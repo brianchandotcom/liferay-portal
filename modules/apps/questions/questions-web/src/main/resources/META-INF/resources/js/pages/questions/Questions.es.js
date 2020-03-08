@@ -15,23 +15,16 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
 import Error from '../../components/Error.es';
-import QuestionBadge from '../../components/QuestionsBadge.es';
-import SectionLabel from '../../components/SectionLabel.es';
-import TagList from '../../components/TagList.es';
-import UserIcon from '../../components/UserIcon.es';
-import {getRankedThreads, getThreads} from '../../utils/client.es';
-import {dateToInternationalHuman, normalizeRating} from '../../utils/utils.es';
-import QuestionsNavigationBar from '../QuestionsNavigationBar.es';
 import QuestionRow from '../../components/QuestionRow.es';
+import {getRankedThreads, getThreads} from '../../utils/client.es';
+import QuestionsNavigationBar from '../QuestionsNavigationBar.es';
 
 export default ({
 	match: {
-		params: {creatorId, sectionTitle, tag: taxonomyCategoryId},
+		params: {creatorId, tag: taxonomyCategoryId},
 	},
 }) => {
 	const [error, setError] = useState({});
@@ -97,11 +90,6 @@ export default ({
 		]
 	);
 
-	const hasValidAnswer = question =>
-		question.messageBoardMessages.items.filter(
-			message => message.showAsAnswer
-		).length > 0;
-
 	const filterChange = type => {
 		if (type === 'latest-edited') {
 			renderQuestions(loadThreads('dateModified:desc'));
@@ -136,7 +124,7 @@ export default ({
 			) : (
 				questions.items &&
 				questions.items.map(question => (
-					<QuestionRow question={question} />
+					<QuestionRow key={question.id} question={question} />
 				))
 			)}
 

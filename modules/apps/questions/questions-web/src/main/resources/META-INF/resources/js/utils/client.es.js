@@ -409,6 +409,9 @@ export const getThreads = ({
 							showAsAnswer
 						}
 					}
+					messageBoardSection {
+						title
+					}
 					taxonomyCategoryBriefs {
 						taxonomyCategoryId
 						taxonomyCategoryName
@@ -476,6 +479,9 @@ export const getRankedThreads = (
 							showAsAnswer
 						}
 					}
+					messageBoardSection {
+						title
+					}
 					taxonomyCategoryBriefs {
 						taxonomyCategoryId
 						taxonomyCategoryName
@@ -534,57 +540,52 @@ export const getSections = siteKey =>
 
 export const getUserActivity = (siteKey, userId = '') => {
 	const filter = `creatorId eq ${userId}`;
+
 	return request(gql`
 		query {
-			messageBoardThreads(
-			flatten: true
-			siteKey: ${siteKey}
- 			sort: "dateCreated:desc"
-			filter: ${filter}
-			) {
-			items {
-				aggregateRating {
-					ratingAverage
-					ratingCount
-					ratingValue
-				}
-				articleBody
-				creator {
+			messageBoardThreads(filter: ${filter}, flatten: true, siteKey: ${siteKey}, sort: "dateCreated:desc") {
+				items {
+					aggregateRating {
+						ratingAverage
+						ratingCount
+						ratingValue
+					}
+					articleBody
+					creator {
+						id
+						name
+						image
+					}
+					creatorStatistics {
+						postsNumber
+						rank
+					}
+					dateModified
+					friendlyUrlPath
+					headline
 					id
-					name
-					image
-				}
-				creatorStatistics {
-					postsNumber
-					rank
-				}
-				dateModified
-				friendlyUrlPath
-				headline
-				id
-				messageBoardSection {
-					title
-				}
-				messageBoardMessages {
-					items {
-					showAsAnswer
+					messageBoardSection {
+						title
+					}
+					messageBoardMessages {
+						items {
+						showAsAnswer
+						}
+					}
+					messageBoardSection {
+						title
+					}
+					taxonomyCategoryBriefs{
+						taxonomyCategoryId
+						taxonomyCategoryName
 					}
 				}
-				messageBoardSection {
-					title
-				}
-				taxonomyCategoryBriefs{
-					taxonomyCategoryId
-					taxonomyCategoryName
-				}
-			}
 			page
 			pageSize
 			totalCount
 			}
-		}`
-	);
-}
+		}`);
+};
 
 export const markAsAnswerMessageBoardMessage = (
 	messageBoardMessageId,

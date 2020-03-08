@@ -50,6 +50,12 @@ public class ActionUtil {
 
 		Class<?>[] interfaceClasses = superClass.getInterfaces();
 
+		if (interfaceClasses.length == 0) {
+			superClass = superClass.getSuperclass();
+
+			interfaceClasses = superClass.getInterfaces();
+		}
+
 		return addAction(
 			actionName, clazz, (Long)groupedModel.getPrimaryKeyObj(),
 			methodName, object, groupedModel.getUserId(),

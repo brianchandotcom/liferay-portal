@@ -101,7 +101,7 @@ export default withRouter(
 						<Link
 							to={`/questions/${(section &&
 								section.parentSection &&
-								section.parentSection.id) ||
+								section.parentSection.title) ||
 								sectionTitle}`}
 						>
 							<ClayDropDown.Help>

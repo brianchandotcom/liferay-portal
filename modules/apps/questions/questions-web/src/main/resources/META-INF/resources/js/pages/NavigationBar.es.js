@@ -14,49 +14,81 @@
 
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import React from 'react';
-import {withRouter, Link} from 'react-router-dom';
+import React, {useContext} from 'react';
+import {Link, withRouter} from 'react-router-dom';
 
-export default withRouter(({history, location, match: {url}}) => {
-	const isActive = value => location.pathname.includes(value);
+import {AppContext} from '../AppContext.es';
 
-	return (
-		<>
-			{location.pathname !== '/' && (
-				<div className="align-items-center d-flex justify-content-between questions-navigation">
-					<ClayNavigationBar triggerLabel="Questions">
-						<ClayNavigationBar.Item
-							active={!isActive('tags')}
-							onClick={() => history.push(url)}
-						>
-							<ClayLink
+export default withRouter(
+	({
+		history,
+		location,
+		match: {
+			params: {sectionTitle},
+		},
+	}) => {
+		const isActive = value => location.pathname.includes(value);
+
+		const context = useContext(AppContext);
+
+		return (
+			<>
+				{location.pathname !== '/' && (
+					<div className="align-items-center d-flex justify-content-between questions-navigation">
+						<ClayNavigationBar triggerLabel="Questions">
+							<ClayNavigationBar.Item
+								active={!isActive('tags')}
+								onClick={() => {
+									if (!sectionTitle) {
+										return history.push('/questions');
+									}
+
+									return history.push(
+										`/questions/${sectionTitle}`
+									);
+								}}
+							>
+								<ClayLink
+									className="nav-link"
+									displayType="unstyled"
+								>
+									{Liferay.Language.get('questions')}
+								</ClayLink>
+							</ClayNavigationBar.Item>
+
+							<ClayNavigationBar.Item
+								active={isActive('tags')}
+								onClick={() => {
+									if (!sectionTitle) {
+										return history.push('/questions');
+									}
+
+									return history.push(
+										`/questions/${sectionTitle}/tags`
+									);
+								}}
+							>
+								<ClayLink
+									className="nav-link"
+									displayType="unstyled"
+								>
+									{Liferay.Language.get('tags')}
+								</ClayLink>
+							</ClayNavigationBar.Item>
+						</ClayNavigationBar>
+
+						<div className="autofit-col">
+							<Link
 								className="nav-link"
 								displayType="unstyled"
+								to={`/activity/${context.userId}`}
 							>
-								{Liferay.Language.get('questions')}
-							</ClayLink>
-						</ClayNavigationBar.Item>
-
-						<ClayNavigationBar.Item
-							active={isActive('tags')}
-							onClick={() => history.push(url + '/tags')}
-						>
-							<ClayLink
-								className="nav-link"
-								displayType="unstyled"
-							>
-								{Liferay.Language.get('tags')}
-							</ClayLink>
-						</ClayNavigationBar.Item>
-					</ClayNavigationBar>
-
-					<div className="autofit-col">
-						<Link className="nav-link" displayType="unstyled" to={`questions/activity/${Liferay.ThemeDisplay.getUserId()}`} >
-							{Liferay.Language.get('my-activity')}
-						</Link>
+								{Liferay.Language.get('my-activity')}
+							</Link>
+						</div>
 					</div>
-				</div>
-			)}
-		</>
-	);
-});
+				)}
+			</>
+		);
+	}
+);

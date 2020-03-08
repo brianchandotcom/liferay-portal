@@ -20,12 +20,12 @@ import {ErrorBoundary} from './components/ErrorBoundary.es';
 import NavigationBar from './pages/NavigationBar.es';
 import EditAnswer from './pages/answers/EditAnswer.es';
 import Home from './pages/home/Home';
+import UserActivity from './pages/home/UserActivity.es';
 import EditQuestion from './pages/questions/EditQuestion.es';
 import NewQuestion from './pages/questions/NewQuestion.es';
 import Question from './pages/questions/Question.es';
 import Questions from './pages/questions/Questions.es';
 import Tags from './pages/tags/Tags.es';
-import UserActivity from "./pages/home/UserActivity.es";
 
 export default props => (
 	<AppContextProvider {...props}>
@@ -34,6 +34,11 @@ export default props => (
 				<div>
 					<Route component={Home} exact path="/" />
 					<Route component={Home} exact path="/questions" />
+					<Route
+						component={UserActivity}
+						exact
+						path="/activity/:creatorId"
+					/>
 
 					<Route
 						path="/questions/:sectionTitle"
@@ -81,11 +86,6 @@ export default props => (
 										component={Questions}
 										exact
 										path={`${path}/`}
-									/>
-									<Route
-										component={UserActivity}
-										exact
-										path={`${path}/activity/:creatorId`}
 									/>
 								</Switch>
 							</>

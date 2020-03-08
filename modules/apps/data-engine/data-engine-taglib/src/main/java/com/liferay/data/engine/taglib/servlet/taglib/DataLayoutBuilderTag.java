@@ -63,7 +63,8 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			).put(
 				"pluginEntryPoint",
 				DataLayoutTaglibUtil.resolveModule(
-					"data-engine-taglib/data_layout_builder/js/plugins/fields-sidebar/index.es")
+					"data-engine-taglib/data_layout_builder/js/plugins" +
+						"/fields-sidebar/index.es")
 			).put(
 				"sidebarPanelId", "fields"
 			).build()

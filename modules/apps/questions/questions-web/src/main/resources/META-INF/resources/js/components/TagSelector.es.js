@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayForm from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import React, {useContext, useEffect, useState} from 'react';
 
@@ -21,6 +22,7 @@ import {getAllTags} from '../utils/client.es';
 export default ({tagsChange, tags = [], ...props}) => {
 	const context = useContext(AppContext);
 
+	const [error, setError] = useState(false);
 	const [inputValue, setInputValue] = useState('');
 	const [items, setItems] = useState([]);
 	const [sourceItems, setSourceItems] = useState([]);
@@ -58,19 +60,45 @@ export default ({tagsChange, tags = [], ...props}) => {
 			!maxTags(tags) &&
 			!duplicatedTags(tags)
 		) {
+			setError(false);
 			setItems(tags);
 			tagsChange(tags);
+		}
+		else {
+			setError(true);
 		}
 	};
 
 	return (
-		<ClayMultiSelect
-			{...props}
-			inputValue={inputValue}
-			items={items}
-			onChange={setInputValue}
-			onItemsChange={filterItems}
-			sourceItems={sourceItems}
-		/>
+		<>
+			<ClayForm.Group className="c-mt-4">
+				<label htmlFor="basicInput">
+					{Liferay.Language.get('tags')}
+				</label>
+				<ClayMultiSelect
+					{...props}
+					inputValue={inputValue}
+					items={items}
+					onChange={setInputValue}
+					onItemsChange={filterItems}
+					sourceItems={sourceItems}
+				/>
+				<ClayForm.FeedbackGroup className={error && 'has-error'}>
+					<ClayForm.FeedbackItem>
+						<span className="small text-secondary">
+							{Liferay.Language.get(
+								'add-up-to-5-tags-to-describe-what-your-question-is-about'
+							)}
+						</span>
+					</ClayForm.FeedbackItem>
+					{error && (
+						<ClayForm.FeedbackItem>
+							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+							{Liferay.Language.get('this-is-not-a-valid-tag')}
+						</ClayForm.FeedbackItem>
+					)}
+				</ClayForm.FeedbackGroup>
+			</ClayForm.Group>
+		</>
 	);
 };

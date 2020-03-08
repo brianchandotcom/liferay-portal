@@ -65,7 +65,8 @@ public class EditDDMStructureMVCRenderCommand implements MVCRenderCommand {
 				new DLEditFileEntryTypeDisplayContext(
 					_ddm, _ddmStorageLinkLocalService,
 					_ddmStructureLocalService, _language,
-					_portal.getLiferayPortletRequest(renderRequest)));
+					_portal.getLiferayPortletRequest(renderRequest),
+					_portal.getLiferayPortletResponse(renderResponse)));
 
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,

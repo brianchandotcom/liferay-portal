@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -28,17 +29,26 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.portlet.PortletURL;
 
 /**
  * @author Cristina González
@@ -48,13 +58,113 @@ public class DLEditFileEntryTypeDisplayContext {
 	public DLEditFileEntryTypeDisplayContext(
 		DDM ddm, DDMStorageLinkLocalService ddmStorageLinkLocalService,
 		DDMStructureLocalService ddmStructureLocalService, Language language,
-		LiferayPortletRequest liferayPortletRequest) {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_ddm = ddm;
 		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_language = language;
 		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
+	}
+
+	public List<Map> getAdditionalPanels(String npmResolvedPackageName) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		List<Map> additionalPanels = new ArrayList<>();
+
+		additionalPanels.add(
+			HashMapBuilder.<String, Object>put(
+				"icon", "cog"
+			).put(
+				"label", LanguageUtil.get(themeDisplay.getLocale(), "details")
+			).put(
+				"pluginEntryPoint",
+				npmResolvedPackageName +
+					"/document_library/js/ddm/panels/index.es"
+			).put(
+				"sidebarPanelId", "details"
+			).put(
+				"url",
+				() -> {
+					PortletURL editBasicInfoURL =
+						_liferayPortletResponse.createRenderURL();
+
+					editBasicInfoURL.setParameter(
+						"mvcPath", "/document_library/ddm/details.jsp");
+					editBasicInfoURL.setWindowState(
+						LiferayWindowState.EXCLUSIVE);
+
+					return editBasicInfoURL.toString();
+				}
+			).build());
+
+		additionalPanels.add(
+			HashMapBuilder.<String, Object>put(
+				"icon", "document"
+			).put(
+				"label",
+				LanguageUtil.get(
+					themeDisplay.getLocale(), "additional-metadata-fields")
+			).put(
+				"pluginEntryPoint",
+				npmResolvedPackageName +
+					"/document_library/js/ddm/panels/index.es"
+			).put(
+				"sidebarPanelId", "additionalMetadataFields"
+			).put(
+				"url",
+				() -> {
+					PortletURL editAdditionalMetadataFieldsURL =
+						_liferayPortletResponse.createRenderURL();
+
+					editAdditionalMetadataFieldsURL.setParameter(
+						"mvcPath",
+						"/document_library/ddm/additional_metadata_fields.jsp");
+					editAdditionalMetadataFieldsURL.setWindowState(
+						LiferayWindowState.EXCLUSIVE);
+
+					return editAdditionalMetadataFieldsURL.toString();
+				}
+			).build());
+
+		DLFileEntryType fileEntryType =
+			(DLFileEntryType)_liferayPortletRequest.getAttribute(
+				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE);
+
+		if (fileEntryType == null) {
+			additionalPanels.add(
+				HashMapBuilder.<String, Object>put(
+					"icon", "lock"
+				).put(
+					"label",
+					LanguageUtil.get(themeDisplay.getLocale(), "permissions")
+				).put(
+					"pluginEntryPoint",
+					npmResolvedPackageName +
+						"/document_library/js/ddm/panels/index.es"
+				).put(
+					"sidebarPanelId", "permissions"
+				).put(
+					"url",
+					() -> {
+						PortletURL editPermissionsURL =
+							_liferayPortletResponse.createRenderURL();
+
+						editPermissionsURL.setParameter(
+							"mvcPath", "/document_library/ddm/permissions.jsp");
+						editPermissionsURL.setWindowState(
+							LiferayWindowState.EXCLUSIVE);
+
+						return editPermissionsURL.toString();
+					}
+				).build());
+		}
+
+		return additionalPanels;
 	}
 
 	public String getAvailableFields() {
@@ -210,5 +320,6 @@ public class DLEditFileEntryTypeDisplayContext {
 	private String _fieldsJSONArrayString;
 	private final Language _language;
 	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 
 }

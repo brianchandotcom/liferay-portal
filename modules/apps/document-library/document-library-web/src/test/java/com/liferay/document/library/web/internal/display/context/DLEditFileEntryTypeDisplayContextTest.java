@@ -98,7 +98,7 @@ public class DLEditFileEntryTypeDisplayContextTest {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
 			new DLEditFileEntryTypeDisplayContext(
 				_ddm, _ddmStorageLinkLocalService, _ddmStructureLocalService,
-				_language, null);
+				_language, null, null);
 
 		Assert.assertEquals(
 			"Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE",
@@ -117,7 +117,8 @@ public class DLEditFileEntryTypeDisplayContextTest {
 						_getRandomDDMStructure()
 					).withParameter(
 						"definition", RandomTestUtil.randomString()
-					).build()));
+					).build()),
+				null);
 
 		Assert.assertEquals(
 			"[\"pt_BR\"]",
@@ -136,7 +137,8 @@ public class DLEditFileEntryTypeDisplayContextTest {
 						_getRandomDDMStructure()
 					).withParameter(
 						"definition", RandomTestUtil.randomString()
-					).build()));
+					).build()),
+				null);
 
 		Assert.assertEquals(
 			"pt_BR", dlEditFileEntryTypeDisplayContext.getDefaultLanguageId());
@@ -152,7 +154,8 @@ public class DLEditFileEntryTypeDisplayContextTest {
 					new MockHttpServletRequestBuilder().withAttribute(
 						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
 						_getRandomDDMStructure()
-					).build()));
+					).build()),
+				null);
 
 		Assert.assertTrue(
 			dlEditFileEntryTypeDisplayContext.isFieldNameEditionDisabled());
@@ -168,7 +171,8 @@ public class DLEditFileEntryTypeDisplayContextTest {
 					new MockHttpServletRequestBuilder().withAttribute(
 						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
 						_getRandomDDMStructure()
-					).build()));
+					).build()),
+				null);
 
 		Assert.assertEquals(
 			StringPool.BLANK,
@@ -187,7 +191,8 @@ public class DLEditFileEntryTypeDisplayContextTest {
 						_getRandomDDMStructure()
 					).withParameter(
 						"definition", RandomTestUtil.randomString()
-					).build()));
+					).build()),
+				null);
 
 		Assert.assertEquals(
 			true,

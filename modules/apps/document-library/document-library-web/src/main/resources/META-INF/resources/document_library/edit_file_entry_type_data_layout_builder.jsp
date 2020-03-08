@@ -25,6 +25,8 @@ long fileEntryTypeId = BeanParamUtil.getLong(fileEntryType, request, "fileEntryT
 
 com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = (com.liferay.dynamic.data.mapping.model.DDMStructure)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
 
+DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFileEntryTypeDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT);
+
 long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId");
 
 String ddmStructureKey = StringPool.BLANK;
@@ -64,33 +66,16 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 
 		<aui:model-context bean="<%= fileEntryType %>" model="<%= DLFileEntryType.class %>" />
 
-		<aui:fieldset-group cssClass="edit-file-entry-type" markupView="lexicon">
-			<aui:fieldset collapsible="<%= true %>" extended="<%= false %>" id="detailsMetadataFields" persistState="<%= true %>" title="details">
-				<liferay-util:include page="/document_library/ddm/details.jsp" servletContext="<%= application %>" />
-			</aui:fieldset>
-
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="mainMetadataFields" label="main-metadata-fields">
-				<liferay-data-engine:data-layout-builder
-					componentId='<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
-					contentType="document-library"
-					dataDefinitionId="<%= ddmStructureId %>"
-					dataLayoutInputId="dataLayout"
-					groupId="<%= scopeGroupId %>"
-					localizable="<%= true %>"
-					namespace="<%= renderResponse.getNamespace() %>"
-				/>
-			</aui:fieldset>
-
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="additionalMetadataFields" label="additional-metadata-fields">
-				<liferay-util:include page="/document_library/ddm/additional_metadata_fields.jsp" servletContext="<%= application %>" />
-			</aui:fieldset>
-
-			<c:if test="<%= fileEntryType == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions" markupView="lexicon">
-					<liferay-util:include page="/document_library/ddm/permissions.jsp" servletContext="<%= application %>" />
-				</aui:fieldset>
-			</c:if>
-		</aui:fieldset-group>
+		<liferay-data-engine:data-layout-builder
+			additionalPanels="<%= dlEditFileEntryTypeDisplayContext.getAdditionalPanels(npmResolvedPackageName) %>"
+			componentId='<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
+			contentType="document-library"
+			dataDefinitionId="<%= ddmStructureId %>"
+			dataLayoutInputId="dataLayout"
+			groupId="<%= scopeGroupId %>"
+			localizable="<%= true %>"
+			namespace="<%= renderResponse.getNamespace() %>"
+		/>
 
 		<aui:button-row>
 			<aui:button type="submit" />

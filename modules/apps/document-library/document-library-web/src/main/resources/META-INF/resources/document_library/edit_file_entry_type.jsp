@@ -27,16 +27,6 @@ com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = (com.liferay.
 
 long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId");
 
-List<DDMStructure> ddmStructures = null;
-
-if (fileEntryType != null) {
-	ddmStructures = fileEntryType.getDDMStructures();
-
-	if (ddmStructure != null) {
-		ddmStructures = ListUtil.filter(fileEntryType.getDDMStructures(), currentDDMStructure -> currentDDMStructure.getStructureId() != ddmStructure.getStructureId());
-	}
-}
-
 String ddmStructureKey = StringPool.BLANK;
 String fileEntryTypeUuid = StringPool.BLANK;
 
@@ -55,14 +45,6 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 %>
 
 <div class="container-fluid-1280">
-	<liferay-util:buffer
-		var="removeStructureIcon"
-	>
-		<clay:icon
-			symbol="times-circle"
-		/>
-	</liferay-util:buffer>
-
 	<portlet:actionURL name="/document_library/edit_file_entry_type" var="editFileEntryTypeURL">
 		<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry_type" />
 	</portlet:actionURL>
@@ -86,17 +68,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 
 		<aui:fieldset-group cssClass="edit-file-entry-type" markupView="lexicon">
 			<aui:fieldset collapsible="<%= true %>" extended="<%= false %>" id="detailsMetadataFields" persistState="<%= true %>" title="details">
-				<aui:field-wrapper>
-					<c:if test="<%= (ddmStructure != null) && (ddmStructure.getGroupId() != scopeGroupId) %>">
-						<div class="alert alert-warning">
-							<liferay-ui:message key="this-document-type-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-document-type" />
-						</div>
-					</c:if>
-				</aui:field-wrapper>
-
-				<aui:input name="name" />
-
-				<aui:input name="description" />
+				<liferay-util:include page="/document_library/ddm/details.jsp" servletContext="<%= application %>" />
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="mainMetadataFields" label="main-metadata-fields">
@@ -119,50 +91,12 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="additionalMetadataFields" label="additional-metadata-fields">
-				<liferay-ui:search-container
-					headerNames="name,null"
-					total="<%= (ddmStructures != null) ? ddmStructures.size() : 0 %>"
-				>
-					<liferay-ui:search-container-results
-						results="<%= ddmStructures %>"
-					/>
-
-					<liferay-ui:search-container-row
-						className="com.liferay.dynamic.data.mapping.kernel.DDMStructure"
-						escapedModel="<%= true %>"
-						keyProperty="structureId"
-						modelVar="curDDMStructure"
-					>
-						<liferay-ui:search-container-column-text
-							name="name"
-							value="<%= HtmlUtil.escape(curDDMStructure.getName(locale)) %>"
-						/>
-
-						<liferay-ui:search-container-column-text>
-							<a class="modify-link" data-rowId="<%= curDDMStructure.getStructureId() %>" href="javascript:;" title="<%= LanguageUtil.get(request, "remove") %>"><%= removeStructureIcon %></a>
-						</liferay-ui:search-container-column-text>
-					</liferay-ui:search-container-row>
-
-					<liferay-ui:search-iterator
-						markupView="lexicon"
-						paginate="<%= false %>"
-					/>
-				</liferay-ui:search-container>
-
-				<liferay-ui:icon
-					cssClass="modify-link select-metadata"
-					label="<%= true %>"
-					linkCssClass="btn btn-secondary"
-					message="select"
-					url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
-				/>
+				<liferay-util:include page="/document_library/ddm/additional_metadata_fields.jsp" servletContext="<%= application %>" />
 			</aui:fieldset>
 
 			<c:if test="<%= fileEntryType == null %>">
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions" markupView="lexicon">
-					<liferay-ui:input-permissions
-						modelName="<%= DLFileEntryType.class.getName() %>"
-					/>
+					<liferay-util:include page="/document_library/ddm/permissions.jsp" servletContext="<%= application %>" />
 				</aui:fieldset>
 			</c:if>
 		</aui:fieldset-group>
@@ -176,44 +110,6 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 </div>
 
 <aui:script>
-function <portlet:namespace />openDDMStructureSelector() {
-	Liferay.Util.selectEntity(
-		{
-			dialog: {
-				constrain: true,
-				modal: true,
-			},
-			eventName: '<portlet:namespace />selectDDMStructure',
-			id: '<portlet:namespace />selectDDMStructure',
-			title:
-				'<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
-			uri:
-				'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" /></portlet:renderURL>',
-		},
-		function(event) {
-			var searchContainer = Liferay.SearchContainer.get(
-				'<portlet:namespace />ddmStructuresSearchContainer'
-			);
-
-			var data = searchContainer.getData(false);
-
-			if (!data.includes(event.ddmstructureid)) {
-				var ddmStructureLink =
-					'<a class="modify-link" data-rowId="' +
-					event.ddmstructureid +
-					'" href="javascript:;" title="<%= LanguageUtil.get(request, "remove") %>"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
-
-				searchContainer.addRow(
-					[event.name, ddmStructureLink],
-					event.ddmstructureid
-				);
-
-				searchContainer.updateDataStore();
-			}
-		}
-	);
-}
-
 function <portlet:namespace />saveStructure() {
 	<c:choose>
 		<c:when test="<%= dlEditFileEntryTypeDisplayContext.useDataEngineEditor() %>">
@@ -263,24 +159,6 @@ function <portlet:namespace />saveStructure() {
 		</c:otherwise>
 	</c:choose>
 }
-</aui:script>
-
-<aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get(
-		'<portlet:namespace />ddmStructuresSearchContainer'
-	);
-
-	searchContainer.get('contentBox').delegate(
-		'click',
-		function(event) {
-			var link = event.currentTarget;
-
-			var tr = link.ancestor('tr');
-
-			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
-		},
-		'.modify-link'
-	);
 </aui:script>
 
 <%

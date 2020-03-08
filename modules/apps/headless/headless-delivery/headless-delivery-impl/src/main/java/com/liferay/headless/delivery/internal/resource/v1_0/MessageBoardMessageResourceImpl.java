@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -57,6 +58,7 @@ import java.util.Map;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -320,16 +322,26 @@ public class MessageBoardMessageResourceImpl
 			encodingFormat = MBMessageConstants.DEFAULT_FORMAT;
 		}
 
+		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
+			_getExpandoBridgeAttributes(messageBoardMessage),
+			parentMBMessage.getGroupId(),
+			messageBoardMessage.getViewableByAsString());
+
+		UriBuilder uriBuilder = contextUriInfo.getBaseUriBuilder();
+
+		serviceContext.setAttribute(
+			"entryURL",
+			String.valueOf(
+				uriBuilder.replacePath(
+					"/"
+				).build()));
+
 		MBMessage mbMessage = _mbMessageService.addMessage(
 			messageBoardMessageId, headline,
 			messageBoardMessage.getArticleBody(), encodingFormat,
 			Collections.emptyList(),
 			GetterUtil.getBoolean(messageBoardMessage.getAnonymous()), 0.0,
-			false,
-			ServiceContextUtil.createServiceContext(
-				_getExpandoBridgeAttributes(messageBoardMessage),
-				parentMBMessage.getGroupId(),
-				messageBoardMessage.getViewableByAsString()));
+			false, serviceContext);
 
 		_updateAnswer(mbMessage, messageBoardMessage);
 

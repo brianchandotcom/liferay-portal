@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -94,6 +95,7 @@ import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -383,16 +385,27 @@ public class MessageBoardThreadResourceImpl
 			encodingFormat = MBMessageConstants.DEFAULT_FORMAT;
 		}
 
+		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
+			messageBoardThread.getTaxonomyCategoryIds(),
+			messageBoardThread.getKeywords(),
+			_getExpandoBridgeAttributes(messageBoardThread), siteId,
+			messageBoardThread.getViewableByAsString());
+
+		UriBuilder uriBuilder = contextUriInfo.getBaseUriBuilder();
+
+		serviceContext.setAttribute(
+			"entryURL",
+			String.valueOf(
+				uriBuilder.replacePath(
+					"/"
+				).build()));
+
 		MBMessage mbMessage = _mbMessageService.addMessage(
 			siteId, messageBoardSectionId, messageBoardThread.getHeadline(),
 			messageBoardThread.getArticleBody(), encodingFormat,
 			Collections.emptyList(), false,
 			_toPriority(siteId, messageBoardThread.getThreadType()), false,
-			ServiceContextUtil.createServiceContext(
-				messageBoardThread.getTaxonomyCategoryIds(),
-				messageBoardThread.getKeywords(),
-				_getExpandoBridgeAttributes(messageBoardThread), siteId,
-				messageBoardThread.getViewableByAsString()));
+			serviceContext);
 
 		_updateQuestion(mbMessage, messageBoardThread);
 

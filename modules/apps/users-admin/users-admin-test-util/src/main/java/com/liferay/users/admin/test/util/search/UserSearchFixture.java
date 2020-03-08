@@ -36,22 +36,26 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
 import com.liferay.portal.kernel.service.ListTypeServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RegionServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.users.admin.test.util.search.OrganizationBlueprint.OrganizationBlueprintBuilder;
+import com.liferay.users.admin.test.util.search.UserBlueprintImpl.UserBlueprintBuilderImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -62,6 +66,26 @@ import java.util.Map;
  * @author André de Oliveira
  */
 public class UserSearchFixture {
+
+	public UserSearchFixture() {
+		this(
+			UserLocalServiceUtil.getService(), new GroupSearchFixture(),
+			new OrganizationSearchFixture(
+				OrganizationLocalServiceUtil.getService()),
+			new UserGroupSearchFixture(UserGroupLocalServiceUtil.getService()));
+	}
+
+	public UserSearchFixture(
+		UserLocalService userLocalService,
+		GroupSearchFixture groupSearchFixture,
+		OrganizationSearchFixture organizationSearchFixture,
+		UserGroupSearchFixture userGroupSearchFixture) {
+
+		_userLocalService = userLocalService;
+		_groupSearchFixture = groupSearchFixture;
+		_organizationSearchFixture = organizationSearchFixture;
+		_userGroupSearchFixture = userGroupSearchFixture;
+	}
 
 	public Address addAddress(User user) throws PortalException {
 		List<ListType> listTypes = ListTypeServiceUtil.getListTypes(
@@ -97,48 +121,44 @@ public class UserSearchFixture {
 		return address;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Group addGroup() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
-		_groups.add(group);
-
-		return group;
+		return addGroup(new GroupBlueprint());
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Group addGroup(GroupBlueprint groupBlueprint) throws Exception {
-		Group group = addGroup();
-
-		Locale locale = groupBlueprint.getDefaultLocale();
-
-		if (locale != null) {
-			GroupTestUtil.updateDisplaySettings(
-				group.getGroupId(), null, locale);
-		}
-
-		return group;
+		return _groupSearchFixture.addGroup(groupBlueprint);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Organization addOrganization() throws Exception {
-		Organization organization = OrganizationTestUtil.addOrganization();
+		OrganizationBlueprintBuilder organizationBlueprintBuilder =
+			OrganizationSearchFixture.getTestOrganizationBlueprintBuilder();
 
-		_organizations.add(organization);
-
-		return organization;
+		return _organizationSearchFixture.addOrganization(
+			organizationBlueprintBuilder.build());
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Organization addOrganization(
 			OrganizationBlueprint organizationBlueprint)
 		throws Exception {
 
-		Organization organization = addOrganization();
-
-		String[] assetTagNames = organizationBlueprint.getAssetTagNames();
-
-		if (assetTagNames != null) {
-			OrganizationTestUtil.updateAsset(organization, null, assetTagNames);
-		}
-
-		return organization;
+		return _organizationSearchFixture.addOrganization(
+			organizationBlueprint);
 	}
 
 	public User addUser(String screenName, Group group, String... assetTagNames)
@@ -173,14 +193,29 @@ public class UserSearchFixture {
 		return user;
 	}
 
-	public UserGroup addUserGroup() throws Exception {
-		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+	public User addUser(
+		UserBlueprint.UserBlueprintBuilder userBlueprintBuilder) {
 
-		_userGroups.add(userGroup);
+		User user = _addUser(userBlueprintBuilder);
 
-		return userGroup;
+		_users.add(user);
+
+		return user;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public UserGroup addUserGroup() throws Exception {
+		return _userGroupSearchFixture.addUserGroup(
+			UserGroupSearchFixture.getTestUserGroupBlueprintBuilder());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public User addUserWithAddress(
 			String screenName, Group group, String... assetTagNames)
 		throws Exception {
@@ -194,6 +229,10 @@ public class UserSearchFixture {
 		return user;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public User addUserWithJobTitle(
 			String screenName, Group group, String... assetTagNames)
 		throws Exception {
@@ -207,6 +246,10 @@ public class UserSearchFixture {
 		return user;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public User addUserWithOrganization(
 			String screenName, Group group, String... assetTagNames)
 		throws Exception {
@@ -220,6 +263,10 @@ public class UserSearchFixture {
 		return user;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public User addUserWithUserGroup(
 			String screenName, Group group, String... assetTagNames)
 		throws Exception {
@@ -243,12 +290,20 @@ public class UserSearchFixture {
 		return _assetTags;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public List<Group> getGroups() {
-		return _groups;
+		return _groupSearchFixture.getGroups();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public List<Organization> getOrganizations() {
-		return _organizations;
+		return _organizationSearchFixture.getOrganizations();
 	}
 
 	public SearchContext getSearchContext(String keywords) throws Exception {
@@ -261,8 +316,60 @@ public class UserSearchFixture {
 		return searchContext;
 	}
 
+	public UserBlueprint.UserBlueprintBuilder getTestUserBlueprintBuilder() {
+		UserBlueprint.UserBlueprintBuilder userBlueprintBuilder =
+			new UserBlueprintBuilderImpl();
+
+		long companyId = getTestCompanyId();
+		long groupId = getTestGroupId();
+		long userId = getTestUserId();
+
+		ServiceContext serviceContext = new ServiceContext() {
+			{
+				setAddGroupPermissions(true);
+				setAddGuestPermissions(true);
+				setCompanyId(companyId);
+				setScopeGroupId(groupId);
+				setUserId(userId);
+			}
+		};
+
+		return userBlueprintBuilder.autoPassword(
+			true
+		).birthdayMonth(
+			Calendar.JANUARY
+		).birthdayDay(
+			1
+		).birthdayYear(
+			1970
+		).companyId(
+			companyId
+		).emailAddress(
+			RandomTestUtil.randomString() + RandomTestUtil.nextLong() +
+				"@liferay.com"
+		).userId(
+			userId
+		).screenName(
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE)
+		).locale(
+			LocaleUtil.getDefault()
+		).firstName(
+			RandomTestUtil.randomString()
+		).lastName(
+			RandomTestUtil.randomString()
+		).serviceContext(
+			serviceContext
+		);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public List<UserGroup> getUserGroups() {
-		return _userGroups;
+		return _userGroupSearchFixture.getUserGroups();
 	}
 
 	public List<User> getUsers() {
@@ -367,6 +474,33 @@ public class UserSearchFixture {
 			group.getGroupId(), TestPropsValues.getUserId());
 	}
 
+	protected static long getTestCompanyId() {
+		try {
+			return TestPropsValues.getCompanyId();
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	protected static long getTestGroupId() {
+		try {
+			return TestPropsValues.getGroupId();
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	protected static long getTestUserId() {
+		try {
+			return TestPropsValues.getUserId();
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
 	private User _addUser(
 			String screenName, String firstName, String lastName,
 			long[] groupIds, Locale locale, ServiceContext serviceContext)
@@ -377,14 +511,42 @@ public class UserSearchFixture {
 			firstName, lastName, groupIds, serviceContext);
 	}
 
+	private User _addUser(
+		UserBlueprint.UserBlueprintBuilder userBlueprintBuilder) {
+
+		UserBlueprint userBlueprint = userBlueprintBuilder.build();
+
+		try {
+			return _userLocalService.addUserWithWorkflow(
+				userBlueprint.getCreatorUserId(), userBlueprint.getCompanyId(),
+				userBlueprint.isAutoPassword(), userBlueprint.getPassword1(),
+				userBlueprint.getPassword2(), userBlueprint.isAutoScreenName(),
+				userBlueprint.getScreenName(), userBlueprint.getEmailAddress(),
+				userBlueprint.getFacebookId(), userBlueprint.getOpenId(),
+				userBlueprint.getLocale(), userBlueprint.getFirstName(),
+				userBlueprint.getMiddleName(), userBlueprint.getLastName(),
+				userBlueprint.getPrefixId(), userBlueprint.getSuffixId(),
+				userBlueprint.isMale(), userBlueprint.getBirthdayMonth(),
+				userBlueprint.getBirthdayDay(), userBlueprint.getBirthdayYear(),
+				userBlueprint.getJobTitle(), userBlueprint.getGroupIds(),
+				userBlueprint.getOrganizationIds(), userBlueprint.getRoleIds(),
+				userBlueprint.getUserGroupIds(), userBlueprint.isSendMail(),
+				userBlueprint.getServiceContext());
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
 	private final List<Address> _addresses = new ArrayList<>();
 	private final List<AssetTag> _assetTags = new ArrayList<>();
 	private long _companyId;
-	private final List<Group> _groups = new ArrayList<>();
-	private final List<Organization> _organizations = new ArrayList<>();
+	private final GroupSearchFixture _groupSearchFixture;
+	private final OrganizationSearchFixture _organizationSearchFixture;
 	private PermissionChecker _permissionChecker;
 	private String _principal;
-	private final List<UserGroup> _userGroups = new ArrayList<>();
+	private final UserGroupSearchFixture _userGroupSearchFixture;
+	private final UserLocalService _userLocalService;
 	private final List<User> _users = new ArrayList<>();
 
 }

@@ -451,12 +451,14 @@ export const getRankedThreads = (
 	dateModified,
 	page = 1,
 	pageSize = 20,
-	sectionId,
+	section,
 	sort = ''
 ) =>
 	request(gql`
         query {
-			messageBoardThreadsRanked(dateModified: ${dateModified.toISOString()}, messageBoardSectionId: ${sectionId}, page: ${page}, pageSize: ${pageSize}, sort: ${sort}){
+			messageBoardThreadsRanked(dateModified: ${dateModified.toISOString()}, messageBoardSectionId: ${
+		section.id
+	}, page: ${page}, pageSize: ${pageSize}, sort: ${sort}){
 				items {
 					aggregateRating {
 						ratingAverage

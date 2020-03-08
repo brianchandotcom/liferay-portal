@@ -32,10 +32,13 @@ public class LiferayResponseErrorProvider implements ErrorTypeProvider {
 		Set<ErrorTypeDefinition> errors = new HashSet<>();
 
 		errors.add(LiferayError.BAD_REQUEST);
+		errors.add(LiferayError.CONNECTION_TIMEOUT);
+		errors.add(LiferayError.EXECUTION);
 		errors.add(LiferayError.NOT_ACCEPTABLE);
 		errors.add(LiferayError.NOT_ALLOWED);
 		errors.add(LiferayError.NOT_FOUND);
 		errors.add(LiferayError.NOT_IMPLEMENTED);
+		errors.add(LiferayError.OAUTH2_ERROR);
 		errors.add(LiferayError.SERVER_ERROR);
 		errors.add(LiferayError.UNAUTHORIZED);
 		errors.add(LiferayError.UNSUPPORTED_MEDIA_TYPE);

@@ -18,10 +18,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.NullNode;
 
+import com.liferay.mule.internal.error.LiferayError;
+
 import java.io.IOException;
 
 import java.util.Objects;
 
+import org.mule.runtime.extension.api.exception.ModuleException;
 import org.mule.runtime.http.api.domain.entity.HttpEntity;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 
@@ -45,11 +48,17 @@ public class JsonNodeReader {
 	}
 
 	public JsonNode fromHttpResponse(HttpResponse httpResponse)
-		throws IOException {
+		throws ModuleException {
 
 		HttpEntity httpEntity = httpResponse.getEntity();
 
-		return objectMapper.readTree(httpEntity.getContent());
+		try {
+			return objectMapper.readTree(httpEntity.getContent());
+		}
+		catch (IOException ioe) {
+			throw new ModuleException(
+				ioe.getMessage(), LiferayError.EXECUTION, ioe);
+		}
 	}
 
 	public JsonNode getDescendantJsonNode(JsonNode jsonNode, String path) {

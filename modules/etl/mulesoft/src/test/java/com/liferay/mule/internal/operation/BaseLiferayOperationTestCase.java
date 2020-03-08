@@ -14,6 +14,8 @@
 
 package com.liferay.mule.internal.operation;
 
+import java.util.regex.Pattern;
+
 import org.mule.functional.junit4.MuleArtifactFunctionalTestCase;
 import org.mule.runtime.api.event.Event;
 import org.mule.runtime.api.message.Message;

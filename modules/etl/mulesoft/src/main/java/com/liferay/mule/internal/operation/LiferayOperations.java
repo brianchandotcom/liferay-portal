@@ -30,12 +30,10 @@ import com.liferay.mule.internal.metadata.output.GETEndpointOutputTypeResolver;
 import com.liferay.mule.internal.metadata.output.PATCHEndpointOutputTypeResolver;
 import com.liferay.mule.internal.metadata.output.POSTEndpointOutputTypeResolver;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import org.mule.runtime.api.util.MultiMap;
 import org.mule.runtime.core.api.util.IOUtils;
@@ -52,6 +50,7 @@ import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.annotation.param.display.Summary;
+import org.mule.runtime.extension.api.exception.ModuleException;
 import org.mule.runtime.extension.api.runtime.operation.Result;
 import org.mule.runtime.http.api.domain.entity.HttpEntity;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
@@ -84,7 +83,7 @@ public class LiferayOperations {
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")
 				TimeUnit connectionTimeoutTimeUnit)
-		throws IOException, TimeoutException {
+		throws ModuleException {
 
 		logEndpointParams(Method.DELETE, endpoint, pathParams, queryParams);
 
@@ -115,7 +114,7 @@ public class LiferayOperations {
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")
 				TimeUnit connectionTimeoutTimeUnit)
-		throws Exception {
+		throws ModuleException {
 
 		logEndpointParams(Method.GET, endpoint, pathParams, queryParams);
 
@@ -149,7 +148,7 @@ public class LiferayOperations {
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")
 				TimeUnit connectionTimeoutTimeUnit)
-		throws IOException, TimeoutException {
+		throws ModuleException {
 
 		logEndpointParams(Method.PATCH, endpoint, pathParams, queryParams);
 
@@ -183,7 +182,7 @@ public class LiferayOperations {
 			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 			@Summary("Time unit to be used in the timeout configurations")
 				TimeUnit connectionTimeoutTimeUnit)
-		throws IOException, TimeoutException {
+		throws ModuleException {
 
 		logEndpointParams(Method.POST, endpoint, pathParams, queryParams);
 

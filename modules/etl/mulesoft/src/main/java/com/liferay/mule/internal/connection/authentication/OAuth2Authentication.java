@@ -16,6 +16,7 @@ package com.liferay.mule.internal.connection.authentication;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import com.liferay.mule.internal.error.LiferayError;
 import com.liferay.mule.internal.oas.OASURLParser;
 import com.liferay.mule.internal.util.JsonNodeReader;
 
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.mule.runtime.api.util.MultiMap;
 import org.mule.runtime.core.api.util.IOUtils;
+import org.mule.runtime.extension.api.exception.ModuleException;
 import org.mule.runtime.http.api.HttpConstants;
 import org.mule.runtime.http.api.client.HttpClient;
 import org.mule.runtime.http.api.domain.entity.HttpEntity;
@@ -53,9 +55,7 @@ public class OAuth2Authentication implements HttpAuthentication {
 	}
 
 	@Override
-	public String getAuthorizationHeader()
-		throws IOException, TimeoutException {
-
+	public String getAuthorizationHeader() throws ModuleException {
 		JsonNode authorizationJsonNode = getAuthorizationJsonNode();
 
 		JsonNode tokenTypeJsonNode = authorizationJsonNode.get("token_type");
@@ -67,37 +67,49 @@ public class OAuth2Authentication implements HttpAuthentication {
 			accessTokenJsonNode.textValue());
 	}
 
-	private JsonNode getAuthorizationJsonNode()
-		throws IOException, TimeoutException {
-
+	private JsonNode getAuthorizationJsonNode() throws ModuleException {
 		HttpRequestBuilder httpRequestBuilder = HttpRequest.builder();
 
-		HttpResponse httpResponse = httpClient.send(
-			httpRequestBuilder.addHeader(
-				"Content-Type", "application/x-www-form-urlencoded"
-			).method(
-				HttpConstants.Method.POST
-			).queryParams(
-				queryParams
-			).uri(
-				oAuth2AccessTokenURI
-			).build(),
-			10000, true, null);
+		HttpResponse httpResponse = null;
+
+		try {
+			httpResponse = httpClient.send(
+				httpRequestBuilder.addHeader(
+					"Content-Type", "application/x-www-form-urlencoded"
+				).method(
+					HttpConstants.Method.POST
+				).queryParams(
+					queryParams
+				).uri(
+					oAuth2AccessTokenURI
+				).build(),
+				10000, true, null);
+		}
+		catch (IOException ioe) {
+			throw new ModuleException(
+				ioe.getMessage(), LiferayError.EXECUTION, ioe);
+		}
+		catch (TimeoutException te) {
+			throw new ModuleException(
+				te.getMessage(), LiferayError.CONNECTION_TIMEOUT, te);
+		}
 
 		if (httpResponse == null) {
-			throw new OAuth2Exception(
-				"Unresponsive authorization server's OAuth 2.0 endpoint");
+			throw new ModuleException(
+				"Unresponsive authorization server's OAuth 2.0 endpoint",
+				LiferayError.OAUTH2_ERROR);
 		}
 		else if (httpResponse.getStatusCode() != 200) {
 			HttpEntity httpEntity = httpResponse.getEntity();
 
-			throw new OAuth2Exception(
+			throw new ModuleException(
 				String.format(
 					"Unable to fetch access token from authorization server. " +
 						"Request failed with status %d (%s) and message %s",
 					httpResponse.getStatusCode(),
 					httpResponse.getReasonPhrase(),
-					IOUtils.toString(httpEntity.getContent())));
+					IOUtils.toString(httpEntity.getContent())),
+				LiferayError.OAUTH2_ERROR);
 		}
 
 		JsonNodeReader jsonNodeReader = new JsonNodeReader();

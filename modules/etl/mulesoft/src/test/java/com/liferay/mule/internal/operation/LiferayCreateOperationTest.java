@@ -15,7 +15,6 @@
 package com.liferay.mule.internal.operation;
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Test;

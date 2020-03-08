@@ -14,8 +14,6 @@
 
 package com.liferay.mule.internal.error;
 
-import java.io.IOException;
-
 import org.mule.runtime.core.api.util.IOUtils;
 import org.mule.runtime.extension.api.exception.ModuleException;
 import org.mule.runtime.http.api.domain.entity.HttpEntity;
@@ -26,7 +24,7 @@ import org.mule.runtime.http.api.domain.message.response.HttpResponse;
  */
 public class LiferayResponseValidator {
 
-	public void validate(HttpResponse httpResponse) throws IOException {
+	public void validate(HttpResponse httpResponse) throws ModuleException {
 		if (httpResponse == null) {
 			throw new ModuleException(
 				"Server returned no response", LiferayError.SERVER_ERROR);

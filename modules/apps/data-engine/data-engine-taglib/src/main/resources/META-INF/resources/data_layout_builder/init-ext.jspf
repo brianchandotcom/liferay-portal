@@ -41,4 +41,6 @@ JSONObject configJSONObject = (JSONObject)request.getAttribute("liferay-data-eng
 JSONObject dataLayoutJSONObject = (JSONObject)request.getAttribute("liferay-data-engine:data-layout-builder:dataLayout");
 JSONArray fieldTypesJSONArray = (JSONArray)request.getAttribute("liferay-data-engine:data-layout-builder:fieldTypes");
 String fieldTypesModules = (String)request.getAttribute("liferay-data-engine:data-layout-builder:fieldTypesModules");
+String[] panels = (String[])request.getAttribute("liferay-data-engine:data-layout-builder:panels");
+java.util.Map sidebarPanels = _toHashMap(GetterUtil.getObject((java.util.Map)request.getAttribute("liferay-data-engine:data-layout-builder:sidebarPanels")));
 %>

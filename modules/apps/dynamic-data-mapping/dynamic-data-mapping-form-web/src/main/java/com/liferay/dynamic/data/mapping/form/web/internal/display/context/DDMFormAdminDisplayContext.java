@@ -342,10 +342,17 @@ public class DDMFormAdminDisplayContext {
 	public String getDDMFormHTML(RenderRequest renderRequest)
 		throws PortalException {
 
+		return getDDMFormHTML(renderRequest, true);
+	}
+
+	public String getDDMFormHTML(RenderRequest renderRequest, boolean readOnly)
+		throws PortalException {
+
 		DDMFormViewFormInstanceRecordDisplayContext
 			formViewRecordDisplayContext = getFormViewRecordDisplayContext();
 
-		return formViewRecordDisplayContext.getDDMFormHTML(renderRequest);
+		return formViewRecordDisplayContext.getDDMFormHTML(
+			renderRequest, readOnly);
 	}
 
 	public DDMFormInstance getDDMFormInstance() throws PortalException {

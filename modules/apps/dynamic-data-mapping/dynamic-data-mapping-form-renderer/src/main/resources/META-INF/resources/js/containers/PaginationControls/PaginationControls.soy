@@ -2,6 +2,8 @@
 
 {template .render}
 	{@param activePage: number}
+	{@param cancelLabel: string}
+	{@param showCancelButton: bool}
 	{@param showSubmitButton: bool}
 	{@param spritemap: string}
 	{@param submitLabel: string}
@@ -9,6 +11,7 @@
 	{@param? _handleNextClicked: any}
 	{@param? _handlePreviousClicked: any}
 	{@param? readOnly: bool}
+	{@param? redirectURL: string}
 	{@param? strings: map<string, string>}
 
 	<div class="lfr-ddm-form-pagination-controls">
@@ -62,6 +65,13 @@
 			<button class="btn btn-primary float-right lfr-ddm-form-submit" type="submit">
 				{$submitLabel}
 			</button>
+		{/if}
+		{if $showCancelButton and not $readOnly}
+			<div class="ddm-btn-cancel float-right">
+				<a class="btn btn-cancel btn-secondary" href="{$redirectURL}">
+					{$cancelLabel}
+				</a>
+			</div>
 		{/if}
 	</div>
 {/template}

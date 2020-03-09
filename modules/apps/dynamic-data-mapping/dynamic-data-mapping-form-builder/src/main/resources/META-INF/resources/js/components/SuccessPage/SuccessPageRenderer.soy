@@ -2,8 +2,10 @@
 
 {deltemplate PageRenderer.container variant="'success'"}
 	{@param activePage: number}
+	{@param cancelLabel: string}
 	{@param pageIndex: number}
 	{@param pages: ?}
+	{@param showCancelButton: bool}
 	{@param showSubmitButton: bool}
 	{@param spritemap: string}
 	{@param submitLabel: string}
@@ -17,6 +19,7 @@
 	{@param? page: ?}
 	{@param? paginationMode: ?}
 	{@param? readOnly: bool}
+	{@param? redirectURL: string}
 	{@param? strings: map<string, string>}
 
 	{if $activePage == $pageIndex}

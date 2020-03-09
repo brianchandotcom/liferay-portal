@@ -2,8 +2,10 @@
 
 {deltemplate PageRenderer.container variant="'single_page'"}
 	{@param activePage: number}
+	{@param cancelLabel: string}
 	{@param pageIndex: number}
 	{@param pages: ?}
+	{@param showCancelButton: bool}
 	{@param showSubmitButton: bool}
 	{@param spritemap: string}
 	{@param submitLabel: string}
@@ -15,6 +17,7 @@
 	{@param? empty: bool}
 	{@param? page: ?}
 	{@param? readOnly: bool}
+	{@param? redirectURL: string}
 	{@param? strings: map<string, string>}
 
 	{let $classes kind="text"}

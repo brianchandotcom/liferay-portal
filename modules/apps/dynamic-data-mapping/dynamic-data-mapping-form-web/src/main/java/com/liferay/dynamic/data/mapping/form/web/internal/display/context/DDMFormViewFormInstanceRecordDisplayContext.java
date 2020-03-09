@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
@@ -79,6 +80,12 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 	public String getDDMFormHTML(RenderRequest renderRequest)
 		throws PortalException {
 
+		return getDDMFormHTML(renderRequest, true);
+	}
+
+	public String getDDMFormHTML(RenderRequest renderRequest, boolean readOnly)
+		throws PortalException {
+
 		DDMFormInstanceRecord formInstanceRecord = getDDMFormInstanceRecord();
 
 		DDMFormInstance formInstance = formInstanceRecord.getFormInstance();
@@ -92,8 +99,7 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 
 		DDMFormRenderingContext formRenderingContext =
 			createDDMFormRenderingContext(
-				structureVersion.getDDMForm(),
-				ParamUtil.getBoolean(renderRequest, "readOnly", true));
+				structureVersion.getDDMForm(), readOnly);
 
 		DDMFormValues formValues = getDDMFormValues(
 			renderRequest, formInstanceRecord, structureVersion);
@@ -127,6 +133,7 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 
 		formRenderingContext.setHttpServletRequest(
 			_ddmFormAdminRequestHelper.getRequest());
+
 		formRenderingContext.setHttpServletResponse(_httpServletResponse);
 
 		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
@@ -138,6 +145,18 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 		}
 
 		formRenderingContext.setLocale(locale);
+
+		String redirectURL = ParamUtil.getString(
+			_ddmFormAdminRequestHelper.getRequest(), "redirect");
+
+		if (Validator.isNotNull(redirectURL)) {
+			formRenderingContext.setRedirectURL(redirectURL);
+			formRenderingContext.setCancelLabel(
+				LanguageUtil.get(locale, "cancel"));
+		}
+		else {
+			formRenderingContext.setShowCancelButton(false);
+		}
 
 		formRenderingContext.setPortletNamespace(
 			PortalUtil.getPortletNamespace(

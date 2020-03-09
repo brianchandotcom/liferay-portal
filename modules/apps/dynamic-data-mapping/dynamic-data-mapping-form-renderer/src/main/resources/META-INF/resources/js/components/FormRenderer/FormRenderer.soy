@@ -8,10 +8,13 @@
 	{@param? _handleFieldEdited: any}
 	{@param? _handleFieldFocused: any}
 	{@param? activePage: int}
+	{@param? cancelLabel: string}
 	{@param? editable: bool}
 	{@param? editingLanguageId: string}
 	{@param? paginationMode: string}
 	{@param? readOnly: bool}
+	{@param? redirectURL: string}
+	{@param? showCancelButton: bool}
 	{@param? showSubmitButton: bool}
 	{@param? strings: map<string, string>}
 	{@param? submitLabel: string}
@@ -34,6 +37,7 @@
 
 			{call PageRenderer.render}
 				{param activePage: $activePage /}
+				{param cancelLabel: $cancelLabel ?: 'cancel' /}
 				{param editable: $editable /}
 				{param events: [
 					'fieldBlurred': $_handleFieldBlurred,
@@ -47,7 +51,9 @@
 				{param pages: $pages /}
 				{param paginationMode: $currentPaginationMode /}
 				{param readOnly: $readOnly /}
+				{param redirectURL: $redirectURL /}
 				{param ref: 'pageRenderer' + $activePage /}
+				{param showCancelButton: $showCancelButton != false /}
 				{param showSubmitButton: $showSubmitButton != false /}
 				{param spritemap: $spritemap /}
 				{param strings: $strings /}
@@ -58,6 +64,7 @@
 			{foreach $page in $pages}
 				{call PageRenderer.render}
 					{param activePage: $activePage /}
+					{param cancelLabel: $cancelLabel ?: 'cancel' /}
 					{param editable: $editable /}
 					{param editingLanguageId: $editingLanguageId /}
 					{param events: [
@@ -72,7 +79,9 @@
 					{param pages: $pages /}
 					{param paginationMode: $currentPaginationMode /}
 					{param readOnly: $readOnly /}
+					{param redirectURL: $redirectURL /}
 					{param ref: 'pageRenderer' + index($page) /}
+					{param showCancelButton: $showCancelButton != false /}
 					{param showSubmitButton: $showSubmitButton != false /}
 					{param spritemap: $spritemap /}
 					{param strings: $strings /}

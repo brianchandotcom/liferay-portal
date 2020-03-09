@@ -249,14 +249,6 @@ definition {
 			locator1 = "Fragment#EDITABLE_FIELD");
 	}
 
-	macro clickFragmentTopper {
-		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
-
-		Click(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_TOPPER");
-	}
-
 	macro clickPublish {
 		Button.click(button = "Publish");
 	}

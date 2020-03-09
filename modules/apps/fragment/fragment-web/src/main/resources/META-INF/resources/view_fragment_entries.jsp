@@ -38,16 +38,6 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 		>
 
 			<%
-			FragmentComposition fragmentComposition = null;
-			FragmentEntry fragmentEntry = null;
-
-			if (object instanceof FragmentComposition) {
-				fragmentComposition = (FragmentComposition)object;
-			}
-			else {
-				fragmentEntry = (FragmentEntry)object;
-			}
-
 			row.setCssClass("card-page-item-asset " + row.getCssClass());
 
 			FragmentEntryVerticalCardFactory fragmentEntryVerticalCardFactory = FragmentEntryVerticalCardFactory.getInstance();
@@ -55,14 +45,14 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 
 			<liferay-ui:search-container-column-text>
 				<c:choose>
-					<c:when test="<%= fragmentComposition != null %>">
+					<c:when test="<%= object instanceof FragmentComposition %>">
 						<clay:vertical-card
-							verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard(fragmentComposition, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentDisplayContext.getFragmentType()) %>"
+							verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard((FragmentComposition)object, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentDisplayContext.getFragmentType()) %>"
 						/>
 					</c:when>
 					<c:otherwise>
 						<clay:vertical-card
-							verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard(fragmentEntry, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentDisplayContext.getFragmentType()) %>"
+							verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard((FragmentEntry)object, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentDisplayContext.getFragmentType()) %>"
 						/>
 					</c:otherwise>
 				</c:choose>

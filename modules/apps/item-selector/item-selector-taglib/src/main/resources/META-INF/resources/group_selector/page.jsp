@@ -54,7 +54,6 @@ Set<String> groupTypes = groupSelectorDisplayContext.getGroupTypes();
 				colspan="<%= 3 %>"
 			>
 				<liferay-frontend:horizontal-card
-					cardCssClass="card-interactive card-interactive-primary"
 					text="<%= curGroup.getDescriptiveName(locale) %>"
 					url="<%= groupSelectorDisplayContext.getViewGroupURL(curGroup) %>"
 				>

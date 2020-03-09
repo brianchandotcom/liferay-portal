@@ -113,5 +113,5 @@ export default function FragmentCard({
 FragmentCard.propTypes = {
 	imagePreviewURL: PropTypes.string,
 	name: PropTypes.string.isRequired,
-	type: PropTypes.string,
+	type: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };

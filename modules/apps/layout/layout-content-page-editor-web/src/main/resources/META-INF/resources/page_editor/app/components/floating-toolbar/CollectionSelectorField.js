@@ -36,5 +36,5 @@ export const CollectionSelectorField = ({field, onValueSelect, value}) => {
 CollectionSelectorField.propTypes = {
 	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
 	onValueSelect: PropTypes.func.isRequired,
-	value: PropTypes.object,
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };

@@ -608,6 +608,13 @@ public class PullRequest {
 			}
 		}
 
+		public String getUserLogin() {
+			JSONObject userJSONObject = _commentJSONObject.getJSONObject(
+				"user");
+
+			return userJSONObject.getString("login");
+		}
+
 		private static final SimpleDateFormat _UtcIso8601SimpleDateFormat;
 
 		static {

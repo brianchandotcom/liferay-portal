@@ -443,6 +443,8 @@ public class LayoutPageTemplatesImporterImpl
 				_layoutPageTemplateEntryLocalService.
 					fetchLayoutPageTemplateEntry(groupId, entry.getKey());
 
+			boolean added = false;
+
 			if (layoutPageTemplateEntry == null) {
 				layoutPageTemplateEntry =
 					_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
@@ -453,6 +455,8 @@ public class LayoutPageTemplatesImporterImpl
 						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
 						WorkflowConstants.STATUS_APPROVED,
 						ServiceContextThreadLocal.getServiceContext());
+
+				added = true;
 			}
 			else if (overwrite) {
 				layoutPageTemplateEntry =
@@ -461,10 +465,15 @@ public class LayoutPageTemplatesImporterImpl
 							layoutPageTemplateEntry.
 								getLayoutPageTemplateEntryId(),
 							pageTemplate.getName());
+
+				added = true;
 			}
 
-			_processPageDefinition(
-				layoutPageTemplateEntry, pageTemplateEntry.getPageDefinition());
+			if (added) {
+				_processPageDefinition(
+					layoutPageTemplateEntry,
+					pageTemplateEntry.getPageDefinition());
+			}
 		}
 	}
 

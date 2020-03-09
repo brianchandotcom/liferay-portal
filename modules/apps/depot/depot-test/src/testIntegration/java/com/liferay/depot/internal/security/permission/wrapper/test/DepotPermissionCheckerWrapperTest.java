@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.test.util.DepotTestUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -124,6 +125,43 @@ public class DepotPermissionCheckerWrapperTest {
 					permissionChecker.hasPermission(
 						depotEntry.getGroup(), Group.class.getName(),
 						depotEntry.getGroupId(), ActionKeys.MANAGE_LAYOUTS));
+			});
+	}
+
+	@Test
+	public void testHasPermissionReturnsTrueForAssetLibraryAdministrators()
+		throws Exception {
+
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
+
+		DepotTestUtil.withAssetLibraryAdministrator(
+			depotEntry,
+			user -> {
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
+
+				Assert.assertTrue(
+					permissionChecker.hasPermission(
+						depotEntry.getGroup(), DLFileEntry.class.getName(),
+						DLFileEntry.class.getName(), ActionKeys.UPDATE));
+			});
+	}
+
+	@Test
+	public void testHasPermissionReturnsTrueForAssetLibraryOwners()
+		throws Exception {
+
+		DepotTestUtil.withRegularUser(
+			(user, role) -> {
+				DepotEntry depotEntry = _addDepotEntry(user.getUserId());
+
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
+
+				Assert.assertTrue(
+					permissionChecker.hasPermission(
+						depotEntry.getGroup(), DLFileEntry.class.getName(),
+						DLFileEntry.class.getName(), ActionKeys.UPDATE));
 			});
 	}
 

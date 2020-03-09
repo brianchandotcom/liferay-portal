@@ -7827,6 +7827,8 @@ jdbc.counter.maxActive=5
 jdbc.counter.maxIdle=0
 jdbc.counter.minIdle=0
 
+company.security.strangers.verify=false
+
 browser.launcher.url=
 
 setup.wizard.enabled=false

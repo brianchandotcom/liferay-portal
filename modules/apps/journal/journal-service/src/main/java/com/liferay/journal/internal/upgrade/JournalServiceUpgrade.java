@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
@@ -200,7 +201,8 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.1.6", "1.1.7",
 			new UpgradeDiscussionSubscriptionClassName(
-				_subscriptionLocalService, JournalArticle.class.getName(),
+				_classNameLocalService, _subscriptionLocalService,
+				JournalArticle.class.getName(),
 				UpgradeDiscussionSubscriptionClassName.DeletionMode.ADD_NEW));
 
 		registry.register("1.1.7", "1.1.8", new UpgradeJournalArticle());
@@ -288,6 +290,9 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

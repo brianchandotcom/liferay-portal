@@ -16,12 +16,14 @@ package com.liferay.comment.upgrade;
 
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
-
-import java.util.List;
 
 /**
  * @author Roberto Díaz
@@ -29,12 +31,27 @@ import java.util.List;
 public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 
 	public UpgradeDiscussionSubscriptionClassName(
+		ClassNameLocalService classNameLocalService,
 		SubscriptionLocalService subscriptionLocalService,
 		String oldSubscriptionClassName, DeletionMode deletionMode) {
 
+		_classNameLocalService = classNameLocalService;
 		_subscriptionLocalService = subscriptionLocalService;
 		_oldSubscriptionClassName = oldSubscriptionClassName;
 		_deletionMode = deletionMode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public UpgradeDiscussionSubscriptionClassName(
+		SubscriptionLocalService subscriptionLocalService,
+		String oldSubscriptionClassName, DeletionMode deletionMode) {
+
+		this(
+			ClassNameLocalServiceUtil.getService(), subscriptionLocalService,
+			oldSubscriptionClassName, deletionMode);
 	}
 
 	public enum DeletionMode {
@@ -57,28 +74,41 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 			MBDiscussion.class.getName() + StringPool.UNDERLINE +
 				_oldSubscriptionClassName;
 
-		List<Subscription> subscriptions =
-			_subscriptionLocalService.getSubscriptions(
-				_oldSubscriptionClassName);
+		ActionableDynamicQuery actionableDynamicQuery =
+			_subscriptionLocalService.getActionableDynamicQuery();
 
-		for (Subscription subscription : subscriptions) {
-			_subscriptionLocalService.addSubscription(
-				subscription.getUserId(), subscription.getGroupId(),
-				newSubscriptionClassName, subscription.getClassPK());
-		}
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq(
+					"classNameId",
+					_classNameLocalService.getClassNameId(
+						_oldSubscriptionClassName))));
+		actionableDynamicQuery.setPerformActionMethod(
+			(Subscription subscription) ->
+				_subscriptionLocalService.addSubscription(
+					subscription.getUserId(), subscription.getGroupId(),
+					newSubscriptionClassName, subscription.getClassPK()));
+		actionableDynamicQuery.performActions();
 	}
 
 	private void _deleteSubscriptions() throws PortalException {
-		List<Subscription> subscriptions =
-			_subscriptionLocalService.getSubscriptions(
-				_oldSubscriptionClassName);
+		ActionableDynamicQuery actionableDynamicQuery =
+			_subscriptionLocalService.getActionableDynamicQuery();
 
-		for (Subscription subscription : subscriptions) {
-			_subscriptionLocalService.deleteSubscription(
-				subscription.getSubscriptionId());
-		}
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq(
+					"classNameId",
+					_classNameLocalService.getClassNameId(
+						_oldSubscriptionClassName))));
+		actionableDynamicQuery.setPerformActionMethod(
+			(Subscription subscription) ->
+				_subscriptionLocalService.deleteSubscription(
+					subscription.getSubscriptionId()));
+		actionableDynamicQuery.performActions();
 	}
 
+	private final ClassNameLocalService _classNameLocalService;
 	private final DeletionMode _deletionMode;
 	private final String _oldSubscriptionClassName;
 	private final SubscriptionLocalService _subscriptionLocalService;

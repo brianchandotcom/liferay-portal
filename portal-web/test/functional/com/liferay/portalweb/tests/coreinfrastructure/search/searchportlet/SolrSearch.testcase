@@ -907,7 +907,7 @@ definition {
 
 	@priority = "4"
 	test SearchContentPagesSmoke {
-		property portal.suite.search.engine = "false";
+		property portal.suite.search.engine = "disabled";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 

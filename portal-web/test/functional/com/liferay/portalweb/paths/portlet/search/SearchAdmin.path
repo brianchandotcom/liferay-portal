@@ -48,6 +48,27 @@
 	<td>//td[contains(@class,'lfr-version-column')]</td>
 	<td></td>
 </tr>
+<!--SIDECAR-->
+<tr>
+	<td>ACTIVE_CONNECTION_COUNT</td>
+	<td>//div[contains(@class,'container-fluid')]//span[contains(@class,'badge-item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDECAR_CLUSTER_NAME</td>
+	<td>//div[contains(@class,'connection-info') and contains(.,'EMBEDDED')]//span[contains(@class,'cluster-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDECAR_HEALTH</td>
+	<td>//div[contains(@class,'connection-info') and contains(.,'EMBEDDED')]//div[contains(@class,'connection-health-indicator-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDECAR_NODES</td>
+	<td>//div[contains(@class,'connection-info') and contains(.,'EMBEDDED')]//tr[contains(.,'${key_nodeName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

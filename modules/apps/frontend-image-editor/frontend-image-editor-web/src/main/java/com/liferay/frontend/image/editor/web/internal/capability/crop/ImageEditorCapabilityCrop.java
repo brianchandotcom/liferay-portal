@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.image.editor.capability.crop.internal;
+package com.liferay.frontend.image.editor.web.internal.capability.crop;
 
 import com.liferay.frontend.image.editor.capability.BaseImageEditorCapability;
 import com.liferay.frontend.image.editor.capability.ImageEditorCapability;
@@ -61,7 +61,7 @@ public class ImageEditorCapabilityCrop extends BaseImageEditorCapability {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.image.editor.capability.crop)"
+		target = "(osgi.web.symbolicname=com.liferay.frontend.image.editor.web)"
 	)
 	private ServletContext _servletContext;
 

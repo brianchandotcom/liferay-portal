@@ -16,6 +16,7 @@ package com.liferay.portal.internal.db.partition;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -109,12 +110,6 @@ public class DBPartitionHelperUtil {
 		}
 	}
 
-	public static void usePartition(Connection connection) {
-		if (_DATABASE_PARTITION_ENABLED) {
-			_usePartition(connection, CompanyThreadLocal.getCompanyId());
-		}
-	}
-
 	public static DataSource wrapDataSource(DataSource dataSource)
 		throws SQLException {
 
@@ -131,7 +126,33 @@ public class DBPartitionHelperUtil {
 				_defaultSchemaName = connection.getCatalog();
 			}
 
-			dataSource = new DBPartitionDataSource(dataSource);
+			dataSource = new DataSourceWrapper(dataSource) {
+
+				@Override
+				public Connection getConnection() throws SQLException {
+					Connection connection = super.getConnection();
+
+					_usePartition(
+						connection, CompanyThreadLocal.getCompanyId());
+
+					return connection;
+				}
+
+				@Override
+				public Connection getConnection(
+						String username, String password)
+					throws SQLException {
+
+					Connection connection = super.getConnection(
+						username, password);
+
+					_usePartition(
+						connection, CompanyThreadLocal.getCompanyId());
+
+					return connection;
+				}
+
+			};
 		}
 
 		return dataSource;

@@ -54,21 +54,24 @@ const NotMappedMessage = () => (
 
 const Collection = React.forwardRef(({children, item}, ref) => {
 	const child = React.Children.toArray(children)[0];
+	const collectionConfig = item.config;
 
 	return (
 		<div className="page-editor__collection" ref={ref}>
-			{collectionIsMapped(item.config) ? (
-				Array.from({length: 3}).map((_element, idx) => (
-					<ControlsIdConverterContextProvider
-						key={idx}
-						value={{
-							fromControlsId,
-							toControlsId: getToControlsId(item.itemId, idx),
-						}}
-					>
-						{React.cloneElement(child)}
-					</ControlsIdConverterContextProvider>
-				))
+			{collectionIsMapped(collectionConfig) ? (
+				Array.from({length: collectionConfig.numberOfItems}).map(
+					(_element, idx) => (
+						<ControlsIdConverterContextProvider
+							key={idx}
+							value={{
+								fromControlsId,
+								toControlsId: getToControlsId(item.itemId, idx),
+							}}
+						>
+							{React.cloneElement(child)}
+						</ControlsIdConverterContextProvider>
+					)
+				)
 			) : (
 				<NotMappedMessage />
 			)}

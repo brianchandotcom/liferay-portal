@@ -20,6 +20,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -58,13 +59,15 @@ public class FragmentLayoutStructureItemHelper
 			FragmentCollectionContributorTracker
 				fragmentCollectionContributorTracker,
 			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
-			Layout layout, LayoutStructure layoutStructure,
-			PageElement pageElement, String parentItemId, int position)
+			FragmentEntryValidator fragmentEntryValidator, Layout layout,
+			LayoutStructure layoutStructure, PageElement pageElement,
+			String parentItemId, int position)
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 			fragmentCollectionContributorTracker,
-			fragmentEntryProcessorRegistry, layout, pageElement, position);
+			fragmentEntryProcessorRegistry, fragmentEntryValidator, layout,
+			pageElement, position);
 
 		if (fragmentEntryLink == null) {
 			return null;
@@ -92,7 +95,8 @@ public class FragmentLayoutStructureItemHelper
 			FragmentCollectionContributorTracker
 				fragmentCollectionContributorTracker,
 			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
-			Layout layout, PageElement pageElement, int position)
+			FragmentEntryValidator fragmentEntryValidator, Layout layout,
+			PageElement pageElement, int position)
 		throws Exception {
 
 		Map<String, Object> definitionMap = getDefinitionMap(
@@ -155,6 +159,9 @@ public class FragmentLayoutStructureItemHelper
 		JSONObject freeMarkerFragmentEntryProcessorJSONObject =
 			_toFreeMarkerFragmentEntryProcessorJSONObject(
 				(Map<String, Object>)definitionMap.get("fragmentConfig"));
+
+		fragmentEntryValidator.validateConfigurationValues(
+			configuration, fragmentEntryProcessorValuesJSONObject);
 
 		if (freeMarkerFragmentEntryProcessorJSONObject.length() > 0) {
 			fragmentEntryProcessorValuesJSONObject.put(

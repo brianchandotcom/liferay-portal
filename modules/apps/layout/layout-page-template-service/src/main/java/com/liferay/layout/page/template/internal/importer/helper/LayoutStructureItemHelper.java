@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.internal.importer.helper;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
+import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -30,8 +31,9 @@ public interface LayoutStructureItemHelper {
 			FragmentCollectionContributorTracker
 				fragmentCollectionContributorTracker,
 			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
-			Layout layout, LayoutStructure layoutStructure,
-			PageElement pageElement, String parentItemId, int position)
+			FragmentEntryValidator fragmentEntryValidator, Layout layout,
+			LayoutStructure layoutStructure, PageElement pageElement,
+			String parentItemId, int position)
 		throws Exception;
 
 }

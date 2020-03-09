@@ -20,6 +20,7 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
@@ -404,8 +405,8 @@ public class LayoutPageTemplatesImporterImpl
 		LayoutStructureItem layoutStructureItem =
 			layoutStructureItemHelper.addLayoutStructureItem(
 				_fragmentCollectionContributorTracker,
-				_fragmentEntryProcessorRegistry, layout, layoutStructure,
-				pageElement, parentItemId, position);
+				_fragmentEntryProcessorRegistry, _fragmentEntryValidator,
+				layout, layoutStructure, pageElement, parentItemId, position);
 
 		if ((layoutStructureItem == null) ||
 			(pageElement.getPageElements() == null)) {
@@ -523,6 +524,9 @@ public class LayoutPageTemplatesImporterImpl
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
+
+	@Reference
+	private FragmentEntryValidator _fragmentEntryValidator;
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;

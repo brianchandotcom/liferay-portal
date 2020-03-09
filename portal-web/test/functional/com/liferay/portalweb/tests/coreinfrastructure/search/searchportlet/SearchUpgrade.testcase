@@ -69,6 +69,24 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewClassicSearchPortletConfigurationArchive721 {
+		property data.archive.type = "data-archive-classic-search-portlet";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.1";
+
+		Upgrade.viewClassicSearchPortletConfiguration();
+	}
+
+	@priority = "5"
+	test ViewClassicSearchPortletConfigurationArchive730 {
+		property data.archive.type = "data-archive-classic-search-portlet";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.0";
+
+		Upgrade.viewClassicSearchPortletConfiguration();
+	}
+
+	@priority = "5"
 	test ViewClassicSearchPortletConfigurationArchive7110 {
 		property data.archive.type = "data-archive-classic-search-portlet";
 		property portal.version = "7.1.10";
@@ -103,6 +121,15 @@ definition {
 		FormFields.enableCheckbox(fieldName = "classicSearchPortletInFrontPage");
 
 		SystemSettings.saveConfiguration();
+
+		Upgrade.viewClassicSearchPortletConfiguration();
+	}
+
+	@priority = "5"
+	test ViewClassicSearchPortletConfigurationArchive72101 {
+		property data.archive.type = "data-archive-classic-search-portlet";
+		property portal.version = "7.2.10.1";
+		property test.run.environment = "EE";
 
 		Upgrade.viewClassicSearchPortletConfiguration();
 	}

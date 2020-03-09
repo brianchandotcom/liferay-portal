@@ -2,8 +2,8 @@ definition {
 
 	macro changeConfigColor {
 		Click(
-			fragment_name = "${fragmentName}",
-			locator1 = "PageEditor#SECTION_NAME");
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_HEADER");
 
 		Click.clickNoMouseOver(
 			key_elementType = "Fragment",
@@ -20,8 +20,8 @@ definition {
 
 	macro changeConfigSelection {
 		Click(
-			fragment_name = "${fragmentName}",
-			locator1 = "PageEditor#SECTION_NAME");
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_HEADER");
 
 		Click.clickNoMouseOver(
 			key_elementType = "Fragment",
@@ -40,8 +40,8 @@ definition {
 
 	macro changeConfigText {
 		Click(
-			fragment_name = "${fragmentName}",
-			locator1 = "PageEditor#SECTION_NAME");
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_HEADER");
 
 		Click.clickNoMouseOver(
 			key_elementType = "Fragment",
@@ -60,8 +60,8 @@ definition {
 
 	macro checkConfigCheckbox {
 		Click(
-			fragment_name = "${fragmentName}",
-			locator1 = "PageEditor#SECTION_NAME");
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_HEADER");
 
 		Click.clickNoMouseOver(
 			key_elementType = "Fragment",
@@ -78,8 +78,8 @@ definition {
 
 	macro restoreConfigValues {
 		Click(
-			fragment_name = "${fragmentName}",
-			locator1 = "PageEditor#SECTION_NAME");
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_HEADER");
 
 		Click.clickNoMouseOver(
 			key_elementType = "Fragment",

@@ -1192,17 +1192,17 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		DynamicQuery dynamicQuery = layoutLocalService.dynamicQuery();
 
-		Property classNameIdProperty =
-			PropertyFactoryUtil.forName("classNameId");
+		Property classNameIdProperty = PropertyFactoryUtil.forName(
+			"classNameId");
 
-		dynamicQuery.add(classNameIdProperty.eq(new Long(0)));
+		dynamicQuery.add(classNameIdProperty.eq(Long.valueOf(0)));
 
 		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
 
 		dynamicQuery.add(groupIdProperty.eq(groupId));
 
-		Property privateLayoutProperty =
-			PropertyFactoryUtil.forName("privateLayout");
+		Property privateLayoutProperty = PropertyFactoryUtil.forName(
+			"privateLayout");
 
 		dynamicQuery.add(privateLayoutProperty.eq(privateLayout));
 

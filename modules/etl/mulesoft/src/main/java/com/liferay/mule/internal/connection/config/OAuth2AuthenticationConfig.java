@@ -33,6 +33,10 @@ public class OAuth2AuthenticationConfig {
 		return consumerSecret;
 	}
 
+	public String getOpenApiSpecPath() {
+		return openApiSpecPath;
+	}
+
 	public void setConsumerKey(String consumerKey) {
 		this.consumerKey = consumerKey;
 	}
@@ -41,16 +45,25 @@ public class OAuth2AuthenticationConfig {
 		this.consumerSecret = consumerSecret;
 	}
 
+	public void setOpenApiSpecPath(String openApiSpecPath) {
+		this.openApiSpecPath = openApiSpecPath;
+	}
+
 	@DisplayName("Consumer Key")
 	@Expression(ExpressionSupport.NOT_SUPPORTED)
 	@Parameter
-	@Placement(order = 1)
+	@Placement(order = 2)
 	private String consumerKey;
 
 	@DisplayName("Consumer Secret")
 	@Expression(ExpressionSupport.NOT_SUPPORTED)
 	@Parameter
-	@Placement(order = 2)
+	@Placement(order = 3)
 	private String consumerSecret;
+
+	@DisplayName("OpenAPI Spec URL")
+	@Parameter
+	@Placement(order = 1)
+	private String openApiSpecPath;
 
 }

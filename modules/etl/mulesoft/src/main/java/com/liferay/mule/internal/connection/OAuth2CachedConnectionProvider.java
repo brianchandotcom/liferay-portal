@@ -32,13 +32,13 @@ public class OAuth2CachedConnectionProvider
 	@Override
 	public LiferayConnection connect() throws ConnectionException {
 		return LiferayConnection.withOAuth2Authentication(
-			httpService, openApiSpecPath,
+			httpService, oAuth2AuthenticationConfig.getOpenApiSpecPath(),
 			oAuth2AuthenticationConfig.getConsumerKey(),
 			oAuth2AuthenticationConfig.getConsumerSecret(),
 			liferayProxyConfig.getProxyConfig());
 	}
 
-	@ParameterGroup(name = "Connection config")
+	@ParameterGroup(name = ParameterGroup.CONNECTION)
 	private OAuth2AuthenticationConfig oAuth2AuthenticationConfig;
 
 }

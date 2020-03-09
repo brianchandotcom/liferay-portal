@@ -24,12 +24,20 @@ import org.mule.runtime.extension.api.annotation.param.display.Placement;
  */
 public class BasicAuthenticationConfig {
 
+	public String getOpenApiSpecPath() {
+		return openApiSpecPath;
+	}
+
 	public String getPassword() {
 		return password;
 	}
 
 	public String getUsername() {
 		return username;
+	}
+
+	public void setOpenApiSpecPath(String openApiSpecPath) {
+		this.openApiSpecPath = openApiSpecPath;
 	}
 
 	public void setPassword(String password) {
@@ -40,15 +48,20 @@ public class BasicAuthenticationConfig {
 		this.username = username;
 	}
 
+	@DisplayName("OpenAPI Spec URL")
+	@Parameter
+	@Placement(order = 1)
+	private String openApiSpecPath;
+
 	@DisplayName("Password")
 	@Parameter
 	@Password
-	@Placement(order = 2)
+	@Placement(order = 3)
 	private String password;
 
 	@DisplayName("Username")
 	@Parameter
-	@Placement(order = 1)
+	@Placement(order = 2)
 	private String username;
 
 }

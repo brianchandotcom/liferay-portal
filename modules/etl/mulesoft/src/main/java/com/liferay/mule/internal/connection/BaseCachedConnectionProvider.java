@@ -25,10 +25,7 @@ import javax.inject.Inject;
 import org.mule.runtime.api.connection.CachedConnectionProvider;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionValidationResult;
-import org.mule.runtime.extension.api.annotation.param.Parameter;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
-import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
-import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.http.api.HttpService;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 
@@ -74,10 +71,5 @@ public abstract class BaseCachedConnectionProvider
 
 	@ParameterGroup(name = "Proxy config")
 	protected LiferayProxyConfig liferayProxyConfig;
-
-	@DisplayName("OpenAPI Spec URL")
-	@Parameter
-	@Placement(order = 1)
-	protected String openApiSpecPath;
 
 }

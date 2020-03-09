@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -141,11 +142,10 @@ public class ConfigurationUpgradeStepFactoryTest {
 				else if (factory) {
 
 					// Factory configuration instance will only be persisted
-					// after the first update with actual data
+					// after the first update with dictionary
 
 					ConfigurationTestUtil.saveConfiguration(
-						configuration,
-						MapUtil.singletonDictionary("key", "value"));
+						configuration, new HashMapDictionary<>());
 				}
 			}
 
@@ -178,7 +178,7 @@ public class ConfigurationUpgradeStepFactoryTest {
 				else {
 					Assert.assertNull(
 						"Configuration property felix.fileinstall.filename " +
-							"still exists",
+							"should not exist",
 						fileName);
 				}
 			}

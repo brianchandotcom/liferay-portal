@@ -214,32 +214,28 @@ public class PQLOperatorTest extends TestCase {
 		_validateGetPQLResult("test", "~", null, Boolean.FALSE);
 		_validateGetPQLResult(null, "~", null, Boolean.FALSE);
 		_validateGetPQLResult("test1", "~", "test2", Boolean.FALSE);
-	}
 
-	@Test
-	public void testGetPQLResultStringOperatorErrors() throws Exception {
-		Set<String> conditionalOperators = new HashSet<>();
+		_validateGetPQLResult("fal", "~", "false", Boolean.FALSE);
+		_validateGetPQLResult("false", "~", "fal", Boolean.TRUE);
+		_validateGetPQLResult("false", "~", "false", Boolean.TRUE);
+		_validateGetPQLResult("false", "~", "true", Boolean.FALSE);
 
-		conditionalOperators.add("!~");
-		conditionalOperators.add("~");
+		_validateGetPQLResult("tru", "~", "true", Boolean.FALSE);
+		_validateGetPQLResult("true", "~", "false", Boolean.FALSE);
+		_validateGetPQLResult("true", "~", "tru", Boolean.TRUE);
+		_validateGetPQLResult("true", "~", "true", Boolean.TRUE);
 
-		for (String operator : conditionalOperators) {
-			String expectedError =
-				"Operator only works for string values: " + operator;
+		_validateGetPQLResult("12", "~", "12.3", Boolean.FALSE);
+		_validateGetPQLResult("12.3", "~", "12", Boolean.TRUE);
+		_validateGetPQLResult("12.3", "~", "12.3", Boolean.TRUE);
+		_validateGetPQLResult("12.3", "~", "test", Boolean.FALSE);
+		_validateGetPQLResult("test", "~", "12.3", Boolean.FALSE);
 
-			_validateGetPQLResultError("test", operator, "true", expectedError);
-			_validateGetPQLResultError("true", operator, "true", expectedError);
-			_validateGetPQLResultError(
-				"false", operator, "test", expectedError);
-
-			_validateGetPQLResultError("test", operator, "12.3", expectedError);
-			_validateGetPQLResultError("12.3", operator, "12.3", expectedError);
-			_validateGetPQLResultError("12.3", operator, "test", expectedError);
-
-			_validateGetPQLResultError("test", operator, "123", expectedError);
-			_validateGetPQLResultError("123", operator, "123", expectedError);
-			_validateGetPQLResultError("123", operator, "test", expectedError);
-		}
+		_validateGetPQLResult("12", "~", "123", Boolean.FALSE);
+		_validateGetPQLResult("123", "~", "12", Boolean.TRUE);
+		_validateGetPQLResult("123", "~", "123", Boolean.TRUE);
+		_validateGetPQLResult("123", "~", "test", Boolean.FALSE);
+		_validateGetPQLResult("test", "~", "123", Boolean.FALSE);
 	}
 
 	@Test
@@ -250,6 +246,28 @@ public class PQLOperatorTest extends TestCase {
 		_validateGetPQLResult("test", "!~", null, Boolean.FALSE);
 		_validateGetPQLResult(null, "!~", null, Boolean.FALSE);
 		_validateGetPQLResult("test1", "!~", "test2", Boolean.TRUE);
+
+		_validateGetPQLResult("fal", "!~", "false", Boolean.TRUE);
+		_validateGetPQLResult("false", "!~", "fal", Boolean.FALSE);
+		_validateGetPQLResult("false", "!~", "false", Boolean.FALSE);
+		_validateGetPQLResult("false", "!~", "true", Boolean.TRUE);
+
+		_validateGetPQLResult("tru", "!~", "true", Boolean.TRUE);
+		_validateGetPQLResult("true", "!~", "false", Boolean.TRUE);
+		_validateGetPQLResult("true", "!~", "tru", Boolean.FALSE);
+		_validateGetPQLResult("true", "!~", "true", Boolean.FALSE);
+
+		_validateGetPQLResult("12", "!~", "12.3", Boolean.TRUE);
+		_validateGetPQLResult("12.3", "!~", "12", Boolean.FALSE);
+		_validateGetPQLResult("12.3", "!~", "12.3", Boolean.FALSE);
+		_validateGetPQLResult("12.3", "!~", "test", Boolean.TRUE);
+		_validateGetPQLResult("test", "!~", "12.3", Boolean.TRUE);
+
+		_validateGetPQLResult("12", "!~", "123", Boolean.TRUE);
+		_validateGetPQLResult("123", "!~", "12", Boolean.FALSE);
+		_validateGetPQLResult("123", "!~", "123", Boolean.FALSE);
+		_validateGetPQLResult("123", "!~", "test", Boolean.TRUE);
+		_validateGetPQLResult("test", "!~", "123", Boolean.TRUE);
 	}
 
 	@Test

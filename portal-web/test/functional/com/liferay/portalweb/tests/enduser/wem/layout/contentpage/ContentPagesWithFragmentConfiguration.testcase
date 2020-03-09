@@ -185,7 +185,9 @@ definition {
 			fragment_name = "Text Fragment Example",
 			locator1 = "PageEditor#SECTION_NAME");
 
-		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		task ("Assert placeholder is exist") {
 			AssertVisible(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_CONFIGURATION_PANEL");

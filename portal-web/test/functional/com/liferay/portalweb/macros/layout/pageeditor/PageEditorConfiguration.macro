@@ -1,22 +1,21 @@
 definition {
 
-	@summary = "Toggles the config switch to open and close the configuration floating toolbar"
-	macro _toggleConfigurationFloatingToolbar {
-		Click.clickNoMouseOver(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_CONFIGURATION");
-	}
-
 	macro changeConfigColor {
 		Click(
 			fragment_name = "${fragmentName}",
 			locator1 = "PageEditor#SECTION_NAME");
 
-		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		Click(
 			colorPalette = "${colorPalette}",
 			locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_PALETTE_SELECT");
 
-		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 	}
 
 	macro changeConfigSelection {
@@ -24,7 +23,9 @@ definition {
 			fragment_name = "${fragmentName}",
 			locator1 = "PageEditor#SECTION_NAME");
 
-		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		while (!IsTextEqual(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT", value1 = "${optionValue}")) {
 			Select(
@@ -32,7 +33,9 @@ definition {
 				value1 = "${optionValue}");
 		}
 
-		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 	}
 
 	macro changeConfigText {
@@ -40,7 +43,9 @@ definition {
 			fragment_name = "${fragmentName}",
 			locator1 = "PageEditor#SECTION_NAME");
 
-		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		while (!IsTextEqual(key_fieldName = "${textConfigName}", locator1 = "FormFields#TEXT_FIELD", value1 = "${editableText}")) {
 			FormFields.editText(
@@ -48,7 +53,9 @@ definition {
 				fieldValue = "${editableText}");
 		}
 
-		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 	}
 
 	macro checkConfigCheckbox {
@@ -56,13 +63,17 @@ definition {
 			fragment_name = "${fragmentName}",
 			locator1 = "PageEditor#SECTION_NAME");
 
-		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		Check.checkToggleSwitch(
 			checkboxName = "${checkboxName}",
 			locator1 = "Fragment#FRAGMENT_CHECKBOX");
 
-		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 	}
 
 	macro restoreConfigValues {
@@ -70,11 +81,15 @@ definition {
 			fragment_name = "${fragmentName}",
 			locator1 = "PageEditor#SECTION_NAME");
 
-		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		Button.click(button = "Restore Values");
 
-		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 	}
 
 }

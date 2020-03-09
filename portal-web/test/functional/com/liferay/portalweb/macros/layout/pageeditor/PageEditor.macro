@@ -577,7 +577,9 @@ definition {
 			key_position = "1",
 			locator1 = "PageEditor#ROW");
 
-		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+		Click.clickNoMouseOver(
+			key_elementType = "Row",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		if (isSet(columnCount)) {
 			Select(
@@ -606,7 +608,9 @@ definition {
 			key_position = "1",
 			locator1 = "PageEditor#SECTION");
 
-		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+		Click.clickNoMouseOver(
+			key_elementType = "Section",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		if (isSet(container)) {
 			Select(
@@ -751,9 +755,11 @@ definition {
 	macro gotoSelectPanel {
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
-		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_CONFIGURATION_BUTTON");
+		Click(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
-		Click(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_PLUS_BUTTON");
+		Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}

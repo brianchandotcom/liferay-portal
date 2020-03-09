@@ -278,6 +278,9 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 			kaleoTaskInstanceToken.getKaleoInstanceToken(), LogType.TASK_UPDATE,
 			serviceContext);
 
+		kaleoLog.setKaleoTaskInstanceTokenId(
+			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
+
 		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances =
 			kaleoTaskInstanceToken.getKaleoTaskAssignmentInstances();
 

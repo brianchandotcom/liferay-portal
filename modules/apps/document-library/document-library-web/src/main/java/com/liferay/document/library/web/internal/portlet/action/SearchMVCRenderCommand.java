@@ -48,7 +48,7 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 			_dlPortletToolbarContributorRegistry.
 				getDLPortletToolbarContributor());
 		renderRequest.setAttribute(
-			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, _dlTrashUtil);
+			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, _dlTrashHelper);
 
 		return "/document_library/view.jsp";
 	}
@@ -58,6 +58,6 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 		_dlPortletToolbarContributorRegistry;
 
 	@Reference
-	private DLTrashHelper _dlTrashUtil;
+	private DLTrashHelper _dlTrashHelper;
 
 }

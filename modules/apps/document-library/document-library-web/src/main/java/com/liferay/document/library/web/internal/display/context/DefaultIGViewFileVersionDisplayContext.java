@@ -44,21 +44,21 @@ public class DefaultIGViewFileVersionDisplayContext
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, FileShortcut fileShortcut,
-			ResourceBundle resourceBundle, DLTrashHelper dlTrashUtil,
+			ResourceBundle resourceBundle, DLTrashHelper dlTrashHelper,
 			VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper)
 		throws PortalException {
 
 		this(
 			httpServletRequest, httpServletResponse,
 			fileShortcut.getFileVersion(), fileShortcut, resourceBundle,
-			dlTrashUtil, versioningStrategy, dlURLHelper);
+			dlTrashHelper, versioningStrategy, dlURLHelper);
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, FileVersion fileVersion,
 			FileShortcut fileShortcut, ResourceBundle resourceBundle,
-			DLTrashHelper dlTrashUtil, VersioningStrategy versioningStrategy,
+			DLTrashHelper dlTrashHelper, VersioningStrategy versioningStrategy,
 			DLURLHelper dlURLHelper)
 		throws PortalException {
 
@@ -69,12 +69,12 @@ public class DefaultIGViewFileVersionDisplayContext
 
 		if (fileShortcut == null) {
 			_uiItemsBuilder = new UIItemsBuilder(
-				httpServletRequest, fileVersion, resourceBundle, dlTrashUtil,
+				httpServletRequest, fileVersion, resourceBundle, dlTrashHelper,
 				versioningStrategy, dlURLHelper);
 		}
 		else {
 			_uiItemsBuilder = new UIItemsBuilder(
-				httpServletRequest, fileShortcut, resourceBundle, dlTrashUtil,
+				httpServletRequest, fileShortcut, resourceBundle, dlTrashHelper,
 				versioningStrategy, dlURLHelper);
 		}
 	}
@@ -82,13 +82,13 @@ public class DefaultIGViewFileVersionDisplayContext
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, FileVersion fileVersion,
-			ResourceBundle resourceBundle, DLTrashHelper dlTrashUtil,
+			ResourceBundle resourceBundle, DLTrashHelper dlTrashHelper,
 			VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper)
 		throws PortalException {
 
 		this(
 			httpServletRequest, httpServletResponse, fileVersion, null,
-			resourceBundle, dlTrashUtil, versioningStrategy, dlURLHelper);
+			resourceBundle, dlTrashHelper, versioningStrategy, dlURLHelper);
 	}
 
 	@Override

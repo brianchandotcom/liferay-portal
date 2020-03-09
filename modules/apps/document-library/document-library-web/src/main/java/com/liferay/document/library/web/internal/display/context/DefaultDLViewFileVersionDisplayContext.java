@@ -76,7 +76,7 @@ public class DefaultDLViewFileVersionDisplayContext
 			HttpServletResponse httpServletResponse, FileShortcut fileShortcut,
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 			ResourceBundle resourceBundle, StorageEngine storageEngine,
-			DLTrashHelper dlTrashUtil,
+			DLTrashHelper dlTrashHelper,
 			DLPreviewRendererProvider dlPreviewRendererProvider,
 			VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper)
 		throws PortalException {
@@ -84,7 +84,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		this(
 			httpServletRequest, fileShortcut.getFileVersion(), fileShortcut,
 			dlMimeTypeDisplayContext, resourceBundle, storageEngine,
-			dlTrashUtil, dlPreviewRendererProvider, versioningStrategy,
+			dlTrashHelper, dlPreviewRendererProvider, versioningStrategy,
 			dlURLHelper);
 	}
 
@@ -93,13 +93,13 @@ public class DefaultDLViewFileVersionDisplayContext
 		HttpServletResponse httpServletResponse, FileVersion fileVersion,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 		ResourceBundle resourceBundle, StorageEngine storageEngine,
-		DLTrashHelper dlTrashUtil,
+		DLTrashHelper dlTrashHelper,
 		DLPreviewRendererProvider dlPreviewRendererProvider,
 		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		this(
 			httpServletRequest, fileVersion, null, dlMimeTypeDisplayContext,
-			resourceBundle, storageEngine, dlTrashUtil,
+			resourceBundle, storageEngine, dlTrashHelper,
 			dlPreviewRendererProvider, versioningStrategy, dlURLHelper);
 	}
 
@@ -324,7 +324,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		FileShortcut fileShortcut,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 		ResourceBundle resourceBundle, StorageEngine storageEngine,
-		DLTrashHelper dlTrashUtil,
+		DLTrashHelper dlTrashHelper,
 		DLPreviewRendererProvider dlPreviewRendererProvider,
 		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
@@ -352,12 +352,12 @@ public class DefaultDLViewFileVersionDisplayContext
 			if (fileShortcut == null) {
 				_uiItemsBuilder = new UIItemsBuilder(
 					httpServletRequest, fileEntry, fileVersion, _resourceBundle,
-					dlTrashUtil, versioningStrategy, dlURLHelper);
+					dlTrashHelper, versioningStrategy, dlURLHelper);
 			}
 			else {
 				_uiItemsBuilder = new UIItemsBuilder(
 					httpServletRequest, fileShortcut, _resourceBundle,
-					dlTrashUtil, versioningStrategy, dlURLHelper);
+					dlTrashHelper, versioningStrategy, dlURLHelper);
 			}
 		}
 		catch (PortalException portalException) {

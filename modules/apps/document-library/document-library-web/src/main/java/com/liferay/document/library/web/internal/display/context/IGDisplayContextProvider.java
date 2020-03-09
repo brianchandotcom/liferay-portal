@@ -66,7 +66,7 @@ public class IGDisplayContextProvider {
 			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
 				new DefaultIGViewFileVersionDisplayContext(
 					httpServletRequest, httpServletResponse, fileShortcut,
-					resourceBundle, _dlTrashUtil, _versioningStrategy,
+					resourceBundle, _dlTrashHelper, _versioningStrategy,
 					_dlURLHelper);
 
 			if (fileShortcut == null) {
@@ -106,7 +106,7 @@ public class IGDisplayContextProvider {
 			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
 				new DefaultIGViewFileVersionDisplayContext(
 					httpServletRequest, httpServletResponse, fileVersion,
-					resourceBundle, _dlTrashUtil, _versioningStrategy,
+					resourceBundle, _dlTrashHelper, _versioningStrategy,
 					_dlURLHelper);
 
 			if (fileVersion == null) {
@@ -141,7 +141,7 @@ public class IGDisplayContextProvider {
 	}
 
 	@Reference
-	private DLTrashHelper _dlTrashUtil;
+	private DLTrashHelper _dlTrashHelper;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;

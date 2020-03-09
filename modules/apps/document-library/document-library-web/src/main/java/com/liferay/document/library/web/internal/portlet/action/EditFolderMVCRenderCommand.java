@@ -54,7 +54,7 @@ public class EditFolderMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Override
 	protected DLTrashHelper getDLTrashUtil() {
-		return _dlTrashUtil;
+		return _dlTrashHelper;
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class EditFolderMVCRenderCommand extends GetFolderMVCRenderCommand {
 	}
 
 	@Reference
-	private DLTrashHelper _dlTrashUtil;
+	private DLTrashHelper _dlTrashHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"

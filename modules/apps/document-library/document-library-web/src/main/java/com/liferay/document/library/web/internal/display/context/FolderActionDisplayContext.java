@@ -64,10 +64,10 @@ import javax.servlet.http.HttpServletRequest;
 public class FolderActionDisplayContext {
 
 	public FolderActionDisplayContext(
-		HttpServletRequest httpServletRequest, DLTrashHelper dlTrashUtil) {
+		HttpServletRequest httpServletRequest, DLTrashHelper dlTrashHelper) {
 
 		_httpServletRequest = httpServletRequest;
-		_dlTrashUtil = dlTrashUtil;
+		_dlTrashHelper = dlTrashHelper;
 
 		_dlRequestHelper = new DLRequestHelper(httpServletRequest);
 	}
@@ -620,7 +620,7 @@ public class FolderActionDisplayContext {
 
 		if (((folder == null) ||
 			 folder.isRepositoryCapabilityProvided(TrashCapability.class)) &&
-			_dlTrashUtil.isTrashEnabled(
+			_dlTrashHelper.isTrashEnabled(
 				_dlRequestHelper.getScopeGroupId(), _getRepositoryId())) {
 
 			return true;
@@ -853,7 +853,7 @@ public class FolderActionDisplayContext {
 	}
 
 	private final DLRequestHelper _dlRequestHelper;
-	private final DLTrashHelper _dlTrashUtil;
+	private final DLTrashHelper _dlTrashHelper;
 	private Folder _folder;
 	private final HttpServletRequest _httpServletRequest;
 	private String _randomNamespace;

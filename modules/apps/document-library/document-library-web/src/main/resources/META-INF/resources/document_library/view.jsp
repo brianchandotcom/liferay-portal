@@ -269,7 +269,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></portlet:renderURL>',
 					scopeGroupId: <%= scopeGroupId %>,
 					searchContainerId: 'entries',
-					trashEnabled: <%= (scopeGroupId == repositoryId) && dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) %>,
+					trashEnabled: <%= (scopeGroupId == repositoryId) && dlTrashHelper.isTrashEnabled(scopeGroupId, repositoryId) %>,
 					uploadable: <%= uploadable %>,
 					uploadURL: '<%= uploadURL %>',
 					viewFileEntryURL:

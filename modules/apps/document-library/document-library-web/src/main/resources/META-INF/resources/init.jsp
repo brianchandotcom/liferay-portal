@@ -261,7 +261,7 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-DLTrashHelper dlTrashUtil = (DLTrashHelper)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL);
+DLTrashHelper dlTrashHelper = (DLTrashHelper)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL);
 
 DLWebComponentProvider dlWebComponentProvider = DLWebComponentProvider.getDLWebComponentProvider();
 

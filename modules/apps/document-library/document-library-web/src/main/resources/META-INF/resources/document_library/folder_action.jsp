@@ -17,7 +17,7 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayContext(request, dlTrashUtil);
+FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayContext(request, dlTrashHelper);
 %>
 
 <c:if test="<%= folderActionDisplayContext.isShowActions() %>">

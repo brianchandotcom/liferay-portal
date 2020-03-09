@@ -288,7 +288,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 				if (folder.isRepositoryCapabilityProvided(
 						TrashCapability.class) &&
-					_dlTrashUtil.isTrashEnabled(
+					_dlTrashHelper.isTrashEnabled(
 						folder.getGroupId(), folder.getRepositoryId())) {
 
 					_dlTrashService.moveFolderToTrash(folder.getFolderId());
@@ -308,7 +308,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 				if (fileEntry.isRepositoryCapabilityProvided(
 						TrashCapability.class) &&
-					_dlTrashUtil.isTrashEnabled(
+					_dlTrashHelper.isTrashEnabled(
 						fileEntry.getGroupId(), fileEntry.getRepositoryId())) {
 
 					_dlTrashService.moveFileEntryToTrash(
@@ -1263,9 +1263,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 
 	@Reference
-	private DLTrashService _dlTrashService;
+	private DLTrashHelper _dlTrashHelper;
 
 	@Reference
-	private DLTrashHelper _dlTrashUtil;
+	private DLTrashService _dlTrashService;
 
 }

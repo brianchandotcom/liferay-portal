@@ -44,7 +44,7 @@ entriesChecker.setCssClass("entry-selector");
 
 entriesChecker.setRememberCheckBoxStateURLRegex(dlAdminDisplayContext.getRememberCheckBoxStateURLRegex());
 
-EntriesMover entriesMover = new EntriesMover(dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId));
+EntriesMover entriesMover = new EntriesMover(dlTrashHelper.isTrashEnabled(scopeGroupId, repositoryId));
 
 String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
 

@@ -35,7 +35,7 @@ public class ViewSlideShowMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Override
 	protected DLTrashHelper getDLTrashUtil() {
-		return _dlTrashUtil;
+		return _dlTrashHelper;
 	}
 
 	@Override
@@ -44,6 +44,6 @@ public class ViewSlideShowMVCRenderCommand extends GetFolderMVCRenderCommand {
 	}
 
 	@Reference
-	private DLTrashHelper _dlTrashUtil;
+	private DLTrashHelper _dlTrashHelper;
 
 }

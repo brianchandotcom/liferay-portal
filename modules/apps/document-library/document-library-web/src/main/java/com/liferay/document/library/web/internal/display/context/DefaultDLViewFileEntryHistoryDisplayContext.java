@@ -41,7 +41,7 @@ public class DefaultDLViewFileEntryHistoryDisplayContext
 
 	public DefaultDLViewFileEntryHistoryDisplayContext(
 		HttpServletRequest httpServletRequest, FileVersion fileVersion,
-		ResourceBundle resourceBundle, DLTrashHelper dlTrashUtil,
+		ResourceBundle resourceBundle, DLTrashHelper dlTrashHelper,
 		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		_resourceBundle = resourceBundle;
@@ -53,7 +53,7 @@ public class DefaultDLViewFileEntryHistoryDisplayContext
 			dlRequestHelper);
 
 		_uiItemsBuilder = new UIItemsBuilder(
-			httpServletRequest, fileVersion, _resourceBundle, dlTrashUtil,
+			httpServletRequest, fileVersion, _resourceBundle, dlTrashHelper,
 			versioningStrategy, dlURLHelper);
 	}
 

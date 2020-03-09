@@ -66,7 +66,7 @@ public class DeleteFolderPortletConfigurationIcon
 
 			String key = "delete";
 
-			if (_dlTrashUtil.isTrashEnabled(
+			if (_dlTrashHelper.isTrashEnabled(
 					themeDisplay.getScopeGroupId(), folder.getRepositoryId())) {
 
 				key = "move-to-recycle-bin";
@@ -106,7 +106,7 @@ public class DeleteFolderPortletConfigurationIcon
 					WebKeys.THEME_DISPLAY);
 
 			if (DLFolderUtil.isRepositoryRoot(folder) ||
-				!_dlTrashUtil.isTrashEnabled(
+				!_dlTrashHelper.isTrashEnabled(
 					themeDisplay.getScopeGroupId(), folder.getRepositoryId())) {
 
 				portletURL.setParameter(Constants.CMD, Constants.DELETE);
@@ -185,7 +185,7 @@ public class DeleteFolderPortletConfigurationIcon
 	}
 
 	@Reference
-	private DLTrashHelper _dlTrashUtil;
+	private DLTrashHelper _dlTrashHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"

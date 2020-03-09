@@ -103,7 +103,7 @@ public class DLAdminManagementToolbarDisplayContext {
 		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			_dlRequestHelper);
 
-		_dlTrashUtil = (DLTrashHelper)_httpServletRequest.getAttribute(
+		_dlTrashHelper = (DLTrashHelper)_httpServletRequest.getAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL);
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
@@ -201,7 +201,7 @@ public class DLAdminManagementToolbarDisplayContext {
 						dropdownItem -> {
 							dropdownItem.putData("action", "deleteEntries");
 
-							if (_dlTrashUtil.isTrashEnabled(
+							if (_dlTrashHelper.isTrashEnabled(
 									scopeGroup.getGroupId(),
 									_getRepositoryId())) {
 
@@ -924,7 +924,7 @@ public class DLAdminManagementToolbarDisplayContext {
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
 	private final DLRequestHelper _dlRequestHelper;
-	private final DLTrashHelper _dlTrashUtil;
+	private final DLTrashHelper _dlTrashHelper;
 	private Boolean _hasValidAssetVocabularies;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;

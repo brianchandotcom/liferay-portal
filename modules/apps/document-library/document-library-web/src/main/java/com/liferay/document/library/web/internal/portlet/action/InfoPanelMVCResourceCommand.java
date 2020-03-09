@@ -66,7 +66,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		resourceRequest.setAttribute(
-			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, _dlTrashUtil);
+			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, _dlTrashHelper);
 		resourceRequest.setAttribute(
 			WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES,
 			ActionUtil.getFileEntries(resourceRequest));
@@ -83,7 +83,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	@Reference
-	private DLTrashHelper _dlTrashUtil;
+	private DLTrashHelper _dlTrashHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.RepositoryModel)"

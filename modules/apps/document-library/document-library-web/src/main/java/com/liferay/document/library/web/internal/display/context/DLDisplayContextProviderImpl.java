@@ -122,7 +122,7 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 			dlViewFileEntryHistoryDisplayContext =
 				new DefaultDLViewFileEntryHistoryDisplayContext(
 					httpServletRequest, fileVersion, resourceBundle,
-					_dlTrashUtil, _versioningStrategy, _dlURLHelper);
+					_dlTrashHelper, _versioningStrategy, _dlURLHelper);
 
 		if (fileVersion == null) {
 			return dlViewFileEntryHistoryDisplayContext;
@@ -164,7 +164,7 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 				new DefaultDLViewFileVersionDisplayContext(
 					httpServletRequest, httpServletResponse, fileShortcut,
 					_dlMimeTypeDisplayContext, resourceBundle, _storageEngine,
-					_dlTrashUtil, dlPreviewRendererProvider,
+					_dlTrashHelper, dlPreviewRendererProvider,
 					_versioningStrategy, _dlURLHelper);
 
 			for (DLDisplayContextFactory dlDisplayContextFactory :
@@ -202,7 +202,7 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 			new DefaultDLViewFileVersionDisplayContext(
 				httpServletRequest, httpServletResponse, fileVersion,
 				_dlMimeTypeDisplayContext, resourceBundle, _storageEngine,
-				_dlTrashUtil, dlPreviewRendererProvider, _versioningStrategy,
+				_dlTrashHelper, dlPreviewRendererProvider, _versioningStrategy,
 				_dlURLHelper);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
@@ -259,7 +259,7 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 		_dlPreviewRendererProviders;
 
 	@Reference
-	private DLTrashHelper _dlTrashUtil;
+	private DLTrashHelper _dlTrashHelper;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;

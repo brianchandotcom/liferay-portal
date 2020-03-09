@@ -96,7 +96,7 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Override
 	protected DLTrashHelper getDLTrashUtil() {
-		return _dlTrashUtil;
+		return _dlTrashHelper;
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 		_dlPortletToolbarContributorRegistry;
 
 	@Reference
-	private DLTrashHelper _dlTrashUtil;
+	private DLTrashHelper _dlTrashHelper;
 
 	@Reference
 	private Portal _portal;

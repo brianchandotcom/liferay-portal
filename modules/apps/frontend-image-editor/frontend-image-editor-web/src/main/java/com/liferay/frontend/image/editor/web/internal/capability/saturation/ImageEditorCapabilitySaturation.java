@@ -15,7 +15,6 @@
 package com.liferay.frontend.image.editor.web.internal.capability.saturation;
 
 import com.liferay.frontend.image.editor.capability.BaseImageEditorCapability;
-import com.liferay.frontend.image.editor.capability.ImageEditorCapability;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -23,24 +22,14 @@ import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Bruno Basto
  */
-@Component(
-	immediate = true,
-	property = {
-		"com.liferay.frontend.image.editor.capability.category=adjust",
-		"com.liferay.frontend.image.editor.capability.controls=saturation",
-		"com.liferay.frontend.image.editor.capability.icon=effects",
-		"com.liferay.frontend.image.editor.capability.name=saturation",
-		"com.liferay.frontend.image.editor.capability.type=tool"
-	},
-	service = ImageEditorCapability.class
-)
 public class ImageEditorCapabilitySaturation extends BaseImageEditorCapability {
+
+	public ImageEditorCapabilitySaturation(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
 
 	@Override
 	public String getLabel(Locale locale) {
@@ -60,9 +49,6 @@ public class ImageEditorCapabilitySaturation extends BaseImageEditorCapability {
 		return _servletContext;
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.image.editor.web)"
-	)
-	private ServletContext _servletContext;
+	private final ServletContext _servletContext;
 
 }

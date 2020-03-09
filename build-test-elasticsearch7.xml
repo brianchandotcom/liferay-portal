@@ -1025,10 +1025,10 @@ xpack.monitoring.collection.enabled: true</echo>
 		<property name="register.repository">
 			<![CDATA[
 				{
-					"type": "fs",
 					"settings": {
 						"location": "${liferay.home}/data/elasticsearch7/repo"
-					}
+					},
+					"type": "fs"
 				}
 			]]>
 		</property>

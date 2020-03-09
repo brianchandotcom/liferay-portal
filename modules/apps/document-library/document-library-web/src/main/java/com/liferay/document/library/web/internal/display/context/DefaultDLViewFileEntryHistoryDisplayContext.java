@@ -20,7 +20,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.logic.UIItemsBuilder;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
-import com.liferay.document.library.web.internal.util.DLTrashUtil;
+import com.liferay.document.library.web.internal.util.DLTrashHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
@@ -41,7 +41,7 @@ public class DefaultDLViewFileEntryHistoryDisplayContext
 
 	public DefaultDLViewFileEntryHistoryDisplayContext(
 		HttpServletRequest httpServletRequest, FileVersion fileVersion,
-		ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
+		ResourceBundle resourceBundle, DLTrashHelper dlTrashUtil,
 		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		_resourceBundle = resourceBundle;

@@ -31,7 +31,7 @@ import com.liferay.document.library.web.internal.display.context.util.DLRequestH
 import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
-import com.liferay.document.library.web.internal.util.DLTrashUtil;
+import com.liferay.document.library.web.internal.util.DLTrashHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -103,7 +103,7 @@ public class DLAdminManagementToolbarDisplayContext {
 		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			_dlRequestHelper);
 
-		_dlTrashUtil = (DLTrashUtil)_httpServletRequest.getAttribute(
+		_dlTrashUtil = (DLTrashHelper)_httpServletRequest.getAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL);
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
@@ -924,7 +924,7 @@ public class DLAdminManagementToolbarDisplayContext {
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
 	private final DLRequestHelper _dlRequestHelper;
-	private final DLTrashUtil _dlTrashUtil;
+	private final DLTrashHelper _dlTrashUtil;
 	private Boolean _hasValidAssetVocabularies;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;

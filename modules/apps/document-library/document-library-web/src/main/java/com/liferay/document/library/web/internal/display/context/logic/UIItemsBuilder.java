@@ -23,7 +23,7 @@ import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.document.library.web.internal.util.DLTrashUtil;
+import com.liferay.document.library.web.internal.util.DLTrashHelper;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -93,7 +93,7 @@ public class UIItemsBuilder {
 	public UIItemsBuilder(
 		HttpServletRequest httpServletRequest, FileEntry fileEntry,
 		FileVersion fileVersion, ResourceBundle resourceBundle,
-		DLTrashUtil dlTrashUtil, VersioningStrategy versioningStrategy,
+		DLTrashHelper dlTrashUtil, VersioningStrategy versioningStrategy,
 		DLURLHelper dlURLHelper) {
 
 		this(
@@ -103,7 +103,7 @@ public class UIItemsBuilder {
 
 	public UIItemsBuilder(
 			HttpServletRequest httpServletRequest, FileShortcut fileShortcut,
-			ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
+			ResourceBundle resourceBundle, DLTrashHelper dlTrashUtil,
 			VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper)
 		throws PortalException {
 
@@ -115,7 +115,7 @@ public class UIItemsBuilder {
 
 	public UIItemsBuilder(
 		HttpServletRequest httpServletRequest, FileVersion fileVersion,
-		ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
+		ResourceBundle resourceBundle, DLTrashHelper dlTrashUtil,
 		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		this(
@@ -1050,7 +1050,7 @@ public class UIItemsBuilder {
 	private UIItemsBuilder(
 		HttpServletRequest httpServletRequest, FileEntry fileEntry,
 		FileShortcut fileShortcut, FileVersion fileVersion,
-		ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
+		ResourceBundle resourceBundle, DLTrashHelper dlTrashUtil,
 		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		try {
@@ -1391,7 +1391,7 @@ public class UIItemsBuilder {
 	}
 
 	private String _currentURL;
-	private final DLTrashUtil _dlTrashUtil;
+	private final DLTrashHelper _dlTrashUtil;
 	private final DLURLHelper _dlURLHelper;
 	private final FileEntry _fileEntry;
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;

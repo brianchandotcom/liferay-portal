@@ -26,8 +26,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(service = DLTrashUtil.class)
-public class DLTrashUtil {
+@Component(service = DLTrashHelper.class)
+public class DLTrashHelper {
 
 	public boolean isTrashEnabled(long groupId, long repositoryId)
 		throws PortalException {

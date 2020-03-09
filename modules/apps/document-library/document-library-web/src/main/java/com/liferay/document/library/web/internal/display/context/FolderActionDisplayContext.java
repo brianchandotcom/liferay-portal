@@ -23,7 +23,7 @@ import com.liferay.document.library.web.internal.display.context.util.DLRequestH
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.document.library.web.internal.security.permission.resource.DLPermission;
 import com.liferay.document.library.web.internal.util.DLFolderUtil;
-import com.liferay.document.library.web.internal.util.DLTrashUtil;
+import com.liferay.document.library.web.internal.util.DLTrashHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.ResultRow;
@@ -64,7 +64,7 @@ import javax.servlet.http.HttpServletRequest;
 public class FolderActionDisplayContext {
 
 	public FolderActionDisplayContext(
-		HttpServletRequest httpServletRequest, DLTrashUtil dlTrashUtil) {
+		HttpServletRequest httpServletRequest, DLTrashHelper dlTrashUtil) {
 
 		_httpServletRequest = httpServletRequest;
 		_dlTrashUtil = dlTrashUtil;
@@ -853,7 +853,7 @@ public class FolderActionDisplayContext {
 	}
 
 	private final DLRequestHelper _dlRequestHelper;
-	private final DLTrashUtil _dlTrashUtil;
+	private final DLTrashHelper _dlTrashUtil;
 	private Folder _folder;
 	private final HttpServletRequest _httpServletRequest;
 	private String _randomNamespace;

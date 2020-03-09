@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_BODY</td>
-	<td>//div[contains(@class,'fragment-entry-link-wrapper')][contains(.,'${key_fragmentName}')]</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]/div[contains(@class,'page-editor__topper__content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,12 +60,12 @@
 </tr>
 <tr>
 	<td>EDITABLE_FIELD</td>
-	<td>//div[contains(@class,'fragment-entry-link')]//div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]</td>
+	<td>//div[contains(@class,'page-editor__fragment-content')]//div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EDITABLE_FIELD_CK_EDITOR</td>
-	<td>//div[contains(@class,'fragment-entry-link')]//div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]//div[contains(@class,'cke_editable_inline')]</td>
+	<td>//div[contains(@class,'page-editor__fragment-content')]//div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]//div[contains(@class,'cke_editable_inline')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -122,7 +122,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_BORDER_COLOR</td>
-	<td>//div[contains(@class,'component-${key_fragmentName}')]//hr[contains(@style,'border-color:rgb(${key_borderColor})')]</td>
+	<td>//div[contains(@class,'component-${key_fragmentName}')]//hr[contains(@class,'border-${key_paletteItem}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -147,7 +147,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_HEIGHT</td>
-	<td>//div[contains(@class,'fragment-entry-link-content')]//div//div[contains(@class,'py-${key_height}')]</td>
+	<td>//div[contains(@class,'page-editor__topper__content')]//div//div[contains(@class,'py-${key_height}')]</td>
 	<td></td>
 </tr>
 <tr>

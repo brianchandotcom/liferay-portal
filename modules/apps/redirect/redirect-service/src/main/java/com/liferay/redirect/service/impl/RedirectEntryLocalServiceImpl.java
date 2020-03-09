@@ -19,12 +19,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.redirect.exception.DuplicateRedirectEntrySourceURLException;
 import com.liferay.redirect.exception.RequiredRedirectEntryDestinationURLException;
 import com.liferay.redirect.exception.RequiredRedirectEntrySourceURLException;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.base.RedirectEntryLocalServiceBaseImpl;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -70,6 +73,19 @@ public class RedirectEntryLocalServiceImpl
 	@Override
 	public RedirectEntry fetchRedirectEntry(long groupId, String sourceURL) {
 		return redirectEntryPersistence.fetchByG_S(groupId, sourceURL);
+	}
+
+	@Override
+	public List<RedirectEntry> getRedirectEntries(
+		long groupId, int start, int end,
+		OrderByComparator<RedirectEntry> obc) {
+
+		return redirectEntryPersistence.findByGroupId(groupId, start, end, obc);
+	}
+
+	@Override
+	public int getRedirectEntriesCount(long groupId) {
+		return redirectEntryPersistence.countByGroupId(groupId);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

@@ -16,9 +16,7 @@ package com.liferay.fragment.util.comparator;
 
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Pavel Savinov
@@ -42,28 +40,8 @@ public class FragmentCompositionFragmentEntryNameComparator
 
 	@Override
 	public int compare(Object object1, Object object2) {
-		String name1 = StringPool.BLANK;
-		String name2 = StringPool.BLANK;
-
-		if ((object1 instanceof FragmentComposition) &&
-			(object2 instanceof FragmentComposition)) {
-
-			FragmentComposition fragmentComposition1 =
-				(FragmentComposition)object1;
-
-			FragmentComposition fragmentComposition2 =
-				(FragmentComposition)object2;
-
-			name1 = StringUtil.toLowerCase(fragmentComposition1.getName());
-			name2 = StringUtil.toLowerCase(fragmentComposition2.getName());
-		}
-		else {
-			FragmentEntry fragmentEntry1 = (FragmentEntry)object1;
-			FragmentEntry fragmentEntry2 = (FragmentEntry)object2;
-
-			name1 = StringUtil.toLowerCase(fragmentEntry1.getName());
-			name2 = StringUtil.toLowerCase(fragmentEntry2.getName());
-		}
+		String name1 = getName(object1);
+		String name2 = getName(object2);
 
 		int value = name1.compareTo(name2);
 
@@ -91,6 +69,19 @@ public class FragmentCompositionFragmentEntryNameComparator
 	@Override
 	public boolean isAscending() {
 		return _ascending;
+	}
+
+	protected String getName(Object object) {
+		if (object instanceof FragmentComposition) {
+			FragmentComposition fragmentComposition =
+				(FragmentComposition)object;
+
+			return fragmentComposition.getName();
+		}
+
+		FragmentEntry fragmentEntry = (FragmentEntry)object;
+
+		return fragmentEntry.getName();
 	}
 
 	private final boolean _ascending;

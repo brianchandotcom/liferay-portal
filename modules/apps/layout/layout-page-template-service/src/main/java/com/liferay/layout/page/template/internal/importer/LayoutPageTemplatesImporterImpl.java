@@ -497,19 +497,17 @@ public class LayoutPageTemplatesImporterImpl
 				fetchLayoutPageTemplateStructure(
 					layout.getGroupId(), classNameId, layout.getPlid());
 
-		if (layoutPageTemplateStructure == null) {
+		if (layoutPageTemplateStructure != null) {
 			_layoutPageTemplateStructureLocalService.
-				addLayoutPageTemplateStructure(
-					layout.getUserId(), layout.getGroupId(), classNameId,
-					layout.getPlid(), jsonObject.toString(),
-					ServiceContextThreadLocal.getServiceContext());
+				deleteLayoutPageTemplateStructure(
+					layoutPageTemplateStructure.
+						getLayoutPageTemplateStructureId());
 		}
-		else {
-			_layoutPageTemplateStructureLocalService.
-				updateLayoutPageTemplateStructure(
-					layout.getGroupId(), classNameId, layout.getPlid(),
-					jsonObject.toString());
-		}
+
+		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
+			layout.getUserId(), layout.getGroupId(), classNameId,
+			layout.getPlid(), jsonObject.toString(),
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	private void _updateLayouts(LayoutPageTemplateEntry layoutPageTemplateEntry)

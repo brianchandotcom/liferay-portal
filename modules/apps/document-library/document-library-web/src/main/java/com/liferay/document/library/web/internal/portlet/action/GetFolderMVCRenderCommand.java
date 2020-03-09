@@ -54,7 +54,7 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER, folder);
 
 			renderRequest.setAttribute(
-				DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, getDLTrashHelper());
+				DLWebKeys.DOCUMENT_LIBRARY_TRASH_HELPER, getDLTrashHelper());
 
 			return getPath();
 		}

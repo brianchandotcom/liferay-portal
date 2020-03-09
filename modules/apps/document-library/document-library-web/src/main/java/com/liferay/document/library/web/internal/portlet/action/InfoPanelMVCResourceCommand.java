@@ -66,7 +66,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		resourceRequest.setAttribute(
-			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, _dlTrashHelper);
+			DLWebKeys.DOCUMENT_LIBRARY_TRASH_HELPER, _dlTrashHelper);
 		resourceRequest.setAttribute(
 			WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES,
 			ActionUtil.getFileEntries(resourceRequest));

@@ -104,7 +104,7 @@ public class DLAdminManagementToolbarDisplayContext {
 			_dlRequestHelper);
 
 		_dlTrashHelper = (DLTrashHelper)_httpServletRequest.getAttribute(
-			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL);
+			DLWebKeys.DOCUMENT_LIBRARY_TRASH_HELPER);
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

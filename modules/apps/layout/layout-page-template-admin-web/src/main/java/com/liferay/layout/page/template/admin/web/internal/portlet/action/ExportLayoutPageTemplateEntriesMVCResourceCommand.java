@@ -77,7 +77,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 	}
 
 	public String getFileName(long[] exportLayoutPageTemplateEntryIds) {
-		return "page-templates-" + Time.getTimestamp() + ".zip";
+		return "page-templates-" + Time.getShortTimestamp() + ".zip";
 	}
 
 	@Override

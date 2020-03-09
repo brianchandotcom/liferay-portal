@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Frontend Image Editor Capability Resize
-Bundle-SymbolicName: com.liferay.frontend.image.editor.capability.resize
-Bundle-Version: 4.0.5
-Provide-Capability:\
-	soy;\
-		type="image-editor-capability";\
-		version:Version="${Bundle-Version}"
-Web-ContextPath: /frontend-image-editor-capability-resize

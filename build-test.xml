@@ -5093,6 +5093,12 @@ war.path=${app.server.portal.dir}/</echo>
 						</then>
 					</elseif>
 					<elseif>
+						<equals arg1="${portal.version}" arg2="7.2.1" />
+						<then>
+							<property name="portal.version.url.path" value="7.2.1-ga2" />
+						</then>
+					</elseif>
+					<elseif>
 						<equals arg1="${portal.version}" arg2="7.3.0" />
 						<then>
 							<property name="portal.version.url.path" value="7.3.0-ga1" />
@@ -5112,6 +5118,7 @@ war.path=${app.server.portal.dir}/</echo>
 						<equals arg1="${portal.version}" arg2="7.0.4" />
 						<equals arg1="${portal.version}" arg2="7.1.3" />
 						<equals arg1="${portal.version}" arg2="7.2.0" />
+						<equals arg1="${portal.version}" arg2="7.2.1" />
 						<equals arg1="${portal.version}" arg2="7.3.0" />
 					</or>
 					<then>

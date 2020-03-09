@@ -193,7 +193,7 @@ public class DepotEntryServiceTest {
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			ServiceContextTestUtil.getServiceContext(
-				user.getGroupId(), user.getUserId()));
+				TestPropsValues.getGroupId(), user.getUserId()));
 
 		_depotEntries.add(depotEntry);
 
@@ -211,7 +211,7 @@ public class DepotEntryServiceTest {
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			Collections.emptyMap(), new UnicodeProperties(),
 			ServiceContextTestUtil.getServiceContext(
-				user.getGroupId(), user.getUserId()));
+				TestPropsValues.getGroupId(), user.getUserId()));
 	}
 
 	@DeleteAfterTestRun

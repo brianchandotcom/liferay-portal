@@ -182,7 +182,7 @@ public class DepotEntrySearchTest {
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			ServiceContextTestUtil.getServiceContext(
-				user.getGroupId(), user.getUserId()));
+				TestPropsValues.getGroupId(), user.getUserId()));
 
 		_depotEntries.add(depotEntry);
 

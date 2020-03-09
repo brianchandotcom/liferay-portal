@@ -44,11 +44,7 @@ import javax.sql.DataSource;
 public class DBPartitionHelperUtil {
 
 	public static boolean addPartition(long companyId) {
-		if (!_DATABASE_PARTITION_ENABLED) {
-			return false;
-		}
-
-		if (companyId == _defaultCompanyId) {
+		if (!_DATABASE_PARTITION_ENABLED || (companyId == _defaultCompanyId)) {
 			return false;
 		}
 

@@ -64,7 +64,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 					createCredentialsProvider());
 
 				if (_elasticsearchConnectionConfigurationWrapper.
-						isHhttpSSLEnabled()) {
+						isHttpSSLEnabled()) {
 
 					httpClientBuilder.setSSLContext(createSSLContext());
 				}

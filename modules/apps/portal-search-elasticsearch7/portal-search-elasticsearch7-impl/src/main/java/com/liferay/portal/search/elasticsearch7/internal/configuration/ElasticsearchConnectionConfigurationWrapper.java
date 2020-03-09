@@ -69,7 +69,7 @@ public class ElasticsearchConnectionConfigurationWrapper {
 		return _elasticsearchConnectionConfiguration.authenticationEnabled();
 	}
 
-	public boolean isHhttpSSLEnabled() {
+	public boolean isHttpSSLEnabled() {
 		return _elasticsearchConnectionConfiguration.httpSSLEnabled();
 	}
 

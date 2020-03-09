@@ -54,11 +54,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIGURABLE_FIELD</td>
-	<td>//div[contains(@class,'page-editor__topper__content')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EDITABLE_FIELD</td>
 	<td>//div[contains(@class,'page-editor__fragment-content')]//div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]</td>
 	<td></td>

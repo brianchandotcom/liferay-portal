@@ -132,6 +132,11 @@ public class LockLocalServiceTest {
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
+				expectedDBType = ExpectedDBType.SQLSERVER,
+				expectedLog = "Cannot insert duplicate key row in object",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
 				expectedDBType = ExpectedDBType.SYBASE,
 				expectedLog = "Attempt to insert duplicate key row",
 				expectedType = ExpectedType.CONTAINS
@@ -325,6 +330,11 @@ public class LockLocalServiceTest {
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.POSTGRESQL,
 				expectedLog = "ERROR: duplicate key value violates unique constraint ",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				expectedDBType = ExpectedDBType.SQLSERVER,
+				expectedLog = "Cannot insert duplicate key row in object",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(

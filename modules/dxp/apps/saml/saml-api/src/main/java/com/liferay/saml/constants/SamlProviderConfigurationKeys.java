@@ -17,7 +17,7 @@ package com.liferay.saml.constants;
 /**
  * @author Marta Medio
  */
-public interface SamlRoleKeys {
+public interface SamlProviderConfigurationKeys {
 
 	public static final String SAML_ROLE_IDP = "idp";
 

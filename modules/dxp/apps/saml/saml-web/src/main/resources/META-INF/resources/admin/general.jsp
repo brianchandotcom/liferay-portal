@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean currentSamlRoleIsSP = StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), SamlRoleKeys.SAML_ROLE_SP);
+boolean currentSamlRoleIsSP = StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), SamlProviderConfigurationKeys.SAML_ROLE_SP);
 boolean isRoleIdPAvailable = generalTabDefaultViewDisplayContext.isRoleIdPAvailable();
 
 UnicodeProperties properties = PropertiesParamUtil.getProperties(request, "settings--");
@@ -45,7 +45,7 @@ String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProvide
 	<aui:fieldset>
 		<aui:input label="enabled" name='<%= "settings--" + PortletPropsKeys.SAML_ENABLED + "--" %>' type="checkbox" value="<%= samlProviderConfigurationHelper.isEnabled() %>" />
 
-		<c:if test="<%= !isRoleIdPAvailable && StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), SamlRoleKeys.SAML_ROLE_IDP) %>">
+		<c:if test="<%= !isRoleIdPAvailable && StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), SamlProviderConfigurationKeys.SAML_ROLE_IDP) %>">
 			<div class="portlet-msg-info">
 				<liferay-ui:message key="the-identity-provider-role-is-not-available-for-configuration-please-migrate-to-an-alternate-idp-provider-solution" />
 			</div>
@@ -58,8 +58,8 @@ String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProvide
 		</c:if>
 
 		<aui:select label="saml-role" name='<%= "settings--" + PortletPropsKeys.SAML_ROLE + "--" %>' required="<%= true %>" showEmptyOption="<%= true %>">
-			<aui:option label="identity-provider" selected="<%= samlRole.equals(SamlRoleKeys.SAML_ROLE_IDP) %>" value="<%= SamlRoleKeys.SAML_ROLE_IDP %>" />
-			<aui:option label="service-provider" selected="<%= samlRole.equals(SamlRoleKeys.SAML_ROLE_SP) %>" value="<%= SamlRoleKeys.SAML_ROLE_SP %>" />
+			<aui:option label="identity-provider" selected="<%= samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_IDP) %>" value="<%= SamlProviderConfigurationKeys.SAML_ROLE_IDP %>" />
+			<aui:option label="service-provider" selected="<%= samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_SP) %>" value="<%= SamlProviderConfigurationKeys.SAML_ROLE_SP %>" />
 		</aui:select>
 
 		<aui:input helpMessage="entity-id-help" label="saml-entity-id" name='<%= "settings--" + PortletPropsKeys.SAML_ENTITY_ID + "--" %>' required="<%= true %>" value="<%= entityId %>" />

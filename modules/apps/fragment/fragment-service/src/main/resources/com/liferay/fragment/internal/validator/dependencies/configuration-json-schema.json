@@ -328,16 +328,48 @@
 						"validation": {
 							"anyOf": [
 								{
-									"not": {
-										"properties": {
-											"type": {
-												"const": "pattern"
-											}
+									"additionalProperties": false,
+									"properties": {
+										"max": {
+											"title": "The Max Schema",
+											"type": "number"
+										},
+										"min": {
+											"title": "The Min Schema",
+											"type": "number"
+										},
+										"type": {
+											"const": "number"
 										}
 									}
 								},
 								{
+									"additionalProperties": false,
 									"properties": {
+										"maxLength": {
+											"title": "The MaxLength Schema",
+											"type": "number"
+										},
+										"minLength": {
+											"title": "The MaxLength Schema",
+											"type": "number"
+										},
+										"type": {
+											"enum": [
+												"email",
+												"url",
+												"text"
+											]
+										}
+									}
+								},
+								{
+									"additionalProperties": false,
+									"properties": {
+										"regexp": {
+											"title": "The RegExp Schema",
+											"type": "string"
+										},
 										"type": {
 											"const": "pattern"
 										}
@@ -352,31 +384,12 @@
 									"title": "The ErrorMessage Schema",
 									"type": "string"
 								},
-								"max": {
-									"title": "The Max Schema",
-									"type": "number"
-								},
-								"maxLength": {
-									"title": "The MaxLength Schema",
-									"type": "number"
-								},
-								"min": {
-									"title": "The Min Schema",
-									"type": "number"
-								},
-								"minLength": {
-									"title": "The MaxLength Schema",
-									"type": "number"
-								},
-								"regexp": {
-									"title": "The RegExp Schema",
-									"type": "string"
-								},
 								"type": {
 									"enum": [
 										"email",
 										"number",
 										"pattern",
+										"text",
 										"url"
 									],
 									"title": "The Type Schema",

@@ -291,8 +291,11 @@ public class FragmentLayoutStructureItemHelper
 				if ((value1 instanceof JSONObject) &&
 					(value2 instanceof JSONObject)) {
 
-					_deepMerge(
-						(JSONObject)value1, jsonObject2.getJSONObject(key));
+					jsonObject.put(
+						key,
+						_deepMerge(
+							(JSONObject)value1,
+							jsonObject2.getJSONObject(key)));
 				}
 				else {
 					jsonObject.put(key, value2);

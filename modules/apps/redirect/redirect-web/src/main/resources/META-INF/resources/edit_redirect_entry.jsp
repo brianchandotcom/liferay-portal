@@ -51,6 +51,10 @@ else {
 	</c:if>
 
 	<liferay-frontend:edit-form-body>
+		<liferay-ui:error exception="<%= DuplicateRedirectEntrySourceURLException.class %>" focusField="sourceURL" message="there-is-already-a-redirect-set-for-the-same-source-url" />
+		<liferay-ui:error exception="<%= RequiredRedirectEntryDestinationURLException.class %>" focusField="destinationURL" message="the-destination-url-must-be-specified" />
+		<liferay-ui:error exception="<%= RequiredRedirectEntrySourceURLException.class %>" focusField="sourceURL" message="the-source-url-must-be-specified" />
+
 		<aui:field-wrapper cssClass="form-group" label="source-url" name="sourceURL" required="<%= true %>">
 			<div class="form-text"><%= redirectDisplayContext.getGroupBaseURL() %></div>
 

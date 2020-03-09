@@ -19,6 +19,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.redirect.exception.DuplicateRedirectEntrySourceURLException;
+import com.liferay.redirect.exception.RequiredRedirectEntryDestinationURLException;
+import com.liferay.redirect.exception.RequiredRedirectEntrySourceURLException;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.base.RedirectEntryLocalServiceBaseImpl;
 
@@ -37,8 +41,15 @@ public class RedirectEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RedirectEntry addRedirectEntry(
-		long groupId, String destinationURL, String sourceURL,
-		boolean temporary, ServiceContext serviceContext) {
+			long groupId, String destinationURL, String sourceURL,
+			boolean temporary, ServiceContext serviceContext)
+		throws PortalException {
+
+		_validate(destinationURL, sourceURL);
+
+		if (fetchRedirectEntry(groupId, sourceURL) != null) {
+			throw new DuplicateRedirectEntrySourceURLException();
+		}
 
 		RedirectEntry redirectEntry = redirectEntryPersistence.create(
 			counterLocalService.increment());
@@ -68,13 +79,36 @@ public class RedirectEntryLocalServiceImpl
 			boolean temporary)
 		throws PortalException {
 
+		_validate(destinationURL, sourceURL);
+
 		RedirectEntry redirectEntry = getRedirectEntry(redirectEntryId);
+
+		RedirectEntry existingRedirectEntry = fetchRedirectEntry(
+			redirectEntry.getGroupId(), sourceURL);
+
+		if ((existingRedirectEntry != null) &&
+			(existingRedirectEntry.getRedirectEntryId() != redirectEntryId)) {
+
+			throw new DuplicateRedirectEntrySourceURLException();
+		}
 
 		redirectEntry.setDestinationURL(destinationURL);
 		redirectEntry.setSourceURL(sourceURL);
 		redirectEntry.setTemporary(temporary);
 
 		return redirectEntryPersistence.update(redirectEntry);
+	}
+
+	private void _validate(String destinationURL, String sourceURL)
+		throws PortalException {
+
+		if (Validator.isNull(destinationURL)) {
+			throw new RequiredRedirectEntryDestinationURLException();
+		}
+
+		if (Validator.isNull(sourceURL)) {
+			throw new RequiredRedirectEntrySourceURLException();
+		}
 	}
 
 }

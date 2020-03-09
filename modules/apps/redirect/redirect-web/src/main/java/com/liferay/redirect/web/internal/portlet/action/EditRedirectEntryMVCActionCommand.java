@@ -17,6 +17,7 @@ package com.liferay.redirect.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -44,8 +45,7 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		long redirectEntryId = ParamUtil.getLong(
 			actionRequest, "redirectEntryId");
@@ -55,19 +55,30 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 		String sourceURL = ParamUtil.getString(actionRequest, "sourceURL");
 		boolean temporary = ParamUtil.getBoolean(actionRequest, "temporary");
 
-		if (redirectEntryId == 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		try {
+			if (redirectEntryId == 0) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-			_redirectEntryLocalService.addRedirectEntry(
-				themeDisplay.getScopeGroupId(), destinationURL, sourceURL,
-				temporary,
-				ServiceContextFactory.getInstance(
-					RedirectEntry.class.getName(), actionRequest));
+				_redirectEntryLocalService.addRedirectEntry(
+					themeDisplay.getScopeGroupId(), destinationURL, sourceURL,
+					temporary,
+					ServiceContextFactory.getInstance(
+						RedirectEntry.class.getName(), actionRequest));
+			}
+			else {
+				_redirectEntryLocalService.updateRedirectEntry(
+					redirectEntryId, destinationURL, sourceURL, temporary);
+			}
 		}
-		else {
-			_redirectEntryLocalService.updateRedirectEntry(
-				redirectEntryId, destinationURL, sourceURL, temporary);
+		catch (Exception exception) {
+			SessionErrors.add(actionRequest, exception.getClass(), exception);
+
+			actionResponse.setRenderParameter(
+				"mvcRenderCommandName", "/redirect/edit_redirect_entry");
+
+			hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 

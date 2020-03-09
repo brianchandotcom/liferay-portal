@@ -1498,7 +1498,7 @@ public class LayoutStagedModelDataHandler
 		for (Element layoutPageTemplateStructureElement :
 				layoutPageTemplateStructureElements) {
 
-			_layoutPageTemplateStructureDataHandlerUtil.
+			_layoutPageTemplateStructureDataHandlerHelper.
 				importLayoutPageTemplateStructure(
 					portletDataContext,
 					_portal.getClassNameId(Layout.class.getName()),
@@ -2337,7 +2337,7 @@ public class LayoutStagedModelDataHandler
 
 	@Reference
 	private LayoutPageTemplateStructureDataHandlerHelper
-		_layoutPageTemplateStructureDataHandlerUtil;
+		_layoutPageTemplateStructureDataHandlerHelper;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

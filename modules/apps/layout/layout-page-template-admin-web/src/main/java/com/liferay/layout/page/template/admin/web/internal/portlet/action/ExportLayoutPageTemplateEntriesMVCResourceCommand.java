@@ -84,7 +84,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 				layoutPageTemplateEntries.add(layoutPageTemplateEntry);
 			}
 
-			return _exportUtil.exportPageTemplateDefinitions(
+			return _exportHelper.exportPageTemplateDefinitions(
 				layoutPageTemplateEntries);
 		}
 		catch (Exception exception) {
@@ -112,7 +112,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 	}
 
 	@Reference
-	private ExportHelper _exportUtil;
+	private ExportHelper _exportHelper;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

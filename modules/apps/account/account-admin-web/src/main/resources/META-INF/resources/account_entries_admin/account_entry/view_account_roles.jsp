@@ -52,12 +52,6 @@ renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay
 					<portlet:param name="accountRoleId" value="<%= String.valueOf(accountRole.getAccountRoleId()) %>" />
 				</portlet:renderURL>
 
-				<%
-				if (AccountRoleConstants.isSharedRole(accountRole.getRole())) {
-					rowURL = StringPool.BLANK;
-				}
-				%>
-
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"

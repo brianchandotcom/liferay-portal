@@ -17,13 +17,16 @@ package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
 import com.liferay.account.admin.web.internal.helper.AccountRoleRequestHelper;
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.Constants;
@@ -86,6 +89,12 @@ public class AccountRoleDefinePermissionsScreenNavigationCategory
 	@Override
 	public boolean isVisible(User user, AccountRole accountRole) {
 		if (accountRole == null) {
+			return false;
+		}
+
+		Role role = _roleLocalService.fetchRole(accountRole.getRoleId());
+
+		if ((role != null) && AccountRoleConstants.isSharedRole(role)) {
 			return false;
 		}
 
@@ -179,6 +188,9 @@ public class AccountRoleDefinePermissionsScreenNavigationCategory
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.roles.admin.web)")
 	private ServletContext _servletContext;

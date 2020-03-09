@@ -15,10 +15,15 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
+import com.liferay.account.constants.AccountRoleConstants;
+import com.liferay.account.model.AccountRole;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.RoleLocalService;
 
 import java.io.IOException;
 
@@ -41,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class AccountRoleDetailsScreenNavigationCategory
-	implements ScreenNavigationCategory, ScreenNavigationEntry {
+	implements ScreenNavigationCategory, ScreenNavigationEntry<AccountRole> {
 
 	@Override
 	public String getCategoryKey() {
@@ -65,6 +70,21 @@ public class AccountRoleDetailsScreenNavigationCategory
 	}
 
 	@Override
+	public boolean isVisible(User user, AccountRole accountRole) {
+		if (accountRole == null) {
+			return true;
+		}
+
+		Role role = _roleLocalService.fetchRole(accountRole.getRoleId());
+
+		if ((role != null) && AccountRoleConstants.isSharedRole(role)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public void render(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -77,5 +97,8 @@ public class AccountRoleDetailsScreenNavigationCategory
 
 	@Reference
 	protected JSPRenderer jspRenderer;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

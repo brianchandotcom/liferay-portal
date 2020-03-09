@@ -33,19 +33,19 @@ Role role = accountRoleDisplay.getRole();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
+	<portlet:renderURL var="editAccountRoleURL">
+		<portlet:param name="mvcPath" value="/account_entries_admin/edit_account_role.jsp" />
+		<portlet:param name="backURL" value="<%= currentURL %>" />
+		<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+		<portlet:param name="accountRoleId" value="<%= String.valueOf(accountRoleDisplay.getAccountRoleId()) %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		message='<%= AccountRoleConstants.isSharedRole(role) ? "assign-users" : "edit" %>'
+		url="<%= editAccountRoleURL %>"
+	/>
+
 	<c:if test="<%= role.getType() != RoleConstants.TYPE_ACCOUNT %>">
-		<portlet:renderURL var="editAccountRoleURL">
-			<portlet:param name="mvcPath" value="/account_entries_admin/edit_account_role.jsp" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
-			<portlet:param name="accountRoleId" value="<%= String.valueOf(accountRoleDisplay.getAccountRoleId()) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editAccountRoleURL %>"
-		/>
-
 		<portlet:actionURL name="/account_admin/delete_account_roles" var="deleteAccountRolesURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="accountRoleIds" value="<%= String.valueOf(accountRoleDisplay.getAccountRoleId()) %>" />

@@ -224,9 +224,11 @@ definition {
 	}
 
 	macro clickConfigurableField {
-		Click(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#CONFIGURABLE_FIELD");
+		var key_fragmentName = "${fragmentName}";
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
+			Click(locator1 = "Fragment#FRAGMENT_BODY");
+		}
 	}
 
 	macro clickDiscardDraft {
@@ -236,12 +238,13 @@ definition {
 	}
 
 	macro clickEditableField {
-		Click(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_BODY");
+		var key_fragmentName = "${fragmentName}";
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
+			Click(locator1 = "Fragment#FRAGMENT_BODY");
+		}
 
 		Click(
-			key_fragmentName = "${fragmentName}",
 			key_id = "${id}",
 			locator1 = "Fragment#EDITABLE_FIELD");
 	}
@@ -426,11 +429,17 @@ definition {
 	}
 
 	macro editContentDisplay {
-		Click(locator1 = "Fragment#CONFIGURABLE_FIELD");
+		var key_fragmentName = "Content";
 
-		Click.clickNoMouseOver(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_CONFIGURATION");
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
+			Click(locator1 = "Fragment#FRAGMENT_BODY");
+		}
 
-		Click(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_PLUS_BUTTON");
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+
+		Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -458,7 +467,7 @@ definition {
 				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
 
 			AssertTextEquals(
-				locator1 = "Fragment#CONFIGURABLE_FIELD",
+				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "${entryContent}");
 		}
 
@@ -503,7 +512,7 @@ definition {
 					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT");
 
 				AssertTextEquals(
-					locator1 = "Fragment#CONFIGURABLE_FIELD",
+					locator1 = "Fragment#FRAGMENT_BODY",
 					value1 = "${webContentContent}");
 			}
 			else {
@@ -512,7 +521,7 @@ definition {
 					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
 
 				AssertTextEquals(
-					locator1 = "Fragment#CONFIGURABLE_FIELD",
+					locator1 = "Fragment#FRAGMENT_BODY",
 					value1 = "${webContentContent}");
 			}
 		}
@@ -717,11 +726,15 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Page Structure");
 
-		Click(
-			key_nodeName = "${fragmentName}",
-			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+		if (IsElementNotPresent(key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE")) {
+			Click(
+				key_nodeName = "${fragmentName}",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+		}
 
-		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_CONFIGURATION_BUTTON");
+		Click(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 	}
 
 	macro gotoDuplicate {
@@ -729,11 +742,13 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Page Structure");
 
-		Click(
-			key_nodeName = "${fragmentName}",
-			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+		if (IsElementNotPresent(key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE")) {
+			Click(
+				key_nodeName = "${fragmentName}",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+		}
 
-		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_DUPLICATE_BUTTON");
+		Click(locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_DUPLICATE_BUTTON");
 	}
 
 	macro gotoEditableFieldEdit {

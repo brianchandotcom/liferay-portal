@@ -28,7 +28,10 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 	const prefixKey = 'bulk';
 	const prefixKeys = [prefixKey];
 	const {
-		filterValues: {bulkAssigneeUserIds: userIds, bulkTaskKeys: taskNames},
+		filterValues: {
+			bulkAssigneeUserIds: userIds,
+			bulkTaskKeys: workflowTaskNames,
+		},
 		prefixedKeys,
 		selectedFilters,
 	} = useFilter({filterKeys, prefixKeys, withoutRouteParams: true});
@@ -51,7 +54,7 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 			assigneeIds,
 			completed: false,
 			searchByRoles,
-			taskNames,
+			workflowTaskNames,
 		};
 
 		if (selectAll) {
@@ -65,7 +68,7 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 
 		return params;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [taskNames, userIds]);
+	}, [workflowTaskNames, userIds]);
 
 	const {data, postData} = usePost({
 		admin: true,

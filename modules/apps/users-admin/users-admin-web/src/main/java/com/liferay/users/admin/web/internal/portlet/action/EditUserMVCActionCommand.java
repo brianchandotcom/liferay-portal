@@ -479,8 +479,9 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			!deleteLogo, portraitBytes, languageId, user.getTimeZoneId(),
 			user.getGreeting(), comments, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			null, null, null, null, null, jobTitle, null, null, null, null,
-			null, null, null, null, null, null, serviceContext);
+			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
+			contact.getSkypeSn(), contact.getTwitterSn(), jobTitle, null, null,
+			null, null, null, null, null, null, null, null, serviceContext);
 
 		if (oldScreenName.equals(user.getScreenName())) {
 			oldScreenName = StringPool.BLANK;

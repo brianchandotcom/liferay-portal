@@ -488,7 +488,10 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public Object getTaskUpdateMessageArguments(WorkflowLog workflowLog) {
-		return HtmlUtil.escape(_getActorName(workflowLog));
+		return HtmlUtil.escape(
+			PortalUtil.getUserName(
+				workflowLog.getAuditUserId(),
+				String.valueOf(workflowLog.getAuditUserId())));
 	}
 
 	public int getTotalItems() throws PortalException {
@@ -507,7 +510,10 @@ public class WorkflowTaskDisplayContext {
 
 	public Object getTransitionMessageArguments(WorkflowLog workflowLog) {
 		return new Object[] {
-			HtmlUtil.escape(_getActorName(workflowLog)),
+			HtmlUtil.escape(
+				PortalUtil.getUserName(
+					workflowLog.getAuditUserId(),
+					String.valueOf(workflowLog.getAuditUserId()))),
 			HtmlUtil.escape(workflowLog.getPreviousState()),
 			HtmlUtil.escape(
 				LanguageUtil.get(

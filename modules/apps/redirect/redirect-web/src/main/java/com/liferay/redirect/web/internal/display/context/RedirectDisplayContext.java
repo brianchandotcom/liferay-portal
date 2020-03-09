@@ -158,6 +158,24 @@ public class RedirectDisplayContext {
 			_liferayPortletRequest, _liferayPortletResponse, _getPortletURL(),
 			getSearchContainerId());
 
+		if (!_redirectEntrySearch.isSearch()) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			_redirectEntrySearch.setTotal(
+				RedirectEntryLocalServiceUtil.getRedirectEntriesCount(
+					themeDisplay.getScopeGroupId()));
+
+			_redirectEntrySearch.setResults(
+				RedirectEntryLocalServiceUtil.getRedirectEntries(
+					themeDisplay.getScopeGroupId(),
+					_redirectEntrySearch.getStart(),
+					_redirectEntrySearch.getEnd(), null));
+
+			return _redirectEntrySearch;
+		}
+
 		Indexer indexer = IndexerRegistryUtil.getIndexer(RedirectEntry.class);
 
 		SearchContext searchContext = SearchContextFactory.getInstance(

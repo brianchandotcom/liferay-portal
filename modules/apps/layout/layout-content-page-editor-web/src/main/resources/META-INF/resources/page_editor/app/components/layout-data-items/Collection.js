@@ -18,6 +18,10 @@ import {ControlsIdConverterContextProvider} from '../ControlsIdConverterContext'
 
 const COLLECTION_ID_DIVIDER = '$';
 
+function collectionIsMapped(collectionConfig) {
+	return collectionConfig.collection;
+}
+
 function getCollectionPrefix(collectionId, index) {
 	return `collection-${collectionId}-${index}${COLLECTION_ID_DIVIDER}`;
 }
@@ -49,25 +53,25 @@ const NotMappedMessage = () => (
 );
 
 const Collection = React.forwardRef(({children, item}, ref) => {
-	if (React.Children.count(children) == 0) {
-		return <NotMappedMessage />;
-	}
-
-	const child = React.Children.only(children);
+	const child = React.Children.toArray(children)[0];
 
 	return (
 		<div className="page-editor__collection" ref={ref}>
-			{Array.from({length: 3}).map((_element, idx) => (
-				<ControlsIdConverterContextProvider
-					key={idx}
-					value={{
-						fromControlsId,
-						toControlsId: getToControlsId(item.itemId, idx),
-					}}
-				>
-					{React.cloneElement(child)}
-				</ControlsIdConverterContextProvider>
-			))}
+			{collectionIsMapped(item.config) ? (
+				Array.from({length: 3}).map((_element, idx) => (
+					<ControlsIdConverterContextProvider
+						key={idx}
+						value={{
+							fromControlsId,
+							toControlsId: getToControlsId(item.itemId, idx),
+						}}
+					>
+						{React.cloneElement(child)}
+					</ControlsIdConverterContextProvider>
+				))
+			) : (
+				<NotMappedMessage />
+			)}
 		</div>
 	);
 });

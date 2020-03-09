@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayForm from '@clayui/form';
+import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React from 'react';
 
 import CollectionSelector from '../../../common/components/CollectionSelector';
@@ -56,6 +56,22 @@ export const CollectionConfigurationPanel = ({item}) => {
 							collection,
 						})
 					}
+				/>
+			</ClayForm.Group>
+			<ClayForm.Group small>
+				<label htmlFor="collectionNumberOfItems">
+					{Liferay.Language.get('max-number-of-items')}
+				</label>
+				<ClaySelectWithOption
+					aria-label={Liferay.Language.get('max-number-of-items')}
+					id="collectionNumberOfItems"
+					onChange={({target: {value}}) =>
+						handleConfigurationChanged({
+							numberOfItems: value,
+						})
+					}
+					options={[{label: '3'}, {label: '5'}, {label: '10'}]}
+					value={collectionConfig.numberOfItems}
 				/>
 			</ClayForm.Group>
 		</>

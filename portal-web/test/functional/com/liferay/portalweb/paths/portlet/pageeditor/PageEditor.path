@@ -332,18 +332,8 @@
 </tr>
 <!--EDITABLE_FIELD_TOOLBAR-->
 <tr>
-	<td>EDITABLE_FIELD_TOOLBAR_DUPLICATE_BUTTON</td>
-	<td>//button[@*='Duplicate']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON</td>
 	<td>//button[@*='Edit']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDITABLE_FIELD_TOOLBAR_CONFIGURATION_BUTTON</td>
-	<td>//button[@*='Fragment Configuration']</td>
 	<td></td>
 </tr>
 <tr>
@@ -352,13 +342,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDITABLE_FIELD_TOOLBAR_MAP_ASSET_SELECT_POPUP_BUTTON</td>
-	<td>//div/input[contains(@id,'itemSelectorInput')]/following-sibling::button</td>
+	<td>EDITABLE_FIELD_TOOLBAR_MAP_BUTTON</td>
+	<td>//button[@*='Map']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>EDITABLE_FIELD_TOOLBAR_MAP_BUTTON</td>
-	<td>//button[@*='Map']</td>
+	<td>EDITABLE_FIELD_TOOLBAR_MAP_ASSET_SELECT_POPUP_BUTTON</td>
+	<td>//div/input[contains(@id,'itemSelectorInput')]/following-sibling::button</td>
 	<td></td>
 </tr>
 <tr>
@@ -369,6 +359,27 @@
 <tr>
 	<td>EDITABLE_FIELD_TOOLBAR_LAYOUT_BACKGROUND_IMAGE_BUTTON</td>
 	<td>//button[@data-panel-id='layout_background_image']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FRAGMENT_BODY_TOOLBAR-->
+<tr>
+	<td>FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON</td>
+	<td>//button[@*='Fragment Configuration']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_BODY_TOOLBAR_DUPLICATE_BUTTON</td>
+	<td>//button[@*='Duplicate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON</td>
+	<td>//div[contains(@class,'floating-toolbar')]//div[contains(@class,'form-group')]//button[*[name()='svg'][contains(@class,'plus')]]</td>
 	<td></td>
 </tr>
 <tr>

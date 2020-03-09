@@ -43,6 +43,14 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 	public void validateConfiguration(String configuration)
 		throws FragmentEntryConfigurationException {
 
+		validateConfigurationValues(configuration, null);
+	}
+
+	@Override
+	public void validateConfigurationValues(
+			String configuration, JSONObject valuesJSONObject)
+		throws FragmentEntryConfigurationException {
+
 		if (Validator.isNull(configuration)) {
 			return;
 		}
@@ -78,9 +86,9 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 					JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(
 						fieldIndex);
 
-					if (fieldNames.contains(
-							fieldJSONObject.getString("name"))) {
+					String fieldName = fieldJSONObject.getString("name");
 
+					if (fieldNames.contains(fieldName)) {
 						throw new FragmentEntryConfigurationException(
 							"Field names must be unique");
 					}
@@ -88,18 +96,26 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 					JSONObject typeOptionsJSONObject =
 						fieldJSONObject.getJSONObject("typeOptions");
 
-					if ((typeOptionsJSONObject != null) &&
-						typeOptionsJSONObject.has("validation")) {
-
+					if (typeOptionsJSONObject != null) {
 						String defaultValue = fieldJSONObject.getString(
 							"defaultValue");
 
 						_checkValidationRules(
 							defaultValue,
 							typeOptionsJSONObject.getJSONObject("validation"));
+
+						if (valuesJSONObject != null) {
+							String value = valuesJSONObject.getString(
+								fieldName);
+
+							_checkValidationRules(
+								value,
+								typeOptionsJSONObject.getJSONObject(
+									"validation"));
+						}
 					}
 
-					fieldNames.add(fieldJSONObject.getString("name"));
+					fieldNames.add(fieldName);
 				}
 			}
 		}
@@ -114,16 +130,16 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 	}
 
 	private boolean _checkValidationRules(
-		String defaultValue, JSONObject validationJSONObject) {
+		String value, JSONObject validationJSONObject) {
 
-		if (Validator.isNull(defaultValue) || (validationJSONObject == null)) {
+		if (Validator.isNull(value) || (validationJSONObject == null)) {
 			return true;
 		}
 
 		String type = validationJSONObject.getString("type");
 
 		if (Objects.equals(type, "email")) {
-			return Validator.isEmailAddress(defaultValue);
+			return Validator.isEmailAddress(value);
 		}
 		else if (Objects.equals(type, "number")) {
 			long max = validationJSONObject.getLong("max", Long.MAX_VALUE);
@@ -131,9 +147,9 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 
 			boolean valid = false;
 
-			if (Validator.isNumber(defaultValue) &&
-				(GetterUtil.getLong(defaultValue) <= max) &&
-				(GetterUtil.getLong(defaultValue) >= min)) {
+			if (Validator.isNumber(value) &&
+				(GetterUtil.getLong(value) <= max) &&
+				(GetterUtil.getLong(value) >= min)) {
 
 				valid = true;
 			}
@@ -143,10 +159,10 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 		else if (Objects.equals(type, "pattern")) {
 			String regexp = validationJSONObject.getString("regexp");
 
-			return defaultValue.matches(regexp);
+			return value.matches(regexp);
 		}
 		else if (Objects.equals(type, "url")) {
-			return Validator.isUrl(defaultValue);
+			return Validator.isUrl(value);
 		}
 
 		long maxLength = validationJSONObject.getLong(
@@ -154,9 +170,7 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 		long minLength = validationJSONObject.getLong(
 			"minLength", Long.MIN_VALUE);
 
-		if ((defaultValue.length() <= maxLength) &&
-			(defaultValue.length() >= minLength)) {
-
+		if ((value.length() <= maxLength) && (value.length() >= minLength)) {
 			return true;
 		}
 

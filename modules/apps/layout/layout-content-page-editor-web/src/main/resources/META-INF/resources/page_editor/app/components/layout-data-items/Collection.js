@@ -14,6 +14,7 @@
 
 import React from 'react';
 
+import {COLLECTION_LIST_FORMATS} from '../../config/constants/collectionListFormats';
 import {ControlsIdConverterContextProvider} from '../ControlsIdConverterContext';
 
 const COLLECTION_ID_DIVIDER = '$';
@@ -52,26 +53,80 @@ const NotMappedMessage = () => (
 	</div>
 );
 
+const Grid = ({child, collectionId, numberOfItems}) => {
+	const numberOfColumns = 3;
+	const numberOfRows = Math.ceil(numberOfItems / numberOfColumns);
+
+	const createRows = () => {
+		const rows = [];
+
+		for (let i = 0; i < numberOfRows; i++) {
+			const columns = [];
+
+			for (let j = 0; j < numberOfColumns; j++) {
+				const index = [i, j].join('-');
+				const itemCount = i * numberOfColumns + j;
+
+				columns.push(
+					<div className={`col col-${12 / numberOfColumns}`}>
+						{itemCount < numberOfItems && (
+							<ControlsIdConverterContextProvider
+								key={index}
+								value={{
+									fromControlsId,
+									toControlsId: getToControlsId(
+										collectionId,
+										index
+									),
+								}}
+							>
+								{React.cloneElement(child)}
+							</ControlsIdConverterContextProvider>
+						)}
+					</div>
+				);
+			}
+
+			rows.push(<div className="row">{columns}</div>);
+		}
+
+		return rows;
+	};
+
+	return createRows();
+};
+
+const Stack = ({child, collectionId, numberOfItems}) => {
+	return Array.from({length: numberOfItems}).map((_element, idx) => (
+		<ControlsIdConverterContextProvider
+			key={idx}
+			value={{
+				fromControlsId,
+				toControlsId: getToControlsId(collectionId, idx),
+			}}
+		>
+			{React.cloneElement(child)}
+		</ControlsIdConverterContextProvider>
+	));
+};
+
 const Collection = React.forwardRef(({children, item}, ref) => {
 	const child = React.Children.toArray(children)[0];
 	const collectionConfig = item.config;
 
+	const ContentComponent =
+		collectionConfig.listFormat === COLLECTION_LIST_FORMATS.grid
+			? Grid
+			: Stack;
+
 	return (
 		<div className="page-editor__collection" ref={ref}>
 			{collectionIsMapped(collectionConfig) ? (
-				Array.from({length: collectionConfig.numberOfItems}).map(
-					(_element, idx) => (
-						<ControlsIdConverterContextProvider
-							key={idx}
-							value={{
-								fromControlsId,
-								toControlsId: getToControlsId(item.itemId, idx),
-							}}
-						>
-							{React.cloneElement(child)}
-						</ControlsIdConverterContextProvider>
-					)
-				)
+				<ContentComponent
+					child={child}
+					collectionId={item.itemId}
+					numberOfItems={collectionConfig.numberOfItems}
+				/>
 			) : (
 				<NotMappedMessage />
 			)}

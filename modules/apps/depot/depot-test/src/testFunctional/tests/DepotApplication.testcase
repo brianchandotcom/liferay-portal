@@ -26,6 +26,119 @@ definition {
 		}
 	}
 
+	@description = "This ensures that a depot document cannot be searched on a connected site when DM application is disabled."
+	@priority = "5"
+	test SearchForDisabledDocumentOnSite {
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Search Bar");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Search Results");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Test Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.configureApplication(
+			applicationList = "Documents and Media",
+			status = "Disabled");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		Search.searchCP(searchTerm = "DM Document Title");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "DM Document Title");
+	}
+
+	@description = "This ensures that a depot web content cannot be searched on a connected site when WC application is disabled."
+	@priority = "5"
+	test SearchForDisabledWebContentOnSite {
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Search Bar");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Search Results");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "WC WebContent Title");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Test Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.configureApplication(
+			applicationList = "Web Content",
+			status = "Disabled");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		Search.searchCP(searchTerm = "WC WebContent Title");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "WC WebContent Title");
+	}
+
 	@description = "This ensures that previous asset selections persist in content sets after DM and WC applications are disabled."
 	@priority = "5"
 	test SelectDisabledAssetsFromContentSets {
@@ -230,6 +343,35 @@ definition {
 		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Dynamic Asset List",
 			type = "Dynamic");
+	}
+
+	@description = "This ensures that a user cannot see the sections of the product menu that contain disabled applications."
+	@priority = "5"
+	test ViewDepotWithAllAppsDisabled {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.configureApplication(
+			applicationList = "Content Sets,Documents and Media,Web Content",
+			status = "Disabled");
+
+		DepotNavigator.openDepotAdmin();
+
+		Click(
+			key_card = "Test Depot Name",
+			locator1 = "LexiconCard#CARD_TITLE");
+
+		AssertElementNotPresent(
+			key_category = "Content &amp; Data",
+			locator1 = "ProductMenu#CATEGORY_EXPANDED");
+
+		AssertElementNotPresent(
+			key_category = "Recycle Bin",
+			locator1 = "ProductMenu#CATEGORY_COLLAPSED");
 	}
 
 	@description = "This ensures that a depot web content persists in WCD as previously and it's not appeared in the item selector on a connected site when WC application is disabled."

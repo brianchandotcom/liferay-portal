@@ -94,10 +94,9 @@ definition {
 
 		task ("Assert there is a message in page editor informing the page author that the content is no longer available") {
 			AssertVisible(
-				key_content = "The selected content is no longer available. Please select another.",
-				key_fragmentClass = "entry",
-				key_position = "1",
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
+				key_fragmentName = "Content",
+				key_messageIfo = "The selected content is no longer available. Please select another.",
+				locator1 = "Fragment#MESSAGE_INFO");
 		}
 	}
 

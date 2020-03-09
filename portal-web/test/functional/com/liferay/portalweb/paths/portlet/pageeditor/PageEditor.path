@@ -369,7 +369,7 @@
 <!--FRAGMENT_BODY_TOOLBAR-->
 <tr>
 	<td>FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON</td>
-	<td>//button[@*='Fragment Configuration']</td>
+	<td>//button[@*='${key_elementType} Configuration']</td>
 	<td></td>
 </tr>
 <tr>

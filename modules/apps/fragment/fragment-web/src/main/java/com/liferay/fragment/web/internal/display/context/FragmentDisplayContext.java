@@ -109,14 +109,13 @@ public class FragmentDisplayContext {
 	}
 
 	public String getAvailableActions(Object object) {
-		if (object instanceof FragmentComposition) {
-			if (FragmentPermission.contains(
-					_themeDisplay.getPermissionChecker(),
-					_themeDisplay.getScopeGroupId(),
-					FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
+		if ((object instanceof FragmentComposition) &&
+			FragmentPermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(),
+				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
 
-				return "deleteEntries";
-			}
+			return "deleteEntries";
 		}
 
 		List<String> availableActions = new ArrayList<>();

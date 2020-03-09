@@ -34,7 +34,7 @@ public class ModelResourcePermissionUtil {
 			permissionChecker, className, classPK, actionId);
 	}
 
-	public boolean contains(
+	public static boolean contains(
 		PermissionChecker permissionChecker, long plid, String actionId) {
 
 		return _modelResourcePermission.contains(

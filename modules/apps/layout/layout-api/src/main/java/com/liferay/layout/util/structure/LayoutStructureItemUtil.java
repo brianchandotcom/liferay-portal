@@ -32,6 +32,12 @@ public class LayoutStructureItemUtil {
 			return new CollectionLayoutStructureItem(parentItemId);
 		}
 
+		if (Objects.equals(
+				itemType, LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM)) {
+
+			return new CollectionItemLayoutStructureItem(parentItemId);
+		}
+
 		if (Objects.equals(itemType, LayoutDataItemTypeConstants.TYPE_COLUMN)) {
 			return new ColumnLayoutStructureItem(parentItemId);
 		}

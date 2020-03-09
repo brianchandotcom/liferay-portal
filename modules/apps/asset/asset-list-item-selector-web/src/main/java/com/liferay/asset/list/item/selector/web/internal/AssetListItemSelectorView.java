@@ -244,40 +244,8 @@ public class AssetListItemSelectorView
 			String keywords = ParamUtil.getString(
 				_httpServletRequest, "keywords");
 
-			List<AssetListEntry> assetListEntries = null;
-			int assetListEntriesCount = 0;
-
-			if (Validator.isNotNull(keywords)) {
-				assetListEntries = _assetListEntryService.getAssetListEntries(
-					PortalUtil.getCurrentAndAncestorSiteGroupIds(
-						themeDisplay.getScopeGroupId()),
-					keywords, searchContainer.getStart(),
-					searchContainer.getEnd(),
-					searchContainer.getOrderByComparator());
-
-				assetListEntriesCount =
-					_assetListEntryService.getAssetListEntriesCount(
-						PortalUtil.getCurrentAndAncestorSiteGroupIds(
-							themeDisplay.getScopeGroupId()),
-						keywords);
-			}
-			else {
-				assetListEntries = _assetListEntryService.getAssetListEntries(
-					PortalUtil.getCurrentAndAncestorSiteGroupIds(
-						themeDisplay.getScopeGroupId()),
-					searchContainer.getStart(), searchContainer.getEnd(),
-					searchContainer.getOrderByComparator());
-
-				assetListEntriesCount =
-					_assetListEntryService.getAssetListEntriesCount(
-						PortalUtil.getCurrentAndAncestorSiteGroupIds(
-							themeDisplay.getScopeGroupId()));
-			}
-
-			searchContainer.setResults(assetListEntries);
-			searchContainer.setTotal(assetListEntriesCount);
-
-			return searchContainer;
+			return _getSearchContainer(
+				keywords, themeDisplay.getScopeGroupId(), searchContainer);
 		}
 
 		@Override
@@ -293,6 +261,42 @@ public class AssetListItemSelectorView
 		@Override
 		public boolean isShowSearch() {
 			return true;
+		}
+
+		private SearchContainer _getSearchContainer(
+				String keywords, long groupId, SearchContainer searchContainer)
+			throws PortalException {
+
+			List<AssetListEntry> assetListEntries = null;
+			int assetListEntriesCount = 0;
+
+			if (Validator.isNotNull(keywords)) {
+				assetListEntries = _assetListEntryService.getAssetListEntries(
+					PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
+					keywords, searchContainer.getStart(),
+					searchContainer.getEnd(),
+					searchContainer.getOrderByComparator());
+
+				assetListEntriesCount =
+					_assetListEntryService.getAssetListEntriesCount(
+						PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
+						keywords);
+			}
+			else {
+				assetListEntries = _assetListEntryService.getAssetListEntries(
+					PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
+					searchContainer.getStart(), searchContainer.getEnd(),
+					searchContainer.getOrderByComparator());
+
+				assetListEntriesCount =
+					_assetListEntryService.getAssetListEntriesCount(
+						PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId));
+			}
+
+			searchContainer.setResults(assetListEntries);
+			searchContainer.setTotal(assetListEntriesCount);
+
+			return searchContainer;
 		}
 
 		private final HttpServletRequest _httpServletRequest;

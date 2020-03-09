@@ -100,7 +100,7 @@ definition {
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
 			site = "false",
-			title = "WC WebContent Title");
+			title = "WC Depot WebContent");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -161,9 +161,7 @@ definition {
 			pageName = "Page Name",
 			siteName = "Site Name");
 
-		WebContent.viewPGViaWCD(
-			webContentContent = "WC Depot WebContent",
-			webContentTitle = "Web Content Title");
+		WebContent.viewPGViaWCD(webContentContent = "WC Depot WebContent");
 	}
 
 	@description = "This ensures that a depot web content can be selected through the fragment in a content page on a connected site."

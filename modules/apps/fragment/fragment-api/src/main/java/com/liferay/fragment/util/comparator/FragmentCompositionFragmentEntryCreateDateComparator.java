@@ -16,34 +16,34 @@ package com.liferay.fragment.util.comparator;
 
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Pavel Savinov
  */
-public class FragmentCompositionAndEntryNameComparator
+public class FragmentCompositionFragmentEntryCreateDateComparator
 	extends OrderByComparator<Object> {
 
-	public static final String ORDER_BY_ASC = "name ASC";
+	public static final String ORDER_BY_ASC = "createDate ASC";
 
-	public static final String ORDER_BY_DESC = "name DESC";
+	public static final String ORDER_BY_DESC = "createDate DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"name"};
+	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public FragmentCompositionAndEntryNameComparator() {
-		this(false);
+	public FragmentCompositionFragmentEntryCreateDateComparator() {
+		this(true);
 	}
 
-	public FragmentCompositionAndEntryNameComparator(boolean ascending) {
+	public FragmentCompositionFragmentEntryCreateDateComparator(
+		boolean ascending) {
+
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(Object object1, Object object2) {
-		String name1 = StringPool.BLANK;
-		String name2 = StringPool.BLANK;
+		int value = 0;
 
 		if ((object1 instanceof FragmentComposition) &&
 			(object2 instanceof FragmentComposition)) {
@@ -54,18 +54,17 @@ public class FragmentCompositionAndEntryNameComparator
 			FragmentComposition fragmentComposition2 =
 				(FragmentComposition)object2;
 
-			name1 = StringUtil.toLowerCase(fragmentComposition1.getName());
-			name2 = StringUtil.toLowerCase(fragmentComposition2.getName());
+			DateUtil.compareTo(
+				fragmentComposition1.getCreateDate(),
+				fragmentComposition2.getCreateDate());
 		}
 		else {
 			FragmentEntry fragmentEntry1 = (FragmentEntry)object1;
 			FragmentEntry fragmentEntry2 = (FragmentEntry)object2;
 
-			name1 = StringUtil.toLowerCase(fragmentEntry1.getName());
-			name2 = StringUtil.toLowerCase(fragmentEntry2.getName());
+			DateUtil.compareTo(
+				fragmentEntry1.getCreateDate(), fragmentEntry2.getCreateDate());
 		}
-
-		int value = name1.compareTo(name2);
 
 		if (_ascending) {
 			return value;

@@ -281,7 +281,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 				sb.append("\"${propertyName}\": ");
 
-				<#if allSchemas[propertyType]??>
+				<#if allSchemas[propertyType]?? || stringUtil.equals(propertyType, "Object")>
 					sb.append(String.valueOf(${propertyName}));
 				<#else>
 					<#if propertyType?contains("[]")>
@@ -315,12 +315,12 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 						sb.append("]");
 					<#else>
-						<#if stringUtil.equals(propertyType, "Date") || stringUtil.equals(propertyType, "Object") || stringUtil.equals(propertyType, "String") || enumSchemas?keys?seq_contains(propertyType)>
+						<#if stringUtil.equals(propertyType, "Date") || stringUtil.equals(propertyType, "String") || enumSchemas?keys?seq_contains(propertyType)>
 							sb.append("\"");
 
 							<#if stringUtil.equals(propertyType, "Date")>
 								sb.append(liferayToJSONDateFormat.format(${propertyName}));
-							<#elseif stringUtil.equals(propertyType, "Object") || stringUtil.equals(propertyType, "String")>
+							<#elseif stringUtil.equals(propertyType, "String")>
 								sb.append(_escape(${propertyName}));
 							<#else>
 								sb.append(${propertyName});

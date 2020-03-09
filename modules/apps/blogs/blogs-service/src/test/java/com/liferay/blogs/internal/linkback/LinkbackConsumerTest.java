@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.blogs.linkback;
+package com.liferay.blogs.internal.linkback;
 
-import com.liferay.blogs.internal.linkback.LinkbackConsumerImpl;
-import com.liferay.blogs.web.internal.util.BlogsUtil;
+import com.liferay.blogs.linkback.LinkbackConsumer;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -27,30 +26,21 @@ import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
 /**
  * @author André de Oliveira
  */
-@PrepareForTest(BlogsUtil.class)
-@RunWith(PowerMockRunner.class)
-public class LinkbackConsumerTest extends PowerMockito {
+public class LinkbackConsumerTest {
 
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
-		setUpBlogsUtil();
 
 		_linkbackConsumer = new LinkbackConsumerImpl();
 
@@ -148,10 +138,6 @@ public class LinkbackConsumerTest extends PowerMockito {
 		).URLtoString(
 			url
 		);
-	}
-
-	protected void setUpBlogsUtil() {
-		mockStatic(BlogsUtil.class, Mockito.RETURNS_SMART_NULLS);
 	}
 
 	@Mock

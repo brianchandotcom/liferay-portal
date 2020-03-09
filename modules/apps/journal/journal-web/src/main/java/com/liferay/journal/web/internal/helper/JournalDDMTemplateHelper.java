@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.util;
+package com.liferay.journal.web.internal.helper;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;

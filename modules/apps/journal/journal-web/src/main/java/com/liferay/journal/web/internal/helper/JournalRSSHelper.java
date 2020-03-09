@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.util;
+package com.liferay.journal.web.internal.helper;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;

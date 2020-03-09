@@ -63,9 +63,19 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 
 		searchContainer.setOrderByType(orderByType);
 
-		searchContainer.setRowChecker(
-			new SelectAccountUserRowChecker(
-				liferayPortletResponse, accountEntryId));
+		long accountRoleId = ParamUtil.getLong(
+			liferayPortletRequest, "accountRoleId");
+
+		if (accountRoleId > 0) {
+			searchContainer.setRowChecker(
+				new SelectAccountRoleUserRowChecker(
+					liferayPortletResponse, accountEntryId, accountRoleId));
+		}
+		else {
+			searchContainer.setRowChecker(
+				new SelectAccountUserRowChecker(
+					liferayPortletResponse, accountEntryId));
+		}
 
 		String navigation = ParamUtil.getString(
 			liferayPortletRequest, "navigation", "current-account-users");

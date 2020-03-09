@@ -329,34 +329,6 @@ public class WorkflowTasksBulkSelection {
 	protected Boolean searchByUserRoles;
 
 	@Schema
-	public String[] getTaskNames() {
-		return taskNames;
-	}
-
-	public void setTaskNames(String[] taskNames) {
-		this.taskNames = taskNames;
-	}
-
-	@JsonIgnore
-	public void setTaskNames(
-		UnsafeSupplier<String[], Exception> taskNamesUnsafeSupplier) {
-
-		try {
-			taskNames = taskNamesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] taskNames;
-
-	@Schema
 	public Long getWorkflowDefinitionId() {
 		return workflowDefinitionId;
 	}
@@ -411,6 +383,34 @@ public class WorkflowTasksBulkSelection {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] workflowInstanceIds;
+
+	@Schema
+	public String[] getWorkflowTaskNames() {
+		return workflowTaskNames;
+	}
+
+	public void setWorkflowTaskNames(String[] workflowTaskNames) {
+		this.workflowTaskNames = workflowTaskNames;
+	}
+
+	@JsonIgnore
+	public void setWorkflowTaskNames(
+		UnsafeSupplier<String[], Exception> workflowTaskNamesUnsafeSupplier) {
+
+		try {
+			workflowTaskNames = workflowTaskNamesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] workflowTaskNames;
 
 	@Override
 	public boolean equals(Object object) {
@@ -590,30 +590,6 @@ public class WorkflowTasksBulkSelection {
 			sb.append(searchByUserRoles);
 		}
 
-		if (taskNames != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"taskNames\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < taskNames.length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(taskNames[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < taskNames.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		if (workflowDefinitionId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -637,6 +613,30 @@ public class WorkflowTasksBulkSelection {
 				sb.append(workflowInstanceIds[i]);
 
 				if ((i + 1) < workflowInstanceIds.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (workflowTaskNames != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowTaskNames\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < workflowTaskNames.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(workflowTaskNames[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < workflowTaskNames.length) {
 					sb.append(", ");
 				}
 			}

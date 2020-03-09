@@ -40,6 +40,12 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 			<%
 			row.setCssClass("card-page-item-asset " + row.getCssClass());
 
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"actions", fragmentDisplayContext.getAvailableActions(object)
+				).build()
+			);
+
 			FragmentEntryVerticalCardFactory fragmentEntryVerticalCardFactory = FragmentEntryVerticalCardFactory.getInstance();
 			%>
 

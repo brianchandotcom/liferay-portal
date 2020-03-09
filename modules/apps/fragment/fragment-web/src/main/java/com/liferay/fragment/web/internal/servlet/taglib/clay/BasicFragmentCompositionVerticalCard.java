@@ -86,6 +86,17 @@ public class BasicFragmentCompositionVerticalCard
 	}
 
 	@Override
+	public String getInputName() {
+		return rowChecker.getRowIds() +
+			FragmentComposition.class.getSimpleName();
+	}
+
+	@Override
+	public String getInputValue() {
+		return String.valueOf(_fragmentComposition.getFragmentCollectionId());
+	}
+
+	@Override
 	public List<LabelItem> getLabels() {
 		return LabelItemListBuilder.add(
 			labelItem -> labelItem.setStatus(_fragmentComposition.getStatus())

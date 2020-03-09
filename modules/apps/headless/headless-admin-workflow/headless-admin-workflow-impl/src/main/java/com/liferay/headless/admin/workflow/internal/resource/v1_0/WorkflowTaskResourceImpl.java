@@ -351,7 +351,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 				_workflowTaskManager.search(
 					contextCompany.getCompanyId(), contextUser.getUserId(),
 					workflowTasksBulkSelection.getAssetTitle(),
-					workflowTasksBulkSelection.getTaskNames(),
+					workflowTasksBulkSelection.getWorkflowTaskNames(),
 					workflowTasksBulkSelection.getAssetTypes(),
 					workflowTasksBulkSelection.getAssetPrimaryKeys(),
 					assigneeClassName,
@@ -371,7 +371,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 			_workflowTaskManager.searchCount(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
 				workflowTasksBulkSelection.getAssetTitle(),
-				workflowTasksBulkSelection.getTaskNames(),
+				workflowTasksBulkSelection.getWorkflowTaskNames(),
 				workflowTasksBulkSelection.getAssetTypes(),
 				workflowTasksBulkSelection.getAssetPrimaryKeys(),
 				assigneeClassName, workflowTasksBulkSelection.getAssigneeIds(),

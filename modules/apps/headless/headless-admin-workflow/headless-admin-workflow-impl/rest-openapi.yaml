@@ -538,10 +538,6 @@ components:
                     type: boolean
                 searchByUserRoles:
                     type: boolean
-                taskNames:
-                    items:
-                        type: string
-                    type: array
                 workflowDefinitionId:
                     format: int64
                     type: integer
@@ -549,6 +545,10 @@ components:
                     items:
                         format: int64
                         type: integer
+                    type: array
+                workflowTaskNames:
+                    items:
+                        type: string
                     type: array
             type: object
 info:

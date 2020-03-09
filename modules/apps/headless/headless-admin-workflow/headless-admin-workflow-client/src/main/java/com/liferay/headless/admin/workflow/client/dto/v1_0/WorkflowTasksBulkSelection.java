@@ -239,27 +239,6 @@ public class WorkflowTasksBulkSelection implements Cloneable {
 
 	protected Boolean searchByUserRoles;
 
-	public String[] getTaskNames() {
-		return taskNames;
-	}
-
-	public void setTaskNames(String[] taskNames) {
-		this.taskNames = taskNames;
-	}
-
-	public void setTaskNames(
-		UnsafeSupplier<String[], Exception> taskNamesUnsafeSupplier) {
-
-		try {
-			taskNames = taskNamesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String[] taskNames;
-
 	public Long getWorkflowDefinitionId() {
 		return workflowDefinitionId;
 	}
@@ -301,6 +280,27 @@ public class WorkflowTasksBulkSelection implements Cloneable {
 	}
 
 	protected Long[] workflowInstanceIds;
+
+	public String[] getWorkflowTaskNames() {
+		return workflowTaskNames;
+	}
+
+	public void setWorkflowTaskNames(String[] workflowTaskNames) {
+		this.workflowTaskNames = workflowTaskNames;
+	}
+
+	public void setWorkflowTaskNames(
+		UnsafeSupplier<String[], Exception> workflowTaskNamesUnsafeSupplier) {
+
+		try {
+			workflowTaskNames = workflowTaskNamesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] workflowTaskNames;
 
 	@Override
 	public WorkflowTasksBulkSelection clone()

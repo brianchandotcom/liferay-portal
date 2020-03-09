@@ -230,35 +230,6 @@ public class WorkflowTasksBulkSelectionSerDes {
 			sb.append(workflowTasksBulkSelection.getSearchByUserRoles());
 		}
 
-		if (workflowTasksBulkSelection.getTaskNames() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"taskNames\": ");
-
-			sb.append("[");
-
-			for (int i = 0;
-				 i < workflowTasksBulkSelection.getTaskNames().length; i++) {
-
-				sb.append("\"");
-
-				sb.append(
-					_escape(workflowTasksBulkSelection.getTaskNames()[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) <
-						workflowTasksBulkSelection.getTaskNames().length) {
-
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		if (workflowTasksBulkSelection.getWorkflowDefinitionId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -287,6 +258,38 @@ public class WorkflowTasksBulkSelectionSerDes {
 
 				if ((i + 1) < workflowTasksBulkSelection.
 						getWorkflowInstanceIds().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (workflowTasksBulkSelection.getWorkflowTaskNames() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowTaskNames\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < workflowTasksBulkSelection.getWorkflowTaskNames().length;
+				 i++) {
+
+				sb.append("\"");
+
+				sb.append(
+					_escape(
+						workflowTasksBulkSelection.getWorkflowTaskNames()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) <
+						workflowTasksBulkSelection.
+							getWorkflowTaskNames().length) {
 
 					sb.append(", ");
 				}
@@ -404,15 +407,6 @@ public class WorkflowTasksBulkSelectionSerDes {
 					workflowTasksBulkSelection.getSearchByUserRoles()));
 		}
 
-		if (workflowTasksBulkSelection.getTaskNames() == null) {
-			map.put("taskNames", null);
-		}
-		else {
-			map.put(
-				"taskNames",
-				String.valueOf(workflowTasksBulkSelection.getTaskNames()));
-		}
-
 		if (workflowTasksBulkSelection.getWorkflowDefinitionId() == null) {
 			map.put("workflowDefinitionId", null);
 		}
@@ -431,6 +425,16 @@ public class WorkflowTasksBulkSelectionSerDes {
 				"workflowInstanceIds",
 				String.valueOf(
 					workflowTasksBulkSelection.getWorkflowInstanceIds()));
+		}
+
+		if (workflowTasksBulkSelection.getWorkflowTaskNames() == null) {
+			map.put("workflowTaskNames", null);
+		}
+		else {
+			map.put(
+				"workflowTaskNames",
+				String.valueOf(
+					workflowTasksBulkSelection.getWorkflowTaskNames()));
 		}
 
 		return map;
@@ -514,12 +518,6 @@ public class WorkflowTasksBulkSelectionSerDes {
 						(Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "taskNames")) {
-				if (jsonParserFieldValue != null) {
-					workflowTasksBulkSelection.setTaskNames(
-						toStrings((Object[])jsonParserFieldValue));
-				}
-			}
 			else if (Objects.equals(
 						jsonParserFieldName, "workflowDefinitionId")) {
 
@@ -534,6 +532,12 @@ public class WorkflowTasksBulkSelectionSerDes {
 				if (jsonParserFieldValue != null) {
 					workflowTasksBulkSelection.setWorkflowInstanceIds(
 						toLongs((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "workflowTaskNames")) {
+				if (jsonParserFieldValue != null) {
+					workflowTasksBulkSelection.setWorkflowTaskNames(
+						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else {

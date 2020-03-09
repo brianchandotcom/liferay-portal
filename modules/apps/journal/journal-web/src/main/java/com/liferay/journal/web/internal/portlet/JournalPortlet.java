@@ -154,7 +154,7 @@ public class JournalPortlet extends MVCPortlet {
 				DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
 			renderRequest.setAttribute(
 				JournalDDMTemplateHelper.class.getName(),
-				_journalDDMTemplateUtil);
+				_journalDDMTemplateHelper);
 		}
 
 		renderRequest.setAttribute(
@@ -327,7 +327,7 @@ public class JournalPortlet extends MVCPortlet {
 		_journalDDMEditorConfiguration;
 
 	@Reference
-	private JournalDDMTemplateHelper _journalDDMTemplateUtil;
+	private JournalDDMTemplateHelper _journalDDMTemplateHelper;
 
 	private volatile JournalFileUploadsConfiguration
 		_journalFileUploadsConfiguration;

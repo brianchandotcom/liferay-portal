@@ -19,7 +19,7 @@
 <%
 JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = new JournalEditDDMTemplateDisplayContext(request);
 
-JournalDDMTemplateHelper journalDDMTemplateUtil = (JournalDDMTemplateHelper)request.getAttribute(JournalDDMTemplateHelper.class.getName());
+JournalDDMTemplateHelper journalDDMTemplateHelper = (JournalDDMTemplateHelper)request.getAttribute(JournalDDMTemplateHelper.class.getName());
 %>
 
 <aui:input name="scriptContent" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getScript() %>" />
@@ -56,7 +56,7 @@ JournalDDMTemplateHelper journalDDMTemplateUtil = (JournalDDMTemplateHelper)requ
 										%>
 
 											<li class="palette-item-container">
-												<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(journalDDMTemplateUtil.getDataContent(templateVariableDefinition, journalEditDDMTemplateDisplayContext.getLanguage())) %>" data-title="<%= HtmlUtil.escapeAttribute(journalDDMTemplateUtil.getPaletteItemTitle(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), templateVariableDefinition)) %>">
+												<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(journalDDMTemplateHelper.getDataContent(templateVariableDefinition, journalEditDDMTemplateDisplayContext.getLanguage())) %>" data-title="<%= HtmlUtil.escapeAttribute(journalDDMTemplateHelper.getPaletteItemTitle(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), templateVariableDefinition)) %>">
 													<%= HtmlUtil.escape(LanguageUtil.get(request, journalEditDDMTemplateDisplayContext.getTemplateHandlerResourceBundle(), templateVariableDefinition.getLabel())) %>
 
 													<c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>

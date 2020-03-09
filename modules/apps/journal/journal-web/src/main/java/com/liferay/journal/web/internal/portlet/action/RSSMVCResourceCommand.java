@@ -45,18 +45,18 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		return _journalRSSUtil.getRSS(resourceRequest, resourceResponse);
+		return _journalRSSHelper.getRSS(resourceRequest, resourceResponse);
 	}
 
 	@Reference
-	protected void setJournalRSSHelper(JournalRSSHelper journalRSSUtil) {
-		_journalRSSUtil = journalRSSUtil;
+	protected void setJournalRSSHelper(JournalRSSHelper journalRSSHelper) {
+		_journalRSSHelper = journalRSSHelper;
 	}
 
-	protected void unsetJournalRSSHelper(JournalRSSHelper journalRSSUtil) {
-		_journalRSSUtil = null;
+	protected void unsetJournalRSSHelper(JournalRSSHelper journalRSSHelper) {
+		_journalRSSHelper = null;
 	}
 
-	private JournalRSSHelper _journalRSSUtil;
+	private JournalRSSHelper _journalRSSHelper;
 
 }

@@ -310,7 +310,7 @@ definition {
 	macro save {
 		Click(locator1 = "AppBuilder#SAVE_BUTTON");
 
-		AppBuilderAdmin.waitForSaveButtonNotVisible()
+		AppBuilderAdmin.waitForSaveButtonNotVisible();
 	}
 
 	macro searchByItem {
@@ -501,13 +501,14 @@ definition {
 	}
 
 	macro waitForSaveButtonNotVisible {
-		while (IsVisible(locator1 = "AppBuilder#SAVE_BUTTON")) {
+		while (IsElementPresent(locator1 = "AppBuilder#SAVE_BUTTON")) {
 			Pause(locator1 = "1000");
 		}
+		Pause(locator1 = "1000");
 	}
 
 	macro waitForSaveButtonVisible {
-		while (IsNotVisible(locator1 = "AppBuilder#SAVE_BUTTON")) {
+		while (IsElementNotPresent(locator1 = "AppBuilder#SAVE_BUTTON")) {
 			Pause(locator1 = "1000");
 		}
 	}

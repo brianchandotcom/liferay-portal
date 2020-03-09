@@ -93,6 +93,14 @@ public class ConfigurationUpgradeStepFactoryTest {
 			boolean configFile, boolean data, boolean factory)
 		throws Exception {
 
+		_testUpgradeConfig(configFile, data, factory, configFile);
+	}
+
+	private void _testUpgradeConfig(
+			boolean configFile, boolean data, boolean factory,
+			boolean felixFileName)
+		throws Exception {
+
 		Configuration configuration = null;
 
 		String oldPid = _OLD_PID;
@@ -131,7 +139,7 @@ public class ConfigurationUpgradeStepFactoryTest {
 						oldPid);
 				}
 
-				if (configFile) {
+				if (felixFileName) {
 					URI uri = oldConfigFile.toURI();
 
 					ConfigurationTestUtil.saveConfiguration(
@@ -168,7 +176,7 @@ public class ConfigurationUpgradeStepFactoryTest {
 
 				String fileName = dictionary.get("felix.fileinstall.filename");
 
-				if (configFile) {
+				if (felixFileName) {
 					URI uri = newConfigFile.toURI();
 
 					Assert.assertEquals(

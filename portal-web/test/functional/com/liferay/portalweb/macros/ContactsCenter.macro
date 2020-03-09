@@ -48,25 +48,53 @@ definition {
 	}
 
 	macro viewContactCenterContainerPG {
-		AssertTextEquals(
-			locator1 = "ContactsCenter#CONTACT_CONNECTIONS_COUNT",
-			value1 = "You have ${contactConnection} connections.");
+		if ("${contactConnection}" != "1") {
+			AssertTextEquals(
+				locator1 = "ContactsCenter#CONTACT_CONNECTIONS_COUNT",
+				value1 = "You have ${contactConnection} connections.");
+		}
+		else{
+			AssertTextEquals(
+				locator1 = "ContactsCenter#CONTACT_CONNECTIONS_COUNT",
+				value1 = "You have one connection.");
+		}
 
 		AssertTextEquals(
 			locator1 = "ContactsCenter#CONTACT_FOLLOWING_COUNT",
 			value1 = "You are following ${contactFollowing} people.");
 
-		AssertTextEquals(
-			locator1 = "ContactsCenter#CONTACT_FOLLOWER_COUNT",
-			value1 = "You have ${contactFollower} followers.");
+		if ("${contactFollower}" != "1") {
+			AssertTextEquals(
+				locator1 = "ContactsCenter#CONTACT_FOLLOWER_COUNT",
+				value1 = "You have ${contactFollower} followers.");
+		}
+		else{
+			AssertTextEquals(
+				locator1 = "ContactsCenter#CONTACT_FOLLOWER_COUNT",
+				value1 = "You have one follower.");
+		}
 
-		AssertTextEquals(
-			locator1 = "ContactsCenter#MY_CONTACTS_COUNT",
-			value1 = "View my ${myContact} contacts.");
+		if ("${myContact}" != "1") {
+			AssertTextEquals(
+				locator1 = "ContactsCenter#MY_CONTACTS_COUNT",
+				value1 = "View my ${myContact} contacts.");
+		}
+		else{
+			AssertTextEquals(
+				locator1 = "ContactsCenter#MY_CONTACTS_COUNT",
+				value1 = "View one contact.");
+		}
 
-		AssertTextEquals(
-			locator1 = "ContactsCenter#All_USERS_COUNT",
-			value1 = "View all ${allUser} users.");
+		if ("${allUser}" != "1") {
+			AssertTextEquals(
+				locator1 = "ContactsCenter#All_USERS_COUNT",
+				value1 = "View all ${allUser} users.");
+		}
+		else{
+			AssertTextEquals(
+				locator1 = "ContactsCenter#All_USERS_COUNT",
+				value1 = "View one user.");
+		}
 	}
 
 	macro viewContactPG {

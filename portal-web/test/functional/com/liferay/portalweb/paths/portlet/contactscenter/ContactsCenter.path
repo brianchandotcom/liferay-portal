@@ -25,22 +25,22 @@
 </tr>
 <tr>
 	<td>CONTACT_CONNECTIONS_COUNT</td>
-	<td>//div[contains(@class,'contacts-count') and contains(@class,'connections')]</td>
+	<td>//div[contains(@class,'contacts-count') and contains(@class,'connection')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTACT_FOLLOWING_COUNT</td>
-	<td>//div[contains(@class,'contacts-count') and contains(@class,'followings')]</td>
+	<td>//div[contains(@class,'contacts-count') and contains(@class,'following')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTACT_FOLLOWER_COUNT</td>
-	<td>//div[contains(@class,'contacts-count') and contains(@class,'followers')]</td>
+	<td>//div[contains(@class,'contacts-count') and contains(@class,'follower')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MY_CONTACTS_COUNT</td>
-	<td>//div[contains(@class,'contacts-count') and contains(@class,'contacts')]/*[contains(text(),'View my')]</td>
+	<td>//div[contains(@class,'contacts-count') and contains(@class,'contact')]/*[contains(text(),'View')]</td>
 	<td></td>
 </tr>
 <tr>

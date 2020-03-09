@@ -47,21 +47,11 @@ public class DeleteFragmentEntriesMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] deleteFragmentEntryIds = null;
-
 		long fragmentEntryId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryId");
 
-		if (fragmentEntryId > 0) {
-			deleteFragmentEntryIds = new long[] {fragmentEntryId};
-		}
-		else {
-			deleteFragmentEntryIds = ParamUtil.getLongValues(
-				actionRequest, "rowIds");
-		}
-
 		try {
-			_fragmentEntryService.deleteFragmentEntries(deleteFragmentEntryIds);
+			_fragmentEntryService.deleteFragmentEntry(fragmentEntryId);
 		}
 		catch (RequiredFragmentEntryException requiredFragmentEntryException) {
 			SessionErrors.add(

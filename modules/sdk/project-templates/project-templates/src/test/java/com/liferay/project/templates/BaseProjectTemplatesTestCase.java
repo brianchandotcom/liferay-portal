@@ -478,7 +478,7 @@ public interface BaseProjectTemplatesTestCase {
 		}
 
 		if (!liferayVersionSet) {
-			completeArgs.add("-DliferayVersion=7.3.0");
+			completeArgs.add("-DliferayVersion=" + ProjectTemplateArgs.getLiferayVersion());
 		}
 
 		if (!projectTypeSet) {
@@ -840,9 +840,9 @@ public interface BaseProjectTemplatesTestCase {
 			enableTargetPlatformInWorkspace(workspaceDir, "7.2.1");
 		}
 		else {
-			workspaceDir = buildWorkspace(temporaryFolder, "7.3.0");
+			workspaceDir = buildWorkspace(temporaryFolder, ProjectTemplateArgs.getLiferayVersion());
 
-			enableTargetPlatformInWorkspace(workspaceDir, "7.3.0");
+			enableTargetPlatformInWorkspace(workspaceDir, ProjectTemplateArgs.getLiferayVersion());
 		}
 
 		File modulesDir = new File(workspaceDir, "modules");

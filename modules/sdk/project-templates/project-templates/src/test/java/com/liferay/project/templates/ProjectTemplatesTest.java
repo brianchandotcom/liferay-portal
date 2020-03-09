@@ -2794,7 +2794,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateWarCoreExtInWorkspace() throws Exception {
 		File modulesDir = new File(
-			buildWorkspace(temporaryFolder, "7.3.0"), "modules");
+			buildWorkspace(temporaryFolder, ProjectTemplateArgs.getLiferayVersion()), "modules");
 
 		File projectDir = buildTemplateWithGradle(
 			modulesDir, "war-core-ext", "test-war-core-ext");
@@ -3365,7 +3365,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File gradleProjectDir = _buildTemplateWithGradle(template, name);
 
-		File workspaceDir = buildWorkspace(temporaryFolder, "7.3.0");
+		File workspaceDir = buildWorkspace(temporaryFolder, ProjectTemplateArgs.getLiferayVersion());
 
 		File modulesDir = new File(workspaceDir, "modules");
 
@@ -3404,7 +3404,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testComparePortalToolsBundleSupportPluginVersions()
 		throws Exception {
 
-		File workspaceDir = buildWorkspace(temporaryFolder, "7.3.0");
+		File workspaceDir = buildWorkspace(temporaryFolder, ProjectTemplateArgs.getLiferayVersion());
 
 		Optional<String> result = executeGradle(
 			workspaceDir, true, _gradleDistribution, ":tasks");
@@ -3419,7 +3419,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		}
 
 		File mavenWorkspaceDir = _buildTemplateWithMaven(
-			"workspace", "mavenWS", "liferayMaven", "-DliferayVersion=7.3.0");
+			"workspace", "mavenWS", "liferayMaven", "-DliferayVersion=" + ProjectTemplateArgs.getLiferayVersion());
 
 		testContains(
 			mavenWorkspaceDir, "pom.xml",
@@ -3482,7 +3482,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testSassCompilerMavenWorkspace() throws Exception {
 		File nativeSassWorkspaceDir = _buildTemplateWithMaven(
 			"workspace", "nativeSassMavenWS", "liferayMaven",
-			"-DliferayVersion=7.3.0");
+			"-DliferayVersion=" + ProjectTemplateArgs.getLiferayVersion());
 
 		File nativeSassModulesDir = new File(nativeSassWorkspaceDir, "modules");
 
@@ -3501,7 +3501,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File rubySassWorkspaceDir = _buildTemplateWithMaven(
 			"workspace", "rubySassMavenWS", "liferayMaven",
-			"-DliferayVersion=7.3.0");
+			"-DliferayVersion=" + ProjectTemplateArgs.getLiferayVersion());
 
 		File rubySassModulesDir = new File(rubySassWorkspaceDir, "modules");
 
@@ -3537,7 +3537,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 	@Test
 	public void testSassCompilerWorkspace() throws Exception {
-		File nativeSassWorkspaceDir = buildWorkspace(temporaryFolder, "7.3.0");
+		File nativeSassWorkspaceDir = buildWorkspace(temporaryFolder, ProjectTemplateArgs.getLiferayVersion());
 
 		File nativeSassModulesDir = new File(nativeSassWorkspaceDir, "modules");
 
@@ -3554,8 +3554,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			nativeSassOutput,
 			nativeSassOutput.contains("Using native Sass compiler"));
 
-		File rubySassWorkspaceDir = _buildTemplateWithGradle(
-			WorkspaceUtil.WORKSPACE, "rubySassWorkspace");
+		File rubySassWorkspaceDir = buildWorkspace(temporaryFolder, ProjectTemplateArgs.getLiferayVersion());
 
 		writeGradlePropertiesInWorkspace(
 			rubySassWorkspaceDir, "sass.compiler.class.name=ruby");

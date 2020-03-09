@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.image.editor.capability.rotate.internal;
+package com.liferay.frontend.image.editor.web.internal.capability.rotate;
 
 import com.liferay.frontend.image.editor.capability.BaseImageEditorCapability;
 import com.liferay.frontend.image.editor.capability.ImageEditorCapability;
@@ -61,7 +61,7 @@ public class ImageEditorCapabilityRotate extends BaseImageEditorCapability {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.image.editor.capability.rotate)"
+		target = "(osgi.web.symbolicname=com.liferay.frontend.image.editor.web)"
 	)
 	private ServletContext _servletContext;
 

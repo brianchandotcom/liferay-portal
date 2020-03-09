@@ -51,23 +51,8 @@ import org.osgi.service.component.annotations.Reference;
 public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 	implements MVCResourceCommand {
 
-	public File getFile(ResourceRequest resourceRequest)
+	public File getFile(long[] exportLayoutPageTemplateEntryIds)
 		throws PortletException {
-
-		long[] exportLayoutPageTemplateEntryIds = null;
-
-		long layoutPageTemplateEntryEntryId = ParamUtil.getLong(
-			resourceRequest, "layoutPageTemplateEntryId");
-
-		if (layoutPageTemplateEntryEntryId > 0) {
-			exportLayoutPageTemplateEntryIds = new long[] {
-				layoutPageTemplateEntryEntryId
-			};
-		}
-		else {
-			exportLayoutPageTemplateEntryIds = ParamUtil.getLongValues(
-				resourceRequest, "rowIds");
-		}
 
 		try {
 			List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
@@ -91,16 +76,39 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 		}
 	}
 
+	public String getFileName(long[] exportLayoutPageTemplateEntryIds) {
+		return "page-templates-" + Time.getTimestamp() + ".zip";
+	}
+
 	@Override
 	public boolean serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
+		long[] exportLayoutPageTemplateEntryIds = null;
+
+		long layoutPageTemplateEntryEntryId = ParamUtil.getLong(
+			resourceRequest, "layoutPageTemplateEntryId");
+
+		if (layoutPageTemplateEntryEntryId > 0) {
+			exportLayoutPageTemplateEntryIds = new long[] {
+				layoutPageTemplateEntryEntryId
+			};
+		}
+		else {
+			exportLayoutPageTemplateEntryIds = ParamUtil.getLongValues(
+				resourceRequest, "rowIds");
+		}
+
+		if (exportLayoutPageTemplateEntryIds.length == 0) {
+			return false;
+		}
+
 		try {
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
-				"page-templates-" + Time.getTimestamp() + ".zip",
-				new FileInputStream(getFile(resourceRequest)),
+				getFileName(exportLayoutPageTemplateEntryIds),
+				new FileInputStream(getFile(exportLayoutPageTemplateEntryIds)),
 				ContentTypes.APPLICATION_ZIP);
 		}
 		catch (Exception exception) {

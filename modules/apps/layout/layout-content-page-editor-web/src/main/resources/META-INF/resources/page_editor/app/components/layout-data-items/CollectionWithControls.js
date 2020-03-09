@@ -19,14 +19,14 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
-import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
+import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
 import {useSelector} from '../../store/index';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import Collection from './Collection';
 
 const CollectionWithControls = React.forwardRef(({item, layoutData}, ref) => {
-	const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
+	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
 
 	const buttons = [];
 
@@ -38,7 +38,7 @@ const CollectionWithControls = React.forwardRef(({item, layoutData}, ref) => {
 		</Collection>
 	);
 
-	return showLayoutItemTopper ? (
+	return canUpdateLayoutContent ? (
 		<Topper item={item} itemRef={ref} layoutData={layoutData}>
 			{() => content}
 		</Topper>

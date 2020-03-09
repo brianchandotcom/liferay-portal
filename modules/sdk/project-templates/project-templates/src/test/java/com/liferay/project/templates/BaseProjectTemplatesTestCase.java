@@ -463,8 +463,6 @@ public interface BaseProjectTemplatesTestCase {
 		completeArgs.add("-DartifactId=" + name);
 		completeArgs.add("-Dversion=1.0.0");
 
-		String liferayVersion = null;
-
 		boolean liferayVersionSet = false;
 		boolean projectTypeSet = false;
 
@@ -472,7 +470,6 @@ public interface BaseProjectTemplatesTestCase {
 			completeArgs.add(arg);
 
 			if (arg.startsWith("-DliferayVersion=")) {
-				liferayVersion = arg.substring(17);
 				liferayVersionSet = true;
 			}
 			else if (arg.startsWith("-DprojectType=")) {

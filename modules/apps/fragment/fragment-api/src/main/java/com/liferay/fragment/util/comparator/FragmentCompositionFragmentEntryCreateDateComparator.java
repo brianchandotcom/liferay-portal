@@ -19,6 +19,8 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.Date;
+
 /**
  * @author Pavel Savinov
  */
@@ -43,28 +45,8 @@ public class FragmentCompositionFragmentEntryCreateDateComparator
 
 	@Override
 	public int compare(Object object1, Object object2) {
-		int value = 0;
-
-		if ((object1 instanceof FragmentComposition) &&
-			(object2 instanceof FragmentComposition)) {
-
-			FragmentComposition fragmentComposition1 =
-				(FragmentComposition)object1;
-
-			FragmentComposition fragmentComposition2 =
-				(FragmentComposition)object2;
-
-			DateUtil.compareTo(
-				fragmentComposition1.getCreateDate(),
-				fragmentComposition2.getCreateDate());
-		}
-		else {
-			FragmentEntry fragmentEntry1 = (FragmentEntry)object1;
-			FragmentEntry fragmentEntry2 = (FragmentEntry)object2;
-
-			DateUtil.compareTo(
-				fragmentEntry1.getCreateDate(), fragmentEntry2.getCreateDate());
-		}
+		int value = DateUtil.compareTo(
+			getCreateDate(object1), getCreateDate(object2));
 
 		if (_ascending) {
 			return value;
@@ -90,6 +72,19 @@ public class FragmentCompositionFragmentEntryCreateDateComparator
 	@Override
 	public boolean isAscending() {
 		return _ascending;
+	}
+
+	protected Date getCreateDate(Object object) {
+		if (object instanceof FragmentComposition) {
+			FragmentComposition fragmentComposition =
+				(FragmentComposition)object;
+
+			return fragmentComposition.getCreateDate();
+		}
+
+		FragmentEntry fragmentEntry = (FragmentEntry)object;
+
+		return fragmentEntry.getCreateDate();
 	}
 
 	private final boolean _ascending;

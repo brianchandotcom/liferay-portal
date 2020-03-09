@@ -14,26 +14,33 @@
 
 package com.liferay.redirect.web.internal.util.comparator;
 
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.redirect.model.RedirectEntry;
+
+import java.util.Date;
 
 /**
  * @author Alejandro Tardín
  */
-public class RedirectEntrySourceURLComparator
-	extends BaseRedirectEntryComparator<String> {
+public abstract class BaseRedirectEntryDateComparator
+	extends BaseRedirectEntryComparator<Date> {
 
-	public RedirectEntrySourceURLComparator(boolean ascending) {
+	public BaseRedirectEntryDateComparator(boolean ascending) {
 		super(ascending);
 	}
 
 	@Override
-	protected String getFieldName() {
-		return "sourceURL";
-	}
+	public int compare(
+		RedirectEntry redirectEntry1, RedirectEntry redirectEntry2) {
 
-	@Override
-	protected String getFieldValue(RedirectEntry redirectEntry) {
-		return redirectEntry.getSourceURL();
+		int value = DateUtil.compareTo(
+			redirectEntry2.getCreateDate(), redirectEntry2.getCreateDate());
+
+		if (isAscending()) {
+			return value;
+		}
+
+		return -value;
 	}
 
 }

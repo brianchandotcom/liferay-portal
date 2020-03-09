@@ -14,17 +14,28 @@
 
 package com.liferay.redirect.web.internal.util.comparator;
 
-import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.redirect.model.RedirectEntry;
+
+import java.util.Date;
 
 /**
  * @author Alejandro Tardín
  */
 public class RedirectEntryModifiedDateComparator
-	extends StagedModelModifiedDateComparator<RedirectEntry> {
+	extends BaseRedirectEntryDateComparator {
 
 	public RedirectEntryModifiedDateComparator(boolean ascending) {
 		super(ascending);
+	}
+
+	@Override
+	protected String getFieldName() {
+		return "modifiedDate";
+	}
+
+	@Override
+	protected Date getFieldValue(RedirectEntry redirectEntry) {
+		return redirectEntry.getModifiedDate();
 	}
 
 }

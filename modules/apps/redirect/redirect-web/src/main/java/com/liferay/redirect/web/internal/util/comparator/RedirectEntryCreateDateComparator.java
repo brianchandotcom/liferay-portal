@@ -14,59 +14,28 @@
 
 package com.liferay.redirect.web.internal.util.comparator;
 
-import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.redirect.model.RedirectEntry;
+
+import java.util.Date;
 
 /**
  * @author Alejandro Tardín
  */
 public class RedirectEntryCreateDateComparator
-	extends OrderByComparator<RedirectEntry> {
-
-	public static final String ORDER_BY_ASC = "RedirectEntry.createDate ASC";
-
-	public static final String ORDER_BY_DESC = "RedirectEntry.createDate DESC";
-
-	public static final String[] ORDER_BY_FIELDS = {"createDate"};
+	extends BaseRedirectEntryDateComparator {
 
 	public RedirectEntryCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		super(ascending);
 	}
 
 	@Override
-	public int compare(
-		RedirectEntry redirectEntry1, RedirectEntry redirectEntry2) {
-
-		int value = DateUtil.compareTo(
-			redirectEntry2.getCreateDate(), redirectEntry2.getCreateDate());
-
-		if (_ascending) {
-			return value;
-		}
-
-		return -value;
+	protected String getFieldName() {
+		return "createDate";
 	}
 
 	@Override
-	public String getOrderBy() {
-		if (_ascending) {
-			return ORDER_BY_ASC;
-		}
-
-		return ORDER_BY_DESC;
+	protected Date getFieldValue(RedirectEntry redirectEntry) {
+		return redirectEntry.getCreateDate();
 	}
-
-	@Override
-	public String[] getOrderByFields() {
-		return ORDER_BY_FIELDS;
-	}
-
-	@Override
-	public boolean isAscending() {
-		return _ascending;
-	}
-
-	private final boolean _ascending;
 
 }

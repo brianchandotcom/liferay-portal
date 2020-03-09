@@ -31,6 +31,11 @@ export default function InfoPanel({title, url}) {
 					setContent(content);
 					setLoading(false);
 				}
+			})
+			.catch(error => {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
 			});
 	}, [isMounted, url]);
 

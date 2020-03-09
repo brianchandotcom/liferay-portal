@@ -51,15 +51,11 @@ public class DBPartitionHelperUtil {
 		Connection connection = CurrentConnectionUtil.getConnection(
 			InfrastructureUtil.getDataSource());
 
-		try {
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"create schema if not exists " +
-							_getSchemaName(companyId) +
-								" character set utf8")) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"create schema if not exists " + _getSchemaName(companyId) +
+					" character set utf8")) {
 
-				preparedStatement.executeUpdate();
-			}
+			preparedStatement.executeUpdate();
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 

@@ -61,7 +61,9 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			rs.first();
+			if (!rs.next()) {
+				return urlSubject;
+			};
 
 			int mbMessageCount = rs.getInt(1);
 

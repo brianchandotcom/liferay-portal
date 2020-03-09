@@ -17,7 +17,7 @@ package com.liferay.fragment.web.internal.portlet.action;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
-import com.liferay.fragment.web.internal.portlet.util.ExportUtil;
+import com.liferay.fragment.web.internal.portlet.util.ExportHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -85,7 +85,7 @@ public class ExportAllFragmentEntriesMVCResourceCommand
 	}
 
 	@Reference
-	private ExportUtil _exportUtil;
+	private ExportHelper _exportUtil;
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;

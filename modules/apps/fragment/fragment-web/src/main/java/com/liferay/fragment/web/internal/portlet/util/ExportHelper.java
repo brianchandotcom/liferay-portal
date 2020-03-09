@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = ExportUtil.class)
-public class ExportUtil {
+@Component(immediate = true, service = ExportHelper.class)
+public class ExportHelper {
 
 	public File exportFragmentCollections(
 			List<FragmentCollection> fragmentCollections)

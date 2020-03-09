@@ -142,9 +142,9 @@ public class DBPartitionHelperUtil {
 			DBInspector dbInspector, String tableName)
 		throws Exception {
 
-		if (!dbInspector.hasColumn(tableName, "companyId") ||
-			tableName.equals("Portlet") || tableName.equals("Company") ||
-			tableName.equals("VirtualHost")) {
+		if (tableName.equals("Portlet") || tableName.equals("Company") ||
+			tableName.equals("VirtualHost") ||
+			!dbInspector.hasColumn(tableName, "companyId")) {
 
 			return true;
 		}

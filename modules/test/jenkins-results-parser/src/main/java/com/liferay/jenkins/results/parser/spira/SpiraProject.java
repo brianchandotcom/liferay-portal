@@ -181,6 +181,37 @@ public class SpiraProject extends BaseSpiraArtifact {
 			this, new SearchQuery.SearchParameter("Path", testCasePath));
 	}
 
+	public SpiraTestSet getSpiraTestSetByID(int testSetID) {
+		List<SpiraTestSet> spiraTestSets = SpiraTestSet.getSpiraTestSets(
+			this,
+			new SearchQuery.SearchParameter(SpiraTestSet.ID_KEY, testSetID));
+
+		if (spiraTestSets.size() > 1) {
+			throw new RuntimeException("Duplicate test set ID " + testSetID);
+		}
+
+		if (spiraTestSets.isEmpty()) {
+			throw new RuntimeException("Missing test set ID " + testSetID);
+		}
+
+		return spiraTestSets.get(0);
+	}
+
+	public SpiraTestSet getSpiraTestSetByPath(String testSetPath) {
+		List<SpiraTestSet> spiraTestSets = getSpiraTestSetsByPath(testSetPath);
+
+		if (spiraTestSets.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate test set path " + testSetPath);
+		}
+
+		if (spiraTestSets.isEmpty()) {
+			throw new RuntimeException("Missing test set path " + testSetPath);
+		}
+
+		return spiraTestSets.get(0);
+	}
+
 	public SpiraTestSetFolder getSpiraTestSetFolderByID(int testSetFolderID) {
 		List<SpiraTestSetFolder> spiraTestSetFolders =
 			SpiraTestSetFolder.getSpiraTestSetFolders(
@@ -225,6 +256,11 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 		return SpiraTestSetFolder.getSpiraTestSetFolders(
 			this, new SearchQuery.SearchParameter("Path", testCaseSetPath));
+	}
+
+	public List<SpiraTestSet> getSpiraTestSetsByPath(String testSetPath) {
+		return SpiraTestSet.getSpiraTestSets(
+			this, new SearchQuery.SearchParameter("Path", testSetPath));
 	}
 
 	protected static final String ID_KEY = "ProjectId";

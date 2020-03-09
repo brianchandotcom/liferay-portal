@@ -24,6 +24,35 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-107017."
+	@priority = "4"
+	test CreateUserViaJSONWSAPIUI {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/api/jsonws?contextName=&signature=/user/add-user-31-long-boolean-java.lang.String-java.lang.String-boolean-java.lang.String-java.lang.String-long-java.lang.String-java.util.Locale-java.lang.String-java.lang.String-java.lang.String-long-long-boolean-int-int-int-java.lang.String-%5BJ-%5BJ-%5BJ-%5BJ-java.util.List-java.util.List-java.util.List-java.util.List-java.util.List-boolean-com.liferay.portal.kernel.service.ServiceContext");
+
+		JSONUser.addUserByJSONWSUI(
+			userFirstName = "testfUI",
+			userLastName = "testlUI");
+
+		AssertHTMLSourceTextPresent(
+			locator1 = "JSONWS#SECURITY_RESULT",
+			value1 = "Welcome testfUI testlUI!");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		var key_userScreenName = "testui";
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizations#USER_TABLE_NAME",
+			value1 = "testfUI testlUI");
+	}
+
 	@description = "This is a use case for LPS-83566."
 	@priority = "5"
 	test EscapeUrlRedirectWithGroovyScript {

@@ -1020,9 +1020,9 @@ definition {
 	macro editViaContentPanel {
 		PageEditor.gotoTab(tabName = "Contents");
 
-		LexiconEntry.gotoFragmentEllipsisMenuItem(
+		LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
 			menuItem = "Edit",
-			webContentTitle = "${webContentTitleEdit}");
+			rowEntry = "${webContentTitle}");
 
 		WebContent.addCP(webContentTitle = "${webContentTitleEdit}");
 

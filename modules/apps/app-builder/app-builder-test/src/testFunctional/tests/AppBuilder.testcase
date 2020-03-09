@@ -1518,7 +1518,7 @@ definition {
 			fieldName = "Nickname",
 			fieldValue = "Tester");
 
-		AppBuilderAdmin.save();
+		Click(locator1 = "AppBuilder#SAVE_BUTTON");
 
 		AppBuilderAdmin.validateSuccessMessage();
 

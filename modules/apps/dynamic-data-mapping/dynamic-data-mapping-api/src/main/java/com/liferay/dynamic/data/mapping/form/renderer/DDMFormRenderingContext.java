@@ -37,6 +37,10 @@ public class DDMFormRenderingContext {
 		_properties.put(key, value);
 	}
 
+	public String getCancelLabel() {
+		return _cancelLabel;
+	}
+
 	public String getContainerId() {
 		return _containerId;
 	}
@@ -69,6 +73,10 @@ public class DDMFormRenderingContext {
 		return (T)_properties.get(key);
 	}
 
+	public String getRedirectURL() {
+		return _redirectURL;
+	}
+
 	public String getSubmitLabel() {
 		return _submitLabel;
 	}
@@ -85,6 +93,10 @@ public class DDMFormRenderingContext {
 		return MapUtil.getBoolean(_properties, "sharedURL");
 	}
 
+	public boolean isShowCancelButton() {
+		return _showCancelButton;
+	}
+
 	public boolean isShowRequiredFieldsWarning() {
 		return _showRequiredFieldsWarning;
 	}
@@ -95,6 +107,10 @@ public class DDMFormRenderingContext {
 
 	public boolean isViewMode() {
 		return MapUtil.getBoolean(_properties, "viewMode");
+	}
+
+	public void setCancelLabel(String cancelLabel) {
+		_cancelLabel = cancelLabel;
 	}
 
 	public void setContainerId(String containerId) {
@@ -131,12 +147,20 @@ public class DDMFormRenderingContext {
 		_readOnly = readOnly;
 	}
 
+	public void setRedirectURL(String redirectURL) {
+		_redirectURL = redirectURL;
+	}
+
 	public void setReturnFullContext(boolean fullContext) {
 		_properties.put("returnFullContext", fullContext);
 	}
 
 	public void setSharedURL(boolean sharedURL) {
 		_properties.put("sharedURL", sharedURL);
+	}
+
+	public void setShowCancelButton(boolean showCancelButton) {
+		_showCancelButton = showCancelButton;
 	}
 
 	public void setShowRequiredFieldsWarning(
@@ -157,6 +181,7 @@ public class DDMFormRenderingContext {
 		_properties.put("viewMode", viewMode);
 	}
 
+	private String _cancelLabel;
 	private String _containerId;
 	private DDMFormValues _ddmFormValues;
 	private long _groupId;
@@ -166,6 +191,8 @@ public class DDMFormRenderingContext {
 	private String _portletNamespace;
 	private final Map<String, Object> _properties = new HashMap<>();
 	private boolean _readOnly;
+	private String _redirectURL;
+	private boolean _showCancelButton = true;
 	private boolean _showRequiredFieldsWarning = true;
 	private boolean _showSubmitButton = true;
 	private String _submitLabel;

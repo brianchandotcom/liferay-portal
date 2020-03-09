@@ -2,8 +2,10 @@
 
 {deltemplate PageRenderer.container variant="'wizard'"}
 	{@param activePage: number}
+	{@param cancelLabel: string}
 	{@param pageIndex: number}
 	{@param pages: ?}
+	{@param showCancelButton: bool}
 	{@param showSubmitButton: bool}
 	{@param spritemap: string}
 	{@param submitLabel: string}
@@ -16,6 +18,7 @@
 	{@param? empty: bool}
 	{@param? page: ?}
 	{@param? readOnly: bool}
+	{@param? redirectURL: string}
 	{@param? strings: map<string, string>}
 
 	<div class="ddm-form-page-container wizard">
@@ -60,7 +63,10 @@
 			{if length($pages) > 0}
 				{call DDM.Form.PaginationControls.render}
 					{param activePage: $activePage /}
+					{param cancelLabel: $cancelLabel /}
 					{param readOnly: $readOnly /}
+					{param redirectURL: $redirectURL /}
+					{param showCancelButton: $showCancelButton /}
 					{param showSubmitButton: $showSubmitButton /}
 					{param spritemap: $spritemap /}
 					{param strings: $strings /}

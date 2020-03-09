@@ -1,7 +1,9 @@
 {namespace PageRenderer}
 
 {template .render}
+	{@param cancelLabel: string}
 	{@param pages: ?}
+	{@param showCancelButton: bool}
 	{@param showSubmitButton: bool}
 	{@param spritemap: string}
 	{@param submitLabel: string}
@@ -18,6 +20,7 @@
 	{@param? pageIndex: number}
 	{@param? paginationMode: string}
 	{@param? readOnly: bool}
+	{@param? redirectURL: string}
 	{@param? strings: map<string, string>}
 
 	{let $contentRenderer kind="text"}
@@ -42,6 +45,7 @@
 		{param _handleFieldEdited: $_handleFieldEdited /}
 		{param _handleFieldFocused: $_handleFieldFocused /}
 		{param activePage: $activePage ?: 0 /}
+		{param cancelLabel: $cancelLabel /}
 		{param contentRenderer: $contentRenderer /}
 		{param editable: $editable /}
 		{param editingLanguageId: $editingLanguageId /}
@@ -51,6 +55,8 @@
 		{param pages: $pages /}
 		{param paginationMode: $paginationMode /}
 		{param readOnly: $readOnly /}
+		{param redirectURL: $redirectURL /}
+		{param showCancelButton: $showCancelButton /}
 		{param showSubmitButton: $showSubmitButton /}
 		{param spritemap: $spritemap /}
 		{param strings: $strings /}

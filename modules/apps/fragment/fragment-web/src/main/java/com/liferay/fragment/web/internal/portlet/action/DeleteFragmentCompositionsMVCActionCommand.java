@@ -45,23 +45,11 @@ public class DeleteFragmentCompositionsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] deleteFragmentCompositionIds = null;
-
 		long fragmentCompositionId = ParamUtil.getLong(
 			actionRequest, "fragmentCompositionId");
 
-		if (fragmentCompositionId > 0) {
-			deleteFragmentCompositionIds = new long[] {fragmentCompositionId};
-		}
-		else {
-			deleteFragmentCompositionIds = ParamUtil.getLongValues(
-				actionRequest, "rowIds");
-		}
-
-		for (long currentFragmentCompositionId : deleteFragmentCompositionIds) {
-			_fragmentCompositionService.deleteFragmentComposition(
-				currentFragmentCompositionId);
-		}
+		_fragmentCompositionService.deleteFragmentComposition(
+			fragmentCompositionId);
 	}
 
 	@Reference

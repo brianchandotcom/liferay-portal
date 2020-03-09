@@ -170,8 +170,9 @@ public class ManageCollaboratorsViewMVCRenderCommand
 
 				SharingEntryPermissionDisplayAction
 					userSharingEntryPermissionDisplayActionKey =
-						_sharingUtil.getSharingEntryPermissionDisplayActionKey(
-							sharingEntry);
+						_sharingHelper.
+							getSharingEntryPermissionDisplayActionKey(
+								sharingEntry);
 
 				collaboratorJSONObject.put(
 					"sharingEntryPermissionActionId",
@@ -217,7 +218,7 @@ public class ManageCollaboratorsViewMVCRenderCommand
 			WebKeys.THEME_DISPLAY);
 
 		List<SharingEntryPermissionDisplay> sharingEntryPermissionDisplays =
-			_sharingUtil.getSharingEntryPermissionDisplays(
+			_sharingHelper.getSharingEntryPermissionDisplays(
 				themeDisplay.getPermissionChecker(), classNameId, classPK,
 				themeDisplay.getScopeGroupId(), themeDisplay.getLocale());
 
@@ -247,7 +248,7 @@ public class ManageCollaboratorsViewMVCRenderCommand
 	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
-	private SharingHelper _sharingUtil;
+	private SharingHelper _sharingHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

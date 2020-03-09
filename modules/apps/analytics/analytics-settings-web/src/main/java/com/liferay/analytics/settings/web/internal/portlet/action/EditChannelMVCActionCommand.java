@@ -251,11 +251,12 @@ public class EditChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 			Group group = groupLocalService.fetchGroup(
 				GetterUtil.getLong(selectedGroupId));
 
-			UnicodeProperties properties = group.getTypeSettingsProperties();
+			UnicodeProperties typeSettingsUnicodeProperties =
+				group.getTypeSettingsProperties();
 
-			properties.put("analyticsChannelId", channelId);
+			typeSettingsUnicodeProperties.put("analyticsChannelId", channelId);
 
-			group.setTypeSettingsProperties(properties);
+			group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 			groupLocalService.updateGroup(group);
 		}

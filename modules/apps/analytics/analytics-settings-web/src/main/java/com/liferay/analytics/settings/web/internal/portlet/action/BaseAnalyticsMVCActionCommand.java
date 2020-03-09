@@ -195,11 +195,12 @@ public abstract class BaseAnalyticsMVCActionCommand
 				continue;
 			}
 
-			UnicodeProperties properties = group.getTypeSettingsProperties();
+			UnicodeProperties typeSettingsUnicodeProperties =
+				group.getTypeSettingsProperties();
 
-			properties.remove("analyticsChannelId");
+			typeSettingsUnicodeProperties.remove("analyticsChannelId");
 
-			group.setTypeSettingsProperties(properties);
+			group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 			groupLocalService.updateGroup(group);
 		}

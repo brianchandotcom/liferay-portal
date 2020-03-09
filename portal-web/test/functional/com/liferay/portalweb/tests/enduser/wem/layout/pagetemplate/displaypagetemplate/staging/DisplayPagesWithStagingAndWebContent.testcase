@@ -188,12 +188,13 @@ definition {
 		}
 	}
 
-	// Ignore test until POSHI-48 is resolved
-
 	@description = "This tests one of the workarounds of LPS-86373."
 	@ignore = "true"
 	@priority = "5"
 	test PublishDisplayPageMarkedAsDefault {
+
+		// Ignore test until POSHI-48 is resolved
+
 		property portal.acceptance = "true";
 
 		task ("Mark the display page as default") {

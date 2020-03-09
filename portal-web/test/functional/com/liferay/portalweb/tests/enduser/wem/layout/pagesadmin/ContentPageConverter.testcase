@@ -955,8 +955,12 @@ definition {
 	}
 
 	@description = "This is a test for LPS-106198. check the status for convension draft page and can edit widget page to content page conversion in draft form."
+	@ignore = "true"
 	@priority = "5"
 	test ViewAndEditConversionDraftPage {
+
+		// Ignore test until POSHI-48 is resolved
+
 		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(

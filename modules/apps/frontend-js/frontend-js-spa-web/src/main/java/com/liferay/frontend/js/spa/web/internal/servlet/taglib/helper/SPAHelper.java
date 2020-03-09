@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.js.spa.web.internal.servlet.taglib.util;
+package com.liferay.frontend.js.spa.web.internal.servlet.taglib.helper;
 
 import com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration;
 import com.liferay.frontend.js.spa.web.internal.configuration.SPAConfigurationUtil;

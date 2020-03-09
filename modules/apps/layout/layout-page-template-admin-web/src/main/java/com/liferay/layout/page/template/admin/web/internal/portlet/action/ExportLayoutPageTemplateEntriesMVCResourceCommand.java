@@ -94,35 +94,44 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 		return fileNamePrefix + Time.getShortTimestamp() + ".zip";
 	}
 
-	@Override
-	public boolean serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws PortletException {
+	public long[] getLayoutPageTemplateEntryIds(
+		ResourceRequest resourceRequest) {
 
-		long[] exportLayoutPageTemplateEntryIds = null;
+		long[] layoutPageTemplateEntryIds = null;
 
 		long layoutPageTemplateEntryEntryId = ParamUtil.getLong(
 			resourceRequest, "layoutPageTemplateEntryId");
 
 		if (layoutPageTemplateEntryEntryId > 0) {
-			exportLayoutPageTemplateEntryIds = new long[] {
+			layoutPageTemplateEntryIds = new long[] {
 				layoutPageTemplateEntryEntryId
 			};
 		}
 		else {
-			exportLayoutPageTemplateEntryIds = ParamUtil.getLongValues(
+			layoutPageTemplateEntryIds = ParamUtil.getLongValues(
 				resourceRequest, "rowIds");
 		}
 
-		if (exportLayoutPageTemplateEntryIds.length == 0) {
+		return layoutPageTemplateEntryIds;
+	}
+
+	@Override
+	public boolean serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortletException {
+
+		long[] layoutPageTemplateEntryIds = getLayoutPageTemplateEntryIds(
+			resourceRequest);
+
+		if (layoutPageTemplateEntryIds.length == 0) {
 			return false;
 		}
 
 		try {
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
-				getFileName(exportLayoutPageTemplateEntryIds),
-				new FileInputStream(getFile(exportLayoutPageTemplateEntryIds)),
+				getFileName(layoutPageTemplateEntryIds),
+				new FileInputStream(getFile(layoutPageTemplateEntryIds)),
 				ContentTypes.APPLICATION_ZIP);
 		}
 		catch (Exception exception) {

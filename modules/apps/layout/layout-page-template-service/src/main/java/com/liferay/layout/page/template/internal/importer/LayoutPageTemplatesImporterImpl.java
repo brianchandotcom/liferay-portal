@@ -114,6 +114,13 @@ public class LayoutPageTemplatesImporterImpl
 					overwrite);
 			}
 		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException, portalException);
+
+				throw portalException;
+			}
+		}
 	}
 
 	@Override

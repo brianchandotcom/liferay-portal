@@ -37,4 +37,8 @@ public abstract class BaseLiferayOperationTestCase
 		return payloadTypedValue.getValue();
 	}
 
+	protected static final Pattern productPattern = Pattern.compile(
+		"[\\s\\S]+\"active\"[\\s\\S]+\"catalogId\"[\\s\\S]+" +
+			"\"name\"[\\s\\S]+\"productType\"[\\s\\S]+");
+
 }

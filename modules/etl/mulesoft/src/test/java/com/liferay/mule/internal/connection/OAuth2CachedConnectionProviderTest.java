@@ -12,21 +12,42 @@
  * details.
  */
 
-package com.liferay.mule.internal.operation;
+package com.liferay.mule.internal.connection;
+
+import com.liferay.mule.internal.operation.BaseLiferayOperationTestCase;
 
 import java.util.regex.Matcher;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.mule.runtime.api.exception.MuleException;
+
 /**
  * @author Matija Petanjek
  */
-public class LiferayCreateOperationTest extends BaseLiferayOperationTestCase {
+public class OAuth2CachedConnectionProviderTest
+	extends BaseLiferayOperationTestCase {
 
 	@Test
-	public void testCreateOperation() throws Exception {
-		String payload = getPayload("test-create-product-flow");
+	public void testInvalidOAuth2CachedConnectionProvider() throws Exception {
+		try {
+			getPayload("invalid-oauth2-connection-flow");
+
+			Assert.fail();
+		}
+		catch (MuleException me) {
+			String message = me.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"Unable to fetch access token from authorization server."));
+		}
+	}
+
+	@Test
+	public void testValidOAuth2CachedConnectionProvider() throws Exception {
+		String payload = getPayload("valid-oauth2-connection-flow");
 
 		Matcher matcher = productPattern.matcher(payload);
 
@@ -35,7 +56,7 @@ public class LiferayCreateOperationTest extends BaseLiferayOperationTestCase {
 
 	@Override
 	protected String getConfigFile() {
-		return "test-create-operation.xml";
+		return "test-oauth2-authentication.xml";
 	}
 
 }

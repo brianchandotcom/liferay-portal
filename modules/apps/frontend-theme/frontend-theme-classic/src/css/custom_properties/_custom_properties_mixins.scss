@@ -8,15 +8,21 @@
 ) {
 	&:not(:disabled):not(.disabled) {
 		background-color: $background;
-		border-color: $border;
 		color: $color;
+
+		&:not(.btn-outline-borderless) {
+			border-color: $border;
+		}
 
 		&:active,
 		&:focus,
 		&:hover {
 			background-color: $hover-background;
-			border-color: $hover-border;
 			color: $hover-color;
+
+			&:not(.btn-outline-borderless) {
+				border-color: $hover-border;
+			}
 		}
 	}
 }

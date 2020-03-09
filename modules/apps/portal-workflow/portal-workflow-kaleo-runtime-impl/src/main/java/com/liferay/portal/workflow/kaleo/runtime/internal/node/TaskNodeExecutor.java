@@ -33,7 +33,7 @@ import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelect
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
 import com.liferay.portal.workflow.kaleo.runtime.calendar.DueDateCalculator;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
-import com.liferay.portal.workflow.kaleo.runtime.internal.assignment.TaskAssignerUtil;
+import com.liferay.portal.workflow.kaleo.runtime.internal.assignment.TaskAssignerHelper;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
@@ -224,7 +224,7 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 	private KaleoTaskLocalService _kaleoTaskLocalService;
 
 	@Reference
-	private TaskAssignerUtil _taskAssignerUtil;
+	private TaskAssignerHelper _taskAssignerUtil;
 
 	@Reference
 	private TaskAssignmentSelectorRegistry _taskAssignmentSelectorRegistry;

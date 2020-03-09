@@ -168,7 +168,8 @@ public class WorkflowInstanceEditDisplayContext
 		return new Object[] {
 			HtmlUtil.escape(
 				PortalUtil.getUserName(
-					workflowLog.getAuditUserId(), StringPool.BLANK)),
+					workflowLog.getAuditUserId(),
+					String.valueOf(workflowLog.getAuditUserId()))),
 			HtmlUtil.escape(
 				LanguageUtil.get(
 					workflowInstanceRequestHelper.getRequest(),
@@ -205,7 +206,7 @@ public class WorkflowInstanceEditDisplayContext
 		return HtmlUtil.escape(workflowTask.getName());
 	}
 
-	public Object getTaskUpdateMessageArguments(WorkflowLog workflowLog) {
+	public String getTaskUpdateMessageArguments(WorkflowLog workflowLog) {
 		return HtmlUtil.escape(
 			PortalUtil.getUserName(
 				workflowLog.getAuditUserId(),
@@ -229,9 +230,7 @@ public class WorkflowInstanceEditDisplayContext
 		};
 	}
 
-	public String getUserFullName(WorkflowLog workflowLog)
-		throws PortalException {
-
+	public String getUserFullName(WorkflowLog workflowLog) {
 		User user = _getUser(workflowLog.getUserId());
 
 		return HtmlUtil.escape(user.getFullName());

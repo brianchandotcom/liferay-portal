@@ -187,7 +187,7 @@ public class WorkflowTaskDisplayContext {
 	public String getAssignedTheTaskMessageKey(WorkflowLog workflowLog)
 		throws PortalException {
 
-		User user = _users.get(workflowLog.getUserId());
+		User user = _getUser(workflowLog.getUserId());
 
 		if (user.isMale()) {
 			return "x-assigned-the-task-to-himself";
@@ -459,7 +459,8 @@ public class WorkflowTaskDisplayContext {
 		return new Object[] {
 			HtmlUtil.escape(
 				PortalUtil.getUserName(
-					workflowLog.getAuditUserId(), StringPool.BLANK)),
+					workflowLog.getAuditUserId(),
+					String.valueOf(workflowLog.getAuditUserId()))),
 			HtmlUtil.escape(
 				LanguageUtil.get(
 					_workflowTaskRequestHelper.getRequest(),
@@ -487,7 +488,7 @@ public class WorkflowTaskDisplayContext {
 		return HtmlUtil.escape(workflowTask.getName());
 	}
 
-	public Object getTaskUpdateMessageArguments(WorkflowLog workflowLog) {
+	public String getTaskUpdateMessageArguments(WorkflowLog workflowLog) {
 		return HtmlUtil.escape(
 			PortalUtil.getUserName(
 				workflowLog.getAuditUserId(),
@@ -532,7 +533,7 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public String getUserFullName(WorkflowLog workflowLog) {
-		User user = _users.get(workflowLog.getUserId());
+		User user = _getUser(workflowLog.getUserId());
 
 		return HtmlUtil.escape(user.getFullName());
 	}
@@ -703,15 +704,11 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public boolean isAuditUser(WorkflowLog workflowLog) {
-		User user = null;
-
-		if (workflowLog.getUserId() != 0) {
-			user = _users.get(workflowLog.getUserId());
+		if (workflowLog.getUserId() == 0) {
+			return false;
 		}
 
-		if ((user != null) &&
-			(workflowLog.getAuditUserId() == user.getUserId())) {
-
+		if (workflowLog.getAuditUserId() == workflowLog.getUserId()) {
 			return true;
 		}
 
@@ -743,13 +740,9 @@ public class WorkflowTaskDisplayContext {
 				LanguageUtil.getLanguageId(_httpServletRequest));
 		}
 		else if (workflowLog.getUserId() != 0) {
-			User user = _getUser(workflowLog.getUserId());
-
-			if (user == null) {
-				return String.valueOf(workflowLog.getUserId());
-			}
-
-			return user.getFullName();
+			return PortalUtil.getUserName(
+				workflowLog.getUserId(),
+				String.valueOf(workflowLog.getUserId()));
 		}
 
 		return StringPool.BLANK;

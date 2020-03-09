@@ -77,7 +77,21 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 	}
 
 	public String getFileName(long[] exportLayoutPageTemplateEntryIds) {
-		return "page-templates-" + Time.getShortTimestamp() + ".zip";
+		String fileNamePrefix = "page-templates-";
+
+		if (exportLayoutPageTemplateEntryIds.length == 1) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(
+						exportLayoutPageTemplateEntryIds[0]);
+
+			fileNamePrefix =
+				"page-template-" +
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey() +
+						"-";
+		}
+
+		return fileNamePrefix + Time.getShortTimestamp() + ".zip";
 	}
 
 	@Override

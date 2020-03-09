@@ -93,7 +93,7 @@ public class BasicFragmentCompositionVerticalCard
 
 	@Override
 	public String getInputValue() {
-		return String.valueOf(_fragmentComposition.getFragmentCollectionId());
+		return String.valueOf(_fragmentComposition.getFragmentCompositionId());
 	}
 
 	@Override

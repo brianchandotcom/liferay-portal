@@ -50,8 +50,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = SharingNotificationUtil.class)
-public class SharingNotificationUtil {
+@Component(service = SharingNotificationHelper.class)
+public class SharingNotificationHelper {
 
 	public String getNotificationEmailBody(
 			SharingEntry sharingEntry, PortletRequest portletRequest)

@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.notifications.internal.util.SharingNotificationHelper;
 import com.liferay.sharing.notifications.internal.util.SharingNotificationSubcriptionSender;
-import com.liferay.sharing.notifications.internal.util.SharingNotificationUtil;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryLocalServiceWrapper;
@@ -189,7 +189,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
-	private SharingNotificationUtil _sharingNotificationUtil;
+	private SharingNotificationHelper _sharingNotificationUtil;
 
 	@Reference
 	private UserLocalService _userLocalService;

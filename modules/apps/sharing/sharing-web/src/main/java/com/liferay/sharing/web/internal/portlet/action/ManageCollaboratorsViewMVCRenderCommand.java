@@ -36,7 +36,7 @@ import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.constants.SharingWebKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
-import com.liferay.sharing.web.internal.util.SharingUtil;
+import com.liferay.sharing.web.internal.util.SharingHelper;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -247,7 +247,7 @@ public class ManageCollaboratorsViewMVCRenderCommand
 	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
-	private SharingUtil _sharingUtil;
+	private SharingHelper _sharingUtil;
 
 	@Reference
 	private UserLocalService _userLocalService;

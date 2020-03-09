@@ -37,8 +37,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = SharingUtil.class)
-public class SharingUtil {
+@Component(immediate = true, service = SharingHelper.class)
+public class SharingHelper {
 
 	public SharingEntryPermissionDisplayAction
 		getSharingEntryPermissionDisplayActionKey(SharingEntry sharingEntry) {
@@ -84,13 +84,13 @@ public class SharingUtil {
 		}
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, SharingUtil.class);
+			locale, SharingHelper.class);
 
 		return SharingEntryPermissionDisplay.getSharingEntryPermissionDisplays(
 			sharingEntryActions, resourceBundle);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(SharingUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(SharingHelper.class);
 
 	@Reference
 	private SharingPermission _sharingPermission;

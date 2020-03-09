@@ -72,9 +72,9 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration",
-	service = SPAUtil.class
+	service = SPAHelper.class
 )
-public class SPAUtil {
+public class SPAHelper {
 
 	public long getCacheExpirationTime(long companyId) {
 		return _cacheExpirationTime;
@@ -272,7 +272,7 @@ public class SPAUtil {
 
 	private static final String _VALID_STATUS_CODES;
 
-	private static final Log _log = LogFactoryUtil.getLog(SPAUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(SPAHelper.class);
 
 	private static final List<String> _navigationExceptionSelectors =
 		new CopyOnWriteArrayList<>();

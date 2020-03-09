@@ -15,7 +15,7 @@
 package com.liferay.frontend.js.spa.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.frontend.js.spa.web.internal.servlet.taglib.util.SPAUtil;
+import com.liferay.frontend.js.spa.web.internal.servlet.taglib.util.SPAHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -175,6 +175,6 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private volatile SPAUtil _spaUtil;
+	private volatile SPAHelper _spaUtil;
 
 }

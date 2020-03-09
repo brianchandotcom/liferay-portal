@@ -36,8 +36,8 @@ public class OAuth2CachedConnectionProviderTest
 
 			Assert.fail();
 		}
-		catch (MuleException me) {
-			String message = me.getMessage();
+		catch (MuleException muleException) {
+			String message = muleException.getMessage();
 
 			Assert.assertTrue(
 				message.contains(

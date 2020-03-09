@@ -55,9 +55,9 @@ public class JsonNodeReader {
 		try {
 			return objectMapper.readTree(httpEntity.getContent());
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new ModuleException(
-				ioe.getMessage(), LiferayError.EXECUTION, ioe);
+				ioException.getMessage(), LiferayError.EXECUTION, ioException);
 		}
 	}
 

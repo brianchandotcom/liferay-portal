@@ -85,13 +85,14 @@ public class OAuth2Authentication implements HttpAuthentication {
 				).build(),
 				10000, true, null);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new ModuleException(
-				ioe.getMessage(), LiferayError.EXECUTION, ioe);
+				ioException.getMessage(), LiferayError.EXECUTION, ioException);
 		}
-		catch (TimeoutException te) {
+		catch (TimeoutException timeoutException) {
 			throw new ModuleException(
-				te.getMessage(), LiferayError.CONNECTION_TIMEOUT, te);
+				timeoutException.getMessage(), LiferayError.CONNECTION_TIMEOUT,
+				timeoutException);
 		}
 
 		if (httpResponse == null) {

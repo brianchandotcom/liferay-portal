@@ -28,6 +28,11 @@
 	<td>//div[contains(@class,'page-structure') and contains(.,'${key_nodeName}')]/button[contains(@class,'tree-node')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAGE_STRUCTURE_TREE_NODE_ACTIVE</td>
+	<td>//div[contains(@class,'page-structure') and contains(.,'${key_nodeName}') and contains(@class,'active')]/button[contains(@class,'tree-node')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

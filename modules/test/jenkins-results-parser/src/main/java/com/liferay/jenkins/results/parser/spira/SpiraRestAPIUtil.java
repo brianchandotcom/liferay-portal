@@ -37,9 +37,15 @@ public class SpiraRestAPIUtil {
 			HttpRequestMethod httpRequestMethod, String requestData)
 		throws IOException {
 
+		String spiraBaseURL = _SPIRA_BASE_URL;
+
+		if (urlPath.contains("/test-sets/search")) {
+			spiraBaseURL = spiraBaseURL.replace("v6_0", "v5_0");
+		}
+
 		return JenkinsResultsParserUtil.toString(
 			JenkinsResultsParserUtil.combine(
-				_SPIRA_BASE_URL,
+				spiraBaseURL,
 				_applyURLPathReplacements(urlPath, urlPathReplacements),
 				_toURLParametersString(urlParameters)),
 			false, httpRequestMethod, requestData);

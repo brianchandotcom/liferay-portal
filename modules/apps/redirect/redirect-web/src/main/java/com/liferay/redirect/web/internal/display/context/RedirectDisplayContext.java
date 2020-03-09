@@ -163,51 +163,12 @@ public class RedirectDisplayContext {
 			_liferayPortletRequest, _liferayPortletResponse, _getPortletURL(),
 			getSearchContainerId());
 
-		if (!_redirectEntrySearch.isSearch()) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			_redirectEntrySearch.setTotal(
-				RedirectEntryLocalServiceUtil.getRedirectEntriesCount(
-					themeDisplay.getScopeGroupId()));
-
-			_redirectEntrySearch.setResults(
-				RedirectEntryLocalServiceUtil.getRedirectEntries(
-					themeDisplay.getScopeGroupId(),
-					_redirectEntrySearch.getStart(),
-					_redirectEntrySearch.getEnd(), _getOrderByComparator()));
-
-			return _redirectEntrySearch;
+		if (_redirectEntrySearch.isSearch()) {
+			_populateFromSearch(_redirectEntrySearch);
 		}
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(RedirectEntry.class);
-
-		SearchContext searchContext = SearchContextFactory.getInstance(
-			PortalUtil.getHttpServletRequest(_liferayPortletRequest));
-
-		searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
-		searchContext.setEnd(_redirectEntrySearch.getEnd());
-		searchContext.setSorts(_getSorts());
-		searchContext.setStart(_redirectEntrySearch.getStart());
-
-		Hits hits = indexer.search(searchContext);
-
-		List<SearchResult> searchResults = SearchResultUtil.getSearchResults(
-			hits, LocaleUtil.getDefault());
-
-		Stream<SearchResult> stream = searchResults.stream();
-
-		_redirectEntrySearch.setResults(
-			stream.map(
-				SearchResult::getClassPK
-			).map(
-				RedirectEntryLocalServiceUtil::fetchRedirectEntry
-			).collect(
-				Collectors.toList()
-			));
-
-		_redirectEntrySearch.setTotal(hits.getLength());
+		else {
+			_populateFromService(_redirectEntrySearch);
+		}
 
 		return _redirectEntrySearch;
 	}
@@ -283,6 +244,53 @@ public class RedirectDisplayContext {
 		}
 
 		return false;
+	}
+
+	private void _populateFromSearch(RedirectEntrySearch redirectEntrySearch)
+		throws PortalException {
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(RedirectEntry.class);
+
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			PortalUtil.getHttpServletRequest(_liferayPortletRequest));
+
+		searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
+		searchContext.setEnd(redirectEntrySearch.getEnd());
+		searchContext.setSorts(_getSorts());
+		searchContext.setStart(redirectEntrySearch.getStart());
+
+		Hits hits = indexer.search(searchContext);
+
+		List<SearchResult> searchResults = SearchResultUtil.getSearchResults(
+			hits, LocaleUtil.getDefault());
+
+		Stream<SearchResult> stream = searchResults.stream();
+
+		redirectEntrySearch.setResults(
+			stream.map(
+				SearchResult::getClassPK
+			).map(
+				RedirectEntryLocalServiceUtil::fetchRedirectEntry
+			).collect(
+				Collectors.toList()
+			));
+
+		redirectEntrySearch.setTotal(hits.getLength());
+	}
+
+	private void _populateFromService(RedirectEntrySearch redirectEntrySearch) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		redirectEntrySearch.setTotal(
+			RedirectEntryLocalServiceUtil.getRedirectEntriesCount(
+				themeDisplay.getScopeGroupId()));
+
+		redirectEntrySearch.setResults(
+			RedirectEntryLocalServiceUtil.getRedirectEntries(
+				themeDisplay.getScopeGroupId(), _redirectEntrySearch.getStart(),
+				_redirectEntrySearch.getEnd(), _getOrderByComparator()));
 	}
 
 	private final HttpServletRequest _httpServletRequest;

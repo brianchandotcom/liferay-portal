@@ -561,8 +561,6 @@ definition {
 				siteTemplateName = "Site Template Name");
 		}
 
-		Portlet.addPG(portletName = "Tasks");
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -597,12 +595,6 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.png",
 			dmDocumentTitle = "Document_1.png");
-
-		Tasks.addTask(
-			dueDate = "true",
-			taskAssignee = "userfn userln",
-			taskDescription = "Review Tests",
-			taskReporter = "userfn userln");
 
 		User.firstLoginPG(
 			password = "test",

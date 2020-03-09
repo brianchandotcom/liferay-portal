@@ -125,7 +125,7 @@ public class EditSyncedContactsMVCActionCommand
 		StatusLine statusLine = httpResponse.getStatusLine();
 
 		if (statusLine.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
-			disconnectDataSource(themeDisplay.getCompanyId(), httpResponse);
+			checkResponse(themeDisplay.getCompanyId(), httpResponse);
 
 			return;
 		}

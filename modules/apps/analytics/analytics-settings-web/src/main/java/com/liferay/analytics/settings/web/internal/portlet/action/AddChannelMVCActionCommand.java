@@ -169,7 +169,7 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 		StatusLine statusLine = httpResponse.getStatusLine();
 
 		if (statusLine.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
-			disconnectDataSource(themeDisplay.getCompanyId(), httpResponse);
+			checkResponse(themeDisplay.getCompanyId(), httpResponse);
 
 			return;
 		}
@@ -211,7 +211,7 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 		statusLine = httpResponse.getStatusLine();
 
 		if (statusLine.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
-			disconnectDataSource(themeDisplay.getCompanyId(), httpResponse);
+			checkResponse(themeDisplay.getCompanyId(), httpResponse);
 
 			return;
 		}

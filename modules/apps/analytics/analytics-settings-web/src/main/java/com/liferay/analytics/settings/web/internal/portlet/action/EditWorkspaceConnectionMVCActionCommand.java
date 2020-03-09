@@ -172,7 +172,7 @@ public class EditWorkspaceConnectionMVCActionCommand
 
 			configurationProperties.remove("token");
 
-			disconnectDataSource(themeDisplay.getCompanyId());
+			clearConfiguration(themeDisplay.getCompanyId());
 		}
 	}
 
@@ -194,7 +194,7 @@ public class EditWorkspaceConnectionMVCActionCommand
 		StatusLine statusLine = httpResponse.getStatusLine();
 
 		if (statusLine.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
-			disconnectDataSource(companyId, httpResponse);
+			checkResponse(companyId, httpResponse);
 
 			configurationProperties.remove("token");
 

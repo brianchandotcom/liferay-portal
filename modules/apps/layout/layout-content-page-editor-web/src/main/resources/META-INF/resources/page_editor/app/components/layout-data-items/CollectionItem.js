@@ -12,13 +12,18 @@
  * details.
  */
 
-export const LAYOUT_DATA_ITEM_TYPES = {
-	collection: 'collection',
-	collectionItem: 'collection-item',
-	column: 'column',
-	container: 'container',
-	dropZone: 'drop-zone',
-	fragment: 'fragment',
-	root: 'root',
-	row: 'row',
-};
+import React from 'react';
+
+export default function CollectionItem({children}) {
+	if (React.Children.count(children) === 0) {
+		return (
+			<div className="page-editor__collection-item">
+				<p className="page-editor__collection-item__title">
+					some title
+				</p>
+			</div>
+		);
+	}
+
+	return children;
+}

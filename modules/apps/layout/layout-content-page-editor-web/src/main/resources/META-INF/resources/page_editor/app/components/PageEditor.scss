@@ -26,6 +26,19 @@
 			padding: 5em 0;
 			text-align: center;
 		}
+
+		&-item {
+			border: 1px solid fade_out($purple, 0.9);
+			min-height: 80px;
+
+			&__title {
+				color: $purple;
+				font-size: 0.75rem;
+				font-style: italic;
+				padding-left: 8px;
+				padding-top: 8px;
+			}
+		}
 	}
 
 	&__col &__col__resizer.btn.btn-primary {

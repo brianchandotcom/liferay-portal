@@ -19,6 +19,11 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
+import com.liferay.layout.list.retriever.LayoutListRetriever;
+import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
+import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
+import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -150,13 +155,32 @@ public class FragmentEntryConfigurationParserImpl
 
 			String name = fragmentConfigurationField.getName();
 
-			Object contextObject = _getContextObject(
-				fragmentConfigurationField.getType(),
-				configurationValuesJSONObject.getString(name));
+			if (StringUtil.equalsIgnoreCase(
+					fragmentConfigurationField.getType(), "itemSelector")) {
 
-			if (contextObject != null) {
-				contextObjects.put(
-					name + _CONTEXT_OBJECT_SUFFIX, contextObject);
+				Object contextObject = _getInfoDisplayObjectEntry(
+					configurationValuesJSONObject.getString(name));
+
+				if (contextObject != null) {
+					contextObjects.put(
+						name + _CONTEXT_OBJECT_SUFFIX, contextObject);
+				}
+
+				continue;
+			}
+
+			if (StringUtil.equalsIgnoreCase(
+					fragmentConfigurationField.getType(),
+					"collectionSelector")) {
+
+				Object contextListObject = _getInfoListObjectEntry(
+					segmentsExperienceIds,
+					configurationValuesJSONObject.getString(name));
+
+				if (contextListObject != null) {
+					contextObjects.put(
+						name + _CONTEXT_OBJECT_LIST_SUFFIX, contextListObject);
+				}
 			}
 		}
 
@@ -406,14 +430,6 @@ public class FragmentEntryConfigurationParserImpl
 			});
 	}
 
-	private Object _getContextObject(String type, String value) {
-		if (StringUtil.equalsIgnoreCase(type, "itemSelector")) {
-			return _getInfoDisplayObjectEntry(value);
-		}
-
-		return null;
-	}
-
 	private JSONArray _getFieldSetsJSONArray(String configuration) {
 		try {
 			JSONObject configurationJSONObject =
@@ -545,6 +561,56 @@ public class FragmentEntryConfigurationParserImpl
 		return null;
 	}
 
+	private Object _getInfoListObjectEntry(
+		long[] segmentsExperienceIds, String value) {
+
+		if (Validator.isNull(value)) {
+			return Collections.emptyList();
+		}
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+
+			if (jsonObject.length() <= 0) {
+				return Collections.emptyList();
+			}
+
+			String type = jsonObject.getString("type");
+
+			LayoutListRetriever layoutListRetriever =
+				_layoutListRetrieverTracker.getLayoutListRetriever(type);
+
+			if (layoutListRetriever == null) {
+				return Collections.emptyList();
+			}
+
+			ListObjectReferenceFactory listObjectReferenceFactory =
+				_listObjectReferenceFactoryTracker.getListObjectReference(type);
+
+			if (listObjectReferenceFactory == null) {
+				return Collections.emptyList();
+			}
+
+			DefaultLayoutListRetrieverContext
+				defaultLayoutListRetrieverContext =
+					new DefaultLayoutListRetrieverContext();
+
+			defaultLayoutListRetrieverContext.setSegmentsExperienceIdsOptional(
+				segmentsExperienceIds);
+
+			return layoutListRetriever.getList(
+				listObjectReferenceFactory.getListObjectReference(jsonObject),
+				defaultLayoutListRetrieverContext);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get collection: " + value, exception);
+			}
+		}
+
+		return Collections.emptyList();
+	}
+
 	private JSONObject _getInfoListObjectEntryJSONObject(String value) {
 		if (Validator.isNull(value)) {
 			return JSONFactoryUtil.createJSONObject();
@@ -565,6 +631,8 @@ public class FragmentEntryConfigurationParserImpl
 		return null;
 	}
 
+	private static final String _CONTEXT_OBJECT_LIST_SUFFIX = "ObjectList";
+
 	private static final String _CONTEXT_OBJECT_SUFFIX = "Object";
 
 	private static final String _KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR =
@@ -576,5 +644,12 @@ public class FragmentEntryConfigurationParserImpl
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+
+	@Reference
+	private LayoutListRetrieverTracker _layoutListRetrieverTracker;
+
+	@Reference
+	private ListObjectReferenceFactoryTracker
+		_listObjectReferenceFactoryTracker;
 
 }

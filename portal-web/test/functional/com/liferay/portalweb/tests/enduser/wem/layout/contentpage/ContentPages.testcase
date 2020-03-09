@@ -214,7 +214,9 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Contents");
 
-		LexiconEntry.gotoFragmentEllipsisMenuItem(menuItem = "Edit");
+		LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
+			menuItem = "Edit",
+			rowEntry = "WC WebContent Title");
 
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 	}

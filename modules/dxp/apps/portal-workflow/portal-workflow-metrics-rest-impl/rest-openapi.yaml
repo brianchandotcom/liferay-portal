@@ -34,6 +34,31 @@ components:
                     format: int64
                     type: integer
             type: object
+        AssigneeUserBulkSelection:
+            description:
+                https://schema.org/AssigneeUserBulkSelection
+            properties:
+                completed:
+                    type: boolean
+                dateEnd:
+                    format: date-time
+                    type: string
+                dateStart:
+                    format: date-time
+                    type: string
+                    type: array
+                keywords:
+                    type: string
+                roleIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                taskKeys:
+                    items:
+                        type: string
+                    type: array
+            type: object
         Calendar:
             description:
                 https://www.schema.org/Calendar
@@ -436,8 +461,8 @@ paths:
                         ""
             tags: ["Process"]
     "/processes/{processId}/assignee-users":
-        get:
-            operationId: getProcessAssigneeUsersPage
+        post:
+            operationId: postProcessAssigneeUsersPage
             parameters:
                 - in: path
                   name: processId
@@ -445,37 +470,6 @@ paths:
                   schema:
                       format: int64
                       type: integer
-                - in: query
-                  name: completed
-                  schema:
-                      type: boolean
-                - in: query
-                  name: dateEnd
-                  schema:
-                      format: date-time
-                      type: string
-                - in: query
-                  name: dateStart
-                  schema:
-                      format: date-time
-                      type: string
-                - in: query
-                  name: keywords
-                  schema:
-                      type: string
-                - in: query
-                  name: roleIds
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
-                - in: query
-                  name: taskKeys
-                  schema:
-                      items:
-                          type: string
-                      type: array
                 - in: query
                   name: page
                   schema:
@@ -488,6 +482,14 @@ paths:
                   name: sort
                   schema:
                       type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/AssigneeUserBulkSelection"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/AssigneeUserBulkSelection"
             responses:
                 200:
                     content:

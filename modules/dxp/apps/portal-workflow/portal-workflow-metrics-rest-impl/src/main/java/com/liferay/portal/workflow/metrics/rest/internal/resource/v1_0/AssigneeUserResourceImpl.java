@@ -53,6 +53,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUserBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.internal.odata.entity.v1_0.AssigneeUserEntityModel;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeUserResource;
@@ -92,16 +93,19 @@ public class AssigneeUserResourceImpl
 	}
 
 	@Override
-	public Page<AssigneeUser> getProcessAssigneeUsersPage(
-			Long processId, Boolean completed, Date dateEnd, Date dateStart,
-			String keywords, Long[] roleIds, String[] taskKeys,
-			Pagination pagination, Sort[] sorts)
+	public Page<AssigneeUser> postProcessAssigneeUsersPage(
+			Long processId, Pagination pagination, Sort[] sorts,
+			AssigneeUserBulkSelection assigneeUserBulkSelection)
 		throws Exception {
 
 		Set<Long> userIds = Collections.emptySet();
 
-		if (Validator.isNotNull(keywords) || ArrayUtil.isNotEmpty(roleIds)) {
-			userIds = _getUserIds(keywords, roleIds);
+		if (Validator.isNotNull(assigneeUserBulkSelection.getKeywords()) ||
+			ArrayUtil.isNotEmpty(assigneeUserBulkSelection.getRoleIds())) {
+
+			userIds = _getUserIds(
+				assigneeUserBulkSelection.getKeywords(),
+				assigneeUserBulkSelection.getRoleIds());
 
 			if (userIds.isEmpty()) {
 				return Page.of(Collections.emptyList());
@@ -111,20 +115,28 @@ public class AssigneeUserResourceImpl
 		if (pagination == null) {
 			return Page.of(
 				_getAssigneeUsers(
-					GetterUtil.getBoolean(completed), dateEnd, dateStart,
-					processId, taskKeys, userIds));
+					GetterUtil.getBoolean(
+						assigneeUserBulkSelection.getCompleted()),
+					assigneeUserBulkSelection.getDateEnd(),
+					assigneeUserBulkSelection.getDateStart(), processId,
+					assigneeUserBulkSelection.getTaskKeys(), userIds));
 		}
 
 		long count = _getAssigneeUsersCount(
-			GetterUtil.getBoolean(completed), dateEnd, dateStart, processId,
-			taskKeys, userIds);
+			GetterUtil.getBoolean(assigneeUserBulkSelection.getCompleted()),
+			assigneeUserBulkSelection.getDateEnd(),
+			assigneeUserBulkSelection.getDateStart(), processId,
+			assigneeUserBulkSelection.getTaskKeys(), userIds);
 
 		if (count > 0) {
 			return Page.of(
 				_getAssigneeUsers(
-					GetterUtil.getBoolean(completed), dateEnd, dateStart,
-					_toFieldSort(sorts), pagination, processId, taskKeys,
-					userIds),
+					GetterUtil.getBoolean(
+						assigneeUserBulkSelection.getCompleted()),
+					assigneeUserBulkSelection.getDateEnd(),
+					assigneeUserBulkSelection.getDateStart(),
+					_toFieldSort(sorts), pagination, processId,
+					assigneeUserBulkSelection.getTaskKeys(), userIds),
 				pagination, count);
 		}
 

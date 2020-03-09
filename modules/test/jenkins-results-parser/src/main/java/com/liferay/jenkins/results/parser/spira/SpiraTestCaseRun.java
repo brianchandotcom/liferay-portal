@@ -90,6 +90,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			SpiraTestCaseRun.class,
 			new Supplier<List<JSONObject>>() {
 
+				@Override
 				public List<JSONObject> get() {
 					return _requestSpiraTestCaseRuns(
 						spiraProject, spiraTestCase, searchParameters);
@@ -98,6 +99,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			},
 			new Function<JSONObject, SpiraTestCaseRun>() {
 
+				@Override
 				public SpiraTestCaseRun apply(JSONObject jsonObject) {
 					return new SpiraTestCaseRun(jsonObject);
 				}

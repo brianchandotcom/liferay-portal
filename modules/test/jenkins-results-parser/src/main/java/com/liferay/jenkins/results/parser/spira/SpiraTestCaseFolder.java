@@ -192,6 +192,7 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 			SpiraTestCaseFolder.class,
 			new Supplier<List<JSONObject>>() {
 
+				@Override
 				public List<JSONObject> get() {
 					return _requestSpiraTestCaseFolders(spiraProject);
 				}
@@ -199,6 +200,7 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 			},
 			new Function<JSONObject, SpiraTestCaseFolder>() {
 
+				@Override
 				public SpiraTestCaseFolder apply(JSONObject jsonObject) {
 					return new SpiraTestCaseFolder(jsonObject);
 				}

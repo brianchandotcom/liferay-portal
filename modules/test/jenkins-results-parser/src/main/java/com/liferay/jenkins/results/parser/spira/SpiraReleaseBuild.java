@@ -73,6 +73,7 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 			SpiraReleaseBuild.class,
 			new Supplier<List<JSONObject>>() {
 
+				@Override
 				public List<JSONObject> get() {
 					return _requestSpiraReleaseBuilds(
 						spiraProject, spiraRelease, searchParameters);
@@ -81,6 +82,7 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 			},
 			new Function<JSONObject, SpiraReleaseBuild>() {
 
+				@Override
 				public SpiraReleaseBuild apply(JSONObject jsonObject) {
 					return new SpiraReleaseBuild(jsonObject);
 				}

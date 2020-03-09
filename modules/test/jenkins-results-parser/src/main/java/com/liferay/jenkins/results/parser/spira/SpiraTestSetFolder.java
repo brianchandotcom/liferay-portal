@@ -189,6 +189,7 @@ public class SpiraTestSetFolder extends PathSpiraArtifact {
 			SpiraTestSetFolder.class,
 			new Supplier<List<JSONObject>>() {
 
+				@Override
 				public List<JSONObject> get() {
 					return _requestSpiraTestSetFolders(spiraProject);
 				}
@@ -196,6 +197,7 @@ public class SpiraTestSetFolder extends PathSpiraArtifact {
 			},
 			new Function<JSONObject, SpiraTestSetFolder>() {
 
+				@Override
 				public SpiraTestSetFolder apply(JSONObject jsonObject) {
 					return new SpiraTestSetFolder(jsonObject);
 				}

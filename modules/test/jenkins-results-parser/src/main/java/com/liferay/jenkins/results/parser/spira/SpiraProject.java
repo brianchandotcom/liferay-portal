@@ -37,6 +37,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 			SpiraProject.class,
 			new Supplier<List<JSONObject>>() {
 
+				@Override
 				public List<JSONObject> get() {
 					return _requestSpiraProjectByID(projectID);
 				}
@@ -44,6 +45,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 			},
 			new Function<JSONObject, SpiraProject>() {
 
+				@Override
 				public SpiraProject apply(JSONObject jsonObject) {
 					return new SpiraProject(jsonObject);
 				}

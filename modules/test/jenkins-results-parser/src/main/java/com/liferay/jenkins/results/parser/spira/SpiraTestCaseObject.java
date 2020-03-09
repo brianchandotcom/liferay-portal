@@ -192,6 +192,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			SpiraTestCaseObject.class,
 			new Supplier<List<JSONObject>>() {
 
+				@Override
 				public List<JSONObject> get() {
 					return _requestSpiraTestCases(
 						spiraProject, searchParameters);
@@ -200,6 +201,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			},
 			new Function<JSONObject, SpiraTestCaseObject>() {
 
+				@Override
 				public SpiraTestCaseObject apply(JSONObject jsonObject) {
 					return new SpiraTestCaseObject(jsonObject);
 				}

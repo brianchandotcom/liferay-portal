@@ -198,6 +198,7 @@ public class SpiraRelease extends PathSpiraArtifact {
 			SpiraRelease.class,
 			new Supplier<List<JSONObject>>() {
 
+				@Override
 				public List<JSONObject> get() {
 					return _requestSpiraReleases(
 						spiraProject.getID(), searchParameters);
@@ -206,6 +207,7 @@ public class SpiraRelease extends PathSpiraArtifact {
 			},
 			new Function<JSONObject, SpiraRelease>() {
 
+				@Override
 				public SpiraRelease apply(JSONObject jsonObject) {
 					return new SpiraRelease(jsonObject);
 				}

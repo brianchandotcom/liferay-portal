@@ -291,6 +291,7 @@ definition {
 	}
 
 	@description = "This ensures that a LAR file consisting of web content can be imported in a depot."
+	@ignore = "true"
 	@priority = "4"
 	test ImportWebContent {
 		JSONWebcontent.addWebContent(

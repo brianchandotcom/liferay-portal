@@ -216,6 +216,7 @@ definition {
 	}
 
 	@description = "This ensures that a LAR file consisting of a DL document and image can be imported in a depot."
+	@ignore = "true"
 	@priority = "4"
 	test ImportFile {
 		JSONDocument.addFile(

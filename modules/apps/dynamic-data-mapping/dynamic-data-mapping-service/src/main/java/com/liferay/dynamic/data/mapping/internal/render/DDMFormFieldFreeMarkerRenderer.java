@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal.render;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.internal.util.DDMFormFieldFreeMarkerRendererHelper;
+import com.liferay.dynamic.data.mapping.internal.util.DDMFormFieldFreeMarkerRendererUtil;
 import com.liferay.dynamic.data.mapping.internal.util.DDMImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -528,7 +528,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 				"editorName",
 				() -> {
 					Editor editor =
-						DDMFormFieldFreeMarkerRendererHelper.getEditor(
+						DDMFormFieldFreeMarkerRendererUtil.getEditor(
 							httpServletRequest);
 
 					return editor.getName();

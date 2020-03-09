@@ -28,6 +28,7 @@ export default function updateFragmentConfiguration({
 		...editableValues,
 		[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: segmentsExperienceId
 			? {
+					...editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR],
 					[segmentsExperienceId]: configurationValues,
 			  }
 			: configurationValues,

@@ -76,13 +76,13 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		);
 	}
 
-	deleteSelectedFragmentEntries() {
+	deleteEntries() {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			submitForm(this.one('#fm'), this.deleteFragmentEntriesURL);
+			submitForm(this.one('#fm'), this.deleteEntriesURL);
 		}
 	}
 
@@ -130,7 +130,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 ManagementToolbarDefaultEventHandler.STATE = {
 	copyContributedFragmentEntryURL: Config.string(),
 	copyFragmentEntryURL: Config.string(),
-	deleteFragmentEntriesURL: Config.string(),
+	deleteEntriesURL: Config.string(),
 	exportFragmentEntriesURL: Config.string(),
 	fragmentCollectionId: Config.string(),
 	moveFragmentEntryURL: Config.string(),

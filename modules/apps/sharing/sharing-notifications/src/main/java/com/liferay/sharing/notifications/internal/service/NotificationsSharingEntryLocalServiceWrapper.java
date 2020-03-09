@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.notifications.internal.util.SharingNotificationHelper;
+import com.liferay.sharing.notifications.internal.helper.SharingNotificationHelper;
 import com.liferay.sharing.notifications.internal.util.SharingNotificationSubcriptionSender;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;

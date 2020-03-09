@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharing.notifications.internal.util;
+package com.liferay.sharing.notifications.internal.helper;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;

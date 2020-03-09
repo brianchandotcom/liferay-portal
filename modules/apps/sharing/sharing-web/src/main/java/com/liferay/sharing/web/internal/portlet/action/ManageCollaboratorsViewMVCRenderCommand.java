@@ -36,7 +36,7 @@ import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.constants.SharingWebKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
-import com.liferay.sharing.web.internal.util.SharingHelper;
+import com.liferay.sharing.web.internal.helper.SharingHelper;
 
 import java.text.DateFormat;
 import java.text.Format;

@@ -65,15 +65,15 @@ public class DLAMImageOptimizer implements AMImageOptimizer {
 
 		int total = count * amImageConfigurationEntries.size();
 
-		AtomicInteger countAtomiCounter = new AtomicInteger(0);
-		AtomicInteger errorAtomiCounter = new AtomicInteger(0);
+		AtomicInteger successCount = new AtomicInteger(0);
+		AtomicInteger errorCount = new AtomicInteger(0);
 
 		for (AMImageConfigurationEntry amImageConfigurationEntry :
 				amImageConfigurationEntries) {
 
 			_optimize(
 				companyId, amImageConfigurationEntry.getUUID(), total,
-				countAtomiCounter, errorAtomiCounter);
+				successCount, errorCount);
 		}
 	}
 
@@ -81,17 +81,16 @@ public class DLAMImageOptimizer implements AMImageOptimizer {
 	public void optimize(long companyId, String configurationEntryUuid) {
 		int total = _amImageCounter.countExpectedAMImageEntries(companyId);
 
-		AtomicInteger countAtomiCounter = new AtomicInteger(0);
-		AtomicInteger errorAtomiCounter = new AtomicInteger(0);
+		AtomicInteger successCount = new AtomicInteger(0);
+		AtomicInteger errorCount = new AtomicInteger(0);
 
 		_optimize(
-			companyId, configurationEntryUuid, total, countAtomiCounter,
-			errorAtomiCounter);
+			companyId, configurationEntryUuid, total, successCount, errorCount);
 	}
 
 	private void _optimize(
 		long companyId, String configurationEntryUuid, int total,
-		AtomicInteger countAtomicCounter, AtomicInteger errorAtomiCounter) {
+		AtomicInteger successCount, AtomicInteger errorCount) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_dlFileEntryLocalService.getActionableDynamicQuery();
@@ -154,8 +153,8 @@ public class DLAMImageOptimizer implements AMImageOptimizer {
 						fileEntry.getFileVersion(), configurationEntryUuid);
 
 					_sendStatusMessage(
-						countAtomicCounter.incrementAndGet(), total,
-						errorAtomiCounter.get());
+						successCount.incrementAndGet(), total,
+						errorCount.get());
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
@@ -166,8 +165,8 @@ public class DLAMImageOptimizer implements AMImageOptimizer {
 					}
 
 					_sendStatusMessage(
-						countAtomicCounter.get(), total,
-						errorAtomiCounter.incrementAndGet());
+						successCount.get(), total,
+						errorCount.incrementAndGet());
 				}
 			});
 

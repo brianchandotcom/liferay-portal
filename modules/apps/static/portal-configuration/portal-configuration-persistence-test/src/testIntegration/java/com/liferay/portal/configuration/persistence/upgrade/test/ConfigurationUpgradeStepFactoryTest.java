@@ -61,7 +61,7 @@ public class ConfigurationUpgradeStepFactoryTest {
 
 	@Test
 	public void testUpgradeConfigWithDBAndFile() throws Exception {
-		_testUpgradeConfig(true, true, false);
+		_testUpgradeConfig(false, true, true);
 	}
 
 	@Test
@@ -78,7 +78,7 @@ public class ConfigurationUpgradeStepFactoryTest {
 
 	@Test
 	public void testUpgradeConfigWithoutDBWithFile() throws Exception {
-		_testUpgradeConfig(true, false, false);
+		_testUpgradeConfig(false, false, true);
 	}
 
 	@Test
@@ -88,14 +88,14 @@ public class ConfigurationUpgradeStepFactoryTest {
 
 	@Test
 	public void testUpgradeFactoryConfigWithDBWithoutFile() throws Exception {
-		_testUpgradeConfig(false, true, true);
+		_testUpgradeConfig(true, true, false);
 	}
 
 	@Test
 	public void testUpgradeFactoryConfigWithDBWithoutFileWithFileName()
 		throws Exception {
 
-		_testUpgradeConfig(false, true, true, true);
+		_testUpgradeConfig(true, true, false, true);
 	}
 
 	@Test
@@ -104,14 +104,14 @@ public class ConfigurationUpgradeStepFactoryTest {
 	}
 
 	private void _testUpgradeConfig(
-			boolean configFile, boolean data, boolean factory)
+			boolean factory, boolean data, boolean configFile)
 		throws Exception {
 
-		_testUpgradeConfig(configFile, data, factory, configFile);
+		_testUpgradeConfig(factory, data, configFile, configFile);
 	}
 
 	private void _testUpgradeConfig(
-			boolean configFile, boolean data, boolean factory,
+			boolean factory, boolean data, boolean configFile,
 			boolean felixFileName)
 		throws Exception {
 

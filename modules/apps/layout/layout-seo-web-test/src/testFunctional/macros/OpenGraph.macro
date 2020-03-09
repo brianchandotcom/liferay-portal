@@ -132,12 +132,12 @@ definition {
 		task ("Assert image configuration") {
 			AssertTextEquals.assertPartialText(
 				key_fieldLabel = "Image",
-				locator1 = "FormFields#LABEL",
+				locator1 = "FormFields#OPEN_GRAPH_LABEL",
 				value1 = "Image");
 
 			AssertTextEquals.assertPartialText(
 				key_fieldLabel = "Image Alt Description",
-				locator1 = "FormFields#LABEL",
+				locator1 = "FormFields#OPEN_GRAPH_LABEL",
 				value1 = "Image Alt Description");
 
 			AssertElementPresent(locator1 = "Button#SELECT_OPEN_GRAPH_IMAGE");

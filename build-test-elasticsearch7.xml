@@ -1079,8 +1079,15 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<if>
 			<and>
+				<contains string="${curl.output.follower.indices}" substring="liferay-0" />
 				<contains string="${curl.output.follower.indices}" substring="liferay-${companyId}" />
 				<contains string="${curl.output.follower.indices}" substring="liferay-search-tuning-synonyms-liferay-${companyId}" />
+				<contains string="${curl.output.follower.indices}" substring="workflow-metrics-instances" />
+				<contains string="${curl.output.follower.indices}" substring="workflow-metrics-nodes" />
+				<contains string="${curl.output.follower.indices}" substring="workflow-metrics-processes" />
+				<contains string="${curl.output.follower.indices}" substring="workflow-metrics-sla-instance-results" />
+				<contains string="${curl.output.follower.indices}" substring="workflow-metrics-sla-task-results" />
+				<contains string="${curl.output.follower.indices}" substring="workflow-metrics-tokens" />
 			</and>
 			<then>
 				<echo>Created follower indices.</echo>

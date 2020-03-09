@@ -58,8 +58,7 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.1.2", "1.1.3",
 			new UpgradeDiscussionSubscriptionClassName(
-				_classNameLocalService, _subscriptionLocalService,
-				BlogsEntry.class.getName(),
+				_subscriptionLocalService, BlogsEntry.class.getName(),
 				UpgradeDiscussionSubscriptionClassName.DeletionMode.ADD_NEW));
 
 		registry.register(
@@ -72,8 +71,7 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"2.0.0", "2.0.1",
 			new UpgradeDiscussionSubscriptionClassName(
-				_classNameLocalService, _subscriptionLocalService,
-				BlogsEntry.class.getName(),
+				_subscriptionLocalService, BlogsEntry.class.getName(),
 				UpgradeDiscussionSubscriptionClassName.DeletionMode.
 					DELETE_OLD));
 
@@ -89,8 +87,13 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 			});
 	}
 
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
+	@Reference(unbind = "-")
+	protected void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		// See  LPS-109525
+
+	}
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

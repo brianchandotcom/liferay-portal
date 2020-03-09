@@ -61,8 +61,7 @@ public class WikiServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.1.0", "1.1.1",
 			new UpgradeDiscussionSubscriptionClassName(
-				_classNameLocalService, _subscriptionLocalService,
-				WikiPage.class.getName(),
+				_subscriptionLocalService, WikiPage.class.getName(),
 				UpgradeDiscussionSubscriptionClassName.DeletionMode.ADD_NEW));
 
 		registry.register(
@@ -84,8 +83,13 @@ public class WikiServiceUpgrade implements UpgradeStepRegistrator {
 			});
 	}
 
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
+	@Reference(unbind = "-")
+	protected void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		// See  LPS-109525
+
+	}
 
 	@Reference
 	private SettingsFactory _settingsFactory;

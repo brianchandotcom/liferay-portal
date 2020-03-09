@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -30,11 +30,9 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 
 	public UpgradeDiscussionSubscriptionClassName(
-		ClassNameLocalService classNameLocalService,
 		SubscriptionLocalService subscriptionLocalService,
 		String oldSubscriptionClassName, DeletionMode deletionMode) {
 
-		_classNameLocalService = classNameLocalService;
 		_subscriptionLocalService = subscriptionLocalService;
 		_oldSubscriptionClassName = oldSubscriptionClassName;
 		_deletionMode = deletionMode;
@@ -67,7 +65,7 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 			dynamicQuery -> dynamicQuery.add(
 				RestrictionsFactoryUtil.eq(
 					"classNameId",
-					_classNameLocalService.getClassNameId(
+					ClassNameLocalServiceUtil.getClassNameId(
 						_oldSubscriptionClassName))));
 		actionableDynamicQuery.setPerformActionMethod(
 			(Subscription subscription) ->
@@ -85,7 +83,7 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 			dynamicQuery -> dynamicQuery.add(
 				RestrictionsFactoryUtil.eq(
 					"classNameId",
-					_classNameLocalService.getClassNameId(
+					ClassNameLocalServiceUtil.getClassNameId(
 						_oldSubscriptionClassName))));
 		actionableDynamicQuery.setPerformActionMethod(
 			(Subscription subscription) ->
@@ -94,7 +92,6 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		actionableDynamicQuery.performActions();
 	}
 
-	private final ClassNameLocalService _classNameLocalService;
 	private final DeletionMode _deletionMode;
 	private final String _oldSubscriptionClassName;
 	private final SubscriptionLocalService _subscriptionLocalService;

@@ -365,7 +365,7 @@ definition {
 
 		task ("View the fragment style") {
 			PageEditor.viewFragmentStyle(
-				borderColor = "247, 248, 249",
+				borderColor = "lighter",
 				fragmentName = "separator",
 				verticalSpace = "3");
 		}

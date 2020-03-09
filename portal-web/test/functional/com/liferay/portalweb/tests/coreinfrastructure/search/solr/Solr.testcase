@@ -107,6 +107,16 @@ definition {
 			value1 = "explain");
 	}
 
+	@description = "This test is to ensure that when Solr is used as the search engine, the search tuning portlet in not available in the product menu without needing to blacklist the search tuning module."
+	@priority = "4"
+	test AssertSearchTuningPortletNotAvailable {
+		ProductMenuHelper.expandPanel(panel = "Control Panel");
+
+		AssertElementNotPresent(
+			key_panel = "Search Tuning",
+			locator1 = "ProductMenu#PORTLET");
+	}
+
 	@description = "This smoke test is to ensure that Liferay is successfully running on a remote Solr by asserting the Solr administration dashboard and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal."
 	@priority = "4"
 	test SolrSmokeTest {

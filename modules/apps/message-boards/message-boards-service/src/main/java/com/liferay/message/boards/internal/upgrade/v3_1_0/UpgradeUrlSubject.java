@@ -16,7 +16,6 @@ package com.liferay.message.boards.internal.upgrade.v3_1_0;
 
 import com.liferay.message.boards.internal.upgrade.v3_1_0.util.MBMessageTable;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,66 +48,49 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 	private String _findUniqueUrlSubject(Connection con, String urlSubject)
 		throws SQLException {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(
+		try (PreparedStatement ps = con.prepareStatement(
 				"select count(*) from MBMessage where MBMessage.urlSubject " +
-					"like ?");
+					"like ?")) {
 
 			ps.setString(1, urlSubject + "%");
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (!rs.next()) {
+					return urlSubject;
+				}
 
-			if (!rs.next()) {
-				return urlSubject;
+				int mbMessageCount = rs.getInt(1);
+
+				if (mbMessageCount == 0) {
+					return urlSubject;
+				}
+
+				return urlSubject + StringPool.DASH + mbMessageCount;
 			}
-
-			int mbMessageCount = rs.getInt(1);
-
-			if (mbMessageCount == 0) {
-				return urlSubject;
-			}
-
-			return urlSubject + StringPool.DASH + mbMessageCount;
-		}
-		finally {
-			DataAccess.cleanUp(ps);
-			DataAccess.cleanUp(rs);
 		}
 	}
 
 	private Map<Long, String> _getInitialUrlSubjects(Connection con)
 		throws SQLException {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(
+		try (PreparedStatement ps = con.prepareStatement(
 				"select messageId, subject from MBMessage where " +
 					"(MBMessage.urlSubject is null) or (MBMessage.urlSubject " +
-						"= '')");
+						"= '')")) {
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				Map<Long, String> urlSubjects = new HashMap<>();
 
-			Map<Long, String> urlSubjects = new HashMap<>();
+				while (rs.next()) {
+					long messageId = rs.getLong(1);
+					String subject = rs.getString(2);
 
-			while (rs.next()) {
-				long messageId = rs.getLong(1);
-				String subject = rs.getString(2);
+					urlSubjects.put(
+						messageId, _getUrlSubject(messageId, subject));
+				}
 
-				String urlSubject = _getUrlSubject(messageId, subject);
-
-				urlSubjects.put(messageId, urlSubject);
+				return urlSubjects;
 			}
-
-			return urlSubjects;
-		}
-		finally {
-			DataAccess.cleanUp(ps);
-			DataAccess.cleanUp(rs);
 		}
 	}
 
@@ -147,20 +129,14 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 			Connection con, long messageId, String urlSubject)
 		throws SQLException {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = con.prepareStatement(
+		try (PreparedStatement ps = con.prepareStatement(
 				"update MBMessage set MBMessage.urlSubject = ? where " +
-					"MBMessage.messageId = ?");
+					"MBMessage.messageId = ?")) {
 
 			ps.setString(1, urlSubject);
 			ps.setLong(2, messageId);
 
 			ps.execute();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 

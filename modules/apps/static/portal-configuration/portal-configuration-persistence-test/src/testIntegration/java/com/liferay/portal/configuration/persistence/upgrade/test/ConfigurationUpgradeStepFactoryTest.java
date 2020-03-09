@@ -90,7 +90,7 @@ public class ConfigurationUpgradeStepFactoryTest {
 	}
 
 	private void _testUpgradeConfig(
-			boolean configFileExist, boolean dataExist, boolean factory)
+			boolean configFile, boolean data, boolean factory)
 		throws Exception {
 
 		Configuration configuration = null;
@@ -112,11 +112,11 @@ public class ConfigurationUpgradeStepFactoryTest {
 		}
 
 		try {
-			if (configFileExist) {
+			if (configFile) {
 				oldConfigFile.createNewFile();
 			}
 
-			if (dataExist) {
+			if (data) {
 				if (factory) {
 					configuration =
 						_configurationAdmin.createFactoryConfiguration(
@@ -131,7 +131,7 @@ public class ConfigurationUpgradeStepFactoryTest {
 						oldPid);
 				}
 
-				if (configFileExist) {
+				if (configFile) {
 					URI uri = oldConfigFile.toURI();
 
 					ConfigurationTestUtil.saveConfiguration(
@@ -155,7 +155,7 @@ public class ConfigurationUpgradeStepFactoryTest {
 
 			upgradeStep.upgrade(null);
 
-			if (dataExist) {
+			if (data) {
 				Assert.assertFalse(
 					"Configuration " + oldPid + " still exists",
 					_persistenceManager.exists(oldPid));
@@ -168,7 +168,7 @@ public class ConfigurationUpgradeStepFactoryTest {
 
 				String fileName = dictionary.get("felix.fileinstall.filename");
 
-				if (configFileExist) {
+				if (configFile) {
 					URI uri = newConfigFile.toURI();
 
 					Assert.assertEquals(
@@ -183,7 +183,7 @@ public class ConfigurationUpgradeStepFactoryTest {
 				}
 			}
 
-			if (configFileExist) {
+			if (configFile) {
 				Assert.assertFalse(
 					"Configuration file " + oldConfigFile + " still exists",
 					oldConfigFile.exists());
@@ -193,12 +193,12 @@ public class ConfigurationUpgradeStepFactoryTest {
 			}
 		}
 		finally {
-			if (configFileExist) {
+			if (configFile) {
 				oldConfigFile.delete();
 				newConfigFile.delete();
 			}
 
-			if (!factory || dataExist) {
+			if (!factory || data) {
 				_persistenceManager.delete(oldPid);
 				_persistenceManager.delete(newPid);
 			}

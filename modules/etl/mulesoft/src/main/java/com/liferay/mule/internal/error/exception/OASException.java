@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mule.internal.oas;
+package com.liferay.mule.internal.error.exception;
 
 /**
  * @author Matija Petanjek

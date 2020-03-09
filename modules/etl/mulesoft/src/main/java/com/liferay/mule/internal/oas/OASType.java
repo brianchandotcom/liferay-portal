@@ -14,6 +14,8 @@
 
 package com.liferay.mule.internal.oas;
 
+import com.liferay.mule.internal.error.exception.OASException;
+
 /**
  * @author Matija Petanjek
  */

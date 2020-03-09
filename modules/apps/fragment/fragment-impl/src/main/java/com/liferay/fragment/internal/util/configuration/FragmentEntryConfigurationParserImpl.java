@@ -176,6 +176,12 @@ public class FragmentEntryConfigurationParserImpl
 			return _getFieldValue("bool", value);
 		}
 		else if (StringUtil.equalsIgnoreCase(
+					fragmentConfigurationField.getType(),
+					"collectionSelector")) {
+
+			return _getInfoListObjectEntryJSONObject(value);
+		}
+		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(), "colorPalette")) {
 
 			JSONObject jsonObject = (JSONObject)_getFieldValue("object", value);
@@ -531,6 +537,26 @@ public class FragmentEntryConfigurationParserImpl
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to serialize info display object entry to JSON: " +
+						value,
+					jsonException);
+			}
+		}
+
+		return null;
+	}
+
+	private JSONObject _getInfoListObjectEntryJSONObject(String value) {
+		if (Validator.isNull(value)) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		try {
+			return JSONFactoryUtil.createJSONObject(value);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to serialize info list object entry to JSON: " +
 						value,
 					jsonException);
 			}

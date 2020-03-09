@@ -195,15 +195,10 @@ import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.MavenPluginConvention;
 import org.gradle.api.plugins.MavenRepositoryHandlerConvention;
-import org.gradle.api.plugins.quality.FindBugs;
-import org.gradle.api.plugins.quality.FindBugsPlugin;
-import org.gradle.api.plugins.quality.FindBugsReports;
 import org.gradle.api.plugins.quality.Pmd;
 import org.gradle.api.plugins.quality.PmdExtension;
 import org.gradle.api.plugins.quality.PmdPlugin;
 import org.gradle.api.provider.Property;
-import org.gradle.api.reporting.CustomizableHtmlReport;
-import org.gradle.api.reporting.SingleFileReport;
 import org.gradle.api.resources.ResourceHandler;
 import org.gradle.api.resources.TextResourceFactory;
 import org.gradle.api.specs.Spec;
@@ -491,7 +486,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTaskTestIntegration(project);
 		_configureTaskTlddoc(project, portalRootDir);
 		_configureTasksCheckOSGiBundleState(project, liferayExtension);
-		_configureTasksFindBugs(project);
 		_configureTasksJavaCompile(project);
 		_configureTasksJspC(project);
 		_configureTasksPmd(project);
@@ -1700,7 +1694,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, BaselinePlugin.class);
 		GradleUtil.applyPlugin(project, DependencyCheckerPlugin.class);
-		GradleUtil.applyPlugin(project, FindBugsPlugin.class);
 		GradleUtil.applyPlugin(project, IdeaPlugin.class);
 		GradleUtil.applyPlugin(project, JSDocPlugin.class);
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
@@ -3397,52 +3390,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskFindBugs(FindBugs findBugs) {
-		Project project = findBugs.getProject();
-
-		findBugs.setMaxHeapSize("3g");
-
-		FindBugsReports findBugsReports = findBugs.getReports();
-
-		CustomizableHtmlReport customizableHtmlReport =
-			findBugsReports.getHtml();
-
-		customizableHtmlReport.setEnabled(true);
-
-		SingleFileReport xmlReport = findBugsReports.getXml();
-
-		xmlReport.setEnabled(false);
-
-		SourceSet sourceSet = null;
-
-		String name = findBugs.getName();
-
-		if (name.startsWith("findbugs")) {
-			name = GUtil.toLowerCamelCase(name.substring(8));
-
-			JavaPluginConvention javaPluginConvention =
-				GradleUtil.getConvention(project, JavaPluginConvention.class);
-
-			SourceSetContainer sourceSetContainer =
-				javaPluginConvention.getSourceSets();
-
-			sourceSet = sourceSetContainer.findByName(name);
-		}
-
-		if (sourceSet != null) {
-			ConfigurableFileTree configurableFileTree = project.fileTree(
-				FileUtil.getJavaClassesDir(sourceSet));
-
-			configurableFileTree.setBuiltBy(
-				Collections.singleton(sourceSet.getOutput()));
-
-			configurableFileTree.setIncludes(
-				Collections.singleton("**/*.class"));
-
-			findBugs.setClasses(configurableFileTree);
-		}
-	}
-
 	private void _configureTaskGenerateJSPJava(
 		Project project, LiferayExtension liferayExtension) {
 
@@ -3820,21 +3767,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			task.setEnabled(false);
 			task.setFinalizedBy(Collections.emptySet());
 		}
-	}
-
-	private void _configureTasksFindBugs(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			FindBugs.class,
-			new Action<FindBugs>() {
-
-				@Override
-				public void execute(FindBugs findBugs) {
-					_configureTaskFindBugs(findBugs);
-				}
-
-			});
 	}
 
 	private void _configureTasksJavaCompile(Project project) {

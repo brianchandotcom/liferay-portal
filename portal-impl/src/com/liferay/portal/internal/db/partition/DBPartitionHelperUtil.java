@@ -14,7 +14,6 @@
 
 package com.liferay.portal.internal.db.partition;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -143,7 +142,8 @@ public class DBPartitionHelperUtil {
 	}
 
 	private static String _getSchemaName(long companyId) {
-		return _DATABASE_PARTITION_INSTANCE_ID + CharPool.UNDERLINE + companyId;
+		return _DATABASE_PARTITION_INSTANCE_ID + StringPool.UNDERLINE +
+			companyId;
 	}
 
 	private static boolean _isControlTable(

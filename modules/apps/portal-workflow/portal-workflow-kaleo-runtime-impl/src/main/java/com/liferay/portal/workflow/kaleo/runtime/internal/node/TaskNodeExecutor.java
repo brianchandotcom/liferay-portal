@@ -176,7 +176,7 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 			return;
 		}
 
-		_taskAssignerUtil.reassignKaleoTask(
+		_taskAssignerHelper.reassignKaleoTask(
 			kaleoTaskReassignments, executionContext);
 	}
 
@@ -224,7 +224,7 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 	private KaleoTaskLocalService _kaleoTaskLocalService;
 
 	@Reference
-	private TaskAssignerHelper _taskAssignerUtil;
+	private TaskAssignerHelper _taskAssignerHelper;
 
 	@Reference
 	private TaskAssignmentSelectorRegistry _taskAssignmentSelectorRegistry;

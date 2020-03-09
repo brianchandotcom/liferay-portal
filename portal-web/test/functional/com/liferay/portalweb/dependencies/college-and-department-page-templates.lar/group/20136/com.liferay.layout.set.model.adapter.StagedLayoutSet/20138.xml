@@ -28,7 +28,7 @@
     <__originalLayoutSetPrototypeUuid></__originalLayoutSetPrototypeUuid>
     <__layoutSetPrototypeLinkEnabled>false</__layoutSetPrototypeLinkEnabled>
     <__columnBitmask>0</__columnBitmask>
-    <__settingsProperties serialization="custom">
+    <__settingsUnicodeProperties serialization="custom">
       <unserializable-parents/>
       <map>
         <default>
@@ -43,7 +43,7 @@
           <__safe>true</__safe>
         </default>
       </com.liferay.portal.kernel.util.UnicodeProperties>
-    </__settingsProperties>
+    </__settingsUnicodeProperties>
   </__layoutSet>
   <__userId>20103</__userId>
   <__userName></__userName>

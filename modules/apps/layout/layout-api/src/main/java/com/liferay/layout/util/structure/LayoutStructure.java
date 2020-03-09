@@ -14,6 +14,7 @@
 
 package com.liferay.layout.util.structure;
 
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
@@ -139,6 +140,17 @@ public class LayoutStructure {
 			LayoutStructureItemUtil.create(itemType, parentItemId);
 
 		_updateLayoutStructure(layoutStructureItem, position);
+
+		if (Objects.equals(
+				itemType, LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
+
+			LayoutStructureItem collectionItemLayoutStructureItem =
+				LayoutStructureItemUtil.create(
+					LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM,
+					layoutStructureItem.getItemId());
+
+			_updateLayoutStructure(collectionItemLayoutStructureItem, 0);
+		}
 
 		return layoutStructureItem;
 	}

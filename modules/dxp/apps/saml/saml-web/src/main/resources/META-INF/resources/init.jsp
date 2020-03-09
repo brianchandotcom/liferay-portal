@@ -55,7 +55,7 @@ page import="com.liferay.saml.runtime.metadata.LocalEntityManager" %><%@
 page import="com.liferay.saml.util.NameIdTypeValues" %><%@
 page import="com.liferay.saml.util.PortletPropsKeys" %><%@
 page import="com.liferay.saml.web.internal.display.context.GeneralTabDefaultViewDisplayContext" %><%@
-page import="com.liferay.saml.web.internal.util.NameIdTypeValuesUtilHelper" %><%@
+page import="com.liferay.saml.web.internal.util.NameIdTypeValuesUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.security.InvalidParameterException" %><%@
@@ -75,7 +75,7 @@ page import="java.util.List" %>
 String currentURL = PortalUtil.getCurrentURL(request);
 
 LocalEntityManager localEntityManager = (LocalEntityManager)request.getAttribute(LocalEntityManager.class.getName());
-NameIdTypeValues nameIdTypeValues = NameIdTypeValuesUtilHelper.getNameIdTypeValues();
+NameIdTypeValues nameIdTypeValues = NameIdTypeValuesUtil.getNameIdTypeValues();
 GeneralTabDefaultViewDisplayContext generalTabDefaultViewDisplayContext = (GeneralTabDefaultViewDisplayContext)renderRequest.getAttribute(GeneralTabDefaultViewDisplayContext.class.getName());
 SamlProviderConfigurationHelper samlProviderConfigurationHelper = (SamlProviderConfigurationHelper)request.getAttribute(SamlProviderConfigurationHelper.class.getName());
 

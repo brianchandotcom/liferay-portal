@@ -23,7 +23,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Michael C. Han
  */
-public class NameIdTypeValuesUtilHelper {
+public class NameIdTypeValuesUtil {
 
 	public static NameIdTypeValues getNameIdTypeValues() {
 		return _serviceTracker.getService();
@@ -31,7 +31,7 @@ public class NameIdTypeValuesUtilHelper {
 
 	private static final ServiceTracker<NameIdTypeValues, NameIdTypeValues>
 		_serviceTracker = ServiceTrackerFactory.open(
-			FrameworkUtil.getBundle(NameIdTypeValuesUtilHelper.class),
+			FrameworkUtil.getBundle(NameIdTypeValuesUtil.class),
 			NameIdTypeValues.class);
 
 }

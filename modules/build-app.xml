@@ -785,48 +785,26 @@
 					excludes="**/*-test*,${app.module.dirs.excludes}"
 					includes="apps/${app.name}/**,dxp/apps/${app.name}/**"
 				>
-					<and>
-						<present targetdir="${modules.dir}">
-							<mapper
-								from="*"
-								to="*/.lfrbuild-portal"
-								type="glob"
-							/>
-						</present>
-						<not>
-							<present targetdir="${modules.dir}">
-								<mapper
-									from="*"
-									to="*/.lfrbuild-releng-ignore"
-									type="glob"
-								/>
-							</present>
-						</not>
-					</and>
+					<present targetdir="${modules.dir}">
+						<mapper
+							from="*"
+							to="*/.lfrbuild-portal"
+							type="glob"
+						/>
+					</present>
 				</dirset>
 				<dirset
 					dir="${modules.dir}"
 					excludes="${app.module.dirs.excludes}"
 					includes="apps/${app.name}/**,dxp/apps/${app.name}/**"
 				>
-					<and>
-						<present targetdir="${modules.dir}">
-							<mapper
-								from="*"
-								to="*/.lfrbuild-portal-private"
-								type="glob"
-							/>
-						</present>
-						<not>
-							<present targetdir="${modules.dir}">
-								<mapper
-									from="*"
-									to="*/.lfrbuild-releng-ignore"
-									type="glob"
-								/>
-							</present>
-						</not>
-					</and>
+					<present targetdir="${modules.dir}">
+						<mapper
+							from="*"
+							to="*/.lfrbuild-portal-private"
+							type="glob"
+						/>
+					</present>
 				</dirset>
 			</path>
 		</pathconvert>
@@ -842,24 +820,13 @@
 					excludes="**/*-test*,${app.module.dirs.excludes}"
 					includes="apps/${app.name}/**"
 				>
-					<and>
-						<present targetdir="${modules.dir}">
-							<mapper
-								from="*"
-								to="*/.lfrbuild-portal"
-								type="glob"
-							/>
-						</present>
-						<not>
-							<present targetdir="${modules.dir}">
-								<mapper
-									from="*"
-									to="*/.lfrbuild-releng-ignore"
-									type="glob"
-								/>
-							</present>
-						</not>
-					</and>
+					<present targetdir="${modules.dir}">
+						<mapper
+							from="*"
+							to="*/.lfrbuild-portal"
+							type="glob"
+						/>
+					</present>
 				</dirset>
 			</path>
 		</pathconvert>

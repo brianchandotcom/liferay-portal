@@ -15,11 +15,9 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.exception.RequiredFragmentEntryException;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -60,21 +58,9 @@ public class DeleteFragmentCompositionsMVCActionCommand
 				actionRequest, "rowIds");
 		}
 
-		try {
-			for (long currentFragmentCompositionId :
-					deleteFragmentCompositionIds) {
-
-				_fragmentCompositionService.deleteFragmentComposition(
-					currentFragmentCompositionId);
-			}
-		}
-		catch (RequiredFragmentEntryException requiredFragmentEntryException) {
-			SessionErrors.add(
-				actionRequest, requiredFragmentEntryException.getClass());
-
-			hideDefaultErrorMessage(actionRequest);
-
-			sendRedirect(actionRequest, actionResponse);
+		for (long currentFragmentCompositionId : deleteFragmentCompositionIds) {
+			_fragmentCompositionService.deleteFragmentComposition(
+				currentFragmentCompositionId);
 		}
 	}
 

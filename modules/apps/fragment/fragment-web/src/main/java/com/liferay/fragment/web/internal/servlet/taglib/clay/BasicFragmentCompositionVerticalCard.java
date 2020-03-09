@@ -50,14 +50,12 @@ public class BasicFragmentCompositionVerticalCard
 		super(fragmentComposition, rowChecker);
 
 		_fragmentComposition = fragmentComposition;
-
-		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override

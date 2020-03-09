@@ -91,8 +91,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Raymond Augé
  */
-@Component(service = JournalRSSUtil.class)
-public class JournalRSSUtil {
+@Component(service = JournalRSSHelper.class)
+public class JournalRSSHelper {
 
 	public List<JournalArticle> getArticles(JournalFeed feed) {
 		long companyId = feed.getCompanyId();
@@ -686,7 +686,8 @@ public class JournalRSSUtil {
 		"<request><parameters><parameter><name>rss</name><value>true</value>" +
 			"</parameter></parameters></request>";
 
-	private static final Log _log = LogFactoryUtil.getLog(JournalRSSUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalRSSHelper.class);
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

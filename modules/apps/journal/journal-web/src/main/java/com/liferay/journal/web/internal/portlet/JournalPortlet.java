@@ -58,7 +58,7 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.internal.configuration.JournalDDMEditorConfiguration;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
-import com.liferay.journal.web.internal.util.JournalDDMTemplateUtil;
+import com.liferay.journal.web.internal.util.JournalDDMTemplateHelper;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -153,7 +153,7 @@ public class JournalPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
 			renderRequest.setAttribute(
-				JournalDDMTemplateUtil.class.getName(),
+				JournalDDMTemplateHelper.class.getName(),
 				_journalDDMTemplateUtil);
 		}
 
@@ -327,7 +327,7 @@ public class JournalPortlet extends MVCPortlet {
 		_journalDDMEditorConfiguration;
 
 	@Reference
-	private JournalDDMTemplateUtil _journalDDMTemplateUtil;
+	private JournalDDMTemplateHelper _journalDDMTemplateUtil;
 
 	private volatile JournalFileUploadsConfiguration
 		_journalFileUploadsConfiguration;

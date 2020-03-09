@@ -19,7 +19,7 @@
 <%
 JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = new JournalEditDDMTemplateDisplayContext(request);
 
-JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.getAttribute(JournalDDMTemplateUtil.class.getName());
+JournalDDMTemplateHelper journalDDMTemplateUtil = (JournalDDMTemplateHelper)request.getAttribute(JournalDDMTemplateHelper.class.getName());
 %>
 
 <aui:input name="scriptContent" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getScript() %>" />

@@ -37,8 +37,8 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = JournalDDMTemplateUtil.class)
-public class JournalDDMTemplateUtil {
+@Component(service = JournalDDMTemplateHelper.class)
+public class JournalDDMTemplateHelper {
 
 	public String getDataContent(
 		TemplateVariableDefinition templateVariableDefinition,
@@ -318,6 +318,6 @@ public class JournalDDMTemplateUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JournalDDMTemplateUtil.class);
+		JournalDDMTemplateHelper.class);
 
 }

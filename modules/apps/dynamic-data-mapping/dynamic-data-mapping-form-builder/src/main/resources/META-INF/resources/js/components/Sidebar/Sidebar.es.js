@@ -385,10 +385,10 @@ class Sidebar extends Component {
 		cancelChangesModal.show();
 	}
 
-	_deleteField(indexes) {
+	_deleteField(fieldName) {
 		const {dispatch} = this.context;
 
-		dispatch('fieldDeleted', {indexes});
+		dispatch('fieldDeleted', {fieldName});
 	}
 
 	dispatchFieldBlurred() {
@@ -414,10 +414,10 @@ class Sidebar extends Component {
 			});
 	}
 
-	_duplicateField(indexes) {
+	_duplicateField(fieldName) {
 		const {dispatch} = this.context;
 
-		dispatch('fieldDuplicated', {indexes});
+		dispatch('fieldDuplicated', {fieldName});
 	}
 
 	_fetchElementSet(fieldSetId) {
@@ -663,7 +663,12 @@ class Sidebar extends Component {
 	}
 
 	_handleElementSettingsClicked({data: {item}}) {
-		const {columnIndex, pageIndex, rowIndex} = this.props.focusedField;
+		const {
+			columnIndex,
+			fieldName,
+			pageIndex,
+			rowIndex,
+		} = this.props.focusedField;
 		const {settingsItem} = item;
 		const indexes = {
 			columnIndex,
@@ -673,10 +678,10 @@ class Sidebar extends Component {
 
 		if (!item.disabled) {
 			if (settingsItem === 'duplicate-field') {
-				this._duplicateField(indexes);
+				this._duplicateField(fieldName);
 			}
 			else if (settingsItem === 'delete-field') {
-				this._deleteField(indexes);
+				this._deleteField(fieldName);
 			}
 			else if (settingsItem === 'cancel-field-changes') {
 				this._cancelFieldChanges(indexes);

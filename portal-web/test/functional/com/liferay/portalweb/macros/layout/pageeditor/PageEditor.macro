@@ -72,9 +72,10 @@ definition {
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
 
-		AssertTextEquals(
-			locator1 = "Fragment#CONFIGURABLE_FIELD",
-			value1 = "The selected content will be shown here.");
+		AssertVisible(
+			key_fragmentName = "${fragmentName}",
+			key_messageIfo = "The selected content will be shown here.",
+			locator1 = "Fragment#MESSAGE_INFO");
 	}
 
 	macro addExperience {

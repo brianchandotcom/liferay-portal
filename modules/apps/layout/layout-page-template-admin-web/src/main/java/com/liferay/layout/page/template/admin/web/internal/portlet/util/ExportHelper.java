@@ -62,8 +62,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rubén Pulido
  */
-@Component(immediate = true, service = ExportUtil.class)
-public class ExportUtil {
+@Component(immediate = true, service = ExportHelper.class)
+public class ExportHelper {
 
 	public File exportPageTemplateDefinitions(
 			List<LayoutPageTemplateEntry> layoutPageTemplateEntries)
@@ -207,7 +207,7 @@ public class ExportUtil {
 
 	private static final String _ROOT_FOLDER = "page-templates";
 
-	private static final Log _log = LogFactoryUtil.getLog(ExportUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(ExportHelper.class);
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{

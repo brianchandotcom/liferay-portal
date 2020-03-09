@@ -43,9 +43,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	immediate = true, service = LayoutPageTemplateStructureDataHandlerUtil.class
+	immediate = true,
+	service = LayoutPageTemplateStructureDataHandlerHelper.class
 )
-public class LayoutPageTemplateStructureDataHandlerUtil {
+public class LayoutPageTemplateStructureDataHandlerHelper {
 
 	public void importLayoutPageTemplateStructure(
 			PortletDataContext portletDataContext, long classNameId,

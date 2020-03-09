@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.util;
+package com.liferay.document.library.web.internal.helper;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;

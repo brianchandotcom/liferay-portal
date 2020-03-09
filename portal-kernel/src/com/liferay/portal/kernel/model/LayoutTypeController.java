@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.model;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 import java.io.Serializable;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +29,13 @@ public interface LayoutTypeController extends Serializable {
 	public String[] getConfigurationActionDelete();
 
 	public String[] getConfigurationActionUpdate();
+
+	public default String getFriendlyURL(
+			HttpServletRequest httpServletRequest, Layout layout)
+		throws PortalException {
+
+		return null;
+	}
 
 	public String getType();
 

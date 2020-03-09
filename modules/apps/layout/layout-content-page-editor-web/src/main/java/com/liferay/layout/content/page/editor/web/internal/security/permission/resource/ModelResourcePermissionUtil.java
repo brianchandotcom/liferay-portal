@@ -27,18 +27,18 @@ import org.osgi.service.component.annotations.Reference;
 public class ModelResourcePermissionUtil {
 
 	public static boolean contains(
+		PermissionChecker permissionChecker, long plid, String actionId) {
+
+		return _modelResourcePermission.contains(
+			permissionChecker, plid, actionId);
+	}
+
+	public static boolean contains(
 		PermissionChecker permissionChecker, String className, long classPK,
 		String actionId) {
 
 		return _modelResourcePermission.contains(
 			permissionChecker, className, classPK, actionId);
-	}
-
-	public static boolean contains(
-		PermissionChecker permissionChecker, long plid, String actionId) {
-
-		return _modelResourcePermission.contains(
-			permissionChecker, plid, actionId);
 	}
 
 	@Reference(unbind = "-")

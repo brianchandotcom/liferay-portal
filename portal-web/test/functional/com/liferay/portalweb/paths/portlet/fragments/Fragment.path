@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_INFO</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//div[@class='portlet-msg-info' and contains(.,'${key_messageIfo}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

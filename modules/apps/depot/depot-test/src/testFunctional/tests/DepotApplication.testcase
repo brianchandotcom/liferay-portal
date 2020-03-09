@@ -27,6 +27,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot document cannot be searched on a connected site when DM application is disabled."
+	@ignore = "true"
 	@priority = "5"
 	test SearchForDisabledDocumentOnSite {
 		JSONGroup.addGroup(groupName = "Test Site Name");
@@ -83,6 +84,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot web content cannot be searched on a connected site when WC application is disabled."
+	@ignore = "true"
 	@priority = "5"
 	test SearchForDisabledWebContentOnSite {
 		JSONGroup.addGroup(groupName = "Test Site Name");
@@ -346,6 +348,7 @@ definition {
 	}
 
 	@description = "This ensures that a user cannot see the sections of the product menu that contain disabled applications."
+	@ignore = "true"
 	@priority = "5"
 	test ViewDepotWithAllAppsDisabled {
 		DepotNavigator.openDepotAdmin();

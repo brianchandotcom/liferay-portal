@@ -38,7 +38,10 @@ const BulkReassignModal = () => {
 	const {
 		dispatch,
 		filterState,
-		filterValues: {bulkAssigneeUserIds: userIds, bulkTaskKeys: taskNames},
+		filterValues: {
+			bulkAssigneeUserIds: userIds,
+			bulkTaskKeys: workflowTaskNames,
+		},
 	} = useFilter({withoutRouteParams: true});
 
 	const {
@@ -102,7 +105,7 @@ const BulkReassignModal = () => {
 			assigneeIds,
 			completed: false,
 			searchByRoles,
-			taskNames,
+			workflowTaskNames,
 		};
 
 		if (selectAllInstances) {
@@ -118,7 +121,7 @@ const BulkReassignModal = () => {
 
 		return params;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [taskNames, userIds, visible]);
+	}, [workflowTaskNames, userIds, visible]);
 
 	const {postData} = usePost({
 		admin: true,

@@ -16,6 +16,7 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React from 'react';
 
 import CollectionSelector from '../../../common/components/CollectionSelector';
+import {COLLECTION_LIST_FORMATS} from '../../config/constants/collectionListFormats';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
@@ -56,6 +57,31 @@ export const CollectionConfigurationPanel = ({item}) => {
 							collection,
 						})
 					}
+				/>
+			</ClayForm.Group>
+			<ClayForm.Group small>
+				<label htmlFor="collectionListFormat">
+					{Liferay.Language.get('list-format')}
+				</label>
+				<ClaySelectWithOption
+					aria-label={Liferay.Language.get('list-format')}
+					id="collectionListFormat"
+					onChange={({target: {value}}) =>
+						handleConfigurationChanged({
+							listFormat: value,
+						})
+					}
+					options={[
+						{
+							label: Liferay.Language.get('stacked'),
+							value: COLLECTION_LIST_FORMATS.stacked,
+						},
+						{
+							label: Liferay.Language.get('grid'),
+							value: COLLECTION_LIST_FORMATS.grid,
+						},
+					]}
+					value={collectionConfig.listFormat}
 				/>
 			</ClayForm.Group>
 			<ClayForm.Group small>

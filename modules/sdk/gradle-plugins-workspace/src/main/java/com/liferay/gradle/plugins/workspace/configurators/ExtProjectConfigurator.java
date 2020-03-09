@@ -20,7 +20,6 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.workspace.tasks.InitBundleTask;
 import com.liferay.gradle.util.FileUtil;
 
 import groovy.lang.Closure;
@@ -37,11 +36,9 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.CopySourceSpec;
-import org.gradle.api.file.CopySpec;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.JavaPlugin;
@@ -79,7 +76,6 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 
 		_configureLiferay(project, workspaceExtension);
 		_configureRootTaskDistBundle(project, extPlugin);
-		_configureRootTaskInitBundle(project, extPlugin);
 	}
 
 	@Override
@@ -167,49 +163,6 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 				@SuppressWarnings("unused")
 				public void doCall(CopySourceSpec copySourceSpec) {
 					copySourceSpec.from(task);
-				}
-
-			});
-	}
-
-	private void _configureRootTaskInitBundle(
-		Project project, boolean extPlugin) {
-
-		InitBundleTask initBundleTask = (InitBundleTask)GradleUtil.getTask(
-			project.getRootProject(),
-			RootProjectConfigurator.INIT_BUNDLE_TASK_NAME);
-
-		final String dirName;
-		String taskName = null;
-
-		if (extPlugin) {
-			dirName = "osgi/war";
-			taskName = WarPlugin.WAR_TASK_NAME;
-		}
-		else {
-			dirName = "osgi/marketplace/override";
-			taskName = JavaPlugin.JAR_TASK_NAME;
-		}
-
-		final Task task = GradleUtil.getTask(project, taskName);
-
-		initBundleTask.dependsOn(task);
-
-		initBundleTask.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					project.copy(
-						new Action<CopySpec>() {
-
-							@Override
-							public void execute(CopySpec copySpec) {
-								copySpec.from(task);
-								copySpec.into(dirName);
-							}
-
-						});
 				}
 
 			});

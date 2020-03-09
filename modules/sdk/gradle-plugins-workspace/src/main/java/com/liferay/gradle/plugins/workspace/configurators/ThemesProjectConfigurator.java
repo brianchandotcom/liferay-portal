@@ -22,7 +22,6 @@ import com.liferay.gradle.plugins.workspace.ProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.workspace.tasks.InitBundleTask;
 
 import groovy.json.JsonSlurper;
 
@@ -42,7 +41,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.ConfigurableFileCollection;
@@ -94,7 +92,6 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 				project, BasePlugin.ASSEMBLE_TASK_NAME);
 
 			_configureRootTaskDistBundle(assembleTask);
-			_configureRootTaskInitBundle(assembleTask);
 
 			Callable<ConfigurableFileCollection> warSourcePath =
 				new Callable<ConfigurableFileCollection>() {
@@ -203,44 +200,6 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 					configurableFileCollection.builtBy(assembleTask);
 
 					copySpec.from(warFile);
-				}
-
-			});
-	}
-
-	private void _configureRootTaskInitBundle(final Task assembleTask) {
-		Project project = assembleTask.getProject();
-
-		InitBundleTask initBundleTask = (InitBundleTask)GradleUtil.getTask(
-			project.getRootProject(),
-			RootProjectConfigurator.INIT_BUNDLE_TASK_NAME);
-
-		initBundleTask.dependsOn(assembleTask);
-
-		initBundleTask.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					project.copy(
-						new Action<CopySpec>() {
-
-							@Override
-							public void execute(CopySpec copySpec) {
-								File warFile = _getWarFile(project);
-
-								ConfigurableFileCollection
-									configurableFileCollection = project.files(
-										warFile);
-
-								configurableFileCollection.builtBy(
-									assembleTask);
-
-								copySpec.from(warFile);
-								copySpec.into("osgi/war");
-							}
-
-						});
 				}
 
 			});

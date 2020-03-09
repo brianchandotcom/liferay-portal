@@ -269,12 +269,6 @@
 	<td>//tr[contains(.,'${key_language}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
-
-<tr>
-	<td>FRAGMENT_VERTICAL_ELLIPSIS</td>
-	<td>//*[contains(@class, 'fragments-editor-sidebar')]//*[contains(@class, 'lexicon-icon-ellipsis-v')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>FRAGMENT_PAGE_CONTENT_VERTICAL_ELLIPSIS</td>
 	<td>//li[contains(@class,'page-content') and contains(.,'${key_rowEntry}')]//button[contains(@class,'btn-monospaced')]</td>

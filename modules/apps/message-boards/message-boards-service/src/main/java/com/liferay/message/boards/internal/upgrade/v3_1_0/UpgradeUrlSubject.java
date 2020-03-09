@@ -63,7 +63,7 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 
 			if (!rs.next()) {
 				return urlSubject;
-			};
+			}
 
 			int mbMessageCount = rs.getInt(1);
 

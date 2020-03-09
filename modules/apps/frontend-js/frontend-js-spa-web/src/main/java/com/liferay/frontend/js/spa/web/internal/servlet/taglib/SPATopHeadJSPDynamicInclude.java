@@ -56,7 +56,7 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		if (_spaUtil.isDisabled(httpServletRequest)) {
+		if (_spaHelper.isDisabled(httpServletRequest)) {
 			return;
 		}
 
@@ -67,42 +67,42 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		Map<String, String> values = HashMapBuilder.put(
 			"cacheExpirationTime",
 			String.valueOf(
-				_spaUtil.getCacheExpirationTime(themeDisplay.getCompanyId()))
+				_spaHelper.getCacheExpirationTime(themeDisplay.getCompanyId()))
 		).put(
 			"clearScreensCache",
 			String.valueOf(
-				_spaUtil.isClearScreensCache(
+				_spaHelper.isClearScreensCache(
 					httpServletRequest, httpServletRequest.getSession()))
 		).put(
-			"debugEnabled", String.valueOf(_spaUtil.isDebugEnabled())
+			"debugEnabled", String.valueOf(_spaHelper.isDebugEnabled())
 		).put(
-			"excludedPaths", _spaUtil.getExcludedPaths()
+			"excludedPaths", _spaHelper.getExcludedPaths()
 		).put(
 			"loginRedirect",
-			_html.escapeJS(_spaUtil.getLoginRedirect(httpServletRequest))
+			_html.escapeJS(_spaHelper.getLoginRedirect(httpServletRequest))
 		).put(
 			"message",
 			_language.get(
-				_spaUtil.getLanguageResourceBundle(
+				_spaHelper.getLanguageResourceBundle(
 					"frontend-js-spa-web", themeDisplay.getLocale()),
 				"it-looks-like-this-is-taking-longer-than-expected")
 		).put(
 			"navigationExceptionSelectors",
-			_spaUtil.getNavigationExceptionSelectors()
+			_spaHelper.getNavigationExceptionSelectors()
 		).put(
-			"portletsBlacklist", _spaUtil.getPortletsBlacklist(themeDisplay)
+			"portletsBlacklist", _spaHelper.getPortletsBlacklist(themeDisplay)
 		).put(
-			"requestTimeout", String.valueOf(_spaUtil.getRequestTimeout())
+			"requestTimeout", String.valueOf(_spaHelper.getRequestTimeout())
 		).put(
-			"timeout", String.valueOf(_spaUtil.getUserNotificationTimeout())
+			"timeout", String.valueOf(_spaHelper.getUserNotificationTimeout())
 		).put(
 			"title",
 			_language.get(
-				_spaUtil.getLanguageResourceBundle(
+				_spaHelper.getLanguageResourceBundle(
 					"frontend-js-spa-web", themeDisplay.getLocale()),
 				"oops")
 		).put(
-			"validStatusCodes", _spaUtil.getValidStatusCodes()
+			"validStatusCodes", _spaHelper.getValidStatusCodes()
 		).build();
 
 		ScriptData configScriptData = new ScriptData();
@@ -175,6 +175,6 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private volatile SPAHelper _spaUtil;
+	private volatile SPAHelper _spaHelper;
 
 }

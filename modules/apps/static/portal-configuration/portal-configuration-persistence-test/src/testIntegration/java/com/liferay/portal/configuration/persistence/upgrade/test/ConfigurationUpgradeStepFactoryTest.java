@@ -70,6 +70,13 @@ public class ConfigurationUpgradeStepFactoryTest {
 	}
 
 	@Test
+	public void testUpgradeConfigWithDBWithoutFileWithFileName()
+		throws Exception {
+
+		_testUpgradeConfig(false, true, false, true);
+	}
+
+	@Test
 	public void testUpgradeConfigWithoutDBWithFile() throws Exception {
 		_testUpgradeConfig(true, false, false);
 	}
@@ -82,6 +89,13 @@ public class ConfigurationUpgradeStepFactoryTest {
 	@Test
 	public void testUpgradeFactoryConfigWithDBWithoutFile() throws Exception {
 		_testUpgradeConfig(false, true, true);
+	}
+
+	@Test
+	public void testUpgradeFactoryConfigWithDBWithoutFileWithFileName()
+		throws Exception {
+
+		_testUpgradeConfig(false, true, true, true);
 	}
 
 	@Test

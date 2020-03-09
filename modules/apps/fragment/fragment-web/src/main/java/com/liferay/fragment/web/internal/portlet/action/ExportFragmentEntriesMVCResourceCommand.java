@@ -66,7 +66,7 @@ public class ExportFragmentEntriesMVCResourceCommand
 		}
 		else {
 			exportFragmentEntryIds = ParamUtil.getLongValues(
-				resourceRequest, "rowIds");
+				resourceRequest, "rowIdsFragmentEntry");
 		}
 
 		try {

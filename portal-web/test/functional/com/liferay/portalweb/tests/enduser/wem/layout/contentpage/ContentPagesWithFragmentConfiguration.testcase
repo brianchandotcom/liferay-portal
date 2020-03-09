@@ -181,10 +181,6 @@ definition {
 			collectionName = "Collection Name",
 			fragmentName = "Text Fragment Example");
 
-		Click(
-			fragment_name = "Text Fragment Example",
-			locator1 = "PageEditor#SECTION_NAME");
-
 		Click.clickNoMouseOver(
 			key_elementType = "Fragment",
 			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");

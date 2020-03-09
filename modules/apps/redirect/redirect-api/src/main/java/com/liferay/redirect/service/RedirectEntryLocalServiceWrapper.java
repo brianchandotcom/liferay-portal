@@ -35,9 +35,10 @@ public class RedirectEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.redirect.model.RedirectEntry addRedirectEntry(
-		long groupId, String destinationURL, String sourceURL,
-		boolean temporary,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+			long groupId, String destinationURL, String sourceURL,
+			boolean temporary,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _redirectEntryLocalService.addRedirectEntry(
 			groupId, destinationURL, sourceURL, temporary, serviceContext);

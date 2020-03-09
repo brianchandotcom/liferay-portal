@@ -65,8 +65,9 @@ public interface RedirectEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public RedirectEntry addRedirectEntry(
-		long groupId, String destinationURL, String sourceURL,
-		boolean temporary, ServiceContext serviceContext);
+			long groupId, String destinationURL, String sourceURL,
+			boolean temporary, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the redirect entry to the database. Also notifies the appropriate model listeners.

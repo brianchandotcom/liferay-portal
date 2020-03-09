@@ -25,27 +25,37 @@ import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import Collection from './Collection';
 
-const CollectionWithControls = React.forwardRef(({item, layoutData}, ref) => {
-	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
+const CollectionWithControls = React.forwardRef(
+	({children, item, layoutData}, ref) => {
+		const canUpdateLayoutContent = useSelector(
+			selectCanUpdateLayoutContent
+		);
 
-	const buttons = [];
+		const buttons = [];
 
-	buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.collectionConfiguration);
+		buttons.push(
+			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.collectionConfiguration
+		);
 
-	const content = (
-		<Collection item={item} ref={ref}>
-			<FloatingToolbar buttons={buttons} item={item} itemRef={ref} />
-		</Collection>
-	);
+		const content = (
+			<>
+				<Collection item={item} ref={ref}>
+					{children}
+				</Collection>
 
-	return canUpdateLayoutContent ? (
-		<Topper item={item} itemRef={ref} layoutData={layoutData}>
-			{() => content}
-		</Topper>
-	) : (
-		content
-	);
-});
+				<FloatingToolbar buttons={buttons} item={item} itemRef={ref} />
+			</>
+		);
+
+		return canUpdateLayoutContent ? (
+			<Topper item={item} itemRef={ref} layoutData={layoutData}>
+				{() => content}
+			</Topper>
+		) : (
+			content
+		);
+	}
+);
 
 CollectionWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,

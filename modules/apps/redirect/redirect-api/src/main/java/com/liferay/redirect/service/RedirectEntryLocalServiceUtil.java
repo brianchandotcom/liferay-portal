@@ -285,6 +285,15 @@ public class RedirectEntryLocalServiceUtil {
 		return getService().getRedirectEntries(start, end);
 	}
 
+	public static java.util.List<com.liferay.redirect.model.RedirectEntry>
+		getRedirectEntries(
+			long groupId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.redirect.model.RedirectEntry> obc) {
+
+		return getService().getRedirectEntries(groupId, start, end, obc);
+	}
+
 	/**
 	 * Returns all the redirect entries matching the UUID and company.
 	 *
@@ -326,6 +335,10 @@ public class RedirectEntryLocalServiceUtil {
 	 */
 	public static int getRedirectEntriesCount() {
 		return getService().getRedirectEntriesCount();
+	}
+
+	public static int getRedirectEntriesCount(long groupId) {
+		return getService().getRedirectEntriesCount(groupId);
 	}
 
 	/**

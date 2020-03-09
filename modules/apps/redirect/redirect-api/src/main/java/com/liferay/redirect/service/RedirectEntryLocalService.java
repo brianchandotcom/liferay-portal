@@ -242,6 +242,10 @@ public interface RedirectEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<RedirectEntry> getRedirectEntries(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<RedirectEntry> getRedirectEntries(
+		long groupId, int start, int end, OrderByComparator<RedirectEntry> obc);
+
 	/**
 	 * Returns all the redirect entries matching the UUID and company.
 	 *
@@ -275,6 +279,9 @@ public interface RedirectEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRedirectEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRedirectEntriesCount(long groupId);
 
 	/**
 	 * Returns the redirect entry with the primary key.

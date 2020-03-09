@@ -304,6 +304,17 @@ public class RedirectEntryLocalServiceWrapper
 		return _redirectEntryLocalService.getRedirectEntries(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.redirect.model.RedirectEntry>
+		getRedirectEntries(
+			long groupId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.redirect.model.RedirectEntry> obc) {
+
+		return _redirectEntryLocalService.getRedirectEntries(
+			groupId, start, end, obc);
+	}
+
 	/**
 	 * Returns all the redirect entries matching the UUID and company.
 	 *
@@ -348,6 +359,11 @@ public class RedirectEntryLocalServiceWrapper
 	@Override
 	public int getRedirectEntriesCount() {
 		return _redirectEntryLocalService.getRedirectEntriesCount();
+	}
+
+	@Override
+	public int getRedirectEntriesCount(long groupId) {
+		return _redirectEntryLocalService.getRedirectEntriesCount(groupId);
 	}
 
 	/**

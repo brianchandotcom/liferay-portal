@@ -20,7 +20,12 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUserBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeUserResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 
 import java.util.function.BiFunction;
@@ -42,12 +47,45 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
+	public static void setAssigneeUserResourceComponentServiceObjects(
+		ComponentServiceObjects<AssigneeUserResource>
+			assigneeUserResourceComponentServiceObjects) {
+
+		_assigneeUserResourceComponentServiceObjects =
+			assigneeUserResourceComponentServiceObjects;
+	}
+
 	public static void setSLAResourceComponentServiceObjects(
 		ComponentServiceObjects<SLAResource>
 			slaResourceComponentServiceObjects) {
 
 		_slaResourceComponentServiceObjects =
 			slaResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public java.util.Collection<AssigneeUser> createProcessAssigneeUsersPage(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("assigneeUserBulkSelection") AssigneeUserBulkSelection
+				assigneeUserBulkSelection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_assigneeUserResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			assigneeUserResource -> {
+				Page paginationPage =
+					assigneeUserResource.postProcessAssigneeUsersPage(
+						processId, Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							assigneeUserResource, sortsString),
+						assigneeUserBulkSelection);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -160,6 +198,19 @@ public class Mutation {
 		}
 	}
 
+	private void _populateResourceContext(
+			AssigneeUserResource assigneeUserResource)
+		throws Exception {
+
+		assigneeUserResource.setContextAcceptLanguage(_acceptLanguage);
+		assigneeUserResource.setContextCompany(_company);
+		assigneeUserResource.setContextHttpServletRequest(_httpServletRequest);
+		assigneeUserResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		assigneeUserResource.setContextUriInfo(_uriInfo);
+		assigneeUserResource.setContextUser(_user);
+	}
+
 	private void _populateResourceContext(SLAResource slaResource)
 		throws Exception {
 
@@ -171,6 +222,8 @@ public class Mutation {
 		slaResource.setContextUser(_user);
 	}
 
+	private static ComponentServiceObjects<AssigneeUserResource>
+		_assigneeUserResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SLAResource>
 		_slaResourceComponentServiceObjects;
 

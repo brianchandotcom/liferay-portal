@@ -33,6 +33,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUserBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeUserResource;
 
 import io.swagger.v3.oas.annotations.Parameter;
@@ -55,11 +56,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
-import javax.ws.rs.GET;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
@@ -78,19 +79,14 @@ public abstract class BaseAssigneeUserResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/assignee-users'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/assignee-users' -d $'{"completed": ___, "dateEnd": ___, "dateStart": ___, "instanceIds": ___, "keywords": ___, "roleIds": ___, "taskKeys": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
-	@GET
+	@Consumes({"application/json", "application/xml"})
+	@POST
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
-			@Parameter(in = ParameterIn.QUERY, name = "completed"),
-			@Parameter(in = ParameterIn.QUERY, name = "dateEnd"),
-			@Parameter(in = ParameterIn.QUERY, name = "dateStart"),
-			@Parameter(in = ParameterIn.QUERY, name = "keywords"),
-			@Parameter(in = ParameterIn.QUERY, name = "roleIds"),
-			@Parameter(in = ParameterIn.QUERY, name = "taskKeys"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
 			@Parameter(in = ParameterIn.QUERY, name = "sort")
@@ -99,19 +95,11 @@ public abstract class BaseAssigneeUserResourceImpl
 	@Path("/processes/{processId}/assignee-users")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AssigneeUser")})
-	public Page<AssigneeUser> getProcessAssigneeUsersPage(
+	public Page<AssigneeUser> postProcessAssigneeUsersPage(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
 				processId,
-			@Parameter(hidden = true) @QueryParam("completed") Boolean
-				completed,
-			@Parameter(hidden = true) @QueryParam("dateEnd") java.util.Date
-				dateEnd,
-			@Parameter(hidden = true) @QueryParam("dateStart") java.util.Date
-				dateStart,
-			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
-			@Parameter(hidden = true) @QueryParam("roleIds") Long[] roleIds,
-			@Parameter(hidden = true) @QueryParam("taskKeys") String[] taskKeys,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@Context Pagination pagination, @Context Sort[] sorts,
+			AssigneeUserBulkSelection assigneeUserBulkSelection)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -153,14 +141,7 @@ public abstract class BaseAssigneeUserResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getProcessAssigneeUsersPage(
-			(Long)parameters.get("processId"),
-			(Boolean)parameters.get("completed"),
-			(java.util.Date)parameters.get("dateEnd"),
-			(java.util.Date)parameters.get("dateStart"),
-			(String)parameters.get("keywords"),
-			(Long[])parameters.get("roleIds"),
-			(String[])parameters.get("taskKeys"), pagination, sorts);
+		return null;
 	}
 
 	@Override

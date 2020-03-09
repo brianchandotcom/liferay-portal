@@ -1,26 +1,19 @@
 dependencies {
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testCompile group: "javax.portlet", name: "portlet-api", version: "3.0.1"
-	testCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
-	testCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	testCompile project(":apps:blogs:blogs-api")
-	testCompile project(":apps:blogs:blogs-service")
-	testCompile project(":apps:blogs:blogs-test-util")
-	testCompile project(":apps:blogs:blogs-web")
-	testCompile project(":core:petra:petra-lang")
-	testCompile project(":core:petra:petra-sql-dsl-api")
-	testCompile project(":core:petra:petra-string")
-	testCompile project(":core:registry-api")
-
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile group: "javax.portlet", name: "portlet-api", version: "3.0.1"
+	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	testIntegrationCompile project(":apps:asset:asset-api")
 	testIntegrationCompile project(":apps:asset:asset-auto-tagger-api")
 	testIntegrationCompile project(":apps:asset:asset-test-util")
+	testIntegrationCompile project(":apps:blogs:blogs-api")
+	testIntegrationCompile project(":apps:blogs:blogs-test-util")
 	testIntegrationCompile project(":apps:export-import:export-import-api")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:info:info-api")
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:message-boards:message-boards-api")
+	testIntegrationCompile project(":apps:portal-search:portal-search-api")
 	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":apps:portal:portal-notifications-test-util")
 	testIntegrationCompile project(":apps:ratings:ratings-test-util")
@@ -31,5 +24,7 @@ dependencies {
 	testIntegrationCompile project(":apps:trash:trash-test-util")
 	testIntegrationCompile project(":apps:upload:upload-api")
 	testIntegrationCompile project(":apps:users-admin:users-admin-test-util")
+	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

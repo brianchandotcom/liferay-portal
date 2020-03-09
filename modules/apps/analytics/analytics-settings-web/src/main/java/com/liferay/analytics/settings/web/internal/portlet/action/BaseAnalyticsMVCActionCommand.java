@@ -76,6 +76,17 @@ public abstract class BaseAnalyticsMVCActionCommand
 		}
 	}
 
+	protected void disconnectDataSource(long companyId) throws Exception {
+		removeChannelId(
+			PrefsPropsUtil.getStringArray(
+				companyId, "liferayAnalyticsGroupIds", StringPool.COMMA));
+
+		removeCompanyPreferences(companyId);
+
+		configurationProvider.deleteCompanyConfiguration(
+			AnalyticsConfiguration.class, companyId);
+	}
+
 	protected void disconnectDataSource(
 			long companyId, HttpResponse httpResponse)
 		throws Exception {
@@ -88,14 +99,7 @@ public abstract class BaseAnalyticsMVCActionCommand
 		String message = responseJSONObject.getString("message");
 
 		if (message.equals("INVALID_TOKEN")) {
-			removeChannelId(
-				PrefsPropsUtil.getStringArray(
-					companyId, "liferayAnalyticsGroupIds", StringPool.COMMA));
-
-			removeCompanyPreferences(companyId);
-
-			configurationProvider.deleteCompanyConfiguration(
-				AnalyticsConfiguration.class, companyId);
+			disconnectDataSource(companyId);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -216,16 +220,6 @@ public abstract class BaseAnalyticsMVCActionCommand
 				"liferayAnalyticsFaroBackendURL", "liferayAnalyticsGroupIds",
 				"liferayAnalyticsURL"
 			});
-	}
-
-	protected void removeConfigurationProperties(
-			long companyId, Dictionary<String, Object> configurationProperties)
-		throws Exception {
-
-		configurationProperties.remove("token");
-
-		configurationProvider.deleteCompanyConfiguration(
-			AnalyticsConfiguration.class, companyId);
 	}
 
 	protected void saveCompanyConfiguration(

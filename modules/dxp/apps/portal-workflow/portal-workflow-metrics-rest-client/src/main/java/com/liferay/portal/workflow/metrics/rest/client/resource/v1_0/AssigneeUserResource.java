@@ -21,9 +21,6 @@ import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.client.problem.Problem;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.AssigneeUserSerDes;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -43,16 +40,16 @@ public interface AssigneeUserResource {
 		return new Builder();
 	}
 
-	public Page<AssigneeUser> getProcessAssigneeUsersPage(
-			Long processId, Boolean completed, java.util.Date dateEnd,
-			java.util.Date dateStart, String keywords, Long[] roleIds,
-			String[] taskKeys, Pagination pagination, String sortString)
+	public Page<AssigneeUser> postProcessAssigneeUsersPage(
+			Long processId, Pagination pagination, String sortString,
+			com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
+				AssigneeUserBulkSelection assigneeUserBulkSelection)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getProcessAssigneeUsersPageHttpResponse(
-			Long processId, Boolean completed, java.util.Date dateEnd,
-			java.util.Date dateStart, String keywords, Long[] roleIds,
-			String[] taskKeys, Pagination pagination, String sortString)
+	public HttpInvoker.HttpResponse postProcessAssigneeUsersPageHttpResponse(
+			Long processId, Pagination pagination, String sortString,
+			com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
+				AssigneeUserBulkSelection assigneeUserBulkSelection)
 		throws Exception;
 
 	public static class Builder {
@@ -111,16 +108,16 @@ public interface AssigneeUserResource {
 	public static class AssigneeUserResourceImpl
 		implements AssigneeUserResource {
 
-		public Page<AssigneeUser> getProcessAssigneeUsersPage(
-				Long processId, Boolean completed, java.util.Date dateEnd,
-				java.util.Date dateStart, String keywords, Long[] roleIds,
-				String[] taskKeys, Pagination pagination, String sortString)
+		public Page<AssigneeUser> postProcessAssigneeUsersPage(
+				Long processId, Pagination pagination, String sortString,
+				com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
+					AssigneeUserBulkSelection assigneeUserBulkSelection)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProcessAssigneeUsersPageHttpResponse(
-					processId, completed, dateEnd, dateStart, keywords, roleIds,
-					taskKeys, pagination, sortString);
+				postProcessAssigneeUsersPageHttpResponse(
+					processId, pagination, sortString,
+					assigneeUserBulkSelection);
 
 			String content = httpResponse.getContent();
 
@@ -142,13 +139,17 @@ public interface AssigneeUserResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getProcessAssigneeUsersPageHttpResponse(
-				Long processId, Boolean completed, java.util.Date dateEnd,
-				java.util.Date dateStart, String keywords, Long[] roleIds,
-				String[] taskKeys, Pagination pagination, String sortString)
+		public HttpInvoker.HttpResponse
+				postProcessAssigneeUsersPageHttpResponse(
+					Long processId, Pagination pagination, String sortString,
+					com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
+						AssigneeUserBulkSelection assigneeUserBulkSelection)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				assigneeUserBulkSelection.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -167,42 +168,7 @@ public interface AssigneeUserResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-				"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-			if (completed != null) {
-				httpInvoker.parameter("completed", String.valueOf(completed));
-			}
-
-			if (dateEnd != null) {
-				httpInvoker.parameter(
-					"dateEnd", liferayToJSONDateFormat.format(dateEnd));
-			}
-
-			if (dateStart != null) {
-				httpInvoker.parameter(
-					"dateStart", liferayToJSONDateFormat.format(dateStart));
-			}
-
-			if (keywords != null) {
-				httpInvoker.parameter("keywords", String.valueOf(keywords));
-			}
-
-			if (roleIds != null) {
-				for (int i = 0; i < roleIds.length; i++) {
-					httpInvoker.parameter(
-						"roleIds", String.valueOf(roleIds[i]));
-				}
-			}
-
-			if (taskKeys != null) {
-				for (int i = 0; i < taskKeys.length; i++) {
-					httpInvoker.parameter(
-						"taskKeys", String.valueOf(taskKeys[i]));
-				}
-			}
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (pagination != null) {
 				httpInvoker.parameter(

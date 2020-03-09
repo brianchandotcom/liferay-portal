@@ -19,8 +19,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
-
-import java.util.Date;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUserBulkSelection;
 
 import javax.annotation.Generated;
 
@@ -47,10 +46,9 @@ public interface AssigneeUserResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<AssigneeUser> getProcessAssigneeUsersPage(
-			Long processId, Boolean completed, Date dateEnd, Date dateStart,
-			String keywords, Long[] roleIds, String[] taskKeys,
-			Pagination pagination, Sort[] sorts)
+	public Page<AssigneeUser> postProcessAssigneeUsersPage(
+			Long processId, Pagination pagination, Sort[] sorts,
+			AssigneeUserBulkSelection assigneeUserBulkSelection)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

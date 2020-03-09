@@ -80,7 +80,7 @@ public class ExportFragmentEntriesMVCResourceCommand
 				fragmentEntries.add(fragmentEntry);
 			}
 
-			File file = _exportUtil.exportFragmentEntries(fragmentEntries);
+			File file = _exportHelper.exportFragmentEntries(fragmentEntries);
 
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
@@ -95,7 +95,7 @@ public class ExportFragmentEntriesMVCResourceCommand
 	}
 
 	@Reference
-	private ExportHelper _exportUtil;
+	private ExportHelper _exportHelper;
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;

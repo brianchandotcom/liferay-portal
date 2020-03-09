@@ -46,6 +46,10 @@ components:
                 dateStart:
                     format: date-time
                     type: string
+                instanceIds:
+                    items:
+                        format: int64
+                        type: integer
                     type: array
                 keywords:
                     type: string

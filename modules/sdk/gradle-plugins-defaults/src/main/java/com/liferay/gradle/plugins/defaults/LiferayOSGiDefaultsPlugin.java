@@ -17,6 +17,10 @@ package com.liferay.gradle.plugins.defaults;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.version.Version;
 
+import com.github.spotbugs.snom.SpotBugsPlugin;
+import com.github.spotbugs.snom.SpotBugsReport;
+import com.github.spotbugs.snom.SpotBugsTask;
+
 import com.gradle.publish.PublishPlugin;
 
 import com.liferay.gradle.plugins.JspCDefaultsPlugin;
@@ -139,6 +143,7 @@ import org.gradle.StartParameter;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.JavaVersion;
+import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -196,6 +201,7 @@ import org.gradle.api.plugins.quality.FindBugsReports;
 import org.gradle.api.plugins.quality.Pmd;
 import org.gradle.api.plugins.quality.PmdExtension;
 import org.gradle.api.plugins.quality.PmdPlugin;
+import org.gradle.api.provider.Property;
 import org.gradle.api.reporting.CustomizableHtmlReport;
 import org.gradle.api.reporting.SingleFileReport;
 import org.gradle.api.resources.ResourceHandler;
@@ -489,6 +495,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTasksJavaCompile(project);
 		_configureTasksJspC(project);
 		_configureTasksPmd(project);
+		_configureTasksSpotBugs(project);
 		_configureTestIntegrationTomcat(project);
 
 		_addTaskUpdateFileSnapshotVersions(project);
@@ -1699,6 +1706,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
 		GradleUtil.applyPlugin(project, PmdPlugin.class);
 		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
+		GradleUtil.applyPlugin(project, SpotBugsPlugin.class);
 
 		if (FileUtil.exists(project, "rest-config.yaml")) {
 			GradleUtil.applyPlugin(project, RESTBuilderPlugin.class);
@@ -3871,6 +3879,88 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Pmd pmd) {
 					_configureTaskPmd(pmd);
+				}
+
+			});
+	}
+
+	private void _configureTaskSpotBugs(SpotBugsTask spotBugsTask) {
+		Property<String> maxHeapSizeProperty = spotBugsTask.getMaxHeapSize();
+
+		maxHeapSizeProperty.set("3g");
+
+		Property<Boolean> showProgressProperty = spotBugsTask.getShowProgress();
+
+		showProgressProperty.set(true);
+
+		String name = spotBugsTask.getName();
+		Project project = spotBugsTask.getProject();
+
+		if (name.startsWith("spotbugs")) {
+			name = GUtil.toLowerCamelCase(name.substring(8));
+
+			JavaPluginConvention javaPluginConvention =
+				GradleUtil.getConvention(project, JavaPluginConvention.class);
+
+			SourceSetContainer sourceSetContainer =
+				javaPluginConvention.getSourceSets();
+
+			SourceSet sourceSet = sourceSetContainer.findByName(name);
+
+			if (sourceSet != null) {
+				ConfigurableFileTree configurableFileTree = project.fileTree(
+					FileUtil.getJavaClassesDir(sourceSet));
+
+				configurableFileTree.setBuiltBy(
+					Collections.singleton(sourceSet.getOutput()));
+
+				configurableFileTree.setIncludes(
+					Collections.singleton("**/*.class"));
+
+				spotBugsTask.setClasses(configurableFileTree);
+			}
+		}
+
+		NamedDomainObjectContainer<SpotBugsReport> namedDomainObjectContainer =
+			spotBugsTask.getReports();
+
+		final SpotBugsReport spotBugsReport = namedDomainObjectContainer.create(
+			"html");
+
+		spotBugsReport.setEnabled(true);
+		spotBugsReport.setStylesheet("fancy-hist.xsl");
+
+		spotBugsTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					Logger logger = project.getLogger();
+
+					if (logger.isLifecycleEnabled()) {
+						File file = spotBugsReport.getDestination();
+
+						String url = FileUtil.getUrl(file);
+
+						logger.lifecycle("Creating report: {}", url);
+					}
+				}
+
+			});
+	}
+
+	private void _configureTasksSpotBugs(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			SpotBugsTask.class,
+			new Action<SpotBugsTask>() {
+
+				@Override
+				public void execute(SpotBugsTask spotBugsTask) {
+					_configureTaskSpotBugs(spotBugsTask);
 				}
 
 			});

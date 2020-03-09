@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Revert Schema Version
-Bundle-SymbolicName: com.liferay.revert.schema.version
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.revert.schema.version.constants
-Liferay-Require-SchemaVersion: 2.1.1
-Liferay-Service: true

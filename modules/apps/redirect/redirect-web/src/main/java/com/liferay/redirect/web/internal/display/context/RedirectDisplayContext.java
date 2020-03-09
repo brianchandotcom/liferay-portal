@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -42,6 +43,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryLocalServiceUtil;
 import com.liferay.redirect.web.internal.search.RedirectEntrySearch;
+import com.liferay.redirect.web.internal.util.comparator.RedirectEntryCreateDateComparator;
+import com.liferay.redirect.web.internal.util.comparator.RedirectEntryDestinationURLComparator;
+import com.liferay.redirect.web.internal.util.comparator.RedirectEntryModifiedDateComparator;
+import com.liferay.redirect.web.internal.util.comparator.RedirectEntrySourceURLComparator;
 
 import java.util.List;
 import java.util.Objects;
@@ -171,7 +176,7 @@ public class RedirectDisplayContext {
 				RedirectEntryLocalServiceUtil.getRedirectEntries(
 					themeDisplay.getScopeGroupId(),
 					_redirectEntrySearch.getStart(),
-					_redirectEntrySearch.getEnd(), null));
+					_redirectEntrySearch.getEnd(), _getOrderByComparator()));
 
 			return _redirectEntrySearch;
 		}
@@ -205,6 +210,31 @@ public class RedirectDisplayContext {
 		_redirectEntrySearch.setTotal(hits.getLength());
 
 		return _redirectEntrySearch;
+	}
+
+	private OrderByComparator _getOrderByComparator() {
+		boolean orderByAsc = StringUtil.equals(
+			_redirectEntrySearch.getOrderByType(), "asc");
+
+		if (Objects.equals(
+				_redirectEntrySearch.getOrderByCol(), "source-url")) {
+
+			return new RedirectEntrySourceURLComparator(!orderByAsc);
+		}
+
+		if (Objects.equals(
+				_redirectEntrySearch.getOrderByCol(), "destination-url")) {
+
+			return new RedirectEntryDestinationURLComparator(!orderByAsc);
+		}
+
+		if (Objects.equals(
+				_redirectEntrySearch.getOrderByCol(), "modified-date")) {
+
+			return new RedirectEntryModifiedDateComparator(!orderByAsc);
+		}
+
+		return new RedirectEntryCreateDateComparator(!orderByAsc);
 	}
 
 	private PortletURL _getPortletURL() {

@@ -211,11 +211,7 @@ public class PageElement {
 
 			sb.append("\"definition\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(definition));
-
-			sb.append("\"");
+			sb.append(String.valueOf(definition));
 		}
 
 		if (pageElements != null) {

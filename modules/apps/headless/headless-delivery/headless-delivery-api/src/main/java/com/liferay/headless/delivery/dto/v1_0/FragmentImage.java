@@ -165,11 +165,7 @@ public class FragmentImage {
 
 			sb.append("\"description\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(description));
-
-			sb.append("\"");
+			sb.append(String.valueOf(description));
 		}
 
 		if (title != null) {
@@ -179,11 +175,7 @@ public class FragmentImage {
 
 			sb.append("\"title\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(title));
-
-			sb.append("\"");
+			sb.append(String.valueOf(title));
 		}
 
 		if (url != null) {
@@ -193,11 +185,7 @@ public class FragmentImage {
 
 			sb.append("\"url\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(url));
-
-			sb.append("\"");
+			sb.append(String.valueOf(url));
 		}
 
 		sb.append("}");

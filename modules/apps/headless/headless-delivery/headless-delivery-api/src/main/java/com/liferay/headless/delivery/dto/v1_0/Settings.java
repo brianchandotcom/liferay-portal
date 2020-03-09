@@ -314,11 +314,7 @@ public class Settings {
 
 			sb.append("\"themeSettings\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(themeSettings));
-
-			sb.append("\"");
+			sb.append(String.valueOf(themeSettings));
 		}
 
 		sb.append("}");

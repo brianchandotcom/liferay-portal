@@ -146,11 +146,7 @@ public class FragmentFieldText {
 
 			sb.append("\"text\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(text));
-
-			sb.append("\"");
+			sb.append(String.valueOf(text));
 		}
 
 		sb.append("}");

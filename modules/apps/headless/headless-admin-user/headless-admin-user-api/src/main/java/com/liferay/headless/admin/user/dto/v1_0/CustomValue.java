@@ -164,11 +164,7 @@ public class CustomValue {
 
 			sb.append("\"data\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(data));
-
-			sb.append("\"");
+			sb.append(String.valueOf(data));
 		}
 
 		if (data_i18n != null) {

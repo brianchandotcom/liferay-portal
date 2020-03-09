@@ -282,11 +282,7 @@ public class Subscription {
 
 			sb.append("\"contentId\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(contentId));
-
-			sb.append("\"");
+			sb.append(String.valueOf(contentId));
 		}
 
 		if (contentType != null) {

@@ -221,11 +221,7 @@ public class ContentSetElement {
 
 			sb.append("\"content\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(content));
-
-			sb.append("\"");
+			sb.append(String.valueOf(content));
 		}
 
 		if (contentType != null) {

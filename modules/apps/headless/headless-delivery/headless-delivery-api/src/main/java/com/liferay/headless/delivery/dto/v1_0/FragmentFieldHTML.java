@@ -107,11 +107,7 @@ public class FragmentFieldHTML {
 
 			sb.append("\"html\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(html));
-
-			sb.append("\"");
+			sb.append(String.valueOf(html));
 		}
 
 		sb.append("}");

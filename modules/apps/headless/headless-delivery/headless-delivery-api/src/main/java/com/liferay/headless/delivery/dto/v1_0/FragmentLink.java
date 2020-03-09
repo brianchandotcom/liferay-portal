@@ -197,11 +197,7 @@ public class FragmentLink {
 
 			sb.append("\"value\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(value));
-
-			sb.append("\"");
+			sb.append(String.valueOf(value));
 		}
 
 		sb.append("}");

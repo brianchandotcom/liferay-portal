@@ -54,7 +54,7 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER, folder);
 
 			renderRequest.setAttribute(
-				DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, getDLTrashUtil());
+				DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, getDLTrashHelper());
 
 			return getPath();
 		}
@@ -73,7 +73,7 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 		throws PortalException {
 	}
 
-	protected abstract DLTrashHelper getDLTrashUtil();
+	protected abstract DLTrashHelper getDLTrashHelper();
 
 	protected abstract String getPath();
 

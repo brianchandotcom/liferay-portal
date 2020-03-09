@@ -95,7 +95,7 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 	}
 
 	@Override
-	protected DLTrashHelper getDLTrashUtil() {
+	protected DLTrashHelper getDLTrashHelper() {
 		return _dlTrashHelper;
 	}
 

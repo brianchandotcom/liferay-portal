@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 public class IGViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Override
-	protected DLTrashHelper getDLTrashUtil() {
+	protected DLTrashHelper getDLTrashHelper() {
 		return _dlTrashHelper;
 	}
 

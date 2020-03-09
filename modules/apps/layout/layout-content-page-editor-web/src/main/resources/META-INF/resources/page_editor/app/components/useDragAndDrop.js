@@ -164,9 +164,10 @@ export default function useDragAndDrop({
 			}
 		},
 		hover(_item, _monitor) {
-			if (_item.itemId === item.itemId) {
-				dispatch(initialDragDrop.store);
-
+			if (
+				!_monitor.isOver({shallow: true}) ||
+				_item.itemId === item.itemId
+			) {
 				return;
 			}
 

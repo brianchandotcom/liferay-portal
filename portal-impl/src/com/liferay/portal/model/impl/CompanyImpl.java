@@ -453,7 +453,6 @@ public class CompanyImpl extends CompanyBaseImpl {
 	}
 
 	private Account _account;
-
 	private CompanyInfo _companyInfo;
 
 	@CacheField

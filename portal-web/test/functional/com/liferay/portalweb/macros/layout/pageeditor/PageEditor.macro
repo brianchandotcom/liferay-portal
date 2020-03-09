@@ -1037,8 +1037,8 @@ definition {
 
 		if (isSet(borderColor)) {
 			AssertElementPresent(
-				key_borderColor = "${borderColor}",
 				key_fragmentName = "${fragmentName}",
+				key_paletteItem = "${borderColor}",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BORDER_COLOR");
 		}
 

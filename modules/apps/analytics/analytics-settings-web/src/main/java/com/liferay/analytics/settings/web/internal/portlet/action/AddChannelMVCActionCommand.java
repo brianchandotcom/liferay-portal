@@ -94,9 +94,12 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 		configurationProperties.put(
 			"syncedGroupIds", liferayAnalyticsGroupIds.toArray(new String[0]));
 
-		_notifyAnalyticsCloud(
+		_notifyAnalyticsCloudCreateChannels(
 			actionRequest, ParamUtil.getString(actionRequest, "channelType"),
-			liferayAnalyticsGroupIds, selectedGroupIds);
+			selectedGroupIds);
+
+		_notifyAnalyticsCloudSitesSelected(
+			actionRequest, liferayAnalyticsGroupIds);
 	}
 
 	private JSONObject _buildGroupJSONObject(
@@ -136,9 +139,9 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 		return liferayAnalyticsGroupIds;
 	}
 
-	private void _notifyAnalyticsCloud(
+	private void _notifyAnalyticsCloudCreateChannels(
 			ActionRequest actionRequest, String channelType,
-			Set<String> liferayAnalyticsGroupIds, String[] selectedGroupIds)
+			String[] selectedGroupIds)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -150,7 +153,62 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 			return;
 		}
 
-		// Update sitesSelected flag
+		Stream<String> stream = Arrays.stream(selectedGroupIds);
+
+		List<Group> groups = stream.map(
+			Long::valueOf
+		).map(
+			groupLocalService::fetchGroup
+		).filter(
+			Objects::nonNull
+		).collect(
+			Collectors.toList()
+		);
+
+		HttpResponse httpResponse = AnalyticsSettingsUtil.doPost(
+			JSONUtil.put(
+				"channelType", channelType
+			).put(
+				"dataSourceId",
+				AnalyticsSettingsUtil.getAsahFaroBackendDataSourceId(
+					themeDisplay.getCompanyId())
+			).put(
+				"groups",
+				JSONUtil.toJSONArray(
+					groups, group -> _buildGroupJSONObject(group, themeDisplay))
+			),
+			themeDisplay.getCompanyId(), "api/1.0/channels");
+
+		StatusLine statusLine = httpResponse.getStatusLine();
+
+		if (statusLine.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
+			checkResponse(themeDisplay.getCompanyId(), httpResponse);
+
+			return;
+		}
+
+		if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
+			throw new PortalException(
+				"Unable to create channels: " +
+					EntityUtils.toString(httpResponse.getEntity()));
+		}
+
+		_updateTypeSettingsProperties(
+			EntityUtils.toString(httpResponse.getEntity()));
+	}
+
+	private void _notifyAnalyticsCloudSitesSelected(
+			ActionRequest actionRequest, Set<String> liferayAnalyticsGroupIds)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!AnalyticsSettingsUtil.isAnalyticsEnabled(
+				themeDisplay.getCompanyId())) {
+
+			return;
+		}
 
 		boolean sitesSelected = true;
 
@@ -179,51 +237,6 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 				"Unable to update data source details: " +
 					EntityUtils.toString(httpResponse.getEntity()));
 		}
-
-		// Create channels
-
-		Stream<String> stream = Arrays.stream(selectedGroupIds);
-
-		List<Group> groups = stream.map(
-			Long::valueOf
-		).map(
-			groupLocalService::fetchGroup
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
-
-		httpResponse = AnalyticsSettingsUtil.doPost(
-			JSONUtil.put(
-				"channelType", channelType
-			).put(
-				"dataSourceId",
-				AnalyticsSettingsUtil.getAsahFaroBackendDataSourceId(
-					themeDisplay.getCompanyId())
-			).put(
-				"groups",
-				JSONUtil.toJSONArray(
-					groups, group -> _buildGroupJSONObject(group, themeDisplay))
-			),
-			themeDisplay.getCompanyId(), "api/1.0/channels");
-
-		statusLine = httpResponse.getStatusLine();
-
-		if (statusLine.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
-			checkResponse(themeDisplay.getCompanyId(), httpResponse);
-
-			return;
-		}
-
-		if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
-			throw new PortalException(
-				"Unable to create channels: " +
-					EntityUtils.toString(httpResponse.getEntity()));
-		}
-
-		_updateTypeSettingsProperties(
-			EntityUtils.toString(httpResponse.getEntity()));
 	}
 
 	private Set<String> _updateCompanyPreferences(

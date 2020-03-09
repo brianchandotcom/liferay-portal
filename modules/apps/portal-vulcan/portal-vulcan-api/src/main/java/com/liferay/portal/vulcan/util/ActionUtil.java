@@ -43,23 +43,11 @@ public class ActionUtil {
 		String actionName, Class clazz, GroupedModel groupedModel,
 		String methodName, Object object, UriInfo uriInfo) {
 
-		Class<? extends GroupedModel> groupedModelClass =
-			groupedModel.getClass();
-
-		Class<?> superClass = groupedModelClass.getSuperclass();
-
-		Class<?>[] interfaceClasses = superClass.getInterfaces();
-
-		if (interfaceClasses.length == 0) {
-			superClass = superClass.getSuperclass();
-
-			interfaceClasses = superClass.getInterfaces();
-		}
-
 		return addAction(
 			actionName, clazz, (Long)groupedModel.getPrimaryKeyObj(),
 			methodName, object, groupedModel.getUserId(),
-			interfaceClasses[0].getName(), groupedModel.getGroupId(), uriInfo);
+			groupedModel.getModelClassName(), groupedModel.getGroupId(),
+			uriInfo);
 	}
 
 	public static Map<String, String> addAction(

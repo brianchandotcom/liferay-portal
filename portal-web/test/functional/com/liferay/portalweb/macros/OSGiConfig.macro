@@ -1,5 +1,15 @@
 definition {
 
+	macro deployOSGiConfigFile {
+		Variables.assertDefined(parameterList = "${OSGiConfigFileBaseDir},${OSGiConfigFileName}");
+
+		var configs = FileUtil.read("${OSGiConfigFileBaseDir}/${OSGiConfigFileName}");
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		FileUtil.write("${liferayHome}/osgi/configs/${OSGiConfigFileName}", "${configs}");
+	}
+
 	macro deployOSGiConfigs {
 		Variables.assertDefined(parameterList = "${OSGiConfigs},${OSGiConfigFileName}");
 

@@ -90,16 +90,8 @@ public class PQLOperatorFactory {
 
 					String operator = getOperator();
 
-					if (!(pqlResultObject1 instanceof String) ||
-						!(pqlResultObject2 instanceof String)) {
-
-						throw new Exception(
-							"Operator only works for string values: " +
-								operator);
-					}
-
-					String pqlResultString1 = (String)pqlResultObject1;
-					String pqlResultString2 = (String)pqlResultObject2;
+					String pqlResultString1 = String.valueOf(pqlResultObject1);
+					String pqlResultString2 = String.valueOf(pqlResultObject2);
 
 					if (operator.equals("~")) {
 						return pqlResultString1.contains(pqlResultString2);

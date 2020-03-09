@@ -56,7 +56,7 @@ public class GroupTypeContributorUtil {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	public void addGroupTypeContributor(
+	protected void addGroupTypeContributor(
 		GroupTypeContributor groupTypeContributor) {
 
 		_groupTypeContributors.add(groupTypeContributor);

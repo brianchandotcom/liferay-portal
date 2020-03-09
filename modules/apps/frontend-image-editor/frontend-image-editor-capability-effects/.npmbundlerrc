@@ -1,6 +1,0 @@
-{
-	"ignore": [
-		"**/EffectsHelper.js",
-		"**/EffectsWorker.js"
-	]
-}

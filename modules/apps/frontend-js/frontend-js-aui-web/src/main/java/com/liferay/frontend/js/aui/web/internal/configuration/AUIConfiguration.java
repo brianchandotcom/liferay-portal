@@ -20,8 +20,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 
 /**
  * @author Iván Zaera Avellón
+ * @author Marko Cikos
  */
-@ExtendedObjectClassDefinition(category = "third-party", generateUI = false)
+@ExtendedObjectClassDefinition(category = "third-party")
 @Meta.OCD(
 	description = "frontend-js-aui-configuration-description",
 	id = "com.liferay.frontend.js.aui.web.internal.configuration.AUIConfiguration",
@@ -29,18 +30,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	name = "frontend-js-aui-configuration-name"
 )
 public interface AUIConfiguration {
-
-	/**
-	 * Set this to <code>true</code> to enable AUI usage.
-	 *
-	 * @return <code>true</code> if AUI is enabled.
-	 * @review
-	 */
-	@Meta.AD(
-		deflt = "true", description = "enable-aui-description",
-		name = "enable-aui", required = false
-	)
-	public boolean enableAUI();
 
 	/**
 	 * Set this to <code>true</code> to preload widely used AUI modules.

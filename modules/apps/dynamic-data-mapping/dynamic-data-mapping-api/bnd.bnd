@@ -13,6 +13,7 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.expression,\
 	com.liferay.dynamic.data.mapping.expression.model,\
 	com.liferay.dynamic.data.mapping.form.builder.context,\
+	com.liferay.dynamic.data.mapping.form.builder.rule,\
 	com.liferay.dynamic.data.mapping.form.builder.settings,\
 	com.liferay.dynamic.data.mapping.form.evaluator,\
 	com.liferay.dynamic.data.mapping.form.field.type,\

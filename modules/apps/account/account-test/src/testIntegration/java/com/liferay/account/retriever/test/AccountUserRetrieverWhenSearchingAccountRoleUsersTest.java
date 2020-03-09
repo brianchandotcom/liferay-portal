@@ -192,10 +192,10 @@ public class AccountUserRetrieverWhenSearchingAccountRoleUsersTest {
 	}
 
 	private User _addAccountRoleUser(
-			long accountEntryId, long accountRoleId, String keywords)
+			long accountEntryId, long accountRoleId, String screenName)
 		throws Exception {
 
-		User user = _addAccountUser(accountEntryId, keywords);
+		User user = _addAccountUser(accountEntryId, screenName);
 
 		_accountRoleLocalService.associateUser(
 			accountEntryId, accountRoleId, user.getUserId());
@@ -207,10 +207,10 @@ public class AccountUserRetrieverWhenSearchingAccountRoleUsersTest {
 		return _addAccountUser(accountEntryId, RandomTestUtil.randomString());
 	}
 
-	private User _addAccountUser(long accountEntryId, String keywords)
+	private User _addAccountUser(long accountEntryId, String screenName)
 		throws Exception {
 
-		User user = UserTestUtil.addUser(keywords);
+		User user = UserTestUtil.addUser(screenName);
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntryId, user.getUserId());

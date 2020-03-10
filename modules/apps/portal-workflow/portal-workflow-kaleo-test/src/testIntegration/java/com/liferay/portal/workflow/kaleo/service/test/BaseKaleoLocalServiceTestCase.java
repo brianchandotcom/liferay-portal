@@ -98,6 +98,8 @@ public abstract class BaseKaleoLocalServiceTestCase {
 				StringUtil.randomString(),
 				_read("legal-marketing-definition.xml"), 1, serviceContext);
 
+		_kaleoDefinitions.add(kaleoDefinition);
+
 		_kaleoDefinitionLocalService.activateKaleoDefinition(
 			kaleoDefinition.getKaleoDefinitionId(), serviceContext);
 
@@ -112,10 +114,18 @@ public abstract class BaseKaleoLocalServiceTestCase {
 			).put(
 				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK,
 				String.valueOf(_addBlogsEntry().getEntryId())
+			).put(
+				WorkflowConstants.CONTEXT_SERVICE_CONTEXT,
+				(Serializable)serviceContext
 			).build();
 
-		return _kaleoInstanceLocalService.addKaleoInstance(
-			1, 1, "Test", 1, workflowContext, serviceContext);
+		KaleoInstance kaleoInstance =
+			_kaleoInstanceLocalService.addKaleoInstance(
+				1, 1, "Test", 1, workflowContext, serviceContext);
+
+		_kaleoInstances.add(kaleoInstance);
+
+		return kaleoInstance;
 	}
 
 	protected KaleoInstanceToken addKaleoInstanceToken(
@@ -124,32 +134,47 @@ public abstract class BaseKaleoLocalServiceTestCase {
 
 		KaleoNode kaleoNode = addKaleoNode(kaleoInstance);
 
-		return _kaleoInstanceTokenLocalService.addKaleoInstanceToken(
-			kaleoNode.getKaleoNodeId(), kaleoInstance.getKaleoDefinitionId(),
-			kaleoInstance.getKaleoDefinitionVersionId(),
-			kaleoInstance.getKaleoInstanceId(), 0,
-			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
-			serviceContext);
+		KaleoInstanceToken kaleoInstanceToken =
+			_kaleoInstanceTokenLocalService.addKaleoInstanceToken(
+				kaleoNode.getKaleoNodeId(),
+				kaleoInstance.getKaleoDefinitionId(),
+				kaleoInstance.getKaleoDefinitionVersionId(),
+				kaleoInstance.getKaleoInstanceId(), 0,
+				WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
+				serviceContext);
+
+		_kaleoInstanceTokens.add(kaleoInstanceToken);
+
+		return kaleoInstanceToken;
 	}
 
 	protected KaleoNode addKaleoNode(KaleoInstance kaleoInstance)
 		throws Exception {
 
-		return _kaleoNodeLocalService.addKaleoNode(
+		KaleoNode kaleoNode = _kaleoNodeLocalService.addKaleoNode(
 			kaleoInstance.getKaleoDefinitionId(),
 			kaleoInstance.getKaleoDefinitionVersionId(),
 			new Task("task", StringPool.BLANK), serviceContext);
+
+		_kaleoNodes.add(kaleoNode);
+
+		return kaleoNode;
 	}
 
 	protected KaleoTaskInstanceToken addKaleoTaskInstanceToken(
 			KaleoInstance kaleoInstance, KaleoInstanceToken kaleoInstanceToken)
 		throws Exception {
 
-		return kaleoTaskInstanceTokenLocalService.addKaleoTaskInstanceToken(
-			kaleoInstanceToken.getKaleoInstanceTokenId(), 1, "task",
-			Collections.emptyList(), null,
-			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
-			serviceContext);
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			kaleoTaskInstanceTokenLocalService.addKaleoTaskInstanceToken(
+				kaleoInstanceToken.getKaleoInstanceTokenId(), 1, "task",
+				Collections.emptyList(), null,
+				WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
+				serviceContext);
+
+		_kaleoTaskInstanceTokens.add(kaleoTaskInstanceToken);
+
+		return kaleoTaskInstanceToken;
 	}
 
 	protected KaleoLog addNodeExitKaleoLog(
@@ -220,6 +245,8 @@ public abstract class BaseKaleoLocalServiceTestCase {
 
 		_kaleoDefinitionLocalService.deleteKaleoDefinition(
 			kaleoDefinition.getName(), serviceContext);
+
+		_kaleoDefinitions.remove(kaleoDefinition);
 	}
 
 	protected KaleoDefinition updateKaleoDefinition(
@@ -283,6 +310,7 @@ public abstract class BaseKaleoLocalServiceTestCase {
 		serviceContext.setUserId(TestPropsValues.getUserId());
 	}
 
+	@DeleteAfterTestRun
 	private final List<BlogsEntry> _blogsEntries = new ArrayList<>();
 
 	@Inject
@@ -294,16 +322,33 @@ public abstract class BaseKaleoLocalServiceTestCase {
 	@Inject
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
 
+	@DeleteAfterTestRun
+	private final List<KaleoDefinition> _kaleoDefinitions = new ArrayList<>();
+
 	@Inject
 	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
+	@DeleteAfterTestRun
+	private final List<KaleoInstance> _kaleoInstances = new ArrayList<>();
+
 	@Inject
 	private KaleoInstanceTokenLocalService _kaleoInstanceTokenLocalService;
+
+	@DeleteAfterTestRun
+	private final List<KaleoInstanceToken> _kaleoInstanceTokens =
+		new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private final List<KaleoLog> _kaleoLogs = new ArrayList<>();
 
 	@Inject
 	private KaleoNodeLocalService _kaleoNodeLocalService;
+
+	@DeleteAfterTestRun
+	private final List<KaleoNode> _kaleoNodes = new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private final List<KaleoTaskInstanceToken> _kaleoTaskInstanceTokens =
+		new ArrayList<>();
 
 }

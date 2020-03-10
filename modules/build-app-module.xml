@@ -433,7 +433,7 @@
 		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}-${artifact.version}.war" />
 	</target>
 
-	<target if="${get.artifact.version.from.releng}" name="get-artifact-version-from-releng">
+	<target if="${get.artifact.version.from.releng}" name="get-artifact-version-from-releng" unless="artifact.exclude">
 		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
 			<filterchain>
 				<linecontains>

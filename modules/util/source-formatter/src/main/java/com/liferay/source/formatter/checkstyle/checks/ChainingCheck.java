@@ -636,9 +636,7 @@ public class ChainingCheck extends BaseCheck {
 
 				JavaMethod javaMethod = (JavaMethod)javaTerm;
 
-				if (javaMethod.getAccessModifier() !=
-						JavaTerm.ACCESS_MODIFIER_PUBLIC) {
-
+				if (!javaMethod.isPublic()) {
 					continue;
 				}
 

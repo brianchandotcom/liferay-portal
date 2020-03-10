@@ -75,13 +75,7 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 		int previousPos = -1;
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-			if (!javaTerm.isJavaVariable()) {
-				continue;
-			}
-
-			String accessModifier = javaTerm.getAccessModifier();
-
-			if (!accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PRIVATE)) {
+			if (!javaTerm.isPrivate() || !javaTerm.isJavaVariable()) {
 				continue;
 			}
 

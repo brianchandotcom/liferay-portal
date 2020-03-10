@@ -82,9 +82,7 @@ public class JavaComponentActivateCheck extends BaseJavaTermCheck {
 				}
 			}
 
-			if (javaTerm.getAccessModifier() ==
-					JavaTerm.ACCESS_MODIFIER_PROTECTED) {
-
+			if (javaTerm.isProtected()) {
 				continue;
 			}
 

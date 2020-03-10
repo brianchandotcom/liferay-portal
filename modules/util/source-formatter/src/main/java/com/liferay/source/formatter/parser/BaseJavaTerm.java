@@ -96,6 +96,15 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	}
 
 	@Override
+	public boolean isDefault() {
+		if (_accessModifier.equals(JavaTerm.ACCESS_MODIFIER_DEFAULT)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isJavaClass() {
 		if (this instanceof JavaClass) {
 			return true;

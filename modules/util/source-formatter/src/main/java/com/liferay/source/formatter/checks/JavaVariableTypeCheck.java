@@ -68,9 +68,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		String absolutePath, JavaClass javaClass, String classContent,
 		JavaVariable javaVariable) {
 
-		String accessModifier = javaVariable.getAccessModifier();
-
-		if (accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PUBLIC)) {
+		if (javaVariable.isPublic()) {
 			return classContent;
 		}
 
@@ -82,7 +80,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 				classContent, javaVariable, fieldType);
 		}
 
-		if (!accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PRIVATE)) {
+		if (!javaVariable.isPrivate()) {
 			return classContent;
 		}
 

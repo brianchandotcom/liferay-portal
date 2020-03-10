@@ -82,9 +82,7 @@ public class LocaleUtilCheck extends BaseFileCheck {
 			_LOCALE_UTIL_FILE_NAME, localeUtilClassContent);
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-			if (javaTerm.getAccessModifier() ==
-					JavaTerm.ACCESS_MODIFIER_PUBLIC) {
-
+			if (javaTerm.isPublic()) {
 				_localeUtilTermNames.add(javaTerm.getName());
 			}
 		}

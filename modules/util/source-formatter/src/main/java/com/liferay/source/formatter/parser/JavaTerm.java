@@ -50,6 +50,8 @@ public interface JavaTerm {
 
 	public boolean isAbstract();
 
+	public boolean isDefault();
+
 	public boolean isJavaClass();
 
 	public boolean isJavaConstructor();

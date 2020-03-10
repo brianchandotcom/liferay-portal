@@ -52,13 +52,7 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 			String fileContent)
 		throws IOException {
 
-		if (javaTerm.hasAnnotation("Override")) {
-			return javaTerm.getContent();
-		}
-
-		String accessModifier = javaTerm.getAccessModifier();
-
-		if (!accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PUBLIC)) {
+		if (!javaTerm.isPublic() || javaTerm.hasAnnotation("Override")) {
 			return javaTerm.getContent();
 		}
 

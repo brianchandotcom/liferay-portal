@@ -36,13 +36,7 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
-		if (!fileName.endsWith("Test.java")) {
-			return javaTerm.getContent();
-		}
-
-		String accessModifier = javaTerm.getAccessModifier();
-
-		if (!accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PUBLIC)) {
+		if (!javaTerm.isPublic() || !fileName.endsWith("Test.java")) {
 			return javaTerm.getContent();
 		}
 

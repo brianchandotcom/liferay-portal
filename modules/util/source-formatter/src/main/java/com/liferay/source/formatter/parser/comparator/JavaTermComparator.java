@@ -69,23 +69,19 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 				return 1;
 			}
 
-			if (javaTerm1.isStatic()) {
-				String accessModifier = javaTerm1.getAccessModifier();
+			if (javaTerm1.isPrivate() && javaTerm1.isStatic()) {
+				if (name2.equals("_log") || name2.equals("_logger")) {
+					return 1;
+				}
 
-				if (accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PRIVATE)) {
-					if (name2.equals("_log") || name2.equals("_logger")) {
-						return 1;
-					}
+				if (name1.equals("_instance") || name1.equals("_log") ||
+					name1.equals("_logger")) {
 
-					if (name1.equals("_instance") || name1.equals("_log") ||
-						name1.equals("_logger")) {
+					return -1;
+				}
 
-						return -1;
-					}
-
-					if (name2.equals("_instance")) {
-						return 1;
-					}
+				if (name2.equals("_instance")) {
+					return 1;
 				}
 			}
 		}
@@ -268,9 +264,7 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 			return -1;
 		}
 
-		String accessModifier = javaTerm.getAccessModifier();
-
-		if (accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PUBLIC)) {
+		if (javaTerm.isPublic()) {
 			if (javaTerm.isStatic()) {
 				if (javaTerm.isJavaVariable()) {
 					return 1;
@@ -303,7 +297,7 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 			}
 		}
 
-		if (accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PROTECTED)) {
+		if (javaTerm.isProtected()) {
 			if (javaTerm.isStatic()) {
 				if (javaTerm.isJavaMethod()) {
 					return 8;
@@ -336,7 +330,7 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 			}
 		}
 
-		if (accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PRIVATE)) {
+		if (javaTerm.isPrivate()) {
 			if (javaTerm.isStatic()) {
 				if (javaTerm.isJavaMethod()) {
 					return 15;

@@ -2080,19 +2080,6 @@ com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=300000</echo>
 								</sequential>
 							</for>
 
-							<delete dir="${liferay.home}/osgi/deploy" />
-							<delete dir="${liferay.home}/osgi/modules" />
-							<delete dir="${liferay.home}/osgi/portal" />
-							<delete dir="${liferay.home}/osgi/static" />
-							<delete dir="${liferay.home}/osgi/war" />
-
-							<delete>
-								<fileset
-									dir="${liferay.home}/osgi/test"
-									excludes="com.liferay.arquillian.extension.junit.bridge.connector.jar,com.liferay.portal.test.jar"
-								/>
-							</delete>
-
 							<if>
 								<equals arg1="${build.profile}" arg2="dxp" />
 								<then>
@@ -2130,6 +2117,19 @@ com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=300000</echo>
 									</delete>
 								</then>
 							</if>
+
+							<delete dir="${liferay.home}/osgi/deploy" />
+							<delete dir="${liferay.home}/osgi/modules" />
+							<delete dir="${liferay.home}/osgi/portal" />
+							<delete dir="${liferay.home}/osgi/static" />
+							<delete dir="${liferay.home}/osgi/war" />
+
+							<delete>
+								<fileset
+									dir="${liferay.home}/osgi/test"
+									excludes="com.liferay.arquillian.extension.junit.bridge.connector.jar,com.liferay.portal.test.jar"
+								/>
+							</delete>
 
 							<trycatch>
 								<try>

@@ -38,7 +38,7 @@ public class LocalizedMapUtil {
 		for (Map.Entry<Locale, String> entry : localizedMap.entrySet()) {
 			Locale locale = entry.getKey();
 
-			i18nMap.put(locale.toLanguageTag(), entry.getValue());
+			i18nMap.put(LocaleUtil.toBCP47LanguageId(locale), entry.getValue());
 		}
 
 		return i18nMap;

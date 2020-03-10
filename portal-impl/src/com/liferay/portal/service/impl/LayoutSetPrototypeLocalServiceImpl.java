@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredLayoutSetPrototypeException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.base.LayoutSetPrototypeLocalServiceBaseImpl;
@@ -92,7 +90,7 @@ public class LayoutSetPrototypeLocalServiceImpl
 		String friendlyURL =
 			"/template-" + layoutSetPrototype.getLayoutSetPrototypeId();
 
-		Group group = groupLocalService.addGroup(
+		groupLocalService.addGroup(
 			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			LayoutSetPrototype.class.getName(),
 			layoutSetPrototype.getLayoutSetPrototypeId(),
@@ -100,15 +98,6 @@ public class LayoutSetPrototypeLocalServiceImpl
 			layoutSetPrototype.getNameMap(), null, 0, true,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL, false,
 			true, serviceContext);
-
-		if (GetterUtil.getBoolean(
-				serviceContext.getAttribute("addDefaultLayout"), true)) {
-
-			layoutLocalService.addLayout(
-				userId, group.getGroupId(), true,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Home", null, null,
-				LayoutConstants.TYPE_PORTLET, false, "/home", serviceContext);
-		}
 
 		return layoutSetPrototype;
 	}

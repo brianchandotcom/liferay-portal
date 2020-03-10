@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.uad.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
-import com.liferay.dynamic.data.mapping.uad.constants.DDMUADConstants;
+import com.liferay.dynamic.data.mapping.uad.constants.DDMFormInstanceUADConstants;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -66,18 +66,20 @@ public class DDMUADHelper {
 			fieldValues.put(
 				"createDate",
 				Time.getSimpleDate(
-					createdDate, DDMUADConstants.DEFAULT_DATE_FORMAT));
+					createdDate,
+					DDMFormInstanceUADConstants.
+						DEFAULT_DDM_FORM_INSTANCE_DATE_FORMAT));
 		}
 	}
 
-	public String getFormInstanceFormattedName(
+	public String getDDMFormInstanceFormattedName(
 		DDMFormInstance ddmFormInstance) {
 
 		Document document = toXMLDocument(ddmFormInstance.getName());
 
-		Node firstChild = document.getFirstChild();
+		Node firstChildNode = document.getFirstChild();
 
-		return firstChild.getTextContent();
+		return firstChildNode.getTextContent();
 	}
 
 	public Document toXMLDocument(String xml) {
@@ -85,10 +87,11 @@ public class DDMUADHelper {
 			DocumentBuilderFactory documentBuilderFactory =
 				SecureXMLFactoryProviderUtil.newDocumentBuilderFactory();
 
-			DocumentBuilder builder =
+			DocumentBuilder documentBuilder =
 				documentBuilderFactory.newDocumentBuilder();
 
-			return builder.parse(new InputSource(new StringReader(xml)));
+			return documentBuilder.parse(
+				new InputSource(new StringReader(xml)));
 		}
 		catch (IOException | ParserConfigurationException | SAXException
 					exception) {

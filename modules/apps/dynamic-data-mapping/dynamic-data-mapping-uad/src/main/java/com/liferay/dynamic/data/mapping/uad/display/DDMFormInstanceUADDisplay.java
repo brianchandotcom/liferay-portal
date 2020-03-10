@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.uad.display;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
-import com.liferay.dynamic.data.mapping.uad.constants.DDMUADConstants;
+import com.liferay.dynamic.data.mapping.uad.constants.DDMFormInstanceUADConstants;
 import com.liferay.dynamic.data.mapping.uad.util.DDMUADHelper;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -60,7 +60,7 @@ public class DDMFormInstanceUADDisplay extends BaseDDMFormInstanceUADDisplay {
 
 	@Override
 	public String getName(DDMFormInstance ddmFormInstance, Locale locale) {
-		return _ddmUADHelper.getFormInstanceFormattedName(ddmFormInstance);
+		return _ddmUADHelper.getDDMFormInstanceFormattedName(ddmFormInstance);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class DDMFormInstanceUADDisplay extends BaseDDMFormInstanceUADDisplay {
 
 	@Override
 	public Serializable getParentContainerId(DDMFormInstance ddmFormInstance) {
-		return DDMUADConstants.DEFAULT_PARENT_ID;
+		return DDMFormInstanceUADConstants.DEFAULT_DDM_FORM_INSTANCE_PARENT_ID;
 	}
 
 	@Override
@@ -84,7 +84,8 @@ public class DDMFormInstanceUADDisplay extends BaseDDMFormInstanceUADDisplay {
 					(DDMFormInstanceRecord)childObject;
 
 				if ((long)parentContainerId ==
-						DDMUADConstants.DEFAULT_PARENT_ID) {
+						DDMFormInstanceUADConstants.
+							DEFAULT_DDM_FORM_INSTANCE_PARENT_ID) {
 
 					return ddmFormInstanceRecord.getFormInstance();
 				}

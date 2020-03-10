@@ -14,19 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.uad.display;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
@@ -50,6 +37,20 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
+
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -126,19 +127,19 @@ public class DDMFormInstanceRecordUADDisplay
 		DDMFormInstanceRecord ddmFormInstanceRecord, Locale locale) {
 
 		try {
-			int formInstanceRecordIndex =
-				_ddmFormInstanceRecordUADCacheHelper.getFormInstanceRecordIndex(
-					ddmFormInstanceRecord);
+			int ddmFormInstanceRecordIndex =
+				_ddmFormInstanceRecordUADCacheHelper.
+					getDDMFormInstanceRecordIndex(ddmFormInstanceRecord);
 
 			DDMFormInstance ddmFormInstance =
 				ddmFormInstanceRecord.getFormInstance();
 
-			String formInstanceName =
-				_ddmUADHelper.getFormInstanceFormattedName(ddmFormInstance);
+			String ddmFormInstanceName =
+				_ddmUADHelper.getDDMFormInstanceFormattedName(ddmFormInstance);
 
 			StringBundler sb = new StringBundler(6);
 
-			sb.append(formInstanceName);
+			sb.append(ddmFormInstanceName);
 
 			sb.append(StringPool.SPACE);
 
@@ -152,7 +153,7 @@ public class DDMFormInstanceRecordUADDisplay
 
 			sb.append(StringPool.POUND);
 
-			sb.append(formInstanceRecordIndex + 1);
+			sb.append(ddmFormInstanceRecordIndex + 1);
 
 			return sb.toString();
 		}
@@ -177,9 +178,9 @@ public class DDMFormInstanceRecordUADDisplay
 
 	@Override
 	public boolean isUserOwned(
-		DDMFormInstanceRecord formInstanceRecord, long userId) {
+		DDMFormInstanceRecord ddmFormInstanceRecord, long userId) {
 
-		if (formInstanceRecord.getUserId() == userId) {
+		if (ddmFormInstanceRecord.getUserId() == userId) {
 			return true;
 		}
 

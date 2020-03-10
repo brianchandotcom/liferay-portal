@@ -14,13 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.form.builder.internal.settings;
 
-import com.liferay.dynamic.data.mapping.form.builder.internal.converter.DDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.form.builder.internal.util.DDMExpressionFunctionMetadataHelper;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRule;
+import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureNameComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -151,11 +150,8 @@ public class DDMFormBuilderSettingsRetrieverHelper {
 	public String getSerializedDDMFormRules(DDMForm ddmForm) {
 		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
 
-		List<SPIDDMFormRule> spiDDMFormRules =
-			_ddmFormRuleToDDMFormRuleConverter.convert(
-				ddmForm.getDDMFormRules());
-
-		return jsonSerializer.serializeDeep(spiDDMFormRules);
+		return jsonSerializer.serializeDeep(
+			_spiDDMFormRuleConverter.convert(ddmForm.getDDMFormRules()));
 	}
 
 	protected String getServletContextPath(Servlet servlet) {
@@ -203,9 +199,6 @@ public class DDMFormBuilderSettingsRetrieverHelper {
 	private Servlet _ddmFormFunctionsServlet;
 
 	@Reference
-	private DDMFormRuleConverter _ddmFormRuleToDDMFormRuleConverter;
-
-	@Reference
 	private DDMStructureService _ddmStructureService;
 
 	@Reference
@@ -218,5 +211,8 @@ public class DDMFormBuilderSettingsRetrieverHelper {
 		target = "(osgi.http.whiteboard.servlet.name=com.liferay.dynamic.data.mapping.form.builder.internal.servlet.RolesServlet)"
 	)
 	private Servlet _rolesServlet;
+
+	@Reference
+	private SPIDDMFormRuleConverter _spiDDMFormRuleConverter;
 
 }

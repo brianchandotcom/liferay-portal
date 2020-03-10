@@ -157,7 +157,8 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 			return;
 		}
 
-		jsonObject.put("rules", rulesToJSONArray(ddmFormRules));
+		jsonObject.put(
+			"rules", DDMFormRuleJSONSerializer.serialize(ddmFormRules));
 	}
 
 	protected void addSuccessPageSettings(
@@ -214,26 +215,6 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 			);
 
 			jsonArray.put(jsonObject);
-		}
-
-		return jsonArray;
-	}
-
-	protected JSONArray ruleActionsToJSONArray(List<String> ruleActions) {
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (String ruleAction : ruleActions) {
-			jsonArray.put(ruleAction);
-		}
-
-		return jsonArray;
-	}
-
-	protected JSONArray rulesToJSONArray(List<DDMFormRule> ddmFormRules) {
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (DDMFormRule ddmFormRule : ddmFormRules) {
-			jsonArray.put(toJSONObject(ddmFormRule));
 		}
 
 		return jsonArray;
@@ -318,20 +299,6 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 			"name", ddmFormFieldValidationExpression.getName()
 		).put(
 			"value", ddmFormFieldValidationExpression.getValue()
-		);
-
-		return jsonObject;
-	}
-
-	protected JSONObject toJSONObject(DDMFormRule ddmFormRule) {
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		jsonObject.put(
-			"actions", ruleActionsToJSONArray(ddmFormRule.getActions())
-		).put(
-			"condition", ddmFormRule.getCondition()
-		).put(
-			"enabled", ddmFormRule.isEnabled()
 		);
 
 		return jsonObject;

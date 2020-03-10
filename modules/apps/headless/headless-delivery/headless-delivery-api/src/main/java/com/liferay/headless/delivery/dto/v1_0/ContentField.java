@@ -289,17 +289,17 @@ public class ContentField {
 
 	@Schema
 	@Valid
-	public Map<String, Object> getValue_i18n() {
+	public Map<String, Value> getValue_i18n() {
 		return value_i18n;
 	}
 
-	public void setValue_i18n(Map<String, Object> value_i18n) {
+	public void setValue_i18n(Map<String, Value> value_i18n) {
 		this.value_i18n = value_i18n;
 	}
 
 	@JsonIgnore
 	public void setValue_i18n(
-		UnsafeSupplier<Map<String, Object>, Exception>
+		UnsafeSupplier<Map<String, Value>, Exception>
 			value_i18nUnsafeSupplier) {
 
 		try {
@@ -315,7 +315,7 @@ public class ContentField {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Object> value_i18n;
+	protected Map<String, Value> value_i18n;
 
 	@Override
 	public boolean equals(Object object) {

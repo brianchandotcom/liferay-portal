@@ -94,7 +94,7 @@ definition {
 			locator1 = "PageEditor#EXPERIENCE_NAME",
 			value1 = "${experienceName}");
 
-		Button.clickSave();
+		Click(locator1 = "Button#SAVE");
 
 		AssertClick(
 			locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME",

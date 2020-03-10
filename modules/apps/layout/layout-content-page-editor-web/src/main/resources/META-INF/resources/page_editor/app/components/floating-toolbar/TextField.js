@@ -111,7 +111,7 @@ function parseTypeOptions(typeOptions = {}) {
 		type: 'text',
 	};
 
-	if (!validationType) {
+	if (!validationType || validationType === 'text') {
 		result.type = 'text';
 
 		if (Number.isInteger(properties.minLength)) {

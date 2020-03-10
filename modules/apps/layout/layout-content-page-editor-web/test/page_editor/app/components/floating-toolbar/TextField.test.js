@@ -94,7 +94,7 @@ describe('TextField', () => {
 
 	it('renders an input with the maxLength/minLength attributes when defined in the validation', () => {
 		const {getByLabelText} = renderTextField({
-			validation: {maxLength: 3, minLength: 0},
+			validation: {maxLength: 3, minLength: 0, type: 'text'},
 		});
 
 		const input = getByLabelText(INPUT_NAME);

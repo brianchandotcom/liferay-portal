@@ -15,7 +15,11 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
+import com.liferay.layout.page.template.util.LayoutPageTemplateImportEntry;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -23,14 +27,23 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.File;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,11 +66,57 @@ public class ImportLayoutPageTemplateEntryMVCActionCommand
 	protected void addSuccessMessage(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		String successMessage = LanguageUtil.get(
-			_portal.getHttpServletRequest(actionRequest),
-			"the-files-were-imported-correctly");
+		List<LayoutPageTemplateImportEntry> layoutPageTemplateImportEntries =
+			(List)actionRequest.getAttribute(
+				LayoutPageTemplateAdminWebKeys.
+					LAYOUT_PAGE_TEMPLATE_IMPORT_ENTRIES);
 
-		SessionMessages.add(actionRequest, "requestProcessed", successMessage);
+		if (layoutPageTemplateImportEntries != null) {
+			String successMessage = StringPool.BLANK;
+
+			if (ListUtil.isEmpty(layoutPageTemplateImportEntries)) {
+				successMessage = LanguageUtil.get(
+					_portal.getHttpServletRequest(actionRequest),
+					"no-file-was-imported");
+			}
+			else {
+				HttpServletRequest httpServletRequest =
+					_portal.getHttpServletRequest(actionRequest);
+
+				List<String> formattedMessages = new ArrayList<>();
+
+				Stream<LayoutPageTemplateImportEntry> stream =
+					layoutPageTemplateImportEntries.stream();
+
+				Map<LayoutPageTemplateImportEntry.Status, Long>
+					layoutPageTemplateImportEntriesMap = stream.collect(
+						Collectors.groupingBy(
+							LayoutPageTemplateImportEntry::getStatus,
+							Collectors.counting()));
+
+				for (Map.Entry<LayoutPageTemplateImportEntry.Status, Long>
+						entrySet :
+							layoutPageTemplateImportEntriesMap.entrySet()) {
+
+					LayoutPageTemplateImportEntry.Status status =
+						entrySet.getKey();
+
+					formattedMessages.add(
+						LanguageUtil.format(
+							httpServletRequest, "x-file-x",
+							new Object[] {
+								entrySet.getValue(), status.getLabel()
+							}));
+				}
+
+				successMessage = LanguageUtil.format(
+					httpServletRequest, "import-result-x",
+					StringUtil.merge(formattedMessages, StringPool.NEW_LINE));
+			}
+
+			SessionMessages.add(
+				actionRequest, "requestProcessed", successMessage);
+		}
 	}
 
 	@Override
@@ -68,6 +127,9 @@ public class ImportLayoutPageTemplateEntryMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long layoutPageTemplateCollectionId = ParamUtil.getLong(
+			actionRequest, "layoutPageTemplateCollectionId");
+
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(actionRequest);
 
@@ -77,9 +139,17 @@ public class ImportLayoutPageTemplateEntryMVCActionCommand
 			actionRequest, "overwrite", true);
 
 		try {
-			_layoutPageTemplatesImporter.importFile(
-				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), file,
-				overwrite);
+			List<LayoutPageTemplateImportEntry>
+				layoutPageTemplateImportEntries =
+					_layoutPageTemplatesImporter.importFile(
+						themeDisplay.getUserId(),
+						themeDisplay.getScopeGroupId(),
+						layoutPageTemplateCollectionId, file, overwrite);
+
+			actionRequest.setAttribute(
+				LayoutPageTemplateAdminWebKeys.
+					LAYOUT_PAGE_TEMPLATE_IMPORT_ENTRIES,
+				layoutPageTemplateImportEntries);
 
 			SessionMessages.add(actionRequest, "success");
 		}

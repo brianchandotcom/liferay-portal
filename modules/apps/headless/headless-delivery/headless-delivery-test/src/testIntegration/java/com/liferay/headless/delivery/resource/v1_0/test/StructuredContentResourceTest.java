@@ -26,8 +26,8 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
+import com.liferay.headless.delivery.client.dto.v1_0.ContentFieldValue;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
-import com.liferay.headless.delivery.client.dto.v1_0.Value;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
@@ -35,6 +35,7 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -69,8 +70,13 @@ public class StructuredContentResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_ddmStructure = _addDDMStructure(testGroup);
-		_irrelevantDDMStructure = _addDDMStructure(irrelevantGroup);
+		_ddmStructure = _addDDMStructure(
+			testGroup, "test-structured-content-structure.json");
+		_ddmLocalizedStructure = _addDDMStructure(
+			testGroup, "test-localized-structured-content-structure.json");
+
+		_irrelevantDDMStructure = _addDDMStructure(
+			irrelevantGroup, "test-structured-content-structure.json");
 
 		_ddmTemplate = _addDDMTemplate(_ddmStructure);
 		_addDDMTemplate(_irrelevantDDMStructure);
@@ -134,10 +140,11 @@ public class StructuredContentResourceTest
 
 		ContentField[] contentFields = structuredContent.getContentFields();
 
-		Value value = contentFields[0].getValue();
+		ContentFieldValue contentFieldValue =
+			contentFields[0].getContentFieldValue();
 
 		Assert.assertEquals(
-			"<div>" + value.getData() + "</div>",
+			"<div>" + contentFieldValue.getData() + "</div>",
 			structuredContentResource.
 				getStructuredContentRenderedContentTemplate(
 					structuredContent.getId(), _ddmTemplate.getTemplateId()));
@@ -153,6 +160,19 @@ public class StructuredContentResourceTest
 	@Override
 	@Test
 	public void testGraphQLGetSiteStructuredContentByUuid() {
+	}
+
+	@Test
+	public void testPostSiteLocalizedStructuredContent() throws Exception {
+		StructuredContent randomLocalizedStructuredContent =
+			_randomLocalizedStructuredContent();
+
+		StructuredContent postStructuredContent =
+			testPostSiteStructuredContent_addStructuredContent(
+				randomLocalizedStructuredContent);
+
+		assertEquals(randomLocalizedStructuredContent, postStructuredContent);
+		assertValid(postStructuredContent);
 	}
 
 	@Override
@@ -185,12 +205,12 @@ public class StructuredContentResourceTest
 			new ContentField[] {
 				new ContentField() {
 					{
-						name = "MyText";
-						value = new Value() {
+						contentFieldValue = new ContentFieldValue() {
 							{
 								data = RandomTestUtil.randomString(10);
 							}
 						};
+						name = "MyText";
 					}
 				}
 			});
@@ -231,7 +251,9 @@ public class StructuredContentResourceTest
 		return _journalFolder.getFolderId();
 	}
 
-	private DDMStructure _addDDMStructure(Group group) throws Exception {
+	private DDMStructure _addDDMStructure(Group group, String filename)
+		throws Exception {
+
 		DDMStructureTestHelper ddmStructureTestHelper =
 			new DDMStructureTestHelper(
 				PortalUtil.getClassNameId(JournalArticle.class), group);
@@ -239,8 +261,8 @@ public class StructuredContentResourceTest
 		return ddmStructureTestHelper.addStructure(
 			PortalUtil.getClassNameId(JournalArticle.class),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_deserialize(_read("test-structured-content-structure.json")),
-			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+			_deserialize(_read(filename)), StorageType.JSON.getValue(),
+			DDMStructureConstants.TYPE_DEFAULT);
 	}
 
 	private DDMTemplate _addDDMTemplate(DDMStructure ddmStructure)
@@ -264,6 +286,46 @@ public class StructuredContentResourceTest
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
+	private StructuredContent _randomLocalizedStructuredContent()
+		throws Exception {
+
+		StructuredContent structuredContent = super.randomStructuredContent();
+
+		ContentFieldValue randomEnglishContentFieldValue =
+			new ContentFieldValue() {
+				{
+					data = RandomTestUtil.randomString(10);
+				}
+			};
+
+		ContentFieldValue randomSpanishContentFieldValue =
+			new ContentFieldValue() {
+				{
+					data = RandomTestUtil.randomString(10);
+				}
+			};
+
+		structuredContent.setContentFields(
+			new ContentField[] {
+				new ContentField() {
+					{
+						contentFieldValue = randomEnglishContentFieldValue;
+						contentFieldValue_i18n = HashMapBuilder.put(
+							"en-US", randomEnglishContentFieldValue
+						).put(
+							"es-ES", randomSpanishContentFieldValue
+						).build();
+						name = "MyText";
+					}
+				}
+			});
+
+		structuredContent.setContentStructureId(
+			_ddmLocalizedStructure.getStructureId());
+
+		return structuredContent;
+	}
+
 	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
@@ -276,6 +338,7 @@ public class StructuredContentResourceTest
 	@Inject(filter = "ddm.form.deserializer.type=json")
 	private static DDMFormDeserializer _jsonDDMFormDeserializer;
 
+	private DDMStructure _ddmLocalizedStructure;
 	private DDMStructure _ddmStructure;
 	private DDMTemplate _ddmTemplate;
 	private DDMStructure _irrelevantDDMStructure;

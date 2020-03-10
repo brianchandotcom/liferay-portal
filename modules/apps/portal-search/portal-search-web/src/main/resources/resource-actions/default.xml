@@ -103,6 +103,21 @@
 		</permissions>
 	</portlet-resource>
 	<portlet-resource>
+		<portlet-name>com_liferay_portal_search_web_low_level_search_options_portlet_LowLevelSearchOptionsPortlet</portlet-name>
+		<permissions>
+			<supports>
+				<action-key>ADD_TO_PAGE</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<guest-unsupported>
+				<action-key>ADD_TO_PAGE</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</guest-unsupported>
+		</permissions>
+	</portlet-resource>
+	<portlet-resource>
 		<portlet-name>com_liferay_portal_search_web_modified_facet_portlet_ModifiedFacetPortlet</portlet-name>
 		<permissions>
 			<supports>
@@ -139,6 +154,21 @@
 			<guest-unsupported>
 				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
 				<action-key>CONFIGURATION</action-key>
+			</guest-unsupported>
+		</permissions>
+	</portlet-resource>
+	<portlet-resource>
+		<portlet-name>com_liferay_portal_search_web_search_insights_portlet_SearchInsightsPortlet</portlet-name>
+		<permissions>
+			<supports>
+				<action-key>ADD_TO_PAGE</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<guest-unsupported>
+				<action-key>ADD_TO_PAGE</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>
 	</portlet-resource>

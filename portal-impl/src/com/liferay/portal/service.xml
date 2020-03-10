@@ -757,7 +757,7 @@
 		<reference entity="ExportImportConfiguration" package-path="com.liferay.portlet.exportimport" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 	</entity>
-	<entity local-service="true" name="LayoutBranch" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout">
+	<entity local-service="true" name="LayoutBranch" plural-name="LayoutBranchs" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout">
 
 		<!-- PK fields -->
 
@@ -1090,7 +1090,7 @@
 		<reference entity="PluginSetting" package-path="com.liferay.portal" />
 		<reference entity="VirtualHost" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutSetBranch" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout">
+	<entity local-service="true" name="LayoutSetBranch" plural-name="LayoutSetBranchs" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout">
 
 		<!-- PK fields -->
 
@@ -1946,7 +1946,7 @@
 
 		<reference entity="LayoutRevision" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="RecentLayoutSetBranch" remote-service="false" uuid="false">
+	<entity local-service="true" name="RecentLayoutSetBranch" plural-name="RecentLayoutSetBranchs" remote-service="false" uuid="false">
 
 		<!-- PK fields -->
 

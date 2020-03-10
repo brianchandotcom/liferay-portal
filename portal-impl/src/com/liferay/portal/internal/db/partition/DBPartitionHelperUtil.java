@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.hibernate.DialectDetector;
 
 import java.sql.Connection;
@@ -122,6 +123,12 @@ public class DBPartitionHelperUtil {
 
 			if (db.getDBType() != DBType.MYSQL) {
 				throw new Error("Database Partition requires MySQL");
+			}
+
+			if (Validator.isNull(_DATABASE_PARTITION_INSTANCE_ID)) {
+				throw new Error(
+					"Database Partition requires setting the property " +
+						"database.partition.instance.id");
 			}
 
 			try (Connection connection = dataSource.getConnection()) {

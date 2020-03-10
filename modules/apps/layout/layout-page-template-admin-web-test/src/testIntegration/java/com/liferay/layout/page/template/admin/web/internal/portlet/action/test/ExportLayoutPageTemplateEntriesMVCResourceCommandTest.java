@@ -132,11 +132,13 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			fileEntry.getFileEntryId());
 
+		long[] layoutPageTemplateEntryIds = {
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		};
+
 		File file = ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "getFile",
-			new Class<?>[] {ResourceRequest.class},
-			_getMockResourceRequest(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+			_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
+			layoutPageTemplateEntryIds);
 
 		try (ZipFile zipFile = new ZipFile(file)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();

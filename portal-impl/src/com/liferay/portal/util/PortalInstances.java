@@ -263,7 +263,7 @@ public class PortalInstances {
 		long companyId = 0;
 
 		try {
-			Company company = CompanyLocalServiceUtil.checkCompany(webId);
+			Company company = CompanyLocalServiceUtil.getCompanyByWebId(webId);
 
 			companyId = company.getCompanyId();
 		}
@@ -277,6 +277,13 @@ public class PortalInstances {
 
 		try {
 			CompanyThreadLocal.setCompanyId(companyId);
+
+			try {
+				CompanyLocalServiceUtil.checkCompany(webId);
+			}
+			catch (Exception exception) {
+				_log.error(exception, exception);
+			}
 
 			String principalName = null;
 

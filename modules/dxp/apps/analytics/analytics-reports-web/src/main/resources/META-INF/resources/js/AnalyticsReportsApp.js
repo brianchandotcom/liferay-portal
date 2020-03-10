@@ -14,8 +14,8 @@ import React from 'react';
 import BasicInformation from './components/BasicInformation';
 import Chart from './components/Chart';
 import Hint from './components/Hint';
-import PieChart from './components/PieChart';
 import TotalCount from './components/TotalCount';
+import TrafficSources from './components/TrafficSources';
 import APIService from './utils/APIService';
 import {numberFormat} from './utils/numberFormat';
 
@@ -110,7 +110,7 @@ export default function({context, props}) {
 				/>
 			</h5>
 
-			<PieChart
+			<TrafficSources
 				dataProvider={api.getTrafficSources}
 				languageTag={languageTag}
 			/>

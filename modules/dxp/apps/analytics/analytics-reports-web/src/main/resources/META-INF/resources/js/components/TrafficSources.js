@@ -9,8 +9,9 @@
  * distribution rights of the Software.
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
-import {Cell, Pie, PieChart as RechartsPieChart} from 'recharts';
+import {Cell, Pie, PieChart} from 'recharts';
 
 import {numberFormat} from '../utils/numberFormat';
 import Hint from './Hint';
@@ -29,7 +30,7 @@ const FALLBACK_COLOR = '#e92563';
 
 const getColorByName = name => COLORS_MAP[name] || FALLBACK_COLOR;
 
-export default function PieChart({dataProvider, languageTag}) {
+export default function TrafficSources({dataProvider, languageTag}) {
 	const [trafficSources, setTrafficSources] = useState([]);
 
 	useEffect(() => {
@@ -74,7 +75,7 @@ export default function PieChart({dataProvider, languageTag}) {
 			</div>
 
 			<div className="pie-chart-wrapper--chart">
-				<RechartsPieChart height={80} width={80}>
+				<PieChart height={80} width={80}>
 					<Pie
 						cx="50%"
 						cy="50%"
@@ -90,8 +91,13 @@ export default function PieChart({dataProvider, languageTag}) {
 							return <Cell fill={fillColor} key={i} />;
 						})}
 					</Pie>
-				</RechartsPieChart>
+				</PieChart>
 			</div>
 		</div>
 	);
 }
+
+TrafficSources.propTypes = {
+	dataProvider: PropTypes.func.isRequired,
+	languageTag: PropTypes.string.isRequired,
+};

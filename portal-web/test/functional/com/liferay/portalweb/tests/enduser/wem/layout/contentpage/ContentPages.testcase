@@ -642,7 +642,7 @@ definition {
 
 	@description = "This is a test for LPS-102887. A user can edit content in a web content display widget through content panel"
 	@priority = "4"
-	test EditWecContentInAPViaContentPanel {
+	test EditWebContentInAPViaContentPanel {
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Test Site Name",
@@ -686,7 +686,7 @@ definition {
 
 	@description = "This is a test for LPS-102887. A user can edit content in a web content display widget through content panel"
 	@priority = "4"
-	test EditWecContentInWCDViaContentPanel {
+	test EditWebContentInWCDViaContentPanel {
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Test Site Name",

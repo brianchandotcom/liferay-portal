@@ -17,13 +17,10 @@ mergeLang {
 		transformKeys = [
 			"ddm-form-instance": "ddm-form-instance",
 			"javax.portlet.title.com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet": "application.name.com.liferay.dynamic.data.mapping.uad",
+			"personal-data-erasure": "personal-data-erasure",
 			"record": "record"
 		]
 	}
 
-	setting("../../user-associated-data/user-associated-data-web/src/main/resources/content") {
-		transformKeys = ["personal-data-erasure": "personal-data-erasure"]
-	}
-
-	sourceDirs = ["../dynamic-data-mapping-lang/src/main/resources/content", "../../user-associated-data/user-associated-data-web/src/main/resources/content"]
+	sourceDirs = ["../dynamic-data-mapping-lang/src/main/resources/content"]
 }

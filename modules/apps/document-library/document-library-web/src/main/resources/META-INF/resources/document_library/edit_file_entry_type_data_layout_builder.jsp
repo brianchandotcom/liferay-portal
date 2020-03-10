@@ -25,6 +25,8 @@ long fileEntryTypeId = BeanParamUtil.getLong(fileEntryType, request, "fileEntryT
 
 com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = (com.liferay.dynamic.data.mapping.model.DDMStructure)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
 
+DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFileEntryTypeDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT);
+
 long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId");
 
 String ddmStructureKey = StringPool.BLANK;
@@ -80,6 +82,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 
 	<div class="container-fluid container-fluid-max-xl container-view">
 		<liferay-data-engine:data-layout-builder
+			additionalPanels="<%= dlEditFileEntryTypeDisplayContext.getAdditionalPanels(npmResolvedPackageName) %>"
 			componentId='<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
 			contentType="document-library"
 			dataDefinitionId="<%= ddmStructureId %>"

@@ -139,10 +139,6 @@ definition {
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
 
-		PageEditorConfiguration.changeConfigSelection(
-			fragmentName = "Row",
-			optionValue = "${columnCount}");
-
 		AssertVisible(
 			key_elementType = "Row",
 			key_position = "1",

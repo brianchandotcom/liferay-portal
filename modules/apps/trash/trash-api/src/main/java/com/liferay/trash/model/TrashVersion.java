@@ -65,6 +65,6 @@ public interface TrashVersion extends PersistedModel, TrashVersionModel {
 
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			typeSettingsProperties);
+			typeSettingsUnicodeProperties);
 
 }

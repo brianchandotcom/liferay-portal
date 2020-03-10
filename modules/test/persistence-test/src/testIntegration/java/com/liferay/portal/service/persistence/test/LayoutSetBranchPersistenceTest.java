@@ -80,7 +80,7 @@ public class LayoutSetBranchPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<LayoutSetBranch> iterator = _layoutSetBranchs.iterator();
+		Iterator<LayoutSetBranch> iterator = _layoutSetBranches.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -161,7 +161,7 @@ public class LayoutSetBranchPersistenceTest {
 		newLayoutSetBranch.setLayoutSetPrototypeLinkEnabled(
 			RandomTestUtil.randomBoolean());
 
-		_layoutSetBranchs.add(_persistence.update(newLayoutSetBranch));
+		_layoutSetBranches.add(_persistence.update(newLayoutSetBranch));
 
 		LayoutSetBranch existingLayoutSetBranch = _persistence.findByPrimaryKey(
 			newLayoutSetBranch.getPrimaryKey());
@@ -330,16 +330,16 @@ public class LayoutSetBranchPersistenceTest {
 		primaryKeys.add(newLayoutSetBranch1.getPrimaryKey());
 		primaryKeys.add(newLayoutSetBranch2.getPrimaryKey());
 
-		Map<Serializable, LayoutSetBranch> layoutSetBranchs =
+		Map<Serializable, LayoutSetBranch> layoutSetBranches =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertEquals(2, layoutSetBranchs.size());
+		Assert.assertEquals(2, layoutSetBranches.size());
 		Assert.assertEquals(
 			newLayoutSetBranch1,
-			layoutSetBranchs.get(newLayoutSetBranch1.getPrimaryKey()));
+			layoutSetBranches.get(newLayoutSetBranch1.getPrimaryKey()));
 		Assert.assertEquals(
 			newLayoutSetBranch2,
-			layoutSetBranchs.get(newLayoutSetBranch2.getPrimaryKey()));
+			layoutSetBranches.get(newLayoutSetBranch2.getPrimaryKey()));
 	}
 
 	@Test
@@ -355,10 +355,10 @@ public class LayoutSetBranchPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, LayoutSetBranch> layoutSetBranchs =
+		Map<Serializable, LayoutSetBranch> layoutSetBranches =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(layoutSetBranchs.isEmpty());
+		Assert.assertTrue(layoutSetBranches.isEmpty());
 	}
 
 	@Test
@@ -374,23 +374,23 @@ public class LayoutSetBranchPersistenceTest {
 		primaryKeys.add(newLayoutSetBranch.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, LayoutSetBranch> layoutSetBranchs =
+		Map<Serializable, LayoutSetBranch> layoutSetBranches =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertEquals(1, layoutSetBranchs.size());
+		Assert.assertEquals(1, layoutSetBranches.size());
 		Assert.assertEquals(
 			newLayoutSetBranch,
-			layoutSetBranchs.get(newLayoutSetBranch.getPrimaryKey()));
+			layoutSetBranches.get(newLayoutSetBranch.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, LayoutSetBranch> layoutSetBranchs =
+		Map<Serializable, LayoutSetBranch> layoutSetBranches =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(layoutSetBranchs.isEmpty());
+		Assert.assertTrue(layoutSetBranches.isEmpty());
 	}
 
 	@Test
@@ -401,13 +401,13 @@ public class LayoutSetBranchPersistenceTest {
 
 		primaryKeys.add(newLayoutSetBranch.getPrimaryKey());
 
-		Map<Serializable, LayoutSetBranch> layoutSetBranchs =
+		Map<Serializable, LayoutSetBranch> layoutSetBranches =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertEquals(1, layoutSetBranchs.size());
+		Assert.assertEquals(1, layoutSetBranches.size());
 		Assert.assertEquals(
 			newLayoutSetBranch,
-			layoutSetBranchs.get(newLayoutSetBranch.getPrimaryKey()));
+			layoutSetBranches.get(newLayoutSetBranch.getPrimaryKey()));
 	}
 
 	@Test
@@ -583,12 +583,12 @@ public class LayoutSetBranchPersistenceTest {
 		layoutSetBranch.setLayoutSetPrototypeLinkEnabled(
 			RandomTestUtil.randomBoolean());
 
-		_layoutSetBranchs.add(_persistence.update(layoutSetBranch));
+		_layoutSetBranches.add(_persistence.update(layoutSetBranch));
 
 		return layoutSetBranch;
 	}
 
-	private List<LayoutSetBranch> _layoutSetBranchs =
+	private List<LayoutSetBranch> _layoutSetBranches =
 		new ArrayList<LayoutSetBranch>();
 	private LayoutSetBranchPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;

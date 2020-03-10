@@ -301,33 +301,33 @@ public class RecentLayoutSetBranchLocalServiceWrapper
 	}
 
 	/**
-	 * Returns a range of all the recent layout set branchs.
+	 * Returns a range of all the recent layout set branches.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.RecentLayoutSetBranchModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of recent layout set branchs
-	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
-	 * @return the range of recent layout set branchs
+	 * @param start the lower bound of the range of recent layout set branches
+	 * @param end the upper bound of the range of recent layout set branches (not inclusive)
+	 * @return the range of recent layout set branches
 	 */
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.RecentLayoutSetBranch>
-		getRecentLayoutSetBranchs(int start, int end) {
+		getRecentLayoutSetBranches(int start, int end) {
 
-		return _recentLayoutSetBranchLocalService.getRecentLayoutSetBranchs(
+		return _recentLayoutSetBranchLocalService.getRecentLayoutSetBranches(
 			start, end);
 	}
 
 	/**
-	 * Returns the number of recent layout set branchs.
+	 * Returns the number of recent layout set branches.
 	 *
-	 * @return the number of recent layout set branchs
+	 * @return the number of recent layout set branches
 	 */
 	@Override
-	public int getRecentLayoutSetBranchsCount() {
+	public int getRecentLayoutSetBranchesCount() {
 		return _recentLayoutSetBranchLocalService.
-			getRecentLayoutSetBranchsCount();
+			getRecentLayoutSetBranchesCount();
 	}
 
 	/**

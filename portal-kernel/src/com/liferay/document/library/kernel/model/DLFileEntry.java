@@ -121,6 +121,6 @@ public interface DLFileEntry
 
 	public void setExtraSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			extraSettingsProperties);
+			extraSettingsUnicodeProperties);
 
 }

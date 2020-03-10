@@ -37,10 +37,11 @@ public class TrashVersionLocalServiceWrapper
 	public com.liferay.trash.model.TrashVersion addTrashVersion(
 		long trashEntryId, String className, long classPK, int status,
 		com.liferay.portal.kernel.util.UnicodeProperties
-			typeSettingsProperties) {
+			typeSettingsUnicodeProperties) {
 
 		return _trashVersionLocalService.addTrashVersion(
-			trashEntryId, className, classPK, status, typeSettingsProperties);
+			trashEntryId, className, classPK, status,
+			typeSettingsUnicodeProperties);
 	}
 
 	/**

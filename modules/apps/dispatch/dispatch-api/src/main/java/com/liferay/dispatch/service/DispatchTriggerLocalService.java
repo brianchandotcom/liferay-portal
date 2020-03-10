@@ -76,7 +76,7 @@ public interface DispatchTriggerLocalService
 
 	public DispatchTrigger addDispatchTrigger(
 			long userId, String name, boolean system, String type,
-			UnicodeProperties typeSettingsProperties)
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException;
 
 	/**
@@ -284,7 +284,7 @@ public interface DispatchTriggerLocalService
 
 	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, String name,
-			UnicodeProperties typeSettingsProperties)
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException;
 
 }

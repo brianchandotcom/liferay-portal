@@ -89,6 +89,6 @@ public interface DLFileVersion
 
 	public void setExtraSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			extraSettingsProperties);
+			extraSettingsUnicodeProperties);
 
 }

@@ -56,7 +56,7 @@ public class RepositoryServiceHttp {
 			long parentFolderId, String name, String description,
 			String portletId,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsProperties,
+				typeSettingsUnicodeProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -67,7 +67,8 @@ public class RepositoryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, classNameId, parentFolderId, name,
-				description, portletId, typeSettingsProperties, serviceContext);
+				description, portletId, typeSettingsUnicodeProperties,
+				serviceContext);
 
 			Object returnObj = null;
 

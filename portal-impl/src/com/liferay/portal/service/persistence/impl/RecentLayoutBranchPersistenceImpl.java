@@ -79,10 +79,10 @@ public class RecentLayoutBranchPersistenceImpl
 	private FinderPath _finderPathCountByGroupId;
 
 	/**
-	 * Returns all the recent layout branchs where groupId = &#63;.
+	 * Returns all the recent layout branches where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the matching recent layout branchs
+	 * @return the matching recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findByGroupId(long groupId) {
@@ -91,16 +91,16 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the recent layout branchs where groupId = &#63;.
+	 * Returns a range of all the recent layout branches where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutBranchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of recent layout branchs
-	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
-	 * @return the range of matching recent layout branchs
+	 * @param start the lower bound of the range of recent layout branches
+	 * @param end the upper bound of the range of recent layout branches (not inclusive)
+	 * @return the range of matching recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findByGroupId(
@@ -110,17 +110,17 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the recent layout branchs where groupId = &#63;.
+	 * Returns an ordered range of all the recent layout branches where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutBranchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of recent layout branchs
-	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
+	 * @param start the lower bound of the range of recent layout branches
+	 * @param end the upper bound of the range of recent layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching recent layout branchs
+	 * @return the ordered range of matching recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findByGroupId(
@@ -131,18 +131,18 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the recent layout branchs where groupId = &#63;.
+	 * Returns an ordered range of all the recent layout branches where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutBranchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of recent layout branchs
-	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
+	 * @param start the lower bound of the range of recent layout branches
+	 * @param end the upper bound of the range of recent layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching recent layout branchs
+	 * @return the ordered range of matching recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findByGroupId(
@@ -358,7 +358,7 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the recent layout branchs before and after the current recent layout branch in the ordered set where groupId = &#63;.
+	 * Returns the recent layout branches before and after the current recent layout branch in the ordered set where groupId = &#63;.
 	 *
 	 * @param recentLayoutBranchId the primary key of the current recent layout branch
 	 * @param groupId the group ID
@@ -511,7 +511,7 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the recent layout branchs where groupId = &#63; from the database.
+	 * Removes all the recent layout branches where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 */
@@ -526,10 +526,10 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of recent layout branchs where groupId = &#63;.
+	 * Returns the number of recent layout branches where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the number of matching recent layout branchs
+	 * @return the number of matching recent layout branches
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
@@ -585,10 +585,10 @@ public class RecentLayoutBranchPersistenceImpl
 	private FinderPath _finderPathCountByUserId;
 
 	/**
-	 * Returns all the recent layout branchs where userId = &#63;.
+	 * Returns all the recent layout branches where userId = &#63;.
 	 *
 	 * @param userId the user ID
-	 * @return the matching recent layout branchs
+	 * @return the matching recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findByUserId(long userId) {
@@ -596,16 +596,16 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the recent layout branchs where userId = &#63;.
+	 * Returns a range of all the recent layout branches where userId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutBranchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param userId the user ID
-	 * @param start the lower bound of the range of recent layout branchs
-	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
-	 * @return the range of matching recent layout branchs
+	 * @param start the lower bound of the range of recent layout branches
+	 * @param end the upper bound of the range of recent layout branches (not inclusive)
+	 * @return the range of matching recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findByUserId(
@@ -615,17 +615,17 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the recent layout branchs where userId = &#63;.
+	 * Returns an ordered range of all the recent layout branches where userId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutBranchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param userId the user ID
-	 * @param start the lower bound of the range of recent layout branchs
-	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
+	 * @param start the lower bound of the range of recent layout branches
+	 * @param end the upper bound of the range of recent layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching recent layout branchs
+	 * @return the ordered range of matching recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findByUserId(
@@ -636,18 +636,18 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the recent layout branchs where userId = &#63;.
+	 * Returns an ordered range of all the recent layout branches where userId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutBranchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param userId the user ID
-	 * @param start the lower bound of the range of recent layout branchs
-	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
+	 * @param start the lower bound of the range of recent layout branches
+	 * @param end the upper bound of the range of recent layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching recent layout branchs
+	 * @return the ordered range of matching recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findByUserId(
@@ -863,7 +863,7 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the recent layout branchs before and after the current recent layout branch in the ordered set where userId = &#63;.
+	 * Returns the recent layout branches before and after the current recent layout branch in the ordered set where userId = &#63;.
 	 *
 	 * @param recentLayoutBranchId the primary key of the current recent layout branch
 	 * @param userId the user ID
@@ -1016,7 +1016,7 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the recent layout branchs where userId = &#63; from the database.
+	 * Removes all the recent layout branches where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
 	 */
@@ -1031,10 +1031,10 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of recent layout branchs where userId = &#63;.
+	 * Returns the number of recent layout branches where userId = &#63;.
 	 *
 	 * @param userId the user ID
-	 * @return the number of matching recent layout branchs
+	 * @return the number of matching recent layout branches
 	 */
 	@Override
 	public int countByUserId(long userId) {
@@ -1090,10 +1090,10 @@ public class RecentLayoutBranchPersistenceImpl
 	private FinderPath _finderPathCountByLayoutBranchId;
 
 	/**
-	 * Returns all the recent layout branchs where layoutBranchId = &#63;.
+	 * Returns all the recent layout branches where layoutBranchId = &#63;.
 	 *
 	 * @param layoutBranchId the layout branch ID
-	 * @return the matching recent layout branchs
+	 * @return the matching recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findByLayoutBranchId(long layoutBranchId) {
@@ -1102,16 +1102,16 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the recent layout branchs where layoutBranchId = &#63;.
+	 * Returns a range of all the recent layout branches where layoutBranchId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutBranchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param layoutBranchId the layout branch ID
-	 * @param start the lower bound of the range of recent layout branchs
-	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
-	 * @return the range of matching recent layout branchs
+	 * @param start the lower bound of the range of recent layout branches
+	 * @param end the upper bound of the range of recent layout branches (not inclusive)
+	 * @return the range of matching recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findByLayoutBranchId(
@@ -1121,17 +1121,17 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the recent layout branchs where layoutBranchId = &#63;.
+	 * Returns an ordered range of all the recent layout branches where layoutBranchId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutBranchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param layoutBranchId the layout branch ID
-	 * @param start the lower bound of the range of recent layout branchs
-	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
+	 * @param start the lower bound of the range of recent layout branches
+	 * @param end the upper bound of the range of recent layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching recent layout branchs
+	 * @return the ordered range of matching recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findByLayoutBranchId(
@@ -1143,18 +1143,18 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the recent layout branchs where layoutBranchId = &#63;.
+	 * Returns an ordered range of all the recent layout branches where layoutBranchId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutBranchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param layoutBranchId the layout branch ID
-	 * @param start the lower bound of the range of recent layout branchs
-	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
+	 * @param start the lower bound of the range of recent layout branches
+	 * @param end the upper bound of the range of recent layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching recent layout branchs
+	 * @return the ordered range of matching recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findByLayoutBranchId(
@@ -1376,7 +1376,7 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the recent layout branchs before and after the current recent layout branch in the ordered set where layoutBranchId = &#63;.
+	 * Returns the recent layout branches before and after the current recent layout branch in the ordered set where layoutBranchId = &#63;.
 	 *
 	 * @param recentLayoutBranchId the primary key of the current recent layout branch
 	 * @param layoutBranchId the layout branch ID
@@ -1532,7 +1532,7 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the recent layout branchs where layoutBranchId = &#63; from the database.
+	 * Removes all the recent layout branches where layoutBranchId = &#63; from the database.
 	 *
 	 * @param layoutBranchId the layout branch ID
 	 */
@@ -1548,10 +1548,10 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of recent layout branchs where layoutBranchId = &#63;.
+	 * Returns the number of recent layout branches where layoutBranchId = &#63;.
 	 *
 	 * @param layoutBranchId the layout branch ID
-	 * @return the number of matching recent layout branchs
+	 * @return the number of matching recent layout branches
 	 */
 	@Override
 	public int countByLayoutBranchId(long layoutBranchId) {
@@ -1787,12 +1787,12 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of recent layout branchs where userId = &#63; and layoutSetBranchId = &#63; and plid = &#63;.
+	 * Returns the number of recent layout branches where userId = &#63; and layoutSetBranchId = &#63; and plid = &#63;.
 	 *
 	 * @param userId the user ID
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @return the number of matching recent layout branchs
+	 * @return the number of matching recent layout branches
 	 */
 	@Override
 	public int countByU_L_P(long userId, long layoutSetBranchId, long plid) {
@@ -1890,13 +1890,13 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Caches the recent layout branchs in the entity cache if it is enabled.
+	 * Caches the recent layout branches in the entity cache if it is enabled.
 	 *
-	 * @param recentLayoutBranchs the recent layout branchs
+	 * @param recentLayoutBranches the recent layout branches
 	 */
 	@Override
-	public void cacheResult(List<RecentLayoutBranch> recentLayoutBranchs) {
-		for (RecentLayoutBranch recentLayoutBranch : recentLayoutBranchs) {
+	public void cacheResult(List<RecentLayoutBranch> recentLayoutBranches) {
+		for (RecentLayoutBranch recentLayoutBranch : recentLayoutBranches) {
 			if (EntityCacheUtil.getResult(
 					RecentLayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 					RecentLayoutBranchImpl.class,
@@ -1911,7 +1911,7 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all recent layout branchs.
+	 * Clears the cache for all recent layout branches.
 	 *
 	 * <p>
 	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
@@ -1947,11 +1947,11 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	@Override
-	public void clearCache(List<RecentLayoutBranch> recentLayoutBranchs) {
+	public void clearCache(List<RecentLayoutBranch> recentLayoutBranches) {
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		for (RecentLayoutBranch recentLayoutBranch : recentLayoutBranchs) {
+		for (RecentLayoutBranch recentLayoutBranch : recentLayoutBranches) {
 			EntityCacheUtil.removeResult(
 				RecentLayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 				RecentLayoutBranchImpl.class,
@@ -2336,9 +2336,9 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns all the recent layout branchs.
+	 * Returns all the recent layout branches.
 	 *
-	 * @return the recent layout branchs
+	 * @return the recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findAll() {
@@ -2346,15 +2346,15 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the recent layout branchs.
+	 * Returns a range of all the recent layout branches.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutBranchModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of recent layout branchs
-	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
-	 * @return the range of recent layout branchs
+	 * @param start the lower bound of the range of recent layout branches
+	 * @param end the upper bound of the range of recent layout branches (not inclusive)
+	 * @return the range of recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findAll(int start, int end) {
@@ -2362,16 +2362,16 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the recent layout branchs.
+	 * Returns an ordered range of all the recent layout branches.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutBranchModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of recent layout branchs
-	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
+	 * @param start the lower bound of the range of recent layout branches
+	 * @param end the upper bound of the range of recent layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of recent layout branchs
+	 * @return the ordered range of recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findAll(
@@ -2382,17 +2382,17 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the recent layout branchs.
+	 * Returns an ordered range of all the recent layout branches.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutBranchModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of recent layout branchs
-	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
+	 * @param start the lower bound of the range of recent layout branches
+	 * @param end the upper bound of the range of recent layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of recent layout branchs
+	 * @return the ordered range of recent layout branches
 	 */
 	@Override
 	public List<RecentLayoutBranch> findAll(
@@ -2476,7 +2476,7 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the recent layout branchs from the database.
+	 * Removes all the recent layout branches from the database.
 	 *
 	 */
 	@Override
@@ -2487,9 +2487,9 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of recent layout branchs.
+	 * Returns the number of recent layout branches.
 	 *
-	 * @return the number of recent layout branchs
+	 * @return the number of recent layout branches
 	 */
 	@Override
 	public int countAll() {

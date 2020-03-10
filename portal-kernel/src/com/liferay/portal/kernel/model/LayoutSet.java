@@ -146,7 +146,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 		String companyFallbackVirtualHostname);
 
 	public void setSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);
+		com.liferay.portal.kernel.util.UnicodeProperties
+			settingsUnicodeProperties);
 
 	/**
 	 * Sets the name of the layout set's virtual host.

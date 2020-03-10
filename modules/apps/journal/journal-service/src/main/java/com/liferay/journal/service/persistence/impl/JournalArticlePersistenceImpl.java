@@ -3965,15 +3965,15 @@ public class JournalArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param DDMStructureKeies the ddm structure keies
+	 * @param DDMStructureKeys the ddm structure keys
 	 * @return the matching journal articles
 	 */
 	@Override
 	public List<JournalArticle> findByDDMStructureKey(
-		String[] DDMStructureKeies) {
+		String[] DDMStructureKeys) {
 
 		return findByDDMStructureKey(
-			DDMStructureKeies, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			DDMStructureKeys, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -3983,16 +3983,16 @@ public class JournalArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param DDMStructureKeies the ddm structure keies
+	 * @param DDMStructureKeys the ddm structure keys
 	 * @param start the lower bound of the range of journal articles
 	 * @param end the upper bound of the range of journal articles (not inclusive)
 	 * @return the range of matching journal articles
 	 */
 	@Override
 	public List<JournalArticle> findByDDMStructureKey(
-		String[] DDMStructureKeies, int start, int end) {
+		String[] DDMStructureKeys, int start, int end) {
 
-		return findByDDMStructureKey(DDMStructureKeies, start, end, null);
+		return findByDDMStructureKey(DDMStructureKeys, start, end, null);
 	}
 
 	/**
@@ -4002,7 +4002,7 @@ public class JournalArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param DDMStructureKeies the ddm structure keies
+	 * @param DDMStructureKeys the ddm structure keys
 	 * @param start the lower bound of the range of journal articles
 	 * @param end the upper bound of the range of journal articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -4010,11 +4010,11 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public List<JournalArticle> findByDDMStructureKey(
-		String[] DDMStructureKeies, int start, int end,
+		String[] DDMStructureKeys, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return findByDDMStructureKey(
-			DDMStructureKeies, start, end, orderByComparator, true);
+			DDMStructureKeys, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -4033,25 +4033,24 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public List<JournalArticle> findByDDMStructureKey(
-		String[] DDMStructureKeies, int start, int end,
+		String[] DDMStructureKeys, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
-		if (DDMStructureKeies == null) {
-			DDMStructureKeies = new String[0];
+		if (DDMStructureKeys == null) {
+			DDMStructureKeys = new String[0];
 		}
-		else if (DDMStructureKeies.length > 1) {
-			for (int i = 0; i < DDMStructureKeies.length; i++) {
-				DDMStructureKeies[i] = Objects.toString(
-					DDMStructureKeies[i], "");
+		else if (DDMStructureKeys.length > 1) {
+			for (int i = 0; i < DDMStructureKeys.length; i++) {
+				DDMStructureKeys[i] = Objects.toString(DDMStructureKeys[i], "");
 			}
 
-			DDMStructureKeies = ArrayUtil.sortedUnique(DDMStructureKeies);
+			DDMStructureKeys = ArrayUtil.sortedUnique(DDMStructureKeys);
 		}
 
-		if (DDMStructureKeies.length == 1) {
+		if (DDMStructureKeys.length == 1) {
 			return findByDDMStructureKey(
-				DDMStructureKeies[0], start, end, orderByComparator);
+				DDMStructureKeys[0], start, end, orderByComparator);
 		}
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
@@ -4063,12 +4062,12 @@ public class JournalArticlePersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache && productionMode) {
-				finderArgs = new Object[] {StringUtil.merge(DDMStructureKeies)};
+				finderArgs = new Object[] {StringUtil.merge(DDMStructureKeys)};
 			}
 		}
 		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
-				StringUtil.merge(DDMStructureKeies), start, end,
+				StringUtil.merge(DDMStructureKeys), start, end,
 				orderByComparator
 			};
 		}
@@ -4083,7 +4082,7 @@ public class JournalArticlePersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if (!ArrayUtil.contains(
-							DDMStructureKeies,
+							DDMStructureKeys,
 							journalArticle.getDDMStructureKey())) {
 
 						list = null;
@@ -4099,11 +4098,11 @@ public class JournalArticlePersistenceImpl
 
 			sb.append(_SQL_SELECT_JOURNALARTICLE_WHERE);
 
-			if (DDMStructureKeies.length > 0) {
+			if (DDMStructureKeys.length > 0) {
 				sb.append("(");
 
-				for (int i = 0; i < DDMStructureKeies.length; i++) {
-					String DDMStructureKey = DDMStructureKeies[i];
+				for (int i = 0; i < DDMStructureKeys.length; i++) {
+					String DDMStructureKey = DDMStructureKeys[i];
 
 					if (DDMStructureKey.isEmpty()) {
 						sb.append(
@@ -4114,7 +4113,7 @@ public class JournalArticlePersistenceImpl
 							_FINDER_COLUMN_DDMSTRUCTUREKEY_DDMSTRUCTUREKEY_2);
 					}
 
-					if ((i + 1) < DDMStructureKeies.length) {
+					if ((i + 1) < DDMStructureKeys.length) {
 						sb.append(WHERE_OR);
 					}
 				}
@@ -4144,7 +4143,7 @@ public class JournalArticlePersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				for (String DDMStructureKey : DDMStructureKeies) {
+				for (String DDMStructureKey : DDMStructureKeys) {
 					if ((DDMStructureKey != null) &&
 						!DDMStructureKey.isEmpty()) {
 
@@ -4277,21 +4276,20 @@ public class JournalArticlePersistenceImpl
 	/**
 	 * Returns the number of journal articles where DDMStructureKey = any &#63;.
 	 *
-	 * @param DDMStructureKeies the ddm structure keies
+	 * @param DDMStructureKeys the ddm structure keys
 	 * @return the number of matching journal articles
 	 */
 	@Override
-	public int countByDDMStructureKey(String[] DDMStructureKeies) {
-		if (DDMStructureKeies == null) {
-			DDMStructureKeies = new String[0];
+	public int countByDDMStructureKey(String[] DDMStructureKeys) {
+		if (DDMStructureKeys == null) {
+			DDMStructureKeys = new String[0];
 		}
-		else if (DDMStructureKeies.length > 1) {
-			for (int i = 0; i < DDMStructureKeies.length; i++) {
-				DDMStructureKeies[i] = Objects.toString(
-					DDMStructureKeies[i], "");
+		else if (DDMStructureKeys.length > 1) {
+			for (int i = 0; i < DDMStructureKeys.length; i++) {
+				DDMStructureKeys[i] = Objects.toString(DDMStructureKeys[i], "");
 			}
 
-			DDMStructureKeies = ArrayUtil.sortedUnique(DDMStructureKeies);
+			DDMStructureKeys = ArrayUtil.sortedUnique(DDMStructureKeys);
 		}
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
@@ -4302,7 +4300,7 @@ public class JournalArticlePersistenceImpl
 		Long count = null;
 
 		if (productionMode) {
-			finderArgs = new Object[] {StringUtil.merge(DDMStructureKeies)};
+			finderArgs = new Object[] {StringUtil.merge(DDMStructureKeys)};
 
 			count = (Long)finderCache.getResult(
 				_finderPathWithPaginationCountByDDMStructureKey, finderArgs,
@@ -4314,11 +4312,11 @@ public class JournalArticlePersistenceImpl
 
 			sb.append(_SQL_COUNT_JOURNALARTICLE_WHERE);
 
-			if (DDMStructureKeies.length > 0) {
+			if (DDMStructureKeys.length > 0) {
 				sb.append("(");
 
-				for (int i = 0; i < DDMStructureKeies.length; i++) {
-					String DDMStructureKey = DDMStructureKeies[i];
+				for (int i = 0; i < DDMStructureKeys.length; i++) {
+					String DDMStructureKey = DDMStructureKeys[i];
 
 					if (DDMStructureKey.isEmpty()) {
 						sb.append(
@@ -4329,7 +4327,7 @@ public class JournalArticlePersistenceImpl
 							_FINDER_COLUMN_DDMSTRUCTUREKEY_DDMSTRUCTUREKEY_2);
 					}
 
-					if ((i + 1) < DDMStructureKeies.length) {
+					if ((i + 1) < DDMStructureKeys.length) {
 						sb.append(WHERE_OR);
 					}
 				}
@@ -4351,7 +4349,7 @@ public class JournalArticlePersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				for (String DDMStructureKey : DDMStructureKeies) {
+				for (String DDMStructureKey : DDMStructureKeys) {
 					if ((DDMStructureKey != null) &&
 						!DDMStructureKey.isEmpty()) {
 

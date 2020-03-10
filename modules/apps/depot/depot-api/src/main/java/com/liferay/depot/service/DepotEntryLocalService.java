@@ -325,7 +325,7 @@ public interface DepotEntryLocalService
 			long depotEntryId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap,
 			Map<String, Boolean> depotAppCustomizationMap,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException;
 

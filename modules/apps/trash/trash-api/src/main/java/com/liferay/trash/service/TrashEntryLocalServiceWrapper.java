@@ -46,7 +46,7 @@ public class TrashEntryLocalServiceWrapper
 	 * @param statusOVPs the primary keys and statuses of any of the entry's
 	 versions (e.g., {@link
 	 com.liferay.portlet.documentlibrary.model.DLFileVersion})
-	 * @param typeSettingsProperties the type settings properties
+	 * @param typeSettingsUnicodeProperties the type settings properties
 	 * @return the trashEntry
 	 */
 	@Override
@@ -57,12 +57,12 @@ public class TrashEntryLocalServiceWrapper
 				<com.liferay.portal.kernel.util.ObjectValuePair<Long, Integer>>
 					statusOVPs,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsProperties)
+				typeSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _trashEntryLocalService.addTrashEntry(
 			userId, groupId, className, classPK, classUuid, referrerClassName,
-			status, statusOVPs, typeSettingsProperties);
+			status, statusOVPs, typeSettingsUnicodeProperties);
 	}
 
 	/**

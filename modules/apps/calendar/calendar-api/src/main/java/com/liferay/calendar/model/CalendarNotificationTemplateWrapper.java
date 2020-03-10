@@ -509,9 +509,10 @@ public class CalendarNotificationTemplateWrapper
 	@Override
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			notificationTypeSettingsProperties) {
+			notificationTypeSettingsUnicodeProperties) {
 
-		model.setTypeSettingsProperties(notificationTypeSettingsProperties);
+		model.setTypeSettingsProperties(
+			notificationTypeSettingsUnicodeProperties);
 	}
 
 	/**

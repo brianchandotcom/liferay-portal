@@ -66,7 +66,7 @@ public interface RepositoryLocalService
 	public Repository addRepository(
 			long userId, long groupId, long classNameId, long parentFolderId,
 			String name, String description, String portletId,
-			UnicodeProperties typeSettingsProperties, boolean hidden,
+			UnicodeProperties typeSettingsUnicodeProperties, boolean hidden,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -331,7 +331,7 @@ public interface RepositoryLocalService
 		throws PortalException;
 
 	public void updateRepository(
-			long repositoryId, UnicodeProperties typeSettingsProperties)
+			long repositoryId, UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException;
 
 	/**

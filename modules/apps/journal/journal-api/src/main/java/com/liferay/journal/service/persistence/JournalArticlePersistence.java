@@ -1022,11 +1022,11 @@ public interface JournalArticlePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param DDMStructureKeies the ddm structure keies
+	 * @param DDMStructureKeys the ddm structure keys
 	 * @return the matching journal articles
 	 */
 	public java.util.List<JournalArticle> findByDDMStructureKey(
-		String[] DDMStructureKeies);
+		String[] DDMStructureKeys);
 
 	/**
 	 * Returns a range of all the journal articles where DDMStructureKey = any &#63;.
@@ -1035,13 +1035,13 @@ public interface JournalArticlePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param DDMStructureKeies the ddm structure keies
+	 * @param DDMStructureKeys the ddm structure keys
 	 * @param start the lower bound of the range of journal articles
 	 * @param end the upper bound of the range of journal articles (not inclusive)
 	 * @return the range of matching journal articles
 	 */
 	public java.util.List<JournalArticle> findByDDMStructureKey(
-		String[] DDMStructureKeies, int start, int end);
+		String[] DDMStructureKeys, int start, int end);
 
 	/**
 	 * Returns an ordered range of all the journal articles where DDMStructureKey = any &#63;.
@@ -1050,14 +1050,14 @@ public interface JournalArticlePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param DDMStructureKeies the ddm structure keies
+	 * @param DDMStructureKeys the ddm structure keys
 	 * @param start the lower bound of the range of journal articles
 	 * @param end the upper bound of the range of journal articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching journal articles
 	 */
 	public java.util.List<JournalArticle> findByDDMStructureKey(
-		String[] DDMStructureKeies, int start, int end,
+		String[] DDMStructureKeys, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
 			orderByComparator);
 
@@ -1076,7 +1076,7 @@ public interface JournalArticlePersistence
 	 * @return the ordered range of matching journal articles
 	 */
 	public java.util.List<JournalArticle> findByDDMStructureKey(
-		String[] DDMStructureKeies, int start, int end,
+		String[] DDMStructureKeys, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
 			orderByComparator,
 		boolean useFinderCache);
@@ -1099,10 +1099,10 @@ public interface JournalArticlePersistence
 	/**
 	 * Returns the number of journal articles where DDMStructureKey = any &#63;.
 	 *
-	 * @param DDMStructureKeies the ddm structure keies
+	 * @param DDMStructureKeys the ddm structure keys
 	 * @return the number of matching journal articles
 	 */
-	public int countByDDMStructureKey(String[] DDMStructureKeies);
+	public int countByDDMStructureKey(String[] DDMStructureKeys);
 
 	/**
 	 * Returns all the journal articles where DDMTemplateKey = &#63;.

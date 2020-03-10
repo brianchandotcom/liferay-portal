@@ -36,13 +36,13 @@ public class RepositoryLocalServiceWrapper
 			java.lang.String name, java.lang.String description,
 			java.lang.String portletId,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsProperties,
+				typeSettingsUnicodeProperties,
 			boolean hidden, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _repositoryLocalService.addRepository(
 			userId, groupId, classNameId, parentFolderId, name, description,
-			portletId, typeSettingsProperties, hidden, serviceContext);
+			portletId, typeSettingsUnicodeProperties, hidden, serviceContext);
 	}
 
 	/**
@@ -448,11 +448,11 @@ public class RepositoryLocalServiceWrapper
 	public void updateRepository(
 			long repositoryId,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsProperties)
+				typeSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_repositoryLocalService.updateRepository(
-			repositoryId, typeSettingsProperties);
+			repositoryId, typeSettingsUnicodeProperties);
 	}
 
 	/**

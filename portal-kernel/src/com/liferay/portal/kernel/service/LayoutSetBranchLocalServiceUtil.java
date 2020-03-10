@@ -279,6 +279,24 @@ public class LayoutSetBranchLocalServiceUtil {
 		return getService().getLayoutSetBranch(groupId, privateLayout, name);
 	}
 
+	/**
+	 * Returns a range of all the layout set branches.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutSetBranchModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of layout set branches
+	 * @param end the upper bound of the range of layout set branches (not inclusive)
+	 * @return the range of layout set branches
+	 */
+	public static java.util.List
+		<com.liferay.portal.kernel.model.LayoutSetBranch> getLayoutSetBranches(
+			int start, int end) {
+
+		return getService().getLayoutSetBranches(start, end);
+	}
+
 	public static java.util.List
 		<com.liferay.portal.kernel.model.LayoutSetBranch> getLayoutSetBranches(
 			long groupId, boolean privateLayout) {
@@ -287,30 +305,12 @@ public class LayoutSetBranchLocalServiceUtil {
 	}
 
 	/**
-	 * Returns a range of all the layout set branchs.
+	 * Returns the number of layout set branches.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutSetBranchModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of layout set branchs
-	 * @param end the upper bound of the range of layout set branchs (not inclusive)
-	 * @return the range of layout set branchs
+	 * @return the number of layout set branches
 	 */
-	public static java.util.List
-		<com.liferay.portal.kernel.model.LayoutSetBranch> getLayoutSetBranchs(
-			int start, int end) {
-
-		return getService().getLayoutSetBranchs(start, end);
-	}
-
-	/**
-	 * Returns the number of layout set branchs.
-	 *
-	 * @return the number of layout set branchs
-	 */
-	public static int getLayoutSetBranchsCount() {
-		return getService().getLayoutSetBranchsCount();
+	public static int getLayoutSetBranchesCount() {
+		return getService().getLayoutSetBranchesCount();
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSetBranch

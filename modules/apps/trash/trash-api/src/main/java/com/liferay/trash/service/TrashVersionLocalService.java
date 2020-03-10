@@ -63,7 +63,7 @@ public interface TrashVersionLocalService
 	 */
 	public TrashVersion addTrashVersion(
 		long trashEntryId, String className, long classPK, int status,
-		UnicodeProperties typeSettingsProperties);
+		UnicodeProperties typeSettingsUnicodeProperties);
 
 	/**
 	 * Adds the trash version to the database. Also notifies the appropriate model listeners.

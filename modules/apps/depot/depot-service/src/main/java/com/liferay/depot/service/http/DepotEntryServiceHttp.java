@@ -301,7 +301,7 @@ public class DepotEntryServiceHttp {
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			java.util.Map<String, Boolean> depotAppCustomizationMap,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsProperties,
+				typeSettingsUnicodeProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -312,7 +312,7 @@ public class DepotEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, depotEntryId, nameMap, descriptionMap,
-				depotAppCustomizationMap, typeSettingsProperties,
+				depotAppCustomizationMap, typeSettingsUnicodeProperties,
 				serviceContext);
 
 			Object returnObj = null;

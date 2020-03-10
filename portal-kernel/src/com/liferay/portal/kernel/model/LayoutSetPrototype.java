@@ -74,6 +74,7 @@ public interface LayoutSetPrototype
 	public boolean hasSetModifiedDate();
 
 	public void setSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);
+		com.liferay.portal.kernel.util.UnicodeProperties
+			settingsUnicodeProperties);
 
 }

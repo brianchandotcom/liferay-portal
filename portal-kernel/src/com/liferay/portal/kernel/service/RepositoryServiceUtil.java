@@ -39,13 +39,13 @@ public class RepositoryServiceUtil {
 			long groupId, long classNameId, long parentFolderId, String name,
 			String description, String portletId,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsProperties,
+				typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addRepository(
 			groupId, classNameId, parentFolderId, name, description, portletId,
-			typeSettingsProperties, serviceContext);
+			typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	public static void checkRepository(long repositoryId)

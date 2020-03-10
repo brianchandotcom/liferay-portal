@@ -80,10 +80,10 @@ public class LayoutBranchPersistenceImpl
 	private FinderPath _finderPathCountByLayoutSetBranchId;
 
 	/**
-	 * Returns all the layout branchs where layoutSetBranchId = &#63;.
+	 * Returns all the layout branches where layoutSetBranchId = &#63;.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
-	 * @return the matching layout branchs
+	 * @return the matching layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findByLayoutSetBranchId(long layoutSetBranchId) {
@@ -92,16 +92,16 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the layout branchs where layoutSetBranchId = &#63;.
+	 * Returns a range of all the layout branches where layoutSetBranchId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
-	 * @param start the lower bound of the range of layout branchs
-	 * @param end the upper bound of the range of layout branchs (not inclusive)
-	 * @return the range of matching layout branchs
+	 * @param start the lower bound of the range of layout branches
+	 * @param end the upper bound of the range of layout branches (not inclusive)
+	 * @return the range of matching layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findByLayoutSetBranchId(
@@ -111,17 +111,17 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the layout branchs where layoutSetBranchId = &#63;.
+	 * Returns an ordered range of all the layout branches where layoutSetBranchId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
-	 * @param start the lower bound of the range of layout branchs
-	 * @param end the upper bound of the range of layout branchs (not inclusive)
+	 * @param start the lower bound of the range of layout branches
+	 * @param end the upper bound of the range of layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout branchs
+	 * @return the ordered range of matching layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findByLayoutSetBranchId(
@@ -133,18 +133,18 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the layout branchs where layoutSetBranchId = &#63;.
+	 * Returns an ordered range of all the layout branches where layoutSetBranchId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
-	 * @param start the lower bound of the range of layout branchs
-	 * @param end the upper bound of the range of layout branchs (not inclusive)
+	 * @param start the lower bound of the range of layout branches
+	 * @param end the upper bound of the range of layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching layout branchs
+	 * @return the ordered range of matching layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findByLayoutSetBranchId(
@@ -367,7 +367,7 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the layout branchs before and after the current layout branch in the ordered set where layoutSetBranchId = &#63;.
+	 * Returns the layout branches before and after the current layout branch in the ordered set where layoutSetBranchId = &#63;.
 	 *
 	 * @param layoutBranchId the primary key of the current layout branch
 	 * @param layoutSetBranchId the layout set branch ID
@@ -519,7 +519,7 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the layout branchs where layoutSetBranchId = &#63; from the database.
+	 * Removes all the layout branches where layoutSetBranchId = &#63; from the database.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 */
@@ -535,10 +535,10 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of layout branchs where layoutSetBranchId = &#63;.
+	 * Returns the number of layout branches where layoutSetBranchId = &#63;.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
-	 * @return the number of matching layout branchs
+	 * @return the number of matching layout branches
 	 */
 	@Override
 	public int countByLayoutSetBranchId(long layoutSetBranchId) {
@@ -595,11 +595,11 @@ public class LayoutBranchPersistenceImpl
 	private FinderPath _finderPathCountByL_P;
 
 	/**
-	 * Returns all the layout branchs where layoutSetBranchId = &#63; and plid = &#63;.
+	 * Returns all the layout branches where layoutSetBranchId = &#63; and plid = &#63;.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @return the matching layout branchs
+	 * @return the matching layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findByL_P(long layoutSetBranchId, long plid) {
@@ -609,7 +609,7 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the layout branchs where layoutSetBranchId = &#63; and plid = &#63;.
+	 * Returns a range of all the layout branches where layoutSetBranchId = &#63; and plid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>.
@@ -617,9 +617,9 @@ public class LayoutBranchPersistenceImpl
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @param start the lower bound of the range of layout branchs
-	 * @param end the upper bound of the range of layout branchs (not inclusive)
-	 * @return the range of matching layout branchs
+	 * @param start the lower bound of the range of layout branches
+	 * @param end the upper bound of the range of layout branches (not inclusive)
+	 * @return the range of matching layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findByL_P(
@@ -629,7 +629,7 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the layout branchs where layoutSetBranchId = &#63; and plid = &#63;.
+	 * Returns an ordered range of all the layout branches where layoutSetBranchId = &#63; and plid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>.
@@ -637,10 +637,10 @@ public class LayoutBranchPersistenceImpl
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @param start the lower bound of the range of layout branchs
-	 * @param end the upper bound of the range of layout branchs (not inclusive)
+	 * @param start the lower bound of the range of layout branches
+	 * @param end the upper bound of the range of layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout branchs
+	 * @return the ordered range of matching layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findByL_P(
@@ -652,7 +652,7 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the layout branchs where layoutSetBranchId = &#63; and plid = &#63;.
+	 * Returns an ordered range of all the layout branches where layoutSetBranchId = &#63; and plid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>.
@@ -660,11 +660,11 @@ public class LayoutBranchPersistenceImpl
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @param start the lower bound of the range of layout branchs
-	 * @param end the upper bound of the range of layout branchs (not inclusive)
+	 * @param start the lower bound of the range of layout branches
+	 * @param end the upper bound of the range of layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching layout branchs
+	 * @return the ordered range of matching layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findByL_P(
@@ -901,7 +901,7 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the layout branchs before and after the current layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63;.
+	 * Returns the layout branches before and after the current layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63;.
 	 *
 	 * @param layoutBranchId the primary key of the current layout branch
 	 * @param layoutSetBranchId the layout set branch ID
@@ -1059,7 +1059,7 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the layout branchs where layoutSetBranchId = &#63; and plid = &#63; from the database.
+	 * Removes all the layout branches where layoutSetBranchId = &#63; and plid = &#63; from the database.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
@@ -1076,11 +1076,11 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of layout branchs where layoutSetBranchId = &#63; and plid = &#63;.
+	 * Returns the number of layout branches where layoutSetBranchId = &#63; and plid = &#63;.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @return the number of matching layout branchs
+	 * @return the number of matching layout branches
 	 */
 	@Override
 	public int countByL_P(long layoutSetBranchId, long plid) {
@@ -1333,12 +1333,12 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of layout branchs where layoutSetBranchId = &#63; and plid = &#63; and name = &#63;.
+	 * Returns the number of layout branches where layoutSetBranchId = &#63; and plid = &#63; and name = &#63;.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param name the name
-	 * @return the number of matching layout branchs
+	 * @return the number of matching layout branches
 	 */
 	@Override
 	public int countByL_P_N(long layoutSetBranchId, long plid, String name) {
@@ -1424,12 +1424,12 @@ public class LayoutBranchPersistenceImpl
 	private FinderPath _finderPathCountByL_P_M;
 
 	/**
-	 * Returns all the layout branchs where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
+	 * Returns all the layout branches where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param master the master
-	 * @return the matching layout branchs
+	 * @return the matching layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findByL_P_M(
@@ -1441,7 +1441,7 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the layout branchs where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
+	 * Returns a range of all the layout branches where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>.
@@ -1450,9 +1450,9 @@ public class LayoutBranchPersistenceImpl
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param master the master
-	 * @param start the lower bound of the range of layout branchs
-	 * @param end the upper bound of the range of layout branchs (not inclusive)
-	 * @return the range of matching layout branchs
+	 * @param start the lower bound of the range of layout branches
+	 * @param end the upper bound of the range of layout branches (not inclusive)
+	 * @return the range of matching layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findByL_P_M(
@@ -1462,7 +1462,7 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the layout branchs where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
+	 * Returns an ordered range of all the layout branches where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>.
@@ -1471,10 +1471,10 @@ public class LayoutBranchPersistenceImpl
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param master the master
-	 * @param start the lower bound of the range of layout branchs
-	 * @param end the upper bound of the range of layout branchs (not inclusive)
+	 * @param start the lower bound of the range of layout branches
+	 * @param end the upper bound of the range of layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout branchs
+	 * @return the ordered range of matching layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findByL_P_M(
@@ -1487,7 +1487,7 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the layout branchs where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
+	 * Returns an ordered range of all the layout branches where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>.
@@ -1496,11 +1496,11 @@ public class LayoutBranchPersistenceImpl
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param master the master
-	 * @param start the lower bound of the range of layout branchs
-	 * @param end the upper bound of the range of layout branchs (not inclusive)
+	 * @param start the lower bound of the range of layout branches
+	 * @param end the upper bound of the range of layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching layout branchs
+	 * @return the ordered range of matching layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findByL_P_M(
@@ -1753,7 +1753,7 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the layout branchs before and after the current layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
+	 * Returns the layout branches before and after the current layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
 	 *
 	 * @param layoutBranchId the primary key of the current layout branch
 	 * @param layoutSetBranchId the layout set branch ID
@@ -1916,7 +1916,7 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the layout branchs where layoutSetBranchId = &#63; and plid = &#63; and master = &#63; from the database.
+	 * Removes all the layout branches where layoutSetBranchId = &#63; and plid = &#63; and master = &#63; from the database.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
@@ -1936,12 +1936,12 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of layout branchs where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
+	 * Returns the number of layout branches where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param master the master
-	 * @return the number of matching layout branchs
+	 * @return the number of matching layout branches
 	 */
 	@Override
 	public int countByL_P_M(long layoutSetBranchId, long plid, boolean master) {
@@ -2037,13 +2037,13 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Caches the layout branchs in the entity cache if it is enabled.
+	 * Caches the layout branches in the entity cache if it is enabled.
 	 *
-	 * @param layoutBranchs the layout branchs
+	 * @param layoutBranches the layout branches
 	 */
 	@Override
-	public void cacheResult(List<LayoutBranch> layoutBranchs) {
-		for (LayoutBranch layoutBranch : layoutBranchs) {
+	public void cacheResult(List<LayoutBranch> layoutBranches) {
+		for (LayoutBranch layoutBranch : layoutBranches) {
 			if (EntityCacheUtil.getResult(
 					LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 					LayoutBranchImpl.class, layoutBranch.getPrimaryKey()) ==
@@ -2058,7 +2058,7 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all layout branchs.
+	 * Clears the cache for all layout branches.
 	 *
 	 * <p>
 	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
@@ -2093,11 +2093,11 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	@Override
-	public void clearCache(List<LayoutBranch> layoutBranchs) {
+	public void clearCache(List<LayoutBranch> layoutBranches) {
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		for (LayoutBranch layoutBranch : layoutBranchs) {
+		for (LayoutBranch layoutBranch : layoutBranches) {
 			EntityCacheUtil.removeResult(
 				LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 				LayoutBranchImpl.class, layoutBranch.getPrimaryKey());
@@ -2484,9 +2484,9 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout branchs.
+	 * Returns all the layout branches.
 	 *
-	 * @return the layout branchs
+	 * @return the layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findAll() {
@@ -2494,15 +2494,15 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the layout branchs.
+	 * Returns a range of all the layout branches.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of layout branchs
-	 * @param end the upper bound of the range of layout branchs (not inclusive)
-	 * @return the range of layout branchs
+	 * @param start the lower bound of the range of layout branches
+	 * @param end the upper bound of the range of layout branches (not inclusive)
+	 * @return the range of layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findAll(int start, int end) {
@@ -2510,16 +2510,16 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the layout branchs.
+	 * Returns an ordered range of all the layout branches.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of layout branchs
-	 * @param end the upper bound of the range of layout branchs (not inclusive)
+	 * @param start the lower bound of the range of layout branches
+	 * @param end the upper bound of the range of layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of layout branchs
+	 * @return the ordered range of layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findAll(
@@ -2529,17 +2529,17 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the layout branchs.
+	 * Returns an ordered range of all the layout branches.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of layout branchs
-	 * @param end the upper bound of the range of layout branchs (not inclusive)
+	 * @param start the lower bound of the range of layout branches
+	 * @param end the upper bound of the range of layout branches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of layout branchs
+	 * @return the ordered range of layout branches
 	 */
 	@Override
 	public List<LayoutBranch> findAll(
@@ -2622,7 +2622,7 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the layout branchs from the database.
+	 * Removes all the layout branches from the database.
 	 *
 	 */
 	@Override
@@ -2633,9 +2633,9 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of layout branchs.
+	 * Returns the number of layout branches.
 	 *
-	 * @return the number of layout branchs
+	 * @return the number of layout branches
 	 */
 	@Override
 	public int countAll() {

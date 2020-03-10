@@ -50,11 +50,11 @@ public class DispatchTriggerLocalServiceWrapper
 	public com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
 			long userId, String name, boolean system, String type,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsProperties)
+				typeSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dispatchTriggerLocalService.addDispatchTrigger(
-			userId, name, system, type, typeSettingsProperties);
+			userId, name, system, type, typeSettingsUnicodeProperties);
 	}
 
 	/**
@@ -370,11 +370,11 @@ public class DispatchTriggerLocalServiceWrapper
 	public com.liferay.dispatch.model.DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, String name,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsProperties)
+				typeSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dispatchTriggerLocalService.updateDispatchTrigger(
-			dispatchTriggerId, name, typeSettingsProperties);
+			dispatchTriggerId, name, typeSettingsUnicodeProperties);
 	}
 
 	@Override

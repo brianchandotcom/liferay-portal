@@ -34,13 +34,13 @@ public class RepositoryServiceWrapper
 			java.lang.String name, java.lang.String description,
 			java.lang.String portletId,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsProperties,
+				typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _repositoryService.addRepository(
 			groupId, classNameId, parentFolderId, name, description, portletId,
-			typeSettingsProperties, serviceContext);
+			typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Override

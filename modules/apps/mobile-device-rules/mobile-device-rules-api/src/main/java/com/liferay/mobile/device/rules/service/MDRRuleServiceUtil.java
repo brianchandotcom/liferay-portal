@@ -52,13 +52,14 @@ public class MDRRuleServiceUtil {
 	public static com.liferay.mobile.device.rules.model.MDRRule addRule(
 			long ruleGroupId, java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap, String type,
-			com.liferay.portal.kernel.util.UnicodeProperties typeSettings,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				typeSettingsUnicodeProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addRule(
-			ruleGroupId, nameMap, descriptionMap, type, typeSettings,
-			serviceContext);
+			ruleGroupId, nameMap, descriptionMap, type,
+			typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	public static void deleteRule(long ruleId)
@@ -106,13 +107,13 @@ public class MDRRuleServiceUtil {
 			long ruleId, java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap, String type,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsProperties,
+				typeSettingsUnicodeProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateRule(
-			ruleId, nameMap, descriptionMap, type, typeSettingsProperties,
-			serviceContext);
+			ruleId, nameMap, descriptionMap, type,
+			typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	public static MDRRuleService getService() {

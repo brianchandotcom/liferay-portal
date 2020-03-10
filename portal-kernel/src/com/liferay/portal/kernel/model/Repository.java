@@ -60,6 +60,6 @@ public interface Repository extends PersistedModel, RepositoryModel {
 
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			typeSettingsProperties);
+			typeSettingsUnicodeProperties);
 
 }

@@ -101,7 +101,7 @@ public class MDRActionServiceHttp {
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap, String type,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsProperties,
+				typeSettingsUnicodeProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -112,7 +112,7 @@ public class MDRActionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, ruleGroupInstanceId, nameMap, descriptionMap, type,
-				typeSettingsProperties, serviceContext);
+				typeSettingsUnicodeProperties, serviceContext);
 
 			Object returnObj = null;
 
@@ -307,7 +307,7 @@ public class MDRActionServiceHttp {
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap, String type,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsProperties,
+				typeSettingsUnicodeProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -318,7 +318,7 @@ public class MDRActionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, actionId, nameMap, descriptionMap, type,
-				typeSettingsProperties, serviceContext);
+				typeSettingsUnicodeProperties, serviceContext);
 
 			Object returnObj = null;
 

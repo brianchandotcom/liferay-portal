@@ -3623,14 +3623,14 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param latest the latest
 	 * @return the matching kb articles
 	 */
 	@Override
-	public List<KBArticle> findByR_L(long[] resourcePrimKeies, boolean latest) {
+	public List<KBArticle> findByR_L(long[] resourcePrimKeys, boolean latest) {
 		return findByR_L(
-			resourcePrimKeies, latest, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			resourcePrimKeys, latest, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
 
@@ -3641,7 +3641,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param latest the latest
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -3649,9 +3649,9 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_L(
-		long[] resourcePrimKeies, boolean latest, int start, int end) {
+		long[] resourcePrimKeys, boolean latest, int start, int end) {
 
-		return findByR_L(resourcePrimKeies, latest, start, end, null);
+		return findByR_L(resourcePrimKeys, latest, start, end, null);
 	}
 
 	/**
@@ -3661,7 +3661,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param latest the latest
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -3670,11 +3670,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_L(
-		long[] resourcePrimKeies, boolean latest, int start, int end,
+		long[] resourcePrimKeys, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return findByR_L(
-			resourcePrimKeies, latest, start, end, orderByComparator, true);
+			resourcePrimKeys, latest, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3694,20 +3694,20 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_L(
-		long[] resourcePrimKeies, boolean latest, int start, int end,
+		long[] resourcePrimKeys, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
 		boolean useFinderCache) {
 
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
-		if (resourcePrimKeies.length == 1) {
+		if (resourcePrimKeys.length == 1) {
 			return findByR_L(
-				resourcePrimKeies[0], latest, start, end, orderByComparator);
+				resourcePrimKeys[0], latest, start, end, orderByComparator);
 		}
 
 		Object[] finderArgs = null;
@@ -3717,13 +3717,13 @@ public class KBArticlePersistenceImpl
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
-					StringUtil.merge(resourcePrimKeies), latest
+					StringUtil.merge(resourcePrimKeys), latest
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderArgs = new Object[] {
-				StringUtil.merge(resourcePrimKeies), latest, start, end,
+				StringUtil.merge(resourcePrimKeys), latest, start, end,
 				orderByComparator
 			};
 		}
@@ -3737,8 +3737,7 @@ public class KBArticlePersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (KBArticle kbArticle : list) {
 					if (!ArrayUtil.contains(
-							resourcePrimKeies,
-							kbArticle.getResourcePrimKey()) ||
+							resourcePrimKeys, kbArticle.getResourcePrimKey()) ||
 						(latest != kbArticle.isLatest())) {
 
 						list = null;
@@ -3754,12 +3753,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_SELECT_KBARTICLE_WHERE);
 
-			if (resourcePrimKeies.length > 0) {
+			if (resourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_R_L_RESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(resourcePrimKeies));
+				sb.append(StringUtil.merge(resourcePrimKeys));
 
 				sb.append(")");
 
@@ -3896,21 +3895,21 @@ public class KBArticlePersistenceImpl
 	/**
 	 * Returns the number of kb articles where resourcePrimKey = any &#63; and latest = &#63;.
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param latest the latest
 	 * @return the number of matching kb articles
 	 */
 	@Override
-	public int countByR_L(long[] resourcePrimKeies, boolean latest) {
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+	public int countByR_L(long[] resourcePrimKeys, boolean latest) {
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
 		Object[] finderArgs = new Object[] {
-			StringUtil.merge(resourcePrimKeies), latest
+			StringUtil.merge(resourcePrimKeys), latest
 		};
 
 		Long count = (Long)finderCache.getResult(
@@ -3921,12 +3920,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_COUNT_KBARTICLE_WHERE);
 
-			if (resourcePrimKeies.length > 0) {
+			if (resourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_R_L_RESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(resourcePrimKeies));
+				sb.append(StringUtil.merge(resourcePrimKeys));
 
 				sb.append(")");
 
@@ -4455,15 +4454,14 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param main the main
 	 * @return the matching kb articles
 	 */
 	@Override
-	public List<KBArticle> findByR_M(long[] resourcePrimKeies, boolean main) {
+	public List<KBArticle> findByR_M(long[] resourcePrimKeys, boolean main) {
 		return findByR_M(
-			resourcePrimKeies, main, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+			resourcePrimKeys, main, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -4473,7 +4471,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param main the main
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -4481,9 +4479,9 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_M(
-		long[] resourcePrimKeies, boolean main, int start, int end) {
+		long[] resourcePrimKeys, boolean main, int start, int end) {
 
-		return findByR_M(resourcePrimKeies, main, start, end, null);
+		return findByR_M(resourcePrimKeys, main, start, end, null);
 	}
 
 	/**
@@ -4493,7 +4491,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param main the main
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -4502,11 +4500,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_M(
-		long[] resourcePrimKeies, boolean main, int start, int end,
+		long[] resourcePrimKeys, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return findByR_M(
-			resourcePrimKeies, main, start, end, orderByComparator, true);
+			resourcePrimKeys, main, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -4526,20 +4524,20 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_M(
-		long[] resourcePrimKeies, boolean main, int start, int end,
+		long[] resourcePrimKeys, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
 		boolean useFinderCache) {
 
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
-		if (resourcePrimKeies.length == 1) {
+		if (resourcePrimKeys.length == 1) {
 			return findByR_M(
-				resourcePrimKeies[0], main, start, end, orderByComparator);
+				resourcePrimKeys[0], main, start, end, orderByComparator);
 		}
 
 		Object[] finderArgs = null;
@@ -4549,13 +4547,13 @@ public class KBArticlePersistenceImpl
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
-					StringUtil.merge(resourcePrimKeies), main
+					StringUtil.merge(resourcePrimKeys), main
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderArgs = new Object[] {
-				StringUtil.merge(resourcePrimKeies), main, start, end,
+				StringUtil.merge(resourcePrimKeys), main, start, end,
 				orderByComparator
 			};
 		}
@@ -4569,8 +4567,7 @@ public class KBArticlePersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (KBArticle kbArticle : list) {
 					if (!ArrayUtil.contains(
-							resourcePrimKeies,
-							kbArticle.getResourcePrimKey()) ||
+							resourcePrimKeys, kbArticle.getResourcePrimKey()) ||
 						(main != kbArticle.isMain())) {
 
 						list = null;
@@ -4586,12 +4583,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_SELECT_KBARTICLE_WHERE);
 
-			if (resourcePrimKeies.length > 0) {
+			if (resourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_R_M_RESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(resourcePrimKeies));
+				sb.append(StringUtil.merge(resourcePrimKeys));
 
 				sb.append(")");
 
@@ -4728,21 +4725,21 @@ public class KBArticlePersistenceImpl
 	/**
 	 * Returns the number of kb articles where resourcePrimKey = any &#63; and main = &#63;.
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param main the main
 	 * @return the number of matching kb articles
 	 */
 	@Override
-	public int countByR_M(long[] resourcePrimKeies, boolean main) {
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+	public int countByR_M(long[] resourcePrimKeys, boolean main) {
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
 		Object[] finderArgs = new Object[] {
-			StringUtil.merge(resourcePrimKeies), main
+			StringUtil.merge(resourcePrimKeys), main
 		};
 
 		Long count = (Long)finderCache.getResult(
@@ -4753,12 +4750,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_COUNT_KBARTICLE_WHERE);
 
-			if (resourcePrimKeies.length > 0) {
+			if (resourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_R_M_RESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(resourcePrimKeies));
+				sb.append(StringUtil.merge(resourcePrimKeys));
 
 				sb.append(")");
 
@@ -5287,14 +5284,14 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param status the status
 	 * @return the matching kb articles
 	 */
 	@Override
-	public List<KBArticle> findByR_S(long[] resourcePrimKeies, int status) {
+	public List<KBArticle> findByR_S(long[] resourcePrimKeys, int status) {
 		return findByR_S(
-			resourcePrimKeies, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			resourcePrimKeys, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
 
@@ -5305,7 +5302,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -5313,9 +5310,9 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_S(
-		long[] resourcePrimKeies, int status, int start, int end) {
+		long[] resourcePrimKeys, int status, int start, int end) {
 
-		return findByR_S(resourcePrimKeies, status, start, end, null);
+		return findByR_S(resourcePrimKeys, status, start, end, null);
 	}
 
 	/**
@@ -5325,7 +5322,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -5334,11 +5331,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_S(
-		long[] resourcePrimKeies, int status, int start, int end,
+		long[] resourcePrimKeys, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return findByR_S(
-			resourcePrimKeies, status, start, end, orderByComparator, true);
+			resourcePrimKeys, status, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -5358,20 +5355,20 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_S(
-		long[] resourcePrimKeies, int status, int start, int end,
+		long[] resourcePrimKeys, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
 		boolean useFinderCache) {
 
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
-		if (resourcePrimKeies.length == 1) {
+		if (resourcePrimKeys.length == 1) {
 			return findByR_S(
-				resourcePrimKeies[0], status, start, end, orderByComparator);
+				resourcePrimKeys[0], status, start, end, orderByComparator);
 		}
 
 		Object[] finderArgs = null;
@@ -5381,13 +5378,13 @@ public class KBArticlePersistenceImpl
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
-					StringUtil.merge(resourcePrimKeies), status
+					StringUtil.merge(resourcePrimKeys), status
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderArgs = new Object[] {
-				StringUtil.merge(resourcePrimKeies), status, start, end,
+				StringUtil.merge(resourcePrimKeys), status, start, end,
 				orderByComparator
 			};
 		}
@@ -5401,8 +5398,7 @@ public class KBArticlePersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (KBArticle kbArticle : list) {
 					if (!ArrayUtil.contains(
-							resourcePrimKeies,
-							kbArticle.getResourcePrimKey()) ||
+							resourcePrimKeys, kbArticle.getResourcePrimKey()) ||
 						(status != kbArticle.getStatus())) {
 
 						list = null;
@@ -5418,12 +5414,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_SELECT_KBARTICLE_WHERE);
 
-			if (resourcePrimKeies.length > 0) {
+			if (resourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_R_S_RESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(resourcePrimKeies));
+				sb.append(StringUtil.merge(resourcePrimKeys));
 
 				sb.append(")");
 
@@ -5560,21 +5556,21 @@ public class KBArticlePersistenceImpl
 	/**
 	 * Returns the number of kb articles where resourcePrimKey = any &#63; and status = &#63;.
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param status the status
 	 * @return the number of matching kb articles
 	 */
 	@Override
-	public int countByR_S(long[] resourcePrimKeies, int status) {
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+	public int countByR_S(long[] resourcePrimKeys, int status) {
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
 		Object[] finderArgs = new Object[] {
-			StringUtil.merge(resourcePrimKeies), status
+			StringUtil.merge(resourcePrimKeys), status
 		};
 
 		Long count = (Long)finderCache.getResult(
@@ -5585,12 +5581,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_COUNT_KBARTICLE_WHERE);
 
-			if (resourcePrimKeies.length > 0) {
+			if (resourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_R_S_RESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(resourcePrimKeies));
+				sb.append(StringUtil.merge(resourcePrimKeys));
 
 				sb.append(")");
 
@@ -10539,16 +10535,16 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @return the matching kb articles
 	 */
 	@Override
 	public List<KBArticle> findByP_L(
-		long[] parentResourcePrimKeies, boolean latest) {
+		long[] parentResourcePrimKeys, boolean latest) {
 
 		return findByP_L(
-			parentResourcePrimKeies, latest, QueryUtil.ALL_POS,
+			parentResourcePrimKeys, latest, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -10559,7 +10555,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -10567,9 +10563,9 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByP_L(
-		long[] parentResourcePrimKeies, boolean latest, int start, int end) {
+		long[] parentResourcePrimKeys, boolean latest, int start, int end) {
 
-		return findByP_L(parentResourcePrimKeies, latest, start, end, null);
+		return findByP_L(parentResourcePrimKeys, latest, start, end, null);
 	}
 
 	/**
@@ -10579,7 +10575,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -10588,11 +10584,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByP_L(
-		long[] parentResourcePrimKeies, boolean latest, int start, int end,
+		long[] parentResourcePrimKeys, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return findByP_L(
-			parentResourcePrimKeies, latest, start, end, orderByComparator,
+			parentResourcePrimKeys, latest, start, end, orderByComparator,
 			true);
 	}
 
@@ -10613,21 +10609,21 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByP_L(
-		long[] parentResourcePrimKeies, boolean latest, int start, int end,
+		long[] parentResourcePrimKeys, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
 		boolean useFinderCache) {
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
-		if (parentResourcePrimKeies.length == 1) {
+		if (parentResourcePrimKeys.length == 1) {
 			return findByP_L(
-				parentResourcePrimKeies[0], latest, start, end,
+				parentResourcePrimKeys[0], latest, start, end,
 				orderByComparator);
 		}
 
@@ -10638,13 +10634,13 @@ public class KBArticlePersistenceImpl
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
-					StringUtil.merge(parentResourcePrimKeies), latest
+					StringUtil.merge(parentResourcePrimKeys), latest
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderArgs = new Object[] {
-				StringUtil.merge(parentResourcePrimKeies), latest, start, end,
+				StringUtil.merge(parentResourcePrimKeys), latest, start, end,
 				orderByComparator
 			};
 		}
@@ -10658,7 +10654,7 @@ public class KBArticlePersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (KBArticle kbArticle : list) {
 					if (!ArrayUtil.contains(
-							parentResourcePrimKeies,
+							parentResourcePrimKeys,
 							kbArticle.getParentResourcePrimKey()) ||
 						(latest != kbArticle.isLatest())) {
 
@@ -10675,12 +10671,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_SELECT_KBARTICLE_WHERE);
 
-			if (parentResourcePrimKeies.length > 0) {
+			if (parentResourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_P_L_PARENTRESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(parentResourcePrimKeies));
+				sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 				sb.append(")");
 
@@ -10817,22 +10813,22 @@ public class KBArticlePersistenceImpl
 	/**
 	 * Returns the number of kb articles where parentResourcePrimKey = any &#63; and latest = &#63;.
 	 *
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @return the number of matching kb articles
 	 */
 	@Override
-	public int countByP_L(long[] parentResourcePrimKeies, boolean latest) {
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+	public int countByP_L(long[] parentResourcePrimKeys, boolean latest) {
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
 		Object[] finderArgs = new Object[] {
-			StringUtil.merge(parentResourcePrimKeies), latest
+			StringUtil.merge(parentResourcePrimKeys), latest
 		};
 
 		Long count = (Long)finderCache.getResult(
@@ -10843,12 +10839,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_COUNT_KBARTICLE_WHERE);
 
-			if (parentResourcePrimKeies.length > 0) {
+			if (parentResourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_P_L_PARENTRESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(parentResourcePrimKeies));
+				sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 				sb.append(")");
 
@@ -11379,16 +11375,16 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param main the main
 	 * @return the matching kb articles
 	 */
 	@Override
 	public List<KBArticle> findByP_M(
-		long[] parentResourcePrimKeies, boolean main) {
+		long[] parentResourcePrimKeys, boolean main) {
 
 		return findByP_M(
-			parentResourcePrimKeies, main, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			parentResourcePrimKeys, main, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
 
@@ -11399,7 +11395,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param main the main
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -11407,9 +11403,9 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByP_M(
-		long[] parentResourcePrimKeies, boolean main, int start, int end) {
+		long[] parentResourcePrimKeys, boolean main, int start, int end) {
 
-		return findByP_M(parentResourcePrimKeies, main, start, end, null);
+		return findByP_M(parentResourcePrimKeys, main, start, end, null);
 	}
 
 	/**
@@ -11419,7 +11415,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param main the main
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -11428,11 +11424,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByP_M(
-		long[] parentResourcePrimKeies, boolean main, int start, int end,
+		long[] parentResourcePrimKeys, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return findByP_M(
-			parentResourcePrimKeies, main, start, end, orderByComparator, true);
+			parentResourcePrimKeys, main, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -11452,22 +11448,21 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByP_M(
-		long[] parentResourcePrimKeies, boolean main, int start, int end,
+		long[] parentResourcePrimKeys, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
 		boolean useFinderCache) {
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
-		if (parentResourcePrimKeies.length == 1) {
+		if (parentResourcePrimKeys.length == 1) {
 			return findByP_M(
-				parentResourcePrimKeies[0], main, start, end,
-				orderByComparator);
+				parentResourcePrimKeys[0], main, start, end, orderByComparator);
 		}
 
 		Object[] finderArgs = null;
@@ -11477,13 +11472,13 @@ public class KBArticlePersistenceImpl
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
-					StringUtil.merge(parentResourcePrimKeies), main
+					StringUtil.merge(parentResourcePrimKeys), main
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderArgs = new Object[] {
-				StringUtil.merge(parentResourcePrimKeies), main, start, end,
+				StringUtil.merge(parentResourcePrimKeys), main, start, end,
 				orderByComparator
 			};
 		}
@@ -11497,7 +11492,7 @@ public class KBArticlePersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (KBArticle kbArticle : list) {
 					if (!ArrayUtil.contains(
-							parentResourcePrimKeies,
+							parentResourcePrimKeys,
 							kbArticle.getParentResourcePrimKey()) ||
 						(main != kbArticle.isMain())) {
 
@@ -11514,12 +11509,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_SELECT_KBARTICLE_WHERE);
 
-			if (parentResourcePrimKeies.length > 0) {
+			if (parentResourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_P_M_PARENTRESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(parentResourcePrimKeies));
+				sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 				sb.append(")");
 
@@ -11656,22 +11651,22 @@ public class KBArticlePersistenceImpl
 	/**
 	 * Returns the number of kb articles where parentResourcePrimKey = any &#63; and main = &#63;.
 	 *
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param main the main
 	 * @return the number of matching kb articles
 	 */
 	@Override
-	public int countByP_M(long[] parentResourcePrimKeies, boolean main) {
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+	public int countByP_M(long[] parentResourcePrimKeys, boolean main) {
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
 		Object[] finderArgs = new Object[] {
-			StringUtil.merge(parentResourcePrimKeies), main
+			StringUtil.merge(parentResourcePrimKeys), main
 		};
 
 		Long count = (Long)finderCache.getResult(
@@ -11682,12 +11677,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_COUNT_KBARTICLE_WHERE);
 
-			if (parentResourcePrimKeies.length > 0) {
+			if (parentResourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_P_M_PARENTRESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(parentResourcePrimKeies));
+				sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 				sb.append(")");
 
@@ -12218,16 +12213,16 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param status the status
 	 * @return the matching kb articles
 	 */
 	@Override
 	public List<KBArticle> findByP_S(
-		long[] parentResourcePrimKeies, int status) {
+		long[] parentResourcePrimKeys, int status) {
 
 		return findByP_S(
-			parentResourcePrimKeies, status, QueryUtil.ALL_POS,
+			parentResourcePrimKeys, status, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -12238,7 +12233,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -12246,9 +12241,9 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByP_S(
-		long[] parentResourcePrimKeies, int status, int start, int end) {
+		long[] parentResourcePrimKeys, int status, int start, int end) {
 
-		return findByP_S(parentResourcePrimKeies, status, start, end, null);
+		return findByP_S(parentResourcePrimKeys, status, start, end, null);
 	}
 
 	/**
@@ -12258,7 +12253,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -12267,11 +12262,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByP_S(
-		long[] parentResourcePrimKeies, int status, int start, int end,
+		long[] parentResourcePrimKeys, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return findByP_S(
-			parentResourcePrimKeies, status, start, end, orderByComparator,
+			parentResourcePrimKeys, status, start, end, orderByComparator,
 			true);
 	}
 
@@ -12292,21 +12287,21 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByP_S(
-		long[] parentResourcePrimKeies, int status, int start, int end,
+		long[] parentResourcePrimKeys, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
 		boolean useFinderCache) {
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
-		if (parentResourcePrimKeies.length == 1) {
+		if (parentResourcePrimKeys.length == 1) {
 			return findByP_S(
-				parentResourcePrimKeies[0], status, start, end,
+				parentResourcePrimKeys[0], status, start, end,
 				orderByComparator);
 		}
 
@@ -12317,13 +12312,13 @@ public class KBArticlePersistenceImpl
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
-					StringUtil.merge(parentResourcePrimKeies), status
+					StringUtil.merge(parentResourcePrimKeys), status
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderArgs = new Object[] {
-				StringUtil.merge(parentResourcePrimKeies), status, start, end,
+				StringUtil.merge(parentResourcePrimKeys), status, start, end,
 				orderByComparator
 			};
 		}
@@ -12337,7 +12332,7 @@ public class KBArticlePersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (KBArticle kbArticle : list) {
 					if (!ArrayUtil.contains(
-							parentResourcePrimKeies,
+							parentResourcePrimKeys,
 							kbArticle.getParentResourcePrimKey()) ||
 						(status != kbArticle.getStatus())) {
 
@@ -12354,12 +12349,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_SELECT_KBARTICLE_WHERE);
 
-			if (parentResourcePrimKeies.length > 0) {
+			if (parentResourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_P_S_PARENTRESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(parentResourcePrimKeies));
+				sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 				sb.append(")");
 
@@ -12496,22 +12491,22 @@ public class KBArticlePersistenceImpl
 	/**
 	 * Returns the number of kb articles where parentResourcePrimKey = any &#63; and status = &#63;.
 	 *
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param status the status
 	 * @return the number of matching kb articles
 	 */
 	@Override
-	public int countByP_S(long[] parentResourcePrimKeies, int status) {
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+	public int countByP_S(long[] parentResourcePrimKeys, int status) {
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
 		Object[] finderArgs = new Object[] {
-			StringUtil.merge(parentResourcePrimKeies), status
+			StringUtil.merge(parentResourcePrimKeys), status
 		};
 
 		Long count = (Long)finderCache.getResult(
@@ -12522,12 +12517,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_COUNT_KBARTICLE_WHERE);
 
-			if (parentResourcePrimKeies.length > 0) {
+			if (parentResourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_P_S_PARENTRESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(parentResourcePrimKeies));
+				sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 				sb.append(")");
 
@@ -13692,17 +13687,17 @@ public class KBArticlePersistenceImpl
 	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param latest the latest
 	 * @return the matching kb articles that the user has permission to view
 	 */
 	@Override
 	public List<KBArticle> filterFindByR_G_L(
-		long[] resourcePrimKeies, long groupId, boolean latest) {
+		long[] resourcePrimKeys, long groupId, boolean latest) {
 
 		return filterFindByR_G_L(
-			resourcePrimKeies, groupId, latest, QueryUtil.ALL_POS,
+			resourcePrimKeys, groupId, latest, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -13713,7 +13708,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param latest the latest
 	 * @param start the lower bound of the range of kb articles
@@ -13722,11 +13717,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> filterFindByR_G_L(
-		long[] resourcePrimKeies, long groupId, boolean latest, int start,
+		long[] resourcePrimKeys, long groupId, boolean latest, int start,
 		int end) {
 
 		return filterFindByR_G_L(
-			resourcePrimKeies, groupId, latest, start, end, null);
+			resourcePrimKeys, groupId, latest, start, end, null);
 	}
 
 	/**
@@ -13736,7 +13731,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param latest the latest
 	 * @param start the lower bound of the range of kb articles
@@ -13746,20 +13741,20 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> filterFindByR_G_L(
-		long[] resourcePrimKeies, long groupId, boolean latest, int start,
+		long[] resourcePrimKeys, long groupId, boolean latest, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByR_G_L(
-				resourcePrimKeies, groupId, latest, start, end,
+				resourcePrimKeys, groupId, latest, start, end,
 				orderByComparator);
 		}
 
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
 		StringBundler sb = new StringBundler();
@@ -13771,12 +13766,12 @@ public class KBArticlePersistenceImpl
 			sb.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		if (resourcePrimKeies.length > 0) {
+		if (resourcePrimKeys.length > 0) {
 			sb.append("(");
 
 			sb.append(_FINDER_COLUMN_R_G_L_RESOURCEPRIMKEY_7);
 
-			sb.append(StringUtil.merge(resourcePrimKeies));
+			sb.append(StringUtil.merge(resourcePrimKeys));
 
 			sb.append(")");
 
@@ -13857,17 +13852,17 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param latest the latest
 	 * @return the matching kb articles
 	 */
 	@Override
 	public List<KBArticle> findByR_G_L(
-		long[] resourcePrimKeies, long groupId, boolean latest) {
+		long[] resourcePrimKeys, long groupId, boolean latest) {
 
 		return findByR_G_L(
-			resourcePrimKeies, groupId, latest, QueryUtil.ALL_POS,
+			resourcePrimKeys, groupId, latest, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -13878,7 +13873,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param latest the latest
 	 * @param start the lower bound of the range of kb articles
@@ -13887,11 +13882,10 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_G_L(
-		long[] resourcePrimKeies, long groupId, boolean latest, int start,
+		long[] resourcePrimKeys, long groupId, boolean latest, int start,
 		int end) {
 
-		return findByR_G_L(
-			resourcePrimKeies, groupId, latest, start, end, null);
+		return findByR_G_L(resourcePrimKeys, groupId, latest, start, end, null);
 	}
 
 	/**
@@ -13901,7 +13895,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param latest the latest
 	 * @param start the lower bound of the range of kb articles
@@ -13911,11 +13905,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_G_L(
-		long[] resourcePrimKeies, long groupId, boolean latest, int start,
+		long[] resourcePrimKeys, long groupId, boolean latest, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return findByR_G_L(
-			resourcePrimKeies, groupId, latest, start, end, orderByComparator,
+			resourcePrimKeys, groupId, latest, start, end, orderByComparator,
 			true);
 	}
 
@@ -13937,20 +13931,20 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_G_L(
-		long[] resourcePrimKeies, long groupId, boolean latest, int start,
+		long[] resourcePrimKeys, long groupId, boolean latest, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator,
 		boolean useFinderCache) {
 
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
-		if (resourcePrimKeies.length == 1) {
+		if (resourcePrimKeys.length == 1) {
 			return findByR_G_L(
-				resourcePrimKeies[0], groupId, latest, start, end,
+				resourcePrimKeys[0], groupId, latest, start, end,
 				orderByComparator);
 		}
 
@@ -13961,14 +13955,14 @@ public class KBArticlePersistenceImpl
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
-					StringUtil.merge(resourcePrimKeies), groupId, latest
+					StringUtil.merge(resourcePrimKeys), groupId, latest
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderArgs = new Object[] {
-				StringUtil.merge(resourcePrimKeies), groupId, latest, start,
-				end, orderByComparator
+				StringUtil.merge(resourcePrimKeys), groupId, latest, start, end,
+				orderByComparator
 			};
 		}
 
@@ -13981,8 +13975,7 @@ public class KBArticlePersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (KBArticle kbArticle : list) {
 					if (!ArrayUtil.contains(
-							resourcePrimKeies,
-							kbArticle.getResourcePrimKey()) ||
+							resourcePrimKeys, kbArticle.getResourcePrimKey()) ||
 						(groupId != kbArticle.getGroupId()) ||
 						(latest != kbArticle.isLatest())) {
 
@@ -13999,12 +13992,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_SELECT_KBARTICLE_WHERE);
 
-			if (resourcePrimKeies.length > 0) {
+			if (resourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_R_G_L_RESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(resourcePrimKeies));
+				sb.append(StringUtil.merge(resourcePrimKeys));
 
 				sb.append(")");
 
@@ -14155,24 +14148,24 @@ public class KBArticlePersistenceImpl
 	/**
 	 * Returns the number of kb articles where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param latest the latest
 	 * @return the number of matching kb articles
 	 */
 	@Override
 	public int countByR_G_L(
-		long[] resourcePrimKeies, long groupId, boolean latest) {
+		long[] resourcePrimKeys, long groupId, boolean latest) {
 
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
 		Object[] finderArgs = new Object[] {
-			StringUtil.merge(resourcePrimKeies), groupId, latest
+			StringUtil.merge(resourcePrimKeys), groupId, latest
 		};
 
 		Long count = (Long)finderCache.getResult(
@@ -14183,12 +14176,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_COUNT_KBARTICLE_WHERE);
 
-			if (resourcePrimKeies.length > 0) {
+			if (resourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_R_G_L_RESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(resourcePrimKeies));
+				sb.append(StringUtil.merge(resourcePrimKeys));
 
 				sb.append(")");
 
@@ -14301,36 +14294,36 @@ public class KBArticlePersistenceImpl
 	/**
 	 * Returns the number of kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param latest the latest
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
 	@Override
 	public int filterCountByR_G_L(
-		long[] resourcePrimKeies, long groupId, boolean latest) {
+		long[] resourcePrimKeys, long groupId, boolean latest) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByR_G_L(resourcePrimKeies, groupId, latest);
+			return countByR_G_L(resourcePrimKeys, groupId, latest);
 		}
 
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
 		StringBundler sb = new StringBundler();
 
 		sb.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
 
-		if (resourcePrimKeies.length > 0) {
+		if (resourcePrimKeys.length > 0) {
 			sb.append("(");
 
 			sb.append(_FINDER_COLUMN_R_G_L_RESOURCEPRIMKEY_7);
 
-			sb.append(StringUtil.merge(resourcePrimKeies));
+			sb.append(StringUtil.merge(resourcePrimKeys));
 
 			sb.append(")");
 
@@ -15245,17 +15238,17 @@ public class KBArticlePersistenceImpl
 	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param main the main
 	 * @return the matching kb articles that the user has permission to view
 	 */
 	@Override
 	public List<KBArticle> filterFindByR_G_M(
-		long[] resourcePrimKeies, long groupId, boolean main) {
+		long[] resourcePrimKeys, long groupId, boolean main) {
 
 		return filterFindByR_G_M(
-			resourcePrimKeies, groupId, main, QueryUtil.ALL_POS,
+			resourcePrimKeys, groupId, main, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -15266,7 +15259,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param main the main
 	 * @param start the lower bound of the range of kb articles
@@ -15275,11 +15268,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> filterFindByR_G_M(
-		long[] resourcePrimKeies, long groupId, boolean main, int start,
+		long[] resourcePrimKeys, long groupId, boolean main, int start,
 		int end) {
 
 		return filterFindByR_G_M(
-			resourcePrimKeies, groupId, main, start, end, null);
+			resourcePrimKeys, groupId, main, start, end, null);
 	}
 
 	/**
@@ -15289,7 +15282,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param main the main
 	 * @param start the lower bound of the range of kb articles
@@ -15299,20 +15292,19 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> filterFindByR_G_M(
-		long[] resourcePrimKeies, long groupId, boolean main, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator) {
+		long[] resourcePrimKeys, long groupId, boolean main, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByR_G_M(
-				resourcePrimKeies, groupId, main, start, end,
-				orderByComparator);
+				resourcePrimKeys, groupId, main, start, end, orderByComparator);
 		}
 
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
 		StringBundler sb = new StringBundler();
@@ -15324,12 +15316,12 @@ public class KBArticlePersistenceImpl
 			sb.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		if (resourcePrimKeies.length > 0) {
+		if (resourcePrimKeys.length > 0) {
 			sb.append("(");
 
 			sb.append(_FINDER_COLUMN_R_G_M_RESOURCEPRIMKEY_7);
 
-			sb.append(StringUtil.merge(resourcePrimKeies));
+			sb.append(StringUtil.merge(resourcePrimKeys));
 
 			sb.append(")");
 
@@ -15410,17 +15402,17 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param main the main
 	 * @return the matching kb articles
 	 */
 	@Override
 	public List<KBArticle> findByR_G_M(
-		long[] resourcePrimKeies, long groupId, boolean main) {
+		long[] resourcePrimKeys, long groupId, boolean main) {
 
 		return findByR_G_M(
-			resourcePrimKeies, groupId, main, QueryUtil.ALL_POS,
+			resourcePrimKeys, groupId, main, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -15431,7 +15423,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param main the main
 	 * @param start the lower bound of the range of kb articles
@@ -15440,10 +15432,10 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_G_M(
-		long[] resourcePrimKeies, long groupId, boolean main, int start,
+		long[] resourcePrimKeys, long groupId, boolean main, int start,
 		int end) {
 
-		return findByR_G_M(resourcePrimKeies, groupId, main, start, end, null);
+		return findByR_G_M(resourcePrimKeys, groupId, main, start, end, null);
 	}
 
 	/**
@@ -15453,7 +15445,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param main the main
 	 * @param start the lower bound of the range of kb articles
@@ -15463,11 +15455,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_G_M(
-		long[] resourcePrimKeies, long groupId, boolean main, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator) {
+		long[] resourcePrimKeys, long groupId, boolean main, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
 
 		return findByR_G_M(
-			resourcePrimKeies, groupId, main, start, end, orderByComparator,
+			resourcePrimKeys, groupId, main, start, end, orderByComparator,
 			true);
 	}
 
@@ -15489,20 +15481,20 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_G_M(
-		long[] resourcePrimKeies, long groupId, boolean main, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator,
+		long[] resourcePrimKeys, long groupId, boolean main, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator,
 		boolean useFinderCache) {
 
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
-		if (resourcePrimKeies.length == 1) {
+		if (resourcePrimKeys.length == 1) {
 			return findByR_G_M(
-				resourcePrimKeies[0], groupId, main, start, end,
+				resourcePrimKeys[0], groupId, main, start, end,
 				orderByComparator);
 		}
 
@@ -15513,13 +15505,13 @@ public class KBArticlePersistenceImpl
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
-					StringUtil.merge(resourcePrimKeies), groupId, main
+					StringUtil.merge(resourcePrimKeys), groupId, main
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderArgs = new Object[] {
-				StringUtil.merge(resourcePrimKeies), groupId, main, start, end,
+				StringUtil.merge(resourcePrimKeys), groupId, main, start, end,
 				orderByComparator
 			};
 		}
@@ -15533,8 +15525,7 @@ public class KBArticlePersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (KBArticle kbArticle : list) {
 					if (!ArrayUtil.contains(
-							resourcePrimKeies,
-							kbArticle.getResourcePrimKey()) ||
+							resourcePrimKeys, kbArticle.getResourcePrimKey()) ||
 						(groupId != kbArticle.getGroupId()) ||
 						(main != kbArticle.isMain())) {
 
@@ -15551,12 +15542,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_SELECT_KBARTICLE_WHERE);
 
-			if (resourcePrimKeies.length > 0) {
+			if (resourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_R_G_M_RESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(resourcePrimKeies));
+				sb.append(StringUtil.merge(resourcePrimKeys));
 
 				sb.append(")");
 
@@ -15705,24 +15696,24 @@ public class KBArticlePersistenceImpl
 	/**
 	 * Returns the number of kb articles where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param main the main
 	 * @return the number of matching kb articles
 	 */
 	@Override
 	public int countByR_G_M(
-		long[] resourcePrimKeies, long groupId, boolean main) {
+		long[] resourcePrimKeys, long groupId, boolean main) {
 
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
 		Object[] finderArgs = new Object[] {
-			StringUtil.merge(resourcePrimKeies), groupId, main
+			StringUtil.merge(resourcePrimKeys), groupId, main
 		};
 
 		Long count = (Long)finderCache.getResult(
@@ -15733,12 +15724,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_COUNT_KBARTICLE_WHERE);
 
-			if (resourcePrimKeies.length > 0) {
+			if (resourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_R_G_M_RESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(resourcePrimKeies));
+				sb.append(StringUtil.merge(resourcePrimKeys));
 
 				sb.append(")");
 
@@ -15851,36 +15842,36 @@ public class KBArticlePersistenceImpl
 	/**
 	 * Returns the number of kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param main the main
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
 	@Override
 	public int filterCountByR_G_M(
-		long[] resourcePrimKeies, long groupId, boolean main) {
+		long[] resourcePrimKeys, long groupId, boolean main) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByR_G_M(resourcePrimKeies, groupId, main);
+			return countByR_G_M(resourcePrimKeys, groupId, main);
 		}
 
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
 		StringBundler sb = new StringBundler();
 
 		sb.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
 
-		if (resourcePrimKeies.length > 0) {
+		if (resourcePrimKeys.length > 0) {
 			sb.append("(");
 
 			sb.append(_FINDER_COLUMN_R_G_M_RESOURCEPRIMKEY_7);
 
-			sb.append(StringUtil.merge(resourcePrimKeies));
+			sb.append(StringUtil.merge(resourcePrimKeys));
 
 			sb.append(")");
 
@@ -16797,17 +16788,17 @@ public class KBArticlePersistenceImpl
 	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param status the status
 	 * @return the matching kb articles that the user has permission to view
 	 */
 	@Override
 	public List<KBArticle> filterFindByR_G_S(
-		long[] resourcePrimKeies, long groupId, int status) {
+		long[] resourcePrimKeys, long groupId, int status) {
 
 		return filterFindByR_G_S(
-			resourcePrimKeies, groupId, status, QueryUtil.ALL_POS,
+			resourcePrimKeys, groupId, status, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -16818,7 +16809,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
@@ -16827,11 +16818,10 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> filterFindByR_G_S(
-		long[] resourcePrimKeies, long groupId, int status, int start,
-		int end) {
+		long[] resourcePrimKeys, long groupId, int status, int start, int end) {
 
 		return filterFindByR_G_S(
-			resourcePrimKeies, groupId, status, start, end, null);
+			resourcePrimKeys, groupId, status, start, end, null);
 	}
 
 	/**
@@ -16841,7 +16831,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
@@ -16851,20 +16841,20 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> filterFindByR_G_S(
-		long[] resourcePrimKeies, long groupId, int status, int start, int end,
+		long[] resourcePrimKeys, long groupId, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByR_G_S(
-				resourcePrimKeies, groupId, status, start, end,
+				resourcePrimKeys, groupId, status, start, end,
 				orderByComparator);
 		}
 
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
 		StringBundler sb = new StringBundler();
@@ -16876,12 +16866,12 @@ public class KBArticlePersistenceImpl
 			sb.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		if (resourcePrimKeies.length > 0) {
+		if (resourcePrimKeys.length > 0) {
 			sb.append("(");
 
 			sb.append(_FINDER_COLUMN_R_G_S_RESOURCEPRIMKEY_7);
 
-			sb.append(StringUtil.merge(resourcePrimKeies));
+			sb.append(StringUtil.merge(resourcePrimKeys));
 
 			sb.append(")");
 
@@ -16962,17 +16952,17 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param status the status
 	 * @return the matching kb articles
 	 */
 	@Override
 	public List<KBArticle> findByR_G_S(
-		long[] resourcePrimKeies, long groupId, int status) {
+		long[] resourcePrimKeys, long groupId, int status) {
 
 		return findByR_G_S(
-			resourcePrimKeies, groupId, status, QueryUtil.ALL_POS,
+			resourcePrimKeys, groupId, status, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -16983,7 +16973,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
@@ -16992,11 +16982,9 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_G_S(
-		long[] resourcePrimKeies, long groupId, int status, int start,
-		int end) {
+		long[] resourcePrimKeys, long groupId, int status, int start, int end) {
 
-		return findByR_G_S(
-			resourcePrimKeies, groupId, status, start, end, null);
+		return findByR_G_S(resourcePrimKeys, groupId, status, start, end, null);
 	}
 
 	/**
@@ -17006,7 +16994,7 @@ public class KBArticlePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
@@ -17016,11 +17004,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_G_S(
-		long[] resourcePrimKeies, long groupId, int status, int start, int end,
+		long[] resourcePrimKeys, long groupId, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return findByR_G_S(
-			resourcePrimKeies, groupId, status, start, end, orderByComparator,
+			resourcePrimKeys, groupId, status, start, end, orderByComparator,
 			true);
 	}
 
@@ -17042,20 +17030,20 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByR_G_S(
-		long[] resourcePrimKeies, long groupId, int status, int start, int end,
+		long[] resourcePrimKeys, long groupId, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
 		boolean useFinderCache) {
 
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
-		if (resourcePrimKeies.length == 1) {
+		if (resourcePrimKeys.length == 1) {
 			return findByR_G_S(
-				resourcePrimKeies[0], groupId, status, start, end,
+				resourcePrimKeys[0], groupId, status, start, end,
 				orderByComparator);
 		}
 
@@ -17066,14 +17054,14 @@ public class KBArticlePersistenceImpl
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
-					StringUtil.merge(resourcePrimKeies), groupId, status
+					StringUtil.merge(resourcePrimKeys), groupId, status
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderArgs = new Object[] {
-				StringUtil.merge(resourcePrimKeies), groupId, status, start,
-				end, orderByComparator
+				StringUtil.merge(resourcePrimKeys), groupId, status, start, end,
+				orderByComparator
 			};
 		}
 
@@ -17086,8 +17074,7 @@ public class KBArticlePersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (KBArticle kbArticle : list) {
 					if (!ArrayUtil.contains(
-							resourcePrimKeies,
-							kbArticle.getResourcePrimKey()) ||
+							resourcePrimKeys, kbArticle.getResourcePrimKey()) ||
 						(groupId != kbArticle.getGroupId()) ||
 						(status != kbArticle.getStatus())) {
 
@@ -17104,12 +17091,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_SELECT_KBARTICLE_WHERE);
 
-			if (resourcePrimKeies.length > 0) {
+			if (resourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_R_G_S_RESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(resourcePrimKeies));
+				sb.append(StringUtil.merge(resourcePrimKeys));
 
 				sb.append(")");
 
@@ -17256,24 +17243,22 @@ public class KBArticlePersistenceImpl
 	/**
 	 * Returns the number of kb articles where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param status the status
 	 * @return the number of matching kb articles
 	 */
 	@Override
-	public int countByR_G_S(
-		long[] resourcePrimKeies, long groupId, int status) {
-
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+	public int countByR_G_S(long[] resourcePrimKeys, long groupId, int status) {
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
 		Object[] finderArgs = new Object[] {
-			StringUtil.merge(resourcePrimKeies), groupId, status
+			StringUtil.merge(resourcePrimKeys), groupId, status
 		};
 
 		Long count = (Long)finderCache.getResult(
@@ -17284,12 +17269,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_COUNT_KBARTICLE_WHERE);
 
-			if (resourcePrimKeies.length > 0) {
+			if (resourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_R_G_S_RESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(resourcePrimKeies));
+				sb.append(StringUtil.merge(resourcePrimKeys));
 
 				sb.append(")");
 
@@ -17402,36 +17387,36 @@ public class KBArticlePersistenceImpl
 	/**
 	 * Returns the number of kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
 	 *
-	 * @param resourcePrimKeies the resource prim keies
+	 * @param resourcePrimKeys the resource prim keys
 	 * @param groupId the group ID
 	 * @param status the status
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
 	@Override
 	public int filterCountByR_G_S(
-		long[] resourcePrimKeies, long groupId, int status) {
+		long[] resourcePrimKeys, long groupId, int status) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByR_G_S(resourcePrimKeies, groupId, status);
+			return countByR_G_S(resourcePrimKeys, groupId, status);
 		}
 
-		if (resourcePrimKeies == null) {
-			resourcePrimKeies = new long[0];
+		if (resourcePrimKeys == null) {
+			resourcePrimKeys = new long[0];
 		}
-		else if (resourcePrimKeies.length > 1) {
-			resourcePrimKeies = ArrayUtil.sortedUnique(resourcePrimKeies);
+		else if (resourcePrimKeys.length > 1) {
+			resourcePrimKeys = ArrayUtil.sortedUnique(resourcePrimKeys);
 		}
 
 		StringBundler sb = new StringBundler();
 
 		sb.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
 
-		if (resourcePrimKeies.length > 0) {
+		if (resourcePrimKeys.length > 0) {
 			sb.append("(");
 
 			sb.append(_FINDER_COLUMN_R_G_S_RESOURCEPRIMKEY_7);
 
-			sb.append(StringUtil.merge(resourcePrimKeies));
+			sb.append(StringUtil.merge(resourcePrimKeys));
 
 			sb.append(")");
 
@@ -18356,16 +18341,16 @@ public class KBArticlePersistenceImpl
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @return the matching kb articles that the user has permission to view
 	 */
 	@Override
 	public List<KBArticle> filterFindByG_P_L(
-		long groupId, long[] parentResourcePrimKeies, boolean latest) {
+		long groupId, long[] parentResourcePrimKeys, boolean latest) {
 
 		return filterFindByG_P_L(
-			groupId, parentResourcePrimKeies, latest, QueryUtil.ALL_POS,
+			groupId, parentResourcePrimKeys, latest, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -18377,7 +18362,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -18385,11 +18370,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> filterFindByG_P_L(
-		long groupId, long[] parentResourcePrimKeies, boolean latest, int start,
+		long groupId, long[] parentResourcePrimKeys, boolean latest, int start,
 		int end) {
 
 		return filterFindByG_P_L(
-			groupId, parentResourcePrimKeies, latest, start, end, null);
+			groupId, parentResourcePrimKeys, latest, start, end, null);
 	}
 
 	/**
@@ -18400,7 +18385,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -18409,21 +18394,21 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> filterFindByG_P_L(
-		long groupId, long[] parentResourcePrimKeies, boolean latest, int start,
+		long groupId, long[] parentResourcePrimKeys, boolean latest, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_L(
-				groupId, parentResourcePrimKeies, latest, start, end,
+				groupId, parentResourcePrimKeys, latest, start, end,
 				orderByComparator);
 		}
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
 		StringBundler sb = new StringBundler();
@@ -18437,12 +18422,12 @@ public class KBArticlePersistenceImpl
 
 		sb.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
 
-		if (parentResourcePrimKeies.length > 0) {
+		if (parentResourcePrimKeys.length > 0) {
 			sb.append("(");
 
 			sb.append(_FINDER_COLUMN_G_P_L_PARENTRESOURCEPRIMKEY_7);
 
-			sb.append(StringUtil.merge(parentResourcePrimKeies));
+			sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 			sb.append(")");
 
@@ -18522,16 +18507,16 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @return the matching kb articles
 	 */
 	@Override
 	public List<KBArticle> findByG_P_L(
-		long groupId, long[] parentResourcePrimKeies, boolean latest) {
+		long groupId, long[] parentResourcePrimKeys, boolean latest) {
 
 		return findByG_P_L(
-			groupId, parentResourcePrimKeies, latest, QueryUtil.ALL_POS,
+			groupId, parentResourcePrimKeys, latest, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -18543,7 +18528,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -18551,11 +18536,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByG_P_L(
-		long groupId, long[] parentResourcePrimKeies, boolean latest, int start,
+		long groupId, long[] parentResourcePrimKeys, boolean latest, int start,
 		int end) {
 
 		return findByG_P_L(
-			groupId, parentResourcePrimKeies, latest, start, end, null);
+			groupId, parentResourcePrimKeys, latest, start, end, null);
 	}
 
 	/**
@@ -18566,7 +18551,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -18575,11 +18560,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByG_P_L(
-		long groupId, long[] parentResourcePrimKeies, boolean latest, int start,
+		long groupId, long[] parentResourcePrimKeys, boolean latest, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return findByG_P_L(
-			groupId, parentResourcePrimKeies, latest, start, end,
+			groupId, parentResourcePrimKeys, latest, start, end,
 			orderByComparator, true);
 	}
 
@@ -18601,21 +18586,21 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByG_P_L(
-		long groupId, long[] parentResourcePrimKeies, boolean latest, int start,
+		long groupId, long[] parentResourcePrimKeys, boolean latest, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator,
 		boolean useFinderCache) {
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
-		if (parentResourcePrimKeies.length == 1) {
+		if (parentResourcePrimKeys.length == 1) {
 			return findByG_P_L(
-				groupId, parentResourcePrimKeies[0], latest, start, end,
+				groupId, parentResourcePrimKeys[0], latest, start, end,
 				orderByComparator);
 		}
 
@@ -18626,13 +18611,13 @@ public class KBArticlePersistenceImpl
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentResourcePrimKeies), latest
+					groupId, StringUtil.merge(parentResourcePrimKeys), latest
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderArgs = new Object[] {
-				groupId, StringUtil.merge(parentResourcePrimKeies), latest,
+				groupId, StringUtil.merge(parentResourcePrimKeys), latest,
 				start, end, orderByComparator
 			};
 		}
@@ -18647,7 +18632,7 @@ public class KBArticlePersistenceImpl
 				for (KBArticle kbArticle : list) {
 					if ((groupId != kbArticle.getGroupId()) ||
 						!ArrayUtil.contains(
-							parentResourcePrimKeies,
+							parentResourcePrimKeys,
 							kbArticle.getParentResourcePrimKey()) ||
 						(latest != kbArticle.isLatest())) {
 
@@ -18666,12 +18651,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
 
-			if (parentResourcePrimKeies.length > 0) {
+			if (parentResourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_G_P_L_PARENTRESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(parentResourcePrimKeies));
+				sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 				sb.append(")");
 
@@ -18823,24 +18808,24 @@ public class KBArticlePersistenceImpl
 	 * Returns the number of kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @return the number of matching kb articles
 	 */
 	@Override
 	public int countByG_P_L(
-		long groupId, long[] parentResourcePrimKeies, boolean latest) {
+		long groupId, long[] parentResourcePrimKeys, boolean latest) {
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
 		Object[] finderArgs = new Object[] {
-			groupId, StringUtil.merge(parentResourcePrimKeies), latest
+			groupId, StringUtil.merge(parentResourcePrimKeys), latest
 		};
 
 		Long count = (Long)finderCache.getResult(
@@ -18853,12 +18838,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
 
-			if (parentResourcePrimKeies.length > 0) {
+			if (parentResourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_G_P_L_PARENTRESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(parentResourcePrimKeies));
+				sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 				sb.append(")");
 
@@ -18970,24 +18955,24 @@ public class KBArticlePersistenceImpl
 	 * Returns the number of kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
 	@Override
 	public int filterCountByG_P_L(
-		long groupId, long[] parentResourcePrimKeies, boolean latest) {
+		long groupId, long[] parentResourcePrimKeys, boolean latest) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_P_L(groupId, parentResourcePrimKeies, latest);
+			return countByG_P_L(groupId, parentResourcePrimKeys, latest);
 		}
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
 		StringBundler sb = new StringBundler();
@@ -18996,12 +18981,12 @@ public class KBArticlePersistenceImpl
 
 		sb.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
 
-		if (parentResourcePrimKeies.length > 0) {
+		if (parentResourcePrimKeys.length > 0) {
 			sb.append("(");
 
 			sb.append(_FINDER_COLUMN_G_P_L_PARENTRESOURCEPRIMKEY_7);
 
-			sb.append(StringUtil.merge(parentResourcePrimKeies));
+			sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 			sb.append(")");
 
@@ -19924,16 +19909,16 @@ public class KBArticlePersistenceImpl
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param main the main
 	 * @return the matching kb articles that the user has permission to view
 	 */
 	@Override
 	public List<KBArticle> filterFindByG_P_M(
-		long groupId, long[] parentResourcePrimKeies, boolean main) {
+		long groupId, long[] parentResourcePrimKeys, boolean main) {
 
 		return filterFindByG_P_M(
-			groupId, parentResourcePrimKeies, main, QueryUtil.ALL_POS,
+			groupId, parentResourcePrimKeys, main, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -19945,7 +19930,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param main the main
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -19953,11 +19938,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> filterFindByG_P_M(
-		long groupId, long[] parentResourcePrimKeies, boolean main, int start,
+		long groupId, long[] parentResourcePrimKeys, boolean main, int start,
 		int end) {
 
 		return filterFindByG_P_M(
-			groupId, parentResourcePrimKeies, main, start, end, null);
+			groupId, parentResourcePrimKeys, main, start, end, null);
 	}
 
 	/**
@@ -19968,7 +19953,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param main the main
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -19977,21 +19962,21 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> filterFindByG_P_M(
-		long groupId, long[] parentResourcePrimKeies, boolean main, int start,
+		long groupId, long[] parentResourcePrimKeys, boolean main, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_M(
-				groupId, parentResourcePrimKeies, main, start, end,
+				groupId, parentResourcePrimKeys, main, start, end,
 				orderByComparator);
 		}
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
 		StringBundler sb = new StringBundler();
@@ -20005,12 +19990,12 @@ public class KBArticlePersistenceImpl
 
 		sb.append(_FINDER_COLUMN_G_P_M_GROUPID_2);
 
-		if (parentResourcePrimKeies.length > 0) {
+		if (parentResourcePrimKeys.length > 0) {
 			sb.append("(");
 
 			sb.append(_FINDER_COLUMN_G_P_M_PARENTRESOURCEPRIMKEY_7);
 
-			sb.append(StringUtil.merge(parentResourcePrimKeies));
+			sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 			sb.append(")");
 
@@ -20090,16 +20075,16 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param main the main
 	 * @return the matching kb articles
 	 */
 	@Override
 	public List<KBArticle> findByG_P_M(
-		long groupId, long[] parentResourcePrimKeies, boolean main) {
+		long groupId, long[] parentResourcePrimKeys, boolean main) {
 
 		return findByG_P_M(
-			groupId, parentResourcePrimKeies, main, QueryUtil.ALL_POS,
+			groupId, parentResourcePrimKeys, main, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -20111,7 +20096,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param main the main
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -20119,11 +20104,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByG_P_M(
-		long groupId, long[] parentResourcePrimKeies, boolean main, int start,
+		long groupId, long[] parentResourcePrimKeys, boolean main, int start,
 		int end) {
 
 		return findByG_P_M(
-			groupId, parentResourcePrimKeies, main, start, end, null);
+			groupId, parentResourcePrimKeys, main, start, end, null);
 	}
 
 	/**
@@ -20134,7 +20119,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param main the main
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -20143,11 +20128,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByG_P_M(
-		long groupId, long[] parentResourcePrimKeies, boolean main, int start,
+		long groupId, long[] parentResourcePrimKeys, boolean main, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return findByG_P_M(
-			groupId, parentResourcePrimKeies, main, start, end,
+			groupId, parentResourcePrimKeys, main, start, end,
 			orderByComparator, true);
 	}
 
@@ -20169,21 +20154,21 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByG_P_M(
-		long groupId, long[] parentResourcePrimKeies, boolean main, int start,
+		long groupId, long[] parentResourcePrimKeys, boolean main, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator,
 		boolean useFinderCache) {
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
-		if (parentResourcePrimKeies.length == 1) {
+		if (parentResourcePrimKeys.length == 1) {
 			return findByG_P_M(
-				groupId, parentResourcePrimKeies[0], main, start, end,
+				groupId, parentResourcePrimKeys[0], main, start, end,
 				orderByComparator);
 		}
 
@@ -20194,13 +20179,13 @@ public class KBArticlePersistenceImpl
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentResourcePrimKeies), main
+					groupId, StringUtil.merge(parentResourcePrimKeys), main
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderArgs = new Object[] {
-				groupId, StringUtil.merge(parentResourcePrimKeies), main, start,
+				groupId, StringUtil.merge(parentResourcePrimKeys), main, start,
 				end, orderByComparator
 			};
 		}
@@ -20215,7 +20200,7 @@ public class KBArticlePersistenceImpl
 				for (KBArticle kbArticle : list) {
 					if ((groupId != kbArticle.getGroupId()) ||
 						!ArrayUtil.contains(
-							parentResourcePrimKeies,
+							parentResourcePrimKeys,
 							kbArticle.getParentResourcePrimKey()) ||
 						(main != kbArticle.isMain())) {
 
@@ -20234,12 +20219,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_G_P_M_GROUPID_2);
 
-			if (parentResourcePrimKeies.length > 0) {
+			if (parentResourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_G_P_M_PARENTRESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(parentResourcePrimKeies));
+				sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 				sb.append(")");
 
@@ -20391,24 +20376,24 @@ public class KBArticlePersistenceImpl
 	 * Returns the number of kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param main the main
 	 * @return the number of matching kb articles
 	 */
 	@Override
 	public int countByG_P_M(
-		long groupId, long[] parentResourcePrimKeies, boolean main) {
+		long groupId, long[] parentResourcePrimKeys, boolean main) {
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
 		Object[] finderArgs = new Object[] {
-			groupId, StringUtil.merge(parentResourcePrimKeies), main
+			groupId, StringUtil.merge(parentResourcePrimKeys), main
 		};
 
 		Long count = (Long)finderCache.getResult(
@@ -20421,12 +20406,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_G_P_M_GROUPID_2);
 
-			if (parentResourcePrimKeies.length > 0) {
+			if (parentResourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_G_P_M_PARENTRESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(parentResourcePrimKeies));
+				sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 				sb.append(")");
 
@@ -20538,24 +20523,24 @@ public class KBArticlePersistenceImpl
 	 * Returns the number of kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param main the main
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
 	@Override
 	public int filterCountByG_P_M(
-		long groupId, long[] parentResourcePrimKeies, boolean main) {
+		long groupId, long[] parentResourcePrimKeys, boolean main) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_P_M(groupId, parentResourcePrimKeies, main);
+			return countByG_P_M(groupId, parentResourcePrimKeys, main);
 		}
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
 		StringBundler sb = new StringBundler();
@@ -20564,12 +20549,12 @@ public class KBArticlePersistenceImpl
 
 		sb.append(_FINDER_COLUMN_G_P_M_GROUPID_2);
 
-		if (parentResourcePrimKeies.length > 0) {
+		if (parentResourcePrimKeys.length > 0) {
 			sb.append("(");
 
 			sb.append(_FINDER_COLUMN_G_P_M_PARENTRESOURCEPRIMKEY_7);
 
-			sb.append(StringUtil.merge(parentResourcePrimKeies));
+			sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 			sb.append(")");
 
@@ -21492,16 +21477,16 @@ public class KBArticlePersistenceImpl
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param status the status
 	 * @return the matching kb articles that the user has permission to view
 	 */
 	@Override
 	public List<KBArticle> filterFindByG_P_S(
-		long groupId, long[] parentResourcePrimKeies, int status) {
+		long groupId, long[] parentResourcePrimKeys, int status) {
 
 		return filterFindByG_P_S(
-			groupId, parentResourcePrimKeies, status, QueryUtil.ALL_POS,
+			groupId, parentResourcePrimKeys, status, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -21513,7 +21498,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -21521,11 +21506,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> filterFindByG_P_S(
-		long groupId, long[] parentResourcePrimKeies, int status, int start,
+		long groupId, long[] parentResourcePrimKeys, int status, int start,
 		int end) {
 
 		return filterFindByG_P_S(
-			groupId, parentResourcePrimKeies, status, start, end, null);
+			groupId, parentResourcePrimKeys, status, start, end, null);
 	}
 
 	/**
@@ -21536,7 +21521,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -21545,21 +21530,21 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> filterFindByG_P_S(
-		long groupId, long[] parentResourcePrimKeies, int status, int start,
+		long groupId, long[] parentResourcePrimKeys, int status, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_S(
-				groupId, parentResourcePrimKeies, status, start, end,
+				groupId, parentResourcePrimKeys, status, start, end,
 				orderByComparator);
 		}
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
 		StringBundler sb = new StringBundler();
@@ -21573,12 +21558,12 @@ public class KBArticlePersistenceImpl
 
 		sb.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
 
-		if (parentResourcePrimKeies.length > 0) {
+		if (parentResourcePrimKeys.length > 0) {
 			sb.append("(");
 
 			sb.append(_FINDER_COLUMN_G_P_S_PARENTRESOURCEPRIMKEY_7);
 
-			sb.append(StringUtil.merge(parentResourcePrimKeies));
+			sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 			sb.append(")");
 
@@ -21658,16 +21643,16 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param status the status
 	 * @return the matching kb articles
 	 */
 	@Override
 	public List<KBArticle> findByG_P_S(
-		long groupId, long[] parentResourcePrimKeies, int status) {
+		long groupId, long[] parentResourcePrimKeys, int status) {
 
 		return findByG_P_S(
-			groupId, parentResourcePrimKeies, status, QueryUtil.ALL_POS,
+			groupId, parentResourcePrimKeys, status, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -21679,7 +21664,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -21687,11 +21672,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByG_P_S(
-		long groupId, long[] parentResourcePrimKeies, int status, int start,
+		long groupId, long[] parentResourcePrimKeys, int status, int start,
 		int end) {
 
 		return findByG_P_S(
-			groupId, parentResourcePrimKeies, status, start, end, null);
+			groupId, parentResourcePrimKeys, status, start, end, null);
 	}
 
 	/**
@@ -21702,7 +21687,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
@@ -21711,11 +21696,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByG_P_S(
-		long groupId, long[] parentResourcePrimKeies, int status, int start,
+		long groupId, long[] parentResourcePrimKeys, int status, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return findByG_P_S(
-			groupId, parentResourcePrimKeies, status, start, end,
+			groupId, parentResourcePrimKeys, status, start, end,
 			orderByComparator, true);
 	}
 
@@ -21737,21 +21722,21 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByG_P_S(
-		long groupId, long[] parentResourcePrimKeies, int status, int start,
+		long groupId, long[] parentResourcePrimKeys, int status, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator,
 		boolean useFinderCache) {
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
-		if (parentResourcePrimKeies.length == 1) {
+		if (parentResourcePrimKeys.length == 1) {
 			return findByG_P_S(
-				groupId, parentResourcePrimKeies[0], status, start, end,
+				groupId, parentResourcePrimKeys[0], status, start, end,
 				orderByComparator);
 		}
 
@@ -21762,13 +21747,13 @@ public class KBArticlePersistenceImpl
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentResourcePrimKeies), status
+					groupId, StringUtil.merge(parentResourcePrimKeys), status
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderArgs = new Object[] {
-				groupId, StringUtil.merge(parentResourcePrimKeies), status,
+				groupId, StringUtil.merge(parentResourcePrimKeys), status,
 				start, end, orderByComparator
 			};
 		}
@@ -21783,7 +21768,7 @@ public class KBArticlePersistenceImpl
 				for (KBArticle kbArticle : list) {
 					if ((groupId != kbArticle.getGroupId()) ||
 						!ArrayUtil.contains(
-							parentResourcePrimKeies,
+							parentResourcePrimKeys,
 							kbArticle.getParentResourcePrimKey()) ||
 						(status != kbArticle.getStatus())) {
 
@@ -21802,12 +21787,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
 
-			if (parentResourcePrimKeies.length > 0) {
+			if (parentResourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_G_P_S_PARENTRESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(parentResourcePrimKeies));
+				sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 				sb.append(")");
 
@@ -21959,24 +21944,24 @@ public class KBArticlePersistenceImpl
 	 * Returns the number of kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param status the status
 	 * @return the number of matching kb articles
 	 */
 	@Override
 	public int countByG_P_S(
-		long groupId, long[] parentResourcePrimKeies, int status) {
+		long groupId, long[] parentResourcePrimKeys, int status) {
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
 		Object[] finderArgs = new Object[] {
-			groupId, StringUtil.merge(parentResourcePrimKeies), status
+			groupId, StringUtil.merge(parentResourcePrimKeys), status
 		};
 
 		Long count = (Long)finderCache.getResult(
@@ -21989,12 +21974,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
 
-			if (parentResourcePrimKeies.length > 0) {
+			if (parentResourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_G_P_S_PARENTRESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(parentResourcePrimKeies));
+				sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 				sb.append(")");
 
@@ -22106,24 +22091,24 @@ public class KBArticlePersistenceImpl
 	 * Returns the number of kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param status the status
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
 	@Override
 	public int filterCountByG_P_S(
-		long groupId, long[] parentResourcePrimKeies, int status) {
+		long groupId, long[] parentResourcePrimKeys, int status) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_P_S(groupId, parentResourcePrimKeies, status);
+			return countByG_P_S(groupId, parentResourcePrimKeys, status);
 		}
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
 		StringBundler sb = new StringBundler();
@@ -22132,12 +22117,12 @@ public class KBArticlePersistenceImpl
 
 		sb.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
 
-		if (parentResourcePrimKeies.length > 0) {
+		if (parentResourcePrimKeys.length > 0) {
 			sb.append("(");
 
 			sb.append(_FINDER_COLUMN_G_P_S_PARENTRESOURCEPRIMKEY_7);
 
-			sb.append(StringUtil.merge(parentResourcePrimKeies));
+			sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 			sb.append(")");
 
@@ -31232,18 +31217,18 @@ public class KBArticlePersistenceImpl
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @param status the status
 	 * @return the matching kb articles that the user has permission to view
 	 */
 	@Override
 	public List<KBArticle> filterFindByG_P_L_S(
-		long groupId, long[] parentResourcePrimKeies, boolean latest,
+		long groupId, long[] parentResourcePrimKeys, boolean latest,
 		int status) {
 
 		return filterFindByG_P_L_S(
-			groupId, parentResourcePrimKeies, latest, status, QueryUtil.ALL_POS,
+			groupId, parentResourcePrimKeys, latest, status, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -31255,7 +31240,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
@@ -31264,11 +31249,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> filterFindByG_P_L_S(
-		long groupId, long[] parentResourcePrimKeies, boolean latest,
-		int status, int start, int end) {
+		long groupId, long[] parentResourcePrimKeys, boolean latest, int status,
+		int start, int end) {
 
 		return filterFindByG_P_L_S(
-			groupId, parentResourcePrimKeies, latest, status, start, end, null);
+			groupId, parentResourcePrimKeys, latest, status, start, end, null);
 	}
 
 	/**
@@ -31279,7 +31264,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
@@ -31289,22 +31274,21 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> filterFindByG_P_L_S(
-		long groupId, long[] parentResourcePrimKeies, boolean latest,
-		int status, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
+		long groupId, long[] parentResourcePrimKeys, boolean latest, int status,
+		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_L_S(
-				groupId, parentResourcePrimKeies, latest, status, start, end,
+				groupId, parentResourcePrimKeys, latest, status, start, end,
 				orderByComparator);
 		}
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
 		StringBundler sb = new StringBundler();
@@ -31318,12 +31302,12 @@ public class KBArticlePersistenceImpl
 
 		sb.append(_FINDER_COLUMN_G_P_L_S_GROUPID_2);
 
-		if (parentResourcePrimKeies.length > 0) {
+		if (parentResourcePrimKeys.length > 0) {
 			sb.append("(");
 
 			sb.append(_FINDER_COLUMN_G_P_L_S_PARENTRESOURCEPRIMKEY_7);
 
-			sb.append(StringUtil.merge(parentResourcePrimKeies));
+			sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 			sb.append(")");
 
@@ -31407,18 +31391,18 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @param status the status
 	 * @return the matching kb articles
 	 */
 	@Override
 	public List<KBArticle> findByG_P_L_S(
-		long groupId, long[] parentResourcePrimKeies, boolean latest,
+		long groupId, long[] parentResourcePrimKeys, boolean latest,
 		int status) {
 
 		return findByG_P_L_S(
-			groupId, parentResourcePrimKeies, latest, status, QueryUtil.ALL_POS,
+			groupId, parentResourcePrimKeys, latest, status, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -31430,7 +31414,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
@@ -31439,11 +31423,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByG_P_L_S(
-		long groupId, long[] parentResourcePrimKeies, boolean latest,
-		int status, int start, int end) {
+		long groupId, long[] parentResourcePrimKeys, boolean latest, int status,
+		int start, int end) {
 
 		return findByG_P_L_S(
-			groupId, parentResourcePrimKeies, latest, status, start, end, null);
+			groupId, parentResourcePrimKeys, latest, status, start, end, null);
 	}
 
 	/**
@@ -31454,7 +31438,7 @@ public class KBArticlePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @param status the status
 	 * @param start the lower bound of the range of kb articles
@@ -31464,12 +31448,11 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByG_P_L_S(
-		long groupId, long[] parentResourcePrimKeies, boolean latest,
-		int status, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
+		long groupId, long[] parentResourcePrimKeys, boolean latest, int status,
+		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return findByG_P_L_S(
-			groupId, parentResourcePrimKeies, latest, status, start, end,
+			groupId, parentResourcePrimKeys, latest, status, start, end,
 			orderByComparator, true);
 	}
 
@@ -31492,22 +31475,21 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public List<KBArticle> findByG_P_L_S(
-		long groupId, long[] parentResourcePrimKeies, boolean latest,
-		int status, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator,
+		long groupId, long[] parentResourcePrimKeys, boolean latest, int status,
+		int start, int end, OrderByComparator<KBArticle> orderByComparator,
 		boolean useFinderCache) {
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
-		if (parentResourcePrimKeies.length == 1) {
+		if (parentResourcePrimKeys.length == 1) {
 			return findByG_P_L_S(
-				groupId, parentResourcePrimKeies[0], latest, status, start, end,
+				groupId, parentResourcePrimKeys[0], latest, status, start, end,
 				orderByComparator);
 		}
 
@@ -31518,14 +31500,14 @@ public class KBArticlePersistenceImpl
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentResourcePrimKeies), latest,
+					groupId, StringUtil.merge(parentResourcePrimKeys), latest,
 					status
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderArgs = new Object[] {
-				groupId, StringUtil.merge(parentResourcePrimKeies), latest,
+				groupId, StringUtil.merge(parentResourcePrimKeys), latest,
 				status, start, end, orderByComparator
 			};
 		}
@@ -31540,7 +31522,7 @@ public class KBArticlePersistenceImpl
 				for (KBArticle kbArticle : list) {
 					if ((groupId != kbArticle.getGroupId()) ||
 						!ArrayUtil.contains(
-							parentResourcePrimKeies,
+							parentResourcePrimKeys,
 							kbArticle.getParentResourcePrimKey()) ||
 						(latest != kbArticle.isLatest()) ||
 						(status != kbArticle.getStatus())) {
@@ -31560,12 +31542,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_G_P_L_S_GROUPID_2);
 
-			if (parentResourcePrimKeies.length > 0) {
+			if (parentResourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_G_P_L_S_PARENTRESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(parentResourcePrimKeies));
+				sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 				sb.append(")");
 
@@ -31728,26 +31710,26 @@ public class KBArticlePersistenceImpl
 	 * Returns the number of kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @param status the status
 	 * @return the number of matching kb articles
 	 */
 	@Override
 	public int countByG_P_L_S(
-		long groupId, long[] parentResourcePrimKeies, boolean latest,
+		long groupId, long[] parentResourcePrimKeys, boolean latest,
 		int status) {
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
 		Object[] finderArgs = new Object[] {
-			groupId, StringUtil.merge(parentResourcePrimKeies), latest, status
+			groupId, StringUtil.merge(parentResourcePrimKeys), latest, status
 		};
 
 		Long count = (Long)finderCache.getResult(
@@ -31760,12 +31742,12 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_G_P_L_S_GROUPID_2);
 
-			if (parentResourcePrimKeies.length > 0) {
+			if (parentResourcePrimKeys.length > 0) {
 				sb.append("(");
 
 				sb.append(_FINDER_COLUMN_G_P_L_S_PARENTRESOURCEPRIMKEY_7);
 
-				sb.append(StringUtil.merge(parentResourcePrimKeies));
+				sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 				sb.append(")");
 
@@ -31887,27 +31869,27 @@ public class KBArticlePersistenceImpl
 	 * Returns the number of kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param parentResourcePrimKeys the parent resource prim keys
 	 * @param latest the latest
 	 * @param status the status
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
 	@Override
 	public int filterCountByG_P_L_S(
-		long groupId, long[] parentResourcePrimKeies, boolean latest,
+		long groupId, long[] parentResourcePrimKeys, boolean latest,
 		int status) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return countByG_P_L_S(
-				groupId, parentResourcePrimKeies, latest, status);
+				groupId, parentResourcePrimKeys, latest, status);
 		}
 
-		if (parentResourcePrimKeies == null) {
-			parentResourcePrimKeies = new long[0];
+		if (parentResourcePrimKeys == null) {
+			parentResourcePrimKeys = new long[0];
 		}
-		else if (parentResourcePrimKeies.length > 1) {
-			parentResourcePrimKeies = ArrayUtil.sortedUnique(
-				parentResourcePrimKeies);
+		else if (parentResourcePrimKeys.length > 1) {
+			parentResourcePrimKeys = ArrayUtil.sortedUnique(
+				parentResourcePrimKeys);
 		}
 
 		StringBundler sb = new StringBundler();
@@ -31916,12 +31898,12 @@ public class KBArticlePersistenceImpl
 
 		sb.append(_FINDER_COLUMN_G_P_L_S_GROUPID_2);
 
-		if (parentResourcePrimKeies.length > 0) {
+		if (parentResourcePrimKeys.length > 0) {
 			sb.append("(");
 
 			sb.append(_FINDER_COLUMN_G_P_L_S_PARENTRESOURCEPRIMKEY_7);
 
-			sb.append(StringUtil.merge(parentResourcePrimKeies));
+			sb.append(StringUtil.merge(parentResourcePrimKeys));
 
 			sb.append(")");
 

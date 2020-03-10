@@ -73,6 +73,6 @@ public interface TrashEntry extends PersistedModel, TrashEntryModel {
 
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			typeSettingsProperties);
+			typeSettingsUnicodeProperties);
 
 }

@@ -99,7 +99,8 @@ public class MDRRuleServiceHttp {
 			HttpPrincipal httpPrincipal, long ruleGroupId,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap, String type,
-			com.liferay.portal.kernel.util.UnicodeProperties typeSettings,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				typeSettingsUnicodeProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -109,7 +110,7 @@ public class MDRRuleServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, ruleGroupId, nameMap, descriptionMap, type,
-				typeSettings, serviceContext);
+				typeSettingsUnicodeProperties, serviceContext);
 
 			Object returnObj = null;
 
@@ -300,7 +301,7 @@ public class MDRRuleServiceHttp {
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap, String type,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsProperties,
+				typeSettingsUnicodeProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -311,7 +312,7 @@ public class MDRRuleServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, ruleId, nameMap, descriptionMap, type,
-				typeSettingsProperties, serviceContext);
+				typeSettingsUnicodeProperties, serviceContext);
 
 			Object returnObj = null;
 

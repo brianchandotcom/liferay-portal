@@ -317,28 +317,30 @@ public abstract class RecentLayoutBranchLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns a range of all the recent layout branchs.
+	 * Returns a range of all the recent layout branches.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.RecentLayoutBranchModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of recent layout branchs
-	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
-	 * @return the range of recent layout branchs
+	 * @param start the lower bound of the range of recent layout branches
+	 * @param end the upper bound of the range of recent layout branches (not inclusive)
+	 * @return the range of recent layout branches
 	 */
 	@Override
-	public List<RecentLayoutBranch> getRecentLayoutBranchs(int start, int end) {
+	public List<RecentLayoutBranch> getRecentLayoutBranches(
+		int start, int end) {
+
 		return recentLayoutBranchPersistence.findAll(start, end);
 	}
 
 	/**
-	 * Returns the number of recent layout branchs.
+	 * Returns the number of recent layout branches.
 	 *
-	 * @return the number of recent layout branchs
+	 * @return the number of recent layout branches
 	 */
 	@Override
-	public int getRecentLayoutBranchsCount() {
+	public int getRecentLayoutBranchesCount() {
 		return recentLayoutBranchPersistence.countAll();
 	}
 

@@ -200,6 +200,6 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			typeSettingsProperties);
+			typeSettingsUnicodeProperties);
 
 }

@@ -80,6 +80,7 @@ public interface LayoutSetBranch extends LayoutSetBranchModel, PersistedModel {
 	public boolean isLogo();
 
 	public void setSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);
+		com.liferay.portal.kernel.util.UnicodeProperties
+			settingsUnicodeProperties);
 
 }

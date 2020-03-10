@@ -531,7 +531,7 @@ public class CompanyServiceHttp {
 				emailAddresses,
 			java.util.List<com.liferay.portal.kernel.model.Phone> phones,
 			java.util.List<com.liferay.portal.kernel.model.Website> websites,
-			com.liferay.portal.kernel.util.UnicodeProperties properties)
+			com.liferay.portal.kernel.util.UnicodeProperties unicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -543,7 +543,7 @@ public class CompanyServiceHttp {
 				methodKey, companyId, virtualHost, mx, homeURL, hasLogo,
 				logoBytes, name, legalName, legalId, legalType, sicCode,
 				tickerSymbol, industry, type, size, languageId, timeZoneId,
-				addresses, emailAddresses, phones, websites, properties);
+				addresses, emailAddresses, phones, websites, unicodeProperties);
 
 			Object returnObj = null;
 
@@ -693,7 +693,7 @@ public class CompanyServiceHttp {
 
 	public static void updatePreferences(
 			HttpPrincipal httpPrincipal, long companyId,
-			com.liferay.portal.kernel.util.UnicodeProperties properties)
+			com.liferay.portal.kernel.util.UnicodeProperties unicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -702,7 +702,7 @@ public class CompanyServiceHttp {
 				_updatePreferencesParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, properties);
+				methodKey, companyId, unicodeProperties);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);

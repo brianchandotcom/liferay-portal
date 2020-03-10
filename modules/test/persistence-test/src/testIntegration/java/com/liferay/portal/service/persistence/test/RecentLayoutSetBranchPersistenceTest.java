@@ -79,7 +79,7 @@ public class RecentLayoutSetBranchPersistenceTest {
 	@After
 	public void tearDown() throws Exception {
 		Iterator<RecentLayoutSetBranch> iterator =
-			_recentLayoutSetBranchs.iterator();
+			_recentLayoutSetBranches.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -138,7 +138,7 @@ public class RecentLayoutSetBranchPersistenceTest {
 
 		newRecentLayoutSetBranch.setLayoutSetId(RandomTestUtil.nextLong());
 
-		_recentLayoutSetBranchs.add(
+		_recentLayoutSetBranches.add(
 			_persistence.update(newRecentLayoutSetBranch));
 
 		RecentLayoutSetBranch existingRecentLayoutSetBranch =
@@ -267,17 +267,17 @@ public class RecentLayoutSetBranchPersistenceTest {
 		primaryKeys.add(newRecentLayoutSetBranch1.getPrimaryKey());
 		primaryKeys.add(newRecentLayoutSetBranch2.getPrimaryKey());
 
-		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranchs =
+		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranches =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertEquals(2, recentLayoutSetBranchs.size());
+		Assert.assertEquals(2, recentLayoutSetBranches.size());
 		Assert.assertEquals(
 			newRecentLayoutSetBranch1,
-			recentLayoutSetBranchs.get(
+			recentLayoutSetBranches.get(
 				newRecentLayoutSetBranch1.getPrimaryKey()));
 		Assert.assertEquals(
 			newRecentLayoutSetBranch2,
-			recentLayoutSetBranchs.get(
+			recentLayoutSetBranches.get(
 				newRecentLayoutSetBranch2.getPrimaryKey()));
 	}
 
@@ -294,10 +294,10 @@ public class RecentLayoutSetBranchPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranchs =
+		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranches =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(recentLayoutSetBranchs.isEmpty());
+		Assert.assertTrue(recentLayoutSetBranches.isEmpty());
 	}
 
 	@Test
@@ -314,13 +314,13 @@ public class RecentLayoutSetBranchPersistenceTest {
 		primaryKeys.add(newRecentLayoutSetBranch.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranchs =
+		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranches =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertEquals(1, recentLayoutSetBranchs.size());
+		Assert.assertEquals(1, recentLayoutSetBranches.size());
 		Assert.assertEquals(
 			newRecentLayoutSetBranch,
-			recentLayoutSetBranchs.get(
+			recentLayoutSetBranches.get(
 				newRecentLayoutSetBranch.getPrimaryKey()));
 	}
 
@@ -328,10 +328,10 @@ public class RecentLayoutSetBranchPersistenceTest {
 	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranchs =
+		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranches =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(recentLayoutSetBranchs.isEmpty());
+		Assert.assertTrue(recentLayoutSetBranches.isEmpty());
 	}
 
 	@Test
@@ -343,13 +343,13 @@ public class RecentLayoutSetBranchPersistenceTest {
 
 		primaryKeys.add(newRecentLayoutSetBranch.getPrimaryKey());
 
-		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranchs =
+		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranches =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertEquals(1, recentLayoutSetBranchs.size());
+		Assert.assertEquals(1, recentLayoutSetBranches.size());
 		Assert.assertEquals(
 			newRecentLayoutSetBranch,
-			recentLayoutSetBranchs.get(
+			recentLayoutSetBranches.get(
 				newRecentLayoutSetBranch.getPrimaryKey()));
 	}
 
@@ -508,12 +508,13 @@ public class RecentLayoutSetBranchPersistenceTest {
 
 		recentLayoutSetBranch.setLayoutSetId(RandomTestUtil.nextLong());
 
-		_recentLayoutSetBranchs.add(_persistence.update(recentLayoutSetBranch));
+		_recentLayoutSetBranches.add(
+			_persistence.update(recentLayoutSetBranch));
 
 		return recentLayoutSetBranch;
 	}
 
-	private List<RecentLayoutSetBranch> _recentLayoutSetBranchs =
+	private List<RecentLayoutSetBranch> _recentLayoutSetBranches =
 		new ArrayList<RecentLayoutSetBranch>();
 	private RecentLayoutSetBranchPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;

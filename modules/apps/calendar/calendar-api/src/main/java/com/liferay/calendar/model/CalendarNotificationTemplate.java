@@ -68,6 +68,6 @@ public interface CalendarNotificationTemplate
 
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			notificationTypeSettingsProperties);
+			notificationTypeSettingsUnicodeProperties);
 
 }

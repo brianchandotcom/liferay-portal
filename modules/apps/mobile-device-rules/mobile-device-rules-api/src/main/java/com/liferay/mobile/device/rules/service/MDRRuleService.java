@@ -65,7 +65,8 @@ public interface MDRRuleService extends BaseService {
 	public MDRRule addRule(
 			long ruleGroupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
-			UnicodeProperties typeSettings, ServiceContext serviceContext)
+			UnicodeProperties typeSettingsUnicodeProperties,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteRule(long ruleId) throws PortalException;
@@ -92,7 +93,7 @@ public interface MDRRuleService extends BaseService {
 	public MDRRule updateRule(
 			long ruleId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException;
 

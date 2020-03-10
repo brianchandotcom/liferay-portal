@@ -91,10 +91,10 @@ public class JournalContentSearchPersistenceImpl
 	private FinderPath _finderPathCountByCompanyId;
 
 	/**
-	 * Returns all the journal content searchs where companyId = &#63;.
+	 * Returns all the journal content searches where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @return the matching journal content searchs
+	 * @return the matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByCompanyId(long companyId) {
@@ -103,16 +103,16 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the journal content searchs where companyId = &#63;.
+	 * Returns a range of all the journal content searches where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
-	 * @return the range of matching journal content searchs
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
+	 * @return the range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByCompanyId(
@@ -122,17 +122,17 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where companyId = &#63;.
+	 * Returns an ordered range of all the journal content searches where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByCompanyId(
@@ -143,18 +143,18 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where companyId = &#63;.
+	 * Returns an ordered range of all the journal content searches where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByCompanyId(
@@ -374,7 +374,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the journal content searchs before and after the current journal content search in the ordered set where companyId = &#63;.
+	 * Returns the journal content searches before and after the current journal content search in the ordered set where companyId = &#63;.
 	 *
 	 * @param contentSearchId the primary key of the current journal content search
 	 * @param companyId the company ID
@@ -530,7 +530,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the journal content searchs where companyId = &#63; from the database.
+	 * Removes all the journal content searches where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 */
@@ -545,10 +545,10 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of journal content searchs where companyId = &#63;.
+	 * Returns the number of journal content searches where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @return the number of matching journal content searchs
+	 * @return the number of matching journal content searches
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
@@ -603,10 +603,10 @@ public class JournalContentSearchPersistenceImpl
 	private FinderPath _finderPathCountByPortletId;
 
 	/**
-	 * Returns all the journal content searchs where portletId = &#63;.
+	 * Returns all the journal content searches where portletId = &#63;.
 	 *
 	 * @param portletId the portlet ID
-	 * @return the matching journal content searchs
+	 * @return the matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByPortletId(String portletId) {
@@ -615,16 +615,16 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the journal content searchs where portletId = &#63;.
+	 * Returns a range of all the journal content searches where portletId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param portletId the portlet ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
-	 * @return the range of matching journal content searchs
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
+	 * @return the range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByPortletId(
@@ -634,17 +634,17 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where portletId = &#63;.
+	 * Returns an ordered range of all the journal content searches where portletId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param portletId the portlet ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByPortletId(
@@ -655,18 +655,18 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where portletId = &#63;.
+	 * Returns an ordered range of all the journal content searches where portletId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param portletId the portlet ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByPortletId(
@@ -901,7 +901,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the journal content searchs before and after the current journal content search in the ordered set where portletId = &#63;.
+	 * Returns the journal content searches before and after the current journal content search in the ordered set where portletId = &#63;.
 	 *
 	 * @param contentSearchId the primary key of the current journal content search
 	 * @param portletId the portlet ID
@@ -1070,7 +1070,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the journal content searchs where portletId = &#63; from the database.
+	 * Removes all the journal content searches where portletId = &#63; from the database.
 	 *
 	 * @param portletId the portlet ID
 	 */
@@ -1085,10 +1085,10 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of journal content searchs where portletId = &#63;.
+	 * Returns the number of journal content searches where portletId = &#63;.
 	 *
 	 * @param portletId the portlet ID
-	 * @return the number of matching journal content searchs
+	 * @return the number of matching journal content searches
 	 */
 	@Override
 	public int countByPortletId(String portletId) {
@@ -1159,10 +1159,10 @@ public class JournalContentSearchPersistenceImpl
 	private FinderPath _finderPathCountByArticleId;
 
 	/**
-	 * Returns all the journal content searchs where articleId = &#63;.
+	 * Returns all the journal content searches where articleId = &#63;.
 	 *
 	 * @param articleId the article ID
-	 * @return the matching journal content searchs
+	 * @return the matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByArticleId(String articleId) {
@@ -1171,16 +1171,16 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the journal content searchs where articleId = &#63;.
+	 * Returns a range of all the journal content searches where articleId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param articleId the article ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
-	 * @return the range of matching journal content searchs
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
+	 * @return the range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByArticleId(
@@ -1190,17 +1190,17 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where articleId = &#63;.
+	 * Returns an ordered range of all the journal content searches where articleId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param articleId the article ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByArticleId(
@@ -1211,18 +1211,18 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where articleId = &#63;.
+	 * Returns an ordered range of all the journal content searches where articleId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param articleId the article ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByArticleId(
@@ -1457,7 +1457,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the journal content searchs before and after the current journal content search in the ordered set where articleId = &#63;.
+	 * Returns the journal content searches before and after the current journal content search in the ordered set where articleId = &#63;.
 	 *
 	 * @param contentSearchId the primary key of the current journal content search
 	 * @param articleId the article ID
@@ -1626,7 +1626,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the journal content searchs where articleId = &#63; from the database.
+	 * Removes all the journal content searches where articleId = &#63; from the database.
 	 *
 	 * @param articleId the article ID
 	 */
@@ -1641,10 +1641,10 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of journal content searchs where articleId = &#63;.
+	 * Returns the number of journal content searches where articleId = &#63;.
 	 *
 	 * @param articleId the article ID
-	 * @return the number of matching journal content searchs
+	 * @return the number of matching journal content searches
 	 */
 	@Override
 	public int countByArticleId(String articleId) {
@@ -1715,11 +1715,11 @@ public class JournalContentSearchPersistenceImpl
 	private FinderPath _finderPathCountByG_P;
 
 	/**
-	 * Returns all the journal content searchs where groupId = &#63; and privateLayout = &#63;.
+	 * Returns all the journal content searches where groupId = &#63; and privateLayout = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @return the matching journal content searchs
+	 * @return the matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P(
@@ -1730,7 +1730,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the journal content searchs where groupId = &#63; and privateLayout = &#63;.
+	 * Returns a range of all the journal content searches where groupId = &#63; and privateLayout = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
@@ -1738,9 +1738,9 @@ public class JournalContentSearchPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
-	 * @return the range of matching journal content searchs
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
+	 * @return the range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P(
@@ -1750,7 +1750,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where groupId = &#63; and privateLayout = &#63;.
+	 * Returns an ordered range of all the journal content searches where groupId = &#63; and privateLayout = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
@@ -1758,10 +1758,10 @@ public class JournalContentSearchPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P(
@@ -1773,7 +1773,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where groupId = &#63; and privateLayout = &#63;.
+	 * Returns an ordered range of all the journal content searches where groupId = &#63; and privateLayout = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
@@ -1781,11 +1781,11 @@ public class JournalContentSearchPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P(
@@ -2022,7 +2022,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	 * Returns the journal content searches before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
 	 *
 	 * @param contentSearchId the primary key of the current journal content search
 	 * @param groupId the group ID
@@ -2183,7 +2183,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the journal content searchs where groupId = &#63; and privateLayout = &#63; from the database.
+	 * Removes all the journal content searches where groupId = &#63; and privateLayout = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
@@ -2200,11 +2200,11 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of journal content searchs where groupId = &#63; and privateLayout = &#63;.
+	 * Returns the number of journal content searches where groupId = &#63; and privateLayout = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @return the number of matching journal content searchs
+	 * @return the number of matching journal content searches
 	 */
 	@Override
 	public int countByG_P(long groupId, boolean privateLayout) {
@@ -2266,11 +2266,11 @@ public class JournalContentSearchPersistenceImpl
 	private FinderPath _finderPathCountByG_A;
 
 	/**
-	 * Returns all the journal content searchs where groupId = &#63; and articleId = &#63;.
+	 * Returns all the journal content searches where groupId = &#63; and articleId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param articleId the article ID
-	 * @return the matching journal content searchs
+	 * @return the matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_A(
@@ -2281,7 +2281,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the journal content searchs where groupId = &#63; and articleId = &#63;.
+	 * Returns a range of all the journal content searches where groupId = &#63; and articleId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
@@ -2289,9 +2289,9 @@ public class JournalContentSearchPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param articleId the article ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
-	 * @return the range of matching journal content searchs
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
+	 * @return the range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_A(
@@ -2301,7 +2301,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where groupId = &#63; and articleId = &#63;.
+	 * Returns an ordered range of all the journal content searches where groupId = &#63; and articleId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
@@ -2309,10 +2309,10 @@ public class JournalContentSearchPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param articleId the article ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_A(
@@ -2324,7 +2324,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where groupId = &#63; and articleId = &#63;.
+	 * Returns an ordered range of all the journal content searches where groupId = &#63; and articleId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
@@ -2332,11 +2332,11 @@ public class JournalContentSearchPersistenceImpl
 	 *
 	 * @param groupId the group ID
 	 * @param articleId the article ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_A(
@@ -2586,7 +2586,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and articleId = &#63;.
+	 * Returns the journal content searches before and after the current journal content search in the ordered set where groupId = &#63; and articleId = &#63;.
 	 *
 	 * @param contentSearchId the primary key of the current journal content search
 	 * @param groupId the group ID
@@ -2760,7 +2760,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the journal content searchs where groupId = &#63; and articleId = &#63; from the database.
+	 * Removes all the journal content searches where groupId = &#63; and articleId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param articleId the article ID
@@ -2777,11 +2777,11 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of journal content searchs where groupId = &#63; and articleId = &#63;.
+	 * Returns the number of journal content searches where groupId = &#63; and articleId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param articleId the article ID
-	 * @return the number of matching journal content searchs
+	 * @return the number of matching journal content searches
 	 */
 	@Override
 	public int countByG_A(long groupId, String articleId) {
@@ -2859,12 +2859,12 @@ public class JournalContentSearchPersistenceImpl
 	private FinderPath _finderPathCountByG_P_L;
 
 	/**
-	 * Returns all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 * Returns all the journal content searches where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
-	 * @return the matching journal content searchs
+	 * @return the matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P_L(
@@ -2876,7 +2876,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 * Returns a range of all the journal content searches where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
@@ -2885,9 +2885,9 @@ public class JournalContentSearchPersistenceImpl
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
-	 * @return the range of matching journal content searchs
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
+	 * @return the range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P_L(
@@ -2898,7 +2898,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 * Returns an ordered range of all the journal content searches where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
@@ -2907,10 +2907,10 @@ public class JournalContentSearchPersistenceImpl
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P_L(
@@ -2923,7 +2923,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 * Returns an ordered range of all the journal content searches where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
@@ -2932,11 +2932,11 @@ public class JournalContentSearchPersistenceImpl
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P_L(
@@ -3189,7 +3189,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 * Returns the journal content searches before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
 	 *
 	 * @param contentSearchId the primary key of the current journal content search
 	 * @param groupId the group ID
@@ -3356,7 +3356,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; from the database.
+	 * Removes all the journal content searches where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
@@ -3376,12 +3376,12 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	 * Returns the number of journal content searches where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
-	 * @return the number of matching journal content searchs
+	 * @return the number of matching journal content searches
 	 */
 	@Override
 	public int countByG_P_L(
@@ -3452,12 +3452,12 @@ public class JournalContentSearchPersistenceImpl
 	private FinderPath _finderPathCountByG_P_A;
 
 	/**
-	 * Returns all the journal content searchs where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
+	 * Returns all the journal content searches where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param articleId the article ID
-	 * @return the matching journal content searchs
+	 * @return the matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P_A(
@@ -3469,7 +3469,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the journal content searchs where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
+	 * Returns a range of all the journal content searches where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
@@ -3478,9 +3478,9 @@ public class JournalContentSearchPersistenceImpl
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param articleId the article ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
-	 * @return the range of matching journal content searchs
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
+	 * @return the range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P_A(
@@ -3491,7 +3491,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
+	 * Returns an ordered range of all the journal content searches where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
@@ -3500,10 +3500,10 @@ public class JournalContentSearchPersistenceImpl
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param articleId the article ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P_A(
@@ -3516,7 +3516,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
+	 * Returns an ordered range of all the journal content searches where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
@@ -3525,11 +3525,11 @@ public class JournalContentSearchPersistenceImpl
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param articleId the article ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P_A(
@@ -3796,7 +3796,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
+	 * Returns the journal content searches before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
 	 *
 	 * @param contentSearchId the primary key of the current journal content search
 	 * @param groupId the group ID
@@ -3976,7 +3976,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the journal content searchs where groupId = &#63; and privateLayout = &#63; and articleId = &#63; from the database.
+	 * Removes all the journal content searches where groupId = &#63; and privateLayout = &#63; and articleId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
@@ -3996,12 +3996,12 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of journal content searchs where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
+	 * Returns the number of journal content searches where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param articleId the article ID
-	 * @return the number of matching journal content searchs
+	 * @return the number of matching journal content searches
 	 */
 	@Override
 	public int countByG_P_A(
@@ -4088,13 +4088,13 @@ public class JournalContentSearchPersistenceImpl
 	private FinderPath _finderPathCountByG_P_L_P;
 
 	/**
-	 * Returns all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
+	 * Returns all the journal content searches where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
 	 * @param portletId the portlet ID
-	 * @return the matching journal content searchs
+	 * @return the matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P_L_P(
@@ -4106,7 +4106,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
+	 * Returns a range of all the journal content searches where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
@@ -4116,9 +4116,9 @@ public class JournalContentSearchPersistenceImpl
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
 	 * @param portletId the portlet ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
-	 * @return the range of matching journal content searchs
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
+	 * @return the range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P_L_P(
@@ -4130,7 +4130,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
+	 * Returns an ordered range of all the journal content searches where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
@@ -4140,10 +4140,10 @@ public class JournalContentSearchPersistenceImpl
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
 	 * @param portletId the portlet ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P_L_P(
@@ -4157,7 +4157,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
+	 * Returns an ordered range of all the journal content searches where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
@@ -4167,11 +4167,11 @@ public class JournalContentSearchPersistenceImpl
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
 	 * @param portletId the portlet ID
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching journal content searchs
+	 * @return the ordered range of matching journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findByG_P_L_P(
@@ -4460,7 +4460,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
+	 * Returns the journal content searches before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
 	 *
 	 * @param contentSearchId the primary key of the current journal content search
 	 * @param groupId the group ID
@@ -4645,7 +4645,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63; from the database.
+	 * Removes all the journal content searches where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
@@ -4666,13 +4666,13 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
+	 * Returns the number of journal content searches where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
 	 * @param portletId the portlet ID
-	 * @return the number of matching journal content searchs
+	 * @return the number of matching journal content searches
 	 */
 	@Override
 	public int countByG_P_L_P(
@@ -5005,14 +5005,14 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63; and articleId = &#63;.
+	 * Returns the number of journal content searches where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63; and articleId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
 	 * @param portletId the portlet ID
 	 * @param articleId the article ID
-	 * @return the number of matching journal content searchs
+	 * @return the number of matching journal content searches
 	 */
 	@Override
 	public int countByG_P_L_P_A(
@@ -5159,14 +5159,14 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Caches the journal content searchs in the entity cache if it is enabled.
+	 * Caches the journal content searches in the entity cache if it is enabled.
 	 *
-	 * @param journalContentSearchs the journal content searchs
+	 * @param journalContentSearches the journal content searches
 	 */
 	@Override
-	public void cacheResult(List<JournalContentSearch> journalContentSearchs) {
+	public void cacheResult(List<JournalContentSearch> journalContentSearches) {
 		for (JournalContentSearch journalContentSearch :
-				journalContentSearchs) {
+				journalContentSearches) {
 
 			if (entityCache.getResult(
 					entityCacheEnabled, JournalContentSearchImpl.class,
@@ -5181,7 +5181,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all journal content searchs.
+	 * Clears the cache for all journal content searches.
 	 *
 	 * <p>
 	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
@@ -5217,12 +5217,12 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	@Override
-	public void clearCache(List<JournalContentSearch> journalContentSearchs) {
+	public void clearCache(List<JournalContentSearch> journalContentSearches) {
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (JournalContentSearch journalContentSearch :
-				journalContentSearchs) {
+				journalContentSearches) {
 
 			entityCache.removeResult(
 				entityCacheEnabled, JournalContentSearchImpl.class,
@@ -5783,9 +5783,9 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns all the journal content searchs.
+	 * Returns all the journal content searches.
 	 *
-	 * @return the journal content searchs
+	 * @return the journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findAll() {
@@ -5793,15 +5793,15 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the journal content searchs.
+	 * Returns a range of all the journal content searches.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
-	 * @return the range of journal content searchs
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
+	 * @return the range of journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findAll(int start, int end) {
@@ -5809,16 +5809,16 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs.
+	 * Returns an ordered range of all the journal content searches.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of journal content searchs
+	 * @return the ordered range of journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findAll(
@@ -5829,17 +5829,17 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the journal content searchs.
+	 * Returns an ordered range of all the journal content searches.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalContentSearchModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of journal content searchs
-	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param start the lower bound of the range of journal content searches
+	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of journal content searchs
+	 * @return the ordered range of journal content searches
 	 */
 	@Override
 	public List<JournalContentSearch> findAll(
@@ -5923,7 +5923,7 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Removes all the journal content searchs from the database.
+	 * Removes all the journal content searches from the database.
 	 *
 	 */
 	@Override
@@ -5934,9 +5934,9 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of journal content searchs.
+	 * Returns the number of journal content searches.
 	 *
-	 * @return the number of journal content searchs
+	 * @return the number of journal content searches
 	 */
 	@Override
 	public int countAll() {

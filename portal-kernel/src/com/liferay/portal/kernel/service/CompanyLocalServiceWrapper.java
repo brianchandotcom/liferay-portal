@@ -738,15 +738,15 @@ public class CompanyLocalServiceWrapper
 	 * found in portal.properties.
 	 *
 	 * @param companyId the primary key of the company
-	 * @param properties the company's properties. See {@link UnicodeProperties}
+	 * @param unicodeProperties the company's properties. See {@link UnicodeProperties}
 	 */
 	@Override
 	public void updatePreferences(
 			long companyId,
-			com.liferay.portal.kernel.util.UnicodeProperties properties)
+			com.liferay.portal.kernel.util.UnicodeProperties unicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_companyLocalService.updatePreferences(companyId, properties);
+		_companyLocalService.updatePreferences(companyId, unicodeProperties);
 	}
 
 	/**

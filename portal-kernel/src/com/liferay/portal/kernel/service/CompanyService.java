@@ -240,7 +240,7 @@ public interface CompanyService extends BaseService {
 	 * @param emailAddresses the company's email addresses
 	 * @param phones the company's phone numbers
 	 * @param websites the company's websites
-	 * @param properties the company's properties
+	 * @param unicodeProperties the company's properties
 	 * @return the company with the primary key
 	 */
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
@@ -251,7 +251,7 @@ public interface CompanyService extends BaseService {
 			String tickerSymbol, String industry, String type, String size,
 			String languageId, String timeZoneId, List<Address> addresses,
 			List<EmailAddress> emailAddresses, List<Phone> phones,
-			List<Website> websites, UnicodeProperties properties)
+			List<Website> websites, UnicodeProperties unicodeProperties)
 		throws PortalException;
 
 	/**
@@ -291,9 +291,10 @@ public interface CompanyService extends BaseService {
 	 * found in portal.properties.
 	 *
 	 * @param companyId the primary key of the company
-	 * @param properties the company's properties. See {@link UnicodeProperties}
+	 * @param unicodeProperties the company's properties. See {@link UnicodeProperties}
 	 */
-	public void updatePreferences(long companyId, UnicodeProperties properties)
+	public void updatePreferences(
+			long companyId, UnicodeProperties unicodeProperties)
 		throws PortalException;
 
 	/**

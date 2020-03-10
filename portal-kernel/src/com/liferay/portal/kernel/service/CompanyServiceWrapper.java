@@ -272,7 +272,7 @@ public class CompanyServiceWrapper
 	 * @param emailAddresses the company's email addresses
 	 * @param phones the company's phone numbers
 	 * @param websites the company's websites
-	 * @param properties the company's properties
+	 * @param unicodeProperties the company's properties
 	 * @return the company with the primary key
 	 */
 	@Override
@@ -290,14 +290,14 @@ public class CompanyServiceWrapper
 				emailAddresses,
 			java.util.List<com.liferay.portal.kernel.model.Phone> phones,
 			java.util.List<com.liferay.portal.kernel.model.Website> websites,
-			com.liferay.portal.kernel.util.UnicodeProperties properties)
+			com.liferay.portal.kernel.util.UnicodeProperties unicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _companyService.updateCompany(
 			companyId, virtualHost, mx, homeURL, hasLogo, logoBytes, name,
 			legalName, legalId, legalType, sicCode, tickerSymbol, industry,
 			type, size, languageId, timeZoneId, addresses, emailAddresses,
-			phones, websites, properties);
+			phones, websites, unicodeProperties);
 	}
 
 	/**
@@ -351,15 +351,15 @@ public class CompanyServiceWrapper
 	 * found in portal.properties.
 	 *
 	 * @param companyId the primary key of the company
-	 * @param properties the company's properties. See {@link UnicodeProperties}
+	 * @param unicodeProperties the company's properties. See {@link UnicodeProperties}
 	 */
 	@Override
 	public void updatePreferences(
 			long companyId,
-			com.liferay.portal.kernel.util.UnicodeProperties properties)
+			com.liferay.portal.kernel.util.UnicodeProperties unicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_companyService.updatePreferences(companyId, properties);
+		_companyService.updatePreferences(companyId, unicodeProperties);
 	}
 
 	/**

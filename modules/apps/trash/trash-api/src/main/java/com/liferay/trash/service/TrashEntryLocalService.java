@@ -80,14 +80,14 @@ public interface TrashEntryLocalService
 	 * @param statusOVPs the primary keys and statuses of any of the entry's
 	 versions (e.g., {@link
 	 com.liferay.portlet.documentlibrary.model.DLFileVersion})
-	 * @param typeSettingsProperties the type settings properties
+	 * @param typeSettingsUnicodeProperties the type settings properties
 	 * @return the trashEntry
 	 */
 	public TrashEntry addTrashEntry(
 			long userId, long groupId, String className, long classPK,
 			String classUuid, String referrerClassName, int status,
 			List<ObjectValuePair<Long, Integer>> statusOVPs,
-			UnicodeProperties typeSettingsProperties)
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException;
 
 	/**

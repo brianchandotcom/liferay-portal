@@ -299,20 +299,15 @@
 	<td>//header[contains(@class,'navbar-${key_type}')]</td>
 	<td></td>
 </tr>
-<!--SECTION-->
+<!--LAYOUT ELEMENTS-->
 <tr>
-	<td>SECTION</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]</td>
+	<td>LAYOUT_ELEMENTS_HEADER</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'${key_elementType}')][${key_position}]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ROW</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Row')][${key_position}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SECTION_HEADER_DELETE_BUTTON</td>
-	<td>//section[contains(@class,'fragment-entry-link')][${key_position}]/nav//button</td>
+	<td>LAYOUT_ELEMENTS_HEADER_DELETE_BUTTON</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'${key_elementType}')][${key_position}]//button[*[name()='svg'][*[contains(@class,'times-circle')]]]</td>
 	<td></td>
 </tr>
 <tr>

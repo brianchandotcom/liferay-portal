@@ -79,7 +79,7 @@ public class LayoutBranchPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<LayoutBranch> iterator = _layoutBranches.iterator();
+		Iterator<LayoutBranch> iterator = _layoutBranchs.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -142,7 +142,7 @@ public class LayoutBranchPersistenceTest {
 
 		newLayoutBranch.setMaster(RandomTestUtil.randomBoolean());
 
-		_layoutBranches.add(_persistence.update(newLayoutBranch));
+		_layoutBranchs.add(_persistence.update(newLayoutBranch));
 
 		LayoutBranch existingLayoutBranch = _persistence.findByPrimaryKey(
 			newLayoutBranch.getPrimaryKey());
@@ -272,16 +272,16 @@ public class LayoutBranchPersistenceTest {
 		primaryKeys.add(newLayoutBranch1.getPrimaryKey());
 		primaryKeys.add(newLayoutBranch2.getPrimaryKey());
 
-		Map<Serializable, LayoutBranch> layoutBranches =
+		Map<Serializable, LayoutBranch> layoutBranchs =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertEquals(2, layoutBranches.size());
+		Assert.assertEquals(2, layoutBranchs.size());
 		Assert.assertEquals(
 			newLayoutBranch1,
-			layoutBranches.get(newLayoutBranch1.getPrimaryKey()));
+			layoutBranchs.get(newLayoutBranch1.getPrimaryKey()));
 		Assert.assertEquals(
 			newLayoutBranch2,
-			layoutBranches.get(newLayoutBranch2.getPrimaryKey()));
+			layoutBranchs.get(newLayoutBranch2.getPrimaryKey()));
 	}
 
 	@Test
@@ -297,10 +297,10 @@ public class LayoutBranchPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, LayoutBranch> layoutBranches =
+		Map<Serializable, LayoutBranch> layoutBranchs =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(layoutBranches.isEmpty());
+		Assert.assertTrue(layoutBranchs.isEmpty());
 	}
 
 	@Test
@@ -316,23 +316,23 @@ public class LayoutBranchPersistenceTest {
 		primaryKeys.add(newLayoutBranch.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, LayoutBranch> layoutBranches =
+		Map<Serializable, LayoutBranch> layoutBranchs =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertEquals(1, layoutBranches.size());
+		Assert.assertEquals(1, layoutBranchs.size());
 		Assert.assertEquals(
 			newLayoutBranch,
-			layoutBranches.get(newLayoutBranch.getPrimaryKey()));
+			layoutBranchs.get(newLayoutBranch.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, LayoutBranch> layoutBranches =
+		Map<Serializable, LayoutBranch> layoutBranchs =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(layoutBranches.isEmpty());
+		Assert.assertTrue(layoutBranchs.isEmpty());
 	}
 
 	@Test
@@ -343,13 +343,13 @@ public class LayoutBranchPersistenceTest {
 
 		primaryKeys.add(newLayoutBranch.getPrimaryKey());
 
-		Map<Serializable, LayoutBranch> layoutBranches =
+		Map<Serializable, LayoutBranch> layoutBranchs =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertEquals(1, layoutBranches.size());
+		Assert.assertEquals(1, layoutBranchs.size());
 		Assert.assertEquals(
 			newLayoutBranch,
-			layoutBranches.get(newLayoutBranch.getPrimaryKey()));
+			layoutBranchs.get(newLayoutBranch.getPrimaryKey()));
 	}
 
 	@Test
@@ -504,12 +504,12 @@ public class LayoutBranchPersistenceTest {
 
 		layoutBranch.setMaster(RandomTestUtil.randomBoolean());
 
-		_layoutBranches.add(_persistence.update(layoutBranch));
+		_layoutBranchs.add(_persistence.update(layoutBranch));
 
 		return layoutBranch;
 	}
 
-	private List<LayoutBranch> _layoutBranches = new ArrayList<LayoutBranch>();
+	private List<LayoutBranch> _layoutBranchs = new ArrayList<LayoutBranch>();
 	private LayoutBranchPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
 

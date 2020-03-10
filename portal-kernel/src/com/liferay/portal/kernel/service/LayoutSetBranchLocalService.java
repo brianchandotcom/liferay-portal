@@ -225,6 +225,10 @@ public interface LayoutSetBranchLocalService
 			long groupId, boolean privateLayout, String name)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutSetBranch> getLayoutSetBranches(
+		long groupId, boolean privateLayout);
+
 	/**
 	 * Returns a range of all the layout set branches.
 	 *
@@ -237,11 +241,7 @@ public interface LayoutSetBranchLocalService
 	 * @return the range of layout set branches
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutSetBranch> getLayoutSetBranches(int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutSetBranch> getLayoutSetBranches(
-		long groupId, boolean privateLayout);
+	public List<LayoutSetBranch> getLayoutSetBranchs(int start, int end);
 
 	/**
 	 * Returns the number of layout set branches.
@@ -249,7 +249,7 @@ public interface LayoutSetBranchLocalService
 	 * @return the number of layout set branches
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutSetBranchesCount();
+	public int getLayoutSetBranchsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutSetBranch getMasterLayoutSetBranch(

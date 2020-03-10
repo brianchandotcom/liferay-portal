@@ -324,7 +324,7 @@ public abstract class LayoutSetBranchLocalServiceBaseImpl
 	 * @return the range of layout set branches
 	 */
 	@Override
-	public List<LayoutSetBranch> getLayoutSetBranches(int start, int end) {
+	public List<LayoutSetBranch> getLayoutSetBranchs(int start, int end) {
 		return layoutSetBranchPersistence.findAll(start, end);
 	}
 
@@ -334,7 +334,7 @@ public abstract class LayoutSetBranchLocalServiceBaseImpl
 	 * @return the number of layout set branches
 	 */
 	@Override
-	public int getLayoutSetBranchesCount() {
+	public int getLayoutSetBranchsCount() {
 		return layoutSetBranchPersistence.countAll();
 	}
 

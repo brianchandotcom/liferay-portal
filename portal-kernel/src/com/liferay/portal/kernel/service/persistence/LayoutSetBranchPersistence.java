@@ -789,9 +789,9 @@ public interface LayoutSetBranchPersistence
 	/**
 	 * Caches the layout set branches in the entity cache if it is enabled.
 	 *
-	 * @param layoutSetBranches the layout set branches
+	 * @param layoutSetBranchs the layout set branches
 	 */
-	public void cacheResult(java.util.List<LayoutSetBranch> layoutSetBranches);
+	public void cacheResult(java.util.List<LayoutSetBranch> layoutSetBranchs);
 
 	/**
 	 * Creates a new layout set branch with the primary key. Does not add the layout set branch to the database.

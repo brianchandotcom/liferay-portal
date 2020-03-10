@@ -301,6 +301,14 @@ public class LayoutSetBranchLocalServiceWrapper
 			groupId, privateLayout, name);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.LayoutSetBranch>
+		getLayoutSetBranches(long groupId, boolean privateLayout) {
+
+		return _layoutSetBranchLocalService.getLayoutSetBranches(
+			groupId, privateLayout);
+	}
+
 	/**
 	 * Returns a range of all the layout set branches.
 	 *
@@ -314,17 +322,9 @@ public class LayoutSetBranchLocalServiceWrapper
 	 */
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.LayoutSetBranch>
-		getLayoutSetBranches(int start, int end) {
+		getLayoutSetBranchs(int start, int end) {
 
-		return _layoutSetBranchLocalService.getLayoutSetBranches(start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.LayoutSetBranch>
-		getLayoutSetBranches(long groupId, boolean privateLayout) {
-
-		return _layoutSetBranchLocalService.getLayoutSetBranches(
-			groupId, privateLayout);
+		return _layoutSetBranchLocalService.getLayoutSetBranchs(start, end);
 	}
 
 	/**
@@ -333,8 +333,8 @@ public class LayoutSetBranchLocalServiceWrapper
 	 * @return the number of layout set branches
 	 */
 	@Override
-	public int getLayoutSetBranchesCount() {
-		return _layoutSetBranchLocalService.getLayoutSetBranchesCount();
+	public int getLayoutSetBranchsCount() {
+		return _layoutSetBranchLocalService.getLayoutSetBranchsCount();
 	}
 
 	@Override

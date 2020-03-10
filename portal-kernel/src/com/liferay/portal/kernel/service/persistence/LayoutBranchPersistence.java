@@ -574,9 +574,9 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	/**
 	 * Caches the layout branches in the entity cache if it is enabled.
 	 *
-	 * @param layoutBranches the layout branches
+	 * @param layoutBranchs the layout branches
 	 */
-	public void cacheResult(java.util.List<LayoutBranch> layoutBranches);
+	public void cacheResult(java.util.List<LayoutBranch> layoutBranchs);
 
 	/**
 	 * Creates a new layout branch with the primary key. Does not add the layout branch to the database.

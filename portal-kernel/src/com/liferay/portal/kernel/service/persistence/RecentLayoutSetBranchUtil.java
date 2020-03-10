@@ -729,12 +729,12 @@ public class RecentLayoutSetBranchUtil {
 	/**
 	 * Caches the recent layout set branches in the entity cache if it is enabled.
 	 *
-	 * @param recentLayoutSetBranches the recent layout set branches
+	 * @param recentLayoutSetBranchs the recent layout set branches
 	 */
 	public static void cacheResult(
-		List<RecentLayoutSetBranch> recentLayoutSetBranches) {
+		List<RecentLayoutSetBranch> recentLayoutSetBranchs) {
 
-		getPersistence().cacheResult(recentLayoutSetBranches);
+		getPersistence().cacheResult(recentLayoutSetBranchs);
 	}
 
 	/**

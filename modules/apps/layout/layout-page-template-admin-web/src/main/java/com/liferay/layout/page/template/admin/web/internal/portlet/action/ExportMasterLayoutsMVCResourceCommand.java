@@ -66,7 +66,7 @@ public class ExportMasterLayoutsMVCResourceCommand
 				layoutPageTemplateEntries.add(layoutPageTemplateEntry);
 			}
 
-			return _exportUtil.exportMasterPages(layoutPageTemplateEntries);
+			return _exportUtil.exportMasterLayouts(layoutPageTemplateEntries);
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);

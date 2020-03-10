@@ -31,7 +31,7 @@ public class GeneralScreenNavigationEntry
 
 	@Override
 	public String getActionCommandName() {
-		return "/depot_entry/edit";
+		return "/depot/edit_depot_entry";
 	}
 
 	@Override

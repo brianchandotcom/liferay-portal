@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + DepotPortletKeys.DEPOT_ADMIN,
-		"mvc.command.name=/depot_entry/delete"
+		"mvc.command.name=/depot/delete_depot_entry"
 	},
 	service = MVCActionCommand.class
 )

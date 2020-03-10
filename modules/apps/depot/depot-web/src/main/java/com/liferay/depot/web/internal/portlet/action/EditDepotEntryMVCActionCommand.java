@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + DepotPortletKeys.DEPOT_ADMIN,
 		"javax.portlet.name=" + DepotPortletKeys.DEPOT_SETTINGS,
-		"mvc.command.name=/depot_entry/edit"
+		"mvc.command.name=/depot/edit_depot_entry"
 	},
 	service = MVCActionCommand.class
 )

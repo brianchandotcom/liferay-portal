@@ -35,7 +35,7 @@ else {
 RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 %>
 
-<portlet:actionURL name="/redirect_entry/edit" var="editRedirectEntryURL" />
+<portlet:actionURL name="/redirect/edit_redirect_entry" var="editRedirectEntryURL" />
 
 <liferay-frontend:edit-form
 	action="<%= editRedirectEntryURL %>"

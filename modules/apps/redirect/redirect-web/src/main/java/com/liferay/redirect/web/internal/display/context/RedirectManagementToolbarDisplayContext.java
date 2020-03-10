@@ -65,7 +65,8 @@ public class RedirectManagementToolbarDisplayContext
 						liferayPortletResponse.createRenderURL();
 
 					editRedirectEntryURL.setParameter(
-						"mvcRenderCommandName", "/redirect_entry/edit");
+						"mvcRenderCommandName",
+						"/redirect/edit_redirect_entry");
 
 					PortletURL portletURL = getPortletURL();
 

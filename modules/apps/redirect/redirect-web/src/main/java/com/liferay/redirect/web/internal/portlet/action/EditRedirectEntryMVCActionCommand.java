@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + RedirectPortletKeys.REDIRECT,
-		"mvc.command.name=/redirect_entry/edit"
+		"mvc.command.name=/redirect/edit_redirect_entry"
 	},
 	service = MVCActionCommand.class
 )

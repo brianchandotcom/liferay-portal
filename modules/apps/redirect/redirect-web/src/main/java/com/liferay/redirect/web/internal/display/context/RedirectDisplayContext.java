@@ -80,7 +80,7 @@ public class RedirectDisplayContext {
 					_liferayPortletResponse.createRenderURL();
 
 				editRedirectEntryURL.setParameter(
-					"mvcRenderCommandName", "/redirect_entry/edit");
+					"mvcRenderCommandName", "/redirect/edit_redirect_entry");
 
 				PortletURL portletURL = _getPortletURL();
 
@@ -102,7 +102,8 @@ public class RedirectDisplayContext {
 					_liferayPortletResponse.createActionURL();
 
 				deleteRedirectEntryURL.setParameter(
-					ActionRequest.ACTION_NAME, "/redirect_entry/delete");
+					ActionRequest.ACTION_NAME,
+					"/redirect/delete_redirect_entry");
 
 				deleteRedirectEntryURL.setParameter(
 					"redirectEntryId",

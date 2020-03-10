@@ -1,9 +1,11 @@
 definition {
 
 	macro changeConfigColor {
-		Click(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_HEADER");
+		var key_fragmentName = "${fragmentName}";
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
+			Click(locator1 = "Fragment#FRAGMENT_HEADER");
+		}
 
 		Click.clickNoMouseOver(
 			key_elementType = "Fragment",
@@ -19,9 +21,11 @@ definition {
 	}
 
 	macro changeConfigSelection {
-		Click(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_HEADER");
+		var key_fragmentName = "${fragmentName}";
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
+			Click(locator1 = "Fragment#FRAGMENT_HEADER");
+		}
 
 		Click.clickNoMouseOver(
 			key_elementType = "Fragment",
@@ -39,9 +43,11 @@ definition {
 	}
 
 	macro changeConfigText {
-		Click(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_HEADER");
+		var key_fragmentName = "${fragmentName}";
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
+			Click(locator1 = "Fragment#FRAGMENT_HEADER");
+		}
 
 		Click.clickNoMouseOver(
 			key_elementType = "Fragment",
@@ -59,9 +65,11 @@ definition {
 	}
 
 	macro checkConfigCheckbox {
-		Click(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_HEADER");
+		var key_fragmentName = "${fragmentName}";
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
+			Click(locator1 = "Fragment#FRAGMENT_HEADER");
+		}
 
 		Click.clickNoMouseOver(
 			key_elementType = "Fragment",
@@ -77,9 +85,11 @@ definition {
 	}
 
 	macro restoreConfigValues {
-		Click(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_HEADER");
+		var key_fragmentName = "${fragmentName}";
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
+			Click(locator1 = "Fragment#FRAGMENT_HEADER");
+		}
 
 		Click.clickNoMouseOver(
 			key_elementType = "Fragment",

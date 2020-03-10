@@ -144,8 +144,9 @@ definition {
 			optionValue = "${columnCount}");
 
 		AssertVisible(
+			key_elementType = "Row",
 			key_position = "1",
-			locator1 = "PageEditor#ROW");
+			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
 		PageEditor.waitForAutoSave();
 	}
@@ -162,8 +163,9 @@ definition {
 			value1 = "");
 
 		AssertVisible(
+			key_elementType = "Section",
 			key_position = "1",
-			locator1 = "PageEditor#SECTION");
+			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
 		PageEditor.waitForAutoSave();
 	}
@@ -783,9 +785,11 @@ definition {
 	}
 
 	macro removeFragment {
-		MouseOver.mouseOverNotVisible(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_HEADER");
+		var key_fragmentName = "${fragmentName}";
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
+		}
 
 		Click(
 			key_fragmentName = "${fragmentName}",
@@ -798,14 +802,15 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro removeSection {
-		MouseOver.mouseOverNotVisible(
-			key_position = "${position}",
-			locator1 = "PageEditor#SECTION");
+	macro removeLayoutElement {
+		var key_elementType = "${elementType}";
+		var key_position = "${position}";
 
-		Click(
-			key_position = "${position}",
-			locator1 = "PageEditor#SECTION_HEADER_DELETE_BUTTON");
+		if (IsNotVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER")) {
+			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+		}
+
+		Click(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER_DELETE_BUTTON");
 
 		PageEditor.waitForAutoSave();
 	}

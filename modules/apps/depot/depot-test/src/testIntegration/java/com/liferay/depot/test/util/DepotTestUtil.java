@@ -92,6 +92,21 @@ public class DepotTestUtil {
 		}
 	}
 
+	public static void withDepotEnabled(
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("enabled", true);
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(_PID, dictionary)) {
+
+			unsafeRunnable.run();
+		}
+	}
+
 	public static void withRegularUser(
 			UnsafeBiConsumer<User, Role, Exception> unsafeBiConsumer)
 		throws Exception {

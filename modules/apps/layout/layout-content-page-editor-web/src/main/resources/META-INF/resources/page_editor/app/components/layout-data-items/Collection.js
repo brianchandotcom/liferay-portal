@@ -206,7 +206,8 @@ const Grid = ({
 								key={index}
 								value={{
 									collectionFields,
-									collectionItem: mockList[i + 1 + j],
+									collectionItem:
+										mockList[i * numberOfColumns + j],
 									fromControlsId,
 									toControlsId: getToControlsId(
 										collectionId,

@@ -20,16 +20,18 @@ export default function(
 	editableId,
 	processorType,
 	languageId,
-	prefixedSegmentsExperienceId
+	prefixedSegmentsExperienceId,
+	getFieldValue = InfoItemService.getAssetFieldValue
 ) {
 	const editableValue = editableValues[processorType][editableId];
 
 	let valuePromise;
 
 	if (editableIsMappedToInfoItem(editableValue)) {
-		valuePromise = getMappingValue({
+		valuePromise = getFieldValue({
 			classNameId: editableValue.classNameId,
 			classPK: editableValue.classPK,
+			collectionFieldId: editableValue.collectionFieldId,
 			fieldId: editableValue.fieldId,
 			languageId,
 		});
@@ -47,9 +49,10 @@ export default function(
 	let configPromise;
 
 	if (editableIsMappedToInfoItem(editableValue.config)) {
-		configPromise = getMappingValue({
+		configPromise = getFieldValue({
 			classNameId: editableValue.config.classNameId,
 			classPK: editableValue.config.classPK,
+			collectionFieldId: editableValue.config.collectionFieldId,
 			fieldId: editableValue.config.fieldId,
 		}).then(href => {
 			return {...editableValue.config, href};
@@ -89,28 +92,10 @@ function selectEditableValueContent(
 
 function editableIsMappedToInfoItem(editableValue) {
 	return (
-		editableValue &&
-		editableValue.classNameId &&
-		editableValue.classPK &&
-		editableValue.fieldId
+		(editableValue &&
+			editableValue.classNameId &&
+			editableValue.classPK &&
+			editableValue.fieldId) ||
+		editableValue.collectionFieldId
 	);
-}
-
-function getMappingValue({
-	classNameId,
-	classPK,
-	fieldId,
-	languageId = undefined,
-}) {
-	return InfoItemService.getAssetFieldValue({
-		classNameId,
-		classPK,
-		fieldId,
-		languageId,
-		onNetworkStatus: () => {},
-	}).then(response => {
-		const {fieldValue = ''} = response;
-
-		return fieldValue;
-	});
 }

@@ -178,7 +178,7 @@ public class ExportUtil {
 
 		zipWriter.addEntry(
 			masterLayoutPath + StringPool.SLASH +
-				LayoutPageTemplateExportImportConstants.FILE_NAME_MASTER_PAGE,
+				LayoutPageTemplateExportImportConstants.FILE_NAME_MASTER_LAYOUT,
 			objectWriter.writeValueAsString(
 				MasterPageConverterUtil.toMasterPage(layoutPageTemplateEntry)));
 

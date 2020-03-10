@@ -19,7 +19,7 @@ package com.liferay.layout.page.template.constants;
  */
 public class LayoutPageTemplateExportImportConstants {
 
-	public static final String FILE_NAME_MASTER_PAGE = "master-page.json";
+	public static final String FILE_NAME_MASTER_LAYOUT = "master-page.json";
 
 	public static final String FILE_NAME_PAGE_DEFINITION =
 		"page-definition.json";

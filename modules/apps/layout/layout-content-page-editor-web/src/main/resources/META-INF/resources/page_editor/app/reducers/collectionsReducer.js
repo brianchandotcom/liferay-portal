@@ -25,10 +25,13 @@ export default function collectionsReducer(collections = [], action) {
 			);
 
 			if (!existingCollection) {
-				collections.push({
-					fragmentCollectionId: composition.fragmentCollectionId,
-					name: composition.fragmentCollectionName,
-				});
+				return [
+					...collections,
+					{
+						fragmentCollectionId: composition.fragmentCollectionId,
+						name: composition.fragmentCollectionName,
+					},
+				];
 			}
 
 			return collections;

@@ -17,8 +17,8 @@ package com.liferay.exportimport.web.internal.portlet.action;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationFactory;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationHelper;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
@@ -284,11 +284,11 @@ public class EditExportConfigurationMVCActionCommand
 			actionRequest, "exportImportConfigurationId");
 
 		if (exportImportConfigurationId > 0) {
-			return ExportImportConfigurationHelper.
+			return ExportImportConfigurationUtil.
 				updateExportLayoutExportImportConfiguration(actionRequest);
 		}
 
-		return ExportImportConfigurationHelper.
+		return ExportImportConfigurationUtil.
 			addExportLayoutExportImportConfiguration(actionRequest);
 	}
 

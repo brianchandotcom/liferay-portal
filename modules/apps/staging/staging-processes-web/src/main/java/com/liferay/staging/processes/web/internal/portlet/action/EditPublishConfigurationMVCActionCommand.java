@@ -16,7 +16,7 @@ package com.liferay.staging.processes.web.internal.portlet.action;
 
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationFactory;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationHelper;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationUtil;
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
@@ -290,22 +290,22 @@ public class EditPublishConfigurationMVCActionCommand
 
 		if (group.isStagedRemotely()) {
 			if (exportImportConfigurationId > 0) {
-				return ExportImportConfigurationHelper.
+				return ExportImportConfigurationUtil.
 					updatePublishLayoutRemoteExportImportConfiguration(
 						actionRequest);
 			}
 
-			return ExportImportConfigurationHelper.
+			return ExportImportConfigurationUtil.
 				addPublishLayoutRemoteExportImportConfiguration(actionRequest);
 		}
 
 		if (exportImportConfigurationId > 0) {
-			return ExportImportConfigurationHelper.
+			return ExportImportConfigurationUtil.
 				updatePublishLayoutLocalExportImportConfiguration(
 					actionRequest);
 		}
 
-		return ExportImportConfigurationHelper.
+		return ExportImportConfigurationUtil.
 			addPublishLayoutLocalExportImportConfiguration(actionRequest);
 	}
 

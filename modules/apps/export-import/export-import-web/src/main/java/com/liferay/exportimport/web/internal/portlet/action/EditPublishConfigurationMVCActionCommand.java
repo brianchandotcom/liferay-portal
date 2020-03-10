@@ -16,7 +16,7 @@ package com.liferay.exportimport.web.internal.portlet.action;
 
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationHelper;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
@@ -249,22 +249,22 @@ public class EditPublishConfigurationMVCActionCommand
 
 		if (exportImportConfigurationId > 0) {
 			if (localPublishing) {
-				return ExportImportConfigurationHelper.
+				return ExportImportConfigurationUtil.
 					updatePublishLayoutLocalExportImportConfiguration(
 						actionRequest);
 			}
 
-			return ExportImportConfigurationHelper.
+			return ExportImportConfigurationUtil.
 				updatePublishLayoutRemoteExportImportConfiguration(
 					actionRequest);
 		}
 
 		if (localPublishing) {
-			return ExportImportConfigurationHelper.
+			return ExportImportConfigurationUtil.
 				addPublishLayoutLocalExportImportConfiguration(actionRequest);
 		}
 
-		return ExportImportConfigurationHelper.
+		return ExportImportConfigurationUtil.
 			addPublishLayoutRemoteExportImportConfiguration(actionRequest);
 	}
 

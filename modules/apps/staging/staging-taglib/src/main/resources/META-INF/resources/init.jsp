@@ -31,7 +31,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.background.task.kernel.util.comparator.BackgroundTaskComparatorFactoryUtil" %><%@
 page import="com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames" %><%@
 page import="com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants" %><%@
-page import="com.liferay.exportimport.kernel.configuration.ExportImportConfigurationHelper" %><%@
+page import="com.liferay.exportimport.kernel.configuration.ExportImportConfigurationUtil" %><%@
 page import="com.liferay.exportimport.kernel.exception.RemoteExportException" %><%@
 page import="com.liferay.exportimport.kernel.lar.ExportImportDateUtil" %><%@
 page import="com.liferay.exportimport.kernel.lar.ExportImportHelperUtil" %><%@

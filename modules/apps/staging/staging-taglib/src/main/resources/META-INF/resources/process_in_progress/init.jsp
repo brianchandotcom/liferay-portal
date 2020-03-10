@@ -34,7 +34,7 @@ long allProgressBarCountersTotal = 0;
 int percentage = 100;
 
 if (backgroundTaskStatus != null) {
-	cmd = ArrayUtil.toString(ExportImportConfigurationHelper.getExportImportConfigurationParameter(backgroundTask, Constants.CMD), StringPool.BLANK);
+	cmd = ArrayUtil.toString(ExportImportConfigurationUtil.getExportImportConfigurationParameter(backgroundTask, Constants.CMD), StringPool.BLANK);
 
 	long allModelAdditionCountersTotal = GetterUtil.getLong(backgroundTaskStatus.getAttribute("allModelAdditionCountersTotal"));
 	long allPortletAdditionCounter = GetterUtil.getLong(backgroundTaskStatus.getAttribute("allPortletAdditionCounter"));

@@ -570,7 +570,17 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_CENTER_TEXT",
 			value1 = "There are no comments yet.");
 
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.clickPencil();
+
 		PageEditor.changeExperience(newExperience = "New Experience Name");
+
+		PageEditor.gotoCommentViaFragment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentName = "Title",
+			position = "1");
 
 		PageEditor.viewCommentList(
 			commentCount = "1 Comment",

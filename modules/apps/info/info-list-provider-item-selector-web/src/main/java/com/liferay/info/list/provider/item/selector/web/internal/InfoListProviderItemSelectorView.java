@@ -80,7 +80,7 @@ public class InfoListProviderItemSelectorView
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return _language.get(resourceBundle, "info-list-providers");
+		return _language.get(resourceBundle, "content-set-providers");
 	}
 
 	@Override

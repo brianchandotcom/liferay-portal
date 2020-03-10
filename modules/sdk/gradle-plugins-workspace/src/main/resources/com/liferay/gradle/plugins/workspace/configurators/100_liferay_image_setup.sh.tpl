@@ -18,28 +18,31 @@ function copy_configs {
 	fi
 }
 
-function copy_and_remove_scripts {
-	SCRIPTS_DIR="/home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts"
+function copy_remove_dir {
+	SRC_DIR=$1
+	DEST_DIR=$2
 
-	if [ -n "$(ls -A ${SCRIPTS_DIR}/* 2> /dev/null)" ]; then
-		echo "[LIFERAY] Copying ${SCRIPTS_DIR} script files:"
+	if [ -n "$(ls -A ${SRC_DIR}/* 2> /dev/null)" ]; then
+		echo "[LIFERAY] Copying $SRC_DIR $DEST_DIR files:"
 		echo ""
 
-		tree --noreport "${SCRIPTS_DIR}"
+		tree --noreport "$SRC_DIR"
 
 		echo ""
-		echo "[LIFERAY] ... into ${LIFERAY_MOUNT_DIR}/scripts"
+		echo "[LIFERAY] ... into ${LIFERAY_MOUNT_DIR}/${DEST_DIR}"
 
-		cp -R "${SCRIPTS_DIR}"/* ${LIFERAY_MOUNT_DIR}/scripts
+		cp -R "${SRC_DIR}"/* ${LIFERAY_MOUNT_DIR}/${DEST_DIR}
 
-		rm -rf "${SCRIPTS_DIR}"
+		rm -rf "${SRC_DIR}"
 
 		echo ""
 	fi
 }
 
 function main {
-	copy_and_remove_scripts
+	copy_remove_dir "/home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts" scripts
+
+	copy_remove_dir "/home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/patching" patching
 
 	copy_configs
 }

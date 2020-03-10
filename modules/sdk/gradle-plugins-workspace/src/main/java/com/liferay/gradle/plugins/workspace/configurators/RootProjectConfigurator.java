@@ -534,6 +534,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		dockerfile.instruction(
 			"COPY --chown=liferay:liferay deploy /mnt/liferay/deploy");
 		dockerfile.instruction(
+			"COPY --chown=liferay:liferay patching /mnt/liferay/patching");
+		dockerfile.instruction(
 			"COPY --chown=liferay:liferay scripts /mnt/liferay/scripts");
 		dockerfile.instruction(
 			"COPY --chown=liferay:liferay " + _LIFERAY_CONFIGS_DIR_NAME +
@@ -557,6 +559,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 						File destinationDir = workspaceExtension.getDockerDir();
 
 						_createTouchFile(new File(destinationDir, "deploy"));
+						_createTouchFile(new File(destinationDir, "patching"));
 						_createTouchFile(new File(destinationDir, "scripts"));
 						_createTouchFile(new File(destinationDir, "work"));
 

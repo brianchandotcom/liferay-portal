@@ -21,9 +21,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Jürgen Kappler
  */
+@ProviderType
 public interface FragmentEntryConfigurationParser {
 
 	public JSONObject getConfigurationDefaultValuesJSONObject(

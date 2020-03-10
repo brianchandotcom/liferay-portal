@@ -1,0 +1,177 @@
+{
+	"definition": {
+		"backgroundColor": "",
+		"backgroundImage": {
+			"title": {
+				"value": "welcome_bg.jpg"
+			},
+			"url": {
+				"value": "${WELCOME_IMAGE_URL}"
+			}
+		},
+		"layout": {
+			"containerType": "Fixed",
+			"paddingBottom": 10,
+			"paddingHorizontal": 1,
+			"paddingTop": 10
+		}
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"fragment": {
+					"collectionName": "Basic Components",
+					"key": "BASIC_COMPONENT-heading",
+					"name": "Heading"
+				},
+				"fragmentConfig": {
+					"bottomSpacing": "2",
+					"headingLevel": "h1",
+					"textAlign": "left",
+					"textColor": {
+						"color": "white"
+					}
+				},
+				"fragmentFields": [
+					{
+						"id": "element-text",
+						"value": {
+							"text": {
+								"value_i18n": {
+									"ar_SA": "أهلاً بالعالم",
+									"bg_BG": "Здравей, свят",
+									"ca_AD": "Hello World",
+									"cs_CZ": "Ahoj světe",
+									"da_DK": "Hello World",
+									"de_DE": "Hallo Welt",
+									"el_GR": "Γεια σου κόσμε",
+									"en_AU": "Hello World",
+									"en_GB": "Hello World",
+									"en_US": "Hello World",
+									"es_ES": "Hola Mundo",
+									"et_EE": "Tere maailm",
+									"eu_ES": "Hello World",
+									"fa_IR": "سلام به دنیا",
+									"fi_FI": "Hei, Maailma",
+									"fr_CA": "Hello World",
+									"fr_FR": "Bonjour le monde",
+									"gl_ES": "Hello World",
+									"hi_IN": "हैलो वर्ल्ड",
+									"hr_HR": "Hello World",
+									"hu_HU": "Helló Világ",
+									"in_ID": "Halo dunia",
+									"it_IT": "Hello world",
+									"iw_IL": "Hello World",
+									"ja_JP": "Hello World",
+									"kk_KZ": "Hello World",
+									"ko_KR": "전 세계 여러분 안녕하세요",
+									"lo_LA": "Hello World",
+									"lt_LT": "sveikas, pasauli",
+									"nb_NO": "hallo verden",
+									"nl_BE": "Hello World",
+									"nl_NL": "Hello World",
+									"pl_PL": "Cześć ludzie",
+									"pt_BR": "Olá Mundo",
+									"pt_PT": "Olá, mundo",
+									"ro_RO": "bună oameni buni",
+									"ru_RU": "Всем привет",
+									"sk_SK": "čaute všetci",
+									"sl_SI": "pozdravljeni vsi skupaj",
+									"sr_RS": "Hello World",
+									"sr_RS_latin": "Hello World",
+									"sv_SE": "Hej världen",
+									"ta_IN": "ஹலோ உலகம்",
+									"th_TH": "หวัดดีชาวโลก",
+									"tr_TR": "Merhaba Dünya",
+									"uk_UA": "Привіт, народ",
+									"vi_VN": "Chào thế giới",
+									"zh_CN": "Hello World",
+									"zh_TW": "世界您好"
+								}
+							}
+						}
+					}
+				]
+			},
+			"type": "Fragment"
+		},
+		{
+			"definition": {
+				"fragment": {
+					"collectionName": "Basic Components",
+					"key": "BASIC_COMPONENT-paragraph",
+					"name": "Paragraph"
+				},
+				"fragmentConfig": {
+					"bottomSpacing": "5",
+					"textAlign": "left",
+					"textColor": {
+						"color": "white"
+					}
+				},
+				"fragmentFields": [
+					{
+						"id": "element-text",
+						"value": {
+							"text": {
+								"value_i18n": {
+									"ar_SA": "${RELEASE_INFO}",
+									"bg_BG": "${RELEASE_INFO}",
+									"ca_AD": "${RELEASE_INFO}",
+									"cs_CZ": "${RELEASE_INFO}",
+									"da_DK": "${RELEASE_INFO}",
+									"de_DE": "${RELEASE_INFO}",
+									"el_GR": "${RELEASE_INFO}",
+									"en_AU": "${RELEASE_INFO}",
+									"en_GB": "${RELEASE_INFO}",
+									"en_US": "${RELEASE_INFO}",
+									"es_ES": "${RELEASE_INFO}",
+									"et_EE": "${RELEASE_INFO}",
+									"eu_ES": "${RELEASE_INFO}",
+									"fa_IR": "${RELEASE_INFO}",
+									"fi_FI": "${RELEASE_INFO}",
+									"fr_CA": "${RELEASE_INFO}",
+									"fr_FR": "${RELEASE_INFO}",
+									"gl_ES": "${RELEASE_INFO}",
+									"hi_IN": "${RELEASE_INFO}",
+									"hr_HR": "${RELEASE_INFO}",
+									"hu_HU": "${RELEASE_INFO}",
+									"in_ID": "${RELEASE_INFO}",
+									"it_IT": "${RELEASE_INFO}",
+									"iw_IL": "${RELEASE_INFO}",
+									"ja_JP": "${RELEASE_INFO}",
+									"kk_KZ": "${RELEASE_INFO}",
+									"ko_KR": "${RELEASE_INFO}",
+									"lo_LA": "${RELEASE_INFO}",
+									"lt_LT": "${RELEASE_INFO}",
+									"nb_NO": "${RELEASE_INFO}",
+									"nl_BE": "${RELEASE_INFO}",
+									"nl_NL": "${RELEASE_INFO}",
+									"pl_PL": "${RELEASE_INFO}",
+									"pt_BR": "${RELEASE_INFO}",
+									"pt_PT": "${RELEASE_INFO}",
+									"ro_RO": "${RELEASE_INFO}",
+									"ru_RU": "${RELEASE_INFO}",
+									"sk_SK": "${RELEASE_INFO}",
+									"sl_SI": "${RELEASE_INFO}",
+									"sr_RS": "${RELEASE_INFO}",
+									"sr_RS_latin": "${RELEASE_INFO}",
+									"sv_SE": "${RELEASE_INFO}",
+									"ta_IN": "${RELEASE_INFO}",
+									"th_TH": "${RELEASE_INFO}",
+									"tr_TR": "${RELEASE_INFO}",
+									"uk_UA": "${RELEASE_INFO}",
+									"vi_VN": "${RELEASE_INFO}",
+									"zh_CN": "${RELEASE_INFO}",
+									"zh_TW": "${RELEASE_INFO}"
+								}
+							}
+						}
+					}
+				]
+			},
+			"type": "Fragment"
+		}
+	],
+	"type": "Section"
+}

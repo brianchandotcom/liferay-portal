@@ -28,6 +28,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.exception.PageDefinitionValidatorException;
+import com.liferay.layout.page.template.importer.LayoutPageTemplateImporterResultEntry;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.internal.importer.helper.LayoutStructureItemHelper;
 import com.liferay.layout.page.template.internal.importer.helper.LayoutStructureItemHelperFactory;
@@ -85,6 +86,17 @@ public class LayoutPageTemplatesImporterImpl
 			long userId, long groupId, File file, boolean overwrite)
 		throws Exception {
 
+		importFile(userId, groupId, 0, file, overwrite);
+	}
+
+	@Override
+	public List<LayoutPageTemplateImporterResultEntry> importFile(
+			long userId, long groupId, long layoutPageTemplateCollectionId,
+			File file, boolean overwrite)
+		throws Exception {
+
+		_layoutPageTemplateImporterResultEntries = new ArrayList<>();
+
 		try (ZipFile zipFile = new ZipFile(file)) {
 			Map<String, PageTemplateCollectionEntry>
 				pageTemplateCollectionEntryMap =
@@ -121,6 +133,8 @@ public class LayoutPageTemplatesImporterImpl
 				throw portalException;
 			}
 		}
+
+		return _layoutPageTemplateImporterResultEntries;
 	}
 
 	@Override
@@ -320,6 +334,11 @@ public class LayoutPageTemplatesImporterImpl
 						"Invalid page definition for: " +
 							pageTemplate.getName());
 				}
+
+				_layoutPageTemplateImporterResultEntries.add(
+					new LayoutPageTemplateImporterResultEntry(
+						pageTemplate.getName(),
+						LayoutPageTemplateImporterResultEntry.Status.INVALID));
 			}
 		}
 
@@ -527,6 +546,17 @@ public class LayoutPageTemplatesImporterImpl
 				_processPageDefinition(
 					layoutPageTemplateEntry,
 					pageTemplateEntry.getPageDefinition());
+
+				_layoutPageTemplateImporterResultEntries.add(
+					new LayoutPageTemplateImporterResultEntry(
+						layoutPageTemplateEntry.getName(),
+						LayoutPageTemplateImporterResultEntry.Status.IMPORTED));
+			}
+			else {
+				_layoutPageTemplateImporterResultEntries.add(
+					new LayoutPageTemplateImporterResultEntry(
+						layoutPageTemplateEntry.getName(),
+						LayoutPageTemplateImporterResultEntry.Status.IGNORED));
 			}
 		}
 	}
@@ -612,6 +642,9 @@ public class LayoutPageTemplatesImporterImpl
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	private List<LayoutPageTemplateImporterResultEntry>
+		_layoutPageTemplateImporterResultEntries;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

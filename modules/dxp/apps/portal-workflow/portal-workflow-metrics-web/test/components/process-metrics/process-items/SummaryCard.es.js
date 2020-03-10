@@ -9,161 +9,157 @@
  * distribution rights of the Software.
  */
 
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
+import '@testing-library/jest-dom/extend-expect';
+
+import {slaStatusConstants} from '../../../../src/main/resources/META-INF/resources/js/components/filter/SLAStatusFilter.es';
 import SummaryCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/process-items/SummaryCard.es';
-import {MockRouter as Router} from '../../../mock/MockRouter.es';
+import {MockRouter} from '../../../mock/MockRouter.es';
 
-test('Should format percentage', () => {
+describe('The SummaryCard component should', () => {
+	let getByTestId, renderResult;
+
 	const props = {
 		getTitle: () => 'Overdue',
 		iconColor: 'danger',
 		iconName: 'exclamation-circle',
 		processId: 12345,
+		slaStatusFilter: slaStatusConstants.overdue,
 		total: false,
 		totalValue: 858000,
 		value: 156403,
 	};
 
-	const component = mount(
-		<Router>
-			<SummaryCard {...props} />
-		</Router>
-	);
+	beforeAll(() => {
+		cleanup();
 
-	const instance = component.find(SummaryCard).instance();
+		renderResult = render(
+			<MockRouter>
+				<SummaryCard {...props} />
+			</MockRouter>
+		);
 
-	expect(instance.formattedPercentage).toEqual('18.23%');
+		getByTestId = renderResult.getByTestId;
+	});
+
+	test('Render correct icon and title', () => {
+		const instanceIcon = getByTestId('instanceIcon');
+		const instanceTitle = getByTestId('instanceTitle');
+
+		expect([...instanceIcon.classList][1]).toContain('exclamation-circle');
+		expect(instanceTitle).toHaveTextContent('Overdue');
+	});
+
+	test('Render formatted percentage', () => {
+		const footer = getByTestId('footer');
+
+		expect(footer).toHaveTextContent('18.23%');
+	});
+
+	test('Render formatted value for values with more than 3 digits', () => {
+		const formattedValue = getByTestId('formattedValue');
+
+		expect(formattedValue).toHaveTextContent('156.4K');
+	});
+
+	test('Show see items only when item is hovered', () => {
+		const childLink = getByTestId('childLink');
+		const footer = getByTestId('footer');
+
+		fireEvent.mouseOver(childLink);
+
+		expect(footer).toHaveTextContent('see-items');
+
+		fireEvent.mouseOut(childLink);
+
+		expect(footer).toHaveTextContent('18.23%');
+	});
 });
 
-test('Should format value for values with more than 3 digits', () => {
+describe('The SummaryCard component should', () => {
+	let getByTestId, renderResult;
+
 	const props = {
-		getTitle: () => 'Overdue',
-		iconColor: 'danger',
-		iconName: 'exclamation-circle',
-		processId: 12345,
-		total: false,
-		totalValue: 858000,
-		value: 156403,
-	};
-
-	const component = mount(
-		<Router>
-			<SummaryCard {...props} />
-		</Router>
-	);
-
-	const instance = component.find(SummaryCard).instance();
-
-	expect(instance.formattedValue).toEqual('156.4K');
-});
-
-test('Should not format percentage for total item', () => {
-	const props = {
+		completed: true,
 		getTitle: () => 'Total',
 		processId: 12345,
+		timeRange: {
+			dateEnd: '2019-12-09T00:00:00Z',
+			dateStart: '2019-12-03T00:00:00Z',
+			key: '7',
+		},
 		total: true,
-		totalValue: 858000,
-		value: 858000,
-	};
-
-	const component = mount(
-		<Router>
-			<SummaryCard {...props} />
-		</Router>
-	);
-
-	const instance = component.find(SummaryCard).instance();
-
-	expect(instance.formattedPercentage).toEqual(null);
-});
-
-test('Should not format value for values with 3 or less digits', () => {
-	const props = {
-		getTitle: () => 'Overdue',
-		iconColor: 'danger',
-		iconName: 'exclamation-circle',
-		processId: 12345,
-		total: false,
 		totalValue: 3500,
 		value: 310,
 	};
 
-	const component = mount(
-		<Router>
-			<SummaryCard {...props} />
-		</Router>
-	);
+	beforeAll(() => {
+		cleanup();
 
-	const instance = component.find(SummaryCard).instance();
+		renderResult = render(
+			<MockRouter>
+				<SummaryCard {...props} />
+			</MockRouter>
+		);
 
-	expect(instance.formattedValue).toEqual('310');
+		getByTestId = renderResult.getByTestId;
+	});
+
+	test('Not render formatted percentage for total item', () => {
+		const footer = getByTestId('footer');
+
+		expect(footer).toHaveTextContent('');
+	});
+
+	test('Not render formatted value for values with 3 or less digits', () => {
+		const formattedValue = getByTestId('formattedValue');
+
+		expect(formattedValue).toHaveTextContent('310');
+	});
+
+	test('Render with correct link', () => {
+		const childLink = getByTestId('childLink');
+
+		const href = childLink.getAttribute('href');
+
+		expect(href).toContain('/instance/12345/20/1');
+		expect(href).toContain(
+			'filters.statuses%5B0%5D=Completed&filters.dateEnd=2019-12-09T00%3A00%3A00Z&filters.dateStart=2019-12-03T00%3A00%3A00Z&filters.timeRange%5B0%5D=7'
+		);
+	});
 });
 
-test('Should render component', () => {
+describe('The SummaryCard component should', () => {
+	let getByTestId, renderResult;
+
 	const props = {
 		getTitle: () => 'On Time',
 		iconColor: 'success',
 		iconName: 'check-circle',
 		processId: 12345,
-		total: false,
-		totalValue: 55,
-		value: 31,
-	};
-
-	const component = mount(
-		<Router>
-			<SummaryCard {...props} />
-		</Router>
-	);
-
-	expect(component).toMatchSnapshot();
-});
-
-test('Should render component with disabled state', () => {
-	const props = {
-		getTitle: () => 'On Time',
-		iconColor: 'success',
-		iconName: 'check-circle',
-		processId: 12345,
+		slaStatusFilter: slaStatusConstants.ontime,
 		total: false,
 		totalValue: 55,
 		value: undefined,
 	};
 
-	const component = mount(
-		<Router>
-			<SummaryCard {...props} />
-		</Router>
-	);
+	beforeAll(() => {
+		cleanup();
 
-	expect(component).toMatchSnapshot();
-});
+		renderResult = render(
+			<MockRouter>
+				<SummaryCard {...props} />
+			</MockRouter>
+		);
 
-test('Should test mouse over', () => {
-	const props = {
-		getTitle: () => 'On Time',
-		iconColor: 'success',
-		iconName: 'check-circle',
-		processId: 12345,
-		total: false,
-		totalValue: 55,
-		value: 31,
-	};
-
-	const component = mount(
-		<Router>
-			<SummaryCard {...props} />
-		</Router>
-	);
-
-	const instance = component.find(SummaryCard).instance();
-
-	instance.handleMouseOver(null, () => {
-		expect(instance.state.hovered).toEqual(true);
+		getByTestId = renderResult.getByTestId;
 	});
 
-	instance.handleMouseOut(null, () => {
-		expect(instance.state.hovered).toEqual(false);
+	test('Render component with disabled state', () => {
+		const childLink = getByTestId('childLink');
+
+		expect([childLink.classList][0]).toContain('disabled');
 	});
 });

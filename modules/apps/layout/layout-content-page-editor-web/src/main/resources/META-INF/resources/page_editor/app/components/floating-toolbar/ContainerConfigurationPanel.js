@@ -22,7 +22,7 @@ import {
 import {CONTAINER_TYPES} from '../../config/constants/containerTypes';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateItemConfig from '../../thunks/updateItemConfig';
 import {ContainerBackgroundColorConfiguration} from './ContainerBackgroundColorConfiguration';
@@ -35,9 +35,7 @@ import {ContainerTypeConfiguration} from './ContainerTypeConfiguration';
 
 export const ContainerConfigurationPanel = ({item}) => {
 	const dispatch = useDispatch();
-	const segmentsExperienceId = useSelector(
-		selectPrefixedSegmentsExperienceId
-	);
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const containerConfig = {
 		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[

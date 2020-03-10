@@ -19,7 +19,7 @@ import React, {useState} from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateItemConfig from '../../thunks/updateItemConfig';
 import updateRowColumns from '../../thunks/updateRowColumns';
@@ -48,9 +48,7 @@ const ClayCheckboxWithState = ({onValueChange, ...otherProps}) => {
 
 export const RowConfigurationPanel = ({item}) => {
 	const dispatch = useDispatch();
-	const segmentsExperienceId = useSelector(
-		selectPrefixedSegmentsExperienceId
-	);
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const rowConfig = {
 		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[LAYOUT_DATA_ITEM_TYPES.row],

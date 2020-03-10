@@ -12,8 +12,7 @@
  * details.
  */
 
-import {SEGMENTS_EXPERIENCE_ID_PREFIX} from '../config/constants/segmentsExperienceIdPrefix';
-import selectSegmentsExperienceId from './selectSegmentsExperienceId';
+import {config} from '../config/index';
 
 /**
  * Returns the selected segmentsExperienceId or the default one.
@@ -23,10 +22,7 @@ import selectSegmentsExperienceId from './selectSegmentsExperienceId';
  * @param {object} state
  * @return {string}
  */
-export default function selectPrefixedSegmentsExperienceId(state) {
-	const segmentsExperienceId = selectSegmentsExperienceId(state);
-
-	return segmentsExperienceId
-		? `${SEGMENTS_EXPERIENCE_ID_PREFIX}${selectSegmentsExperienceId(state)}`
-		: '';
+export default function selectSegmentsExperienceId(state) {
+	return `${state.segmentsExperienceId ||
+		config.defaultSegmentsExperienceId}`;
 }

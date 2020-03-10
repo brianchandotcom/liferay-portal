@@ -20,6 +20,7 @@ import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {config} from '../../config/index';
 import Processors from '../../processors/index';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
 import {useActiveItemId} from '../Controls';
@@ -44,9 +45,10 @@ export default function FragmentContentProcessor({
 	const languageId = useSelector(
 		state => state.languageId || config.defaultLanguageId
 	);
-	const segmentsExperienceId = useSelector(
+	const prefixedSegmentsExperienceId = useSelector(
 		selectPrefixedSegmentsExperienceId
 	);
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const editableElement = useMemo(
 		() =>
@@ -97,12 +99,14 @@ export default function FragmentContentProcessor({
 					...editableValue,
 				};
 
-				if (segmentsExperienceId) {
+				if (prefixedSegmentsExperienceId) {
 					nextEditableValue = {
 						...nextEditableValue,
 
-						[segmentsExperienceId]: {
-							...(nextEditableValue[segmentsExperienceId] || {}),
+						[prefixedSegmentsExperienceId]: {
+							...(nextEditableValue[
+								prefixedSegmentsExperienceId
+							] || {}),
 							[languageId]: value,
 						},
 					};
@@ -150,6 +154,7 @@ export default function FragmentContentProcessor({
 		editableValues,
 		fragmentEntryLinkId,
 		languageId,
+		prefixedSegmentsExperienceId,
 		segmentsExperienceId,
 		setEditableProcessorUniqueId,
 	]);

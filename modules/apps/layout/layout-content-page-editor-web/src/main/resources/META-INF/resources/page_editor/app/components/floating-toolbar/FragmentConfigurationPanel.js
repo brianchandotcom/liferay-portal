@@ -24,6 +24,7 @@ import {
 import {FRAGMENT_CONFIGURATION_FIELD_TYPES} from '../../config/constants/fragmentConfigurationFieldTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freemarkerFragmentEntryProcessor';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateFragmentConfiguration from '../../thunks/updateFragmentConfiguration';
 
@@ -66,7 +67,8 @@ export const FragmentConfigurationPanel = ({item}) => {
 		state => state.fragmentEntryLinks[item.config.fragmentEntryLinkId]
 	);
 
-	const segmentsExperienceId = useSelector(
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+	const prefixedSegmentsExperienceId = useSelector(
 		selectPrefixedSegmentsExperienceId
 	);
 
@@ -74,12 +76,12 @@ export const FragmentConfigurationPanel = ({item}) => {
 	const defaultConfigurationValues =
 		fragmentEntryLink.defaultConfigurationValues;
 
-	const configurationValues = segmentsExperienceId
+	const configurationValues = prefixedSegmentsExperienceId
 		? {
 				...defaultConfigurationValues,
 				...fragmentEntryLink.editableValues[
 					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-				][segmentsExperienceId],
+				][prefixedSegmentsExperienceId],
 		  }
 		: {
 				...defaultConfigurationValues,
@@ -93,6 +95,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 			updateFragmentConfiguration({
 				configurationValues: defaultConfigurationValues,
 				fragmentEntryLink,
+				prefixedSegmentsExperienceId,
 				segmentsExperienceId,
 			})
 		);
@@ -108,6 +111,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 			updateFragmentConfiguration({
 				configurationValues: nextConfigurationValues,
 				fragmentEntryLink,
+				prefixedSegmentsExperienceId,
 				segmentsExperienceId,
 			})
 		);

@@ -38,7 +38,7 @@ export default function FragmentContentDecoration({
 	const hoveredItemType = useHoveredItemType();
 	const isActive = useIsActive();
 	const languageId = useSelector(state => state.languageId);
-	const segmentsExperienceId = useSelector(
+	const prefixedSegmentsExperienceId = useSelector(
 		selectPrefixedSegmentsExperienceId
 	);
 
@@ -106,9 +106,11 @@ export default function FragmentContentDecoration({
 			() =>
 				config.defaultLanguageId !== languageId &&
 				(editableValue[languageId] ||
-					(editableValue[segmentsExperienceId] &&
-						editableValue[segmentsExperienceId][languageId])),
-			[editableValue, languageId, segmentsExperienceId]
+					(editableValue[prefixedSegmentsExperienceId] &&
+						editableValue[prefixedSegmentsExperienceId][
+							languageId
+						])),
+			[editableValue, languageId, prefixedSegmentsExperienceId]
 		),
 	});
 

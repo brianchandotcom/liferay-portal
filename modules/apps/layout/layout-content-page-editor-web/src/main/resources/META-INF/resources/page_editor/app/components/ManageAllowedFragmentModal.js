@@ -17,6 +17,7 @@ import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
+import {config} from '../config/index';
 import {useDispatch} from '../store/index';
 import updateItemConfig from '../thunks/updateItemConfig';
 import AllowedFragmentSelector from './AllowedFragmentSelector';
@@ -40,7 +41,7 @@ const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
 					fragmentEntryKeys: [...selectedFragments],
 				},
 				itemId: item.itemId,
-				segmentsExperienceId: 0,
+				segmentsExperienceId: config.defaultSegmentsExperienceId,
 			})
 		).then(() => {
 			setLoading(false);

@@ -53,10 +53,14 @@ const getEditableValues = fragmentEntryLinks =>
 			[]
 		);
 
-const isTranslated = (editableValue, languageId, segmentExperienceId) =>
+const isTranslated = (
+	editableValue,
+	languageId,
+	prefixedSegmentsExperienceId
+) =>
 	editableValue[languageId] ||
-	(segmentExperienceId in editableValue &&
-		editableValue[segmentExperienceId][languageId]);
+	(prefixedSegmentsExperienceId in editableValue &&
+		editableValue[prefixedSegmentsExperienceId][languageId]);
 
 const getTranslationStatus = ({
 	editableValuesLength,
@@ -134,7 +138,7 @@ export default function Translation({
 	languageId,
 }) {
 	const [active, setActive] = useState(false);
-	const segmentsExperienceId = useSelector(
+	const prefixedSegmentsExperienceId = useSelector(
 		selectPrefixedSegmentsExperienceId
 	);
 	const editableValues = useMemo(
@@ -154,14 +158,18 @@ export default function Translation({
 		}).map(languageId => ({
 			languageId,
 			values: editableValues.filter(editableValue =>
-				isTranslated(editableValue, languageId, segmentsExperienceId)
+				isTranslated(
+					editableValue,
+					languageId,
+					prefixedSegmentsExperienceId
+				)
 			),
 		}));
 	}, [
 		availableLanguages,
 		defaultLanguageId,
 		editableValues,
-		segmentsExperienceId,
+		prefixedSegmentsExperienceId,
 	]);
 
 	const {languageIcon, languageLabel} = availableLanguages[languageId];

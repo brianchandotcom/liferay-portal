@@ -24,6 +24,7 @@ import {
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {config} from '../../config/index';
 import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import {useSelectItem} from '../Controls';
@@ -49,9 +50,7 @@ const ContainerWithControls = React.forwardRef(
 			},
 		});
 
-		const segmentsExperienceId = useSelector(
-			state => state.segmentsExperienceId
-		);
+		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 		const selectItem = useSelectItem();
 		const canUpdateLayoutContent = useSelector(
 			selectCanUpdateLayoutContent

@@ -120,7 +120,7 @@ export function ImagePropertiesPanel({item}) {
 			nextEditableValueConfig.imageTitle = imageTitle;
 		}
 
-		if (state.segmentsExperienceId) {
+		if (prefixedSegmentsExperienceId) {
 			nextEditableValue = {
 				...editableValue,
 				config: nextEditableValueConfig,

@@ -57,7 +57,7 @@ const FragmentContent = React.forwardRef(
 
 		const languageId = useSelector(state => state.languageId);
 
-		const segmentsExperienceId = useSelector(
+		const prefixedSegmentsExperienceId = useSelector(
 			selectPrefixedSegmentsExperienceId
 		);
 
@@ -94,7 +94,7 @@ const FragmentContent = React.forwardRef(
 						editable.dataset.lfrBackgroundImageId,
 						BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 						languageId,
-						segmentsExperienceId
+						prefixedSegmentsExperienceId
 					).then(([value, _editableConfig]) => {
 						const processor = Processors['background-image'];
 
@@ -112,7 +112,7 @@ const FragmentContent = React.forwardRef(
 							editable.getAttribute('id'),
 							EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 							languageId,
-							segmentsExperienceId
+							prefixedSegmentsExperienceId
 						).then(([value, editableConfig]) => {
 							const processor =
 								Processors[editable.getAttribute('type')] ||
@@ -135,7 +135,7 @@ const FragmentContent = React.forwardRef(
 			editableValues,
 			isMounted,
 			languageId,
-			segmentsExperienceId,
+			prefixedSegmentsExperienceId,
 		]);
 
 		const onFloatingToolbarButtonClick = (buttonId, editableId) => {

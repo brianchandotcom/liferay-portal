@@ -20,6 +20,7 @@ import {useDebounceCallback} from '../../../core/hooks/useDebounceCallback';
 import {getEditableItemPropTypes} from '../../../prop-types/index';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
@@ -63,12 +64,10 @@ const TARGET_OPTIONS = [
 export default function LinkPanel({item}) {
 	const {editableId, fragmentEntryLinkId} = item;
 
+	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
 	const languageId = useSelector(state => state.languageId);
-	const segmentsExperienceId = useSelector(
-		state => state.segmentsExperienceId
-	);
-	const dispatch = useDispatch();
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const editableValue =
 		fragmentEntryLinks[fragmentEntryLinkId].editableValues[

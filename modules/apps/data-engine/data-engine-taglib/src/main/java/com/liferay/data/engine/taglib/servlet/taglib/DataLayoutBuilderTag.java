@@ -51,36 +51,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		setNamespacedAttribute(
 			request, "fieldTypesModules",
 			DataLayoutTaglibUtil.resolveFieldTypesModules());
-
-		Map<String, Object> sidebarPanels = HashMapBuilder.<String, Object>put(
-			"fields",
-			HashMapBuilder.<String, Object>put(
-				"icon", "grid"
-			).put(
-				"isLink", false
-			).put(
-				"label", LanguageUtil.get(request, "fields")
-			).put(
-				"pluginEntryPoint",
-				DataLayoutTaglibUtil.resolveModule(
-					"data-engine-taglib/data_layout_builder/js/plugins" +
-						"/fields-sidebar/index.es")
-			).put(
-				"sidebarPanelId", "fields"
-			).build()
-		).build();
-
-		List<Map> additionalPanels = getAdditionalPanels();
-
-		if (ListUtil.isNotEmpty(additionalPanels)) {
-			for (Map<String, Object> additionalPanel : additionalPanels) {
-				sidebarPanels.put(
-					(String)additionalPanel.get("sidebarPanelId"),
-					additionalPanel);
-			}
-		}
-
-		setNamespacedAttribute(request, "sidebarPanels", sidebarPanels);
+		setNamespacedAttribute(request, "sidebarPanels", _getSidebarPanels());
 
 		return result;
 	}
@@ -119,6 +90,38 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		).toArray(
 			String[]::new
 		);
+	}
+
+	private Map<String, Object> _getSidebarPanels() {
+		Map<String, Object> sidebarPanels = HashMapBuilder.<String, Object>put(
+			"fields",
+			HashMapBuilder.<String, Object>put(
+				"icon", "grid"
+			).put(
+				"isLink", false
+			).put(
+				"label", LanguageUtil.get(request, "fields")
+			).put(
+				"pluginEntryPoint",
+				DataLayoutTaglibUtil.resolveModule(
+					"data-engine-taglib/data_layout_builder/js/plugins" +
+						"/fields-sidebar/index.es")
+			).put(
+				"sidebarPanelId", "fields"
+			).build()
+		).build();
+
+		List<Map> additionalPanels = getAdditionalPanels();
+
+		if (ListUtil.isNotEmpty(additionalPanels)) {
+			for (Map<String, Object> additionalPanel : additionalPanels) {
+				sidebarPanels.put(
+					(String)additionalPanel.get("sidebarPanelId"),
+					additionalPanel);
+			}
+		}
+
+		return sidebarPanels;
 	}
 
 }

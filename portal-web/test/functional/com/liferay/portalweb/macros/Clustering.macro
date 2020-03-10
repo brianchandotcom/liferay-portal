@@ -220,6 +220,12 @@ definition {
 		Clustering._viewNoLiveSession(count = "${countNotPresent}");
 	}
 
+	macro viewSidecarInfoViaSidecarURL {
+		Navigator.openSpecificURL(url = "${url}");
+
+		AssertElementPresent(locator1 = "//body[contains(.,'${sidecarInfo}')]");
+	}
+
 	@description = "This will view the text not shows at a specific bundle at ${base_branch}-bundles-${bundle_index}/logs."
 	macro viewTextNotPresentOnSpecificNode {
 		if ("${nodePort}" == "8080") {

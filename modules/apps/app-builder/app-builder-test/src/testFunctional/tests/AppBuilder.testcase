@@ -1431,11 +1431,11 @@ definition {
 
 		Portlet.addPG(portletName = "My First App");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
-		PortletEntry.inputText(
-			fieldLabel = "Text",
-			text = "Heilung");
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content of form deployed as widget.");
 
 		App.saveApp();
 
@@ -1443,7 +1443,7 @@ definition {
 
 		TableViewBuilder.validatePortletFieldTypeInTV(fieldType = "Text");
 
-		TableViewBuilder.validatePortletTextInputInTV(textInput = "Heilung");
+		TableViewBuilder.validatePortletTextInputInTV(textInput = "Content of form deployed as widget.");
 
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
@@ -1485,7 +1485,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "App Builder Test Page");
 
-		TableViewBuilder.validatePortletTextInputInTV(textInput = "Heilung");
+		TableViewBuilder.validatePortletTextInputInTV(textInput = "Content of form deployed as widget.");
 	}
 
 	@description = "Clear search results when clicking the Clear button on the search results banner"

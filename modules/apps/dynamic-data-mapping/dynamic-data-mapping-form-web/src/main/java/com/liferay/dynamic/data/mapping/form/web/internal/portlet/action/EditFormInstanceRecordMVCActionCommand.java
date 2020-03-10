@@ -52,13 +52,13 @@ public class EditFormInstanceRecordMVCActionCommand
 		long ddmFormInstanceRecordId = ParamUtil.getLong(
 			actionRequest, "formInstanceRecordId");
 
-		ddmFormInstanceRecordLocalService.updateFormInstanceRecord(
+		_ddmFormInstanceRecordLocalService.updateFormInstanceRecord(
 			userId, ddmFormInstanceRecordId, false, ddmFormValues,
 			serviceContext);
 	}
 
 	@Reference
-	protected DDMFormInstanceRecordLocalService
-		ddmFormInstanceRecordLocalService;
+	private DDMFormInstanceRecordLocalService
+		_ddmFormInstanceRecordLocalService;
 
 }

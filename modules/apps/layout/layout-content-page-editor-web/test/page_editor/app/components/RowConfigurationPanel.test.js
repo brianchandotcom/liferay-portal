@@ -72,7 +72,7 @@ describe('RowConfigurationPanel', () => {
 		expect(updateRowColumns).toHaveBeenCalledWith({
 			itemId: '0',
 			numberOfColumns: 6,
-			segmentsExperienceId: 'segments-experience-id-0',
+			segmentsExperienceId: '0',
 		});
 	});
 
@@ -85,7 +85,7 @@ describe('RowConfigurationPanel', () => {
 		expect(updateItemConfig).toHaveBeenCalledWith({
 			itemConfig: {gutters: false},
 			itemId: '0',
-			segmentsExperienceId: 'segments-experience-id-0',
+			segmentsExperienceId: '0',
 		});
 	});
 });

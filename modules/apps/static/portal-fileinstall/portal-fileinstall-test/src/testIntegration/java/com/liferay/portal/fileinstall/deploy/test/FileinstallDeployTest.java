@@ -135,7 +135,7 @@ public class FileinstallDeployTest {
 
 		CountDownLatch installCountDownLatch = new CountDownLatch(1);
 
-		CountDownLatch updateCountDownLatch = new CountDownLatch(1);
+		CountDownLatch updateCountDownLatch = new CountDownLatch(3);
 
 		CountDownLatch deleteCountDownLatch = new CountDownLatch(1);
 
@@ -154,14 +154,14 @@ public class FileinstallDeployTest {
 				int type = bundleEvent.getType();
 
 				if (type == BundleEvent.STARTED) {
-					if (installCountDownLatch.getCount() != 1) {
-						updateCountDownLatch.countDown();
-					}
-
 					installCountDownLatch.countDown();
+					updateCountDownLatch.countDown();
 				}
 				else if (type == BundleEvent.UNINSTALLED) {
 					deleteCountDownLatch.countDown();
+				}
+				else if (type == BundleEvent.UPDATED) {
+					updateCountDownLatch.countDown();
 				}
 			}
 

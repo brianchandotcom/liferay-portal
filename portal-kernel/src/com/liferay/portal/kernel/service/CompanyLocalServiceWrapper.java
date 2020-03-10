@@ -82,8 +82,7 @@ public class CompanyLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the company with the web domain and mail domain. If no such
-	 * company exits, the method will create a new company.
+	 * Returns the company with the web domain and mail domain.
 	 *
 	 * The method goes through a series of checks to ensure that the company
 	 * contains default users, groups, etc.

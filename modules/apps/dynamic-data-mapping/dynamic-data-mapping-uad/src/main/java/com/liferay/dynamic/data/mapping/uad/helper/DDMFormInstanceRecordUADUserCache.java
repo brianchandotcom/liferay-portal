@@ -30,23 +30,23 @@ import java.util.Map;
 public class DDMFormInstanceRecordUADUserCache {
 
 	public DDMFormInstanceRecordUADUserCache(
-		DDMFormInstanceRecordLocalService ddmFormInstanceLocalService,
+		DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService,
 		long formInstanceId) {
 
-		_ddmFormInstanceRecordLocalService = ddmFormInstanceLocalService;
+		_ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
 		_ddmFormInstanceRecordMap = new HashMap<>();
 		_formInstanceId = formInstanceId;
 	}
 
-	public List<DDMFormInstanceRecord> getFormInstanceRecords(long userId) {
+	public List<DDMFormInstanceRecord> getDDMFormInstanceRecords(long userId) {
 		if (_ddmFormInstanceRecordMap.get(userId) == null) {
-			putFormInstanceRecords(userId);
+			putDDMFormInstanceRecords(userId);
 		}
 
 		return _ddmFormInstanceRecordMap.get(userId);
 	}
 
-	public void putFormInstanceRecords(long userId) {
+	public void putDDMFormInstanceRecords(long userId) {
 		List<DDMFormInstanceRecord> ddmFormInstanceRecords = new ArrayList<>();
 
 		ddmFormInstanceRecords.addAll(

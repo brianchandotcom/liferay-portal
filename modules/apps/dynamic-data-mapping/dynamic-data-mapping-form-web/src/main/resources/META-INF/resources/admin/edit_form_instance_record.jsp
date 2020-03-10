@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-DDMFormInstanceRecordVersion formInstanceRecordVersion = ddmFormAdminDisplayContext.getDDMFormInstanceRecordVersion();
+DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion = ddmFormAdminDisplayContext.getDDMFormInstanceRecordVersion();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -42,10 +42,10 @@ renderResponse.setTitle(GetterUtil.get(title, LanguageUtil.get(request, "view-fo
 <div class="container-fluid-1280 ddm-form-builder-app editing-form-entry">
 	<portlet:actionURL name="addFormInstanceRecord" var="editFormInstanceRecordActionURL" />
 
-	<aui:form action="<%= editFormInstanceRecordActionURL %>" data-DDMFormInstanceId="<%= formInstanceRecordVersion.getFormInstanceId() %>" data-senna-off="true" method="post" name="fm">
+	<aui:form action="<%= editFormInstanceRecordActionURL %>" data-DDMFormInstanceId="<%= ddmFormInstanceRecordVersion.getFormInstanceId() %>" data-senna-off="true" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="formInstanceId" type="hidden" value="<%= formInstanceRecordVersion.getFormInstanceId() %>" />
-		<aui:input name="formInstanceRecordId" type="hidden" value="<%= formInstanceRecordVersion.getFormInstanceRecordId() %>" />
+		<aui:input name="formInstanceId" type="hidden" value="<%= ddmFormInstanceRecordVersion.getFormInstanceId() %>" />
+		<aui:input name="formInstanceRecordId" type="hidden" value="<%= ddmFormInstanceRecordVersion.getFormInstanceRecordId() %>" />
 		<%= ddmFormAdminDisplayContext.getDDMFormHTML(renderRequest) %>
 	</aui:form>
 </div>

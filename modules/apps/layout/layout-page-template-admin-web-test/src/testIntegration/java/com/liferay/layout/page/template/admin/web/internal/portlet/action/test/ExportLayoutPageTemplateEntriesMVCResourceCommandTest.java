@@ -51,6 +51,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
@@ -199,6 +200,23 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey() +
 						"-"));
 		Assert.assertTrue(fileName.endsWith(".zip"));
+	}
+
+	@Test
+	public void testGetLayoutPageTemplateEntryIdsSinglePageTemplate() {
+		long expectedLayoutPageTemplateEntryId = RandomTestUtil.randomLong();
+
+		long[] actualLayoutPageTemplateEntryIds = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "getLayoutPageTemplateEntryIds",
+			new Class<?>[] {ResourceRequest.class},
+			_getMockResourceRequest(expectedLayoutPageTemplateEntryId));
+
+		Assert.assertEquals(
+			Arrays.toString(actualLayoutPageTemplateEntryIds), 1,
+			actualLayoutPageTemplateEntryIds.length);
+		Assert.assertEquals(
+			expectedLayoutPageTemplateEntryId,
+			actualLayoutPageTemplateEntryIds[0]);
 	}
 
 	private MockResourceRequest _getMockResourceRequest(

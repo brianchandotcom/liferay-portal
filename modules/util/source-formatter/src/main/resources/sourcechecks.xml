@@ -460,7 +460,9 @@
 
 		<!-- Liferay Source Checks -->
 
-		<check name="JSONDeprecatedPackagesCheck" />
+		<check name="JSONDeprecatedPackagesCheck">
+			<property name="deprecatedPackageNames" value="@clayui/checkbox,liferay-module-config-generator,metal-cli" />
+		</check>
 		<check name="JSONPackageJSONBNDVersionCheck" />
 		<check name="JSONPackageJSONCheck" />
 		<check name="JSONPackageJSONDependencyVersionCheck" />

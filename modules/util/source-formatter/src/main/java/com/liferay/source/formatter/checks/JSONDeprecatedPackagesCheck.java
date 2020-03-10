@@ -16,6 +16,8 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
+import java.util.List;
+
 /**
  * @author Alan Huang
  */
@@ -34,7 +36,10 @@ public class JSONDeprecatedPackagesCheck extends BaseFileCheck {
 			return content;
 		}
 
-		for (String deprecatedPackageName : _DEPRECATED_PACKAGE_NAMES) {
+		List<String> deprecatedPackageNames = getAttributeValues(
+			_DEPRECATED_PACKAGE_NAMES_KEY, absolutePath);
+
+		for (String deprecatedPackageName : deprecatedPackageNames) {
 			int x = -1;
 
 			while (true) {
@@ -58,8 +63,7 @@ public class JSONDeprecatedPackagesCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String[] _DEPRECATED_PACKAGE_NAMES = {
-		"@clayui/checkbox", "liferay-module-config-generator", "metal-cli"
-	};
+	private static final String _DEPRECATED_PACKAGE_NAMES_KEY =
+		"deprecatedPackageNames";
 
 }

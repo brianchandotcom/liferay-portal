@@ -257,7 +257,7 @@ definition {
 
 	@description = "This is a test for LPS-91000 and LPS-95002. User can edit number of columns a section has as well as padding options."
 	@priority = "5"
-	test ChangeLayoutSectionProperties {
+	test ChangeLayoutELementProperties {
 
 		// Ignore test from acceptance until POSHI-48 resolved
 

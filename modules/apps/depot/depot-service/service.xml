@@ -24,6 +24,10 @@
 		<finder name="DepotEntryId" return-type="Collection">
 			<finder-column name="depotEntryId" />
 		</finder>
+		<finder name="D_E" return-type="DepotAppCustomization" unique="true">
+			<finder-column name="depotEntryId" />
+			<finder-column name="enabled" />
+		</finder>
 		<finder name="D_P" return-type="DepotAppCustomization" unique="true">
 			<finder-column name="depotEntryId" />
 			<finder-column name="portletId" />

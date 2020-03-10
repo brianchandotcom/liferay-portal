@@ -88,6 +88,8 @@ const Languages = ({
 				({localeId}) => localeId === id
 			);
 
+			newIndex = newIndex + (newIndex < currentIndex ? 0 : -1);
+
 			const clonedLanguages = [...languages];
 			const removedItem = clonedLanguages.splice(currentIndex, 1)[0];
 			clonedLanguages.splice(newIndex, 0, removedItem);

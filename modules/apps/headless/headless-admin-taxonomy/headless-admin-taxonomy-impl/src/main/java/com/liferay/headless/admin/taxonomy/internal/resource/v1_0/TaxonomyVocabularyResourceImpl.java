@@ -548,7 +548,8 @@ public class TaxonomyVocabularyResourceImpl
 
 		if ((add && (localizedNames == null)) ||
 			((localizedNames != null) &&
-			 !localizedNames.containsKey(defaultLocale.toLanguageTag()))) {
+			 !localizedNames.containsKey(
+				 LocaleUtil.toBCP47LanguageId(defaultLocale)))) {
 
 			String w3cLanguageId = LocaleUtil.toW3cLanguageId(defaultLocale);
 

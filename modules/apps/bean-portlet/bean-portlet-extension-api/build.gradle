@@ -4,14 +4,4 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
-
-	runtime group: "javax.mvc", name: "javax.mvc-api", version: "1.0-pfd"
-}
-
-deployDependencies {
-	from configurations.runtime
-
-	include "javax.mvc-api-*.jar"
-
-	rename(/javax\.mvc-api-(.+)\.jar/, "javax.mvc-api" + renameSuffix)
 }

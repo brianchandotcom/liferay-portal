@@ -896,6 +896,14 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			return;
 		}
 
+		AssigneeUser[] assigneeUsers = instance.getAssigneeUsers();
+
+		if (!Objects.equals(
+				assigneeUsers[0].getId(), contextUser.getUserId())) {
+
+			return;
+		}
+
 		instance.setTransitions(_toTransitions(instance));
 	}
 

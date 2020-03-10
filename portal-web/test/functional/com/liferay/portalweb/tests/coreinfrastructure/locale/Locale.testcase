@@ -82,9 +82,7 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		task ("Assert current time displays in user's selected time zone by asserting time zone specific label") {
-			AssertSelectedLabel(
-				locator1 = "Select#TIME_ZONE",
-				value1 = "(UTC -08:00) Pacific Standard Time");
+			Calendar.viewSelectedTimeZone(timeZone = "(UTC -08:00) Pacific Standard Time");
 		}
 
 		JSONUser.addUser(
@@ -103,9 +101,7 @@ definition {
 		UserNavigator.gotoDisplaySettings();
 
 		task ("Assert current time displays in user's selected time zone by asserting time zone specific label") {
-			AssertSelectedLabel(
-				locator1 = "Select#TIME_ZONE",
-				value1 = "(UTC -08:00) Pacific Standard Time");
+			Calendar.viewSelectedTimeZone(timeZone = "(UTC -08:00) Pacific Standard Time");
 		}
 
 		PortalSettings.gotoConfiguration(
@@ -125,9 +121,7 @@ definition {
 		UserNavigator.gotoDisplaySettings();
 
 		task ("Assert current time displays in user's selected time zone by asserting time zone specific label") {
-			AssertSelectedLabel(
-				locator1 = "Select#TIME_ZONE",
-				value1 = "(UTC -08:00) Pacific Standard Time");
+			Calendar.viewSelectedTimeZone(timeZone = "(UTC -08:00) Pacific Standard Time");
 		}
 	}
 

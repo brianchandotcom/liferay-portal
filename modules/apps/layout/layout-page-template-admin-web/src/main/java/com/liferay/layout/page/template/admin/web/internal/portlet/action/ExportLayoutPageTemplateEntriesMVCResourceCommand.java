@@ -51,20 +51,17 @@ import org.osgi.service.component.annotations.Reference;
 public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 	implements MVCResourceCommand {
 
-	public File getFile(long[] exportLayoutPageTemplateEntryIds)
+	public File getFile(long[] layoutPageTemplateEntryIds)
 		throws PortletException {
 
 		try {
 			List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 				new ArrayList<>();
 
-			for (long exportLayoutPageTemplateEntryId :
-					exportLayoutPageTemplateEntryIds) {
-
+			for (long layoutPageTemplateEntryId : layoutPageTemplateEntryIds) {
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
 					_layoutPageTemplateEntryLocalService.
-						fetchLayoutPageTemplateEntry(
-							exportLayoutPageTemplateEntryId);
+						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
 				layoutPageTemplateEntries.add(layoutPageTemplateEntry);
 			}
@@ -76,14 +73,13 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 		}
 	}
 
-	public String getFileName(long[] exportLayoutPageTemplateEntryIds) {
+	public String getFileName(long[] layoutPageTemplateEntryIds) {
 		String fileNamePrefix = "page-templates-";
 
-		if (exportLayoutPageTemplateEntryIds.length == 1) {
+		if (layoutPageTemplateEntryIds.length == 1) {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntry(
-						exportLayoutPageTemplateEntryIds[0]);
+					fetchLayoutPageTemplateEntry(layoutPageTemplateEntryIds[0]);
 
 			fileNamePrefix =
 				"page-template-" +

@@ -29,7 +29,7 @@ export const TextField = ({field, onValueSelect, value}) => {
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
-		setCurrentValue(value || field.defaultValue);
+		setCurrentValue(value || field.defaultValue || '');
 	}, [field.defaultValue, value]);
 
 	const {additionalProps = {}, type = 'text'} = parseTypeOptions(
@@ -38,26 +38,11 @@ export const TextField = ({field, onValueSelect, value}) => {
 
 	const selectValue = useCallback(
 		target => {
-			if (!isMounted()) {
-				return;
-			}
-
-			if (target.validity.valid) {
-				setErrorMessage('');
-
+			if (isMounted() && target.validity.valid) {
 				onValueSelect(field.name, target.value);
 			}
-			else {
-				const validationErrorMessage =
-					(field.typeOptions &&
-						field.typeOptions.validation &&
-						field.typeOptions.validation.errorMessage) ||
-					Liferay.Language.get('you-have-entered-invalid-data');
-
-				setErrorMessage(validationErrorMessage);
-			}
 		},
-		[field.name, field.typeOptions, isMounted, onValueSelect]
+		[field.name, isMounted, onValueSelect]
 	);
 
 	const [debouncedOnValueSelect] = useDebounceCallback(selectValue, 500);
@@ -74,6 +59,21 @@ export const TextField = ({field, onValueSelect, value}) => {
 					}
 				}}
 				onChange={event => {
+					if (event.target.validity.valid) {
+						setErrorMessage('');
+					}
+					else {
+						const validationErrorMessage =
+							(field.typeOptions &&
+								field.typeOptions.validation &&
+								field.typeOptions.validation.errorMessage) ||
+							Liferay.Language.get(
+								'you-have-entered-invalid-data'
+							);
+
+						setErrorMessage(validationErrorMessage);
+					}
+
 					debouncedOnValueSelect(event.target);
 
 					setCurrentValue(event.target.value);

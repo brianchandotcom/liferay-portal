@@ -51,35 +51,17 @@ import org.osgi.service.component.annotations.Reference;
 public class ExportMasterLayoutsMVCResourceCommand
 	implements MVCResourceCommand {
 
-	public File getFile(ResourceRequest resourceRequest)
+	public File getFile(long[] layoutPageTemplateEntryIds)
 		throws PortletException {
-
-		long[] exportLayoutPageTemplateEntryIds = null;
-
-		long layoutPageTemplateEntryEntryId = ParamUtil.getLong(
-			resourceRequest, "layoutPageTemplateEntryId");
-
-		if (layoutPageTemplateEntryEntryId > 0) {
-			exportLayoutPageTemplateEntryIds = new long[] {
-				layoutPageTemplateEntryEntryId
-			};
-		}
-		else {
-			exportLayoutPageTemplateEntryIds = ParamUtil.getLongValues(
-				resourceRequest, "rowIds");
-		}
 
 		try {
 			List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 				new ArrayList<>();
 
-			for (long exportLayoutPageTemplateEntryId :
-					exportLayoutPageTemplateEntryIds) {
-
+			for (long layoutPageTemplateEntryId : layoutPageTemplateEntryIds) {
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
 					_layoutPageTemplateEntryLocalService.
-						fetchLayoutPageTemplateEntry(
-							exportLayoutPageTemplateEntryId);
+						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
 				layoutPageTemplateEntries.add(layoutPageTemplateEntry);
 			}
@@ -91,16 +73,61 @@ public class ExportMasterLayoutsMVCResourceCommand
 		}
 	}
 
+	public String getFileName(long[] layoutPageTemplateEntryIds) {
+		String fileNamePrefix = "master-pages-";
+
+		if (layoutPageTemplateEntryIds.length == 1) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(layoutPageTemplateEntryIds[0]);
+
+			fileNamePrefix =
+				"master-page-" +
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey() +
+						"-";
+		}
+
+		return fileNamePrefix + Time.getShortTimestamp() + ".zip";
+	}
+
+	public long[] getLayoutPageTemplateEntryIds(
+		ResourceRequest resourceRequest) {
+
+		long[] layoutPageTemplateEntryIds = null;
+
+		long layoutPageTemplateEntryEntryId = ParamUtil.getLong(
+			resourceRequest, "layoutPageTemplateEntryId");
+
+		if (layoutPageTemplateEntryEntryId > 0) {
+			layoutPageTemplateEntryIds = new long[] {
+				layoutPageTemplateEntryEntryId
+			};
+		}
+		else {
+			layoutPageTemplateEntryIds = ParamUtil.getLongValues(
+				resourceRequest, "rowIds");
+		}
+
+		return layoutPageTemplateEntryIds;
+	}
+
 	@Override
 	public boolean serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
+		long[] layoutPageTemplateEntryIds = getLayoutPageTemplateEntryIds(
+			resourceRequest);
+
+		if (layoutPageTemplateEntryIds.length == 0) {
+			return false;
+		}
+
 		try {
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
-				"master-pages-" + Time.getTimestamp() + ".zip",
-				new FileInputStream(getFile(resourceRequest)),
+				getFileName(layoutPageTemplateEntryIds),
+				new FileInputStream(getFile(layoutPageTemplateEntryIds)),
 				ContentTypes.APPLICATION_ZIP);
 		}
 		catch (Exception exception) {

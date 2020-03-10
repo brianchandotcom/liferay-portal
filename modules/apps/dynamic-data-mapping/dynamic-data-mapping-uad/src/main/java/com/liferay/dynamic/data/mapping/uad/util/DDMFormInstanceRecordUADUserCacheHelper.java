@@ -42,10 +42,10 @@ public class DDMFormInstanceRecordUADUserCacheHelper {
 
 		int index = 0;
 
-		for (DDMFormInstanceRecord currFormInstanceRecord :
+		for (DDMFormInstanceRecord currentDDMFormInstanceRecord :
 				ddmFormInstanceRecords) {
 
-			if (currFormInstanceRecord.getFormInstanceRecordId() ==
+			if (currentDDMFormInstanceRecord.getFormInstanceRecordId() ==
 					ddmFormInstanceRecord.getFormInstanceRecordId()) {
 
 				return index;

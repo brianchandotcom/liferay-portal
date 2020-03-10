@@ -22,7 +22,7 @@ public class DDMUADConstants {
 
 	public static final String DEFAULT_DATE_FORMAT = "MMM dd yyyy 'at' HH:mm";
 	
-	public static final long DEFAULT_PARENT_ID = 0;
+	public static final long DEFAULT_DDM_FORM_INSTANCE_PARENT_ID = 0;
 	
 	public static final String[] USER_ID_FIELD_NAMES_DDM_FORM_INSTANCE = {
 		"userId", "versionUserId"

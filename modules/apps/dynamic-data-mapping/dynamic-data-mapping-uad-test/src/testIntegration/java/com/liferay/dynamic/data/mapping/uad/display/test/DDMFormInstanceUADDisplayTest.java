@@ -70,7 +70,8 @@ public class DDMFormInstanceUADDisplayTest
 
 		Assert.assertNull(
 			_uadDisplay.getTopLevelContainer(
-				DDMFormInstance.class, DDMUADConstants.DEFAULT_PARENT_ID,
+				DDMFormInstance.class,
+				DDMUADConstants.DEFAULT_DDM_FORM_INSTANCE_PARENT_ID,
 				ddmFormInstance));
 	}
 

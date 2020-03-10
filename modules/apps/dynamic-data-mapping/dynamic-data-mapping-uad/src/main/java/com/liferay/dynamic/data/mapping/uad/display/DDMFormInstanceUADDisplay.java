@@ -70,7 +70,7 @@ public class DDMFormInstanceUADDisplay extends BaseDDMFormInstanceUADDisplay {
 
 	@Override
 	public Serializable getParentContainerId(DDMFormInstance ddmFormInstance) {
-		return DDMUADConstants.DEFAULT_PARENT_ID;
+		return DDMUADConstants.DEFAULT_DDM_FORM_INSTANCE_PARENT_ID;
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class DDMFormInstanceUADDisplay extends BaseDDMFormInstanceUADDisplay {
 					(DDMFormInstanceRecord)childObject;
 
 				if ((long)parentContainerId ==
-						DDMUADConstants.DEFAULT_PARENT_ID) {
+						DDMUADConstants.DEFAULT_DDM_FORM_INSTANCE_PARENT_ID) {
 
 					return ddmFormInstanceRecord.getFormInstance();
 				}

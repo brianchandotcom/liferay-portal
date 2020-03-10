@@ -2,6 +2,7 @@ Bundle-Name: Liferay Dynamic Data Mapping SPI
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.spi
 Bundle-Version: 1.1.1
 Export-Package:\
+	com.liferay.dynamic.data.mapping.spi.converter,\
 	com.liferay.dynamic.data.mapping.spi.converter.model,\
 	com.liferay.dynamic.data.mapping.spi.converter.serializer,\
 	com.liferay.dynamic.data.mapping.spi.form.builder.settings

@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.expression.model.Expression;
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.visitor.ActionExpressionVisitor;
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.visitor.ConditionExpressionVisitor;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRule;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRuleAction;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRuleCondition;
@@ -47,9 +48,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMFormRuleConverter.class)
-public class DDMFormRuleConverter {
+@Component(immediate = true, service = SPIDDMFormRuleConverter.class)
+public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 
+	@Override
 	public List<SPIDDMFormRule> convert(List<DDMFormRule> ddmFormRules) {
 		List<SPIDDMFormRule> spiDDMFormRules = new ArrayList<>();
 
@@ -60,6 +62,7 @@ public class DDMFormRuleConverter {
 		return spiDDMFormRules;
 	}
 
+	@Override
 	public List<DDMFormRule> convert(
 		List<SPIDDMFormRule> spiDDMFormRules,
 		SPIDDMFormRuleSerializerContext spiDDMFormRuleSerializerContext) {

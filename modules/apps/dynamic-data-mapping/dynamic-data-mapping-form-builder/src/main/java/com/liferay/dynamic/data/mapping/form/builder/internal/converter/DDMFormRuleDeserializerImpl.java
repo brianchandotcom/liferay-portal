@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.form.builder.internal.converter.model.ac
 import com.liferay.dynamic.data.mapping.form.builder.rule.DDMFormRuleDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRule;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRuleAction;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRuleCondition;

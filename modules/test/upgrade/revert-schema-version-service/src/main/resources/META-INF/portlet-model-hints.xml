@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.revert.schema.version.model.SchemaEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="entryId" type="long" />
+		<field name="companyId" type="long" />
+	</model>
+</model-hints>

@@ -170,7 +170,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			StringUtil.trim(virtualHostname));
 
 		if (Validator.isNull(webId) ||
-			webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID) ||
 			(companyPersistence.fetchByWebId(webId) != null)) {
 
 			throw new CompanyWebIdException();
@@ -243,6 +242,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			if (webId.equals("liferay.net")) {
 				_addDemoSettings(company);
+			}
+
+			_addDefaultUser(company);
+
+			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+				return company;
 			}
 
 			return checkCompany(webId, mx);

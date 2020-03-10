@@ -33,7 +33,7 @@ ext {
 		"com.liferay.portal.tools.bundle.support.version": "3.5.4",
 		"com.liferay.portal.tools.service.builder.version": "1.0.328",
 		"com.liferay.portal.tools.soy.builder.version": "3.0.4",
-		"com.liferay.portal.tools.theme.builder.version": "1.1.7"
+		"com.liferay.portal.tools.theme.builder.version": "1.1.8"
 	]
 }
 

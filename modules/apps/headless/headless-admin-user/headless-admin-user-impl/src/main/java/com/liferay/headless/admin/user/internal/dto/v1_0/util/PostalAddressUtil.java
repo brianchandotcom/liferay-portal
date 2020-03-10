@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Locale;
 import java.util.Set;
@@ -73,7 +74,8 @@ public class PostalAddressUtil {
 
 						return localesStream.collect(
 							Collectors.toMap(
-								Locale::toLanguageTag, country::getName));
+								LocaleUtil::toBCP47LanguageId,
+								country::getName));
 					});
 				setAddressRegion(
 					() -> {

@@ -476,7 +476,8 @@ public class TaxonomyCategoryResourceImpl
 
 		if ((add && (localizedNames == null)) ||
 			(!add && (localizedNames != null) &&
-			 !localizedNames.containsKey(defaultLocale.toLanguageTag()))) {
+			 !localizedNames.containsKey(
+				 LocaleUtil.toBCP47LanguageId(defaultLocale)))) {
 
 			String w3cLanguageId = LocaleUtil.toW3cLanguageId(defaultLocale);
 

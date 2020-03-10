@@ -122,14 +122,12 @@
 			margin: 0;
 			padding: 0;
 			.pie-chart-wrapper--legend--dot {
-				display: inline-block;
-				width: 8px;
-				height: 8px;
 				border-radius: 50%;
+				display: inline-block;
+				height: 8px;
 				margin-right: 0.5rem;
+				width: 8px;
 			}
-		}
-		.pie-chart-wrapper--chart {
 		}
 	}
 }

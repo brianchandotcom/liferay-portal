@@ -60,9 +60,29 @@ function APIService({endpoints, namespace, page}) {
 		});
 	}
 
+	function getOrganicVolume() {
+		// TODO remove frontend mock
+
+		return new Promise(resolve =>
+			setTimeout(
+				() => resolve({analyticsReportsOrganicVolume: 445545}),
+				300
+			)
+		);
+	}
+
+	function getPaidVolume() {
+		// TODO remove frontend mock
+		return new Promise(resolve =>
+			setTimeout(() => resolve({analyticsReportsPaidVolume: 170222}), 300)
+		);
+	}
+
 	return {
 		getHistoricalReads,
 		getHistoricalViews,
+		getOrganicVolume,
+		getPaidVolume,
 		getTotalReads,
 		getTotalViews,
 	};

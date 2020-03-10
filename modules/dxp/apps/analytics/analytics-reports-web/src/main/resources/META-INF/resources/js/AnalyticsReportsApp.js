@@ -60,6 +60,24 @@ export default function({context, props}) {
 		});
 	}
 
+	function _handleOrganicVolume() {
+		return api.getOrganicVolume().then(response => {
+			return numberFormat(
+				languageTag,
+				response.analyticsReportsOrganicVolume
+			);
+		});
+	}
+
+	function _handlePaidVolume() {
+		return api.getPaidVolume().then(response => {
+			return numberFormat(
+				languageTag,
+				response.analyticsReportsPaidVolume
+			);
+		});
+	}
+
 	return (
 		<div className="p-3">
 			<BasicInformation
@@ -69,8 +87,12 @@ export default function({context, props}) {
 				title={title}
 			/>
 
+			<h5 className="mt-4 sheet-subtitle text-secondary">
+				{Liferay.Language.get('reads-and-views')}
+			</h5>
+
 			<TotalCount
-				className="mt-4"
+				className="mt-2"
 				dataProvider={_handleTotalViews}
 				label={Liferay.Util.sub(Liferay.Language.get('total-views'))}
 				popoverHeader={Liferay.Language.get('total-views')}
@@ -80,7 +102,7 @@ export default function({context, props}) {
 			/>
 
 			<TotalCount
-				className="mt-2"
+				className="mb-3 mt-2"
 				dataProvider={_handleTotalReads}
 				label={Liferay.Util.sub(Liferay.Language.get('total-reads'))}
 				popoverHeader={Liferay.Language.get('total-reads')}
@@ -88,8 +110,6 @@ export default function({context, props}) {
 					'this-number-refers-to-the-total-number-of-reads-since-the-content-was-published'
 				)}
 			/>
-
-			<hr />
 
 			<Chart
 				dataProviders={[getHistoricalViews, getHistoricalReads]}
@@ -99,7 +119,21 @@ export default function({context, props}) {
 				timeSpanOptions={timeSpans}
 			/>
 
-			<hr />
+			<h5 className="mt-4 sheet-subtitle text-secondary">
+				{Liferay.Language.get('traffic')}
+			</h5>
+
+			<TotalCount
+				className="mt-2"
+				dataProvider={_handleOrganicVolume}
+				label={Liferay.Util.sub(Liferay.Language.get('organic-volume'))}
+			/>
+
+			<TotalCount
+				className="mt-2"
+				dataProvider={_handlePaidVolume}
+				label={Liferay.Util.sub(Liferay.Language.get('paid-volume'))}
+			/>
 
 			<PieChart />
 		</div>

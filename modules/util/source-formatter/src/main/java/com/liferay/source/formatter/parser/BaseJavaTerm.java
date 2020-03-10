@@ -141,6 +141,33 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	}
 
 	@Override
+	public boolean isPrivate() {
+		if (_accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PRIVATE)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isProtected() {
+		if (_accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PROTECTED)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isPublic() {
+		if (_accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PUBLIC)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isStatic() {
 		return _isStatic;
 	}

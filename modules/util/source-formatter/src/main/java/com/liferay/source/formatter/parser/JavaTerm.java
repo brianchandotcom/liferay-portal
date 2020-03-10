@@ -60,6 +60,12 @@ public interface JavaTerm {
 
 	public boolean isJavaVariable();
 
+	public boolean isPrivate();
+
+	public boolean isProtected();
+
+	public boolean isPublic();
+
 	public boolean isStatic();
 
 	public void setParentJavaClass(JavaClass javaClass);

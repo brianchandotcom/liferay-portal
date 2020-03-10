@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Cell, Pie, PieChart} from 'recharts';
@@ -31,13 +32,17 @@ const FALLBACK_COLOR = '#e92563';
 const getColorByName = name => COLORS_MAP[name] || FALLBACK_COLOR;
 
 export default function TrafficSources({dataProvider, languageTag}) {
+	const isMounted = useIsMounted();
 	const [trafficSources, setTrafficSources] = useState([]);
 
 	useEffect(() => {
-		dataProvider().then(response =>
-			setTrafficSources(response.analyticsReportsTrafficSources)
-		);
-	}, [dataProvider]);
+		dataProvider().then(response => {
+			if (isMounted()) {
+				setTrafficSources(response.analyticsReportsTrafficSources);
+			}
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<div className="pie-chart-wrapper">

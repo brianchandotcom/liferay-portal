@@ -177,10 +177,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		validateVirtualHost(webId, virtualHostname);
 		validateMx(-1, mx);
 
-		Company company = checkCompany(webId, mx);
+		Company company = companyPersistence.create(
+			counterLocalService.increment());
 
-		company = companyPersistence.fetchByPrimaryKey(company.getCompanyId());
-
+		company.setWebId(webId);
 		company.setMx(mx);
 		company.setSystem(system);
 		company.setMaxUsers(maxUsers);
@@ -190,10 +190,37 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Virtual host
 
-		company = updateVirtualHostname(
-			company.getCompanyId(), virtualHostname);
+		updateVirtualHostname(company.getCompanyId(), virtualHostname);
 
-		return company;
+		// Account
+
+		String name = webId;
+
+		if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+			name = PropsValues.COMPANY_DEFAULT_NAME;
+		}
+
+		updateAccount(
+			company, name, null, null, null, null, null, null, null, null);
+
+		// Company info
+
+		try {
+			company.setKey(Encryptor.serializeKey(Encryptor.generateKey()));
+		}
+		catch (EncryptorException encryptorException) {
+			throw new SystemException(encryptorException);
+		}
+
+		companyInfoPersistence.update(company.getCompanyInfo());
+
+		// Demo settings
+
+		if (webId.equals("liferay.net")) {
+			_addDemoSettings(company);
+		}
+
+		return checkCompany(webId, mx);
 	}
 
 	/**
@@ -213,8 +240,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the company with the web domain and mail domain. If no such
-	 * company exits, the method will create a new company.
+	 * Returns the company with the web domain and mail domain.
 	 *
 	 * The method goes through a series of checks to ensure that the company
 	 * contains default users, groups, etc.
@@ -231,58 +257,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	public Company checkCompany(String webId, String mx)
 		throws PortalException {
 
-		// Company
+		Company company = getCompanyByWebId(webId);
 
-		Company company = companyPersistence.fetchByWebId(webId);
-
-		if (company == null) {
-			long companyId = counterLocalService.increment();
-
-			company = companyPersistence.create(companyId);
-
-			try {
-				company.setKey(Encryptor.serializeKey(Encryptor.generateKey()));
-			}
-			catch (EncryptorException encryptorException) {
-				throw new SystemException(encryptorException);
-			}
-
-			company.setWebId(webId);
-			company.setMx(mx);
-			company.setActive(true);
-
-			company = companyPersistence.update(company);
-
-			// Account
-
-			String name = webId;
-
-			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-				name = PropsValues.COMPANY_DEFAULT_NAME;
-			}
-
-			updateAccount(
-				company, name, null, null, null, null, null, null, null, null);
-
-			// Company info
-
-			companyInfoPersistence.update(company.getCompanyInfo());
-
-			// Virtual host
-
-			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-				company = updateVirtualHostname(
-					companyId, _DEFAULT_VIRTUAL_HOST);
-			}
-
-			// Demo settings
-
-			if (webId.equals("liferay.net")) {
-				_addDemoSettings(company);
-			}
-		}
-
-		preregisterCompany(company.getCompanyId());
+		final long companyId = company.getCompanyId();
 
 		Locale localeThreadLocalDefaultLocale =
 			LocaleThreadLocal.getDefaultLocale();
@@ -290,14 +267,14 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			LocaleThreadLocal.getSiteDefaultLocale();
 
 		try {
+			preregisterCompany(company.getCompanyId());
+
 			Locale companyDefaultLocale = LocaleUtil.fromLanguageId(
 				PropsValues.COMPANY_DEFAULT_LOCALE);
 
 			LocaleThreadLocal.setDefaultLocale(companyDefaultLocale);
 
 			LocaleThreadLocal.setSiteDefaultLocale(null);
-
-			final long companyId = company.getCompanyId();
 
 			// Key
 

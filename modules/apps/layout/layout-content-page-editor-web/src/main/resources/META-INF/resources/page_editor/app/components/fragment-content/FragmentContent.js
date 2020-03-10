@@ -18,13 +18,16 @@ import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
+import {updateFragmentEntryLinkContent} from '../../actions/index';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import Processors from '../../processors/index';
 import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
-import {useSelector} from '../../store/index';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
+import FragmentService from '../../services/FragmentService';
+import {useDispatch, useSelector} from '../../store/index';
 import UnsafeHTML from '../UnsafeHTML';
 import {
 	useEditableProcessorUniqueId,
@@ -41,6 +44,7 @@ import resolveEditableValue from './resolveEditableValue';
 
 const FragmentContent = React.forwardRef(
 	({fragmentEntryLinkId, itemId}, ref) => {
+		const dispatch = useDispatch();
 		const element = ref.current;
 		const isMounted = useIsMounted();
 		const editableProcessorUniqueId = useEditableProcessorUniqueId();
@@ -60,6 +64,7 @@ const FragmentContent = React.forwardRef(
 		const prefixedSegmentsExperienceId = useSelector(
 			selectPrefixedSegmentsExperienceId
 		);
+		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 		const defaultContent = useSelector(state =>
 			state.fragmentEntryLinks[fragmentEntryLinkId]
@@ -74,6 +79,21 @@ const FragmentContent = React.forwardRef(
 		);
 
 		const [content, setContent] = useState(defaultContent);
+
+		useEffect(() => {
+			FragmentService.renderFragmentEntryLinkContent({
+				fragmentEntryLinkId,
+				onNetworkStatus: dispatch,
+				segmentsExperienceId,
+			}).then(({content}) =>
+				dispatch(
+					updateFragmentEntryLinkContent({
+						content,
+						fragmentEntryLinkId,
+					})
+				)
+			);
+		}, [dispatch, fragmentEntryLinkId, segmentsExperienceId]);
 
 		useEffect(() => {
 			let element = document.createElement('div');

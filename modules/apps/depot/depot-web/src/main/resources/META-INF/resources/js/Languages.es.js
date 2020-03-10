@@ -23,8 +23,7 @@ import ManageLanguages from './ManageLanguages.es';
 
 import '../css/Languages.scss';
 
-export const getLocalesInputValue = arr =>
-	arr.map(({localeId}) => localeId).join(',');
+const getLocalesInputValue = arr => arr.map(({localeId}) => localeId).join(',');
 
 function arrayMove(arr, from, to) {
 	const clonedArr = [...arr];

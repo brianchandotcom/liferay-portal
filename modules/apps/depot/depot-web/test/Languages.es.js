@@ -20,9 +20,7 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 
-import Languages, {
-	getLocalesInputValue,
-} from '../src/main/resources/META-INF/resources/js/Languages.es';
+import Languages from '../src/main/resources/META-INF/resources/js/Languages.es';
 
 const availableLocales = [
 	{displayName: 'a', localeId: 'a'},
@@ -100,11 +98,7 @@ describe('Languages', () => {
 		expect(
 			getByDisplayValue(defaultProps.siteDefaultLocaleId)
 		).not.toBeNull();
-		expect(
-			getByDisplayValue(
-				getLocalesInputValue(defaultProps.siteAvailableLocales)
-			)
-		).not.toBeNull();
+		expect(getByDisplayValue('b')).not.toBeNull();
 	});
 
 	it('changes the default language', () => {
@@ -215,11 +209,7 @@ describe('Languages', () => {
 			);
 
 			expect(languagesList).toHaveLength(1);
-			expect(
-				result.getAllByDisplayValue(
-					getLocalesInputValue([defaultProps.siteAvailableLocales[1]])
-				)
-			).not.toBeNull();
+			expect(result.getAllByDisplayValue('b')).not.toBeNull();
 		});
 
 		it('add custom locale and save', async () => {
@@ -236,14 +226,7 @@ describe('Languages', () => {
 			);
 
 			expect(languagesList).toHaveLength(3);
-			expect(
-				result.getByDisplayValue(
-					getLocalesInputValue([
-						...defaultProps.siteAvailableLocales,
-						defaultProps.availableLocales[2],
-					])
-				)
-			).not.toBeNull();
+			expect(result.getByDisplayValue('a,b,c')).not.toBeNull();
 		});
 	});
 });

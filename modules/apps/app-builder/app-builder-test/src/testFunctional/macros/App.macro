@@ -29,6 +29,24 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}
 
+	macro clickDeploy {
+		Button.click(button = "Deploy");
+	}
+
+	macro clickNewAppButton {
+		AssertClick(
+			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
+			value1 = "New App");
+	}
+
+	macro clickNext {
+		Button.click(button = "Next");
+	}
+
+	macro clickPrevious {
+		Button.click(button = "Previous");
+	}
+
 	macro editSiteDeployed {
 		AppBuilderAdmin.openItem(itemName = "${appTitle}");
 
@@ -49,26 +67,12 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}
 
-	macro clickDeploy {
-		Button.click(button = "Deploy");
-	}
-
-	macro clickNewAppButton {
-		AssertClick(
-			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
-			value1 = "New App");
-	}
-
-	macro clickNext {
-		Button.click(button = "Next");
-	}
-
-	macro clickPrevious {
-		Button.click(button = "Previous");
-	}
-
 	macro openProductMenuPlaceItDropdown {
 		Click(locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN");
+	}
+
+	macro openProductMenuSiteOption {
+		Click(locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN");
 	}
 
 	macro saveApp {
@@ -90,12 +94,7 @@ definition {
 			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
 	}
 
-	macro openProductMenuSiteOption {
-		Click(locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN");
-	}
-
 	macro selectProductMenuSiteOption {
-		App.openProductMenuSiteOption();
 		Click(
 			key_dropdownOption = "${siteOption}",
 			locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN_OPTION");

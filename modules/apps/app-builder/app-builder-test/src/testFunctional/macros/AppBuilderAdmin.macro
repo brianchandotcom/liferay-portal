@@ -370,6 +370,24 @@ definition {
 			value1 = "UNDEPLOYED");
 	}
 
+	macro validateAppIsNotPresentOnControlPanel {
+		ProductMenuHelper.expandPanel(panel = "Control Panel");
+
+		AssertElementNotPresent(
+			key_portlet = "${portlet}",
+			locator1 = "AppBuilder#CUSTOM_PORTLET");
+	}
+
+	macro validateAppIsNotPresentOnSite {
+		ProductMenuHelper.expandPanel(panel = "Site Administration");
+
+		ProductMenuHelper.expandCategory(category = "Content & Data");
+
+		AssertElementNotPresent(
+			key_portlet = "${portlet}",
+			locator1 = "ProductMenu#PORTLET");
+	}
+
 	macro validateCustomObjectNameOnHeader {
 		AssertTextEquals(
 			locator1 = "AppBuilder#CUSTOM_OBJECT_NAME_ON_HEADER",

@@ -13,6 +13,8 @@ definition {
 		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "App Builder Site Name");
+		JSONGroup.addGroup(groupName = "App Builder Site 1");
+		JSONGroup.addGroup(groupName = "App Builder Site 2");
 
 		Navigator.openURL();
 
@@ -38,9 +40,9 @@ definition {
 
 			Page.tearDownCP();
 
-			Site.tearDownCP();
-
-			JSONGroup.deleteGroupByName(groupName = "App Builder Site Name"); -- FALAR COM ALEX SOBRE TIRAR ESSE CHAMADA UMA VEZ QUE TODOS OS SITES VÃO SER DELETADOS
+			JSONGroup.deleteGroupByName(groupName = "App Builder Site Name");
+			JSONGroup.deleteGroupByName(groupName = "App Builder Site 1");
+			JSONGroup.deleteGroupByName(groupName = "App Builder Site 2");
 
 			JSONUser.tearDownNonAdminUsers();
 
@@ -1778,6 +1780,199 @@ definition {
 		DetailsView.validateEntry(entry = "1987");
 	}
 
+	@description = "Publish my app in one or more sites"
+	@priority = "5"
+	test PublishAppsInOneOrMoreSites {
+
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Site 1",
+			layoutName = "App Builder Test Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Site 2",
+			layoutName = "App Builder Test Page");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object 1",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "Form View Title",
+			tableViewName = "Table View Title");
+
+		App.add(
+			appTitle = "Test App A",
+			deployOption = "Product Menu",
+			formViewName = "Form View Title",
+			menuOption = "Site Menu",
+			siteOptionList = "App Builder Site 1",
+			tableViewName = "Table View Title");
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site 1");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Test App A");
+
+		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site 2");
+
+		AppBuilderAdmin.validateAppIsNotPresentOnSite(portlet = "Test App A");
+
+		AppBuilderAdmin.validateAppIsNotPresentOnControlPanel(portlet = "Test App A");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Table Views");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		App.editSiteDeployed(
+			appTitle = "Test App A",
+			menuOption = "Site Menu",
+			siteOptionList = "App Builder Site 2");
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site 1");
+
+		AppBuilderAdmin.validateAppIsNotPresentOnSite(appName = "Test App A");
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site 2");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Test App A");
+
+		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Table Views");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		App.editSiteDeployed(
+			appTitle = "Test App A",
+			menuOption = "Site Menu",
+			siteOptionList = "App Builder Site 1,App Builder Site 2");
+
+		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object 2",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "Form View Title",
+			tableViewName = "Table View Title");
+
+		App.add(
+			appTitle = "Test App B",
+			deployOption = "Product Menu",
+			formViewName = "Form View Title",
+			menuOption = "Control Panel and Site Menu",
+			siteOptionList = "App Builder Site 1",
+			tableViewName = "Table View Title");
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site 1");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Test App A");
+
+		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Test App B");
+
+		AppBuilderAdmin.validateProductMenuApp(appName = "Test App B");
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site 2");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Test App A");
+
+		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
+
+		AppBuilderAdmin.validateAppIsNotPresentOnSite(portlet = "Test App B");
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "Test App B");
+
+		AppBuilderAdmin.validateProductMenuApp(appName = "Test App B");
+
+		AppBuilderAdmin.validateAppIsNotPresentOnControlPanel(portlet = "Test App A");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "my custom object 1");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.undeployApp(itemName = "Test App A");
+
+		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.openItem(itemName = "my custom object 2");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.undeployApp(itemName = "Test App B");
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site 1");
+
+		AppBuilderAdmin.validateAppIsNotPresentOnSite(portlet = "Test App A");
+
+		AppBuilderAdmin.validateAppIsNotPresentOnSite(portlet = "Test App B");
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site 2");
+
+		AppBuilderAdmin.validateAppIsNotPresentOnSite(portlet = "Test App A");
+
+		AppBuilderAdmin.validateAppIsNotPresentOnSite(portlet = "Test App B");
+
+		AppBuilderAdmin.validateAppIsNotPresentOnControlPanel(portlet = "Test App A");
+
+		AppBuilderAdmin.validateAppIsNotPresentOnControlPanel(portlet = "Test App B");
+	}
+
 	@description = "Publish apps in the product menu and reuse its views"
 	@priority = "5"
 	test PublishAppsInProductMenuAndReuseItsViews {
@@ -3074,42 +3269,6 @@ definition {
 		DetailsView.validateEntry(entry = "Bester");
 
 		DetailsView.deleteEntry(itemName = "Changed");
-	}
-
-	@description = "Publish my app in one or more sites"
-	@priority = "5"
-	test PublishAppsInOneOrMoreSites {
-
-		JSONLayout.addPublicLayout(
-			groupName = "App Builder Site 1",
-			layoutName = "App Builder Test Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "App Builder Site 2",
-			layoutName = "App Builder Test Page");
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object 1",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		FormViewBuilder.addFormView(
-			fieldType = "Text",
-			formViewName = "My Form View");
-
-		TableViewBuilder.addBasicTableView(
-			fieldType = "Text",
-			tableViewName = "My Table View");
-
-
-
-
-
-
-
-		// Navigator.gotoSitePage(
-		// 	pageName = "App Builder Test Page",
-		// 	siteName = "App Builder Site Name");
 	}
 
 }

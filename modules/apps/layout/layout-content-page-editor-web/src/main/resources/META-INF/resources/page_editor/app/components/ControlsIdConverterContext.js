@@ -15,6 +15,8 @@
 import React, {useContext} from 'react';
 
 const INITIAL_STATE = {
+	collectionFields: null,
+	collectionItem: null,
 	fromControlsId: itemId => itemId,
 	toControlsId: controlId => controlId,
 };
@@ -35,4 +37,16 @@ const useToControlsId = () => {
 	return context.toControlsId;
 };
 
-export {ControlsIdConverterContextProvider, useFromControlsId, useToControlsId};
+const useCollectionFields = () => {
+	const context = useContext(ControlsIdConverterContext);
+
+	return context.collectionFields;
+};
+
+export {
+	ControlsIdConverterContext,
+	ControlsIdConverterContextProvider,
+	useCollectionFields,
+	useFromControlsId,
+	useToControlsId,
+};

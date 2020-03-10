@@ -259,12 +259,12 @@
 <!--EXPERIENCE-->
 <tr>
 	<td>EXPERIENCE_BUTTON_NAME</td>
-	<td>//div[contains(@class,'segments-experience-selector')]/button[contains(.,'${key_experienceName}')]</td>
+	<td>//div[contains(@class,'page-editor__toolbar-experience')]/button[contains(.,'${key_experienceName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EXPERIENCE_DEFAULT_BUTTON_NAME</td>
-	<td>//div[contains(@class,'segments-experience-selector')]/button[contains(.,'Default')]</td>
+	<td>//div[contains(@class,'page-editor__toolbar-experience')]/button[contains(.,'Default')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -274,7 +274,7 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_LABEL</td>
-	<td>//div[contains(@class,'segments-experience-selector')]/label[contains(.,'Experience')]</td>
+	<td>//div[contains(@class,'page-editor__toolbar-experience')]/label[contains(.,'Experience')]</td>
 	<td></td>
 </tr>
 <tr>

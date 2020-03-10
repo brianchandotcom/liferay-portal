@@ -112,6 +112,34 @@ public class WorkflowTaskAssignToMe {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Date dueDate;
 
+	@Schema
+	public Long getWorkflowTaskId() {
+		return workflowTaskId;
+	}
+
+	public void setWorkflowTaskId(Long workflowTaskId) {
+		this.workflowTaskId = workflowTaskId;
+	}
+
+	@JsonIgnore
+	public void setWorkflowTaskId(
+		UnsafeSupplier<Long, Exception> workflowTaskIdUnsafeSupplier) {
+
+		try {
+			workflowTaskId = workflowTaskIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	protected Long workflowTaskId;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -169,6 +197,16 @@ public class WorkflowTaskAssignToMe {
 			sb.append(liferayToJSONDateFormat.format(dueDate));
 
 			sb.append("\"");
+		}
+
+		if (workflowTaskId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowTaskId\": ");
+
+			sb.append(workflowTaskId);
 		}
 
 		sb.append("}");

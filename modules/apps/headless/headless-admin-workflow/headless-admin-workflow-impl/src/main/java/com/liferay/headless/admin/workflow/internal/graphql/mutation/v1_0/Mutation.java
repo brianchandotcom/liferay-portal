@@ -221,6 +221,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean patchWorkflowTaskUpdateDueDate(
+			@GraphQLName("workflowTaskAssignToMes") WorkflowTaskAssignToMe[]
+				workflowTaskAssignToMes)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowTaskResource ->
+				workflowTaskResource.patchWorkflowTaskUpdateDueDate(
+					workflowTaskAssignToMes));
+
+		return true;
+	}
+
+	@GraphQLField
 	public WorkflowTask createWorkflowTaskAssignToMe(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("workflowTaskAssignToMe") WorkflowTaskAssignToMe

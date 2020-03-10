@@ -171,6 +171,16 @@ public interface WorkflowTaskResource {
 				Long creatorId, Pagination pagination)
 		throws Exception;
 
+	public void patchWorkflowTaskUpdateDueDate(
+			com.liferay.headless.admin.workflow.client.dto.v1_0.
+				WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse patchWorkflowTaskUpdateDueDateHttpResponse(
+			com.liferay.headless.admin.workflow.client.dto.v1_0.
+				WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
+		throws Exception;
+
 	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception;
 
 	public HttpInvoker.HttpResponse getWorkflowTaskHttpResponse(
@@ -1308,6 +1318,83 @@ public interface WorkflowTaskResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-admin-workflow/v1.0/workflow-tasks/submitting-user");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void patchWorkflowTaskUpdateDueDate(
+				com.liferay.headless.admin.workflow.client.dto.v1_0.
+					WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				patchWorkflowTaskUpdateDueDateHttpResponse(
+					workflowTaskAssignToMes);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				patchWorkflowTaskUpdateDueDateHttpResponse(
+					com.liferay.headless.admin.workflow.client.dto.v1_0.
+						WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				Stream.of(
+					workflowTaskAssignToMes
+				).map(
+					value -> String.valueOf(value)
+				).collect(
+					Collectors.toList()
+				).toString(),
+				"application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/update-due-date");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

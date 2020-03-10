@@ -102,6 +102,10 @@ public interface WorkflowTaskResource {
 			Long creatorId, Pagination pagination)
 		throws Exception;
 
+	public void patchWorkflowTaskUpdateDueDate(
+			WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
+		throws Exception;
+
 	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception;
 
 	public WorkflowTask postWorkflowTaskAssignToMe(

@@ -71,6 +71,27 @@ public class WorkflowTaskAssignToMe implements Cloneable {
 
 	protected Date dueDate;
 
+	public Long getWorkflowTaskId() {
+		return workflowTaskId;
+	}
+
+	public void setWorkflowTaskId(Long workflowTaskId) {
+		this.workflowTaskId = workflowTaskId;
+	}
+
+	public void setWorkflowTaskId(
+		UnsafeSupplier<Long, Exception> workflowTaskIdUnsafeSupplier) {
+
+		try {
+			workflowTaskId = workflowTaskIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long workflowTaskId;
+
 	@Override
 	public WorkflowTaskAssignToMe clone() throws CloneNotSupportedException {
 		return (WorkflowTaskAssignToMe)super.clone();

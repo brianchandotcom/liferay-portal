@@ -91,6 +91,16 @@ public class WorkflowTaskAssignToMeSerDes {
 			sb.append("\"");
 		}
 
+		if (workflowTaskAssignToMe.getWorkflowTaskId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowTaskId\": ");
+
+			sb.append(workflowTaskAssignToMe.getWorkflowTaskId());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -128,6 +138,15 @@ public class WorkflowTaskAssignToMeSerDes {
 			liferayToJSONDateFormat.format(
 				workflowTaskAssignToMe.getDueDate()));
 
+		if (workflowTaskAssignToMe.getWorkflowTaskId() == null) {
+			map.put("workflowTaskId", null);
+		}
+		else {
+			map.put(
+				"workflowTaskId",
+				String.valueOf(workflowTaskAssignToMe.getWorkflowTaskId()));
+		}
+
 		return map;
 	}
 
@@ -159,6 +178,12 @@ public class WorkflowTaskAssignToMeSerDes {
 				if (jsonParserFieldValue != null) {
 					workflowTaskAssignToMe.setDueDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "workflowTaskId")) {
+				if (jsonParserFieldValue != null) {
+					workflowTaskAssignToMe.setWorkflowTaskId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else {

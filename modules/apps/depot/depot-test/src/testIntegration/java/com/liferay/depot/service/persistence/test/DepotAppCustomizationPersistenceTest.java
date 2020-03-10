@@ -181,6 +181,14 @@ public class DepotAppCustomizationPersistenceTest {
 	}
 
 	@Test
+	public void testCountByD_E() throws Exception {
+		_persistence.countByD_E(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByD_E(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DepotAppCustomization newDepotAppCustomization =
 			addDepotAppCustomization();
@@ -471,6 +479,17 @@ public class DepotAppCustomizationPersistenceTest {
 				ReflectionTestUtil.invoke(
 					existingDepotAppCustomization, "getOriginalPortletId",
 					new Class<?>[0])));
+
+		Assert.assertEquals(
+			Long.valueOf(existingDepotAppCustomization.getDepotEntryId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingDepotAppCustomization, "getOriginalDepotEntryId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Boolean.valueOf(existingDepotAppCustomization.getEnabled()),
+			ReflectionTestUtil.<Boolean>invoke(
+				existingDepotAppCustomization, "getOriginalEnabled",
+				new Class<?>[0]));
 	}
 
 	protected DepotAppCustomization addDepotAppCustomization()

@@ -250,6 +250,14 @@ public class DepotAppCustomizationLocalServiceWrapper
 			depotAppCustomizationId);
 	}
 
+	@Override
+	public int getDepotAppCustomizationCount(
+		long depotEntryId, boolean enabled) {
+
+		return _depotAppCustomizationLocalService.getDepotAppCustomizationCount(
+			depotEntryId, enabled);
+	}
+
 	/**
 	 * Returns a range of all the depot app customizations.
 	 *

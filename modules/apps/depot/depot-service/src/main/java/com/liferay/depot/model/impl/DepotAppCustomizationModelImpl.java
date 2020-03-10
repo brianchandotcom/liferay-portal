@@ -102,9 +102,11 @@ public class DepotAppCustomizationModelImpl
 
 	public static final long DEPOTENTRYID_COLUMN_BITMASK = 1L;
 
-	public static final long PORTLETID_COLUMN_BITMASK = 2L;
+	public static final long ENABLED_COLUMN_BITMASK = 2L;
 
-	public static final long DEPOTAPPCUSTOMIZATIONID_COLUMN_BITMASK = 4L;
+	public static final long PORTLETID_COLUMN_BITMASK = 4L;
+
+	public static final long DEPOTAPPCUSTOMIZATIONID_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -354,7 +356,19 @@ public class DepotAppCustomizationModelImpl
 
 	@Override
 	public void setEnabled(boolean enabled) {
+		_columnBitmask |= ENABLED_COLUMN_BITMASK;
+
+		if (!_setOriginalEnabled) {
+			_setOriginalEnabled = true;
+
+			_originalEnabled = _enabled;
+		}
+
 		_enabled = enabled;
+	}
+
+	public boolean getOriginalEnabled() {
+		return _originalEnabled;
 	}
 
 	@Override
@@ -495,6 +509,11 @@ public class DepotAppCustomizationModelImpl
 
 		depotAppCustomizationModelImpl._setOriginalDepotEntryId = false;
 
+		depotAppCustomizationModelImpl._originalEnabled =
+			depotAppCustomizationModelImpl._enabled;
+
+		depotAppCustomizationModelImpl._setOriginalEnabled = false;
+
 		depotAppCustomizationModelImpl._originalPortletId =
 			depotAppCustomizationModelImpl._portletId;
 
@@ -610,6 +629,8 @@ public class DepotAppCustomizationModelImpl
 	private long _originalDepotEntryId;
 	private boolean _setOriginalDepotEntryId;
 	private boolean _enabled;
+	private boolean _originalEnabled;
+	private boolean _setOriginalEnabled;
 	private String _portletId;
 	private String _originalPortletId;
 	private long _columnBitmask;

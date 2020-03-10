@@ -862,6 +862,236 @@ public class DepotAppCustomizationPersistenceImpl
 	private static final String _FINDER_COLUMN_D_P_PORTLETID_3 =
 		"(depotAppCustomization.portletId IS NULL OR depotAppCustomization.portletId = '')";
 
+	private FinderPath _finderPathFetchByD_E;
+	private FinderPath _finderPathCountByD_E;
+
+	/**
+	 * Returns the depot app customization where depotEntryId = &#63; and enabled = &#63; or throws a <code>NoSuchAppCustomizationException</code> if it could not be found.
+	 *
+	 * @param depotEntryId the depot entry ID
+	 * @param enabled the enabled
+	 * @return the matching depot app customization
+	 * @throws NoSuchAppCustomizationException if a matching depot app customization could not be found
+	 */
+	@Override
+	public DepotAppCustomization findByD_E(long depotEntryId, boolean enabled)
+		throws NoSuchAppCustomizationException {
+
+		DepotAppCustomization depotAppCustomization = fetchByD_E(
+			depotEntryId, enabled);
+
+		if (depotAppCustomization == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("depotEntryId=");
+			sb.append(depotEntryId);
+
+			sb.append(", enabled=");
+			sb.append(enabled);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchAppCustomizationException(sb.toString());
+		}
+
+		return depotAppCustomization;
+	}
+
+	/**
+	 * Returns the depot app customization where depotEntryId = &#63; and enabled = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param depotEntryId the depot entry ID
+	 * @param enabled the enabled
+	 * @return the matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
+	 */
+	@Override
+	public DepotAppCustomization fetchByD_E(
+		long depotEntryId, boolean enabled) {
+
+		return fetchByD_E(depotEntryId, enabled, true);
+	}
+
+	/**
+	 * Returns the depot app customization where depotEntryId = &#63; and enabled = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param depotEntryId the depot entry ID
+	 * @param enabled the enabled
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
+	 */
+	@Override
+	public DepotAppCustomization fetchByD_E(
+		long depotEntryId, boolean enabled, boolean useFinderCache) {
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {depotEntryId, enabled};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByD_E, finderArgs, this);
+		}
+
+		if (result instanceof DepotAppCustomization) {
+			DepotAppCustomization depotAppCustomization =
+				(DepotAppCustomization)result;
+
+			if ((depotEntryId != depotAppCustomization.getDepotEntryId()) ||
+				(enabled != depotAppCustomization.isEnabled())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_DEPOTAPPCUSTOMIZATION_WHERE);
+
+			sb.append(_FINDER_COLUMN_D_E_DEPOTENTRYID_2);
+
+			sb.append(_FINDER_COLUMN_D_E_ENABLED_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(depotEntryId);
+
+				queryPos.add(enabled);
+
+				List<DepotAppCustomization> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByD_E, finderArgs, list);
+					}
+				}
+				else {
+					DepotAppCustomization depotAppCustomization = list.get(0);
+
+					result = depotAppCustomization;
+
+					cacheResult(depotAppCustomization);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByD_E, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (DepotAppCustomization)result;
+		}
+	}
+
+	/**
+	 * Removes the depot app customization where depotEntryId = &#63; and enabled = &#63; from the database.
+	 *
+	 * @param depotEntryId the depot entry ID
+	 * @param enabled the enabled
+	 * @return the depot app customization that was removed
+	 */
+	@Override
+	public DepotAppCustomization removeByD_E(long depotEntryId, boolean enabled)
+		throws NoSuchAppCustomizationException {
+
+		DepotAppCustomization depotAppCustomization = findByD_E(
+			depotEntryId, enabled);
+
+		return remove(depotAppCustomization);
+	}
+
+	/**
+	 * Returns the number of depot app customizations where depotEntryId = &#63; and enabled = &#63;.
+	 *
+	 * @param depotEntryId the depot entry ID
+	 * @param enabled the enabled
+	 * @return the number of matching depot app customizations
+	 */
+	@Override
+	public int countByD_E(long depotEntryId, boolean enabled) {
+		FinderPath finderPath = _finderPathCountByD_E;
+
+		Object[] finderArgs = new Object[] {depotEntryId, enabled};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_DEPOTAPPCUSTOMIZATION_WHERE);
+
+			sb.append(_FINDER_COLUMN_D_E_DEPOTENTRYID_2);
+
+			sb.append(_FINDER_COLUMN_D_E_ENABLED_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(depotEntryId);
+
+				queryPos.add(enabled);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_D_E_DEPOTENTRYID_2 =
+		"depotAppCustomization.depotEntryId = ? AND ";
+
+	private static final String _FINDER_COLUMN_D_E_ENABLED_2 =
+		"depotAppCustomization.enabled = ?";
+
 	public DepotAppCustomizationPersistenceImpl() {
 		setModelClass(DepotAppCustomization.class);
 
@@ -885,6 +1115,14 @@ public class DepotAppCustomizationPersistenceImpl
 			new Object[] {
 				depotAppCustomization.getDepotEntryId(),
 				depotAppCustomization.getPortletId()
+			},
+			depotAppCustomization);
+
+		finderCache.putResult(
+			_finderPathFetchByD_E,
+			new Object[] {
+				depotAppCustomization.getDepotEntryId(),
+				depotAppCustomization.isEnabled()
 			},
 			depotAppCustomization);
 
@@ -993,6 +1231,16 @@ public class DepotAppCustomizationPersistenceImpl
 			_finderPathCountByD_P, args, Long.valueOf(1), false);
 		finderCache.putResult(
 			_finderPathFetchByD_P, args, depotAppCustomizationModelImpl, false);
+
+		args = new Object[] {
+			depotAppCustomizationModelImpl.getDepotEntryId(),
+			depotAppCustomizationModelImpl.isEnabled()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByD_E, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByD_E, args, depotAppCustomizationModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -1019,6 +1267,28 @@ public class DepotAppCustomizationPersistenceImpl
 
 			finderCache.removeResult(_finderPathCountByD_P, args);
 			finderCache.removeResult(_finderPathFetchByD_P, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				depotAppCustomizationModelImpl.getDepotEntryId(),
+				depotAppCustomizationModelImpl.isEnabled()
+			};
+
+			finderCache.removeResult(_finderPathCountByD_E, args);
+			finderCache.removeResult(_finderPathFetchByD_E, args);
+		}
+
+		if ((depotAppCustomizationModelImpl.getColumnBitmask() &
+			 _finderPathFetchByD_E.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				depotAppCustomizationModelImpl.getOriginalDepotEntryId(),
+				depotAppCustomizationModelImpl.getOriginalEnabled()
+			};
+
+			finderCache.removeResult(_finderPathCountByD_E, args);
+			finderCache.removeResult(_finderPathFetchByD_E, args);
 		}
 	}
 
@@ -1555,6 +1825,19 @@ public class DepotAppCustomizationPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_P",
 			new String[] {Long.class.getName(), String.class.getName()});
+
+		_finderPathFetchByD_E = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			DepotAppCustomizationImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByD_E",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			DepotAppCustomizationModelImpl.DEPOTENTRYID_COLUMN_BITMASK |
+			DepotAppCustomizationModelImpl.ENABLED_COLUMN_BITMASK);
+
+		_finderPathCountByD_E = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_E",
+			new String[] {Long.class.getName(), Boolean.class.getName()});
 	}
 
 	@Deactivate

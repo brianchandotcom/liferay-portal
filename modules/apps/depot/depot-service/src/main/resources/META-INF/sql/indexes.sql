@@ -1,3 +1,4 @@
+create unique index IX_5B76D798 on DepotAppCustomization (depotEntryId, enabled);
 create unique index IX_DA8D9ACC on DepotAppCustomization (depotEntryId, portletId[$COLUMN_LENGTH:75$]);
 
 create unique index IX_884D6226 on DepotEntry (groupId);

@@ -238,6 +238,56 @@ public interface DepotAppCustomizationPersistence
 	public int countByD_P(long depotEntryId, String portletId);
 
 	/**
+	 * Returns the depot app customization where depotEntryId = &#63; and enabled = &#63; or throws a <code>NoSuchAppCustomizationException</code> if it could not be found.
+	 *
+	 * @param depotEntryId the depot entry ID
+	 * @param enabled the enabled
+	 * @return the matching depot app customization
+	 * @throws NoSuchAppCustomizationException if a matching depot app customization could not be found
+	 */
+	public DepotAppCustomization findByD_E(long depotEntryId, boolean enabled)
+		throws NoSuchAppCustomizationException;
+
+	/**
+	 * Returns the depot app customization where depotEntryId = &#63; and enabled = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param depotEntryId the depot entry ID
+	 * @param enabled the enabled
+	 * @return the matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
+	 */
+	public DepotAppCustomization fetchByD_E(long depotEntryId, boolean enabled);
+
+	/**
+	 * Returns the depot app customization where depotEntryId = &#63; and enabled = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param depotEntryId the depot entry ID
+	 * @param enabled the enabled
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
+	 */
+	public DepotAppCustomization fetchByD_E(
+		long depotEntryId, boolean enabled, boolean useFinderCache);
+
+	/**
+	 * Removes the depot app customization where depotEntryId = &#63; and enabled = &#63; from the database.
+	 *
+	 * @param depotEntryId the depot entry ID
+	 * @param enabled the enabled
+	 * @return the depot app customization that was removed
+	 */
+	public DepotAppCustomization removeByD_E(long depotEntryId, boolean enabled)
+		throws NoSuchAppCustomizationException;
+
+	/**
+	 * Returns the number of depot app customizations where depotEntryId = &#63; and enabled = &#63;.
+	 *
+	 * @param depotEntryId the depot entry ID
+	 * @param enabled the enabled
+	 * @return the number of matching depot app customizations
+	 */
+	public int countByD_E(long depotEntryId, boolean enabled);
+
+	/**
 	 * Caches the depot app customization in the entity cache if it is enabled.
 	 *
 	 * @param depotAppCustomization the depot app customization

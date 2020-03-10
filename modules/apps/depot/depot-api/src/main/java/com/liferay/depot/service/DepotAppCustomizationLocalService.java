@@ -205,6 +205,10 @@ public interface DepotAppCustomizationLocalService
 			long depotAppCustomizationId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDepotAppCustomizationCount(
+		long depotEntryId, boolean enabled);
+
 	/**
 	 * Returns a range of all the depot app customizations.
 	 *

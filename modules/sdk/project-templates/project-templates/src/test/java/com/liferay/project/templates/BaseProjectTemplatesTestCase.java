@@ -17,6 +17,7 @@ package com.liferay.project.templates;
 import aQute.bnd.main.bnd;
 
 import com.liferay.maven.executor.MavenExecutor;
+import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
 import com.liferay.project.templates.extensions.util.FileUtil;
 import com.liferay.project.templates.extensions.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.extensions.util.Validator;
@@ -478,7 +479,7 @@ public interface BaseProjectTemplatesTestCase {
 		}
 
 		if (!liferayVersionSet) {
-			completeArgs.add("-DliferayVersion=" + ProjectTemplateArgs.getLiferayVersion());
+			completeArgs.add("-DliferayVersion=" + getLiferayVersion());
 		}
 
 		if (!projectTypeSet) {
@@ -768,6 +769,12 @@ public interface BaseProjectTemplatesTestCase {
 		return executeMaven(projectDir, false, mavenExecutor, args);
 	}
 
+	public default String getLiferayVersion() {
+		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
+
+		return projectTemplatesArgs.getLiferayVersion();
+	}
+
 	public default File getWorkspaceDir(File dir) {
 		File gradleParent = findParentFile(
 			dir,
@@ -840,9 +847,9 @@ public interface BaseProjectTemplatesTestCase {
 			enableTargetPlatformInWorkspace(workspaceDir, "7.2.1");
 		}
 		else {
-			workspaceDir = buildWorkspace(temporaryFolder, ProjectTemplateArgs.getLiferayVersion());
+			workspaceDir = buildWorkspace(temporaryFolder, getLiferayVersion());
 
-			enableTargetPlatformInWorkspace(workspaceDir, ProjectTemplateArgs.getLiferayVersion());
+			enableTargetPlatformInWorkspace(workspaceDir, getLiferayVersion());
 		}
 
 		File modulesDir = new File(workspaceDir, "modules");

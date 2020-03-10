@@ -252,7 +252,9 @@ public class WikiPageCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -275,7 +277,7 @@ public class WikiPageCacheModel
 		version = objectInput.readDouble();
 
 		minorEdit = objectInput.readBoolean();
-		content = objectInput.readUTF();
+		content = (String)objectInput.readObject();
 		summary = objectInput.readUTF();
 		format = objectInput.readUTF();
 
@@ -336,10 +338,10 @@ public class WikiPageCacheModel
 		objectOutput.writeBoolean(minorEdit);
 
 		if (content == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(content);
+			objectOutput.writeObject(content);
 		}
 
 		if (summary == null) {

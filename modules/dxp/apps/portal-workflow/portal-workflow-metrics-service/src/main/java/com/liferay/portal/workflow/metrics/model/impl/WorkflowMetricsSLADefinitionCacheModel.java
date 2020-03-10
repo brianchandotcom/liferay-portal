@@ -267,7 +267,9 @@ public class WorkflowMetricsSLADefinitionCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -284,7 +286,7 @@ public class WorkflowMetricsSLADefinitionCacheModel
 
 		active = objectInput.readBoolean();
 		calendarKey = objectInput.readUTF();
-		description = objectInput.readUTF();
+		description = (String)objectInput.readObject();
 
 		duration = objectInput.readLong();
 		name = objectInput.readUTF();
@@ -342,10 +344,10 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(description);
+			objectOutput.writeObject(description);
 		}
 
 		objectOutput.writeLong(duration);

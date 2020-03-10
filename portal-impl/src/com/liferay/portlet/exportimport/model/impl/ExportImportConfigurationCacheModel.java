@@ -200,7 +200,9 @@ public class ExportImportConfigurationCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		exportImportConfigurationId = objectInput.readLong();
@@ -217,7 +219,7 @@ public class ExportImportConfigurationCacheModel
 		description = objectInput.readUTF();
 
 		type = objectInput.readInt();
-		settings = objectInput.readUTF();
+		settings = (String)objectInput.readObject();
 
 		status = objectInput.readInt();
 
@@ -265,10 +267,10 @@ public class ExportImportConfigurationCacheModel
 		objectOutput.writeInt(type);
 
 		if (settings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(settings);
+			objectOutput.writeObject(settings);
 		}
 
 		objectOutput.writeInt(status);

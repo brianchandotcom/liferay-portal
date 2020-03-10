@@ -198,7 +198,9 @@ public class DDLRecordSetVersionCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		recordSetVersionId = objectInput.readLong();
@@ -216,7 +218,7 @@ public class DDLRecordSetVersionCacheModel
 		DDMStructureVersionId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
-		settings = objectInput.readUTF();
+		settings = (String)objectInput.readObject();
 		version = objectInput.readUTF();
 
 		status = objectInput.readInt();
@@ -266,10 +268,10 @@ public class DDLRecordSetVersionCacheModel
 		}
 
 		if (settings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(settings);
+			objectOutput.writeObject(settings);
 		}
 
 		if (version == null) {

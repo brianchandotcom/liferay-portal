@@ -213,7 +213,9 @@ public class AnnouncementsEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -230,7 +232,7 @@ public class AnnouncementsEntryCacheModel
 
 		classPK = objectInput.readLong();
 		title = objectInput.readUTF();
-		content = objectInput.readUTF();
+		content = (String)objectInput.readObject();
 		url = objectInput.readUTF();
 		type = objectInput.readUTF();
 		displayDate = objectInput.readLong();
@@ -280,10 +282,10 @@ public class AnnouncementsEntryCacheModel
 		}
 
 		if (content == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(content);
+			objectOutput.writeObject(content);
 		}
 
 		if (url == null) {

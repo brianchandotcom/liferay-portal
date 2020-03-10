@@ -235,7 +235,7 @@ public class DDMFormInstanceCacheModel
 		version = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
-		settings = objectInput.readUTF();
+		settings = (String)objectInput.readObject();
 		lastPublishDate = objectInput.readLong();
 
 		_ddmFormValues =
@@ -305,10 +305,10 @@ public class DDMFormInstanceCacheModel
 		}
 
 		if (settings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(settings);
+			objectOutput.writeObject(settings);
 		}
 
 		objectOutput.writeLong(lastPublishDate);

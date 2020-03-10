@@ -199,7 +199,9 @@ public class RepositoryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -218,7 +220,7 @@ public class RepositoryCacheModel
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		portletId = objectInput.readUTF();
-		typeSettings = objectInput.readUTF();
+		typeSettings = (String)objectInput.readObject();
 
 		dlFolderId = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
@@ -277,10 +279,10 @@ public class RepositoryCacheModel
 		}
 
 		if (typeSettings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(typeSettings);
+			objectOutput.writeObject(typeSettings);
 		}
 
 		objectOutput.writeLong(dlFolderId);

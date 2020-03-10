@@ -253,7 +253,9 @@ public class FragmentEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -271,12 +273,12 @@ public class FragmentEntryCacheModel
 		fragmentCollectionId = objectInput.readLong();
 		fragmentEntryKey = objectInput.readUTF();
 		name = objectInput.readUTF();
-		css = objectInput.readUTF();
-		html = objectInput.readUTF();
-		js = objectInput.readUTF();
+		css = (String)objectInput.readObject();
+		html = (String)objectInput.readObject();
+		js = (String)objectInput.readObject();
 
 		cacheable = objectInput.readBoolean();
-		configuration = objectInput.readUTF();
+		configuration = (String)objectInput.readObject();
 
 		previewFileEntryId = objectInput.readLong();
 
@@ -338,33 +340,33 @@ public class FragmentEntryCacheModel
 		}
 
 		if (css == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(css);
+			objectOutput.writeObject(css);
 		}
 
 		if (html == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(html);
+			objectOutput.writeObject(html);
 		}
 
 		if (js == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(js);
+			objectOutput.writeObject(js);
 		}
 
 		objectOutput.writeBoolean(cacheable);
 
 		if (configuration == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(configuration);
+			objectOutput.writeObject(configuration);
 		}
 
 		objectOutput.writeLong(previewFileEntryId);

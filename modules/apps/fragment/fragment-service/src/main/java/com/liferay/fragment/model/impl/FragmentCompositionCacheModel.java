@@ -229,7 +229,9 @@ public class FragmentCompositionCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -248,7 +250,7 @@ public class FragmentCompositionCacheModel
 		fragmentCompositionKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
-		data = objectInput.readUTF();
+		data = (String)objectInput.readObject();
 
 		previewFileEntryId = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
@@ -313,10 +315,10 @@ public class FragmentCompositionCacheModel
 		}
 
 		if (data == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(data);
+			objectOutput.writeObject(data);
 		}
 
 		objectOutput.writeLong(previewFileEntryId);

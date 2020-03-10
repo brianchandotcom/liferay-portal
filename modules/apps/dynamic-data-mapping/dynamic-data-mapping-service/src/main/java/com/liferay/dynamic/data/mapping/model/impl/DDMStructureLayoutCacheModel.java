@@ -216,9 +216,9 @@ public class DDMStructureLayoutCacheModel
 		structureLayoutKey = objectInput.readUTF();
 
 		structureVersionId = objectInput.readLong();
-		name = objectInput.readUTF();
-		description = objectInput.readUTF();
-		definition = objectInput.readUTF();
+		name = (String)objectInput.readObject();
+		description = (String)objectInput.readObject();
+		definition = (String)objectInput.readObject();
 
 		_ddmFormLayout =
 			(com.liferay.dynamic.data.mapping.model.DDMFormLayout)
@@ -266,24 +266,24 @@ public class DDMStructureLayoutCacheModel
 		objectOutput.writeLong(structureVersionId);
 
 		if (name == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(name);
+			objectOutput.writeObject(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(description);
+			objectOutput.writeObject(description);
 		}
 
 		if (definition == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(definition);
+			objectOutput.writeObject(definition);
 		}
 
 		objectOutput.writeObject(_ddmFormLayout);

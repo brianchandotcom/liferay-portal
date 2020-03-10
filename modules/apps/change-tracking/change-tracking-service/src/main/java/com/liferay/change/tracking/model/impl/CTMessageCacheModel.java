@@ -113,7 +113,9 @@ public class CTMessageCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		ctMessageId = objectInput.readLong();
@@ -121,7 +123,7 @@ public class CTMessageCacheModel
 		companyId = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
-		messageContent = objectInput.readUTF();
+		messageContent = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -135,10 +137,10 @@ public class CTMessageCacheModel
 		objectOutput.writeLong(ctCollectionId);
 
 		if (messageContent == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(messageContent);
+			objectOutput.writeObject(messageContent);
 		}
 	}
 

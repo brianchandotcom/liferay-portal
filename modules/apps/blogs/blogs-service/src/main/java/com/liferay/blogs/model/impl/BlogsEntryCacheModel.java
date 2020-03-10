@@ -291,7 +291,9 @@ public class BlogsEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -309,13 +311,13 @@ public class BlogsEntryCacheModel
 		subtitle = objectInput.readUTF();
 		urlTitle = objectInput.readUTF();
 		description = objectInput.readUTF();
-		content = objectInput.readUTF();
+		content = (String)objectInput.readObject();
 		displayDate = objectInput.readLong();
 
 		allowPingbacks = objectInput.readBoolean();
 
 		allowTrackbacks = objectInput.readBoolean();
-		trackbacks = objectInput.readUTF();
+		trackbacks = (String)objectInput.readObject();
 		coverImageCaption = objectInput.readUTF();
 
 		coverImageFileEntryId = objectInput.readLong();
@@ -394,10 +396,10 @@ public class BlogsEntryCacheModel
 		}
 
 		if (content == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(content);
+			objectOutput.writeObject(content);
 		}
 
 		objectOutput.writeLong(displayDate);
@@ -407,10 +409,10 @@ public class BlogsEntryCacheModel
 		objectOutput.writeBoolean(allowTrackbacks);
 
 		if (trackbacks == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(trackbacks);
+			objectOutput.writeObject(trackbacks);
 		}
 
 		if (coverImageCaption == null) {

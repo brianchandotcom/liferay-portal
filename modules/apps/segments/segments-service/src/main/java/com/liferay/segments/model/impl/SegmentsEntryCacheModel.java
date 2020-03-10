@@ -214,7 +214,9 @@ public class SegmentsEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -233,7 +235,7 @@ public class SegmentsEntryCacheModel
 		description = objectInput.readUTF();
 
 		active = objectInput.readBoolean();
-		criteria = objectInput.readUTF();
+		criteria = (String)objectInput.readObject();
 		source = objectInput.readUTF();
 		type = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
@@ -292,10 +294,10 @@ public class SegmentsEntryCacheModel
 		objectOutput.writeBoolean(active);
 
 		if (criteria == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(criteria);
+			objectOutput.writeObject(criteria);
 		}
 
 		if (source == null) {

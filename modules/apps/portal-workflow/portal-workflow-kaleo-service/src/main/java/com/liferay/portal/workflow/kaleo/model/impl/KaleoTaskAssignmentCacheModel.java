@@ -213,7 +213,9 @@ public class KaleoTaskAssignmentCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		kaleoTaskAssignmentId = objectInput.readLong();
@@ -239,7 +241,7 @@ public class KaleoTaskAssignmentCacheModel
 
 		assigneeClassPK = objectInput.readLong();
 		assigneeActionId = objectInput.readUTF();
-		assigneeScript = objectInput.readUTF();
+		assigneeScript = (String)objectInput.readObject();
 		assigneeScriptLanguage = objectInput.readUTF();
 		assigneeScriptRequiredContexts = objectInput.readUTF();
 	}
@@ -298,10 +300,10 @@ public class KaleoTaskAssignmentCacheModel
 		}
 
 		if (assigneeScript == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(assigneeScript);
+			objectOutput.writeObject(assigneeScript);
 		}
 
 		if (assigneeScriptLanguage == null) {

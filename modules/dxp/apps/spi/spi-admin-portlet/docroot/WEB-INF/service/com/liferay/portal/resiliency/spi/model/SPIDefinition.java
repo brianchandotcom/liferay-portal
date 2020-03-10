@@ -107,6 +107,6 @@ public interface SPIDefinition extends PersistedModel, SPIDefinitionModel {
 
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			typeSettingsProperties);
+			typeSettingsUnicodeProperties);
 
 }

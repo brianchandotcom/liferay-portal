@@ -176,7 +176,9 @@ public class DefinitionCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		uuid = objectInput.readUTF();
 
 		definitionId = objectInput.readLong();
@@ -194,7 +196,7 @@ public class DefinitionCacheModel
 
 		sourceId = objectInput.readLong();
 		reportName = objectInput.readUTF();
-		reportParameters = objectInput.readUTF();
+		reportParameters = (String)objectInput.readObject();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -249,10 +251,10 @@ public class DefinitionCacheModel
 		}
 
 		if (reportParameters == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(reportParameters);
+			objectOutput.writeObject(reportParameters);
 		}
 
 		objectOutput.writeLong(lastPublishDate);

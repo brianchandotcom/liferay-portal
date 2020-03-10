@@ -174,7 +174,9 @@ public class LayoutPageTemplateStructureRelCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -192,7 +194,7 @@ public class LayoutPageTemplateStructureRelCacheModel
 		layoutPageTemplateStructureId = objectInput.readLong();
 
 		segmentsExperienceId = objectInput.readLong();
-		data = objectInput.readUTF();
+		data = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -229,10 +231,10 @@ public class LayoutPageTemplateStructureRelCacheModel
 		objectOutput.writeLong(segmentsExperienceId);
 
 		if (data == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(data);
+			objectOutput.writeObject(data);
 		}
 	}
 

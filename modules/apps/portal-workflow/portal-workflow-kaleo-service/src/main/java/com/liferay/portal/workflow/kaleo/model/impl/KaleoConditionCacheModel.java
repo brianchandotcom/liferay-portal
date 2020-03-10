@@ -176,7 +176,9 @@ public class KaleoConditionCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		kaleoConditionId = objectInput.readLong();
@@ -195,7 +197,7 @@ public class KaleoConditionCacheModel
 		kaleoDefinitionVersionId = objectInput.readLong();
 
 		kaleoNodeId = objectInput.readLong();
-		script = objectInput.readUTF();
+		script = (String)objectInput.readObject();
 		scriptLanguage = objectInput.readUTF();
 		scriptRequiredContexts = objectInput.readUTF();
 	}
@@ -229,10 +231,10 @@ public class KaleoConditionCacheModel
 		objectOutput.writeLong(kaleoNodeId);
 
 		if (script == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(script);
+			objectOutput.writeObject(script);
 		}
 
 		if (scriptLanguage == null) {

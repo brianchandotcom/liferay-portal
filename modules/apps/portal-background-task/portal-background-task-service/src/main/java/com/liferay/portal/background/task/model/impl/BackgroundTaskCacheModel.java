@@ -219,7 +219,7 @@ public class BackgroundTaskCacheModel
 		completionDate = objectInput.readLong();
 
 		status = objectInput.readInt();
-		statusMessage = objectInput.readUTF();
+		statusMessage = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -273,10 +273,10 @@ public class BackgroundTaskCacheModel
 		objectOutput.writeInt(status);
 
 		if (statusMessage == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(statusMessage);
+			objectOutput.writeObject(statusMessage);
 		}
 	}
 

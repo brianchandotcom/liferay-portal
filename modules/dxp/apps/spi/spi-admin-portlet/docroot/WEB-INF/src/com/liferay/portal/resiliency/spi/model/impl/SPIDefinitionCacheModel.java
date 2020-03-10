@@ -196,7 +196,9 @@ public class SPIDefinitionCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		spiDefinitionId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -213,7 +215,7 @@ public class SPIDefinitionCacheModel
 		jvmArguments = objectInput.readUTF();
 		portletIds = objectInput.readUTF();
 		servletContextNames = objectInput.readUTF();
-		typeSettings = objectInput.readUTF();
+		typeSettings = (String)objectInput.readObject();
 
 		status = objectInput.readInt();
 		statusMessage = objectInput.readUTF();
@@ -282,10 +284,10 @@ public class SPIDefinitionCacheModel
 		}
 
 		if (typeSettings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(typeSettings);
+			objectOutput.writeObject(typeSettings);
 		}
 
 		objectOutput.writeInt(status);

@@ -238,7 +238,9 @@ public class MBMessageCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		uuid = objectInput.readUTF();
 
 		messageId = objectInput.readLong();
@@ -266,7 +268,7 @@ public class MBMessageCacheModel
 		treePath = objectInput.readUTF();
 		subject = objectInput.readUTF();
 		urlSubject = objectInput.readUTF();
-		body = objectInput.readUTF();
+		body = (String)objectInput.readObject();
 		format = objectInput.readUTF();
 
 		anonymous = objectInput.readBoolean();
@@ -346,10 +348,10 @@ public class MBMessageCacheModel
 		}
 
 		if (body == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(body);
+			objectOutput.writeObject(body);
 		}
 
 		if (format == null) {

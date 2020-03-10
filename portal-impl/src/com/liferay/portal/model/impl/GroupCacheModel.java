@@ -204,7 +204,9 @@ public class GroupCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -227,7 +229,7 @@ public class GroupCacheModel
 		description = objectInput.readUTF();
 
 		type = objectInput.readInt();
-		typeSettings = objectInput.readUTF();
+		typeSettings = (String)objectInput.readObject();
 
 		manualMembership = objectInput.readBoolean();
 
@@ -299,10 +301,10 @@ public class GroupCacheModel
 		objectOutput.writeInt(type);
 
 		if (typeSettings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(typeSettings);
+			objectOutput.writeObject(typeSettings);
 		}
 
 		objectOutput.writeBoolean(manualMembership);

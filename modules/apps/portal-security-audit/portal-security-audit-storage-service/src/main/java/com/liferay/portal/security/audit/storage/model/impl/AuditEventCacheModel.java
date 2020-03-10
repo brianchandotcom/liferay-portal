@@ -191,7 +191,9 @@ public class AuditEventCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		auditEventId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -209,7 +211,7 @@ public class AuditEventCacheModel
 
 		serverPort = objectInput.readInt();
 		sessionID = objectInput.readUTF();
-		additionalInfo = objectInput.readUTF();
+		additionalInfo = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -288,10 +290,10 @@ public class AuditEventCacheModel
 		}
 
 		if (additionalInfo == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(additionalInfo);
+			objectOutput.writeObject(additionalInfo);
 		}
 	}
 

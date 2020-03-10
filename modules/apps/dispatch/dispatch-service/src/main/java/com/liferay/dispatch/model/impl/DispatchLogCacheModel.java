@@ -178,7 +178,9 @@ public class DispatchLogCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		dispatchLogId = objectInput.readLong();
@@ -192,8 +194,8 @@ public class DispatchLogCacheModel
 
 		dispatchTriggerId = objectInput.readLong();
 		endDate = objectInput.readLong();
-		error = objectInput.readUTF();
-		output = objectInput.readUTF();
+		error = (String)objectInput.readObject();
+		output = (String)objectInput.readObject();
 		startDate = objectInput.readLong();
 
 		status = objectInput.readInt();
@@ -223,17 +225,17 @@ public class DispatchLogCacheModel
 		objectOutput.writeLong(endDate);
 
 		if (error == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(error);
+			objectOutput.writeObject(error);
 		}
 
 		if (output == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(output);
+			objectOutput.writeObject(output);
 		}
 
 		objectOutput.writeLong(startDate);

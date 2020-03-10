@@ -218,7 +218,9 @@ public class MessageCacheModel implements CacheModel<Message>, Externalizable {
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		messageId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -232,13 +234,13 @@ public class MessageCacheModel implements CacheModel<Message>, Externalizable {
 
 		folderId = objectInput.readLong();
 		sender = objectInput.readUTF();
-		to = objectInput.readUTF();
-		cc = objectInput.readUTF();
-		bcc = objectInput.readUTF();
+		to = (String)objectInput.readObject();
+		cc = (String)objectInput.readObject();
+		bcc = (String)objectInput.readObject();
 		sentDate = objectInput.readLong();
 		subject = objectInput.readUTF();
 		preview = objectInput.readUTF();
-		body = objectInput.readUTF();
+		body = (String)objectInput.readObject();
 		flags = objectInput.readUTF();
 
 		size = objectInput.readLong();
@@ -277,24 +279,24 @@ public class MessageCacheModel implements CacheModel<Message>, Externalizable {
 		}
 
 		if (to == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(to);
+			objectOutput.writeObject(to);
 		}
 
 		if (cc == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(cc);
+			objectOutput.writeObject(cc);
 		}
 
 		if (bcc == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(bcc);
+			objectOutput.writeObject(bcc);
 		}
 
 		objectOutput.writeLong(sentDate);
@@ -314,10 +316,10 @@ public class MessageCacheModel implements CacheModel<Message>, Externalizable {
 		}
 
 		if (body == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(body);
+			objectOutput.writeObject(body);
 		}
 
 		if (flags == null) {

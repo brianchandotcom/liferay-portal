@@ -306,7 +306,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 		if (_isPageDefinitionFile(zipEntry.getName())) {
 			_validateContent(
 				StringUtil.read(zipFile.getInputStream(zipEntry)),
-				"expected_page_definition.json");
+				"expected_page_template_page_definition.json");
 		}
 
 		if (_isPageTemplateCollectionFile(zipEntry.getName())) {

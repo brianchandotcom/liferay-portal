@@ -34,11 +34,8 @@ import javax.portlet.PortletRequest;
 
 /**
  * @author Levente Hudák
- * @deprecated As of Athanasius (7.3.x), replaced by {@link
- *             ExportImportConfigurationUtil}
  */
-@Deprecated
-public class ExportImportConfigurationHelper {
+public class ExportImportConfigurationUtil {
 
 	public static ExportImportConfiguration
 			addExportLayoutExportImportConfiguration(

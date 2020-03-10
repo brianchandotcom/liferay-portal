@@ -183,6 +183,8 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
+			Pause(locator1 = "3000");
+
 			Navigator.gotoNavItem(navItem = "My Sites");
 
 			SiteSelector.selectSite(site = "${siteName}");

@@ -117,7 +117,8 @@ public class LayoutPageTemplatesImporterImpl
 
 				LayoutPageTemplateCollection layoutPageTemplateCollection =
 					_getLayoutPageTemplateCollection(
-						groupId, pageTemplateCollectionEntry, overwrite);
+						groupId, layoutPageTemplateCollectionId,
+						pageTemplateCollectionEntry, overwrite);
 
 				_processPageTemplateEntries(
 					groupId, layoutPageTemplateCollection,
@@ -194,10 +195,27 @@ public class LayoutPageTemplatesImporterImpl
 	}
 
 	private LayoutPageTemplateCollection _getLayoutPageTemplateCollection(
-			long groupId,
+			long groupId, long layoutPageTemplateCollectionId,
 			PageTemplateCollectionEntry pageTemplateCollectionEntry,
 			boolean overwrite)
 		throws PortalException {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection = null;
+
+		if (layoutPageTemplateCollectionId > 0) {
+			layoutPageTemplateCollection =
+				_layoutPageTemplateCollectionService.
+					fetchLayoutPageTemplateCollection(
+						layoutPageTemplateCollectionId);
+
+			if (layoutPageTemplateCollection == null) {
+				throw new PortalException(
+					"Invalid layout page template collection ID: " +
+						layoutPageTemplateCollectionId);
+			}
+
+			return layoutPageTemplateCollection;
+		}
 
 		String layoutPageTemplateCollectionKey =
 			pageTemplateCollectionEntry.getKey();
@@ -205,7 +223,7 @@ public class LayoutPageTemplatesImporterImpl
 		PageTemplateCollection pageTemplateCollection =
 			pageTemplateCollectionEntry.getPageTemplateCollection();
 
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
+		layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
 					groupId, layoutPageTemplateCollectionKey);

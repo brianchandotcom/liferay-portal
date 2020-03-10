@@ -18,24 +18,48 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryService;
-import com.liferay.headless.common.spi.resource.SPICommentResource;
+import com.liferay.headless.common.spi.odata.entity.CommentEntityModel;
 import com.liferay.headless.delivery.dto.v1_0.Comment;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CommentUtil;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.message.boards.exception.DiscussionMaxCommentsException;
+import com.liferay.message.boards.exception.MessageSubjectException;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.comment.DiscussionComment;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.comment.DuplicateCommentException;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.function.Function;
 
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -55,10 +79,11 @@ public class CommentResourceImpl
 
 	@Override
 	public void deleteComment(Long commentId) throws Exception {
-		SPICommentResource<Comment> spiCommentResource =
-			_getSPICommentResource();
+		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
-		spiCommentResource.deleteComment(commentId);
+		discussionPermission.checkDeletePermission(commentId);
+
+		_commentManager.deleteComment(commentId);
 	}
 
 	@Override
@@ -67,12 +92,17 @@ public class CommentResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		SPICommentResource<Comment> spiCommentResource =
-			_getSPICommentResource();
-
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
-		return spiCommentResource.getEntityCommentsPage(
+		Discussion discussion = _commentManager.getDiscussion(
+			blogsEntry.getUserId(), blogsEntry.getGroupId(),
+			BlogsEntry.class.getName(), blogPostingId,
+			_createServiceContextFunction());
+
+		DiscussionComment rootDiscussionComment =
+			discussion.getRootDiscussionComment();
+
+		return _getComments(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"add-discussion",
 				addAction(
@@ -86,16 +116,27 @@ public class CommentResourceImpl
 					blogsEntry.getUserId(), BlogsEntry.class.getName(),
 					blogsEntry.getGroupId())
 			).build(),
-			blogsEntry.getGroupId(), BlogsEntry.class.getName(), blogPostingId,
-			search, filter, pagination, sorts);
+			rootDiscussionComment.getCommentId(), search, filter, pagination,
+			sorts);
 	}
 
 	@Override
 	public Comment getComment(Long commentId) throws Exception {
-		SPICommentResource<Comment> spiCommentResource =
-			_getSPICommentResource();
+		com.liferay.portal.kernel.comment.Comment comment =
+			_commentManager.fetchComment(commentId);
 
-		return spiCommentResource.getComment(commentId);
+		if (comment == null) {
+			throw new NoSuchModelException(
+				"No comment exists with comment ID " + commentId);
+		}
+
+		DiscussionPermission discussionPermission = _getDiscussionPermission();
+
+		discussionPermission.checkViewPermission(
+			contextCompany.getCompanyId(), comment.getGroupId(),
+			comment.getClassName(), comment.getClassPK());
+
+		return CommentUtil.toComment(comment, _commentManager, _portal);
 	}
 
 	@Override
@@ -104,11 +145,9 @@ public class CommentResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		SPICommentResource<Comment> spiCommentResource =
-			_getSPICommentResource();
-
-		return spiCommentResource.getCommentCommentsPage(
-			parentCommentId, search, filter, pagination, sorts);
+		return _getComments(
+			Collections.emptyMap(), parentCommentId, search, filter, pagination,
+			sorts);
 	}
 
 	@Override
@@ -117,12 +156,17 @@ public class CommentResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		SPICommentResource<Comment> spiCommentResource =
-			_getSPICommentResource();
-
 		DLFileEntry dlFileEntry = _dlFileEntryService.getFileEntry(documentId);
 
-		return spiCommentResource.getEntityCommentsPage(
+		Discussion discussion = _commentManager.getDiscussion(
+			dlFileEntry.getUserId(), dlFileEntry.getGroupId(),
+			DLFileEntry.class.getName(), documentId,
+			_createServiceContextFunction());
+
+		DiscussionComment rootDiscussionComment =
+			discussion.getRootDiscussionComment();
+
+		return _getComments(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"add-discussion",
 				addAction(
@@ -136,16 +180,13 @@ public class CommentResourceImpl
 					dlFileEntry.getUserId(), DLFileEntry.class.getName(),
 					dlFileEntry.getGroupId())
 			).build(),
-			dlFileEntry.getGroupId(), DLFileEntry.class.getName(), documentId,
-			search, filter, pagination, sorts);
+			rootDiscussionComment.getCommentId(), search, filter, pagination,
+			sorts);
 	}
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		SPICommentResource<Comment> spiCommentResource =
-			_getSPICommentResource();
-
-		return spiCommentResource.getEntityModel(multivaluedMap);
+		return new CommentEntityModel();
 	}
 
 	@Override
@@ -154,13 +195,18 @@ public class CommentResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		SPICommentResource<Comment> spiCommentResource =
-			_getSPICommentResource();
-
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			structuredContentId);
 
-		return spiCommentResource.getEntityCommentsPage(
+		Discussion discussion = _commentManager.getDiscussion(
+			journalArticle.getUserId(), journalArticle.getGroupId(),
+			JournalArticle.class.getName(), structuredContentId,
+			_createServiceContextFunction());
+
+		DiscussionComment rootDiscussionComment =
+			discussion.getRootDiscussionComment();
+
+		return _getComments(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"add-discussion",
 				addAction(
@@ -175,22 +221,19 @@ public class CommentResourceImpl
 					journalArticle.getUserId(), JournalArticle.class.getName(),
 					journalArticle.getGroupId())
 			).build(),
-			journalArticle.getGroupId(), JournalArticle.class.getName(),
-			structuredContentId, search, filter, pagination, sorts);
+			rootDiscussionComment.getCommentId(), search, filter, pagination,
+			sorts);
 	}
 
 	@Override
 	public Comment postBlogPostingComment(Long blogPostingId, Comment comment)
 		throws Exception {
 
-		SPICommentResource<Comment> spiCommentResource =
-			_getSPICommentResource();
-
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
-		return spiCommentResource.postEntityComment(
-			blogsEntry.getGroupId(), BlogsEntry.class.getName(), blogPostingId,
-			comment.getText());
+		return _postEntityComment(
+			BlogsEntry.class.getName(), blogPostingId, comment.getText(),
+			blogsEntry.getGroupId());
 	}
 
 	@Override
@@ -204,25 +247,26 @@ public class CommentResourceImpl
 			throw new NotFoundException();
 		}
 
-		SPICommentResource<Comment> spiCommentResource =
-			_getSPICommentResource();
-
-		return spiCommentResource.postCommentComment(
-			parentComment, comment.getText());
+		return _postComment(
+			() -> _commentManager.addComment(
+				_getUserId(), parentComment.getClassName(),
+				parentComment.getClassPK(), StringPool.BLANK,
+				parentComment.getCommentId(), StringPool.BLANK,
+				StringBundler.concat("<p>", comment.getText(), "</p>"),
+				_createServiceContextFunction()),
+			parentComment.getClassName(), parentComment.getClassPK(),
+			parentComment.getGroupId());
 	}
 
 	@Override
 	public Comment postDocumentComment(Long documentId, Comment comment)
 		throws Exception {
 
-		SPICommentResource<Comment> spiCommentResource =
-			_getSPICommentResource();
-
 		DLFileEntry fileEntry = _dlFileEntryService.getFileEntry(documentId);
 
-		return spiCommentResource.postEntityComment(
-			fileEntry.getGroupId(), DLFileEntry.class.getName(), documentId,
-			comment.getText());
+		return _postEntityComment(
+			DLFileEntry.class.getName(), documentId, comment.getText(),
+			fileEntry.getGroupId());
 	}
 
 	@Override
@@ -230,32 +274,139 @@ public class CommentResourceImpl
 			Long structuredContentId, Comment comment)
 		throws Exception {
 
-		SPICommentResource<Comment> spiCommentResource =
-			_getSPICommentResource();
-
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			structuredContentId);
 
-		return spiCommentResource.postEntityComment(
-			journalArticle.getGroupId(), JournalArticle.class.getName(),
-			structuredContentId, comment.getText());
+		return _postEntityComment(
+			JournalArticle.class.getName(), structuredContentId,
+			comment.getText(), journalArticle.getGroupId());
 	}
 
 	@Override
 	public Comment putComment(Long commentId, Comment comment)
 		throws Exception {
 
-		SPICommentResource<Comment> spiCommentResource =
-			_getSPICommentResource();
+		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
-		return spiCommentResource.putComment(commentId, comment.getText());
+		discussionPermission.checkUpdatePermission(commentId);
+
+		com.liferay.portal.kernel.comment.Comment existingComment =
+			_commentManager.fetchComment(commentId);
+
+		try {
+			_commentManager.updateComment(
+				existingComment.getUserId(), existingComment.getClassName(),
+				existingComment.getClassPK(), commentId, StringPool.BLANK,
+				StringBundler.concat("<p>", comment.getText(), "</p>"),
+				_createServiceContextFunction());
+
+			return CommentUtil.toComment(
+				_commentManager.fetchComment(commentId), _commentManager,
+				_portal);
+		}
+		catch (MessageSubjectException messageSubjectException) {
+			throw new ClientErrorException(
+				"Comment text is null", 422, messageSubjectException);
+		}
 	}
 
-	private SPICommentResource<Comment> _getSPICommentResource() {
-		return new SPICommentResource<>(
-			_commentManager, contextCompany,
-			comment -> CommentUtil.toComment(
-				comment, _commentManager, _portal));
+	private Function<String, ServiceContext> _createServiceContextFunction() {
+		return className -> {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+			return serviceContext;
+		};
+	}
+
+	private Page<Comment> _getComments(
+			Map<String, Map<String, String>> actions, Long commentId,
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			actions,
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						"parentMessageId", String.valueOf(commentId)),
+					BooleanClauseOccur.MUST);
+			},
+			filter, MBMessage.class, search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute("discussion", Boolean.TRUE);
+				searchContext.setAttribute(
+					"searchPermissionContext", StringPool.BLANK);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			sorts,
+			document -> CommentUtil.toComment(
+				_commentManager.fetchComment(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
+				_commentManager, _portal));
+	}
+
+	private DiscussionPermission _getDiscussionPermission() {
+		return _commentManager.getDiscussionPermission(
+			PermissionThreadLocal.getPermissionChecker());
+	}
+
+	private long _getUserId() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return permissionChecker.getUserId();
+	}
+
+	private Comment _postComment(
+			UnsafeSupplier<Long, ? extends Exception> addCommentUnsafeSupplier,
+			String className, long classPK, long groupId)
+		throws Exception {
+
+		DiscussionPermission discussionPermission = _getDiscussionPermission();
+
+		discussionPermission.checkAddPermission(
+			contextCompany.getCompanyId(), groupId, className, classPK);
+
+		try {
+			long commentId = addCommentUnsafeSupplier.get();
+
+			return CommentUtil.toComment(
+				_commentManager.fetchComment(commentId), _commentManager,
+				_portal);
+		}
+		catch (DiscussionMaxCommentsException discussionMaxCommentsException) {
+			throw new ClientErrorException(
+				"Maximum number of comments has been reached", 422,
+				discussionMaxCommentsException);
+		}
+		catch (DuplicateCommentException duplicateCommentException) {
+			throw new ClientErrorException(
+				"A comment with the same text already exists", 409,
+				duplicateCommentException);
+		}
+		catch (MessageSubjectException messageSubjectException) {
+			throw new ClientErrorException(
+				"Comment text is null", 422, messageSubjectException);
+		}
+	}
+
+	private Comment _postEntityComment(
+			String className, long classPK, String text, long groupId)
+		throws Exception {
+
+		return _postComment(
+			() -> _commentManager.addComment(
+				_getUserId(), groupId, className, classPK, StringPool.BLANK,
+				StringPool.BLANK, StringBundler.concat("<p>", text, "</p>"),
+				_createServiceContextFunction()),
+			className, classPK, groupId);
 	}
 
 	@Reference

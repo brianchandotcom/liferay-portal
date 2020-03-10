@@ -17,7 +17,9 @@ package com.liferay.fragment.service.impl;
 import com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCompositionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.base.FragmentCollectionLocalServiceBaseImpl;
 import com.liferay.petra.string.CharPool;
@@ -136,6 +138,17 @@ public class FragmentCollectionLocalServiceImpl
 
 		PortletFileRepositoryUtil.deletePortletFolder(
 			fragmentCollection.getResourcesFolderId(false));
+
+		// Fragment compositions
+
+		List<FragmentComposition> fragmentCompositions =
+			fragmentCompositionPersistence.findByFragmentCollectionId(
+				fragmentCollection.getFragmentCollectionId());
+
+		for (FragmentComposition fragmentComposition : fragmentCompositions) {
+			_fragmentCompositionLocalService.deleteFragmentComposition(
+				fragmentComposition);
+		}
 
 		// Fragment entries
 
@@ -294,6 +307,9 @@ public class FragmentCollectionLocalServiceImpl
 
 		return StringPool.BLANK;
 	}
+
+	@Reference
+	private FragmentCompositionLocalService _fragmentCompositionLocalService;
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;

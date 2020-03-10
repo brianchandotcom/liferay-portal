@@ -202,6 +202,12 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>PRODUCT_MENU_SITE_DROPDOWN_OPTION</td>
+	<td>//span[text()='${key_dropdownOption}']</td>
+	<td></td>
+</tr>
+
 <!--CONTROL_PANEL-->
 <tr>
 	<td>CUSTOM_PORTLET</td>

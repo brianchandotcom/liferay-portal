@@ -38,7 +38,9 @@ definition {
 
 			Page.tearDownCP();
 
-			JSONGroup.deleteGroupByName(groupName = "App Builder Site Name");
+			Site.tearDownCP();
+
+			JSONGroup.deleteGroupByName(groupName = "App Builder Site Name"); -- FALAR COM ALEX SOBRE TIRAR ESSE CHAMADA UMA VEZ QUE TODOS OS SITES VÃO SER DELETADOS
 
 			JSONUser.tearDownNonAdminUsers();
 
@@ -1831,17 +1833,17 @@ definition {
 		App.selectTableView(tableViewName = "${myTableViewName_1}");
 		App.toggleDeploy(deployOption = "Product Menu");
 		App.openProductMenuPlaceItDropdown();
-		App.validateProductMenuPlaceItDropdownList(itemName = "Control Panel");
-		App.validateProductMenuPlaceItDropdownList(itemName = "Site Menu");
-		App.validateProductMenuPlaceItDropdownList(itemName = "Control Panel and Site Menu");
+		App.validateProductMenuPlaceItDropdownList(menuOption = "Control Panel");
+		App.validateProductMenuPlaceItDropdownList(menuOption = "Site Menu");
+		App.validateProductMenuPlaceItDropdownList(menuOption = "Control Panel and Site Menu");
 
-		App.selectProductMenuPlaceItDropdownOption(itemName = "Site Menu");
+		App.selectProductMenuPlaceItDropdownOption(menuOption = "Site Menu");
 		App.validateProductMenuSiteDropdownPresent();
-		App.selectProductMenuPlaceItDropdownOption(itemName = "Control Panel and Site Menu");
+		App.selectProductMenuPlaceItDropdownOption(menuOption = "Control Panel and Site Menu");
 		App.validateProductMenuSiteDropdownPresent();
 
-		App.selectProductMenuPlaceItDropdownOption(itemName = "Control Panel");
-		Button.click(button = "Deploy");
+		App.selectProductMenuPlaceItDropdownOption(menuOption = "Control Panel");
+		App.clickDeploy();
 
 		App.add(
 			appTitle = "${myAppName_2}",
@@ -1945,7 +1947,7 @@ definition {
 		App.toggleDeploy(deployOption = "Widget");
 		App.toggleDeploy(deployOption = "Standalone");
 		App.toggleDeploy(deployOption = "Product Menu");
-		Button.click(button = "Deploy");
+		App.clickDeploy();
 		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 
 		App.add(
@@ -3072,6 +3074,42 @@ definition {
 		DetailsView.validateEntry(entry = "Bester");
 
 		DetailsView.deleteEntry(itemName = "Changed");
+	}
+
+	@description = "Publish my app in one or more sites"
+	@priority = "5"
+	test PublishAppsInOneOrMoreSites {
+
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Site 1",
+			layoutName = "App Builder Test Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Site 2",
+			layoutName = "App Builder Test Page");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object 1",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "My Form View");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "Text",
+			tableViewName = "My Table View");
+
+
+
+
+
+
+
+		// Navigator.gotoSitePage(
+		// 	pageName = "App Builder Test Page",
+		// 	siteName = "App Builder Site Name");
 	}
 
 }

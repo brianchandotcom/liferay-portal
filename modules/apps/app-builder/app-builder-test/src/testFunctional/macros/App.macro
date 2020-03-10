@@ -13,7 +13,38 @@ definition {
 
 		App.toggleDeploy(deployOption = "${deployOption}");
 
-		Button.click(button = "Deploy");
+		if (isSet(menuOption) && isSet(siteOptionList)) {
+
+			App.selectProductMenuPlaceItDropdownOption(menuOption = "${menuOption}");
+
+			App.openProductMenuSiteOption();
+
+			for (var siteOption : list "${siteOptionList}") {
+				App.selectProductMenuSiteOption(siteOption = "${siteOption}");
+			}
+		}
+
+		App.clickDeploy();
+
+		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+	}
+
+	macro editSiteDeployed {
+		AppBuilderAdmin.openItem(itemName = "${appTitle}");
+
+		App.toggleUndeploy(deployOption = "Product Menu");
+
+		App.toggleDeploy(deployOption = "Product Menu");
+
+		App.selectProductMenuPlaceItDropdownOption(menuOption = "${menuOption}");
+
+		App.openProductMenuSiteOption();
+
+		for (var siteOption : list "${siteOptionList}") {
+			App.selectProductMenuSiteOption(siteOption = "${siteOption}");
+		}
+
+		Button.click(button = "Save");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}
@@ -55,8 +86,19 @@ definition {
 	macro selectProductMenuPlaceItDropdownOption {
 		App.openProductMenuPlaceItDropdown();
 		Click(
-			key_dropdownOption = "${itemName}",
+			key_dropdownOption = "${menuOption}",
 			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
+	}
+
+	macro openProductMenuSiteOption {
+		Click(locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN");
+	}
+
+	macro selectProductMenuSiteOption {
+		App.openProductMenuSiteOption();
+		Click(
+			key_dropdownOption = "${siteOption}",
+			locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN_OPTION");
 	}
 
 	macro selectTableView {
@@ -90,10 +132,9 @@ definition {
 	}
 
 	macro validateProductMenuPlaceItDropdownList {
-		AssertTextEquals(
-			key_dropdownOption = "${itemName}",
-			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION",
-			value1 = "${itemName}");
+		AssertElementPresent(
+			key_dropdownOption = "${menuOption}",
+			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
 	}
 
 	macro validateProductMenuSiteDropdownPresent {

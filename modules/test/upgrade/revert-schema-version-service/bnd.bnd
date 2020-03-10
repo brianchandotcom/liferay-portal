@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Revert Schema Version Service
+Bundle-SymbolicName: com.liferay.revert.schema.version.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 2.1.1
+Liferay-Service: true

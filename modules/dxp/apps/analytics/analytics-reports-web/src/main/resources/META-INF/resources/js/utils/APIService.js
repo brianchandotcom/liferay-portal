@@ -60,31 +60,40 @@ function APIService({endpoints, namespace, page}) {
 		});
 	}
 
-	function getOrganicVolume() {
+	function getTrafficSources() {
 		// TODO remove frontend mock
-
 		return new Promise(resolve =>
 			setTimeout(
-				() => resolve({analyticsReportsOrganicVolume: 445545}),
+				() =>
+					resolve({
+						analyticsReportsTrafficSources: [
+							{
+								helpMessage:
+									'People that find your page through a search engine, such as Google or Bing',
+								name: 'organic',
+								title: 'Organic',
+								value: 32178,
+							},
+							{
+								helpMessage:
+									'Traffic that you have to pay to obtain',
+								name: 'paid',
+								title: 'Paid',
+								value: 278256,
+							},
+						],
+					}),
 				300
 			)
-		);
-	}
-
-	function getPaidVolume() {
-		// TODO remove frontend mock
-		return new Promise(resolve =>
-			setTimeout(() => resolve({analyticsReportsPaidVolume: 170222}), 300)
 		);
 	}
 
 	return {
 		getHistoricalReads,
 		getHistoricalViews,
-		getOrganicVolume,
-		getPaidVolume,
 		getTotalReads,
 		getTotalViews,
+		getTrafficSources,
 	};
 }
 

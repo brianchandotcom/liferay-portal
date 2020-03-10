@@ -13,6 +13,7 @@ import React from 'react';
 
 import BasicInformation from './components/BasicInformation';
 import Chart from './components/Chart';
+import Hint from './components/Hint';
 import PieChart from './components/PieChart';
 import TotalCount from './components/TotalCount';
 import APIService from './utils/APIService';
@@ -60,24 +61,6 @@ export default function({context, props}) {
 		});
 	}
 
-	function _handleOrganicVolume() {
-		return api.getOrganicVolume().then(response => {
-			return numberFormat(
-				languageTag,
-				response.analyticsReportsOrganicVolume
-			);
-		});
-	}
-
-	function _handlePaidVolume() {
-		return api.getPaidVolume().then(response => {
-			return numberFormat(
-				languageTag,
-				response.analyticsReportsPaidVolume
-			);
-		});
-	}
-
 	return (
 		<div className="p-3">
 			<BasicInformation
@@ -120,22 +103,17 @@ export default function({context, props}) {
 			/>
 
 			<h5 className="mt-4 sheet-subtitle text-secondary">
-				{Liferay.Language.get('traffic')}
+				{Liferay.Language.get('traffic-sources')}
+				<Hint
+					message={Liferay.Language.get('traffic-message')}
+					title={Liferay.Language.get('traffic-sources')}
+				/>
 			</h5>
 
-			<TotalCount
-				className="mt-2"
-				dataProvider={_handleOrganicVolume}
-				label={Liferay.Util.sub(Liferay.Language.get('organic-volume'))}
+			<PieChart
+				dataProvider={api.getTrafficSources}
+				languageTag={languageTag}
 			/>
-
-			<TotalCount
-				className="mt-2"
-				dataProvider={_handlePaidVolume}
-				label={Liferay.Util.sub(Liferay.Language.get('paid-volume'))}
-			/>
-
-			<PieChart />
 		</div>
 	);
 }

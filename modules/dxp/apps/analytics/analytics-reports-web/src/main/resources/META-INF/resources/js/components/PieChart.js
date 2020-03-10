@@ -13,12 +13,13 @@ import React from 'react';
 import {Cell, Pie, PieChart as RechartsPieChart} from 'recharts';
 
 import {numberFormat} from '../utils/numberFormat';
+import Hint from './Hint';
+
+const {useEffect, useState} = React;
 
 const COLORS_MAP = {
-	backlinks: '#AF78FF',
-	email: '#FFB46E',
-	paid: '#50D2A0',
-	search: '#4B9BFF',
+	organic: '#7785FF',
+	paid: '#FFB46E',
 };
 
 /**
@@ -28,36 +29,21 @@ const FALLBACK_COLOR = '#e92563';
 
 const getColorByName = name => COLORS_MAP[name] || FALLBACK_COLOR;
 
-export default function PieChart({languageTag = 'es-ES'}) {
-	const mockData = [
-		{
-			name: 'search',
-			title: 'Search',
-			value: 32178,
-		},
-		{
-			name: 'paid',
-			title: 'Paid',
-			value: 278256,
-		},
-		{
-			name: 'backlinks',
-			title: 'Backlinks',
-			value: 200901,
-		},
-		{
-			name: 'email',
-			title: 'Email',
-			value: 223836,
-		},
-	];
+export default function PieChart({dataProvider, languageTag}) {
+	const [trafficSources, setTrafficSources] = useState([]);
+
+	useEffect(() => {
+		dataProvider().then(response =>
+			setTrafficSources(response.analyticsReportsTrafficSources)
+		);
+	}, [dataProvider]);
 
 	return (
 		<div className="pie-chart-wrapper">
 			<div className="pie-chart-wrapper--legend">
 				<table>
 					<tbody>
-						{mockData.map(entry => {
+						{trafficSources.map(entry => {
 							return (
 								<tr key={entry.name}>
 									<td>
@@ -72,6 +58,10 @@ export default function PieChart({languageTag = 'es-ES'}) {
 									</td>
 									<td className="font-weight-bold pr-1 text-secondary">
 										{entry.title}
+										<Hint
+											message={entry.helpMessage}
+											title={entry.title}
+										/>
 									</td>
 									<td className="font-weight-bold">
 										{numberFormat(languageTag, entry.value)}
@@ -82,18 +72,19 @@ export default function PieChart({languageTag = 'es-ES'}) {
 					</tbody>
 				</table>
 			</div>
+
 			<div className="pie-chart-wrapper--chart">
-				<RechartsPieChart height={100} width={100}>
+				<RechartsPieChart height={80} width={80}>
 					<Pie
 						cx="50%"
 						cy="50%"
-						data={mockData}
+						data={trafficSources}
 						innerRadius={25}
 						nameKey={'name'}
-						outerRadius={50}
+						outerRadius={40}
 						paddingAngle={5}
 					>
-						{mockData.map((entry, i) => {
+						{trafficSources.map((entry, i) => {
 							const fillColor = getColorByName(entry.name);
 
 							return <Cell fill={fillColor} key={i} />;

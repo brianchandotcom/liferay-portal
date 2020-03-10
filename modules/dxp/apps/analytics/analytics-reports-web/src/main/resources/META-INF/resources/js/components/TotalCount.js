@@ -9,12 +9,11 @@
  * distribution rights of the Software.
  */
 
-import ClayIcon from '@clayui/icon';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Popover from './Popover';
+import Hint from './Hint';
 
 function TotalCount({
 	className,
@@ -23,8 +22,6 @@ function TotalCount({
 	popoverHeader,
 	popoverMessage,
 }) {
-	const iconRef = React.useRef();
-	const [showTooltip, setShowTooltip] = React.useState(false);
 	const [value, setValue] = React.useState(null);
 	const isMounted = useIsMounted();
 
@@ -47,25 +44,9 @@ function TotalCount({
 		<div className={className}>
 			<span className="text-secondary">
 				{label}
-				<span
-					className="p-1"
-					onMouseEnter={() => setShowTooltip(true)}
-					onMouseLeave={() => setShowTooltip(false)}
-					ref={iconRef}
-				>
-					<ClayIcon
-						className="mr-1"
-						small="true"
-						symbol="question-circle"
-					/>
-				</span>
-
-				{showTooltip && (
-					<Popover anchor={iconRef.current} header={popoverHeader}>
-						{popoverMessage}
-					</Popover>
-				)}
+				<Hint message={popoverMessage} title={popoverHeader} />
 			</span>
+
 			<span className="font-weight-bold">{value}</span>
 		</div>
 	);

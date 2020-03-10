@@ -43,6 +43,14 @@ public class DepotAppCustomizationLocalServiceImpl
 	}
 
 	@Override
+	public int getDepotAppCustomizationCount(
+		long depotEntryId, boolean enabled) {
+
+		return depotAppCustomizationPersistence.countByD_E(
+			depotEntryId, enabled);
+	}
+
+	@Override
 	public DepotAppCustomization updateDepotAppCustomization(
 			long depotEntryId, boolean enabled, String portletId)
 		throws PortalException {

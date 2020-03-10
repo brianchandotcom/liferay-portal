@@ -195,6 +195,7 @@ com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil#detectDevice(HttpSer
 com.liferay.portal.kernel.mobile.device.DeviceRecognitionProvider#detectDevice(HttpServletRequest)
 com.liferay.portal.kernel.model.BaseModel#setExpandoBridgeAttributes(ServiceContext)
 com.liferay.portal.kernel.model.LayoutTypeAccessPolicy#checkAccessAllowedToPortlet(HttpServletRequest,Layout,Portlet)
+com.liferay.portal.kernel.model.LayoutTypeController#getFriendlyURL(HttpServletRequest,Layout)
 com.liferay.portal.kernel.model.LayoutTypeController#matches(HttpServletRequest,String,Layout)
 com.liferay.portal.kernel.notifications.UserNotificationHandler#interpret(UserNotificationEvent,ServiceContext)
 com.liferay.portal.kernel.notifications.UserNotificationHandler#isApplicable(UserNotificationEvent,ServiceContext)

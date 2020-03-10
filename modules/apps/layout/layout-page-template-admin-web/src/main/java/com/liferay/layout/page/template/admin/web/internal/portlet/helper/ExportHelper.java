@@ -166,7 +166,7 @@ public class ExportHelper {
 		throws Exception {
 
 		String masterLayoutPath =
-			_ROOT_FOLDER_MASTER_PAGES + StringPool.SLASH +
+			"master-pages" + StringPool.SLASH +
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
 
 		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
@@ -223,7 +223,7 @@ public class ExportHelper {
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionKey();
 
 		String layoutPageTemplateCollectionPath =
-			_ROOT_FOLDER_PAGE_TEMPLATES + StringPool.SLASH +
+			"page-templates" + StringPool.SLASH +
 				layoutPageTemplateCollectionKey;
 
 		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
@@ -277,10 +277,6 @@ public class ExportHelper {
 				previewFileEntry.getContentStream());
 		}
 	}
-
-	private static final String _ROOT_FOLDER_MASTER_PAGES = "master-pages";
-
-	private static final String _ROOT_FOLDER_PAGE_TEMPLATES = "page-templates";
 
 	private static final Log _log = LogFactoryUtil.getLog(ExportHelper.class);
 

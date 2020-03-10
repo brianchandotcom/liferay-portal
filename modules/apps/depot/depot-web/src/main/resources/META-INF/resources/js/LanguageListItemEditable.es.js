@@ -74,7 +74,7 @@ const LanguageListItem = ({
 }) => {
 	const [active, setActive] = useState(false);
 	const [dropZone, setDropZone] = useState();
-	const tableRef = useRef();
+	const itemRef = useRef();
 
 	const [{isDragging}, drag] = useDrag({
 		collect: monitor => ({
@@ -90,7 +90,7 @@ const LanguageListItem = ({
 	const [{isOver}, drop] = useDrop({
 		accept: ACCEPTING_TYPES.ITEM,
 		canDrop(source, monitor) {
-			const dropZone = getDropZone(tableRef, monitor);
+			const dropZone = getDropZone(itemRef, monitor);
 
 			return isValidTarget(source, {id: localeId, index}, dropZone);
 		},
@@ -105,14 +105,18 @@ const LanguageListItem = ({
 					newIndex = index + 1;
 				}
 
-				onItemDrop(source.id, newIndex);
+				if (newIndex < source.index) {
+					newIndex = newIndex - 1;
+				}
+
+				onItemDrop(source.index, newIndex);
 			}
 		},
 		hover(source, monitor) {
 			let dropZone;
 
 			if (isOver && monitor.canDrop()) {
-				dropZone = getDropZone(tableRef, monitor);
+				dropZone = getDropZone(itemRef, monitor);
 			}
 
 			setDropZone(dropZone);
@@ -120,7 +124,7 @@ const LanguageListItem = ({
 	});
 
 	useEffect(() => {
-		drag(drop(tableRef));
+		drag(drop(itemRef));
 	}, [drag, drop]);
 
 	const makeDefault = event => {
@@ -138,7 +142,7 @@ const LanguageListItem = ({
 				'drop-bottom': isOver && dropZone === DROP_ZONES.BOTTOM,
 				'drop-top': isOver && dropZone === DROP_ZONES.TOP,
 			})}
-			ref={tableRef}
+			ref={itemRef}
 		>
 			<ClayTable.Cell expanded>
 				<div className="autofit-row autofit-row-center">

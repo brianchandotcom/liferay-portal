@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -117,18 +117,18 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(), groupId,
 			categoryId, ActionKeys.ADD_MESSAGE);
 
-		if (!ModelResourcePermissionHelper.contains(
+		if (!ModelResourcePermissionUtil.contains(
 				_categoryModelResourcePermission, getPermissionChecker(),
 				groupId, categoryId, ActionKeys.ADD_FILE)) {
 
 			inputStreamOVPs = Collections.emptyList();
 		}
 
-		if (!ModelResourcePermissionHelper.contains(
+		if (!ModelResourcePermissionUtil.contains(
 				_categoryModelResourcePermission, getPermissionChecker(),
 				groupId, categoryId, ActionKeys.UPDATE_THREAD_PRIORITY)) {
 
@@ -220,7 +220,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			throw new LockedThreadException(sb.toString());
 		}
 
-		if (!ModelResourcePermissionHelper.contains(
+		if (!ModelResourcePermissionUtil.contains(
 				_categoryModelResourcePermission, getPermissionChecker(),
 				parentMessage.getGroupId(), parentMessage.getCategoryId(),
 				ActionKeys.ADD_FILE)) {
@@ -228,7 +228,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			inputStreamOVPs = Collections.emptyList();
 		}
 
-		if (!ModelResourcePermissionHelper.contains(
+		if (!ModelResourcePermissionUtil.contains(
 				_categoryModelResourcePermission, getPermissionChecker(),
 				parentMessage.getGroupId(), parentMessage.getCategoryId(),
 				ActionKeys.UPDATE_THREAD_PRIORITY)) {
@@ -263,7 +263,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			throw new LockedThreadException(sb.toString());
 		}
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(),
 			message.getGroupId(), message.getCategoryId(), ActionKeys.ADD_FILE);
 
@@ -277,7 +277,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			InputStream inputStream, String mimeType)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(), groupId,
 			categoryId, ActionKeys.ADD_FILE);
 
@@ -326,7 +326,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			long groupId, long categoryId, String folderName, String fileName)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(), groupId,
 			categoryId, ActionKeys.ADD_FILE);
 
@@ -730,7 +730,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(),
 			message.getGroupId(), message.getCategoryId(), ActionKeys.ADD_FILE);
 
@@ -819,7 +819,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			throw new LockedThreadException(sb.toString());
 		}
 
-		if (!ModelResourcePermissionHelper.contains(
+		if (!ModelResourcePermissionUtil.contains(
 				_categoryModelResourcePermission, getPermissionChecker(),
 				message.getGroupId(), message.getCategoryId(),
 				ActionKeys.ADD_FILE)) {
@@ -827,7 +827,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			inputStreamOVPs = Collections.emptyList();
 		}
 
-		if (!ModelResourcePermissionHelper.contains(
+		if (!ModelResourcePermissionUtil.contains(
 				_categoryModelResourcePermission, getPermissionChecker(),
 				message.getGroupId(), message.getCategoryId(),
 				ActionKeys.UPDATE_THREAD_PRIORITY)) {
@@ -850,14 +850,14 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (parentMessageId > 0) {
-			if (ModelResourcePermissionHelper.contains(
+			if (ModelResourcePermissionUtil.contains(
 					_categoryModelResourcePermission, permissionChecker,
 					groupId, categoryId, ActionKeys.ADD_MESSAGE)) {
 
 				return;
 			}
 
-			if (!ModelResourcePermissionHelper.contains(
+			if (!ModelResourcePermissionUtil.contains(
 					_categoryModelResourcePermission, permissionChecker,
 					groupId, categoryId, ActionKeys.REPLY_TO_MESSAGE)) {
 
@@ -867,7 +867,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			}
 		}
 		else {
-			ModelResourcePermissionHelper.check(
+			ModelResourcePermissionUtil.check(
 				_categoryModelResourcePermission, permissionChecker, groupId,
 				categoryId, ActionKeys.ADD_MESSAGE);
 		}

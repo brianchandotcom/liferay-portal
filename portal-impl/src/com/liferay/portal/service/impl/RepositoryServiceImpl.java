@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -70,7 +70,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		Repository repository = repositoryPersistence.findByPrimaryKey(
 			repositoryId);
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, getPermissionChecker(),
 			repository.getGroupId(), repository.getDlFolderId(),
 			ActionKeys.DELETE);
@@ -83,7 +83,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		Repository repository = repositoryPersistence.findByPrimaryKey(
 			repositoryId);
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, getPermissionChecker(),
 			repository.getGroupId(), repository.getDlFolderId(),
 			ActionKeys.VIEW);
@@ -98,7 +98,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		Repository repository = repositoryPersistence.findByG_N_P(
 			groupId, portletId, portletId);
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, getPermissionChecker(),
 			repository.getGroupId(), repository.getDlFolderId(),
 			ActionKeys.VIEW);
@@ -123,7 +123,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		Repository repository = repositoryPersistence.findByPrimaryKey(
 			repositoryId);
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, getPermissionChecker(),
 			repository.getGroupId(), repository.getDlFolderId(),
 			ActionKeys.UPDATE);
@@ -183,7 +183,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 				repositoryId);
 
 			if (repository != null) {
-				ModelResourcePermissionHelper.check(
+				ModelResourcePermissionUtil.check(
 					_folderModelResourcePermission, getPermissionChecker(),
 					repository.getGroupId(), repository.getDlFolderId(),
 					ActionKeys.VIEW);

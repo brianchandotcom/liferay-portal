@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
@@ -71,7 +71,7 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 
 			if (!_dlOpenerOneDriveManager.isConfigured(
 					themeDisplay.getCompanyId()) ||
-				!ModelResourcePermissionHelper.contains(
+				!ModelResourcePermissionUtil.contains(
 					_folderEntryModelResourcePermission,
 					themeDisplay.getPermissionChecker(),
 					themeDisplay.getScopeGroupId(), folderId,

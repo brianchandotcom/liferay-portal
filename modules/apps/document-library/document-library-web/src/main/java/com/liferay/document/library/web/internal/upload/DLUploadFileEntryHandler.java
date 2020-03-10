@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -59,7 +59,7 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 
 		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, themeDisplay.getPermissionChecker(),
 			themeDisplay.getScopeGroupId(), folderId, ActionKeys.ADD_DOCUMENT);
 

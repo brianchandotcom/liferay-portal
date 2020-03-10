@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,7 +52,7 @@ public class DLFolderPermission {
 			String actionId)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, permissionChecker, groupId,
 			folderId, actionId);
 	}
@@ -79,7 +79,7 @@ public class DLFolderPermission {
 			String actionId)
 		throws PortalException {
 
-		return ModelResourcePermissionHelper.contains(
+		return ModelResourcePermissionUtil.contains(
 			_folderModelResourcePermission, permissionChecker, groupId,
 			folderId, actionId);
 	}

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -53,7 +53,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(),
 			serviceContext.getScopeGroupId(), parentCategoryId,
 			ActionKeys.ADD_CATEGORY);
@@ -74,7 +74,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			boolean allowAnonymousEmail, ServiceContext serviceContext)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(),
 			serviceContext.getScopeGroupId(), parentCategoryId,
 			ActionKeys.ADD_CATEGORY);
@@ -104,7 +104,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 	public void deleteCategory(long groupId, long categoryId)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(), groupId,
 			categoryId, ActionKeys.DELETE);
 
@@ -521,7 +521,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 	public void subscribeCategory(long groupId, long categoryId)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(), groupId,
 			categoryId, ActionKeys.SUBSCRIBE);
 
@@ -533,7 +533,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 	public void unsubscribeCategory(long groupId, long categoryId)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(), groupId,
 			categoryId, ActionKeys.SUBSCRIBE);
 

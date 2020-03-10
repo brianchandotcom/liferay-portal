@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -57,7 +57,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_journalFolderModelResourcePermission, getPermissionChecker(),
 			groupId, parentFolderId, ActionKeys.ADD_FOLDER);
 
@@ -122,7 +122,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	public List<Long> getFolderIds(long groupId, long folderId)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_journalFolderModelResourcePermission, getPermissionChecker(),
 			groupId, folderId, ActionKeys.VIEW);
 
@@ -371,7 +371,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 	@Override
 	public void subscribe(long groupId, long folderId) throws PortalException {
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_journalFolderModelResourcePermission, getPermissionChecker(),
 			groupId, folderId, ActionKeys.SUBSCRIBE);
 
@@ -382,7 +382,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	public void unsubscribe(long groupId, long folderId)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_journalFolderModelResourcePermission, getPermissionChecker(),
 			groupId, folderId, ActionKeys.SUBSCRIBE);
 
@@ -412,7 +412,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			boolean mergeWithParentFolder, ServiceContext serviceContext)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_journalFolderModelResourcePermission, getPermissionChecker(),
 			groupId, folderId, ActionKeys.UPDATE);
 

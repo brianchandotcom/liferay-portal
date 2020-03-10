@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
@@ -56,7 +56,7 @@ public class DLFolderPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, permissionChecker, groupId,
 			folderId, actionId);
 	}
@@ -83,7 +83,7 @@ public class DLFolderPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		return ModelResourcePermissionHelper.contains(
+		return ModelResourcePermissionUtil.contains(
 			_folderModelResourcePermission, permissionChecker, groupId,
 			folderId, actionId);
 	}
@@ -94,7 +94,7 @@ public class DLFolderPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, permissionChecker, groupId,
 			primaryKey, actionId);
 	}

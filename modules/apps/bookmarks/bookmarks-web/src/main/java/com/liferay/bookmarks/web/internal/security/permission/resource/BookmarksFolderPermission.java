@@ -18,7 +18,7 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,7 +43,7 @@ public class BookmarksFolderPermission {
 			String actionId)
 		throws PortalException {
 
-		return ModelResourcePermissionHelper.contains(
+		return ModelResourcePermissionUtil.contains(
 			_bookmarksFolderModelResourcePermission, permissionChecker, groupId,
 			folderId, actionId);
 	}

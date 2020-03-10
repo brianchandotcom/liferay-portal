@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -51,7 +51,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_bookmarksFolderModelResourcePermission, getPermissionChecker(),
 			serviceContext.getScopeGroupId(), parentFolderId,
 			ActionKeys.ADD_FOLDER);
@@ -96,7 +96,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public List<Long> getFolderIds(long groupId, long folderId)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_bookmarksFolderModelResourcePermission, getPermissionChecker(),
 			groupId, folderId, ActionKeys.VIEW);
 
@@ -291,7 +291,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public void subscribeFolder(long groupId, long folderId)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_bookmarksFolderModelResourcePermission, getPermissionChecker(),
 			groupId, folderId, ActionKeys.SUBSCRIBE);
 
@@ -303,7 +303,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public void unsubscribeFolder(long groupId, long folderId)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_bookmarksFolderModelResourcePermission, getPermissionChecker(),
 			groupId, folderId, ActionKeys.SUBSCRIBE);
 

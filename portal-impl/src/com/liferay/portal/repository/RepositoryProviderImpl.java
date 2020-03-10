@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RepositoryEntryLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
@@ -408,7 +408,7 @@ public class RepositoryProviderImpl implements RepositoryProvider {
 
 			if ((repository != null) && (permissionChecker != null)) {
 				try {
-					ModelResourcePermissionHelper.check(
+					ModelResourcePermissionUtil.check(
 						_folderModelResourcePermission, permissionChecker,
 						repository.getGroupId(), repository.getDlFolderId(),
 						ActionKeys.VIEW);

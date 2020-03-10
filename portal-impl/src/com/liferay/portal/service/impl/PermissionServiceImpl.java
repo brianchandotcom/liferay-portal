@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.permission.TeamPermissionUtil;
@@ -111,7 +111,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 				return true;
 			}
 
-			ModelResourcePermissionHelper.check(
+			ModelResourcePermissionUtil.check(
 				modelResourcePermission, permissionChecker, groupId, classPK,
 				actionId);
 

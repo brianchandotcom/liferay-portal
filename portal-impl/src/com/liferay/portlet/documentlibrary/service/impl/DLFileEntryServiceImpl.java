@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -71,7 +71,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			InputStream is, long size, ServiceContext serviceContext)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, getPermissionChecker(), groupId,
 			folderId, ActionKeys.ADD_DOCUMENT);
 
@@ -165,7 +165,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		_fileEntryModelResourcePermission.check(
 			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, getPermissionChecker(), groupId,
 			destFolderId, ActionKeys.ADD_DOCUMENT);
 
@@ -245,7 +245,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			OrderByComparator<DLFileEntry> obc)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, getPermissionChecker(), groupId,
 			folderId, ActionKeys.VIEW);
 
@@ -277,7 +277,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			int end, OrderByComparator<DLFileEntry> obc)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, getPermissionChecker(), groupId,
 			folderId, ActionKeys.VIEW);
 
@@ -291,7 +291,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			int start, int end, OrderByComparator<DLFileEntry> obc)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, getPermissionChecker(), groupId,
 			folderId, ActionKeys.VIEW);
 
@@ -312,7 +312,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			OrderByComparator<DLFileEntry> obc)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, getPermissionChecker(), groupId,
 			folderId, ActionKeys.VIEW);
 
@@ -588,7 +588,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		_fileEntryModelResourcePermission.check(
 			permissionChecker, fileEntryId, ActionKeys.UPDATE);
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, permissionChecker,
 			serviceContext.getScopeGroupId(), newFolderId,
 			ActionKeys.ADD_DOCUMENT);

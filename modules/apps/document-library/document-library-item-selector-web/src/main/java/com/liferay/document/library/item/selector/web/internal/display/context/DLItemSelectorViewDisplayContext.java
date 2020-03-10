@@ -51,7 +51,7 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -289,7 +289,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			return _showDragAndDropZone;
 		}
 
-		if (!ModelResourcePermissionHelper.contains(
+		if (!ModelResourcePermissionUtil.contains(
 				_folderModelResourcePermission,
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(), _getFolderId(),

@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -56,7 +56,7 @@ public class OAuth2ApplicationServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_oAuth2ApplicationModelResourcePermission, getPermissionChecker(),
 			0, 0, OAuth2ProviderActionKeys.ACTION_ADD_APPLICATION);
 
@@ -89,7 +89,7 @@ public class OAuth2ApplicationServiceImpl
 			List<String> scopeAliasesList, ServiceContext serviceContext)
 		throws PortalException {
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_oAuth2ApplicationModelResourcePermission, getPermissionChecker(),
 			0, 0, OAuth2ProviderActionKeys.ACTION_ADD_APPLICATION);
 
@@ -283,7 +283,7 @@ public class OAuth2ApplicationServiceImpl
 		User user = getUser();
 
 		if ((clientCredentialUserId != user.getUserId()) &&
-			!ModelResourcePermissionHelper.contains(
+			!ModelResourcePermissionUtil.contains(
 				_userModelResourcePermission, getPermissionChecker(), 0,
 				clientCredentialUserId, ActionKeys.IMPERSONATE)) {
 

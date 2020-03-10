@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -374,7 +374,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	public Lock lockThread(long threadId) throws PortalException {
 		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(),
 			thread.getGroupId(), thread.getCategoryId(),
 			ActionKeys.LOCK_THREAD);
@@ -401,12 +401,12 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 		MBThread thread = mbThreadLocalService.getThread(threadId);
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(),
 			thread.getGroupId(), thread.getCategoryId(),
 			ActionKeys.MOVE_THREAD);
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(),
 			thread.getGroupId(), categoryId, ActionKeys.MOVE_THREAD);
 
@@ -420,7 +420,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 		MBThread thread = mbThreadLocalService.getThread(threadId);
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(),
 			thread.getGroupId(), thread.getCategoryId(), ActionKeys.UPDATE);
 
@@ -496,7 +496,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 		MBMessage message = _mbMessageLocalService.getMessage(messageId);
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(),
 			message.getGroupId(), message.getCategoryId(),
 			ActionKeys.MOVE_THREAD);
@@ -512,7 +512,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	public void unlockThread(long threadId) throws PortalException {
 		MBThread thread = mbThreadLocalService.getThread(threadId);
 
-		ModelResourcePermissionHelper.check(
+		ModelResourcePermissionUtil.check(
 			_categoryModelResourcePermission, getPermissionChecker(),
 			thread.getGroupId(), thread.getCategoryId(),
 			ActionKeys.LOCK_THREAD);

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -94,7 +94,7 @@ public class AccessFromDesktopPortletConfigurationIcon
 					folderId = folder.getFolderId();
 				}
 
-				if (ModelResourcePermissionHelper.contains(
+				if (ModelResourcePermissionUtil.contains(
 						_folderModelResourcePermission,
 						themeDisplay.getPermissionChecker(),
 						themeDisplay.getScopeGroupId(), folderId,

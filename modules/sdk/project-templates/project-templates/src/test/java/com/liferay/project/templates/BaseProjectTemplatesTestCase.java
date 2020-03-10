@@ -479,7 +479,7 @@ public interface BaseProjectTemplatesTestCase {
 		}
 
 		if (!liferayVersionSet) {
-			completeArgs.add("-DliferayVersion=" + getLiferayVersion());
+			completeArgs.add("-DliferayVersion=" + getDefaultLiferayVersion());
 		}
 
 		if (!projectTypeSet) {
@@ -769,7 +769,7 @@ public interface BaseProjectTemplatesTestCase {
 		return executeMaven(projectDir, false, mavenExecutor, args);
 	}
 
-	public default String getLiferayVersion() {
+	public default String getDefaultLiferayVersion() {
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
 		return projectTemplatesArgs.getLiferayVersion();
@@ -847,9 +847,11 @@ public interface BaseProjectTemplatesTestCase {
 			enableTargetPlatformInWorkspace(workspaceDir, "7.2.1");
 		}
 		else {
-			workspaceDir = buildWorkspace(temporaryFolder, getLiferayVersion());
+			workspaceDir = buildWorkspace(
+				temporaryFolder, getDefaultLiferayVersion());
 
-			enableTargetPlatformInWorkspace(workspaceDir, getLiferayVersion());
+			enableTargetPlatformInWorkspace(
+				workspaceDir, getDefaultLiferayVersion());
 		}
 
 		File modulesDir = new File(workspaceDir, "modules");

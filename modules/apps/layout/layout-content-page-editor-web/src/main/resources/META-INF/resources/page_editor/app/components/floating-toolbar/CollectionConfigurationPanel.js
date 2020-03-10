@@ -23,6 +23,12 @@ import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSe
 import {useDispatch, useSelector} from '../../store/index';
 import updateItemConfig from '../../thunks/updateItemConfig';
 
+const NUMBER_OF_COLUMNS_OPTIONS = ['1', '2', '3', '4', '5', '6'];
+
+function collectionIsMapped(collectionConfig) {
+	return collectionConfig.collection;
+}
+
 export const CollectionConfigurationPanel = ({item}) => {
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(
@@ -59,46 +65,78 @@ export const CollectionConfigurationPanel = ({item}) => {
 					}
 				/>
 			</ClayForm.Group>
-			<ClayForm.Group small>
-				<label htmlFor="collectionListFormat">
-					{Liferay.Language.get('list-format')}
-				</label>
-				<ClaySelectWithOption
-					aria-label={Liferay.Language.get('list-format')}
-					id="collectionListFormat"
-					onChange={({target: {value}}) =>
-						handleConfigurationChanged({
-							listFormat: value,
-						})
-					}
-					options={[
-						{
-							label: Liferay.Language.get('stacked'),
-							value: COLLECTION_LIST_FORMATS.stacked,
-						},
-						{
-							label: Liferay.Language.get('grid'),
-							value: COLLECTION_LIST_FORMATS.grid,
-						},
-					]}
-					value={collectionConfig.listFormat}
-				/>
-			</ClayForm.Group>
-			<ClayForm.Group small>
-				<label htmlFor="collectionNumberOfItems">
-					{Liferay.Language.get('max-number-of-items')}
-				</label>
-				<ClayInput
-					id="collectionNumberOfItems"
-					onChange={({target: {value}}) =>
-						handleConfigurationChanged({
-							numberOfItems: value,
-						})
-					}
-					type="number"
-					value={collectionConfig.numberOfItems}
-				/>
-			</ClayForm.Group>
+			{collectionIsMapped(item.config) && (
+				<>
+					<ClayForm.Group small>
+						<label htmlFor="collectionListFormat">
+							{Liferay.Language.get('list-format')}
+						</label>
+						<ClaySelectWithOption
+							aria-label={Liferay.Language.get('list-format')}
+							id="collectionListFormat"
+							onChange={({target: {value}}) =>
+								handleConfigurationChanged({
+									listFormat: value,
+								})
+							}
+							options={[
+								{
+									label: Liferay.Language.get('stacked'),
+									value: COLLECTION_LIST_FORMATS.stacked,
+								},
+								{
+									label: Liferay.Language.get('grid'),
+									value: COLLECTION_LIST_FORMATS.grid,
+								},
+							]}
+							value={collectionConfig.listFormat}
+						/>
+					</ClayForm.Group>
+
+					{item.config.listFormat ===
+						COLLECTION_LIST_FORMATS.grid && (
+						<ClayForm.Group small>
+							<label htmlFor="collectionNumberOfColumns">
+								{Liferay.Language.get('number-of-columns')}
+							</label>
+							<ClaySelectWithOption
+								aria-label={Liferay.Language.get(
+									'number-of-columns'
+								)}
+								id="collectionNumberOfColumns"
+								onChange={({target: {value}}) =>
+									handleConfigurationChanged({
+										numberOfColumns: value,
+									})
+								}
+								options={NUMBER_OF_COLUMNS_OPTIONS.map(
+									value => ({
+										label: value,
+										value,
+									})
+								)}
+								value={item.config.numberOfColumns}
+							/>
+						</ClayForm.Group>
+					)}
+
+					<ClayForm.Group small>
+						<label htmlFor="collectionNumberOfItems">
+							{Liferay.Language.get('max-number-of-items')}
+						</label>
+						<ClayInput
+							id="collectionNumberOfItems"
+							onChange={({target: {value}}) =>
+								handleConfigurationChanged({
+									numberOfItems: value,
+								})
+							}
+							type="number"
+							value={collectionConfig.numberOfItems}
+						/>
+					</ClayForm.Group>
+				</>
+			)}
 		</>
 	);
 };

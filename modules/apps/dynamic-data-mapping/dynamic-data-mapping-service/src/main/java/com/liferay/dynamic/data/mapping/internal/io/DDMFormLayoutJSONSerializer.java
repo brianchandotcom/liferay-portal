@@ -21,11 +21,14 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -56,6 +59,7 @@ public class DDMFormLayoutJSONSerializer implements DDMFormLayoutSerializer {
 		addDefaultLanguageId(jsonObject, ddmFormLayout.getDefaultLocale());
 		addPages(jsonObject, ddmFormLayout.getDDMFormLayoutPages());
 		addPaginationMode(jsonObject, ddmFormLayout.getPaginationMode());
+		addRules(jsonObject, ddmFormLayout.getDDMFormRules());
 
 		DDMFormLayoutSerializerSerializeResponse.Builder builder =
 			DDMFormLayoutSerializerSerializeResponse.Builder.newBuilder(
@@ -145,10 +149,19 @@ public class DDMFormLayoutJSONSerializer implements DDMFormLayoutSerializer {
 		jsonObject.put("rows", jsonArray);
 	}
 
-	protected void addTitle(JSONObject pageJSONObject, LocalizedValue title) {
-		Map<Locale, String> values = title.getValues();
+	protected void addRules(
+		JSONObject jsonObject, List<DDMFormRule> ddmFormRules) {
 
-		if (values.isEmpty()) {
+		if (ListUtil.isEmpty(ddmFormRules)) {
+			return;
+		}
+
+		jsonObject.put(
+			"rules", DDMFormRuleJSONSerializer.serialize(ddmFormRules));
+	}
+
+	protected void addTitle(JSONObject pageJSONObject, LocalizedValue title) {
+		if (MapUtil.isEmpty(title.getValues())) {
 			return;
 		}
 

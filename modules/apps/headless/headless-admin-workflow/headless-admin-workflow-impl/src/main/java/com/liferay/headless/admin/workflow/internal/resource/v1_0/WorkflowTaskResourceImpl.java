@@ -313,6 +313,22 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 	}
 
 	@Override
+	public void patchWorkflowTaskUpdateDueDate(
+			WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
+		throws Exception {
+
+		for (WorkflowTaskAssignToMe workflowTaskAssignToMe :
+				workflowTaskAssignToMes) {
+
+			_workflowTaskManager.updateDueDate(
+				contextCompany.getCompanyId(), contextUser.getUserId(),
+				workflowTaskAssignToMe.getWorkflowTaskId(),
+				workflowTaskAssignToMe.getComment(),
+				workflowTaskAssignToMe.getDueDate());
+		}
+	}
+
+	@Override
 	public WorkflowTask postWorkflowTaskAssignToMe(
 			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception {

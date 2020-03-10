@@ -417,6 +417,10 @@ components:
                     format: date-time
                     type: string
                     writeOnly: true
+                workflowTaskId:
+                    format: int64
+                    type: integer
+                    writeOnly: true
             type: object
         WorkflowTaskAssignToRole:
             description:
@@ -1420,6 +1424,29 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/WorkflowTask"
                                 type: array
+                    description:
+                        ""
+            tags: ["WorkflowTask"]
+    "/workflow-tasks/update-due-date":
+        patch:
+            operationId: patchWorkflowTaskUpdateDueDate
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/WorkflowTaskAssignToMe"
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/WorkflowTaskAssignToMe"
+                            type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["WorkflowTask"]

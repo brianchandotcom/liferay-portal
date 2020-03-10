@@ -53,7 +53,7 @@ definition {
 
 			Pause(locator1 = "3000");
 
-			AssertElementPresent.assertVisible(
+			AssertElementPresent.pauseAssertVisible(
 				locator1 = "ItemSelector#ADD_BUTTON",
 				value1 = "Add");
 

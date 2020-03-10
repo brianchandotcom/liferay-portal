@@ -256,10 +256,20 @@ $theme-colors-cp: map-deep-merge(
 
 	// Nav and Navbar
 
-	--nav-font-size: var(--navbar-font-size);
+	--navbar-active-color: #{$navbar-light-active-color};
+	--navbar-brand-color: #{$navbar-light-brand-color};
+	--navbar-brand-font-size: #{$navbar-brand-font-size};
+	--navbar-color: #{$navbar-light-color};
 	--navbar-font-size: var(--font-size-sm);
+	--navbar-hover-color: #{$navbar-light-hover-color};
+	--navbar-light-active-color: #{$navbar-light-active-color};
+	--navbar-light-brand-hover-color: #{$navbar-light-brand-hover-color};
+	--navbar-light-hover-color: #{$navbar-light-hover-color};
 
+	--nav-font-size: var(--navbar-font-size);
+	--nav-link-active-color: inherit;
 	--nav-link-color: inherit;
+	--nav-link-hover-color: inherit;
 	--nav-link-padding-x: calc(var(--spacer) * #{$spacer});
 	--nav-link-padding-y: calc(var(--spacer) * #{$nav-link-padding-y});
 
@@ -303,7 +313,6 @@ $theme-colors-cp: map-deep-merge(
 	--table-list-divider-color: var(--table-list-color);
 	--table-list-divider-padding-x: #{$table-list-divider-padding-x};
 	--table-list-divider-padding-y: #{$table-list-divider-padding-y};
-
 
 	// List group
 

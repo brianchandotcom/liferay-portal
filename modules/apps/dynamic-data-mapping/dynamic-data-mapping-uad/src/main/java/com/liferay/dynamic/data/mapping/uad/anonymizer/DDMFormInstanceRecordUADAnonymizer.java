@@ -54,7 +54,7 @@ public class DDMFormInstanceRecordUADAnonymizer
 		super.autoAnonymize(ddmFormInstanceRecord, userId, anonymousUser);
 
 		List<DDMFormInstanceRecordVersion> ddmFormInstanceRecordVersions =
-			ddmFormInstanceRecordVersionLocalService.
+			_ddmFormInstanceRecordVersionLocalService.
 				getFormInstanceRecordVersions(
 					ddmFormInstanceRecord.getFormInstanceRecordId(),
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
@@ -81,7 +81,7 @@ public class DDMFormInstanceRecordUADAnonymizer
 				}
 
 				DynamicQuery dynamicSubquery =
-					ddmFormInstanceRecordVersionLocalService.dynamicQuery();
+					_ddmFormInstanceRecordVersionLocalService.dynamicQuery();
 
 				dynamicSubquery.setProjection(
 					ProjectionFactoryUtil.property("formInstanceRecordId"));
@@ -101,13 +101,6 @@ public class DDMFormInstanceRecordUADAnonymizer
 		return actionableDynamicQuery;
 	}
 
-	@Reference
-	protected DDMContentLocalService ddmContentLocalService;
-
-	@Reference
-	protected DDMFormInstanceRecordVersionLocalService
-		ddmFormInstanceRecordVersionLocalService;
-
 	private void _anonymizeDDMContents(
 		List<DDMContent> ddmContents, long userId, User anonymousUser) {
 
@@ -118,7 +111,7 @@ public class DDMFormInstanceRecordUADAnonymizer
 					ddmContent.setUserName(anonymousUser.getFullName());
 				}
 
-				ddmContentLocalService.updateDDMContent(ddmContent);
+				_ddmContentLocalService.updateDDMContent(ddmContent);
 			});
 	}
 
@@ -148,26 +141,23 @@ public class DDMFormInstanceRecordUADAnonymizer
 						anonymousUser.getFullName());
 				}
 
-				if (ddmFormInstanceRecordVersion.getStatusByUserId() ==
-						userId) {
-
-					ddmFormInstanceRecordVersion.setStatusByUserId(
-						anonymousUser.getUserId());
-
-					ddmFormInstanceRecordVersion.setStatusByUserName(
-						anonymousUser.getFullName());
-				}
-
 				ddmContents.add(
-					ddmContentLocalService.fetchDDMContent(
+					_ddmContentLocalService.fetchDDMContent(
 						ddmFormInstanceRecordVersion.getStorageId()));
 
-				ddmFormInstanceRecordVersionLocalService.
+				_ddmFormInstanceRecordVersionLocalService.
 					updateDDMFormInstanceRecordVersion(
 						ddmFormInstanceRecordVersion);
 			});
 
 		_anonymizeDDMContents(ddmContents, userId, anonymousUser);
 	}
+
+	@Reference
+	private DDMContentLocalService _ddmContentLocalService;
+
+	@Reference
+	private DDMFormInstanceRecordVersionLocalService
+		_ddmFormInstanceRecordVersionLocalService;
 
 }

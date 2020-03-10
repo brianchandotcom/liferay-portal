@@ -15,16 +15,13 @@
 package com.liferay.dynamic.data.mapping.uad.constants;
 
 /**
- * @author Brian Wing Shun Chan
- * @generated
+ * @author Marcos Martins
  */
-public class DDMUADConstants {
+public class DDMFormInstanceUADConstants {
 
-	public static final String[] USER_ID_FIELD_NAMES_DDM_FORM_INSTANCE = {
-		"userId", "versionUserId"
-	};
+	public static final String DEFAULT_DDM_FORM_INSTANCE_DATE_FORMAT =
+		"MMM dd yyyy 'at' HH:mm";
 
-	public static final String[] USER_ID_FIELD_NAMES_DDM_FORM_INSTANCE_RECORD =
-		{"userId", "versionUserId"};
+	public static final long DEFAULT_DDM_FORM_INSTANCE_PARENT_ID = 0;
 
 }

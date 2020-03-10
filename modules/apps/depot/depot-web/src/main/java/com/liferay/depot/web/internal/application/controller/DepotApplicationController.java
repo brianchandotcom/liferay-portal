@@ -21,9 +21,11 @@ import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.trash.constants.TrashPortletKeys;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -121,6 +123,10 @@ public class DepotApplicationController {
 		}
 
 		if (!depotApplication.isCustomizable()) {
+			if (Objects.equals(portletId, TrashPortletKeys.TRASH)) {
+				return _isTrashEnabled(depotEntry.getDepotEntryId());
+			}
+
 			return true;
 		}
 
@@ -152,6 +158,23 @@ public class DepotApplicationController {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
+	}
+
+	private boolean _isTrashEnabled(long depotEntryId) {
+		int enabledDepotAppCustomizationCount =
+			_depotAppCustomizationLocalService.getDepotAppCustomizationCount(
+				depotEntryId, true);
+		int disabledDepotAppCustomizationCount =
+			_depotAppCustomizationLocalService.getDepotAppCustomizationCount(
+				depotEntryId, false);
+
+		if ((enabledDepotAppCustomizationCount == 0) &&
+			(disabledDepotAppCustomizationCount > 0)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Reference

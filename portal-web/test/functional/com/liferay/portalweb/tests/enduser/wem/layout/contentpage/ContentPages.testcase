@@ -296,6 +296,12 @@ definition {
 		}
 
 		task ("Edit the row's properties") {
+			if (IsVisible(key_elementType = "Row", locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON")) {
+				Click(
+					key_elementType = "Row",
+					locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+			}
+
 			PageEditor.editLayoutRow(
 				columnCount = "3",
 				spaceBetweenColumns = "false");

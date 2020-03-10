@@ -130,6 +130,16 @@ public class FragmentEntryConfigurationParserImpl
 	public Map<String, Object> getContextObjects(
 		JSONObject configurationValuesJSONObject, String configuration) {
 
+		return getContextObjects(
+			configurationValuesJSONObject, configuration,
+			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
+	}
+
+	@Override
+	public Map<String, Object> getContextObjects(
+		JSONObject configurationValuesJSONObject, String configuration,
+		long[] segmentsExperienceIds) {
+
 		HashMap<String, Object> contextObjects = new HashMap<>();
 
 		List<FragmentConfigurationField> fragmentConfigurationFields =

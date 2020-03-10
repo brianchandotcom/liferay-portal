@@ -576,13 +576,14 @@ definition {
 	}
 
 	macro editLayoutRow {
-		Click(
-			key_position = "1",
-			locator1 = "PageEditor#ROW");
+		var key_elementType = "Row";
+		var key_position = "1";
 
-		Click.clickNoMouseOver(
-			key_elementType = "Row",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		if (IsNotVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER")) {
+			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+		}
+
+		Click.clickNoMouseOver(locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		if (isSet(columnCount)) {
 			Select(
@@ -607,13 +608,14 @@ definition {
 	}
 
 	macro editLayoutSection {
-		Click(
-			key_position = "1",
-			locator1 = "PageEditor#SECTION");
+		var key_elementType = "Section";
+		var key_position = "1";
 
-		Click.clickNoMouseOver(
-			key_elementType = "Section",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		if (IsNotVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER")) {
+			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+		}
+
+		Click.clickNoMouseOver(locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
 		if (isSet(container)) {
 			Select(

@@ -92,6 +92,21 @@ public class DepotActionDropdownItemsProvider {
 									_httpServletRequest, "delete"));
 						});
 				}
+
+				if (_hasPermissionsPermission()) {
+					add(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "permissionsDepotEntry");
+							dropdownItem.putData(
+								"permissionsDepotEntryURL",
+								DepotEntryURLUtil.getDepotEntryPermissionsURL(
+									_depotEntry, _liferayPortletRequest));
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "permissions"));
+						});
+				}
 			}
 		};
 
@@ -107,6 +122,22 @@ public class DepotActionDropdownItemsProvider {
 			if (!DepotEntryPermission.contains(
 					_themeDisplay.getPermissionChecker(),
 					_depotEntry.getDepotEntryId(), ActionKeys.DELETE)) {
+
+				return false;
+			}
+
+			return true;
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
+		}
+	}
+
+	private boolean _hasPermissionsPermission() {
+		try {
+			if (!DepotEntryPermission.contains(
+					_themeDisplay.getPermissionChecker(),
+					_depotEntry.getDepotEntryId(), ActionKeys.PERMISSIONS)) {
 
 				return false;
 			}

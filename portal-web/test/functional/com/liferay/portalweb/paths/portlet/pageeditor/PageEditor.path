@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COMMENT_LIST_TITLE</td>
-	<td>//h1[contains(@class,'fragments-editor-sidebar-section__title') and contains(.,'Comments')]</td>
+	<td>//h1[contains(@class,'page-editor__sidebar__panel-header')and contains(.,'Comments')]</td>
 	<td></td>
 </tr>
 <tr>

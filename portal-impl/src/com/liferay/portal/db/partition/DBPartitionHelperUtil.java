@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.internal.db.partition;
+package com.liferay.portal.db.partition;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

@@ -21,7 +21,7 @@ import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.internal.db.partition.DBPartitionHelperUtil;
+import com.liferay.portal.db.partition.DBPartitionHelperUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.Property;

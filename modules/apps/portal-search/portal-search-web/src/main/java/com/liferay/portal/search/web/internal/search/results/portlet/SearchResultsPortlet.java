@@ -113,14 +113,14 @@ public class SearchResultsPortlet extends MVCPortlet {
 			buildDisplayContext(
 				portletSharedSearchResponse, renderRequest, renderResponse);
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			searchResultsPortletDisplayContext);
-
 		if (searchResultsPortletDisplayContext.isRenderNothing()) {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			searchResultsPortletDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}

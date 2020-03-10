@@ -88,15 +88,15 @@ public class SuggestionsPortlet extends MVCPortlet {
 				suggestionsPortletPreferences, portletSharedSearchResponse,
 				renderRequest);
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, suggestionsPortletDisplayContext);
-
-		if (!suggestionsPortletDisplayContext.hasSpellCheckSuggestion() &&
-			!suggestionsPortletDisplayContext.hasRelatedQueriesSuggestions()) {
+		if (!suggestionsPortletDisplayContext.hasRelatedQueriesSuggestions() &&
+			!suggestionsPortletDisplayContext.hasSpellCheckSuggestion()) {
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, suggestionsPortletDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}

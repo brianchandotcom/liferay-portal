@@ -762,6 +762,12 @@ public class MainServlet extends HttpServlet {
 			_log.debug("Initialize companies");
 		}
 
+		if (StartupHelperUtil.isDBNew()) {
+			CompanyLocalServiceUtil.addCompany(
+				PropsValues.COMPANY_DEFAULT_WEB_ID, "localhost",
+				PropsValues.COMPANY_DEFAULT_WEB_ID, false, 0, true);
+		}
+
 		ServletContext servletContext = getServletContext();
 
 		try {

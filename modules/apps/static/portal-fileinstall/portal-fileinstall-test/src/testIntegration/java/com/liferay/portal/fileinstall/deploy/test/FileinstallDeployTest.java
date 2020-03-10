@@ -15,10 +15,10 @@
 package com.liferay.portal.fileinstall.deploy.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -79,99 +79,51 @@ public class FileinstallDeployTest {
 	}
 
 	@Test
-	public void testConfiguration() throws Exception {
-		CountDownLatch installCountDownLatch = new CountDownLatch(1);
-
-		CountDownLatch updateCountDownLatch = new CountDownLatch(1);
-
-		CountDownLatch deleteCountDownLatch = new CountDownLatch(1);
-
-		ConfigurationListener configurationListener =
-			new ConfigurationListener() {
-
-				@Override
-				public void configurationEvent(
-					ConfigurationEvent configurationEvent) {
-
-					if (!Objects.equals(
-							configurationEvent.getPid(), _CONFIGURATION_PID)) {
-
-						return;
-					}
-
-					int type = configurationEvent.getType();
-
-					if (type == ConfigurationEvent.CM_UPDATED) {
-						if (installCountDownLatch.getCount() == 1) {
-							installCountDownLatch.countDown();
-						}
-						else {
-							updateCountDownLatch.countDown();
-						}
-					}
-					else if (type == ConfigurationEvent.CM_DELETED) {
-						deleteCountDownLatch.countDown();
-					}
-				}
-
-			};
-
-		ServiceRegistration<ConfigurationListener> serviceRegistration =
-			_bundleContext.registerService(
-				ConfigurationListener.class, configurationListener, null);
-
+	public void testConfiguration() throws Throwable {
 		Path path = Paths.get(
 			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
-			_CONFIGURATION_PID.concat(".cfg"));
+			_CONFIGURATION_PID.concat(".config"));
 
 		try {
-			String content = StringBundler.concat(
-				_TEST_KEY, StringPool.EQUAL, _TEST_VALUE_1);
+			_waitForConfiguration(
+				() -> {
+					String content = StringBundler.concat(
+						_TEST_KEY, StringPool.EQUAL, _TEST_VALUE_1);
 
-			Files.write(path, content.getBytes());
-
-			installCountDownLatch.await(30, TimeUnit.SECONDS);
-
-			_waitForConfiguration();
+					Files.write(path, content.getBytes());
+				});
 
 			Configuration configuration = _configurationAdmin.getConfiguration(
-				_CONFIGURATION_PID);
+				_CONFIGURATION_PID, StringPool.QUESTION);
 
 			Dictionary<String, Object> properties =
 				configuration.getProperties();
 
 			Assert.assertEquals(_TEST_VALUE_1, properties.get(_TEST_KEY));
 
-			content = StringBundler.concat(
-				_TEST_KEY, StringPool.EQUAL, _TEST_VALUE_2);
+			_waitForConfiguration(
+				() -> {
+					String content = StringBundler.concat(
+						_TEST_KEY, StringPool.EQUAL, _TEST_VALUE_2);
 
-			Files.write(path, content.getBytes());
-
-			updateCountDownLatch.await(30, TimeUnit.SECONDS);
-
-			_waitForConfiguration();
+					Files.write(path, content.getBytes());
+				});
 
 			configuration = _configurationAdmin.getConfiguration(
-				_CONFIGURATION_PID);
+				_CONFIGURATION_PID, StringPool.QUESTION);
 
 			properties = configuration.getProperties();
 
 			Assert.assertEquals(_TEST_VALUE_2, properties.get(_TEST_KEY));
 
-			Files.delete(path);
-
-			deleteCountDownLatch.await(30, TimeUnit.SECONDS);
-
-			_waitForConfiguration();
+			_waitForConfiguration(() -> Files.delete(path));
 
 			configuration = _configurationAdmin.getConfiguration(
-				_CONFIGURATION_PID);
+				_CONFIGURATION_PID, StringPool.QUESTION);
 
 			Assert.assertNull(configuration.getProperties());
 		}
 		finally {
-			serviceRegistration.unregister();
-
 			Files.deleteIfExists(path);
 		}
 	}
@@ -254,7 +206,7 @@ public class FileinstallDeployTest {
 
 			Files.delete(path);
 
-			deleteCountDownLatch.await(30, TimeUnit.SECONDS);
+			deleteCountDownLatch.await();
 
 			Assert.assertEquals(Bundle.UNINSTALLED, bundle.getState());
 		}
@@ -302,40 +254,61 @@ public class FileinstallDeployTest {
 		}
 	}
 
-	private void _waitForConfiguration() throws Exception {
-		String pid = FileinstallDeployTest.class.getName();
+	private void _waitForConfiguration(UnsafeRunnable runnable)
+		throws Throwable {
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
 		ConfigurationListener configurationListener =
-			new ConfigurationListener() {
-
-				@Override
-				public void configurationEvent(
-					ConfigurationEvent configurationEvent) {
-
-					if (!Objects.equals(configurationEvent.getPid(), pid)) {
-						return;
-					}
+			(ConfigurationEvent configurationEvent) -> {
+				if (Objects.equals(
+						configurationEvent.getPid(), _CONFIGURATION_PID)) {
 
 					countDownLatch.countDown();
 				}
-
 			};
 
 		ServiceRegistration<ConfigurationListener> serviceRegistration =
 			_bundleContext.registerService(
 				ConfigurationListener.class, configurationListener, null);
 
-		Configuration configuration = _configurationAdmin.getConfiguration(pid);
+		String checkpointPid = FileinstallDeployTest.class.getName();
 
-		configuration.update(new HashMapDictionary<String, Object>());
+		CountDownLatch eventCountDownLatch = new CountDownLatch(1);
 
-		countDownLatch.await(30, TimeUnit.SECONDS);
+		ConfigurationListener checkpointConfigurationListener =
+			(ConfigurationEvent configurationEvent) -> {
+				if (Objects.equals(
+						configurationEvent.getPid(), checkpointPid)) {
 
-		serviceRegistration.unregister();
+					eventCountDownLatch.countDown();
+				}
+			};
 
-		configuration.delete();
+		ServiceRegistration<ConfigurationListener>
+			checkpointServiceRegistration = _bundleContext.registerService(
+				ConfigurationListener.class, checkpointConfigurationListener,
+				null);
+
+		try {
+			runnable.run();
+
+			countDownLatch.await();
+
+			Configuration configuration = _configurationAdmin.getConfiguration(
+				checkpointPid, StringPool.QUESTION);
+
+			configuration.update();
+
+			configuration.delete();
+
+			eventCountDownLatch.await();
+		}
+		finally {
+			checkpointServiceRegistration.unregister();
+
+			serviceRegistration.unregister();
+		}
 	}
 
 	private static final String _CONFIGURATION_PID =

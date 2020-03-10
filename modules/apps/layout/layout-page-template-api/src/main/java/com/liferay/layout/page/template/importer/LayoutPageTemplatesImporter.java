@@ -15,6 +15,7 @@
 package com.liferay.layout.page.template.importer;
 
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.layout.page.template.util.LayoutPageTemplateImportEntry;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.model.Layout;
 
@@ -32,6 +33,11 @@ public interface LayoutPageTemplatesImporter {
 
 	public void importFile(
 			long userId, long groupId, File file, boolean overwrite)
+		throws Exception;
+
+	public List<LayoutPageTemplateImportEntry> importFile(
+			long userId, long groupId, long layoutPageTemplateCollectionId,
+			File file, boolean overwrite)
 		throws Exception;
 
 	public List<FragmentEntryLink> importPageElement(

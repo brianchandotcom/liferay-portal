@@ -240,7 +240,7 @@ public interface RecentLayoutSetBranchLocalService
 	 * @return the range of recent layout set branches
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<RecentLayoutSetBranch> getRecentLayoutSetBranches(
+	public List<RecentLayoutSetBranch> getRecentLayoutSetBranchs(
 		int start, int end);
 
 	/**
@@ -249,7 +249,7 @@ public interface RecentLayoutSetBranchLocalService
 	 * @return the number of recent layout set branches
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRecentLayoutSetBranchesCount();
+	public int getRecentLayoutSetBranchsCount();
 
 	/**
 	 * Updates the recent layout set branch in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

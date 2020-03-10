@@ -313,9 +313,9 @@ public class RecentLayoutSetBranchLocalServiceWrapper
 	 */
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.RecentLayoutSetBranch>
-		getRecentLayoutSetBranches(int start, int end) {
+		getRecentLayoutSetBranchs(int start, int end) {
 
-		return _recentLayoutSetBranchLocalService.getRecentLayoutSetBranches(
+		return _recentLayoutSetBranchLocalService.getRecentLayoutSetBranchs(
 			start, end);
 	}
 
@@ -325,9 +325,9 @@ public class RecentLayoutSetBranchLocalServiceWrapper
 	 * @return the number of recent layout set branches
 	 */
 	@Override
-	public int getRecentLayoutSetBranchesCount() {
+	public int getRecentLayoutSetBranchsCount() {
 		return _recentLayoutSetBranchLocalService.
-			getRecentLayoutSetBranchesCount();
+			getRecentLayoutSetBranchsCount();
 	}
 
 	/**

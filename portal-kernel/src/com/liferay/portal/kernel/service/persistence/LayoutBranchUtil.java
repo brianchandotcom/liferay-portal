@@ -774,10 +774,10 @@ public class LayoutBranchUtil {
 	/**
 	 * Caches the layout branches in the entity cache if it is enabled.
 	 *
-	 * @param layoutBranches the layout branches
+	 * @param layoutBranchs the layout branches
 	 */
-	public static void cacheResult(List<LayoutBranch> layoutBranches) {
-		getPersistence().cacheResult(layoutBranches);
+	public static void cacheResult(List<LayoutBranch> layoutBranchs) {
+		getPersistence().cacheResult(layoutBranchs);
 	}
 
 	/**

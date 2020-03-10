@@ -209,6 +209,11 @@ public interface LayoutBranchLocalService
 	public LayoutBranch getLayoutBranch(long layoutBranchId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutBranch> getLayoutBranches(
+		long layoutSetBranchId, long plid, int start, int end,
+		OrderByComparator<LayoutBranch> orderByComparator);
+
 	/**
 	 * Returns a range of all the layout branches.
 	 *
@@ -221,12 +226,7 @@ public interface LayoutBranchLocalService
 	 * @return the range of layout branches
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutBranch> getLayoutBranches(int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutBranch> getLayoutBranches(
-		long layoutSetBranchId, long plid, int start, int end,
-		OrderByComparator<LayoutBranch> orderByComparator);
+	public List<LayoutBranch> getLayoutBranchs(int start, int end);
 
 	/**
 	 * Returns the number of layout branches.
@@ -234,7 +234,7 @@ public interface LayoutBranchLocalService
 	 * @return the number of layout branches
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutBranchesCount();
+	public int getLayoutBranchsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutBranch> getLayoutSetBranchLayoutBranches(

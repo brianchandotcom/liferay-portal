@@ -1881,14 +1881,14 @@ public class RecentLayoutSetBranchPersistenceImpl
 	/**
 	 * Caches the recent layout set branches in the entity cache if it is enabled.
 	 *
-	 * @param recentLayoutSetBranches the recent layout set branches
+	 * @param recentLayoutSetBranchs the recent layout set branches
 	 */
 	@Override
 	public void cacheResult(
-		List<RecentLayoutSetBranch> recentLayoutSetBranches) {
+		List<RecentLayoutSetBranch> recentLayoutSetBranchs) {
 
 		for (RecentLayoutSetBranch recentLayoutSetBranch :
-				recentLayoutSetBranches) {
+				recentLayoutSetBranchs) {
 
 			if (EntityCacheUtil.getResult(
 					RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
@@ -1941,14 +1941,12 @@ public class RecentLayoutSetBranchPersistenceImpl
 	}
 
 	@Override
-	public void clearCache(
-		List<RecentLayoutSetBranch> recentLayoutSetBranches) {
-
+	public void clearCache(List<RecentLayoutSetBranch> recentLayoutSetBranchs) {
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (RecentLayoutSetBranch recentLayoutSetBranch :
-				recentLayoutSetBranches) {
+				recentLayoutSetBranchs) {
 
 			EntityCacheUtil.removeResult(
 				RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,

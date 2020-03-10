@@ -1040,10 +1040,10 @@ public class LayoutSetBranchUtil {
 	/**
 	 * Caches the layout set branches in the entity cache if it is enabled.
 	 *
-	 * @param layoutSetBranches the layout set branches
+	 * @param layoutSetBranchs the layout set branches
 	 */
-	public static void cacheResult(List<LayoutSetBranch> layoutSetBranches) {
-		getPersistence().cacheResult(layoutSetBranches);
+	public static void cacheResult(List<LayoutSetBranch> layoutSetBranchs) {
+		getPersistence().cacheResult(layoutSetBranchs);
 	}
 
 	/**

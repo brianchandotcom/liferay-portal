@@ -2039,11 +2039,11 @@ public class LayoutBranchPersistenceImpl
 	/**
 	 * Caches the layout branches in the entity cache if it is enabled.
 	 *
-	 * @param layoutBranches the layout branches
+	 * @param layoutBranchs the layout branches
 	 */
 	@Override
-	public void cacheResult(List<LayoutBranch> layoutBranches) {
-		for (LayoutBranch layoutBranch : layoutBranches) {
+	public void cacheResult(List<LayoutBranch> layoutBranchs) {
+		for (LayoutBranch layoutBranch : layoutBranchs) {
 			if (EntityCacheUtil.getResult(
 					LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 					LayoutBranchImpl.class, layoutBranch.getPrimaryKey()) ==
@@ -2093,11 +2093,11 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	@Override
-	public void clearCache(List<LayoutBranch> layoutBranches) {
+	public void clearCache(List<LayoutBranch> layoutBranchs) {
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		for (LayoutBranch layoutBranch : layoutBranches) {
+		for (LayoutBranch layoutBranch : layoutBranchs) {
 			EntityCacheUtil.removeResult(
 				LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 				LayoutBranchImpl.class, layoutBranch.getPrimaryKey());

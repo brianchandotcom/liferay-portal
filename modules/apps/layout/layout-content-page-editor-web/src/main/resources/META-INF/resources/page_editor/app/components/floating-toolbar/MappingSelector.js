@@ -23,6 +23,7 @@ import {PAGE_TYPES} from '../../config/constants/pageTypes';
 import {config} from '../../config/index';
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
+import {useCollectionFields} from '../ControlsIdConverterContext';
 
 const MAPPING_SOURCE_TYPE_IDS = {
 	content: 'content',
@@ -78,11 +79,71 @@ function loadFields({
 	return Promise.resolve([]);
 }
 
-export default function MappingSelector({
+export default function({fieldType, mappedItem, onMappingSelect}) {
+	const collectionFields = useCollectionFields();
+
+	return collectionFields ? (
+		<CollectionMappingSelector
+			collectionFields={collectionFields}
+			fieldType={fieldType}
+			mappedItem={mappedItem}
+			onMappingSelect={onMappingSelect}
+		/>
+	) : (
+		<MappingSelector
+			fieldType={fieldType}
+			mappedItem={mappedItem}
+			onMappingSelect={onMappingSelect}
+		/>
+	);
+}
+
+function CollectionMappingSelector({
+	collectionFields,
 	fieldType,
 	mappedItem,
 	onMappingSelect,
 }) {
+	const fields = collectionFields.filter(
+		field => COMPATIBLE_TYPES[fieldType].indexOf(field.type) !== -1
+	);
+
+	return (
+		<ClayForm.Group small>
+			<label htmlFor="mappingSelectorFieldSelect">
+				{Liferay.Language.get('field')}
+			</label>
+			<ClaySelectWithOption
+				aria-label={Liferay.Language.get('field')}
+				id="mappingSelectorFieldSelect"
+				onChange={event => {
+					if (event.target.value === UNMAPPED_OPTION.value) {
+						onMappingSelect({collectionFieldId: ''});
+					}
+					else {
+						onMappingSelect({
+							collectionFieldId: event.target.value,
+						});
+					}
+				}}
+				options={
+					fields && fields.length
+						? [
+								UNMAPPED_OPTION,
+								...fields.map(({key, label}) => ({
+									label,
+									value: key,
+								})),
+						  ]
+						: [UNMAPPED_OPTION]
+				}
+				value={mappedItem.collectionFieldId}
+			/>
+		</ClayForm.Group>
+	);
+}
+
+function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	const dispatch = useDispatch();
 	const mappedInfoItems = useSelector(state => state.mappedInfoItems);
 

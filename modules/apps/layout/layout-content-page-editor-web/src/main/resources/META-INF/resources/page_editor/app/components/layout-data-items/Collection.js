@@ -73,6 +73,8 @@ const Grid = ({child, collectionId, numberOfItems}) => {
 							<ControlsIdConverterContextProvider
 								key={index}
 								value={{
+									collectionFields: [],
+									collectionItem: {},
 									fromControlsId,
 									toControlsId: getToControlsId(
 										collectionId,
@@ -101,6 +103,8 @@ const Stack = ({child, collectionId, numberOfItems}) => {
 		<ControlsIdConverterContextProvider
 			key={idx}
 			value={{
+				collectionFields: [],
+				collectionItem: {},
 				fromControlsId,
 				toControlsId: getToControlsId(collectionId, idx),
 			}}

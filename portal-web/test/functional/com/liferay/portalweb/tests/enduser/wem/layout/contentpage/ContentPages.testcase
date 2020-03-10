@@ -278,7 +278,11 @@ definition {
 		}
 
 		task ("Add a 2 column row layout") {
-			PageEditor.addLayoutRow(columnCount = "2");
+			PageEditor.addLayoutRow();
+
+			PageEditor.editLayoutRow(
+				columnCount = "2",
+				spaceBetweenColumns = "true");
 		}
 
 		task ("Assert the layout by default has space between columns") {

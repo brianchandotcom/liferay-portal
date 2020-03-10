@@ -256,10 +256,14 @@ public final class LiferayConnection {
 				httpRequest, (int)connectionTimeout, true, null);
 		}
 		catch (IOException ioException) {
+			logger.error(ioException.getMessage(), ioException);
+
 			throw new ModuleException(
 				ioException.getMessage(), LiferayError.EXECUTION, ioException);
 		}
 		catch (TimeoutException timeoutException) {
+			logger.error(timeoutException.getMessage(), timeoutException);
+
 			throw new ModuleException(
 				timeoutException.getMessage(), LiferayError.CONNECTION_TIMEOUT,
 				timeoutException);

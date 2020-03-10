@@ -36,18 +36,6 @@ public class BasicAuthenticationConfig {
 		return username;
 	}
 
-	public void setOpenApiSpecPath(String openApiSpecPath) {
-		this.openApiSpecPath = openApiSpecPath;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	@DisplayName("OpenAPI Spec URL")
 	@Parameter
 	@Placement(order = 1)

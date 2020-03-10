@@ -21,6 +21,9 @@ import org.mule.runtime.extension.api.annotation.Alias;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Matija Petanjek
  */
@@ -31,12 +34,24 @@ public class OAuth2CachedConnectionProvider
 
 	@Override
 	public LiferayConnection connect() throws ConnectionException {
+		logger.debug(
+			"Initializing connection to Liferay Portal instance using OAuth " +
+				"2.0 authorization");
+
 		return LiferayConnection.withOAuth2Authentication(
 			httpService, oAuth2AuthenticationConfig.getOpenApiSpecPath(),
 			oAuth2AuthenticationConfig.getConsumerKey(),
 			oAuth2AuthenticationConfig.getConsumerSecret(),
 			liferayProxyConfig.getProxyConfig());
 	}
+
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+
+	private static final Logger logger = LoggerFactory.getLogger(
+		OAuth2CachedConnectionProvider.class);
 
 	@ParameterGroup(name = ParameterGroup.CONNECTION)
 	private OAuth2AuthenticationConfig oAuth2AuthenticationConfig;

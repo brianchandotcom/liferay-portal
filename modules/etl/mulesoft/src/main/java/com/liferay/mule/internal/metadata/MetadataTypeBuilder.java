@@ -42,6 +42,9 @@ import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
 import org.mule.runtime.api.metadata.resolving.FailureCode;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Matija Petanjek
  */
@@ -119,11 +122,19 @@ public class MetadataTypeBuilder {
 				liferayConnection.getOpenAPISpec());
 		}
 		catch (IOException ioException) {
+			logger.error(
+				"Unable to read Open API document from Liferay Portal instance",
+				ioException);
+
 			throw new MetadataResolvingException(
 				ioException.getMessage(),
 				FailureCode.NO_DYNAMIC_METADATA_AVAILABLE, ioException);
 		}
 		catch (TimeoutException timeoutException) {
+			logger.error(
+				"Unable to establish connection to Liferay Portal instance",
+				timeoutException);
+
 			throw new MetadataResolvingException(
 				timeoutException.getMessage(), FailureCode.CONNECTION_FAILURE,
 				timeoutException);
@@ -402,6 +413,9 @@ public class MetadataTypeBuilder {
 
 		objectFieldTypeBuilder.value(getMetadataType(propertyJsonNode));
 	}
+
+	private static final Logger logger = LoggerFactory.getLogger(
+		MetadataTypeBuilder.class);
 
 	private final JsonNodeReader jsonNodeReader = new JsonNodeReader();
 

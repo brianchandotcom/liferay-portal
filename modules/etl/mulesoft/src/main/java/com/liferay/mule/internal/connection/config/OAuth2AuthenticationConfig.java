@@ -37,18 +37,6 @@ public class OAuth2AuthenticationConfig {
 		return openApiSpecPath;
 	}
 
-	public void setConsumerKey(String consumerKey) {
-		this.consumerKey = consumerKey;
-	}
-
-	public void setConsumerSecret(String consumerSecret) {
-		this.consumerSecret = consumerSecret;
-	}
-
-	public void setOpenApiSpecPath(String openApiSpecPath) {
-		this.openApiSpecPath = openApiSpecPath;
-	}
-
 	@DisplayName("Consumer Key")
 	@Expression(ExpressionSupport.NOT_SUPPORTED)
 	@Parameter

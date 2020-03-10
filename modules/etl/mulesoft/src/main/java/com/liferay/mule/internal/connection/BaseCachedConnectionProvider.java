@@ -29,6 +29,8 @@ import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import org.mule.runtime.http.api.HttpService;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 
+import org.slf4j.Logger;
+
 /**
  * @author Matija Petanjek
  */
@@ -37,6 +39,8 @@ public abstract class BaseCachedConnectionProvider
 
 	@Override
 	public void disconnect(LiferayConnection liferayConnection) {
+		getLogger().debug("Closing connection to Liferay Portal instance");
+
 		liferayConnection.invalidate();
 	}
 
@@ -65,6 +69,8 @@ public abstract class BaseCachedConnectionProvider
 				exception.getMessage(), exception);
 		}
 	}
+
+	protected abstract Logger getLogger();
 
 	@Inject
 	protected HttpService httpService;

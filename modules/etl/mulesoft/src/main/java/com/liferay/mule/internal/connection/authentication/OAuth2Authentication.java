@@ -36,6 +36,9 @@ import org.mule.runtime.http.api.domain.message.request.HttpRequest;
 import org.mule.runtime.http.api.domain.message.request.HttpRequestBuilder;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Matija Petanjek
  */
@@ -86,31 +89,39 @@ public class OAuth2Authentication implements HttpAuthentication {
 				10000, true, null);
 		}
 		catch (IOException ioException) {
+			logger.error(ioException.getMessage(), ioException);
+
 			throw new ModuleException(
 				ioException.getMessage(), LiferayError.EXECUTION, ioException);
 		}
 		catch (TimeoutException timeoutException) {
+			logger.error(timeoutException.getMessage(), timeoutException);
+
 			throw new ModuleException(
 				timeoutException.getMessage(), LiferayError.CONNECTION_TIMEOUT,
 				timeoutException);
 		}
 
 		if (httpResponse == null) {
-			throw new ModuleException(
-				"Unresponsive authorization server's OAuth 2.0 endpoint",
-				LiferayError.OAUTH2_ERROR);
+			String message =
+				"Unresponsive authorization server's OAuth 2.0 endpoint";
+
+			logger.error(message);
+
+			throw new ModuleException(message, LiferayError.OAUTH2_ERROR);
 		}
 		else if (httpResponse.getStatusCode() != 200) {
 			HttpEntity httpEntity = httpResponse.getEntity();
 
-			throw new ModuleException(
-				String.format(
-					"Unable to fetch access token from authorization server. " +
-						"Request failed with status %d (%s) and message %s",
-					httpResponse.getStatusCode(),
-					httpResponse.getReasonPhrase(),
-					IOUtils.toString(httpEntity.getContent())),
-				LiferayError.OAUTH2_ERROR);
+			String message = String.format(
+				"Unable to fetch access token from authorization server. " +
+					"Request failed with status %d (%s) and message %s",
+				httpResponse.getStatusCode(), httpResponse.getReasonPhrase(),
+				IOUtils.toString(httpEntity.getContent()));
+
+			logger.error(message);
+
+			throw new ModuleException(message, LiferayError.OAUTH2_ERROR);
 		}
 
 		JsonNodeReader jsonNodeReader = new JsonNodeReader();
@@ -127,6 +138,9 @@ public class OAuth2Authentication implements HttpAuthentication {
 	}
 
 	private static final String OAUTH2_ENDPOINT = "/o/oauth2/token";
+
+	private static final Logger logger = LoggerFactory.getLogger(
+		OAuth2Authentication.class);
 
 	private final HttpClient httpClient;
 	private final String oAuth2AccessTokenURI;

@@ -34,6 +34,11 @@ public interface LayoutPageTemplatesImporter {
 			long userId, long groupId, File file, boolean overwrite)
 		throws Exception;
 
+	public List<LayoutPageTemplatesImporterResultEntry> importFile(
+			long userId, long groupId, long layoutPageTemplateCollectionId,
+			File file, boolean overwrite)
+		throws Exception;
+
 	public List<FragmentEntryLink> importPageElement(
 			Layout layout, LayoutStructure layoutStructure, String parentItemId,
 			String pageElementJSON, int position)

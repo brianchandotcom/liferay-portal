@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
+
+<service-builder auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.revert.schema.version">
+	<namespace>RevertSchemaVersion</namespace>
+	<entity local-service="true" name="SchemaEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="entryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+	</entity>
+</service-builder>

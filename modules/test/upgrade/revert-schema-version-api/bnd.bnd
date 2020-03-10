@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Revert Schema Version API
+Bundle-SymbolicName: com.liferay.revert.schema.version.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.revert.schema.version.exception,\
+	com.liferay.revert.schema.version.model,\
+	com.liferay.revert.schema.version.service,\
+	com.liferay.revert.schema.version.service.persistence

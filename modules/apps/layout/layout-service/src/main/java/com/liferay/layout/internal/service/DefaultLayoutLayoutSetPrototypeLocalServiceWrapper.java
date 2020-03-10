@@ -14,20 +14,28 @@
 
 package com.liferay.layout.internal.service;
 
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -86,10 +94,15 @@ public class DefaultLayoutLayoutSetPrototypeLocalServiceWrapper
 					SegmentsExperienceConstants.ID_DEFAULT));
 
 			try {
+				String layoutDefinitionJSON = StringUtil.replace(
+					_DEFAULT_LAYOUT_DEFINITION, "${WELCOME_IMAGE_URL}",
+					_getWelcomeImageURL(
+						defaultLayout.getGroupId(), userId,
+						defaultLayout.getPlid(), serviceContext));
+
 				_layoutPageTemplatesImporter.importPageElement(
 					defaultLayout, layoutStructure,
-					layoutStructure.getMainItemId(), _DEFAULT_LAYOUT_DEFINITION,
-					0);
+					layoutStructure.getMainItemId(), layoutDefinitionJSON, 0);
 			}
 			catch (Exception exception) {
 				throw new PortalException(exception);
@@ -99,9 +112,49 @@ public class DefaultLayoutLayoutSetPrototypeLocalServiceWrapper
 		return layoutSetPrototype;
 	}
 
+	private String _getWelcomeImageURL(
+			long groupId, long userId, long plid, ServiceContext serviceContext)
+		throws Exception {
+
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				groupId, Layout.class.getName());
+
+		if (repository == null) {
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+
+			repository = PortletFileRepositoryUtil.addPortletRepository(
+				groupId, Layout.class.getName(), serviceContext);
+		}
+
+		FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
+			groupId, repository.getDlFolderId(), _WELCOME_IMAGE_FILENAME);
+
+		if (fileEntry == null) {
+			byte[] bytes = _file.getBytes(
+				DefaultLayoutLayoutSetPrototypeLocalServiceWrapper.class,
+				_WELCOME_IMAGE_FILENAME);
+
+			fileEntry = _portletFileRepository.addPortletFileEntry(
+				groupId, userId, Layout.class.getName(), plid,
+				Layout.class.getName(), repository.getDlFolderId(), bytes,
+				_WELCOME_IMAGE_FILENAME,
+				MimeTypesUtil.getContentType(_WELCOME_IMAGE_FILENAME), false);
+		}
+
+		return DLUtil.getDownloadURL(
+			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
+	}
+
 	private static final String _DEFAULT_LAYOUT_DEFINITION = StringUtil.read(
 		DefaultLayoutLayoutSetPrototypeLocalServiceWrapper.class,
 		"default-layout-definition.json");
+
+	private static final String _WELCOME_IMAGE_FILENAME = "welcome_bg.jpg";
+
+	@Reference
+	private File _file;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
@@ -115,5 +168,8 @@ public class DefaultLayoutLayoutSetPrototypeLocalServiceWrapper
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 }

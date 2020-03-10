@@ -35,11 +35,12 @@ definition {
 		var pageName = "Test Page1";
 		var portletBody = "Welcome to Liferay";
 		var portletName = "Hello World";
+		var siteName = "Site Name";
 
 		task ("Add a '${portletName}' portlet to the page named '${pageName}'") {
 			Navigator.gotoSitePage(
 				pageName = "${pageName}",
-				siteName = "Site Name");
+				siteName = "${siteName}");
 
 			Portlet.addPG(
 				i = "${i}",
@@ -53,13 +54,84 @@ definition {
 
 			Navigator.gotoSitePage(
 				pageName = "${pageName}",
-				siteName = "Site Name");
+				siteName = "${siteName}");
 
 			Portlet.viewTitle(portletName = "${portletName}");
 
 			Portlet.viewBody(
 				portletBody = "${portletBody}",
 				portletName = "${portletName}");
+		}
+
+		var collectionName = "Basic Components";
+		var contentPageName = "Test Content Page";
+		var fragmentId = "Heading";
+		var fragmentName = "Heading";
+
+		task ("Add a '${fragmentName}' fragment to the content page named '${contentPageName}'") {
+			task ("Create a Content Page") {
+				SitePages.openPagesAdmin(siteURLKey = "${siteName}");
+
+				ContentPages.addPage(pageName = "${contentPageName}");
+			}
+
+			task ("Add a basic '${fragmentName}' component") {
+				PageEditor.addFragment(
+					collectionName = "${collectionName}",
+					fragmentName = "${fragmentName}");
+			}
+
+			task ("Configure the '${fragmentName}' fragment") {
+				PageEditor.gotoConfiguration(fragmentName = "${fragmentName}");
+
+				PageEditor.configureFragment(
+					headingLevel = "H2",
+					textAlign = "Right",
+					textColor = "secondary");
+			}
+
+			task ("View the '${fragmentName}' fragment style") {
+				PageEditor.viewFragmentStyle(
+					alignment = "right",
+					fragmentName = "heading",
+					headingLevel = "h2",
+					textColor = "secondary");
+			}
+
+			task ("Remove the '${fragmentName}' fragment") {
+				PageEditor.removeFragment(fragmentName = "${fragmentName}");
+			}
+
+			task ("Add a basic '${fragmentName}' component") {
+				PageEditor.addFragment(
+					collectionName = "${collectionName}",
+					fragmentName = "${fragmentName}");
+			}
+
+			task ("Duplicate the '${fragmentName}' fragment") {
+				PageEditor.gotoDuplicate(fragmentName = "${fragmentName}");
+			}
+
+			task ("View the duplicate '${fragmentName}' fragment") {
+				PageEditor.viewDuplicateFragment(
+					fragmentName = "${fragmentName}",
+					id = "Heading");
+			}
+
+			task ("Publish Content Page") {
+				PageEditor.clickPublish();
+			}
+
+			task ("Navigate to the content page") {
+				Navigator.gotoSitePage(
+					pageName = "${contentPageName}",
+					siteName = "${siteName}");
+			}
+
+			task ("Assert the '${fragmentName}' fragment is present") {
+				AssertElementPresent(locator1 = "//h1[contains(.,'Heading Example')]");
+			}
+
 		}
 
 		var portlet = "Web Content";

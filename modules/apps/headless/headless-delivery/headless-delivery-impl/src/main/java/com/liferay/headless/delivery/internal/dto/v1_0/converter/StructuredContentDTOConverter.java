@@ -68,6 +68,7 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.text.ParseException;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -361,13 +362,20 @@ public class StructuredContentDTOConverter
 							return null;
 						}
 
-						Map<String, Object> map = new HashMap<>();
+						Map<String, Value> map = new HashMap<>();
 
 						com.liferay.dynamic.data.mapping.model.Value ddmValue =
 							ddmFormFieldValue.getValue();
 
 						Map<Locale, String> ddmValueValues =
-							ddmValue.getValues();
+							Optional.ofNullable(
+								ddmValue
+							).map(
+								com.liferay.dynamic.data.mapping.model.Value::
+									getValues
+							).orElse(
+								Collections.emptyMap()
+							);
 
 						for (Map.Entry<Locale, String> entry :
 								ddmValueValues.entrySet()) {
@@ -375,7 +383,7 @@ public class StructuredContentDTOConverter
 							Locale locale = entry.getKey();
 
 							map.put(
-								locale.toLanguageTag(),
+								LocaleUtil.toBCP47LanguageId(locale),
 								_getValue(
 									ddmFormField, dlAppService, dlURLHelper,
 									journalArticleService, layoutLocalService,

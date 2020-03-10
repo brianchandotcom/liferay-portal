@@ -37,12 +37,17 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.ParseException;
 
+import java.util.Collections;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.BiFunction;
 
 import javax.ws.rs.BadRequestException;
 
@@ -66,112 +71,52 @@ public class DDMValueUtil {
 		}
 
 		if (ddmFormField.isLocalizable()) {
-			LocalizedValue localizedValue = new LocalizedValue(locale);
+			Map<String, com.liferay.headless.delivery.dto.v1_0.Value>
+				i18nValues = contentFieldValue.getValue_i18n();
 
 			if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType())) {
-				localizedValue.addString(
-					locale, _toDateString(value.getData(), locale));
+				return _getLocalizedValue(
+					locale, value, i18nValues,
+					DDMValueUtil::_toLocalizedDateString);
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.DOCUMENT_LIBRARY,
 						ddmFormField.getType())) {
 
-				String valueString = StringPool.BLANK;
-
-				ContentDocument contentDocument = value.getDocument();
-
-				if ((contentDocument != null) &&
-					(contentDocument.getId() != null)) {
-
-					valueString = _toJSON(
-						dlAppService, StringPool.BLANK,
-						contentDocument.getId());
-				}
-
-				localizedValue.addString(locale, valueString);
+				return _getLocalizedValue(
+					locale, value, i18nValues,
+					(loc, val) -> _toLocalizedDocument(dlAppService, val));
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.IMAGE, ddmFormField.getType())) {
 
-				String valueString = StringPool.BLANK;
-
-				ContentDocument contentDocument = value.getImage();
-
-				if ((contentDocument != null) &&
-					(contentDocument.getId() != null)) {
-
-					valueString = _toJSON(
-						dlAppService, contentDocument.getDescription(),
-						contentDocument.getId());
-				}
-
-				localizedValue.addString(locale, valueString);
+				return _getLocalizedValue(
+					locale, value, i18nValues,
+					(loc, val) -> _toLocalizedImage(dlAppService, val));
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.JOURNAL_ARTICLE,
 						ddmFormField.getType())) {
 
-				String valueString = StringPool.BLANK;
-
-				StructuredContentLink structuredContentLink =
-					value.getStructuredContentLink();
-
-				if ((structuredContentLink != null) &&
-					(structuredContentLink.getId() != null)) {
-
-					JournalArticle journalArticle = null;
-
-					try {
-						journalArticle = journalArticleService.getLatestArticle(
-							structuredContentLink.getId());
-					}
-					catch (Exception exception) {
-						throw new BadRequestException(
-							"No structured content exists with ID " +
-								structuredContentLink.getId(),
-							exception);
-					}
-
-					valueString = JSONUtil.put(
-						"className", JournalArticle.class.getName()
-					).put(
-						"classPK", journalArticle.getResourcePrimKey()
-					).put(
-						"title", journalArticle.getTitle()
-					).toString();
-				}
-
-				localizedValue.addString(locale, valueString);
+				return _getLocalizedValue(
+					locale, value, i18nValues,
+					(loc, val) -> _toLocalizedJournalArticle(
+						journalArticleService, val));
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.LINK_TO_PAGE,
 						ddmFormField.getType())) {
 
-				String valueString = StringPool.BLANK;
-
-				if (value.getLink() != null) {
-					Layout layout = _getLayout(
-						groupId, layoutLocalService, value.getLink());
-
-					valueString = JSONUtil.put(
-						"groupId", layout.getGroupId()
-					).put(
-						"label", layout.getFriendlyURL()
-					).put(
-						"layoutId", layout.getLayoutId()
-					).put(
-						"privateLayout", layout.isPrivateLayout()
-					).toString();
-				}
-
-				localizedValue.addString(locale, valueString);
+				return _getLocalizedValue(
+					locale, value, i18nValues,
+					(loc, val) -> _toLocalizedLinkToPage(
+						groupId, layoutLocalService, val));
 			}
 			else {
-				localizedValue.addString(
-					locale, GetterUtil.getString(value.getData()));
+				return _getLocalizedValue(
+					locale, value, i18nValues,
+					(loc, val) -> GetterUtil.getString(val.getData()));
 			}
-
-			return localizedValue;
 		}
 
 		if (Objects.equals(
@@ -225,22 +170,37 @@ public class DDMValueUtil {
 		return layout;
 	}
 
-	private static String _toDateString(String valueString, Locale locale) {
-		if (Validator.isNull(valueString)) {
-			return StringPool.BLANK;
-		}
+	private static LocalizedValue _getLocalizedValue(
+		Locale defaultLocale,
+		com.liferay.headless.delivery.dto.v1_0.Value defaultValue,
+		Map<String, com.liferay.headless.delivery.dto.v1_0.Value> i18nValues,
+		BiFunction<Locale, com.liferay.headless.delivery.dto.v1_0.Value, String>
+			localizedValueFunction) {
 
-		try {
-			return DateUtil.getDate(
-				DateUtil.parseDate(
-					"yyyy-MM-dd'T'HH:mm:ss'Z'", valueString, locale),
-				"yyyy-MM-dd", locale);
-		}
-		catch (ParseException parseException) {
-			throw new BadRequestException(
-				"Unable to parse date that does not conform to ISO-8601",
-				parseException);
-		}
+		LocalizedValue localizedValue = new LocalizedValue(defaultLocale);
+
+		localizedValue.addString(
+			defaultLocale,
+			localizedValueFunction.apply(defaultLocale, defaultValue));
+
+		Optional.ofNullable(
+			i18nValues
+		).orElse(
+			Collections.emptyMap()
+		).forEach(
+			(languageId, languageValue) -> {
+				Locale locale = LocaleUtil.fromLanguageId(
+					languageId, true, false);
+
+				if (locale != null) {
+					localizedValue.addString(
+						locale,
+						localizedValueFunction.apply(locale, languageValue));
+				}
+			}
+		);
+
+		return localizedValue;
 	}
 
 	private static String _toJSON(
@@ -275,6 +235,120 @@ public class DDMValueUtil {
 		).put(
 			"uuid", fileEntry.getUuid()
 		).toString();
+	}
+
+	private static String _toLocalizedDateString(
+		Locale locale, com.liferay.headless.delivery.dto.v1_0.Value value) {
+
+		if (Validator.isNull(value.getData())) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			return DateUtil.getDate(
+				DateUtil.parseDate(
+					"yyyy-MM-dd'T'HH:mm:ss'Z'", value.getData(), locale),
+				"yyyy-MM-dd", locale);
+		}
+		catch (ParseException parseException) {
+			throw new BadRequestException(
+				"Unable to parse date that does not conform to ISO-8601",
+				parseException);
+		}
+	}
+
+	private static String _toLocalizedDocument(
+		DLAppService dlAppService,
+		com.liferay.headless.delivery.dto.v1_0.Value value) {
+
+		String valueString = StringPool.BLANK;
+
+		ContentDocument contentDocument = value.getDocument();
+
+		if ((contentDocument != null) && (contentDocument.getId() != null)) {
+			valueString = _toJSON(
+				dlAppService, StringPool.BLANK, contentDocument.getId());
+		}
+
+		return valueString;
+	}
+
+	private static String _toLocalizedImage(
+		DLAppService dlAppService,
+		com.liferay.headless.delivery.dto.v1_0.Value value) {
+
+		String valueString = StringPool.BLANK;
+
+		ContentDocument contentDocument = value.getImage();
+
+		if ((contentDocument != null) && (contentDocument.getId() != null)) {
+			valueString = _toJSON(
+				dlAppService, contentDocument.getDescription(),
+				contentDocument.getId());
+		}
+
+		return valueString;
+	}
+
+	private static String _toLocalizedJournalArticle(
+		JournalArticleService journalArticleService,
+		com.liferay.headless.delivery.dto.v1_0.Value value) {
+
+		String valueString = StringPool.BLANK;
+
+		StructuredContentLink structuredContentLink =
+			value.getStructuredContentLink();
+
+		if ((structuredContentLink != null) &&
+			(structuredContentLink.getId() != null)) {
+
+			JournalArticle journalArticle = null;
+
+			try {
+				journalArticle = journalArticleService.getLatestArticle(
+					structuredContentLink.getId());
+			}
+			catch (Exception exception) {
+				throw new BadRequestException(
+					"No structured content exists with ID " +
+						structuredContentLink.getId(),
+					exception);
+			}
+
+			valueString = JSONUtil.put(
+				"className", JournalArticle.class.getName()
+			).put(
+				"classPK", journalArticle.getResourcePrimKey()
+			).put(
+				"title", journalArticle.getTitle()
+			).toString();
+		}
+
+		return valueString;
+	}
+
+	private static String _toLocalizedLinkToPage(
+		long groupId, LayoutLocalService layoutLocalService,
+		com.liferay.headless.delivery.dto.v1_0.Value value) {
+
+		String valueString = StringPool.BLANK;
+
+		if (value.getLink() != null) {
+			Layout layout = _getLayout(
+				groupId, layoutLocalService, value.getLink());
+
+			valueString = JSONUtil.put(
+				"groupId", layout.getGroupId()
+			).put(
+				"label", layout.getFriendlyURL()
+			).put(
+				"layoutId", layout.getLayoutId()
+			).put(
+				"privateLayout", layout.isPrivateLayout()
+			).toString();
+		}
+
+		return valueString;
 	}
 
 }

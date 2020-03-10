@@ -12,7 +12,9 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import React, {useCallback, useContext} from 'react';
+
+import InfoItemService from '../services/InfoItemService';
 
 const INITIAL_STATE = {
 	collectionFields: null,
@@ -43,10 +45,44 @@ const useCollectionFields = () => {
 	return context.collectionFields;
 };
 
+const useGetFieldValue = () => {
+	const context = useContext(ControlsIdConverterContext);
+
+	const getFromServer = useCallback(
+		({classNameId, classPK, fieldId, languageId}) =>
+			InfoItemService.getAssetFieldValue({
+				classNameId,
+				classPK,
+				fieldId,
+				languageId,
+				onNetworkStatus: () => {},
+			}).then(response => {
+				const {fieldValue = ''} = response;
+
+				return fieldValue;
+			}),
+		[]
+	);
+
+	const getFromCollectionItem = useCallback(
+		({collectionFieldId}) =>
+			Promise.resolve(context.collectionItem[collectionFieldId]),
+		[context.collectionItem]
+	);
+
+	if (context.collectionFields !== null && context.collectionItem !== null) {
+		return getFromCollectionItem;
+	}
+	else {
+		return getFromServer;
+	}
+};
+
 export {
 	ControlsIdConverterContext,
 	ControlsIdConverterContextProvider,
 	useCollectionFields,
 	useFromControlsId,
 	useToControlsId,
+	useGetFieldValue,
 };

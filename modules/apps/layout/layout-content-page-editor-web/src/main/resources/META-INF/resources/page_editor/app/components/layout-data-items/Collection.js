@@ -47,6 +47,132 @@ function fromControlsId(controlsItemId) {
 	return itemId;
 }
 
+const mockList = [
+	{
+		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
+		categories: '1',
+		title: 'title1',
+	},
+	{
+		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
+		categories: '2',
+		title: 'title2',
+	},
+	{
+		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
+		categories: '3',
+		title: 'title3',
+	},
+	{
+		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
+		categories: '4',
+		title: 'title4',
+	},
+	{
+		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
+		categories: '5',
+		title: 'title5',
+	},
+	{
+		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
+		categories: '6',
+		title: 'title6',
+	},
+	{
+		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
+		categories: '7',
+		title: 'title7',
+	},
+	{
+		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
+		categories: '8',
+		title: 'title8',
+	},
+	{
+		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
+		categories: '9',
+		title: 'title9',
+	},
+	{
+		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
+		categories: '10',
+		title: 'title10',
+	},
+];
+
+const collectionFields = [
+	{
+		key: 'categories',
+		label: 'Categories',
+		type: 'text',
+	},
+	{
+		key: 'displayPageURL',
+		label: 'Display Page URL',
+		type: 'text',
+	},
+	{
+		key: 'tagNames',
+		label: 'Tags',
+		type: 'text',
+	},
+	{
+		key: 'authorName',
+		label: 'Author Name',
+		type: 'text',
+	},
+	{
+		key: 'authorProfileImage',
+		label: 'Author Profile Image',
+		type: 'image',
+	},
+	{
+		key: 'description',
+		label: 'Description',
+		type: 'text',
+	},
+	{
+		key: 'lastEditorName',
+		label: 'Last Editor Name',
+		type: 'text',
+	},
+	{
+		key: 'lastEditorProfileImage',
+		label: 'Last Editor Profile Image',
+		type: 'image',
+	},
+	{
+		key: 'publishDate',
+		label: 'Publish Date',
+		type: 'text',
+	},
+	{
+		key: 'smallImage',
+		label: 'Small Image',
+		type: 'image',
+	},
+	{
+		key: 'summary',
+		label: 'Summary',
+		type: 'text',
+	},
+	{
+		key: 'title',
+		label: 'Title',
+		type: 'text',
+	},
+	{
+		key: 'content',
+		label: 'Content',
+		type: 'ddm-text-html',
+	},
+	{
+		key: 'ddmTemplate_BASIC_WEB_CONTENT',
+		label: 'Basic Web Content *',
+		type: 'text',
+	},
+];
+
 const NotMappedMessage = () => (
 	<div className="page-editor__collection__not-mapped-message">
 		{Liferay.Language.get('not-mapped')}
@@ -79,8 +205,8 @@ const Grid = ({
 							<ControlsIdConverterContextProvider
 								key={index}
 								value={{
-									collectionFields: [],
-									collectionItem: {},
+									collectionFields,
+									collectionItem: mockList[i + 1 + j],
 									fromControlsId,
 									toControlsId: getToControlsId(
 										collectionId,
@@ -113,8 +239,8 @@ const Stack = ({child, collectionId, collectionLength = 3, numberOfItems}) => {
 		<ControlsIdConverterContextProvider
 			key={idx}
 			value={{
-				collectionFields: [],
-				collectionItem: {},
+				collectionFields,
+				collectionItem: mockList[idx],
 				fromControlsId,
 				toControlsId: getToControlsId(collectionId, idx),
 			}}

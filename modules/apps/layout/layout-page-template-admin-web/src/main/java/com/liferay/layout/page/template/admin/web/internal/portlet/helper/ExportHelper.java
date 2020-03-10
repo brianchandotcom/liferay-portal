@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ExportHelper.class)
 public class ExportHelper {
 
-	public File exportMasterPages(
+	public File exportMasterLayouts(
 			List<LayoutPageTemplateEntry> layoutPageTemplateEntries)
 		throws PortletException {
 
@@ -76,7 +76,7 @@ public class ExportHelper {
 			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 					layoutPageTemplateEntries) {
 
-				_populateMasterPagesZipWriter(
+				_populateMasterLayoutsZipWriter(
 					layoutPageTemplateEntry, zipWriter);
 			}
 
@@ -160,12 +160,12 @@ public class ExportHelper {
 					layoutPageTemplateCollectionId));
 	}
 
-	private void _populateMasterPagesZipWriter(
+	private void _populateMasterLayoutsZipWriter(
 			LayoutPageTemplateEntry layoutPageTemplateEntry,
 			ZipWriter zipWriter)
 		throws Exception {
 
-		String masterPagePath =
+		String masterLayoutPath =
 			_ROOT_FOLDER_MASTER_PAGES + StringPool.SLASH +
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
 
@@ -177,7 +177,7 @@ public class ExportHelper {
 		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
 
 		zipWriter.addEntry(
-			masterPagePath + StringPool.SLASH +
+			masterLayoutPath + StringPool.SLASH +
 				LayoutPageTemplateExportImportConstants.FILE_NAME_MASTER_PAGE,
 			objectWriter.writeValueAsString(
 				MasterPageConverterUtil.toMasterPage(layoutPageTemplateEntry)));
@@ -193,7 +193,7 @@ public class ExportHelper {
 					layout);
 
 			zipWriter.addEntry(
-				masterPagePath + "/page-definition.json",
+				masterLayoutPath + "/page-definition.json",
 				objectWriter.writeValueAsString(pageDefinition));
 		}
 
@@ -202,7 +202,7 @@ public class ExportHelper {
 
 		if (previewFileEntry != null) {
 			zipWriter.addEntry(
-				masterPagePath + "/thumbnail." +
+				masterLayoutPath + "/thumbnail." +
 					previewFileEntry.getExtension(),
 				previewFileEntry.getContentStream());
 		}

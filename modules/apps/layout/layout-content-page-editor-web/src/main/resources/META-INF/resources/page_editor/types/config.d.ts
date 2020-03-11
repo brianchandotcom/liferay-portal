@@ -89,6 +89,7 @@ export interface Config {
 		toolbarPluginId: string;
 	}>;
 
+	updateConfigurationValuesURL: string;
 	updateItemConfigURL: string;
 	updateLayoutPageTemplateDataURL: string;
 	updateRowColumnsURL: string;

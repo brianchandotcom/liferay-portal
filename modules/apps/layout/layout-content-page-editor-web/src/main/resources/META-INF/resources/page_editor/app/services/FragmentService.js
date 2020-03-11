@@ -263,6 +263,32 @@ export default {
 	},
 
 	/**
+	 * Update configurationValues of the fragmentEntryLink with the given fragmentEntryLinkId
+	 * @param {object} options
+	 * @param {string} options.configurationValues New configurationValues
+	 * @param {string} options.fragmentEntryLinkId Id of the fragmentEntryLink
+	 * @param {function} options.onNetworkStatus
+	 */
+	updateConfigurationValues({
+		configurationValues,
+		fragmentEntryLinkId,
+		onNetworkStatus,
+	}) {
+		return serviceFetch(
+			config.updateConfigurationValuesURL,
+			{
+				body: {
+					editableValues: JSON.stringify(configurationValues),
+					fragmentEntryLinkId,
+					updateClassedModel: true,
+				},
+			},
+			onNetworkStatus,
+			{requestGenerateDraft: true}
+		);
+	},
+
+	/**
 	 * Update editableValues of the fragmentEntryLink with the given fragmentEntryLinkId
 	 * @param {object} options
 	 * @param {string} options.editableValues New editableValues

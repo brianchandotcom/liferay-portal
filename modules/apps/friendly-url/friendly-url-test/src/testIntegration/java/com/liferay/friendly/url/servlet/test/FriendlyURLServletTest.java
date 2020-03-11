@@ -46,6 +46,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.redirect.model.RedirectEntry;
+import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -322,6 +324,68 @@ public class FriendlyURLServletTest {
 		Assert.assertEquals(302, mockHttpServletResponse.getStatus());
 	}
 
+	@Test
+	public void testServiceRedirectWithMatchingPermanentRedirectEntry()
+		throws Exception {
+
+		RedirectEntry redirectEntry =
+			_redirectEntryLocalService.addRedirectEntry(
+				_group.getGroupId(), "http://www.liferay.com", "path", false,
+				ServiceContextTestUtil.getServiceContext());
+
+		try {
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
+
+			_servlet.service(
+				new MockHttpServletRequest(
+					"GET",
+					StringBundler.concat(
+						PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+						_group.getFriendlyURL(), StringPool.SLASH, "path")),
+				mockHttpServletResponse);
+
+			Assert.assertEquals(301, mockHttpServletResponse.getStatus());
+			Assert.assertEquals(
+				"http://www.liferay.com",
+				mockHttpServletResponse.getHeader("Location"));
+		}
+		finally {
+			_redirectEntryLocalService.deleteRedirectEntry(redirectEntry);
+		}
+	}
+
+	@Test
+	public void testServiceRedirectWithMatchingTemporaryRedirectEntry()
+		throws Exception {
+
+		RedirectEntry redirectEntry =
+			_redirectEntryLocalService.addRedirectEntry(
+				_group.getGroupId(), "http://www.liferay.com", "path", true,
+				ServiceContextTestUtil.getServiceContext());
+
+		try {
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
+
+			_servlet.service(
+				new MockHttpServletRequest(
+					"GET",
+					StringBundler.concat(
+						PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+						_group.getFriendlyURL(), StringPool.SLASH, "path")),
+				mockHttpServletResponse);
+
+			Assert.assertEquals(302, mockHttpServletResponse.getStatus());
+			Assert.assertEquals(
+				"http://www.liferay.com",
+				mockHttpServletResponse.getHeader("Location"));
+		}
+		finally {
+			_redirectEntryLocalService.deleteRedirectEntry(redirectEntry);
+		}
+	}
+
 	protected String getI18nLanguageId(HttpServletRequest httpServletRequest) {
 		String path = GetterUtil.getString(httpServletRequest.getPathInfo());
 
@@ -433,6 +497,10 @@ public class FriendlyURLServletTest {
 	private Layout _layout;
 	private Constructor<?> _redirectConstructor1;
 	private Constructor<?> _redirectConstructor2;
+
+	@Inject
+	private RedirectEntryLocalService _redirectEntryLocalService;
+
 	private ServiceTracker<Servlet, Servlet> _serviceTracker;
 	private Servlet _servlet;
 

@@ -124,7 +124,7 @@ public class MessageBoardSectionResourceImpl
 						String.valueOf(mbCategory.getCategoryId())),
 					BooleanClauseOccur.MUST);
 			},
-			mbCategory.getGroupId(), search, filter, pagination, sorts);
+			mbCategory.getGroupId(), filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class MessageBoardSectionResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			siteId, search, filter, pagination, sorts);
+			siteId, filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -249,13 +249,13 @@ public class MessageBoardSectionResourceImpl
 	private Page<MessageBoardSection> _getMessageBoardSectionsPage(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Long siteId, String search, Filter filter, Pagination pagination,
+			Long siteId, Filter filter, String keywords, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
 			actions, booleanQueryUnsafeConsumer, filter, MBCategory.class,
-			search, pagination,
+			keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {

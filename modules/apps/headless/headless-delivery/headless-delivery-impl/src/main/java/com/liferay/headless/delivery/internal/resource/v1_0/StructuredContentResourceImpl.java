@@ -180,7 +180,7 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			ddmStructure.getGroupId(), search, filter, pagination, sorts);
+			ddmStructure.getGroupId(), filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -266,7 +266,7 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			siteId, search, filter, pagination, sorts);
+			siteId, filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -323,7 +323,7 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			journalFolder.getGroupId(), search, filter, pagination, sorts);
+			journalFolder.getGroupId(), filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -794,13 +794,13 @@ public class StructuredContentResourceImpl
 	private Page<StructuredContent> _getStructuredContentsPage(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Long siteId, String search, Filter filter, Pagination pagination,
+			Long siteId, Filter filter, String keywords, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
 			actions, booleanQueryUnsafeConsumer, filter, JournalArticle.class,
-			search, pagination,
+			keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				com.liferay.portal.kernel.search.Field.ARTICLE_ID,
 				com.liferay.portal.kernel.search.Field.SCOPE_GROUP_ID),

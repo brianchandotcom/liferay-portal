@@ -144,7 +144,7 @@ public class KnowledgeBaseArticleResourceImpl
 						String.valueOf(kbArticle.getResourcePrimKey())),
 					BooleanClauseOccur.MUST);
 			},
-			kbArticle.getGroupId(), search, filter, pagination, sorts);
+			kbArticle.getGroupId(), filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -196,7 +196,7 @@ public class KnowledgeBaseArticleResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			kbFolder.getGroupId(), search, filter, pagination, sorts);
+			kbFolder.getGroupId(), filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -240,7 +240,7 @@ public class KnowledgeBaseArticleResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			siteId, search, filter, pagination, sorts);
+			siteId, filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -397,13 +397,13 @@ public class KnowledgeBaseArticleResourceImpl
 	private Page<KnowledgeBaseArticle> _getKnowledgeBaseArticlesPage(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Long siteId, String search, Filter filter, Pagination pagination,
+			Long siteId, Filter filter, String keywords, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
 			actions, booleanQueryUnsafeConsumer, filter, KBArticle.class,
-			search, pagination,
+			keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
@@ -412,7 +412,7 @@ public class KnowledgeBaseArticleResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
 
-				if (search == null) {
+				if (keywords == null) {
 					searchContext.setKeywords("");
 				}
 			},

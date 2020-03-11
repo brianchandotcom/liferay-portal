@@ -101,7 +101,7 @@ public class DocumentFolderResourceImpl
 					"com.liferay.document.library", folder.getGroupId())
 			).build(),
 			parentDocumentFolder.getId(), parentDocumentFolder.getSiteId(),
-			flatten, search, filter, pagination, sorts);
+			flatten, filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -137,7 +137,7 @@ public class DocumentFolderResourceImpl
 					"VIEW", "getSiteDocumentFoldersPage",
 					"com.liferay.document.library", siteId)
 			).build(),
-			documentFolderId, siteId, flatten, search, filter, pagination,
+			documentFolderId, siteId, flatten, filter, search, pagination,
 			sorts);
 	}
 
@@ -233,7 +233,7 @@ public class DocumentFolderResourceImpl
 	private Page<DocumentFolder> _getDocumentFoldersPage(
 			Map<String, Map<String, String>> actions,
 			Long parentDocumentFolderId, Long siteId, Boolean flatten,
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			Filter filter, String keywords, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -259,7 +259,7 @@ public class DocumentFolderResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			filter, DLFolder.class, search, pagination,
+			filter, DLFolder.class, keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {

@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins;
 
-import aQute.bnd.gradle.BndBuilderPlugin;
 import aQute.bnd.gradle.BndUtils;
 import aQute.bnd.gradle.BundleTaskConvention;
 import aQute.bnd.gradle.PropertiesWrapper;
@@ -958,14 +957,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _applyPlugins(Project project) {
-		GradleUtil.applyPlugin(project, BndBuilderPlugin.class);
+		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
 		_configureBundleExtension(project);
-
-		// "bundle" must be applied before "java", otherwise it will be too late
-		// to replace the JarBuilderFactory.
-
-		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
 

@@ -116,11 +116,23 @@ public class ConfigurationUpgradeStepFactoryImpl
 						fileName.equals(oldPid.concat(".config")) ||
 						fileName.startsWith(oldPid.concat(StringPool.DASH))) {
 
-						_renameConfigurationFile(
-							file,
-							new File(
-								StringUtil.replace(
-									file.getPath(), oldPid, newPid)));
+						File newFile = new File(
+							StringUtil.replace(file.getPath(), oldPid, newPid));
+
+						if (newFile.exists()) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									StringBundler.concat(
+										"Unable to rename ",
+										file.getAbsolutePath(), " to ",
+										newFile.getAbsolutePath(),
+										" because the file already exists"));
+							}
+
+							continue;
+						}
+
+						Files.move(file.toPath(), newFile.toPath());
 					}
 				}
 			}
@@ -128,25 +140,6 @@ public class ConfigurationUpgradeStepFactoryImpl
 				throw new UpgradeException(ioException);
 			}
 		};
-	}
-
-	private void _renameConfigurationFile(
-			File oldConfigFile, File newConfigFile)
-		throws IOException {
-
-		if (newConfigFile.exists()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Unable to rename ", oldConfigFile.getAbsolutePath(),
-						" to ", newConfigFile.getAbsolutePath(),
-						" because the file already exists"));
-			}
-
-			return;
-		}
-
-		Files.move(oldConfigFile.toPath(), newConfigFile.toPath());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

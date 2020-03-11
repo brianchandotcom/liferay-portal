@@ -137,13 +137,8 @@ class TabsProvider {
 
 		const panel = this._getPanel(trigger);
 
-		if (panel) {
-			if (panel.classList.contains(CssClass.SHOW)) {
-				this.hide({panel, trigger});
-			}
-			else {
-				this.show({panel, trigger});
-			}
+		if (panel && !panel.classList.contains(CssClass.SHOW)) {
+			this.show({panel, trigger});
 		}
 	};
 

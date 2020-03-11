@@ -19,9 +19,7 @@ definition {
 				value1 = "${directoryDisplayStyle}");
 		}
 
-		Button.clickSave();
-
-		SelectFrameTop();
+		Portlet.saveAndCloseConfig();
 	}
 
 	macro viewDefaultConfigurationPG {

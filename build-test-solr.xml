@@ -295,10 +295,18 @@ schema=schema.xml</echo>
 					"query": {
 						"bool": {
 							"must": [
-								{ "match": { "userName": "test test" } }
+								{
+									"match": {
+										"userName": "test test"
+									}
+								}
 							],
 							"must_not": [
-								{ "match": { "hidden": "true" } }
+								{
+									"match": {
+										"hidden": "true"
+									}
+								}
 							]
 						}
 					}

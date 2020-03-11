@@ -24,9 +24,12 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.util.LayoutPageTemplateImportEntry;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.RowLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -90,6 +93,58 @@ public class LayoutPageTemplatesImporterTest {
 	}
 
 	@Test
+	public void testImportEmptyLayoutPageTemplateEntryRow() throws Exception {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getImportLayoutPageTemplateEntry("row");
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					layoutPageTemplateEntry.getPlid());
+
+		Assert.assertNotNull(layoutPageTemplateStructure);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(0));
+
+		LayoutStructureItem layoutStructureItem = _getBaseLayoutStructureItem(
+			layoutStructure);
+
+		Assert.assertTrue(
+			layoutStructureItem instanceof RowLayoutStructureItem);
+
+		RowLayoutStructureItem rowLayoutStructureItem =
+			(RowLayoutStructureItem)layoutStructureItem;
+
+		Assert.assertNotNull(rowLayoutStructureItem);
+
+		Assert.assertEquals(6, rowLayoutStructureItem.getNumberOfColumns());
+		Assert.assertFalse(rowLayoutStructureItem.isGutters());
+
+		List<String> rowChildrenItemsIds =
+			rowLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			rowChildrenItemsIds.toString(), 6, rowChildrenItemsIds.size());
+
+		for (String rowChildItemId : rowChildrenItemsIds) {
+			LayoutStructureItem childLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(rowChildItemId);
+
+			Assert.assertEquals(
+				LayoutDataItemTypeConstants.TYPE_COLUMN,
+				childLayoutStructureItem.getItemType());
+
+			ColumnLayoutStructureItem columnLayoutStructureItem =
+				(ColumnLayoutStructureItem)childLayoutStructureItem;
+
+			Assert.assertEquals(2, columnLayoutStructureItem.getSize());
+		}
+	}
+
+	@Test
 	public void testImportEmptyLayoutPageTemplateEntrySection()
 		throws Exception {
 
@@ -108,19 +163,8 @@ public class LayoutPageTemplatesImporterTest {
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(0));
 
-		LayoutStructureItem mainLayoutStructureItem =
-			layoutStructure.getMainLayoutStructureItem();
-
-		List<String> childrenItemIds =
-			mainLayoutStructureItem.getChildrenItemIds();
-
-		Assert.assertEquals(
-			childrenItemIds.toString(), 1, childrenItemIds.size());
-
-		String childItemId = childrenItemIds.get(0);
-
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(childItemId);
+		LayoutStructureItem layoutStructureItem = _getBaseLayoutStructureItem(
+			layoutStructure);
 
 		Assert.assertTrue(
 			layoutStructureItem instanceof ContainerLayoutStructureItem);
@@ -187,6 +231,23 @@ public class LayoutPageTemplatesImporterTest {
 		catch (Exception exception) {
 			throw new Exception(exception);
 		}
+	}
+
+	private LayoutStructureItem _getBaseLayoutStructureItem(
+		LayoutStructure layoutStructure) {
+
+		LayoutStructureItem mainLayoutStructureItem =
+			layoutStructure.getMainLayoutStructureItem();
+
+		List<String> childrenItemIds =
+			mainLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 1, childrenItemIds.size());
+
+		String childItemId = childrenItemIds.get(0);
+
+		return layoutStructure.getLayoutStructureItem(childItemId);
 	}
 
 	private LayoutPageTemplateEntry _getImportLayoutPageTemplateEntry(

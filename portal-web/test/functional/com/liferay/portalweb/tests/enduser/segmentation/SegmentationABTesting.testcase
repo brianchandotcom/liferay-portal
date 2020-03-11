@@ -23,7 +23,6 @@ definition {
 		PageEditor.clickPublish();
 		
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/abtesting-content-page");
-
 	}
 
 	tearDown {

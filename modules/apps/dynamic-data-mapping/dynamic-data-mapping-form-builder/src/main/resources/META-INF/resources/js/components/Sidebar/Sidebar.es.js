@@ -43,7 +43,7 @@ class Sidebar extends Component {
 		this._bindDragAndDrop();
 
 		this._eventHandler.add(
-			dom.on(document, 'mousedown', this._handleDocumentMouseDown, true)
+			dom.on(document, 'mousedown', this._handleDocumentMouseDown, false)
 		);
 	}
 

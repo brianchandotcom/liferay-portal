@@ -292,6 +292,7 @@ export default () => {
 					target,
 					sidebarRef.current,
 					'.data-layout-builder-sidebar',
+					'.ddm-field-actions-container',
 					'.ddm-form-builder',
 					'.dropdown-menu'
 				)

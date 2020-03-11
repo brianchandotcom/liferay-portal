@@ -13,34 +13,45 @@
  */
 
 import {ClayActionsDropdown} from 'clay-dropdown';
+import {FormSupport} from 'dynamic-data-mapping-form-renderer';
 import Component from 'metal-jsx';
+import {Align} from 'metal-position';
 import {Config} from 'metal-state';
 
 import {pageStructure} from '../../util/config.es';
 
-const getFieldContainer = (pages, fieldName) => {
+const getFieldContainer = fieldName => {
 	return document.querySelector(
 		`.ddm-field-container[data-field-name="${fieldName}"]`
 	);
 };
 
 class FieldActionsDropDown extends Component {
+	close() {
+		this.setState({expanded: false});
+	}
+
 	created() {
 		this.on('fieldNameChanged', this._handleFieldNameChanged);
 
-		this.expanded = false;
+		this.close();
+	}
+
+	open() {
+		this.setState({expanded: true});
 	}
 
 	render() {
-		const {expanded} = this;
-		const {disabled, items, label, spritemap} = this.props;
+		const {expanded} = this.state;
+		const {disabled, items, spritemap, visible} = this.props;
 
 		return (
 			<div
-				class="ddm-field-actions-container"
-				onMouseDown={this._handleElementClicked.bind(this)}
+				class={`ddm-field-actions-container ${visible ? '' : 'hide'}`}
+				onMouseDown={this._handleOnMouseDown.bind(this)}
+				onMouseLeave={this._handleOnMouseLeave.bind(this)}
 			>
-				<span class="actions-label">{label}</span>
+				<span class="actions-label">{this._getLabel()}</span>
 
 				<ClayActionsDropdown
 					disabled={disabled}
@@ -57,10 +68,19 @@ class FieldActionsDropDown extends Component {
 		);
 	}
 
+	rendered() {
+		this._align();
+
+		requestAnimationFrame(() => {
+			this._align();
+
+			this.refs.dropdown.refs.dropdown.refs.portal.emit('rendered');
+		});
+	}
+
 	syncExpanded(expanded) {
-		const {pages} = this.props;
 		const {fieldName} = this.state;
-		const fieldContainer = getFieldContainer(pages, fieldName);
+		const fieldContainer = getFieldContainer(fieldName);
 
 		if (!fieldContainer) {
 			return;
@@ -74,32 +94,75 @@ class FieldActionsDropDown extends Component {
 		}
 	}
 
-	_handleElementClicked({target}) {
-		const {disabled} = this.props;
+	syncVisible(visible) {
+		if (visible) {
+			this.element.classList.remove('hide');
+		}
+		else {
+			this.element.classList.add('hide');
+		}
+	}
+
+	_align() {
+		const {fieldName} = this.state;
+		const fieldContainer = getFieldContainer(fieldName);
+
+		if (this.element && fieldContainer) {
+			Align.align(this.element, fieldContainer, Align.TopLeft);
+		}
+	}
+
+	_getLabel() {
+		const {fieldName} = this.state;
+		const {fieldTypes, pages} = this.props;
+		const field = FormSupport.findFieldByName(pages, fieldName);
+
+		return (
+			field &&
+			fieldTypes.find(fieldType => {
+				return fieldType.name === field.type;
+			}).label
+		);
+	}
+
+	_handleOnMouseDown(event) {
 		const {dropdown} = this.refs;
 
-		if (!dropdown.element.contains(target)) {
+		event.stopImmediatePropagation();
+		event.stopPropagation();
+
+		if (!dropdown.element.contains(event.target)) {
 			const {dispatch} = this.context;
 			const {fieldName} = this.state;
 
 			dispatch('fieldClicked', {fieldName});
 		}
-		else if (!this.expanded && !disabled) {
-			this.expanded = true;
+	}
+
+	_handleOnMouseLeave(event) {
+		const {fieldName} = this.state;
+
+		if (!fieldName) {
+			return;
 		}
+
+		this.emit('mouseLeave', {
+			...event,
+			container: getFieldContainer(fieldName),
+			relatedTarget: event.relatedTarget,
+		});
 	}
 
 	_handleExpandedChanged({newVal}) {
-		this.expanded = newVal;
+		this.setState({expanded: newVal});
 
 		this.syncExpanded(newVal);
 	}
 
 	_handleFieldNameChanged({newVal, prevVal}) {
-		const {pages} = this.props;
 		const {expanded} = this.state;
-		const newFieldContainer = getFieldContainer(pages, newVal);
-		const prevFieldContainer = getFieldContainer(pages, prevVal);
+		const newFieldContainer = getFieldContainer(newVal);
+		const prevFieldContainer = getFieldContainer(prevVal);
 
 		if (prevFieldContainer && newFieldContainer !== prevFieldContainer) {
 			prevFieldContainer.classList.remove('expanded');
@@ -119,7 +182,7 @@ class FieldActionsDropDown extends Component {
 
 		action(fieldName);
 
-		this.refs.dropdown.expanded = false;
+		this.close();
 	}
 }
 
@@ -134,13 +197,13 @@ FieldActionsDropDown.PROPS = {
 	disabled: Config.bool().value(false),
 
 	/**
-	 * @default undefined
+	 * @default []
 	 * @instance
 	 * @memberof FieldActionsDropDown
-	 * @type {!string}
+	 * @type {?array<object>}
 	 */
 
-	label: Config.string(),
+	fieldTypes: Config.array().value([]),
 
 	/**
 	 * @default []
@@ -163,15 +226,22 @@ FieldActionsDropDown.PROPS = {
 
 FieldActionsDropDown.STATE = {
 	/**
-	 * @default {}
+	 * @default false
 	 * @instance
 	 * @memberof FieldActionsDropDown
-	 * @type {!Object}
+	 * @type {!boolean}
+	 */
+
+	expanded: Config.bool(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof FieldActionsDropDown
+	 * @type {!string}
 	 */
 
 	fieldName: Config.string(),
 };
-
-export {getFieldContainer};
 
 export default FieldActionsDropDown;

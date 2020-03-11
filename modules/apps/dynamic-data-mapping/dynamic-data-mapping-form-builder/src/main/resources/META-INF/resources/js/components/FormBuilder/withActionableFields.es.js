@@ -12,14 +12,12 @@
  * details.
  */
 
-import {FormSupport} from 'dynamic-data-mapping-form-renderer';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
+import {Config} from 'metal-state';
 
-import FieldActionsDropDown, {
-	getFieldContainer,
-} from './FieldActionsDropDown.es';
+import FieldActionsDropDown from './FieldActionsDropDown.es';
 import formBuilderProps from './props.es';
 
 const _CSS_HOVERED = 'hovered';
@@ -64,6 +62,10 @@ const withActionableFields = ChildComponent => {
 			super.disposeInternal();
 
 			this._eventHandler.removeAllListeners();
+
+			if (this._actionableFieldsContainer) {
+				dom.exitDocument(this._actionableFieldsContainer);
+			}
 		}
 
 		isActionsEnabled() {
@@ -72,8 +74,24 @@ const withActionableFields = ChildComponent => {
 			return defaultLanguageId === editingLanguageId;
 		}
 
+		hasFocusedField() {
+			const {focusedField} = this.props;
+
+			return Object.keys(focusedField).length > 0;
+		}
+
+		hideActions(actions) {
+			actions.close();
+			actions.setState({fieldName: null});
+
+			if (actions === this.refs.hoveredFieldActions) {
+				this.setState({hoveredFieldActionsVisible: false});
+			}
+		}
+
 		render() {
-			const {fieldActions, pages, spritemap} = this.props;
+			const {hoveredFieldActionsVisible} = this.state;
+			const {fieldActions, fieldTypes, pages, spritemap} = this.props;
 
 			return (
 				<div>
@@ -81,22 +99,34 @@ const withActionableFields = ChildComponent => {
 
 					<FieldActionsDropDown
 						disabled={!this.isActionsEnabled()}
+						events={{
+							mouseLeave: this._handleMouseLeaveActions.bind(
+								this
+							),
+						}}
+						fieldTypes={fieldTypes}
 						items={fieldActions}
 						pages={pages}
 						portalElement={this._actionableFieldsContainer}
 						ref="selectedFieldActions"
 						spritemap={spritemap}
-						visible={false}
+						visible={this.hasFocusedField()}
 					/>
 
 					<FieldActionsDropDown
 						disabled={!this.isActionsEnabled()}
+						events={{
+							mouseLeave: this._handleMouseLeaveActions.bind(
+								this
+							),
+						}}
+						fieldTypes={fieldTypes}
 						items={fieldActions}
 						pages={pages}
 						portalElement={this._actionableFieldsContainer}
 						ref="hoveredFieldActions"
 						spritemap={spritemap}
-						visible={false}
+						visible={hoveredFieldActionsVisible}
 					/>
 				</div>
 			);
@@ -104,120 +134,39 @@ const withActionableFields = ChildComponent => {
 
 		rendered() {
 			const {focusedField} = this.props;
-			const {hoveredFieldActions, selectedFieldActions} = this.refs;
+			const {selectedFieldActions} = this.refs;
 
-			if (Object.keys(focusedField).length > 0) {
+			if (this.hasFocusedField()) {
 				const {fieldName} = focusedField;
 
 				this.showActions(selectedFieldActions, fieldName);
 			}
 			else {
-				selectedFieldActions.props.visible = false;
-			}
-
-			if (hoveredFieldActions.state.fieldName) {
-				this.showActions(
-					hoveredFieldActions,
-					hoveredFieldActions.state.fieldName
-				);
+				this.hideActions(selectedFieldActions);
 			}
 		}
 
-		showActions(actions, fieldName, field) {
-			actions.props.label = this._getFieldType(fieldName, field);
-			actions.props.visible = true;
-
-			if (fieldName !== actions.state.fieldName) {
-				actions.setState({fieldName});
-
-				actions.refs.dropdown.expanded = false;
+		showActions(actions, fieldName) {
+			if (actions.state.fieldName !== fieldName) {
+				actions.close();
 			}
 
-			actions.forceUpdate(() => {
-				window.requestAnimationFrame(() => {
-					const {pages} = this.props;
-					const fieldContainer = getFieldContainer(pages, fieldName);
+			actions.setState({fieldName});
 
-					if (fieldContainer) {
-						fieldContainer.appendChild(actions.element);
-					}
-				});
-			});
+			if (actions === this.refs.hoveredFieldActions) {
+				this.setState({hoveredFieldActionsVisible: true});
+			}
 		}
 
 		_getClosestParent(node) {
 			return dom.closest(node.parentElement, `.ddm-field-container`);
 		}
 
-		_getFieldType(fieldName, field) {
-			const {fieldTypes, pages} = this.props;
-
-			if (!field) {
-				field = FormSupport.findFieldByName(pages, fieldName);
-			}
-
-			return (
-				field &&
-				fieldTypes.find(fieldType => {
-					return fieldType.name === field.type;
-				}).label
-			);
-		}
-
 		_handleMouseEnterField(event) {
-			event.stopPropagation();
-
 			const {delegateTarget} = event;
 
-			this._handleActionsMouseEnter(delegateTarget);
-			this._handleHoverMouseEnter(delegateTarget);
+			this._handleMouseLeaveField(event);
 
-			event.stopPropagation();
-		}
-
-		_handleMouseLeaveField(event) {
-			const {delegateTarget} = event;
-
-			this._handleActionsMouseLeave(delegateTarget);
-			this._handleHoverMouseLeave(delegateTarget);
-
-			event.stopPropagation();
-		}
-
-		_handleActionsMouseEnter(delegateTarget) {
-			if (!delegateTarget.classList.contains('selected')) {
-				const {fieldName} = delegateTarget.dataset;
-				const {hoveredFieldActions} = this.refs;
-				const {pages} = this.props;
-
-				const field = FormSupport.findFieldByName(pages, fieldName);
-
-				if (field) {
-					this.showActions(hoveredFieldActions, fieldName, field);
-				}
-			}
-		}
-
-		_handleActionsMouseLeave(delegateTarget) {
-			const closestParent = this._getClosestParent(delegateTarget);
-
-			if (
-				closestParent &&
-				!closestParent.classList.contains('selected')
-			) {
-				const {fieldName} = closestParent.dataset;
-				const {hoveredFieldActions} = this.refs;
-				const {pages} = this.props;
-
-				const field = FormSupport.findFieldByName(pages, fieldName);
-
-				if (field) {
-					this.showActions(hoveredFieldActions, fieldName, field);
-				}
-			}
-		}
-
-		_handleHoverMouseEnter(delegateTarget) {
 			let closestParent = this._getClosestParent(delegateTarget);
 
 			while (closestParent) {
@@ -227,21 +176,83 @@ const withActionableFields = ChildComponent => {
 			}
 
 			delegateTarget.classList.add(_CSS_HOVERED);
+
+			const {fieldName} = delegateTarget.dataset;
+			const {hoveredFieldActions, selectedFieldActions} = this.refs;
+
+			if (selectedFieldActions.state.fieldName !== fieldName) {
+				this.showActions(hoveredFieldActions, fieldName);
+			}
+
+			event.stopPropagation();
 		}
 
-		_handleHoverMouseLeave(delegateTarget) {
+		_handleMouseLeaveActions(event) {
+			const {hoveredFieldActions} = this.refs;
+			const {relatedTarget} = event;
+
+			const closestRelatedParent = this._getClosestParent(relatedTarget);
+
+			if (
+				closestRelatedParent &&
+				closestRelatedParent.dataset.fieldName ===
+					hoveredFieldActions.state.fieldName
+			) {
+				return;
+			}
+
+			this._handleMouseLeaveField({
+				delegateTarget: event.container,
+				relatedTarget,
+			});
+		}
+
+		_handleMouseLeaveField(event) {
+			const {delegateTarget} = event;
+			const {hoveredFieldActions, selectedFieldActions} = this.refs;
+
+			if (
+				hoveredFieldActions.expanded ||
+				!this._hasLeftField(event.relatedTarget)
+			) {
+				return;
+			}
+
+			delegateTarget.classList.remove(_CSS_HOVERED);
+
+			this.hideActions(hoveredFieldActions);
+
 			const closestParent = this._getClosestParent(delegateTarget);
 
 			if (closestParent) {
 				closestParent.classList.add(_CSS_HOVERED);
+
+				const {fieldName} = closestParent.dataset;
+
+				if (selectedFieldActions.state.fieldName !== fieldName) {
+					this.showActions(hoveredFieldActions, fieldName);
+				}
 			}
 
-			delegateTarget.classList.remove(_CSS_HOVERED);
+			if (event.stopPropagation) {
+				event.stopPropagation();
+			}
+		}
+
+		_hasLeftField(relatedTarget) {
+			return !dom.closest(
+				relatedTarget,
+				'.dropdown-menu,.ddm-field-actions-container'
+			);
 		}
 	}
 
 	ActionableFields.PROPS = {
 		...formBuilderProps,
+	};
+
+	ActionableFields.STATE = {
+		hoveredFieldActionsVisible: Config.bool().value(false),
 	};
 
 	return ActionableFields;

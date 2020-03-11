@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -66,6 +67,10 @@ public class ElasticsearchConnectionManager
 	public ElasticsearchConnection getElasticsearchConnection(
 		String connectionId) {
 
+		if (_log.isInfoEnabled()) {
+			_log.info("Getting connection with ID: " + connectionId);
+		}
+
 		return _elasticsearchConnections.get(connectionId);
 	}
 
@@ -87,14 +92,21 @@ public class ElasticsearchConnectionManager
 			getElasticsearchConnection(connectionId, preferLocalCluster);
 
 		if (elasticsearchConnection == null) {
-			throw new ElasticsearchConnectionNotInitializedException();
+			throw new ElasticsearchConnectionNotInitializedException(
+				_getExceptionMessage(
+					"Elasticsearch connection not found.", connectionId,
+					preferLocalCluster));
 		}
 
 		RestHighLevelClient restHighLevelClient =
 			elasticsearchConnection.getRestHighLevelClient();
 
 		if (restHighLevelClient == null) {
-			throw new ElasticsearchConnectionNotInitializedException();
+			throw new ElasticsearchConnectionNotInitializedException(
+				_getExceptionMessage(
+					"REST high level client not found.",
+					elasticsearchConnection.getConnectionId(),
+					preferLocalCluster));
 		}
 
 		return restHighLevelClient;
@@ -213,19 +225,49 @@ public class ElasticsearchConnectionManager
 	protected ElasticsearchConnection getElasticsearchConnection(
 		String connectionId, boolean preferLocalCluster) {
 
+		if (_operationMode == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Operation Mode is not set");
+			}
+
+			return null;
+		}
+
 		if (!Validator.isBlank(connectionId)) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Getting connection with ID: " + connectionId);
+			}
+
 			return _elasticsearchConnections.get(connectionId);
 		}
 
 		if (isOperationModeEmbedded()) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Getting EMBEDDED connection");
+			}
+
 			return _elasticsearchConnections.get(
 				EmbeddedElasticsearchConnection.CONNECTION_ID);
 		}
 
 		if (preferLocalCluster && isCrossClusterReplicationEnabled()) {
-			return _elasticsearchConnections.get(
+			String localClusterConnectionId =
 				crossClusterReplicationConfigurationWrapper.
-					getCCRLocalClusterConnectionId());
+					getCCRLocalClusterConnectionId();
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Getting local cluster connection with ID: " +
+						localClusterConnectionId);
+			}
+
+			return _elasticsearchConnections.get(localClusterConnectionId);
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Getting remote cluster connection with ID: " +
+					_elasticsearchConfiguration.remoteClusterConnectionId());
 		}
 
 		return _elasticsearchConnections.get(
@@ -266,6 +308,17 @@ public class ElasticsearchConnectionManager
 
 	@Reference(unbind = "-")
 	protected IndexFactory indexFactory;
+
+	private String _getExceptionMessage(
+		String message, String connectionId, boolean preferLocalCluster) {
+
+		return StringBundler.concat(
+			message, " Operation Mode: ", _operationMode, ", Connection ID: ",
+			connectionId, ", Prefer Local Cluster: ", preferLocalCluster,
+			", Cross-Cluster Replication Enabled: ",
+			isCrossClusterReplicationEnabled(), ". Enable INFO logs on ",
+			ElasticsearchConnectionManager.class, " for more information");
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchConnectionManager.class);

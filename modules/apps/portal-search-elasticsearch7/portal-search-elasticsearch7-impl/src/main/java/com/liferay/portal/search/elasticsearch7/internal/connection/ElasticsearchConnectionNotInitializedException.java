@@ -19,4 +19,9 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
  */
 public class ElasticsearchConnectionNotInitializedException
 	extends IllegalStateException {
+
+	public ElasticsearchConnectionNotInitializedException(String s) {
+		super(s);
+	}
+
 }

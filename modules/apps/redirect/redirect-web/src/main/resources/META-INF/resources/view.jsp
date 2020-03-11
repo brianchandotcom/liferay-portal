@@ -18,18 +18,20 @@
 
 <%
 RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+
+SearchContainer<RedirectEntry> redirectSearchContainer = redirectDisplayContext.searchContainer();
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new RedirectManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, redirectDisplayContext.searchContainer()) %>"
+	displayContext="<%= new RedirectManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, redirectSearchContainer) %>"
 />
 
-<aui:form action="<%= redirectDisplayContext.searchContainer().getIteratorURL() %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= redirectSearchContainer.getIteratorURL() %>" cssClass="container-fluid-1280" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<liferay-ui:search-container
 		id="<%= redirectDisplayContext.getSearchContainerId() %>"
-		searchContainer="<%= redirectDisplayContext.searchContainer() %>"
+		searchContainer="<%= redirectSearchContainer %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.redirect.model.RedirectEntry"
@@ -75,7 +77,7 @@ RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(reque
 
 		<liferay-ui:search-iterator
 			markupView="lexicon"
-			searchContainer="<%= searchContainer %>"
+			searchContainer="<%= redirectSearchContainer %>"
 		/>
 	</liferay-ui:search-container>
 </aui:form>

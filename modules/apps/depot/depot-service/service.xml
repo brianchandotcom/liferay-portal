@@ -24,7 +24,7 @@
 		<finder name="DepotEntryId" return-type="Collection">
 			<finder-column name="depotEntryId" />
 		</finder>
-		<finder name="D_E" return-type="DepotAppCustomization" unique="true">
+		<finder name="D_E" return-type="DepotAppCustomization">
 			<finder-column name="depotEntryId" />
 			<finder-column name="enabled" />
 		</finder>

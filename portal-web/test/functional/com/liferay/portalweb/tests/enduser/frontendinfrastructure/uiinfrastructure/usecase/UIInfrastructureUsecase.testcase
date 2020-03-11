@@ -253,6 +253,8 @@ definition {
 			columnNumberTo = "2",
 			portletName = "Hello World");
 
+		Navigator.gotoPage(pageName = "Test Page");
+
 		Portlet.dragAndDropPortletToColumnPG(
 			columnNumberFrom = "1",
 			columnNumberTo = "3",

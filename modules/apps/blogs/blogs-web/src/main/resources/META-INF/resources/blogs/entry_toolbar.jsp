@@ -82,6 +82,18 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 				/>
 			</div>
 		</div>
+
+		<div class="autofit-col">
+			<div class="ratings">
+				<liferay-ratings:ratings
+					className="<%= BlogsEntry.class.getName() %>"
+					classPK="<%= entry.getEntryId() %>"
+					inTrash="<%= entry.isInTrash() %>"
+					ratingsEntry="<%= ratingsEntry %>"
+					ratingsStats="<%= ratingsStats %>"
+				/>
+			</div>
+		</div>
 	</c:if>
 
 	<c:if test="<%= blogsPortletInstanceConfiguration.enableFlags() && showFlags %>">

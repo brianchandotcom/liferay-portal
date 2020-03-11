@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Comment API
 Bundle-SymbolicName: com.liferay.comment.api
-Bundle-Version: 5.0.5
+Bundle-Version: 5.1.0
 Export-Package:\
 	com.liferay.comment.configuration,\
 	com.liferay.comment.constants,\

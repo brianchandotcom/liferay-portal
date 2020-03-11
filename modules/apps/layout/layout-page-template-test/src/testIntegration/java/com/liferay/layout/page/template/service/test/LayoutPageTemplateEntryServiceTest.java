@@ -29,7 +29,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence;
 import com.liferay.layout.page.template.service.persistence.impl.constants.LayoutPersistenceConstants;
-import com.liferay.layout.page.template.util.LayoutPageTemplateTestUtil;
+import com.liferay.layout.page.template.service.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;

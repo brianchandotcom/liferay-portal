@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.util;
+package com.liferay.layout.page.template.service.test.util;
 
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;

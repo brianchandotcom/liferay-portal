@@ -62,7 +62,14 @@ public class PropertiesLongLinesCheck extends BaseFileCheck {
 			return comment;
 		}
 
-		int x = comment.indexOf(CharPool.SPACE, 6);
+		int x = -1;
+
+		if (comment.startsWith("    # See http:")) {
+			x = comment.indexOf(CharPool.SPACE, 10);
+		}
+		else {
+			x = comment.indexOf(CharPool.SPACE, 6);
+		}
 
 		if (x == -1) {
 			return comment;

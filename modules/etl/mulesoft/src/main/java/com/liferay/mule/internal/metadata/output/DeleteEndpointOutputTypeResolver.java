@@ -12,23 +12,22 @@
  * details.
  */
 
-package com.liferay.mule.internal.metadata.key;
+package com.liferay.mule.internal.metadata.output;
 
-import com.liferay.mule.internal.metadata.MetadataKeysBuilder;
+import com.liferay.mule.internal.metadata.MetadataTypeBuilder;
 import com.liferay.mule.internal.oas.OASConstants;
 
-import java.util.Set;
-
+import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.metadata.MetadataContext;
-import org.mule.runtime.api.metadata.MetadataKey;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
-import org.mule.runtime.api.metadata.resolving.TypeKeysResolver;
+import org.mule.runtime.api.metadata.resolving.OutputTypeResolver;
 
 /**
  * @author Matija Petanjek
  */
-public class DELETEEndpointTypeKeysResolver implements TypeKeysResolver {
+public class DeleteEndpointOutputTypeResolver
+	implements OutputTypeResolver<String> {
 
 	@Override
 	public String getCategoryName() {
@@ -36,14 +35,17 @@ public class DELETEEndpointTypeKeysResolver implements TypeKeysResolver {
 	}
 
 	@Override
-	public Set<MetadataKey> getKeys(MetadataContext metadataContext)
+	public MetadataType getOutputType(
+			MetadataContext metadataContext, String endpoint)
 		throws ConnectionException, MetadataResolvingException {
 
-		return metadataKeysBuilder.buildMetadataKeys(
-			metadataContext, OASConstants.OPERATION_DELETE);
+		return metadataTypeBuilder.buildMetadataType(
+			metadataContext, endpoint, OASConstants.OPERATION_DELETE,
+			OASConstants.
+				PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
 	}
 
-	private final MetadataKeysBuilder metadataKeysBuilder =
-		new MetadataKeysBuilder();
+	private final MetadataTypeBuilder metadataTypeBuilder =
+		new MetadataTypeBuilder();
 
 }

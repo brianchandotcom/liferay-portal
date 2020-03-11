@@ -26,12 +26,12 @@ import org.mule.runtime.api.metadata.resolving.OutputTypeResolver;
 /**
  * @author Matija Petanjek
  */
-public class DELETEEndpointOutputTypeResolver
+public class PatchEndpointOutputTypeResolver
 	implements OutputTypeResolver<String> {
 
 	@Override
 	public String getCategoryName() {
-		return "liferay-delete";
+		return "liferay-patch";
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class DELETEEndpointOutputTypeResolver
 		throws ConnectionException, MetadataResolvingException {
 
 		return metadataTypeBuilder.buildMetadataType(
-			metadataContext, endpoint, OASConstants.OPERATION_DELETE,
+			metadataContext, endpoint, OASConstants.OPERATION_PATCH,
 			OASConstants.
 				PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
 	}

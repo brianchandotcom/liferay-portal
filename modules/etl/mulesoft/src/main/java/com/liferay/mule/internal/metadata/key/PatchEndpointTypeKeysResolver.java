@@ -28,11 +28,11 @@ import org.mule.runtime.api.metadata.resolving.TypeKeysResolver;
 /**
  * @author Matija Petanjek
  */
-public class GETEndpointTypeKeysResolver implements TypeKeysResolver {
+public class PatchEndpointTypeKeysResolver implements TypeKeysResolver {
 
 	@Override
 	public String getCategoryName() {
-		return "liferay-get";
+		return "liferay-patch";
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class GETEndpointTypeKeysResolver implements TypeKeysResolver {
 		throws ConnectionException, MetadataResolvingException {
 
 		return metadataKeysBuilder.buildMetadataKeys(
-			metadataContext, OASConstants.OPERATION_GET);
+			metadataContext, OASConstants.OPERATION_PATCH);
 	}
 
 	private final MetadataKeysBuilder metadataKeysBuilder =

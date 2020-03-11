@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mule.internal.metadata.output;
+package com.liferay.mule.internal.metadata.input;
 
 import com.liferay.mule.internal.metadata.MetadataTypeBuilder;
 import com.liferay.mule.internal.oas.OASConstants;
@@ -21,28 +21,28 @@ import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
-import org.mule.runtime.api.metadata.resolving.OutputTypeResolver;
+import org.mule.runtime.api.metadata.resolving.InputTypeResolver;
 
 /**
  * @author Matija Petanjek
  */
-public class GETEndpointOutputTypeResolver
-	implements OutputTypeResolver<String> {
+public class PatchEndpointInputTypeResolver
+	implements InputTypeResolver<String> {
 
 	@Override
 	public String getCategoryName() {
-		return "liferay-get";
+		return "liferay-patch";
 	}
 
 	@Override
-	public MetadataType getOutputType(
+	public MetadataType getInputMetadata(
 			MetadataContext metadataContext, String endpoint)
 		throws ConnectionException, MetadataResolvingException {
 
 		return metadataTypeBuilder.buildMetadataType(
-			metadataContext, endpoint, OASConstants.OPERATION_GET,
+			metadataContext, endpoint, OASConstants.OPERATION_PATCH,
 			OASConstants.
-				PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
+				PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
 	}
 
 	private final MetadataTypeBuilder metadataTypeBuilder =

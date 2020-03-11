@@ -26,7 +26,7 @@ import org.mule.runtime.api.metadata.resolving.InputTypeResolver;
 /**
  * @author Matija Petanjek
  */
-public class POSTEndpointInputTypeResolver
+public class PostEndpointInputTypeResolver
 	implements InputTypeResolver<String> {
 
 	@Override

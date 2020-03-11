@@ -28,7 +28,7 @@ import org.mule.runtime.api.metadata.resolving.TypeKeysResolver;
 /**
  * @author Matija Petanjek
  */
-public class POSTEndpointTypeKeysResolver implements TypeKeysResolver {
+public class PostEndpointTypeKeysResolver implements TypeKeysResolver {
 
 	@Override
 	public String getCategoryName() {

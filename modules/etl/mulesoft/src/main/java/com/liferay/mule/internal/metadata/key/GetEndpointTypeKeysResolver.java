@@ -12,40 +12,38 @@
  * details.
  */
 
-package com.liferay.mule.internal.metadata.output;
+package com.liferay.mule.internal.metadata.key;
 
-import com.liferay.mule.internal.metadata.MetadataTypeBuilder;
+import com.liferay.mule.internal.metadata.MetadataKeysBuilder;
 import com.liferay.mule.internal.oas.OASConstants;
 
-import org.mule.metadata.api.model.MetadataType;
+import java.util.Set;
+
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.metadata.MetadataContext;
+import org.mule.runtime.api.metadata.MetadataKey;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
-import org.mule.runtime.api.metadata.resolving.OutputTypeResolver;
+import org.mule.runtime.api.metadata.resolving.TypeKeysResolver;
 
 /**
  * @author Matija Petanjek
  */
-public class POSTEndpointOutputTypeResolver
-	implements OutputTypeResolver<String> {
+public class GetEndpointTypeKeysResolver implements TypeKeysResolver {
 
 	@Override
 	public String getCategoryName() {
-		return "liferay-post";
+		return "liferay-get";
 	}
 
 	@Override
-	public MetadataType getOutputType(
-			MetadataContext metadataContext, String endpoint)
+	public Set<MetadataKey> getKeys(MetadataContext metadataContext)
 		throws ConnectionException, MetadataResolvingException {
 
-		return metadataTypeBuilder.buildMetadataType(
-			metadataContext, endpoint, OASConstants.OPERATION_POST,
-			OASConstants.
-				PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
+		return metadataKeysBuilder.buildMetadataKeys(
+			metadataContext, OASConstants.OPERATION_GET);
 	}
 
-	private final MetadataTypeBuilder metadataTypeBuilder =
-		new MetadataTypeBuilder();
+	private final MetadataKeysBuilder metadataKeysBuilder =
+		new MetadataKeysBuilder();
 
 }

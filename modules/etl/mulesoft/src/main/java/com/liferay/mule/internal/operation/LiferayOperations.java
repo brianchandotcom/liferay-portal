@@ -19,16 +19,16 @@ import static org.mule.runtime.http.api.HttpConstants.Method;
 import com.liferay.mule.internal.connection.LiferayConnection;
 import com.liferay.mule.internal.error.LiferayResponseValidator;
 import com.liferay.mule.internal.error.provider.LiferayResponseErrorProvider;
-import com.liferay.mule.internal.metadata.input.PATCHEndpointInputTypeResolver;
-import com.liferay.mule.internal.metadata.input.POSTEndpointInputTypeResolver;
-import com.liferay.mule.internal.metadata.key.DELETEEndpointTypeKeysResolver;
-import com.liferay.mule.internal.metadata.key.GETEndpointTypeKeysResolver;
-import com.liferay.mule.internal.metadata.key.PATCHEndpointTypeKeysResolver;
-import com.liferay.mule.internal.metadata.key.POSTEndpointTypeKeysResolver;
-import com.liferay.mule.internal.metadata.output.DELETEEndpointOutputTypeResolver;
-import com.liferay.mule.internal.metadata.output.GETEndpointOutputTypeResolver;
-import com.liferay.mule.internal.metadata.output.PATCHEndpointOutputTypeResolver;
-import com.liferay.mule.internal.metadata.output.POSTEndpointOutputTypeResolver;
+import com.liferay.mule.internal.metadata.input.PatchEndpointInputTypeResolver;
+import com.liferay.mule.internal.metadata.input.PostEndpointInputTypeResolver;
+import com.liferay.mule.internal.metadata.key.DeleteEndpointTypeKeysResolver;
+import com.liferay.mule.internal.metadata.key.GetEndpointTypeKeysResolver;
+import com.liferay.mule.internal.metadata.key.PatchEndpointTypeKeysResolver;
+import com.liferay.mule.internal.metadata.key.PostEndpointTypeKeysResolver;
+import com.liferay.mule.internal.metadata.output.DeleteEndpointOutputTypeResolver;
+import com.liferay.mule.internal.metadata.output.GetEndpointOutputTypeResolver;
+import com.liferay.mule.internal.metadata.output.PatchEndpointOutputTypeResolver;
+import com.liferay.mule.internal.metadata.output.PostEndpointOutputTypeResolver;
 
 import java.io.InputStream;
 
@@ -66,10 +66,10 @@ public class LiferayOperations {
 
 	@DisplayName("Delete Record")
 	@MediaType(MediaType.APPLICATION_JSON)
-	@OutputResolver(output = DELETEEndpointOutputTypeResolver.class)
+	@OutputResolver(output = DeleteEndpointOutputTypeResolver.class)
 	public Result<String, Void> delete(
 			@Connection LiferayConnection connection,
-			@MetadataKeyId(DELETEEndpointTypeKeysResolver.class)
+			@MetadataKeyId(DeleteEndpointTypeKeysResolver.class)
 				String endpoint,
 			@DisplayName("Path Parameters") @NullSafe @Optional
 				Map<String, String> pathParams,
@@ -98,10 +98,10 @@ public class LiferayOperations {
 
 	@DisplayName("Get Records")
 	@MediaType(MediaType.APPLICATION_JSON)
-	@OutputResolver(output = GETEndpointOutputTypeResolver.class)
+	@OutputResolver(output = GetEndpointOutputTypeResolver.class)
 	public Result<String, Void> get(
 			@Connection LiferayConnection connection,
-			@MetadataKeyId(GETEndpointTypeKeysResolver.class) String endpoint,
+			@MetadataKeyId(GetEndpointTypeKeysResolver.class) String endpoint,
 			@DisplayName("Path Parameters") @NullSafe @Optional
 				Map<String, String> pathParams,
 			@DisplayName("Query Parameters") @NullSafe @Optional
@@ -129,12 +129,12 @@ public class LiferayOperations {
 
 	@DisplayName("Update Record")
 	@MediaType(MediaType.APPLICATION_JSON)
-	@OutputResolver(output = PATCHEndpointOutputTypeResolver.class)
+	@OutputResolver(output = PatchEndpointOutputTypeResolver.class)
 	public Result<String, Void> patch(
 			@Connection LiferayConnection connection,
-			@MetadataKeyId(PATCHEndpointTypeKeysResolver.class) String endpoint,
+			@MetadataKeyId(PatchEndpointTypeKeysResolver.class) String endpoint,
 			@Content @DisplayName("Record")
-			@TypeResolver(value = PATCHEndpointInputTypeResolver.class)
+			@TypeResolver(value = PatchEndpointInputTypeResolver.class)
 				InputStream inputStream,
 			@DisplayName("Path Parameters") @NullSafe @Optional
 				Map<String, String> pathParams,
@@ -163,12 +163,12 @@ public class LiferayOperations {
 
 	@DisplayName("Create Record")
 	@MediaType(MediaType.APPLICATION_JSON)
-	@OutputResolver(output = POSTEndpointOutputTypeResolver.class)
+	@OutputResolver(output = PostEndpointOutputTypeResolver.class)
 	public Result<String, Void> post(
 			@Connection LiferayConnection connection,
-			@MetadataKeyId(POSTEndpointTypeKeysResolver.class) String endpoint,
+			@MetadataKeyId(PostEndpointTypeKeysResolver.class) String endpoint,
 			@Content @DisplayName("Record")
-			@TypeResolver(value = POSTEndpointInputTypeResolver.class)
+			@TypeResolver(value = PostEndpointInputTypeResolver.class)
 				InputStream inputStream,
 			@DisplayName("Path Parameters") @NullSafe @Optional
 				Map<String, String> pathParams,

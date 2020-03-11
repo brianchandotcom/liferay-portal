@@ -32,7 +32,7 @@ definition {
 			locator1 = "Configuration#SCOPE_SELECT",
 			value1 = "Select");
 
-		MenuItem.click(menuItem = "Other Site...");
+		MenuItem.click(menuItem = "Other Site or Asset Library...");
 
 		SelectFrame(value1 = "relative=top");
 

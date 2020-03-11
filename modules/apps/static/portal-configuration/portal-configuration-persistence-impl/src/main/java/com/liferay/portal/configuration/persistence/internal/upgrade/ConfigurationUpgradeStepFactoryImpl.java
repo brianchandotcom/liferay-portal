@@ -50,11 +50,29 @@ public class ConfigurationUpgradeStepFactoryImpl
 	public UpgradeStep createUpgradeStep(String oldPid, String newPid) {
 		return dbProcessContext -> {
 			try {
-				if (_persistenceManager.exists(oldPid)) {
-					Dictionary<String, String> dictionary =
-						_persistenceManager.load(oldPid);
+				Enumeration<Dictionary<String, String>> dictionaries =
+					_persistenceManager.getDictionaries();
 
-					dictionary.put("service.pid", newPid);
+				while (dictionaries.hasMoreElements()) {
+					Dictionary<String, String> dictionary =
+						dictionaries.nextElement();
+
+					String oldServicePid = dictionary.get("service.pid");
+
+					if (!oldPid.equals(oldServicePid)) {
+						if (!oldPid.equals(
+								dictionary.get("service.factoryPid"))) {
+
+							continue;
+						}
+
+						dictionary.put("service.factoryPid", newPid);
+					}
+
+					String newServicePid = StringUtil.replace(
+						oldServicePid, oldPid, newPid);
+
+					dictionary.put("service.pid", newServicePid);
 
 					String fileName = dictionary.get(
 						"felix.fileinstall.filename");
@@ -65,45 +83,9 @@ public class ConfigurationUpgradeStepFactoryImpl
 							StringUtil.replace(fileName, oldPid, newPid));
 					}
 
-					_persistenceManager.store(newPid, dictionary);
+					_persistenceManager.store(newServicePid, dictionary);
 
-					_persistenceManager.delete(oldPid);
-				}
-				else {
-					Enumeration<Dictionary<String, String>> dictionaries =
-						_persistenceManager.getDictionaries();
-
-					while (dictionaries.hasMoreElements()) {
-						Dictionary<String, String> dictionary =
-							dictionaries.nextElement();
-
-						if (!oldPid.equals(
-								dictionary.get("service.factoryPid"))) {
-
-							continue;
-						}
-
-						dictionary.put("service.factoryPid", newPid);
-
-						String newServicePid = StringUtil.replace(
-							dictionary.get("service.pid"), oldPid, newPid);
-
-						String oldServicePid = dictionary.put(
-							"service.pid", newServicePid);
-
-						String fileName = dictionary.get(
-							"felix.fileinstall.filename");
-
-						if (fileName != null) {
-							dictionary.put(
-								"felix.fileinstall.filename",
-								StringUtil.replace(fileName, oldPid, newPid));
-						}
-
-						_persistenceManager.store(newServicePid, dictionary);
-
-						_persistenceManager.delete(oldServicePid);
-					}
+					_persistenceManager.delete(oldServicePid);
 				}
 
 				File configResourcesDir = new File(

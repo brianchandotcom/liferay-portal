@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.exception.NoSuchEntryException;
@@ -33,6 +35,7 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -59,6 +62,8 @@ public class SegmentsEntryRoleLocalServiceTest {
 
 		_segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			TestPropsValues.getGroupId());
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext();
 	}
 
 	@Test
@@ -172,8 +177,40 @@ public class SegmentsEntryRoleLocalServiceTest {
 		Assert.assertEquals(segmentsEntryRole, segmentsEntryRoles.get(0));
 	}
 
+	@Test
+	public void testSetSiteRoles() throws Exception {
+		for (int i = 0; i < 10; i++) {
+			_roles.add(RoleTestUtil.addRole(RoleConstants.TYPE_SITE));
+		}
+
+		_testSetSiteRoles(_roles.subList(0, 4));
+		_testSetSiteRoles(_roles.subList(5, 9));
+		_testSetSiteRoles(_roles.subList(3, 7));
+	}
+
+	private void _testSetSiteRoles(List<Role> roles) throws Exception {
+		long[] roleIds = ListUtil.toLongArray(roles, Role.ROLE_ID_ACCESSOR);
+
+		_segmentsEntryRoleLocalService.setSegmentsEntrySiteRoles(
+			_segmentsEntry.getSegmentsEntryId(), roleIds, _serviceContext);
+
+		List<Long> expectedRoleIdsList = ListUtil.fromArray(roleIds);
+
+		List<Long> actualRoleIdsList = ListUtil.fromArray(
+			_segmentsEntry.getRoleIds());
+
+		Assert.assertEquals(
+			actualRoleIdsList.toString(), expectedRoleIdsList.size(),
+			actualRoleIdsList.size());
+
+		Assert.assertTrue(expectedRoleIdsList.containsAll(actualRoleIdsList));
+	}
+
 	@DeleteAfterTestRun
 	private Role _role;
+
+	@DeleteAfterTestRun
+	private final List<Role> _roles = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private SegmentsEntry _segmentsEntry;
@@ -183,5 +220,7 @@ public class SegmentsEntryRoleLocalServiceTest {
 
 	@Inject
 	private SegmentsEntryRoleLocalService _segmentsEntryRoleLocalService;
+
+	private ServiceContext _serviceContext;
 
 }

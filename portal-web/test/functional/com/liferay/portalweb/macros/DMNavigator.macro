@@ -167,6 +167,8 @@ definition {
 	macro gotoShare {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
+		AssertElementPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "${dmDocumentTitle}");

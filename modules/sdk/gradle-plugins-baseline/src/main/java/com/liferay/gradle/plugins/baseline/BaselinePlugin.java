@@ -97,13 +97,8 @@ public class BaselinePlugin implements Plugin<Project> {
 		final AbstractArchiveTask newJarTask,
 		final BaselineConfigurationExtension baselineConfigurationExtension) {
 
-		Project project = newJarTask.getProject();
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		Configuration configuration = configurationContainer.maybeCreate(
-			BASELINE_CONFIGURATION_NAME);
+		Configuration configuration = GradleUtil.addConfiguration(
+			newJarTask.getProject(), BASELINE_CONFIGURATION_NAME);
 
 		configuration.defaultDependencies(
 			new Action<DependencySet>() {
@@ -132,7 +127,7 @@ public class BaselinePlugin implements Plugin<Project> {
 		final AbstractArchiveTask newJarTask) {
 
 		final BaselineTask baselineTask = _addTaskBaseline(
-			newJarTask, BASELINE_TASK_NAME, true);
+			newJarTask, BASELINE_TASK_NAME);
 
 		baselineTask.setDescription(
 			"Compares the public API of this project with the public API of " +
@@ -146,7 +141,7 @@ public class BaselinePlugin implements Plugin<Project> {
 		AbstractArchiveTask newJarTask, int majorVersion) {
 
 		BaselineTask baselineTask = _addTaskBaseline(
-			newJarTask, BASELINE_TASK_NAME + majorVersion, false);
+			newJarTask, BASELINE_TASK_NAME + majorVersion);
 
 		baselineTask.dependsOn(newJarTask);
 
@@ -174,13 +169,12 @@ public class BaselinePlugin implements Plugin<Project> {
 	}
 
 	private BaselineTask _addTaskBaseline(
-		final AbstractArchiveTask newJarTask, String taskName,
-		boolean overwrite) {
+		final AbstractArchiveTask newJarTask, String taskName) {
 
 		Project project = newJarTask.getProject();
 
-		final BaselineTask baselineTask = GradleUtil.addTask(
-			project, taskName, BaselineTask.class, overwrite);
+		BaselineTask baselineTask = GradleUtil.addTask(
+			project, taskName, BaselineTask.class);
 
 		File bndFile = project.file("bnd.bnd");
 
@@ -204,7 +198,7 @@ public class BaselinePlugin implements Plugin<Project> {
 				@Override
 				public File call() throws Exception {
 					SourceSet sourceSet = GradleUtil.getSourceSet(
-						baselineTask.getProject(),
+						newJarTask.getProject(),
 						SourceSet.MAIN_SOURCE_SET_NAME);
 
 					return GradleUtil.getSrcDir(sourceSet.getResources());

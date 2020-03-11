@@ -24,7 +24,6 @@ import java.io.File;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionContainer;
@@ -132,10 +131,6 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getBndFile() {
 		return GradleUtil.toFile(getProject(), _bndFile);
-	}
-
-	public Task getBundleTask() {
-		return null;
 	}
 
 	@Override

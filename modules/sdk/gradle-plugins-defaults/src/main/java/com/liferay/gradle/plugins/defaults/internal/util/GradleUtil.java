@@ -21,10 +21,8 @@ import java.io.File;
 import java.lang.reflect.Method;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.gradle.StartParameter;
@@ -71,18 +69,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 				}
 
 			});
-	}
-
-	@SuppressWarnings("unchecked")
-	public static <T extends Task> T addTask(
-		Project project, String name, Class<T> clazz, boolean overwrite) {
-
-		Map<String, Object> args = new HashMap<>();
-
-		args.put(Task.TASK_OVERWRITE, overwrite);
-		args.put(Task.TASK_TYPE, clazz);
-
-		return (T)project.task(args, name);
 	}
 
 	public static void excludeTasksWithProperty(

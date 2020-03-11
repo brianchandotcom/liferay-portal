@@ -131,13 +131,14 @@ public class UserCsv {
 		CSVParser csvParser = null;
 
 		try {
+			CSVFormat csvFormat = CSVFormat.DEFAULT;
+
+			csvFormat = csvFormat.withFirstRecordAsHeader();
+			csvFormat = csvFormat.withIgnoreSurroundingSpaces();
+			csvFormat = csvFormat.withNullString("");
+
 			csvParser = CSVParser.parse(
-				csvFile, Charset.defaultCharset(),
-				CSVFormat.DEFAULT.withFirstRecordAsHeader(
-				).withIgnoreSurroundingSpaces(
-				).withNullString(
-					""
-				));
+				csvFile, Charset.defaultCharset(), csvFormat);
 		}
 		catch (IOException ioException) {
 			_log.error(ioException, ioException);

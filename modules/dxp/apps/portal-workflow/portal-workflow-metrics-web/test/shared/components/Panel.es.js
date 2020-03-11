@@ -9,67 +9,80 @@
  * distribution rights of the Software.
  */
 
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
+
+import '@testing-library/jest-dom/extend-expect';
 
 import Panel from '../../../src/main/resources/META-INF/resources/js/shared/components/Panel.es';
 
-describe('Panel', () => {
-	let component;
+describe('The Panel component should', () => {
+	afterEach(cleanup);
 
-	afterEach(() => {
-		if (component) {
-			component.unmount();
-		}
-	});
-
-	it('does not render component child components without content', () => {
-		component = shallow(
+	test('Not render child components without content', () => {
+		const {getByTestId} = render(
 			<Panel>
 				<Panel.Body />
 				<Panel.Footer />
 			</Panel>
 		);
 
-		expect(component.render()).toMatchSnapshot();
+		const panel = getByTestId('panel');
+
+		expect(panel.children[0]).toBeUndefined();
+		expect(panel.children[1]).toBeUndefined();
 	});
 
-	it('renders component', () => {
-		component = mount(
+	test('Render components correctly', () => {
+		const {getByTestId} = render(
 			<Panel>
 				<Panel.Header>{'Header'}</Panel.Header>
 				<Panel.Body>{'Body'}</Panel.Body>
-				<Panel.Footer label="Footer Label">{'Footer'}</Panel.Footer>
+				<Panel.Footer>{'Footer'}</Panel.Footer>
 			</Panel>
 		);
 
-		expect(component).toMatchSnapshot();
+		const panel = getByTestId('panel');
+
+		expect(panel.children.length).toBe(3);
+		expect(panel.children[0]).toHaveTextContent('Header');
+		expect(panel.children[1]).toHaveTextContent('Body');
+		expect(panel.children[2]).toHaveTextContent('Footer');
 	});
 
-	it('renders class passed by props', () => {
-		component = shallow(
-			<Panel elementClass={'custom-class'}>
-				<Panel.Header elementClass={'custom-class-header'}>
+	test('Render class passed by props', () => {
+		const {getByTestId} = render(
+			<Panel elementClasses={'custom-class'}>
+				<Panel.Header elementClasses={'custom-class-header'}>
 					{'Header'}
 				</Panel.Header>
-				<Panel.Body elementClass={'custom-class-body'}>
+				<Panel.Body elementClasses={'custom-class-body'}>
 					{'Body'}
 				</Panel.Body>
-				<Panel.Footer elementClass={'custom-class-footer'}>
+				<Panel.Footer elementClasses={'custom-class-footer'}>
 					{'Footer'}
 				</Panel.Footer>
 			</Panel>
 		);
 
-		expect(component.find(Panel.Header).render()).toMatchSnapshot();
+		const panel = getByTestId('panel');
+
+		expect(panel.classList[2]).toBe('custom-class');
+		expect(panel.children[0].classList[1]).toBe('custom-class-header');
+		expect(panel.children[1].classList[1]).toBe('custom-class-body');
+		expect(panel.children[2].classList[1]).toBe('custom-class-footer');
 	});
 
-	it('renders header with title', () => {
-		component = shallow(
+	test('Render header with title', () => {
+		const {getByTestId} = render(
 			<Panel>
 				<Panel.Header title={'Lorem Ipsum'}>{'Header'}</Panel.Header>
 			</Panel>
 		);
 
-		expect(component.find(Panel.Header).render()).toMatchSnapshot();
+		const panelHeader = getByTestId('panelHeader');
+
+		expect(panelHeader.children[0]).toHaveTextContent('Lorem Ipsum');
+		expect(panelHeader.children[1]).toHaveTextContent('Header');
 	});
 });

@@ -19,6 +19,7 @@ import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,6 +57,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.AsyncPortletServletRequest;
+import com.liferay.redirect.model.RedirectEntry;
+import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.site.model.SiteFriendlyURL;
 import com.liferay.site.service.SiteFriendlyURLLocalService;
 
@@ -163,6 +166,16 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		if ((pos != -1) && ((pos + 1) != path.length())) {
 			friendlyURL = path.substring(pos);
+
+			RedirectEntry redirectEntry =
+				redirectEntryLocalService.fetchRedirectEntry(
+					group.getGroupId(), _normalizeFriendlyURL(friendlyURL));
+
+			if (redirectEntry != null) {
+				return new Redirect(
+					redirectEntry.getDestinationURL(), true,
+					!redirectEntry.isTemporary());
+			}
 		}
 		else {
 			httpServletRequest.setAttribute(
@@ -605,6 +618,9 @@ public class FriendlyURLServlet extends HttpServlet {
 	protected Portal portal;
 
 	@Reference
+	protected RedirectEntryLocalService redirectEntryLocalService;
+
+	@Reference
 	protected SiteFriendlyURLLocalService siteFriendlyURLLocalService;
 
 	@Reference
@@ -642,6 +658,14 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		return true;
+	}
+
+	private String _normalizeFriendlyURL(String friendlyURL) {
+		if (friendlyURL.startsWith(StringPool.SLASH)) {
+			return friendlyURL.substring(1);
+		}
+
+		return friendlyURL;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1,0 +1,56 @@
+{
+	"pageElement" : {
+		"pageElements" : [
+			{
+				"definition" : {
+					"gutters" : false,
+					"numberOfColumns" : 6
+				},
+				"pageElements" : [
+					{
+						"definition" : {
+							"size" : 2
+						},
+						"type" : "Column"
+					},
+					{
+						"definition" : {
+							"size" : 2
+						},
+						"type" : "Column"
+					},
+					{
+						"definition" : {
+							"size" : 2
+						},
+						"type" : "Column"
+					},
+					{
+						"definition" : {
+							"size" : 2
+						},
+						"type" : "Column"
+					},
+					{
+						"definition" : {
+							"size" : 2
+						},
+						"type" : "Column"
+					},
+					{
+						"definition" : {
+							"size" : 2
+						},
+						"type" : "Column"
+					}
+				],
+				"type" : "Row"
+			}
+		],
+		"type" : "Root"
+	},
+	"settings" : {
+		"colorSchemeName" : "01",
+		"themeName" : "Classic"
+	}
+}

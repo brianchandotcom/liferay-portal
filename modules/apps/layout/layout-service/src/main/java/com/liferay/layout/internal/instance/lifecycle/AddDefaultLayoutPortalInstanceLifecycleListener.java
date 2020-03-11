@@ -14,6 +14,7 @@
 
 package com.liferay.layout.internal.instance.lifecycle;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistration;
 import com.liferay.layout.internal.util.DefaultLayoutDefinitionImporter;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringPool;
@@ -169,6 +170,14 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 		if (updateLayoutSet) {
 			_layoutSetLocalService.updateLayoutSet(layoutSet);
 		}
+	}
+
+	@Reference(
+		target = "(fragment.collection.key=BASIC_COMPONENT)", unbind = "-"
+	)
+	protected void setFragmentCollectionContributorRegistration(
+		FragmentCollectionContributorRegistration
+			fragmentCollectionContributorRegistration) {
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

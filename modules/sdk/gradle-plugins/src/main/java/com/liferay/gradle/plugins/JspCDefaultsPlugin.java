@@ -18,7 +18,7 @@ import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.jasper.jspc.CompileJSPTask;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
-import com.liferay.gradle.plugins.util.BndBuilderUtil;
+import com.liferay.gradle.plugins.util.BndUtil;
 
 import java.io.File;
 
@@ -77,7 +77,7 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 	}
 
 	private void _configureBundleExtensionDefaults(Project project) {
-		Map<String, Object> bundleInstructions = BndBuilderUtil.getInstructions(
+		Map<String, Object> bundleInstructions = BndUtil.getInstructions(
 			project);
 
 		StringBuilder sb = new StringBuilder();

@@ -21,7 +21,7 @@ import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.internal.util.IncludeResourceCompileIncludeInstruction;
 import com.liferay.gradle.plugins.tasks.ExecuteBndTask;
 import com.liferay.gradle.plugins.tasks.WatchTask;
-import com.liferay.gradle.plugins.util.BndBuilderUtil;
+import com.liferay.gradle.plugins.util.BndUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -119,7 +119,7 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					String instruction = BndBuilderUtil.getInstruction(
+					String instruction = BndUtil.getInstruction(
 						project, Constants.BUNDLE_NAME);
 
 					return instruction + " Libs";
@@ -133,7 +133,7 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					String instruction = BndBuilderUtil.getInstruction(
+					String instruction = BndUtil.getInstruction(
 						project, Constants.BUNDLE_SYMBOLICNAME);
 
 					return instruction + ".libs";
@@ -149,7 +149,7 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return BndBuilderUtil.getInstruction(
+					return BndUtil.getInstruction(
 						project, Constants.BUNDLE_SYMBOLICNAME);
 				}
 

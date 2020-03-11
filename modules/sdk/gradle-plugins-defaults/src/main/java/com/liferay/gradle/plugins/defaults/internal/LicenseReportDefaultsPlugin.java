@@ -28,7 +28,7 @@ import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUt
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.VersionsXmlReportRenderer;
 import com.liferay.gradle.plugins.defaults.internal.util.XMLUtil;
-import com.liferay.gradle.plugins.util.BndBuilderUtil;
+import com.liferay.gradle.plugins.util.BndUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -266,8 +266,8 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 
 			final Set<String> dependencyNames = new HashSet<>();
 
-			Map<String, Object> bundleInstructions =
-				BndBuilderUtil.getInstructions(project);
+			Map<String, Object> bundleInstructions = BndUtil.getInstructions(
+				project);
 
 			_addBundleDependencyNames(
 				dependencyNames, bundleInstructions, Constants.INCLUDERESOURCE);

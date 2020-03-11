@@ -20,7 +20,7 @@ import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.baseline.BaselinePlugin;
 import com.liferay.gradle.plugins.baseline.BaselineTask;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.util.BndBuilderUtil;
+import com.liferay.gradle.plugins.util.BndUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.util.Map;
@@ -61,7 +61,7 @@ public class BaselineDefaultsPlugin extends BaseDefaultsPlugin<BaselinePlugin> {
 				@Override
 				public boolean isSatisfiedBy(Task task) {
 					Map<String, Object> bundleInstructions =
-						BndBuilderUtil.getInstructions(task.getProject());
+						BndUtil.getInstructions(task.getProject());
 
 					String exportPackage = GradleUtil.toString(
 						bundleInstructions.get(Constants.EXPORT_PACKAGE));

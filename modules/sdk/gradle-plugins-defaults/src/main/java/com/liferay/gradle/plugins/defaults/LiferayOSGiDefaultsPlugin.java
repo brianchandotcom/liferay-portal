@@ -76,7 +76,7 @@ import com.liferay.gradle.plugins.test.integration.TestIntegrationTomcatExtensio
 import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
 import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
-import com.liferay.gradle.plugins.util.BndBuilderUtil;
+import com.liferay.gradle.plugins.util.BndUtil;
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
@@ -741,7 +741,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return BndBuilderUtil.getInstruction(
+					return BndUtil.getInstruction(
 						project, Constants.BUNDLE_SYMBOLICNAME);
 				}
 
@@ -1693,7 +1693,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private void _applyPlugins(Project project) {
 		if (Validator.isNotNull(
-				BndBuilderUtil.getInstruction(project, "Main-Class"))) {
+				BndUtil.getInstruction(project, "Main-Class"))) {
 
 			GradleUtil.applyPlugin(project, ApplicationPlugin.class);
 		}
@@ -1778,8 +1778,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			Constants.BUNDLE_VERSION);
 
 		if (Validator.isNotNull(bundleVersion)) {
-			Map<String, Object> bundleInstructions =
-				BndBuilderUtil.getInstructions(project);
+			Map<String, Object> bundleInstructions = BndUtil.getInstructions(
+				project);
 
 			bundleInstructions.put(Constants.BUNDLE_VERSION, bundleVersion);
 
@@ -2087,7 +2087,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureBundleInstructions(Project project) {
-		Map<String, Object> bundleInstructions = BndBuilderUtil.getInstructions(
+		Map<String, Object> bundleInstructions = BndUtil.getInstructions(
 			project);
 
 		String projectPath = project.getPath();
@@ -3647,7 +3647,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskJavadocFilter(Javadoc javadoc) {
-		String exportPackage = BndBuilderUtil.getInstruction(
+		String exportPackage = BndUtil.getInstruction(
 			javadoc.getProject(), Constants.EXPORT_PACKAGE);
 
 		if (Validator.isNull(exportPackage)) {
@@ -3751,8 +3751,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		sb.append(' ');
 		sb.append(project.getVersion());
 		sb.append(" - ");
-		sb.append(
-			BndBuilderUtil.getInstruction(project, Constants.BUNDLE_NAME));
+		sb.append(BndUtil.getInstruction(project, Constants.BUNDLE_NAME));
 
 		javadoc.setTitle(sb.toString());
 	}
@@ -3853,7 +3852,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTasksJspC(Project project) {
-		String fragmentHost = BndBuilderUtil.getInstruction(
+		String fragmentHost = BndUtil.getInstruction(
 			project, Constants.FRAGMENT_HOST);
 
 		if (Validator.isNotNull(fragmentHost)) {

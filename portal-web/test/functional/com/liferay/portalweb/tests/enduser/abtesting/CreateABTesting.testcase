@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Abtesting";
+	property testray.main.component.name = "Ab Testing";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -33,37 +33,37 @@ definition {
 	@priority = "5"
 	test CreateABTest {
        
-        Click(locator1 = "ABtesting#AB_TESTING_BUTTON");
+        Click(locator1 = "Abtesting#AB_TESTING_BUTTON");
 
-        Click(locator1 = "ABtesting#CREATE_AB_TEST_BUTTON");
+        Click(locator1 = "Abtesting#CREATE_AB_TEST_BUTTON");
 
-        Click(locator1 = "ABtesting#AB_TEST_TITLE_FIELD");
+        Click(locator1 = "Abtesting#AB_TEST_TITLE_FIELD");
 
 		Type(
-			locator1 = "ABtesting#AB_TEST_TITLE_FIELD",
+			locator1 = "Abtesting#AB_TEST_TITLE_FIELD",
 			value1 = "CreateABTest test AB test title");
 
-        Click(locator1 = "ABtesting#SAVE_AB_TEST_BUTTON");
+        Click(locator1 = "Abtesting#SAVE_AB_TEST_BUTTON");
 
-        Click(locator1 = "ABtesting#CREATE_VARIANT_BUTTON");
+        Click(locator1 = "Abtesting#CREATE_VARIANT_BUTTON");
 
-        Click(locator1 = "ABtesting#INPUT_VARIANT_NAME");
+        Click(locator1 = "Abtesting#INPUT_VARIANT_NAME");
 
 		Type(
-			locator1 = "ABtesting#INPUT_VARIANT_NAME",
+			locator1 = "Abtesting#INPUT_VARIANT_NAME",
 			value1 = "Variant Name");
 
-        Click(locator1 = "ABtesting#SAVE_VARIANT_NAME_BUTTON");
+        Click(locator1 = "Abtesting#SAVE_VARIANT_NAME_BUTTON");
 
-        Click(locator1 = "ABtesting#REVIEW_AND_RUN_TEST_BUTTON");
+        Click(locator1 = "Abtesting#REVIEW_AND_RUN_TEST_BUTTON");
 
-        Click(locator1 = "ABtesting#RUN_TEST_BUTTON");
+        Click(locator1 = "Abtesting#RUN_TEST_BUTTON");
 
-        Click(locator1 = "ABtesting#OK_BUTTON");
+        Click(locator1 = "Abtesting#OK_BUTTON");
 
-        Click(locator1 = "ABtesting#CONTROL_VARIANT");
+        Click(locator1 = "Abtesting#CONTROL_VARIANT");
 
-        Click(locator1 = "ABtesting#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
+        Click(locator1 = "Abtesting#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
 	}
 
 }

@@ -8,6 +8,7 @@ exports[`Should display error on alert when receive a server error after submit 
       "get": [Function],
       "post": [Function],
       "put": [Function],
+      "request": [Function],
     }
   }
 >
@@ -1110,6 +1111,7 @@ exports[`Should display error on field when receive a server error after submit 
       "get": [Function],
       "post": [Function],
       "put": [Function],
+      "request": [Function],
     }
   }
 >

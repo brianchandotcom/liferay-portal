@@ -19,6 +19,8 @@ import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.IOException;
 
+import java.util.Objects;
+
 import org.json.JSONObject;
 
 /**
@@ -55,13 +57,20 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 
 		JSONObject jsonObject = new JSONObject(content);
 
-		_checkIncorrectEntry(fileName, jsonObject, "devDependencies");
-
 		if (jsonObject.isNull("scripts")) {
 			return content;
 		}
 
 		JSONObject scriptsJSONObject = jsonObject.getJSONObject("scripts");
+
+		if (!scriptsJSONObject.isNull("build") &&
+			Objects.equals(
+				scriptsJSONObject.get("build"), "liferay-npm-bundler")) {
+
+			return content;
+		}
+
+		_checkIncorrectEntry(fileName, jsonObject, "devDependencies");
 
 		if (absolutePath.contains("/modules/apps/frontend-theme")) {
 			_checkScript(

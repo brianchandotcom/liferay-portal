@@ -24,7 +24,9 @@ RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(reque
 	displayContext="<%= new RedirectManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, redirectDisplayContext.searchContainer()) %>"
 />
 
-<div class="container-fluid container-fluid-max-xl main-content-body">
+<aui:form action="<%= redirectDisplayContext.searchContainer().getIteratorURL() %>" cssClass="container-fluid-1280" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
 	<liferay-ui:search-container
 		id="<%= redirectDisplayContext.getSearchContainerId() %>"
 		searchContainer="<%= redirectDisplayContext.searchContainer() %>"
@@ -76,4 +78,4 @@ RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(reque
 			searchContainer="<%= searchContainer %>"
 		/>
 	</liferay-ui:search-container>
-</div>
+</aui:form>

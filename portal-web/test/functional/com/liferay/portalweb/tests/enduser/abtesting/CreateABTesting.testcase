@@ -1,9 +1,9 @@
-@component-name = "portal-segmentation"
+@component-name = "portal-abtesting"
 definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Segmentation";
+	property testray.main.component.name = "Abtesting";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -14,15 +14,11 @@ definition {
 
 		// Create site and content page
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
 		ContentPages.addPage(pageName = "ABtesting Content Page");
 
 		PageEditor.clickPublish();
 		
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/abtesting-content-page");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/abtesting-content-page");
 	}
 
 	tearDown {
@@ -31,19 +27,9 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-		else {
-			ProductMenu.gotoPortlet(
-				category = "People",
-				panel = "Site Administration",
-				portlet = "Segments");
-
-			if (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
-				Segmentation.tearDown();
-			}
-		}
 	}
 
-    @description = "Validate if the user can create an AB test”
+    @description = "Validate if the user can create an AB test"
 	@priority = "5"
 	test CreateABTest {
        
@@ -55,7 +41,7 @@ definition {
 
 		Type(
 			locator1 = "ABtesting#AB_TEST_TITLE_FIELD",
-			value1 = "AB test title");
+			value1 = "CreateABTest test AB test title");
 
         Click(locator1 = "ABtesting#SAVE_AB_TEST_BUTTON");
 

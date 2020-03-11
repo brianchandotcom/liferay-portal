@@ -912,7 +912,7 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 	}
 
 	private static final String _MAIL_ENGINE_CLASS_NAME =
-		"com.liferay.util.mail.MailEngine";
+		"com.liferay.petra.mail.MailEngine";
 
 	private static final String _PROXY_MESSAGE_LISTENER_CLASS_NAME =
 		"com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener";

@@ -62,8 +62,6 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.model.LayoutTemplate;
-import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Portlet;
@@ -131,7 +129,6 @@ import com.liferay.portal.service.http.ClassNameServiceHttp;
 import com.liferay.portal.service.http.GroupServiceHttp;
 import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -3927,91 +3924,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			friendlyURL, serviceContext);
 	}
 
-	protected void addDefaultGuestPublicLayoutByProperties(Group group)
-		throws PortalException {
-
-		List<Portlet> portlets = portletLocalService.getPortlets(
-			group.getCompanyId());
-
-		if (portlets.isEmpty()) {
-
-			// LPS-38457
-
-			return;
-		}
-
-		long defaultUserId = userLocalService.getDefaultUserId(
-			group.getCompanyId());
-		String friendlyURL = getFriendlyURL(
-			PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_FRIENDLY_URL);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		Layout layout = layoutLocalService.addLayout(
-			defaultUserId, group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_NAME, StringPool.BLANK,
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
-			serviceContext);
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		layoutTypePortlet.setLayoutTemplateId(
-			0, PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_TEMPLATE_ID, false);
-
-		LayoutTemplate layoutTemplate = layoutTypePortlet.getLayoutTemplate();
-
-		for (String columnId : layoutTemplate.getColumns()) {
-			String keyPrefix = PropsKeys.DEFAULT_GUEST_PUBLIC_LAYOUT_PREFIX;
-
-			String portletIds = PropsUtil.get(keyPrefix.concat(columnId));
-
-			layoutTypePortlet.addPortletIds(
-				0, StringUtil.split(portletIds), columnId, false);
-		}
-
-		layoutLocalService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getTypeSettings());
-
-		boolean updateLayoutSet = false;
-
-		LayoutSet layoutSet = layout.getLayoutSet();
-
-		if (Validator.isNotNull(
-				PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_REGULAR_THEME_ID)) {
-
-			layoutSet.setThemeId(
-				PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_REGULAR_THEME_ID);
-
-			updateLayoutSet = true;
-		}
-
-		if (Validator.isNotNull(
-				PropsValues.
-					DEFAULT_GUEST_PUBLIC_LAYOUT_REGULAR_COLOR_SCHEME_ID)) {
-
-			layoutSet.setColorSchemeId(
-				PropsValues.
-					DEFAULT_GUEST_PUBLIC_LAYOUT_REGULAR_COLOR_SCHEME_ID);
-
-			updateLayoutSet = true;
-		}
-
-		if (updateLayoutSet) {
-			layoutSetLocalService.updateLayoutSet(layoutSet);
-		}
-	}
-
 	protected void addDefaultGuestPublicLayouts(Group group)
 		throws PortalException {
 
 		if (publicLARFile != null) {
 			addDefaultGuestPublicLayoutsByLAR(group, publicLARFile);
-		}
-		else {
-			addDefaultGuestPublicLayoutByProperties(group);
 		}
 	}
 

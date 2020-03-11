@@ -15,6 +15,7 @@
 import dom from 'metal-dom';
 
 import LocalizableText from '../../../src/main/resources/META-INF/resources/LocalizableText/LocalizableText.es';
+import withContextMock from '../__mocks__/withContextMock.es';
 
 let component;
 const spritemap = 'icons.svg';
@@ -54,6 +55,7 @@ const defaultLocalizableTextConfig = {
 	name: 'localizableTextField',
 	spritemap,
 };
+const LocalizableTextWithContextMock = withContextMock(LocalizableText);
 
 describe('Field LocalizableText', () => {
 	beforeEach(() => {
@@ -67,7 +69,7 @@ describe('Field LocalizableText', () => {
 	});
 
 	it('is not readOnly', () => {
-		component = new LocalizableText({
+		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			readOnly: false,
 		});
@@ -76,7 +78,7 @@ describe('Field LocalizableText', () => {
 	});
 
 	it('has a label', () => {
-		component = new LocalizableText({
+		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			label: 'label',
 		});
@@ -85,7 +87,7 @@ describe('Field LocalizableText', () => {
 	});
 
 	it('has a placeholder', () => {
-		component = new LocalizableText({
+		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			placeholder: 'Placeholder',
 		});
@@ -94,7 +96,7 @@ describe('Field LocalizableText', () => {
 	});
 
 	it('is not required', () => {
-		component = new LocalizableText({
+		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			required: false,
 		});
@@ -103,7 +105,7 @@ describe('Field LocalizableText', () => {
 	});
 
 	it('renders values', () => {
-		component = new LocalizableText({
+		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			value: {
 				ca_ES: 'Teste ES',
@@ -116,7 +118,7 @@ describe('Field LocalizableText', () => {
 	});
 
 	it('renders no values when values come empty', () => {
-		component = new LocalizableText({
+		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			value: {},
 		});
@@ -125,7 +127,7 @@ describe('Field LocalizableText', () => {
 	});
 
 	it('shows default language value when no other language is selected', () => {
-		component = new LocalizableText({
+		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			value: {
 				ca_ES: 'Teste ES',
@@ -145,7 +147,7 @@ describe('Field LocalizableText', () => {
 
 		const events = {fieldEdited: handleFieldEdited};
 
-		component = new LocalizableText({
+		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			events,
 			value: {
@@ -173,7 +175,7 @@ describe('Field LocalizableText', () => {
 	});
 
 	it('fills with the selected language value when the selected language is translated', () => {
-		component = new LocalizableText({
+		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			value: {
 				ca_ES: 'Teste ES',
@@ -208,7 +210,7 @@ describe('Field LocalizableText', () => {
 	});
 
 	it('fills with the default language value when the selected language is not translated', () => {
-		component = new LocalizableText({
+		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			value: {
 				ca_ES: 'Teste ES',
@@ -245,7 +247,7 @@ describe('Field LocalizableText', () => {
 	});
 
 	it('adds a new translation for an untranslated item', () => {
-		component = new LocalizableText({
+		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			value: {
 				ca_ES: 'Teste ES',
@@ -285,7 +287,7 @@ describe('Field LocalizableText', () => {
 	});
 
 	it('removes the translation of an item already translated', () => {
-		component = new LocalizableText({
+		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			value: {
 				ca_ES: 'Teste ES',

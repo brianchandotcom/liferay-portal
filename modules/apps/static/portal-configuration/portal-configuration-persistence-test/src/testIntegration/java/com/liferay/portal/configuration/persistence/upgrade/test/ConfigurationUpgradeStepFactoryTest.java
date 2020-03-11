@@ -160,26 +160,28 @@ public class ConfigurationUpgradeStepFactoryTest {
 		}
 
 		if (data) {
+			Dictionary<String, Object> properties;
+
+			if (felixFileName) {
+				URI uri = oldConfigFile.toURI();
+
+				properties = MapUtil.singletonDictionary(
+					"felix.fileinstall.filename", uri.toString());
+			}
+			else {
+				properties = new HashMapDictionary<>();
+			}
+
 			if (factory) {
 				oldPid = ConfigurationTestUtil.createFactoryConfiguration(
-					oldPid, new HashMapDictionary<>());
+					oldPid, properties);
 
 				newPid = StringUtil.replace(
 					oldPid, _TEST_PID_OLD, _TEST_PID_NEW);
 			}
 			else {
 				ConfigurationTestUtil.saveConfiguration(
-					_configurationAdmin.getConfiguration(oldPid),
-					new HashMapDictionary<>());
-			}
-
-			if (felixFileName) {
-				URI uri = oldConfigFile.toURI();
-
-				ConfigurationTestUtil.saveConfiguration(
-					oldPid,
-					MapUtil.singletonDictionary(
-						"felix.fileinstall.filename", uri.toString()));
+					_configurationAdmin.getConfiguration(oldPid), properties);
 			}
 		}
 

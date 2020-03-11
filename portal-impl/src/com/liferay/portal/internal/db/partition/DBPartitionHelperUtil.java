@@ -92,6 +92,8 @@ public class DBPartitionHelperUtil {
 					}
 				}
 			}
+
+			_usePartition(connection, companyId);
 		}
 		catch (Exception exception) {
 			throw new ORMException(exception);

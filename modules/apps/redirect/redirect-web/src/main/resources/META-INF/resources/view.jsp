@@ -20,10 +20,12 @@
 RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 
 SearchContainer<RedirectEntry> redirectSearchContainer = redirectDisplayContext.searchContainer();
+
+RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext = new RedirectManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, redirectSearchContainer);
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new RedirectManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, redirectSearchContainer) %>"
+	displayContext="<%= redirectManagementToolbarDisplayContext %>"
 />
 
 <aui:form action="<%= redirectSearchContainer.getIteratorURL() %>" cssClass="container-fluid-1280" name="fm">
@@ -86,3 +88,9 @@ SearchContainer<RedirectEntry> redirectSearchContainer = redirectDisplayContext.
 		/>
 	</liferay-ui:search-container>
 </aui:form>
+
+<liferay-frontend:component
+	componentId="<%= redirectManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	context="<%= redirectManagementToolbarDisplayContext.getComponentContext() %>"
+	module="js/RedirectManagementToolbarDefaultEventHandler.es"
+/>

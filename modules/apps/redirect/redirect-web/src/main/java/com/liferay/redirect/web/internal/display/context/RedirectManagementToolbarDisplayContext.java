@@ -24,9 +24,12 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.List;
+import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderURL;
 
@@ -72,6 +75,22 @@ public class RedirectManagementToolbarDisplayContext
 		return clearResultsURL.toString();
 	}
 
+	public Map<String, Object> getComponentContext() {
+		return HashMapBuilder.<String, Object>put(
+			"deleteRedirectEntriesURL",
+			() -> {
+				PortletURL deleteRedirectEntriesURL =
+					liferayPortletResponse.createActionURL();
+
+				deleteRedirectEntriesURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/redirect/delete_redirect_entry");
+
+				return deleteRedirectEntriesURL.toString();
+			}
+		).build();
+	}
+
 	@Override
 	public CreationMenu getCreationMenu() {
 		try {
@@ -99,6 +118,11 @@ public class RedirectManagementToolbarDisplayContext
 		}
 
 		return null;
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return "redirectManagementToolbarDefaultEventHandler";
 	}
 
 	@Override

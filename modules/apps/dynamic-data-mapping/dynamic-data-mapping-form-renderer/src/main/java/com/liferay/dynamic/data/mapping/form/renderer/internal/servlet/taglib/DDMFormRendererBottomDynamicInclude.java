@@ -15,12 +15,14 @@
 package com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.taglib;
 
 import com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.taglib.helper.BaseDDMFormFieldTypesDynamicInclude;
+import com.liferay.portal.kernel.servlet.PortalSessionContext;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,7 +39,11 @@ public class DDMFormRendererBottomDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		Object fieldTypesRequested = httpServletRequest.getAttribute(
+		HttpSession session = httpServletRequest.getSession();
+
+		HttpSession portalSession = PortalSessionContext.get(session.getId());
+
+		Object fieldTypesRequested = portalSession.getAttribute(
 			DDMFormFieldTypesDynamicInclude.
 				FIELD_TYPES_REQUESTED_ATTRIBUTE_NAME);
 
@@ -45,7 +51,7 @@ public class DDMFormRendererBottomDynamicInclude
 			include(httpServletResponse);
 		}
 
-		httpServletRequest.removeAttribute(
+		portalSession.removeAttribute(
 			DDMFormFieldTypesDynamicInclude.
 				FIELD_TYPES_REQUESTED_ATTRIBUTE_NAME);
 	}

@@ -47,17 +47,20 @@ public class RedirectEntrySearch extends SearchContainer<RedirectEntry> {
 		String orderByCol = ParamUtil.getString(portletRequest, "orderByCol");
 		String orderByType = ParamUtil.getString(portletRequest, "orderByType");
 
-		if (Validator.isNotNull(orderByCol) &&
-			Validator.isNotNull(orderByType)) {
-
+		if (Validator.isNotNull(orderByCol)) {
 			preferences.setValue(
 				portletId, "redirect-entries-order-by-col", orderByCol);
-			preferences.setValue(
-				portletId, "redirect-entries-order-by-type", orderByType);
 		}
 		else {
 			orderByCol = preferences.getValue(
 				portletId, "redirect-entries-order-by-col", "modified");
+		}
+
+		if (Validator.isNotNull(orderByType)) {
+			preferences.setValue(
+				portletId, "redirect-entries-order-by-type", orderByType);
+		}
+		else {
 			orderByType = preferences.getValue(
 				portletId, "redirect-entries-order-by-type", "asc");
 		}

@@ -133,7 +133,7 @@ public class OrganizationResourceImpl
 						getName(),
 					_getServiceBuilderOrganizationId(parentOrganizationId))
 			).build(),
-			parentOrganizationId, flatten, search, filter, pagination, sorts);
+			parentOrganizationId, flatten, filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -158,7 +158,7 @@ public class OrganizationResourceImpl
 						getName(),
 					0L)
 			).build(),
-			null, flatten, search, filter, pagination, sorts);
+			null, flatten, filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -346,8 +346,8 @@ public class OrganizationResourceImpl
 
 	private Page<Organization> _getOrganizationsPage(
 			Map<String, Map<String, String>> actions,
-			String parentOrganizationId, Boolean flatten, String search,
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String parentOrganizationId, Boolean flatten, Filter filter,
+			String search, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		long serviceBuilderOrganizationId = _getServiceBuilderOrganizationId(

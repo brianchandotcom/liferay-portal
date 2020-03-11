@@ -179,7 +179,7 @@ public class MessageBoardThreadResourceImpl
 					new TermFilter("parentMessageId", "0"),
 					BooleanClauseOccur.MUST);
 			},
-			mbCategory.getGroupId(), search, filter, pagination, sorts);
+			mbCategory.getGroupId(), filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -263,7 +263,7 @@ public class MessageBoardThreadResourceImpl
 					new TermFilter("parentMessageId", "0"),
 					BooleanClauseOccur.MUST);
 			},
-			siteId, search, filter, pagination, sorts);
+			siteId, filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -482,7 +482,7 @@ public class MessageBoardThreadResourceImpl
 	private Page<MessageBoardThread> _getSiteMessageBoardThreadsPage(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Long siteId, String search, Filter filter, Pagination pagination,
+			Long siteId, Filter filter, String search, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
 

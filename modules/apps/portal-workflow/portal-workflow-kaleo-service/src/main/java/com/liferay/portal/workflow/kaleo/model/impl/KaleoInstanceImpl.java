@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
+import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalServiceUtil;
 
 import java.io.Serializable;
@@ -46,7 +47,8 @@ public class KaleoInstanceImpl extends KaleoInstanceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return getRootKaleoInstanceToken(null, serviceContext);
+		return getRootKaleoInstanceToken(
+			WorkflowContextUtil.convert(getWorkflowContext()), serviceContext);
 	}
 
 }

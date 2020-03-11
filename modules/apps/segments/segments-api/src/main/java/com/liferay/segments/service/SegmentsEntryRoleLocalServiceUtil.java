@@ -328,6 +328,15 @@ public class SegmentsEntryRoleLocalServiceUtil {
 		return getService().hasSegmentEntryRole(segmentsEntryId, roleId);
 	}
 
+	public static void setSegmentsEntrySiteRoles(
+			long segmentsEntryId, long[] siteRoleIds,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().setSegmentsEntrySiteRoles(
+			segmentsEntryId, siteRoleIds, serviceContext);
+	}
+
 	/**
 	 * Updates the segments entry role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

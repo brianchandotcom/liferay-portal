@@ -426,6 +426,11 @@ public class SegmentsEntryWrapper
 		return model.getPrimaryKey();
 	}
 
+	@Override
+	public long[] getRoleIds() {
+		return model.getRoleIds();
+	}
+
 	/**
 	 * Returns the segments entry ID of this segments entry.
 	 *

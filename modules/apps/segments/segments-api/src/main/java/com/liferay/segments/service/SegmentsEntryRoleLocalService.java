@@ -271,6 +271,11 @@ public interface SegmentsEntryRoleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasSegmentEntryRole(long segmentsEntryId, long roleId);
 
+	public void setSegmentsEntrySiteRoles(
+			long segmentsEntryId, long[] siteRoleIds,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Updates the segments entry role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

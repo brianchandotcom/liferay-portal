@@ -506,8 +506,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			sb.append(primaryKeyName);
 			sb.append(" not in (");
 
-			for (Serializable serializable : unresolvedPrimaryKeys) {
-				sb.append(serializable);
+			for (Long unresolvedPrimaryKey : unresolvedPrimaryKeys) {
+				sb.append(unresolvedPrimaryKey);
 				sb.append(", ");
 			}
 

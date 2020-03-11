@@ -43,8 +43,21 @@ public class DeleteRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_redirectEntryLocalService.deleteRedirectEntry(
-			ParamUtil.getLong(actionRequest, "redirectEntryId"));
+		long redirectEntryId = ParamUtil.getLong(
+			actionRequest, "redirectEntryId");
+
+		if (redirectEntryId > 0) {
+			_redirectEntryLocalService.deleteRedirectEntry(redirectEntryId);
+		}
+		else {
+			long[] deleteRedirectEntryIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
+
+			for (long deleteRedirectEntryId : deleteRedirectEntryIds) {
+				_redirectEntryLocalService.deleteRedirectEntry(
+					deleteRedirectEntryId);
+			}
+		}
 	}
 
 	@Reference

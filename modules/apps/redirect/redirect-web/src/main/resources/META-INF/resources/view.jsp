@@ -18,22 +18,33 @@
 
 <%
 RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+
+SearchContainer<RedirectEntry> redirectSearchContainer = redirectDisplayContext.searchContainer();
+
+RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext = new RedirectManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, redirectSearchContainer);
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new RedirectManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, redirectDisplayContext.searchContainer()) %>"
+	displayContext="<%= redirectManagementToolbarDisplayContext %>"
 />
 
-<div class="container-fluid container-fluid-max-xl main-content-body">
+<aui:form action="<%= redirectSearchContainer.getIteratorURL() %>" cssClass="container-fluid-1280" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
 	<liferay-ui:search-container
 		id="<%= redirectDisplayContext.getSearchContainerId() %>"
-		searchContainer="<%= redirectDisplayContext.searchContainer() %>"
+		searchContainer="<%= redirectSearchContainer %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.redirect.model.RedirectEntry"
 			keyProperty="redirectEntryId"
 			modelVar="redirectEntry"
 		>
+
+			<%
+			row.setData(HashMapBuilder.<String, Object>put("actions", "deleteSelectedRedirectEntries").build());
+			%>
+
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="source-url"
@@ -73,7 +84,13 @@ RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(reque
 
 		<liferay-ui:search-iterator
 			markupView="lexicon"
-			searchContainer="<%= searchContainer %>"
+			searchContainer="<%= redirectSearchContainer %>"
 		/>
 	</liferay-ui:search-container>
-</div>
+</aui:form>
+
+<liferay-frontend:component
+	componentId="<%= redirectManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	context="<%= redirectManagementToolbarDisplayContext.getComponentContext() %>"
+	module="js/RedirectManagementToolbarDefaultEventHandler.es"
+/>

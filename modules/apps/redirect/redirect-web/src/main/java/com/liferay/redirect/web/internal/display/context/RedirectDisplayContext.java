@@ -155,7 +155,8 @@ public class RedirectDisplayContext {
 		}
 
 		_redirectEntrySearch = new RedirectEntrySearch(
-			_liferayPortletRequest, _getPortletURL(), getSearchContainerId());
+			_liferayPortletRequest, _liferayPortletResponse, _getPortletURL(),
+			getSearchContainerId());
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(RedirectEntry.class);
 

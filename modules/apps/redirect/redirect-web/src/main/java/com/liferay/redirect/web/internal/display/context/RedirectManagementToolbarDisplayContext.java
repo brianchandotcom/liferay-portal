@@ -17,12 +17,19 @@ package com.liferay.redirect.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderURL;
 
@@ -46,6 +53,18 @@ public class RedirectManagementToolbarDisplayContext
 	}
 
 	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "deleteSelectedRedirectEntries");
+				dropdownItem.setIcon("times-circle");
+				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setQuickAction(true);
+			}
+		).build();
+	}
+
+	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
 
@@ -54,6 +73,22 @@ public class RedirectManagementToolbarDisplayContext
 		clearResultsURL.setParameter("orderByType", getOrderByType());
 
 		return clearResultsURL.toString();
+	}
+
+	public Map<String, Object> getComponentContext() {
+		return HashMapBuilder.<String, Object>put(
+			"deleteRedirectEntriesURL",
+			() -> {
+				PortletURL deleteRedirectEntriesURL =
+					liferayPortletResponse.createActionURL();
+
+				deleteRedirectEntriesURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/redirect/delete_redirect_entry");
+
+				return deleteRedirectEntriesURL.toString();
+			}
+		).build();
 	}
 
 	@Override
@@ -86,6 +121,11 @@ public class RedirectManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getDefaultEventHandler() {
+		return "redirectManagementToolbarDefaultEventHandler";
+	}
+
+	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
 
@@ -93,11 +133,6 @@ public class RedirectManagementToolbarDisplayContext
 		searchActionURL.setParameter("orderByType", getOrderByType());
 
 		return searchActionURL.toString();
-	}
-
-	@Override
-	public Boolean isSelectable() {
-		return false;
 	}
 
 	@Override

@@ -2,9 +2,12 @@
 	"dependencies": {
 		"recharts": "1.8.5"
 	},
+	"devDependencies": {
+		"liferay-npm-bundler": "3.0.0-snapshot.dda6cd1"
+	},
 	"name": "frontend-js-recharts",
 	"scripts": {
-		"build": "liferay-npm-scripts build",
+		"build": "liferay-npm-bundler",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},

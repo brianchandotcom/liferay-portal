@@ -35,7 +35,9 @@ import java.util.Dictionary;
 
 import org.apache.felix.cm.PersistenceManager;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,6 +56,34 @@ public class ConfigurationUpgradeStepFactoryTest {
 	@Rule
 	public static AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() {
+		_configsDir = new File(
+			_props.get(PropsKeys.MODULE_FRAMEWORK_CONFIGS_DIR));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		for (File file : _configsDir.listFiles()) {
+			String fileName = file.getName();
+
+			if (fileName.startsWith(_TEST_PID)) {
+				file.delete();
+			}
+		}
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			"(service.pid=" + _TEST_PID + "*)");
+
+		if (configurations == null) {
+			return;
+		}
+
+		for (Configuration configuration : configurations) {
+			ConfigurationTestUtil.deleteConfiguration(configuration);
+		}
+	}
 
 	@Test
 	public void testUpgradeConfigWithDBAndFile() throws Exception {
@@ -115,104 +145,85 @@ public class ConfigurationUpgradeStepFactoryTest {
 
 		String newPid = _TEST_PID_NEW;
 
-		String parentDir = _props.get(PropsKeys.MODULE_FRAMEWORK_CONFIGS_DIR);
+		File oldConfigFile = new File(_configsDir, oldPid + ".config");
 
-		File oldConfigFile = new File(parentDir, oldPid + ".config");
-
-		File newConfigFile = new File(parentDir, newPid + ".config");
+		File newConfigFile = new File(_configsDir, newPid + ".config");
 
 		if (factory) {
-			oldConfigFile = new File(parentDir, oldPid + "-instance.config");
+			oldConfigFile = new File(_configsDir, oldPid + "-instance.config");
 
-			newConfigFile = new File(parentDir, newPid + "-instance.config");
+			newConfigFile = new File(_configsDir, newPid + "-instance.config");
 		}
 
-		try {
-			if (configFile) {
-				oldConfigFile.createNewFile();
+		if (configFile) {
+			oldConfigFile.createNewFile();
+		}
+
+		if (data) {
+			if (factory) {
+				oldPid = ConfigurationTestUtil.createFactoryConfiguration(
+					oldPid, new HashMapDictionary<>());
+
+				newPid = StringUtil.replace(
+					oldPid, _TEST_PID_OLD, _TEST_PID_NEW);
+			}
+			else {
+				ConfigurationTestUtil.saveConfiguration(
+					_configurationAdmin.getConfiguration(oldPid),
+					new HashMapDictionary<>());
 			}
 
-			if (data) {
-				if (factory) {
-					oldPid = ConfigurationTestUtil.createFactoryConfiguration(
-						oldPid, new HashMapDictionary<>());
+			if (felixFileName) {
+				URI uri = oldConfigFile.toURI();
 
-					newPid = StringUtil.replace(
-						oldPid, _TEST_PID_OLD, _TEST_PID_NEW);
-				}
-				else {
-					ConfigurationTestUtil.saveConfiguration(
-						_configurationAdmin.getConfiguration(oldPid),
-						new HashMapDictionary<>());
-				}
-
-				if (felixFileName) {
-					URI uri = oldConfigFile.toURI();
-
-					ConfigurationTestUtil.saveConfiguration(
-						oldPid,
-						MapUtil.singletonDictionary(
-							"felix.fileinstall.filename", uri.toString()));
-				}
-			}
-
-			UpgradeStep upgradeStep =
-				_configurationUpgradeStepFactory.createUpgradeStep(
-					_TEST_PID_OLD, _TEST_PID_NEW);
-
-			upgradeStep.upgrade(null);
-
-			if (data) {
-				Assert.assertFalse(
-					"Configuration " + oldPid + " still exists",
-					_persistenceManager.exists(oldPid));
-				Assert.assertTrue(
-					"Configuration " + newPid + " does not exist",
-					_persistenceManager.exists(newPid));
-
-				Dictionary<String, String> dictionary =
-					_persistenceManager.load(newPid);
-
-				String fileName = dictionary.get("felix.fileinstall.filename");
-
-				if (felixFileName) {
-					URI uri = newConfigFile.toURI();
-
-					Assert.assertEquals(
-						"Configuration " + fileName + " is not inconsistent",
-						fileName, uri.toString());
-				}
-				else {
-					Assert.assertNull(
-						"Configuration property felix.fileinstall.filename " +
-							"should not exist",
-						fileName);
-				}
-			}
-
-			if (configFile) {
-				Assert.assertFalse(
-					"Configuration file " + oldConfigFile + " still exists",
-					oldConfigFile.exists());
-				Assert.assertTrue(
-					"Configuration file " + newConfigFile + " does not exist",
-					newConfigFile.exists());
+				ConfigurationTestUtil.saveConfiguration(
+					oldPid,
+					MapUtil.singletonDictionary(
+						"felix.fileinstall.filename", uri.toString()));
 			}
 		}
-		finally {
-			if (configFile) {
-				oldConfigFile.delete();
-				newConfigFile.delete();
-			}
 
-			if (data) {
-				for (Configuration configuration :
-						_configurationAdmin.listConfigurations(
-							"(service.pid=" + _TEST_PID + "*)")) {
+		UpgradeStep upgradeStep =
+			_configurationUpgradeStepFactory.createUpgradeStep(
+				_TEST_PID_OLD, _TEST_PID_NEW);
 
-					ConfigurationTestUtil.deleteConfiguration(configuration);
-				}
+		upgradeStep.upgrade(null);
+
+		if (data) {
+			Assert.assertFalse(
+				"Configuration " + oldPid + " still exists",
+				_persistenceManager.exists(oldPid));
+			Assert.assertTrue(
+				"Configuration " + newPid + " does not exist",
+				_persistenceManager.exists(newPid));
+
+			Dictionary<String, String> dictionary = _persistenceManager.load(
+				newPid);
+
+			String fileName = dictionary.get("felix.fileinstall.filename");
+
+			if (felixFileName) {
+				URI uri = newConfigFile.toURI();
+
+				Assert.assertEquals(
+					"Configuration " + fileName + " is not inconsistent",
+					fileName, uri.toString());
 			}
+			else {
+				Assert.assertNull(
+					"Configuration property felix.fileinstall.filename " +
+						"should not exist",
+					fileName);
+			}
+		}
+
+		if (configFile) {
+			Assert.assertFalse(
+				"Configuration file " + oldConfigFile + " still exists",
+				oldConfigFile.exists());
+			Assert.assertTrue(
+				"Configuration file " + newConfigFile + " does not exist",
+				newConfigFile.exists());
 		}
 	}
 
@@ -221,6 +232,8 @@ public class ConfigurationUpgradeStepFactoryTest {
 	private static final String _TEST_PID_NEW = _TEST_PID + ".new";
 
 	private static final String _TEST_PID_OLD = _TEST_PID + ".old";
+
+	private File _configsDir;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

@@ -1,0 +1,78 @@
+@component-name = "portal-ab-test"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "A/B Test";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		// Create content page
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		ContentPages.addPage(pageName = "Content Page");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/content-page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Validate if the user can create an A/B Test"
+	@priority = "5"
+	test CreateABTest {
+
+		task ("Create the A/B Test") {
+			Click(locator1 = "ABTest#AB_TEST_BUTTON");
+
+			Click(locator1 = "ABTest#CREATE_TEST_BUTTON");
+
+			Click(locator1 = "ABTest#AB_TEST_TITLE_FIELD");
+
+			Type(
+				locator1 = "ABTest#AB_TEST_TITLE_FIELD",
+				value1 = "Create A/B Test Title");
+
+			Click(locator1 = "ABTest#SAVE_AB_TEST_BUTTON");
+		}
+
+		task ("Create the Variant of the A/B Test") {
+			Click(locator1 = "ABTest#CREATE_VARIANT_BUTTON");
+
+			Click(locator1 = "ABTest#VARIANT_NAME_FIELD");
+
+			Type(
+				locator1 = "ABTest#VARIANT_NAME_FIELD",
+				value1 = "Variant Name");
+
+			Click(locator1 = "ABTest#SAVE_VARIANT_NAME_BUTTON");
+		}
+
+		task ("Run the A/B Test") {
+			Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
+
+			Click(locator1 = "ABTest#RUN_TEST_BUTTON");
+
+			Click(locator1 = "ABTest#OK_BUTTON");
+		}
+
+		task ("Check it on Analytics Cloud") {
+			Click(locator1 = "ABTest#CONTROL_VARIANT");
+
+			Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
+		}
+	}
+}

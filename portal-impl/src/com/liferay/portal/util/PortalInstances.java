@@ -16,8 +16,8 @@ package com.liferay.portal.util;
 
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.db.partition.DBPartitionHelperUtil;
+import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;

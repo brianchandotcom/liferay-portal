@@ -85,21 +85,19 @@ exports[`Should display error on alert when receive a server error after submit 
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -174,21 +172,19 @@ exports[`Should display error on alert when receive a server error after submit 
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -235,21 +231,19 @@ exports[`Should display error on alert when receive a server error after submit 
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -293,12 +287,10 @@ exports[`Should display error on alert when receive a server error after submit 
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -481,21 +473,19 @@ exports[`Should display error on alert when receive a server error after submit 
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -539,12 +529,10 @@ exports[`Should display error on alert when receive a server error after submit 
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -686,21 +674,19 @@ exports[`Should display error on alert when receive a server error after submit 
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -747,21 +733,19 @@ exports[`Should display error on alert when receive a server error after submit 
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -805,12 +789,10 @@ exports[`Should display error on alert when receive a server error after submit 
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -946,21 +928,19 @@ exports[`Should display error on alert when receive a server error after submit 
                     <span
                       className="reference-mark"
                     >
-                      <Icon
-                        iconName="asterisk"
+                      <ForwardRef
+                        symbol="asterisk"
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                            }
-                          }
-                          data-testid="icon"
-                          focusable="false"
+                          key="asterisk"
                           role="presentation"
-                        />
-                      </Icon>
+                        >
+                          <use
+                            xlinkHref="#asterisk"
+                          />
+                        </svg>
+                      </ForwardRef>
                     </span>
                   </label>
                 </FieldLabel>
@@ -1207,21 +1187,19 @@ exports[`Should display error on field when receive a server error after submit 
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -1296,21 +1274,19 @@ exports[`Should display error on field when receive a server error after submit 
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -1357,21 +1333,19 @@ exports[`Should display error on field when receive a server error after submit 
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -1415,12 +1389,10 @@ exports[`Should display error on field when receive a server error after submit 
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -1603,21 +1575,19 @@ exports[`Should display error on field when receive a server error after submit 
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -1661,12 +1631,10 @@ exports[`Should display error on field when receive a server error after submit 
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -1808,21 +1776,19 @@ exports[`Should display error on field when receive a server error after submit 
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -1869,21 +1835,19 @@ exports[`Should display error on field when receive a server error after submit 
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -1927,12 +1891,10 @@ exports[`Should display error on field when receive a server error after submit 
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -2068,21 +2030,19 @@ exports[`Should display error on field when receive a server error after submit 
                     <span
                       className="reference-mark"
                     >
-                      <Icon
-                        iconName="asterisk"
+                      <ForwardRef
+                        symbol="asterisk"
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                            }
-                          }
-                          data-testid="icon"
-                          focusable="false"
+                          key="asterisk"
                           role="presentation"
-                        />
-                      </Icon>
+                        >
+                          <use
+                            xlinkHref="#asterisk"
+                          />
+                        </svg>
+                      </ForwardRef>
                     </span>
                   </label>
                 </FieldLabel>
@@ -2329,21 +2289,19 @@ exports[`Should edit the SLA with valid values 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -2419,21 +2377,19 @@ exports[`Should edit the SLA with valid values 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -2480,21 +2436,19 @@ exports[`Should edit the SLA with valid values 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -2538,12 +2492,10 @@ exports[`Should edit the SLA with valid values 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -2726,21 +2678,19 @@ exports[`Should edit the SLA with valid values 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -2784,12 +2734,10 @@ exports[`Should edit the SLA with valid values 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -2931,21 +2879,19 @@ exports[`Should edit the SLA with valid values 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -2992,21 +2938,19 @@ exports[`Should edit the SLA with valid values 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -3050,12 +2994,10 @@ exports[`Should edit the SLA with valid values 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -3191,21 +3133,19 @@ exports[`Should edit the SLA with valid values 1`] = `
                     <span
                       className="reference-mark"
                     >
-                      <Icon
-                        iconName="asterisk"
+                      <ForwardRef
+                        symbol="asterisk"
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                            }
-                          }
-                          data-testid="icon"
-                          focusable="false"
+                          key="asterisk"
                           role="presentation"
-                        />
-                      </Icon>
+                        >
+                          <use
+                            xlinkHref="#asterisk"
+                          />
+                        </svg>
+                      </ForwardRef>
                     </span>
                   </label>
                 </FieldLabel>
@@ -3445,21 +3385,19 @@ exports[`Should redirect to SLA list 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -3535,21 +3473,19 @@ exports[`Should redirect to SLA list 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -3596,21 +3532,19 @@ exports[`Should redirect to SLA list 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -3654,12 +3588,10 @@ exports[`Should redirect to SLA list 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -3842,21 +3774,19 @@ exports[`Should redirect to SLA list 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -3900,12 +3830,10 @@ exports[`Should redirect to SLA list 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -4047,21 +3975,19 @@ exports[`Should redirect to SLA list 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -4108,21 +4034,19 @@ exports[`Should redirect to SLA list 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -4166,12 +4090,10 @@ exports[`Should redirect to SLA list 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -4307,21 +4229,19 @@ exports[`Should redirect to SLA list 1`] = `
                     <span
                       className="reference-mark"
                     >
-                      <Icon
-                        iconName="asterisk"
+                      <ForwardRef
+                        symbol="asterisk"
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                            }
-                          }
-                          data-testid="icon"
-                          focusable="false"
+                          key="asterisk"
                           role="presentation"
-                        />
-                      </Icon>
+                        >
+                          <use
+                            xlinkHref="#asterisk"
+                          />
+                        </svg>
+                      </ForwardRef>
                     </span>
                   </label>
                 </FieldLabel>
@@ -4570,21 +4490,19 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -4660,21 +4578,19 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -4721,21 +4637,19 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -4779,12 +4693,10 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -4967,21 +4879,19 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -5025,12 +4935,10 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -5172,21 +5080,19 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -5233,21 +5139,19 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -5291,12 +5195,10 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -5432,21 +5334,19 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                     <span
                       className="reference-mark"
                     >
-                      <Icon
-                        iconName="asterisk"
+                      <ForwardRef
+                        symbol="asterisk"
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                            }
-                          }
-                          data-testid="icon"
-                          focusable="false"
+                          key="asterisk"
                           role="presentation"
-                        />
-                      </Icon>
+                        >
+                          <use
+                            xlinkHref="#asterisk"
+                          />
+                        </svg>
+                      </ForwardRef>
                     </span>
                   </label>
                 </FieldLabel>
@@ -5739,21 +5639,19 @@ exports[`Should render component 1`] = `
                           <span
                             className="reference-mark"
                           >
-                            <Icon
-                              iconName="asterisk"
+                            <ForwardRef
+                              symbol="asterisk"
                             >
                               <svg
                                 className="lexicon-icon lexicon-icon-asterisk"
-                                dangerouslySetInnerHTML={
-                                  Object {
-                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                                  }
-                                }
-                                data-testid="icon"
-                                focusable="false"
+                                key="asterisk"
                                 role="presentation"
-                              />
-                            </Icon>
+                              >
+                                <use
+                                  xlinkHref="#asterisk"
+                                />
+                              </svg>
+                            </ForwardRef>
                           </span>
                         </label>
                       </FieldLabel>
@@ -5829,21 +5727,19 @@ exports[`Should render component 1`] = `
                           <span
                             className="reference-mark"
                           >
-                            <Icon
-                              iconName="asterisk"
+                            <ForwardRef
+                              symbol="asterisk"
                             >
                               <svg
                                 className="lexicon-icon lexicon-icon-asterisk"
-                                dangerouslySetInnerHTML={
-                                  Object {
-                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                                  }
-                                }
-                                data-testid="icon"
-                                focusable="false"
+                                key="asterisk"
                                 role="presentation"
-                              />
-                            </Icon>
+                              >
+                                <use
+                                  xlinkHref="#asterisk"
+                                />
+                              </svg>
+                            </ForwardRef>
                           </span>
                         </label>
                       </FieldLabel>
@@ -5890,21 +5786,19 @@ exports[`Should render component 1`] = `
                                         className="col-1 drop-icon mt-1 text-right"
                                         onClick={[Function]}
                                       >
-                                        <Icon
-                                          iconName="caret-double"
+                                        <ForwardRef
+                                          symbol="caret-double"
                                         >
                                           <svg
                                             className="lexicon-icon lexicon-icon-caret-double"
-                                            dangerouslySetInnerHTML={
-                                              Object {
-                                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                              }
-                                            }
-                                            data-testid="icon"
-                                            focusable="false"
+                                            key="caret-double"
                                             role="presentation"
-                                          />
-                                        </Icon>
+                                          >
+                                            <use
+                                              xlinkHref="#caret-double"
+                                            />
+                                          </svg>
+                                        </ForwardRef>
                                       </div>
                                       <DropDown
                                         active={false}
@@ -5948,12 +5842,10 @@ exports[`Should render component 1`] = `
                                                       >
                                                         <svg
                                                           class="lexicon-icon lexicon-icon-caret-double"
-                                                          data-testid="icon"
-                                                          focusable="false"
                                                           role="presentation"
                                                         >
                                                           <use
-                                                            xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                            xlink:href="#caret-double"
                                                           />
                                                         </svg>
                                                       </div>
@@ -6136,21 +6028,19 @@ exports[`Should render component 1`] = `
                                         className="col-1 drop-icon mt-1 text-right"
                                         onClick={[Function]}
                                       >
-                                        <Icon
-                                          iconName="caret-double"
+                                        <ForwardRef
+                                          symbol="caret-double"
                                         >
                                           <svg
                                             className="lexicon-icon lexicon-icon-caret-double"
-                                            dangerouslySetInnerHTML={
-                                              Object {
-                                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                              }
-                                            }
-                                            data-testid="icon"
-                                            focusable="false"
+                                            key="caret-double"
                                             role="presentation"
-                                          />
-                                        </Icon>
+                                          >
+                                            <use
+                                              xlinkHref="#caret-double"
+                                            />
+                                          </svg>
+                                        </ForwardRef>
                                       </div>
                                       <DropDown
                                         active={false}
@@ -6194,12 +6084,10 @@ exports[`Should render component 1`] = `
                                                       >
                                                         <svg
                                                           class="lexicon-icon lexicon-icon-caret-double"
-                                                          data-testid="icon"
-                                                          focusable="false"
                                                           role="presentation"
                                                         >
                                                           <use
-                                                            xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                            xlink:href="#caret-double"
                                                           />
                                                         </svg>
                                                       </div>
@@ -6341,21 +6229,19 @@ exports[`Should render component 1`] = `
                           <span
                             className="reference-mark"
                           >
-                            <Icon
-                              iconName="asterisk"
+                            <ForwardRef
+                              symbol="asterisk"
                             >
                               <svg
                                 className="lexicon-icon lexicon-icon-asterisk"
-                                dangerouslySetInnerHTML={
-                                  Object {
-                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                                  }
-                                }
-                                data-testid="icon"
-                                focusable="false"
+                                key="asterisk"
                                 role="presentation"
-                              />
-                            </Icon>
+                              >
+                                <use
+                                  xlinkHref="#asterisk"
+                                />
+                              </svg>
+                            </ForwardRef>
                           </span>
                         </label>
                       </FieldLabel>
@@ -6402,21 +6288,19 @@ exports[`Should render component 1`] = `
                                         className="col-1 drop-icon mt-1 text-right"
                                         onClick={[Function]}
                                       >
-                                        <Icon
-                                          iconName="caret-double"
+                                        <ForwardRef
+                                          symbol="caret-double"
                                         >
                                           <svg
                                             className="lexicon-icon lexicon-icon-caret-double"
-                                            dangerouslySetInnerHTML={
-                                              Object {
-                                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                              }
-                                            }
-                                            data-testid="icon"
-                                            focusable="false"
+                                            key="caret-double"
                                             role="presentation"
-                                          />
-                                        </Icon>
+                                          >
+                                            <use
+                                              xlinkHref="#caret-double"
+                                            />
+                                          </svg>
+                                        </ForwardRef>
                                       </div>
                                       <DropDown
                                         active={false}
@@ -6460,12 +6344,10 @@ exports[`Should render component 1`] = `
                                                       >
                                                         <svg
                                                           class="lexicon-icon lexicon-icon-caret-double"
-                                                          data-testid="icon"
-                                                          focusable="false"
                                                           role="presentation"
                                                         >
                                                           <use
-                                                            xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                            xlink:href="#caret-double"
                                                           />
                                                         </svg>
                                                       </div>
@@ -6601,21 +6483,19 @@ exports[`Should render component 1`] = `
                         <span
                           className="reference-mark"
                         >
-                          <Icon
-                            iconName="asterisk"
+                          <ForwardRef
+                            symbol="asterisk"
                           >
                             <svg
                               className="lexicon-icon lexicon-icon-asterisk"
-                              dangerouslySetInnerHTML={
-                                Object {
-                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                                }
-                              }
-                              data-testid="icon"
-                              focusable="false"
+                              key="asterisk"
                               role="presentation"
-                            />
-                          </Icon>
+                            >
+                              <use
+                                xlinkHref="#asterisk"
+                              />
+                            </svg>
+                          </ForwardRef>
                         </span>
                       </label>
                     </FieldLabel>
@@ -6909,21 +6789,19 @@ exports[`Should render component in edit mode 1`] = `
                           <span
                             className="reference-mark"
                           >
-                            <Icon
-                              iconName="asterisk"
+                            <ForwardRef
+                              symbol="asterisk"
                             >
                               <svg
                                 className="lexicon-icon lexicon-icon-asterisk"
-                                dangerouslySetInnerHTML={
-                                  Object {
-                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                                  }
-                                }
-                                data-testid="icon"
-                                focusable="false"
+                                key="asterisk"
                                 role="presentation"
-                              />
-                            </Icon>
+                              >
+                                <use
+                                  xlinkHref="#asterisk"
+                                />
+                              </svg>
+                            </ForwardRef>
                           </span>
                         </label>
                       </FieldLabel>
@@ -6999,21 +6877,19 @@ exports[`Should render component in edit mode 1`] = `
                           <span
                             className="reference-mark"
                           >
-                            <Icon
-                              iconName="asterisk"
+                            <ForwardRef
+                              symbol="asterisk"
                             >
                               <svg
                                 className="lexicon-icon lexicon-icon-asterisk"
-                                dangerouslySetInnerHTML={
-                                  Object {
-                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                                  }
-                                }
-                                data-testid="icon"
-                                focusable="false"
+                                key="asterisk"
                                 role="presentation"
-                              />
-                            </Icon>
+                              >
+                                <use
+                                  xlinkHref="#asterisk"
+                                />
+                              </svg>
+                            </ForwardRef>
                           </span>
                         </label>
                       </FieldLabel>
@@ -7060,21 +6936,19 @@ exports[`Should render component in edit mode 1`] = `
                                         className="col-1 drop-icon mt-1 text-right"
                                         onClick={[Function]}
                                       >
-                                        <Icon
-                                          iconName="caret-double"
+                                        <ForwardRef
+                                          symbol="caret-double"
                                         >
                                           <svg
                                             className="lexicon-icon lexicon-icon-caret-double"
-                                            dangerouslySetInnerHTML={
-                                              Object {
-                                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                              }
-                                            }
-                                            data-testid="icon"
-                                            focusable="false"
+                                            key="caret-double"
                                             role="presentation"
-                                          />
-                                        </Icon>
+                                          >
+                                            <use
+                                              xlinkHref="#caret-double"
+                                            />
+                                          </svg>
+                                        </ForwardRef>
                                       </div>
                                       <DropDown
                                         active={false}
@@ -7118,12 +6992,10 @@ exports[`Should render component in edit mode 1`] = `
                                                       >
                                                         <svg
                                                           class="lexicon-icon lexicon-icon-caret-double"
-                                                          data-testid="icon"
-                                                          focusable="false"
                                                           role="presentation"
                                                         >
                                                           <use
-                                                            xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                            xlink:href="#caret-double"
                                                           />
                                                         </svg>
                                                       </div>
@@ -7306,21 +7178,19 @@ exports[`Should render component in edit mode 1`] = `
                                         className="col-1 drop-icon mt-1 text-right"
                                         onClick={[Function]}
                                       >
-                                        <Icon
-                                          iconName="caret-double"
+                                        <ForwardRef
+                                          symbol="caret-double"
                                         >
                                           <svg
                                             className="lexicon-icon lexicon-icon-caret-double"
-                                            dangerouslySetInnerHTML={
-                                              Object {
-                                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                              }
-                                            }
-                                            data-testid="icon"
-                                            focusable="false"
+                                            key="caret-double"
                                             role="presentation"
-                                          />
-                                        </Icon>
+                                          >
+                                            <use
+                                              xlinkHref="#caret-double"
+                                            />
+                                          </svg>
+                                        </ForwardRef>
                                       </div>
                                       <DropDown
                                         active={false}
@@ -7364,12 +7234,10 @@ exports[`Should render component in edit mode 1`] = `
                                                       >
                                                         <svg
                                                           class="lexicon-icon lexicon-icon-caret-double"
-                                                          data-testid="icon"
-                                                          focusable="false"
                                                           role="presentation"
                                                         >
                                                           <use
-                                                            xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                            xlink:href="#caret-double"
                                                           />
                                                         </svg>
                                                       </div>
@@ -7511,21 +7379,19 @@ exports[`Should render component in edit mode 1`] = `
                           <span
                             className="reference-mark"
                           >
-                            <Icon
-                              iconName="asterisk"
+                            <ForwardRef
+                              symbol="asterisk"
                             >
                               <svg
                                 className="lexicon-icon lexicon-icon-asterisk"
-                                dangerouslySetInnerHTML={
-                                  Object {
-                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                                  }
-                                }
-                                data-testid="icon"
-                                focusable="false"
+                                key="asterisk"
                                 role="presentation"
-                              />
-                            </Icon>
+                              >
+                                <use
+                                  xlinkHref="#asterisk"
+                                />
+                              </svg>
+                            </ForwardRef>
                           </span>
                         </label>
                       </FieldLabel>
@@ -7572,21 +7438,19 @@ exports[`Should render component in edit mode 1`] = `
                                         className="col-1 drop-icon mt-1 text-right"
                                         onClick={[Function]}
                                       >
-                                        <Icon
-                                          iconName="caret-double"
+                                        <ForwardRef
+                                          symbol="caret-double"
                                         >
                                           <svg
                                             className="lexicon-icon lexicon-icon-caret-double"
-                                            dangerouslySetInnerHTML={
-                                              Object {
-                                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                              }
-                                            }
-                                            data-testid="icon"
-                                            focusable="false"
+                                            key="caret-double"
                                             role="presentation"
-                                          />
-                                        </Icon>
+                                          >
+                                            <use
+                                              xlinkHref="#caret-double"
+                                            />
+                                          </svg>
+                                        </ForwardRef>
                                       </div>
                                       <DropDown
                                         active={false}
@@ -7630,12 +7494,10 @@ exports[`Should render component in edit mode 1`] = `
                                                       >
                                                         <svg
                                                           class="lexicon-icon lexicon-icon-caret-double"
-                                                          data-testid="icon"
-                                                          focusable="false"
                                                           role="presentation"
                                                         >
                                                           <use
-                                                            xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                            xlink:href="#caret-double"
                                                           />
                                                         </svg>
                                                       </div>
@@ -7771,21 +7633,19 @@ exports[`Should render component in edit mode 1`] = `
                         <span
                           className="reference-mark"
                         >
-                          <Icon
-                            iconName="asterisk"
+                          <ForwardRef
+                            symbol="asterisk"
                           >
                             <svg
                               className="lexicon-icon lexicon-icon-asterisk"
-                              dangerouslySetInnerHTML={
-                                Object {
-                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                                }
-                              }
-                              data-testid="icon"
-                              focusable="false"
+                              key="asterisk"
                               role="presentation"
-                            />
-                          </Icon>
+                            >
+                              <use
+                                xlinkHref="#asterisk"
+                              />
+                            </svg>
+                          </ForwardRef>
                         </span>
                       </label>
                     </FieldLabel>
@@ -8123,21 +7983,19 @@ exports[`Should test handler erros 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -8211,21 +8069,19 @@ exports[`Should test handler erros 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -8272,21 +8128,19 @@ exports[`Should test handler erros 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -8330,12 +8184,10 @@ exports[`Should test handler erros 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -8518,21 +8370,19 @@ exports[`Should test handler erros 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -8576,12 +8426,10 @@ exports[`Should test handler erros 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -8723,21 +8571,19 @@ exports[`Should test handler erros 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -8784,21 +8630,19 @@ exports[`Should test handler erros 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -8842,12 +8686,10 @@ exports[`Should test handler erros 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -8983,21 +8825,19 @@ exports[`Should test handler erros 1`] = `
                     <span
                       className="reference-mark"
                     >
-                      <Icon
-                        iconName="asterisk"
+                      <ForwardRef
+                        symbol="asterisk"
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                            }
-                          }
-                          data-testid="icon"
-                          focusable="false"
+                          key="asterisk"
                           role="presentation"
-                        />
-                      </Icon>
+                        >
+                          <use
+                            xlinkHref="#asterisk"
+                          />
+                        </svg>
+                      </ForwardRef>
                     </span>
                   </label>
                 </FieldLabel>
@@ -9231,21 +9071,19 @@ exports[`Should test handler erros at start node keys 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -9319,21 +9157,19 @@ exports[`Should test handler erros at start node keys 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -9380,21 +9216,19 @@ exports[`Should test handler erros at start node keys 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -9438,12 +9272,10 @@ exports[`Should test handler erros at start node keys 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -9626,21 +9458,19 @@ exports[`Should test handler erros at start node keys 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -9684,12 +9514,10 @@ exports[`Should test handler erros at start node keys 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -9831,21 +9659,19 @@ exports[`Should test handler erros at start node keys 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -9892,21 +9718,19 @@ exports[`Should test handler erros at start node keys 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -9950,12 +9774,10 @@ exports[`Should test handler erros at start node keys 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -10091,21 +9913,19 @@ exports[`Should test handler erros at start node keys 1`] = `
                     <span
                       className="reference-mark"
                     >
-                      <Icon
-                        iconName="asterisk"
+                      <ForwardRef
+                        symbol="asterisk"
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                            }
-                          }
-                          data-testid="icon"
-                          focusable="false"
+                          key="asterisk"
                           role="presentation"
-                        />
-                      </Icon>
+                        >
+                          <use
+                            xlinkHref="#asterisk"
+                          />
+                        </svg>
+                      </ForwardRef>
                     </span>
                   </label>
                 </FieldLabel>
@@ -10339,21 +10159,19 @@ exports[`Should test handler no array erros 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -10427,21 +10245,19 @@ exports[`Should test handler no array erros 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -10488,21 +10304,19 @@ exports[`Should test handler no array erros 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -10546,12 +10360,10 @@ exports[`Should test handler no array erros 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -10734,21 +10546,19 @@ exports[`Should test handler no array erros 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -10792,12 +10602,10 @@ exports[`Should test handler no array erros 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -10939,21 +10747,19 @@ exports[`Should test handler no array erros 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -11000,21 +10806,19 @@ exports[`Should test handler no array erros 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -11058,12 +10862,10 @@ exports[`Should test handler no array erros 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -11199,21 +11001,19 @@ exports[`Should test handler no array erros 1`] = `
                     <span
                       className="reference-mark"
                     >
-                      <Icon
-                        iconName="asterisk"
+                      <ForwardRef
+                        symbol="asterisk"
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                            }
-                          }
-                          data-testid="icon"
-                          focusable="false"
+                          key="asterisk"
                           role="presentation"
-                        />
-                      </Icon>
+                        >
+                          <use
+                            xlinkHref="#asterisk"
+                          />
+                        </svg>
+                      </ForwardRef>
                     </span>
                   </label>
                 </FieldLabel>
@@ -11447,21 +11247,19 @@ exports[`Should test load data callback 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -11535,21 +11333,19 @@ exports[`Should test load data callback 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -11596,21 +11392,19 @@ exports[`Should test load data callback 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -11654,12 +11448,10 @@ exports[`Should test load data callback 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -11842,21 +11634,19 @@ exports[`Should test load data callback 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -11900,12 +11690,10 @@ exports[`Should test load data callback 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -12047,21 +11835,19 @@ exports[`Should test load data callback 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -12108,21 +11894,19 @@ exports[`Should test load data callback 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -12166,12 +11950,10 @@ exports[`Should test load data callback 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -12307,21 +12089,19 @@ exports[`Should test load data callback 1`] = `
                     <span
                       className="reference-mark"
                     >
-                      <Icon
-                        iconName="asterisk"
+                      <ForwardRef
+                        symbol="asterisk"
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                            }
-                          }
-                          data-testid="icon"
-                          focusable="false"
+                          key="asterisk"
                           role="presentation"
-                        />
-                      </Icon>
+                        >
+                          <use
+                            xlinkHref="#asterisk"
+                          />
+                        </svg>
+                      </ForwardRef>
                     </span>
                   </label>
                 </FieldLabel>
@@ -12556,21 +12336,19 @@ exports[`Should update state after input changes 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -12644,21 +12422,19 @@ exports[`Should update state after input changes 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -12705,21 +12481,19 @@ exports[`Should update state after input changes 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -12763,12 +12537,10 @@ exports[`Should update state after input changes 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -12951,21 +12723,19 @@ exports[`Should update state after input changes 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -13009,12 +12779,10 @@ exports[`Should update state after input changes 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -13156,21 +12924,19 @@ exports[`Should update state after input changes 1`] = `
                       <span
                         className="reference-mark"
                       >
-                        <Icon
-                          iconName="asterisk"
+                        <ForwardRef
+                          symbol="asterisk"
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
-                            dangerouslySetInnerHTML={
-                              Object {
-                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                              }
-                            }
-                            data-testid="icon"
-                            focusable="false"
+                            key="asterisk"
                             role="presentation"
-                          />
-                        </Icon>
+                          >
+                            <use
+                              xlinkHref="#asterisk"
+                            />
+                          </svg>
+                        </ForwardRef>
                       </span>
                     </label>
                   </FieldLabel>
@@ -13217,21 +12983,19 @@ exports[`Should update state after input changes 1`] = `
                                     className="col-1 drop-icon mt-1 text-right"
                                     onClick={[Function]}
                                   >
-                                    <Icon
-                                      iconName="caret-double"
+                                    <ForwardRef
+                                      symbol="caret-double"
                                     >
                                       <svg
                                         className="lexicon-icon lexicon-icon-caret-double"
-                                        dangerouslySetInnerHTML={
-                                          Object {
-                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
-                                          }
-                                        }
-                                        data-testid="icon"
-                                        focusable="false"
+                                        key="caret-double"
                                         role="presentation"
-                                      />
-                                    </Icon>
+                                      >
+                                        <use
+                                          xlinkHref="#caret-double"
+                                        />
+                                      </svg>
+                                    </ForwardRef>
                                   </div>
                                   <DropDown
                                     active={false}
@@ -13275,12 +13039,10 @@ exports[`Should update state after input changes 1`] = `
                                                   >
                                                     <svg
                                                       class="lexicon-icon lexicon-icon-caret-double"
-                                                      data-testid="icon"
-                                                      focusable="false"
                                                       role="presentation"
                                                     >
                                                       <use
-                                                        xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                                                        xlink:href="#caret-double"
                                                       />
                                                     </svg>
                                                   </div>
@@ -13416,21 +13178,19 @@ exports[`Should update state after input changes 1`] = `
                     <span
                       className="reference-mark"
                     >
-                      <Icon
-                        iconName="asterisk"
+                      <ForwardRef
+                        symbol="asterisk"
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
-                            }
-                          }
-                          data-testid="icon"
-                          focusable="false"
+                          key="asterisk"
                           role="presentation"
-                        />
-                      </Icon>
+                        >
+                          <use
+                            xlinkHref="#asterisk"
+                          />
+                        </svg>
+                      </ForwardRef>
                     </span>
                   </label>
                 </FieldLabel>

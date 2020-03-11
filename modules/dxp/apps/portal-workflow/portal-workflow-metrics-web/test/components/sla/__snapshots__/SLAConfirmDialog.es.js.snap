@@ -269,21 +269,19 @@ exports[`Should cancel dialog through SLA List 1`] = `
                               href="/sla/new/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
                               onClick={[Function]}
                             >
-                              <Icon
-                                iconName="plus"
+                              <ForwardRef
+                                symbol="plus"
                               >
                                 <svg
                                   className="lexicon-icon lexicon-icon-plus"
-                                  dangerouslySetInnerHTML={
-                                    Object {
-                                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
-                                    }
-                                  }
-                                  data-testid="icon"
-                                  focusable="false"
+                                  key="plus"
                                   role="presentation"
-                                />
-                              </Icon>
+                                >
+                                  <use
+                                    xlinkHref="#plus"
+                                  />
+                                </svg>
+                              </ForwardRef>
                             </a>
                           </Link>
                         </ChildLink>
@@ -457,21 +455,19 @@ exports[`Should cancel dialog through SLA List 2`] = `
                               href="/sla/new/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
                               onClick={[Function]}
                             >
-                              <Icon
-                                iconName="plus"
+                              <ForwardRef
+                                symbol="plus"
                               >
                                 <svg
                                   className="lexicon-icon lexicon-icon-plus"
-                                  dangerouslySetInnerHTML={
-                                    Object {
-                                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
-                                    }
-                                  }
-                                  data-testid="icon"
-                                  focusable="false"
+                                  key="plus"
                                   role="presentation"
-                                />
-                              </Icon>
+                                >
+                                  <use
+                                    xlinkHref="#plus"
+                                  />
+                                </svg>
+                              </ForwardRef>
                             </a>
                           </Link>
                         </ChildLink>

@@ -116,21 +116,19 @@ exports[`Should expand tab items 1`] = `
                 onClick={[Function]}
               >
                 completed
-                <Icon
-                  iconName="caret-bottom"
+                <ForwardRef
+                  symbol="caret-bottom"
                 >
                   <svg
                     className="lexicon-icon lexicon-icon-caret-bottom"
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                      }
-                    }
-                    data-testid="icon"
-                    focusable="false"
+                    key="caret-bottom"
                     role="presentation"
-                  />
-                </Icon>
+                  >
+                    <use
+                      xlinkHref="#caret-bottom"
+                    />
+                  </svg>
+                </ForwardRef>
               </button>
               <div
                 className="collapse navbar-collapse "
@@ -364,21 +362,19 @@ exports[`Should hide tab items 1`] = `
                 onClick={[Function]}
               >
                 completed
-                <Icon
-                  iconName="caret-bottom"
+                <ForwardRef
+                  symbol="caret-bottom"
                 >
                   <svg
                     className="lexicon-icon lexicon-icon-caret-bottom"
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                      }
-                    }
-                    data-testid="icon"
-                    focusable="false"
+                    key="caret-bottom"
                     role="presentation"
-                  />
-                </Icon>
+                  >
+                    <use
+                      xlinkHref="#caret-bottom"
+                    />
+                  </svg>
+                </ForwardRef>
               </button>
               <div
                 className="collapse navbar-collapse "
@@ -512,15 +508,12 @@ exports[`Should render component 1`] = `
       pending
       <svg
         className="lexicon-icon lexicon-icon-caret-bottom"
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-          }
-        }
-        data-testid="icon"
-        focusable="false"
         role="presentation"
-      />
+      >
+        <use
+          xlinkHref="#caret-bottom"
+        />
+      </svg>
     </button>
     <div
       className="collapse navbar-collapse "

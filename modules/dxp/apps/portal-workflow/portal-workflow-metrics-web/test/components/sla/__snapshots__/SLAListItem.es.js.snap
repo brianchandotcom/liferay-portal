@@ -44,15 +44,12 @@ exports[`Should render component 1`] = `
       >
         <svg
           className="lexicon-icon lexicon-icon-ellipsis-v"
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
-            }
-          }
-          data-testid="icon"
-          focusable="false"
           role="presentation"
-        />
+        >
+          <use
+            xlinkHref="#ellipsis-v"
+          />
+        </svg>
       </a>
       <ul
         aria-labelledby=""
@@ -219,21 +216,19 @@ exports[`Should render component 2`] = `
                   id="dropDownAction"
                   role="button"
                 >
-                  <Icon
-                    iconName="ellipsis-v"
+                  <ForwardRef
+                    symbol="ellipsis-v"
                   >
                     <svg
                       className="lexicon-icon lexicon-icon-ellipsis-v"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
-                        }
-                      }
-                      data-testid="icon"
-                      focusable="false"
+                      key="ellipsis-v"
                       role="presentation"
-                    />
-                  </Icon>
+                    >
+                      <use
+                        xlinkHref="#ellipsis-v"
+                      />
+                    </svg>
+                  </ForwardRef>
                 </a>
                 <ul
                   aria-labelledby=""
@@ -374,22 +369,20 @@ exports[`Should render component blocked 1`] = `
               <div
                 className="table-list-title"
               >
-                <Icon
-                  elementClasses="text-danger"
-                  iconName="exclamation-full"
+                <ForwardRef
+                  className="text-danger"
+                  symbol="exclamation-full"
                 >
                   <svg
                     className="lexicon-icon lexicon-icon-exclamation-full text-danger"
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-full\\" />",
-                      }
-                    }
-                    data-testid="icon"
-                    focusable="false"
+                    key="exclamation-full"
                     role="presentation"
-                  />
-                </Icon>
+                  >
+                    <use
+                      xlinkHref="#exclamation-full"
+                    />
+                  </svg>
+                </ForwardRef>
                  
                 <ChildLink
                   to="/sla/edit/undefined/undefined"
@@ -437,21 +430,19 @@ exports[`Should render component blocked 1`] = `
                   id="dropDownAction"
                   role="button"
                 >
-                  <Icon
-                    iconName="ellipsis-v"
+                  <ForwardRef
+                    symbol="ellipsis-v"
                   >
                     <svg
                       className="lexicon-icon lexicon-icon-ellipsis-v"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
-                        }
-                      }
-                      data-testid="icon"
-                      focusable="false"
+                      key="ellipsis-v"
                       role="presentation"
-                    />
-                  </Icon>
+                    >
+                      <use
+                        xlinkHref="#ellipsis-v"
+                      />
+                    </svg>
+                  </ForwardRef>
                 </a>
                 <ul
                   aria-labelledby=""

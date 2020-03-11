@@ -75,43 +75,44 @@ public class ImportLayoutPageTemplateEntryMVCActionCommand
 			return;
 		}
 
-		String successMessage = StringPool.BLANK;
-
 		if (ListUtil.isEmpty(layoutPageTemplateImportEntries)) {
-			successMessage = LanguageUtil.get(
-				_portal.getHttpServletRequest(actionRequest),
-				"no-file-was-imported");
+			SessionMessages.add(
+				actionRequest, "requestProcessed",
+				LanguageUtil.get(
+					_portal.getHttpServletRequest(actionRequest),
+					"no-file-was-imported"));
+
+			return;
 		}
-		else {
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(actionRequest);
 
-			List<String> formattedMessages = new ArrayList<>();
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
 
-			Stream<LayoutPageTemplateImportEntry> stream =
-				layoutPageTemplateImportEntries.stream();
+		List<String> formattedMessages = new ArrayList<>();
 
-			Map<LayoutPageTemplateImportEntry.Status, Long>
-				layoutPageTemplateImportEntriesMap = stream.collect(
-					Collectors.groupingBy(
-						LayoutPageTemplateImportEntry::getStatus,
-						Collectors.counting()));
+		Stream<LayoutPageTemplateImportEntry> stream =
+			layoutPageTemplateImportEntries.stream();
 
-			for (Map.Entry<LayoutPageTemplateImportEntry.Status, Long>
-					entrySet : layoutPageTemplateImportEntriesMap.entrySet()) {
+		Map<LayoutPageTemplateImportEntry.Status, Long>
+			layoutPageTemplateImportEntriesMap = stream.collect(
+				Collectors.groupingBy(
+					LayoutPageTemplateImportEntry::getStatus,
+					Collectors.counting()));
 
-				LayoutPageTemplateImportEntry.Status status = entrySet.getKey();
+		for (Map.Entry<LayoutPageTemplateImportEntry.Status, Long> entrySet :
+				layoutPageTemplateImportEntriesMap.entrySet()) {
 
-				formattedMessages.add(
-					LanguageUtil.format(
-						httpServletRequest, "x-file-x",
-						new Object[] {entrySet.getValue(), status.getLabel()}));
-			}
+			LayoutPageTemplateImportEntry.Status status = entrySet.getKey();
 
-			successMessage = LanguageUtil.format(
-				httpServletRequest, "import-result-x",
-				StringUtil.merge(formattedMessages, StringPool.NEW_LINE));
+			formattedMessages.add(
+				LanguageUtil.format(
+					httpServletRequest, "x-file-x",
+					new Object[] {entrySet.getValue(), status.getLabel()}));
 		}
+
+		String successMessage = LanguageUtil.format(
+			httpServletRequest, "import-result-x",
+			StringUtil.merge(formattedMessages, StringPool.NEW_LINE));
 
 		SessionMessages.add(actionRequest, "requestProcessed", successMessage);
 	}

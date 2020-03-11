@@ -14,7 +14,6 @@
 
 package com.liferay.ac.csv.data.generator.util;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,44 +62,24 @@ public class GeneratedDataUtil {
 
 	public void deleteAll() throws PortalException {
 		for (Map.Entry<String, User> e : _addedUserMap.entrySet()) {
-			if (_preExistingData.contains(e.getValue())) {
-				continue;
-			}
-
 			_userLocalService.deleteUser(e.getValue());
 		}
 
 		for (Map.Entry<String, Organization> e :
 				_addedOrganizationMap.entrySet()) {
 
-			if (_preExistingData.contains(e.getValue())) {
-				continue;
-			}
-
 			_organizationLocalService.deleteOrganization(e.getValue());
 		}
 
 		for (Map.Entry<String, Role> e : _addedRoleMap.entrySet()) {
-			if (_preExistingData.contains(e.getValue())) {
-				continue;
-			}
-
 			_roleLocalService.deleteRole(e.getValue());
 		}
 
 		for (Map.Entry<String, UserGroup> e : _addedUserGroupMap.entrySet()) {
-			if (_preExistingData.contains(e.getValue())) {
-				continue;
-			}
-
 			_userGroupLocalService.deleteUserGroup(e.getValue());
 		}
 
 		for (Map.Entry<String, Team> e : _addedTeamMap.entrySet()) {
-			if (_preExistingData.contains(e.getValue())) {
-				continue;
-			}
-
 			_teamLocalService.deleteTeam(e.getValue());
 		}
 	}
@@ -166,78 +144,6 @@ public class GeneratedDataUtil {
 		_defaultGroupId = userActiveGroupIds.get(0);
 	}
 
-	public void setExistingPortalData() {
-		List<User> existingUserList = _userLocalService.getUsers(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		existingUserList.parallelStream(
-		).forEach(
-			user -> {
-				if (!containsUserKey(user.getEmailAddress())) {
-					_preExistingData.add(user);
-
-					_addedUserMap.put(user.getEmailAddress(), user);
-				}
-			}
-		);
-
-		List<Organization> existingOrgList =
-			_organizationLocalService.getOrganizations(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		existingOrgList.parallelStream(
-		).forEach(
-			org -> {
-				if (!containsOrganizationKey(org.getName())) {
-					_preExistingData.add(org);
-
-					_addedOrganizationMap.put(org.getName(), org);
-				}
-			}
-		);
-
-		List<UserGroup> existingUserGroupList =
-			_userGroupLocalService.getUserGroups(_companyId);
-
-		existingUserGroupList.parallelStream(
-		).forEach(
-			userGroup -> {
-				if (!containsUserGroupKey(userGroup.getName())) {
-					_preExistingData.add(userGroup);
-
-					_addedUserGroupMap.put(userGroup.getName(), userGroup);
-				}
-			}
-		);
-
-		List<Role> existingRoleList = _roleLocalService.getRoles(_companyId);
-
-		existingRoleList.parallelStream(
-		).forEach(
-			role -> {
-				if (!containsRoleKey(role.getName())) {
-					_preExistingData.add(role);
-
-					_addedRoleMap.put(role.getName(), role);
-				}
-			}
-		);
-
-		List<Team> existingTeamList = _teamLocalService.getTeams(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		existingTeamList.parallelStream(
-		).forEach(
-			team -> {
-				if (!containsTeamKey(team.getName())) {
-					_preExistingData.add(team);
-
-					_addedTeamMap.put(team.getName(), team);
-				}
-			}
-		);
-	}
-
 	private volatile HashMap<String, Organization> _addedOrganizationMap =
 		new HashMap<>();
 	private volatile HashMap<String, Role> _addedRoleMap = new HashMap<>();
@@ -254,8 +160,6 @@ public class GeneratedDataUtil {
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
-
-	private volatile List<Object> _preExistingData = new ArrayList<>();
 
 	@Reference
 	private RoleLocalService _roleLocalService;

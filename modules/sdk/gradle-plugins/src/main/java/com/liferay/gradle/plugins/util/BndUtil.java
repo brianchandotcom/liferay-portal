@@ -27,7 +27,7 @@ import org.gradle.api.plugins.ExtensionContainer;
  * @author Andrea Di Giorgi
  * @author Raymond Augé
  */
-public class BndBuilderUtil {
+public class BndUtil {
 
 	public static String getInstruction(Project project, String key) {
 		Map<String, Object> bundleInstructions = getInstructions(project);

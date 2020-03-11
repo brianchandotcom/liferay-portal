@@ -60,6 +60,22 @@ public class DepotPermissionCheckerWrapperTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testAssetLibraryAdminIsContentReviewer() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
+
+		DepotTestUtil.withAssetLibraryAdministrator(
+			depotEntry,
+			user -> {
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
+
+				Assert.assertTrue(
+					permissionChecker.isContentReviewer(
+						depotEntry.getCompanyId(), depotEntry.getGroupId()));
+			});
+	}
+
+	@Test
 	public void testHasPermissionForADepotGroupDelegatesToDepot()
 		throws Exception {
 

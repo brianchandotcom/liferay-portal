@@ -12,6 +12,7 @@
  * details.
  */
 
+import {FormSupport} from 'dynamic-data-mapping-form-renderer';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
@@ -133,8 +134,8 @@ const withActionableFields = ChildComponent => {
 		}
 
 		rendered() {
-			const {focusedField} = this.props;
-			const {selectedFieldActions} = this.refs;
+			const {focusedField, pages} = this.props;
+			const {hoveredFieldActions, selectedFieldActions} = this.refs;
 
 			if (this.hasFocusedField()) {
 				const {fieldName} = focusedField;
@@ -143,6 +144,18 @@ const withActionableFields = ChildComponent => {
 			}
 			else {
 				this.hideActions(selectedFieldActions);
+			}
+
+			const hoveredFieldName = hoveredFieldActions.state.fieldName;
+
+			if (!FormSupport.findFieldByName(pages, hoveredFieldName)) {
+				this.hideActions(hoveredFieldActions);
+
+				const hoveredNode = this._getHoveredNode();
+
+				if (hoveredNode) {
+					hoveredNode.classList.remove(_CSS_HOVERED);
+				}
 			}
 		}
 
@@ -162,27 +175,32 @@ const withActionableFields = ChildComponent => {
 			return dom.closest(node.parentElement, `.ddm-field-container`);
 		}
 
+		_getHoveredNode() {
+			return this.element.querySelector(
+				`.ddm-field-container.${_CSS_HOVERED}`
+			);
+		}
+
 		_handleMouseEnterField(event) {
 			const {delegateTarget} = event;
+			const {fieldName} = delegateTarget.dataset;
+			const {hoveredFieldActions, selectedFieldActions} = this.refs;
 
-			this._handleMouseLeaveField(event);
+			if (selectedFieldActions.state.fieldName === fieldName) {
+				this._handleMouseLeaveField(event);
 
-			let closestParent = this._getClosestParent(delegateTarget);
+				return;
+			}
 
-			while (closestParent) {
-				closestParent.classList.remove(_CSS_HOVERED);
+			const hoveredNode = this._getHoveredNode();
 
-				closestParent = this._getClosestParent(closestParent);
+			if (hoveredNode) {
+				hoveredNode.classList.remove(_CSS_HOVERED);
 			}
 
 			delegateTarget.classList.add(_CSS_HOVERED);
 
-			const {fieldName} = delegateTarget.dataset;
-			const {hoveredFieldActions, selectedFieldActions} = this.refs;
-
-			if (selectedFieldActions.state.fieldName !== fieldName) {
-				this.showActions(hoveredFieldActions, fieldName);
-			}
+			this.showActions(hoveredFieldActions, fieldName);
 
 			event.stopPropagation();
 		}
@@ -225,11 +243,11 @@ const withActionableFields = ChildComponent => {
 			const closestParent = this._getClosestParent(delegateTarget);
 
 			if (closestParent) {
-				closestParent.classList.add(_CSS_HOVERED);
-
 				const {fieldName} = closestParent.dataset;
 
 				if (selectedFieldActions.state.fieldName !== fieldName) {
+					closestParent.classList.add(_CSS_HOVERED);
+
 					this.showActions(hoveredFieldActions, fieldName);
 				}
 			}

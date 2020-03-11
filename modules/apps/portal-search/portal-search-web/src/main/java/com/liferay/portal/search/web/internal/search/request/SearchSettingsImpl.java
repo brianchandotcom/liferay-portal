@@ -101,6 +101,11 @@ public class SearchSettingsImpl implements SearchSettings {
 	}
 
 	@Override
+	public Optional<String> getScopeParameterName() {
+		return Optional.ofNullable(_scopeParameterName);
+	}
+
+	@Override
 	public SearchContext getSearchContext() {
 		return _searchContext;
 	}
@@ -144,6 +149,11 @@ public class SearchSettingsImpl implements SearchSettings {
 		_paginationStartParameterName = paginationStartParameterName;
 	}
 
+	@Override
+	public void setScopeParameterName(String scopeParameterName) {
+		_scopeParameterName = scopeParameterName;
+	}
+
 	protected String getAggregationName(Facet facet) {
 		if (facet instanceof com.liferay.portal.search.facet.Facet) {
 			com.liferay.portal.search.facet.Facet osgiFacet =
@@ -160,6 +170,7 @@ public class SearchSettingsImpl implements SearchSettings {
 	private String _paginationDeltaParameterName;
 	private Integer _paginationStart;
 	private String _paginationStartParameterName;
+	private String _scopeParameterName;
 	private final SearchContext _searchContext;
 	private final SearchRequestBuilder _searchRequestBuilder;
 

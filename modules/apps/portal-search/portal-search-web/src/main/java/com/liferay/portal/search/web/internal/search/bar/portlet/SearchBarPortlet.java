@@ -114,8 +114,9 @@ public class SearchBarPortlet extends MVCPortlet {
 			portletSharedSearchResponse.getSearchSettings(),
 			searchBarPortletPreferences, themeDisplay);
 
-		String scopeParameterName =
-			searchBarPortletPreferences.getScopeParameterName();
+		String scopeParameterName = getScopeParameterName(
+			portletSharedSearchResponse.getSearchSettings(),
+			searchBarPortletPreferences, themeDisplay);
 
 		return searchBarPortletDisplayBuilder.setDestination(
 			searchBarPortletPreferences.getDestinationString()
@@ -167,6 +168,23 @@ public class SearchBarPortlet extends MVCPortlet {
 		SearchRequest request = searchResponse.getRequest();
 
 		return request.getPaginationStartParameterName();
+	}
+
+	protected String getScopeParameterName(
+		SearchSettings searchSettings,
+		SearchBarPortletPreferences searchBarPortletPreferences,
+		ThemeDisplay themeDisplay) {
+
+		if (!SearchBarPortletDestinationUtil.isSameDestination(
+				searchBarPortletPreferences, themeDisplay)) {
+
+			return searchBarPortletPreferences.getScopeParameterName();
+		}
+
+		Optional<String> optional = searchSettings.getScopeParameterName();
+
+		return optional.orElse(
+			searchBarPortletPreferences.getScopeParameterName());
 	}
 
 	protected boolean isEmptySearchEnabled(

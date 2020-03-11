@@ -48,17 +48,24 @@
 				label=""
 				name=htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())
 				placeholder=searchBarPortletDisplayContext.getInputPlaceholder()
-				title="search"
+				title=languageUtil.get(locale, 'search')
 				type="text"
 				useNamespace=false
-				value=searchBarPortletDisplayContext.getKeywords()
+				value=htmlUtil.escape(searchBarPortletDisplayContext.getKeywords())
 				wrapperCssClass="input-group-item input-group-append search-bar-keywords-input-wrapper"
 			/>
 		<#else>
 			<div class="input-group-item search-bar-keywords-input-wrapper">
 				<input
-				class="form-control input-group-inset input-group-inset-before search-bar-keywords-input" data-qa-id="searchInput"
-				id="${namespace + stringUtil.randomId()}" name="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())}" placeholder="${searchBarPortletDisplayContext.getInputPlaceholder()}" title="${languageUtil.get(locale, 'search')}" type="text" value="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywords())}" />
+					class="form-control input-group-inset input-group-inset-before search-bar-keywords-input"
+					data-qa-id="searchInput"
+					id="${namespace + stringUtil.randomId()}"
+					name="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())}"
+					placeholder="${searchBarPortletDisplayContext.getInputPlaceholder()}"
+					title="${languageUtil.get(locale, 'search')}"
+					type="text"
+					value="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywords())}"
+				/>
 
 				<div class="input-group-inset-item input-group-inset-item-before">
 					<button ariaLabel="${languageUtil.get(locale, 'submit')}" class="btn btn-unstyled" type="submit">

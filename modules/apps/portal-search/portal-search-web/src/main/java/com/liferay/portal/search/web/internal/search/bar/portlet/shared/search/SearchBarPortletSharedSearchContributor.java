@@ -77,6 +77,9 @@ public class SearchBarPortletSharedSearchContributor
 			searchRequestBuilder, searchBarPortletPreferences,
 			portletSharedSearchSettings);
 
+		setScopeParameterName(
+			searchBarPortletPreferences, portletSharedSearchSettings);
+
 		filterByThisSite(
 			searchRequestBuilder, searchBarPortletPreferences,
 			portletSharedSearchSettings);
@@ -298,6 +301,14 @@ public class SearchBarPortletSharedSearchContributor
 			searchContext -> searchContext.setAttribute(
 				SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX,
 				Boolean.TRUE));
+	}
+
+	protected void setScopeParameterName(
+		SearchBarPortletPreferences searchBarPortletPreferences,
+		PortletSharedSearchSettings portletSharedSearchSettings) {
+
+		portletSharedSearchSettings.setScopeParameterName(
+			searchBarPortletPreferences.getScopeParameterName());
 	}
 
 	protected boolean shouldContributeToCurrentPageSearch(

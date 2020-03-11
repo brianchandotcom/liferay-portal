@@ -14,6 +14,8 @@ definition {
 
 		// Create site and content page
 
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
 		ContentPages.addPage(pageName = "ABtesting Content Page");
 
 		PageEditor.clickPublish();

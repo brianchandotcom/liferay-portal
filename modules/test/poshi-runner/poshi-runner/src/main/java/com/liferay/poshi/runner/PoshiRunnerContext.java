@@ -535,33 +535,6 @@ public class PoshiRunnerContext {
 	private static String _getTestBatchGroups() throws Exception {
 		String propertyQuery = PropsValues.TEST_BATCH_PROPERTY_QUERY;
 
-		if (propertyQuery == null) {
-			String[] propertyNames = PropsValues.TEST_BATCH_PROPERTY_NAMES;
-			String[] propertyValues = PropsValues.TEST_BATCH_PROPERTY_VALUES;
-
-			if (propertyNames.length != propertyValues.length) {
-				throw new Exception(
-					"'test.batch.property.names'" +
-						"/'test.batch.property.values' must have matching " +
-							"amounts of entries!");
-			}
-
-			StringBuilder sb = new StringBuilder();
-
-			for (int i = 0; i < propertyNames.length; i++) {
-				sb.append(propertyNames[i]);
-				sb.append(" == \"");
-				sb.append(propertyValues[i]);
-				sb.append("\"");
-
-				if (i < (propertyNames.length - 1)) {
-					sb.append(" OR ");
-				}
-			}
-
-			propertyQuery = sb.toString();
-		}
-
 		if (Validator.isNotNull(PropsValues.TEST_RUN_ENVIRONMENT)) {
 			StringBuilder sb = new StringBuilder();
 
@@ -1488,9 +1461,7 @@ public class PoshiRunnerContext {
 		StringBuilder sb = new StringBuilder();
 
 		if ((PropsValues.TEST_BATCH_MAX_GROUP_SIZE > 0) &&
-			(((PropsValues.TEST_BATCH_PROPERTY_NAMES != null) &&
-			  (PropsValues.TEST_BATCH_PROPERTY_VALUES != null)) ||
-			 (PropsValues.TEST_BATCH_PROPERTY_QUERY != null))) {
+			(PropsValues.TEST_BATCH_PROPERTY_QUERY != null)) {
 
 			sb.append(_getTestBatchGroups());
 		}

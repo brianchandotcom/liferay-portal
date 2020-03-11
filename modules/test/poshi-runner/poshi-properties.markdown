@@ -184,16 +184,6 @@ Sets the maximum number of tests running in a batch.
 
 Sets the maximum number of tests running in an axis.
 
-### test.batch.property.names
-
-Sets the names of properties used to filter out tests in PQL. This must be
-paired with [`test.batch.property.values`](#testbatchpropertyvalues).
-
-### test.batch.property.values
-
-Sets the values of properties used to filter out tests in PQL. This must be
-paired with [`test.batch.property.names`](#testbatchpropertynames).
-
 ### test.batch.run.type
 
 Sets how groups of tests are organized; valid values are `sequential` or

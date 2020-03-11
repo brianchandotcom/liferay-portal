@@ -10,11 +10,11 @@
  */
 
 import {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import MaskedInput from 'react-text-mask';
 
-import Icon from '../../../../shared/components/Icon.es';
 import {
 	defaultDateFormat,
 	formatDate,
@@ -78,7 +78,7 @@ const UpdateDueDateStep = ({dueDate = new Date()}) => {
 					<label htmlFor="dateInput">
 						{Liferay.Language.get('new-due-date')}{' '}
 						<span className="reference-mark">
-							<Icon iconName="asterisk" />
+							<ClayIcon symbol="asterisk" />
 						</span>
 					</label>
 

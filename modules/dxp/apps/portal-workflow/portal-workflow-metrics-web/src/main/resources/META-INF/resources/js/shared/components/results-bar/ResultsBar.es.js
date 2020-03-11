@@ -10,12 +10,12 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import React, {useCallback} from 'react';
 
 import {useFilter} from '../../hooks/useFilter.es';
 import {useRouter} from '../../hooks/useRouter.es';
 import {sub} from '../../util/lang.es';
-import Icon from '../Icon.es';
 import {
 	removeFilters,
 	removeItem,
@@ -123,7 +123,7 @@ const FilterItem = ({filter, item, withoutRouteParams}) => {
 								displayType="unstyled"
 								onClick={removeFilter}
 							>
-								<Icon iconName="times" />
+								<ClayIcon symbol="times" />
 							</ClayButton>
 						</span>
 					)}

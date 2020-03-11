@@ -9,16 +9,15 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
 import React from 'react';
-
-import Icon from '../../../shared/components/Icon.es';
 
 const FieldLabel = ({fieldId, required, text}) => (
 	<label htmlFor={fieldId}>
 		{`${text} `}
 		{required && (
 			<span className="reference-mark">
-				<Icon iconName="asterisk" />
+				<ClayIcon symbol="asterisk" />
 			</span>
 		)}
 	</label>

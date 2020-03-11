@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
 import React, {useEffect, useRef} from 'react';
 import MaskedInput from 'react-text-mask';
 
-import Icon from '../../shared/components/Icon.es';
 import {
 	addClickOutsideListener,
 	handleClickOutside,
@@ -165,7 +165,7 @@ const FormGroupItem = ({children, error}) => (
 			<div className="form-feedback-group">
 				<div className="form-feedback-item">
 					<span className="form-feedback-indicator mr-2">
-						<Icon iconName="exclamation-full" />
+						<ClayIcon symbol="exclamation-full" />
 					</span>
 
 					<span className="text-semi-bold" data-testid="errorSpan">

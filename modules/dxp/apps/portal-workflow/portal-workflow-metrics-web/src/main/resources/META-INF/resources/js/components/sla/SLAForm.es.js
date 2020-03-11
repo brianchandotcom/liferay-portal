@@ -10,12 +10,12 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 import MaskedInput from 'react-text-mask';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
-import Icon from '../../shared/components/Icon.es';
 import {AutocompleteMultiSelect} from '../../shared/components/autocomplete/AutocompleteMultiSelect.es';
 import LoadingState from '../../shared/components/loading/LoadingState.es';
 import {
@@ -85,7 +85,7 @@ const AlertMessage = () => {
 		<div className="alert-container">
 			<div className="alert alert-danger" role="alert">
 				<span className="alert-indicator">
-					<Icon iconName="exclamation-full" />
+					<ClayIcon symbol="exclamation-full" />
 				</span>
 
 				<strong className="lead">

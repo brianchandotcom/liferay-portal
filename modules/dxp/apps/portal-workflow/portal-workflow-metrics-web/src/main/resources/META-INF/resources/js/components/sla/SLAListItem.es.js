@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-import Icon from '../../shared/components/Icon.es';
 import {ChildLink} from '../../shared/components/router/routerWrapper.es';
 import {formatDuration} from '../../shared/util/duration.es';
 import moment from '../../shared/util/moment.es';
@@ -49,9 +49,9 @@ class SLAListItem extends React.Component {
 				<td className="table-cell-expand">
 					<div className="table-list-title">
 						{blocked && (
-							<Icon
-								elementClasses="text-danger"
-								iconName="exclamation-full"
+							<ClayIcon
+								className="text-danger"
+								symbol="exclamation-full"
 							/>
 						)}{' '}
 						<ChildLink to={`/sla/edit/${processId}/${id}`}>
@@ -83,7 +83,7 @@ class SLAListItem extends React.Component {
 							id="dropDownAction"
 							role="button"
 						>
-							<Icon iconName="ellipsis-v" />
+							<ClayIcon symbol="ellipsis-v" />
 						</a>
 
 						<ul

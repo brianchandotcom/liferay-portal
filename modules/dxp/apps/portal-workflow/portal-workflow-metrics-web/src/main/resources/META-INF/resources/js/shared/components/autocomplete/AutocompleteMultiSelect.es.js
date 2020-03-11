@@ -10,9 +10,9 @@
  */
 
 import ClayAutocomplete from '@clayui/autocomplete';
+import ClayIcon from '@clayui/icon';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import Icon from '../Icon.es';
 import {
 	addClickOutsideListener,
 	handleClickOutside,
@@ -169,7 +169,7 @@ const AutocompleteMultiSelect = ({
 					className="col-1 drop-icon mt-1 text-right"
 					onClick={handleFocus}
 				>
-					<Icon iconName="caret-double" />
+					<ClayIcon symbol="caret-double" />
 				</div>
 
 				<Autocomplete.DropDown
@@ -207,7 +207,7 @@ const Item = ({key, name, onRemove}) => {
 					onClick={onRemove}
 					type="button"
 				>
-					<Icon iconName="times" />
+					<ClayIcon symbol="times" />
 				</button>
 			</span>
 		</span>

@@ -9,11 +9,10 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
 import React from 'react';
-
-import Icon from './Icon.es';
 
 const Body = ({children, elementClasses}) => {
 	const classes = getCN('panel-body', elementClasses);
@@ -79,7 +78,7 @@ const HeaderWithOptions = props => {
 								data-tooltip-align={tooltipPosition}
 								title={description}
 							>
-								<Icon iconName={'question-circle-full'} />
+								<ClayIcon symbol="question-circle-full" />
 							</span>
 						</span>
 					</ClayTooltipProvider>

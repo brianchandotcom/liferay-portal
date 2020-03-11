@@ -9,12 +9,12 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
 import getClassName from 'classnames';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {useFilter} from '../../hooks/useFilter.es';
 import {useRouter} from '../../hooks/useRouter.es';
-import Icon from '../Icon.es';
 import {FilterItem} from './FilterItem.es';
 import {FilterSearch} from './FilterSearch.es';
 import {
@@ -216,7 +216,7 @@ const Filter = ({
 					{name}
 				</span>
 
-				<Icon iconName="caret-bottom" />
+				<ClayIcon symbol="caret-bottom" />
 			</button>
 
 			<div className={classes.menu} role="menu">

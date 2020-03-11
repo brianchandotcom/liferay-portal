@@ -10,10 +10,10 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useContext, useEffect, useMemo} from 'react';
 
-import Icon from '../../../shared/components/Icon.es';
 import Panel from '../../../shared/components/Panel.es';
 import EmptyState from '../../../shared/components/empty-state/EmptyState.es';
 import ReloadButton from '../../../shared/components/list/ReloadButton.es';
@@ -130,7 +130,7 @@ const Header = ({children, data, description, title}) => (
 							data-tooltip-align={'right'}
 							title={description}
 						>
-							<Icon iconName={'question-circle-full'} />
+							<ClayIcon symbol="question-circle-full" />
 						</span>
 					</span>
 				</ClayTooltipProvider>

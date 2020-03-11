@@ -10,10 +10,10 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
-import Icon from '../../shared/components/Icon.es';
 import ListView from '../../shared/components/list/ListView.es';
 import ReloadButton from '../../shared/components/list/ReloadButton.es';
 import PaginationBar from '../../shared/components/pagination-bar/PaginationBar.es';
@@ -202,7 +202,7 @@ class SLAListCard extends React.Component {
 												className="btn btn-primary nav-btn nav-btn-monospaced"
 												to={`/sla/new/${processId}`}
 											>
-												<Icon iconName="plus" />
+												<ClayIcon symbol="plus" />
 											</ChildLink>
 										</span>
 									</span>

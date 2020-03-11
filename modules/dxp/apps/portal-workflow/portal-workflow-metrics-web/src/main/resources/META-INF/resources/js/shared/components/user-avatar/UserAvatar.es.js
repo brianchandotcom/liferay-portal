@@ -9,10 +9,9 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React from 'react';
-
-import Icon from '../Icon.es';
 
 const UserAvatar = ({className, image}) => {
 	const avatarClassName = getCN(
@@ -26,7 +25,7 @@ const UserAvatar = ({className, image}) => {
 				{image ? (
 					<img className="img-fluid" src={image} />
 				) : (
-					<Icon iconName="user" />
+					<ClayIcon symbol="user" />
 				)}
 			</span>
 		</span>

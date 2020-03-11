@@ -9,9 +9,8 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
 import React from 'react';
-
-import Icon from '../Icon.es';
 
 const FilterSearch = ({
 	children,
@@ -40,7 +39,7 @@ const FilterSearch = ({
 
 							<span className="input-group-inset-item input-group-inset-item-after">
 								<span className="ml-2 mr-2">
-									<Icon iconName="search" />
+									<ClayIcon symbol="search" />
 								</span>
 							</span>
 						</div>

@@ -10,10 +10,10 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
-import Icon from '../../shared/components/Icon.es';
 import QuickActionKebab from '../../shared/components/quick-action-kebab/QuickActionKebab.es';
 import moment from '../../shared/util/moment.es';
 import {capitalize} from '../../shared/util/util.es';
@@ -118,9 +118,10 @@ const Item = ({totalCount, ...instance}) => {
 						className={`sticker sticker-sm ${slaStatusIcon.bgColor}`}
 					>
 						<span className="inline-item">
-							<Icon
-								elementClasses={slaStatusIcon.iconColor}
-								iconName={slaStatusIcon.iconName}
+							<ClayIcon
+								className={slaStatusIcon.iconColor}
+								data-testid="statusIcon"
+								symbol={slaStatusIcon.iconName}
 							/>
 						</span>
 					</span>

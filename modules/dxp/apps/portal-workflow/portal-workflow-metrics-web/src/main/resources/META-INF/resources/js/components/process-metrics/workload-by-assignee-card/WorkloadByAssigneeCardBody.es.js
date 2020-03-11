@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
 import React, {useContext} from 'react';
 
-import Icon from '../../../shared/components/Icon.es';
 import Panel from '../../../shared/components/Panel.es';
 import EmptyState from '../../../shared/components/empty-state/EmptyState.es';
 import ReloadButton from '../../../shared/components/list/ReloadButton.es';
@@ -123,7 +123,7 @@ const Footer = ({processId, processStepKey, totalCount}) => {
 					)} (${totalCount})`}
 				</span>
 
-				<Icon iconName="caret-right-l" />
+				<ClayIcon symbol="caret-right-l" />
 			</ChildLink>
 		</div>
 	);

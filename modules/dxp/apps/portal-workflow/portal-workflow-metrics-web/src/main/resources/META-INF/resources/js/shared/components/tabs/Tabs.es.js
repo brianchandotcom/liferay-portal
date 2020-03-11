@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 
-import Icon from '../Icon.es';
 import TabItem from './TabItem.es';
 
 class Tabs extends React.Component {
@@ -66,7 +66,7 @@ class Tabs extends React.Component {
 					>
 						{activeTab.name}
 
-						<Icon iconName="caret-bottom" />
+						<ClayIcon symbol="caret-bottom" />
 					</button>
 
 					<div

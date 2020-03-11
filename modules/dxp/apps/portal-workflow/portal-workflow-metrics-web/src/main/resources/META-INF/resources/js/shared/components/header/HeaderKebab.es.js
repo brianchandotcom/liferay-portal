@@ -11,9 +11,9 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import React, {useMemo, useState} from 'react';
 
-import Icon from '../Icon.es';
 import Portal from '../portal/Portal.es';
 import {ChildLink} from '../router/routerWrapper.es';
 
@@ -42,7 +42,7 @@ const HeaderKebab = ({kebabItems = []}) => {
 						displayType="unstyled"
 						monospaced
 					>
-						<Icon iconName="ellipsis-v" />
+						<ClayIcon symbol="ellipsis-v" />
 					</ClayButton>
 				}
 			>

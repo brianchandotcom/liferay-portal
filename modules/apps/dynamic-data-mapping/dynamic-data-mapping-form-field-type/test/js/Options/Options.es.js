@@ -12,22 +12,10 @@
  * details.
  */
 
+import {fireEvent} from '@testing-library/react';
+
 import Options from '../../../src/main/resources/META-INF/resources/Options/Options.es';
 import withContextMock from '../__mocks__/withContextMock.es';
-
-const fireEvent = {
-	input: (element, config) => {
-		element.value = config.target.value;
-
-		var event = new Event('input', {
-			...config,
-			bubbles: true,
-			cancelable: true,
-		});
-
-		element.dispatchEvent(event);
-	},
-};
 
 let component;
 const spritemap = 'icons.svg';
@@ -143,7 +131,11 @@ describe('Options', () => {
 		const {element} = component;
 		const labelInputs = element.querySelectorAll('.ddm-field-text');
 
-		fireEvent.input(labelInputs[0], {target: {value: 'Hello'}});
+		fireEvent.change(labelInputs[0], {
+			target: {
+				value: 'Hello',
+			},
+		});
 
 		jest.runAllTimers();
 
@@ -171,7 +163,11 @@ describe('Options', () => {
 		const {element} = component;
 		const labelInputs = element.querySelectorAll('.ddm-field-text');
 
-		fireEvent.input(labelInputs[1], {target: {value: 'Hello'}});
+		fireEvent.change(labelInputs[1], {
+			target: {
+				value: 'Hello',
+			},
+		});
 
 		jest.runAllTimers();
 

@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.redirect.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,7 +28,9 @@ public class RequiredRedirectEntrySourceURLException extends PortalException {
 		super(msg);
 	}
 
-	public RequiredRedirectEntrySourceURLException(String msg, Throwable cause) {
+	public RequiredRedirectEntrySourceURLException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

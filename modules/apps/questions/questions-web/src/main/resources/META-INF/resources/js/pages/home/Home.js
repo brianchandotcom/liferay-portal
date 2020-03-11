@@ -18,6 +18,7 @@ import {Link} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import {getSections} from '../../utils/client.es';
+import lang from '../../utils/lang.es';
 
 export default () => {
 	const context = useContext(AppContext);
@@ -50,10 +51,10 @@ export default () => {
 									>
 										<p>{section.description}</p>
 										<p>
-											{
-												section.numberOfMessageBoardThreads
-											}{' '}
-											{Liferay.Language.get('threads')}
+											{lang.sub(
+												Liferay.Language.get('x-questions'),
+												[section.numberOfMessageBoardThreads]
+											)}
 										</p>
 									</ClayCard.Description>
 								</ClayCard.Body>

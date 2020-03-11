@@ -76,7 +76,7 @@ public class RatingsTag extends IncludeTag {
 		_classPK = classPK;
 	}
 
-	public void setInTrash(Boolean inTrash) {
+	public void setInTrash(boolean inTrash) {
 		_inTrash = inTrash;
 	}
 

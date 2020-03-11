@@ -1,3 +1,4 @@
+import aQute.bnd.gradle.BundleTaskConvention
 import aQute.bnd.osgi.Constants
 
 import org.gradle.util.VersionNumber
@@ -14,7 +15,6 @@ buildscript {
 	}
 }
 
-apply plugin: "biz.aQute.bnd.builder"
 apply plugin: "com.liferay.baseline"
 
 Properties bndProperties = _getBndProperties(project)
@@ -34,7 +34,15 @@ baselineConfiguration {
 }
 
 jar {
-	bnd "-include": "bnd.bnd"
+	BundleTaskConvention bundleTaskConvention = new BundleTaskConvention(jar)
+
+	bundleTaskConvention.bndfile = file("bnd.bnd")
+
+	convention.plugins.bundle = bundleTaskConvention
+
+	doLast {
+		bundleTaskConvention.buildBundle()
+	}
 }
 
 repositories {

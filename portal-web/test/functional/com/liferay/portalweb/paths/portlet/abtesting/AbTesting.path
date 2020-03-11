@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>AbTesting</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AbTesting</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>AB_TESTING_BUTTON</td>
+	<td>//*[contains(@class, 'lexicon-icon lexicon-icon-test')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AB_TESTING_TITLE_FIELD</td>
+	<td>//input[@class='form-control mt-1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_VARIANT</td>
+	<td>//*[contains(@class,'lfr-portal-tooltip text-truncate btn btn-unstyled') and @data-title='Control']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CREATE_TEST_BUTTON</td>
+	<td>//*[contains(@class, 'btn btn-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CREATE_VARIANT_BUTTON</td>
+	<td>//*[contains(@class,'mb-3 btn btn-secondary') and contains(text(),'Create Variant')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VARIANT_NAME_FIELD</td>
+	<td>//input[@class='form-control mt-1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OK_BUTTON</td>
+	<td>//*[contains(@class,'btn btn-primary') and text()='OK']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVIEW_AND_RUN_TEST_BUTTON</td>
+	<td>//*[contains(@class,'w-100 btn btn-primary') and contains(text(),'Review and Run Test')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RUN_TEST_BUTTON</td>
+	<td>//*[contains(@class,'btn btn-primary') and text()='Run']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_AB_TESTING_BUTTON</td>
+	<td>//*[contains(@class,'btn btn-primary') and contains(text(),'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_VARIANT_NAME_BUTTON</td>
+	<td>//*[contains(@class,'btn btn-primary') and contains(text(),'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_DATA_ANALYTICS_CLOUD_BUTTON</td>
+	<td>//*[contains(@class,'btn btn-secondary btn-sm mt-3 w-100 link-secondary')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

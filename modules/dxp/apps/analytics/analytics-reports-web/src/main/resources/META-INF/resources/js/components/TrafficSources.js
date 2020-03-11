@@ -62,7 +62,7 @@ export default function TrafficSources({dataProvider, languageTag}) {
 											}}
 										></span>
 									</td>
-									<td className="font-weight-bold pr-1 text-secondary">
+									<td className="pie-chart-wrapper--legend--title pr-1 text-secondary">
 										{entry.title}
 										<Hint
 											message={entry.helpMessage}

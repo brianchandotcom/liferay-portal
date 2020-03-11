@@ -33,11 +33,11 @@ public class RedirectEntryModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, RedirectEntry redirectEntry) {
-		document.addText("destinationURL", redirectEntry.getDestinationURL());
-		document.addText("sourceURL", redirectEntry.getSourceURL());
-
 		document.setSortableTextFields(
 			new String[] {"destinationURL", "sourceURL"});
+
+		document.addText("destinationURL", redirectEntry.getDestinationURL());
+		document.addText("sourceURL", redirectEntry.getSourceURL());
 	}
 
 }

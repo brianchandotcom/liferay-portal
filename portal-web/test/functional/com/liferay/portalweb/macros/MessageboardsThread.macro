@@ -636,7 +636,7 @@ definition {
 				value1 = "Reply");
 		}
 		else {
-			AssertElementPresent(
+			AssertElementPresent.assertVisible(
 				key_threadSubject = "${threadSubject}",
 				locator1 = "MessageBoardsThread#THREAD_REPLY_BUTTON");
 

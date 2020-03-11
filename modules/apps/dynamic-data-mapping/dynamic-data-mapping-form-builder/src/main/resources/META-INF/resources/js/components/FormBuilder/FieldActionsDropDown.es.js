@@ -14,6 +14,8 @@
 
 import {ClayActionsDropdown} from 'clay-dropdown';
 import {FormSupport} from 'dynamic-data-mapping-form-renderer';
+import dom from 'metal-dom';
+import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
 import {Align} from 'metal-position';
 import {Config} from 'metal-state';
@@ -27,14 +29,24 @@ const getFieldContainer = fieldName => {
 };
 
 class FieldActionsDropDown extends Component {
+	attached() {
+		this._eventHandler.add(
+			dom.on(window, 'resize', this._align.bind(this))
+		);
+	}
+
 	close() {
 		this.setState({expanded: false});
 	}
 
 	created() {
-		this.on('fieldNameChanged', this._handleFieldNameChanged);
+		this._eventHandler = new EventHandler();
 
 		this.close();
+	}
+
+	disposed() {
+		this._eventHandler.removeAllListeners();
 	}
 
 	open() {

@@ -87,7 +87,12 @@ export default function PageStructureSidebar() {
 			});
 		}
 		else {
-			item.children.forEach(childId => {
+			const itemChildren =
+				item.type === LAYOUT_DATA_ITEM_TYPES.collection
+					? items[item.children[0]].children
+					: item.children;
+
+			itemChildren.forEach(childId => {
 				const childItem = items[childId];
 
 				if (
@@ -122,6 +127,7 @@ export default function PageStructureSidebar() {
 	};
 
 	const data = masterLayoutData || layoutData;
+
 	const nodes = visit(data.items[data.rootItems.main], data.items).children;
 
 	return (

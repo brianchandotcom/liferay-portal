@@ -134,10 +134,6 @@ public class ConfigurationUpgradeStepFactoryImpl
 			File oldConfigFile, File newConfigFile)
 		throws IOException {
 
-		if (!oldConfigFile.exists()) {
-			return;
-		}
-
 		if (newConfigFile.exists()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(

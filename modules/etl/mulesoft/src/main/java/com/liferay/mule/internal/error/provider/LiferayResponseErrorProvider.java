@@ -34,6 +34,7 @@ public class LiferayResponseErrorProvider implements ErrorTypeProvider {
 		errors.add(LiferayError.BAD_REQUEST);
 		errors.add(LiferayError.CONNECTION_TIMEOUT);
 		errors.add(LiferayError.EXECUTION);
+		errors.add(LiferayError.INVALID_OAS_DOCUMENT);
 		errors.add(LiferayError.NOT_ACCEPTABLE);
 		errors.add(LiferayError.NOT_ALLOWED);
 		errors.add(LiferayError.NOT_FOUND);

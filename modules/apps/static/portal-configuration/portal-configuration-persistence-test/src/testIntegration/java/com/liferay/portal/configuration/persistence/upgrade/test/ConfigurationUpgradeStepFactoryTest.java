@@ -15,12 +15,8 @@
 package com.liferay.portal.configuration.persistence.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -115,11 +111,9 @@ public class ConfigurationUpgradeStepFactoryTest {
 			boolean felixFileName)
 		throws Exception {
 
-		Configuration configuration = null;
+		String oldPid = _TEST_PID_OLD;
 
-		String oldPid = _OLD_PID;
-
-		String newPid = _NEW_PID;
+		String newPid = _TEST_PID_NEW;
 
 		String parentDir = _props.get(PropsKeys.MODULE_FRAMEWORK_CONFIGS_DIR);
 
@@ -140,40 +134,31 @@ public class ConfigurationUpgradeStepFactoryTest {
 
 			if (data) {
 				if (factory) {
-					configuration =
-						_configurationAdmin.createFactoryConfiguration(
-							oldPid, StringPool.QUESTION);
+					oldPid = ConfigurationTestUtil.createFactoryConfiguration(
+						oldPid, new HashMapDictionary<>());
 
-					oldPid = configuration.getPid();
-
-					newPid = StringUtil.replace(oldPid, _OLD_PID, _NEW_PID);
+					newPid = StringUtil.replace(
+						oldPid, _TEST_PID_OLD, _TEST_PID_NEW);
 				}
 				else {
-					configuration = _configurationAdmin.getConfiguration(
-						oldPid);
+					ConfigurationTestUtil.saveConfiguration(
+						_configurationAdmin.getConfiguration(oldPid),
+						new HashMapDictionary<>());
 				}
 
 				if (felixFileName) {
 					URI uri = oldConfigFile.toURI();
 
 					ConfigurationTestUtil.saveConfiguration(
-						configuration,
+						oldPid,
 						MapUtil.singletonDictionary(
 							"felix.fileinstall.filename", uri.toString()));
-				}
-				else if (factory) {
-
-					// Factory configuration instance will only be persisted
-					// after the first update with dictionary
-
-					ConfigurationTestUtil.saveConfiguration(
-						configuration, new HashMapDictionary<>());
 				}
 			}
 
 			UpgradeStep upgradeStep =
 				_configurationUpgradeStepFactory.createUpgradeStep(
-					_OLD_PID, _NEW_PID);
+					_TEST_PID_OLD, _TEST_PID_NEW);
 
 			upgradeStep.upgrade(null);
 
@@ -220,29 +205,22 @@ public class ConfigurationUpgradeStepFactoryTest {
 				newConfigFile.delete();
 			}
 
-			if (!factory || data) {
-				_persistenceManager.delete(oldPid);
-				_persistenceManager.delete(newPid);
-			}
-			else {
-				DB db = DBManagerUtil.getDB();
+			if (data) {
+				for (Configuration configuration :
+						_configurationAdmin.listConfigurations(
+							"(service.pid=" + _TEST_PID + "*)")) {
 
-				db.runSQL(
-					StringBundler.concat(
-						"delete from Configuration_ where configurationId ",
-						"like '", _OLD_PID, "%' or configurationId like '",
-						_NEW_PID, "%'"));
-			}
-
-			if (configuration != null) {
-				ConfigurationTestUtil.deleteConfiguration(configuration);
+					ConfigurationTestUtil.deleteConfiguration(configuration);
+				}
 			}
 		}
 	}
 
-	private static final String _NEW_PID = "test.new.pid";
+	private static final String _TEST_PID = "test.pid";
 
-	private static final String _OLD_PID = "test.old.pid";
+	private static final String _TEST_PID_NEW = _TEST_PID + ".new";
+
+	private static final String _TEST_PID_OLD = _TEST_PID + ".old";
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

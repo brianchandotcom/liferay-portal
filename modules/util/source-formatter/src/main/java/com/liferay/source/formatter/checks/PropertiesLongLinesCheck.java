@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -61,23 +62,21 @@ public class PropertiesLongLinesCheck extends BaseFileCheck {
 			return comment;
 		}
 
-		int x = comment.indexOf(" ", 6);
+		int x = comment.indexOf(CharPool.SPACE, 6);
 
 		if (x == -1) {
 			return comment;
 		}
 
-		String s = "";
-
 		if (x > getMaxLineLength()) {
-			s = "    # " + comment.substring(x + 1);
+			String s = "    # " + comment.substring(x + 1);
 
 			return comment.substring(0, x) + "\n" + _splitComment(s);
 		}
 
-		x = comment.lastIndexOf(" ", getMaxLineLength());
+		x = comment.lastIndexOf(CharPool.SPACE, getMaxLineLength());
 
-		s = "    # " + comment.substring(x + 1);
+		String s = "    # " + comment.substring(x + 1);
 
 		return comment.substring(0, x) + "\n" + _splitComment(s);
 	}

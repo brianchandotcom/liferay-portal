@@ -31,6 +31,7 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
+import org.gradle.api.plugins.MavenPlugin;
 
 /**
  * @author Andrea Di Giorgi
@@ -112,7 +113,9 @@ public class LiferayAntPlugin implements Plugin<Project> {
 
 			@Override
 			public String transform(String targetName) {
-				if (targetName.equals(BasePlugin.CLEAN_TASK_NAME)) {
+				if (targetName.equals(BasePlugin.CLEAN_TASK_NAME) ||
+					targetName.equals(MavenPlugin.INSTALL_TASK_NAME)) {
+
 					targetName = "ant" + StringUtil.capitalize(targetName);
 				}
 

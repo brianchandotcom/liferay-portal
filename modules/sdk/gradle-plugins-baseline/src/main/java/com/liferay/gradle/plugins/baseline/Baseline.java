@@ -51,7 +51,7 @@ import java.util.Set;
  * @author Raymond Augé
  * @author Andrea Di Giorgi
  */
-public abstract class Baseline {
+public class Baseline {
 
 	public boolean execute() throws Exception {
 		_headerPrinted = false;
@@ -673,9 +673,19 @@ public abstract class Baseline {
 		return false;
 	}
 
-	protected abstract void log(Reporter reporter);
+	protected void log(Reporter reporter) {
+		for (String message : reporter.getErrors()) {
+			System.out.println(message);
+		}
 
-	protected abstract void log(String output);
+		for (String message : reporter.getWarnings()) {
+			System.out.println(message);
+		}
+	}
+
+	protected void log(String output) {
+		System.out.println(output);
+	}
 
 	protected void persistLog(String output) throws IOException {
 		if (_logFile == null) {

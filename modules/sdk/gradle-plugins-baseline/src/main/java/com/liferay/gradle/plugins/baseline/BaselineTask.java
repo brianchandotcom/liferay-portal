@@ -14,19 +14,24 @@
 
 package com.liferay.gradle.plugins.baseline;
 
-import aQute.service.reporter.Reporter;
-
+import com.liferay.gradle.plugins.baseline.internal.work.BaselineWorkAction;
+import com.liferay.gradle.plugins.baseline.internal.work.BaselineWorkParameters;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
+import javax.inject.Inject;
+
+import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
-import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.DirectoryProperty;
+import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionContainer;
+import org.gradle.api.provider.Property;
 import org.gradle.api.reporting.ReportingExtension;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
@@ -36,6 +41,8 @@ import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.VerificationTask;
+import org.gradle.workers.WorkQueue;
+import org.gradle.workers.WorkerExecutor;
 
 /**
  * @author Andrea Di Giorgi
@@ -43,82 +50,93 @@ import org.gradle.api.tasks.VerificationTask;
 @CacheableTask
 public class BaselineTask extends DefaultTask implements VerificationTask {
 
-	public BaselineTask() {
+	@Inject
+	public BaselineTask(WorkerExecutor workerExecutor) {
 		_logFileName = "baseline/" + getName() + ".log";
+		_workerExecutor = workerExecutor;
 	}
 
 	@TaskAction
-	public void baseline() throws Exception {
-		final Logger logger = getLogger();
+	public void baseline() {
+		WorkQueue workQueue = _workerExecutor.noIsolation();
 
-		Baseline baseline = new Baseline() {
+		workQueue.submit(
+			BaselineWorkAction.class,
+			new Action<BaselineWorkParameters>() {
 
-			@Override
-			protected void log(Reporter reporter) {
-				if (logger.isErrorEnabled()) {
-					for (String message : reporter.getErrors()) {
-						logger.error(message);
+				@Override
+				public void execute(
+					BaselineWorkParameters baselineWorkParameters) {
+
+					Logger logger = getLogger();
+
+					if (logger.isInfoEnabled()) {
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("Comparing ");
+						sb.append(getNewJarFile());
+						sb.append(" against ");
+						sb.append(getOldJarFile());
+
+						logger.info(sb.toString());
 					}
+
+					RegularFileProperty bndFileRegularFileProperty =
+						baselineWorkParameters.getBndFile();
+
+					bndFileRegularFileProperty.set(getBndFile());
+
+					Property<Boolean> forceCalculatedVersionProperty =
+						baselineWorkParameters.getForceCalculatedVersion();
+
+					forceCalculatedVersionProperty.set(
+						isForceCalculatedVersion());
+
+					Property<Boolean> ignoreExcessiveVersionIncreasesProperty =
+						baselineWorkParameters.
+							getIgnoreExcessiveVersionIncreases();
+
+					ignoreExcessiveVersionIncreasesProperty.set(
+						isIgnoreExcessiveVersionIncreases());
+
+					Property<Boolean> ignoreFailuresProperty =
+						baselineWorkParameters.getIgnoreFailures();
+
+					ignoreFailuresProperty.set(getIgnoreFailures());
+
+					RegularFileProperty logFileRegularFileProperty =
+						baselineWorkParameters.getLogFile();
+
+					logFileRegularFileProperty.set(getLogFile());
+
+					RegularFileProperty newJarFileRegularFileProperty =
+						baselineWorkParameters.getNewJarFile();
+
+					newJarFileRegularFileProperty.set(getNewJarFile());
+
+					RegularFileProperty oldJarFileRegularFileProperty =
+						baselineWorkParameters.getOldJarFile();
+
+					oldJarFileRegularFileProperty.set(getOldJarFile());
+
+					Property<Boolean> reportDiffProperty =
+						baselineWorkParameters.getReportDiff();
+
+					reportDiffProperty.set(isReportDiff());
+
+					Property<Boolean> reportOnlyDirtyPackagesProperty =
+						baselineWorkParameters.getReportOnlyDirtyPackages();
+
+					reportOnlyDirtyPackagesProperty.set(
+						isReportOnlyDirtyPackages());
+
+					DirectoryProperty sourceDirDirectoryProperty =
+						baselineWorkParameters.getSourceDir();
+
+					sourceDirDirectoryProperty.set(getSourceDir());
 				}
 
-				if (logger.isWarnEnabled()) {
-					for (String message : reporter.getWarnings()) {
-						logger.warn(message);
-					}
-				}
-			}
-
-			@Override
-			protected void log(String output) {
-				if (logger.isLifecycleEnabled()) {
-					logger.lifecycle(output);
-				}
-			}
-
-		};
-
-		baseline.setBndFile(getBndFile());
-		baseline.setForceCalculatedVersion(isForceCalculatedVersion());
-		baseline.setForcePackageInfo(true);
-		baseline.setIgnoreExcessiveVersionIncreases(
-			isIgnoreExcessiveVersionIncreases());
-		baseline.setLogFile(getLogFile());
-		baseline.setNewJarFile(getNewJarFile());
-		baseline.setOldJarFile(getOldJarFile());
-		baseline.setReportDiff(isReportDiff());
-		baseline.setReportOnlyDirtyPackages(isReportOnlyDirtyPackages());
-		baseline.setSourceDir(getSourceDir());
-
-		boolean match = baseline.execute();
-
-		if (logger.isInfoEnabled()) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Comparing ");
-			sb.append(getNewJarFile());
-			sb.append(" against ");
-			sb.append(getOldJarFile());
-
-			logger.info(sb.toString());
-		}
-
-		if (!match) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Semantic versioning is incorrect while checking ");
-			sb.append(getNewJarFile());
-			sb.append(" against ");
-			sb.append(getOldJarFile());
-
-			if (getIgnoreFailures()) {
-				if (logger.isWarnEnabled()) {
-					logger.warn(sb.toString());
-				}
-			}
-			else {
-				throw new GradleException(sb.toString());
-			}
-		}
+			});
 	}
 
 	@Input
@@ -259,5 +277,6 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 	private boolean _reportDiff;
 	private boolean _reportOnlyDirtyPackages;
 	private Object _sourceDir;
+	private final WorkerExecutor _workerExecutor;
 
 }

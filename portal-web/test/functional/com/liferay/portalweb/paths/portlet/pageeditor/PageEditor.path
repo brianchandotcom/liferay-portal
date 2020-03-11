@@ -248,7 +248,7 @@
 </tr>
 <tr>
 	<td>CONTENT_PAGE_WEB_CONTENT_CONTENT</td>
-	<td>//div[contains(@class,'journal-content-article ')]</td>
+	<td>//div[contains(@class,'journal-content-article')]</td>
 	<td></td>
 </tr>
 <tr>

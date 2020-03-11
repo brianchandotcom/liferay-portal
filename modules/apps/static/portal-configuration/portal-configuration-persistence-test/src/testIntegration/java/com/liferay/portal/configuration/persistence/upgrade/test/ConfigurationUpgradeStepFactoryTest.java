@@ -129,6 +129,14 @@ public class ConfigurationUpgradeStepFactoryTest {
 		_testUpgradeConfig(true, false, true);
 	}
 
+	private File _getConfigFile(String pid, boolean factory) {
+		if (factory) {
+			return new File(_configsDir, pid + "-instance.config");
+		}
+
+		return new File(_configsDir, pid + ".config");
+	}
+
 	private void _testUpgradeConfig(
 			boolean factory, boolean data, boolean configFile)
 		throws Exception {
@@ -145,15 +153,8 @@ public class ConfigurationUpgradeStepFactoryTest {
 
 		String newPid = _TEST_PID_NEW;
 
-		File oldConfigFile = new File(_configsDir, oldPid + ".config");
-
-		File newConfigFile = new File(_configsDir, newPid + ".config");
-
-		if (factory) {
-			oldConfigFile = new File(_configsDir, oldPid + "-instance.config");
-
-			newConfigFile = new File(_configsDir, newPid + "-instance.config");
-		}
+		File oldConfigFile = _getConfigFile(oldPid, factory);
+		File newConfigFile = _getConfigFile(newPid, factory);
 
 		if (configFile) {
 			oldConfigFile.createNewFile();

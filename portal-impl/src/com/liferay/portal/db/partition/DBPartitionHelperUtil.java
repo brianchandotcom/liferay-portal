@@ -94,7 +94,7 @@ public class DBPartitionHelperUtil {
 				}
 			}
 
-			_usePartition(connection, companyId);
+			_usePartition(connection);
 		}
 		catch (Exception exception) {
 			throw new ORMException(exception);
@@ -141,8 +141,7 @@ public class DBPartitionHelperUtil {
 				public Connection getConnection() throws SQLException {
 					Connection connection = super.getConnection();
 
-					_usePartition(
-						connection, CompanyThreadLocal.getCompanyId());
+					_usePartition(connection);
 
 					return connection;
 				}
@@ -155,8 +154,7 @@ public class DBPartitionHelperUtil {
 					Connection connection = super.getConnection(
 						username, password);
 
-					_usePartition(
-						connection, CompanyThreadLocal.getCompanyId());
+					_usePartition(connection);
 
 					return connection;
 				}
@@ -185,11 +183,13 @@ public class DBPartitionHelperUtil {
 		return false;
 	}
 
-	private static void _usePartition(Connection connection, long companyId) {
+	private static void _usePartition(Connection connection) {
 		try {
 			if (connection.isReadOnly()) {
 				return;
 			}
+
+			long companyId = CompanyThreadLocal.getCompanyId();
 
 			try (Statement statement = connection.createStatement()) {
 				if ((companyId == CompanyConstants.SYSTEM) ||

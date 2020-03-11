@@ -63,24 +63,20 @@ public class ContainerLayoutStructureItemHelper
 				(Map<String, Object>)definitionMap.get("backgroundImage");
 
 			if (backgroundImageMap != null) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				Map<String, String> titleMap =
-					(Map<String, String>)backgroundImageMap.get("title");
-
-				if (titleMap != null) {
-					jsonObject.put("title", titleMap.get("value"));
-				}
+				Map<String, Object> titleMap =
+					(Map<String, Object>)backgroundImageMap.get("title");
 
 				Map<String, Object> urlMap =
 					(Map<String, Object>)backgroundImageMap.get("url");
 
-				if (urlMap != null) {
-					String urlValue = (String)urlMap.get("value");
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-					if (Validator.isNotNull(urlValue)) {
-						jsonObject.put("url", urlValue);
-					}
+				if (titleMap != null) {
+					jsonObject.put("title", _getLocalizedValue(titleMap));
+				}
+
+				if (urlMap != null) {
+					jsonObject.put("url", _getLocalizedValue(urlMap));
 
 					_processMapping(
 						jsonObject, (Map<String, String>)urlMap.get("mapping"));
@@ -110,6 +106,26 @@ public class ContainerLayoutStructureItemHelper
 		}
 
 		return containerLayoutStructureItem;
+	}
+
+	private Object _getLocalizedValue(Map<String, Object> map) {
+		Map<String, Object> localizedValuesMap = (Map<String, Object>)map.get(
+			"value_i18n");
+
+		if (localizedValuesMap != null) {
+			JSONObject localizedValueJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			for (Map.Entry<String, Object> entry :
+					localizedValuesMap.entrySet()) {
+
+				localizedValueJSONObject.put(entry.getKey(), entry.getValue());
+			}
+
+			return localizedValueJSONObject;
+		}
+
+		return map.get("value");
 	}
 
 	private void _processMapping(

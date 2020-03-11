@@ -90,22 +90,6 @@ class FieldActionsDropDown extends Component {
 		});
 	}
 
-	syncExpanded(expanded) {
-		const {fieldName} = this.state;
-		const fieldContainer = getFieldContainer(fieldName);
-
-		if (!fieldContainer) {
-			return;
-		}
-
-		if (expanded) {
-			fieldContainer.classList.add('expanded');
-		}
-		else {
-			fieldContainer.classList.remove('expanded');
-		}
-	}
-
 	syncVisible(visible) {
 		if (visible) {
 			this.element.classList.remove('hide');
@@ -167,22 +151,6 @@ class FieldActionsDropDown extends Component {
 
 	_handleExpandedChanged({newVal}) {
 		this.setState({expanded: newVal});
-
-		this.syncExpanded(newVal);
-	}
-
-	_handleFieldNameChanged({newVal, prevVal}) {
-		const {expanded} = this.state;
-		const newFieldContainer = getFieldContainer(newVal);
-		const prevFieldContainer = getFieldContainer(prevVal);
-
-		if (prevFieldContainer && newFieldContainer !== prevFieldContainer) {
-			prevFieldContainer.classList.remove('expanded');
-
-			if (expanded && newFieldContainer) {
-				newFieldContainer.classList.add('expanded');
-			}
-		}
 	}
 
 	_handleItemClicked({

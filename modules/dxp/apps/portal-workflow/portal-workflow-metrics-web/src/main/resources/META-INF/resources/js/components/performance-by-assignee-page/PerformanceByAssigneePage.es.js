@@ -13,8 +13,8 @@ import React, {useMemo} from 'react';
 
 import PromisesResolver from '../../shared/components/promises-resolver/PromisesResolver.es';
 import {parse} from '../../shared/components/router/queryString.es';
-import {useFetch} from '../../shared/hooks/useFetch.es';
 import {useFilter} from '../../shared/hooks/useFilter.es';
+import {usePost} from '../../shared/hooks/usePost.es';
 import {useProcessTitle} from '../../shared/hooks/useProcessTitle.es';
 import {useTimeRangeFetch} from '../filter/hooks/useTimeRangeFetch.es';
 import {getTimeRangeParams} from '../filter/util/timeRangeUtil.es';
@@ -24,7 +24,7 @@ import {Header} from './PerformanceByAssigneePageHeader.es';
 const PerformanceByAssigneePage = ({query, routeParams}) => {
 	useTimeRangeFetch();
 
-	const {processId} = routeParams;
+	const {processId, ...paginationParams} = routeParams;
 	const {search = null} = parse(query);
 	const filterKeys = ['processStep', 'roles'];
 
@@ -41,19 +41,19 @@ const PerformanceByAssigneePage = ({query, routeParams}) => {
 		dateStart,
 	]);
 
-	const {data, fetchData} = useFetch({
-		params: {
+	const {data, postData} = usePost({
+		body: {
 			completed: true,
 			keywords: search,
 			roleIds,
 			taskKeys,
-			...routeParams,
 			...timeRange,
 		},
+		params: paginationParams,
 		url: `/processes/${processId}/assignee-users`,
 	});
 
-	const promises = useMemo(() => [fetchData()], [fetchData]);
+	const promises = useMemo(() => [postData()], [postData]);
 
 	return (
 		<PromisesResolver promises={promises}>

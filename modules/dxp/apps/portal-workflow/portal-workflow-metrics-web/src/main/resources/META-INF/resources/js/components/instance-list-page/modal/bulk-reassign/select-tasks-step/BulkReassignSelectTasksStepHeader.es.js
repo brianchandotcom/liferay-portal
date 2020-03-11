@@ -21,6 +21,7 @@ import {ModalContext} from '../../ModalContext.es';
 
 const Header = ({
 	filterKeys,
+	instanceIds,
 	items = [],
 	prefixKey,
 	selectedFilters,
@@ -134,6 +135,7 @@ const Header = ({
 						/>
 
 						<AssigneeFilter
+							instanceIds={instanceIds}
 							options={{withoutRouteParams: true}}
 							prefixKey={prefixKey}
 							processId={processId}

@@ -13,8 +13,8 @@ import React, {useMemo, useState} from 'react';
 
 import Panel from '../../../shared/components/Panel.es';
 import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
-import {useFetch} from '../../../shared/hooks/useFetch.es';
 import {useFilter} from '../../../shared/hooks/useFilter.es';
+import {usePost} from '../../../shared/hooks/usePost.es';
 import ProcessStepFilter from '../../filter/ProcessStepFilter.es';
 import {Body} from './WorkloadByAssigneeCardBody.es';
 import Tabs from './WorkloadByAssigneeCardTabs.es';
@@ -55,14 +55,29 @@ const WorkloadByAssigneeCard = ({routeParams}) => {
 		filterValues: {taskKeys: [taskKey] = []},
 	} = useFilter({filterKeys});
 
-	const params = getParams(currentTab, taskKey);
+	const sort = useMemo(() => {
+		const items = {
+			onTime: 'onTimeTaskCount:desc',
+			overdue: 'overdueTaskCount:desc',
+			total: 'taskCount:desc',
+		};
 
-	const {data, fetchData} = useFetch({
-		params,
+		return items[currentTab];
+	}, [currentTab]);
+
+	const taskKeys = taskKey !== 'allSteps' ? taskKey : undefined;
+
+	const {data, postData} = usePost({
+		body: {taskKeys},
+		params: {
+			page: 1,
+			pageSize: 10,
+			sort,
+		},
 		url: `/processes/${processId}/assignee-users`,
 	});
 
-	const promises = useMemo(() => [fetchData()], [fetchData]);
+	const promises = useMemo(() => [postData()], [postData]);
 
 	return (
 		<PromisesResolver promises={promises}>
@@ -77,32 +92,12 @@ const WorkloadByAssigneeCard = ({routeParams}) => {
 				<WorkloadByAssigneeCard.Body
 					currentTab={currentTab}
 					data={data}
-					processStepKey={params.taskKeys}
+					processStepKey={taskKeys}
 					{...routeParams}
 				/>
 			</Panel>
 		</PromisesResolver>
 	);
-};
-
-const getParams = (currentTab, taskKey) => {
-	const params = {
-		page: 1,
-		pageSize: 10,
-		taskKeys: taskKey !== 'allSteps' ? taskKey : undefined,
-	};
-
-	if (currentTab === 'overdue') {
-		params.sort = 'overdueTaskCount:desc';
-	}
-	else if (currentTab === 'onTime') {
-		params.sort = 'onTimeTaskCount:desc';
-	}
-	else {
-		params.sort = 'taskCount:desc';
-	}
-
-	return params;
 };
 
 WorkloadByAssigneeCard.Body = Body;

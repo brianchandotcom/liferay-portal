@@ -185,7 +185,7 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		// PageEditor.addContentDisplay(fragmentName = "Content");
+		PageEditor.addContentDisplay(fragmentName = "Content");
 
 		PageEditor.editContentDisplay(
 			depotName = "Test Depot Name",

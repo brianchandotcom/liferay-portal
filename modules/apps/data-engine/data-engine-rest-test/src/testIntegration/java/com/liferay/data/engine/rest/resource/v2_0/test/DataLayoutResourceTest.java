@@ -111,7 +111,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	}
 
 	@Override
-	protected DataLayout randomDataLayout() {
+	protected DataLayout randomDataLayout() throws Exception {
 		return DataLayoutTestUtil.createDataLayout(
 			_dataDefinition.getId(), RandomTestUtil.randomString(),
 			testGroup.getGroupId());

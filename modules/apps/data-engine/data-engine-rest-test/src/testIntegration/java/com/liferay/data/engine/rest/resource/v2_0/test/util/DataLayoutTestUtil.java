@@ -18,7 +18,9 @@ import com.liferay.data.engine.rest.client.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutColumn;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutPage;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutRow;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 /**
@@ -27,7 +29,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 public class DataLayoutTestUtil {
 
 	public static DataLayout createDataLayout(
-		long dataDefinitionId, String name, long siteId) {
+			long dataDefinitionId, String name, long siteId)
+		throws PortalException {
 
 		DataLayout dataLayout = new DataLayout() {
 			{
@@ -36,6 +39,7 @@ public class DataLayoutTestUtil {
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
 				paginationMode = "wizard";
+				userId = TestPropsValues.getUserId();
 			}
 		};
 

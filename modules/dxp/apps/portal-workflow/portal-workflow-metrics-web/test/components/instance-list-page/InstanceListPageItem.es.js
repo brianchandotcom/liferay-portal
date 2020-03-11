@@ -77,7 +77,7 @@ describe('The instance list item should', () => {
 			</InstanceListContext.Provider>
 		);
 
-		const instanceStatusIcon = getByTestId('icon');
+		const instanceStatusIcon = getByTestId('statusIcon');
 
 		expect([...instanceStatusIcon.classList]).toContain(
 			'lexicon-icon-check-circle'
@@ -93,7 +93,7 @@ describe('The instance list item should', () => {
 			</InstanceListContext.Provider>
 		);
 
-		const instanceStatusIcon = getByTestId('icon');
+		const instanceStatusIcon = getByTestId('statusIcon');
 
 		expect([...instanceStatusIcon.classList]).toContain(
 			'lexicon-icon-exclamation-circle'
@@ -109,7 +109,7 @@ describe('The instance list item should', () => {
 			</InstanceListContext.Provider>
 		);
 
-		const instanceStatusIcon = getByTestId('icon');
+		const instanceStatusIcon = getByTestId('statusIcon');
 
 		expect([...instanceStatusIcon.classList]).toContain('lexicon-icon-hr');
 	});

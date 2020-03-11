@@ -262,8 +262,6 @@ public class BaselinePlugin implements Plugin<Project> {
 			baselineConfigurationExtension.getLowestMajorVersion();
 
 		if (lowestMajorVersion != null) {
-			BaselineTask previousVersionBaselineTask = baselineTask;
-
 			int maxMajorVersion = versionNumber.getMajor();
 
 			if ((versionNumber.getMinor() == 0) &&
@@ -287,9 +285,7 @@ public class BaselinePlugin implements Plugin<Project> {
 						true);
 				}
 
-				previousVersionBaselineTask.dependsOn(majorVersionBaselineTask);
-
-				previousVersionBaselineTask = majorVersionBaselineTask;
+				baselineTask.dependsOn(majorVersionBaselineTask);
 			}
 		}
 		else if (baselineConfigurationExtension.

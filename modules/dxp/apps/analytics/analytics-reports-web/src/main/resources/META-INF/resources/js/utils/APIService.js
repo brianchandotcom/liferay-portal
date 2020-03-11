@@ -68,17 +68,19 @@ function APIService({endpoints, namespace, page}) {
 					resolve({
 						analyticsReportsTrafficSources: [
 							{
-								helpMessage:
-									'People that find your page through a search engine, such as Google or Bing',
+								helpMessage: Liferay.Language.get(
+									'organic-help-message'
+								),
 								name: 'organic',
-								title: 'Organic',
+								title: Liferay.Language.get('organic'),
 								value: 32178,
 							},
 							{
-								helpMessage:
-									'Traffic that you have to pay to obtain',
+								helpMessage: Liferay.Language.get(
+									'paid-help-message'
+								),
 								name: 'paid',
-								title: 'Paid',
+								title: Liferay.Language.get('paid'),
 								value: 278256,
 							},
 						],

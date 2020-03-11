@@ -105,7 +105,9 @@ export default function({context, props}) {
 			<h5 className="mt-4 sheet-subtitle text-secondary">
 				{Liferay.Language.get('traffic-sources')}
 				<Hint
-					message={Liferay.Language.get('traffic-message')}
+					message={Liferay.Language.get(
+						'traffic-sources-help-message'
+					)}
 					title={Liferay.Language.get('traffic-sources')}
 				/>
 			</h5>

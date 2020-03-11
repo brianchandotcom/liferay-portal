@@ -135,7 +135,9 @@ public class BasicFragmentManagementToolbarDisplayContext
 					liferayPortletResponse.createActionURL();
 
 				deleteEntriesURL.setParameter(
-					ActionRequest.ACTION_NAME, "/fragment/delete_entries");
+					ActionRequest.ACTION_NAME,
+					"/fragment/delete_fragment_compositions_and_fragment_" +
+						"entries");
 				deleteEntriesURL.setParameter(
 					"redirect", themeDisplay.getURLCurrent());
 

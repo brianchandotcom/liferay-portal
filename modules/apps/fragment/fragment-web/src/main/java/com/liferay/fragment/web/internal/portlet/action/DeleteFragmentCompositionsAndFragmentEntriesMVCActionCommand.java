@@ -36,11 +36,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=/fragment/delete_entries"
+		"mvc.command.name=/fragment/delete_fragment_compositions_and_fragment_entries"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteEntriesMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteFragmentCompositionsAndFragmentEntriesMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

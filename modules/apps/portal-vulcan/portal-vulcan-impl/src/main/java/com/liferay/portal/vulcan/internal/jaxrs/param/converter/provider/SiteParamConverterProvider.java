@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import java.util.Optional;
-
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
@@ -71,27 +69,24 @@ public class SiteParamConverterProvider
 	}
 
 	public Long getGroupId(long companyId, String siteId) {
-		if (siteId != null) {
-			Group group = _groupLocalService.fetchGroup(companyId, siteId);
+		if (siteId == null) {
+			return null;
+		}
 
-			if (group == null) {
-				group = _groupLocalService.fetchGroup(
-					GetterUtil.getLong(siteId));
-			}
+		Group group = _fetchGroup(companyId, siteId);
 
-			Group liveGroup = Optional.ofNullable(
-				group
-			).map(
-				Group::getLiveGroup
-			).orElse(
-				null
-			);
+		if (group == null) {
+			return null;
+		}
 
-			if (((group != null) && group.isSite()) ||
-				((liveGroup != null) && liveGroup.isSite())) {
+		if (group.isSite()) {
+			return group.getGroupId();
+		}
 
-				return group.getGroupId();
-			}
+		Group liveGroup = group.getLiveGroup();
+
+		if ((liveGroup != null) && liveGroup.isSite()) {
+			return group.getGroupId();
 		}
 
 		return null;
@@ -100,6 +95,16 @@ public class SiteParamConverterProvider
 	@Override
 	public String toString(Long parameter) {
 		return String.valueOf(parameter);
+	}
+
+	private Group _fetchGroup(long companyId, String groupKey) {
+		Group group = _groupLocalService.fetchGroup(companyId, groupKey);
+
+		if (group != null) {
+			return group;
+		}
+
+		return _groupLocalService.fetchGroup(GetterUtil.getLong(groupKey));
 	}
 
 	private boolean _hasSiteIdAnnotation(Annotation[] annotations) {

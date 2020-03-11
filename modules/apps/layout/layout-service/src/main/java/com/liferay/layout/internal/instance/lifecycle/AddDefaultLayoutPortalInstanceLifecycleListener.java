@@ -14,6 +14,8 @@
 
 package com.liferay.layout.internal.instance.lifecycle;
 
+import com.liferay.layout.internal.util.DefaultLayoutDefinitionImporter;
+import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -27,16 +29,21 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -57,10 +64,11 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 		Group group = _groupLocalService.getGroup(
 			company.getCompanyId(), GroupConstants.GUEST);
 
-		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			group.getGroupId(), false);
+		Layout defaultLayout = _layoutLocalService.fetchFirstLayout(
+			group.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			false);
 
-		if (layoutSet.getPageCount() == 0) {
+		if (defaultLayout == null) {
 			addDefaultGuestPublicLayoutByProperties(group);
 		}
 	}
@@ -89,8 +97,43 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 			defaultUserId, group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_NAME, StringPool.BLANK,
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
+			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false, friendlyURL,
 			serviceContext);
+
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class.getName()), layout.getPlid());
+
+		String currentName = PrincipalThreadLocal.getName();
+		ServiceContext currentServiceContext =
+			ServiceContextThreadLocal.popServiceContext();
+
+		PrincipalThreadLocal.setName(String.valueOf(layout.getUserId()));
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			_defaultLayoutDefinitionImporter.importDefaultLayoutDefinition(
+				draftLayout, serviceContext);
+
+			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
+
+			_layoutLocalService.updatePriority(
+				layout.getPlid(), LayoutConstants.FIRST_PRIORITY);
+
+			_layoutLocalService.updateStatus(
+				layout.getUserId(), layout.getPlid(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+			_layoutLocalService.updateStatus(
+				layout.getUserId(), draftLayout.getPlid(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
+		}
+		finally {
+			PrincipalThreadLocal.setName(currentName);
+			ServiceContextThreadLocal.pushServiceContext(currentServiceContext);
+		}
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -142,14 +185,28 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 		}
 	}
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference
+	private DefaultLayoutDefinitionImporter _defaultLayoutDefinitionImporter;
+
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

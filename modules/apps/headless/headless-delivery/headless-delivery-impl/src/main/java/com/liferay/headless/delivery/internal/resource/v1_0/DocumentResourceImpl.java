@@ -136,7 +136,7 @@ public class DocumentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			search, filter, pagination, sorts);
+			filter, search, pagination, sorts);
 	}
 
 	public Rating getDocumentMyRating(Long documentId) throws Exception {
@@ -191,7 +191,7 @@ public class DocumentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			search, filter, pagination, sorts);
+			filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -408,9 +408,10 @@ public class DocumentResourceImpl
 	}
 
 	private Page<Document> _getDocumentsPage(
-			Map<String, Map<String, String>> actions,
-			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		Map<String, Map<String, String>> actions,
+		UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+		Filter filter, String search, Pagination pagination,
+		Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

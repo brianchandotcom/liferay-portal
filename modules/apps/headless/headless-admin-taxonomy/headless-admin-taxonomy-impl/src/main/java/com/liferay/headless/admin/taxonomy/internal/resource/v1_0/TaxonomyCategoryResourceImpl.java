@@ -167,7 +167,7 @@ public class TaxonomyCategoryResourceImpl
 						String.valueOf(assetCategory.getCategoryId())),
 					BooleanClauseOccur.MUST);
 			},
-			search, filter, pagination, sorts);
+			filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -207,7 +207,7 @@ public class TaxonomyCategoryResourceImpl
 						String.valueOf(taxonomyVocabularyId)),
 					BooleanClauseOccur.MUST);
 			},
-			search, filter, pagination, sorts);
+			filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -372,9 +372,10 @@ public class TaxonomyCategoryResourceImpl
 	}
 
 	private Page<TaxonomyCategory> _getCategoriesPage(
-			Map<String, Map<String, String>> actions,
-			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		Map<String, Map<String, String>> actions,
+		UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+		Filter filter, String search, Pagination pagination,
+		Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

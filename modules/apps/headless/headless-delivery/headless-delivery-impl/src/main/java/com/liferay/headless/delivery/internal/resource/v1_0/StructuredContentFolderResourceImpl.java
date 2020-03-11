@@ -106,7 +106,7 @@ public class StructuredContentFolderResourceImpl
 					"VIEW", "getSiteStructuredContentFoldersPage",
 					"com.liferay.journal", siteId)
 			).build(),
-			parentStructuredContentFolderId, siteId, search, filter, pagination,
+			parentStructuredContentFolderId, siteId, filter, search, pagination,
 			sorts);
 	}
 
@@ -151,8 +151,9 @@ public class StructuredContentFolderResourceImpl
 					"SUBSCRIBE", journalFolder,
 					"putStructuredContentFolderUnsubscribe")
 			).build(),
-			parentStructuredContentFolderId, journalFolder.getGroupId(), search,
-			filter, pagination, sorts);
+			parentStructuredContentFolderId, journalFolder.getGroupId(), filter,
+			search,
+			pagination, sorts);
 	}
 
 	@Override
@@ -249,9 +250,10 @@ public class StructuredContentFolderResourceImpl
 	}
 
 	private Page<StructuredContentFolder> _getFoldersPage(
-			Map<String, Map<String, String>> actions,
-			Long parentStructuredContentFolderId, Long siteId, String search,
-			Filter filter, Pagination pagination, Sort[] sorts)
+		Map<String, Map<String, String>> actions,
+		Long parentStructuredContentFolderId, Long siteId, Filter filter,
+		String search,
+		Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

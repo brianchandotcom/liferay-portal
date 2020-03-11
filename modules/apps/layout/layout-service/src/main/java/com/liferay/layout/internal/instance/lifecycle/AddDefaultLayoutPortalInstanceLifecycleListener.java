@@ -28,13 +28,11 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -46,8 +44,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,16 +71,6 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 
 	protected void addDefaultGuestPublicLayoutByProperties(Group group)
 		throws PortalException {
-
-		List<Portlet> portlets = _portletLocalService.getPortlets(
-			group.getCompanyId());
-
-		if (portlets.isEmpty()) {
-
-			// LPS-38457
-
-			return;
-		}
 
 		long defaultUserId = _userLocalService.getDefaultUserId(
 			group.getCompanyId());
@@ -207,9 +193,6 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

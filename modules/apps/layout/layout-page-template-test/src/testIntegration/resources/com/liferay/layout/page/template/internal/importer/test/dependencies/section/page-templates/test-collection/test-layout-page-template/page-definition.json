@@ -1,0 +1,31 @@
+{
+	"pageElement" : {
+		"pageElements" : [
+			{
+				"definition" : {
+					"backgroundColor" : "danger",
+					"backgroundImage" : {
+						"title" : {
+							"value" : "test.jpg"
+						},
+						"url" : {
+							"value" : "test-image.jpg"
+						}
+					},
+					"layout" : {
+						"containerType" : "Fluid",
+						"paddingBottom" : 4,
+						"paddingHorizontal" : 4,
+						"paddingTop" : 4
+					}
+				},
+				"type" : "Section"
+			}
+		],
+		"type" : "Root"
+	},
+	"settings" : {
+		"colorSchemeName" : "01",
+		"themeName" : "Classic"
+	}
+}

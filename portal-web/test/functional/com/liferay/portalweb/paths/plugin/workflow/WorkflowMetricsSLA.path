@@ -60,27 +60,27 @@
 </tr>
 <tr>
 	<td>SLA_DEFINITION_PAUSE</td>
-	<td>//label[@for="sla_time_pause"]/following-sibling::div[contains(@class, 'align-items-start')]</td>
+	<td>//label[@for="sla_time_pause"]/following-sibling::div//div[contains(@class, 'align-items-start')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SLA_DEFINITION_START</td>
-	<td>//label[@for="sla_time_start"]/following-sibling::div[contains(@class, 'align-items-start')]</td>
+	<td>//label[@for="sla_time_start"]/following-sibling::div//div[contains(@class, 'align-items-start')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SLA_DEFINITION_STOP</td>
-	<td>//label[@for="sla_time_stop"]/following-sibling::div[contains(@class, 'align-items-start')]</td>
+	<td>//label[@for="sla_time_stop"]/following-sibling::div//div[contains(@class, 'align-items-start')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SLA_DROPDOWN_START_OPTION</td>
-	<td>//a[contains(text(),'${key_slaDefinitionStart}')]</td>
+	<td>//span[contains(text(),'${key_slaDefinitionStart}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SLA_DROPDOWN_STOP_OPTION</td>
-	<td>//a[contains(text(),'${key_slaDefinitionEnd}')]</td>
+	<td>//span[contains(text(),'${key_slaDefinitionEnd}')]</td>
 	<td></td>
 </tr>
 <tr>

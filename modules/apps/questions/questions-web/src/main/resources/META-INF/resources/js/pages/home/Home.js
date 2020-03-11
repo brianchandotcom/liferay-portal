@@ -52,8 +52,12 @@ export default () => {
 										<p>{section.description}</p>
 										<p>
 											{lang.sub(
-												Liferay.Language.get('x-questions'),
-												[section.numberOfMessageBoardThreads]
+												Liferay.Language.get(
+													'x-questions'
+												),
+												[
+													section.numberOfMessageBoardThreads,
+												]
 											)}
 										</p>
 									</ClayCard.Description>

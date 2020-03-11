@@ -94,14 +94,6 @@ const {
 };
 
 const clientMock = {
-	get: jest
-		.fn()
-		.mockResolvedValueOnce({data: {items: processSteps}})
-		.mockResolvedValueOnce({data: {items: assignees}})
-		.mockResolvedValueOnce({data: {items: processSteps}})
-		.mockResolvedValueOnce({data: {items: assignees}})
-		.mockResolvedValueOnce({data: {items: processSteps}})
-		.mockResolvedValueOnce({data: {items: assignees}}),
 	patch: jest
 		.fn()
 		.mockRejectedValueOnce(new Error('request-failure'))
@@ -116,6 +108,14 @@ const clientMock = {
 		.mockResolvedValueOnce({data: {workflowTaskAssignableUsers}})
 		.mockResolvedValueOnce({data: {items: [items[0]], totalCount: 1}})
 		.mockResolvedValue({data: {workflowTaskAssignableUsers}}),
+	request: jest
+		.fn()
+		.mockResolvedValueOnce({data: {items: processSteps}})
+		.mockResolvedValueOnce({data: {items: assignees}})
+		.mockResolvedValueOnce({data: {items: processSteps}})
+		.mockResolvedValueOnce({data: {items: assignees}})
+		.mockResolvedValueOnce({data: {items: processSteps}})
+		.mockResolvedValueOnce({data: {items: assignees}}),
 };
 
 const ContainerMock = ({children}) => {

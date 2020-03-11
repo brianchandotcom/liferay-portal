@@ -25,7 +25,7 @@ import '../css/Languages.scss';
 
 const getLocalesInputValue = arr => arr.map(({localeId}) => localeId).join(',');
 
-function arrayMove(arr, from, to) {
+function move(arr, from, to) {
 	const clonedArr = [...arr];
 	const removedItem = clonedArr.splice(from, 1)[0];
 	clonedArr.splice(to, 0, removedItem);
@@ -90,9 +90,7 @@ const Languages = ({
 	};
 
 	const handleOnItemDrop = (currentIndex, newIndex) => {
-		setCustomLocales(languages =>
-			arrayMove(languages, currentIndex, newIndex)
-		);
+		setCustomLocales(languages => move(languages, currentIndex, newIndex));
 	};
 
 	useEffect(() => {

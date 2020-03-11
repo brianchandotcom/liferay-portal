@@ -121,7 +121,7 @@ class Sidebar extends Component {
 		this._handleDragTargetEnter = this._handleDragTargetEnter.bind(this);
 		this._handleDragTargetLeave = this._handleDragTargetLeave.bind(this);
 		this._handleEvaluatorChanged = this._handleEvaluatorChanged.bind(this);
-		this._handleFieldSettingsClicked = this._handleFieldSettingsClicked.bind(
+		this._handleElementSettingsClicked = this._handleElementSettingsClicked.bind(
 			this
 		);
 		this._handlePreviousButtonClicked = this._handlePreviousButtonClicked.bind(
@@ -420,7 +420,7 @@ class Sidebar extends Component {
 		dispatch('fieldDuplicated', {indexes});
 	}
 
-	_fetchFieldSet(fieldSetId) {
+	_fetchElementSet(fieldSetId) {
 		const {
 			editingLanguageId,
 			fieldSetDefinitionURL,
@@ -568,8 +568,8 @@ class Sidebar extends Component {
 		const indexes = FormSupport.getIndexes(columnNode);
 
 		if (fieldSetId) {
-			this._fetchFieldSet(fieldSetId).then(pages => {
-				dispatch('fieldSetAdded', {
+			this._fetchElementSet(fieldSetId).then(pages => {
+				dispatch('elementSetAdded', {
 					data,
 					fieldSetId,
 					fieldSetPages: pages,
@@ -662,7 +662,7 @@ class Sidebar extends Component {
 		});
 	}
 
-	_handleFieldSettingsClicked({data: {item}}) {
+	_handleElementSettingsClicked({data: {item}}) {
 		const {columnIndex, pageIndex, rowIndex} = this.props.focusedField;
 		const {settingsItem} = item;
 		const indexes = {
@@ -1188,7 +1188,7 @@ class Sidebar extends Component {
 							<ClayActionsDropdown
 								events={{
 									itemClicked: this
-										._handleFieldSettingsClicked,
+										._handleElementSettingsClicked,
 								}}
 								items={fieldActions}
 								ref="fieldSettingsActions"

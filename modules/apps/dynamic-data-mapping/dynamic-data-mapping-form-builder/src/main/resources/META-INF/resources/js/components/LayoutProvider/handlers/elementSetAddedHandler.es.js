@@ -16,7 +16,7 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 import {generateFieldName} from '../util/fields.es';
 
-const handleFieldSetAdded = (props, state, event) => {
+const handleElementSetAdded = (props, state, event) => {
 	const {fieldSetPages, indexes} = event;
 	const {pages} = state;
 	const {pageIndex, rowIndex} = indexes;
@@ -60,4 +60,4 @@ const handleFieldSetAdded = (props, state, event) => {
 	return {pages};
 };
 
-export default handleFieldSetAdded;
+export default handleElementSetAdded;

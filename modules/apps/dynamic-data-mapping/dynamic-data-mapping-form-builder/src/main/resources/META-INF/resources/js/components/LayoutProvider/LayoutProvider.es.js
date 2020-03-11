@@ -25,6 +25,7 @@ import {pageStructure, ruleStructure} from '../../util/config.es';
 import {getFieldProperties, localizeField} from '../../util/fieldSupport.es';
 import {setLocalizedValue} from '../../util/i18n.es';
 import handleColumnResized from './handlers/columnResizedHandler.es';
+import handleElementSetAdded from './handlers/elementSetAddedHandler.es';
 import handleFieldAdded from './handlers/fieldAddedHandler.es';
 import handleFieldBlurred from './handlers/fieldBlurredHandler.es';
 import handleFieldClicked from './handlers/fieldClickedHandler.es';
@@ -32,7 +33,6 @@ import handleFieldDeleted from './handlers/fieldDeletedHandler.es';
 import handleFieldDuplicated from './handlers/fieldDuplicatedHandler.es';
 import handleFieldEdited from './handlers/fieldEditedHandler.es';
 import handleFieldMoved from './handlers/fieldMovedHandler.es';
-import handleFieldSetAdded from './handlers/fieldSetAddedHandler.es';
 import handleFocusedFieldEvaluationEnded from './handlers/focusedFieldEvaluationEndedHandler.es';
 import handleLanguageIdDeleted from './handlers/languageIdDeletedHandler.es';
 import handleSectionAdded from './handlers/sectionAddedHandler.es';
@@ -77,6 +77,7 @@ class LayoutProvider extends Component {
 		return {
 			activePageUpdated: this._handleActivePageUpdated.bind(this),
 			columnResized: this._handleColumnResized.bind(this),
+			elementSetAdded: this._handleElementSetAdded.bind(this),
 			fieldAdded: this._handleFieldAdded.bind(this),
 			fieldBlurred: this._handleFieldBlurred.bind(this),
 			fieldChangesCanceled: this._handleFieldChangesCanceled.bind(this),
@@ -85,7 +86,6 @@ class LayoutProvider extends Component {
 			fieldDuplicated: this._handleFieldDuplicated.bind(this),
 			fieldEdited: this._handleFieldEdited.bind(this),
 			fieldMoved: this._handleFieldMoved.bind(this),
-			fieldSetAdded: this._handleFieldSetAdded.bind(this),
 			focusedFieldEvaluationEnded: this._handleFocusedFieldEvaluationEnded.bind(
 				this
 			),
@@ -316,6 +316,10 @@ class LayoutProvider extends Component {
 		);
 	}
 
+	_handleElementSetAdded(event) {
+		this.setState(handleElementSetAdded(this.props, this.state, event));
+	}
+
 	_handleFieldAdded(event) {
 		this.setState(handleFieldAdded(this.props, this.state, event));
 	}
@@ -372,10 +376,6 @@ class LayoutProvider extends Component {
 
 	_handleFieldMoved(event) {
 		this.setState(handleFieldMoved(this.props, this.state, event));
-	}
-
-	_handleFieldSetAdded(event) {
-		this.setState(handleFieldSetAdded(this.props, this.state, event));
 	}
 
 	_handleFocusedFieldEvaluationEnded({settingsContext}) {

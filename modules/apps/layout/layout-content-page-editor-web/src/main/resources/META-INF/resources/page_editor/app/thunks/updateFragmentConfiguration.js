@@ -36,33 +36,25 @@ export default function updateFragmentConfiguration({
 	};
 
 	return dispatch => {
-		return FragmentService.updateEditableValues({
-			editableValues: nextEditableValues,
+		return FragmentService.updateConfigurationValues({
+			configurationValues: nextEditableValues,
 			fragmentEntryLinkId,
 			onNetworkStatus: dispatch,
-		})
-			.then(() => {
-				return FragmentService.renderFragmentEntryLinkContent({
+		}).then(({content, editableValues}) => {
+			dispatch(
+				updateEditableValues({
+					editableValues,
 					fragmentEntryLinkId,
-					onNetworkStatus: dispatch,
 					segmentsExperienceId,
-				});
-			})
-			.then(({content}) => {
-				dispatch(
-					updateEditableValues({
-						editableValues: nextEditableValues,
-						fragmentEntryLinkId,
-						segmentsExperienceId,
-					})
-				);
+				})
+			);
 
-				dispatch(
-					updateFragmentEntryLinkContent({
-						content,
-						fragmentEntryLinkId,
-					})
-				);
-			});
+			dispatch(
+				updateFragmentEntryLinkContent({
+					content,
+					fragmentEntryLinkId,
+				})
+			);
+		});
 	};
 }

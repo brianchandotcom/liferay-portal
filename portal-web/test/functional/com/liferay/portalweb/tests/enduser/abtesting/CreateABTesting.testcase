@@ -19,7 +19,7 @@ definition {
 		ContentPages.addPage(pageName = "ABtesting Content Page");
 
 		PageEditor.clickPublish();
-		
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/abtesting-content-page");
 	}
 
@@ -31,41 +31,41 @@ definition {
 		}
 	}
 
-    @description = "Validate if the user can create an AB test"
+	@description = "Validate if the user can create an AB test"
 	@priority = "5"
 	test CreateABTest {
-       
-        Click(locator1 = "Abtesting#AB_TESTING_BUTTON");
 
-        Click(locator1 = "Abtesting#CREATE_AB_TEST_BUTTON");
+		Click(locator1 = "Abtesting#AB_TESTING_BUTTON");
 
-        Click(locator1 = "Abtesting#AB_TEST_TITLE_FIELD");
+		Click(locator1 = "Abtesting#CREATE_AB_TEST_BUTTON");
+
+		Click(locator1 = "Abtesting#AB_TEST_TITLE_FIELD");
 
 		Type(
 			locator1 = "Abtesting#AB_TEST_TITLE_FIELD",
 			value1 = "CreateABTest test AB test title");
 
-        Click(locator1 = "Abtesting#SAVE_AB_TEST_BUTTON");
+		Click(locator1 = "Abtesting#SAVE_AB_TEST_BUTTON");
 
-        Click(locator1 = "Abtesting#CREATE_VARIANT_BUTTON");
+		Click(locator1 = "Abtesting#CREATE_VARIANT_BUTTON");
 
-        Click(locator1 = "Abtesting#INPUT_VARIANT_NAME");
+		Click(locator1 = "Abtesting#INPUT_VARIANT_NAME");
 
 		Type(
 			locator1 = "Abtesting#INPUT_VARIANT_NAME",
 			value1 = "Variant Name");
 
-        Click(locator1 = "Abtesting#SAVE_VARIANT_NAME_BUTTON");
+		Click(locator1 = "Abtesting#SAVE_VARIANT_NAME_BUTTON");
 
-        Click(locator1 = "Abtesting#REVIEW_AND_RUN_TEST_BUTTON");
+		Click(locator1 = "Abtesting#REVIEW_AND_RUN_TEST_BUTTON");
 
-        Click(locator1 = "Abtesting#RUN_TEST_BUTTON");
+		Click(locator1 = "Abtesting#RUN_TEST_BUTTON");
 
-        Click(locator1 = "Abtesting#OK_BUTTON");
+		Click(locator1 = "Abtesting#OK_BUTTON");
 
-        Click(locator1 = "Abtesting#CONTROL_VARIANT");
+		Click(locator1 = "Abtesting#CONTROL_VARIANT");
 
-        Click(locator1 = "Abtesting#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
+		Click(locator1 = "Abtesting#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
 	}
 
 }

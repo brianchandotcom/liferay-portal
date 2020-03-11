@@ -1,0 +1,84 @@
+@component-name = "portal-segmentation"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Segmentation";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		// Create site and content page
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "ABtesting Content Page");
+
+		PageEditor.clickPublish();
+		
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/abtesting-content-page");
+
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ProductMenu.gotoPortlet(
+				category = "People",
+				panel = "Site Administration",
+				portlet = "Segments");
+
+			if (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
+				Segmentation.tearDown();
+			}
+		}
+	}
+
+    @description = "Validate if the user can create an AB test”
+	@priority = "5"
+	test CreateABTest {
+       
+        Click(locator1 = "ABtesting#AB_TESTING_BUTTON");
+
+        Click(locator1 = "ABtesting#CREATE_AB_TEST_BUTTON");
+
+        Click(locator1 = "ABtesting#AB_TEST_TITLE_FIELD");
+
+		Type(
+			locator1 = "ABtesting#AB_TEST_TITLE_FIELD",
+			value1 = "AB test title");
+
+        Click(locator1 = "ABtesting#SAVE_AB_TEST_BUTTON");
+
+        Click(locator1 = "ABtesting#CREATE_VARIANT_BUTTON");
+
+        Click(locator1 = "ABtesting#INPUT_VARIANT_NAME");
+
+		Type(
+			locator1 = "ABtesting#INPUT_VARIANT_NAME",
+			value1 = "Variant Name");
+
+        Click(locator1 = "ABtesting#SAVE_VARIANT_NAME_BUTTON");
+
+        Click(locator1 = "ABtesting#REVIEW_AND_RUN_TEST_BUTTON");
+
+        Click(locator1 = "ABtesting#RUN_TEST_BUTTON");
+
+        Click(locator1 = "ABtesting#OK_BUTTON");
+
+        Click(locator1 = "ABtesting#CONTROL_VARIANT");
+
+        Click(locator1 = "ABtesting#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
+	}
+
+}

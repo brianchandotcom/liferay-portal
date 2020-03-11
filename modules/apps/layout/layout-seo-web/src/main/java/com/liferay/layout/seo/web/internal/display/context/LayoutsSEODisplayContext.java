@@ -264,6 +264,10 @@ public class LayoutsSEODisplayContext {
 			FileEntry fileEntry = _dlAppService.getFileEntry(
 				layoutSEOEntry.getOpenGraphImageFileEntryId());
 
+			if (fileEntry.isInTrash()) {
+				return StringPool.BLANK;
+			}
+
 			return fileEntry.getTitle();
 		}
 		catch (Exception exception) {
@@ -283,10 +287,14 @@ public class LayoutsSEODisplayContext {
 		}
 
 		try {
-			return _dlurlHelper.getImagePreviewURL(
-				_dlAppService.getFileEntry(
-					layoutSEOEntry.getOpenGraphImageFileEntryId()),
-				_themeDisplay);
+			FileEntry fileEntry = _dlAppService.getFileEntry(
+				layoutSEOEntry.getOpenGraphImageFileEntryId());
+
+			if (fileEntry.isInTrash()) {
+				return StringPool.BLANK;
+			}
+
+			return _dlurlHelper.getImagePreviewURL(fileEntry, _themeDisplay);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

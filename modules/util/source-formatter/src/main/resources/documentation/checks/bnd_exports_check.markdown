@@ -6,6 +6,7 @@ Exceptions:
 
 * Module name ending with `-api`
 * Module name ending with `-client`
+* Module name ending with `-service` **and** export package ending with `.http`
 * Module name ending with `-spi`
 * Module name ending with `-taglib`
 * Module name ending with `-test-util`

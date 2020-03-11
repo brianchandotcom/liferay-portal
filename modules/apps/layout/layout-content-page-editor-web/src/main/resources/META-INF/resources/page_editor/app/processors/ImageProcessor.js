@@ -54,9 +54,7 @@ function render(element, value, config = {}) {
 	}
 
 	if (image) {
-		if (value.alt) {
-			image.alt = value.alt;
-		}
+		image.alt = value.alt || config.alt || image.alt;
 
 		if (config.href) {
 			if (image.parentElement instanceof HTMLAnchorElement) {

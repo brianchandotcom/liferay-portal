@@ -44,12 +44,20 @@ export function MappingPanel({item}) {
 	);
 
 	const updateEditableValue = newEditableValue => {
+		const isMapped =
+			(newEditableValue.classNameId &&
+				newEditableValue.classPK &&
+				newEditableValue.fieldId) ||
+			newEditableValue.mappedField;
+
 		const nextEditableValues = {
 			...fragmentEntryLink.editableValues,
 			[processoryKey]: {
 				...fragmentEntryLink.editableValues[processoryKey],
 				[editableId]: {
-					config: editableValue.config,
+					config: isMapped
+						? {...editableValue.config, alt: ''}
+						: editableValue.config,
 					defaultValue: editableValue.defaultValue,
 					...newEditableValue,
 				},

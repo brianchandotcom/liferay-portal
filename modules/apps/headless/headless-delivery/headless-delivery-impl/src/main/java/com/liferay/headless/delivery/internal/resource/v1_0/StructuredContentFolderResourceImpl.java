@@ -152,8 +152,7 @@ public class StructuredContentFolderResourceImpl
 					"putStructuredContentFolderUnsubscribe")
 			).build(),
 			parentStructuredContentFolderId, journalFolder.getGroupId(), filter,
-			search,
-			pagination, sorts);
+			search, pagination, sorts);
 	}
 
 	@Override
@@ -250,10 +249,9 @@ public class StructuredContentFolderResourceImpl
 	}
 
 	private Page<StructuredContentFolder> _getFoldersPage(
-		Map<String, Map<String, String>> actions,
-		Long parentStructuredContentFolderId, Long siteId, Filter filter,
-		String search,
-		Pagination pagination, Sort[] sorts)
+			Map<String, Map<String, String>> actions,
+			Long parentStructuredContentFolderId, Long siteId, Filter filter,
+			String search, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

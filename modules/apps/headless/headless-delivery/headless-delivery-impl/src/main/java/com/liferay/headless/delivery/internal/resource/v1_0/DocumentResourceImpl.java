@@ -408,10 +408,9 @@ public class DocumentResourceImpl
 	}
 
 	private Page<Document> _getDocumentsPage(
-		Map<String, Map<String, String>> actions,
-		UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-		Filter filter, String search, Pagination pagination,
-		Sort[] sorts)
+			Map<String, Map<String, String>> actions,
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Filter filter, String search, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

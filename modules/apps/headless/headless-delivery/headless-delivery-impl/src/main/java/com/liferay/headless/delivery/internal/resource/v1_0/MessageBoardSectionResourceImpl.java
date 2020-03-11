@@ -247,11 +247,10 @@ public class MessageBoardSectionResourceImpl
 	}
 
 	private Page<MessageBoardSection> _getMessageBoardSectionsPage(
-		Map<String, Map<String, String>> actions,
-		UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-		Long siteId, Filter filter, String search,
-		Pagination pagination,
-		Sort[] sorts)
+			Map<String, Map<String, String>> actions,
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Long siteId, Filter filter, String search, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

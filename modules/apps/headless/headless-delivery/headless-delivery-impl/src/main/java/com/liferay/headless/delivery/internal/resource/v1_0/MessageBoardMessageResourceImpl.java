@@ -358,10 +358,9 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	private Page<MessageBoardMessage> _getMessageBoardMessagesPage(
-		Map<String, Map<String, String>> actions,
-		Long messageBoardMessageId, Long siteId, Boolean flatten, Filter filter,
-		String search,
-		Pagination pagination, Sort[] sorts)
+			Map<String, Map<String, String>> actions,
+			Long messageBoardMessageId, Long siteId, Boolean flatten,
+			Filter filter, String search, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (messageBoardMessageId != null) {

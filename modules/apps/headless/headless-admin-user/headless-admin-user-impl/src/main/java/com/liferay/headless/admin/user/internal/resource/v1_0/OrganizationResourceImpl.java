@@ -345,10 +345,9 @@ public class OrganizationResourceImpl
 	}
 
 	private Page<Organization> _getOrganizationsPage(
-		Map<String, Map<String, String>> actions,
-		String parentOrganizationId, Boolean flatten, Filter filter,
-		String search,
-		Pagination pagination, Sort[] sorts)
+			Map<String, Map<String, String>> actions,
+			String parentOrganizationId, Boolean flatten, Filter filter,
+			String search, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		long serviceBuilderOrganizationId = _getServiceBuilderOrganizationId(

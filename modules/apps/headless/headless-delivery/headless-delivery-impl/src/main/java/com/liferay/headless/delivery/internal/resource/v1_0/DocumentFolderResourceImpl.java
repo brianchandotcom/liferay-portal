@@ -231,10 +231,9 @@ public class DocumentFolderResourceImpl
 	}
 
 	private Page<DocumentFolder> _getDocumentFoldersPage(
-		Map<String, Map<String, String>> actions,
-		Long parentDocumentFolderId, Long siteId, Boolean flatten,
-		Filter filter, String search, Pagination pagination,
-		Sort[] sorts)
+			Map<String, Map<String, String>> actions,
+			Long parentDocumentFolderId, Long siteId, Boolean flatten,
+			Filter filter, String search, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

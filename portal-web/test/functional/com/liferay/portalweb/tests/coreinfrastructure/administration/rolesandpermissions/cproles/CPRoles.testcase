@@ -226,6 +226,41 @@ definition {
 			roleTitle = "Roles Regrole Name");
 	}
 
+	@description = "This is a use case for LPS-109572."
+	@priority = "4"
+	test AssignNewUserToRegularRole {
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoAssignees(roleTitle = "Regular Role");
+
+		RoleNavigator.gotoAssigneeType(assigneeType = "Users");
+
+		Role.addAssignees(assigneeName = "userfn userln");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.viewAssignee(
+			assigneeName = "userfn userln",
+			assigneeType = "Users",
+			roleTitle = "Regular Role");
+	}
+
 	@priority = "5"
 	test DeleteRegularRole {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";

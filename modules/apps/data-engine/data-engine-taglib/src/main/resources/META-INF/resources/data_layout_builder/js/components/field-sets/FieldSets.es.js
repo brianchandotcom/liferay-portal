@@ -15,21 +15,24 @@
 import React, {useContext} from 'react';
 
 import AppContext from '../../AppContext.es';
+import {DRAG_FIELDSET} from '../../drag-and-drop/dragTypes.es';
 import FieldType from '../field-types/FieldType.es';
 
 export default function FieldSets() {
-	const [{fieldsets}] = useContext(AppContext);
+	const [{fieldSets}] = useContext(AppContext);
 
 	return (
 		<>
-			{fieldsets.map(fieldset => (
+			{fieldSets.map(fieldSet => (
 				<FieldType
 					description={`${
-						fieldset.dataDefinitionFields.length
+						fieldSet.dataDefinitionFields.length
 					} ${Liferay.Language.get('fields')}`}
+					dragType={DRAG_FIELDSET}
+					fieldSet={fieldSet}
 					icon="forms"
-					key={fieldset.dataDefinitionKey}
-					label={fieldset.name[themeDisplay.getLanguageId()]}
+					key={fieldSet.dataDefinitionKey}
+					label={fieldSet.name[themeDisplay.getLanguageId()]}
 				/>
 			))}
 		</>

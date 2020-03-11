@@ -100,7 +100,7 @@ export default ({
 					]) => {
 						dispatch({
 							payload: {
-								fieldsets: [
+								fieldSets: [
 									...globalFieldSets,
 									...groupFieldSets,
 								],

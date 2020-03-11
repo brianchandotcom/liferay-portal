@@ -30,8 +30,8 @@ import {
 	dropLayoutBuilderField,
 } from '../actions.es';
 import Button from '../components/button/Button.es';
+import FieldSets from '../components/field-sets/FieldSets.es';
 import FieldTypeList from '../components/field-types/FieldTypeList.es';
-import FieldSets from '../components/fieldsets/Fieldsets.es';
 import Sidebar from '../components/sidebar/Sidebar.es';
 import {useSidebarContent} from '../hooks/index.es';
 import isClickOutside from '../utils/clickOutside.es';

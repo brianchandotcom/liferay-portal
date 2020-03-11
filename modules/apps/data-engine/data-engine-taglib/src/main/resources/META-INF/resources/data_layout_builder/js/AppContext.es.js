@@ -57,8 +57,8 @@ const initialState = {
 	},
 	dataLayoutId: 0,
 	editingLanguageId: themeDisplay.getLanguageId(),
+	fieldSets: [],
 	fieldTypes: [],
-	fieldsets: [],
 	focusedCustomObjectField: {},
 	focusedField: {},
 };
@@ -312,11 +312,11 @@ const createReducer = dataLayoutBuilder => {
 				};
 			}
 			case UPDATE_FIELDSETS: {
-				const {fieldsets} = action.payload;
+				const {fieldSets} = action.payload;
 
 				return {
 					...state,
-					fieldsets,
+					fieldSets,
 				};
 			}
 			case UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD: {

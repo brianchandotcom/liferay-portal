@@ -147,7 +147,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 	function <portlet:namespace />handleSubmitButton(selectedItems) {
 		var button = document.getElementById('<portlet:namespace />add-channel-button');
 
-		if(selectedItems.isEmpty()) {
+		if (selectedItems.isEmpty()) {
 			button.setAttribute('disabled', 'disabled');
 			button.classList.add('disabled');
 		} else {
@@ -156,7 +156,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 		}
 	}
 
-	searchContainer.on('rowToggled', function(event) { return <portlet:namespace />handleSubmitButton(event.elements.allSelectedElements)});
+	searchContainer.on('rowToggled', function(event) {
+		return <portlet:namespace />handleSubmitButton(event.elements.allSelectedElements);
+	});
 
-	Liferay.componentReady('<portlet:namespace />selectGroups').then(function(searchContainer){ return <portlet:namespace />handleSubmitButton(searchContainer.select.getAllSelectedElements())} );
+	Liferay.componentReady(
+		'<portlet:namespace />selectGroups'
+	).then(function(searchContainer) {
+		return <portlet:namespace />handleSubmitButton(searchContainer.select.getAllSelectedElements());
+	});
 </aui:script>

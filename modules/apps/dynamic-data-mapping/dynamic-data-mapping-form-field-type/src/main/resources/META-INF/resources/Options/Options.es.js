@@ -12,90 +12,431 @@
  * details.
  */
 
+import '../FieldBase/FieldBase.es';
+
+import '../KeyValue/KeyValue.es';
+
 import './OptionsRegister.soy';
 
-import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
 import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
-import React, {useMemo, useState} from 'react';
+import Component from 'metal-component';
+import dom from 'metal-dom';
+import {Drag, DragDrop} from 'metal-drag-drop';
+import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import {KeyValueWithFieldBase} from '../KeyValue/KeyValue.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
-import templates from './OptionsAdapter.soy';
+import templates from './Options.soy';
 
-const defaultOption = {label: '', value: ''};
+/**
+ * Options.
+ * @extends Component
+ */
 
-const random = a => {
-	return a
-		? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16)
-		: ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, random);
-};
+class Options extends Component {
+	attached() {
+		let defaultOption = false;
+		const defaultOptionLabel = Liferay.Language.get('option').toLowerCase();
 
-const normalizeFields = fields => {
-	const _fields = fields.map((field, index) => {
-		if (fields.length - 1 === index) {
-			return field;
+		const options = this.getCurrentLocaleValue();
+
+		if (
+			options.length == 1 &&
+			options[0].label.toLowerCase() == defaultOptionLabel
+		) {
+			defaultOption = true;
 		}
 
-		const {label, value: prevValue} = field;
+		this.setState({
+			defaultOption,
+		});
 
-		let value = prevValue ? prevValue : label;
+		this._createDragDrop();
+	}
 
-		if (!value) {
-			value = Liferay.Language.get('option') + random();
+	deleteOption(deletedIndex) {
+		let {value} = this;
+
+		Object.keys(value).forEach(languageId => {
+			value = {
+				...value,
+				[languageId]: value[languageId].filter(
+					(option, currentIndex) => currentIndex !== deletedIndex
+				),
+			};
+		});
+
+		this._handleFieldEdited({}, value);
+	}
+
+	disposeDragAndDrop() {
+		if (this._dragAndDrop) {
+			this._dragAndDrop.dispose();
 		}
+	}
+
+	disposeInternal() {
+		super.disposeInternal();
+
+		this.disposeDragAndDrop();
+	}
+
+	findOptionByValue(options, name, limit = options.length) {
+		return options.find(({value}, index) => {
+			return index < limit && value === name;
+		});
+	}
+
+	getCurrentLocaleValue(localizedValue = this.value) {
+		const {defaultLanguageId, editingLanguageId} = this;
+
+		if (localizedValue && localizedValue[editingLanguageId]) {
+			return localizedValue[editingLanguageId];
+		}
+		else if (localizedValue && localizedValue[defaultLanguageId]) {
+			return localizedValue[defaultLanguageId];
+		}
+
+		return [];
+	}
+
+	getFieldIndex(element) {
+		return parseInt(
+			dom.closest(element, '.ddm-field-options').dataset.index,
+			10
+		);
+	}
+
+	getItems(options = []) {
+		const items = [...options];
+		const newItems = items.map(option => {
+			return {
+				...option,
+				generateKeyword: this.shouldGenerateOptionValue(items, option),
+			};
+		});
+
+		const {defaultLanguageId, editingLanguageId} = this;
+
+		if (defaultLanguageId === editingLanguageId) {
+			newItems.push({
+				label: '',
+				value: '',
+			});
+		}
+
+		return newItems;
+	}
+
+	moveOption(sourceIndex, targetIndex) {
+		let {value} = this;
+
+		Object.keys(value).forEach(languageId => {
+			const options = [...value[languageId]];
+
+			if (sourceIndex < options.length) {
+				options.splice(targetIndex, 0, {
+					...options[sourceIndex],
+				});
+
+				value = {
+					...value,
+					[languageId]: options.filter((option, index) => {
+						return sourceIndex > targetIndex
+							? index != sourceIndex + 1
+							: index != sourceIndex;
+					}),
+				};
+			}
+		});
+
+		this._handleFieldEdited({}, value);
+	}
+
+	normalizeOption(options, option, editedIndex, editedProperty) {
+		const {label, value} = option;
+		let desiredValue =
+			editedProperty === 'label' ? label : value ? value : label;
+		const optionIndex = options.indexOf(option);
+
+		if (!this.shouldGenerateOptionValue(options, option)) {
+			return option;
+		}
+
+		if (!desiredValue) {
+			desiredValue = Liferay.Language.get('option');
+		}
+
+		let normalizedValue = desiredValue;
+		let counter = 0;
+
+		do {
+			if (counter > 0) {
+				normalizedValue = desiredValue + counter;
+			}
+
+			counter++;
+		} while (this.findOptionByValue(options, normalizedValue, optionIndex));
+
+		normalizedValue = normalizeFieldName(normalizedValue);
 
 		return {
-			...field,
-			value: normalizeFieldName(value),
+			...option,
+			value: normalizedValue,
 		};
-	});
-
-	return _fields;
-};
-
-const isOptionValueGenerated = (
-	defaultLanguageId,
-	editingLanguageId,
-	option
-) => {
-	if (defaultLanguageId !== editingLanguageId) {
-		return false;
 	}
 
-	if (option.edited) {
-		return false;
+	normalizeOptions(options, editedIndex, editedProperty) {
+		const normalizedOptions = [...options];
+
+		normalizedOptions.forEach((option, index) => {
+			if (editedIndex !== index) {
+				return;
+			}
+
+			normalizedOptions[index] = this.normalizeOption(
+				normalizedOptions,
+				normalizedOptions[index],
+				editedIndex,
+				editedProperty
+			);
+		});
+
+		return normalizedOptions;
 	}
 
-	if (
-		new RegExp(`^${Liferay.Language.get('option')}\\d*$`).test(option.value)
-	) {
+	prepareStateForRender(state) {
+		const {editingLanguageId} = this;
+		const {value} = state;
+
+		return {
+			...state,
+			items: this.getItems(value[editingLanguageId]),
+		};
+	}
+
+	shouldGenerateOptionValue(options, option) {
+		const {defaultLanguageId, editingLanguageId} = this;
+
+		if (defaultLanguageId !== editingLanguageId) {
+			return false;
+		}
+
+		if (option.value === '') {
+			return true;
+		}
+
+		const optionIndex = options.indexOf(option);
+		const duplicated = options.some(({value}, index) => {
+			return value === option.value && index !== optionIndex;
+		});
+
+		if (duplicated) {
+			return true;
+		}
+
+		if (option.edited) {
+			return false;
+		}
+
+		if (
+			new RegExp(`^${Liferay.Language.get('option')}\\d*$`).test(
+				option.value
+			)
+		) {
+			return true;
+		}
+
+		if (
+			new RegExp(`^${option.value.replace(/\d+$/, '')}\\d*`).test(
+				normalizeFieldName(option.label)
+			)
+		) {
+			return true;
+		}
+
 		return true;
 	}
 
-	if (
-		new RegExp(`^${option.value.replace(/\d+$/, '')}\\d*`).test(
-			normalizeFieldName(option.label)
-		)
-	) {
-		return true;
+	syncEditingLanguageId(editingLanguageId) {
+		const {defaultLanguageId} = this;
+
+		if (
+			defaultLanguageId !== editingLanguageId &&
+			!this.value[editingLanguageId]
+		) {
+			this.setState({
+				value: {
+					...this.value,
+					[editingLanguageId]: this.value[defaultLanguageId].filter(
+						({value}) => !!value
+					),
+				},
+			});
+		}
 	}
 
-	return true;
-};
+	syncValue(value) {
+		this.setState({
+			items: this.getCurrentLocaleValue(value),
+		});
+	}
 
-const Options = ({
-	children,
-	defaultLanguageId,
-	disabled,
-	editingLanguageId,
-	onChange,
-	spritemap,
-	value = {},
-}) => {
-	const normalizedValue = useMemo(() => {
+	_createDragDrop() {
+		this._dragAndDrop = new DragDrop({
+			container: this.element,
+			dragPlaceholder: Drag.Placeholder.CLONE,
+			handles: '.ddm-options-drag:not(.disabled)',
+			sources: '.ddm-field-options',
+			targets: '.ddm-options-target',
+			useShim: false,
+		});
+
+		this._dragAndDrop.on(
+			DragDrop.Events.END,
+			this._handleDragDropEvent.bind(this)
+		);
+		this._dragAndDrop.on(
+			DragDrop.Events.DRAG,
+			this._handleDragEvent.bind(this)
+		);
+	}
+
+	_getOptionIndex({name}) {
+		return parseInt(name.replace(/[^\d]/gi, ''), 10);
+	}
+
+	_handleDragDropEvent({source, target}) {
+		const lastSource = document.querySelector('.ddm-source-dragging');
+		const sourceIndex = parseInt(source.dataset.index, 10);
+
+		if (lastSource) {
+			lastSource.classList.remove('ddm-source-dragging');
+		}
+
+		if (target) {
+			const targetIndex = parseInt(target.dataset.index, 10);
+
+			this.moveOption(sourceIndex, targetIndex);
+		}
+	}
+
+	_handleDragEvent({source}) {
+		source.classList.add('ddm-source-dragging');
+	}
+
+	_handleFieldEdited({originalEvent}, value) {
+		this.emit('fieldEdited', {
+			fieldInstance: this,
+			originalEvent,
+			value,
+		});
+	}
+
+	_handleOptionDeleted(event) {
+		const {delegateTarget} = event;
+		const deletedIndex = this.getFieldIndex(delegateTarget);
+
+		this.deleteOption(deletedIndex);
+	}
+
+	_handleOptionEdited(event, property) {
+		const {defaultLanguageId, editingLanguageId} = this;
+		const {fieldInstance, value} = event;
+		let options = this.getCurrentLocaleValue();
+		const optionIndex = this._getOptionIndex(fieldInstance);
+
+		if (optionIndex < options.length) {
+			options = options.map((option, index) => {
+				return index === optionIndex
+					? {
+							...option,
+							edited:
+								option.edited ||
+								(value &&
+									value !== option.value &&
+									property === 'value'),
+							[property]: value,
+					  }
+					: option;
+			});
+		}
+		else {
+			options = [
+				...options,
+				{
+					label: property === 'label' ? value : '',
+					value: property === 'value' ? value : '',
+				},
+			];
+		}
+
+		options = this.normalizeOptions(options, optionIndex, property);
+
+		let newValue = {
+			...this.value,
+			[editingLanguageId]: options,
+		};
+
+		if (defaultLanguageId === editingLanguageId) {
+			const copyLanguageLabels = (languageId, options) => {
+				return options.map(({label, value}, index) => {
+					const option = newValue[languageId][index];
+
+					if (property === 'label') {
+						label = option.label;
+					}
+
+					return {
+						...option,
+						label,
+						value,
+					};
+				});
+			};
+
+			Object.keys(this.value).forEach(languageId => {
+				if (defaultLanguageId === languageId) {
+					return;
+				}
+
+				newValue = {
+					...newValue,
+					[languageId]: copyLanguageLabels(languageId, options),
+				};
+			});
+		}
+
+		this.setState(
+			{
+				value: newValue,
+			},
+			() => this._handleFieldEdited(event, newValue)
+		);
+	}
+
+	_handleOptionFocused({originalEvent: {target}}) {
+		if (this.defaultOption) {
+			target.value = '';
+
+			this.setState({
+				defaultOption: false,
+			});
+		}
+	}
+
+	_handleOptionLabelEdited(event) {
+		this._handleOptionEdited(event, 'label');
+	}
+
+	_handleOptionValueBlurred({fieldInstance}) {
+		this._handleOptionEdited(
+			{fieldInstance, value: fieldInstance.keyword},
+			'value'
+		);
+	}
+
+	_setValue(value = {}) {
+		const {defaultLanguageId} = this;
 		const formattedValue = {...value};
 
 		Object.keys(value).forEach(languageId => {
@@ -107,188 +448,175 @@ const Options = ({
 		});
 
 		return formattedValue;
-	}, [defaultLanguageId, value]);
+	}
+}
 
-	const [fields, setFields] = useState(() => {
-		const options = normalizedValue[editingLanguageId];
+Options.STATE = {
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Options
+	 * @type {?string}
+	 */
 
-		return [
-			...options.map(option => ({
-				...option,
-				generateKeyword: isOptionValueGenerated(
-					defaultLanguageId,
-					editingLanguageId,
-					option
-				),
-				id: random(),
-			})),
-			defaultLanguageId === editingLanguageId
-				? {...defaultOption}
-				: false,
-		].filter(Boolean);
-	});
+	defaultLanguageId: Config.string().value(themeDisplay.getLanguageId()),
 
-	const fieldsFilter = fields => {
-		const _fields = [...fields];
+	/**
+	 * @default false
+	 * @instance
+	 * @memberof Options
+	 * @type {?bool}
+	 */
 
-		_fields.splice(_fields.length - 1, 1);
+	defaultOption: Config.bool()
+		.internal()
+		.value(false),
 
-		return {...normalizedValue, [editingLanguageId]: _fields};
-	};
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Options
+	 * @type {?string}
+	 */
 
-	const handleAdd = (index, property, value) => {
-		const _fields = [...fields];
+	editingLanguageId: Config.string().value(themeDisplay.getLanguageId()),
 
-		_fields[index][property] = value;
-		_fields.push({...defaultOption, generateKeyword: true, id: random()});
+	/**
+	 * @default 'boolean'
+	 * @instance
+	 * @memberof Options
+	 * @type {?(boolean|undefined)}
+	 */
 
-		setFields(_fields);
-		onChange(fieldsFilter(_fields));
-	};
+	evaluable: Config.bool().value(false),
 
-	const handleChange = (index, property, value) => {
-		const _fields = [...fields];
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Options
+	 * @type {?string}
+	 */
 
-		const {edited, value: prevValue} = _fields[index];
+	fieldName: Config.string(),
 
-		_fields[index][property] = value;
-		_fields[index]['edited'] =
-			edited || (value && value !== prevValue && property === 'value');
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Options
+	 * @type {?(string|undefined)}
+	 */
 
-		setFields(_fields);
-		onChange(fieldsFilter(_fields));
-	};
+	items: Config.arrayOf(
+		Config.shapeOf({
+			disabled: Config.bool().value(false),
+			label: Config.string(),
+			name: Config.string(),
+			value: Config.string(),
+		})
+	).internal(),
 
-	const handleBlur = () => {
-		const _fields = [...fields];
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Options
+	 * @type {?(string|undefined)}
+	 */
 
-		const normalizedFields = normalizeFields(_fields);
+	label: Config.string(),
 
-		setFields(normalizedFields);
-		onChange(fieldsFilter(normalizedFields));
-	};
+	/**
+	 * @default {}
+	 * @instance
+	 * @memberof Options
+	 * @type {?(object|undefined)}
+	 */
 
-	const deleteOption = index => {
-		const _fields = [...fields];
+	localizedValue: Config.object().value({}),
 
-		_fields.splice(index, 1);
+	/**
+	 * @default enter-an-option
+	 * @instance
+	 * @memberof Options
+	 * @type {?(string)}
+	 */
 
-		setFields(_fields);
-		onChange(fieldsFilter(_fields));
-	};
+	placeholder: Config.string().value(Liferay.Language.get('enter-an-option')),
 
-	return (
-		<div className="ddm-field-options-container">
-			{fields.map((option, index) => (
-				<>
-					<div
-						className="ddm-options-target"
-						key={`target_${option.id}`}
-					></div>
+	/**
+	 * @default false
+	 * @instance
+	 * @memberof Options
+	 * @type {?bool}
+	 */
 
-					<div className="ddm-field-options" key={option.id}>
-						<span
-							className={classNames('ddm-options-drag', {
-								disabled,
-							})}
-						>
-							<ClayIcon spritemap={spritemap} symbol="drag" />
-						</span>
+	readOnly: Config.bool().value(false),
 
-						<div className="ddm-option-entry">
-							{children({
-								handleBlur,
-								handleField: !(fields.length - 1 === index)
-									? handleChange.bind(this, index)
-									: handleAdd.bind(this, index),
-								index,
-								option,
-							})}
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof FieldBase
+	 * @type {?(bool|undefined)}
+	 */
 
-							{!(fields.length - 1 === index) && !disabled && (
-								<button
-									className="close close-modal"
-									onClick={() => deleteOption(index)}
-									type="button"
-								>
-									<ClayIcon
-										spritemap={spritemap}
-										symbol="times"
-									/>
-								</button>
-							)}
-						</div>
-					</div>
-				</>
-			))}
-		</div>
-	);
+	repeatable: Config.bool(),
+
+	/**
+	 * @default false
+	 * @instance
+	 * @memberof Options
+	 * @type {?bool}
+	 */
+
+	required: Config.bool().value(false),
+
+	/**
+	 * @default true
+	 * @instance
+	 * @memberof Options
+	 * @type {?bool}
+	 */
+
+	showLabel: Config.bool().value(true),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Options
+	 * @type {?(string|undefined)}
+	 */
+
+	spritemap: Config.string(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Options
+	 * @type {?(string|undefined)}
+	 */
+
+	tip: Config.string(),
+
+	/**
+	 * @default options
+	 * @instance
+	 * @memberof Options
+	 * @type {?(string|undefined)}
+	 */
+
+	type: Config.string().value('options'),
+
+	/**
+	 * @default {}
+	 * @instance
+	 * @memberof Options
+	 * @type {?string}
+	 */
+
+	value: Config.object()
+		.setter('_setValue')
+		.value({}),
 };
 
-const OptionsProxy = connectStore(
-	({
-		defaultLanguageId = themeDisplay.getLanguageId(),
-		editingLanguageId = themeDisplay.getLanguageId(),
-		emit,
-		placeholder = Liferay.Language.get('enter-an-option'),
-		readOnly,
-		required,
-		spritemap,
-		store,
-		value = {},
-		visible,
-		...otherProps
-	}) => (
-		<FieldBaseProxy
-			{...otherProps}
-			readOnly={readOnly}
-			spritemap={spritemap}
-			store={store}
-			visible={visible}
-		>
-			<Options
-				defaultLanguageId={defaultLanguageId}
-				disabled={readOnly}
-				editingLanguageId={editingLanguageId}
-				onChange={value => emit('fieldEdited', {}, value)}
-				spritemap={spritemap}
-				value={value}
-			>
-				{({handleBlur, handleField, index, option}) => (
-					<KeyValueWithFieldBase
-						generateKeyword={option.generateKeyword}
-						keyword={option.value}
-						keywordReadOnly={
-							defaultLanguageId !== editingLanguageId
-						}
-						name={`option${index}`}
-						onKeywordBlur={handleBlur}
-						onKeywordChange={(event, value) =>
-							handleField('value', value)
-						}
-						onTextBlur={handleBlur}
-						onTextChange={event =>
-							handleField('label', event.target.value)
-						}
-						placeholder={placeholder}
-						readOnly={option.disabled}
-						required={required}
-						showLabel={false}
-						spritemap={spritemap}
-						store={store}
-						value={option.label}
-						visible={visible}
-					/>
-				)}
-			</Options>
-		</FieldBaseProxy>
-	)
-);
+Soy.register(Options, templates);
 
-const ReactOptionsAdapter = getConnectedReactComponentAdapter(
-	OptionsProxy,
-	templates
-);
-
-export {ReactOptionsAdapter};
-export default ReactOptionsAdapter;
+export default Options;

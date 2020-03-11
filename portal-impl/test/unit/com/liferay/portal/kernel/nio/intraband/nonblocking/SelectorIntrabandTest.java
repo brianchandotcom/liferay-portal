@@ -426,8 +426,7 @@ public class SelectorIntrabandTest {
 
 			Assert.assertEquals(
 				sequenceId, DatagramUtil.getSequenceId(ackResponseDatagram));
-			Assert.assertTrue(
-				DatagramUtil.isAckResponse(ackResponseDatagram));
+			Assert.assertTrue(DatagramUtil.isAckResponse(ackResponseDatagram));
 
 			ByteBuffer dataByteBuffer = ackResponseDatagram.getDataByteBuffer();
 

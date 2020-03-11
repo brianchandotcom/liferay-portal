@@ -441,6 +441,9 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 				return String.valueOf(blogsEntry.getEntryId());
 			}
+		).put(
+			WorkflowConstants.CONTEXT_SERVICE_CONTEXT,
+			(Serializable)ServiceContextTestUtil.getServiceContext()
 		).build();
 	}
 

@@ -17,6 +17,7 @@ package com.liferay.source.formatter.parser;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -97,7 +98,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 	@Override
 	public boolean isDefault() {
-		if (_accessModifier.equals(JavaTerm.ACCESS_MODIFIER_DEFAULT)) {
+		if (Objects.equals(_accessModifier, JavaTerm.ACCESS_MODIFIER_DEFAULT)) {
 			return true;
 		}
 
@@ -151,7 +152,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 	@Override
 	public boolean isPrivate() {
-		if (_accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PRIVATE)) {
+		if (Objects.equals(_accessModifier, JavaTerm.ACCESS_MODIFIER_PRIVATE)) {
 			return true;
 		}
 
@@ -160,7 +161,9 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 	@Override
 	public boolean isProtected() {
-		if (_accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PROTECTED)) {
+		if (Objects.equals(
+				_accessModifier, JavaTerm.ACCESS_MODIFIER_PROTECTED)) {
+
 			return true;
 		}
 
@@ -169,7 +172,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 	@Override
 	public boolean isPublic() {
-		if (_accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PUBLIC)) {
+		if (Objects.equals(_accessModifier, JavaTerm.ACCESS_MODIFIER_PUBLIC)) {
 			return true;
 		}
 

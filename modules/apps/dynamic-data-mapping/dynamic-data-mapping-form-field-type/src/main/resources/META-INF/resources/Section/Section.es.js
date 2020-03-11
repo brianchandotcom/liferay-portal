@@ -24,25 +24,31 @@ import {Config} from 'metal-state';
 import templates from './Section.soy';
 
 class Section extends Component {
-	prepareStateForRender(state) {
-		const {nestedFields} = this;
-
-		const newState = {
-			...state,
-			nestedRows: state.rows.map(row => ({
-				...row,
-				columns: row.columns.map(column => ({
-					...column,
-					fields: column.fields.map(fieldName => {
-						return nestedFields.find(
-							nestedField => nestedField.fieldName === fieldName
-						);
-					}),
-				})),
+	prepareNestedRows({nestedFields, rows}) {
+		return rows.map(row => ({
+			...row,
+			columns: row.columns.map(column => ({
+				...column,
+				fields: column.fields.map(fieldName => {
+					return nestedFields.find(
+						nestedField => nestedField.fieldName === fieldName
+					);
+				}),
 			})),
-		};
+		}));
+	}
 
-		return newState;
+	prepareStateForRender(state) {
+		return {
+			...state,
+			nestedRows: this.prepareNestedRows(state),
+		};
+	}
+
+	willReceiveState(changes) {
+		if (changes.nestedFields || changes.rows) {
+			this.forceUpdate();
+		}
 	}
 
 	_handleFieldBlurred(event) {
@@ -125,6 +131,17 @@ Section.STATE = {
 	 */
 
 	nestedFields: Config.array().value([]),
+
+	/**
+	 * @default []
+	 * @instance
+	 * @memberof Section
+	 * @type {?(Array)}
+	 */
+
+	nestedRows: Config.array()
+		.internal()
+		.value([]),
 
 	/**
 	 * @default '000000'

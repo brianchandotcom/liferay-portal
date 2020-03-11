@@ -213,7 +213,8 @@ exports[`Field LocalizableText fills with the selected language value when the s
 `;
 
 exports[`Field LocalizableText has a label 1`] = `
-<div class="form-group" data-field-name="localizableTextField"><label>label </label>
+<div class="form-group" data-field-name="localizableTextField">
+  <p class="ddm-label">label </p>
   <div class="input-group">
     <div class="input-group-append input-group-item"><input class="ddm-field-text form-control" id="localizableTextFieldinputValue" type="text" value=""></div><input name="localizableTextField" type="hidden" value="{}">
     <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">

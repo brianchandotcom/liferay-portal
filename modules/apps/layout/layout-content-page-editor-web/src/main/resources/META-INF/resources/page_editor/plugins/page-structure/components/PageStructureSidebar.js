@@ -106,6 +106,10 @@ export default function PageStructureSidebar() {
 			});
 		}
 		const node = {
+			activable:
+				layoutData.items[item.itemId] &&
+				layoutData.items[item.itemId].type !==
+					LAYOUT_DATA_ITEM_TYPES.column,
 			children,
 			disabled: !isMasterPage && itemInMasterLayout,
 			expanded: item.itemId === activeItemId,

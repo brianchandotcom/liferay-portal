@@ -16,6 +16,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.param.converter.provider;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -79,13 +80,7 @@ public class SiteParamConverterProvider
 			return null;
 		}
 
-		if (group.isSite()) {
-			return group.getGroupId();
-		}
-
-		Group liveGroup = group.getLiveGroup();
-
-		if ((liveGroup != null) && liveGroup.isSite()) {
+		if (_isSiteOrDepot(group) || _isSiteOrDepot(group.getLiveGroup())) {
 			return group.getGroupId();
 		}
 
@@ -116,6 +111,18 @@ public class SiteParamConverterProvider
 
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isSiteOrDepot(Group group) {
+		if (group == null) {
+			return false;
+		}
+
+		if (group.isSite() || (group.getType() == GroupConstants.TYPE_DEPOT)) {
+			return true;
 		}
 
 		return false;

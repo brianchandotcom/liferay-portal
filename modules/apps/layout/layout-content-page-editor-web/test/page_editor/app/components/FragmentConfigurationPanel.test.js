@@ -1,0 +1,205 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import React from 'react';
+
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
+
+import '@testing-library/jest-dom/extend-expect';
+import {cleanup, fireEvent, render} from '@testing-library/react';
+
+import {FragmentConfigurationPanel} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/FragmentConfigurationPanel';
+import {config} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config';
+import FragmentService from '../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService';
+import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({
+		config: {},
+	})
+);
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
+	() => jest.fn(() => Promise.resolve({}))
+);
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService',
+	() => ({
+		renderFragmentEntryLinkContent: jest.fn(() => Promise.resolve({})),
+		updateEditableValues: jest.fn(() => Promise.resolve({})),
+	})
+);
+
+const FRAGMENT_ENTRY_LINK_ID = '1';
+
+const fragmentEntryLink = {
+	comments: [],
+	configuration: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						dataType: 'string',
+						defaultValue: 'h1',
+						description: '',
+						label: 'Heading Level',
+						name: 'headingLevel',
+						type: 'select',
+						typeOptions: {
+							validValues: [
+								{label: 'H1', value: 'h1'},
+								{label: 'H2', value: 'h2'},
+								{label: 'H3', value: 'h3'},
+								{label: 'H4', value: 'h4'},
+							],
+						},
+					},
+				],
+				label: '',
+			},
+		],
+	},
+	defaultConfigurationValues: {
+		headingLevel: 'h1',
+	},
+	editableValues: {
+		[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
+		[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {},
+	},
+	fragmentEntryLinkId: FRAGMENT_ENTRY_LINK_ID,
+	name: 'Heading',
+};
+
+const item = {
+	children: [],
+	config: {
+		fragmentEntryLinkId: FRAGMENT_ENTRY_LINK_ID,
+	},
+	itemId: '1',
+	parentId: '',
+	type: '',
+};
+
+const mockDispatch = jest.fn(a => {
+	if (typeof a === 'function') {
+		return a(mockDispatch);
+	}
+});
+
+const renderConfigurationPanel = ({segmentsExperienceId}) => {
+	const state = {
+		fragmentEntryLinks: {[FRAGMENT_ENTRY_LINK_ID]: fragmentEntryLink},
+		segmentsExperienceId,
+	};
+
+	return render(
+		<StoreAPIContextProvider dispatch={mockDispatch} getState={() => state}>
+			<FragmentConfigurationPanel item={item} />
+		</StoreAPIContextProvider>
+	);
+};
+
+describe('FragmentConfigurationPanel', () => {
+	afterEach(() => {
+		cleanup();
+
+		FragmentService.updateEditableValues.mockClear();
+		FragmentService.renderFragmentEntryLinkContent.mockClear();
+	});
+
+	it('does not prefix values with segments if we do not have experiences', async () => {
+		config.defaultSegmentsExperienceId = null;
+
+		const {getByLabelText} = renderConfigurationPanel({
+			segmentsExperienceId: null,
+		});
+
+		const input = getByLabelText('Heading Level');
+
+		await fireEvent.change(input, {
+			target: {value: 'h2'},
+		});
+
+		expect(FragmentService.updateEditableValues).toBeCalledWith(
+			expect.objectContaining({
+				editableValues: {
+					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
+					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
+						headingLevel: 'h2',
+					},
+				},
+			})
+		);
+
+		expect(FragmentService.renderFragmentEntryLinkContent).toBeCalled();
+	});
+
+	it('prefix values with segments when we have experiences', async () => {
+		config.defaultSegmentsExperienceId = '2';
+
+		const {getByLabelText} = renderConfigurationPanel({
+			segmentsExperienceId: '1',
+		});
+
+		const input = getByLabelText('Heading Level');
+
+		await fireEvent.change(input, {
+			target: {value: 'h2'},
+		});
+
+		expect(FragmentService.updateEditableValues).toBeCalledWith(
+			expect.objectContaining({
+				editableValues: {
+					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
+					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
+						'segments-experience-id-1': {headingLevel: 'h2'},
+					},
+				},
+			})
+		);
+
+		expect(FragmentService.renderFragmentEntryLinkContent).toBeCalled();
+	});
+
+	it('prefix values with default experience when segmentsExperience is null', async () => {
+		config.defaultSegmentsExperienceId = '2';
+
+		const {getByLabelText} = renderConfigurationPanel({
+			segmentsExperienceId: null,
+		});
+
+		const input = getByLabelText('Heading Level');
+
+		await fireEvent.change(input, {
+			target: {value: 'h2'},
+		});
+
+		expect(FragmentService.updateEditableValues).toBeCalledWith(
+			expect.objectContaining({
+				editableValues: {
+					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
+					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
+						'segments-experience-id-2': {headingLevel: 'h2'},
+					},
+				},
+			})
+		);
+
+		expect(FragmentService.renderFragmentEntryLinkContent).toBeCalled();
+	});
+});

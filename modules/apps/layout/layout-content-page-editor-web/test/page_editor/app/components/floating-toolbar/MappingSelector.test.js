@@ -16,6 +16,8 @@ import '@testing-library/jest-dom/extend-expect';
 import {
 	act,
 	cleanup,
+	fireEvent,
+	getByLabelText,
 	getByText,
 	queryByText,
 	render,
@@ -23,13 +25,16 @@ import {
 import React from 'react';
 
 import MappingSelector from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/MappingSelector';
+import {config} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
+import {PAGE_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/pageTypes';
 import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
+			pageType: '0',
 			selectedMappingTypes: {
 				subtype: {
 					id: '0',
@@ -42,6 +47,11 @@ jest.mock(
 			},
 		},
 	})
+);
+
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
+	() => jest.fn(() => Promise.resolve())
 );
 
 function renderMappingSelector({mappedItem = {}, onMappingSelect = () => {}}) {
@@ -89,5 +99,38 @@ describe('MappingSelector', () => {
 		expect(getByText(document.body, 'field')).toBeInTheDocument();
 
 		expect(queryByText(document.body, 'source')).not.toBeInTheDocument();
+	});
+
+	it('renders correct selects in display pages', async () => {
+		config.pageType = PAGE_TYPES.display;
+
+		await act(async () => {
+			renderMappingSelector({});
+		});
+
+		expect(getByText(document.body, 'content')).toBeInTheDocument();
+		expect(getByText(document.body, 'field')).toBeInTheDocument();
+		expect(getByText(document.body, 'source')).toBeInTheDocument();
+	});
+
+	it('does not render content select when selecting structure as source', async () => {
+		config.pageType = PAGE_TYPES.display;
+
+		const {getByLabelText, getByText, queryByText} = renderMappingSelector(
+			{}
+		);
+
+		const sourceTypeInput = getByLabelText('source');
+
+		await act(async () => {
+			fireEvent.change(sourceTypeInput, {
+				target: {value: 'structure'},
+			});
+		});
+
+		expect(getByText('field')).toBeInTheDocument();
+		expect(getByText('source')).toBeInTheDocument();
+
+		expect(queryByText('content')).not.toBeInTheDocument();
 	});
 });

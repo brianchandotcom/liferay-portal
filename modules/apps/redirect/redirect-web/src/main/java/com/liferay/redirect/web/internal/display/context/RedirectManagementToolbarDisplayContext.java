@@ -96,11 +96,6 @@ public class RedirectManagementToolbarDisplayContext
 	}
 
 	@Override
-	public Boolean isSelectable() {
-		return false;
-	}
-
-	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {
 			"create-date", "modified-date", "source-url", "destination-url"

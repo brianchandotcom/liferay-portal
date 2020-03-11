@@ -4584,12 +4584,9 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						docker kill ${docker_rm_list}
 
 						docker rm -f ${docker_rm_list}
-
-						while IFS=read -r docker_container
-						do
-						    docker network disconnect -f ${HOSTNAME} $docker_container
-						done <<< "${docker_rm_list}"
 					fi
+
+					docker network disconnect -f ${env.DOCKER_NETWORK_NAME} ${database.host}
 				]]>
 			</echo>
 

@@ -159,6 +159,10 @@ public class UpdateLanguageAction implements Action {
 				redirect = PortalUtil.getLayoutFriendlyURL(
 					layout, themeDisplay, locale);
 			}
+
+			if (Validator.isNotNull(friendlyURLSeparatorPart)) {
+				redirect += friendlyURLSeparatorPart;
+			}
 		}
 
 		if (Validator.isNotNull(queryString)) {

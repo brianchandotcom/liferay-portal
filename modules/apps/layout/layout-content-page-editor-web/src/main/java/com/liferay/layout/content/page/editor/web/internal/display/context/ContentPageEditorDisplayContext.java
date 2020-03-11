@@ -480,7 +480,8 @@ public class ContentPageEditorDisplayContext {
 
 		resourceURL.setResourceID(resourceID);
 
-		return resourceURL.toString();
+		return HttpUtil.addParameter(
+			resourceURL.toString(), "p_l_mode", Constants.EDIT);
 	}
 
 	protected long getSegmentsExperienceId() {

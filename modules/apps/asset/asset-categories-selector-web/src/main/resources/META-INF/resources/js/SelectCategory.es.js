@@ -124,6 +124,4 @@ function SelectCategory({
 	);
 }
 
-export default function(props) {
-	return <SelectCategory {...props} />;
-}
+export default SelectCategory;

@@ -37,23 +37,6 @@ const getDefaultAlertContainer = () => {
 	return container;
 };
 
-const Toast = ({displayType, message, onClose, title, toastProps, variant}) => {
-	return (
-		<ClayAlert.ToastContainer>
-			<ClayAlert
-				autoClose={TOAST_AUTO_CLOSE_INTERVAL}
-				displayType={displayType}
-				onClose={onClose}
-				title={title}
-				variant={variant}
-				{...toastProps}
-			>
-				{message}
-			</ClayAlert>
-		</ClayAlert.ToastContainer>
-	);
-};
-
 /**
  * Function that implements the Toast pattern, which allows to present feedback
  * to user actions as a toast message in the lower left corner of the page
@@ -82,18 +65,22 @@ function openToast({
 
 	const onClose = () => unmountComponentAtNode(container);
 
-	const ToastComponent = () => (
-		<Toast
-			displayType={type}
-			message={message}
-			onClose={onClose}
-			title={title}
-			toastProps={toastProps}
-			variant={variant}
-		/>
+	render(
+		<ClayAlert.ToastContainer>
+			<ClayAlert
+				autoClose={TOAST_AUTO_CLOSE_INTERVAL}
+				displayType={type}
+				onClose={onClose}
+				title={title}
+				variant={variant}
+				{...toastProps}
+			>
+				{message}
+			</ClayAlert>
+		</ClayAlert.ToastContainer>,
+		renderData,
+		container
 	);
-
-	render(ToastComponent, renderData, container);
 }
 
 export {openToast};

@@ -411,6 +411,4 @@ const SharingAutocomplete = ({onItemClick = () => {}, sourceItems}) => {
 	);
 };
 
-export default function(props) {
-	return <Sharing {...props} />;
-}
+export default Sharing;

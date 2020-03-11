@@ -115,6 +115,4 @@ RatingsLike.propTypes = {
 	url: PropTypes.string.isRequired,
 };
 
-export default function(props) {
-	return <RatingsLike {...props} />;
-}
+export default RatingsLike;

@@ -235,5 +235,5 @@ const TooltipProvider = () => {
 };
 
 export default () => {
-	render(() => <TooltipProvider />, {}, getDefaultTooltipContainer());
+	render(<TooltipProvider />, {}, getDefaultTooltipContainer());
 };

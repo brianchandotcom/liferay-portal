@@ -230,6 +230,4 @@ ImagePreviewer.propTypes = {
 	imageURL: PropTypes.string,
 };
 
-export default function(props) {
-	return <ImagePreviewer {...props} />;
-}
+export default ImagePreviewer;

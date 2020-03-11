@@ -98,6 +98,4 @@ PersonalMenu.propTypes = {
 	itemsURL: PropTypes.string,
 };
 
-export default function(props) {
-	return <PersonalMenu {...props} />;
-}
+export default PersonalMenu;

@@ -193,6 +193,4 @@ AdaptiveMediaProgress.propTypes = {
 	uuid: PropTypes.string,
 };
 
-export default function(props) {
-	return <AdaptiveMediaProgress {...props} />;
-}
+export default AdaptiveMediaProgress;

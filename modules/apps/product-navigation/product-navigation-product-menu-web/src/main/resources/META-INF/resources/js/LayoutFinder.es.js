@@ -207,6 +207,4 @@ LayoutFinder.propTypes = {
 	viewInPageAdministrationURL: PropTypes.string,
 };
 
-export default function(props) {
-	return <LayoutFinder {...props} />;
-}
+export default LayoutFinder;

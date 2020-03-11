@@ -12,10 +12,4 @@
  * details.
  */
 
-import React from 'react';
-
-import Collaborators from './components/Collaborators.es';
-
-export default function(props) {
-	return <Collaborators {...props} />;
-}
+export {default} from './components/Collaborators.es';

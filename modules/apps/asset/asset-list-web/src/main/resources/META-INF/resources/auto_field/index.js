@@ -376,6 +376,4 @@ AutoField.propTypes = {
 	vocabularyIds: PropTypes.arrayOf(PropTypes.string),
 };
 
-export default function(props) {
-	return <AutoField {...props} />;
-}
+export default AutoField;

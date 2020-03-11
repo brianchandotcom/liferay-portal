@@ -31,6 +31,4 @@ const EditFormViewApp = ({basePortletURL, ...props}) => {
 	);
 };
 
-export default function(props) {
-	return <EditFormViewApp {...props} />;
-}
+export default EditFormViewApp;

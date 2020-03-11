@@ -118,6 +118,4 @@ PageTypeSelector.propTypes = {
 	privateLayout: PropTypes.bool,
 };
 
-export default function(props) {
-	return <PageTypeSelector {...props} />;
-}
+export default PageTypeSelector;

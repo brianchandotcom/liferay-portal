@@ -77,6 +77,4 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 	);
 };
 
-export default function(props) {
-	return <SelectSiteNavigationMenuItem {...props} />;
-}
+export default SelectSiteNavigationMenuItem;

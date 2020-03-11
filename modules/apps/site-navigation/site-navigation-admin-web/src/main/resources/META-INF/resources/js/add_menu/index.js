@@ -90,6 +90,4 @@ function AddMenu({dropdownItems, portletId}) {
 	);
 }
 
-export default function(props) {
-	return <AddMenu {...props} />;
-}
+export default AddMenu;

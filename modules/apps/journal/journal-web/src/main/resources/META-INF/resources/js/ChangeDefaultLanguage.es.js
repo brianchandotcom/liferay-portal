@@ -106,6 +106,4 @@ ChangeDefaultLanguage.propTypes = {
 	strings: PropTypes.object.isRequired,
 };
 
-export default function(props) {
-	return <ChangeDefaultLanguage {...props} />;
-}
+export default ChangeDefaultLanguage;

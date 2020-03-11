@@ -301,6 +301,4 @@ DocumentPreviewer.propTypes = {
 	totalPages: PropTypes.number,
 };
 
-export default function(props) {
-	return <DocumentPreviewer {...props} />;
-}
+export default DocumentPreviewer;

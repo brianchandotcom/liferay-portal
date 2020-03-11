@@ -264,6 +264,4 @@ class SidebarBody extends React.Component {
 	}
 }
 
-export default function(props) {
-	return <ContextualSidebar {...props} />;
-}
+export default ContextualSidebar;

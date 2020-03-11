@@ -220,6 +220,4 @@ FieldMappings.propTypes = {
 	selectedIndexName: PropTypes.string,
 };
 
-export default function(props) {
-	return <FieldMappings {...props} />;
-}
+export default FieldMappings;

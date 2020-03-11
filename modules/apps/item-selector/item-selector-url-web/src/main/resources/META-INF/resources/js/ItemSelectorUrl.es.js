@@ -144,6 +144,4 @@ ItemSelectorUrl.propTypes = {
 	eventName: PropTypes.string.isRequired,
 };
 
-export default function(props) {
-	return <ItemSelectorUrl {...props} />;
-}
+export default ItemSelectorUrl;

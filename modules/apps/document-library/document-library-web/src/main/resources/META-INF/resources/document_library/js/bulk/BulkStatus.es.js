@@ -114,4 +114,4 @@ BulkStatus.propTypes = {
 	waitingTime: PropTypes.number,
 };
 
-export default props => <BulkStatus {...props} />;
+export default BulkStatus;

@@ -212,6 +212,4 @@ Languages.propTypes = {
 	translatedLanguages: PropTypes.object,
 };
 
-export default function(props) {
-	return <Languages {...props} />;
-}
+export default Languages;

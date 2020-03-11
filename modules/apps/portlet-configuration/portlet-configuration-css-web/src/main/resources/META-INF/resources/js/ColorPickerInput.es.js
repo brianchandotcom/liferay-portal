@@ -38,6 +38,4 @@ const ColorPicker = ({color, label, name}) => {
 	);
 };
 
-export default function(props) {
-	return <ColorPicker {...props} />;
-}
+export default ColorPicker;

@@ -254,6 +254,4 @@ function Comparator({
 	);
 }
 
-export default function(props) {
-	return <Comparator {...props} />;
-}
+export default Comparator;

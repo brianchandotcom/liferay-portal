@@ -114,6 +114,4 @@ const App = props => {
 	);
 };
 
-export default function(props) {
-	return <App {...props} />;
-}
+export default App;

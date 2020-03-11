@@ -40,7 +40,7 @@ function dispose() {
 	unmountComponentAtNode(getDefaultModalContainer());
 }
 
-function SimpleInputModalComponent({
+function openSimpleInputModalImplementation({
 	alert,
 	checkboxFieldLabel,
 	checkboxFieldName,
@@ -55,7 +55,9 @@ function SimpleInputModalComponent({
 	onFormSuccess,
 	placeholder,
 }) {
-	return (
+	dispose();
+
+	render(
 		<SimpleInputModal
 			alert={alert}
 			checkboxFieldLabel={checkboxFieldLabel}
@@ -72,18 +74,8 @@ function SimpleInputModalComponent({
 			namespace={namespace}
 			onFormSuccess={onFormSuccess}
 			placeholder={placeholder}
-		/>
-	);
-}
-
-function openSimpleInputModalImplementation(data) {
-	dispose();
-
-	const renderData = DEFAULT_RENDER_DATA;
-
-	render(
-		SimpleInputModalComponent,
-		{...data, ...renderData},
+		/>,
+		DEFAULT_RENDER_DATA,
 		getDefaultModalContainer()
 	);
 }

@@ -18,7 +18,6 @@ import {PortletBase} from 'frontend-js-web';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
-import React from 'react';
 import ReactDOM from 'react-dom';
 
 import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
@@ -94,7 +93,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			uploadItemURL: this.uploadItemURL,
 		};
 
-		render(props => <ItemSelectorPreview {...props} />, data, container);
+		render(ItemSelectorPreview, data, container);
 	}
 
 	closeItemSelectorPreview() {

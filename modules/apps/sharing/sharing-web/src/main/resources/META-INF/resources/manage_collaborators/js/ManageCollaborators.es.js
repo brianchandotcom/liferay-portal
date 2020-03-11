@@ -583,6 +583,4 @@ ManageCollaborators.propTypes = {
 	portletNamespace: PropTypes.string,
 };
 
-export default function(props) {
-	return <ManageCollaborators {...props} />;
-}
+export default ManageCollaborators;

@@ -154,6 +154,4 @@ SelectLayout.propTypes = {
 	nodes: PropTypes.array.isRequired,
 };
 
-export default function(props) {
-	return <SelectLayout {...props} />;
-}
+export default SelectLayout;

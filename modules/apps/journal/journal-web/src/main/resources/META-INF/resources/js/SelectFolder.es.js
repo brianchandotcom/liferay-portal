@@ -87,6 +87,4 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 	);
 };
 
-export default function(props) {
-	return <SelectFolder {...props} />;
-}
+export default SelectFolder;

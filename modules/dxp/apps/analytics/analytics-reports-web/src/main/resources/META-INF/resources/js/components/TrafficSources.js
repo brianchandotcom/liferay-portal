@@ -85,6 +85,7 @@ export default function TrafficSources({dataProvider, languageTag}) {
 						cx="50%"
 						cy="50%"
 						data={trafficSources}
+						dataKey="value"
 						innerRadius={25}
 						nameKey={'name'}
 						outerRadius={40}

@@ -137,7 +137,10 @@ export default ({dataLayoutBuilder, node}) => {
 			classList.remove('target-over');
 			classList.remove('targetOver');
 
-			if (parentFieldNode) {
+			if (
+				parentFieldNode &&
+				!parentFieldNode.querySelector('.target-over')
+			) {
 				parentFieldNode.classList.remove('active-drop-child');
 			}
 		}

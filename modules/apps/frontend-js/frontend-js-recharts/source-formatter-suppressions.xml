@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JSONPackageJSONCheck" files="package\.json" />
+	</source-check>
+</suppressions>

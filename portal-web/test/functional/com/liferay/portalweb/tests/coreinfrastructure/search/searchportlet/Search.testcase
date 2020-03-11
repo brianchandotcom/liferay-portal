@@ -1832,7 +1832,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Portlet#ERROR");
 
-		for (var portlet : list "Custom Filter,Sort,Suggestions,Search Results,Search Bar") {
+		for (var portlet : list "Custom Filter,Sort,Search Results,Search Bar") {
 			AssertElementPresent(
 				key_portletName = "${portlet}",
 				locator1 = "Portlet#BODY");
@@ -1851,7 +1851,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Portlet#ERROR");
 
-		for (var portlet : list "Custom Filter,Sort,Suggestions,Search Results,Search Bar") {
+		for (var portlet : list "Custom Filter,Sort,Search Results,Search Bar") {
 			AssertElementPresent(
 				key_portletName = "${portlet}",
 				locator1 = "Portlet#BODY");

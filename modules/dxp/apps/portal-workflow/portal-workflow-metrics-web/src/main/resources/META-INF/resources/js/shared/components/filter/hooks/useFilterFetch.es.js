@@ -23,7 +23,10 @@ import {useFilterState} from './useFilterState.es';
 const useFilterFetch = ({
 	filterKey,
 	prefixKey,
-	requestUrl,
+	requestBody: data = {},
+	requestMethod: method = 'get',
+	requestParams: params = {},
+	requestUrl: url,
 	staticItems,
 	withoutRouteParams,
 }) => {
@@ -50,7 +53,7 @@ const useFilterFetch = ({
 			dispatchFilterError(filterKey, true);
 
 			client
-				.get(requestUrl)
+				.request({data, method, params, url})
 				.then(fetchCallback)
 				.catch(() => {
 					dispatchFilterError(filterKey);

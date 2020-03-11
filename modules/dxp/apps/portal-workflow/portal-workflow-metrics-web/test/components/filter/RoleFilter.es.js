@@ -23,7 +23,9 @@ const items = [
 ];
 
 const clientMock = {
-	get: jest.fn().mockResolvedValue({data: {items, totalCount: items.length}}),
+	request: jest
+		.fn()
+		.mockResolvedValue({data: {items, totalCount: items.length}}),
 };
 
 const wrapper = ({children}) => (

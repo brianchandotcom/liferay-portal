@@ -50,6 +50,9 @@ describe('The instance list card should', () => {
 		get: jest
 			.fn()
 			.mockResolvedValue({data: {items, totalCount: items.length + 1}}),
+		request: jest
+			.fn()
+			.mockResolvedValue({data: {items, totalCount: items.length + 1}}),
 	};
 	let getByTestId, getAllByTestId;
 

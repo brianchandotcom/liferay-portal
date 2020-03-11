@@ -31,8 +31,12 @@ const items = [
 	},
 ];
 
+const jestMock = jest.fn().mockResolvedValue({data: {items, totalCount: 2}});
+
 const clientMock = {
-	get: jest.fn().mockResolvedValue({data: {items, totalCount: 2}}),
+	get: jestMock,
+	post: jestMock,
+	request: jestMock,
 };
 
 const MockContext = ({children}) => (

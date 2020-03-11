@@ -99,10 +99,8 @@ describe('The performance by assignee card component should', () => {
 
 		beforeEach(() => {
 			const clientMock = {
-				get: jest
-					.fn()
-					.mockResolvedValueOnce({data})
-					.mockResolvedValue({data: processStepsData}),
+				post: jest.fn().mockResolvedValue({data}),
+				request: jest.fn().mockResolvedValue({data: processStepsData}),
 			};
 
 			const wrapper = ({children}) => (
@@ -171,10 +169,10 @@ describe('The performance by assignee card component should', () => {
 	describe('Be rendered without results', () => {
 		beforeAll(() => {
 			const clientMock = {
-				get: jest
+				post: jest
 					.fn()
-					.mockResolvedValueOnce({data: {items: [], totalCount: 0}})
-					.mockResolvedValue({data: processStepsData}),
+					.mockResolvedValue({data: {items: [], totalCount: 0}}),
+				request: jest.fn().mockResolvedValue({data: processStepsData}),
 			};
 
 			const wrapper = ({children}) => (

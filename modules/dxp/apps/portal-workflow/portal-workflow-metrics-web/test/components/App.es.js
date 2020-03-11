@@ -33,7 +33,9 @@ const pending = {
 	untrackedInstanceCount: 0,
 };
 
-const empty = {items: [], totalCount: 0};
+const jestEmpty = jest
+	.fn()
+	.mockResolvedValue({data: {items: [], totalCount: 0}});
 
 const client = {
 	get: jest
@@ -45,7 +47,9 @@ const client = {
 			},
 		})
 		.mockResolvedValueOnce({data: pending})
-		.mockResolvedValue({data: empty}),
+		.mockResolvedValue({data: {items: [], totalCount: 0}}),
+	post: jestEmpty,
+	request: jestEmpty,
 };
 
 const mockProps = {

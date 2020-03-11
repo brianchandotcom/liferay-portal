@@ -13,7 +13,6 @@ import {render} from '@testing-library/react';
 import React from 'react';
 
 import PerformanceByAssigneePage from '../../../src/main/resources/META-INF/resources/js/components/performance-by-assignee-page/PerformanceByAssigneePage.es';
-import {jsonSessionStorage} from '../../../src/main/resources/META-INF/resources/js/shared/util/storage.es';
 import {MockRouter} from '../../mock/MockRouter.es';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -61,10 +60,9 @@ const timeRangeData = {
 };
 
 const clientMock = {
-	get: jest
-		.fn()
-		.mockResolvedValueOnce({data: timeRangeData})
-		.mockResolvedValue({data}),
+	get: jest.fn().mockResolvedValue({data: timeRangeData}),
+	post: jest.fn().mockResolvedValue({data}),
+	request: jest.fn().mockResolvedValue({data}),
 };
 
 const wrapper = ({children}) => (
@@ -75,7 +73,6 @@ describe('The PerformanceByAssigneePage component having data should', () => {
 	let getAllByTestId;
 
 	beforeAll(() => {
-		jsonSessionStorage.set('timeRanges', timeRangeData);
 		const renderResult = render(
 			<PerformanceByAssigneePage routeParams={{processId: 12345}} />,
 			{wrapper}

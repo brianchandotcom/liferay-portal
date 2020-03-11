@@ -38,6 +38,11 @@ SearchContainer<RedirectEntry> redirectSearchContainer = redirectDisplayContext.
 			keyProperty="redirectEntryId"
 			modelVar="redirectEntry"
 		>
+
+			<%
+			row.setData(HashMapBuilder.<String, Object>put("actions", "deleteSelectedRedirectEntries").build());
+			%>
+
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="source-url"

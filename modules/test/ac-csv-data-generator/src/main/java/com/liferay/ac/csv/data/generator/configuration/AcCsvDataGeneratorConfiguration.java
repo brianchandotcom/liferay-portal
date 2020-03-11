@@ -33,9 +33,6 @@ public interface AcCsvDataGeneratorConfiguration {
 	@Meta.AD
 	public String pathToUserCsv();
 
-	@Meta.AD(deflt = "false", required = false)
-	public String verbose();
-
 	@Meta.AD
 	public String virtualHostName();
 

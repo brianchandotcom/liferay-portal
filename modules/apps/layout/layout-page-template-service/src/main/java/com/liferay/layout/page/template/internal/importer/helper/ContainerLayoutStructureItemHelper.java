@@ -22,8 +22,8 @@ import com.liferay.layout.page.template.util.PaddingConverter;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -55,17 +55,27 @@ public class ContainerLayoutStructureItemHelper
 
 		if (definitionMap != null) {
 			containerLayoutStructureItem.setBackgroundColorCssClass(
-				(String)definitionMap.get("backgroundColorCssClass"));
+				(String)definitionMap.get("backgroundColor"));
 
 			Map<String, Object> backgroundImageMap =
 				(Map<String, Object>)definitionMap.get("backgroundImage");
 
 			if (backgroundImageMap != null) {
-				JSONObject jsonObject = JSONUtil.put(
-					"title", backgroundImageMap.get("title")
-				).put(
-					"url", backgroundImageMap.get("url")
-				);
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+				Map<String, String> titleMap =
+					(Map<String, String>)backgroundImageMap.get("title");
+
+				if (titleMap != null) {
+					jsonObject.put("title", titleMap.get("value"));
+				}
+
+				Map<String, String> urlMap =
+					(Map<String, String>)backgroundImageMap.get("url");
+
+				if (urlMap != null) {
+					jsonObject.put("url", urlMap.get("value"));
+				}
 
 				containerLayoutStructureItem.setBackgroundImageJSONObject(
 					jsonObject);

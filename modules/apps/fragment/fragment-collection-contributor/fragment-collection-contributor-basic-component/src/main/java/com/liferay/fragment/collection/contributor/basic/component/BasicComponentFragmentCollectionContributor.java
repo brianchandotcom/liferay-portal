@@ -25,7 +25,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = FragmentCollectionContributor.class)
+@Component(
+	property = "fragment.collection.key=BASIC_COMPONENT",
+	service = FragmentCollectionContributor.class
+)
 public class BasicComponentFragmentCollectionContributor
 	extends BaseFragmentCollectionContributor {
 

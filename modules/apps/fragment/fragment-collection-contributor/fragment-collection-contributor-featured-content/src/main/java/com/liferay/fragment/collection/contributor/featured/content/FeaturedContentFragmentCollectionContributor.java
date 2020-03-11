@@ -25,7 +25,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = FragmentCollectionContributor.class)
+@Component(
+	property = "fragment.collection.key=FEATURED_CONTENT",
+	service = FragmentCollectionContributor.class
+)
 public class FeaturedContentFragmentCollectionContributor
 	extends BaseFragmentCollectionContributor {
 

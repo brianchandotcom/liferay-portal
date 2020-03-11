@@ -25,7 +25,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = FragmentCollectionContributor.class)
+@Component(
+	property = "fragment.collection.key=NAVIGATION_BARS",
+	service = FragmentCollectionContributor.class
+)
 public class NavigationBarsFragmentCollectionContributor
 	extends BaseFragmentCollectionContributor {
 

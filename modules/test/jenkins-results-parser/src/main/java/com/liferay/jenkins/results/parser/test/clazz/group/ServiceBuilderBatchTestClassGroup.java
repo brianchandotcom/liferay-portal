@@ -186,7 +186,7 @@ public class ServiceBuilderBatchTestClassGroup
 				JenkinsResultsParserUtil.getIncludedFiles(
 					null,
 					getPathMatchers(
-						"portal-tools-service-builder/**",
+						"util/portal-tools-service-builder/**",
 						portalModulesBaseDir),
 					modifiedFiles);
 

@@ -90,11 +90,15 @@ class TabsProvider {
 			return;
 		}
 
-		const activePanel = panel.parentElement.querySelector(
-			`.${CssClass.SHOW}`
-		);
+		const panels = Array.from(panel.parentElement.children);
 
-		if (activePanel) {
+		const activePanels = panels.filter(item => {
+			return item.classList.contains(CssClass.SHOW);
+		});
+
+		if (activePanels.length) {
+			const activePanel = activePanels[0];
+
 			Liferay.on(this.EVENT_HIDDEN, event => {
 				if (event.panel === activePanel) {
 					this.show({panel, trigger});

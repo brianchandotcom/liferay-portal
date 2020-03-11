@@ -14,6 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.HttpHost;
@@ -24,13 +27,11 @@ import org.elasticsearch.client.RestHighLevelClient;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * @author André de Oliveira
  */
-@Ignore
 public class RemoteElasticsearchConnectionTest {
 
 	@Before
@@ -39,7 +40,81 @@ public class RemoteElasticsearchConnectionTest {
 	}
 
 	@Test
+	public void testActivateNeverCloseNeverConnect() {
+		Assert.assertNull(
+			_remoteElasticsearchConnection.getRestHighLevelClient());
+
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"connectionId", "remote"
+		).put(
+			"networkHostAddresses", "http://localhost:9200"
+		).build();
+
+		_remoteElasticsearchConnection.activate(properties);
+
+		Assert.assertNull(
+			_remoteElasticsearchConnection.getRestHighLevelClient());
+
+		_remoteElasticsearchConnection.connect();
+
+		Assert.assertNotNull(
+			_remoteElasticsearchConnection.getRestHighLevelClient());
+
+		_remoteElasticsearchConnection.activate(properties);
+
+		Assert.assertNotNull(
+			_remoteElasticsearchConnection.getRestHighLevelClient());
+	}
+
+	@Test
+	public void testGetConnectionId() {
+		Assert.assertNull(_remoteElasticsearchConnection.getConnectionId());
+
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"connectionId", "remote"
+		).put(
+			"networkHostAddresses", "http://localhost:9200"
+		).build();
+
+		_remoteElasticsearchConnection.activate(properties);
+
+		Assert.assertEquals(
+			"remote", _remoteElasticsearchConnection.getConnectionId());
+	}
+
+	@Test
+	public void testIsActive() {
+		Assert.assertFalse(_remoteElasticsearchConnection.isActive());
+
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"active", "false"
+		).put(
+			"connectionId", "remote"
+		).put(
+			"networkHostAddresses", "http://localhost:9200"
+		).build();
+
+		_remoteElasticsearchConnection.activate(properties);
+
+		Assert.assertFalse(_remoteElasticsearchConnection.isActive());
+
+		properties.put("active", "true");
+
+		_remoteElasticsearchConnection.activate(properties);
+
+		Assert.assertTrue(_remoteElasticsearchConnection.isActive());
+	}
+
+	@Test
 	public void testModifyConnected() {
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"connectionId", "remote"
+		).put(
+			"networkHostAddresses", "http://localhost:9200"
+		).build();
+
+		_remoteElasticsearchConnection.activate(properties);
+
 		Assert.assertFalse(_remoteElasticsearchConnection.isConnected());
 
 		_remoteElasticsearchConnection.connect();
@@ -48,16 +123,15 @@ public class RemoteElasticsearchConnectionTest {
 
 		assertNetworkHostAddress("localhost", 9200);
 
+		properties.put("networkHostAddresses", "http://127.0.0.1:9999");
+
+		_remoteElasticsearchConnection.activate(properties);
+
+		_remoteElasticsearchConnection.connect();
+
 		Assert.assertTrue(_remoteElasticsearchConnection.isConnected());
 
 		assertNetworkHostAddress("127.0.0.1", 9999);
-	}
-
-	@Test
-	public void testModifyUnconnected() {
-		Assert.assertFalse(_remoteElasticsearchConnection.isConnected());
-
-		Assert.assertTrue(_remoteElasticsearchConnection.isConnected());
 	}
 
 	protected void assertNetworkHostAddress(String hostString, int port) {

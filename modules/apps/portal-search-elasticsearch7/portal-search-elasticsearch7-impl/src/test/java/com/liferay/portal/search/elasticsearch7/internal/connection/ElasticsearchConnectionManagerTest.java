@@ -18,9 +18,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.HashMap;
 
+import org.elasticsearch.client.RestHighLevelClient;
+
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import org.mockito.Mock;
@@ -30,7 +31,6 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author André de Oliveira
  */
-@Ignore
 public class ElasticsearchConnectionManagerTest {
 
 	@Before
@@ -40,11 +40,16 @@ public class ElasticsearchConnectionManagerTest {
 		resetMockConnections();
 
 		_elasticsearchConnectionManager = createElasticsearchConnectionManager(
-			_embeddedElasticsearchConnection, _remoteElasticsearchConnection);
+			_embeddedElasticsearchConnection, _remoteElasticsearchConnection1,
+			_remoteElasticsearchConnection2, _remoteElasticsearchConnection3);
 	}
 
 	@Test
-	public void testActivateMustNotOpenAnyConnection() {
+	public void testActivateMustNotChangeAnyConnection() {
+		Mockito.reset(
+			_embeddedElasticsearchConnection, _remoteElasticsearchConnection1,
+			_remoteElasticsearchConnection2, _remoteElasticsearchConnection3);
+
 		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
 			"operationMode", OperationMode.EMBEDDED.name()
 		).build();
@@ -52,38 +57,134 @@ public class ElasticsearchConnectionManagerTest {
 		_elasticsearchConnectionManager.activate(properties);
 
 		verifyNeverCloseNeverConnect(_embeddedElasticsearchConnection);
-		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection);
-	}
+		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection1);
+		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection2);
+		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection3);
 
-	@Test
-	public void testActivateThenConnect() {
-		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
-			"operationMode", OperationMode.EMBEDDED.name()
+		properties = HashMapBuilder.<String, Object>put(
+			"operationMode", OperationMode.REMOTE.name()
 		).build();
 
 		_elasticsearchConnectionManager.activate(properties);
 
-		verifyConnectNeverClose(_embeddedElasticsearchConnection);
-		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection);
+		verifyNeverCloseNeverConnect(_embeddedElasticsearchConnection);
+		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection1);
+		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection2);
+		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection3);
 	}
 
 	@Test
-	public void testGetRestHighLevelClient() {
-		modify(OperationMode.EMBEDDED);
+	public void testGetElasticsearchConnectionWhenOperationModeNotSet() {
+		Assert.assertEquals(
+			null, _elasticsearchConnectionManager.getElasticsearchConnection());
+	}
 
-		_elasticsearchConnectionManager.getRestHighLevelClient();
+	@Test
+	public void testGetEmbeddedElasticsearchConnection() {
+		_elasticsearchConnectionManager.setOperationMode(
+			OperationMode.EMBEDDED);
 
-		Mockito.verify(
-			_embeddedElasticsearchConnection
-		).getRestHighLevelClient();
+		Assert.assertEquals(
+			_embeddedElasticsearchConnection,
+			_elasticsearchConnectionManager.getElasticsearchConnection());
+	}
 
-		modify(OperationMode.REMOTE);
+	@Test
+	public void testGetEmbeddedModeRestHighLevelClient() {
+		_elasticsearchConnectionManager.setOperationMode(
+			OperationMode.EMBEDDED);
 
-		_elasticsearchConnectionManager.getRestHighLevelClient();
+		Assert.assertEquals(
+			_embeddedElasticsearchConnection.getRestHighLevelClient(),
+			_elasticsearchConnectionManager.getRestHighLevelClient());
 
-		Mockito.verify(
-			_remoteElasticsearchConnection
-		).getRestHighLevelClient();
+		Assert.assertEquals(
+			_remoteElasticsearchConnection1.getRestHighLevelClient(),
+			_elasticsearchConnectionManager.getRestHighLevelClient(
+				_REMOTE_1_CONNECTION_ID));
+	}
+
+	@Test
+	public void testGetRemoteElasticsearchConnection() {
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"operationMode", OperationMode.REMOTE.name()
+		).put(
+			"remoteClusterConnectionId", _REMOTE_1_CONNECTION_ID
+		).build();
+
+		_elasticsearchConnectionManager.setConfiguration(properties);
+
+		Assert.assertEquals(
+			_remoteElasticsearchConnection1,
+			_elasticsearchConnectionManager.getElasticsearchConnection());
+
+		properties = HashMapBuilder.<String, Object>put(
+			"operationMode", OperationMode.REMOTE.name()
+		).put(
+			"remoteClusterConnectionId", _REMOTE_3_CONNECTION_ID
+		).build();
+
+		_elasticsearchConnectionManager.setConfiguration(properties);
+
+		Assert.assertEquals(
+			_remoteElasticsearchConnection3,
+			_elasticsearchConnectionManager.getElasticsearchConnection());
+	}
+
+	@Test
+	public void testGetRemoteElasticsearchConnectionWithConnectionId() {
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"operationMode", OperationMode.REMOTE.name()
+		).put(
+			"remoteClusterConnectionId", _REMOTE_2_CONNECTION_ID
+		).build();
+
+		_elasticsearchConnectionManager.setConfiguration(properties);
+
+		Assert.assertEquals(
+			_remoteElasticsearchConnection1,
+			_elasticsearchConnectionManager.getElasticsearchConnection(
+				_REMOTE_1_CONNECTION_ID));
+	}
+
+	@Test
+	public void testGetRemoteRestHighLevelClient() {
+		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"operationMode", OperationMode.REMOTE.name()
+		).put(
+			"remoteClusterConnectionId", _REMOTE_1_CONNECTION_ID
+		).build();
+
+		_elasticsearchConnectionManager.setConfiguration(properties);
+
+		Assert.assertEquals(
+			_remoteElasticsearchConnection1.getRestHighLevelClient(),
+			_elasticsearchConnectionManager.getRestHighLevelClient());
+
+		Assert.assertEquals(
+			_remoteElasticsearchConnection2.getRestHighLevelClient(),
+			_elasticsearchConnectionManager.getRestHighLevelClient(
+				_REMOTE_2_CONNECTION_ID));
+	}
+
+	@Test
+	public void testGetRestHighLevelClientWhenConnectionNull() {
+		_elasticsearchConnectionManager.setOperationMode(OperationMode.REMOTE);
+
+		try {
+			_elasticsearchConnectionManager.getRestHighLevelClient("none");
+
+			Assert.fail();
+		}
+		catch (ElasticsearchConnectionNotInitializedException
+					elasticsearchConnectionNotInitializedException) {
+
+			String message =
+				elasticsearchConnectionNotInitializedException.getMessage();
+
+			Assert.assertTrue(
+				message.contains("Elasticsearch connection not found"));
+		}
 	}
 
 	@Test
@@ -95,181 +196,196 @@ public class ElasticsearchConnectionManagerTest {
 		}
 		catch (ElasticsearchConnectionNotInitializedException
 					elasticsearchConnectionNotInitializedException) {
+
+			String message =
+				elasticsearchConnectionNotInitializedException.getMessage();
+
+			Assert.assertTrue(
+				message.contains("Elasticsearch connection not found"));
 		}
 	}
 
 	@Test
-	public void testSetModifiedOperationModeResetsConnection() {
+	public void testGetRestHighLevelClientWhenRestClientNull() {
+		_elasticsearchConnectionManager.setOperationMode(OperationMode.REMOTE);
+
+		try {
+			_elasticsearchConnectionManager.getRestHighLevelClient(
+				_REMOTE_3_CONNECTION_ID);
+
+			Assert.fail();
+		}
+		catch (ElasticsearchConnectionNotInitializedException
+					elasticsearchConnectionNotInitializedException) {
+
+			String message =
+				elasticsearchConnectionNotInitializedException.getMessage();
+
+			Assert.assertTrue(
+				message.contains("REST high level client not found"));
+		}
+	}
+
+	@Test
+	public void testModifiedMustNotChangeAnyConnection() {
+		Mockito.reset(
+			_embeddedElasticsearchConnection, _remoteElasticsearchConnection1,
+			_remoteElasticsearchConnection2, _remoteElasticsearchConnection3);
+
 		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
 			"operationMode", OperationMode.EMBEDDED.name()
 		).build();
 
-		_elasticsearchConnectionManager.activate(properties);
+		_elasticsearchConnectionManager.modified(properties);
 
-		resetMockConnections();
+		verifyNeverCloseNeverConnect(_embeddedElasticsearchConnection);
+		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection1);
+		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection2);
+		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection3);
 
-		properties.put("operationMode", OperationMode.REMOTE.name());
+		properties = HashMapBuilder.<String, Object>put(
+			"operationMode", OperationMode.REMOTE.name()
+		).build();
 
 		_elasticsearchConnectionManager.modified(properties);
 
-		verifyCloseNeverConnect(_embeddedElasticsearchConnection);
-		verifyConnectNeverClose(_remoteElasticsearchConnection);
-	}
-
-	@Test
-	public void testSetOperationModeToUnavailable() {
-		_elasticsearchConnectionManager.unsetElasticsearchConnection(
-			_remoteElasticsearchConnection);
-
-		verifyCloseNeverConnect(_remoteElasticsearchConnection);
 		verifyNeverCloseNeverConnect(_embeddedElasticsearchConnection);
+		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection1);
+		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection2);
+		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection3);
+	}
 
-		resetMockConnections();
-
-		try {
-			modify(OperationMode.REMOTE);
-
-			Assert.fail();
-		}
-		catch (MissingOperationModeException missingOperationModeException) {
-			String message = missingOperationModeException.getMessage();
-
-			Assert.assertTrue(
-				message,
-				message.contains(String.valueOf(OperationMode.REMOTE)));
-		}
-
+	@Test
+	public void testSetElasticsearchConnection() {
 		verifyNeverCloseNeverConnect(_embeddedElasticsearchConnection);
-		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection);
-	}
-
-	@Test
-	public void testSetSameOperationModeMustNotResetConnection() {
-		modify(OperationMode.REMOTE);
-
-		resetMockConnections();
-
-		modify(OperationMode.REMOTE);
-
-		verifyNeverCloseNeverConnect(_embeddedElasticsearchConnection);
-		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection);
-	}
-
-	@Test
-	public void testToggleOperationMode() {
-		modify(OperationMode.EMBEDDED);
-
-		verifyConnectNeverClose(_embeddedElasticsearchConnection);
-		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection);
-
-		resetMockConnections();
-
-		modify(OperationMode.REMOTE);
-
-		verifyCloseNeverConnect(_embeddedElasticsearchConnection);
-		verifyConnectNeverClose(_remoteElasticsearchConnection);
-
-		resetMockConnections();
-
-		modify(OperationMode.EMBEDDED);
-
-		verifyCloseNeverConnect(_remoteElasticsearchConnection);
-		verifyConnectNeverClose(_embeddedElasticsearchConnection);
-	}
-
-	@Test
-	public void testUnableToCloseOldConnectionUseNewConnectionAnyway() {
-		modify(OperationMode.EMBEDDED);
-
-		resetMockConnections();
-
-		Mockito.doThrow(
-			IllegalStateException.class
-		).when(
-			_embeddedElasticsearchConnection
-		).close();
-
-		modify(OperationMode.REMOTE);
-
-		Assert.assertSame(
-			_remoteElasticsearchConnection,
-			_elasticsearchConnectionManager.getElasticsearchConnection());
-
-		verifyCloseNeverConnect(_embeddedElasticsearchConnection);
-		verifyConnectNeverClose(_remoteElasticsearchConnection);
-	}
-
-	@Test
-	public void testUnableToOpenNewConnectionStayWithOldConnection() {
-		modify(OperationMode.EMBEDDED);
-
-		resetMockConnections();
-
-		Mockito.doThrow(
-			IllegalStateException.class
-		).when(
-			_remoteElasticsearchConnection
-		).connect();
-
-		try {
-			modify(OperationMode.REMOTE);
-
-			Assert.fail();
-		}
-		catch (IllegalStateException illegalStateException) {
-		}
-
-		Assert.assertSame(
-			_embeddedElasticsearchConnection,
-			_elasticsearchConnectionManager.getElasticsearchConnection());
-
-		verifyConnectNeverClose(_remoteElasticsearchConnection);
-		verifyNeverCloseNeverConnect(_embeddedElasticsearchConnection);
+		verifyConnectNeverClose(_remoteElasticsearchConnection1);
+		verifyConnectNeverClose(_remoteElasticsearchConnection2);
+		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection3);
 	}
 
 	protected ElasticsearchConnectionManager
 		createElasticsearchConnectionManager(
 			ElasticsearchConnection embeddedElasticsearchConnection,
-			ElasticsearchConnection remoteElasticsearchConnection) {
+			ElasticsearchConnection remoteElasticsearchConnection1,
+			ElasticsearchConnection remoteElasticsearchConnection2,
+			ElasticsearchConnection remoteElasticsearchConnection3) {
 
 		ElasticsearchConnectionManager elasticsearchConnectionManager =
 			new ElasticsearchConnectionManager();
 
 		elasticsearchConnectionManager.setEmbeddedElasticsearchConnection(
 			embeddedElasticsearchConnection);
+		elasticsearchConnectionManager.setRemoteElasticsearchConnection(
+			remoteElasticsearchConnection1);
+		elasticsearchConnectionManager.setRemoteElasticsearchConnection(
+			remoteElasticsearchConnection2);
+		elasticsearchConnectionManager.setRemoteElasticsearchConnection(
+			remoteElasticsearchConnection3);
 
 		return elasticsearchConnectionManager;
 	}
 
-	protected void modify(OperationMode operationMode) {
-	}
-
 	protected void resetMockConnections() {
 		Mockito.reset(
-			_embeddedElasticsearchConnection, _remoteElasticsearchConnection);
+			_embeddedElasticsearchConnection, _remoteElasticsearchConnection1,
+			_remoteElasticsearchConnection2, _remoteElasticsearchConnection3);
 
+		setUpEmbeddedConnection();
+		setUpRemoteConnection1();
+		setUpRemoteConnection2();
+		setUpRemoteConnection3();
+	}
+
+	protected void setUpEmbeddedConnection() {
+		Mockito.when(
+			_embeddedElasticsearchConnection.getConnectionId()
+		).thenReturn(
+			EmbeddedElasticsearchConnection.CONNECTION_ID
+		);
 		Mockito.when(
 			_embeddedElasticsearchConnection.getOperationMode()
 		).thenReturn(
 			OperationMode.EMBEDDED
 		);
 		Mockito.when(
-			_remoteElasticsearchConnection.getOperationMode()
+			_embeddedElasticsearchConnection.getRestHighLevelClient()
 		).thenReturn(
-			OperationMode.REMOTE
+			Mockito.mock(RestHighLevelClient.class)
+		);
+		Mockito.when(
+			_embeddedElasticsearchConnection.isActive()
+		).thenReturn(
+			true
 		);
 	}
 
-	protected void verifyCloseNeverConnect(
-		ElasticsearchConnection elasticsearchConnection) {
+	protected void setUpRemoteConnection1() {
+		Mockito.when(
+			_remoteElasticsearchConnection1.getConnectionId()
+		).thenReturn(
+			_REMOTE_1_CONNECTION_ID
+		);
+		Mockito.when(
+			_remoteElasticsearchConnection1.getOperationMode()
+		).thenReturn(
+			OperationMode.REMOTE
+		);
+		Mockito.when(
+			_remoteElasticsearchConnection1.getRestHighLevelClient()
+		).thenReturn(
+			Mockito.mock(RestHighLevelClient.class)
+		);
+		Mockito.when(
+			_remoteElasticsearchConnection1.isActive()
+		).thenReturn(
+			true
+		);
+	}
 
-		Mockito.verify(
-			elasticsearchConnection
-		).close();
+	protected void setUpRemoteConnection2() {
+		Mockito.when(
+			_remoteElasticsearchConnection2.getConnectionId()
+		).thenReturn(
+			_REMOTE_2_CONNECTION_ID
+		);
+		Mockito.when(
+			_remoteElasticsearchConnection2.getOperationMode()
+		).thenReturn(
+			OperationMode.REMOTE
+		);
+		Mockito.when(
+			_remoteElasticsearchConnection2.getRestHighLevelClient()
+		).thenReturn(
+			Mockito.mock(RestHighLevelClient.class)
+		);
+		Mockito.when(
+			_remoteElasticsearchConnection2.isActive()
+		).thenReturn(
+			true
+		);
+	}
 
-		Mockito.verify(
-			elasticsearchConnection, Mockito.never()
-		).connect();
+	protected void setUpRemoteConnection3() {
+		Mockito.when(
+			_remoteElasticsearchConnection3.getConnectionId()
+		).thenReturn(
+			_REMOTE_3_CONNECTION_ID
+		);
+		Mockito.when(
+			_remoteElasticsearchConnection3.getOperationMode()
+		).thenReturn(
+			OperationMode.REMOTE
+		);
+		Mockito.when(
+			_remoteElasticsearchConnection3.getRestHighLevelClient()
+		).thenReturn(
+			null
+		);
+		Mockito.when(
+			_remoteElasticsearchConnection3.isActive()
+		).thenReturn(
+			false
+		);
 	}
 
 	protected void verifyConnectNeverClose(
@@ -296,12 +412,24 @@ public class ElasticsearchConnectionManagerTest {
 		).connect();
 	}
 
+	private static final String _REMOTE_1_CONNECTION_ID = "remote 1";
+
+	private static final String _REMOTE_2_CONNECTION_ID = "remote 2";
+
+	private static final String _REMOTE_3_CONNECTION_ID = "remote 3";
+
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 
 	@Mock
 	private ElasticsearchConnection _embeddedElasticsearchConnection;
 
 	@Mock
-	private ElasticsearchConnection _remoteElasticsearchConnection;
+	private ElasticsearchConnection _remoteElasticsearchConnection1;
+
+	@Mock
+	private ElasticsearchConnection _remoteElasticsearchConnection2;
+
+	@Mock
+	private ElasticsearchConnection _remoteElasticsearchConnection3;
 
 }

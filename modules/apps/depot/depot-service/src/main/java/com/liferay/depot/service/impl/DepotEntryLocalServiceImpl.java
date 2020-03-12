@@ -21,13 +21,16 @@ import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.base.DepotEntryLocalServiceBaseImpl;
 import com.liferay.depot.service.persistence.DepotEntryGroupRelPersistence;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.GroupKeyException;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -176,6 +179,10 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		_validateTypeSettingsProperties(
 			depotEntry, typeSettingsUnicodeProperties);
 
+		for (String name : nameMap.values()) {
+			_validateName(name);
+		}
+
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
 
 		UnicodeProperties currentTypeSettingsUnicodeProperties =
@@ -236,6 +243,19 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			_language.get(resourceBundle, "unnamed-asset-library"));
 	}
 
+	private void _validateName(String name) throws PortalException {
+		int groupKeyMaxLength = ModelHintsUtil.getMaxLength(
+			Group.class.getName(), "name");
+
+		if (Validator.isNotNull(name) &&
+			(Validator.isNumber(name) || name.contains(StringPool.STAR) ||
+			 name.contains(_ORGANIZATION_NAME_SUFFIX) ||
+			 (name.length() > groupKeyMaxLength))) {
+
+			throw new GroupKeyException();
+		}
+	}
+
 	private void _validateNameMap(
 			Map<Locale, String> nameMap, Locale defaultLocale)
 		throws DepotEntryNameException {
@@ -278,6 +298,8 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 					depotEntry.getGroupId());
 		}
 	}
+
+	private static final String _ORGANIZATION_NAME_SUFFIX = " LFR_ORGANIZATION";
 
 	@Reference
 	private DepotAppCustomizationLocalService

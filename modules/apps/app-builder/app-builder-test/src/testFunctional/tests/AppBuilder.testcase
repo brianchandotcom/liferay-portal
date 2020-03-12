@@ -2855,6 +2855,86 @@ definition {
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
 	}
 
+	@description = "Search for a column(field) in the columns list in Table View Builder"
+	@priority = "5"
+	test SearchColumnListInTableViewBuilder {
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "Custom Object Title",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.setName(formViewName = "Form View Title 1");
+
+		for (var fieldType : list "Text,Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+			FormViewBuilder.closeSidebar();
+		}
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "My Text 23");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+
+		TableViewBuilder.searchByItem(itemName = "Date");
+
+		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "Date");
+
+		for (var columnLabel : list "Text,Select from List,Single Selection,Multiple Selection,Numeric,Upload") {
+
+			TableViewBuilder.validateNoColumnLabelAtSidebar(columnLabel = "${columnLabel}");
+		}
+
+		TableViewBuilder.clearSearch();
+
+		TableViewBuilder.searchByItem(itemName = "2");
+
+		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "My Text 23");
+
+		for (var columnLabel : list "Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
+
+			TableViewBuilder.validateNoColumnLabelAtSidebar(columnLabel = "${columnLabel}");
+		}
+
+		TableViewBuilder.clearSearch();
+
+		TableViewBuilder.searchByItem(itemName = "Select");
+
+		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "Select from List");
+
+		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "Single Selection");
+
+		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "Multiple Selection");
+
+		for (var columnLabel : list "Text,Date,Numeric,Upload") {
+
+			TableViewBuilder.validateNoColumnLabelAtSidebar(columnLabel = "${columnLabel}");
+		}
+
+		TableViewBuilder.clearSearch();
+
+		TableViewBuilder.searchByItem(itemName = "Oranges");
+
+		for (var columnLabel : list "Text,Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
+
+			TableViewBuilder.validateNoColumnLabelAtSidebar(columnLabel = "${columnLabel}");
+		}
+
+		TableViewBuilder.clearSearch();
+
+		for (var columnLabel : list "My Text 23,Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
+
+			TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "${columnLabel}");
+		}
+	}
+
 	@description = "Search for a deployment in the deployment lists"
 	@priority = "5"
 	test SearchForDeployedItem {
@@ -3765,6 +3845,29 @@ definition {
 		App.selectTableView(tableViewName = "Table View Title");
 
 		App.saveApp();
+	}
+
+	@description = "Make sure the search result show if the column is available to be added or already inserted in the table view"
+	@priority = "5"
+	test ValidateDisabledFieldInTableView {
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "Custom Object Title",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View 1",
+			tableViewName = "My Table View 1");
+
+		AppBuilderAdmin.openItem(itemName = "My Table View 1");
+
+		TableViewBuilder.searchByItem(itemName = "Text");
+
+		TableViewBuilder.validateDisabledField(fieldType = "Text");
+
+		TableViewBuilder.validateColumnLabel(columnLabel = "Text");
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

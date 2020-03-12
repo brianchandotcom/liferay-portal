@@ -144,7 +144,7 @@
 
 <tr>
 	<td>FIELD_LABEL_REQUIRED</td>
-	<td>//p[contains(text(),'${fieldLabel}')]/span[@class='reference-mark']/*[@class='lexicon-icon lexicon-icon-asterisk']</td>
+	<td>//p[contains(text(),'${fieldLabel}')]/span[@class='reference-mark']/*[contains(@class,'lexicon-icon-asterisk')]</td>
 	<td></td>
 </tr>
 

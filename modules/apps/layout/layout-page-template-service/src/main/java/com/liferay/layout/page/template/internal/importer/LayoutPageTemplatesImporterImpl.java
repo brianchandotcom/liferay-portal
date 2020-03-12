@@ -525,47 +525,62 @@ public class LayoutPageTemplatesImporterImpl
 				_layoutPageTemplateEntryLocalService.
 					fetchLayoutPageTemplateEntry(groupId, entry.getKey());
 
-			boolean added = false;
+			try {
+				boolean added = false;
 
-			if (layoutPageTemplateEntry == null) {
-				layoutPageTemplateEntry =
-					_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-						groupId,
-						layoutPageTemplateCollection.
-							getLayoutPageTemplateCollectionId(),
+				if (layoutPageTemplateEntry == null) {
+					layoutPageTemplateEntry =
+						_layoutPageTemplateEntryService.
+							addLayoutPageTemplateEntry(
+								groupId,
+								layoutPageTemplateCollection.
+									getLayoutPageTemplateCollectionId(),
+								pageTemplate.getName(),
+								LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+								0, WorkflowConstants.STATUS_APPROVED,
+								ServiceContextThreadLocal.getServiceContext());
+
+					added = true;
+				}
+				else if (overwrite) {
+					layoutPageTemplateEntry =
+						_layoutPageTemplateEntryService.
+							updateLayoutPageTemplateEntry(
+								layoutPageTemplateEntry.
+									getLayoutPageTemplateEntryId(),
+								pageTemplate.getName());
+
+					added = true;
+				}
+
+				if (added) {
+					_processPageDefinition(
+						layoutPageTemplateEntry,
+						pageTemplateEntry.getPageDefinition());
+
+					_layoutPageTemplateImporterResultEntries.add(
+						new LayoutPageTemplateImporterResultEntry(
+							layoutPageTemplateEntry.getName(),
+							LayoutPageTemplateImporterResultEntry.Status.
+								IMPORTED));
+				}
+				else {
+					_layoutPageTemplateImporterResultEntries.add(
+						new LayoutPageTemplateImporterResultEntry(
+							layoutPageTemplateEntry.getName(),
+							LayoutPageTemplateImporterResultEntry.Status.
+								IGNORED));
+				}
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(portalException, portalException);
+				}
+
+				_layoutPageTemplateImporterResultEntries.add(
+					new LayoutPageTemplateImporterResultEntry(
 						pageTemplate.getName(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
-						WorkflowConstants.STATUS_APPROVED,
-						ServiceContextThreadLocal.getServiceContext());
-
-				added = true;
-			}
-			else if (overwrite) {
-				layoutPageTemplateEntry =
-					_layoutPageTemplateEntryService.
-						updateLayoutPageTemplateEntry(
-							layoutPageTemplateEntry.
-								getLayoutPageTemplateEntryId(),
-							pageTemplate.getName());
-
-				added = true;
-			}
-
-			if (added) {
-				_processPageDefinition(
-					layoutPageTemplateEntry,
-					pageTemplateEntry.getPageDefinition());
-
-				_layoutPageTemplateImporterResultEntries.add(
-					new LayoutPageTemplateImporterResultEntry(
-						layoutPageTemplateEntry.getName(),
-						LayoutPageTemplateImporterResultEntry.Status.IMPORTED));
-			}
-			else {
-				_layoutPageTemplateImporterResultEntries.add(
-					new LayoutPageTemplateImporterResultEntry(
-						layoutPageTemplateEntry.getName(),
-						LayoutPageTemplateImporterResultEntry.Status.IGNORED));
+						LayoutPageTemplateImporterResultEntry.Status.INVALID));
 			}
 		}
 	}

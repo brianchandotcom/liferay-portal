@@ -17,12 +17,17 @@ package com.liferay.depot.web.internal.portlet.action;
 import com.liferay.depot.exception.DepotEntryNameException;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
+import com.liferay.depot.web.internal.constants.DepotEntryConstants;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.DuplicateGroupException;
 import com.liferay.portal.kernel.exception.GroupKeyException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -118,12 +123,53 @@ public class AddDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		if (exception instanceof GroupKeyException) {
-			return LanguageUtil.get(
-				themeDisplay.getRequest(), "please-enter-a-valid-name");
+			return _handleGroupKeyException(themeDisplay);
 		}
 
 		return LanguageUtil.get(
 			themeDisplay.getRequest(), "an-unexpected-error-occurred");
+	}
+
+	private String _handleGroupKeyException(ThemeDisplay themeDisplay) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(
+			LanguageUtil.format(
+				themeDisplay.getRequest(),
+				"the-x-cannot-be-x-or-a-reserved-word-such-as-x",
+				new String[] {
+					DepotEntryConstants.NAME_LABEL,
+					DepotEntryConstants.getNameGeneralRestrictions(
+						themeDisplay.getLocale()),
+					DepotEntryConstants.NAME_RESERVED_WORDS
+				}));
+
+		sb.append(StringPool.SPACE);
+
+		sb.append(
+			LanguageUtil.format(
+				themeDisplay.getRequest(),
+				"the-x-cannot-contain-the-following-invalid-characters-x",
+				new String[] {
+					DepotEntryConstants.NAME_LABEL,
+					DepotEntryConstants.NAME_INVALID_CHARACTERS
+				}));
+
+		sb.append(StringPool.SPACE);
+
+		int groupKeyMaxLength = ModelHintsUtil.getMaxLength(
+			Group.class.getName(), "groupKey");
+
+		sb.append(
+			LanguageUtil.format(
+				themeDisplay.getRequest(),
+				"the-x-cannot-contain-more-than-x-characters",
+				new String[] {
+					DepotEntryConstants.NAME_LABEL,
+					String.valueOf(groupKeyMaxLength)
+				}));
+
+		return sb.toString();
 	}
 
 	@Reference

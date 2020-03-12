@@ -21,7 +21,16 @@ DepotAdminDetailsDisplayContext depotAdminDetailsDisplayContext = (DepotAdminDet
 %>
 
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
-<liferay-ui:error exception="<%= GroupKeyException.class %>" message="please-enter-a-valid-name" />
+
+<liferay-ui:error exception="<%= GroupKeyException.class %>">
+	<p>
+		<liferay-ui:message arguments="<%= new String[] {DepotEntryConstants.NAME_LABEL, DepotEntryConstants.getNameGeneralRestrictions(locale), DepotEntryConstants.NAME_RESERVED_WORDS} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
+	</p>
+
+	<p>
+		<liferay-ui:message arguments="<%= new String[] {DepotEntryConstants.NAME_LABEL, DepotEntryConstants.NAME_INVALID_CHARACTERS} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
+	</p>
+</liferay-ui:error>
 
 <liferay-frontend:fieldset-group>
 	<liferay-frontend:fieldset

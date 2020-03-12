@@ -62,7 +62,15 @@ jest.mock(
 				{key: 'text-field-1', label: 'Text Field 1', type: 'text'},
 			])
 		),
-		getAvailableStructureMappingFields: jest.fn(() => Promise.resolve([])),
+		getAvailableStructureMappingFields: jest.fn(() =>
+			Promise.resolve([
+				{
+					key: 'structure-field-1',
+					label: 'Structure Field 1',
+					type: 'text',
+				},
+			])
+		),
 	})
 );
 
@@ -175,6 +183,38 @@ describe('MappingSelector', () => {
 			classNameId: 'InfoItemClassNameId',
 			classPK: 'infoItemClassPK',
 			fieldId: 'text-field-1',
+		});
+	});
+
+	it('calls onMappingSelect with correct params when mapping to structure', async () => {
+		config.pageType = PAGE_TYPES.display;
+
+		const onMappingSelect = jest.fn();
+
+		await act(async () => {
+			renderMappingSelector({
+				onMappingSelect,
+			});
+		});
+
+		const sourceTypeInput = getByLabelText(document.body, 'source');
+
+		await act(async () => {
+			fireEvent.change(sourceTypeInput, {
+				target: {value: 'structure'},
+			});
+		});
+
+		const fieldSelect = getByLabelText(document.body, 'field');
+
+		await act(async () => {
+			fireEvent.change(fieldSelect, {
+				target: {value: 'structure-field-1'},
+			});
+		});
+
+		expect(onMappingSelect).toBeCalledWith({
+			mappedField: 'structure-field-1',
 		});
 	});
 });

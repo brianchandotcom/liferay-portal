@@ -15,10 +15,13 @@
 package com.liferay.redirect.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.redirect.model.RedirectEntry;
@@ -27,6 +30,7 @@ import com.liferay.redirect.service.RedirectEntryLocalService;
 import java.time.Instant;
 
 import java.util.Date;
+import java.util.Dictionary;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -47,44 +51,71 @@ public class RedirectEntryLocalServiceTest {
 
 	@Test
 	public void testFetchExpiredRedirectEntry() throws Exception {
-		Instant instant = Instant.now();
+		_withRedirectEnabled(
+			() -> {
+				Instant instant = Instant.now();
 
-		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
-			TestPropsValues.getGroupId(), "destinationURL", "sourceURL", true,
-			Date.from(instant.minusSeconds(3600)),
-			ServiceContextTestUtil.getServiceContext());
+				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+					TestPropsValues.getGroupId(), "destinationURL", "sourceURL",
+					true, Date.from(instant.minusSeconds(3600)),
+					ServiceContextTestUtil.getServiceContext());
 
-		Assert.assertNull(
-			_redirectEntryLocalService.fetchRedirectEntry(
-				TestPropsValues.getGroupId(), "sourceURL"));
+				Assert.assertNull(
+					_redirectEntryLocalService.fetchRedirectEntry(
+						TestPropsValues.getGroupId(), "sourceURL"));
+			});
 	}
 
 	@Test
 	public void testFetchNotExpiredRedirectEntry() throws Exception {
-		Instant instant = Instant.now();
+		_withRedirectEnabled(
+			() -> {
+				Instant instant = Instant.now();
 
-		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
-			TestPropsValues.getGroupId(), "destinationURL", "sourceURL", true,
-			Date.from(instant.plusSeconds(3600)),
-			ServiceContextTestUtil.getServiceContext());
+				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+					TestPropsValues.getGroupId(), "destinationURL", "sourceURL",
+					true, Date.from(instant.plusSeconds(3600)),
+					ServiceContextTestUtil.getServiceContext());
 
-		Assert.assertEquals(
-			_redirectEntry,
-			_redirectEntryLocalService.fetchRedirectEntry(
-				TestPropsValues.getGroupId(), "sourceURL"));
+				Assert.assertEquals(
+					_redirectEntry,
+					_redirectEntryLocalService.fetchRedirectEntry(
+						TestPropsValues.getGroupId(), "sourceURL"));
+			});
 	}
 
 	@Test
 	public void testFetchRedirectEntry() throws Exception {
-		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
-			TestPropsValues.getGroupId(), "destinationURL", "sourceURL", true,
-			null, ServiceContextTestUtil.getServiceContext());
+		_withRedirectEnabled(
+			() -> {
+				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+					TestPropsValues.getGroupId(), "destinationURL", "sourceURL",
+					true, null, ServiceContextTestUtil.getServiceContext());
 
-		Assert.assertEquals(
-			_redirectEntry,
-			_redirectEntryLocalService.fetchRedirectEntry(
-				TestPropsValues.getGroupId(), "sourceURL"));
+				Assert.assertEquals(
+					_redirectEntry,
+					_redirectEntryLocalService.fetchRedirectEntry(
+						TestPropsValues.getGroupId(), "sourceURL"));
+			});
 	}
+
+	private void _withRedirectEnabled(UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("enabled", true);
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(_PID, dictionary)) {
+
+			unsafeRunnable.run();
+		}
+	}
+
+	private static final String _PID =
+		"com.liferay.redirect.web.internal.configuration." +
+			"FFRedirectConfiguration";
 
 	@DeleteAfterTestRun
 	private RedirectEntry _redirectEntry;

@@ -6,7 +6,7 @@
 	z-index: 2;
 }
 
-.question-title {
+.questions-title {
 	&:after {
 		background-color: $light-l1;
 		border-radius: 0.25rem;
@@ -25,8 +25,8 @@
 	}
 }
 
-.question-user {
-	.question-user-popover {
+.questions-user {
+	.questions-user-popover {
 		display: none;
 		min-width: 234px;
 		top: 100%;
@@ -34,36 +34,36 @@
 
 	&:hover,
 	&:focus {
-		.question-user-popover {
+		.questions-user-popover {
 			display: block;
 		}
 	}
 }
 
-.question-answer {
+.questions-answer {
 	&:not(:first-child) {
 		border-top: 1px solid $secondary-l3;
 	}
 
-	&.question-answer-success {
+	&.questions-answer-success {
 		background-color: $success-l2;
 		border: 1px solid $success-l1;
 		border-radius: 0.25rem;
 	}
 }
 
-.question-reply {
+.questions-reply {
 	&:not(:first-child) {
 		border-top: 1px solid $secondary-l3;
 		padding-top: 1rem;
 	}
 
-	.question-reply-icon {
+	.questions-reply-icon {
 		transform: rotateZ(180deg);
 	}
 }
 
-.question-creator:before {
+.questions-creator:before {
 	background-color: $secondary-l3;
 	bottom: 0;
 	content: '';
@@ -81,14 +81,14 @@
 	}
 }
 
-.question-button {
+.questions-button {
 	bottom: 2rem;
 	position: fixed;
 	right: 2rem;
 	z-index: 3;
 }
 
-.question-actions {
+.questions-actions {
 	@include media-breakpoint-down(md) {
 		bottom: 100%;
 		position: absolute;
@@ -96,17 +96,28 @@
 	}
 }
 
-.questions-home-card {
-	margin: 1rem;
+.questions-card {
+	.card {
+		border-radius: 0.5rem;
+		box-shadow: none;
+		transition: box-shadow 300ms ease-in-out;
+		will-change: box-shadow;
+	}
+
+	.card-body {
+		padding: 1.5rem;
+	}
+
+	.card-title {
+		font-size: 1.5rem;
+	}
 
 	&:hover,
 	&:focus {
-		box-shadow: 0 20px 40px rgba(39, 40, 51, 0.16);
+		.card {
+			box-shadow: 0 1.25rem 2.5rem rgba($dark, 0.16);
+		}
 	}
-}
-
-.questions-navigation {
-	border-bottom: 1px solid $secondary-l3;
 }
 
 .questions-disabled-link {

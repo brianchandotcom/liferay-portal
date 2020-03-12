@@ -71,7 +71,7 @@ export default ({question}) => {
 			</div>
 
 			<Link
-				className="question-title stretched-link"
+				className="questions-title stretched-link"
 				to={`/questions/${question.messageBoardSection.title}/${question.friendlyUrlPath}`}
 			>
 				<h2 className="c-mb-0 stretched-link-layer text-dark">

@@ -46,60 +46,68 @@ export default withRouter(
 		};
 
 		return (
-			<section className="c-mt-5 c-mx-auto col-xl-10">
-				<h1>{Liferay.Language.get('edit-answer')}</h1>
+			<section className="c-mt-5 questions-section questions-sections-answer">
+				<div className="questions-container">
+					<div className="row">
+						<div className="c-mx-auto col-xl-10">
+							<h1>{Liferay.Language.get('edit-answer')}</h1>
 
-				<ClayForm>
-					<ClayForm.Group className="c-mt-4">
-						<label htmlFor="basicInput">
-							{Liferay.Language.get('answer')}
+							<ClayForm>
+								<ClayForm.Group className="c-mt-4">
+									<label htmlFor="basicInput">
+										{Liferay.Language.get('answer')}
 
-							<span className="c-ml-2 reference-mark">
-								<ClayIcon symbol="asterisk" />
-							</span>
-						</label>
+										<span className="c-ml-2 reference-mark">
+											<ClayIcon symbol="asterisk" />
+										</span>
+									</label>
 
-						<Editor
-							config={getCKEditorConfig()}
-							data={articleBody}
-							onBeforeLoad={onBeforeLoadCKEditor}
-							onChange={event =>
-								setArticleBody(event.editor.getData())
-							}
-							onInstanceReady={loadMessage}
-							required
-							type="text"
-						/>
+									<Editor
+										config={getCKEditorConfig()}
+										data={articleBody}
+										onBeforeLoad={onBeforeLoadCKEditor}
+										onChange={event =>
+											setArticleBody(
+												event.editor.getData()
+											)
+										}
+										onInstanceReady={loadMessage}
+										required
+										type="text"
+									/>
 
-						<ClayForm.FeedbackGroup>
-							<ClayForm.FeedbackItem>
-								<span className="small text-secondary">
-									{Liferay.Language.get(
-										'include-all-the-information-someone-would-need-to-answer-your-question'
-									)}
-								</span>
-							</ClayForm.FeedbackItem>
-						</ClayForm.FeedbackGroup>
-					</ClayForm.Group>
-				</ClayForm>
+									<ClayForm.FeedbackGroup>
+										<ClayForm.FeedbackItem>
+											<span className="small text-secondary">
+												{Liferay.Language.get(
+													'include-all-the-information-someone-would-need-to-answer-your-question'
+												)}
+											</span>
+										</ClayForm.FeedbackItem>
+									</ClayForm.FeedbackGroup>
+								</ClayForm.Group>
+							</ClayForm>
 
-				<div className="c-mt-4 d-flex flex-column-reverse flex-sm-row">
-					<ClayButton
-						className="c-mt-4 c-mt-sm-0"
-						disabled={!articleBody}
-						displayType="primary"
-						onClick={submit}
-					>
-						{Liferay.Language.get('update-your-answer')}
-					</ClayButton>
+							<div className="c-mt-4 d-flex flex-column-reverse flex-sm-row">
+								<ClayButton
+									className="c-mt-4 c-mt-sm-0"
+									disabled={!articleBody}
+									displayType="primary"
+									onClick={submit}
+								>
+									{Liferay.Language.get('update-your-answer')}
+								</ClayButton>
 
-					<ClayButton
-						className="c-ml-sm-3"
-						displayType="secondary"
-						onClick={() => history.goBack()}
-					>
-						{Liferay.Language.get('cancel')}
-					</ClayButton>
+								<ClayButton
+									className="c-ml-sm-3"
+									displayType="secondary"
+									onClick={() => history.goBack()}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
+							</div>
+						</div>
+					</div>
 				</div>
 			</section>
 		);

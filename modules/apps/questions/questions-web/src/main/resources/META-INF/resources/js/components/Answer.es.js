@@ -69,8 +69,8 @@ export default withRouter(
 		return (
 			<>
 				<div
-					className={classnames('question-answer c-p-3', {
-						'question-answer-success': showAsAnswer,
+					className={classnames('questions-answer c-p-3', {
+						'questions-answer-success': showAsAnswer,
 					})}
 				>
 					<div className="align-items-center align-items-md-start row">

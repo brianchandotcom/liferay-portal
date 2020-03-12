@@ -25,10 +25,10 @@ export default ({comment, commentChange}) => {
 	};
 
 	return (
-		<div className="c-my-3 question-reply row">
+		<div className="c-my-3 questions-reply row">
 			<div className="align-items-md-center col-2 col-md-1 d-flex justify-content-end justify-content-md-center">
 				<ClayIcon
-					className="c-mt-3 c-mt-md-0 question-reply-icon text-secondary"
+					className="c-mt-3 c-mt-md-0 questions-reply-icon text-secondary"
 					symbol="reply"
 				/>
 			</div>

@@ -31,42 +31,71 @@ export default () => {
 		);
 	}, [context.siteKey]);
 
+	function descriptionTruncate(description) {
+		return description.length > 150
+			? description.substring(0, 150) + '...'
+			: description;
+	}
+
 	return (
-		<div>
-			<div className="autofit-row">
-				{sections.map(section => (
-					<div
-						className="autofit-col autofit-col-expand"
-						key={section.id}
-					>
-						<Link to={`/questions/${section.title}`}>
-							<ClayCard className="questions-home-card">
-								<ClayCard.Body>
-									<ClayCard.Description displayType="title">
-										{section.title}
-									</ClayCard.Description>
-									<ClayCard.Description
-										displayType="text"
-										truncate={false}
-									>
-										<p>{section.description}</p>
-										<p>
-											{lang.sub(
-												Liferay.Language.get(
-													'x-questions'
-												),
-												[
-													section.numberOfMessageBoardThreads,
-												]
+		<section className="questions-section questions-section-cards">
+			<div className="questions-container">
+				<div className="row">
+					{sections.map(section => (
+						<div
+							className="col-lg-4 col-md-6 col-xl-3"
+							key={section.id}
+						>
+							<Link
+								className="questions-card text-decoration-none text-secondary"
+								to={`/questions/${section.title}`}
+							>
+								<ClayCard>
+									<ClayCard.Body>
+										<ClayCard.Description
+											className="text-dark"
+											displayType="title"
+										>
+											{section.title}
+										</ClayCard.Description>
+
+										<ClayCard.Description
+											className="c-mt-3"
+											displayType="text"
+											truncate={false}
+										>
+											{descriptionTruncate(
+												section.description
 											)}
-										</p>
-									</ClayCard.Description>
-								</ClayCard.Body>
-							</ClayCard>
-						</Link>
-					</div>
-				))}
+										</ClayCard.Description>
+
+										<ClayCard.Description
+											className="c-mt-4 small"
+											displayType="text"
+											truncate={false}
+										>
+											<span>
+												{lang.sub(
+													Liferay.Language.get(
+														'x-questions'
+													),
+													[
+														section.numberOfMessageBoardThreads,
+													]
+												)}
+											</span>
+
+											<button className="btn btn-link btn-sm d-xl-none float-right font-weight-bold p-0">
+												View Topic
+											</button>
+										</ClayCard.Description>
+									</ClayCard.Body>
+								</ClayCard>
+							</Link>
+						</div>
+					))}
+				</div>
 			</div>
-		</div>
+		</section>
 	);
 };

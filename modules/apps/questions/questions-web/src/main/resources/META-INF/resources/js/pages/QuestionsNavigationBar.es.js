@@ -176,7 +176,7 @@ export default withRouter(
 							</ClayButton>
 
 							<ClayButton
-								className="btn-monospaced d-block d-sm-none position-fixed question-button shadow"
+								className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
 								displayType="primary"
 								onClick={() =>
 									history.push(

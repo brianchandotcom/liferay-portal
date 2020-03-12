@@ -32,63 +32,69 @@ export default withRouter(
 		const context = useContext(AppContext);
 
 		return (
-			<>
-				{location.pathname !== '/' && (
-					<div className="align-items-center d-flex justify-content-between questions-navigation">
-						<ClayNavigationBar triggerLabel="Questions">
-							<ClayNavigationBar.Item
-								active={!isActive('tags')}
-								onClick={() => {
-									if (!sectionTitle) {
-										return history.push('/questions');
-									}
+			<section className="border-bottom questions-section questions-section-nav">
+				<div className="questions-container">
+					<div className="row">
+						{location.pathname !== '/' && (
+							<div className="align-items-center col d-flex justify-content-between">
+								<ClayNavigationBar triggerLabel="Questions">
+									<ClayNavigationBar.Item
+										active={!isActive('tags')}
+										onClick={() => {
+											if (!sectionTitle) {
+												return history.push(
+													'/questions'
+												);
+											}
 
-									return history.push(
-										`/questions/${sectionTitle}`
-									);
-								}}
-							>
-								<ClayLink
-									className="nav-link"
+											return history.push(
+												`/questions/${sectionTitle}`
+											);
+										}}
+									>
+										<ClayLink
+											className="nav-link"
+											displayType="unstyled"
+										>
+											{Liferay.Language.get('questions')}
+										</ClayLink>
+									</ClayNavigationBar.Item>
+
+									<ClayNavigationBar.Item
+										active={isActive('tags')}
+										onClick={() => {
+											if (!sectionTitle) {
+												return history.push(
+													'/questions'
+												);
+											}
+
+											return history.push(
+												`/questions/${sectionTitle}/tags`
+											);
+										}}
+									>
+										<ClayLink
+											className="nav-link"
+											displayType="unstyled"
+										>
+											{Liferay.Language.get('tags')}
+										</ClayLink>
+									</ClayNavigationBar.Item>
+								</ClayNavigationBar>
+
+								<Link
+									className="nav-link small text-secondary"
 									displayType="unstyled"
+									to={`/activity/${context.userId}`}
 								>
-									{Liferay.Language.get('questions')}
-								</ClayLink>
-							</ClayNavigationBar.Item>
-
-							<ClayNavigationBar.Item
-								active={isActive('tags')}
-								onClick={() => {
-									if (!sectionTitle) {
-										return history.push('/questions');
-									}
-
-									return history.push(
-										`/questions/${sectionTitle}/tags`
-									);
-								}}
-							>
-								<ClayLink
-									className="nav-link"
-									displayType="unstyled"
-								>
-									{Liferay.Language.get('tags')}
-								</ClayLink>
-							</ClayNavigationBar.Item>
-						</ClayNavigationBar>
-
-						<div className="autofit-col">
-							<Link
-								className="nav-link"
-								displayType="unstyled"
-								to={`/activity/${context.userId}`}
-							>
-								{Liferay.Language.get('my-activity')}
-							</Link>
-						</div>
+									{Liferay.Language.get('my-activity')}
+								</Link>
+							</div>
+						)}
 					</div>
-				)}
-			</>
+				</div>
+			</section>
 		);
 	}
 );

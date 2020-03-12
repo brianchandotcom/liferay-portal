@@ -86,7 +86,7 @@ export default withRouter(
 									</div>
 
 									<Link
-										className="c-mt-2 d-block question-title stretched-link text-reset"
+										className="c-mt-2 d-block questions-title stretched-link text-reset"
 										to={`/questions/${sectionTitle}/${relatedQuestion.friendlyUrlPath}`}
 									>
 										<h3 className="h2 stretched-link-layer">

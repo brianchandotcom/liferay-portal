@@ -112,34 +112,44 @@ export default ({
 	};
 
 	return (
-		<section className="c-mt-5 c-mx-auto c-px-0 col-xl-10">
-			<QuestionsNavigationBar
-				filterChange={filterChange}
-				searchChange={search => setSearch(search)}
-				sectionChange={section => setSection(section)}
-			/>
+		<section className="c-mt-5 questions-section questions-section-list">
+			<div className="questions-container">
+				<div className="row">
+					<div className="c-mx-auto c-px-0 col-xl-10">
+						<QuestionsNavigationBar
+							filterChange={filterChange}
+							searchChange={search => setSearch(search)}
+							sectionChange={section => setSection(section)}
+						/>
 
-			{loading ? (
-				<ClayLoadingIndicator />
-			) : (
-				questions.items &&
-				questions.items.map(question => (
-					<QuestionRow key={question.id} question={question} />
-				))
-			)}
-
-			{!!questions.totalCount &&
-				questions.totalCount > questions.pageSize && (
-					<ClayPaginationWithBasicItems
-						activePage={page}
-						ellipsisBuffer={2}
-						onPageChange={setPage}
-						totalPages={Math.ceil(
-							questions.totalCount / questions.pageSize
+						{loading ? (
+							<ClayLoadingIndicator />
+						) : (
+							questions.items &&
+							questions.items.map(question => (
+								<QuestionRow
+									key={question.id}
+									question={question}
+								/>
+							))
 						)}
-					/>
-				)}
-			<Error error={error} />
+
+						{!!questions.totalCount &&
+							questions.totalCount > questions.pageSize && (
+								<ClayPaginationWithBasicItems
+									activePage={page}
+									ellipsisBuffer={2}
+									onPageChange={setPage}
+									totalPages={Math.ceil(
+										questions.totalCount /
+											questions.pageSize
+									)}
+								/>
+							)}
+						<Error error={error} />
+					</div>
+				</div>
+			</div>
 		</section>
 	);
 };

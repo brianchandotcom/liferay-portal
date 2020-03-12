@@ -22,7 +22,7 @@ export default ({creator, statistics}) => {
 	return (
 		<ClayPopover
 			alignPosition="bottom"
-			className="question-user-popover"
+			className="questions-user-popover"
 			disableScroll={true}
 			header={
 				<div className="align-items-center d-flex">

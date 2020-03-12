@@ -70,7 +70,9 @@ const addCustomObjectField = ({
 	fieldTypes,
 }) => {
 	const fieldType = fieldTypes.find(({name}) => name === fieldTypeName);
-	const dataDefinitionField = dataLayoutBuilder.getDefinitionField(fieldType);
+	const dataDefinitionField = dataLayoutBuilder.getDataDefinitionField(
+		fieldType
+	);
 
 	return {
 		...dataDefinitionField,
@@ -157,7 +159,7 @@ const setDataDefinitionFields = (
 	const newFields = [];
 
 	visitor.mapFields(field => {
-		const definitionField = dataLayoutBuilder.getDefinitionField(field);
+		const definitionField = dataLayoutBuilder.getDataDefinitionField(field);
 
 		newFields.push(definitionField);
 	});
@@ -173,7 +175,7 @@ const setDataDefinitionFields = (
 
 const setDataLayout = dataLayoutBuilder => {
 	const {pages} = dataLayoutBuilder.getStore();
-	const {layout} = dataLayoutBuilder.getDefinitionAndLayout(pages);
+	const {layout} = dataLayoutBuilder.getDataDefinitionAndDataLayout(pages);
 
 	return layout;
 };
@@ -202,7 +204,7 @@ const createReducer = dataLayoutBuilder => {
 					},
 					focusedCustomObjectField: {
 						...newCustomObjectField,
-						settingsContext: dataLayoutBuilder.getFieldSettingsContext(
+						settingsContext: dataLayoutBuilder.getDDMFormFieldSettingsContext(
 							newCustomObjectField
 						),
 					},
@@ -249,7 +251,7 @@ const createReducer = dataLayoutBuilder => {
 									dataDefinitionField.name ===
 									focusedCustomObjectField.name
 								) {
-									return dataLayoutBuilder.getDefinitionField(
+									return dataLayoutBuilder.getDataDefinitionField(
 										editedFocusedCustomObjectField
 									);
 								}
@@ -326,7 +328,7 @@ const createReducer = dataLayoutBuilder => {
 				if (Object.keys(dataDefinitionField).length > 0) {
 					focusedCustomObjectField = {
 						...dataDefinitionField,
-						settingsContext: dataLayoutBuilder.getFieldSettingsContext(
+						settingsContext: dataLayoutBuilder.getDDMFormFieldSettingsContext(
 							dataDefinitionField
 						),
 					};

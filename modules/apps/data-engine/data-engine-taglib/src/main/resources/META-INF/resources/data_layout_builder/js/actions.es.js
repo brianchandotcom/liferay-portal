@@ -44,7 +44,7 @@ export const dropCustomObjectField = ({
 		dataDefinition,
 		dataDefinitionFieldName
 	);
-	const settingsContext = dataLayoutBuilder.getFieldSettingsContext(
+	const settingsContext = dataLayoutBuilder.getDDMFormFieldSettingsContext(
 		dataDefinitionField
 	);
 	const {label} = dataDefinitionField;

@@ -32,32 +32,46 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<c:choose>
-	<c:when test="<%= type.equals(RatingsType.LIKE.getValue()) %>">
-		<clay:button
-			elementClasses="btn-outline-borderless btn-outline-secondary btn-sm"
-			icon="heart"
-		/>
+<div>
+	<c:choose>
+		<c:when test="<%= type.equals(RatingsType.LIKE.getValue()) %>">
+			<clay:button
+				elementClasses="btn-outline-borderless btn-outline-secondary btn-sm"
+				icon="heart"
+			/>
 
-		<react:component
-			data="<%= data %>"
-			module="js/components/RatingsLike.es"
-		/>
-	</c:when>
-	<c:when test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
-		<react:component
-			data="<%= data %>"
-			module="js/components/RatingsThumbs.es"
-		/>
-	</c:when>
-	<c:otherwise>
-		<liferay-ui:ratings
-			className="<%= className %>"
-			classPK="<%= classPK %>"
-			inTrash="<%= inTrash %>"
-			ratingsEntry="<%= ratingsEntry %>"
-			ratingsStats="<%= ratingsStats %>"
-			type="<%= type %>"
-		/>
-	</c:otherwise>
-</c:choose>
+			<react:component
+				data="<%= data %>"
+				module="js/components/RatingsLike.es"
+			/>
+		</c:when>
+		<c:when test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
+			<clay:button
+				disabled="<%= true %>"
+				elementClasses="btn-outline-borderless btn-outline-secondary btn-sm"
+				icon="thumbs-up"
+			/>
+
+			<clay:button
+				disabled="<%= true %>"
+				elementClasses="btn-outline-borderless btn-outline-secondary btn-sm"
+				icon="thumbs-down"
+			/>
+
+			<react:component
+				data="<%= data %>"
+				module="js/components/RatingsThumbs.es"
+			/>
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:ratings
+				className="<%= className %>"
+				classPK="<%= classPK %>"
+				inTrash="<%= inTrash %>"
+				ratingsEntry="<%= ratingsEntry %>"
+				ratingsStats="<%= ratingsStats %>"
+				type="<%= type %>"
+			/>
+		</c:otherwise>
+	</c:choose>
+</div>

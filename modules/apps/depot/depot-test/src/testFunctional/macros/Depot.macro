@@ -272,9 +272,20 @@ definition {
 		}
 
 		if (isSet(depotNameEdit)) {
-			Type(
-				locator1 = "TextInput#NAME",
-				value1 = "${depotNameEdit}");
+			if (isSet(language)) {
+				PortletEntry.changeLocale(
+					fieldName = "Name",
+					locale = "${language}");
+
+				Type(
+					locator1 = "TextInput#NAME",
+					value1 = "${depotNameEdit}");
+			}
+			else {
+				Type(
+					locator1 = "TextInput#NAME",
+					value1 = "${depotNameEdit}");
+			}
 		}
 
 		if (isSet(depotDescriptionEdit)) {

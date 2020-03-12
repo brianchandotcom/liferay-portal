@@ -16,8 +16,8 @@ package com.liferay.portal.db.partition.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeClosable;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.init.DBInitUtil;
 import com.liferay.portal.db.partition.DBPartitionHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -213,7 +213,7 @@ public class DBPartitionHelperUtilTest {
 	}
 
 	private static String _getSchemaName() {
-		return _DB_PARTITION_INSTANCE_ID + CharPool.UNDERLINE + _COMPANY_ID;
+		return _DB_PARTITION_INSTANCE_ID + StringPool.UNDERLINE + _COMPANY_ID;
 	}
 
 	private static final long _COMPANY_ID = 1L;

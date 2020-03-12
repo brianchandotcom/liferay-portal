@@ -12,26 +12,26 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Add a site via JSON") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
-		}
+		// task ("Add a site via JSON") {
+		// 	JSONGroup.addGroup(groupName = "Test Site Name");
+		// }
 
-		task ("Add a fragment collection via JSON") {
-			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
-				name = "Collection Name");
-		}
+		// task ("Add a fragment collection via JSON") {
+		// 	JSONFragment.addFragmentCollection(
+		// 		groupName = "Test Site Name",
+		// 		name = "Collection Name");
+		// }
 
-		task ("Add a section fragment to the fragment collection via JSON") {
-			JSONFragment.addSection(
-				collectionName = "Collection Name",
-				groupName = "Test Site Name",
-				name = "Fragment Name");
-		}
+		// task ("Add a section fragment to the fragment collection via JSON") {
+		// 	JSONFragment.addSection(
+		// 		collectionName = "Collection Name",
+		// 		groupName = "Test Site Name",
+		// 		name = "Fragment Name");
+		// }
 
-		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-		}
+		// task ("Navigate to fragments admin") {
+		// 	FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		// }
 	}
 
 	tearDown {
@@ -434,6 +434,48 @@ definition {
 			PageEditor.viewDuplicateFragment(
 				fragmentName = "Spacer",
 				id = "Spacer");
+		}
+	}
+
+	@description = "This is a test for LPS-106776. Can change section background color, duplicate sectiion and row."
+	@priority = "5"
+	test ConfigureLayoutElements {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a section") {
+			PageEditor.addLayoutSection();
+		}
+
+		task ("Configure the section") {
+			PageEditor.editLayoutSection(backgroundColor = "warning");
+		}
+
+		task ("View the fragment style") {
+			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'bg-warning')]");
+		}
+
+		task ("Duplicate the fragment") {
+			PageEditor.gotoDuplicate(fragmentName = "Section");
+		}
+
+		task ("View the duplicate section fragment") {
+			PageEditor.viewDuplicateFragment(fragmentName = "Section");
+		}
+
+		task ("Add a row") {
+			PageEditor.addLayoutRow();
+		}
+
+		task ("Duplicate the fragment") {
+			PageEditor.gotoDuplicate(fragmentName = "Row");
+		}
+
+		task ("View the duplicate section fragment") {
+			PageEditor.viewDuplicateFragment(fragmentName = "Row");
 		}
 	}
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.redirect.configuration.RedirectConfiguration;
 import com.liferay.redirect.exception.DuplicateRedirectEntrySourceURLException;
 import com.liferay.redirect.exception.RequiredRedirectEntryDestinationURLException;
 import com.liferay.redirect.exception.RequiredRedirectEntrySourceURLException;
@@ -30,6 +31,7 @@ import com.liferay.redirect.service.base.RedirectEntryLocalServiceBaseImpl;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -72,6 +74,10 @@ public class RedirectEntryLocalServiceImpl
 
 	@Override
 	public RedirectEntry fetchRedirectEntry(long groupId, String sourceURL) {
+		if (!_redirectConfiguration.isEnabled()) {
+			return null;
+		}
+
 		return redirectEntryPersistence.fetchByG_S(groupId, sourceURL);
 	}
 
@@ -126,5 +132,8 @@ public class RedirectEntryLocalServiceImpl
 			throw new RequiredRedirectEntrySourceURLException();
 		}
 	}
+
+	@Reference
+	private RedirectConfiguration _redirectConfiguration;
 
 }

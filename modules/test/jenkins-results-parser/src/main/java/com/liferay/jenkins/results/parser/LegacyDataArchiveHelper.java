@@ -27,9 +27,9 @@ import java.util.Properties;
 /**
  * @author Michael Hashimoto
  */
-public class LegacyDataArchiveUtil {
+public class LegacyDataArchiveHelper {
 
-	public LegacyDataArchiveUtil(
+	public LegacyDataArchiveHelper(
 		File generatedArchiveDirectory,
 		GitWorkingDirectory legacyGitWorkingDirectory) {
 

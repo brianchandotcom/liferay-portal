@@ -30,7 +30,7 @@ import java.util.Set;
 public class LegacyDataArchivePortalVersion {
 
 	public LegacyDataArchivePortalVersion(
-		LegacyDataArchiveUtil legacyDataArchiveUtil, String portalVersion) {
+		LegacyDataArchiveHelper legacyDataArchiveUtil, String portalVersion) {
 
 		_legacyDataArchiveUtil = legacyDataArchiveUtil;
 		_portalVersion = portalVersion;
@@ -67,7 +67,7 @@ public class LegacyDataArchivePortalVersion {
 		return _legacyDataArchiveGroups;
 	}
 
-	public LegacyDataArchiveUtil getLegacyDataArchiveUtil() {
+	public LegacyDataArchiveHelper getLegacyDataArchiveUtil() {
 		return _legacyDataArchiveUtil;
 	}
 
@@ -155,7 +155,7 @@ public class LegacyDataArchivePortalVersion {
 	private final List<String> _databaseNames;
 	private final LocalGitCommit _latestTestLocalGitCommit;
 	private final List<LegacyDataArchiveGroup> _legacyDataArchiveGroups;
-	private final LegacyDataArchiveUtil _legacyDataArchiveUtil;
+	private final LegacyDataArchiveHelper _legacyDataArchiveUtil;
 	private final GitWorkingDirectory _legacyGitWorkingDirectory;
 	private final String _portalVersion;
 	private final File _portalVersionDirectory;

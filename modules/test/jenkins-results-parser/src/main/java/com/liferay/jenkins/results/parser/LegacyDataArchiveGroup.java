@@ -92,7 +92,7 @@ public class LegacyDataArchiveGroup {
 	private final LegacyDataArchivePortalVersion
 		_legacyDataArchivePortalVersion;
 	private final List<LegacyDataArchive> _legacyDataArchives;
-	private final LegacyDataArchiveUtil _legacyDataArchiveUtil;
+	private final LegacyDataArchiveHelper _legacyDataArchiveUtil;
 	private final GitWorkingDirectory _legacyGitWorkingDirectory;
 
 }

@@ -32,7 +32,7 @@ public class LegacyDataArchive {
 		return _legacyDataArchiveFile;
 	}
 
-	public LegacyDataArchiveUtil getLegacyDataArchiveUtil() {
+	public LegacyDataArchiveHelper getLegacyDataArchiveUtil() {
 		return _legacyDataArchiveUtil;
 	}
 
@@ -127,7 +127,7 @@ public class LegacyDataArchive {
 	private final LegacyDataArchiveGroup _legacyDataArchiveGroup;
 	private final LegacyDataArchivePortalVersion
 		_legacyDataArchivePortalVersion;
-	private final LegacyDataArchiveUtil _legacyDataArchiveUtil;
+	private final LegacyDataArchiveHelper _legacyDataArchiveUtil;
 	private final GitWorkingDirectory _legacyGitWorkingDirectory;
 
 }

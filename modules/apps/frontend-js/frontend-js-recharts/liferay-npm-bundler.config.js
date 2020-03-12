@@ -28,5 +28,5 @@ module.exports = {
 		},
 	},
 	output: 'build/node/packageRunBuild/resources',
-	'work-dir': 'build/node/bundler',
+	workdir: 'build/node/bundler',
 };

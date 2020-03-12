@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -48,6 +49,9 @@ import com.liferay.redirect.web.internal.util.comparator.RedirectEntryDestinatio
 import com.liferay.redirect.web.internal.util.comparator.RedirectEntryModifiedDateComparator;
 import com.liferay.redirect.web.internal.util.comparator.RedirectEntrySourceURLComparator;
 
+import java.text.DateFormat;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -74,6 +78,9 @@ public class RedirectDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public DropdownItemList getActionDropdownItems(
@@ -122,16 +129,29 @@ public class RedirectDisplayContext {
 		).build();
 	}
 
+	public String getExpirationDateinputValue(RedirectEntry redirectEntry) {
+		if (redirectEntry == null) {
+			return null;
+		}
+
+		Date expirationDate = redirectEntry.getExpirationDate();
+
+		if (expirationDate == null) {
+			return null;
+		}
+
+		DateFormat simpleDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd", _themeDisplay.getLocale());
+
+		return simpleDateFormat.format(expirationDate);
+	}
+
 	public String getGroupBaseURL() {
 		StringBuilder groupBaseURL = new StringBuilder();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		groupBaseURL.append(_themeDisplay.getPortalURL());
 
-		groupBaseURL.append(themeDisplay.getPortalURL());
-
-		Group group = themeDisplay.getScopeGroup();
+		Group group = _themeDisplay.getScopeGroup();
 
 		LayoutSet layoutSet = group.getPublicLayoutSet();
 
@@ -141,7 +161,7 @@ public class RedirectDisplayContext {
 		if (virtualHostnames.isEmpty() ||
 			!_matchesHostname(groupBaseURL, virtualHostnames)) {
 
-			groupBaseURL.append(group.getPathFriendlyURL(false, themeDisplay));
+			groupBaseURL.append(group.getPathFriendlyURL(false, _themeDisplay));
 			groupBaseURL.append(HttpUtil.decodeURL(group.getFriendlyURL()));
 		}
 
@@ -300,5 +320,6 @@ public class RedirectDisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private RedirectEntrySearch _redirectEntrySearch;
+	private final ThemeDisplay _themeDisplay;
 
 }

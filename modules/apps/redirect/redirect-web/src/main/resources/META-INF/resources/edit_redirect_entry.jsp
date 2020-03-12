@@ -75,6 +75,8 @@ else {
 			<aui:option label="permanent" selected="<%= (redirectEntry != null) ? !redirectEntry.isTemporary() : true %>" value="<%= false %>" />
 			<aui:option label="temporary" selected="<%= (redirectEntry != null) ? redirectEntry.isTemporary() : false %>" value="<%= true %>" />
 		</aui:select>
+
+		<aui:input helpMessage="the-redirect-will-be-active-until-the-chosen-date.-leave-it-empty-to-avoid-expiration" name="expirationDate" type="date" value="<%= redirectDisplayContext.getExpirationDateinputValue(redirectEntry) %>" />
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

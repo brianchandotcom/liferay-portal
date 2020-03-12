@@ -19,11 +19,16 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
+
+import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -50,6 +55,11 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 		long redirectEntryId = ParamUtil.getLong(
 			actionRequest, "redirectEntryId");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Date expirationDate = _getExpirationDate(actionRequest, themeDisplay);
+
 		String destinationURL = ParamUtil.getString(
 			actionRequest, "destinationURL");
 		String sourceURL = ParamUtil.getString(actionRequest, "sourceURL");
@@ -57,19 +67,16 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (redirectEntryId == 0) {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)actionRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
 				_redirectEntryLocalService.addRedirectEntry(
 					themeDisplay.getScopeGroupId(), destinationURL, sourceURL,
-					temporary,
+					temporary, expirationDate,
 					ServiceContextFactory.getInstance(
 						RedirectEntry.class.getName(), actionRequest));
 			}
 			else {
 				_redirectEntryLocalService.updateRedirectEntry(
-					redirectEntryId, destinationURL, sourceURL, temporary);
+					redirectEntryId, destinationURL, sourceURL, temporary,
+					expirationDate);
 			}
 		}
 		catch (Exception exception) {
@@ -80,6 +87,23 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
+	}
+
+	private Date _getExpirationDate(
+		ActionRequest actionRequest, ThemeDisplay themeDisplay) {
+
+		String expirationDate = ParamUtil.getString(
+			actionRequest, "expirationDate");
+
+		if (Validator.isNull(expirationDate)) {
+			return null;
+		}
+
+		return GetterUtil.getDate(
+			expirationDate,
+			DateFormatFactoryUtil.getSimpleDateFormat(
+				"yyyy-MM-dd", themeDisplay.getLocale()),
+			null);
 	}
 
 	@Reference

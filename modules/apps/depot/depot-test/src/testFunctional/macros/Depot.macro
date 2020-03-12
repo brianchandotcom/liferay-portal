@@ -192,6 +192,10 @@ definition {
 			SelectFrame(value1 = "relative=top");
 
 			Alert.viewSuccessMessage();
+
+			AssertElementPresent.pauseAssertVisible(
+				key_tableEntry = "${siteName}",
+				locator1 = "LexiconTable#TABLE_ENTRY");
 		}
 	}
 

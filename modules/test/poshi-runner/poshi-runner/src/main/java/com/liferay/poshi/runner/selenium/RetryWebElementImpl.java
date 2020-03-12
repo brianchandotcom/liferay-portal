@@ -470,7 +470,7 @@ public class RetryWebElementImpl extends RemoteWebElement {
 		WebDriver webDriver = WebDriverUtil.getWebDriver();
 
 		WebElement webElement = webDriver.findElement(
-			WebDriverHelper.getBy(_locator));
+			WebDriverUtil.getBy(_locator));
 
 		if (webElement == _webElement) {
 			System.out.println("Unable to find a new web element");

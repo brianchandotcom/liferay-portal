@@ -68,7 +68,8 @@ public class DLFolderUADTestUtil {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	public void cleanUpDependencies(List<DLFolder> dlFolders) throws Exception {
+	public static void cleanUpDependencies(List<DLFolder> dlFolders)
+		throws Exception {
 	}
 
 }

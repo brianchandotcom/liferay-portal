@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.internal.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
+import com.liferay.layout.page.template.importer.LayoutPageTemplateImportEntry;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -23,7 +24,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.page.template.util.LayoutPageTemplateImportEntry;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
@@ -109,8 +109,8 @@ public class LayoutPageTemplatesImporterTest {
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(0));
 
-		LayoutStructureItem layoutStructureItem = _getBaseLayoutStructureItem(
-			layoutStructure);
+		LayoutStructureItem layoutStructureItem =
+			_getMainChildLayoutStructureItem(layoutStructure);
 
 		Assert.assertTrue(
 			layoutStructureItem instanceof RowLayoutStructureItem);
@@ -163,7 +163,7 @@ public class LayoutPageTemplatesImporterTest {
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(0));
 
-		LayoutStructureItem layoutStructureItem = _getBaseLayoutStructureItem(
+		LayoutStructureItem layoutStructureItem = _getMainChildLayoutStructureItem(
 			layoutStructure);
 
 		Assert.assertTrue(
@@ -233,7 +233,7 @@ public class LayoutPageTemplatesImporterTest {
 		}
 	}
 
-	private LayoutStructureItem _getBaseLayoutStructureItem(
+	private LayoutStructureItem _getMainChildLayoutStructureItem(
 		LayoutStructure layoutStructure) {
 
 		LayoutStructureItem mainLayoutStructureItem =

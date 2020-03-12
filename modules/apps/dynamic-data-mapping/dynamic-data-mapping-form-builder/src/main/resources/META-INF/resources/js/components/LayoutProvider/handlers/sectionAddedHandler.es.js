@@ -116,7 +116,12 @@ const addNestedFields = ({field, indexes, nestedFields, props}) => {
 	};
 };
 
-const createSection = (props, event, nestedFields) => {
+export const createSection = (
+	props,
+	event,
+	nestedFields,
+	rows = [{columns: [{fields: [], size: 12}]}]
+) => {
 	const {fieldTypes} = props;
 	const fieldType = fieldTypes.find(fieldType => {
 		return fieldType.name === 'section';
@@ -126,7 +131,7 @@ const createSection = (props, event, nestedFields) => {
 	return addNestedFields({
 		field: {
 			...sectionField,
-			rows: [{columns: [{fields: [], size: 12}]}],
+			rows,
 		},
 		indexes: {
 			columnIndex: 0,
@@ -138,7 +143,7 @@ const createSection = (props, event, nestedFields) => {
 	});
 };
 
-export default (props, state, event) => {
+const handleSectionAdded = (props, state, event) => {
 	const {data, indexes} = event;
 	const {fieldName, parentFieldName} = data;
 	const {pages} = state;
@@ -187,3 +192,5 @@ export default (props, state, event) => {
 
 	return newState;
 };
+
+export default handleSectionAdded;

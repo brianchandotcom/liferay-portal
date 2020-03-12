@@ -255,6 +255,17 @@ export const updateField = (
 			...updateFieldOptions(editingLanguageId, field, propertyValue),
 		};
 	}
+	else if (field.type === 'section' && propertyName === 'rows') {
+		field = {
+			...field,
+			...updateFieldProperty(
+				editingLanguageId,
+				field,
+				propertyName,
+				JSON.stringify(propertyValue)
+			),
+		};
+	}
 	else {
 		field = {
 			...field,

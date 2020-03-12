@@ -273,6 +273,8 @@ public class PortalInstances {
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
+
+			return companyId;
 		}
 
 		Long currentThreadCompanyId = CompanyThreadLocal.getCompanyId();

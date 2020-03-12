@@ -257,8 +257,7 @@ public class RedirectEntryPersistenceTest {
 			"RedirectEntry", "mvccVersion", true, "uuid", true,
 			"redirectEntryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "destinationURL", true, "sourceURL", true,
-			"temporary", true);
+			"modifiedDate", true, "temporary", true);
 	}
 
 	@Test

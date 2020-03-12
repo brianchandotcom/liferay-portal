@@ -81,8 +81,8 @@ const reducer = (state, action) => {
 	return nextState;
 };
 
-const ControlsProvider = ({children}) => {
-	const stateAndDispatch = useReducer(reducer, INITIAL_STATE);
+const ControlsProvider = ({initialState = INITIAL_STATE, children}) => {
+	const stateAndDispatch = useReducer(reducer, initialState);
 
 	return (
 		<ControlsContext.Provider value={stateAndDispatch}>

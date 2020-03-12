@@ -22,7 +22,6 @@ import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
-import com.liferay.layout.page.template.importer.LayoutPageTemplateImportEntry;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -200,6 +199,27 @@ public class LayoutPageTemplatesImporterTest {
 
 		Assert.assertEquals("test.jpg", jsonObject.get("title"));
 		Assert.assertEquals("test-image.jpg", jsonObject.get("url"));
+	}
+
+	@Test
+	public void testImportLayoutPageTemplateEntryImageFragment()
+		throws Exception {
+
+		String html =
+			"<lfr-editable id=\"element-text\" type=\"image\"><img src=\"#\"" +
+				"</lfr-editable>";
+
+		_createFragmentEntry(
+			"test-image-fragment", "Test Image Fragment", html);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getImportLayoutPageTemplateEntry("image-fragment");
+
+		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
+			layoutPageTemplateEntry);
+
+		_validateImageFragmentEntryLinkEditableValues(
+			fragmentEntryLink.getEditableValues());
 	}
 
 	@Test
@@ -418,6 +438,53 @@ public class LayoutPageTemplatesImporterTest {
 
 			_addZipWriterEntry(zipWriter, elementUrl);
 		}
+	}
+
+	private void _validateImageFragmentEntryLinkEditableValues(
+			String editableValues)
+		throws JSONException {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			editableValues);
+
+		JSONObject editableFragmentEntryProcessorJSONObject =
+			jsonObject.getJSONObject(
+				"com.liferay.fragment.entry.processor.editable." +
+					"EditableFragmentEntryProcessor");
+
+		Assert.assertNotNull(editableFragmentEntryProcessorJSONObject);
+
+		JSONObject elementJSONObject =
+			editableFragmentEntryProcessorJSONObject.getJSONObject(
+				"element-image");
+
+		Assert.assertNotNull(elementJSONObject);
+
+		JSONObject configJSONObject = elementJSONObject.getJSONObject("config");
+
+		Assert.assertNotNull(configJSONObject);
+
+		Assert.assertEquals("www.test.com", configJSONObject.getString("href"));
+
+		Assert.assertEquals("Blank", configJSONObject.getString("target"));
+
+		JSONObject freeMarkerFragmentEntryProcessorJSONObject =
+			jsonObject.getJSONObject(
+				"com.liferay.fragment.entry.processor.freemarker." +
+					"FreeMarkerFragmentEntryProcessor");
+
+		Assert.assertNotNull(freeMarkerFragmentEntryProcessorJSONObject);
+
+		Assert.assertEquals(
+			"4",
+			freeMarkerFragmentEntryProcessorJSONObject.getString(
+				"bottomSpacing"));
+		Assert.assertEquals(
+			"w-0",
+			freeMarkerFragmentEntryProcessorJSONObject.getString("imageSize"));
+		Assert.assertEquals(
+			"center",
+			freeMarkerFragmentEntryProcessorJSONObject.getString("imageAlign"));
 	}
 
 	private void _validateTextFragmentEntryLinkEditableValues(

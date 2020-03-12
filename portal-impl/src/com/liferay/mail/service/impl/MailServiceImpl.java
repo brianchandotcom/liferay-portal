@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -40,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 
 /**
@@ -246,7 +248,22 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 			}
 		}
 
-		_session = Session.getInstance(properties);
+		if (smtpAuth) {
+			properties.setProperty(transportPrefix + "starttls.enable", "true");
+
+			_session = Session.getInstance(properties,
+				new javax.mail.Authenticator() {
+					protected PasswordAuthentication
+						getPasswordAuthentication() {
+
+						return new PasswordAuthentication(
+							smtpUser, smtpPassword);
+				}
+			});
+		}
+		else {
+			_session = Session.getInstance(properties);
+		}
 
 		return _session;
 	}

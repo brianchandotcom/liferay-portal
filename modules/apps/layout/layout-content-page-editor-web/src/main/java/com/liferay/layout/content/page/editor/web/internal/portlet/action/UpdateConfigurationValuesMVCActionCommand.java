@@ -69,12 +69,10 @@ public class UpdateConfigurationValuesMVCActionCommand
 
 		String editableValues = ParamUtil.getString(
 			actionRequest, "editableValues");
-		boolean updateClassedModel = ParamUtil.getBoolean(
-			actionRequest, "updateClassedModel", true);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.updateFragmentEntryLink(
-				fragmentEntryLinkId, editableValues, updateClassedModel);
+				fragmentEntryLinkId, editableValues, true);
 
 		FragmentEntryProcessorContext fragmentEntryProcessorContext =
 			new DefaultFragmentEntryProcessorContext(

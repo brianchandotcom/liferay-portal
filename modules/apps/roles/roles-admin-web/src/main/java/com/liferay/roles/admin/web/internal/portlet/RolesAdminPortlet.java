@@ -20,6 +20,8 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
+import com.liferay.depot.configuration.DepotConfiguration;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
@@ -747,6 +749,15 @@ public class RolesAdminPortlet extends MVCPortlet {
 		else if (panelCategoryHelper.containsPortlet(
 					portletId, PanelCategoryKeys.SITE_ADMINISTRATION)) {
 
+			if (_depotConfiguration.isEnabled()) {
+				selResource = DepotEntry.class.getName();
+				actionId = ActionKeys.VIEW_SITE_ADMINISTRATION;
+
+				updateAction(
+					role, scopeGroupId, selResource, actionId, true, scope,
+					groupIds);
+			}
+
 			selResource = Group.class.getName();
 			actionId = ActionKeys.VIEW_SITE_ADMINISTRATION;
 		}
@@ -777,6 +788,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 			}
 		}
 	}
+
+	@Reference
+	private DepotConfiguration _depotConfiguration;
 
 	private GroupService _groupService;
 

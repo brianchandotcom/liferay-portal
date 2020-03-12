@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
-import com.liferay.portal.kernel.dao.orm.ORMException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,7 +49,7 @@ import javax.sql.DataSource;
  */
 public class DBPartitionHelperUtil {
 
-	public static boolean addPartition(long companyId) {
+	public static boolean addPartition(long companyId) throws PortalException {
 		if (!_DATABASE_PARTITION_ENABLED || (companyId == _defaultCompanyId)) {
 			return false;
 		}
@@ -97,7 +97,7 @@ public class DBPartitionHelperUtil {
 			_usePartition(connection);
 		}
 		catch (Exception exception) {
-			throw new ORMException(exception);
+			throw new PortalException(exception);
 		}
 
 		return true;
@@ -183,27 +183,24 @@ public class DBPartitionHelperUtil {
 		return false;
 	}
 
-	private static void _usePartition(Connection connection) {
-		try {
-			if (connection.isReadOnly()) {
-				return;
-			}
+	private static void _usePartition(Connection connection)
+		throws SQLException {
 
-			long companyId = CompanyThreadLocal.getCompanyId();
-
-			try (Statement statement = connection.createStatement()) {
-				if ((companyId == CompanyConstants.SYSTEM) ||
-					(companyId == _defaultCompanyId)) {
-
-					statement.execute("USE " + _defaultSchemaName);
-				}
-				else {
-					statement.execute("USE " + _getSchemaName(companyId));
-				}
-			}
+		if (connection.isReadOnly()) {
+			return;
 		}
-		catch (SQLException sqlException) {
-			throw new ORMException(sqlException);
+
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		try (Statement statement = connection.createStatement()) {
+			if ((companyId == CompanyConstants.SYSTEM) ||
+				(companyId == _defaultCompanyId)) {
+
+				statement.execute("USE " + _defaultSchemaName);
+			}
+			else {
+				statement.execute("USE " + _getSchemaName(companyId));
+			}
 		}
 	}
 

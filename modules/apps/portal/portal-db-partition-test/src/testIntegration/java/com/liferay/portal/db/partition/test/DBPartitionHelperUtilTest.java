@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -170,7 +171,7 @@ public class DBPartitionHelperUtilTest {
 	}
 
 	@Test
-	public void testAddDefaultPartition() {
+	public void testAddDefaultPartition() throws PortalException {
 		DBPartitionHelperUtil.setDefaultCompanyId(
 			_portal.getDefaultCompanyId());
 

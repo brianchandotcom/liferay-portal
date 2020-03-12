@@ -98,6 +98,18 @@ definition {
 			value1 = "${itemList}");
 	}
 
+	macro validateNoColumnLabel {
+		AssertElementNotPresent(
+			locator1 = "TableViewBuilder#COLUMN_LABEL",
+			value1 = "${columnLabel}");
+	}
+
+	macro validateNoColumnLabelAtSidebar {
+		AssertElementNotPresent(
+			locator1 = "TableViewBuilder#COLUMN_LABEL_AT_SIDEBAR",
+			value1 = "${columnLabel}");
+	}
+
 	macro validatePortletFieldTypeInTV {
 		AssertElementPresent(
 			key_fieldType = "${fieldType}",

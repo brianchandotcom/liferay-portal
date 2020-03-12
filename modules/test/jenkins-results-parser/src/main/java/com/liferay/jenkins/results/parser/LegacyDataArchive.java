@@ -32,7 +32,7 @@ public class LegacyDataArchive {
 		return _legacyDataArchiveFile;
 	}
 
-	public LegacyDataArchiveHelper getLegacyDataArchiveUtil() {
+	public LegacyDataArchiveHelper getLegacyDataArchiveHelper() {
 		return _legacyDataArchiveHelper;
 	}
 
@@ -103,7 +103,7 @@ public class LegacyDataArchive {
 			_legacyDataArchiveGroup.getLegacyDataArchivePortalVersion();
 
 		_legacyDataArchiveHelper =
-			_legacyDataArchivePortalVersion.getLegacyDataArchiveUtil();
+			_legacyDataArchivePortalVersion.getLegacyDataArchiveHelper();
 
 		_legacyGitWorkingDirectory =
 			_legacyDataArchiveHelper.getLegacyGitWorkingDirectory();

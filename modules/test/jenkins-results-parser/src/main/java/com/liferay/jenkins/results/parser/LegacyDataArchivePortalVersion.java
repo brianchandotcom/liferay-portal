@@ -67,7 +67,7 @@ public class LegacyDataArchivePortalVersion {
 		return _legacyDataArchiveGroups;
 	}
 
-	public LegacyDataArchiveHelper getLegacyDataArchiveUtil() {
+	public LegacyDataArchiveHelper getLegacyDataArchiveHelper() {
 		return _legacyDataArchiveHelper;
 	}
 

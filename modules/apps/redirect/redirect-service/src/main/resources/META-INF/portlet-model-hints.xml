@@ -11,8 +11,14 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="destinationURL" type="String" />
-		<field name="sourceURL" type="String" />
+		<field name="destinationURL" type="String">
+			<hint-collection name="CLOB" />
+			<sanitize content-type="text/plain" modes="ALL" />
+		</field>
+		<field name="sourceURL" type="String">
+			<hint-collection name="CLOB" />
+			<sanitize content-type="text/plain" modes="ALL" />
+		</field>
 		<field name="temporary" type="boolean" />
 	</model>
 </model-hints>

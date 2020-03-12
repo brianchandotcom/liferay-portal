@@ -171,6 +171,8 @@ definition {
 	}
 
 	macro addNullCP {
+		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
+
 		if (isSet(webContentContent)) {
 			AlloyEditor.addContent(content = "${webContentContent}");
 		}
@@ -179,12 +181,7 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
-		Alert.viewSuccessMessage();
-
-		AssertTextEquals.assertPartialText(
-			key_webContentTitle = "Untitled",
-			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "Untitled");
+		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
 	}
 
 	macro addPGViaAP {
@@ -962,6 +959,8 @@ definition {
 	}
 
 	macro editNullCP {
+		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
+
 		WebContent.addCP(webContentTitle = "");
 
 		if (isSet(webContentContent)) {
@@ -972,12 +971,7 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
-		Alert.viewSuccessMessage();
-
-		AssertTextEquals.assertPartialText(
-			key_webContentTitle = "Untitled",
-			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "Untitled");
+		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
 	}
 
 	macro editPGViaWCD {

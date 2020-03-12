@@ -146,6 +146,17 @@ if (Validator.isNotNull(keywords)) {
 
 				BaseModelSearchResult<AssetEntry> baseModelSearchResult = assetHelper.searchAssetEntries(request, assetEntryQuery, 0, delta);
 
+				long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
+				Layout controlPanelLayout = LayoutLocalServiceUtil.getLayout(controlPanelPlid);
+				ThemeDisplay controlPanelThemeDisplay = (ThemeDisplay)themeDisplay.clone();
+
+				controlPanelThemeDisplay.setPlid(controlPanelPlid);
+				controlPanelThemeDisplay.setLayout(controlPanelLayout);
+				controlPanelThemeDisplay.setScopeGroupId(controlPanelLayout.getGroupId());
+				controlPanelThemeDisplay.setSiteGroupId(controlPanelLayout.getGroupId());
+
+				liferayPortletRequest.setAttribute(WebKeys.THEME_DISPLAY, controlPanelThemeDisplay);
+
 				for (AssetEntry assetEntry : baseModelSearchResult.getBaseModels()) {
 					String className = PortalUtil.getClassName(assetEntry.getClassNameId());
 					long classPK = assetEntry.getClassPK();
@@ -244,6 +255,8 @@ if (Validator.isNotNull(keywords)) {
 
 				<%
 				}
+
+				liferayPortletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 				%>
 
 			</ul>

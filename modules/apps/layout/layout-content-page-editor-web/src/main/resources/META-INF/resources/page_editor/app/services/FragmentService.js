@@ -280,7 +280,6 @@ export default {
 				body: {
 					editableValues: JSON.stringify(configurationValues),
 					fragmentEntryLinkId,
-					updateClassedModel: true,
 				},
 			},
 			onNetworkStatus,
@@ -306,7 +305,6 @@ export default {
 				body: {
 					editableValues: JSON.stringify(editableValues),
 					fragmentEntryLinkId,
-					updateClassedModel: true,
 				},
 			},
 			onNetworkStatus,

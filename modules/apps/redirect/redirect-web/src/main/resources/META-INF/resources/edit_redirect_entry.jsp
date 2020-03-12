@@ -64,8 +64,8 @@ else {
 		<aui:input name="destinationURL" required="<%= true %>" value="<%= (redirectEntry != null) ? redirectEntry.getDestinationURL() : null %>" />
 
 		<aui:select label="type" name="temporary">
-			<aui:option label="permanent" selected="<%= (redirectEntry != null) ? !redirectEntry.isTemporary() : true %>" value="<%= false %>" />
-			<aui:option label="temporary" selected="<%= (redirectEntry != null) ? redirectEntry.isTemporary() : false %>" value="<%= true %>" />
+			<aui:option label="permanent-301" selected="<%= (redirectEntry != null) ? !redirectEntry.isTemporary() : true %>" value="<%= false %>" />
+			<aui:option label="temporary-302" selected="<%= (redirectEntry != null) ? redirectEntry.isTemporary() : false %>" value="<%= true %>" />
 		</aui:select>
 	</liferay-frontend:edit-form-body>
 

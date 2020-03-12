@@ -68,4 +68,23 @@ definition {
 			locator1 = "TableViewBuilder#VALIDATE_PORTLET_TEXT_INPUT_IN_TV");
 	}
 
+	macro selectTab {
+		Click(
+			key_tabName = "${tabName}",
+			locator1 = "TableViewBuilder#TAB_LABEL");
+	}
+
+	macro openFilterDropdown {
+		Click(
+			key_columnLabel = "${columnLabel}",
+			locator1 = "TableViewBuilder#FILTER_DROPDOWN");
+	}
+
+	macro selectFilterDropdownOption {
+		TableViewBuilder.openFilterDropdown(columnLabel = "${columnLabel}");
+		Click(
+			key_dropdownItem = "${dropdownItem}",
+			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
+	}
+
 }

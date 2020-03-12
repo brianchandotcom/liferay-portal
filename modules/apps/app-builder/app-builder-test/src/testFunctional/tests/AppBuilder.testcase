@@ -3415,4 +3415,67 @@ definition {
 		DetailsView.deleteEntry(itemName = "Changed");
 	}
 
+	@description = "Create table views with a fixed entries filter of list field types (select from list and single selection)"
+	@priority = "5"
+	test CreateTableViewsWithFixedEntriesFiltered {
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Color");
+		FormViewBuilder.editOptionsRow(
+				optionName = "Red",
+				optionValue = "Red",
+				rowNumber = "1");
+		FormViewBuilder.editOptionsRow(
+				optionName = "Blue",
+				optionValue = "Blue",
+				rowNumber = "1");
+		FormViewBuilder.editOptionsRow(
+				optionName = "Green",
+				optionValue = "Green",
+				rowNumber = "1");
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Single Selection");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Animal");
+		FormViewBuilder.editOptionsRow(
+				optionName = "Dog",
+				optionValue = "Dog",
+				rowNumber = "1");
+		FormViewBuilder.editOptionsRow(
+				optionName = "Cat",
+				optionValue = "Cat",
+				rowNumber = "1");
+		FormViewBuilder.editOptionsRow(
+				optionName = "Fish",
+				optionValue = "Fish",
+				rowNumber = "1");
+
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.setName(formViewName = "My Form View");
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Color");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Red");
+		TableViewBuilder.setName(tableViewName = "Table Full");
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.add();
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Color");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Red");
+		TableViewBuilder.setName(tableViewName = "Table Filtered");
+
+		TableViewBuilder.selectTab(tabName = "Filters");
+		TableViewBuilder.selectFilterDropdownOption(
+			columnLabel = "Color",
+			dropdownItem = "Red");
+	}
+
 }

@@ -42,6 +42,24 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>TAB_LABEL</td>
+	<td>//button[contains(@role,'tab') and text()='${key_tabName}']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>FILTER_DROPDOWN</td>
+	<td>//label[text()='${key_columnLabel}']/parent::div//span[contains(@class,'filter')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>FILTER_DROPDOWN_ITEM</td>
+	<td>//button[contains(@class,'dropdown') and text()='${key_dropdownItem}']</td>
+	<td></td>
+</tr>
+
 <!--HOMEPAGE_TABLE_VIEW-->
 
 <tr>

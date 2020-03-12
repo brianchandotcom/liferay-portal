@@ -636,6 +636,12 @@ definition {
 				value1 = "${paddingBottom}");
 		}
 
+		if (isSet(backgroundColor)) {
+			Click(
+				key_paletteItem = "${backgroundColor}",
+				locator1 = "Button#PALETTE_ITEM");
+		}
+
 		if (isSet(backgroundImage)) {
 			Select(
 				key_fieldLabel = "Image Source",

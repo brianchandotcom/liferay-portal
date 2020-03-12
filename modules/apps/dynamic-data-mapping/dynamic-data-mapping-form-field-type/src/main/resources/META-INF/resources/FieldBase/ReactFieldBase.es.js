@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
+import ClayIcon, {ClayIconSpriteContext} from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {getRepeatedIndex} from 'dynamic-data-mapping-form-renderer';
@@ -57,99 +57,103 @@ function FieldBase({
 	const repeatedIndex = useMemo(() => getRepeatedIndex(name), [name]);
 
 	return (
-		<ClayTooltipProvider>
-			<div
-				className={classNames('form-group', {
-					'has-error': displayErrors && errorMessage && !valid,
-					hide: !visible,
-				})}
-				data-field-name={name}
-				onClick={onClick}
-			>
-				{repeatable && (
-					<div className="lfr-ddm-form-field-repeatable-toolbar">
-						{repeatable && repeatedIndex > 0 && (
+		<ClayIconSpriteContext.Provider value={spritemap}>
+			<ClayTooltipProvider>
+				<div
+					className={classNames('form-group', {
+						'has-error': displayErrors && errorMessage && !valid,
+						hide: !visible,
+					})}
+					data-field-name={name}
+					onClick={onClick}
+				>
+					{repeatable && (
+						<div className="lfr-ddm-form-field-repeatable-toolbar">
+							{repeatable && repeatedIndex > 0 && (
+								<ClayButton
+									className="ddm-form-field-repeatable-delete-button p-0"
+									disabled={readOnly}
+									onClick={onRemoveButton}
+									small
+									type="button"
+								>
+									<ClayIcon
+										spritemap={spritemap}
+										symbol="trash"
+									/>
+								</ClayButton>
+							)}
+
 							<ClayButton
-								className="ddm-form-field-repeatable-delete-button p-0"
+								className="ddm-form-field-repeatable-add-button p-0"
 								disabled={readOnly}
-								onClick={onRemoveButton}
+								onClick={onRepeatButton}
 								small
 								type="button"
 							>
-								<ClayIcon
-									spritemap={spritemap}
-									symbol="trash"
-								/>
+								<ClayIcon spritemap={spritemap} symbol="plus" />
 							</ClayButton>
-						)}
+						</div>
+					)}
 
-						<ClayButton
-							className="ddm-form-field-repeatable-add-button p-0"
-							disabled={readOnly}
-							onClick={onRepeatButton}
-							small
-							type="button"
+					{((label && showLabel) ||
+						required ||
+						tooltip ||
+						repeatable) && (
+						<p
+							className={classNames({
+								'ddm-empty': !showLabel && !required,
+								'ddm-label': showLabel,
+							})}
 						>
-							<ClayIcon spritemap={spritemap} symbol="plus" />
-						</ClayButton>
-					</div>
-				)}
+							{label && showLabel && label}
 
-				{((label && showLabel) ||
-					required ||
-					tooltip ||
-					repeatable) && (
-					<p
-						className={classNames({
-							'ddm-empty': !showLabel && !required,
-							'ddm-label': showLabel,
-						})}
-					>
-						{label && showLabel && label}
+							{required && spritemap && (
+								<span className="reference-mark">
+									<ClayIcon
+										spritemap={spritemap}
+										symbol="asterisk"
+									/>
+								</span>
+							)}
 
-						{required && spritemap && (
-							<span className="reference-mark">
-								<ClayIcon
-									spritemap={spritemap}
-									symbol="asterisk"
-								/>
-							</span>
-						)}
+							{tooltip && (
+								<div className="ddm-tooltip">
+									<ClayIcon
+										data-tooltip-align="right"
+										spritemap={spritemap}
+										symbol="question-circle-full"
+										title={tooltip}
+									/>
+								</div>
+							)}
+						</p>
+					)}
 
-						{tooltip && (
-							<div className="ddm-tooltip">
-								<ClayIcon
-									data-tooltip-align="right"
-									spritemap={spritemap}
-									symbol="question-circle-full"
-									title={tooltip}
-								/>
+					{children}
+
+					{localizedValueArray.length > 0 &&
+						localizedValueArray.map(language => (
+							<input
+								key={language.name}
+								name={language.name}
+								type="hidden"
+								value={language.value}
+							/>
+						))}
+
+					{tip && <span className="form-text">{tip}</span>}
+
+					{displayErrors && errorMessage && !valid && (
+						<span className="form-feedback-group">
+							<div className="form-feedback-item">
+								{errorMessage}
 							</div>
-						)}
-					</p>
-				)}
-
-				{children}
-
-				{localizedValueArray.length > 0 &&
-					localizedValueArray.map(language => (
-						<input
-							key={language.name}
-							name={language.name}
-							type="hidden"
-							value={language.value}
-						/>
-					))}
-
-				{tip && <span className="form-text">{tip}</span>}
-
-				{displayErrors && errorMessage && !valid && (
-					<span className="form-feedback-group">
-						<div className="form-feedback-item">{errorMessage}</div>
-					</span>
-				)}
-			</div>
-		</ClayTooltipProvider>
+						</span>
+					)}
+				</div>
+			</ClayTooltipProvider>
+		</ClayIconSpriteContext.Provider>
 	);
 }
 

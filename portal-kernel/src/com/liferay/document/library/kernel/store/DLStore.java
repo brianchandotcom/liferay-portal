@@ -21,11 +21,14 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import java.io.File;
 import java.io.InputStream;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  * @author Edward Han
  */
+@ProviderType
 @Transactional(rollbackFor = {PortalException.class, SystemException.class})
 public interface DLStore {
 
@@ -103,6 +106,11 @@ public interface DLStore {
 	public boolean hasFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
+		throws PortalException;
+
+	public void updateFile(
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName)
 		throws PortalException;
 
 	public void updateFile(

@@ -1808,6 +1808,9 @@ public interface PropsKeys {
 	public static final String MAIL_SESSION_MAIL_SMTP_PORT =
 		"mail.session.mail.smtp.port";
 
+	public static final String MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE =
+		"mail.session.mail.smtp.starttls.enable";
+
 	public static final String MAIL_SESSION_MAIL_SMTP_USER =
 		"mail.session.mail.smtp.user";
 

@@ -172,6 +172,9 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		int smtpPort = PrefsPropsUtil.getInteger(
 			PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT,
 			PropsValues.MAIL_SESSION_MAIL_SMTP_PORT);
+		boolean smtpStartTlsEnable = PrefsPropsUtil.getBoolean(
+			PropsKeys.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE,
+			PropsValues.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE);
 		String smtpUser = PrefsPropsUtil.getString(
 			PropsKeys.MAIL_SESSION_MAIL_SMTP_USER,
 			PropsValues.MAIL_SESSION_MAIL_SMTP_USER);
@@ -223,6 +226,11 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		properties.setProperty(transportPrefix + "password", smtpPassword);
 		properties.setProperty(
 			transportPrefix + "port", String.valueOf(smtpPort));
+
+		properties.setProperty(
+			transportPrefix + "starttls.enable",
+			String.valueOf(smtpStartTlsEnable));
+
 		properties.setProperty(transportPrefix + "user", smtpUser);
 
 		// Advanced
@@ -249,8 +257,6 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		}
 
 		if (smtpAuth) {
-			properties.setProperty(transportPrefix + "starttls.enable", "true");
-
 			_session = Session.getInstance(properties,
 				new javax.mail.Authenticator() {
 					protected PasswordAuthentication

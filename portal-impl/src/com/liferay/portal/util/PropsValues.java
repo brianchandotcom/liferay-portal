@@ -1546,6 +1546,10 @@ public class PropsValues {
 	public static final int MAIL_SESSION_MAIL_SMTP_PORT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT));
 
+	public static final boolean MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE));
+
 	public static final String MAIL_SESSION_MAIL_SMTP_USER = PropsUtil.get(
 		PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);
 

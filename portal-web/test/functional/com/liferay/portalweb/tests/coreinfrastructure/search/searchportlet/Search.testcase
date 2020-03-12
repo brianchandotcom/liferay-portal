@@ -135,21 +135,19 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
-		SearchPortlets.addWidgets(searchPortletList = "Category Facet,Custom Facet,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet,Search Results,Search Bar");
+		SearchPortlets.addWidgets(searchPortletList = "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet,Search Bar");
 
 		User.logoutPG();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search");
 
-		// Workaround: Removed assertions for Suggestions, Sort, Search Results, and Modified Facet portlets until LPS-92008 is fixed. See LRQA-47720.
-
-		for (var portletName : list "Category Facet,Custom Facet,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet") {
+		for (var portletName : list "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet") {
 			Portlet.viewNoSpecificPG(portletName = "${portletName}");
 		}
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
-		for (var portletName : list "Category Facet,Custom Facet,Folder Facet,Low Level Search Options,Search Insights,Search Options,Site Facet,Tag Facet,Type Facet,User Facet") {
+		for (var portletName : list "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet") {
 			Portlet.viewNoSpecificPG(portletName = "${portletName}");
 		}
 	}

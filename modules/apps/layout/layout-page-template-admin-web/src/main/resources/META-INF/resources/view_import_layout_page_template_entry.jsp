@@ -40,6 +40,43 @@
 				<aui:input checked="<%= true %>" label="overwrite-existing-entries" name="overwrite" type="checkbox" />
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
+
+		<%
+		List<LayoutPageTemplatesImporterResultEntry> invalidLayoutPageTemplateImportResultEntries = (List<LayoutPageTemplatesImporterResultEntry>)SessionMessages.get(renderRequest, "invalidLayoutPageTemplateImportResultEntries");
+		%>
+
+		<c:if test="<%= ListUtil.isNotEmpty(invalidLayoutPageTemplateImportResultEntries) %>">
+
+			<%
+			int total = invalidLayoutPageTemplateImportResultEntries.size();
+			int viewTotal = (total > 10) ? 10 : total;
+			%>
+
+			<div class="alert alert-warning warning-dialog">
+				<span class="error-message"><liferay-ui:message key="some-entries-could-not-be-imported" /></span>
+
+				<ul class="error-list-items">
+
+					<%
+					for (int i = 0; i < viewTotal; i++) {
+						LayoutPageTemplatesImporterResultEntry layoutPageTemplatesImporterResultEntry = invalidLayoutPageTemplateImportResultEntries.get(i);
+					%>
+
+						<li>
+							<span class="error-info"><%= HtmlUtil.escape(layoutPageTemplatesImporterResultEntry.getErrorMessage()) %></span>
+						</li>
+
+					<%
+					}
+					%>
+
+				</ul>
+
+				<c:if test="<%= total > 10 %>">
+					<span class="error-info"><%= LanguageUtil.format(request, "x-more-entries-could-also-not-be-imported", "<strong>" + (total - viewTotal) + "</strong>", false) %></span>
+				</c:if>
+			</div>
+		</c:if>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

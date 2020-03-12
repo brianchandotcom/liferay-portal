@@ -96,11 +96,11 @@ Liferay connector!
 == Operations
 Now that you've created your Mule project and imported and configured the
 Liferay connector, you can build your Mule flows using Liferay connector
-operations. Operations *Create*, *Delete*, *Get* and *Update* resources defined
-by your OpenAPI document. Each operation implements and exposes different parts
-of the specified OpenAPI document.
+operations. Operations *Create Records*, *Delete Records*, *Get Records*, and
+*Update Records* resources defined by your OpenAPI document. Each operation
+implements and exposes different parts of the specified OpenAPI document.
 
-=== Create Operation
+=== Create Records Operation
 
 Create exposes all endpoints that are manipulated by HTTP POST.
 
@@ -145,91 +145,8 @@ web services and need not be used with every endpoint:
 |No
 |===
 
-=== Delete Operation
-The Delete operation exposes all endpoints that are manipulated by HTTP DELETE.
-Input parameters:
-
-[%header,cols=4*]
-|===
-|Parameter name
-|Type
-|Description
-|Required
-
-|Endpoint
-|String
-|Drop down list of available endpoints that support delete operation
-|Yes
-
-|Path Params
-|Object
-|Map with path parameter values
-|Yes (if required by endpoint)
-
-|Query Params
-|Object
-|Map with query parameter values
-|No
-|===
-
-=== Get Operation
-The Get operation exposes all endpoints that are manipulated by HTTP GET.
-Input parameters:
-
-[%header,cols=4*]
-|===
-|Parameter name
-|Type
-|Description
-|Required
-
-|Endpoint
-|String
-|Drop down list of available endpoints that support get operation
-|Yes
-
-|Path Params
-|Object
-|Map with path parameter values
-|Yes (if required by endpoint)
-
-|Query Params
-|Object
-|Map with query parameter values
-|No
-|===
-
-=== Update Operation
-The Update operation exposes all endpoints that are manipulated by HTTP PATCH.
-Input parameters:
-
-[%header,cols=4*]
-|===
-|Parameter name
-|Type
-|Description
-|Required
-
-|Endpoint
-|String
-|Drop down list of available endpoints that support update operation
-|Yes
-
-|Records
-|Object
-|Object to be updated
-|Yes
-
-|Path Params
-|Object
-|Map with path parameter values
-|Yes (if required by endpoint)
-
-|Query Params
-|Object
-|Map with query parameter values
-|No
-|===
+To see list of all available operations and related input parameters check out
+link:liferay-connector-tech-ref.adoc[Liferay Connector Technical Reference].
 
 You should use
 https://app.swaggerhub.com/organizations/liferayinc as documentation for Liferay

@@ -1,0 +1,392 @@
+= Liferay Connector Technical Reference
+
+The Anypoint Liferay Connector connects Liferay to other platforms and services
+in the Mulesoft ecosystem.
+
+== Configurations
+
+=== Liferay Config
+
+==== Parameters
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|===
+| Parameter name
+| Type
+| Description
+| Default Value
+| Required
+
+| Name
+| String
+| The name of this configuration which is used to reference the configuration.
+|
+| *X*
+
+| Connection
+a|
+
+* <<basic-auth, Basic Authentication>>
+* <<oauth2, OAuth 2.0>>
+| The connection types that can be provided to this configuration.
+|
+| *X*
+|===
+
+=== Connection Types
+
+[[basic-auth]]
+==== Basic Authentication
+
+===== Parameters
+
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|===
+| Parameter name
+| Type
+| Description
+| Default Value
+| Required
+
+| OpenAPI Spec URL
+| String
+| Path to OpenAPI document defined in your Liferay Portal instance which enables
+you to use the RESTful web services defined by the document.
+|
+| *X*
+
+| Username
+| String
+| Username used to initialize the session
+|
+| *X*
+
+| Password
+| String
+| Password used to authenticate the user
+|
+| *X*
+
+[[connection-timeout-basic]]
+| Connection Timeout
+| Number
+| Defines the amount of time, that the client will attempt to establish a
+connection before it times out. Value 0 means infinite time.
+| 5
+|
+
+| Connection Timeout Unit
+| String
+| Qualifies <<connection-timeout-basic, Connection Timeout>> value
+| SECONDS
+|
+
+| Host
+| String
+| Hostname of the proxy. If this property is not set then no proxy will be used,
+otherwise a proxy will be used, but a proxy host must be specified.
+|
+|
+| Port
+| Number
+| Port of the proxy. If host is set then this property must be set and cannot be
+a negative number.
+|
+|
+
+| Username
+| String
+| Username used to authenticate against the proxy. If this property is not set
+then no authentication is going to be used against the proxy, otherwise this
+value must be specified.
+|
+|
+
+| Password
+| String
+| Password used to authenticate against the proxy.
+|
+|
+|===
+
+[[oauth2]]
+==== OAuth 2.0
+
+===== Parameters
+
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|===
+| Parameter name
+| Type
+| Description
+| Default Value
+| Required
+
+| OpenAPI Spec URL
+| String
+| Path to OpenAPI document defined in your Liferay Portal instance which enables
+you to use the RESTful web services defined by the document.
+|
+| *X*
+
+| Consumer Key
+| String
+| Consumer Key for Liferay OAuth 2 application
+|
+| *X*
+
+| Consumer Secret
+| String
+| Liferay OAuth 2 application's client secret
+|
+| *X*
+
+[[connection-timeout-oauth2]]
+| Connection Timeout
+| Number
+| Defines the amount of time, that the client will attempt to establish a
+connection before it times out. Value 0 means infinite time.
+| 5
+|
+
+| Connection Timeout Unit
+| String
+| Qualifies <<connection-timeout-oauth2, Connection Timeout>> value
+| SECONDS
+|
+
+| Host
+| String
+| Hostname of the proxy. If this property is not set then no proxy will be used,
+otherwise a proxy will be used, but a proxy host must be specified.
+|
+|
+| Port
+| Number
+| Port of the proxy. If host is set then this property must be set and cannot be
+a negative number.
+|
+|
+
+| Username
+| String
+| Username used to authenticate against the proxy. If this property is not set
+then no authentication is going to be used against the proxy, otherwise this
+value must be specified.
+|
+|
+
+| Password
+| String
+| Password used to authenticate against the proxy.
+|
+|
+|===
+
+== Operations
+* <<create-operation, Create Records>>
+* <<delete-operation, Delete Records>>
+* <<get-operation, Get Records>>
+* <<update-operation, Update Records>>
+
+[[create-operation]]
+=== Create Records
+
+The Create operation exposes all endpoints that are manipulated by HTTP POST.
+
+==== Parameters
+
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|===
+| Parameter name
+| Type
+| Description
+| Default Value
+| Required
+
+| Endpoint
+| String
+| Drop down list of available endpoints that support create operation
+|
+| Yes
+
+| Records
+| Object
+| Object to be created
+| #[payload]
+| Yes
+
+| Path Params
+| Object
+| Map with path parameter values
+|
+| Yes (if required by endpoint)
+
+| Query Params
+| Object
+| Map with query parameter values
+|
+| No
+|===
+
+==== Throws
+* LIFERAY:BAD_REQUEST
+* LIFERAY:CONNECTION_TIMEOUT
+* LIFERAY:EXECUTION
+* LIFERAY:INVALID_OAS_DOCUMENT
+* LIFERAY:NOT_ACCEPTABLE
+* LIFERAY:NOT_ALLOWED
+* LIFERAY:NOT_FOUND
+* LIFERAY:NOT_IMPLEMENTED
+* LIFERAY:OAUTH2_ERROR
+* LIFERAY:SERVER_ERROR
+* LIFERAY:UNAUTHORIZED
+* LIFERAY:UNSUPPORTED_MEDIA_TYPE
+
+[[delete-operation]]
+=== Delete Records
+
+The Delete operation exposes all endpoints that are manipulated by HTTP DELETE.
+Input parameters:
+
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|===
+| Parameter name
+| Type
+| Description
+| Default Value
+| Required
+
+| Endpoint
+| String
+| Drop down list of available endpoints that support delete operation
+|
+| Yes
+
+| Path Params
+| Object
+| Map with path parameter values
+|
+| Yes (if required by endpoint)
+
+| Query Params
+| Object
+| Map with query parameter values
+|
+| No
+|===
+
+==== Throws
+* LIFERAY:BAD_REQUEST
+* LIFERAY:CONNECTION_TIMEOUT
+* LIFERAY:EXECUTION
+* LIFERAY:INVALID_OAS_DOCUMENT
+* LIFERAY:NOT_ACCEPTABLE
+* LIFERAY:NOT_ALLOWED
+* LIFERAY:NOT_FOUND
+* LIFERAY:NOT_IMPLEMENTED
+* LIFERAY:OAUTH2_ERROR
+* LIFERAY:SERVER_ERROR
+* LIFERAY:UNAUTHORIZED
+* LIFERAY:UNSUPPORTED_MEDIA_TYPE
+
+[[get-operation]]
+=== Get Records
+
+The Get operation exposes all endpoints that are manipulated by HTTP GET.
+
+==== Parameters
+
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|===
+| Parameter name
+| Type
+| Description
+| Default Value
+| Required
+
+| Endpoint
+| String
+| Drop down list of available endpoints that support get operation
+|
+| Yes
+
+| Path Params
+| Object
+| Map with path parameter values
+|
+| Yes (if required by endpoint)
+
+| Query Params
+| Object
+| Map with query parameter values
+|
+| No
+|===
+
+==== Throws
+* LIFERAY:BAD_REQUEST
+* LIFERAY:CONNECTION_TIMEOUT
+* LIFERAY:EXECUTION
+* LIFERAY:INVALID_OAS_DOCUMENT
+* LIFERAY:NOT_ACCEPTABLE
+* LIFERAY:NOT_ALLOWED
+* LIFERAY:NOT_FOUND
+* LIFERAY:NOT_IMPLEMENTED
+* LIFERAY:OAUTH2_ERROR
+* LIFERAY:SERVER_ERROR
+* LIFERAY:UNAUTHORIZED
+* LIFERAY:UNSUPPORTED_MEDIA_TYPE
+
+[[update-operation]]
+=== Update Records
+
+The Update operation exposes all endpoints that are manipulated by HTTP PATCH.
+
+==== Parameters
+
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|===
+| Parameter name
+| Type
+| Description
+| Default Value
+| Required
+
+| Endpoint
+| String
+| Drop down list of available endpoints that support update operation
+|
+| Yes
+
+| Records
+| Object
+| Object to be updated
+| #[payload]
+| Yes
+
+| Path Params
+| Object
+| Map with path parameter values
+|
+| Yes (if required by endpoint)
+
+| Query Params
+| Object
+| Map with query parameter values
+|
+| No
+|===
+
+==== Throws
+* LIFERAY:BAD_REQUEST
+* LIFERAY:CONNECTION_TIMEOUT
+* LIFERAY:EXECUTION
+* LIFERAY:INVALID_OAS_DOCUMENT
+* LIFERAY:NOT_ACCEPTABLE
+* LIFERAY:NOT_ALLOWED
+* LIFERAY:NOT_FOUND
+* LIFERAY:NOT_IMPLEMENTED
+* LIFERAY:OAUTH2_ERROR
+* LIFERAY:SERVER_ERROR
+* LIFERAY:UNAUTHORIZED
+* LIFERAY:UNSUPPORTED_MEDIA_TYPE

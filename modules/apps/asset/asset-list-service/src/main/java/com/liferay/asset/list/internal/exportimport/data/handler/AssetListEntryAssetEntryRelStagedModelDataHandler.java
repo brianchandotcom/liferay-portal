@@ -148,22 +148,20 @@ public class AssetListEntryAssetEntryRelStagedModelDataHandler
 		Group currentGroup = _groupLocalService.fetchGroup(
 			portletDataContext.getScopeGroupId());
 
-		Map<Long, Long> segmentIds =
+		Map<Long, Long> segmentsEntryIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				SegmentsEntry.class);
 
-		long assetListEntryIdSegmentId =
-			assetListEntryAssetEntryRel.getSegmentsEntryId();
+		long segmentsEntryId = assetListEntryAssetEntryRel.getSegmentsEntryId();
 
-		if (!currentGroup.isStagingGroup() && !segmentIds.isEmpty() &&
-			(assetListEntryIdSegmentId > 0) &&
-			segmentIds.containsKey(assetListEntryIdSegmentId)) {
+		if (!currentGroup.isStagingGroup() && !segmentsEntryIds.isEmpty() &&
+			(segmentsEntryId > 0) &&
+			segmentsEntryIds.containsKey(segmentsEntryId)) {
 
-			long newAssetListEntryIdSegmentId = segmentIds.get(
-				assetListEntryIdSegmentId);
+			long newSegmentsEntryId = segmentsEntryIds.get(segmentsEntryId);
 
 			importedAssetListEntryAssetEntryRel.setSegmentsEntryId(
-				newAssetListEntryIdSegmentId);
+				newSegmentsEntryId);
 		}
 
 		AssetListEntryAssetEntryRel existingAssetListEntryAssetEntryRel =

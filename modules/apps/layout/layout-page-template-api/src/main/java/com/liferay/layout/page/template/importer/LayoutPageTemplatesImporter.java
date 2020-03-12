@@ -34,7 +34,7 @@ public interface LayoutPageTemplatesImporter {
 			long userId, long groupId, File file, boolean overwrite)
 		throws Exception;
 
-	public List<LayoutPageTemplateImportEntry> importFile(
+	public List<LayoutPageTemplateImporterResultEntry> importFile(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			File file, boolean overwrite)
 		throws Exception;

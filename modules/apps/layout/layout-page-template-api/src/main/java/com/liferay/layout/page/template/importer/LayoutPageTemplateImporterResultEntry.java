@@ -17,9 +17,9 @@ package com.liferay.layout.page.template.importer;
 /**
  * @author Rubén Pulido
  */
-public class LayoutPageTemplateImportEntry {
+public class LayoutPageTemplateImporterResultEntry {
 
-	public LayoutPageTemplateImportEntry(String name, Status status) {
+	public LayoutPageTemplateImporterResultEntry(String name, Status status) {
 		_name = name;
 		_status = status;
 	}

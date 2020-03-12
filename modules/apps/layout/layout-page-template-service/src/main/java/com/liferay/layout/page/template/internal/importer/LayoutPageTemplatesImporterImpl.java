@@ -28,7 +28,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.exception.PageDefinitionValidatorException;
-import com.liferay.layout.page.template.importer.LayoutPageTemplateImportEntry;
+import com.liferay.layout.page.template.importer.LayoutPageTemplateImporterResultEntry;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.internal.importer.helper.LayoutStructureItemHelper;
 import com.liferay.layout.page.template.internal.importer.helper.LayoutStructureItemHelperFactory;
@@ -89,7 +89,7 @@ public class LayoutPageTemplatesImporterImpl
 	}
 
 	@Override
-	public List<LayoutPageTemplateImportEntry> importFile(
+	public List<LayoutPageTemplateImporterResultEntry> importFile(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			File file, boolean overwrite)
 		throws Exception {
@@ -345,9 +345,9 @@ public class LayoutPageTemplatesImporterImpl
 				}
 
 				_layoutPageTemplateImportEntries.add(
-					new LayoutPageTemplateImportEntry(
+					new LayoutPageTemplateImporterResultEntry(
 						pageTemplate.getName(),
-						LayoutPageTemplateImportEntry.Status.INVALID));
+						LayoutPageTemplateImporterResultEntry.Status.INVALID));
 			}
 		}
 
@@ -559,15 +559,17 @@ public class LayoutPageTemplatesImporterImpl
 						pageTemplateEntry.getPageDefinition());
 
 					_layoutPageTemplateImportEntries.add(
-						new LayoutPageTemplateImportEntry(
+						new LayoutPageTemplateImporterResultEntry(
 							layoutPageTemplateEntry.getName(),
-							LayoutPageTemplateImportEntry.Status.IMPORTED));
+							LayoutPageTemplateImporterResultEntry.Status.
+								IMPORTED));
 				}
 				else {
 					_layoutPageTemplateImportEntries.add(
-						new LayoutPageTemplateImportEntry(
+						new LayoutPageTemplateImporterResultEntry(
 							layoutPageTemplateEntry.getName(),
-							LayoutPageTemplateImportEntry.Status.IGNORED));
+							LayoutPageTemplateImporterResultEntry.Status.
+								IGNORED));
 				}
 			}
 			catch (PortalException portalException) {
@@ -576,9 +578,9 @@ public class LayoutPageTemplatesImporterImpl
 				}
 
 				_layoutPageTemplateImportEntries.add(
-					new LayoutPageTemplateImportEntry(
+					new LayoutPageTemplateImporterResultEntry(
 						pageTemplate.getName(),
-						LayoutPageTemplateImportEntry.Status.INVALID));
+						LayoutPageTemplateImporterResultEntry.Status.INVALID));
 			}
 		}
 	}
@@ -665,7 +667,7 @@ public class LayoutPageTemplatesImporterImpl
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
-	private List<LayoutPageTemplateImportEntry>
+	private List<LayoutPageTemplateImporterResultEntry>
 		_layoutPageTemplateImportEntries;
 
 	@Reference

@@ -764,6 +764,181 @@ definition {
 		BlogsEntry.viewStatus(entryStatus = "Approved");
 	}
 
+	macro configurePageEditor {
+		task ("View fragment persists and could add anther fragment in react edtor") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-fragment-content-page");
+
+			ContentPages.clickPencil();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Card");
+
+			PageEditor.viewFragment(fragmentName = "Card");
+		}
+
+		task ("Assert could edit fragment upgrading from 7.2") {
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_title.html");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_title.css");
+
+			FragmentsEditor.assertFragmentPreview(
+				fragmentLocator = "//div[@class='fragment-header']/h1[@class='title']",
+				text = "LOREM IPSUM DOLOR SIT AMET");
+
+			PortletEntry.publish();
+		}
+
+		task ("Assert could delete fragment upgrading from 7.2") {
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-fragment-content-page");
+
+			ContentPages.clickPencil();
+
+			PageEditor.removeFragment(fragmentName = "Fragment Name");
+
+		}
+
+		task ("Assert the experience survived and could edit") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-experience-content-page");
+
+			ContentPages.clickPencil();
+
+			var key_experienceName = "New Experience Name";
+
+			AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME");
+
+			PageEditor.addComment(
+				content = "Lorem ipsum dolor sit amet",
+				fragmentClass = "header",
+				fragmentComment = "This is a fragment comment.",
+				fragmentName = "Title",
+				position = "1");
+
+			PageEditor.changeExperience(newExperience = "Default");
+
+			PageEditor.removeFragment(fragmentName = "Title");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_CENTER_TEXT",
+				value1 = "There are no comments yet.");
+
+			PageEditor.changeExperience(newExperience = "New Experience Name");
+
+			PageEditor.viewCommentList(
+				commentCount = "1 Comment",
+				fragmentName = "Title",
+				openComment = "true");
+		}
+
+		task ("Assert layout has been converted to a section with columns inside") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-layout-content-page");
+
+			ContentPages.clickPencil();
+
+			AssertVisible(
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			AssertVisible(
+				key_elementType = "Row",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+		}
+
+		task ("Assert translation is working after migration") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-translation-content-page");
+
+			ContentPages.clickPencil();
+
+			AssertVisible(
+				key_content = "New editable fragment en-US text",
+				key_fragmentClass = "rich-text",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
+
+			Click(locator1 = "PageEditor#DROPDOWN");
+
+			MenuItem.click(menuItem = "zh-CN");
+
+			AssertVisible(
+				key_content = "New editable fragment zh-CN text",
+				key_fragmentClass = "rich-text",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
+		}
+
+		task ("Assert mapped content is working after migration") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
+
+			AssertVisible(
+				key_content = "Webcontent Title",
+				key_fragmentClass = "header",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
+
+			AssertVisible(
+				key_content = "Webcontent Content",
+				key_fragmentClass = "rich-text",
+				key_position = "2",
+				locator1 = "Fragment#FRAGMENT");
+
+			DisplayPageTemplate.clickPencilItem(item = "Edit Webcontent Title");
+
+			Click(locator1 = "TextInput#TITLE");
+
+			PortletEntry.inputTitle(title = "Webcontent Title Edit");
+
+			AlloyEditor.addContent(content = "Webcontent Content Edit");
+
+			Button.clickPublish();
+
+			AssertVisible(
+				key_content = "Webcontent Title Edit",
+				key_fragmentClass = "header",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
+
+			AssertVisible(
+				key_content = "Webcontent Content Edit",
+				key_fragmentClass = "rich-text",
+				key_position = "2",
+				locator1 = "Fragment#FRAGMENT");
+		}
+
+		task ("Assert could add fragment added to display page after upgrading") {
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Edit");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+		}
+
+		task ("Assert button frgamnet configuration survived") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-configuration-content-page");
+
+			ContentPages.clickPencil();
+
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "button",
+				size = "lg",
+				type = "link");
+		}
+	}
+
 	macro publishStagedSite {
 		Navigator.openSiteURL(siteName = "Staging Site Staging");
 

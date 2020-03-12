@@ -3,7 +3,7 @@
 		"@clayui/button": "3.3.0",
 		"@clayui/form": "3.6.0",
 		"@clayui/icon": "3.0.4",
-		"@clayui/multi-select": "3.5.0",
+		"@clayui/multi-select": "3.5.1",
 		"classnames": "2.2.6",
 		"prop-types": "15.7.2",
 		"react": "16.12.0",

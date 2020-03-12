@@ -5,7 +5,7 @@
 		"@clayui/icon": "3.0.4",
 		"@clayui/loading-indicator": "3.0.1",
 		"@clayui/sticker": "3.1.0",
-		"@clayui/tooltip": "3.2.0",
+		"@clayui/tooltip": "3.2.1",
 		"classnames": "2.2.6",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",

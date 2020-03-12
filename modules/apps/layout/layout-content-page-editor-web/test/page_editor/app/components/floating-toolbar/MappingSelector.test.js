@@ -30,6 +30,13 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../src/main/resourc
 import {PAGE_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/pageTypes';
 import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 
+const infoItem = {
+	className: 'infoItemClassName',
+	classNameId: 'InfoItemClassNameId',
+	classPK: 'infoItemClassPK',
+	title: 'Info Item',
+};
+
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
@@ -59,6 +66,7 @@ jest.mock(
 	() => ({
 		getAvailableAssetMappingFields: jest.fn(() =>
 			Promise.resolve([
+				{key: 'unmapped', label: 'unmapped'},
 				{key: 'text-field-1', label: 'Text Field 1', type: 'text'},
 			])
 		),
@@ -155,13 +163,6 @@ describe('MappingSelector', () => {
 	});
 
 	it('calls onMappingSelect with correct params when mapping to content', async () => {
-		const infoItem = {
-			className: 'infoItemClassName',
-			classNameId: 'InfoItemClassNameId',
-			classPK: 'infoItemClassPK',
-			title: 'Info Item',
-		};
-
 		const onMappingSelect = jest.fn();
 
 		await act(async () => {
@@ -215,6 +216,32 @@ describe('MappingSelector', () => {
 
 		expect(onMappingSelect).toBeCalledWith({
 			mappedField: 'structure-field-1',
+		});
+	});
+
+	it('calls onMappingSelect with correct params when unmapping', async () => {
+		const onMappingSelect = jest.fn();
+
+		await act(async () => {
+			renderMappingSelector({
+				mappedItem: infoItem,
+				onMappingSelect,
+			});
+		});
+
+		const fieldSelect = getByLabelText(document.body, 'field');
+
+		await act(async () => {
+			fireEvent.change(fieldSelect, {
+				target: {value: 'unmapped'},
+			});
+		});
+
+		expect(onMappingSelect).toBeCalledWith({
+			classNameId: '',
+			classPK: '',
+			fieldId: '',
+			mappedField: '',
 		});
 	});
 });

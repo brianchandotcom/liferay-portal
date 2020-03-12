@@ -16,6 +16,8 @@ definition {
 
 		SiteSelector._searchSite(site = "${site}");
 
+		Pause(locator1 = "3000");
+
 		LexiconEntry.gotoEntry(rowEntry = "${site}");
 
 		SelectFrameTop();

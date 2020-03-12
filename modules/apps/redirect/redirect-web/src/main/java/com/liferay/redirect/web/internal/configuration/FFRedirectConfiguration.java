@@ -21,14 +21,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Alejandro Tardín
  */
-@ExtendedObjectClassDefinition(category = "navigation")
+@ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
 	id = "com.liferay.redirect.web.internal.configuration.FFRedirectConfiguration",
 	localization = "content/Language", name = "redirect-configuration-name"
 )
 public interface FFRedirectConfiguration {
 
-	@Meta.AD(deflt = "true", name = "enabled", required = false)
+	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
 }

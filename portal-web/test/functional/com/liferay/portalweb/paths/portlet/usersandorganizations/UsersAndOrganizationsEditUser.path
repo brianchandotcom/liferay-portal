@@ -132,6 +132,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--DEPOT-->
+<tr>
+	<td>DEPOT_SELECT_LINK</td>
+	<td>//a[contains(@id,'selectDepotGroupLink')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--USER_GROUPS-->
 <tr>
 	<td>USER_GROUPS_TABLE_NAME</td>

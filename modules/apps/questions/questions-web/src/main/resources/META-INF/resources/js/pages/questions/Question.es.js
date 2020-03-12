@@ -160,7 +160,7 @@ export default withRouter(
 		};
 
 		return (
-			<section className="questions-section questions-section-single">
+			<section className="c-mt-5 questions-section questions-section-single">
 				<div className="questions-container">
 					{question && (
 						<div className="row">

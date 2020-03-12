@@ -78,22 +78,34 @@ export default withRouter(
 			[];
 
 		return (
-			<div className="autofit-padded-no-gutters autofit-row autofit-row-center">
-				<div className="autofit-col autofit-col-expand">
+			<div className="align-items-center d-flex justify-content-between">
+				<div className="d-flex">
 					<ClayDropDown
 						active={active}
 						onActiveChange={setActive}
 						trigger={
-							<div>
+							<div className="align-items-center d-flex h-100">
 								{section.parentSection && (
-									<>
-										{section.parentSection.title}
-										{' : '}
-										{section.title ===
-										section.parentSection.title
-											? Liferay.Language.get('all')
-											: section.title}
-									</>
+									<ClayInput.Group>
+										<ClayInput.GroupItem shrink>
+											{section.parentSection.title}
+											{':'}
+										</ClayInput.GroupItem>
+
+										<ClayInput.GroupItem shrink>
+											{section.title ===
+											section.parentSection.title
+												? Liferay.Language.get('all')
+												: section.title}
+										</ClayInput.GroupItem>
+
+										<ClayInput.GroupItem
+											className="align-items-center"
+											shrink
+										>
+											<ClayIcon symbol="caret-bottom" />
+										</ClayInput.GroupItem>
+									</ClayInput.Group>
 								)}
 							</div>
 						}
@@ -108,6 +120,7 @@ export default withRouter(
 								{Liferay.Language.get('all')}
 							</ClayDropDown.Help>
 						</Link>
+
 						<ClayDropDown.ItemList>
 							<ClayDropDown.Group>
 								{getParentSubSections().map((item, i) => (
@@ -120,30 +133,44 @@ export default withRouter(
 							</ClayDropDown.Group>
 						</ClayDropDown.ItemList>
 					</ClayDropDown>
-				</div>
-				<SectionSubscription section={section} />
 
-				<div className="d-flex">
-					{Liferay.Language.get('filter-by')}
-
-					<ClaySelect
-						onChange={event => filterChange(event.target.value)}
-					>
-						{filterOptions.map(option => (
-							<ClaySelect.Option
-								key={option.value}
-								label={option.label}
-								value={option.value}
-							/>
-						))}
-					</ClaySelect>
+					<div className="c-ml-3">
+						<SectionSubscription section={section} />
+					</div>
 				</div>
 
 				<div className="d-flex">
 					<ClayInput.Group>
+						<ClayInput.GroupItem shrink>
+							<label
+								className="align-items-center d-inline-flex font-weight-normal"
+								htmlFor="questionsFilter"
+							>
+								{Liferay.Language.get('filter-by')}
+							</label>
+						</ClayInput.GroupItem>
+
+						<ClayInput.GroupItem shrink>
+							<ClaySelect
+								className="bg-transparent border-0"
+								id="questionsFilter"
+								onChange={event =>
+									filterChange(event.target.value)
+								}
+							>
+								{filterOptions.map(option => (
+									<ClaySelect.Option
+										key={option.value}
+										label={option.label}
+										value={option.value}
+									/>
+								))}
+							</ClaySelect>
+						</ClayInput.GroupItem>
+
 						<ClayInput.GroupItem>
 							<ClayInput
-								className="form-control input-group-inset input-group-inset-after"
+								className="bg-transparent form-control input-group-inset input-group-inset-after"
 								onChange={event =>
 									debounceCallback(event.target.value)
 								}
@@ -151,7 +178,11 @@ export default withRouter(
 								type="text"
 							/>
 
-							<ClayInput.GroupInsetItem after tag="span">
+							<ClayInput.GroupInsetItem
+								after
+								className="bg-transparent"
+								tag="span"
+							>
 								<ClayButtonWithIcon
 									displayType="unstyled"
 									symbol="search"
@@ -159,39 +190,39 @@ export default withRouter(
 								/>
 							</ClayInput.GroupInsetItem>
 						</ClayInput.GroupItem>
-					</ClayInput.Group>
 
-					{context.canCreateThread && (
-						<>
-							<ClayButton
-								className="c-ml-3 d-none d-sm-block text-nowrap"
-								displayType="primary"
-								onClick={() =>
-									history.push(
-										`/questions/${sectionTitle}/new`
-									)
-								}
-							>
-								{Liferay.Language.get('ask-question')}
-							</ClayButton>
-
-							<ClayButton
-								className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
-								displayType="primary"
-								onClick={() =>
-									history.push(
-										`/questions/${sectionTitle}/new`
-									)
-								}
-							>
-								<ClayIcon symbol="pencil" />
-
-								<span className="sr-only">
+						{context.canCreateThread && (
+							<ClayInput.GroupItem shrink>
+								<ClayButton
+									className="c-ml-3 d-none d-sm-block text-nowrap"
+									displayType="primary"
+									onClick={() =>
+										history.push(
+											`/questions/${sectionTitle}/new`
+										)
+									}
+								>
 									{Liferay.Language.get('ask-question')}
-								</span>
-							</ClayButton>
-						</>
-					)}
+								</ClayButton>
+
+								<ClayButton
+									className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
+									displayType="primary"
+									onClick={() =>
+										history.push(
+											`/questions/${sectionTitle}/new`
+										)
+									}
+								>
+									<ClayIcon symbol="pencil" />
+
+									<span className="sr-only">
+										{Liferay.Language.get('ask-question')}
+									</span>
+								</ClayButton>
+							</ClayInput.GroupItem>
+						)}
+					</ClayInput.Group>
 				</div>
 			</div>
 		);

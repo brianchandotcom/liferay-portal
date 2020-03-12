@@ -112,16 +112,18 @@ export default ({
 	};
 
 	return (
-		<section className="c-mt-5 questions-section questions-section-list">
+		<section className="questions-section questions-section-list">
 			<div className="questions-container">
 				<div className="row">
-					<div className="c-mx-auto c-px-0 col-xl-10">
+					<div className="c-mt-3 col">
 						<QuestionsNavigationBar
 							filterChange={filterChange}
 							searchChange={search => setSearch(search)}
 							sectionChange={section => setSection(section)}
 						/>
+					</div>
 
+					<div className="c-mt-5 c-mx-auto c-px-0 col-xl-10">
 						{loading ? (
 							<ClayLoadingIndicator />
 						) : (

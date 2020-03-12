@@ -14,39 +14,37 @@
 
 package com.liferay.gradle.plugins.source.formatter;
 
-import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.tasks.ExecuteJavaTask;
 import com.liferay.source.formatter.SourceFormatterArgs;
 
 import java.io.File;
+
+import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.CacheableTask;
-import org.gradle.api.tasks.JavaExec;
 import org.gradle.util.CollectionUtils;
+import org.gradle.workers.WorkerExecutor;
 
 /**
  * @author Raymond Augé
  * @author Andrea Di Giorgi
  */
 @CacheableTask
-public class FormatSourceTask extends JavaExec {
+public class FormatSourceTask extends ExecuteJavaTask {
 
-	public FormatSourceTask() {
-		setMain("com.liferay.source.formatter.SourceFormatter");
-	}
-
-	@Override
-	public void exec() {
-		setArgs(_getCompleteArgs());
-
-		super.exec();
+	@Inject
+	public FormatSourceTask(WorkerExecutor workerExecutor) {
+		super(workerExecutor);
 	}
 
 	public File getBaseDir() {
@@ -56,6 +54,11 @@ public class FormatSourceTask extends JavaExec {
 
 	public String getBaseDirName() {
 		return _sourceFormatterArgs.getBaseDirName();
+	}
+
+	@Override
+	public FileCollection getClasspath() {
+		return _classpath;
 	}
 
 	public List<String> getFileExtensions() {
@@ -138,6 +141,10 @@ public class FormatSourceTask extends JavaExec {
 		_sourceFormatterArgs.setBaseDirName(baseDirName);
 	}
 
+	public void setClasspath(FileCollection classpath) {
+		_classpath = classpath;
+	}
+
 	public void setFileExtensions(Iterable<String> fileExtensions) {
 		_sourceFormatterArgs.setFileExtensions(
 			CollectionUtils.toList(fileExtensions));
@@ -205,8 +212,9 @@ public class FormatSourceTask extends JavaExec {
 		_sourceFormatterArgs.setThrowException(throwException);
 	}
 
-	private List<String> _getCompleteArgs() {
-		List<String> args = new ArrayList<>(getArgs());
+	@Override
+	protected List<String> getArgs() {
+		List<String> args = new ArrayList<>();
 
 		args.add("format.current.branch=" + isFormatCurrentBranch());
 		args.add("format.latest.author=" + isFormatLatestAuthor());
@@ -228,18 +236,21 @@ public class FormatSourceTask extends JavaExec {
 		FileCollection fileCollection = getFiles();
 
 		if (fileCollection.isEmpty()) {
-			args.add(
-				"source.base.dir=" +
-					_relativizeDir(getBaseDir(), getWorkingDir()));
+			args.add("source.base.dir=" + _normalize(getBaseDir()));
 		}
 		else {
-			args.add("source.files=" + _merge(fileCollection, getWorkingDir()));
+			args.add("source.files=" + _merge(fileCollection));
 		}
 
 		return args;
 	}
 
-	private String _merge(Iterable<File> files, File startFile) {
+	@Override
+	protected String getMain() {
+		return "com.liferay.source.formatter.SourceFormatter";
+	}
+
+	private String _merge(Iterable<File> files) {
 		StringBuilder sb = new StringBuilder();
 
 		int i = 0;
@@ -249,7 +260,7 @@ public class FormatSourceTask extends JavaExec {
 				sb.append(',');
 			}
 
-			sb.append(FileUtil.relativize(file, startFile));
+			sb.append(_normalize(file));
 
 			i++;
 		}
@@ -257,22 +268,23 @@ public class FormatSourceTask extends JavaExec {
 		return sb.toString();
 	}
 
-	private String _relativizeDir(File dir, File startDir) {
-		String relativePath = FileUtil.relativize(dir, startDir);
+	private String _normalize(File file) {
+		Path path = file.toPath();
 
-		if (!relativePath.isEmpty()) {
-			if (File.separatorChar != '/') {
-				relativePath = relativePath.replace(File.separatorChar, '/');
-			}
+		String pathString = path.toString();
 
-			if (relativePath.charAt(relativePath.length() - 1) != '/') {
-				relativePath += '/';
-			}
+		if (File.separatorChar != '/') {
+			pathString = pathString.replace(File.separatorChar, '/');
 		}
 
-		return relativePath;
+		if (pathString.charAt(pathString.length() - 1) != '/') {
+			pathString += '/';
+		}
+
+		return pathString;
 	}
 
+	private FileCollection _classpath;
 	private final SourceFormatterArgs _sourceFormatterArgs =
 		new SourceFormatterArgs();
 

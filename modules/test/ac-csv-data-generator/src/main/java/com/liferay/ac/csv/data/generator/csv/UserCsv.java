@@ -16,6 +16,7 @@ package com.liferay.ac.csv.data.generator.csv;
 
 import com.liferay.ac.csv.data.generator.util.GeneratedDataUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -206,14 +207,22 @@ public class UserCsv {
 						idArray[i] = role.getPrimaryKey();
 					}
 					else {
-						Role newRole = _roleLocalService.addRole(
-							_generatedDataUtil.getDefaultUserId(), null, 0,
-							name, null, null, RoleConstants.TYPE_REGULAR, null,
-							null);
+						Role role;
 
-						_generatedDataUtil.putRole(name, newRole);
+						try {
+							role = _roleLocalService.addRole(
+								_generatedDataUtil.getDefaultUserId(), null, 0,
+								name, null, null, RoleConstants.TYPE_REGULAR,
+								null, null);
+						}
+						catch (DuplicateRoleException duplicateRoleException) {
+							role = _roleLocalService.getRole(
+								_generatedDataUtil.getCompanyId(), name);
+						}
 
-						idArray[i] = newRole.getPrimaryKey();
+						_generatedDataUtil.putRole(name, role);
+
+						idArray[i] = role.getPrimaryKey();
 					}
 				}
 				else if (header.equalsIgnoreCase("teams")) {

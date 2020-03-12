@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -958,6 +959,23 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	@Override
+	public List<Layout> getLayouts(
+			long groupId, boolean privateLayout, String keywords,
+			String[] types, int start, int end, OrderByComparator<Layout> obc)
+		throws PortalException {
+
+		if (Validator.isNull(keywords)) {
+			return filterLayouts(
+				layoutLocalService.getLayouts(
+					groupId, privateLayout, start, end, obc));
+		}
+
+		return layoutLocalService.getLayouts(
+			groupId, getUserId(), privateLayout, keywords, types, start, end,
+			obc);
+	}
+
+	@Override
 	public List<Layout> getLayouts(long groupId, String type) {
 		return layoutPersistence.filterFindByG_T(groupId, type);
 	}
@@ -967,6 +985,19 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		long groupId, String type, int start, int end) {
 
 		return layoutPersistence.filterFindByG_T(groupId, type, start, end);
+	}
+
+	@Override
+	public int getLayoutsCount(
+			Group group, boolean privateLayout, String keywords, String[] types)
+		throws PortalException {
+
+		if (Validator.isNull(keywords)) {
+			return layoutLocalService.getLayoutsCount(group, privateLayout);
+		}
+
+		return layoutLocalService.getLayoutsCount(
+			group, getUserId(), privateLayout, keywords, types);
 	}
 
 	@Override

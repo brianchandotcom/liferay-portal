@@ -71,7 +71,7 @@ export default function({context, props}) {
 			/>
 
 			<h5 className="mt-4 sheet-subtitle text-secondary">
-				{Liferay.Language.get('reads-and-views')}
+				{Liferay.Language.get('views-and-reads')}
 			</h5>
 
 			<TotalCount

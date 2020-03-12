@@ -24,7 +24,7 @@ import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import selectEditableValueContent from '../../selectors/selectEditableValueContent';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
-import updateEditableValues from '../../thunks/updateEditableValues';
+import updateEditableValuesThunk from '../../thunks/updateEditableValues';
 
 export function ImagePropertiesPanel({item}) {
 	const {editableId, editableType, fragmentEntryLinkId} = item;
@@ -59,7 +59,7 @@ export function ImagePropertiesPanel({item}) {
 		return url === editableValue.defaultValue ? '' : url;
 	});
 
-	const updateRowConfig = useCallback(
+	const updateEditableValues = useCallback(
 		newConfig => {
 			const editableValues =
 				state.fragmentEntryLinks[fragmentEntryLinkId].editableValues;
@@ -80,7 +80,7 @@ export function ImagePropertiesPanel({item}) {
 			};
 
 			dispatch(
-				updateEditableValues({
+				updateEditableValuesThunk({
 					editableValues: nextEditableValues,
 					fragmentEntryLinkId,
 					segmentsExperienceId: state.segmentsExperienceId,
@@ -98,7 +98,10 @@ export function ImagePropertiesPanel({item}) {
 		]
 	);
 
-	const [debounceUpdateRowConfig] = useDebounceCallback(updateRowConfig, 500);
+	const [debounceUpdateEditableValues] = useDebounceCallback(
+		updateEditableValues,
+		500
+	);
 
 	const onImageChange = (imageTitle, imageUrl) => {
 		const {editableValues} = state.fragmentEntryLinks[fragmentEntryLinkId];
@@ -149,7 +152,7 @@ export function ImagePropertiesPanel({item}) {
 		};
 
 		dispatch(
-			updateEditableValues({
+			updateEditableValuesThunk({
 				editableValues: nextEditableValues,
 				fragmentEntryLinkId,
 				segmentsExperienceId: state.segmentsExperienceId,
@@ -176,7 +179,7 @@ export function ImagePropertiesPanel({item}) {
 						onChange={event => {
 							setImageDescription(event.target.value);
 
-							debounceUpdateRowConfig({
+							debounceUpdateEditableValues({
 								alt: event.target.value,
 							});
 						}}

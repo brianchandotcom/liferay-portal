@@ -191,8 +191,12 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98589. Multiple widgets with different application decorators survive content page conversion."
+	@ignore = "true"
 	@priority = "5"
 	test ConvertWidgetPageDecoratorsToContentPage {
+
+		// Ignore test until LRQA-56443 is resolved
+
 		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(

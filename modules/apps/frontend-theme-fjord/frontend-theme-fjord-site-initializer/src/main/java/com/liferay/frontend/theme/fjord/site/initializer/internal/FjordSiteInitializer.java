@@ -24,6 +24,7 @@ import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -271,9 +272,14 @@ public class FjordSiteInitializer implements SiteInitializer {
 	private void _addLayout(String name, ServiceContext serviceContext)
 		throws Exception {
 
+		String layoutPageTemplateEntryKey = StringUtil.toLowerCase(name.trim());
+
+		layoutPageTemplateEntryKey = StringUtil.replace(
+			layoutPageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				serviceContext.getScopeGroupId(), StringUtil.toLowerCase(name));
+				serviceContext.getScopeGroupId(), layoutPageTemplateEntryKey);
 
 		Map<Locale, String> nameMap = HashMapBuilder.put(
 			LocaleUtil.getSiteDefault(), name

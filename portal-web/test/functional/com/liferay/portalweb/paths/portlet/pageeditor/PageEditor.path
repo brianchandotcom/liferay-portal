@@ -282,6 +282,12 @@
 	<td>//input[contains(@id,'segmentsExperienceName')]</td>
 	<td></td>
 </tr>
+<!--LANGUAGE_MENU-->
+<tr>
+	<td>DROPDOWN</td>
+	<td>//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td></td>
 	<td></td>

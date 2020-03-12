@@ -729,6 +729,18 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
+	macro downloadCP {
+		Click.waitForMenuToggleJSClick(
+			key_rowEntry = "${dmDocumentTitle}",
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "MenuItem#DOWNLOAD",
+			value1 = "Download");
+
+		DownloadTempFile();
+	}
+
 	macro downloadPG {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
@@ -1136,7 +1148,15 @@ definition {
 				locator1 = "Button#ANY",
 				value1 = "Select This Folder");
 		}
+
 		else {
+			if (IsElementPresent(locator1 = "//div[contains(@class,'portlet-body')]//form//ol[contains(@class,'breadcrumb')]//a[contains(.,'Home')]")) {
+				AssertClick(
+					key_breadcrumbName = "Home",
+					locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
+					value1 = "Home");
+			}
+
 			var key_dmFolderName = "${dmFolderName}";
 
 			AssertClick(

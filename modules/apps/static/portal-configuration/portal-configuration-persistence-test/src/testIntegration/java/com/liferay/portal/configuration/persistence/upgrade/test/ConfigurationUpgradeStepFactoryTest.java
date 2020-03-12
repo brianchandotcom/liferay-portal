@@ -88,12 +88,12 @@ public class ConfigurationUpgradeStepFactoryTest {
 
 	@Test
 	public void testUpgradeConfigWithDBAndFile() throws Exception {
-		_testUpgradeConfig(false, true, true);
+		_testUpgradeConfig(false, true, true, true);
 	}
 
 	@Test
 	public void testUpgradeConfigWithDBWithoutFile() throws Exception {
-		_testUpgradeConfig(false, true, false);
+		_testUpgradeConfig(false, true, false, false);
 	}
 
 	@Test
@@ -105,17 +105,17 @@ public class ConfigurationUpgradeStepFactoryTest {
 
 	@Test
 	public void testUpgradeConfigWithoutDBWithFile() throws Exception {
-		_testUpgradeConfig(false, false, true);
+		_testUpgradeConfig(false, false, true, true);
 	}
 
 	@Test
 	public void testUpgradeFactoryConfigWithDBAndFile() throws Exception {
-		_testUpgradeConfig(true, true, true);
+		_testUpgradeConfig(true, true, true, true);
 	}
 
 	@Test
 	public void testUpgradeFactoryConfigWithDBWithoutFile() throws Exception {
-		_testUpgradeConfig(true, true, false);
+		_testUpgradeConfig(true, true, false, false);
 	}
 
 	@Test
@@ -127,7 +127,7 @@ public class ConfigurationUpgradeStepFactoryTest {
 
 	@Test
 	public void testUpgradeFactoryConfigWithoutDBWithFile() throws Exception {
-		_testUpgradeConfig(true, false, true);
+		_testUpgradeConfig(true, false, true, true);
 	}
 
 	private void _assert(
@@ -277,13 +277,6 @@ public class ConfigurationUpgradeStepFactoryTest {
 					properties);
 			}
 		}
-	}
-
-	private void _testUpgradeConfig(
-			boolean factory, boolean data, boolean configFile)
-		throws Exception {
-
-		_testUpgradeConfig(factory, data, configFile, configFile);
 	}
 
 	private void _testUpgradeConfig(

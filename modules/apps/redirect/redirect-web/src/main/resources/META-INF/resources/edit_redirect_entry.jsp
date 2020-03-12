@@ -58,7 +58,15 @@ else {
 		<aui:field-wrapper cssClass="form-group" label="source-url" name="sourceURL" required="<%= true %>">
 			<div class="form-text"><%= redirectDisplayContext.getGroupBaseURL() %></div>
 
-			<aui:input autoFocus="<%= true %>" label="" name="sourceURL" prefix="/" required="<%= true %>" type="text" value="<%= (redirectEntry != null) ? redirectEntry.getSourceURL() : null %>" />
+			<div class="input-group">
+				<div class="input-group-item input-group-item-shrink input-group-prepend">
+					<span class="input-group-text">/</span>
+				</div>
+
+				<div class="input-group-item">
+					<aui:input autoFocus="<%= true %>" label="" name="sourceURL" required="<%= true %>" type="text" value="<%= (redirectEntry != null) ? redirectEntry.getSourceURL() : null %>" />
+				</div>
+			</div>
 		</aui:field-wrapper>
 
 		<aui:input name="destinationURL" required="<%= true %>" value="<%= (redirectEntry != null) ? redirectEntry.getDestinationURL() : null %>" />

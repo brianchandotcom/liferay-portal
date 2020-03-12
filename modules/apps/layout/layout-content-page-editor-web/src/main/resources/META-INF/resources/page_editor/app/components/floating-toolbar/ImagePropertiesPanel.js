@@ -116,7 +116,13 @@ export function ImagePropertiesPanel({item}) {
 
 		let nextEditableValue = {};
 
-		const nextEditableValueConfig = {...editableValue.config};
+		setImageDescription('');
+
+		const nextEditableValueConfig = {
+			...editableValue.config,
+			alt: '',
+			imageTitle: '',
+		};
 
 		if (imageTitle) {
 			nextEditableValueConfig.imageTitle = imageTitle;

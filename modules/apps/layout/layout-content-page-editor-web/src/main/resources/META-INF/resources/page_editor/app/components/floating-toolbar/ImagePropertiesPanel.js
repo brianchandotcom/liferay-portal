@@ -13,7 +13,6 @@
  */
 
 import {ClayInput} from '@clayui/form';
-import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
 import {ImageSelector} from '../../../common/components/ImageSelector';
@@ -192,10 +191,5 @@ export function ImagePropertiesPanel({item}) {
 }
 
 ImagePropertiesPanel.propTypes = {
-	item: getEditableItemPropTypes({
-		config: PropTypes.shape({
-			alt: PropTypes.string,
-			imageTitle: PropTypes.string,
-		}),
-	}),
+	item: getEditableItemPropTypes().isRequired,
 };

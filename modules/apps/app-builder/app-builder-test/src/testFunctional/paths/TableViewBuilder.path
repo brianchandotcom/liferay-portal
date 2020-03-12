@@ -31,6 +31,12 @@
 <!--SIDEBAR-->
 
 <tr>
+	<td>CLEAR_SEARCH</td>
+	<td>//button[@class='btn btn-monospaced btn-unstyled']//*[@class='lexicon-icon lexicon-icon-times']</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>CLOSE_COLUMN_SIDEBAR</td>
 	<td>//div[contains(@class,'sidebar-header')]//*[contains(@class,'lexicon-icon-angle-left')]</td>
 	<td></td>
@@ -53,6 +59,14 @@
 	<td>//label[text()='${key_columnLabel}']/parent::div//span[contains(@class,'filter')]</td>
 	<td></td>
 </tr>
+
+<tr>
+	<td>DISABLED_COLUMN</td>
+	<td>//div[contains(@class,'field-type disabled')]//span[contains(text(),'${fieldType}')]</td>
+	<td></td>
+</tr>
+
+<!--HOMEPAGE_TABLE_VIEW-->
 
 <tr>
 	<td>FILTER_DROPDOWN_ITEM</td>

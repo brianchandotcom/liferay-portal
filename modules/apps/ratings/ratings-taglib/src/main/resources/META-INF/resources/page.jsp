@@ -44,6 +44,12 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 			module="js/components/RatingsLike.es"
 		/>
 	</c:when>
+	<c:when test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
+		<react:component
+			data="<%= data %>"
+			module="js/components/RatingsThumbs.es"
+		/>
+	</c:when>
 	<c:otherwise>
 		<liferay-ui:ratings
 			className="<%= className %>"

@@ -21,3 +21,21 @@
 		margin-left: 0.5rem;
 	}
 }
+
+.ratings-thumbs {
+	.btn {
+		&:hover:not(:disabled) .lexicon-icon {
+			transform: scale(1.3);
+		}
+
+		&[aria-pressed='true'] {
+			.lexicon-icon {
+				color: $primary;
+			}
+		}
+	}
+
+	.lexicon-icon {
+		transition: all 0.2s ease-in-out;
+	}
+}

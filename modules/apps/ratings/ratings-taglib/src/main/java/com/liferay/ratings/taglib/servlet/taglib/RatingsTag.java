@@ -148,6 +148,20 @@ public class RatingsTag extends IncludeTag {
 
 			String url = _getURL(themeDisplay);
 
+			int positiveVotes = (int)Math.round(_getTotalScore());
+
+			int totalEntries = 0;
+
+			double yourScore = -1.0;
+
+			if (ratingsEntry != null) {
+				yourScore = ratingsEntry.getScore();
+			}
+
+			if (ratingsStats != null) {
+				totalEntries = ratingsStats.getTotalEntries();
+			}
+
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:data",
 				HashMapBuilder.<String, Object>put(
@@ -157,13 +171,21 @@ public class RatingsTag extends IncludeTag {
 				).put(
 					"enabled", _isEnabled(themeDisplay, inTrash)
 				).put(
+					"initialNegativeVotes", totalEntries - positiveVotes
+				).put(
+					"initialPositiveVotes", positiveVotes
+				).put(
 					"inTrash", inTrash
 				).put(
 					"isLiked", _isLiked(ratingsEntry)
 				).put(
-					"positiveVotes", (int)Math.round(_getTotalScore())
+					"positiveVotes", positiveVotes
 				).put(
 					"signedIn", themeDisplay.isSignedIn()
+				).put(
+					"thumbDown", (yourScore != -1.0) && (yourScore < 0.5)
+				).put(
+					"thumbUp", (yourScore != -1.0) && (yourScore >= 0.5)
 				).put(
 					"url", url
 				).build());

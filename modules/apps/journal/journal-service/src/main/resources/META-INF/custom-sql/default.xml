@@ -200,6 +200,8 @@
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title
 					FROM
 						JournalArticleLocalization
+					WHERE
+						[$RETRIEVE_TITLE$]
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title
 				) JournalArticleLocalization ON
@@ -250,6 +252,8 @@
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
 					FROM
 						JournalArticleLocalization
+					WHERE
+						[$RETRIEVE_TITLE$]
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
 				) JournalArticleLocalization ON
@@ -282,6 +286,8 @@
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
 					FROM
 						JournalArticleLocalization
+					WHERE
+						[$RETRIEVE_TITLE$]
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
 				) JournalArticleLocalization ON
@@ -315,6 +321,8 @@
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title
 					FROM
 						JournalArticleLocalization
+					WHERE
+						[$RETRIEVE_TITLE$]
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title
 				) JournalArticleLocalization ON
@@ -348,6 +356,8 @@
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
 					FROM
 						JournalArticleLocalization
+					WHERE
+						[$RETRIEVE_TITLE$]
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
 				) JournalArticleLocalization ON
@@ -382,6 +392,8 @@
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title
 					FROM
 						JournalArticleLocalization
+					WHERE
+						[$RETRIEVE_TITLE$]
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title
 				) JournalArticleLocalization ON
@@ -415,6 +427,8 @@
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
 					FROM
 						JournalArticleLocalization
+					WHERE
+						[$RETRIEVE_TITLE$]
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
 				) JournalArticleLocalization ON

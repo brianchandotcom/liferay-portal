@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.redirect.web.internal.configuration.RedirectConfiguration;
+import com.liferay.redirect.configuration.RedirectConfiguration;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
 import org.osgi.service.component.annotations.Component;

@@ -36,6 +36,7 @@ import com.liferay.redirect.model.RedirectEntry;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -66,7 +67,8 @@ public interface RedirectEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public RedirectEntry addRedirectEntry(
 			long groupId, String destinationURL, String sourceURL,
-			boolean temporary, ServiceContext serviceContext)
+			boolean temporary, Date expirationDate,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -310,7 +312,7 @@ public interface RedirectEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL, String sourceURL,
-			boolean temporary)
+			boolean temporary, Date expirationDate)
 		throws PortalException;
 
 	/**

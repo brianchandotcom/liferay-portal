@@ -152,11 +152,11 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 		RedirectEntry redirectEntry1 =
 			_redirectEntryLocalService.addRedirectEntry(
 				serviceContext.getScopeGroupId(), "http://www.liferay.com/a",
-				RandomTestUtil.randomString(), true, serviceContext);
+				RandomTestUtil.randomString(), true, null, serviceContext);
 		RedirectEntry redirectEntry2 =
 			_redirectEntryLocalService.addRedirectEntry(
 				serviceContext.getScopeGroupId(), "http://www.liferay.com/b",
-				RandomTestUtil.randomString(), true, serviceContext);
+				RandomTestUtil.randomString(), true, null, serviceContext);
 
 		_assertSearchResults(
 			redirectEntry1, redirectEntry2,
@@ -178,11 +178,11 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 		RedirectEntry redirectEntry1 =
 			_redirectEntryLocalService.addRedirectEntry(
 				serviceContext.getScopeGroupId(), "http://www.liferay.com", "a",
-				true, serviceContext);
+				true, null, serviceContext);
 		RedirectEntry redirectEntry2 =
 			_redirectEntryLocalService.addRedirectEntry(
 				serviceContext.getScopeGroupId(), "http://www.liferay.com", "b",
-				true, serviceContext);
+				true, null, serviceContext);
 
 		_assertSearchResults(
 			redirectEntry1, redirectEntry2,
@@ -221,7 +221,7 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 		throws Exception {
 
 		return _redirectEntryLocalService.addRedirectEntry(
-			serviceContext.getScopeGroupId(), keywords, keywords, true,
+			serviceContext.getScopeGroupId(), keywords, keywords, true, null,
 			serviceContext);
 	}
 
@@ -250,7 +250,7 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 
 		return _redirectEntryLocalService.updateRedirectEntry(
 			redirectEntry.getRedirectEntryId(), keywords, keywords,
-			RandomTestUtil.randomBoolean());
+			RandomTestUtil.randomBoolean(), null);
 	}
 
 	private void _assertSearchResults(

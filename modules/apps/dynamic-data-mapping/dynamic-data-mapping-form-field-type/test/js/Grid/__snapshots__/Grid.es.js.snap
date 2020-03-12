@@ -3,7 +3,7 @@
 exports[`Grid has a label 1`] = `
 <div class="react-component-adapter">
   <div class="form-group">
-    <p class="ddm-label">label </p>
+    <p class="ddm-label">label</p>
     <div class="table-responsive"><input aria-label="grid_hidden" type="hidden" class="form-control" value="">
       <div class="table-responsive">
         <table class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped">
@@ -139,7 +139,7 @@ exports[`Grid is not required 1`] = `
 exports[`Grid renders Label if showLabel is true 1`] = `
 <div class="react-component-adapter">
   <div class="form-group">
-    <p class="ddm-label">text </p>
+    <p class="ddm-label">text</p>
     <div class="table-responsive"><input aria-label="grid_hidden" type="hidden" class="form-control" value="">
       <div class="table-responsive">
         <table class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped">

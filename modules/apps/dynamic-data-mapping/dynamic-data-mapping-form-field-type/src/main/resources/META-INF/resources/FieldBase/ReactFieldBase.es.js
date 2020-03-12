@@ -103,7 +103,7 @@ function FieldBase({
 							'ddm-label': showLabel,
 						})}
 					>
-						{label && showLabel && `${label} `}
+						{label && showLabel && label}
 
 						{required && spritemap && (
 							<span className="reference-mark">

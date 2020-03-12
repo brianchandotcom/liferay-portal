@@ -15,7 +15,7 @@ exports[`Field Numeric has a key 1`] = `
 exports[`Field Numeric has a label 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="numericField">
-    <p class="ddm-label">label </p><input name="numericField" aria-label="numeric" type="text" class="form-control" value="">
+    <p class="ddm-label">label</p><input name="numericField" aria-label="numeric" type="text" class="form-control" value="">
   </div>
 </div>
 `;
@@ -59,7 +59,7 @@ exports[`Field Numeric is not required 1`] = `
 exports[`Field Numeric renders Label if showLabel is true 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="numericField">
-    <p class="ddm-label">Numeric Field </p><input name="numericField" aria-label="numeric" type="text" class="form-control" value="">
+    <p class="ddm-label">Numeric Field</p><input name="numericField" aria-label="numeric" type="text" class="form-control" value="">
   </div>
 </div>
 `;

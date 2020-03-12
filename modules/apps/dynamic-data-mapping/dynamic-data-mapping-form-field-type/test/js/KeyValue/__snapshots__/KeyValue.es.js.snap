@@ -12,7 +12,7 @@ exports[`KeyValue has a helptext 1`] = `
 exports[`KeyValue has a label 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="keyValue">
-    <p class="ddm-label">label </p>
+    <p class="ddm-label">label</p>
     <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" name="keyValueLabelkeyValue" type="text" class="form-control ddm-field-text" value=""></div>
     <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
   </div>
@@ -76,7 +76,7 @@ exports[`KeyValue is not required 1`] = `
 exports[`KeyValue renders Label if showLabel is true 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="keyValue">
-    <p class="ddm-label">text </p>
+    <p class="ddm-label">text</p>
     <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" name="keyValueLabelkeyValue" type="text" class="form-control ddm-field-text" value=""></div>
     <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
   </div>

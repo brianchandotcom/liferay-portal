@@ -9,7 +9,7 @@ exports[`Field Text has a helptext 1`] = `
 exports[`Field Text has a label 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="textField">
-    <p class="ddm-label">label </p><input aria-label="text" name="textField" type="text" class="form-control ddm-field-text" value="">
+    <p class="ddm-label">label</p><input aria-label="text" name="textField" type="text" class="form-control ddm-field-text" value="">
   </div>
 </div>
 `;
@@ -53,7 +53,7 @@ exports[`Field Text is not required 1`] = `
 exports[`Field Text renders Label if showLabel is true 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="textField">
-    <p class="ddm-label">text </p><input aria-label="text" name="textField" type="text" class="form-control ddm-field-text" value="">
+    <p class="ddm-label">text</p><input aria-label="text" name="textField" type="text" class="form-control ddm-field-text" value="">
   </div>
 </div>
 `;

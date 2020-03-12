@@ -16,11 +16,13 @@ package com.liferay.headless.admin.user.internal.resource.v1_0.builder;
 
 import com.liferay.headless.admin.user.resource.v1_0.PhoneResource;
 import com.liferay.headless.admin.user.resource.v1_0.builder.PhoneResourceBuilder;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.wrapper.PermissionCheckerWrapper;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -94,8 +96,15 @@ public class PhoneResourceBuilderImpl implements PhoneResourceBuilder {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		PermissionThreadLocal.setPermissionChecker(
-			_permissionCheckerFactory.create(user));
+		PermissionChecker userPermissionChecker =
+			_permissionCheckerFactory.create(user);
+
+		if (!usePermissionChecker) {
+			userPermissionChecker = new LiberalPermissionChecker(
+				permissionChecker);
+		}
+
+		PermissionThreadLocal.setPermissionChecker(userPermissionChecker);
 
 		PhoneResource phoneResource = _componentServiceObjects.getService();
 
@@ -121,5 +130,41 @@ public class PhoneResourceBuilderImpl implements PhoneResourceBuilder {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private class LiberalPermissionChecker extends PermissionCheckerWrapper {
+
+		public LiberalPermissionChecker(PermissionChecker permissionChecker) {
+			super(permissionChecker);
+		}
+
+		@Override
+		public boolean hasPermission(
+			Group group, String name, long primKey, String actionId) {
+
+			return true;
+		}
+
+		@Override
+		public boolean hasPermission(
+			Group group, String name, String primKey, String actionId) {
+
+			return true;
+		}
+
+		@Override
+		public boolean hasPermission(
+			long groupId, String name, long primKey, String actionId) {
+
+			return true;
+		}
+
+		@Override
+		public boolean hasPermission(
+			long groupId, String name, String primKey, String actionId) {
+
+			return true;
+		}
+
+	}
 
 }

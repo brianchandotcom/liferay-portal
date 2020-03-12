@@ -144,13 +144,13 @@ public class GeneratedDataUtil {
 		_defaultGroupId = userActiveGroupIds.get(0);
 	}
 
-	private volatile HashMap<String, Organization> _addedOrganizationMap =
+	private HashMap<String, Organization> _addedOrganizationMap =
 		new HashMap<>();
-	private volatile HashMap<String, Role> _addedRoleMap = new HashMap<>();
-	private volatile HashMap<String, Team> _addedTeamMap = new HashMap<>();
-	private volatile HashMap<String, UserGroup> _addedUserGroupMap =
+	private HashMap<String, Role> _addedRoleMap = new HashMap<>();
+	private HashMap<String, Team> _addedTeamMap = new HashMap<>();
+	private HashMap<String, UserGroup> _addedUserGroupMap =
 		new HashMap<>();
-	private volatile HashMap<String, User> _addedUserMap = new HashMap<>();
+	private HashMap<String, User> _addedUserMap = new HashMap<>();
 	private long _companyId;
 	private long _defaultGroupId;
 	private long _defaultUserId;

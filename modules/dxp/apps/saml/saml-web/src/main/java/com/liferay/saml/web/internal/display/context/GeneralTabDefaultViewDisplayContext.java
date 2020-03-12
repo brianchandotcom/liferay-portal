@@ -141,7 +141,7 @@ public class GeneralTabDefaultViewDisplayContext {
 	}
 
 	public boolean isRoleIdPAvailable() {
-		return _samlConfiguration.idpRoleCanBeConfigured();
+		return _samlConfiguration.idpRoleConfigurationEnabled();
 	}
 
 	public static class X509CertificateStatus {

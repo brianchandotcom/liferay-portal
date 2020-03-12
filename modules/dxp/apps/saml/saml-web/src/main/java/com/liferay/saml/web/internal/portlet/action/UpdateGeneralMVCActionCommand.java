@@ -127,7 +127,7 @@ public class UpdateGeneralMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private boolean _validateRoleSelection(boolean enabled, String samlRole) {
-		if (_samlConfiguration.idpRoleCanBeConfigured()) {
+		if (_samlConfiguration.idpRoleConfigurationEnabled()) {
 			return true;
 		}
 

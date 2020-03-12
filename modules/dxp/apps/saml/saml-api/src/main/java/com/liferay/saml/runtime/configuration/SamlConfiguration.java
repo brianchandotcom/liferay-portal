@@ -123,10 +123,10 @@ public interface SamlConfiguration {
 
 	@Meta.AD(
 		deflt = "true",
-		description = "saml-idp-role-can-be-configured-description",
-		id = "saml.idp.role.can.be.configured",
-		name = "saml-idp-role-can-be-configured", required = false
+		description = "saml-idp-role-configuration-enabled-description",
+		id = "saml.idp.role.configuration.enabled",
+		name = "saml-idp-role-configuration-enabled", required = false
 	)
-	public boolean idpRoleCanBeConfigured();
+	public boolean idpRoleConfigurationEnabled();
 
 }

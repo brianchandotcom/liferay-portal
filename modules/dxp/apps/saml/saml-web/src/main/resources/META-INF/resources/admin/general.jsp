@@ -36,7 +36,7 @@ String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProvide
 	<liferay-ui:error key="certificateInvalid" message="please-create-a-signing-credential-before-enabling" />
 	<liferay-ui:error key="entityIdInUse" message="saml-must-be-disabled-before-changing-the-entity-id" />
 	<liferay-ui:error key="entityIdTooLong" message="entity-id-too-long" />
-	<liferay-ui:error key="idpRoleNotConfigurable" message="the-identity-provider-role-is-not-available-for-configuration" />
+	<liferay-ui:error key="idpRoleNotConfigurable" message="the-identity-provider-role-has-been-disabled-please-re-enable-it" />
 	<liferay-ui:error key="roleInUse" message="saml-must-be-disabled-before-changing-the-saml-role" />
 
 	<aui:fieldset>
@@ -44,7 +44,7 @@ String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProvide
 
 		<c:if test="<%= !generalTabDefaultViewDisplayContext.isRoleIdPAvailable() && StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), SamlProviderConfigurationKeys.SAML_ROLE_IDP) %>">
 			<div class="portlet-msg-info">
-				<liferay-ui:message key="the-identity-provider-role-is-not-available-for-configuration-please-migrate-to-an-alternate-idp-provider-solution" />
+				<liferay-ui:message key="the-identity-provider-role-has-been-disabled-please-re-enable-it-in-system-settings" />
 			</div>
 		</c:if>
 

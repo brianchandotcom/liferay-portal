@@ -75,6 +75,23 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 				<liferay-ui:message key='<%= redirectEntry.isTemporary() ? "temporary" : "permanent" %>' />
 			</liferay-ui:search-container-column-text>
 
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="expiration"
+			>
+				<c:choose>
+					<c:when test="<%= Validator.isNull(redirectEntry.getExpirationDate()) %>">
+						<%= StringPool.DASH %>
+					</c:when>
+					<c:when test="<%= DateUtil.compareTo(redirectEntry.getExpirationDate(), DateUtil.newDate()) <= 0 %>">
+						<strong><liferay-ui:message key="expired" /></strong>
+					</c:when>
+					<c:otherwise>
+						<%= redirectDisplayContext.formatExpirationDate(redirectEntry.getExpirationDate()) %>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
+
 			<liferay-ui:search-container-column-text>
 				<clay:dropdown-actions
 					dropdownItems="<%= redirectDisplayContext.getActionDropdownItems(redirectEntry) %>"

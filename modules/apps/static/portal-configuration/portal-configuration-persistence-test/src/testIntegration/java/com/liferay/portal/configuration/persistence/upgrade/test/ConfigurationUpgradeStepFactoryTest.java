@@ -243,14 +243,7 @@ public class ConfigurationUpgradeStepFactoryTest {
 		return new File(_configsDir, pid + ".config");
 	}
 
-	private void _testUpgradeConfig(
-			boolean factory, boolean data, boolean configFile)
-		throws Exception {
-
-		_testUpgradeConfig(factory, data, configFile, configFile);
-	}
-
-	private void _testUpgradeConfig(
+	private void _initialize(
 			boolean factory, boolean data, boolean configFile,
 			boolean felixFileName)
 		throws Exception {
@@ -284,6 +277,21 @@ public class ConfigurationUpgradeStepFactoryTest {
 					properties);
 			}
 		}
+	}
+
+	private void _testUpgradeConfig(
+			boolean factory, boolean data, boolean configFile)
+		throws Exception {
+
+		_testUpgradeConfig(factory, data, configFile, configFile);
+	}
+
+	private void _testUpgradeConfig(
+			boolean factory, boolean data, boolean configFile,
+			boolean felixFileName)
+		throws Exception {
+
+		_initialize(factory, data, configFile, felixFileName);
 
 		_assert(factory, data, configFile, felixFileName, false);
 

@@ -892,6 +892,11 @@ definition {
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addNullCP(webContentContent = "WC WebContent Content");
+
+		AssertTextEquals(
+			key_editor = "content",
+			locator1 = "AlloyEditor#EDITOR",
+			value1 = "WC WebContent Content");
 	}
 
 	@priority = "3"

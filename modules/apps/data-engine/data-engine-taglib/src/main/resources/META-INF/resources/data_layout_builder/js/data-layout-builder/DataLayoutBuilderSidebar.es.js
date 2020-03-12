@@ -43,7 +43,7 @@ import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 
 const DefaultSidebarBody = ({keywords}) => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
-	const [{fieldsets}] = useContext(AppContext);
+	const [{config}] = useContext(AppContext);
 
 	const onDoubleClick = ({name}) => {
 		const {activePage, pages} = dataLayoutBuilder.getStore();
@@ -82,7 +82,7 @@ const DefaultSidebarBody = ({keywords}) => {
 		},
 	];
 
-	if (fieldsets.length > 0) {
+	if (config.allowFieldSets) {
 		tabs.push({
 			label: Liferay.Language.get('fieldsets'),
 			render: () => <FieldSets />,

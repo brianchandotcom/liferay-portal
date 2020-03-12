@@ -77,7 +77,7 @@ public class RedirectEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -99,6 +99,10 @@ public class RedirectEntryCacheModel
 		sb.append(modifiedDate);
 		sb.append(", destinationURL=");
 		sb.append(destinationURL);
+		sb.append(", expirationDate=");
+		sb.append(expirationDate);
+		sb.append(", lastOccurrenceDate=");
+		sb.append(lastOccurrenceDate);
 		sb.append(", sourceURL=");
 		sb.append(sourceURL);
 		sb.append(", temporary=");
@@ -154,6 +158,21 @@ public class RedirectEntryCacheModel
 			redirectEntryImpl.setDestinationURL(destinationURL);
 		}
 
+		if (expirationDate == Long.MIN_VALUE) {
+			redirectEntryImpl.setExpirationDate(null);
+		}
+		else {
+			redirectEntryImpl.setExpirationDate(new Date(expirationDate));
+		}
+
+		if (lastOccurrenceDate == Long.MIN_VALUE) {
+			redirectEntryImpl.setLastOccurrenceDate(null);
+		}
+		else {
+			redirectEntryImpl.setLastOccurrenceDate(
+				new Date(lastOccurrenceDate));
+		}
+
 		if (sourceURL == null) {
 			redirectEntryImpl.setSourceURL("");
 		}
@@ -186,6 +205,8 @@ public class RedirectEntryCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		destinationURL = (String)objectInput.readObject();
+		expirationDate = objectInput.readLong();
+		lastOccurrenceDate = objectInput.readLong();
 		sourceURL = (String)objectInput.readObject();
 
 		temporary = objectInput.readBoolean();
@@ -227,6 +248,9 @@ public class RedirectEntryCacheModel
 			objectOutput.writeObject(destinationURL);
 		}
 
+		objectOutput.writeLong(expirationDate);
+		objectOutput.writeLong(lastOccurrenceDate);
+
 		if (sourceURL == null) {
 			objectOutput.writeObject("");
 		}
@@ -247,6 +271,8 @@ public class RedirectEntryCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public String destinationURL;
+	public long expirationDate;
+	public long lastOccurrenceDate;
 	public String sourceURL;
 	public boolean temporary;
 

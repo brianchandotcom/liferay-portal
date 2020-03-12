@@ -54,6 +54,18 @@ jest.mock(
 	() => jest.fn(() => Promise.resolve())
 );
 
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/services/InfoItemService',
+	() => ({
+		getAvailableAssetMappingFields: jest.fn(() =>
+			Promise.resolve([
+				{key: 'text-field-1', label: 'Text Field 1', type: 'text'},
+			])
+		),
+		getAvailableStructureMappingFields: jest.fn(() => Promise.resolve([])),
+	})
+);
+
 function renderMappingSelector({mappedItem = {}, onMappingSelect = () => {}}) {
 	const state = {
 		fragmentEntryLinks: {
@@ -132,5 +144,37 @@ describe('MappingSelector', () => {
 		expect(getByText('source')).toBeInTheDocument();
 
 		expect(queryByText('content')).not.toBeInTheDocument();
+	});
+
+	it('calls onMappingSelect with correct params when mapping to content', async () => {
+		const infoItem = {
+			className: 'infoItemClassName',
+			classNameId: 'InfoItemClassNameId',
+			classPK: 'infoItemClassPK',
+			title: 'Info Item',
+		};
+
+		const onMappingSelect = jest.fn();
+
+		await act(async () => {
+			renderMappingSelector({
+				mappedItem: infoItem,
+				onMappingSelect,
+			});
+		});
+
+		const fieldSelect = getByLabelText(document.body, 'field');
+
+		await act(async () => {
+			fireEvent.change(fieldSelect, {
+				target: {value: 'text-field-1'},
+			});
+		});
+
+		expect(onMappingSelect).toBeCalledWith({
+			classNameId: 'InfoItemClassNameId',
+			classPK: 'infoItemClassPK',
+			fieldId: 'text-field-1',
+		});
 	});
 });

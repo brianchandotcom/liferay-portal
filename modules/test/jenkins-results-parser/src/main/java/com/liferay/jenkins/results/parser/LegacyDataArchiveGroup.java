@@ -31,11 +31,11 @@ public class LegacyDataArchiveGroup {
 		_legacyDataArchivePortalVersion = legacyDataArchivePortalVersion;
 		_dataArchiveType = dataArchiveType;
 
-		_legacyDataArchiveUtil =
+		_legacyDataArchiveHelper =
 			_legacyDataArchivePortalVersion.getLegacyDataArchiveUtil();
 
 		_legacyGitWorkingDirectory =
-			_legacyDataArchiveUtil.getLegacyGitWorkingDirectory();
+			_legacyDataArchiveHelper.getLegacyGitWorkingDirectory();
 
 		_legacyDataArchives = _getLegacyDataArchives();
 	}
@@ -89,10 +89,10 @@ public class LegacyDataArchiveGroup {
 	}
 
 	private final String _dataArchiveType;
+	private final LegacyDataArchiveHelper _legacyDataArchiveHelper;
 	private final LegacyDataArchivePortalVersion
 		_legacyDataArchivePortalVersion;
 	private final List<LegacyDataArchive> _legacyDataArchives;
-	private final LegacyDataArchiveHelper _legacyDataArchiveUtil;
 	private final GitWorkingDirectory _legacyGitWorkingDirectory;
 
 }

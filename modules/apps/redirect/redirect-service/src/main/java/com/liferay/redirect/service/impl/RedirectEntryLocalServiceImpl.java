@@ -28,6 +28,7 @@ import com.liferay.redirect.exception.RequiredRedirectEntrySourceURLException;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.base.RedirectEntryLocalServiceBaseImpl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -47,7 +48,8 @@ public class RedirectEntryLocalServiceImpl
 	@Override
 	public RedirectEntry addRedirectEntry(
 			long groupId, String destinationURL, String sourceURL,
-			boolean temporary, ServiceContext serviceContext)
+			boolean temporary, Date expirationDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_validate(destinationURL, sourceURL);
@@ -66,6 +68,7 @@ public class RedirectEntryLocalServiceImpl
 		redirectEntry.setCompanyId(serviceContext.getCompanyId());
 		redirectEntry.setUserId(serviceContext.getUserId());
 		redirectEntry.setDestinationURL(destinationURL);
+		redirectEntry.setExpirationDate(expirationDate);
 		redirectEntry.setSourceURL(sourceURL);
 		redirectEntry.setTemporary(temporary);
 
@@ -98,7 +101,7 @@ public class RedirectEntryLocalServiceImpl
 	@Override
 	public RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL, String sourceURL,
-			boolean temporary)
+			boolean temporary, Date expirationDate)
 		throws PortalException {
 
 		_validate(destinationURL, sourceURL);
@@ -115,6 +118,7 @@ public class RedirectEntryLocalServiceImpl
 		}
 
 		redirectEntry.setDestinationURL(destinationURL);
+		redirectEntry.setExpirationDate(expirationDate);
 		redirectEntry.setSourceURL(sourceURL);
 		redirectEntry.setTemporary(temporary);
 

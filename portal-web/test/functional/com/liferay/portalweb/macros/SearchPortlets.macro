@@ -77,6 +77,20 @@ definition {
 				value1 = "${filterQueryType}");
 		}
 
+		if (isSet(filterValue)) {
+			Type(
+				key_fieldLabel = "Filter Value",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${filterValue}");
+		}
+
+		if (isSet(occur)) {
+			Select(
+				key_fieldLabel = "Occur",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${occur}");
+		}
+
 		PortletEntry.save();
 
 		IFrame.closeFrame();
@@ -130,6 +144,13 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
+		if (isSet(connectionId)) {
+			Select(
+				key_fieldLabel = "Connection ID",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${connectionId}");
+		}
+
 		if (isSet(federatedSearchKey)) {
 			Type(
 				key_fieldLabel = "Federated Search Key",
@@ -151,7 +172,7 @@ definition {
 
 	macro configureSearchOptions {
 		Portlet.gotoPortletOptions(
-			portletName = "Search Options",
+			portletName = "portlet_SearchOptionsPortlet",
 			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -166,6 +187,13 @@ definition {
 			Check(
 				checkboxName = "Basic Facet Selection",
 				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if (isSet(federatedSearchKey)) {
+			Type(
+				key_fieldLabel = "Federated Search Key",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${federatedSearchKey}");
 		}
 
 		PortletEntry.save();

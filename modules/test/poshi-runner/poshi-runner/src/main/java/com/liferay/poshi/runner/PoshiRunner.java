@@ -16,7 +16,7 @@ package com.liferay.poshi.runner;
 
 import com.liferay.poshi.runner.logger.PoshiLogger;
 import com.liferay.poshi.runner.logger.SummaryLogger;
-import com.liferay.poshi.runner.selenium.LiferaySeleniumHelper;
+import com.liferay.poshi.runner.selenium.LiferaySeleniumUtil;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 
@@ -137,7 +137,7 @@ public class PoshiRunner {
 			throw webDriverException;
 		}
 		catch (Exception exception) {
-			LiferaySeleniumHelper.printJavaProcessStacktrace();
+			LiferaySeleniumUtil.printJavaProcessStacktrace();
 
 			PoshiRunnerStackTraceUtil.printStackTrace(exception.getMessage());
 
@@ -151,7 +151,7 @@ public class PoshiRunner {
 
 	@After
 	public void tearDown() throws Exception {
-		LiferaySeleniumHelper.writePoshiWarnings();
+		LiferaySeleniumUtil.writePoshiWarnings();
 
 		SummaryLogger.createSummaryReport();
 
@@ -179,10 +179,10 @@ public class PoshiRunner {
 		try {
 			_runCommand();
 
-			LiferaySeleniumHelper.assertNoPoshiWarnings();
+			LiferaySeleniumUtil.assertNoPoshiWarnings();
 		}
 		catch (Exception exception) {
-			LiferaySeleniumHelper.printJavaProcessStacktrace();
+			LiferaySeleniumUtil.printJavaProcessStacktrace();
 
 			PoshiRunnerStackTraceUtil.printStackTrace(exception.getMessage());
 

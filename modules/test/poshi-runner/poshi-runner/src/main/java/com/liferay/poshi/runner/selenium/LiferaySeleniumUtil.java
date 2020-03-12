@@ -63,7 +63,7 @@ import org.sikuli.api.robot.desktop.DesktopKeyboard;
  * @author Brian Wing Shun Chan
  */
 @SuppressWarnings("deprecation")
-public class LiferaySeleniumHelper {
+public class LiferaySeleniumUtil {
 
 	public static void addToJavaScriptExceptions(Exception exception) {
 		_javaScriptExceptions.add(exception);

@@ -18,7 +18,7 @@ import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.logger.PoshiLogger;
 import com.liferay.poshi.runner.logger.SummaryLogger;
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
-import com.liferay.poshi.runner.selenium.LiferaySeleniumHelper;
+import com.liferay.poshi.runner.selenium.LiferaySeleniumUtil;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
@@ -630,7 +630,7 @@ public class PoshiRunnerExecutor {
 			String fileSeparator = FileUtil.getSeparator();
 
 			GroovyScriptEngine groovyScriptEngine = new GroovyScriptEngine(
-				LiferaySeleniumHelper.getSourceDirFilePath(
+				LiferaySeleniumUtil.getSourceDirFilePath(
 					fileSeparator + PropsValues.TEST_DEPENDENCIES_DIR_NAME +
 						fileSeparator + fileName));
 

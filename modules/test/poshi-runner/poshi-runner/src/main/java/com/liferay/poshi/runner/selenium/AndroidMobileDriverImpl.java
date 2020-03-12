@@ -105,7 +105,7 @@ public class AndroidMobileDriverImpl extends BaseMobileDriverImpl {
 			}
 
 			try {
-				LiferaySeleniumHelper.pause("1000");
+				LiferaySeleniumUtil.pause("1000");
 			}
 			catch (Exception exception) {
 			}

@@ -19,7 +19,7 @@ import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
-import com.liferay.poshi.runner.selenium.LiferaySeleniumHelper;
+import com.liferay.poshi.runner.selenium.LiferaySeleniumUtil;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.HtmlUtil;
@@ -673,7 +673,7 @@ public final class CommandLogger {
 		testClassCommandName = StringUtil.replace(
 			testClassCommandName, "#", "_");
 
-		LiferaySeleniumHelper.captureScreen(
+		LiferaySeleniumUtil.captureScreen(
 			FileUtil.getCanonicalPath(".") + "/test-results/" +
 				testClassCommandName + "/screenshots/" + screenshotName +
 					detailsLinkId + ".jpg");

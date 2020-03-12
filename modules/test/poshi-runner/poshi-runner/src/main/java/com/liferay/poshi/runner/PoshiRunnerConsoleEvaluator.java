@@ -14,7 +14,7 @@
 
 package com.liferay.poshi.runner;
 
-import com.liferay.poshi.runner.selenium.LiferaySeleniumHelper;
+import com.liferay.poshi.runner.selenium.LiferaySeleniumUtil;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 
@@ -51,7 +51,7 @@ public class PoshiRunnerConsoleEvaluator {
 		String line = null;
 
 		while ((line = bufferedReader.readLine()) != null) {
-			if (LiferaySeleniumHelper.isIgnorableErrorLine(line)) {
+			if (LiferaySeleniumUtil.isIgnorableErrorLine(line)) {
 				continue;
 			}
 

@@ -34,7 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class XmlRpcMethodUtil {
 
 	public static Method getMethod(String token, String methodName) {
-		return _xmlRpcMethodUtil._doGetMethod(token, methodName);
+		return _xmlRpcMethodUtil._getMethod(token, methodName);
 	}
 
 	private XmlRpcMethodUtil() {
@@ -46,7 +46,7 @@ public class XmlRpcMethodUtil {
 		_serviceTracker.open();
 	}
 
-	private Method _doGetMethod(String token, String methodName) {
+	private Method _getMethod(String token, String methodName) {
 		Method method = null;
 
 		Map<String, Method> methods = _methodRegistry.get(token);

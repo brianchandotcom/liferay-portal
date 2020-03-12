@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringPool;
@@ -32,6 +33,13 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -54,8 +62,91 @@ import org.openqa.selenium.safari.SafariDriver;
  */
 public class WebDriverUtil extends PropsValues {
 
+	public static By getBy(String locator) {
+		if (locator.startsWith("//")) {
+			return By.xpath(locator);
+		}
+		else if (locator.startsWith("class=")) {
+			locator = locator.substring(6);
+
+			return By.className(locator);
+		}
+		else if (locator.startsWith("css=")) {
+			locator = locator.substring(4);
+
+			return By.cssSelector(locator);
+		}
+		else if (locator.startsWith("link=")) {
+			locator = locator.substring(5);
+
+			return By.linkText(locator);
+		}
+		else if (locator.startsWith("name=")) {
+			locator = locator.substring(5);
+
+			return By.name(locator);
+		}
+		else if (locator.startsWith("tag=")) {
+			locator = locator.substring(4);
+
+			return By.tagName(locator);
+		}
+		else if (locator.startsWith("xpath=") || locator.startsWith("xPath=")) {
+			locator = locator.substring(6);
+
+			return By.xpath(locator);
+		}
+		else {
+			return By.id(locator);
+		}
+	}
+
+	public static String getCSSSource(String htmlSource) throws Exception {
+		Document htmlDocument = Jsoup.parse(htmlSource);
+
+		Elements elements = htmlDocument.select("link[type=text/css]");
+
+		StringBuilder sb = new StringBuilder();
+
+		for (Element element : elements) {
+			String href = element.attr("href");
+
+			if (!href.contains(PropsValues.PORTAL_URL)) {
+				href = PropsValues.PORTAL_URL + href;
+			}
+
+			Connection connection = Jsoup.connect(href);
+
+			Document document = connection.get();
+
+			sb.append(document.text());
+
+			sb.append("\n");
+		}
+
+		return sb.toString();
+	}
+
 	public static WebDriver getWebDriver() {
 		return _webDriverUtil._getWebDriver();
+	}
+
+	public static void saveWebPage(String fileName, String htmlSource)
+		throws Exception {
+
+		if (!PropsValues.SAVE_WEB_PAGE) {
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder(3);
+
+		sb.append("<style>");
+		sb.append(getCSSSource(htmlSource));
+		sb.append("</style></html>");
+
+		FileUtil.write(
+			fileName,
+			StringUtil.replace(htmlSource, "<\\html>", sb.toString()));
 	}
 
 	public static void startWebDriver() {

@@ -24,6 +24,8 @@
 		<!-- Other fields -->
 
 		<column name="destinationURL" type="String" />
+		<column name="expirationDate" type="Date" />
+		<column name="lastOccurrenceDate" type="Date" />
 		<column name="sourceURL" type="String" />
 		<column name="temporary" type="boolean" />
 

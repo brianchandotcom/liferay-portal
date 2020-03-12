@@ -24,6 +24,14 @@ const COLORS_MAP = {
 	paid: '#FFB46E',
 };
 
+const PIE_CHART_SIZES = {
+	height: 80,
+	innerRadius: 25,
+	paddingAngle: 5,
+	radius: 40,
+	width: 80,
+};
+
 /**
  * Used when the traffic source name is not within the COLORS_MAP
  */
@@ -80,16 +88,19 @@ export default function TrafficSources({dataProvider, languageTag}) {
 			</div>
 
 			<div className="pie-chart-wrapper--chart">
-				<PieChart height={80} width={80}>
+				<PieChart
+					height={PIE_CHART_SIZES.height}
+					width={PIE_CHART_SIZES.width}
+				>
 					<Pie
 						cx="50%"
 						cy="50%"
 						data={trafficSources}
 						dataKey="value"
-						innerRadius={25}
+						innerRadius={PIE_CHART_SIZES.innerRadius}
 						nameKey={'name'}
-						outerRadius={40}
-						paddingAngle={5}
+						outerRadius={PIE_CHART_SIZES.radius}
+						paddingAngle={PIE_CHART_SIZES.paddingAngle}
 					>
 						{trafficSources.map((entry, i) => {
 							const fillColor = getColorByName(entry.name);

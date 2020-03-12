@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutReference;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.InputStream;
 
@@ -604,11 +606,22 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Layout> getLayouts(
+			long groupId, boolean privateLayout, String keywords,
+			String[] types, int start, int end, OrderByComparator<Layout> obc)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getLayouts(long groupId, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getLayouts(
 		long groupId, String type, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutsCount(
+			Group group, boolean privateLayout, String keywords, String[] types)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsCount(long groupId, boolean privateLayout);

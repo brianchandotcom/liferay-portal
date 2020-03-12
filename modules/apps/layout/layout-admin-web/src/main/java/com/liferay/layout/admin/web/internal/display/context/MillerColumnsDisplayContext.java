@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -153,9 +154,9 @@ public class MillerColumnsDisplayContext {
 
 		JSONArray layoutsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+		List<Layout> layouts = LayoutServiceUtil.getLayouts(
 			_layoutsAdminDisplayContext.getSelGroupId(), privateLayout,
-			parentLayoutId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			parentLayoutId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (Layout layout : layouts) {
 			if (_layoutsAdminDisplayContext.getActiveLayoutSetBranchId() > 0) {
@@ -195,8 +196,8 @@ public class MillerColumnsDisplayContext {
 				"draggable", true
 			);
 
-			int childLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
-				_layoutsAdminDisplayContext.getSelGroup(),
+			int childLayoutsCount = LayoutServiceUtil.getLayoutsCount(
+				_layoutsAdminDisplayContext.getSelGroupId(),
 				layout.isPrivateLayout(), layout.getLayoutId());
 
 			layoutJSONObject.put(

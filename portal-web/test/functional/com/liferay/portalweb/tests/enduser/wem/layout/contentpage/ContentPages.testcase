@@ -269,14 +269,6 @@ definition {
 			ContentPages.addPage(pageName = "Test Content Page Name");
 		}
 
-		task ("Add a section layout") {
-			PageEditor.addLayoutSection();
-		}
-
-		task ("Assert the layout by default has padding x1") {
-			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'pb-3')]");
-		}
-
 		task ("Add a 2 column row layout") {
 			PageEditor.addLayoutRow();
 
@@ -293,6 +285,14 @@ definition {
 			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][1]");
 			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][2]");
 			AssertElementNotPresent(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][3]");
+		}
+
+		task ("Add a section layout") {
+			PageEditor.addLayoutSection();
+		}
+
+		task ("Assert the layout by default has padding x1") {
+			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'pb-3')]");
 		}
 
 		task ("Edit the row's properties") {

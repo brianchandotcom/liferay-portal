@@ -437,6 +437,48 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-106776. Can change section background color, duplicate sectiion and row."
+	@priority = "5"
+	test ConfigureLayoutElements {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a section") {
+			PageEditor.addLayoutSection();
+		}
+
+		task ("Configure the section") {
+			PageEditor.editLayoutSection(backgroundColor = "warning");
+		}
+
+		task ("View the fragment style") {
+			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'bg-warning')]");
+		}
+
+		task ("Duplicate the fragment") {
+			PageEditor.gotoDuplicate(fragmentName = "Section");
+		}
+
+		task ("View the duplicate section fragment") {
+			PageEditor.viewDuplicateFragment(fragmentName = "Section");
+		}
+
+		task ("Add a row") {
+			PageEditor.addLayoutRow();
+		}
+
+		task ("Duplicate the fragment") {
+			PageEditor.gotoDuplicate(fragmentName = "Row");
+		}
+
+		task ("View the duplicate section fragment") {
+			PageEditor.viewDuplicateFragment(fragmentName = "Row");
+		}
+	}
+
 	@description = "This is a test for LPS-90064 and is a supplementary frontend test to the integration tests in LPS-90307. Fragments can be copied."
 	@priority = "5"
 	test CopyFragment {

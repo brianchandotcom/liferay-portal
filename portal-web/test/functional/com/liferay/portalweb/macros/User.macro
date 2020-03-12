@@ -1489,6 +1489,29 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro editUserAssetLibraryCP {
+		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
+
+		UserNavigator.gotoMemberships();
+
+		AssertClick(
+			locator1 = "UsersAndOrganizationsEditUser#DEPOT_SELECT_LINK",
+			value1 = "SELECT");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		LexiconEntry.gotoEntry(rowEntry = "${depotName}");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals.assertPartialText(
+			key_siteName = "${depotName}",
+			locator1 = "UsersAndOrganizationsEditUser#SITES_TABLE_NAME",
+			value1 = "${depotName}");
+
+		PortletEntry.save();
+	}
+
 	macro editUserDisplaySettingsCP {
 		var key_userScreenName = "${userScreenName}";
 
@@ -2136,6 +2159,18 @@ definition {
 			locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Remove");
+	}
+
+	macro removeUserAssetLibraryCP {
+		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
+
+		UserNavigator.gotoMemberships();
+
+		Click(
+			key_entryName = "${depotName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_DELETE");
+
+		PortletEntry.save();
 	}
 
 	macro resetPassword {

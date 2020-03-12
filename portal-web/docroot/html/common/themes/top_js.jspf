@@ -457,7 +457,18 @@ for (String analyticsType : analyticsTypes) {
 						m.parentNode.insertBefore(a, m);
 					})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-					ga('create', '<%= HtmlUtil.escapeJS(googleAnalyticsId) %>', 'auto');
+					<%
+					String googleAnalyticsCreateCustomConfiguration = groupTypeSettings.getProperty("googleAnalyticsCreateCustomConfiguration");
+					%>
+
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(googleAnalyticsCreateCustomConfiguration) %>">
+							ga('create', '<%= HtmlUtil.escapeJS(googleAnalyticsId) %>', 'auto', <%= googleAnalyticsCreateCustomConfiguration %>);
+						</c:when>
+						<c:otherwise>
+							ga('create', '<%= HtmlUtil.escapeJS(googleAnalyticsId) %>', 'auto');
+						</c:otherwise>
+					</c:choose>
 
 					<%
 					String googleAnalyticsCustomConfiguration = groupTypeSettings.getProperty("googleAnalyticsCustomConfiguration");

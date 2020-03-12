@@ -854,6 +854,17 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		for (String analyticsType : analyticsTypes) {
 			if (StringUtil.equalsIgnoreCase(analyticsType, "google")) {
+				String googleAnalyticsCreateCustomConfiguration =
+					ParamUtil.getString(
+						actionRequest,
+						"googleAnalyticsCreateCustomConfiguration",
+						typeSettingsUnicodeProperties.getProperty(
+							"googleAnalyticsCreateCustomConfiguration"));
+
+				typeSettingsUnicodeProperties.setProperty(
+					"googleAnalyticsCreateCustomConfiguration",
+					googleAnalyticsCreateCustomConfiguration);
+
 				String googleAnalyticsCustomConfiguration = ParamUtil.getString(
 					actionRequest, "googleAnalyticsCustomConfiguration",
 					typeSettingsUnicodeProperties.getProperty(

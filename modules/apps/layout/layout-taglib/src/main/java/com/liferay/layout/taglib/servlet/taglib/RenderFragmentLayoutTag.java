@@ -15,8 +15,6 @@
 package com.liferay.layout.taglib.servlet.taglib;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
-import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -135,10 +133,6 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			"liferay-layout:render-fragment-layout:previewType",
 			_getPreviewType());
 
-		InfoDisplayContributorTracker infoDisplayContributorTracker =
-			(InfoDisplayContributorTracker)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
-
 		InfoDisplayObjectProvider infoDisplayObjectProvider =
 			(InfoDisplayObjectProvider)httpServletRequest.getAttribute(
 				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
@@ -149,7 +143,8 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			new RenderFragmentLayoutDisplayContext(
 				httpServletRequest,
 				(HttpServletResponse)pageContext.getResponse(),
-				infoDisplayContributorTracker, infoDisplayObjectProvider));
+				ServletContextUtil.getInfoDisplayContributorTracker(),
+				infoDisplayObjectProvider));
 
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:segmentsExperienceIds",

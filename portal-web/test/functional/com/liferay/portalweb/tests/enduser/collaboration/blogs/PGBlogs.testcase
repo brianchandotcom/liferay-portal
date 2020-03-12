@@ -587,7 +587,7 @@ definition {
 
 	@priority = "5"
 	test DeleteBlogsEntries {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		for (var entryCount : list "1,2,3") {
 			Navigator.gotoPage(pageName = "Blogs Page");

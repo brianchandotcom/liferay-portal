@@ -237,6 +237,34 @@ public interface RedirectEntryModel
 	public void setDestinationURL(String destinationURL);
 
 	/**
+	 * Returns the expiration date of this redirect entry.
+	 *
+	 * @return the expiration date of this redirect entry
+	 */
+	public Date getExpirationDate();
+
+	/**
+	 * Sets the expiration date of this redirect entry.
+	 *
+	 * @param expirationDate the expiration date of this redirect entry
+	 */
+	public void setExpirationDate(Date expirationDate);
+
+	/**
+	 * Returns the last occurrence date of this redirect entry.
+	 *
+	 * @return the last occurrence date of this redirect entry
+	 */
+	public Date getLastOccurrenceDate();
+
+	/**
+	 * Sets the last occurrence date of this redirect entry.
+	 *
+	 * @param lastOccurrenceDate the last occurrence date of this redirect entry
+	 */
+	public void setLastOccurrenceDate(Date lastOccurrenceDate);
+
+	/**
 	 * Returns the source url of this redirect entry.
 	 *
 	 * @return the source url of this redirect entry

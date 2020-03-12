@@ -9,6 +9,8 @@ create table RedirectEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	destinationURL VARCHAR(75) null,
+	expirationDate DATE null,
+	lastOccurrenceDate DATE null,
 	sourceURL VARCHAR(75) null,
 	temporary BOOLEAN
 );

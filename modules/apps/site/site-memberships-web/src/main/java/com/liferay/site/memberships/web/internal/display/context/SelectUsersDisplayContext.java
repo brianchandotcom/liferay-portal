@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -176,15 +175,15 @@ public class SelectUsersDisplayContext {
 		UserSearchTerms searchTerms =
 			(UserSearchTerms)userSearch.getSearchTerms();
 
-		LinkedHashMap<String, Object> userParams =
-			LinkedHashMapBuilder.<String, Object>put(
-				Field.GROUP_ID, Long.valueOf(getGroupId())
-			).build();
+		LinkedHashMap<String, Object> userParams = new LinkedHashMap<>();
 
 		if (group.isLimitedToParentSiteMembers()) {
 			userParams.put("inherit", Boolean.TRUE);
 			userParams.put(
 				"usersGroups", Long.valueOf(group.getParentGroupId()));
+		}
+		else {
+			userParams.put(Field.GROUP_ID, Long.valueOf(getGroupId()));
 		}
 
 		int usersCount = UserLocalServiceUtil.searchCount(

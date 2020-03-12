@@ -53,7 +53,7 @@ export function ImagePropertiesPanel({item}) {
 			state,
 			fragmentEntryLinkId,
 			editableId,
-			EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+			processoryKey
 		);
 
 		return url === editableValue.defaultValue ? '' : url;

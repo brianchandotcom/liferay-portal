@@ -34,19 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class XmlRpcMethodUtil {
 
 	public static Method getMethod(String token, String methodName) {
-		return _xmlRpcMethodUtil.doGetMethod(token, methodName);
-	}
-
-	protected Method doGetMethod(String token, String methodName) {
-		Method method = null;
-
-		Map<String, Method> methods = _methodRegistry.get(token);
-
-		if (methods != null) {
-			method = methods.get(methodName);
-		}
-
-		return method;
+		return _xmlRpcMethodUtil._doGetMethod(token, methodName);
 	}
 
 	private XmlRpcMethodUtil() {
@@ -56,6 +44,18 @@ public class XmlRpcMethodUtil {
 			Method.class, new MethodServiceTrackerCustomizer());
 
 		_serviceTracker.open();
+	}
+
+	private Method _doGetMethod(String token, String methodName) {
+		Method method = null;
+
+		Map<String, Method> methods = _methodRegistry.get(token);
+
+		if (methods != null) {
+			method = methods.get(methodName);
+		}
+
+		return method;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -53,6 +53,8 @@ public class RedirectEntryWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("destinationURL", getDestinationURL());
+		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("lastOccurrenceDate", getLastOccurrenceDate());
 		attributes.put("sourceURL", getSourceURL());
 		attributes.put("temporary", isTemporary());
 
@@ -121,6 +123,18 @@ public class RedirectEntryWrapper
 			setDestinationURL(destinationURL);
 		}
 
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
+		}
+
+		Date lastOccurrenceDate = (Date)attributes.get("lastOccurrenceDate");
+
+		if (lastOccurrenceDate != null) {
+			setLastOccurrenceDate(lastOccurrenceDate);
+		}
+
 		String sourceURL = (String)attributes.get("sourceURL");
 
 		if (sourceURL != null) {
@@ -165,6 +179,16 @@ public class RedirectEntryWrapper
 	}
 
 	/**
+	 * Returns the expiration date of this redirect entry.
+	 *
+	 * @return the expiration date of this redirect entry
+	 */
+	@Override
+	public Date getExpirationDate() {
+		return model.getExpirationDate();
+	}
+
+	/**
 	 * Returns the group ID of this redirect entry.
 	 *
 	 * @return the group ID of this redirect entry
@@ -172,6 +196,16 @@ public class RedirectEntryWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
+	}
+
+	/**
+	 * Returns the last occurrence date of this redirect entry.
+	 *
+	 * @return the last occurrence date of this redirect entry
+	 */
+	@Override
+	public Date getLastOccurrenceDate() {
+		return model.getLastOccurrenceDate();
 	}
 
 	/**
@@ -320,6 +354,16 @@ public class RedirectEntryWrapper
 	}
 
 	/**
+	 * Sets the expiration date of this redirect entry.
+	 *
+	 * @param expirationDate the expiration date of this redirect entry
+	 */
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		model.setExpirationDate(expirationDate);
+	}
+
+	/**
 	 * Sets the group ID of this redirect entry.
 	 *
 	 * @param groupId the group ID of this redirect entry
@@ -327,6 +371,16 @@ public class RedirectEntryWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the last occurrence date of this redirect entry.
+	 *
+	 * @param lastOccurrenceDate the last occurrence date of this redirect entry
+	 */
+	@Override
+	public void setLastOccurrenceDate(Date lastOccurrenceDate) {
+		model.setLastOccurrenceDate(lastOccurrenceDate);
 	}
 
 	/**

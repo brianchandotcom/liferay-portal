@@ -18,8 +18,16 @@ import {useCallback, useContext, useEffect} from 'react';
 import {useDrop} from 'react-dnd';
 
 import AppContext from '../AppContext.es';
-import {dropCustomObjectField, dropLayoutBuilderField} from '../actions.es';
-import {DRAG_DATA_DEFINITION_FIELD, DRAG_FIELD_TYPE} from './dragTypes.es';
+import {
+	dropCustomObjectField,
+	dropFieldSet,
+	dropLayoutBuilderField,
+} from '../actions.es';
+import {
+	DRAG_DATA_DEFINITION_FIELD,
+	DRAG_FIELDSET,
+	DRAG_FIELD_TYPE,
+} from './dragTypes.es';
 
 const replaceColumn = node => {
 	if (node.parentNode) {
@@ -92,11 +100,23 @@ export default ({dataLayoutBuilder, node}) => {
 					dataLayoutBuilder.dispatch('sectionAdded', payload);
 				}
 			}
+			else if (type === DRAG_FIELDSET) {
+				dataLayoutBuilder.dispatch(
+					'fieldSetAdded',
+					dropFieldSet({
+						dataLayoutBuilder,
+						fieldName,
+						fieldSet: data.fieldSet,
+						indexes,
+						parentFieldName,
+					})
+				);
+			}
 		},
 		[dataDefinition, dataLayoutBuilder, node]
 	);
 	const [{canDrop, overTarget}, dropColumn] = useDrop({
-		accept: [DRAG_DATA_DEFINITION_FIELD, DRAG_FIELD_TYPE],
+		accept: [DRAG_DATA_DEFINITION_FIELD, DRAG_FIELDSET, DRAG_FIELD_TYPE],
 		collect: monitor => ({
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver(),

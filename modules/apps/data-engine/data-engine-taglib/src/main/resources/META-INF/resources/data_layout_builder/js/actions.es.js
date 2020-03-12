@@ -88,3 +88,18 @@ export const dropLayoutBuilderField = ({
 		indexes,
 	};
 };
+
+export const dropFieldSet = ({
+	dataLayoutBuilder,
+	fieldName,
+	fieldSet,
+	indexes,
+	parentFieldName,
+}) => {
+	return {
+		fieldName,
+		fieldSet: dataLayoutBuilder.getDDMForm(fieldSet),
+		indexes,
+		parentFieldName,
+	};
+};

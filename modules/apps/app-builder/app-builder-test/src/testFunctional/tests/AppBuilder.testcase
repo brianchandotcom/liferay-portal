@@ -2014,17 +2014,33 @@ definition {
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
 		FormViewBuilder.setFieldLabel(fieldLabel = "Number of children");
+		FormViewBuilder.setFieldRequired();
 		FormViewBuilder.closeSidebar();
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Number of children");
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
 		FormViewBuilder.setFieldLabel(fieldLabel = "Occupation");
+		FormViewBuilder.setFieldRequired();
 		for (var number : list "1,2,3") {
 			FormViewBuilder.editOptionsRow(
-				optionName = "Select${number}",
-				optionValue = "Select ${number}",
+				optionName = "Select ${number}",
+				optionValue = "Occupation ${number}",
 				rowNumber = "${number}");
 		}
 		FormViewBuilder.closeSidebar();
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Occupation");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Single Selection");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Marital Status");
+		FormViewBuilder.setFieldRequired();
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Option ${number}",
+				optionValue = "Marital Status ${number}",
+				rowNumber = "${number}");
+		}
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Marital Status");
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Date");
 		FormViewBuilder.setFieldLabel(fieldLabel = "Date of birth");
@@ -2036,11 +2052,13 @@ definition {
 		FormViewBuilder.setFieldLabel(fieldLabel = "Hobbies");
 		for (var number : list "1,2,3") {
 			FormViewBuilder.editOptionsRow(
-				optionName = "Multiple${number}",
-				optionValue = "Multiple ${number}",
+				optionName = "Multiple ${number}",
+				optionValue = "Hobby ${number}",
 				rowNumber = "${number}");
 		}
+		FormViewBuilder.setFieldRequired();
 		FormViewBuilder.closeSidebar();
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Hobbies");
 
 		FormViewBuilder.setName(formViewName = "Registration Form");
 
@@ -2048,39 +2066,75 @@ definition {
 
 		AppBuilderAdmin.add();
 
-		FormViewBuilder.addFormViewAndValidateFieldLabel(
+		FormViewBuilder.addFormView(
 			fieldType = "Text",
 			formViewName = "My Form View");
 
 		AppBuilderAdmin.openItem(itemName = "My Form View");
+		/*
+
+		//TODO: Remove this comment once LPS-110060 is fixed.
 
 		FormViewBuilder.addFromObjectField(fieldName = "Hobbies");
 
 		FormViewBuilder.setFieldLabel(fieldLabel = "Hobbies edited");
 
 		FormViewBuilder.validateFormMultipleSelectionField(
-			fieldLabel = "Multiple 1",
+			fieldLabel = "Hobbies 2",
 			fieldName = "Hobbies edited");
+		*/
+
+		FormViewBuilder.addFromObjectField(fieldName = "Marital Status");
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Marital Status 3",
+			fieldName = "Marital Status");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Marital Status");
+
+		FormViewBuilder.addFromObjectField(fieldName = "Occupation");
+		FormViewBuilder.validateSelectFromListField(
+			optionValue = "Occupation 2",
+			rowNumber = "2");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Occupation");
 
 		FormViewBuilder.editFieldInObject(
 			fieldLabel = "Testing Changed Name",
 			fieldName = "Nickname");
+
+		FormViewBuilder.addFromObjectField(fieldName = "Full name");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Full name");
+
+		FormViewBuilder.addFromObjectField(fieldName = "Number of children");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Number of children");
 
 		FormViewBuilder.addFieldToObject(fieldName = "Text");
 
 		FormViewBuilder.addFieldToObject(fieldName = "Select from List");
 
 		FormViewBuilder.searchObjectField(fieldValue = "Date of birth");
-
 		FormViewBuilder.validateSearchResult(fieldLabel = "Date of birth");
+		FormViewBuilder.addFromObjectField(fieldName = "Date of birth");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
 
 		FormViewBuilder.save();
 
 		AppBuilderAdmin.openItem(itemName = "My Form View");
 
-		FormViewBuilder.validateFieldInObject(fieldLabel = "Text");
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
 
-		FormViewBuilder.validateFieldInObject(fieldLabel = "Select from List");
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Occupation");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Occupation");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Marital Status");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Marital Status");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Full name");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Full name");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Number of children");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Number of children");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Date of birth");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
 	}
 
 	@description = "Search for a deployment in the deployment lists"

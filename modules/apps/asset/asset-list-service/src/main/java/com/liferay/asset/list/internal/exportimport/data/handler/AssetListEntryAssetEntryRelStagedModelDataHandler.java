@@ -154,8 +154,8 @@ public class AssetListEntryAssetEntryRelStagedModelDataHandler
 
 		long segmentsEntryId = assetListEntryAssetEntryRel.getSegmentsEntryId();
 
-		if (!currentGroup.isStagingGroup() && !segmentsEntryIds.isEmpty() &&
-			(segmentsEntryId > 0) &&
+		if (!currentGroup.isStagingGroup() && (segmentsEntryId > 0) &&
+			!segmentsEntryIds.isEmpty() &&
 			segmentsEntryIds.containsKey(segmentsEntryId)) {
 
 			long newSegmentsEntryId = segmentsEntryIds.get(segmentsEntryId);

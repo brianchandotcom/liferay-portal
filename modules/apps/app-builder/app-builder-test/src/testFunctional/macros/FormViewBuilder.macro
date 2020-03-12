@@ -264,6 +264,15 @@ definition {
 			value1 = "${fieldLabel}");
 	}
 
+	macro validateSelectFromListField {
+
+		var key_rowNumber = "${rowNumber}";
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "${optionValue}");
+	}
+
 	macro viewCheckboxChecked {
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldName = "${fieldName}",

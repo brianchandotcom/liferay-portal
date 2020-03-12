@@ -14,10 +14,15 @@
 
 package com.liferay.layout.taglib.servlet.taglib;
 
+import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.taglib.internal.display.context.RenderFragmentLayoutDisplayContext;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -37,6 +42,7 @@ import com.liferay.taglib.util.IncludeTag;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -128,6 +134,23 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:previewType",
 			_getPreviewType());
+
+		InfoDisplayContributorTracker infoDisplayContributorTracker =
+			(InfoDisplayContributorTracker)httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
+
+		InfoDisplayObjectProvider infoDisplayObjectProvider =
+			(InfoDisplayObjectProvider)httpServletRequest.getAttribute(
+				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+
+		httpServletRequest.setAttribute(
+			"liferay-layout:render-fragment-layout:" +
+				"renderFragmentLayoutDisplayContext",
+			new RenderFragmentLayoutDisplayContext(
+				httpServletRequest,
+				(HttpServletResponse)pageContext.getResponse(),
+				infoDisplayContributorTracker, infoDisplayObjectProvider));
+
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:segmentsExperienceIds",
 			_getSegmentsExperienceIds());

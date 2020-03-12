@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.redirect.configuration.RedirectConfiguration;
@@ -54,7 +55,7 @@ public class RedirectEntryLocalServiceImpl
 
 		_validate(destinationURL, sourceURL);
 
-		if (fetchRedirectEntry(groupId, sourceURL) != null) {
+		if (redirectEntryPersistence.fetchByG_S(groupId, sourceURL) != null) {
 			throw new DuplicateRedirectEntrySourceURLException();
 		}
 
@@ -81,7 +82,20 @@ public class RedirectEntryLocalServiceImpl
 			return null;
 		}
 
-		return redirectEntryPersistence.fetchByG_S(groupId, sourceURL);
+		RedirectEntry redirectEntry = redirectEntryPersistence.fetchByG_S(
+			groupId, sourceURL);
+
+		if (redirectEntry != null) {
+			Date expirationDate = redirectEntry.getExpirationDate();
+
+			if ((expirationDate != null) &&
+				(DateUtil.compareTo(expirationDate, DateUtil.newDate()) <= 0)) {
+
+				return null;
+			}
+		}
+
+		return redirectEntry;
 	}
 
 	@Override
@@ -108,8 +122,9 @@ public class RedirectEntryLocalServiceImpl
 
 		RedirectEntry redirectEntry = getRedirectEntry(redirectEntryId);
 
-		RedirectEntry existingRedirectEntry = fetchRedirectEntry(
-			redirectEntry.getGroupId(), sourceURL);
+		RedirectEntry existingRedirectEntry =
+			redirectEntryPersistence.fetchByG_S(
+				redirectEntry.getGroupId(), sourceURL);
 
 		if ((existingRedirectEntry != null) &&
 			(existingRedirectEntry.getRedirectEntryId() != redirectEntryId)) {

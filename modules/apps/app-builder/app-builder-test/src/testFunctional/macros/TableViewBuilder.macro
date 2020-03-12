@@ -34,6 +34,10 @@ definition {
 		TableViewBuilder.selectTab(tabName = "Filters");
 	}
 
+	macro clearSearch {
+		Click(locator1 = "TableViewBuilder#CLEAR_SEARCH");
+	}
+
 	macro closeColumnSidebar {
 		Click(locator1 = "TableViewBuilder#CLOSE_COLUMN_SIDEBAR");
 	}
@@ -75,6 +79,12 @@ definition {
 			locator1 = "TableViewBuilder#TAB_LABEL");
 	}
 
+	macro searchByItem {
+		Type(
+			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+			value1 = "${itemName}");
+	}
+
 	macro setName {
 		AppBuilderAdmin.setName(title = "${tableViewName}");
 	}
@@ -102,6 +112,24 @@ definition {
 		AssertElementNotPresent(
 			locator1 = "TableViewBuilder#COLUMN_LABEL",
 			value1 = "${columnLabel}");
+	}
+	
+	macro validateDisabledField {
+		AssertElementPresent(
+			locator1 = "TableViewBuilder#DISABLED_COLUMN",
+			value1 = "${fieldType}");
+	}
+
+	macro validateNoColumnLabelAtSidebar {
+		AssertElementNotPresent(
+			locator1 = "TableViewBuilder#COLUMN_LABEL_AT_SIDEBAR",
+			value1 = "${columnLabel}");
+	}
+
+	macro validatePortletFieldTypeInTV {
+		AssertElementPresent(
+			key_fieldType = "${fieldType}",
+			locator1 = "TableViewBuilder#VALIDATE_PORTLET_FIELD_TYPE_IN_TV");
 	}
 
 	macro validateNoColumnLabelAtSidebar {

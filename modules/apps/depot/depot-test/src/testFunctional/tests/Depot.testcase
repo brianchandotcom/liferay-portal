@@ -123,7 +123,8 @@ definition {
 
 		Depot.editDepot(
 			depotName = "Test Depot Name",
-			depotNameEdit = "título");
+			depotNameEdit = "título",
+			language = "es-ES");
 
 		DepotNavigator.openDepotAdmin();
 

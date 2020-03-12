@@ -15,6 +15,7 @@
 package com.liferay.portal.configuration.persistence.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -129,6 +130,111 @@ public class ConfigurationUpgradeStepFactoryTest {
 		_testUpgradeConfig(true, false, true);
 	}
 
+	private void _assert(
+			boolean factory, boolean data, boolean configFile,
+			boolean felixFileName, boolean upgraded)
+		throws Exception {
+
+		File oldConfigFile = _getConfigFile(_TEST_PID_OLD, factory);
+		File newConfigFile = _getConfigFile(_TEST_PID_NEW, factory);
+
+		if (!configFile) {
+			Assert.assertFalse(
+				"Configuration file " + oldConfigFile + " exists",
+				oldConfigFile.exists());
+			Assert.assertFalse(
+				"Configuration file " + newConfigFile + " exists",
+				newConfigFile.exists());
+		}
+		else if (upgraded) {
+			Assert.assertFalse(
+				"Configuration file " + oldConfigFile + " exists",
+				oldConfigFile.exists());
+			Assert.assertTrue(
+				"Configuration file " + newConfigFile + " does not exist",
+				newConfigFile.exists());
+		}
+		else {
+			Assert.assertTrue(
+				"Configuration file " + oldConfigFile + " does not exist",
+				oldConfigFile.exists());
+			Assert.assertFalse(
+				"Configuration file " + newConfigFile + " exists",
+				newConfigFile.exists());
+		}
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			"(service.pid=" + _TEST_PID + "*)");
+
+		if (!data) {
+			Assert.assertNull(
+				StringBundler.concat(
+					"Configurations with ", _TEST_PID, " as prefix of service ",
+					"pid should not exist"),
+				configurations);
+
+			return;
+		}
+
+		Assert.assertNotNull(
+			StringBundler.concat(
+				"Configurations with ", _TEST_PID, " as prefix of service pid ",
+				"should exist"),
+			configurations);
+
+		Assert.assertEquals(
+			configurations.toString(), 1, configurations.length);
+
+		Configuration configuration = configurations[0];
+
+		String existedPid = configuration.getPid();
+
+		String nonExistedPid;
+
+		if (upgraded) {
+			nonExistedPid = StringUtil.replace(
+				existedPid, _TEST_PID_NEW, _TEST_PID_OLD);
+		}
+		else {
+			nonExistedPid = StringUtil.replace(
+				existedPid, _TEST_PID_OLD, _TEST_PID_NEW);
+		}
+
+		Assert.assertFalse(
+			"Configuration " + nonExistedPid + " still exists",
+			_persistenceManager.exists(nonExistedPid));
+		Assert.assertTrue(
+			"Configuration " + existedPid + " does not exist",
+			_persistenceManager.exists(existedPid));
+
+		Dictionary<String, String> dictionary = _persistenceManager.load(
+			existedPid);
+
+		String fileName = dictionary.get("felix.fileinstall.filename");
+
+		if (!felixFileName) {
+			Assert.assertNull(
+				"Configuration property felix.fileinstall.filename should " +
+					"not exist",
+				fileName);
+
+			return;
+		}
+
+		File existedConfigFile;
+
+		if (upgraded) {
+			existedConfigFile = newConfigFile;
+		}
+		else {
+			existedConfigFile = oldConfigFile;
+		}
+
+		URI uri = existedConfigFile.toURI();
+
+		Assert.assertEquals(uri.toString(), fileName);
+	}
+
 	private File _getConfigFile(String pid, boolean factory) {
 		if (factory) {
 			return new File(_configsDir, pid + "-instance.config");
@@ -149,12 +255,7 @@ public class ConfigurationUpgradeStepFactoryTest {
 			boolean felixFileName)
 		throws Exception {
 
-		String oldPid = _TEST_PID_OLD;
-
-		String newPid = _TEST_PID_NEW;
-
-		File oldConfigFile = _getConfigFile(oldPid, factory);
-		File newConfigFile = _getConfigFile(newPid, factory);
+		File oldConfigFile = _getConfigFile(_TEST_PID_OLD, factory);
 
 		if (configFile) {
 			oldConfigFile.createNewFile();
@@ -174,17 +275,17 @@ public class ConfigurationUpgradeStepFactoryTest {
 			}
 
 			if (factory) {
-				oldPid = ConfigurationTestUtil.createFactoryConfiguration(
-					oldPid, properties);
-
-				newPid = StringUtil.replace(
-					oldPid, _TEST_PID_OLD, _TEST_PID_NEW);
+				ConfigurationTestUtil.createFactoryConfiguration(
+					_TEST_PID_OLD, properties);
 			}
 			else {
 				ConfigurationTestUtil.saveConfiguration(
-					_configurationAdmin.getConfiguration(oldPid), properties);
+					_configurationAdmin.getConfiguration(_TEST_PID_OLD),
+					properties);
 			}
 		}
+
+		_assert(factory, data, configFile, felixFileName, false);
 
 		UpgradeStep upgradeStep =
 			_configurationUpgradeStepFactory.createUpgradeStep(
@@ -192,42 +293,7 @@ public class ConfigurationUpgradeStepFactoryTest {
 
 		upgradeStep.upgrade(null);
 
-		if (data) {
-			Assert.assertFalse(
-				"Configuration " + oldPid + " still exists",
-				_persistenceManager.exists(oldPid));
-			Assert.assertTrue(
-				"Configuration " + newPid + " does not exist",
-				_persistenceManager.exists(newPid));
-
-			Dictionary<String, String> dictionary = _persistenceManager.load(
-				newPid);
-
-			String fileName = dictionary.get("felix.fileinstall.filename");
-
-			if (felixFileName) {
-				URI uri = newConfigFile.toURI();
-
-				Assert.assertEquals(
-					"Configuration " + fileName + " is not inconsistent",
-					fileName, uri.toString());
-			}
-			else {
-				Assert.assertNull(
-					"Configuration property felix.fileinstall.filename " +
-						"should not exist",
-					fileName);
-			}
-		}
-
-		if (configFile) {
-			Assert.assertFalse(
-				"Configuration file " + oldConfigFile + " still exists",
-				oldConfigFile.exists());
-			Assert.assertTrue(
-				"Configuration file " + newConfigFile + " does not exist",
-				newConfigFile.exists());
-		}
+		_assert(factory, data, configFile, felixFileName, true);
 	}
 
 	private static final String _TEST_PID = "test.pid";

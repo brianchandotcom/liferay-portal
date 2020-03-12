@@ -105,7 +105,7 @@ const LanguageListItem = ({
 					newIndex = index + 1;
 				}
 
-				if (newIndex < source.index) {
+				if (newIndex > source.index) {
 					newIndex = newIndex - 1;
 				}
 

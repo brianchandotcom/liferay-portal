@@ -81,6 +81,13 @@ public class RedirectDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_expirationDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy/MM/dd", _themeDisplay.getLocale());
+	}
+
+	public String formatExpirationDate(Date expirationDate) {
+		return _expirationDateFormat.format(expirationDate);
 	}
 
 	public DropdownItemList getActionDropdownItems(
@@ -316,6 +323,7 @@ public class RedirectDisplayContext {
 		redirectEntrySearch.setTotal(hits.getLength());
 	}
 
+	private final DateFormat _expirationDateFormat;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

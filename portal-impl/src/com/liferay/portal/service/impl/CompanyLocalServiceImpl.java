@@ -201,19 +201,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				CompanyThreadLocal.setCompanyIdInitialization(
 					company.getCompanyId())) {
 
-			try {
+			// Schema when db partition enabled
 
-				// Schema when db partition enabled
-
-				if (DBPartitionHelperUtil.addPartition(
-						company.getCompanyId())) {
-
-					dlFileEntryTypeLocalService.
-						createBasicDocumentDLFileEntryType();
-				}
-			}
-			catch (Exception exception) {
-				throw new PortalException(exception);
+			if (DBPartitionHelperUtil.addPartition(company.getCompanyId())) {
+				dlFileEntryTypeLocalService.
+					createBasicDocumentDLFileEntryType();
 			}
 
 			// Account

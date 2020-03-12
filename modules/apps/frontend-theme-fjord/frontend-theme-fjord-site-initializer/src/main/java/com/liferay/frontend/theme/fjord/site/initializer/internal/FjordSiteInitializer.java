@@ -18,24 +18,15 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.page.template.util.LayoutPageTemplateStructureHelperUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -63,6 +54,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -129,9 +121,6 @@ public class FjordSiteInitializer implements SiteInitializer {
 				fragmentCollection.getFragmentCollectionId(),
 				fragmentCollection.getResourcesFolderId(), serviceContext);
 
-			LayoutPageTemplateCollection layoutPageTemplateCollection =
-				_addLayoutPageTemplateCollection(serviceContext);
-
 			List<FragmentEntry> homeFragmentEntries = _addFragmentEntries(
 				fragmentCollection.getFragmentCollectionId(),
 				_PATH + "/fragments/home", serviceContext);
@@ -167,23 +156,13 @@ public class FjordSiteInitializer implements SiteInitializer {
 			featuresFragmentEntries.addAll(footerFragmentEntries);
 			homeFragmentEntries.addAll(footerFragmentEntries);
 
-			_addLayout(
-				homeFragmentEntries,
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				"Home", _PATH + "/fragments/home", serviceContext);
+			_importLayoutPageTemplateEntries(serviceContext);
 
-			_addLayout(
-				featuresFragmentEntries,
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				"Features", _PATH + "/fragments/features", serviceContext);
+			_addLayout("Home", serviceContext);
 
-			_addLayout(
-				downloadFragmentEntries,
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				"Download", _PATH + "/fragments/download", serviceContext);
+			_addLayout("Features", serviceContext);
+
+			_addLayout("Download", serviceContext);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -289,41 +268,12 @@ public class FjordSiteInitializer implements SiteInitializer {
 		return fragmentEntries;
 	}
 
-	private List<FragmentEntryLink> _addFragmentEntryLinks(
-			List<FragmentEntry> fragmentEntries, long plid,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
-
-		for (FragmentEntry fragmentEntry : fragmentEntries) {
-			FragmentEntryLink fragmentEntryLink =
-				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), 0,
-					fragmentEntry.getFragmentEntryId(),
-					_portal.getClassNameId(Layout.class.getName()), plid,
-					fragmentEntry.getCss(), fragmentEntry.getHtml(),
-					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
-					StringPool.BLANK, StringPool.BLANK, 0, null,
-					serviceContext);
-
-			fragmentEntryLinks.add(fragmentEntryLink);
-		}
-
-		return fragmentEntryLinks;
-	}
-
-	private void _addLayout(
-			List<FragmentEntry> fragmentEntries,
-			long layoutPageTemplateCollectionId, String name, String path,
-			ServiceContext serviceContext)
+	private void _addLayout(String name, ServiceContext serviceContext)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_addLayoutPageTemplateEntry(
-				fragmentEntries, layoutPageTemplateCollectionId, name, path,
-				serviceContext);
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				serviceContext.getScopeGroupId(), StringUtil.toLowerCase(name));
 
 		Map<Locale, String> nameMap = HashMapBuilder.put(
 			LocaleUtil.getSiteDefault(), name
@@ -348,96 +298,6 @@ public class FjordSiteInitializer implements SiteInitializer {
 
 				return null;
 			});
-	}
-
-	private LayoutPageTemplateCollection _addLayoutPageTemplateCollection(
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return _layoutPageTemplateCollectionLocalService.
-			addLayoutPageTemplateCollection(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				_THEME_NAME, _THEME_NAME, serviceContext);
-	}
-
-	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(
-			List<FragmentEntry> fragmentEntries,
-			long layoutPageTemplateCollectionId, String name, String path,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				layoutPageTemplateCollectionId, name,
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-		long previewFileEntryId = _getPreviewFileEntryId(
-			LayoutAdminPortletKeys.GROUP_PAGES,
-			LayoutPageTemplateEntry.class.getName(),
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), path,
-			StringUtil.toLowerCase(name) + "_thumbnail.jpg", serviceContext);
-
-		layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				previewFileEntryId);
-
-		Layout layoutPageTemplateEntryLayout = _layoutLocalService.fetchLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		Layout layoutPageTemplateEntryDraftLayout =
-			_layoutLocalService.fetchLayout(
-				_portal.getClassNameId(Layout.class),
-				layoutPageTemplateEntryLayout.getPlid());
-
-		List<FragmentEntryLink> fragmentEntryLinks = _addFragmentEntryLinks(
-			fragmentEntries, layoutPageTemplateEntryDraftLayout.getPlid(),
-			serviceContext);
-
-		JSONObject layoutDataJSONObject =
-			LayoutPageTemplateStructureHelperUtil.
-				generateContentLayoutStructure(fragmentEntryLinks);
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					layoutPageTemplateEntry.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layoutPageTemplateEntryDraftLayout.getPlid());
-
-		if (layoutPageTemplateStructure == null) {
-			_layoutPageTemplateStructureLocalService.
-				addLayoutPageTemplateStructure(
-					serviceContext.getUserId(),
-					layoutPageTemplateEntry.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layoutPageTemplateEntryDraftLayout.getPlid(),
-					layoutDataJSONObject.toString(), serviceContext);
-		}
-		else {
-			_layoutPageTemplateStructureLocalService.
-				updateLayoutPageTemplateStructure(
-					layoutPageTemplateEntry.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layoutPageTemplateEntryDraftLayout.getPlid(),
-					layoutDataJSONObject.toString());
-		}
-
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				_copyLayout(layoutPageTemplateEntryLayout);
-
-				_layoutLocalService.updateStatus(
-					serviceContext.getUserId(),
-					layoutPageTemplateEntryLayout.getPlid(),
-					WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-				return null;
-			});
-
-		return layoutPageTemplateEntry;
 	}
 
 	private void _copyLayout(Layout layout) throws Exception {
@@ -527,6 +387,18 @@ public class FjordSiteInitializer implements SiteInitializer {
 		return fileEntry.getFileEntryId();
 	}
 
+	private void _importLayoutPageTemplateEntries(ServiceContext serviceContext)
+		throws Exception {
+
+		URL url = _bundle.getEntry("/page-templates.zip");
+
+		File file = FileUtil.createTempFile(url.openStream());
+
+		_layoutPageTemplatesImporter.importFile(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(), file,
+			false);
+	}
+
 	private void _updateLogo(ServiceContext serviceContext) throws Exception {
 		URL url = _bundle.getEntry(_PATH + "/images/logo.png");
 
@@ -576,9 +448,6 @@ public class FjordSiteInitializer implements SiteInitializer {
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
@@ -588,16 +457,11 @@ public class FjordSiteInitializer implements SiteInitializer {
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
-	private LayoutPageTemplateCollectionLocalService
-		_layoutPageTemplateCollectionLocalService;
-
-	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 
 	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
+	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

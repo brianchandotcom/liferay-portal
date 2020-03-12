@@ -233,7 +233,6 @@ definition {
 	}
 
 	@description = "This ensures that a user cannot see the sections of the product menu that contain disabled applications."
-	@ignore = "true"
 	@priority = "5"
 	test ViewDepotWithAllAppsDisabled {
 		DepotNavigator.openDepotAdmin();

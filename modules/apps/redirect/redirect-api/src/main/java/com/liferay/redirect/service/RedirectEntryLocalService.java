@@ -67,7 +67,7 @@ public interface RedirectEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public RedirectEntry addRedirectEntry(
 			long groupId, String destinationURL, Date expirationDate,
-			String sourceURL, boolean temporary, ServiceContext serviceContext)
+			boolean permanent, String sourceURL, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -311,7 +311,7 @@ public interface RedirectEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL, Date expirationDate,
-			String sourceURL, boolean temporary)
+			boolean permanent, String sourceURL)
 		throws PortalException;
 
 	/**

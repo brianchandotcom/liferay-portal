@@ -43,8 +43,8 @@ public class RedirectEntrySoap implements Serializable {
 		soapModel.setDestinationURL(model.getDestinationURL());
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setLastOccurrenceDate(model.getLastOccurrenceDate());
+		soapModel.setPermanent(model.isPermanent());
 		soapModel.setSourceURL(model.getSourceURL());
-		soapModel.setTemporary(model.isTemporary());
 
 		return soapModel;
 	}
@@ -194,24 +194,24 @@ public class RedirectEntrySoap implements Serializable {
 		_lastOccurrenceDate = lastOccurrenceDate;
 	}
 
+	public boolean getPermanent() {
+		return _permanent;
+	}
+
+	public boolean isPermanent() {
+		return _permanent;
+	}
+
+	public void setPermanent(boolean permanent) {
+		_permanent = permanent;
+	}
+
 	public String getSourceURL() {
 		return _sourceURL;
 	}
 
 	public void setSourceURL(String sourceURL) {
 		_sourceURL = sourceURL;
-	}
-
-	public boolean getTemporary() {
-		return _temporary;
-	}
-
-	public boolean isTemporary() {
-		return _temporary;
-	}
-
-	public void setTemporary(boolean temporary) {
-		_temporary = temporary;
 	}
 
 	private long _mvccVersion;
@@ -226,7 +226,7 @@ public class RedirectEntrySoap implements Serializable {
 	private String _destinationURL;
 	private Date _expirationDate;
 	private Date _lastOccurrenceDate;
+	private boolean _permanent;
 	private String _sourceURL;
-	private boolean _temporary;
 
 }

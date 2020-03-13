@@ -103,10 +103,10 @@ public class RedirectEntryCacheModel
 		sb.append(expirationDate);
 		sb.append(", lastOccurrenceDate=");
 		sb.append(lastOccurrenceDate);
+		sb.append(", permanent=");
+		sb.append(permanent);
 		sb.append(", sourceURL=");
 		sb.append(sourceURL);
-		sb.append(", temporary=");
-		sb.append(temporary);
 		sb.append("}");
 
 		return sb.toString();
@@ -173,14 +173,14 @@ public class RedirectEntryCacheModel
 				new Date(lastOccurrenceDate));
 		}
 
+		redirectEntryImpl.setPermanent(permanent);
+
 		if (sourceURL == null) {
 			redirectEntryImpl.setSourceURL("");
 		}
 		else {
 			redirectEntryImpl.setSourceURL(sourceURL);
 		}
-
-		redirectEntryImpl.setTemporary(temporary);
 
 		redirectEntryImpl.resetOriginalValues();
 
@@ -207,9 +207,9 @@ public class RedirectEntryCacheModel
 		destinationURL = (String)objectInput.readObject();
 		expirationDate = objectInput.readLong();
 		lastOccurrenceDate = objectInput.readLong();
-		sourceURL = (String)objectInput.readObject();
 
-		temporary = objectInput.readBoolean();
+		permanent = objectInput.readBoolean();
+		sourceURL = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -251,14 +251,14 @@ public class RedirectEntryCacheModel
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(lastOccurrenceDate);
 
+		objectOutput.writeBoolean(permanent);
+
 		if (sourceURL == null) {
 			objectOutput.writeObject("");
 		}
 		else {
 			objectOutput.writeObject(sourceURL);
 		}
-
-		objectOutput.writeBoolean(temporary);
 	}
 
 	public long mvccVersion;
@@ -273,7 +273,7 @@ public class RedirectEntryCacheModel
 	public String destinationURL;
 	public long expirationDate;
 	public long lastOccurrenceDate;
+	public boolean permanent;
 	public String sourceURL;
-	public boolean temporary;
 
 }

@@ -12,7 +12,7 @@
 		"@clayui/multi-select": "3.5.1",
 		"@clayui/pagination-bar": "3.1.1",
 		"@clayui/tabs": "3.1.0",
-		"@clayui/tooltip": "3.2.1",
+		"@clayui/tooltip": "3.2.2",
 		"classnames": "2.2.6",
 		"frontend-js-react-web": "*",
 		"lodash.isfunction": "3.0.9",

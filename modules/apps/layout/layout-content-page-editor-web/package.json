@@ -8,7 +8,7 @@
 		"@clayui/label": "3.1.1",
 		"@clayui/loading-indicator": "3.0.1",
 		"@clayui/sticker": "3.1.0",
-		"@clayui/tooltip": "3.2.1",
+		"@clayui/tooltip": "3.2.2",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"metal-dom": "2.16.8",

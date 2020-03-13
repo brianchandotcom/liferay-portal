@@ -21,4 +21,15 @@ import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCrite
  */
 public class DepotGroupItemSelectorCriterion
 	extends GroupItemSelectorCriterion {
+
+	public boolean isShowBreadcrumb() {
+		return _showBreadcrumb;
+	}
+
+	public void setShowBreadcrumb(boolean showBreadcrumb) {
+		_showBreadcrumb = showBreadcrumb;
+	}
+
+	private boolean _showBreadcrumb = true;
+
 }

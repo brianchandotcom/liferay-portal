@@ -74,7 +74,6 @@ import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
@@ -544,6 +543,15 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 		deactivateWorkflow(group.getGroupId(), className, classPK, typePK);
 	}
 
+	protected User deleteUser(User user) throws Exception {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					_MAIL_ENGINE_CLASS_NAME, Level.OFF)) {
+
+			return UserLocalServiceUtil.deleteUser(user);
+		}
+	}
+
 	protected WorkflowInstanceLink fetchWorkflowInstanceLink(
 			String className, long classPK)
 		throws WorkflowException {
@@ -717,9 +725,6 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 	protected User siteContentReviewerUser;
 	protected User siteMemberUser;
 
-	@Inject
-	protected UserLocalService userLocalService;
-
 	private DDMFormValues _createDDMFormValues(DDMForm ddmForm) {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -792,27 +797,32 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			String roleName, Group group, boolean addUserToRole)
 		throws Exception {
 
-		User user = UserTestUtil.addUser(
-			company.getCompanyId(), companyAdminUser.getUserId(),
-			RandomTestUtil.randomString(
-				NumericStringRandomizerBumper.INSTANCE,
-				UniqueStringRandomizerBumper.INSTANCE),
-			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new long[] {group.getGroupId()},
-			ServiceContextTestUtil.getServiceContext());
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					_MAIL_ENGINE_CLASS_NAME, Level.OFF)) {
 
-		Role role = RoleLocalServiceUtil.getRole(
-			company.getCompanyId(), roleName);
+			User user = UserTestUtil.addUser(
+				company.getCompanyId(), companyAdminUser.getUserId(),
+				RandomTestUtil.randomString(
+					NumericStringRandomizerBumper.INSTANCE,
+					UniqueStringRandomizerBumper.INSTANCE),
+				LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), new long[] {group.getGroupId()},
+				ServiceContextTestUtil.getServiceContext());
 
-		if (addUserToRole) {
-			UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
+			Role role = RoleLocalServiceUtil.getRole(
+				company.getCompanyId(), roleName);
+
+			if (addUserToRole) {
+				UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
+			}
+
+			UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+				new long[] {user.getUserId()}, group.getGroupId(),
+				role.getRoleId());
+
+			return user;
 		}
-
-		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
-			new long[] {user.getUserId()}, group.getGroupId(),
-			role.getRoleId());
-
-		return user;
 	}
 
 	private String _getBasePath() {

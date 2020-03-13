@@ -711,7 +711,7 @@ public class WorkflowTaskManagerImplTest
 			WorkflowTaskManagerUtil.getWorkflowTaskCountByUser(
 				user.getCompanyId(), user.getUserId(), false));
 
-		userLocalService.deleteUser(user);
+		deleteUser(user);
 
 		Assert.assertEquals(
 			0,

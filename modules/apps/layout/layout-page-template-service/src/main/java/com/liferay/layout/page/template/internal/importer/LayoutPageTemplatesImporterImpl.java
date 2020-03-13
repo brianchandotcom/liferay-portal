@@ -25,6 +25,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.exception.PageDefinitionValidatorException;
@@ -52,8 +53,14 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -61,6 +68,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -115,7 +123,7 @@ public class LayoutPageTemplatesImporterImpl
 				_processPageTemplateEntries(
 					groupId, layoutPageTemplateCollection,
 					pageTemplateCollectionEntry.getPageTemplatesEntries(),
-					overwrite);
+					overwrite, zipFile);
 			}
 		}
 		catch (PortalException portalException) {
@@ -331,9 +339,13 @@ public class LayoutPageTemplatesImporterImpl
 				String pageTemplateEntryKey = _getPageTemplateEntryKey(
 					pageTemplate, zipEntry);
 
+				ZipEntry thumbnailZipEntry = _getThumbnailZipEntry(
+					zipEntry.getName(), zipFile);
+
 				pageTemplateCollectionEntry.addPageTemplateEntry(
 					pageTemplateEntryKey,
-					new PageTemplateEntry(pageTemplate, pageDefinition));
+					new PageTemplateEntry(
+						pageTemplate, pageDefinition, thumbnailZipEntry));
 			}
 			catch (PageDefinitionValidatorException
 						pageDefinitionValidatorException) {
@@ -404,6 +416,53 @@ public class LayoutPageTemplatesImporterImpl
 			pageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);
 
 		return pageTemplateEntryKey;
+	}
+
+	private long _getPreviewFileEntryId(
+			long groupId, long layoutPageTemplateEntryId, ZipEntry zipEntry,
+			ZipFile zipFile)
+		throws Exception {
+
+		if (zipEntry == null) {
+			return 0;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Repository repository = _portletFileRepository.fetchPortletRepository(
+			groupId, LayoutAdminPortletKeys.GROUP_PAGES);
+
+		if (repository == null) {
+			repository = _portletFileRepository.addPortletRepository(
+				groupId, LayoutAdminPortletKeys.GROUP_PAGES, serviceContext);
+		}
+
+		String imageFileName =
+			layoutPageTemplateEntryId + "_preview." +
+				FileUtil.getExtension(zipEntry.getName());
+
+		byte[] bytes = null;
+
+		try (InputStream is = zipFile.getInputStream(zipEntry)) {
+			bytes = FileUtil.getBytes(is);
+		}
+
+		FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
+			groupId, serviceContext.getUserId(),
+			LayoutPageTemplateEntry.class.getName(), layoutPageTemplateEntryId,
+			LayoutAdminPortletKeys.GROUP_PAGES, repository.getDlFolderId(),
+			bytes, imageFileName, MimeTypesUtil.getContentType(imageFileName),
+			false);
+
+		return fileEntry.getFileEntryId();
+	}
+
+	private ZipEntry _getThumbnailZipEntry(String fileName, ZipFile zipFile) {
+		String path = fileName.substring(
+			0, fileName.lastIndexOf(StringPool.FORWARD_SLASH) + 1);
+
+		return zipFile.getEntry(path + _FILE_NAME_THUMBNAIL);
 	}
 
 	private boolean _isPageTemplateCollectionFile(String fileName) {
@@ -511,7 +570,7 @@ public class LayoutPageTemplatesImporterImpl
 			long groupId,
 			LayoutPageTemplateCollection layoutPageTemplateCollection,
 			Map<String, PageTemplateEntry> pageTemplateEntryMap,
-			boolean overwrite)
+			boolean overwrite, ZipFile zipFile)
 		throws Exception {
 
 		for (Map.Entry<String, PageTemplateEntry> entry :
@@ -557,6 +616,18 @@ public class LayoutPageTemplatesImporterImpl
 					_processPageDefinition(
 						layoutPageTemplateEntry,
 						pageTemplateEntry.getPageDefinition());
+
+					long previewFileEntryId = _getPreviewFileEntryId(
+						groupId,
+						layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+						pageTemplateEntry.getThumbnailZipEntry(), zipFile);
+
+					layoutPageTemplateEntry =
+						_layoutPageTemplateEntryService.
+							updateLayoutPageTemplateEntry(
+								layoutPageTemplateEntry.
+									getLayoutPageTemplateEntryId(),
+								previewFileEntryId);
 
 					_layoutPageTemplatesImporterResultEntries.add(
 						new LayoutPageTemplatesImporterResultEntry(
@@ -628,6 +699,8 @@ public class LayoutPageTemplatesImporterImpl
 
 	private static final String _DEFAULT_PAGE_TEMPLATE_ENTRY_KEY = "imported";
 
+	private static final String _FILE_NAME_THUMBNAIL = "thumbnail.jpg";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplatesImporterImpl.class);
 
@@ -677,6 +750,9 @@ public class LayoutPageTemplatesImporterImpl
 	@Reference
 	private Portal _portal;
 
+	@Reference
+	private PortletFileRepository _portletFileRepository;
+
 	private class PageTemplateCollectionEntry {
 
 		public PageTemplateCollectionEntry(
@@ -715,10 +791,12 @@ public class LayoutPageTemplatesImporterImpl
 	private class PageTemplateEntry {
 
 		public PageTemplateEntry(
-			PageTemplate pageTemplate, PageDefinition pageDefinition) {
+			PageTemplate pageTemplate, PageDefinition pageDefinition,
+			ZipEntry thumbnailZipEntry) {
 
 			_pageTemplate = pageTemplate;
 			_pageDefinition = pageDefinition;
+			_thumbnailZipEntry = thumbnailZipEntry;
 		}
 
 		public PageDefinition getPageDefinition() {
@@ -729,8 +807,13 @@ public class LayoutPageTemplatesImporterImpl
 			return _pageTemplate;
 		}
 
+		public ZipEntry getThumbnailZipEntry() {
+			return _thumbnailZipEntry;
+		}
+
 		private final PageDefinition _pageDefinition;
 		private final PageTemplate _pageTemplate;
+		private final ZipEntry _thumbnailZipEntry;
 
 	}
 

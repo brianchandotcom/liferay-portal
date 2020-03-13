@@ -313,7 +313,7 @@
 <!--LAYOUT ELEMENTS-->
 <tr>
 	<td>LAYOUT_ELEMENTS_HEADER</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'${key_elementType}')][${key_position}]</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'${key_elementType}')][${key_position}]//li[contains(@class,'title')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -29,7 +29,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import java.lang.reflect.Method;
 
 import org.osgi.service.component.ComponentServiceObjects;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
@@ -72,6 +74,16 @@ public class PhoneResourceBuilderImpl implements PhoneResourceBuilder {
 			private User _user;
 
 		};
+	}
+
+	@Activate
+	protected void activate() {
+		PhoneResource.PhoneResourceBuilderHolder.phoneResourceBuilder = this;
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		PhoneResource.PhoneResourceBuilderHolder.phoneResourceBuilder = null;
 	}
 
 	private Object _invoke(

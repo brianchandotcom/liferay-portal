@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.user.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
+import com.liferay.headless.admin.user.resource.v1_0.builder.PhoneResourceBuilder;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -67,5 +68,15 @@ public interface PhoneResource {
 
 	public void setContextUser(
 		com.liferay.portal.kernel.model.User contextUser);
+
+	public static PhoneResourceBuilder builder() {
+		return PhoneResourceBuilderHolder.phoneResourceBuilder;
+	}
+
+	public static class PhoneResourceBuilderHolder {
+
+		public static volatile PhoneResourceBuilder phoneResourceBuilder;
+
+	}
 
 }

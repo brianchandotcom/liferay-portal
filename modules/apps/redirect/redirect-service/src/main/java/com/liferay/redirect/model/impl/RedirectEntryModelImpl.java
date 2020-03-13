@@ -75,8 +75,8 @@ public class RedirectEntryModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"destinationURL", Types.CLOB},
 		{"expirationDate", Types.TIMESTAMP},
-		{"lastOccurrenceDate", Types.TIMESTAMP}, {"sourceURL", Types.CLOB},
-		{"temporary", Types.BOOLEAN}
+		{"lastOccurrenceDate", Types.TIMESTAMP}, {"permanent", Types.BOOLEAN},
+		{"sourceURL", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -95,12 +95,12 @@ public class RedirectEntryModelImpl
 		TABLE_COLUMNS_MAP.put("destinationURL", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastOccurrenceDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("permanent", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("sourceURL", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("temporary", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RedirectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,redirectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,destinationURL TEXT null,expirationDate DATE null,lastOccurrenceDate DATE null,sourceURL TEXT null,temporary BOOLEAN)";
+		"create table RedirectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,redirectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,destinationURL TEXT null,expirationDate DATE null,lastOccurrenceDate DATE null,permanent BOOLEAN,sourceURL TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table RedirectEntry";
 
@@ -317,14 +317,14 @@ public class RedirectEntryModelImpl
 			"lastOccurrenceDate",
 			(BiConsumer<RedirectEntry, Date>)
 				RedirectEntry::setLastOccurrenceDate);
+		attributeGetterFunctions.put("permanent", RedirectEntry::getPermanent);
+		attributeSetterBiConsumers.put(
+			"permanent",
+			(BiConsumer<RedirectEntry, Boolean>)RedirectEntry::setPermanent);
 		attributeGetterFunctions.put("sourceURL", RedirectEntry::getSourceURL);
 		attributeSetterBiConsumers.put(
 			"sourceURL",
 			(BiConsumer<RedirectEntry, String>)RedirectEntry::setSourceURL);
-		attributeGetterFunctions.put("temporary", RedirectEntry::getTemporary);
-		attributeSetterBiConsumers.put(
-			"temporary",
-			(BiConsumer<RedirectEntry, Boolean>)RedirectEntry::setTemporary);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -524,6 +524,21 @@ public class RedirectEntryModelImpl
 	}
 
 	@Override
+	public boolean getPermanent() {
+		return _permanent;
+	}
+
+	@Override
+	public boolean isPermanent() {
+		return _permanent;
+	}
+
+	@Override
+	public void setPermanent(boolean permanent) {
+		_permanent = permanent;
+	}
+
+	@Override
 	public String getSourceURL() {
 		if (_sourceURL == null) {
 			return "";
@@ -546,21 +561,6 @@ public class RedirectEntryModelImpl
 
 	public String getOriginalSourceURL() {
 		return GetterUtil.getString(_originalSourceURL);
-	}
-
-	@Override
-	public boolean getTemporary() {
-		return _temporary;
-	}
-
-	@Override
-	public boolean isTemporary() {
-		return _temporary;
-	}
-
-	@Override
-	public void setTemporary(boolean temporary) {
-		_temporary = temporary;
 	}
 
 	@Override
@@ -617,8 +617,8 @@ public class RedirectEntryModelImpl
 		redirectEntryImpl.setDestinationURL(getDestinationURL());
 		redirectEntryImpl.setExpirationDate(getExpirationDate());
 		redirectEntryImpl.setLastOccurrenceDate(getLastOccurrenceDate());
+		redirectEntryImpl.setPermanent(isPermanent());
 		redirectEntryImpl.setSourceURL(getSourceURL());
-		redirectEntryImpl.setTemporary(isTemporary());
 
 		redirectEntryImpl.resetOriginalValues();
 
@@ -777,6 +777,8 @@ public class RedirectEntryModelImpl
 			redirectEntryCacheModel.lastOccurrenceDate = Long.MIN_VALUE;
 		}
 
+		redirectEntryCacheModel.permanent = isPermanent();
+
 		redirectEntryCacheModel.sourceURL = getSourceURL();
 
 		String sourceURL = redirectEntryCacheModel.sourceURL;
@@ -784,8 +786,6 @@ public class RedirectEntryModelImpl
 		if ((sourceURL != null) && (sourceURL.length() == 0)) {
 			redirectEntryCacheModel.sourceURL = null;
 		}
-
-		redirectEntryCacheModel.temporary = isTemporary();
 
 		return redirectEntryCacheModel;
 	}
@@ -881,9 +881,9 @@ public class RedirectEntryModelImpl
 	private String _destinationURL;
 	private Date _expirationDate;
 	private Date _lastOccurrenceDate;
+	private boolean _permanent;
 	private String _sourceURL;
 	private String _originalSourceURL;
-	private boolean _temporary;
 	private long _columnBitmask;
 	private RedirectEntry _escapedModel;
 

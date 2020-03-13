@@ -39,12 +39,12 @@ public class RedirectEntryLocalServiceUtil {
 	 */
 	public static com.liferay.redirect.model.RedirectEntry addRedirectEntry(
 			long groupId, String destinationURL, java.util.Date expirationDate,
-			String sourceURL, boolean temporary,
+			boolean permanent, String sourceURL,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addRedirectEntry(
-			groupId, destinationURL, expirationDate, sourceURL, temporary,
+			groupId, destinationURL, expirationDate, permanent, sourceURL,
 			serviceContext);
 	}
 
@@ -373,12 +373,12 @@ public class RedirectEntryLocalServiceUtil {
 
 	public static com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL,
-			java.util.Date expirationDate, String sourceURL, boolean temporary)
+			java.util.Date expirationDate, boolean permanent, String sourceURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateRedirectEntry(
-			redirectEntryId, destinationURL, expirationDate, sourceURL,
-			temporary);
+			redirectEntryId, destinationURL, expirationDate, permanent,
+			sourceURL);
 	}
 
 	/**

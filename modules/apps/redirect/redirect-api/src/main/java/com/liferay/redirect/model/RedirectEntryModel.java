@@ -265,6 +265,27 @@ public interface RedirectEntryModel
 	public void setLastOccurrenceDate(Date lastOccurrenceDate);
 
 	/**
+	 * Returns the permanent of this redirect entry.
+	 *
+	 * @return the permanent of this redirect entry
+	 */
+	public boolean getPermanent();
+
+	/**
+	 * Returns <code>true</code> if this redirect entry is permanent.
+	 *
+	 * @return <code>true</code> if this redirect entry is permanent; <code>false</code> otherwise
+	 */
+	public boolean isPermanent();
+
+	/**
+	 * Sets whether this redirect entry is permanent.
+	 *
+	 * @param permanent the permanent of this redirect entry
+	 */
+	public void setPermanent(boolean permanent);
+
+	/**
 	 * Returns the source url of this redirect entry.
 	 *
 	 * @return the source url of this redirect entry
@@ -278,26 +299,5 @@ public interface RedirectEntryModel
 	 * @param sourceURL the source url of this redirect entry
 	 */
 	public void setSourceURL(String sourceURL);
-
-	/**
-	 * Returns the temporary of this redirect entry.
-	 *
-	 * @return the temporary of this redirect entry
-	 */
-	public boolean getTemporary();
-
-	/**
-	 * Returns <code>true</code> if this redirect entry is temporary.
-	 *
-	 * @return <code>true</code> if this redirect entry is temporary; <code>false</code> otherwise
-	 */
-	public boolean isTemporary();
-
-	/**
-	 * Sets whether this redirect entry is temporary.
-	 *
-	 * @param temporary the temporary of this redirect entry
-	 */
-	public void setTemporary(boolean temporary);
 
 }

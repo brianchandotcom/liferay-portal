@@ -146,9 +146,9 @@ public class RedirectEntryPersistenceTest {
 
 		newRedirectEntry.setLastOccurrenceDate(RandomTestUtil.nextDate());
 
-		newRedirectEntry.setSourceURL(RandomTestUtil.randomString());
+		newRedirectEntry.setPermanent(RandomTestUtil.randomBoolean());
 
-		newRedirectEntry.setTemporary(RandomTestUtil.randomBoolean());
+		newRedirectEntry.setSourceURL(RandomTestUtil.randomString());
 
 		_redirectEntries.add(_persistence.update(newRedirectEntry));
 
@@ -190,11 +190,11 @@ public class RedirectEntryPersistenceTest {
 				existingRedirectEntry.getLastOccurrenceDate()),
 			Time.getShortTimestamp(newRedirectEntry.getLastOccurrenceDate()));
 		Assert.assertEquals(
+			existingRedirectEntry.isPermanent(),
+			newRedirectEntry.isPermanent());
+		Assert.assertEquals(
 			existingRedirectEntry.getSourceURL(),
 			newRedirectEntry.getSourceURL());
-		Assert.assertEquals(
-			existingRedirectEntry.isTemporary(),
-			newRedirectEntry.isTemporary());
 	}
 
 	@Test
@@ -269,7 +269,7 @@ public class RedirectEntryPersistenceTest {
 			"redirectEntryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "expirationDate", true, "lastOccurrenceDate",
-			true, "temporary", true);
+			true, "permanent", true);
 	}
 
 	@Test
@@ -544,9 +544,9 @@ public class RedirectEntryPersistenceTest {
 
 		redirectEntry.setLastOccurrenceDate(RandomTestUtil.nextDate());
 
-		redirectEntry.setSourceURL(RandomTestUtil.randomString());
+		redirectEntry.setPermanent(RandomTestUtil.randomBoolean());
 
-		redirectEntry.setTemporary(RandomTestUtil.randomBoolean());
+		redirectEntry.setSourceURL(RandomTestUtil.randomString());
 
 		_redirectEntries.add(_persistence.update(redirectEntry));
 

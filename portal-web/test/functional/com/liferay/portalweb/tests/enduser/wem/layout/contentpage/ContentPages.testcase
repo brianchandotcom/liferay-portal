@@ -847,8 +847,6 @@ definition {
 			id = "image");
 
 		task ("Assert the image field contains the image name.") {
-			Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON");
-
 			AssertVisible(locator1 = "//input[@value='Document_1.png']");
 		}
 	}

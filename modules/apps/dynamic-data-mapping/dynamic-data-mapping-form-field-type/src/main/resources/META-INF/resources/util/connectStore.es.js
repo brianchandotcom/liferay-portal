@@ -35,6 +35,10 @@ export const connectStore = Component => {
 				fieldInstance: {
 					...instance,
 					...instance.props,
+
+					// Explicitly declare the element, because it will get lost
+					// in the destructuring above because the element is a getter.
+					element: instance.element,
 					isDisposed: instance.isDisposed,
 				},
 				originalEvent: event,

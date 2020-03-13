@@ -813,9 +813,7 @@ definition {
 
 			ContentPages.clickPencil();
 
-			var key_experienceName = "New Experience Name";
-
-			AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME");
+			PageEditor.changeExperience(newExperience = "New Experience Name");
 
 			PageEditor.addComment(
 				content = "Lorem ipsum dolor sit amet",

@@ -344,7 +344,7 @@
 </tr>
 <tr>
 	<td>EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON</td>
-	<td>//button[@data-panel-id='image_properties']</td>
+	<td>//button[@*='Image Properties']</td>
 	<td></td>
 </tr>
 <tr>

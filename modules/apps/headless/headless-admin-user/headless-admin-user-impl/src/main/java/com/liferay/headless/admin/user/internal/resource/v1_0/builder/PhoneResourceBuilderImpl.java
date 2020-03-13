@@ -116,11 +116,11 @@ public class PhoneResourceBuilderImpl implements PhoneResourceBuilder {
 			return method.invoke(phoneResource, arguments);
 		}
 		finally {
-			PrincipalThreadLocal.setName(name);
+			_componentServiceObjects.ungetService(phoneResource);
 
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
-			_componentServiceObjects.ungetService(phoneResource);
+			PrincipalThreadLocal.setName(name);
 		}
 	}
 

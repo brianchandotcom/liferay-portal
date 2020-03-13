@@ -94,12 +94,14 @@ function getConnectedReactComponentAdapter(ReactComponent, templates) {
 		}
 
 		willReceiveProps(changes) {
-			if (
-				changes &&
-				changes.events &&
-				changes.children &&
-				Object.keys(changes).length > 2
-			) {
+			// Delete the events and children properties to make it easier to
+			// check which values have been changed, events and children are
+			// properties that are changing all the time when new renderings
+			// happen, a new reference is created all the time.
+			delete changes.events;
+			delete changes.children;
+
+			if (changes && Object.keys(changes).length > 0) {
 				const newValues = {};
 				const keys = Object.keys(changes);
 

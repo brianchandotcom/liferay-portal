@@ -4145,4 +4145,102 @@ definition {
 		DetailsView.deleteEntry(itemName = "Changed");
 	}
 
+	@description = "LRQA-56514: Make sure predefined values are persisted when creating a Form View"
+	@priority = "5"
+
+    test PredefinedValuesArePersistedInFormView {
+
+        property portal.acceptance = "true";
+		var myFormViewName = "Forms";
+
+        AppBuilderAdmin.addCustomObject(
+			customObjectName = "My new object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+        FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+        FormViewBuilder.switchToAdvancedTab();
+        FormViewBuilder.setFieldPredefinedText(fieldValue = "Rebeca");
+        FormViewBuilder.closeSidebar();
+
+        FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
+        FormViewBuilder.switchToAdvancedTab();
+        FormViewBuilder.setFieldPredefinedText(fieldValue = "12345");
+        FormViewBuilder.closeSidebar();
+
+
+        FormViewBuilder.addFieldByDoubleClick(fieldType = "Date");
+        FormViewBuilder.switchToAdvancedTab();
+        FormViewBuilder.setFieldPredefinedDate(fieldValue = "03/02/2019");
+        FormViewBuilder.closeSidebar();
+
+        FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Select${number}",
+				optionValue = "Select ${number}",
+				rowNumber = "${number}");
+		}
+        FormViewBuilder.switchToAdvancedTab();
+        FormViewBuilder.selectSelectOptionPredefined(selectOption = "Select 2");
+        FormViewBuilder.closeSidebar();
+
+
+        FormViewBuilder.addFieldByDoubleClick(fieldType = "Multiple Selection");
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Multiple${number}",
+				optionValue = "Multiple ${number}",
+				rowNumber = "${number}");
+		}
+        FormViewBuilder.switchToAdvancedTab();
+        FormViewBuilder.selectSelectWithMultipleOptionsPredefined(
+            fieldName = "Multiple Selection",
+            selectOptionsList = "Multiple 1,Multiple 2,Multiple 3");
+        FormViewBuilder.closeSidebar();
+        
+        FormViewBuilder.addFieldByDoubleClick(fieldType = "Single Selection");
+		for (var number: list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Task${number}",
+				optionValue = "Task ${number}",
+				rowNumber = "${number}");
+		}
+        FormViewBuilder.switchToAdvancedTab();
+        FormViewBuilder.selectSelectOptionPredefined(selectOption = "Task 3");
+        FormViewBuilder.closeSidebar();
+
+        FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "My Form View");
+
+        AppBuilderAdmin.openItem(itemName = "My Form View");
+
+        FormViewBuilder.validatePredefinedText(
+            fieldName = "Text",
+            fieldValue = "Rebeca");
+        
+        FormViewBuilder.validatePredefinedText(
+            fieldName = "Numeric",
+            fieldValue = "12345");
+
+        FormViewBuilder.validatePredefinedText(
+            fieldName = "Date",
+            fieldValue = "03/02/2019");
+
+        FormViewBuilder.validatePredefinedSelectList(
+            fieldName = "Select from List",
+            fieldValue = "Select 2");
+
+        FormViewBuilder.validatePredefinedMultipleSelection(
+            fieldName = "Multiple Selection",
+            selectOptionsList = "Multiple 1,Multiple 2,Multiple 3");
+
+        FormViewBuilder.validatePredefinedSingleSelection(
+            fieldName = "Single Selection",
+            fieldValue = "Task3");
+    }
+
 }

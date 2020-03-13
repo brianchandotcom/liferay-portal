@@ -311,8 +311,7 @@ definition {
 
 	macro save {
 		Click(locator1 = "AppBuilder#SAVE_BUTTON");
-
-		AppBuilderAdmin.waitForSaveButtonNotVisible();
+		Pause(locator1 = "2000");
 	}
 
 	macro searchByItem {

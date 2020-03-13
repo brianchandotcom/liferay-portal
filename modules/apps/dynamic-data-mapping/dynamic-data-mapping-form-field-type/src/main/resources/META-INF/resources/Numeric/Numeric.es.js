@@ -89,7 +89,7 @@ const Numeric = ({
 			}
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dataType, symbols, inputRef, setValue]);
+	}, [dataType, inputRef, setValue]);
 
 	return (
 		<ClayInput

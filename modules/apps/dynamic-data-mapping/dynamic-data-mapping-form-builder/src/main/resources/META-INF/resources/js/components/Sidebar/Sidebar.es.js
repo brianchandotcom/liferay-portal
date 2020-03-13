@@ -54,7 +54,6 @@ class Sidebar extends Component {
 			fieldTypes,
 			focusedField,
 		} = this.props;
-		const {activeTab} = this.state;
 		const {dispatch} = this.context;
 		const newFieldType = fieldTypes.find(({name}) => name === type);
 		const newSettingsContext = {
@@ -66,7 +65,6 @@ class Sidebar extends Component {
 				focusedField.fieldName
 			),
 		};
-		const sidebarTabIndex = newSettingsContext.pages.length - 1;
 		let {settingsContext} = focusedField;
 
 		if (type !== focusedField.type) {
@@ -74,11 +72,6 @@ class Sidebar extends Component {
 				settingsContext,
 				newSettingsContext
 			);
-			if (sidebarTabIndex < activeTab) {
-				this.setState({
-					activeTab: sidebarTabIndex,
-				});
-			}
 		}
 
 		dispatch('focusedFieldEvaluationEnded', {
@@ -1096,6 +1089,13 @@ class Sidebar extends Component {
 			spritemap,
 		} = this.props;
 		const {pages, rules} = this.getSettingsFormContext();
+		const sidebarTabIndex = pages.length - 1;
+
+		if (sidebarTabIndex < activeTab) {
+			this.setState({
+				activeTab: sidebarTabIndex,
+			});
+		}
 
 		return (
 			<Form

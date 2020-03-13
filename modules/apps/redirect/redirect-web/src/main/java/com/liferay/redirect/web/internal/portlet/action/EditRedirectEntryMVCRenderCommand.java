@@ -14,12 +14,14 @@
 
 package com.liferay.redirect.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.redirect.model.RedirectEntry;
-import com.liferay.redirect.service.RedirectEntryLocalService;
+import com.liferay.redirect.service.RedirectEntryService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -40,17 +42,23 @@ public class EditRedirectEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
-		renderRequest.setAttribute(
-			RedirectEntry.class.getName(),
-			_redirectEntryLocalService.fetchRedirectEntry(
-				ParamUtil.getLong(renderRequest, "redirectEntryId")));
+		try {
+			renderRequest.setAttribute(
+				RedirectEntry.class.getName(),
+				_redirectEntryService.fetchRedirectEntry(
+					ParamUtil.getLong(renderRequest, "redirectEntryId")));
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
+		}
 
 		return "/edit_redirect_entry.jsp";
 	}
 
 	@Reference
-	private RedirectEntryLocalService _redirectEntryLocalService;
+	private RedirectEntryService _redirectEntryService;
 
 }

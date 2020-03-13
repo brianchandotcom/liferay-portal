@@ -68,11 +68,20 @@ definition {
 
 		PageEditor.expandFragmentCollection(collectionName = "Content Display");
 
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
-			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
-			value1 = "");
+		if ("${scope}" == "Master") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#MASTER_DROP_ZONE",
+				value1 = "");
+		}
+		else {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+				value1 = "");
+		}
 
 		AssertVisible(
 			key_fragmentName = "${fragmentName}",
@@ -117,11 +126,20 @@ definition {
 
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
-			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
-			value1 = "");
+		if ("${scope}" == "Master") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#MASTER_DROP_ZONE",
+				value1 = "");
+		}
+		else {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+				value1 = "");
+		}
 
 		PageEditor.waitForAutoSave();
 
@@ -135,11 +153,20 @@ definition {
 
 		PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
 
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_fragmentName = "Row",
-			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
-			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
-			value1 = "");
+		if ("${scope}" == "Master") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fragmentName = "Row",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#MASTER_DROP_ZONE",
+				value1 = "");
+		}
+		else {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fragmentName = "Row",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+				value1 = "");
+		}
 
 		AssertVisible(
 			key_elementType = "Row",
@@ -154,11 +181,20 @@ definition {
 
 		PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
 
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_fragmentName = "Section",
-			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
-			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
-			value1 = "");
+		if ("${scope}" == "Master") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fragmentName = "Section",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#MASTER_DROP_ZONE",
+				value1 = "");
+		}
+		else {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fragmentName = "Section",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+				value1 = "");
+		}
 
 		AssertVisible(
 			key_elementType = "Section",
@@ -187,10 +223,18 @@ definition {
 
 		var key_portletName = "${portletName}";
 
-		DragAndDrop.javaScriptDragAndDropToObject(
-			locator1 = "PageEditor#WIDGETS_ADD_PORTLET_DRAG_BUTTON",
-			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
-			value1 = "${portletName}");
+		if ("${scope}" == "Master") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				locator1 = "PageEditor#WIDGETS_ADD_PORTLET_DRAG_BUTTON",
+				locator2 = "PageEditor#MASTER_DROP_ZONE",
+				value1 = "");
+		}
+		else {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				locator1 = "PageEditor#WIDGETS_ADD_PORTLET_DRAG_BUTTON",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+				value1 = "${portletName}");
+		}
 
 		Pause(locator1 = "5000");
 

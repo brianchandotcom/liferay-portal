@@ -89,7 +89,6 @@ export default function MappingSelector({
 	const {selectedMappingTypes} = config;
 
 	const [fields, setFields] = useState([]);
-	const [mappedItemTitle, setMappedItemTitle] = useState('');
 	const [selectedItem, setSelectedItem] = useState(mappedItem);
 	const [selectedSourceTypeId, setSelectedSourceTypeId] = useState(
 		MAPPING_SOURCE_TYPE_IDS.content
@@ -143,24 +142,22 @@ export default function MappingSelector({
 	useEffect(() => {
 		const infoItem = mappedInfoItems.find(
 			infoItem =>
-				infoItem.classNameId === selectedItem.classNameId &&
-				infoItem.classPK === selectedItem.classPK
+				infoItem.classNameId === mappedItem.classNameId &&
+				infoItem.classPK === mappedItem.classPK
 		);
 
-		if (infoItem) {
-			setMappedItemTitle(infoItem.title);
-		}
-	}, [mappedInfoItems, selectedItem]);
+		setSelectedItem(selectedItem => ({
+			...infoItem,
+			...mappedItem,
+			...selectedItem,
+		}));
 
-	useEffect(() => {
 		setSelectedSourceTypeId(
 			mappedItem.mappedField
 				? MAPPING_SOURCE_TYPE_IDS.structure
 				: MAPPING_SOURCE_TYPE_IDS.content
 		);
-
-		setSelectedItem(mappedItem);
-	}, [mappedItem]);
+	}, [mappedItem, mappedInfoItems]);
 
 	useEffect(() => {
 		const data =
@@ -235,9 +232,7 @@ export default function MappingSelector({
 					<ItemSelector
 						label={Liferay.Language.get('content')}
 						onItemSelect={onInfoItemSelect}
-						selectedItemTitle={
-							selectedItem.title || mappedItemTitle
-						}
+						selectedItemTitle={selectedItem.title}
 					/>
 				</ClayForm.Group>
 			)}

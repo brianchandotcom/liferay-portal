@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryLocalServiceUtil;
+import com.liferay.redirect.service.RedirectEntryServiceUtil;
 import com.liferay.redirect.web.internal.search.RedirectEntrySearch;
 import com.liferay.redirect.web.internal.util.comparator.RedirectEntryCreateDateComparator;
 import com.liferay.redirect.web.internal.util.comparator.RedirectEntryDestinationURLComparator;
@@ -273,19 +274,19 @@ public class RedirectDisplayContext {
 		return false;
 	}
 
-	private void _populateWithDatabase(
-		RedirectEntrySearch redirectEntrySearch) {
+	private void _populateWithDatabase(RedirectEntrySearch redirectEntrySearch)
+		throws PortalException {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		redirectEntrySearch.setTotal(
-			RedirectEntryLocalServiceUtil.getRedirectEntriesCount(
+			RedirectEntryServiceUtil.getRedirectEntriesCount(
 				themeDisplay.getScopeGroupId()));
 
 		redirectEntrySearch.setResults(
-			RedirectEntryLocalServiceUtil.getRedirectEntries(
+			RedirectEntryServiceUtil.getRedirectEntries(
 				themeDisplay.getScopeGroupId(), _redirectEntrySearch.getStart(),
 				_redirectEntrySearch.getEnd(), _getOrderByComparator()));
 	}

@@ -17,7 +17,7 @@ package com.liferay.redirect.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.redirect.service.RedirectEntryLocalService;
+import com.liferay.redirect.service.RedirectEntryService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
 import javax.portlet.ActionRequest;
@@ -47,20 +47,20 @@ public class DeleteRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "redirectEntryId");
 
 		if (redirectEntryId > 0) {
-			_redirectEntryLocalService.deleteRedirectEntry(redirectEntryId);
+			_redirectEntryService.deleteRedirectEntry(redirectEntryId);
 		}
 		else {
 			long[] deleteRedirectEntryIds = ParamUtil.getLongValues(
 				actionRequest, "rowIds");
 
 			for (long deleteRedirectEntryId : deleteRedirectEntryIds) {
-				_redirectEntryLocalService.deleteRedirectEntry(
+				_redirectEntryService.deleteRedirectEntry(
 					deleteRedirectEntryId);
 			}
 		}
 	}
 
 	@Reference
-	private RedirectEntryLocalService _redirectEntryLocalService;
+	private RedirectEntryService _redirectEntryService;
 
 }

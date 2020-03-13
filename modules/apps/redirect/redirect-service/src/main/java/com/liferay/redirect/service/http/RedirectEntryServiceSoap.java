@@ -14,9 +14,15 @@
 
 package com.liferay.redirect.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.redirect.service.RedirectEntryServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.redirect.service.RedirectEntryServiceUtil</code> service
+ * <code>RedirectEntryServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -54,4 +60,127 @@ package com.liferay.redirect.service.http;
  * @generated
  */
 public class RedirectEntryServiceSoap {
+
+	public static com.liferay.redirect.model.RedirectEntrySoap addRedirectEntry(
+			long groupId, String destinationURL, java.util.Date expirationDate,
+			boolean permanent, String sourceURL,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.redirect.model.RedirectEntry returnValue =
+				RedirectEntryServiceUtil.addRedirectEntry(
+					groupId, destinationURL, expirationDate, permanent,
+					sourceURL, serviceContext);
+
+			return com.liferay.redirect.model.RedirectEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.redirect.model.RedirectEntrySoap
+			deleteRedirectEntry(long redirectEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.redirect.model.RedirectEntry returnValue =
+				RedirectEntryServiceUtil.deleteRedirectEntry(redirectEntryId);
+
+			return com.liferay.redirect.model.RedirectEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.redirect.model.RedirectEntrySoap
+			fetchRedirectEntry(long redirectEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.redirect.model.RedirectEntry returnValue =
+				RedirectEntryServiceUtil.fetchRedirectEntry(redirectEntryId);
+
+			return com.liferay.redirect.model.RedirectEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.redirect.model.RedirectEntrySoap[]
+			getRedirectEntries(
+				long groupId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.redirect.model.RedirectEntry> obc)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.redirect.model.RedirectEntry>
+				returnValue = RedirectEntryServiceUtil.getRedirectEntries(
+					groupId, start, end, obc);
+
+			return com.liferay.redirect.model.RedirectEntrySoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getRedirectEntriesCount(long groupId)
+		throws RemoteException {
+
+		try {
+			int returnValue = RedirectEntryServiceUtil.getRedirectEntriesCount(
+				groupId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.redirect.model.RedirectEntrySoap
+			updateRedirectEntry(
+				long redirectEntryId, String destinationURL,
+				java.util.Date expirationDate, boolean permanent,
+				String sourceURL)
+		throws RemoteException {
+
+		try {
+			com.liferay.redirect.model.RedirectEntry returnValue =
+				RedirectEntryServiceUtil.updateRedirectEntry(
+					redirectEntryId, destinationURL, expirationDate, permanent,
+					sourceURL);
+
+			return com.liferay.redirect.model.RedirectEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		RedirectEntryServiceSoap.class);
+
 }

@@ -32,6 +32,34 @@ public class RedirectEntryServiceWrapper
 		_redirectEntryService = redirectEntryService;
 	}
 
+	@Override
+	public com.liferay.redirect.model.RedirectEntry addRedirectEntry(
+			long groupId, String destinationURL, java.util.Date expirationDate,
+			boolean permanent, String sourceURL,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _redirectEntryService.addRedirectEntry(
+			groupId, destinationURL, expirationDate, permanent, sourceURL,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.redirect.model.RedirectEntry deleteRedirectEntry(
+			long redirectEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _redirectEntryService.deleteRedirectEntry(redirectEntryId);
+	}
+
+	@Override
+	public com.liferay.redirect.model.RedirectEntry fetchRedirectEntry(
+			long redirectEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _redirectEntryService.fetchRedirectEntry(redirectEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -40,6 +68,36 @@ public class RedirectEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _redirectEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.redirect.model.RedirectEntry>
+			getRedirectEntries(
+				long groupId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.redirect.model.RedirectEntry> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _redirectEntryService.getRedirectEntries(
+			groupId, start, end, obc);
+	}
+
+	@Override
+	public int getRedirectEntriesCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _redirectEntryService.getRedirectEntriesCount(groupId);
+	}
+
+	@Override
+	public com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
+			long redirectEntryId, String destinationURL,
+			java.util.Date expirationDate, boolean permanent, String sourceURL)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _redirectEntryService.updateRedirectEntry(
+			redirectEntryId, destinationURL, expirationDate, permanent,
+			sourceURL);
 	}
 
 	@Override

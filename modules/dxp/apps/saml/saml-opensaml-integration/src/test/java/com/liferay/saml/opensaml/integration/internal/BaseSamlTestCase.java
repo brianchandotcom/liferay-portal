@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.constants.SamlProviderConfigurationKeys;
 import com.liferay.saml.opensaml.integration.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.binding.HttpPostBinding;
 import com.liferay.saml.opensaml.integration.internal.binding.HttpRedirectBinding;
@@ -316,7 +317,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		when(
 			samlProviderConfiguration.role()
 		).thenReturn(
-			"idp"
+			SamlProviderConfigurationKeys.SAML_ROLE_IDP
 		);
 
 		when(
@@ -336,7 +337,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		when(
 			samlProviderConfiguration.role()
 		).thenReturn(
-			"sp"
+			SamlProviderConfigurationKeys.SAML_ROLE_SP
 		);
 
 		when(

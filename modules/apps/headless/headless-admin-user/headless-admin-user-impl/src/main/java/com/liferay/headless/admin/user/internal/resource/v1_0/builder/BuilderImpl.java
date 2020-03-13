@@ -15,7 +15,6 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0.builder;
 
 import com.liferay.headless.admin.user.resource.v1_0.PhoneResource;
-import com.liferay.headless.admin.user.resource.v1_0.builder.PhoneResourceBuilder;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -38,12 +37,12 @@ import org.osgi.service.component.annotations.ReferenceScope;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(service = PhoneResourceBuilder.class)
-public class PhoneResourceBuilderImpl implements PhoneResourceBuilder {
+@Component(immediate = true, service = PhoneResource.Builder.class)
+public class BuilderImpl implements PhoneResource.Builder {
 
 	@Override
-	public InitializedPhoneResourceBuilder initialize() {
-		return new InitializedPhoneResourceBuilder() {
+	public InitializedBuilder initialize() {
+		return new InitializedBuilder() {
 
 			@Override
 			public PhoneResource build() {
@@ -55,7 +54,7 @@ public class PhoneResourceBuilderImpl implements PhoneResourceBuilder {
 			}
 
 			@Override
-			public InitializedPhoneResourceBuilder usePermissionChecker(
+			public InitializedBuilder usePermissionChecker(
 				boolean usePermissionChecker) {
 
 				_usePermissionChecker = usePermissionChecker;
@@ -64,7 +63,7 @@ public class PhoneResourceBuilderImpl implements PhoneResourceBuilder {
 			}
 
 			@Override
-			public InitializedPhoneResourceBuilder user(User user) {
+			public InitializedBuilder user(User user) {
 				_user = user;
 
 				return this;
@@ -78,12 +77,12 @@ public class PhoneResourceBuilderImpl implements PhoneResourceBuilder {
 
 	@Activate
 	protected void activate() {
-		PhoneResource.PhoneResourceBuilderHolder.phoneResourceBuilder = this;
+		PhoneResource.BuilderHolder.builder = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		PhoneResource.PhoneResourceBuilderHolder.phoneResourceBuilder = null;
+		PhoneResource.BuilderHolder.builder = null;
 	}
 
 	private Object _invoke(

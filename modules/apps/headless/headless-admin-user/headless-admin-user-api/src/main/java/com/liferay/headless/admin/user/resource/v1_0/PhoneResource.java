@@ -15,7 +15,6 @@
 package com.liferay.headless.admin.user.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
-import com.liferay.headless.admin.user.resource.v1_0.builder.PhoneResourceBuilder;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -27,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.portal.kernel.model.User;
 
 /**
  * To access this resource, run:
@@ -69,13 +69,30 @@ public interface PhoneResource {
 	public void setContextUser(
 		com.liferay.portal.kernel.model.User contextUser);
 
-	public static PhoneResourceBuilder builder() {
-		return PhoneResourceBuilderHolder.phoneResourceBuilder;
+	public static Builder builder() {
+		return BuilderHolder.builder;
 	}
 
-	public static class PhoneResourceBuilderHolder {
+	public interface Builder {
 
-		public static volatile PhoneResourceBuilder phoneResourceBuilder;
+		public InitializedBuilder initialize();
+
+		public interface InitializedBuilder {
+
+			public PhoneResource build();
+
+			public InitializedBuilder usePermissionChecker(
+				boolean usePermissionChecker);
+
+			public InitializedBuilder user(User user);
+
+		}
+
+	}
+
+	public static class BuilderHolder {
+
+		public static volatile Builder builder;
 
 	}
 

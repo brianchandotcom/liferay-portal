@@ -17,7 +17,6 @@ package com.liferay.headless.admin.user.resource.v1_0.builder.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.resource.v1_0.PhoneResource;
-import com.liferay.headless.admin.user.resource.v1_0.builder.PhoneResourceBuilder;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -59,7 +58,8 @@ public class PhoneResourceBuilderTest {
 		User user = UserTestUtil.addCompanyAdminUser(
 			_companyLocalService.getCompany(organization.getCompanyId()));
 
-		PhoneResource phoneResource = _phoneResourceBuilder.initialize(
+		PhoneResource phoneResource = PhoneResource.builder(
+		).initialize(
 		).user(
 			user
 		).build();
@@ -91,7 +91,8 @@ public class PhoneResourceBuilderTest {
 
 		User user = UserTestUtil.addUser();
 
-		PhoneResource phoneResource = _phoneResourceBuilder.initialize(
+		PhoneResource phoneResource = PhoneResource.builder(
+		).initialize(
 		).usePermissionChecker(
 			false
 		).user(
@@ -121,9 +122,6 @@ public class PhoneResourceBuilderTest {
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
-
-	@Inject
-	private PhoneResourceBuilder _phoneResourceBuilder;
 
 	@Inject
 	private UserLocalService _userLocalService;

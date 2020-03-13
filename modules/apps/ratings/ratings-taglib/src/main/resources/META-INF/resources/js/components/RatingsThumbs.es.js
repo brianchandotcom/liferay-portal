@@ -116,8 +116,10 @@ const RatingsThumbs = ({
 		})
 			.then(response => response.json())
 			.then(({totalEntries, totalScore}) => {
-				setNegativeVotes(totalEntries - totalScore);
-				setPositiveVotes(totalScore);
+				if (totalEntries && totalScore) {
+					setNegativeVotes(totalEntries - totalScore);
+					setPositiveVotes(totalScore);
+				}
 			});
 	};
 

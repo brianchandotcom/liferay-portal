@@ -18,47 +18,204 @@ import {act} from 'react-dom/test-utils';
 
 import RatingsThumbs from '../../src/main/resources/META-INF/resources/js/components/RatingsThumbs.es';
 
-const requiredProps = {
-	className: 'className',
+const formDataToObj = formData =>
+	Array.from(formData.entries()).reduce((accumulator, [key, value]) => {
+		accumulator[key] = value;
+
+		return accumulator;
+	}, {});
+
+themeDisplay.getPlid = themeDisplay.getPlid || jest.fn(() => 'plid');
+
+const defaultProps = {
+	className: 'com.liferay.model.RateableEntry',
 	classPK: 'classPK',
+	enabled: true,
 	signedIn: true,
 	url: 'http://url',
-	enabled: true,
 };
 
-themeDisplay.getPlid = themeDisplay.getPlid || (() => 'plis');
-
-const renderComponent = props => render(<RatingsThumbs {...props} />);
+const renderComponent = (props = defaultProps) =>
+	render(<RatingsThumbs {...props} />);
 
 describe('RatingsThumbs', () => {
 	afterEach(cleanup);
 
-	it('renders with the component defaults props', () => {
-		const {getAllByRole} = renderComponent(requiredProps);
+	describe('render', () => {
+		it('disabled', () => {
+			const {getAllByRole} = renderComponent({
+				...defaultProps,
+				enabled: false,
+			});
 
-		const [thumbUpButton, thumbDownButton] = getAllByRole('button');
+			const [thumbUpButton, thumbDownButton] = getAllByRole('button');
 
-		expect(thumbUpButton.value).toBe('0');
-		expect(thumbDownButton.value).toBe('0');
+			expect(thumbUpButton.disabled).toBe(true);
+			expect(thumbDownButton.disabled).toBe(true);
+		});
+
+		it('enabled and default votes', () => {
+			const {getAllByRole} = renderComponent();
+
+			const [thumbUpButton, thumbDownButton] = getAllByRole('button');
+
+			expect(thumbUpButton.value).toBe('0');
+			expect(thumbDownButton.value).toBe('0');
+			expect(thumbUpButton.disabled).toBe(false);
+			expect(thumbDownButton.disabled).toBe(false);
+		});
 	});
 
-	it('thumbUp works', async () => {
-		fetch.mockResponseOnce(
-			JSON.stringify({totalEntries: 1, totalScore: 1})
-		);
-
-		const result = renderComponent({
-			...requiredProps,
-			initialPositiveVotes: 0,
-		});
-		const {getAllByRole} = result;
-		const [thumbUpButton] = getAllByRole('button');
-
-		await act(async () => {
-			fireEvent.click(thumbUpButton);
+	describe('render without server response', () => {
+		beforeEach(() => {
+			// Return a empty obj response and component ignore the server update
+			fetch.mockResponseOnce(JSON.stringify({}));
 		});
 
+		it('vote up then increments UI', async () => {
+			const {getAllByRole} = renderComponent({
+				...defaultProps,
+				initialNegativeVotes: 10,
+				initialPositiveVotes: 26,
+			});
 
-		expect(thumbUpButton.value).toBe('1');
+			const [thumbUpButton, thumbDownButton] = getAllByRole('button');
+
+			await act(async () => {
+				fireEvent.click(thumbUpButton);
+			});
+
+			expect(thumbUpButton.value).toBe('27');
+			expect(thumbDownButton.value).toBe('10');
+		});
+
+		it('vote down then increments UI', async () => {
+			const {getAllByRole} = renderComponent({
+				...defaultProps,
+				initialNegativeVotes: 10,
+				initialPositiveVotes: 26,
+			});
+
+			const [thumbUpButton, thumbDownButton] = getAllByRole('button');
+
+			await act(async () => {
+				fireEvent.click(thumbDownButton);
+			});
+
+			expect(thumbUpButton.value).toBe('26');
+			expect(thumbDownButton.value).toBe('11');
+		});
+
+		it('vote up in voted up then unvote', async () => {
+			const {getAllByRole} = renderComponent({
+				...defaultProps,
+				initialNegativeVotes: 10,
+				initialPositiveVotes: 26,
+				thumbUp: true,
+			});
+
+			const [thumbUpButton, thumbDownButton] = getAllByRole('button');
+
+			await act(async () => {
+				fireEvent.click(thumbUpButton);
+			});
+
+			expect(thumbUpButton.value).toBe('25');
+			expect(thumbDownButton.value).toBe('10');
+		});
+
+		it('vote down in voted down then unvote', async () => {
+			const {getAllByRole} = renderComponent({
+				...defaultProps,
+				initialNegativeVotes: 10,
+				initialPositiveVotes: 26,
+				thumbDown: true,
+			});
+
+			const [thumbUpButton, thumbDownButton] = getAllByRole('button');
+
+			await act(async () => {
+				fireEvent.click(thumbDownButton);
+			});
+
+			expect(thumbUpButton.value).toBe('26');
+			expect(thumbDownButton.value).toBe('9');
+		});
+
+		it('vote up in voted down and increase and unvote', async () => {
+			const {getAllByRole} = renderComponent({
+				...defaultProps,
+				initialNegativeVotes: 10,
+				initialPositiveVotes: 26,
+				thumbDown: true,
+			});
+
+			const [thumbUpButton, thumbDownButton] = getAllByRole('button');
+
+			await act(async () => {
+				fireEvent.click(thumbUpButton);
+			});
+
+			expect(thumbUpButton.value).toBe('27');
+			expect(thumbDownButton.value).toBe('9');
+		});
+
+		it('vote down in voted up and increase and unvote', async () => {
+			const {getAllByRole} = renderComponent({
+				...defaultProps,
+				initialNegativeVotes: 10,
+				initialPositiveVotes: 26,
+				thumbUp: true,
+			});
+
+			const [thumbUpButton, thumbDownButton] = getAllByRole('button');
+
+			await act(async () => {
+				fireEvent.click(thumbDownButton);
+			});
+
+			expect(thumbUpButton.value).toBe('25');
+			expect(thumbDownButton.value).toBe('11');
+		});
+	});
+
+	describe('render with server response', () => {
+		beforeEach(() => {
+			fetch.mockResponseOnce(
+				JSON.stringify({totalEntries: 59 + 27, totalScore: 59})
+			);
+		});
+
+		it('vote up and POST to server url', async () => {
+			const {getAllByRole} = renderComponent();
+			const [thumbUpButton] = getAllByRole('button');
+
+			await act(async () => {
+				fireEvent.click(thumbUpButton);
+			});
+
+			const [url, {body}] = fetch.mock.calls[0];
+			const objFormData = formDataToObj(body);
+
+			expect(url).toBe(defaultProps.url);
+			expect(objFormData.className).toBe(defaultProps.className);
+			expect(objFormData.score).toBe('1');
+		});
+
+		it('vote up and update the counters with server response', async () => {
+			fetch.mockResponseOnce(
+				JSON.stringify({totalEntries: 59 + 27, totalScore: 59})
+			);
+
+			const {getAllByRole} = renderComponent();
+			const [thumbUpButton, thumbDownButton] = getAllByRole('button');
+
+			await act(async () => {
+				fireEvent.click(thumbUpButton);
+			});
+
+			expect(thumbUpButton.value).toBe('59');
+			expect(thumbDownButton.value).toBe('27');
+		});
 	});
 });

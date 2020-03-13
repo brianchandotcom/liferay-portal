@@ -25,17 +25,17 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rafael Praxedes
  */
 @Component(
-	immediate = true, property = "workflow.metrics.index.entity.name=token",
+	immediate = true, property = "workflow.metrics.index.entity.name=task",
 	service = WorkflowMetricsIndexNameBuilder.class
 )
-public class TokenWorkflowMetricsIndexNameBuilder
+public class TaskWorkflowMetricsIndexNameBuilder
 	implements WorkflowMetricsIndexNameBuilder {
 
 	@Override
 	public String getIndexName(long companyId) {
 		return WorkflowMetricsIndexNameBuilderUtil.getIndexName(
 			companyId, indexNameBuilder.getIndexName(companyId),
-			"workflow-metrics-tokens");
+			"workflow-metrics-tasks");
 	}
 
 	@Reference

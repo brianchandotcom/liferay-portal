@@ -932,7 +932,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 	private static final String _CLASS_NAME_TOKEN_INDEXER =
 		"com.liferay.portal.workflow.metrics.internal.search.index." +
-			"TokenWorkflowMetricsIndexer";
+			"TaskWorkflowMetricsIndexer";
 
 	@Reference
 	private DocumentBuilderFactory _documentBuilderFactory;

@@ -408,6 +408,8 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 	private void _resetProperties() {
 		entitySchemaProperties.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
 
+		inboundSchemaProperties.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
+
 		outboundSchemaProperties.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
 
 		rejectSchemaProperties.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
@@ -504,6 +506,8 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		}
 
 		entitySchemaProperties.schema.setValue(endpointSchema);
+
+		inboundSchemaProperties.schema.setValue(endpointSchema);
 
 		rejectSchemaProperties.schema.setValue(
 			SchemaUtils.createRejectSchema(endpointSchema));

@@ -992,8 +992,8 @@ definition {
 			AssertElementNotPresent(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR");
 
 			Click(
+				id = "element-text",
 				key_fragmentName = "Heading",
-				key_id = "element-text",
 				locator1 = "Fragment#EDITABLE_FIELD");
 
 			AssertElementNotPresent(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR");

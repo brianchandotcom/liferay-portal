@@ -245,7 +245,7 @@ definition {
 		}
 
 		Click(
-			key_id = "${id}",
+			id = "${id}",
 			locator1 = "Fragment#EDITABLE_FIELD");
 	}
 
@@ -565,8 +565,8 @@ definition {
 			id = "${id}");
 
 		Type(
+			id = "${id}",
 			key_fragmentName = "${fragmentName}",
-			key_id = "${id}",
 			locator1 = "Fragment#EDITABLE_FIELD_CK_EDITOR",
 			value1 = "${text}");
 
@@ -1023,8 +1023,8 @@ definition {
 
 	macro viewFragmentEditableText {
 		AssertTextEquals(
+			id = "${id}",
 			key_fragmentName = "${fragmentName}",
-			key_id = "${id}",
 			locator1 = "Fragment#EDITABLE_FIELD",
 			value1 = "${editableText}");
 	}

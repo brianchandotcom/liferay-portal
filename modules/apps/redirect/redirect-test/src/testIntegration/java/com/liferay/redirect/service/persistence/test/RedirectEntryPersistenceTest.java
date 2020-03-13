@@ -263,6 +263,12 @@ public class RedirectEntryPersistenceTest {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		_persistence.filterFindByGroupId(
+			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+	}
+
 	protected OrderByComparator<RedirectEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"RedirectEntry", "mvccVersion", true, "uuid", true,

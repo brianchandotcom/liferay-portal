@@ -37,6 +37,24 @@ public class RedirectEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.redirect.service.impl.RedirectEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addEntryResources(
+			com.liferay.redirect.model.RedirectEntry entry,
+			boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().addEntryResources(
+			entry, addGroupPermissions, addGuestPermissions);
+	}
+
+	public static void addEntryResources(
+			com.liferay.redirect.model.RedirectEntry entry,
+			com.liferay.portal.kernel.service.permission.ModelPermissions
+				modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().addEntryResources(entry, modelPermissions);
+	}
+
 	public static com.liferay.redirect.model.RedirectEntry addRedirectEntry(
 			long groupId, String destinationURL, java.util.Date expirationDate,
 			boolean permanent, String sourceURL,

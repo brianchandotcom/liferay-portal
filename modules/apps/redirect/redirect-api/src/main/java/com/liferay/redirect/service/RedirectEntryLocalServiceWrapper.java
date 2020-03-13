@@ -35,13 +35,13 @@ public class RedirectEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.redirect.model.RedirectEntry addRedirectEntry(
-			long groupId, String destinationURL, String sourceURL,
-			boolean temporary, java.util.Date expirationDate,
+			long groupId, String destinationURL, java.util.Date expirationDate,
+			String sourceURL, boolean temporary,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _redirectEntryLocalService.addRedirectEntry(
-			groupId, destinationURL, sourceURL, temporary, expirationDate,
+			groupId, destinationURL, expirationDate, sourceURL, temporary,
 			serviceContext);
 	}
 
@@ -401,13 +401,13 @@ public class RedirectEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
-			long redirectEntryId, String destinationURL, String sourceURL,
-			boolean temporary, java.util.Date expirationDate)
+			long redirectEntryId, String destinationURL,
+			java.util.Date expirationDate, String sourceURL, boolean temporary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _redirectEntryLocalService.updateRedirectEntry(
-			redirectEntryId, destinationURL, sourceURL, temporary,
-			expirationDate);
+			redirectEntryId, destinationURL, expirationDate, sourceURL,
+			temporary);
 	}
 
 	/**

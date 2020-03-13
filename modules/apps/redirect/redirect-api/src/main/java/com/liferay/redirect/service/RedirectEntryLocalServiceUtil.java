@@ -38,13 +38,13 @@ public class RedirectEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.redirect.service.impl.RedirectEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.redirect.model.RedirectEntry addRedirectEntry(
-			long groupId, String destinationURL, String sourceURL,
-			boolean temporary, java.util.Date expirationDate,
+			long groupId, String destinationURL, java.util.Date expirationDate,
+			String sourceURL, boolean temporary,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addRedirectEntry(
-			groupId, destinationURL, sourceURL, temporary, expirationDate,
+			groupId, destinationURL, expirationDate, sourceURL, temporary,
 			serviceContext);
 	}
 
@@ -372,13 +372,13 @@ public class RedirectEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
-			long redirectEntryId, String destinationURL, String sourceURL,
-			boolean temporary, java.util.Date expirationDate)
+			long redirectEntryId, String destinationURL,
+			java.util.Date expirationDate, String sourceURL, boolean temporary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateRedirectEntry(
-			redirectEntryId, destinationURL, sourceURL, temporary,
-			expirationDate);
+			redirectEntryId, destinationURL, expirationDate, sourceURL,
+			temporary);
 	}
 
 	/**

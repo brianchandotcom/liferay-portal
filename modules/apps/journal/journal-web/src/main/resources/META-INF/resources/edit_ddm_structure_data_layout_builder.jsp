@@ -229,18 +229,13 @@ if (ddmStructure != null) {
 			'<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
 		).then(function(dataLayoutBuilder) {
 			var name = <portlet:namespace />getInputLocalizedValues('name');
-			var description = <portlet:namespace />getInputLocalizedValues(
-				'description'
-			);
 
 			dataLayoutBuilder
 				.save({
 					dataDefinition: {
-						description: description,
 						name: name,
 					},
 					dataLayout: {
-						description: description,
 						name: name,
 					},
 				})

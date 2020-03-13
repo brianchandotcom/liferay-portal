@@ -19,8 +19,15 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.redirect.model.RedirectEntry;
+
+import java.util.Date;
+import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -47,6 +54,17 @@ public interface RedirectEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RedirectEntryServiceUtil} to access the redirect entry remote service. Add custom service methods to <code>com.liferay.redirect.service.impl.RedirectEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public RedirectEntry addRedirectEntry(
+			long groupId, String destinationURL, Date expirationDate,
+			boolean permanent, String sourceURL, ServiceContext serviceContext)
+		throws PortalException;
+
+	public RedirectEntry deleteRedirectEntry(long redirectEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public RedirectEntry fetchRedirectEntry(long redirectEntryId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -54,5 +72,19 @@ public interface RedirectEntryService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<RedirectEntry> getRedirectEntries(
+			long groupId, int start, int end,
+			OrderByComparator<RedirectEntry> obc)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRedirectEntriesCount(long groupId) throws PortalException;
+
+	public RedirectEntry updateRedirectEntry(
+			long redirectEntryId, String destinationURL, Date expirationDate,
+			boolean permanent, String sourceURL)
+		throws PortalException;
 
 }

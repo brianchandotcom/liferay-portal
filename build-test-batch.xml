@@ -2010,6 +2010,20 @@ com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=300000</echo>
 								/>
 							</delete>
 
+							<if>
+								<not>
+									<resourcecount count="0" when="greater">
+										<fileset
+											dir="${app.server.parent.dir}/osgi/temp"
+											includes="*.lpkg"
+										/>
+									</resourcecount>
+								</not>
+								<then>
+									<fail>No LPKGs found to deploy on portal after startup.</fail>
+								</then>
+							</if>
+
 							<trycatch>
 								<try>
 									<antcall inheritall="false" target="start-app-server" />

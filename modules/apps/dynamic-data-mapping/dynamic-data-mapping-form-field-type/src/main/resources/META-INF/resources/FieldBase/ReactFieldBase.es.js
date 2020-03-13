@@ -27,6 +27,7 @@ function FieldBase({
 	label,
 	localizedValue = {},
 	name,
+	onClick,
 	onRemoveButton,
 	onRepeatButton,
 	readOnly,
@@ -63,6 +64,7 @@ function FieldBase({
 					hide: !visible,
 				})}
 				data-field-name={name}
+				onClick={onClick}
 			>
 				{repeatable && (
 					<div className="lfr-ddm-form-field-repeatable-toolbar">
@@ -160,6 +162,9 @@ const FieldBaseProxy = ({dispatch, name, store, ...otherProps}) => (
 		{...otherProps}
 		editingLanguageId={store.editingLanguageId}
 		name={name}
+		onClick={event =>
+			dispatch('fieldClicked', {fieldName: name, originalEvent: event})
+		}
 		onRemoveButton={() => dispatch('fieldRemoved', name)}
 		onRepeatButton={() => dispatch('fieldRepeated', name)}
 	/>

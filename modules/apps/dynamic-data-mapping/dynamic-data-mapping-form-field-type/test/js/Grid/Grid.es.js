@@ -142,12 +142,12 @@ describe('Grid', () => {
 		const handleFieldBlurred = data => {
 			expect(data).toEqual(
 				expect.objectContaining({
-					value: 'colFieldId1'
+					value: 'colFieldId1',
 				})
 			);
 			done();
 		};
-		
+
 		const events = {fieldBlurred: handleFieldBlurred};
 
 		component = new GridWithContextMock({
@@ -190,13 +190,13 @@ describe('Grid', () => {
 					fieldInstance: expect.any(Object),
 					originalEvent: expect.any(Object),
 					value: {
-						rowFieldId1: 'colFieldId1'
-					}
+						rowFieldId1: 'colFieldId1',
+					},
 				})
 			);
 			done();
 		};
-		
+
 		const events = {fieldEdited: handleFieldEdited};
 
 		component = new GridWithContextMock({
@@ -238,12 +238,12 @@ describe('Grid', () => {
 				expect.objectContaining({
 					fieldInstance: expect.any(Object),
 					originalEvent: expect.any(Object),
-					value: 'colFieldId1'
+					value: 'colFieldId1',
 				})
 			);
 			done();
 		};
-		
+
 		const events = {fieldFocused: handleFieldFocused};
 
 		component = new GridWithContextMock({

@@ -171,29 +171,55 @@ String eventName = renderResponse.getNamespace() + "assignSiteRoles";
 PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(renderRequest), eventName, itemSelectorCriterion);
 %>
 
+<portlet:actionURL name="updateSegmentsEntrySiteRoles" var="updateSegmentsEntrySiteRolesURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= updateSegmentsEntrySiteRolesURL %>" cssClass="hide" method="post" name="updateSegmentsEntrySiteRolesFm">
+	<aui:input name="segmentsEntryId" type="hidden" />
+	<aui:input name="siteRoleIds" type="hidden" />
+</aui:form>
+
 <aui:script require="metal-dom/src/all/dom as dom, frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+	var form = document.getElementById(
+		'<portlet:namespace/>updateSegmentsEntrySiteRolesFm'
+	);
+
 	dom.delegate(document, 'click', '.assign-site-roles-link', function(event) {
 		var link = dom.closest(event.target, '.assign-site-roles-link');
 
 		var segmentsEntryId = link.dataset.segmentsentryid;
+		var roleIds = link.dataset.roleids;
+
+		var parameters = {
+			p_p_id: '<%= ItemSelectorPortletKeys.ITEM_SELECTOR %>',
+		};
+
+		if (roleIds) {
+			parameters.checkedRoleIds = roleIds;
+		}
+
+		var url = Liferay.Util.PortletURL.createRenderURL(
+			'<%= itemSelectorURL.toString() %>',
+			parameters
+		);
 
 		var itemSelectorDialog = new ItemSelectorDialog.default({
 			eventName: '<%= eventName %>',
 			title: 'assign-site-roles',
-			url: '<%= itemSelectorURL.toString() %>',
+			url: url.toString(),
 		});
 
 		itemSelectorDialog.on('selectedItemChange', function(event) {
 			var selectedItem = event.selectedItem;
 
 			if (selectedItem) {
-				console.info(selectedItem);
-			}
-			else {
-				console.error(
-					'no selected item for segmetnsEntryId: ',
-					segmentsEntryId
-				);
+				var data = {
+					segmentsEntryId: segmentsEntryId,
+					siteRoleIds: selectedItem.value,
+				};
+
+				Liferay.Util.postForm(form, {data: data});
 			}
 		});
 

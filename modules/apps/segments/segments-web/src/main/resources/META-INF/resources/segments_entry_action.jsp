@@ -84,8 +84,16 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 		/>
 	</c:if>
 
+	<%
+	Map<String, Object> data = HashMapBuilder.<String, Object>put(
+		"roleIds", StringUtil.merge(segmentsEntry.getRoleIds())
+	).put(
+		"segmentsEntryId", segmentsEntry.getSegmentsEntryId()
+	).build();
+	%>
+
 	<liferay-ui:icon
-		data='<%= Collections.singletonMap("segmentsEntryId", segmentsEntry.getSegmentsEntryId()) %>'
+		data="<%= data %>"
 		linkCssClass="assign-site-roles-link"
 		message="assign-site-roles"
 		url="javascript:;"

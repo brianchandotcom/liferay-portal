@@ -390,6 +390,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SECTION_BUILDER_LAYOUT_ELEMENTS</td>
+	<td>//div[contains(@class,'page-editor')]//button[@aria-label='${key_elementType}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -21,7 +21,7 @@ import ReactDOM from 'react-dom';
 
 import Observer from './Observer.es';
 
-const CONFIG_BLACKLIST = ['children', 'events', 'key', 'ref', 'visible'];
+const CONFIG_BLACKLIST = ['children', 'events', 'ref', 'visible'];
 const CONFIG_DEFAULT = ['displayErrors'];
 
 /**

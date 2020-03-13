@@ -1710,6 +1710,8 @@ app.server.type=@{app.server.type}]]></echo>
 								<equals arg1="${build.profile}" arg2="dxp" />
 								<then>
 									<antcall inheritAll="false" target="setup-profile-dxp" />
+
+									<antcall target="install-portal-snapshots" />
 								</then>
 							</if>
 
@@ -1876,6 +1878,8 @@ com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=300000</echo>
 								<equals arg1="${build.profile}" arg2="dxp" />
 								<then>
 									<antcall inheritAll="false" target="setup-profile-dxp" />
+
+									<antcall target="install-portal-snapshots" />
 								</then>
 							</if>
 
@@ -2216,6 +2220,8 @@ log.sanitizer.enabled=false</echo>
 								<equals arg1="${build.profile}" arg2="dxp" />
 								<then>
 									<antcall inheritAll="false" target="setup-profile-dxp" />
+
+									<antcall target="install-portal-snapshots" />
 								</then>
 							</if>
 
@@ -2794,6 +2800,8 @@ log.sanitizer.enabled=false</echo>
 				<equals arg1="${build.profile}" arg2="dxp" />
 				<then>
 					<antcall inheritAll="false" target="setup-profile-dxp" />
+
+					<antcall target="install-portal-snapshots" />
 				</then>
 			</if>
 

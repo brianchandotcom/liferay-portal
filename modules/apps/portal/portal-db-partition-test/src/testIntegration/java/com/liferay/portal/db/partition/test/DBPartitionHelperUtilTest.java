@@ -21,7 +21,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.init.DBInitUtil;
 import com.liferay.portal.db.partition.DBPartitionHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
@@ -73,6 +72,10 @@ public class DBPartitionHelperUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_connection = DataAccess.getConnection();
+
+		_defaultSchemaName = _connection.getCatalog();
+
 		_currentDatabasePartitionEnabledValue =
 			ReflectionTestUtil.getAndSetFieldValue(
 				DBPartitionHelperUtil.class, "_DATABASE_PARTITION_ENABLED",
@@ -89,17 +92,14 @@ public class DBPartitionHelperUtilTest {
 		DataSource dbPartitionDataSource = DBPartitionHelperUtil.wrapDataSource(
 			_currentDataSource);
 
+		DBPartitionHelperUtil.setDefaultCompanyId(
+			_portal.getDefaultCompanyId());
+
 		ReflectionTestUtil.setFieldValue(
 			DBInitUtil.class, "_dataSource", dbPartitionDataSource);
 
 		ReflectionTestUtil.setFieldValue(
 			InfrastructureUtil.class, "_dataSource", dbPartitionDataSource);
-
-		_connection = DataAccess.getConnection();
-
-		DBInspector dbInspector = new DBInspector(_connection);
-
-		_defaultSchemaName = dbInspector.getCatalog();
 
 		_db.runSQL("create schema " + _getSchemaName() + " character set utf8");
 	}
@@ -172,9 +172,6 @@ public class DBPartitionHelperUtilTest {
 
 	@Test
 	public void testAddDefaultPartition() throws PortalException {
-		DBPartitionHelperUtil.setDefaultCompanyId(
-			_portal.getDefaultCompanyId());
-
 		Assert.assertFalse(
 			DBPartitionHelperUtil.addPartition(_portal.getDefaultCompanyId()));
 	}
@@ -228,6 +225,6 @@ public class DBPartitionHelperUtilTest {
 	private static String _defaultSchemaName;
 
 	@Inject
-	private Portal _portal;
+	private static Portal _portal;
 
 }

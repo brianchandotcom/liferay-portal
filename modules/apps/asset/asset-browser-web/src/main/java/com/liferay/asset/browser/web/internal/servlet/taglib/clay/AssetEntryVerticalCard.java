@@ -132,9 +132,7 @@ public class AssetEntryVerticalCard implements VerticalCard {
 	@Override
 	public List<LabelItem> getLabels() {
 		return LabelItemListBuilder.add(
-			labelItem -> {
-				labelItem.setStatus(_assetRenderer.getStatus());
-			}
+			labelItem -> labelItem.setStatus(_assetRenderer.getStatus())
 		).build();
 	}
 

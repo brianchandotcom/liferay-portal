@@ -235,7 +235,7 @@
 					Liferay.Util.getOpener().Liferay.fire(
 						'<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>',
 						{
-							data: event.delegateTarget.dataset
+							data: event.delegateTarget.dataset,
 						}
 					);
 				}

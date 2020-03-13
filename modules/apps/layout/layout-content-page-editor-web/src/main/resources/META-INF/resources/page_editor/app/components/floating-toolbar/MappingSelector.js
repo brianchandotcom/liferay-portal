@@ -95,8 +95,15 @@ export default function MappingSelector({
 		MAPPING_SOURCE_TYPE_IDS.content
 	);
 
-	const onInfoItemSelect = selectedItem => {
-		setSelectedItem({...selectedItem, fieldId: '', mappedField: ''});
+	const onInfoItemSelect = selectedInfoItem => {
+		setSelectedItem(selectedInfoItem);
+
+		onMappingSelect({
+			classNameId: '',
+			classPK: '',
+			fieldId: '',
+			mappedField: '',
+		});
 	};
 
 	const onFieldSelect = event => {
@@ -194,6 +201,15 @@ export default function MappingSelector({
 						id="mappingSelectorSourceSelect"
 						onChange={event => {
 							setSelectedSourceTypeId(event.target.value);
+
+							setSelectedItem({});
+
+							onMappingSelect({
+								classNameId: '',
+								classPK: '',
+								fieldId: '',
+								mappedField: '',
+							});
 						}}
 						options={[
 							{

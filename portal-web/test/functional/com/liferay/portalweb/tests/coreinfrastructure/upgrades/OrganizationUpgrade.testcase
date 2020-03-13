@@ -49,6 +49,33 @@ definition {
 	}
 
 	@priority = "5"
+	test AddOrganizationAfterUpgrade720 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.0";
+
+		Upgrade.addOrganization();
+	}
+
+	@priority = "5"
+	test AddOrganizationAfterUpgrade721 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.1";
+
+		Upgrade.addOrganization();
+	}
+
+	@priority = "5"
+	test AddOrganizationAfterUpgrade730 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.0";
+
+		Upgrade.addOrganization();
+	}
+
+	@priority = "5"
 	test AddOrganizationAfterUpgrade7110 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.1.10";
@@ -57,9 +84,25 @@ definition {
 	}
 
 	@priority = "5"
+	test AddOrganizationAfterUpgrade7210 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.2.10";
+
+		Upgrade.addOrganization();
+	}
+
+	@priority = "5"
 	test AddOrganizationAfterUpgrade70106 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.0.10.6";
+
+		Upgrade.addOrganization();
+	}
+
+	@priority = "5"
+	test AddOrganizationAfterUpgrade72101 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.2.10.1";
 
 		Upgrade.addOrganization();
 	}

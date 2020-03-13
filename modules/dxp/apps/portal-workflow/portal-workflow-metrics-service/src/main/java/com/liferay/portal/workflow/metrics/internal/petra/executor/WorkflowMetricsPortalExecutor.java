@@ -22,7 +22,6 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
@@ -46,7 +45,7 @@ public class WorkflowMetricsPortalExecutor {
 	public <T extends Throwable> void execute(
 		UnsafeRunnable<T> unsafeRunnable) {
 
-		TransactionCommitCallbackUtil.registerCallback(
+		_noticeableExecutorService.submit(
 			() -> {
 				if (PortalRunMode.isTestMode()) {
 					try {
@@ -67,8 +66,6 @@ public class WorkflowMetricsPortalExecutor {
 							}
 						});
 				}
-
-				return null;
 			});
 	}
 

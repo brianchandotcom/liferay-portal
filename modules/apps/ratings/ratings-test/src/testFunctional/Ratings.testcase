@@ -372,7 +372,7 @@ definition {
 	}
 
 	@priority = "5"
-	test RateAndEditPageComment {
+	test RateAndEditWikiPageComment {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
@@ -471,7 +471,7 @@ definition {
 	}
 
 	@priority = "5"
-	test RatePage {
+	test RateWikiPage {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
@@ -507,7 +507,7 @@ definition {
 
 	@priority = "3"
 	test ViewKBArticleWithEditedStarRatings {
-		property test.name.skip.portal.instance = "PGKnowledgebasedisplay#ViewKBArticleWithEditedStarRatings";
+		property test.name.skip.portal.instance = "Ratings#ViewKBArticleWithEditedStarRatings";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -549,7 +549,7 @@ definition {
 
 	@priority = "4"
 	test ViewKBArticleWithStarRatings {
-		property test.name.skip.portal.instance = "PGKnowledgebasedisplay#ViewKBArticleWithStarRatings";
+		property test.name.skip.portal.instance = "Ratings#ViewKBArticleWithStarRatings";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

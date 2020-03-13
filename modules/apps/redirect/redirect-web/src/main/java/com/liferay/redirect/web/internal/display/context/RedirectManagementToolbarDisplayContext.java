@@ -21,10 +21,17 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.redirect.model.RedirectEntry;
+import com.liferay.redirect.web.internal.resource.RedirectEntryPermission;
+import com.liferay.redirect.web.internal.resource.RedirectPermission;
 
 import java.util.List;
 import java.util.Map;
@@ -50,6 +57,9 @@ public class RedirectManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
+
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -62,6 +72,19 @@ public class RedirectManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
+	}
+
+	public String getAvailableActions(RedirectEntry redirectEntry)
+		throws PortalException {
+
+		if (RedirectEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), redirectEntry,
+				ActionKeys.DELETE)) {
+
+			return "deleteSelectedRedirectEntries";
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -93,6 +116,13 @@ public class RedirectManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
+		if (!RedirectPermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY)) {
+
+			return null;
+		}
+
 		try {
 			return CreationMenuBuilder.addPrimaryDropdownItem(
 				dropdownItem -> {
@@ -141,5 +171,7 @@ public class RedirectManagementToolbarDisplayContext
 			"create-date", "modified-date", "source-url", "destination-url"
 		};
 	}
+
+	private final ThemeDisplay _themeDisplay;
 
 }

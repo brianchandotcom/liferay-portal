@@ -42,7 +42,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 		>
 
 			<%
-			row.setData(HashMapBuilder.<String, Object>put("actions", "deleteSelectedRedirectEntries").build());
+			row.setData(HashMapBuilder.<String, Object>put("actions", redirectManagementToolbarDisplayContext.getAvailableActions(redirectEntry)).build());
 			%>
 
 			<liferay-ui:search-container-column-text

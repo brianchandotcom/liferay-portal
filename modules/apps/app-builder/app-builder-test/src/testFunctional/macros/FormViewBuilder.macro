@@ -234,6 +234,18 @@ definition {
 
 	macro openFormView {
 		AppBuilderAdmin.openItem(itemName = "${formViewName}");
+	macro enableCheckboxPredefined {
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormViewBuilder#CHECKBOX_PREDEFINED", key_fieldName = "${fieldName}")) {
+			Click(
+				key_fieldName = "${fieldName}",
+				locator1 = "FormViewBuilder#CHECKBOX_PREDEFINED_LIST");
+		}
+
+		FormViewBuilder.viewCheckboxChecked(fieldName = "${fieldName}");
+
+		Pause(
+			itemName = "${formViewName}",
+			locator1 = "1000");
 	}
 
 	macro openSidebar() {
@@ -272,6 +284,20 @@ definition {
 			value1 = "${selectOption}");
 	}
 
+	macro selectSelectOptionPredefined {
+		var key_selectOption = "${selectOption}";
+
+		Click(
+			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST",
+			value1 = "${selectOption}");
+
+		Click(
+			locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST",
+			value1 = "${selectOption}");
+
+		Pause(locator1 = "1000");
+	}
+
 	macro selectSelectWithMultipleOptions {
 		var key_fieldName = "${fieldName}";
 
@@ -280,8 +306,19 @@ definition {
 		}
 
 		Pause(locator1 = "1000");
+	}
 
+	macro selectSelectWithMultipleOptionsPredefined {
 
+		Click(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST");
+
+		var key_fieldName = "${fieldName}";
+
+		for (var selectOption : list "${selectOptionsList}") {
+			FormViewBuilder.enableCheckboxPredefined(fieldName = "${selectOption}");
+		}
+
+		Pause(locator1 = "1000");
 	}
 
 	macro setFieldHelpText {
@@ -306,6 +343,18 @@ definition {
 			value1 = "${fieldLabel}");
 	}
 
+	macro setFieldPredefinedDate {
+		Type(
+			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_DATE",
+			value1 = "${fieldValue}");
+	}
+
+	macro setFieldPredefinedText {
+		Type(
+			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_TEXT",
+			value1 = "${fieldValue}");
+	}
+
 	macro setFieldRequired {
 		FormViewBuilder.clickOnSwitcher(propertyName = "required");
 	}
@@ -313,6 +362,10 @@ definition {
 	macro setName {
 
 		AppBuilderAdmin.setName(title = "${formViewName}");
+	}
+
+	macro switchToAdvancedTab {
+		Click(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_TAB");
 	}
 
 	macro switchToFormViewTab {
@@ -376,6 +429,38 @@ definition {
 			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL",
 			value1 = "${fieldName}");
 	}
+	
+	macro validatePredefinedMultipleSelection {
+		var key_fieldName = "${fieldName}";
+
+		for (var selectOption : list "${selectOptionsList}") {
+			FormViewBuilder.viewCheckboxChecked(fieldName = "${selectOption}");
+		}
+	}
+
+	macro validatePredefinedSelectList {
+		var key_fieldName = "${fieldName}";
+		var key_fieldValue = "${fieldValue}";
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM_SELECTLIST",
+			value1 = "${fieldValue}");
+	}
+
+	macro validatePredefinedSingleSelection {
+		FormViewBuilder.viewSelectChecked(
+			fieldName = "${fieldName}",
+			fieldValue = "${fieldValue}");
+	}
+
+	macro validatePredefinedText {
+		var key_fieldName = "${fieldName}";
+		var key_fieldValue = "${fieldValue}";
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM",
+			value1 = "${fieldValue}");
+	}
 
 	macro validateSearchResult {
 		var key_fieldName = "${fieldLabel}";
@@ -414,95 +499,6 @@ definition {
 			locator1 = "FormViewBuilder#CHECKBOX");
 	}
 
-	macro switchToAdvancedTab {
-		Click(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_TAB");
-	
-	}
-
-	macro setFieldPredefinedText {
-		Type(
-			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_TEXT",
-			value1 = "${fieldValue}");
-	}
-
-	macro setFieldPredefinedDate {
-		Type(
-			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_DATE",
-			value1 = "${fieldValue}");
-	}
-
-	macro selectSelectOptionPredefined {
-		var key_selectOption = "${selectOption}";
-
-		Click(
-			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST",
-			value1 = "${selectOption}");
-
-		Click(
-			locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST",
-			value1 = "${selectOption}");
-
-		Pause(locator1 = "1000");
-	}
-
-	macro selectSelectWithMultipleOptionsPredefined {
-
-		Click(
-			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST");
-
-		var key_fieldName = "${fieldName}";
-
-		for (var selectOption : list "${selectOptionsList}") {
-			FormViewBuilder.enableCheckboxPredefined(fieldName = "${selectOption}");
-		}
-
-		Pause(locator1 = "1000");
-	}
-
-	macro enableCheckboxPredefined {
-		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormViewBuilder#CHECKBOX_PREDEFINED", key_fieldName = "${fieldName}")) {
-			Click(
-				key_fieldName = "${fieldName}",
-				locator1 = "FormViewBuilder#CHECKBOX_PREDEFINED_LIST");
-		}
-
-		FormViewBuilder.viewCheckboxChecked(fieldName = "${fieldName}");
-
-		Pause(locator1 = "1000")
-	}
-
-	macro validatePredefinedText {
-		var key_fieldName = "${fieldName}";
-		var key_fieldValue = "${fieldValue}";
-
-		AssertTextEquals(
-			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM",
-			value1 = "${fieldValue}");
-	}
-
-	macro validatePredefinedSelectList {
-		var key_fieldName = "${fieldName}";
-		var key_fieldValue = "${fieldValue}";
-
-		AssertTextEquals(
-			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM_SELECTLIST",
-			value1 = "${fieldValue}");
-	}
-
-	macro validatePredefinedMultipleSelection {
-		var key_fieldName = "${fieldName}";
-
-		for (var selectOption : list "${selectOptionsList}") {
-			FormViewBuilder.viewCheckboxChecked(fieldName = "${selectOption}");
-		}
-	}
-
-	macro validatePredefinedSingleSelection {
-			FormViewBuilder.viewSelectChecked(
-				fieldName = "${fieldName}",
-				fieldValue = "${fieldValue}");
-	}
-
 	macro viewSelectChecked {
 		var key_fieldName = "${fieldName}";
 		var key_fieldValue = "${fieldValue}";
@@ -512,4 +508,5 @@ definition {
 			key_fieldValue = "${fieldValue}",
 			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM");
 	}
+
 }

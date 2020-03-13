@@ -198,10 +198,14 @@ describe('TextField', () => {
 	});
 
 	it('dispatches updateEditableValues when the image description is changed', async () => {
+		jest.useFakeTimers();
+
 		const {getByLabelText} = renderComponent({});
 		const input = getByLabelText('image-description');
 
 		await userEvent.type(input, 'Random description');
+
+		jest.runAllTimers();
 
 		expect(updateEditableValues).toHaveBeenLastCalledWith(
 			expect.objectContaining({

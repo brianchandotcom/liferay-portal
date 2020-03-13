@@ -281,6 +281,11 @@ public class FjordSiteInitializer implements SiteInitializer {
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				serviceContext.getScopeGroupId(), layoutPageTemplateEntryKey);
 
+		if (layoutPageTemplateEntry == null) {
+			throw new IllegalArgumentException(
+				"Unable to get layout page template entry " + name);
+		}
+
 		Map<Locale, String> nameMap = HashMapBuilder.put(
 			LocaleUtil.getSiteDefault(), name
 		).build();

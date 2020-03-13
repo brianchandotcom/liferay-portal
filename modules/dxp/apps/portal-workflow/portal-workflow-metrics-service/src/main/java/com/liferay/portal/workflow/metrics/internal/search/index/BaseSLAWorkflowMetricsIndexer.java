@@ -14,8 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 
 /**
@@ -50,12 +49,9 @@ public abstract class BaseSLAWorkflowMetricsIndexer
 
 	private void _deleteDocuments(BooleanQuery booleanQuery) {
 		updateDocuments(
-			document -> new DocumentImpl() {
-				{
-					addKeyword("deleted", true);
-					addKeyword(Field.UID, document.getString(Field.UID));
-				}
-			},
+			HashMapBuilder.<String, Object>put(
+				"deleted", Boolean.TRUE
+			).build(),
 			booleanQuery);
 	}
 

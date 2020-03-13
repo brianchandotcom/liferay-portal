@@ -14,10 +14,11 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -27,8 +28,6 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLATaskResult;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
-
-import java.sql.Timestamp;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -47,76 +46,83 @@ public class SLATaskResultWorkflowMetricsIndexer
 	public Document createDocument(
 		WorkflowMetricsSLATaskResult workflowMetricsSLATaskResult) {
 
-		Document document = new DocumentImpl();
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		document.addUID(
-			"WorkflowMetricsSLATaskResult",
+		documentBuilder.setString(
+			Field.UID,
 			digest(
 				workflowMetricsSLATaskResult.getCompanyId(),
 				workflowMetricsSLATaskResult.getInstanceId(),
+				workflowMetricsSLATaskResult.getNodeId(),
 				workflowMetricsSLATaskResult.getProcessId(),
 				workflowMetricsSLATaskResult.getSLADefinitionId(),
-				workflowMetricsSLATaskResult.getTaskId(),
-				workflowMetricsSLATaskResult.getTokenId()));
+				workflowMetricsSLATaskResult.getTaskId()));
 
 		if (workflowMetricsSLATaskResult.getAssigneeId() != null) {
-			document.addKeyword(
+			documentBuilder.setLong(
 				"assigneeId", workflowMetricsSLATaskResult.getAssigneeId());
 		}
 
-		document.addKeyword(
-			"breached", workflowMetricsSLATaskResult.isBreached());
-		document.addKeyword(
-			"companyId", workflowMetricsSLATaskResult.getCompanyId());
+		documentBuilder.setValue(
+			"breached", workflowMetricsSLATaskResult.isBreached()
+		).setLong(
+			"companyId", workflowMetricsSLATaskResult.getCompanyId()
+		);
 
 		if (workflowMetricsSLATaskResult.getCompletionLocalDateTime() != null) {
-			document.addDateSortable(
+			documentBuilder.setDate(
 				"completionDate",
-				Timestamp.valueOf(
+				formatLocalDateTime(
 					workflowMetricsSLATaskResult.getCompletionLocalDateTime()));
 		}
 
 		if (workflowMetricsSLATaskResult.getCompletionUserId() != null) {
-			document.addKeyword(
+			documentBuilder.setLong(
 				"completionUserId",
 				workflowMetricsSLATaskResult.getCompletionUserId());
 		}
 
-		document.addKeyword("deleted", false);
-		document.addKeyword(
+		documentBuilder.setValue(
+			"deleted", false
+		).setValue(
 			"instanceCompleted",
-			workflowMetricsSLATaskResult.isInstanceCompleted());
-		document.addKeyword(
-			"instanceId", workflowMetricsSLATaskResult.getInstanceId());
+			workflowMetricsSLATaskResult.isInstanceCompleted()
+		).setLong(
+			"instanceId", workflowMetricsSLATaskResult.getInstanceId()
+		);
 
 		if (workflowMetricsSLATaskResult.getLastCheckLocalDateTime() != null) {
-			document.addDateSortable(
+			documentBuilder.setDate(
 				"lastCheckDate",
-				Timestamp.valueOf(
+				formatLocalDateTime(
 					workflowMetricsSLATaskResult.getLastCheckLocalDateTime()));
 		}
 
-		document.addKeyword("onTime", workflowMetricsSLATaskResult.isOnTime());
-		document.addKeyword(
-			"processId", workflowMetricsSLATaskResult.getProcessId());
-		document.addKeyword(
-			"slaDefinitionId",
-			workflowMetricsSLATaskResult.getSLADefinitionId());
+		documentBuilder.setValue(
+			"onTime", workflowMetricsSLATaskResult.isOnTime()
+		).setLong(
+			"processId", workflowMetricsSLATaskResult.getProcessId()
+		).setLong(
+			"slaDefinitionId", workflowMetricsSLATaskResult.getSLADefinitionId()
+		);
 
 		WorkflowMetricsSLAStatus workflowMetricsSLAStatus =
 			workflowMetricsSLATaskResult.getWorkflowMetricsSLAStatus();
 
 		if (workflowMetricsSLAStatus != null) {
-			document.addKeyword("status", workflowMetricsSLAStatus.name());
+			documentBuilder.setString(
+				"status", workflowMetricsSLAStatus.name());
 		}
 
-		document.addKeyword("taskId", workflowMetricsSLATaskResult.getTaskId());
-		document.addKeyword(
-			"taskName", workflowMetricsSLATaskResult.getTaskName());
-		document.addKeyword(
-			"tokenId", workflowMetricsSLATaskResult.getTokenId());
+		documentBuilder.setLong(
+			"nodeId", workflowMetricsSLATaskResult.getNodeId()
+		).setString(
+			"taskName", workflowMetricsSLATaskResult.getTaskName()
+		).setLong(
+			"taskId", workflowMetricsSLATaskResult.getTaskId()
+		);
 
-		return document;
+		return documentBuilder.build();
 	}
 
 	@Override
@@ -129,20 +135,19 @@ public class SLATaskResultWorkflowMetricsIndexer
 		return "WorkflowMetricsSLATaskResultType";
 	}
 
-	@Override
 	public void reindex(long companyId) {
 		_creatDefaultDocuments(companyId);
 	}
 
 	protected Document creatDefaultDocument(
-		long companyId, long processId, long taskId, String taskName) {
+		long companyId, long nodeId, long processId, String taskName) {
 
 		WorkflowMetricsSLATaskResult workflowMetricsSLATaskResult =
 			new WorkflowMetricsSLATaskResult();
 
 		workflowMetricsSLATaskResult.setCompanyId(companyId);
+		workflowMetricsSLATaskResult.setNodeId(nodeId);
 		workflowMetricsSLATaskResult.setProcessId(processId);
-		workflowMetricsSLATaskResult.setTaskId(taskId);
 		workflowMetricsSLATaskResult.setTaskName(taskName);
 
 		return createDocument(workflowMetricsSLATaskResult);
@@ -188,8 +193,8 @@ public class SLATaskResultWorkflowMetricsIndexer
 			SearchHit::getDocument
 		).map(
 			document -> creatDefaultDocument(
-				companyId, document.getLong("processId"),
-				document.getLong("nodeId"), document.getString("name"))
+				companyId, document.getLong("nodeId"),
+				document.getLong("processId"), document.getString("name"))
 		).map(
 			document -> new IndexDocumentRequest(getIndexName(), document) {
 				{

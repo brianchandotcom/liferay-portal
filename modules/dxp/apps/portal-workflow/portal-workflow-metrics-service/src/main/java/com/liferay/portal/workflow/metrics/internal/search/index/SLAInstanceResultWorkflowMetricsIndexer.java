@@ -18,10 +18,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -32,8 +33,6 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.workflow.metrics.internal.messaging.WorkflowMetricsSLAProcessMessageListener;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAInstanceResult;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
-
-import java.sql.Timestamp;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -56,78 +55,82 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 	public Document createDocument(
 		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult) {
 
-		Document document = new DocumentImpl();
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		document.addUID(
-			"WorkflowMetricsSLAInstanceResult",
+		documentBuilder.setString(
+			Field.UID,
 			digest(
 				workflowMetricsSLAInstanceResult.getCompanyId(),
 				workflowMetricsSLAInstanceResult.getInstanceId(),
 				workflowMetricsSLAInstanceResult.getProcessId(),
-				workflowMetricsSLAInstanceResult.getSLADefinitionId()));
-		document.addKeyword(
-			"companyId", workflowMetricsSLAInstanceResult.getCompanyId());
+				workflowMetricsSLAInstanceResult.getSLADefinitionId())
+		).setLong(
+			"companyId", workflowMetricsSLAInstanceResult.getCompanyId()
+		);
 
 		if (workflowMetricsSLAInstanceResult.getCompletionLocalDateTime() !=
 				null) {
 
-			document.addDateSortable(
+			documentBuilder.setDate(
 				"completionDate",
-				Timestamp.valueOf(
+				formatLocalDateTime(
 					workflowMetricsSLAInstanceResult.
 						getCompletionLocalDateTime()));
 		}
 
-		document.addKeyword("deleted", false);
-		document.addKeyword(
-			"elapsedTime", workflowMetricsSLAInstanceResult.getElapsedTime());
-		document.addKeyword(
+		documentBuilder.setValue(
+			"deleted", false
+		).setLong(
+			"elapsedTime", workflowMetricsSLAInstanceResult.getElapsedTime()
+		).setValue(
 			"instanceCompleted",
 			workflowMetricsSLAInstanceResult.getCompletionLocalDateTime() !=
-				null);
-		document.addKeyword(
-			"instanceId", workflowMetricsSLAInstanceResult.getInstanceId());
+				null
+		).setLong(
+			"instanceId", workflowMetricsSLAInstanceResult.getInstanceId()
+		);
 
 		if (workflowMetricsSLAInstanceResult.getLastCheckLocalDateTime() !=
 				null) {
 
-			document.addDateSortable(
+			documentBuilder.setDate(
 				"lastCheckDate",
-				Timestamp.valueOf(
+				formatLocalDateTime(
 					workflowMetricsSLAInstanceResult.
 						getLastCheckLocalDateTime()));
 		}
 
-		document.addKeyword(
+		documentBuilder.setValue(
 			"onTime", workflowMetricsSLAInstanceResult.isOnTime());
 
 		if (workflowMetricsSLAInstanceResult.getOverdueLocalDateTime() !=
 				null) {
 
-			document.addDateSortable(
+			documentBuilder.setDate(
 				"overdueDate",
-				Timestamp.valueOf(
+				formatLocalDateTime(
 					workflowMetricsSLAInstanceResult.
 						getOverdueLocalDateTime()));
 		}
 
-		document.addKeyword(
-			"processId", workflowMetricsSLAInstanceResult.getProcessId());
-		document.addKeyword(
-			"remainingTime",
-			workflowMetricsSLAInstanceResult.getRemainingTime());
-		document.addKeyword(
+		documentBuilder.setLong(
+			"processId", workflowMetricsSLAInstanceResult.getProcessId()
+		).setLong(
+			"remainingTime", workflowMetricsSLAInstanceResult.getRemainingTime()
+		).setLong(
 			"slaDefinitionId",
-			workflowMetricsSLAInstanceResult.getSLADefinitionId());
+			workflowMetricsSLAInstanceResult.getSLADefinitionId()
+		);
 
 		WorkflowMetricsSLAStatus workflowMetricsSLAStatus =
 			workflowMetricsSLAInstanceResult.getWorkflowMetricsSLAStatus();
 
 		if (workflowMetricsSLAStatus != null) {
-			document.addKeyword("status", workflowMetricsSLAStatus.name());
+			documentBuilder.setString(
+				"status", workflowMetricsSLAStatus.name());
 		}
 
-		return document;
+		return documentBuilder.build();
 	}
 
 	@Override

@@ -19,23 +19,28 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.document.DocumentBuilder;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
@@ -63,8 +68,16 @@ import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetri
 
 import java.io.Serializable;
 
+import java.text.DateFormat;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import java.util.Date;
 import java.util.List;
-import java.util.function.Function;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -80,23 +93,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 public abstract class BaseWorkflowMetricsIndexer {
 
-	public void addDocument(Document document) {
-		if (searchEngineAdapter == null) {
-			return;
-		}
-
-		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			getIndexName(), document);
-
-		if (PortalRunMode.isTestMode()) {
-			indexDocumentRequest.setRefresh(true);
-		}
-
-		indexDocumentRequest.setType(getIndexType());
-
-		searchEngineAdapter.execute(indexDocumentRequest);
-	}
-
 	public void addDocuments(List<Document> documents) {
 		if (searchEngineAdapter == null) {
 			return;
@@ -107,7 +103,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 		documents.forEach(
 			document -> bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
-					getIndexName(), document.getUID(), document) {
+					getIndexName(), document.getString(Field.UID), document) {
 
 					{
 						setType(getIndexType());
@@ -155,9 +151,13 @@ public abstract class BaseWorkflowMetricsIndexer {
 	}
 
 	public void deleteDocument(Document document) {
-		document.addKeyword("deleted", true);
-
 		_updateDocument(document);
+	}
+
+	public void deleteDocument(DocumentBuilder documentBuilder) {
+		documentBuilder.setValue("deleted", true);
+
+		_updateDocument(documentBuilder.build());
 	}
 
 	public void deleteIndex(long companyId) throws PortalException {
@@ -212,6 +212,23 @@ public abstract class BaseWorkflowMetricsIndexer {
 		}
 	}
 
+	protected void addDocument(Document document) {
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
+		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
+			getIndexName(), document);
+
+		if (PortalRunMode.isTestMode()) {
+			indexDocumentRequest.setRefresh(true);
+		}
+
+		indexDocumentRequest.setType(getIndexType());
+
+		searchEngineAdapter.execute(indexDocumentRequest);
+	}
+
 	protected String digest(Serializable... parts) {
 		StringBuilder sb = new StringBuilder();
 
@@ -219,7 +236,28 @@ public abstract class BaseWorkflowMetricsIndexer {
 			sb.append(part);
 		}
 
-		return DigestUtils.sha256Hex(sb.toString());
+		return StringUtil.removeSubstring(getIndexType(), "Type") +
+			DigestUtils.sha256Hex(sb.toString());
+	}
+
+	protected String formatDate(Date date) {
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyyMMddHHmmss");
+
+		try {
+			return dateFormat.format(date);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
+			}
+
+			return null;
+		}
+	}
+
+	protected String formatLocalDateTime(LocalDateTime localDateTime) {
+		return _dateTimeFormatter.format(localDateTime);
 	}
 
 	protected KaleoDefinitionVersion getKaleoDefinitionVersion(
@@ -243,16 +281,34 @@ public abstract class BaseWorkflowMetricsIndexer {
 		return indicesExistsIndexResponse.isExists();
 	}
 
+	protected void setLocalizedField(
+		DocumentBuilder documentBuilder, String fieldName,
+		Map<Locale, String> localizedMap) {
+
+		Stream.of(
+			localizedMap.entrySet()
+		).flatMap(
+			Set::stream
+		).forEach(
+			entry -> {
+				String localizedName = Field.getLocalizedName(
+					entry.getKey(), fieldName);
+
+				documentBuilder.setValue(
+					localizedName, entry.getValue()
+				).setValue(
+					Field.getSortableFieldName(localizedName), entry.getValue()
+				);
+			}
+		);
+	}
+
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	protected void updateDocuments(
-		Function<com.liferay.portal.search.document.Document, Document>
-			transformDocumentFunction,
-		Query query) {
-
+	protected void updateDocuments(Map<String, Object> fieldsMap, Query query) {
 		if (searchEngineAdapter == null) {
 			return;
 		}
@@ -261,6 +317,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 		searchSearchRequest.setIndexNames(getIndexName());
 		searchSearchRequest.setQuery(query);
+		searchSearchRequest.setTypes(getIndexType());
 		searchSearchRequest.setSelectedFieldNames(Field.UID);
 		searchSearchRequest.setSize(10000);
 
@@ -282,14 +339,25 @@ public abstract class BaseWorkflowMetricsIndexer {
 		).map(
 			SearchHit::getDocument
 		).map(
-			document -> new UpdateDocumentRequest(
-				getIndexName(), document.getString(Field.UID),
-				transformDocumentFunction.apply(document)) {
+			document -> {
+				DocumentBuilder documentBuilder =
+					documentBuilderFactory.builder();
 
-				{
-					setType(getIndexType());
-					setUpsert(true);
-				}
+				documentBuilder.setString(
+					Field.UID, document.getString(Field.UID));
+
+				fieldsMap.forEach(
+					(name, value) -> documentBuilder.setValue(name, value));
+
+				return new UpdateDocumentRequest(
+					getIndexName(), document.getString(Field.UID),
+					documentBuilder.build()) {
+
+					{
+						setType(getIndexType());
+						setUpsert(true);
+					}
+				};
 			}
 		).forEach(
 			bulkDocumentRequest::addBulkableDocumentRequest
@@ -311,6 +379,9 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 	@Reference
 	protected CompanyLocalService companyLocalService;
+
+	@Reference
+	protected DocumentBuilderFactory documentBuilderFactory;
 
 	@Reference
 	protected KaleoDefinitionLocalService kaleoDefinitionLocalService;
@@ -359,7 +430,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 		}
 
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
-			getIndexName(), document.getUID(), document);
+			getIndexName(), document.getString(Field.UID), document);
 
 		if (PortalRunMode.isTestMode()) {
 			updateDocumentRequest.setRefresh(true);
@@ -373,5 +444,12 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 	private static final boolean _INDEX_ON_STARTUP = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.INDEX_ON_STARTUP));
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseWorkflowMetricsIndexer.class);
+
+	private final DateTimeFormatter _dateTimeFormatter =
+		DateTimeFormatter.ofPattern(
+			PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN));
 
 }

@@ -22,6 +22,7 @@ import ReactDOM from 'react-dom';
 import Observer from './Observer.es';
 
 const CONFIG_BLACKLIST = ['children', 'events', 'key', 'ref', 'visible'];
+const CONFIG_DEFAULT = ['displayErrors'];
 
 /**
  * The Adapter needs the React component instance to render and the soy template
@@ -71,7 +72,7 @@ function getConnectedReactComponentAdapter(ReactComponent, templates) {
 		 */
 		constructor(config, parentElement) {
 			const props = {};
-			Object.keys(config).forEach(key => {
+			Object.keys(config).concat(CONFIG_DEFAULT).forEach(key => {
 				if (!CONFIG_BLACKLIST.includes(key)) {
 					props[key] = Config.any();
 				}

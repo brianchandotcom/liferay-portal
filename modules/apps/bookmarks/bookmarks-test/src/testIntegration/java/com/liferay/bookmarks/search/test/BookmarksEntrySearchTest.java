@@ -36,9 +36,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -60,63 +58,43 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 		super.setUp();
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testLocalizedSearch() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchAttachments() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchByDDMStructureField() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchComments() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchCommentsByKeywords() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchExpireAllVersions() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchExpireLatestVersion() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchStatus() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchVersions() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchWithinDDMStructure() {
 	}
 

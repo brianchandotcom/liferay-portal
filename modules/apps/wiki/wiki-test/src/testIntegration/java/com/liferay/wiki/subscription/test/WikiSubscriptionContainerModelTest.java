@@ -30,9 +30,7 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.test.util.WikiTestUtil;
 
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -49,27 +47,19 @@ public class WikiSubscriptionContainerModelTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
-	@Ignore
 	@Override
-	@Test
 	public void testSubscriptionContainerModelWhenAddingBaseModelInRootContainerModel() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSubscriptionContainerModelWhenAddingBaseModelInSubcontainerModel() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSubscriptionContainerModelWhenUpdatingBaseModelInRootContainerModel() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSubscriptionContainerModelWhenUpdatingBaseModelInSubcontainerModel() {
 	}
 

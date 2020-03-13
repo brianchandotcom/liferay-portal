@@ -44,7 +44,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,45 +67,31 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 		super.setUp();
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testLocalizedSearch() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchByDDMStructureField() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchByKeywordsInsideParentBaseModel() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchMyEntries() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchRecentEntries() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchStatus() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchWithinDDMStructure() throws Exception {
 	}
 

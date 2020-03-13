@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.security.permission.wrapper.PermissionCheckerWr
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -49,19 +48,8 @@ public class PhoneResourceBuilderImpl implements PhoneResourceBuilder {
 				return (PhoneResource)ProxyUtil.newProxyInstance(
 					PhoneResource.class.getClassLoader(),
 					new Class<?>[] {PhoneResource.class},
-					new InvocationHandler() {
-
-						@Override
-						public Object invoke(
-								Object proxy, Method method, Object[] arguments)
-							throws Exception {
-
-							return _invoke(
-								method, arguments, _usePermissionChecker,
-								_user);
-						}
-
-					});
+					(proxy, method, arguments) -> _invoke(
+						method, arguments, _usePermissionChecker, _user));
 			}
 
 			@Override

@@ -161,4 +161,64 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-106776. Add a translation to editable text."
+	@priority = "5"
+	test AddTraslationtoRichText {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a Rich Text fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Rich Text");
+		}
+
+		task ("Edit Rich Text text") {
+			PageEditor.editFragmentText(
+				fragmentName = "rich-text",
+				id = "rich-text",
+				text = "New editable fragment en-US text");
+
+			Click(locator1 = "PageEditor#DROPDOWN");
+
+			MenuItem.click(menuItem = "ca-ES");
+
+			PageEditor.editFragmentText(
+				fragmentName = "rich-text",
+				id = "rich-text",
+				text = "New editable fragment ca-ES text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		}
+
+		task ("Navigate to the content page's 'Edit Mode'") {
+			ContentPages.clickPencil();
+		}
+
+		task ("Assert translation is added") {
+			AssertVisible(
+				key_content = "New editable fragment en-US text",
+				key_fragmentClass = "rich-text",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
+
+			Click(locator1 = "PageEditor#DROPDOWN");
+
+			MenuItem.click(menuItem = "ca-ES");
+
+			AssertVisible(
+				key_content = "New editable fragment ca-ES text",
+				key_fragmentClass = "rich-text",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
+		}
+	}
+
 }

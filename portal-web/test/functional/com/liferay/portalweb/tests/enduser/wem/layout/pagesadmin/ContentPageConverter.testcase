@@ -75,12 +75,8 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98325. Assert that multiple pages with several widget pages(that can be converted) and an api to convert bulk widget pages to content pages is executed, all widget pages are converted."
-	@ignore = "true"
 	@priority = "5"
 	test ConvertMultipleWidgetPagesToContentPagesViaAPI {
-
-		// Ignore test until POSHI-48 is resolved
-
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPageConverter#ConvertMultipleWidgetPagesToContentPagesViaAPI";
 
@@ -963,12 +959,8 @@ definition {
 	}
 
 	@description = "This is a test for LPS-106198. check the status for convension draft page and can edit widget page to content page conversion in draft form."
-	@ignore = "true"
 	@priority = "5"
 	test ViewAndEditConversionDraftPage {
-
-		// Ignore test until POSHI-48 is resolved
-
 		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(

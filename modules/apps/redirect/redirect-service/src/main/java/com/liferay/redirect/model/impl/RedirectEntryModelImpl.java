@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.model.RedirectEntryModel;
+import com.liferay.redirect.model.RedirectEntrySoap;
 
 import java.io.Serializable;
 
@@ -39,10 +41,12 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -58,6 +62,7 @@ import java.util.function.Function;
  * @see RedirectEntryImpl
  * @generated
  */
+@JSON(strict = true)
 public class RedirectEntryModelImpl
 	extends BaseModelImpl<RedirectEntry> implements RedirectEntryModel {
 
@@ -132,6 +137,58 @@ public class RedirectEntryModelImpl
 
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
 		_finderCacheEnabled = finderCacheEnabled;
+	}
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static RedirectEntry toModel(RedirectEntrySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		RedirectEntry model = new RedirectEntryImpl();
+
+		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setUuid(soapModel.getUuid());
+		model.setRedirectEntryId(soapModel.getRedirectEntryId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setDestinationURL(soapModel.getDestinationURL());
+		model.setExpirationDate(soapModel.getExpirationDate());
+		model.setLastOccurrenceDate(soapModel.getLastOccurrenceDate());
+		model.setPermanent(soapModel.isPermanent());
+		model.setSourceURL(soapModel.getSourceURL());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<RedirectEntry> toModels(RedirectEntrySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<RedirectEntry> models = new ArrayList<RedirectEntry>(
+			soapModels.length);
+
+		for (RedirectEntrySoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
 	}
 
 	public RedirectEntryModelImpl() {
@@ -332,6 +389,7 @@ public class RedirectEntryModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -342,6 +400,7 @@ public class RedirectEntryModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -367,6 +426,7 @@ public class RedirectEntryModelImpl
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getRedirectEntryId() {
 		return _redirectEntryId;
@@ -377,6 +437,7 @@ public class RedirectEntryModelImpl
 		_redirectEntryId = redirectEntryId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -399,6 +460,7 @@ public class RedirectEntryModelImpl
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -421,6 +483,7 @@ public class RedirectEntryModelImpl
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -447,6 +510,7 @@ public class RedirectEntryModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -462,6 +526,7 @@ public class RedirectEntryModelImpl
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -472,6 +537,7 @@ public class RedirectEntryModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -488,6 +554,7 @@ public class RedirectEntryModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getDestinationURL() {
 		if (_destinationURL == null) {
@@ -503,6 +570,7 @@ public class RedirectEntryModelImpl
 		_destinationURL = destinationURL;
 	}
 
+	@JSON
 	@Override
 	public Date getExpirationDate() {
 		return _expirationDate;
@@ -513,6 +581,7 @@ public class RedirectEntryModelImpl
 		_expirationDate = expirationDate;
 	}
 
+	@JSON
 	@Override
 	public Date getLastOccurrenceDate() {
 		return _lastOccurrenceDate;
@@ -523,11 +592,13 @@ public class RedirectEntryModelImpl
 		_lastOccurrenceDate = lastOccurrenceDate;
 	}
 
+	@JSON
 	@Override
 	public boolean getPermanent() {
 		return _permanent;
 	}
 
+	@JSON
 	@Override
 	public boolean isPermanent() {
 		return _permanent;
@@ -538,6 +609,7 @@ public class RedirectEntryModelImpl
 		_permanent = permanent;
 	}
 
+	@JSON
 	@Override
 	public String getSourceURL() {
 		if (_sourceURL == null) {

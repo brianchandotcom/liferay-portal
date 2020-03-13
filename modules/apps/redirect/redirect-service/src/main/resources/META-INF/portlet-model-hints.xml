@@ -17,10 +17,10 @@
 		</field>
 		<field name="expirationDate" type="Date" />
 		<field name="lastOccurrenceDate" type="Date" />
+		<field name="permanent" type="boolean" />
 		<field name="sourceURL" type="String">
 			<hint-collection name="CLOB" />
 			<sanitize content-type="text/plain" modes="ALL" />
 		</field>
-		<field name="temporary" type="boolean" />
 	</model>
 </model-hints>

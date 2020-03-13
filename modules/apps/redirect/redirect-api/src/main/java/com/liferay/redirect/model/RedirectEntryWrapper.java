@@ -55,8 +55,8 @@ public class RedirectEntryWrapper
 		attributes.put("destinationURL", getDestinationURL());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastOccurrenceDate", getLastOccurrenceDate());
+		attributes.put("permanent", isPermanent());
 		attributes.put("sourceURL", getSourceURL());
-		attributes.put("temporary", isTemporary());
 
 		return attributes;
 	}
@@ -135,16 +135,16 @@ public class RedirectEntryWrapper
 			setLastOccurrenceDate(lastOccurrenceDate);
 		}
 
+		Boolean permanent = (Boolean)attributes.get("permanent");
+
+		if (permanent != null) {
+			setPermanent(permanent);
+		}
+
 		String sourceURL = (String)attributes.get("sourceURL");
 
 		if (sourceURL != null) {
 			setSourceURL(sourceURL);
-		}
-
-		Boolean temporary = (Boolean)attributes.get("temporary");
-
-		if (temporary != null) {
-			setTemporary(temporary);
 		}
 	}
 
@@ -229,6 +229,16 @@ public class RedirectEntryWrapper
 	}
 
 	/**
+	 * Returns the permanent of this redirect entry.
+	 *
+	 * @return the permanent of this redirect entry
+	 */
+	@Override
+	public boolean getPermanent() {
+		return model.getPermanent();
+	}
+
+	/**
 	 * Returns the primary key of this redirect entry.
 	 *
 	 * @return the primary key of this redirect entry
@@ -256,16 +266,6 @@ public class RedirectEntryWrapper
 	@Override
 	public String getSourceURL() {
 		return model.getSourceURL();
-	}
-
-	/**
-	 * Returns the temporary of this redirect entry.
-	 *
-	 * @return the temporary of this redirect entry
-	 */
-	@Override
-	public boolean getTemporary() {
-		return model.getTemporary();
 	}
 
 	/**
@@ -309,13 +309,13 @@ public class RedirectEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this redirect entry is temporary.
+	 * Returns <code>true</code> if this redirect entry is permanent.
 	 *
-	 * @return <code>true</code> if this redirect entry is temporary; <code>false</code> otherwise
+	 * @return <code>true</code> if this redirect entry is permanent; <code>false</code> otherwise
 	 */
 	@Override
-	public boolean isTemporary() {
-		return model.isTemporary();
+	public boolean isPermanent() {
+		return model.isPermanent();
 	}
 
 	@Override
@@ -404,6 +404,16 @@ public class RedirectEntryWrapper
 	}
 
 	/**
+	 * Sets whether this redirect entry is permanent.
+	 *
+	 * @param permanent the permanent of this redirect entry
+	 */
+	@Override
+	public void setPermanent(boolean permanent) {
+		model.setPermanent(permanent);
+	}
+
+	/**
 	 * Sets the primary key of this redirect entry.
 	 *
 	 * @param primaryKey the primary key of this redirect entry
@@ -431,16 +441,6 @@ public class RedirectEntryWrapper
 	@Override
 	public void setSourceURL(String sourceURL) {
 		model.setSourceURL(sourceURL);
-	}
-
-	/**
-	 * Sets whether this redirect entry is temporary.
-	 *
-	 * @param temporary the temporary of this redirect entry
-	 */
-	@Override
-	public void setTemporary(boolean temporary) {
-		model.setTemporary(temporary);
 	}
 
 	/**

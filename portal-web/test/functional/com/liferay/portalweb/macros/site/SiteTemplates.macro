@@ -196,6 +196,21 @@ definition {
 		Button.clickSave();
 	}
 
+	macro getSiteTemplateURL {
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage",
+			rowEntry = "${siteTemplateName}");
+
+		var currentURL = Navigator.getCurrentURL();
+		var siteTemplateURL = StringUtil.extractFirst("${currentURL}", "/~/");
+
+		echo("siteTemplateURL: ${siteTemplateURL}");
+
+		return "${siteTemplateURL}";
+	}
+
 	macro gotoSettingsCP {
 		var key_siteTemplateName = "${siteTemplateName}";
 

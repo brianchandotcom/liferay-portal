@@ -172,7 +172,7 @@ public class MFAEmailOTPChecker {
 			Date lastFailDate = mfaEmailOTPEntry.getLastFailDate();
 
 			long time =
-				mfaEmailOTPConfiguration.retryTimeout() +
+				mfaEmailOTPConfiguration.retryTimeout() * 1000 +
 					lastFailDate.getTime();
 
 			if (time <= System.currentTimeMillis()) {

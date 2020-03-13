@@ -48,9 +48,8 @@ public class RedirectEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RedirectEntry addRedirectEntry(
-			long groupId, String destinationURL, String sourceURL,
-			boolean temporary, Date expirationDate,
-			ServiceContext serviceContext)
+			long groupId, String destinationURL, Date expirationDate,
+			String sourceURL, boolean temporary, ServiceContext serviceContext)
 		throws PortalException {
 
 		_validate(destinationURL, sourceURL);
@@ -114,8 +113,8 @@ public class RedirectEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RedirectEntry updateRedirectEntry(
-			long redirectEntryId, String destinationURL, String sourceURL,
-			boolean temporary, Date expirationDate)
+			long redirectEntryId, String destinationURL, Date expirationDate,
+			String sourceURL, boolean temporary)
 		throws PortalException {
 
 		_validate(destinationURL, sourceURL);

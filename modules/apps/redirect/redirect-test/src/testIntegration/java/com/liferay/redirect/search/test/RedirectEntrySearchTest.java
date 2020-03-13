@@ -152,11 +152,11 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 		RedirectEntry redirectEntry1 =
 			_redirectEntryLocalService.addRedirectEntry(
 				serviceContext.getScopeGroupId(), "http://www.liferay.com/a",
-				RandomTestUtil.randomString(), true, null, serviceContext);
+				null, RandomTestUtil.randomString(), true, serviceContext);
 		RedirectEntry redirectEntry2 =
 			_redirectEntryLocalService.addRedirectEntry(
 				serviceContext.getScopeGroupId(), "http://www.liferay.com/b",
-				RandomTestUtil.randomString(), true, null, serviceContext);
+				null, RandomTestUtil.randomString(), true, serviceContext);
 
 		_assertSearchResults(
 			redirectEntry1, redirectEntry2,
@@ -177,12 +177,12 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 
 		RedirectEntry redirectEntry1 =
 			_redirectEntryLocalService.addRedirectEntry(
-				serviceContext.getScopeGroupId(), "http://www.liferay.com", "a",
-				true, null, serviceContext);
+				serviceContext.getScopeGroupId(), "http://www.liferay.com",
+				null, "a", true, serviceContext);
 		RedirectEntry redirectEntry2 =
 			_redirectEntryLocalService.addRedirectEntry(
-				serviceContext.getScopeGroupId(), "http://www.liferay.com", "b",
-				true, null, serviceContext);
+				serviceContext.getScopeGroupId(), "http://www.liferay.com",
+				null, "b", true, serviceContext);
 
 		_assertSearchResults(
 			redirectEntry1, redirectEntry2,
@@ -221,7 +221,7 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 		throws Exception {
 
 		return _redirectEntryLocalService.addRedirectEntry(
-			serviceContext.getScopeGroupId(), keywords, keywords, true, null,
+			serviceContext.getScopeGroupId(), keywords, null, keywords, true,
 			serviceContext);
 	}
 
@@ -249,8 +249,8 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 		RedirectEntry redirectEntry = (RedirectEntry)baseModel;
 
 		return _redirectEntryLocalService.updateRedirectEntry(
-			redirectEntry.getRedirectEntryId(), keywords, keywords,
-			RandomTestUtil.randomBoolean(), null);
+			redirectEntry.getRedirectEntryId(), keywords, null, keywords,
+			RandomTestUtil.randomBoolean());
 	}
 
 	private void _assertSearchResults(

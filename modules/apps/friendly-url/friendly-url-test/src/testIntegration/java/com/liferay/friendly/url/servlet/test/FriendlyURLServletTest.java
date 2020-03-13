@@ -336,8 +336,8 @@ public class FriendlyURLServletTest {
 			() -> {
 				RedirectEntry redirectEntry =
 					_redirectEntryLocalService.addRedirectEntry(
-						_group.getGroupId(), "http://www.liferay.com", "path",
-						false, null,
+						_group.getGroupId(), "http://www.liferay.com", null,
+						"path", false,
 						ServiceContextTestUtil.getServiceContext());
 
 				try {
@@ -375,8 +375,9 @@ public class FriendlyURLServletTest {
 			() -> {
 				RedirectEntry redirectEntry =
 					_redirectEntryLocalService.addRedirectEntry(
-						_group.getGroupId(), "http://www.liferay.com", "path",
-						true, null, ServiceContextTestUtil.getServiceContext());
+						_group.getGroupId(), "http://www.liferay.com", null,
+						"path", true,
+						ServiceContextTestUtil.getServiceContext());
 
 				try {
 					MockHttpServletResponse mockHttpServletResponse =

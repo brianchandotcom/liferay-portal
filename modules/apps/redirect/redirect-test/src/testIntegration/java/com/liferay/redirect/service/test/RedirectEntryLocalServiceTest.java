@@ -56,8 +56,8 @@ public class RedirectEntryLocalServiceTest {
 				Instant instant = Instant.now();
 
 				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
-					TestPropsValues.getGroupId(), "destinationURL", "sourceURL",
-					true, Date.from(instant.minusSeconds(3600)),
+					TestPropsValues.getGroupId(), "destinationURL",
+					Date.from(instant.minusSeconds(3600)), "sourceURL", true,
 					ServiceContextTestUtil.getServiceContext());
 
 				Assert.assertNull(
@@ -73,8 +73,8 @@ public class RedirectEntryLocalServiceTest {
 				Instant instant = Instant.now();
 
 				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
-					TestPropsValues.getGroupId(), "destinationURL", "sourceURL",
-					true, Date.from(instant.plusSeconds(3600)),
+					TestPropsValues.getGroupId(), "destinationURL",
+					Date.from(instant.plusSeconds(3600)), "sourceURL", true,
 					ServiceContextTestUtil.getServiceContext());
 
 				Assert.assertEquals(
@@ -89,8 +89,9 @@ public class RedirectEntryLocalServiceTest {
 		_withRedirectEnabled(
 			() -> {
 				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
-					TestPropsValues.getGroupId(), "destinationURL", "sourceURL",
-					true, null, ServiceContextTestUtil.getServiceContext());
+					TestPropsValues.getGroupId(), "destinationURL", null,
+					"sourceURL", true,
+					ServiceContextTestUtil.getServiceContext());
 
 				Assert.assertEquals(
 					_redirectEntry,

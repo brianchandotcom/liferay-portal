@@ -121,6 +121,11 @@ public class GitWorkingDirectoryFactory {
 		String upstreamBranchName, String gitRepositoryDirPath,
 		String gitRepositoryName) {
 
+		if (gitRepositoryDirPath == null) {
+			return newGitWorkingDirectory(
+				upstreamBranchName, (File)null, gitRepositoryName);
+		}
+
 		return newGitWorkingDirectory(
 			upstreamBranchName, new File(gitRepositoryDirPath),
 			gitRepositoryName);

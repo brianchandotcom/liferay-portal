@@ -442,7 +442,9 @@ definition {
 
 		WikiPage.addComment(entryComment = "Wiki Page Comment");
 
-		Ratings.rate(ratingResult = "Thumb Up");
+		Ratings.rate(
+			commentRating = "true",
+			ratingResult = "Thumb Up");
 
 		WikiPage.editComment(
 			entryComment = "Wiki Page Comment",

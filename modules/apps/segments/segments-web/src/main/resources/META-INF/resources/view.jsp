@@ -159,11 +159,44 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 	});
 </aui:script>
 
+<%
+ItemSelector itemSelector = (ItemSelector)request.getAttribute(SegmentsWebKeys.ITEM_SELECTOR);
+
+ItemSelectorCriterion itemSelectorCriterion = new RoleItemSelectorCriterion(RoleConstants.TYPE_SITE);
+
+itemSelectorCriterion.setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
+
+String eventName = renderResponse.getNamespace() + "assignSiteRoles";
+
+PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(renderRequest), eventName, itemSelectorCriterion);
+%>
+
 <aui:script require="metal-dom/src/all/dom as dom, frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
-	dom.delegate('#segmentsEntries', 'click', '.assign-site-roles-link', function(
-		event
-	) {
-		alert(event.target.dataset.segmentsentryid);
-		alert(event.currentTarget.dataset.segmentsentryid);
+	dom.delegate(document, 'click', '.assign-site-roles-link', function(event) {
+		var link = dom.closest(event.target, '.assign-site-roles-link');
+
+		var segmentsEntryId = link.dataset.segmentsentryid;
+
+		var itemSelectorDialog = new ItemSelectorDialog.default({
+			eventName: '<%= eventName %>',
+			title: 'assign-site-roles',
+			url: '<%= itemSelectorURL.toString() %>',
+		});
+
+		itemSelectorDialog.on('selectedItemChange', function(event) {
+			var selectedItem = event.selectedItem;
+
+			if (selectedItem) {
+				console.info(selectedItem);
+			}
+			else {
+				console.error(
+					'no selected item for segmetnsEntryId: ',
+					segmentsEntryId
+				);
+			}
+		});
+
+		itemSelectorDialog.open();
 	});
 </aui:script>

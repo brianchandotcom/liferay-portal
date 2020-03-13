@@ -85,8 +85,8 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 	</c:if>
 
 	<liferay-ui:icon
-		cssClass="assign-site-roles-link"
 		data='<%= Collections.singletonMap("segmentsEntryId", segmentsEntry.getSegmentsEntryId()) %>'
+		linkCssClass="assign-site-roles-link"
 		message="assign-site-roles"
 		url="javascript:;"
 	/>

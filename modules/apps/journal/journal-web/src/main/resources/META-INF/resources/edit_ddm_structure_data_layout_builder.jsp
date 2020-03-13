@@ -212,14 +212,17 @@ if (ddmStructure != null) {
 
 	function <portlet:namespace />getInputLocalizedValues(field) {
 		var inputLocalized = Liferay.component('<portlet:namespace />' + field);
-		var translatedLanguages = inputLocalized
-			.get('translatedLanguages')
-			.values();
 		var localizedValues = {};
 
-		translatedLanguages.forEach(function(languageId) {
-			localizedValues[languageId] = inputLocalized.getValue(languageId);
-		});
+		if (inputLocalized) {
+			var translatedLanguages = inputLocalized
+				.get('translatedLanguages')
+				.values();
+
+			translatedLanguages.forEach(function(languageId) {
+				localizedValues[languageId] = inputLocalized.getValue(languageId);
+			});
+		}
 
 		return localizedValues;
 	}

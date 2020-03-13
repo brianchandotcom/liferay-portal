@@ -59,7 +59,8 @@ page import="com.liferay.segments.web.internal.display.context.SelectUsersManage
 page import="com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission" %><%@
 page import="com.liferay.segments.web.internal.servlet.taglib.clay.SelectUserUserCard" %>
 
-<%@ page import="java.util.HashMap" %><%@
+<%@ page import="java.util.Collections" %><%@
+page import="java.util.HashMap" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Objects" %>
 

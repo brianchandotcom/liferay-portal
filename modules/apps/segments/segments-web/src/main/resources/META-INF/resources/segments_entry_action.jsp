@@ -83,4 +83,11 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 			url="<%= deleteURL %>"
 		/>
 	</c:if>
+
+	<liferay-ui:icon
+		cssClass="assign-site-roles-link"
+		data='<%= Collections.singletonMap("segmentsEntryId", segmentsEntry.getSegmentsEntryId()) %>'
+		message="assign-site-roles"
+		url="javascript:;"
+	/>
 </liferay-ui:icon-menu>

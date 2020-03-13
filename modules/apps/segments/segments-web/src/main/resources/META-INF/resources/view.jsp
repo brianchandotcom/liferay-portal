@@ -158,3 +158,12 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 		});
 	});
 </aui:script>
+
+<aui:script require="metal-dom/src/all/dom as dom, frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+	dom.delegate('#segmentsEntries', 'click', '.assign-site-roles-link', function(
+		event
+	) {
+		alert(event.target.dataset.segmentsentryid);
+		alert(event.currentTarget.dataset.segmentsentryid);
+	});
+</aui:script>

@@ -96,20 +96,6 @@ export default function MappingSelector({
 	);
 
 	const onInfoItemSelect = selectedItem => {
-		loadFields({
-			dispatch,
-			fieldType,
-			selectedItem: {
-				className: selectedItem.className,
-				classNameId: selectedItem.classNameId,
-				classPK: selectedItem.classPK,
-				title: selectedItem.title,
-			},
-			selectedSourceTypeId,
-		}).then(newFields => {
-			setFields(newFields);
-		});
-
 		setSelectedItem({...selectedItem, fieldId: '', mappedField: ''});
 	};
 

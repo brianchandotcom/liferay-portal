@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
  * @author Rafael Praxedes
  */
 @RunWith(Arquillian.class)
-public class TokenWorkflowMetricsIndexerTest
+public class TaskWorkflowMetricsIndexerTest
 	extends BaseWorkflowMetricsIndexerTestCase {
 
 	@ClassRule
@@ -44,65 +44,62 @@ public class TokenWorkflowMetricsIndexerTest
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testAddToken() throws Exception {
+	public void testAddTask() throws Exception {
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			addKaleoTaskInstanceToken("review");
 
 		KaleoDefinition kaleoDefinition = getKaleoDefinition();
 
 		retryAssertCount(
-			"workflow-metrics-tokens", "WorkflowMetricsTokenType", "companyId",
+			"workflow-metrics-tasks", "WorkflowMetricsTaskType", "companyId",
 			kaleoDefinition.getCompanyId(), "completed", false, "deleted",
 			false, "processId", kaleoDefinition.getKaleoDefinitionId(),
-			"taskId", kaleoTaskInstanceToken.getKaleoTaskId(), "taskName",
-			"review", "tokenId",
-			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(), "version",
-			"1.0");
+			"nodeId", kaleoTaskInstanceToken.getKaleoTaskId(), "name", "review",
+			"taskId", kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
+			"version", "1.0");
 	}
 
 	@Test
-	public void testAssignToken() throws Exception {
+	public void testAssignTask() throws Exception {
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			addKaleoTaskInstanceToken("review");
 
 		KaleoDefinition kaleoDefinition = getKaleoDefinition();
 
 		retryAssertCount(
-			"workflow-metrics-tokens", "WorkflowMetricsTokenType", "companyId",
+			"workflow-metrics-tasks", "WorkflowMetricsTaskType", "companyId",
 			kaleoDefinition.getCompanyId(), "completed", false, "deleted",
 			false, "processId", kaleoDefinition.getKaleoDefinitionId(),
-			"taskId", kaleoTaskInstanceToken.getKaleoTaskId(), "taskName",
-			"review", "tokenId",
-			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(), "version",
-			"1.0");
+			"nodeId", kaleoTaskInstanceToken.getKaleoTaskId(), "name", "review",
+			"taskId", kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
+			"version", "1.0");
 
 		kaleoTaskInstanceToken = assignKaleoTaskInstanceToken(
 			kaleoTaskInstanceToken);
 
 		retryAssertCount(
-			"workflow-metrics-tokens", "WorkflowMetricsTokenType", "assigneeId",
+			"workflow-metrics-tasks", "WorkflowMetricsTaskType", "assigneeId",
 			TestPropsValues.getUserId(), "companyId",
 			kaleoDefinition.getCompanyId(), "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "taskId",
-			kaleoTaskInstanceToken.getKaleoTaskId(), "taskName", "review",
-			"tokenId", kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
+			kaleoDefinition.getKaleoDefinitionId(), "nodeId",
+			kaleoTaskInstanceToken.getKaleoTaskId(), "name", "review", "taskId",
+			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
 	}
 
 	@Test
-	public void testCompleteToken() throws Exception {
+	public void testCompleteTask() throws Exception {
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			addKaleoTaskInstanceToken("review");
 
 		KaleoDefinition kaleoDefinition = getKaleoDefinition();
 
 		retryAssertCount(
-			"workflow-metrics-tokens", "WorkflowMetricsTokenType", "companyId",
+			"workflow-metrics-tasks", "WorkflowMetricsTaskType", "companyId",
 			kaleoDefinition.getCompanyId(), "completed", false, "deleted",
 			false, "processId", kaleoDefinition.getKaleoDefinitionId(),
-			"taskId", kaleoTaskInstanceToken.getKaleoTaskId(), "taskName",
-			"review", "tokenId",
-			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(), "version",
-			"1.0");
+			"nodeId", kaleoTaskInstanceToken.getKaleoTaskId(), "name", "review",
+			"taskId", kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
+			"version", "1.0");
 
 		kaleoTaskInstanceToken = completeKaleoTaskInstanceToken(
 			kaleoTaskInstanceToken);
@@ -115,16 +112,16 @@ public class TokenWorkflowMetricsIndexerTest
 			createDate.toInstant(), completionDate.toInstant());
 
 		retryAssertCount(
-			"workflow-metrics-tokens", "WorkflowMetricsTokenType", "assigneeId",
+			"workflow-metrics-tasks", "WorkflowMetricsTaskType", "assigneeId",
 			TestPropsValues.getUserId(), "companyId",
 			kaleoDefinition.getCompanyId(), "duration", duration.toMillis(),
-			"processId", kaleoDefinition.getKaleoDefinitionId(), "taskId",
-			kaleoTaskInstanceToken.getKaleoTaskId(), "taskName", "review",
-			"tokenId", kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
+			"processId", kaleoDefinition.getKaleoDefinitionId(), "nodeId",
+			kaleoTaskInstanceToken.getKaleoTaskId(), "name", "review", "taskId",
+			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
 	}
 
 	@Test
-	public void testDeleteToken() throws Exception {
+	public void testDeleteTask() throws Exception {
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			addKaleoTaskInstanceToken("review");
 
@@ -133,12 +130,12 @@ public class TokenWorkflowMetricsIndexerTest
 		KaleoDefinition kaleoDefinition = getKaleoDefinition();
 
 		retryAssertCount(
-			"workflow-metrics-tokens", "WorkflowMetricsTokenType", "companyId",
+			"workflow-metrics-tasks", "WorkflowMetricsTaskType", "companyId",
 			kaleoDefinition.getCompanyId(), "completed", false, "deleted", true,
-			"processId", kaleoDefinition.getKaleoDefinitionId(), "taskId",
-			kaleoTaskInstanceToken.getKaleoTaskId(), "taskName", "review",
-			"tokenId", kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
-			"version", "1.0");
+			"processId", kaleoDefinition.getKaleoDefinitionId(), "nodeId",
+			kaleoTaskInstanceToken.getKaleoTaskId(), "name", "review", "taskId",
+			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(), "version",
+			"1.0");
 	}
 
 	@Test
@@ -149,13 +146,13 @@ public class TokenWorkflowMetricsIndexerTest
 		KaleoDefinition kaleoDefinition = getKaleoDefinition();
 
 		assertReindex(
-			new String[] {"workflow-metrics-tokens"},
-			new String[] {"WorkflowMetricsTokenType"}, "companyId",
+			new String[] {"workflow-metrics-tasks"},
+			new String[] {"WorkflowMetricsTaskType"}, "companyId",
 			kaleoDefinition.getCompanyId(), "completed", false, "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "taskId",
-			kaleoTaskInstanceToken.getKaleoTaskId(), "taskName", "review",
-			"tokenId", kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
-			"version", "1.0");
+			kaleoDefinition.getKaleoDefinitionId(), "nodeId",
+			kaleoTaskInstanceToken.getKaleoTaskId(), "name", "review", "taskId",
+			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(), "version",
+			"1.0");
 	}
 
 }

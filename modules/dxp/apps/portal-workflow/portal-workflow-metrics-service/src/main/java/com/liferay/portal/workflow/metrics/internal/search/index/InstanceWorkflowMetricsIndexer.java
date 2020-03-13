@@ -198,7 +198,7 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			},
 			booleanQuery);
 
-		_tokenWorkflowMetricsIndexer.updateDocuments(
+		_taskWorkflowMetricsIndexer.updateDocuments(
 			documentImpl -> new DocumentImpl() {
 				{
 					addKeyword("instanceCompleted", Boolean.TRUE);
@@ -295,6 +295,6 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		_slaTaskResultWorkflowMetricsIndexer;
 
 	@Reference
-	private TokenWorkflowMetricsIndexer _tokenWorkflowMetricsIndexer;
+	private TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;
 
 }

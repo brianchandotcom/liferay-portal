@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
-import com.liferay.portal.workflow.metrics.internal.search.index.TokenWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.TaskWorkflowMetricsIndexer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,29 +33,29 @@ public class KaleoTaskInstanceTokenModelListener
 	@Override
 	public void onAfterCreate(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 		_workflowMetricsPortalExecutor.execute(
-			() -> _tokenWorkflowMetricsIndexer.addDocument(
-				_tokenWorkflowMetricsIndexer.createDocument(
+			() -> _taskWorkflowMetricsIndexer.addDocument(
+				_taskWorkflowMetricsIndexer.createDocument(
 					kaleoTaskInstanceToken)));
 	}
 
 	@Override
 	public void onAfterRemove(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 		_workflowMetricsPortalExecutor.execute(
-			() -> _tokenWorkflowMetricsIndexer.deleteDocument(
-				_tokenWorkflowMetricsIndexer.createDocument(
+			() -> _taskWorkflowMetricsIndexer.deleteDocument(
+				_taskWorkflowMetricsIndexer.createDocument(
 					kaleoTaskInstanceToken)));
 	}
 
 	@Override
 	public void onAfterUpdate(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 		_workflowMetricsPortalExecutor.execute(
-			() -> _tokenWorkflowMetricsIndexer.updateDocument(
-				_tokenWorkflowMetricsIndexer.createDocument(
+			() -> _taskWorkflowMetricsIndexer.updateDocument(
+				_taskWorkflowMetricsIndexer.createDocument(
 					kaleoTaskInstanceToken)));
 	}
 
 	@Reference
-	private TokenWorkflowMetricsIndexer _tokenWorkflowMetricsIndexer;
+	private TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;
 
 	@Reference
 	private WorkflowMetricsPortalExecutor _workflowMetricsPortalExecutor;

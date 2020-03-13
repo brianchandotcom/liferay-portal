@@ -257,7 +257,7 @@ public class WorkflowMetricsSLAProcessor {
 					StringBundler.concat(
 						"createDate", StringPool.UNDERLINE, "Number")),
 				SortOrder.ASC));
-		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
+		searchSearchRequest.setIndexNames("workflow-metrics-tasks");
 		searchSearchRequest.setQuery(
 			new BooleanQueryImpl() {
 				{
@@ -607,6 +607,7 @@ public class WorkflowMetricsSLAProcessor {
 				setLastCheckLocalDateTime(
 					workflowMetricsSLAInstanceResult.
 						getLastCheckLocalDateTime());
+				setNodeId(document.getLong("nodeId"));
 				setOnTime(
 					WorkflowMetricsSLAProcessor.this.isOnTime(
 						document, nowLocalDateTime,
@@ -615,9 +616,8 @@ public class WorkflowMetricsSLAProcessor {
 				setProcessId(workflowMetricsSLAInstanceResult.getProcessId());
 				setSLADefinitionId(
 					workflowMetricsSLAInstanceResult.getSLADefinitionId());
+				setTaskName(document.getString("name"));
 				setTaskId(document.getLong("taskId"));
-				setTaskName(document.getString("taskName"));
-				setTokenId(document.getLong("tokenId"));
 				setWorkflowMetricsSLAStatus(
 					_getWorkflowMetricsSLAStatus(
 						document, workflowMetricsSLAInstanceResult));

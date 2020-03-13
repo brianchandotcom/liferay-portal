@@ -44,8 +44,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = TokenWorkflowMetricsIndexer.class)
-public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
+@Component(immediate = true, service = TaskWorkflowMetricsIndexer.class)
+public class TaskWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	public Document createDocument(
 		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
@@ -134,12 +134,12 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	@Override
 	public String getIndexName() {
-		return "workflow-metrics-tokens";
+		return "workflow-metrics-tasks";
 	}
 
 	@Override
 	public String getIndexType() {
-		return "WorkflowMetricsTokenType";
+		return "WorkflowMetricsTaskType";
 	}
 
 	@Override
@@ -218,7 +218,7 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TokenWorkflowMetricsIndexer.class);
+		TaskWorkflowMetricsIndexer.class);
 
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer

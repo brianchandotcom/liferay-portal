@@ -99,14 +99,14 @@ public class NodeWorkflowMetricsIndexerTest
 			"WorkflowMetricsSLATaskResultType", "companyId",
 			kaleoDefinition.getCompanyId(), "deleted", false, "instanceId", 0,
 			"processId", kaleoDefinition.getKaleoDefinitionId(),
-			"slaDefinitionId", 0, "taskId", kaleoTask.getKaleoTaskId(),
+			"slaDefinitionId", 0, "nodeId", kaleoTask.getKaleoTaskId(),
 			"taskName", "review");
 		retryAssertCount(
-			"workflow-metrics-tokens", "WorkflowMetricsTokenType", "companyId",
+			"workflow-metrics-tasks", "WorkflowMetricsTaskType", "companyId",
 			kaleoDefinition.getCompanyId(), "completed", false, "deleted",
 			false, "instanceId", 0, "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "taskId",
-			kaleoTask.getKaleoTaskId(), "taskName", "review", "tokenId", 0,
+			kaleoDefinition.getKaleoDefinitionId(), "nodeId",
+			kaleoTask.getKaleoTaskId(), "name", "review", "taskId", 0,
 			"version", "1.0");
 	}
 
@@ -164,11 +164,11 @@ public class NodeWorkflowMetricsIndexerTest
 			).put(
 				"workflow-metrics-sla-task-results", 2
 			).put(
-				"workflow-metrics-tokens", 2
+				"workflow-metrics-tasks", 2
 			).build(),
 			new String[] {
 				"WorkflowMetricsNodeType", "WorkflowMetricsSLATaskResultType",
-				"WorkflowMetricsTokenType"
+				"WorkflowMetricsTaskType"
 			},
 			"companyId", kaleoDefinition.getCompanyId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId());

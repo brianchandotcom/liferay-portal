@@ -136,7 +136,7 @@ public class TaskResourceImpl
 		BooleanQuery tokensBooleanQuery = _queries.booleanQuery();
 
 		tokensBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-tokens"));
+			_queries.term("_index", "workflow-metrics-tasks"));
 		tokensBooleanQuery.addMustQueryClauses(
 			_createTokensBooleanQuery(
 				completed, dateEnd, dateStart, processId, taskNames));
@@ -338,7 +338,7 @@ public class TaskResourceImpl
 
 		searchSearchRequest.addAggregation(termsAggregation);
 
-		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
+		searchSearchRequest.setIndexNames("workflow-metrics-tasks");
 		searchSearchRequest.setQuery(
 			_createTokensBooleanQuery(completed, key, processId, version));
 
@@ -415,7 +415,7 @@ public class TaskResourceImpl
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-tokens", "workflow-metrics-sla-task-results");
+			"workflow-metrics-tasks", "workflow-metrics-sla-task-results");
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(
 				completed, dateEnd, dateStart, processId, tasksMap.keySet()));

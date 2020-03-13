@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.workflow.metrics.internal.search.index.InstanceWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.NodeWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.ProcessWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.internal.search.index.TokenWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.TaskWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.TransitionWorkflowMetricsIndexer;
 
 import java.util.Locale;
@@ -84,19 +84,19 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 		_instanceWorkflowMetricsIndexer.deleteIndex(companyId);
 		_nodeWorkflowMetricsIndexer.deleteIndex(companyId);
 		_processWorkflowMetricsIndexer.deleteIndex(companyId);
-		_tokenWorkflowMetricsIndexer.deleteIndex(companyId);
+		_taskWorkflowMetricsIndexer.deleteIndex(companyId);
 		_transitionWorkflowMetricsIndexer.deleteIndex(companyId);
 
 		_instanceWorkflowMetricsIndexer.createIndex();
 		_nodeWorkflowMetricsIndexer.createIndex();
 		_processWorkflowMetricsIndexer.createIndex();
-		_tokenWorkflowMetricsIndexer.createIndex();
+		_taskWorkflowMetricsIndexer.createIndex();
 		_transitionWorkflowMetricsIndexer.createIndex();
 
 		_instanceWorkflowMetricsIndexer.reindex(companyId);
 		_nodeWorkflowMetricsIndexer.reindex(companyId);
 		_processWorkflowMetricsIndexer.reindex(companyId);
-		_tokenWorkflowMetricsIndexer.reindex(companyId);
+		_taskWorkflowMetricsIndexer.reindex(companyId);
 		_transitionWorkflowMetricsIndexer.reindex(companyId);
 	}
 
@@ -110,7 +110,7 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 	private ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;
 
 	@Reference
-	private TokenWorkflowMetricsIndexer _tokenWorkflowMetricsIndexer;
+	private TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;
 
 	@Reference
 	private TransitionWorkflowMetricsIndexer _transitionWorkflowMetricsIndexer;

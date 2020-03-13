@@ -385,7 +385,7 @@ public class WorkflowMetricsRESTTestHelper {
 				instanceId, processId, taskId, taskName, tokenId, "1.0"));
 
 		_retryAssertCount(
-			"workflow-metrics-tokens", "assigneeId", assigneeId, "companyId",
+			"workflow-metrics-tasks", "assigneeId", assigneeId, "companyId",
 			companyId, "deleted", false, "instanceCompleted", instanceCompleted,
 			"instanceId", instanceId, "processId", processId, "taskId", taskId,
 			"taskName", taskName, "tokenId", tokenId);
@@ -478,7 +478,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 	public void deleteTokens(long companyId, long processId) throws Exception {
 		_deleteDocuments(
-			"workflow-metrics-tokens", "WorkflowMetricsTokenType", "companyId",
+			"workflow-metrics-tasks", "WorkflowMetricsTaskType", "companyId",
 			companyId, "processId", processId);
 	}
 
@@ -918,7 +918,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 	private static final String _CLASS_NAME_TOKEN_INDEXER =
 		"com.liferay.portal.workflow.metrics.internal.search.index." +
-			"TokenWorkflowMetricsIndexer";
+			"TaskWorkflowMetricsIndexer";
 
 	private static Map<String, Object> _indexers = new HashMap<>();
 

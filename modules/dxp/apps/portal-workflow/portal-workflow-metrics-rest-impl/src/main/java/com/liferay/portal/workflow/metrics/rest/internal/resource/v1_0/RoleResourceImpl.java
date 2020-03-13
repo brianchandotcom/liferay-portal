@@ -88,7 +88,7 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 		searchSearchRequest.addAggregation(termsAggregation);
 
-		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
+		searchSearchRequest.setIndexNames("workflow-metrics-tasks");
 		searchSearchRequest.setQuery(
 			_createTokensBooleanQuery(completed, processId));
 

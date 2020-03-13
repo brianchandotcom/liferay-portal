@@ -140,7 +140,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-instances",
-			"workflow-metrics-sla-instance-results", "workflow-metrics-tokens");
+			"workflow-metrics-sla-instance-results", "workflow-metrics-tasks");
 
 		BooleanQuery booleanQuery = _createBooleanQuery(
 			new Long[0], processId, new String[0]);
@@ -272,7 +272,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		BooleanQuery tokensBooleanQuery = _queries.booleanQuery();
 
 		tokensBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-tokens"));
+			_queries.term("_index", "workflow-metrics-tasks"));
 		tokensBooleanQuery.addMustQueryClauses(
 			_createTokensBooleanQuery(processId, instanceId));
 
@@ -311,7 +311,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		BooleanQuery tokensBooleanQuery = _queries.booleanQuery();
 
 		tokensBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-tokens"));
+			_queries.term("_index", "workflow-metrics-tasks"));
 		tokensBooleanQuery.addMustQueryClauses(
 			_createTokensBooleanQuery(assigneeUserIds, processId));
 
@@ -372,7 +372,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		return booleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-tokens"));
+			_queries.term("_index", "workflow-metrics-tasks"));
 	}
 
 	private Instance _createInstance(Document document) {
@@ -590,7 +590,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-instances",
-			"workflow-metrics-sla-instance-results", "workflow-metrics-tokens");
+			"workflow-metrics-sla-instance-results", "workflow-metrics-tasks");
 
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(assigneeUserIds, processId, statuses));
@@ -689,7 +689,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-tokens", "workflow-metrics-transitions");
+			"workflow-metrics-tasks", "workflow-metrics-transitions");
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -741,7 +741,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				ListUtil.fromArray(taskKeys)));
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-instances",
-			"workflow-metrics-sla-instance-results", "workflow-metrics-tokens");
+			"workflow-metrics-sla-instance-results", "workflow-metrics-tasks");
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(assigneeUserIds, processId, statuses));
 

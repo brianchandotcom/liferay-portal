@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.RoleServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -131,10 +130,7 @@ public class RoleItemSelectorViewDisplayContext {
 
 		_searchContainer.setTotal(total);
 
-		_searchContainer.setResults(
-			ListUtil.subList(
-				results, _searchContainer.getStart(),
-				_searchContainer.getEnd()));
+		_searchContainer.setResults(results);
 
 		return _searchContainer;
 	}

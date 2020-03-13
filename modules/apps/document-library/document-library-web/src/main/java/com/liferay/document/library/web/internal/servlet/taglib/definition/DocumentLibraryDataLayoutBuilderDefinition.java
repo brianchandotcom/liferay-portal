@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.servlet.taglib.definition;
 
 import com.liferay.data.engine.taglib.servlet.taglib.definition.DataLayoutBuilderDefinition;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,8 +35,8 @@ public class DocumentLibraryDataLayoutBuilderDefinition
 	}
 
 	@Override
-	public boolean isMultiPage() {
-		return false;
+	public String getPaginationMode() {
+		return DDMFormLayout.SINGLE_PAGE_MODE;
 	}
 
 }

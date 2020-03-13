@@ -134,7 +134,7 @@ public class DataLayoutTaglibUtil {
 		).put(
 			"disabledTabs", dataLayoutBuilderDefinition.getDisabledTabs()
 		).put(
-			"multiPage", dataLayoutBuilderDefinition.isMultiPage()
+			"paginationMode", dataLayoutBuilderDefinition.getPaginationMode()
 		).put(
 			"successPageSettings",
 			dataLayoutBuilderDefinition.getSuccessPageSettings()

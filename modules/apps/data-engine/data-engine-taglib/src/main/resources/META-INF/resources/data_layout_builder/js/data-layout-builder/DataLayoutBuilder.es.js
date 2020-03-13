@@ -44,6 +44,9 @@ class DataLayoutBuilder extends React.Component {
 
 		const context = this._setContext(this.props.context);
 
+		const paginationMode =
+			context.paginationMode || config.paginationMode || 'wizard';
+
 		this.formBuilderWithLayoutProvider = new FormBuilderWithLayoutProvider(
 			{
 				events: {
@@ -55,7 +58,7 @@ class DataLayoutBuilder extends React.Component {
 				},
 				formBuilderProps: {
 					fieldTypes,
-					paginationMode: 'wizard',
+					paginationMode,
 					portletNamespace,
 					ref: 'builder',
 				},
@@ -65,11 +68,10 @@ class DataLayoutBuilder extends React.Component {
 					defaultLanguageId: themeDisplay.getDefaultLanguageId(),
 					editingLanguageId: themeDisplay.getDefaultLanguageId(),
 					initialPages: context.pages,
-					initialPaginationMode: context.paginationMode,
+					initialPaginationMode: paginationMode,
 					initialSuccessPageSettings: config.successPageSettings,
 					ref: 'layoutProvider',
 				},
-				singlePage: !config.multiPage,
 			},
 			this.containerRef.current
 		);
@@ -410,7 +412,7 @@ class DataLayoutBuilder extends React.Component {
 	}
 
 	_setContext(context) {
-		const {defaultLanguageId} = this.props;
+		const {config, defaultLanguageId} = this.props;
 
 		const emptyLocalizableValue = {
 			[defaultLanguageId]: '',
@@ -439,7 +441,7 @@ class DataLayoutBuilder extends React.Component {
 						title: '',
 					},
 				],
-				paginationMode: 'wizard',
+				paginationMode: config.paginationMode || 'wizard',
 				rules: context.rules || [],
 			};
 		}

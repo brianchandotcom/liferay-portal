@@ -34,6 +34,26 @@ public class RedirectEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void addEntryResources(
+			com.liferay.redirect.model.RedirectEntry entry,
+			boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_redirectEntryLocalService.addEntryResources(
+			entry, addGroupPermissions, addGuestPermissions);
+	}
+
+	@Override
+	public void addEntryResources(
+			com.liferay.redirect.model.RedirectEntry entry,
+			com.liferay.portal.kernel.service.permission.ModelPermissions
+				modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_redirectEntryLocalService.addEntryResources(entry, modelPermissions);
+	}
+
+	@Override
 	public com.liferay.redirect.model.RedirectEntry addRedirectEntry(
 			long groupId, String destinationURL, java.util.Date expirationDate,
 			boolean permanent, String sourceURL,

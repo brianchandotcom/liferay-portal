@@ -41,8 +41,11 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
+
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,6 +65,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.dom4j.DocumentException;
 
@@ -143,6 +148,8 @@ public class SourceFormatter {
 				String gitWorkingBranchName = ArgumentsUtil.getString(
 					arguments, "git.working.branch.name",
 					SourceFormatterArgs.GIT_WORKING_BRANCH_NAME);
+
+				_validateCommitMessages(gitWorkingBranchName);
 
 				sourceFormatterArgs.setGitWorkingBranchName(
 					gitWorkingBranchName);
@@ -470,6 +477,37 @@ public class SourceFormatter {
 			}
 
 			cause = cause.getCause();
+		}
+	}
+
+	private static void _validateCommitMessages(String gitWorkingBranchName) {
+		String ticketId = null;
+
+		try {
+			List<String> commitMessages =
+				GitUtil.getCurrentBranchCommitMessages(gitWorkingBranchName);
+
+			for (String commitMessage : commitMessages) {
+				Matcher matcher = _commitMessagePattern.matcher(commitMessage);
+
+				if (!matcher.find()) {
+					continue;
+				}
+
+				ticketId = matcher.group();
+
+				URL url = new URL(
+					"https://issues.liferay.com/rest/api/2/issue/" + ticketId);
+
+				url.openStream();
+			}
+		}
+		catch (FileNotFoundException fileNotFoundException) {
+			System.out.println("Ticket " + ticketId + " does not exist");
+
+			System.exit(1);
+		}
+		catch (Exception exception) {
 		}
 	}
 
@@ -939,6 +977,9 @@ public class SourceFormatter {
 		"source-formatter.properties";
 
 	private static final int _SUBREPOSITORY_MAX_DIR_LEVEL = 3;
+
+	private static final Pattern _commitMessagePattern = Pattern.compile(
+		"^[A-Z]+-[0-9]+");
 
 	private List<String> _allFileNames;
 	private int _maxStatusMessageLength = -1;

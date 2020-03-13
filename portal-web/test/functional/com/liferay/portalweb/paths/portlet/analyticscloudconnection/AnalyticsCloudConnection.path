@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>ACConnection</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ACConnection</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ADD_NEW_PROPERTY_BUTTON</td>
+	<td>//*[contains(@class, 'lexicon-icon lexicon-icon-plus')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANALYTICS_CLOUD_BUTTON</td>
+	<td>//*[contains(@class, 'lexicon-icon lexicon-icon-liferay-ac user-icon-sm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_OPTION</td>
+	<td>//*[contains(@class, 'active collapse-icon collapse-icon-middle list-group-heading panel-header collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_PANEL_MENU</td>
+	<td>//*[contains(@class, 'category-name text-truncate') and text()='Control Panel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DONE_BUTTON</td>
+	<td>//*[contains(@id, '_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_add-channel-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INPUT_LIFERAY_DXP_CHECKBOX</td>
+	<td>//*[contains(@type, 'checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANCE_SETTINGS_OPTION</td>
+	<td>//*[contains(@id, '_com_liferay_product_navigation_product_menu_web_portlet_ProductMenuPortlet_portlet_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SYNCED_SITES_BUTTON</td>
+	<td>//*[contains(@class, 'nav-link') and text()='Synced Sites']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

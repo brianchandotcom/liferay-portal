@@ -94,9 +94,9 @@ JSONArray rangesJSONArray = modifiedFacetPortletPreferences.getRangesJSONArray()
 
 						<div class="lfr-form-row lfr-form-row-inline range-form-row">
 							<div class="row-fields">
-								<aui:input cssClass="label-input" label="label" name='<%= "label_" + i %>' value='<%= jsonObject.getString("label") %>' />
+								<aui:input cssClass="label-input" label="label" name='<%= "label_" + i %>' required="<%= true %>" value='<%= jsonObject.getString("label") %>' />
 
-								<aui:input cssClass="range-input" label="range" name='<%= "range_" + i %>' value='<%= jsonObject.getString("range") %>' />
+								<aui:input cssClass="range-input" label="range" name='<%= "range_" + i %>' required="<%= true %>" value='<%= jsonObject.getString("range") %>' />
 							</div>
 						</div>
 

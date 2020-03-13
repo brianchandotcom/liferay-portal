@@ -260,6 +260,11 @@ class DataLayoutBuilder extends React.Component {
 			dataDefinition,
 			fieldName
 		);
+
+		if (dataDefinitionField.fieldType === 'ddm-text-html') {
+			dataDefinitionField.fieldType = 'rich_text';
+		}
+
 		const {editingLanguageId = themeDisplay.getLanguageId()} = this.props;
 		const settingsContext = this.getDDMFormFieldSettingsContext(
 			dataDefinitionField

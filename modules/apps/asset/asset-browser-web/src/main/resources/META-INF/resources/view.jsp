@@ -110,9 +110,9 @@
 							</h6>
 						</c:if>
 
-						<h6 class="text-default">
-							<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
-						</h6>
+						<span class="text-default">
+							<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= assetRenderer.getStatus() %>" />
+						</span>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(assetBrowserDisplayContext.getDisplayStyle(), "icon") %>'>
@@ -166,6 +166,11 @@
 					<liferay-ui:search-container-column-date
 						name="modified-date"
 						value="<%= assetEntry.getModifiedDate() %>"
+					/>
+
+					<liferay-ui:search-container-column-status
+						name="status"
+						status="<%= assetRenderer.getStatus() %>"
 					/>
 
 					<liferay-ui:search-container-column-text

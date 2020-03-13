@@ -19,6 +19,8 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.RenderRequest;
@@ -124,6 +127,15 @@ public class AssetEntryVerticalCard implements VerticalCard {
 		}
 
 		return null;
+	}
+
+	@Override
+	public List<LabelItem> getLabels() {
+		return LabelItemListBuilder.add(
+			labelItem -> {
+				labelItem.setStatus(_assetRenderer.getStatus());
+			}
+		).build();
 	}
 
 	@Override

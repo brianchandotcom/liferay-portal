@@ -46,10 +46,8 @@ public class PhoneResourceBuilderImpl implements PhoneResourceBuilder {
 
 			@Override
 			public PhoneResource build() {
-				Class<?> clazz = getClass();
-
 				return (PhoneResource)ProxyUtil.newProxyInstance(
-					clazz.getClassLoader(),
+					PhoneResource.class.getClassLoader(),
 					new Class<?>[] {PhoneResource.class},
 					new InvocationHandler() {
 

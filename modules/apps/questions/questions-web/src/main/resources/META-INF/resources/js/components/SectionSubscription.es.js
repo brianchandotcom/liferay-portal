@@ -37,15 +37,19 @@ export default ({onSubscription, section: {id, subscribed}}) => {
 		});
 	};
 
+	const btnTitle = subscription
+		? Liferay.Language.get('subscribed')
+		: Liferay.Language.get('subscribe');
+
 	return (
 		<ClayButton
 			displayType={subscription ? 'primary' : 'secondary'}
 			onClick={changeSubscription}
+			title={btnTitle}
 		>
 			<ClayIcon symbol="bell-on" />
-			{subscription
-				? Liferay.Language.get('subscribed')
-				: Liferay.Language.get('subscribe')}
+
+			<span className="c-ml-2 d-none d-sm-inline-block">{btnTitle}</span>
 		</ClayButton>
 	);
 };

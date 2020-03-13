@@ -78,8 +78,8 @@ export default withRouter(
 			[];
 
 		return (
-			<div className="align-items-center d-flex justify-content-between">
-				<div className="d-flex">
+			<div className="d-flex flex-column flex-lg-row justify-content-between">
+				<div className="d-flex justify-content-between">
 					<ClayDropDown
 						active={active}
 						onActiveChange={setActive}
@@ -139,11 +139,11 @@ export default withRouter(
 					</div>
 				</div>
 
-				<div className="d-flex">
-					<ClayInput.Group>
+				<div className="c-mt-3 c-mt-lg-0 d-flex flex-column flex-md-row">
+					<ClayInput.Group className="justify-content-lg-end">
 						<ClayInput.GroupItem shrink>
 							<label
-								className="align-items-center d-inline-flex font-weight-normal"
+								className="align-items-center d-inline-flex text-secondary"
 								htmlFor="questionsFilter"
 							>
 								{Liferay.Language.get('filter-by')}
@@ -167,7 +167,9 @@ export default withRouter(
 								))}
 							</ClaySelect>
 						</ClayInput.GroupItem>
+					</ClayInput.Group>
 
+					<ClayInput.Group className="c-mt-3 c-mt-md-0">
 						<ClayInput.GroupItem>
 							<ClayInput
 								className="bg-transparent form-control input-group-inset input-group-inset-after"

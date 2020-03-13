@@ -845,10 +845,16 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<attribute name="suite.name" />
 
 		<sequential>
+			<get-testcase-property property.name="hot.deploy.osgi.app.includes" />
 			<propertycopy from="search.engine[@{suite.name}]" name="suite.search.engine" silent="true" />
 
 			<if>
-				<equals arg1="${suite.search.engine}" arg2="elasticsearch7" />
+				<and>
+					<not>
+						<equals arg1="${hot.deploy.osgi.app.includes}" arg2="portal-search-elasticsearch7" />
+					</not>
+					<equals arg1="${suite.search.engine}" arg2="elasticsearch7" />
+				</and>
 				<then>
 					<ant antfile="build-test-elasticsearch7.xml" inheritAll="false" target="deploy-elasticsearch7" />
 				</then>

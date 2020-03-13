@@ -14,10 +14,13 @@
 
 package com.liferay.layout.page.template.internal.importer.helper;
 
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
+import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.validator.FragmentEntryValidator;
@@ -33,6 +36,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,6 +48,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -133,9 +140,13 @@ public class FragmentLayoutStructureItemHelper
 			configuration = fragmentEntry.getConfiguration();
 		}
 
+		FragmentCollection fragmentCollection =
+			FragmentCollectionServiceUtil.fetchFragmentCollection(
+				fragmentEntry.getFragmentCollectionId());
+
 		JSONObject defaultEditableValuesJSONObject =
 			fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
-				html, configuration);
+				_replaceResources(fragmentCollection, html), configuration);
 
 		Map<String, String> editableTypes = _getEditableTypes(html);
 
@@ -324,6 +335,37 @@ public class FragmentLayoutStructureItemHelper
 		return fragmentEntry;
 	}
 
+	private String _replaceResources(
+			FragmentCollection fragmentCollection, String html)
+		throws PortalException {
+
+		if (fragmentCollection == null) {
+			return html;
+		}
+
+		Matcher matcher = _pattern.matcher(html);
+
+		while (matcher.find()) {
+			FileEntry fileEntry =
+				PortletFileRepositoryUtil.fetchPortletFileEntry(
+					fragmentCollection.getGroupId(),
+					fragmentCollection.getResourcesFolderId(),
+					matcher.group(1));
+
+			String fileEntryURL = StringPool.BLANK;
+
+			if (fileEntry != null) {
+				fileEntryURL = DLURLHelperUtil.getDownloadURL(
+					fileEntry, fileEntry.getFileVersion(), null,
+					StringPool.BLANK, false, false);
+			}
+
+			html = StringUtil.replace(html, matcher.group(), fileEntryURL);
+		}
+
+		return html;
+	}
+
 	private JSONObject _toEditableFragmentEntryProcessorJSONObject(
 		Map<String, String> editableTypes, List<Object> fragmentFields) {
 
@@ -416,5 +458,8 @@ public class FragmentLayoutStructureItemHelper
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentLayoutStructureItemHelper.class);
+
+	private static final Pattern _pattern = Pattern.compile(
+		"\\[resources:(.+?)\\]");
 
 }

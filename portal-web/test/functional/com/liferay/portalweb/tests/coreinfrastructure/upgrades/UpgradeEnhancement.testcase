@@ -7,7 +7,7 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Upgrades Core Infrastructure";
 
-	@priority = "5"
+	@priority = "4"
 	test DecrementCoreSchemaMajorVersion {
 		property test.name.skip.portal.instance = "UpgradeEnhancement#DecrementCoreSchemaMajorVersion";
 
@@ -45,7 +45,7 @@ definition {
 		AssertConsoleTextPresent(value1 = "You must first upgrade the portal to the required schema version");
 	}
 
-	@priority = "5"
+	@priority = "4"
 	test DecrementCoreSchemaMicroVersion {
 		property test.name.skip.portal.instance = "UpgradeEnhancement#DecrementCoreSchemaMicroVersion";
 
@@ -94,7 +94,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = "3"
 	test DecrementCoreSchemaMinorVersion {
 		property test.name.skip.portal.instance = "UpgradeEnhancement#DecrementCoreSchemaMinorVersion";
 

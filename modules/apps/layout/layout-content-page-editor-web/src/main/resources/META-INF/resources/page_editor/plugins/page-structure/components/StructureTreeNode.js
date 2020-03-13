@@ -56,6 +56,9 @@ export default function StructureTreeNode({node}) {
 			}}
 		>
 			<ClayButton
+				aria-label={Liferay.Util.sub(Liferay.Language.get('select-x'), [
+					node.name,
+				])}
 				className="page-editor__page-structure__tree-node__mask"
 				disabled={node.disabled}
 				displayType="unstyled"

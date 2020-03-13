@@ -770,7 +770,7 @@ definition {
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 
-		DoubleClick(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON");
+		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON");
 	}
 
 	macro gotoSelectPanel {

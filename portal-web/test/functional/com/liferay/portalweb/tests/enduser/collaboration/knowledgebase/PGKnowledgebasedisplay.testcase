@@ -342,23 +342,6 @@ definition {
 	}
 
 	@priority = "4"
-	test RateKBArticleWithoutSuggestions {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		Ratings.rate(ratingResult = "Thumb Up");
-
-		Ratings.viewRating(
-			ratingResult = "Thumb Up",
-			voteCount = "1");
-	}
-
-	@priority = "4"
 	test SelectParentArticleViaKBDisplay {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -597,48 +580,6 @@ definition {
 		KBArticle.viewBlogsEntryRelatedAsset();
 	}
 
-	@priority = "3"
-	test ViewKBArticleWithEditedStarRatings {
-		property test.name.skip.portal.instance = "PGKnowledgebasedisplay#ViewKBArticleWithEditedStarRatings";
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		KBArticle.viewViaKBDisplayPG(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Community Tools",
-			configurationName = "Ratings",
-			configurationScope = "Virtual Instance Scope");
-
-		Select(
-			locator1 = "Select#KNOWLEDGE_BASE_RATING",
-			value1 = "Stars");
-
-		AssertClickNoError(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
-
-		AssertConfirm(value1 = "Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		KBArticle.rateArticle1Star(kbArticleTitle = "Knowledge Base Article Title");
-
-		KBArticle.viewArticle1StarRatingPG();
-
-		KBArticle.rateArticleFrom1StarTo5Star(kbArticleTitle = "Knowledge Base Article Title");
-
-		KBArticle.viewArticle5StarRatingPG();
-	}
-
 	@priority = "4"
 	test ViewKBArticleWithKBChildArticleHierarchyNavigation {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -713,67 +654,6 @@ definition {
 		KBArticle.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
-	}
-
-	@priority = "4"
-	test ViewKBArticleWithStarRatings {
-		property test.name.skip.portal.instance = "PGKnowledgebasedisplay#ViewKBArticleWithStarRatings";
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		KBArticle.viewViaKBDisplayPG(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		Ratings.rate(ratingResult = "Thumb Up");
-
-		Ratings.viewRating(
-			ratingResult = "Thumb Up",
-			voteCount = "1");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Community Tools",
-			configurationName = "Ratings",
-			configurationScope = "Virtual Instance Scope");
-
-		Select(
-			locator1 = "Select#KNOWLEDGE_BASE_RATING",
-			value1 = "Stars");
-
-		AssertClickNoError(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
-
-		AssertConfirm(value1 = "Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		KBArticle.viewArticle5StarRatingPG();
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Community Tools",
-			configurationName = "Ratings",
-			configurationScope = "Virtual Instance Scope");
-
-		Select(
-			locator1 = "Select#KNOWLEDGE_BASE_RATING",
-			value1 = "Thumbs");
-
-		AssertClickNoError(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
-
-		AssertConfirm(value1 = "Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		Ratings.viewRating(voteCount = "1");
 	}
 
 	@priority = "3"

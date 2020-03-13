@@ -1,0 +1,611 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Ratings";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@priority = "4"
+	test ChangeBlogsRatingType {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Community Tools",
+			configurationName = "Ratings",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureBlogsRatingType(ratingType = "Stars");
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		AssertTextEquals(
+			locator1 = "Ratings#AVERAGE_LABEL",
+			value1 = "Average (0 Votes)");
+
+		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_1");
+	}
+
+	@description = "This is a use case for LPS-74621."
+	@priority = "3"
+	test CommentAndRateBlogsEntryOnLiveSite {
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Pause(locator1 = "3000");
+
+		Ratings.rate(ratingResult = "Thumb Up");
+
+		Comments.addPG(entryComment = "Blogs Entry Comment");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Ratings.viewRating(
+			ratingResult = "Thumb Up",
+			voteCount = "1");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "Blogs Entry Comment",
+			userFullName = "Test Test (You)");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Comments.viewCommentReadOnly();
+
+		Ratings.viewRatingReadOnly();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging");
+
+		Staging.deactivateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		LAR.exportPortlet(larFileName = "Blogs.portlet.lar");
+
+		JSONGroup.addGroup(groupName = "Second Site");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Second Site",
+			layoutName = "Blogs Page");
+
+		Navigator.openSiteURL(siteName = "Second Site");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.openSiteURL(siteName = "Second Site");
+
+		LAR.importPortlet(larFileName = "Blogs.portlet.lar");
+
+		Navigator.openSiteURL(siteName = "Second Site");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Ratings.viewRating(
+			ratingResult = "Thumb Up",
+			voteCount = "1");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "Blogs Entry Comment",
+			userFullName = "Test Test (You)");
+	}
+
+	@description = "This is a use case for LPS-74621."
+	@priority = "3"
+	test CommentAndRateWikiFrontPageOnLiveSite {
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Wiki");
+
+		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		WikiNavigator.gotoFrontPagePG();
+
+		WikiPage.viewFrontPagePG(
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage");
+
+		WikiPage.rate4StarsPG(wikiPageTitle = "FrontPage");
+
+		Comments.addPG(entryComment = "Wiki FrontPage Comment");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetRatingPG(rating = "4");
+
+		AssetPublisherPortlet.viewAverageRatingPG(averageRating = "4");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "Wiki FrontPage Comment",
+			userFullName = "Test Test (You)");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		WikiPage.viewFrontPagePG(
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage");
+
+		Comments.viewCommentReadOnly();
+
+		Ratings.viewRatingWithStarsReadOnly();
+
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.deactivateStagingCP(siteName = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		LAR.exportPortlet(larFileName = "Wiki.portlet.lar");
+
+		JSONGroup.addGroup(groupName = "Second Site");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Second Site",
+			layoutName = "Wiki Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Second Site",
+			layoutName = "Wiki Page",
+			widgetName = "Wiki");
+
+		Navigator.openSiteURL(siteName = "Second Site");
+
+		LAR.importPortlet(larFileName = "Wiki.portlet.lar");
+
+		Navigator.openSiteURL(siteName = "Second Site");
+
+		WikiPage.viewFrontPagePG(
+			viewWikiNode = "true",
+			wikiNodeName = "Main 2",
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage");
+
+		AssetPublisherPortlet.viewAssetRatingPG(rating = "4");
+
+		AssetPublisherPortlet.viewAverageRatingPG(averageRating = "4");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "Wiki FrontPage Comment",
+			userFullName = "Test Test (You)");
+	}
+
+	@description = "This is a use case for LPS-96470."
+	@priority = "3"
+	test ExportImportSiteWithCommentsAndRatingsUnderBlogsEntry {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Ratings.rate(ratingResult = "Thumb Up");
+
+		Comments.addPG(entryComment = "Blogs Entry Comment");
+
+		Ratings.rate(
+			commentRating = "true",
+			ratingResult = "Thumb Up");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Ratings.viewRating(
+			ratingResult = "Thumb Up",
+			voteCount = "1");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "Blogs Entry Comment",
+			userFullName = "Test Test (You)");
+
+		Ratings.viewRating(
+			commentRating = "true",
+			ratingResult = "Thumb Up",
+			voteCount = "1");
+
+		LAR.openExportAdmin(siteScopeName = "Guest");
+
+		LexiconEntry.gotoAdd();
+
+		LAR.configureExportOptions(checkContentNameList = "Blogs");
+
+		AssertClick(
+			locator1 = "SitePagesExport#EXPORT_BUTTON",
+			value1 = "Export");
+
+		var key_larFileName = "${larFileName}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+			value1 = "Successful");
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		JSONGroup.addGroup(groupName = "Second Site");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "Second Site");
+
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Second Site");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Ratings.viewRating(
+			ratingResult = "Thumb Up",
+			voteCount = "1");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "Blogs Entry Comment",
+			userFullName = "Test Test (You)");
+
+		Ratings.viewRating(
+			commentRating = "true",
+			ratingResult = "Thumb Up",
+			voteCount = "1");
+	}
+
+	@priority = "5"
+	test RateAndEditPageComment {
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiPage.addCP(
+			wikiPageContent = "Wiki Page Content 1",
+			wikiPageTitle = "Wiki Page 1");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiTable.viewEntry(
+			draftStatus = "APPROVED",
+			wikiPageTitle = "Wiki Page 1");
+
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page 1");
+
+		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 1");
+
+		WikiPage.addComment(entryComment = "Wiki Page Comment");
+
+		Ratings.rate(ratingResult = "Thumb Up");
+
+		WikiPage.editComment(
+			entryComment = "Wiki Page Comment",
+			entryCommentEdit = "Wiki Page Comment Edited");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page 1");
+
+		WikiPage.viewCommentPG(
+			entryComment = "Wiki Page Comment Edited",
+			wikiPageTitle = "Wiki Page 1");
+
+		Ratings.viewRating(
+			ratingResult = "Thumb Up",
+			voteCount = "1");
+
+		Ratings.viewRating(
+			ratingResult = "Thumb Down",
+			voteCount = "0");
+	}
+
+	@priority = "4"
+	test RateBlogsEntry {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Ratings.rate(ratingResult = "Thumb Up");
+
+		Ratings.viewRating(
+			ratingResult = "Thumb Up",
+			voteCount = "1");
+
+		Ratings.viewRating(
+			ratingResult = "Thumb Down",
+			voteCount = "0");
+
+		Ratings.rate(ratingResult = "Thumb Down");
+
+		Ratings.viewRating(
+			ratingResult = "Thumb Up",
+			voteCount = "0");
+
+		Ratings.viewRating(
+			ratingResult = "Thumb Down",
+			voteCount = "1");
+	}
+
+	@priority = "4"
+	test RateKBArticleWithoutSuggestions {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Ratings.rate(ratingResult = "Thumb Up");
+
+		Ratings.viewRating(
+			ratingResult = "Thumb Up",
+			voteCount = "1");
+	}
+
+	@priority = "5"
+	test RatePage {
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiPage.addCP(
+			wikiPageContent = "Wiki Page Content 1",
+			wikiPageTitle = "Wiki Page 1");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiTable.viewEntry(
+			draftStatus = "APPROVED",
+			wikiPageTitle = "Wiki Page 1");
+
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page 1");
+
+		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 1");
+
+		WikiPage.rate4StarsPG(wikiPageTitle = "Wiki Page 1");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page 1");
+
+		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 1");
+
+		WikiPage.viewRate4StarsPG(wikiPageTitle = "Wiki Page 1");
+	}
+
+	@priority = "3"
+	test ViewKBArticleWithEditedStarRatings {
+		property test.name.skip.portal.instance = "PGKnowledgebasedisplay#ViewKBArticleWithEditedStarRatings";
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Community Tools",
+			configurationName = "Ratings",
+			configurationScope = "Virtual Instance Scope");
+
+		Select(
+			locator1 = "Select#KNOWLEDGE_BASE_RATING",
+			value1 = "Stars");
+
+		AssertClickNoError(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		AssertConfirm(value1 = "Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.rateArticle1Star(kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.viewArticle1StarRatingPG();
+
+		KBArticle.rateArticleFrom1StarTo5Star(kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.viewArticle5StarRatingPG();
+	}
+
+	@priority = "4"
+	test ViewKBArticleWithStarRatings {
+		property test.name.skip.portal.instance = "PGKnowledgebasedisplay#ViewKBArticleWithStarRatings";
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Ratings.rate(ratingResult = "Thumb Up");
+
+		Ratings.viewRating(
+			ratingResult = "Thumb Up",
+			voteCount = "1");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Community Tools",
+			configurationName = "Ratings",
+			configurationScope = "Virtual Instance Scope");
+
+		Select(
+			locator1 = "Select#KNOWLEDGE_BASE_RATING",
+			value1 = "Stars");
+
+		AssertClickNoError(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		AssertConfirm(value1 = "Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewArticle5StarRatingPG();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Community Tools",
+			configurationName = "Ratings",
+			configurationScope = "Virtual Instance Scope");
+
+		Select(
+			locator1 = "Select#KNOWLEDGE_BASE_RATING",
+			value1 = "Thumbs");
+
+		AssertClickNoError(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		AssertConfirm(value1 = "Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Ratings.viewRating(voteCount = "1");
+	}
+
+}

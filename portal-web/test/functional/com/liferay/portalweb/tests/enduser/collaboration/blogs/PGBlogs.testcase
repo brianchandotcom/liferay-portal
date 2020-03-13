@@ -815,39 +815,6 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@priority = "4"
-	test RateBlogsEntry {
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Ratings.rate(ratingResult = "Thumb Up");
-
-		Ratings.viewRating(
-			ratingResult = "Thumb Up",
-			voteCount = "1");
-
-		Ratings.viewRating(
-			ratingResult = "Thumb Down",
-			voteCount = "0");
-
-		Ratings.rate(ratingResult = "Thumb Down");
-
-		Ratings.viewRating(
-			ratingResult = "Thumb Up",
-			voteCount = "0");
-
-		Ratings.viewRating(
-			ratingResult = "Thumb Down",
-			voteCount = "1");
-	}
-
 	@description = "This is a usecase for LPS-83229. This is the only small image test for blogs."
 	@priority = "5"
 	test RemoveSmallImage {

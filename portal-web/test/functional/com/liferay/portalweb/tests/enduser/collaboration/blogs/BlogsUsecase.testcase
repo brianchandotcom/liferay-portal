@@ -248,30 +248,6 @@ definition {
 	}
 
 	@priority = "4"
-	test ChangeBlogsRatingType {
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Community Tools",
-			configurationName = "Ratings",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.configureBlogsRatingType(ratingType = "Stars");
-
-		Navigator.openURL();
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		AssertTextEquals(
-			locator1 = "Ratings#AVERAGE_LABEL",
-			value1 = "Average (0 Votes)");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_1");
-	}
-
-	@priority = "4"
 	test DeleteBlogsEntry {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

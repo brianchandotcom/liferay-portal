@@ -70,12 +70,13 @@
 	{@param? _handleFieldFocused: any}
 	{@param? editable: bool}
 	{@param? empty: bool}
+	{@param? hideHeader: bool }
 	{@param? page: ?}
 
 	<div class="active ddm-form-page lfr-ddm-form-page">
 		{let $headerRenderer: $page.headerRenderer ?: '' /}
 
-		{if $activePage == $pageIndex}
+		{if $activePage == $pageIndex and not $hideHeader}
 			{delcall PageRenderer.PageHeader data="$page" variant="$headerRenderer"}
 				{param description: $page.description ?: '' /}
 				{param pageIndex: $pageIndex /}

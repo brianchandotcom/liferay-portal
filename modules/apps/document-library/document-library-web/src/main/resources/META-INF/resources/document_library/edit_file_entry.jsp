@@ -105,7 +105,6 @@ else {
 	dlEditFileEntryDisplayContext = dlDisplayContextProvider.getDLEditFileEntryDisplayContext(request, response, fileEntry);
 }
 
-Set<Locale> availableLocales = null;
 String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
 String headerTitle = LanguageUtil.get(request, "new-document");
@@ -420,12 +419,6 @@ renderResponse.setTitle(headerTitle);
 										</c:if>
 
 							<%
-										if (localizable) {
-											DDMForm ddmForm = ddmStructure.getDDMForm();
-
-											availableLocales = ddmForm.getAvailableLocales();
-										}
-
 										localizable = false;
 									}
 								}
@@ -486,7 +479,6 @@ renderResponse.setTitle(headerTitle);
 					>
 						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
 							<liferay-expando:custom-attribute-list
-								availableLocales="<%= availableLocales %>"
 								className="<%= DLFileEntryConstants.getClassName() %>"
 								classPK="<%= fileVersionId %>"
 								editable="<%= true %>"

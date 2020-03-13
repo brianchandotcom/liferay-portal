@@ -2712,6 +2712,109 @@ definition {
 		Navigator.closeWindow();
 	}
 
+	@description = "Make sure removing a field from a specific Form View is not impacting another Form View"
+	@priority = "5"
+	test RemoveFieldInMultipleFormViews {
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "My Form View Title 1");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "My Form View Title 2");
+
+		FormViewBuilder.openFormView(formViewName = "My Form View Title 1");
+
+		FormViewBuilder.fieldEllipsisAction(
+			fieldLabel = "Text",
+			selectAction = "Remove");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
+
+		FormViewBuilder.save();
+
+		FormViewBuilder.openFormView(formViewName = "My Form View Title 2");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+
+		FormViewBuilder.validateObjectFieldName(fieldName = "Text");
+	}
+
+	@description = "Remove a field from the Form View from the Objects Sidebar"
+	@priority = "5"
+	test RemoveFormViewFieldInObjectSidebar {
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "My Form View Title");
+
+		FormViewBuilder.openFormView(formViewName = "My Form View Title");
+
+		FormViewBuilder.deleteObjectSidebarField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "Layout is empty.");
+	}
+
+	@description = "Remove fields from the Form View through the 'Remove' option"
+	@priority = "5"
+	test RemoveFormViewFields {
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.setName(formViewName = "Form View Title 1");
+
+		for (var fieldType : list "Text,Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+			FormViewBuilder.closeSidebar();
+		}
+
+		FormViewBuilder.save();
+
+		FormViewBuilder.openFormView(formViewName = "Form View Title 1");
+
+		for (var fieldLabel : list "Text,Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
+
+			FormViewBuilder.fieldEllipsisAction(
+				fieldLabel = "${fieldLabel}",
+				selectAction = "Remove");
+		}
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+		FormViewBuilder.save();
+
+		FormViewBuilder.openFormView(formViewName = "Form View Title 1");
+
+		for (var fieldType : list "Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
+
+			FormViewBuilder.validateNoFieldLabel(fieldLabel = "${fieldType}");
+
+			FormViewBuilder.validateObjectFieldName(fieldName = "${fieldType}");
+		}
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+	}
+
 	@description = "Reuse my object's existing fields when creating a new form view"
 	@priority = "5"
 	test ReuseExistingFormViewFields {

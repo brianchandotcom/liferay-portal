@@ -173,7 +173,7 @@
 <!--FRAGMENT_HEADER-->
 <tr>
 	<td>FRAGMENT_HEADER</td>
-	<td>//div[contains(@class,'page-editor')]//li[contains(.,'${key_fragmentName}')]</td>
+	<td>//div[contains(@class,'page-editor')]//*[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>

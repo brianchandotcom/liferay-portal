@@ -21,7 +21,7 @@ const Item = ({active, name, params, path}) => {
 		<ClayNavigationBar.Item active={active}>
 			<ChildLink
 				className="nav-link"
-				data-testid='tabLink'
+				data-testid="tabLink"
 				to={getPathname(params, path)}
 			>
 				{name}
@@ -40,16 +40,9 @@ const NavbarTabs = ({tabs = []}) => {
 	const {name: activeTabName} = tabs.filter(isActive)[0] || {};
 
 	return (
-		<ClayNavigationBar
-			inverted
-			triggerLabel={activeTabName}
-		>
+		<ClayNavigationBar inverted triggerLabel={activeTabName}>
 			{tabs.map((tab, index) => (
-				<NavbarTabs.Item
-					{...tab}
-					active={isActive(tab)}
-					key={index}
-				/>
+				<NavbarTabs.Item {...tab} active={isActive(tab)} key={index} />
 			))}
 		</ClayNavigationBar>
 	);

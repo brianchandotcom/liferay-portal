@@ -9,83 +9,58 @@
  * distribution rights of the Software.
  */
 
+import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
-import renderer from 'react-test-renderer';
 
-import {Tabs} from '../../../../src/main/resources/META-INF/resources/js/shared/components/tabs/Tabs.es';
-import {MockRouter as Router} from '../../../mock/MockRouter.es';
+import '@testing-library/jest-dom/extend-expect';
 
-const tabs = [
-	{
-		key: 'completed',
-		name: Liferay.Language.get('completed'),
-		params: {
-			processId: 35135,
-		},
-		path: '/metrics/:processId/completed',
-	},
-	{
-		key: 'pending',
-		name: Liferay.Language.get('pending'),
-		params: {
-			processId: 35135,
-		},
-		path: '/metrics/:processId/pending',
-	},
-];
+import Tabs from '../../../../src/main/resources/META-INF/resources/js/shared/components/tabs/Tabs.es';
+import {MockRouter} from '../../../mock/MockRouter.es';
 
-test('Should expand tab items', () => {
-	const component = mount(
-		<Router>
-			<Tabs
-				location={{
-					pathname: '/metrics/:processId/completed',
-				}}
-				tabs={tabs}
-			/>
-		</Router>
-	);
+describe('The Tabs component should', () => {
+	let container, renderResult, tabButtons;
+	const setCurrentTab = jest.fn();
 
-	const instance = component.find(Tabs).instance();
+	beforeAll(() => {
+		const tabs = [
+			{name: 'Tab 1', tabKey: 'tab1'},
+			{name: 'Tab 2', tabKey: 'tab2'},
+			{name: 'Tab 3', tabKey: 'tab3'},
+		];
 
-	instance.toggleExpanded();
+		renderResult = render(
+			<MockRouter>
+				<Tabs
+					currentTab="tab3"
+					setCurrentTab={setCurrentTab}
+					tabs={tabs}
+				/>
+			</MockRouter>
+		);
 
-	expect(component).toMatchSnapshot();
-});
+		container = renderResult.container;
+		tabButtons = container.querySelectorAll('button');
+	});
 
-test('Should hide tab items', () => {
-	const component = mount(
-		<Router>
-			<Tabs
-				location={{
-					pathname: '/metrics/:processId/completed',
-				}}
-				tabs={tabs}
-			/>
-		</Router>
-	);
+	test('Render tabs correctly', () => {
+		expect(tabButtons.length).toBe(3);
+		expect(tabButtons[0]).toHaveTextContent('Tab 1');
+		expect(tabButtons[1]).toHaveTextContent('Tab 2');
+		expect(tabButtons[2]).toHaveTextContent('Tab 3');
+		expect(tabButtons[2].classList).toContain('active');
+	});
 
-	const instance = component.find(Tabs).instance();
+	test('Call setCurrentTab with correct key when respective tab is clicked', () => {
+		fireEvent.click(tabButtons[0]);
 
-	instance.toggleExpanded();
-	instance.hideNavbar();
+		expect(setCurrentTab).toHaveBeenCalledWith('tab1');
 
-	expect(component).toMatchSnapshot();
-});
+		fireEvent.click(tabButtons[1]);
 
-test('Should render component', () => {
-	const component = renderer.create(
-		<Router>
-			<Tabs
-				location={{
-					pathname: '/metrics/:processId/pending',
-				}}
-				tabs={tabs}
-			/>
-		</Router>
-	);
+		expect(setCurrentTab).toHaveBeenCalledWith('tab2');
 
-	const tree = component.toJSON();
+		fireEvent.click(tabButtons[2]);
 
-	expect(tree).toMatchSnapshot();
+		expect(setCurrentTab).toHaveBeenCalledWith('tab3');
+	});
 });

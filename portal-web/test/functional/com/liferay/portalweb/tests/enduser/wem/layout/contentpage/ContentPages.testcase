@@ -295,7 +295,22 @@ definition {
 		}
 
 		task ("Add a section layout") {
-			PageEditor.addLayoutSection();
+			PageEditor.gotoTab(tabName = "Fragments");
+
+			PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_elementType = "Section",
+				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
+				locator2 = "//div[contains(@class,'page-editor__row')]",
+				value1 = "");
+
+			AssertVisible(
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("Assert the layout by default has padding x1") {

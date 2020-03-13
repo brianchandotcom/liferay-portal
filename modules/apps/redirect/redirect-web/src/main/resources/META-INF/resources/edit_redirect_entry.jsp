@@ -71,12 +71,12 @@ else {
 
 		<aui:input name="destinationURL" required="<%= true %>" value="<%= (redirectEntry != null) ? redirectEntry.getDestinationURL() : null %>" />
 
-		<aui:select label="type" name="temporary">
-			<aui:option selected="<%= (redirectEntry != null) ? !redirectEntry.isTemporary() : true %>" value="<%= false %>">
+		<aui:select label="type" name="permanent">
+			<aui:option selected="<%= (redirectEntry != null) ? redirectEntry.isPermanent() : true %>" value="<%= true %>">
 				<liferay-ui:message arguments="<%= HttpServletResponse.SC_MOVED_PERMANENTLY %>" key="permanent-x" />
 			</aui:option>
 
-			<aui:option selected="<%= (redirectEntry != null) ? redirectEntry.isTemporary() : false %>" value="<%= true %>">
+			<aui:option selected="<%= (redirectEntry != null) ? !redirectEntry.isPermanent() : false %>" value="<%= false %>">
 				<liferay-ui:message arguments="<%= HttpServletResponse.SC_FOUND %>" key="temporary-x" />
 			</aui:option>
 		</aui:select>

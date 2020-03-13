@@ -152,11 +152,11 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 		RedirectEntry redirectEntry1 =
 			_redirectEntryLocalService.addRedirectEntry(
 				serviceContext.getScopeGroupId(), "http://www.liferay.com/a",
-				null, RandomTestUtil.randomString(), true, serviceContext);
+				null, false, RandomTestUtil.randomString(), serviceContext);
 		RedirectEntry redirectEntry2 =
 			_redirectEntryLocalService.addRedirectEntry(
 				serviceContext.getScopeGroupId(), "http://www.liferay.com/b",
-				null, RandomTestUtil.randomString(), true, serviceContext);
+				null, false, RandomTestUtil.randomString(), serviceContext);
 
 		_assertSearchResults(
 			redirectEntry1, redirectEntry2,
@@ -178,11 +178,11 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 		RedirectEntry redirectEntry1 =
 			_redirectEntryLocalService.addRedirectEntry(
 				serviceContext.getScopeGroupId(), "http://www.liferay.com",
-				null, "a", true, serviceContext);
+				null, false, "a", serviceContext);
 		RedirectEntry redirectEntry2 =
 			_redirectEntryLocalService.addRedirectEntry(
 				serviceContext.getScopeGroupId(), "http://www.liferay.com",
-				null, "b", true, serviceContext);
+				null, false, "b", serviceContext);
 
 		_assertSearchResults(
 			redirectEntry1, redirectEntry2,
@@ -221,7 +221,7 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 		throws Exception {
 
 		return _redirectEntryLocalService.addRedirectEntry(
-			serviceContext.getScopeGroupId(), keywords, null, keywords, true,
+			serviceContext.getScopeGroupId(), keywords, null, false, keywords,
 			serviceContext);
 	}
 
@@ -249,8 +249,8 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 		RedirectEntry redirectEntry = (RedirectEntry)baseModel;
 
 		return _redirectEntryLocalService.updateRedirectEntry(
-			redirectEntry.getRedirectEntryId(), keywords, null, keywords,
-			RandomTestUtil.randomBoolean());
+			redirectEntry.getRedirectEntryId(), keywords, null,
+			RandomTestUtil.randomBoolean(), keywords);
 	}
 
 	private void _assertSearchResults(

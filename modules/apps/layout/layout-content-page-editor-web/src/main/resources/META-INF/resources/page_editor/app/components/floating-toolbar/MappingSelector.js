@@ -152,7 +152,9 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	const [fields, setFields] = useState([]);
 	const [selectedItem, setSelectedItem] = useState(mappedItem);
 	const [selectedSourceTypeId, setSelectedSourceTypeId] = useState(
-		MAPPING_SOURCE_TYPE_IDS.content
+		mappedItem.mappedField
+			? MAPPING_SOURCE_TYPE_IDS.structure
+			: MAPPING_SOURCE_TYPE_IDS.content
 	);
 
 	const onInfoItemSelect = selectedInfoItem => {
@@ -225,12 +227,6 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 			...mappedItem,
 			...selectedItem,
 		}));
-
-		setSelectedSourceTypeId(
-			mappedItem.mappedField
-				? MAPPING_SOURCE_TYPE_IDS.structure
-				: MAPPING_SOURCE_TYPE_IDS.content
-		);
 	}, [mappedItem, mappedInfoItems]);
 
 	useEffect(() => {

@@ -68,15 +68,15 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			if (redirectEntryId == 0) {
 				_redirectEntryLocalService.addRedirectEntry(
-					themeDisplay.getScopeGroupId(), destinationURL, sourceURL,
-					temporary, expirationDate,
+					themeDisplay.getScopeGroupId(), destinationURL,
+					expirationDate, sourceURL, temporary,
 					ServiceContextFactory.getInstance(
 						RedirectEntry.class.getName(), actionRequest));
 			}
 			else {
 				_redirectEntryLocalService.updateRedirectEntry(
-					redirectEntryId, destinationURL, sourceURL, temporary,
-					expirationDate);
+					redirectEntryId, destinationURL, expirationDate, sourceURL,
+					temporary);
 			}
 		}
 		catch (Exception exception) {

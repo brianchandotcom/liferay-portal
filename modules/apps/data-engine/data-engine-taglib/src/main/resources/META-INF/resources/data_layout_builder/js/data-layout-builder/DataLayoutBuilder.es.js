@@ -360,6 +360,12 @@ class DataLayoutBuilder extends React.Component {
 		return fieldTypes;
 	}
 
+	getFormData() {
+		const {pages} = this.getStore();
+
+		return this.getDataDefinitionAndDataLayout(pages);
+	}
+
 	getLayoutProvider() {
 		const {layoutProvider} = this.formBuilderWithLayoutProvider.refs;
 
@@ -402,11 +408,10 @@ class DataLayoutBuilder extends React.Component {
 			dataLayoutId,
 			groupId,
 		} = this.props;
-		const {pages} = this.getStore();
 		const {
 			definition: dataDefinition,
 			layout: dataLayout,
-		} = this.getDataDefinitionAndDataLayout(pages);
+		} = this.getFormData();
 
 		return saveDefinitionAndLayout({
 			contentType,

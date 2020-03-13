@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MASTER_DROP_ZONE</td>
+	<td>//div[contains(@class,'page-editor__drop-zone')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

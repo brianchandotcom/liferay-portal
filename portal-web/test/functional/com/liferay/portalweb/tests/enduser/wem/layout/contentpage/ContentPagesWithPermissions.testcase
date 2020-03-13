@@ -295,7 +295,7 @@ definition {
 
 	@description = "This is a test for LPS-103454. Content author having permission to update web content could see edit icon in the content page displaying the web contents and could edit web content in editmode, but could not edit editable field "
 	@priority = "5"
-	test EditContentWitheWebContentAticleUpdatePermission {
+	test EditContentWithWebContentArticleUpdatePermission {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "Userfn",
@@ -555,7 +555,7 @@ definition {
 
 	@description = "This is a test for LPS-105109. Content author having permissions to update page content can introduce new inline content after clicking edit icon in content page."
 	@priority = "5"
-	test EditInlineContentWithdUpdatePageContentPermission {
+	test EditInlineContentWithUpdatePageContentPermission {
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Rich Text");
@@ -631,7 +631,7 @@ definition {
 
 	@description = "This is a test for LPS-105109. Content author having permissions to update page content can introduce new inline content after clicking edit icon in content page."
 	@priority = "5"
-	test MapInlineContentWithdUpdatePageContentPermission {
+	test MapInlineContentWithUpdatePageContentPermission {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
@@ -744,7 +744,7 @@ definition {
 
 	@description = "This is a test for LPS-103454. When one WC displayed in multiple fields in a content page, there should be one WC entry in Contents Panel list."
 	@priority = "4"
-	test ViewContentViaContentPanelWithWebContentAticleUpdatePermission {
+	test ViewContentViaContentPanelWithWebContentArticleUpdatePermission {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "Userfn",

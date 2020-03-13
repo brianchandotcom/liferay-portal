@@ -40,9 +40,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
 @Component(service = PhoneResourceBuilder.class)
 public class PhoneResourceBuilderImpl implements PhoneResourceBuilder {
 
+	@Override
 	public InitializedPhoneResourceBuilder initialize() {
 		return new InitializedPhoneResourceBuilder() {
 
+			@Override
 			public PhoneResource build() {
 				Class<?> clazz = getClass();
 
@@ -64,6 +66,7 @@ public class PhoneResourceBuilderImpl implements PhoneResourceBuilder {
 					});
 			}
 
+			@Override
 			public InitializedPhoneResourceBuilder usePermissionChecker(
 				boolean usePermissionChecker) {
 
@@ -72,6 +75,7 @@ public class PhoneResourceBuilderImpl implements PhoneResourceBuilder {
 				return this;
 			}
 
+			@Override
 			public InitializedPhoneResourceBuilder user(User user) {
 				_user = user;
 
@@ -133,10 +137,6 @@ public class PhoneResourceBuilderImpl implements PhoneResourceBuilder {
 
 	private class LiberalPermissionChecker extends PermissionCheckerWrapper {
 
-		public LiberalPermissionChecker(PermissionChecker permissionChecker) {
-			super(permissionChecker);
-		}
-
 		@Override
 		public boolean hasPermission(
 			Group group, String name, long primKey, String actionId) {
@@ -163,6 +163,10 @@ public class PhoneResourceBuilderImpl implements PhoneResourceBuilder {
 			long groupId, String name, String primKey, String actionId) {
 
 			return true;
+		}
+
+		private LiberalPermissionChecker(PermissionChecker permissionChecker) {
+			super(permissionChecker);
 		}
 
 	}

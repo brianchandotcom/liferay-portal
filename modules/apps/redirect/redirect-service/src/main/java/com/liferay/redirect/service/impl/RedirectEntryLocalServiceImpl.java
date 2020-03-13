@@ -49,7 +49,7 @@ public class RedirectEntryLocalServiceImpl
 	@Override
 	public RedirectEntry addRedirectEntry(
 			long groupId, String destinationURL, Date expirationDate,
-			String sourceURL, boolean temporary, ServiceContext serviceContext)
+			boolean permanent, String sourceURL, ServiceContext serviceContext)
 		throws PortalException {
 
 		_validate(destinationURL, sourceURL);
@@ -69,8 +69,8 @@ public class RedirectEntryLocalServiceImpl
 		redirectEntry.setUserId(serviceContext.getUserId());
 		redirectEntry.setDestinationURL(destinationURL);
 		redirectEntry.setExpirationDate(expirationDate);
+		redirectEntry.setPermanent(permanent);
 		redirectEntry.setSourceURL(sourceURL);
-		redirectEntry.setTemporary(temporary);
 
 		return redirectEntryPersistence.update(redirectEntry);
 	}
@@ -114,7 +114,7 @@ public class RedirectEntryLocalServiceImpl
 	@Override
 	public RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL, Date expirationDate,
-			String sourceURL, boolean temporary)
+			boolean permanent, String sourceURL)
 		throws PortalException {
 
 		_validate(destinationURL, sourceURL);
@@ -133,8 +133,8 @@ public class RedirectEntryLocalServiceImpl
 
 		redirectEntry.setDestinationURL(destinationURL);
 		redirectEntry.setExpirationDate(expirationDate);
+		redirectEntry.setPermanent(permanent);
 		redirectEntry.setSourceURL(sourceURL);
-		redirectEntry.setTemporary(temporary);
 
 		return redirectEntryPersistence.update(redirectEntry);
 	}

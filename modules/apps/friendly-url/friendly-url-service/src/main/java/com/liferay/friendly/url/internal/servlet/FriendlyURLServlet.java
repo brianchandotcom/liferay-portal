@@ -174,7 +174,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			if (redirectEntry != null) {
 				return new Redirect(
 					redirectEntry.getDestinationURL(), true,
-					!redirectEntry.isTemporary());
+					redirectEntry.isPermanent());
 			}
 		}
 		else {

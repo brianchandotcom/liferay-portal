@@ -16,12 +16,55 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useReducer} from 'react';
 
+const PRESSED_DOWN = 'DOWN';
+const PRESSED_UP = 'UP';
 const RATING_TYPE = 'thumbs';
-const SCORE_UP = 1;
 const SCORE_DOWN = 0;
 const SCORE_UNVOTE = -1;
+const SCORE_UP = 1;
+
+const VOTE_DOWN = 'VOTE_DOWN';
+const VOTE_UP = 'VOTE_UP';
+const UPDATE_VOTES = 'VOTES_UPDATE';
+
+function reducer(state, action) {
+	switch (action.type) {
+		case VOTE_UP:
+			return {
+				negativeVotes:
+					state.pressed !== PRESSED_DOWN
+						? state.negativeVotes
+						: state.negativeVotes - 1,
+				positiveVotes:
+					state.pressed === PRESSED_UP
+						? state.positiveVotes - 1
+						: state.positiveVotes + 1,
+				pressed: state.pressed !== PRESSED_UP ? PRESSED_UP : null,
+			};
+		case VOTE_DOWN:
+			return {
+				negativeVotes:
+					state.pressed !== PRESSED_DOWN
+						? state.negativeVotes + 1
+						: state.negativeVotes - 1,
+				positiveVotes:
+					state.pressed !== PRESSED_UP
+						? state.positiveVotes
+						: state.positiveVotes - 1,
+				pressed: state.pressed !== PRESSED_UP ? PRESSED_UP : null,
+			};
+		case UPDATE_VOTES:
+			return {
+				...state,
+				negativeVotes: action.payload.negativeVotes,
+				positiveVotes: action.payload.positiveVotes,
+			};
+		default:
+			return state;
+	}
+}
 
 const RatingsThumbs = ({
 	className,
@@ -35,45 +78,25 @@ const RatingsThumbs = ({
 	thumbUp = false,
 	url,
 }) => {
-	const [pressed, setPressed] = useState(
-		thumbDown ? 'down' : thumbUp ? 'up' : null
-	);
-	const [positiveVotes, setPositiveVotes] = useState(initialPositiveVotes);
-	const [negativeVotes, setNegativeVotes] = useState(initialNegativeVotes);
+	const [state, dispatch] = useReducer(reducer, {
+		negativeVotes: initialNegativeVotes,
+		positiveVotes: initialPositiveVotes,
+		pressed: thumbDown ? PRESSED_DOWN : thumbUp ? PRESSED_UP : null,
+	});
+
+	const {negativeVotes, positiveVotes, pressed} = state;
 
 	const voteUp = () => {
-		if (pressed === 'down') {
-			setNegativeVotes(negativeVotes - 1);
-		}
+		dispatch({type: VOTE_UP});
 
-		if (pressed === 'up') {
-			setPositiveVotes(positiveVotes - 1);
-			setPressed(null);
-		}
-		else {
-			setPressed('up');
-			setPositiveVotes(positiveVotes + 1);
-		}
-
-		const score = pressed !== 'up' ? SCORE_UP : SCORE_UNVOTE;
+		const score = pressed !== PRESSED_UP ? SCORE_UP : SCORE_UNVOTE;
 		sendVoteRequest(score);
 	};
 
 	const voteDown = () => {
-		if (pressed === 'up') {
-			setPositiveVotes(positiveVotes - 1);
-		}
+		dispatch({type: VOTE_DOWN});
 
-		if (pressed === 'down') {
-			setNegativeVotes(negativeVotes - 1);
-			setPressed(null);
-		}
-		else {
-			setNegativeVotes(negativeVotes + 1);
-			setPressed('down');
-		}
-
-		const score = pressed !== 'down' ? SCORE_DOWN : SCORE_UNVOTE;
+		const score = pressed !== PRESSED_DOWN ? SCORE_DOWN : SCORE_UNVOTE;
 		sendVoteRequest(score);
 	};
 
@@ -117,8 +140,13 @@ const RatingsThumbs = ({
 			.then(response => response.json())
 			.then(({totalEntries, totalScore}) => {
 				if (totalEntries && totalScore) {
-					setNegativeVotes(totalEntries - totalScore);
-					setPositiveVotes(totalScore);
+					dispatch({
+						payload: {
+							negativeVotes: totalEntries - totalScore,
+							positiveVotes: totalScore,
+						},
+						type: UPDATE_VOTES,
+					});
 				}
 			});
 	};
@@ -126,7 +154,7 @@ const RatingsThumbs = ({
 	return (
 		<div className="ratings-thumbs">
 			<ClayButton
-				aria-pressed={pressed === 'up'}
+				aria-pressed={pressed === PRESSED_UP}
 				borderless
 				disabled={!signedIn || !enabled}
 				displayType="secondary"
@@ -141,7 +169,7 @@ const RatingsThumbs = ({
 				{positiveVotes}
 			</ClayButton>
 			<ClayButton
-				aria-pressed={pressed === 'down'}
+				aria-pressed={pressed === PRESSED_DOWN}
 				borderless
 				disabled={!signedIn || !enabled}
 				displayType="secondary"
@@ -164,6 +192,8 @@ RatingsThumbs.propTypes = {
 	classPK: PropTypes.string.isRequired,
 	enabled: PropTypes.bool,
 	inTrash: PropTypes.bool,
+	initialNegativeVotes: PropTypes.number,
+	initialPositiveVotes: PropTypes.number,
 	signedIn: PropTypes.bool.isRequired,
 	thumbDown: PropTypes.bool,
 	thumbUp: PropTypes.bool,

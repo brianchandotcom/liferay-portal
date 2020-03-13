@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -101,14 +100,6 @@ public class LayoutPageTemplatesImporterImpl
 			Map<String, PageTemplateCollectionEntry>
 				pageTemplateCollectionEntryMap =
 					_getPageTemplateCollectionEntryMap(zipFile);
-
-			if (MapUtil.isEmpty(pageTemplateCollectionEntryMap)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"No valid layout page template entries found in " +
-							zipFile.getName());
-				}
-			}
 
 			for (Map.Entry<String, PageTemplateCollectionEntry> entry :
 					pageTemplateCollectionEntryMap.entrySet()) {

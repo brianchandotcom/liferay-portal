@@ -185,7 +185,7 @@
 <!--RADIO_BUTTON-->
 <tr>
 	<td>RADIO_OPTION_LABEL</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[contains(@value,'${key_radioOption}')]</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/..//input[contains(@value,'${key_radioOption}')]</td>
 	<td></td>
 </tr>
 

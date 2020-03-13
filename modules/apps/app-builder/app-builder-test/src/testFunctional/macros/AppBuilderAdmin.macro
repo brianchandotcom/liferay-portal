@@ -426,6 +426,12 @@ definition {
 			value1 = "${itemName}");
 	}
 
+	macro validateItemNameOnTableNotPresent {
+		AssertElementNotPresent(
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
+			value1 = "${itemName}");
+	}
+
 	macro validateListTitleAtRow {
 		AssertTextEquals(
 			key_RowNumber = "${rowNumber}",

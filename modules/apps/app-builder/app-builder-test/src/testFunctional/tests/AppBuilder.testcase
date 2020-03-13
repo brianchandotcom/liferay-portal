@@ -1177,6 +1177,307 @@ definition {
 		AppBuilderAdmin.deleteEntry(itemName = "Pepe");
 	}
 
+	@description = "Create table views with a fixed entries filter of list field types (select from list and single selection)"
+	@priority = "5"
+	test CreateTableViewsWithFixedEntriesFilter {
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
+		FormViewBuilder.setFieldLabel(fieldLabel = "ID");
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Color");
+		FormViewBuilder.editOptionsRow(
+			optionName = "Red",
+			optionValue = "Red",
+			rowNumber = "1");
+		FormViewBuilder.editOptionsRow(
+			optionName = "Blue",
+			optionValue = "Blue",
+			rowNumber = "2");
+		FormViewBuilder.editOptionsRow(
+			optionName = "Green",
+			optionValue = "Green",
+			rowNumber = "3");
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Single Selection");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Animal");
+		FormViewBuilder.editOptionsRow(
+			optionName = "Dog",
+			optionValue = "Dog",
+			rowNumber = "1");
+		FormViewBuilder.editOptionsRow(
+			optionName = "Cat",
+			optionValue = "Cat",
+			rowNumber = "2");
+		FormViewBuilder.editOptionsRow(
+			optionName = "Fish",
+			optionValue = "Fish",
+			rowNumber = "3");
+
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.setName(formViewName = "My Form View");
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "ID");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Color");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Animal");
+		TableViewBuilder.setName(tableViewName = "Table Full");
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.add();
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "ID");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Color");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Animal");
+		TableViewBuilder.selectTab(tabName = "Filters");
+		TableViewBuilder.selectFilterDropdownItem(
+			columnLabel = "Color",
+			dropdownItemList = "Red");
+		TableViewBuilder.selectFilterDropdownItem(
+			columnLabel = "Animal",
+			dropdownItemList = "Dog");
+		TableViewBuilder.setName(tableViewName = "Table Filtered");
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.openItem(itemName = "Table Filtered");
+		TableViewBuilder.selectTab(tabName = "Filters");
+
+		TableViewBuilder.validateFilterDropdownList(
+			columnLabel = "Color",
+			itemList = "Red");
+
+		TableViewBuilder.validateFilterDropdownList(
+			columnLabel = "Animal",
+			itemList = "Dog");
+
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+		AppBuilderAdmin.add();
+		AppBuilderAdmin.setName(title = "App Full");
+		App.selectFormView(formViewName = "My Form View");
+		App.selectTableView(tableViewName = "Table Full");
+		App.toggleDeploy(deployOption = "Product Menu");
+		Button.click(button = "Deploy");
+
+		AppBuilderAdmin.add();
+		AppBuilderAdmin.setName(title = "App Filtered");
+		App.selectFormView(formViewName = "My Form View");
+		App.selectTableView(tableViewName = "Table Filtered");
+		App.toggleDeploy(deployOption = "Product Menu");
+		Button.click(button = "Deploy");
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "App Filtered");
+
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "ID",
+			fieldValue = "1");
+		FormViewBuilder.selectSelectOption(
+			fieldName = "Color",
+			selectOption = "Red");
+		FormViewBuilder.selectRadioOption(
+			fieldName = "Animal",
+			radioOption = "Dog");
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
+
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "ID",
+			fieldValue = "2");
+		FormViewBuilder.selectSelectOption(
+			fieldName = "Color",
+			selectOption = "Red");
+		FormViewBuilder.selectRadioOption(
+			fieldName = "Animal",
+			radioOption = "Cat");
+		AppBuilderAdmin.save();
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "ID",
+			fieldValue = "3");
+		FormViewBuilder.selectSelectOption(
+			fieldName = "Color",
+			selectOption = "Green");
+		FormViewBuilder.selectRadioOption(
+			fieldName = "Animal",
+			radioOption = "Dog");
+		AppBuilderAdmin.save();
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "ID",
+			fieldValue = "4");
+		FormViewBuilder.selectSelectOption(
+			fieldName = "Color",
+			selectOption = "Blue");
+		FormViewBuilder.selectRadioOption(
+			fieldName = "Animal",
+			radioOption = "Fish");
+		AppBuilderAdmin.save();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "2");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "3");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "4");
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "App Full");
+
+		AppBuilderAdmin.viewItem(itemName = "1");
+		DetailsView.editEntry();
+		FormViewBuilder.selectSelectOption(
+			fieldName = "Color",
+			selectOption = "Blue");
+		FormViewBuilder.selectRadioOption(
+			fieldName = "Animal",
+			radioOption = "Fish");
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.viewItem(itemName = "2");
+		DetailsView.editEntry();
+		FormViewBuilder.selectSelectOption(
+			fieldName = "Color",
+			selectOption = "Red");
+		FormViewBuilder.selectRadioOption(
+			fieldName = "Animal",
+			radioOption = "Dog");
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "App Filtered");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "1");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "3");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "4");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Table Views");
+		AppBuilderAdmin.openItem(itemName = "Table Filtered");
+		TableViewBuilder.selectTab(tabName = "Filters");
+		TableViewBuilder.clickOnSelectAllFilters(columnLabel = "Color");
+		TableViewBuilder.clickOnSelectAllFilters(columnLabel = "Animal");
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.openItem(itemName = "Table Filtered");
+		TableViewBuilder.selectTab(tabName = "Filters");
+
+		TableViewBuilder.validateFilterDropdownList(
+			columnLabel = "Color",
+			itemList = "Red, Blue, Green");
+
+		TableViewBuilder.validateFilterDropdownList(
+			columnLabel = "Animal",
+			itemList = "Dog, Cat, Fish");
+
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "App Filtered");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "3");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "4");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Table Views");
+		AppBuilderAdmin.openItem(itemName = "Table Filtered");
+		TableViewBuilder.selectTab(tabName = "Filters");
+		TableViewBuilder.clickOnClearFilters(columnLabel = "Color");
+		TableViewBuilder.clickOnClearFilters(columnLabel = "Animal");
+		TableViewBuilder.selectFilterDropdownItem(
+			columnLabel = "Color",
+			dropdownItemList = "Blue,Green");
+		TableViewBuilder.selectFilterDropdownItem(
+			columnLabel = "Animal",
+			dropdownItemList = "Cat,Fish");
+
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "App Filtered");
+
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "ID",
+			fieldValue = "5");
+		FormViewBuilder.selectSelectOption(
+			fieldName = "Color",
+			selectOption = "Green");
+		FormViewBuilder.selectRadioOption(
+			fieldName = "Animal",
+			radioOption = "Cat");
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "4");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "5");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "2");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "3");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Table Views");
+		AppBuilderAdmin.openItem(itemName = "Table Filtered");
+		TableViewBuilder.selectTab(tabName = "Filters");
+		TableViewBuilder.clickOnClearFilters(columnLabel = "Color");
+		TableViewBuilder.clickOnClearFilters(columnLabel = "Animal");
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.openItem(itemName = "Table Filtered");
+		TableViewBuilder.selectTab(tabName = "Filters");
+
+		TableViewBuilder.validateFilterDropdownList(
+			columnLabel = "Color",
+			itemList = "Choose Options");
+
+		TableViewBuilder.validateFilterDropdownList(
+			columnLabel = "Animal",
+			itemList = "Choose Options");
+
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "App Filtered");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "3");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "4");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "5");
+	}
+
 	@description = "Delete an existing custom object with no associated relationships"
 	@priority = "5"
 	test DeleteCustomObjectWithAssociatedRelationship {
@@ -3413,69 +3714,6 @@ definition {
 		DetailsView.validateEntry(entry = "Bester");
 
 		DetailsView.deleteEntry(itemName = "Changed");
-	}
-
-	@description = "Create table views with a fixed entries filter of list field types (select from list and single selection)"
-	@priority = "5"
-	test CreateTableViewsWithFixedEntriesFiltered {
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Color");
-		FormViewBuilder.editOptionsRow(
-				optionName = "Red",
-				optionValue = "Red",
-				rowNumber = "1");
-		FormViewBuilder.editOptionsRow(
-				optionName = "Blue",
-				optionValue = "Blue",
-				rowNumber = "1");
-		FormViewBuilder.editOptionsRow(
-				optionName = "Green",
-				optionValue = "Green",
-				rowNumber = "1");
-		FormViewBuilder.closeSidebar();
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Single Selection");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Animal");
-		FormViewBuilder.editOptionsRow(
-				optionName = "Dog",
-				optionValue = "Dog",
-				rowNumber = "1");
-		FormViewBuilder.editOptionsRow(
-				optionName = "Cat",
-				optionValue = "Cat",
-				rowNumber = "1");
-		FormViewBuilder.editOptionsRow(
-				optionName = "Fish",
-				optionValue = "Fish",
-				rowNumber = "1");
-
-		FormViewBuilder.closeSidebar();
-		FormViewBuilder.setName(formViewName = "My Form View");
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.switchTab(tabName = "Table Views");
-
-		AppBuilderAdmin.add();
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Color");
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Red");
-		TableViewBuilder.setName(tableViewName = "Table Full");
-		TableViewBuilder.save();
-
-		AppBuilderAdmin.add();
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Color");
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Red");
-		TableViewBuilder.setName(tableViewName = "Table Filtered");
-
-		TableViewBuilder.selectTab(tabName = "Filters");
-		TableViewBuilder.selectFilterDropdownOption(
-			columnLabel = "Color",
-			dropdownItem = "Red");
 	}
 
 }

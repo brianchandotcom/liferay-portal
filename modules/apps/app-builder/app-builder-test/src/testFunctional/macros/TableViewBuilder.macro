@@ -22,6 +22,18 @@ definition {
 		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "${fieldType}");
 	}
 
+	macro clickOnClearFilters {
+		TableViewBuilder.openFilterDropdown(columnLabel = "${columnLabel}");
+		Click(locator1 = "TableViewBuilder#FILTER_CLEAR");
+		TableViewBuilder.selectTab(tabName = "Filters");
+	}
+
+	macro clickOnSelectAllFilters {
+		TableViewBuilder.openFilterDropdown(columnLabel = "${columnLabel}");
+		Click(locator1 = "TableViewBuilder#FILTER_SELECT_ALL");
+		TableViewBuilder.selectTab(tabName = "Filters");
+	}
+
 	macro closeColumnSidebar {
 		Click(locator1 = "TableViewBuilder#CLOSE_COLUMN_SIDEBAR");
 	}
@@ -36,8 +48,31 @@ definition {
 			value1 = "${columnLabel}");
 	}
 
+	macro openFilterDropdown {
+		Click(
+			key_columnLabel = "${columnLabel}",
+			locator1 = "TableViewBuilder#FILTER_DROPDOWN");
+	}
+
 	macro save {
 		AppBuilderAdmin.save();
+	}
+
+	macro selectFilterDropdownItem {
+		TableViewBuilder.openFilterDropdown(columnLabel = "${columnLabel}");
+
+		for (var dropdownItem : list "${dropdownItemList}") {
+			var key_dropdownItem = "${dropdownItem}";
+			Click(locator1 = "TableViewBuilder#FILTER_DROPDOWN_ITEM");
+		}
+
+		TableViewBuilder.selectTab(tabName = "Filters");
+	}
+
+	macro selectTab {
+		Click(
+			key_tabName = "${tabName}",
+			locator1 = "TableViewBuilder#TAB_LABEL");
 	}
 
 	macro setName {
@@ -56,6 +91,13 @@ definition {
 			value1 = "${columnLabel}");
 	}
 
+	macro validateFilterDropdownList {
+		AssertTextEquals(
+			key_columnLabel = "${columnLabel}",
+			locator1 = "TableViewBuilder#FILTER_DROPDOWN",
+			value1 = "${itemList}");
+	}
+
 	macro validatePortletFieldTypeInTV {
 		AssertElementPresent(
 			key_fieldType = "${fieldType}",
@@ -66,25 +108,6 @@ definition {
 		AssertElementPresent(
 			key_textInput = "${textInput}",
 			locator1 = "TableViewBuilder#VALIDATE_PORTLET_TEXT_INPUT_IN_TV");
-	}
-
-	macro selectTab {
-		Click(
-			key_tabName = "${tabName}",
-			locator1 = "TableViewBuilder#TAB_LABEL");
-	}
-
-	macro openFilterDropdown {
-		Click(
-			key_columnLabel = "${columnLabel}",
-			locator1 = "TableViewBuilder#FILTER_DROPDOWN");
-	}
-
-	macro selectFilterDropdownOption {
-		TableViewBuilder.openFilterDropdown(columnLabel = "${columnLabel}");
-		Click(
-			key_dropdownItem = "${dropdownItem}",
-			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
 	}
 
 }

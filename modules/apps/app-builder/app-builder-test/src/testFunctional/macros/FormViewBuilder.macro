@@ -164,7 +164,7 @@ definition {
 	}
 
 	macro selectRadioOption {
-		Click(
+		Click.clickNoMouseOverNoWaitForVisible(
 			key_fieldName = "${fieldName}",
 			key_radioOption = "${radioOption}",
 			locator1 = "FormViewBuilder#RADIO_OPTION_LABEL");

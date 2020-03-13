@@ -60,6 +60,18 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>FILTER_SELECT_ALL</td>
+	<td>//div[contains(@class,'show')]//span[contains(@class,'dropdown')]//button[text()='Select All']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>FILTER_CLEAR</td>
+	<td>//div[contains(@class,'show')]//span[contains(@class,'dropdown')]//button[text()='Clear']</td>
+	<td></td>
+</tr>
+
 <!--HOMEPAGE_TABLE_VIEW-->
 
 <tr>

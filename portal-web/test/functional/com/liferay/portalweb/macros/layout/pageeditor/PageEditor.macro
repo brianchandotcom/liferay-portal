@@ -155,15 +155,15 @@ definition {
 
 		if ("${scope}" == "Master") {
 			DragAndDrop.javaScriptDragAndDropToObject(
-				key_fragmentName = "Row",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				key_elementType = "Row",
+				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
 				locator2 = "PageEditor#MASTER_DROP_ZONE",
 				value1 = "");
 		}
 		else {
 			DragAndDrop.javaScriptDragAndDropToObject(
-				key_fragmentName = "Row",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				key_elementType = "Row",
+				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
 				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 				value1 = "");
 		}
@@ -183,15 +183,15 @@ definition {
 
 		if ("${scope}" == "Master") {
 			DragAndDrop.javaScriptDragAndDropToObject(
-				key_fragmentName = "Section",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				key_elementType = "Section",
+				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
 				locator2 = "PageEditor#MASTER_DROP_ZONE",
 				value1 = "");
 		}
 		else {
 			DragAndDrop.javaScriptDragAndDropToObject(
-				key_fragmentName = "Section",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				key_elementType = "Section",
+				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
 				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 				value1 = "");
 		}

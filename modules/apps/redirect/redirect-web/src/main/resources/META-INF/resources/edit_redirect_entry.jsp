@@ -71,9 +71,9 @@ else {
 
 		<aui:input name="destinationURL" required="<%= true %>" value="<%= (redirectEntry != null) ? redirectEntry.getDestinationURL() : null %>" />
 
-		<aui:select label="type" name="temporary">
-			<aui:option label="permanent" selected="<%= (redirectEntry != null) ? !redirectEntry.isTemporary() : true %>" value="<%= false %>" />
-			<aui:option label="temporary" selected="<%= (redirectEntry != null) ? redirectEntry.isTemporary() : false %>" value="<%= true %>" />
+		<aui:select label="type" name="permanent">
+			<aui:option label="permanent" selected="<%= (redirectEntry != null) ? redirectEntry.isPermanent() : false %>" value="<%= true %>" />
+			<aui:option label="temporary" selected="<%= (redirectEntry != null) ? !redirectEntry.isPermanent() : false %>" value="<%= false %>" />
 		</aui:select>
 
 		<aui:input helpMessage="the-redirect-will-be-active-until-the-chosen-date.-leave-it-empty-to-avoid-expiration" name="expirationDate" type="date" value="<%= redirectDisplayContext.getExpirationDateinputValue(redirectEntry) %>" />

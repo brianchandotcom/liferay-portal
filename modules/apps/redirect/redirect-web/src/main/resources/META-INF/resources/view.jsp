@@ -72,7 +72,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 				cssClass="table-cell-content"
 				name="type"
 			>
-				<liferay-ui:message key='<%= redirectEntry.isTemporary() ? "temporary" : "permanent" %>' />
+				<liferay-ui:message key='<%= redirectEntry.isPermanent() ? "permanent" : "temporary" %>' />
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text

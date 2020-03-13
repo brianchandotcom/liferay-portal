@@ -337,7 +337,7 @@ public class FriendlyURLServletTest {
 				RedirectEntry redirectEntry =
 					_redirectEntryLocalService.addRedirectEntry(
 						_group.getGroupId(), "http://www.liferay.com", null,
-						"path", false,
+						true, "path",
 						ServiceContextTestUtil.getServiceContext());
 
 				try {
@@ -376,7 +376,7 @@ public class FriendlyURLServletTest {
 				RedirectEntry redirectEntry =
 					_redirectEntryLocalService.addRedirectEntry(
 						_group.getGroupId(), "http://www.liferay.com", null,
-						"path", true,
+						false, "path",
 						ServiceContextTestUtil.getServiceContext());
 
 				try {

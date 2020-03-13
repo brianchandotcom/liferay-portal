@@ -9,94 +9,23 @@
  * distribution rights of the Software.
  */
 
-import ClayIcon from '@clayui/icon';
+import ClayTabs from '@clayui/tabs';
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 
-import TabItem from './TabItem.es';
+const Tabs = ({currentTab, setCurrentTab, tabs = []}) => {
+	return (
+		<ClayTabs className="ml-3 pl-2">
+			{tabs.map(({name, tabKey}, index) => (
+				<ClayTabs.Item
+					active={currentTab === tabKey}
+					key={index}
+					onClick={() => setCurrentTab(tabKey)}
+				>
+					{name}
+				</ClayTabs.Item>
+			))}
+		</ClayTabs>
+	);
+};
 
-class Tabs extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			expanded: false,
-		};
-	}
-
-	hideNavbar() {
-		this.setState({
-			expanded: false,
-		});
-	}
-
-	toggleExpanded() {
-		this.setState({
-			expanded: !this.state.expanded,
-		});
-	}
-
-	render() {
-		const {expanded} = this.state;
-		const {
-			location: {pathname},
-			tabs,
-		} = this.props;
-
-		const isActive = tab => pathname.includes(tab.key);
-
-		const activeTab = tabs.filter(isActive)[0] || {};
-
-		let navbarClassName = '';
-		let togglerClassName = 'collapsed';
-
-		if (expanded) {
-			navbarClassName = 'show';
-			togglerClassName = '';
-		}
-
-		return (
-			<nav className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary">
-				<div className="container-fluid container-fluid-max-xl">
-					<button
-						aria-expanded={expanded}
-						aria-label={Liferay.Language.get('toggle-navigation')}
-						className={`${togglerClassName} navbar-toggler navbar-toggler-link`}
-						onClick={this.toggleExpanded.bind(this)}
-					>
-						{activeTab.name}
-
-						<ClayIcon symbol="caret-bottom" />
-					</button>
-
-					<div
-						className={`collapse navbar-collapse ${navbarClassName}`}
-					>
-						<div className="container-fluid container-fluid-max-xl">
-							<ul
-								className="navbar-nav"
-								data-testid="tabElements"
-							>
-								{tabs.map((tab, index) => (
-									<li
-										className="nav-item"
-										key={index}
-										onClick={this.hideNavbar.bind(this)}
-									>
-										<TabItem
-											{...tab}
-											active={isActive(tab)}
-										/>
-									</li>
-								))}
-							</ul>
-						</div>
-					</div>
-				</div>
-			</nav>
-		);
-	}
-}
-
-export default withRouter(Tabs);
-export {Tabs};
+export default Tabs;

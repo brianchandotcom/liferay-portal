@@ -13,12 +13,12 @@ import React, {useContext, useMemo} from 'react';
 import {Route, Switch} from 'react-router-dom';
 
 import HeaderKebab from '../../shared/components/header/HeaderKebab.es';
+import NavbarTabs from '../../shared/components/navbar-tabs/NavbarTabs.es';
 import {parse, stringify} from '../../shared/components/router/queryString.es';
 import {
 	getPathname,
 	withParams,
 } from '../../shared/components/router/routerUtil.es';
-import Tabs from '../../shared/components/tabs/Tabs.es';
 import {AppContext} from '../AppContext.es';
 import {useTimeRangeFetch} from '../filter/hooks/useTimeRangeFetch.es';
 import SLAInfo from './SLAInfo.es';
@@ -115,7 +115,7 @@ const ProcessMetrics = ({history, processId, query}) => {
 				]}
 			/>
 
-			<Tabs tabs={[dashboardTab, performanceTab]} />
+			<NavbarTabs tabs={[dashboardTab, performanceTab]} />
 
 			<SLAInfo processId={processId} />
 

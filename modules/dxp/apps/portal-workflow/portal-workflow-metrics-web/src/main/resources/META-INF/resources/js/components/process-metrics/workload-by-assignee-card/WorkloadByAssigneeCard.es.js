@@ -13,11 +13,11 @@ import React, {useMemo, useState} from 'react';
 
 import Panel from '../../../shared/components/Panel.es';
 import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
+import Tabs from '../../../shared/components/tabs/Tabs.es';
 import {useFetch} from '../../../shared/hooks/useFetch.es';
 import {useFilter} from '../../../shared/hooks/useFilter.es';
 import ProcessStepFilter from '../../filter/ProcessStepFilter.es';
 import {Body} from './WorkloadByAssigneeCardBody.es';
-import Tabs from './WorkloadByAssigneeCardTabs.es';
 
 const Header = ({processId}) => (
 	<>
@@ -64,15 +64,24 @@ const WorkloadByAssigneeCard = ({routeParams}) => {
 
 	const promises = useMemo(() => [fetchData()], [fetchData]);
 
+	const tabs = [
+		{name: Liferay.Language.get('overdue'), tabKey: 'overdue'},
+		{name: Liferay.Language.get('on-time'), tabKey: 'onTime'},
+		{name: Liferay.Language.get('total'), tabKey: 'total'},
+	];
+
 	return (
 		<PromisesResolver promises={promises}>
 			<Panel elementClasses="workload-by-assignee-card">
 				<WorkloadByAssigneeCard.Header processId={processId} />
 
-				<WorkloadByAssigneeCard.Tabs
-					currentTab={currentTab}
-					setCurrentTab={setCurrentTab}
-				/>
+				<div className="border-bottom">
+					<Tabs
+						currentTab={currentTab}
+						setCurrentTab={setCurrentTab}
+						tabs={tabs}
+					/>
+				</div>
 
 				<WorkloadByAssigneeCard.Body
 					currentTab={currentTab}
@@ -94,11 +103,9 @@ const getParams = (currentTab, taskKey) => {
 
 	if (currentTab === 'overdue') {
 		params.sort = 'overdueTaskCount:desc';
-	}
-	else if (currentTab === 'onTime') {
+	} else if (currentTab === 'onTime') {
 		params.sort = 'onTimeTaskCount:desc';
-	}
-	else {
+	} else {
 		params.sort = 'taskCount:desc';
 	}
 
@@ -107,6 +114,5 @@ const getParams = (currentTab, taskKey) => {
 
 WorkloadByAssigneeCard.Body = Body;
 WorkloadByAssigneeCard.Header = Header;
-WorkloadByAssigneeCard.Tabs = Tabs;
 
 export default WorkloadByAssigneeCard;

@@ -83,7 +83,7 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 						GetterUtil.getString(document.get("version")))) {
 
 					{
-						setType(_tokenWorkflowMetricsIndexer.getIndexType());
+						setType(_taskWorkflowMetricsIndexer.getIndexType());
 					}
 				});
 		}
@@ -247,6 +247,6 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		_slaTaskResultWorkflowMetricsIndexer;
 
 	@Reference
-	private TokenWorkflowMetricsIndexer _tokenWorkflowMetricsIndexer;
+	private TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;
 
 }

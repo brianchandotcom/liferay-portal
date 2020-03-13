@@ -201,7 +201,7 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			},
 			booleanQuery);
 
-		_tokenWorkflowMetricsIndexer.updateDocuments(
+		_taskWorkflowMetricsIndexer.updateDocuments(
 			GetterUtil.getLong(document.get("companyId")),
 			documentImpl -> new DocumentImpl() {
 				{
@@ -303,6 +303,6 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		_slaTaskResultWorkflowMetricsIndexer;
 
 	@Reference
-	private TokenWorkflowMetricsIndexer _tokenWorkflowMetricsIndexer;
+	private TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;
 
 }

@@ -105,10 +105,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			"instanceId", "instanceId");
 
 		FilterAggregation indexFilterAggregation = _aggregations.filter(
-			"tokensIndex",
+			"tasksIndex",
 			_queries.term(
 				"_index",
-				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 					contextCompany.getCompanyId())));
 
 		TermsAggregation assigneeIdTermsAggregation = _aggregations.terms(
@@ -139,7 +139,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		slaDefinitionIdTermsAggregation.setSize(10000);
 
 		TermsAggregation taskNameTermsAggregation = _aggregations.terms(
-			"taskName", "taskName");
+			"name", "name");
 
 		taskNameTermsAggregation.setSize(10000);
 
@@ -155,7 +155,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				contextCompany.getCompanyId()),
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()),
-			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 
 		BooleanQuery booleanQuery = _createBooleanQuery(
@@ -285,15 +285,15 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	private BooleanQuery _createBooleanQuery(long processId, long instanceId) {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		BooleanQuery tokensBooleanQuery = _queries.booleanQuery();
+		BooleanQuery tasksBooleanQuery = _queries.booleanQuery();
 
-		tokensBooleanQuery.addFilterQueryClauses(
+		tasksBooleanQuery.addFilterQueryClauses(
 			_queries.term(
 				"_index",
-				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 					contextCompany.getCompanyId())));
-		tokensBooleanQuery.addMustQueryClauses(
-			_createTokensBooleanQuery(processId, instanceId));
+		tasksBooleanQuery.addMustQueryClauses(
+			_createTasksBooleanQuery(processId, instanceId));
 
 		BooleanQuery transitionsBooleanQuery = _queries.booleanQuery();
 
@@ -306,7 +306,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_createBooleanQuery(processId));
 
 		return booleanQuery.addShouldQueryClauses(
-			tokensBooleanQuery, transitionsBooleanQuery);
+			tasksBooleanQuery, transitionsBooleanQuery);
 	}
 
 	private BooleanQuery _createBooleanQuery(
@@ -336,19 +336,19 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		slaInstanceResultsBooleanQuery.addMustQueryClauses(
 			_createSLAInstanceResultsBooleanQuery(processId));
 
-		BooleanQuery tokensBooleanQuery = _queries.booleanQuery();
+		BooleanQuery tasksBooleanQuery = _queries.booleanQuery();
 
-		tokensBooleanQuery.addFilterQueryClauses(
+		tasksBooleanQuery.addFilterQueryClauses(
 			_queries.term(
 				"_index",
-				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 					contextCompany.getCompanyId())));
-		tokensBooleanQuery.addMustQueryClauses(
-			_createTokensBooleanQuery(assigneeUserIds, processId));
+		tasksBooleanQuery.addMustQueryClauses(
+			_createTasksBooleanQuery(assigneeUserIds, processId));
 
 		return booleanQuery.addShouldQueryClauses(
 			instancesBooleanQuery, slaInstanceResultsBooleanQuery,
-			tokensBooleanQuery);
+			tasksBooleanQuery);
 	}
 
 	private BucketSelectorPipelineAggregation
@@ -405,7 +405,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		return booleanQuery.addFilterQueryClauses(
 			_queries.term(
 				"_index",
-				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 					contextCompany.getCompanyId())));
 	}
 
@@ -497,12 +497,12 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		};
 	}
 
-	private BooleanQuery _createTokensBooleanQuery(
+	private BooleanQuery _createTasksBooleanQuery(
 		long processId, long instanceId) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", 0));
+		booleanQuery.addMustNotQueryClauses(_queries.term("taskId", 0));
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
@@ -512,12 +512,12 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_queries.term("processId", processId));
 	}
 
-	private BooleanQuery _createTokensBooleanQuery(
+	private BooleanQuery _createTasksBooleanQuery(
 		Long[] assigneeUserIds, long processId) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", 0));
+		booleanQuery.addMustNotQueryClauses(_queries.term("taskId", 0));
 
 		if (assigneeUserIds.length > 0) {
 			booleanQuery.addShouldQueryClauses(
@@ -535,7 +535,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	private List<AssigneeUser> _getAssigneeUsers(Bucket bucket) {
 		FilterAggregationResult filterAggregationResult =
 			(FilterAggregationResult)bucket.getChildAggregationResult(
-				"tokensIndex");
+				"tasksIndex");
 
 		TermsAggregationResult termsAggregationResult =
 			(TermsAggregationResult)
@@ -618,15 +618,15 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_resourceHelper.createOverdueScriptedMetricAggregation());
 
 		TermsAggregation taskNameTermsAggregation = _aggregations.terms(
-			"taskName", "taskName");
+			"name", "name");
 
 		taskNameTermsAggregation.setSize(10000);
 
-		FilterAggregation tokensIndexFilterAggregation = _aggregations.filter(
-			"tokensIndex",
+		FilterAggregation tasksIndexFilterAggregation = _aggregations.filter(
+			"tasksIndex",
 			_queries.term(
 				"_index",
-				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 					contextCompany.getCompanyId())));
 
 		TermsAggregation assigneeIdTermsAggregation = _aggregations.terms(
@@ -635,13 +635,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		assigneeIdTermsAggregation.setMissing(-1L);
 		assigneeIdTermsAggregation.setSize(10000);
 
-		tokensIndexFilterAggregation.addChildAggregation(
+		tasksIndexFilterAggregation.addChildAggregation(
 			assigneeIdTermsAggregation);
 
 		termsAggregation.addChildrenAggregations(
 			instancesIndexFilterAggregation, onTimeFilterAggregation,
 			overdueFilterAggregation, taskNameTermsAggregation,
-			tokensIndexFilterAggregation, _aggregations.topHits("topHits"),
+			tasksIndexFilterAggregation, _aggregations.topHits("topHits"),
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
 				ListUtil.fromArray(assigneeUserIds), dateEnd, dateStart,
 				ListUtil.fromArray(slaStatuses), ListUtil.fromArray(statuses),
@@ -661,7 +661,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				contextCompany.getCompanyId()),
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()),
-			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 
 		searchSearchRequest.setQuery(
@@ -761,7 +761,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
-			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()),
 			_transitionWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
@@ -819,7 +819,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				contextCompany.getCompanyId()),
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()),
-			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(assigneeUserIds, processId, statuses));
@@ -869,8 +869,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	private List<String> _getTaskNames(Bucket bucket) {
 		TermsAggregationResult termsAggregationResult =
-			(TermsAggregationResult)bucket.getChildAggregationResult(
-				"taskName");
+			(TermsAggregationResult)bucket.getChildAggregationResult("name");
 
 		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
 
@@ -1132,9 +1131,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	@Reference
 	private Sorts _sorts;
 
-	@Reference(target = "(workflow.metrics.index.entity.name=token)")
+	@Reference(target = "(workflow.metrics.index.entity.name=task)")
 	private WorkflowMetricsIndexNameBuilder
-		_tokenWorkflowMetricsIndexNameBuilder;
+		_taskWorkflowMetricsIndexNameBuilder;
 
 	@Reference(target = "(workflow.metrics.index.entity.name=transition)")
 	private WorkflowMetricsIndexNameBuilder

@@ -205,7 +205,7 @@ public class ResourceHelper {
 				clazz.getResourceAsStream("dependencies/" + resourceName)));
 	}
 
-	public BooleanQuery createTokensBooleanQuery(
+	public BooleanQuery createTasksBooleanQuery(
 		long companyId, boolean instanceCompleted) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
@@ -213,7 +213,7 @@ public class ResourceHelper {
 		booleanQuery.addFilterQueryClauses(
 			_queries.term(
 				"_index",
-				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(companyId)));
+				_taskWorkflowMetricsIndexNameBuilder.getIndexName(companyId)));
 
 		booleanQuery.addMustQueryClauses(
 			_queries.term("instanceCompleted", instanceCompleted));
@@ -502,9 +502,9 @@ public class ResourceHelper {
 	@Reference
 	private Sorts _sorts;
 
-	@Reference(target = "(workflow.metrics.index.entity.name=token)")
+	@Reference(target = "(workflow.metrics.index.entity.name=task)")
 	private WorkflowMetricsIndexNameBuilder
-		_tokenWorkflowMetricsIndexNameBuilder;
+		_taskWorkflowMetricsIndexNameBuilder;
 
 	private Script _workflowMetricsInstanceCountCombineScript;
 	private Script _workflowMetricsInstanceCountInitScript;

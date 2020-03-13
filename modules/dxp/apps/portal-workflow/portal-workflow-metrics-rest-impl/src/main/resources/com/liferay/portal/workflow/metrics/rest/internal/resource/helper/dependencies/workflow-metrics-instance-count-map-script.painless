@@ -1,6 +1,6 @@
 def instanceId = doc.instanceId.value;
 
-if (doc.uid.value.startsWith("WorkflowMetricsToken") &&
+if (doc.uid.value.startsWith("WorkflowMetricsTask") &&
 	((state.assigneeUserIds == null) ||
 	 (((doc.assigneeId.size() != 0) &&
 	  state.assigneeUserIds.contains(doc.assigneeId.value)) || 
@@ -45,9 +45,9 @@ if (doc.uid.value.startsWith("WorkflowMetricsInstance") &&
 		(key, slaStatus) -> (slaStatus == null) ? "untracked" : slaStatus);
 }
 
-if (doc.uid.value.startsWith("WorkflowMetricsToken") &&
+if (doc.uid.value.startsWith("WorkflowMetricsTask") &&
 	((state.taskNames == null) ||
-	 state.taskNames.contains(doc.taskName.value))) {
+	 state.taskNames.contains(doc.name.value))) {
 
 	state.taskNameInstanceIds.add(instanceId);
 }

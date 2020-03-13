@@ -1169,6 +1169,10 @@
 				"store": true,
 				"type": "date"
 			},
+			"nodeId": {
+				"store": true,
+				"type": "keyword"
+			},
 			"onTime": {
 				"store": true,
 				"type": "boolean"
@@ -1193,17 +1197,13 @@
 				"store": true,
 				"type": "keyword"
 			},
-			"tokenId": {
-				"store": true,
-				"type": "keyword"
-			},
 			"uid": {
 				"store": true,
 				"type": "keyword"
 			}
 		}
 	},
-	"WorkflowMetricsTokenType": {
+	"WorkflowMetricsTaskType": {
 		"date_detection": false,
 		"dynamic_templates": [
 			{
@@ -1277,19 +1277,19 @@
 				"store": true,
 				"type": "date"
 			},
+			"name": {
+				"store": true,
+				"type": "keyword"
+			},
+			"nodeId": {
+				"store": true,
+				"type": "keyword"
+			},
 			"processId": {
 				"store": true,
 				"type": "keyword"
 			},
 			"taskId": {
-				"store": true,
-				"type": "keyword"
-			},
-			"taskName": {
-				"store": true,
-				"type": "keyword"
-			},
-			"tokenId": {
 				"store": true,
 				"type": "keyword"
 			},

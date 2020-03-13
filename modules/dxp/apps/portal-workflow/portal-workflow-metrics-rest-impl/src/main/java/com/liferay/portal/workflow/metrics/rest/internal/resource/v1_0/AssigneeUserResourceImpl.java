@@ -185,25 +185,25 @@ public class AssigneeUserResourceImpl
 				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
 				userIds));
 
-		BooleanQuery tokensBooleanQuery = _queries.booleanQuery();
+		BooleanQuery tasksBooleanQuery = _queries.booleanQuery();
 
-		tokensBooleanQuery.addFilterQueryClauses(
+		tasksBooleanQuery.addFilterQueryClauses(
 			_queries.term(
 				"_index",
-				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 					contextCompany.getCompanyId())));
-		tokensBooleanQuery.addMustQueryClauses(
-			_createTokensBooleanQuery(
+		tasksBooleanQuery.addMustQueryClauses(
+			_createTasksBooleanQuery(
 				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
 				userIds));
 
 		return booleanQuery.addShouldQueryClauses(
-			slaTaskResultsBooleanQuery, tokensBooleanQuery);
+			slaTaskResultsBooleanQuery, tasksBooleanQuery);
 	}
 
 	private BooleanQuery _createBooleanQuery(
 		BooleanQuery booleanQuery, boolean completed, Long[] instanceIds,
-		long processId, String[] taskKeys, Set<Long> userIds) {
+		long processId, Set<Long> userIds) {
 
 		if (ArrayUtil.isNotEmpty(instanceIds)) {
 			TermsQuery termsQuery = _queries.terms("instanceId");
@@ -218,14 +218,6 @@ public class AssigneeUserResourceImpl
 				).toArray(
 					Object[]::new
 				));
-
-			booleanQuery.addMustQueryClauses(termsQuery);
-		}
-
-		if (ArrayUtil.isNotEmpty(taskKeys)) {
-			TermsQuery termsQuery = _queries.terms("taskName");
-
-			termsQuery.addValues(taskKeys);
 
 			booleanQuery.addMustQueryClauses(termsQuery);
 		}
@@ -274,10 +266,10 @@ public class AssigneeUserResourceImpl
 		booleanQuery.addFilterQueryClauses(
 			_queries.term(
 				"_index",
-				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 					contextCompany.getCompanyId())));
 
-		return booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", 0));
+		return booleanQuery.addMustNotQueryClauses(_queries.term("taskId", 0));
 	}
 
 	private BooleanQuery _createSLATaskResultsBooleanQuery(
@@ -300,17 +292,25 @@ public class AssigneeUserResourceImpl
 					"status", WorkflowMetricsSLAStatus.COMPLETED.name()));
 		}
 
+		if (ArrayUtil.isNotEmpty(taskKeys)) {
+			TermsQuery termsQuery = _queries.terms("taskName");
+
+			termsQuery.addValues(taskKeys);
+
+			booleanQuery.addMustQueryClauses(termsQuery);
+		}
+
 		return _createBooleanQuery(
-			booleanQuery, completed, instanceIds, processId, taskKeys, userIds);
+			booleanQuery, completed, instanceIds, processId, userIds);
 	}
 
-	private BooleanQuery _createTokensBooleanQuery(
+	private BooleanQuery _createTasksBooleanQuery(
 		boolean completed, Date dateEnd, Date dateStart, Long[] instanceIds,
 		long processId, String[] taskKeys, Set<Long> userIds) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", "0"));
+		booleanQuery.addMustNotQueryClauses(_queries.term("taskId", "0"));
 
 		if (completed && (dateEnd != null) && (dateStart != null)) {
 			booleanQuery.addMustQueryClauses(
@@ -322,8 +322,16 @@ public class AssigneeUserResourceImpl
 
 		booleanQuery.addMustQueryClauses(_queries.term("completed", completed));
 
+		if (ArrayUtil.isNotEmpty(taskKeys)) {
+			TermsQuery termsQuery = _queries.terms("name");
+
+			termsQuery.addValues(taskKeys);
+
+			booleanQuery.addMustQueryClauses(termsQuery);
+		}
+
 		return _createBooleanQuery(
-			booleanQuery, completed, instanceIds, processId, taskKeys, userIds);
+			booleanQuery, completed, instanceIds, processId, userIds);
 	}
 
 	private List<AssigneeUser> _getAssigneeUsers(
@@ -378,7 +386,7 @@ public class AssigneeUserResourceImpl
 		searchSearchRequest.setIndexNames(
 			_slaTaskResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()),
-			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(
@@ -418,10 +426,10 @@ public class AssigneeUserResourceImpl
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
-			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
-			_createTokensBooleanQuery(
+			_createTasksBooleanQuery(
 				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
 				userIds));
 
@@ -458,10 +466,10 @@ public class AssigneeUserResourceImpl
 			_aggregations.cardinality(
 				"assigneeId", completed ? "completionUserId" : "assigneeId"));
 		searchSearchRequest.setIndexNames(
-			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
-			_createTokensBooleanQuery(
+			_createTasksBooleanQuery(
 				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
 				userIds));
 
@@ -693,9 +701,9 @@ public class AssigneeUserResourceImpl
 	@Reference
 	private Sorts _sorts;
 
-	@Reference(target = "(workflow.metrics.index.entity.name=token)")
+	@Reference(target = "(workflow.metrics.index.entity.name=task)")
 	private WorkflowMetricsIndexNameBuilder
-		_tokenWorkflowMetricsIndexNameBuilder;
+		_taskWorkflowMetricsIndexNameBuilder;
 
 	@Reference
 	private UserLocalService _userLocalService;

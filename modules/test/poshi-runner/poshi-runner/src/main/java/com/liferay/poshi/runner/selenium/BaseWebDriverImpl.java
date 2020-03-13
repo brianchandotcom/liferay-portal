@@ -2846,34 +2846,33 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			return;
 		}
 
-		webElement.clear();
-
-		typeKeys(locator, value);
-
 		int maxRetries = 5;
 		int retryCount = 0;
-		String typedValue = webElement.getAttribute("value");
 
-		while (!typedValue.equals(value) && (retryCount < maxRetries)) {
+		while (retryCount < maxRetries) {
+			webElement.clear();
+
+			typeKeys(locator, value);
+
+			String typedValue = webElement.getAttribute("value");
+
+			if (typedValue.equals(value)) {
+				return;
+			}
+
 			retryCount++;
+
+			String message =
+				"Actual typed value: '" + typedValue +
+					"' did not match expected typed value: '" + value + "'.";
 
 			if (retryCount < maxRetries) {
 				System.out.println(
-					"Actual typed value: '" + typedValue +
-						"' did not match expected typed value: '" + value +
-							"'. Retrying LiferaySelenium.type() attempt #" +
-								retryCount + ".");
-
-				webElement.clear();
-
-				typeKeys(locator, value);
-
-				typedValue = webElement.getAttribute("value");
+					message + " Retrying LiferaySelenium.type() attempt #" +
+						(retryCount + 1) + ".");
 			}
 			else {
-				throw new RuntimeException(
-					"Actual typed value: '" + typedValue +
-						"' did not match expected typed value: '" + value);
+				throw new RuntimeException(message);
 			}
 		}
 	}

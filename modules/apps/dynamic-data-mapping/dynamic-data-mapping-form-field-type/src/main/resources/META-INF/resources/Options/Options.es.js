@@ -380,7 +380,14 @@ class Options extends Component {
 		if (defaultLanguageId === editingLanguageId) {
 			const copyLanguageLabels = (languageId, options) => {
 				return options.map(({label, value}, index) => {
-					const option = newValue[languageId][index];
+					let option = newValue[languageId][index];
+
+					if (!option) {
+						option = {
+							label: '',
+							value: '',
+						};
+					}
 
 					if (property === 'label') {
 						label = option.label;

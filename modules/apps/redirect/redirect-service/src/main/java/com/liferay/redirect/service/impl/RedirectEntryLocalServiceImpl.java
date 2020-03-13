@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,6 +45,29 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class RedirectEntryLocalServiceImpl
 	extends RedirectEntryLocalServiceBaseImpl {
+
+	@Override
+	public void addEntryResources(
+			RedirectEntry entry, boolean addGroupPermissions,
+			boolean addGuestPermissions)
+		throws PortalException {
+
+		resourceLocalService.addResources(
+			entry.getCompanyId(), entry.getGroupId(), entry.getUserId(),
+			RedirectEntry.class.getName(), entry.getRedirectEntryId(), false,
+			addGroupPermissions, addGuestPermissions);
+	}
+
+	@Override
+	public void addEntryResources(
+			RedirectEntry entry, ModelPermissions modelPermissions)
+		throws PortalException {
+
+		resourceLocalService.addModelResources(
+			entry.getCompanyId(), entry.getGroupId(), entry.getUserId(),
+			RedirectEntry.class.getName(), entry.getRedirectEntryId(),
+			modelPermissions);
+	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
@@ -72,7 +96,21 @@ public class RedirectEntryLocalServiceImpl
 		redirectEntry.setPermanent(permanent);
 		redirectEntry.setSourceURL(sourceURL);
 
-		return redirectEntryPersistence.update(redirectEntry);
+		redirectEntry = redirectEntryPersistence.update(redirectEntry);
+
+		if (serviceContext.isAddGroupPermissions() ||
+			serviceContext.isAddGuestPermissions()) {
+
+			addEntryResources(
+				redirectEntry, serviceContext.isAddGroupPermissions(),
+				serviceContext.isAddGuestPermissions());
+		}
+		else {
+			addEntryResources(
+				redirectEntry, serviceContext.getModelPermissions());
+		}
+
+		return redirectEntry;
 	}
 
 	@Override

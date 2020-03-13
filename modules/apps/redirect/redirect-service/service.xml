@@ -38,6 +38,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="sourceURL" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="Resource" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>DuplicateRedirectEntrySourceURL</exception>

@@ -1,9 +1,10 @@
 Bundle-Name: Liferay Portal Workflow Metrics API
 Bundle-SymbolicName: com.liferay.portal.workflow.metrics.api
-Bundle-Version: 3.2.3
+Bundle-Version: 3.3.0
 Export-Package:\
 	com.liferay.portal.workflow.metrics.exception,\
 	com.liferay.portal.workflow.metrics.model,\
+	com.liferay.portal.workflow.metrics.search.index,\
 	com.liferay.portal.workflow.metrics.service,\
 	com.liferay.portal.workflow.metrics.service.persistence,\
 	com.liferay.portal.workflow.metrics.util.comparator

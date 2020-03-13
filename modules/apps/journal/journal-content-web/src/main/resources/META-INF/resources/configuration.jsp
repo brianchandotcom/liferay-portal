@@ -76,9 +76,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 			return;
 		}
 
-		var itemValue = JSON.parse(selectedItem.value);
-
-		retrieveWebContent(itemValue.classPK);
+		retrieveWebContent(selectedItem.assetclasspk);
 	});
 
 	dom.delegate(articlePreview, 'click', '.web-content-selector', function(event) {

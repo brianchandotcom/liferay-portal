@@ -219,11 +219,30 @@
 		</aui:script>
 	</c:when>
 	<c:otherwise>
-		<aui:script>
-			Liferay.Util.selectEntityHandler(
-				'#<portlet:namespace />selectAssetFm',
-				'<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>'
+		<aui:script require="metal-dom/src/all/dom as dom">
+			var delegateHandler = dom.delegate(
+				document.querySelector('#<portlet:namespace/>selectAssetFm'),
+				'click',
+				'.selector-button',
+				function(event) {
+					event.preventDefault();
+
+					Liferay.Util.getOpener().Liferay.fire(
+						'<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>',
+						{
+							data: event.delegateTarget.dataset
+						}
+					);
+				}
 			);
+
+			var onDestroyPortlet = function() {
+				delegateHandler.removeListener();
+
+				Liferay.detach('destroyPortlet', onDestroyPortlet);
+			};
+
+			Liferay.on('destroyPortlet', onDestroyPortlet);
 		</aui:script>
 	</c:otherwise>
 </c:choose>

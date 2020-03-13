@@ -113,7 +113,7 @@ public class AssetEntryItemSelectorView
 					_getGroupId(
 						assetEntryItemSelectorCriterion, servletRequest))
 			).put(
-				"multipleSelection", _toStringArray(true)
+				"multipleSelection", _toStringArray(false)
 			).put(
 				"selectedGroupIds",
 				_toStringArray(

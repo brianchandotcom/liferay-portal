@@ -167,8 +167,10 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	};
 
 	const onFieldSelect = event => {
+		const fieldValue = event.target.value;
+
 		const data =
-			event.target.value === UNMAPPED_OPTION.value
+			fieldValue === UNMAPPED_OPTION.value
 				? {
 						classNameId: '',
 						classPK: '',
@@ -179,9 +181,9 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 				? {
 						classNameId: selectedItem.classNameId,
 						classPK: selectedItem.classPK,
-						fieldId: event.target.value,
+						fieldId: fieldValue,
 				  }
-				: {mappedField: event.target.value};
+				: {mappedField: fieldValue};
 
 		if (selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content) {
 			const mappedInfoItem = mappedInfoItems.find(
@@ -195,6 +197,17 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 					addMappedInfoItem({title: selectedItem.title, ...data})
 				);
 			}
+
+			setSelectedItem(selectedItem => ({
+				...selectedItem,
+				fieldId: fieldValue,
+			}));
+		}
+		else {
+			setSelectedItem(selectedItem => ({
+				...selectedItem,
+				mappedField: fieldValue,
+			}));
 		}
 
 		onMappingSelect(data);

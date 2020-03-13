@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -64,6 +65,15 @@ public interface RedirectEntryLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RedirectEntryLocalServiceUtil} to access the redirect entry local service. Add custom service methods to <code>com.liferay.redirect.service.impl.RedirectEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addEntryResources(
+			RedirectEntry entry, boolean addGroupPermissions,
+			boolean addGuestPermissions)
+		throws PortalException;
+
+	public void addEntryResources(
+			RedirectEntry entry, ModelPermissions modelPermissions)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public RedirectEntry addRedirectEntry(
 			long groupId, String destinationURL, Date expirationDate,

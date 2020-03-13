@@ -99,6 +99,8 @@ definition {
 
 	@priority = "3"
 	test AddProcessWithNewFieldSetAndWorkflowViaSourceTab {
+		property test.name.skip.portal.instance = "CPKaleoformsadmin#AddProcessWithNewFieldSetAndWorkflowViaSourceTab";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -167,6 +169,8 @@ definition {
 
 	@priority = "3"
 	test DeactivateAndActivateWorkflowDefinition {
+		property test.name.skip.portal.instance = "CPKaleoformsadmin#DeactivateAndActivateWorkflowDefinition";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

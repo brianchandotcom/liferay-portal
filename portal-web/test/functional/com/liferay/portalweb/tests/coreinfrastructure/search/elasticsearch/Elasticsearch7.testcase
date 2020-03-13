@@ -222,7 +222,14 @@ definition {
 		property osgi.module.configurations = "connectionId=&quot;remote&quot;${line.separator}networkHostAddresses=[&quot;http&colon;//localhost&colon;9202&quot;]:blacklistBundleSymbolicNames=&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.api,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data,com.liferay.portal.mobile.device.detection.fiftyonedegrees,com.liferay.portal.search.elasticsearch6.impl,com.liferay.portal.search.elasticsearch6.spi,com.liferay.portal.search.elasticsearch6.api,com.liferay.portal.search.elasticsearch6.xpack.security.impl&quot;";
 		property test.name.skip.portal.instance = "Elasticsearch7#HotDeployElasticsearch7App";
 
-		var appName = "Liferay Connector to Elasticsearch 7";
+		var consoleLog = Clustering.getLogFileSpecificServer(nodePort = "8080");
+
+		if (contains("${consoleLog}", "Liferay Community Edition")) {
+			var appName = "Liferay CE Connector to Elasticsearch 7";
+		}
+		else {
+			var appName = "Liferay Connector to Elasticsearch 7";
+		}
 
 		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted");
 

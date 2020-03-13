@@ -293,25 +293,21 @@ class DataLayoutBuilder extends React.Component {
 	getDDMFormFieldSettingsContext(dataDefinitionField) {
 		const {editingLanguageId = themeDisplay.getLanguageId()} = this.props;
 		const fieldTypes = this.getFieldTypes();
-		const fieldType = fieldTypes.find(({name}) => {
+		const {settingsContext} = fieldTypes.find(({name}) => {
 			return name === dataDefinitionField.fieldType;
 		});
-		const {settingsContext} = fieldType;
 		const visitor = new PagesVisitor(settingsContext.pages);
 
 		return {
 			...settingsContext,
 			pages: visitor.mapFields(field => {
 				const {fieldName, localizable} = field;
-				const propertyName = this._fromDDMFormToDataDefinitionPropertyName(
-					fieldName
-				);
 				const propertyValue = this._getDataDefinitionfieldPropertyValue(
 					dataDefinitionField,
-					propertyName
+					this._fromDDMFormToDataDefinitionPropertyName(fieldName)
 				);
 
-				let value = propertyValue;
+				let value = field.value;
 
 				if (
 					localizable &&

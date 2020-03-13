@@ -75,7 +75,7 @@ definition {
 
 		AssetListsAdmin.viewAssetTypeList(
 			assetListName = "Depot Manual Asset List",
-			assetType = "Web Content Folder,Basic Document,Basic Web Content,Google Drive Shortcut,Documents Folder,DM Document Type Name 1,DM Document Type Name 2",
+			assetType = "Web Content Folder,Basic Document,Basic Web Content,Documents Folder,DM Document Type Name 1,DM Document Type Name 2",
 			manualSelection = "true");
 
 		for (var i : list "1,2") {
@@ -387,7 +387,7 @@ definition {
 
 		AssetListsAdmin.viewAssetTypeList(
 			assetListName = "Depot Manual Asset List",
-			assetType = "Basic Document,Google Drive Shortcut,Documents Folder,DM Document Type Name",
+			assetType = "Basic Document,Documents Folder,DM Document Type Name",
 			manualSelection = "true");
 
 		DepotNavigator.openDepotAdmin();

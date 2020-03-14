@@ -17,8 +17,10 @@ import ClayTabs from '@clayui/tabs';
 import React, {useState} from 'react';
 
 import CodeMirrorEditor from './CodeMirrorEditor';
+import FragmentPreview from './FragmentPreview';
 
 const FragmentEditor = ({
+	context: {namespace},
 	props: {
 		allowedStatus = {
 			approved: false,
@@ -32,11 +34,16 @@ const FragmentEditor = ({
 		propagationEnabled,
 		readOnly,
 		status,
+		urls,
 	},
 }) => {
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
 	const [isCacheable, setIsCacheable] = useState(cacheable);
 	const [isSaving, setIsSaving] = useState(false);
+	const [configuration, setConfiguration] = useState(initialConfiguration);
+	const [css, setCss] = useState(initialCSS);
+	const [html, setHtml] = useState(initialHTML);
+	const [js, setJs] = useState(initialJS);
 
 	const handleSaveButtonClick = () => {
 		setIsSaving(true);
@@ -179,6 +186,7 @@ const FragmentEditor = ({
 							<CodeMirrorEditor
 								content={initialHTML}
 								mode="html"
+								onChange={setHtml}
 								readOnly={readOnly}
 							/>
 						</div>
@@ -187,6 +195,7 @@ const FragmentEditor = ({
 							<CodeMirrorEditor
 								content={initialCSS}
 								mode="css"
+								onChange={setCss}
 								readOnly={readOnly}
 							/>
 						</div>
@@ -203,9 +212,19 @@ const FragmentEditor = ({
 								codeHeaderText="function(fragmentElement, configuration) {"
 								content={initialJS}
 								mode="javascript"
+								onChange={setJs}
 								readOnly={readOnly}
 							/>
 						</div>
+
+						<FragmentPreview
+							configuration={configuration}
+							css={css}
+							html={html}
+							js={js}
+							namespace={namespace}
+							urls={urls}
+						/>
 					</div>
 				</ClayTabs.TabPane>
 
@@ -214,6 +233,7 @@ const FragmentEditor = ({
 						<CodeMirrorEditor
 							content={initialConfiguration}
 							mode="json"
+							onChange={setConfiguration}
 							readOnly={readOnly}
 						/>
 					</div>

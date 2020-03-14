@@ -124,21 +124,21 @@
 				"fragment": {
 					"additionalProperties": false,
 					"properties": {
-						"fragmentCollectionName": {
-							"title": "The fragmentCollectionName Schema",
+						"collectionName": {
+							"title": "The collectionName Schema",
 							"type": "string"
 						},
-						"fragmentKey": {
-							"title": "The fragmentKey Schema",
+						"key": {
+							"title": "The key Schema",
 							"type": "string"
 						},
-						"fragmentName": {
-							"title": "The fragmentName Schema",
+						"name": {
+							"title": "The name Schema",
 							"type": "string"
 						}
 					},
 					"required": [
-						"fragmentKey"
+						"key"
 					],
 					"title": "The fragment Schema",
 					"type": "object"

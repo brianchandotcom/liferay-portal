@@ -109,7 +109,7 @@ public class FragmentLayoutStructureItemHelper
 		Map<String, Object> fragmentDefinitionMap =
 			(Map<String, Object>)definitionMap.get("fragment");
 
-		String fragmentKey = (String)fragmentDefinitionMap.get("fragmentKey");
+		String fragmentKey = (String)fragmentDefinitionMap.get("key");
 
 		if (Validator.isNull(fragmentKey)) {
 			return null;

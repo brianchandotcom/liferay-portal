@@ -125,12 +125,11 @@ public class FragmentInstanceDefinitionConverterUtil {
 			{
 				fragment = new Fragment() {
 					{
-						fragmentCollectionName = _getFragmentCollectionName(
+						collectionName = _getFragmentCollectionName(
 							fragmentCollectionContributorTracker, fragmentEntry,
 							fragmentRendererTracker, rendererKey);
-						fragmentKey = _getFragmentKey(
-							fragmentEntry, rendererKey);
-						fragmentName = _getFragmentName(
+						key = _getFragmentKey(fragmentEntry, rendererKey);
+						name = _getFragmentName(
 							fragmentEntry, fragmentEntryLink,
 							fragmentRendererTracker, rendererKey);
 					}

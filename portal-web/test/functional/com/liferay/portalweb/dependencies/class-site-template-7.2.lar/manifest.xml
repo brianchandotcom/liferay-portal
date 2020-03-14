@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root>
-	<header available-locales="en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE" build-number="7300" export-date="Thu, 05 Dec 2019 04:10:36 +0000" type="portlet" company-id="20101" company-group-id="20128" group-id="20119" user-personal-site-group-id="20127" private-layout="true" root-portlet-id="com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet" schema-version="1.0.0"/>
+	<header available-locales="en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE" build-number="7301" export-date="Sat, 14 Mar 2020 15:47:40 +0000" type="portlet" company-id="20101" company-group-id="20128" group-id="20119" user-personal-site-group-id="20127" private-layout="true" root-portlet-id="com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet" schema-version="1.0.0"/>
 	<missing-references/>
 	<portlet portlet-id="com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet" layout-id="1" path="/group/20119/portlet/com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet/1/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup"/>
 	<manifest-summary>

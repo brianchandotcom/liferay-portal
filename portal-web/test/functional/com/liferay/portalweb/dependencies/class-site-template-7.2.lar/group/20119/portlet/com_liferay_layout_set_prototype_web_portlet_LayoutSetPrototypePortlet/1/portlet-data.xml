@@ -2,11 +2,11 @@
 
 <LayoutSetPrototypePortletDataHandler self-path="/group/20119/portlet/com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet/1/portlet-data.xml" group-id="20119">
 	<LayoutSetPrototype>
-		<staged-model uuid="009ea8b6-3489-b816-219d-a2edcc4901bf" group-id="38120" path="/company/20101/com.liferay.portal.kernel.model.LayoutSetPrototype/38119.xml" user-uuid="c3424d68-8830-1e53-82e8-b45e33688a6a" asset-entry-priority="0.0">
+		<staged-model uuid="009ea8b6-3489-b816-219d-a2edcc4901bf" group-id="38680" path="/company/20101/com.liferay.portal.kernel.model.LayoutSetPrototype/38679.xml" user-uuid="f753ab7b-a016-dfbc-bff0-c741758c4d84" asset-entry-priority="0.0">
 			<references>
-				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="16" group-id="38120" group-key="38119" live-group-id="38120" type="embedded" uuid="dd7e4fa0-a647-7555-62e1-fc2a29a2ecaf" company-id="20101" layout-id="1" private-layout="true" missing="false"/>
-				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="17" group-id="38120" group-key="38119" live-group-id="38120" type="embedded" uuid="8f43bd18-cb9f-32f9-9689-41c012588d58" company-id="20101" layout-id="2" private-layout="true" missing="false"/>
-				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="18" group-id="38120" group-key="38119" live-group-id="38120" type="embedded" uuid="ca1032e8-89df-a8e4-ada8-2b5e14a2bff1" company-id="20101" layout-id="3" private-layout="true" missing="false"/>
+				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="16" group-id="38680" group-key="38679" live-group-id="38680" type="embedded" uuid="dd7e4fa0-a647-7555-62e1-fc2a29a2ecaf" company-id="20101" layout-id="1" private-layout="true" missing="false"/>
+				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="17" group-id="38680" group-key="38679" live-group-id="38680" type="embedded" uuid="8f43bd18-cb9f-32f9-9689-41c012588d58" company-id="20101" layout-id="2" private-layout="true" missing="false"/>
+				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="18" group-id="38680" group-key="38679" live-group-id="38680" type="embedded" uuid="ca1032e8-89df-a8e4-ada8-2b5e14a2bff1" company-id="20101" layout-id="3" private-layout="true" missing="false"/>
 			</references>
 		</staged-model>
 	</LayoutSetPrototype>

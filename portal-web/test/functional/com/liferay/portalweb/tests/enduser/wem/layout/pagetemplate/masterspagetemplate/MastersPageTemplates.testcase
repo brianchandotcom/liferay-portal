@@ -130,11 +130,24 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("Import the site template with custom masters") {
-			LAR.importSiteCP(
-				larFileName = "custom-masters-site-template.lar",
-				siteName = "Test Site Name",
-				uploadFrom = "dependencies");
+		task ("Add header and footer in custom master") {
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Edit",
+				masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Navigation Bars",
+				dropTarget = "Header",
+				fragmentName = "Header Dark",
+				scope = "Master");
+
+			PageEditor.addFragment(
+				collectionName = "Footers",
+				dropTarget = "Footer",
+				fragmentName = "Footer Nav Dark",
+				scope = "Master");
+
+			Button.click(button = "Publish Master");
 		}
 
 		task ("Add a content page based on Blank") {

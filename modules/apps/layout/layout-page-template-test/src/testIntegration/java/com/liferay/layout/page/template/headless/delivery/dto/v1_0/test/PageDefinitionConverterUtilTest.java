@@ -435,10 +435,9 @@ public class PageDefinitionConverterUtilTest {
 		Fragment fragment = fragmentInstanceDefinition.getFragment();
 
 		Assert.assertEquals(
-			_fragmentCollection.getName(),
-			fragment.getFragmentCollectionName());
-		Assert.assertEquals(fragmentEntryKey, fragment.getFragmentKey());
-		Assert.assertEquals(fragmentName, fragment.getFragmentName());
+			_fragmentCollection.getName(), fragment.getCollectionName());
+		Assert.assertEquals(fragmentEntryKey, fragment.getKey());
+		Assert.assertEquals(fragmentName, fragment.getName());
 
 		FragmentField[] fragmentFields =
 			fragmentInstanceDefinition.getFragmentFields();

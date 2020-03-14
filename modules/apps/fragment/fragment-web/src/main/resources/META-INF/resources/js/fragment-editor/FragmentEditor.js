@@ -16,6 +16,8 @@ import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
 import React, {useState} from 'react';
 
+import CodeMirrorEditor from './CodeMirrorEditor';
+
 const FragmentEditor = ({
 	props: {
 		allowedStatus = {
@@ -23,6 +25,10 @@ const FragmentEditor = ({
 			draft: false,
 		},
 		cacheable,
+		initialCSS,
+		initialConfiguration,
+		initialHTML,
+		initialJS,
 		propagationEnabled,
 		readOnly,
 		status,
@@ -168,11 +174,49 @@ const FragmentEditor = ({
 
 			<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
 				<ClayTabs.TabPane aria-labelledby="code">
-					<div className="fragment-editor"></div>
+					<div className="fragment-editor">
+						<div class="source-editor html">
+							<CodeMirrorEditor
+								content={initialHTML}
+								mode="html"
+								readOnly={readOnly}
+							/>
+						</div>
+
+						<div class="source-editor css">
+							<CodeMirrorEditor
+								content={initialCSS}
+								mode="css"
+								readOnly={readOnly}
+							/>
+						</div>
+
+						<div class="source-editor javascript">
+							<CodeMirrorEditor
+								codeFooterText="}"
+								codeHeaderHelpText={Liferay.Util.sub(
+									Liferay.Language.get(
+										'parameter-x-provides-access-to-the-current-fragment-node-use-it-to-manipulate-fragment-components'
+									),
+									['fragmentElement']
+								)}
+								codeHeaderText="function(fragmentElement, configuration) {"
+								content={initialJS}
+								mode="javascript"
+								readOnly={readOnly}
+							/>
+						</div>
+					</div>
 				</ClayTabs.TabPane>
 
 				<ClayTabs.TabPane aria-labelledby="configuration">
-					<div class="fragment-editor"></div>
+					<div class="fragment-editor">
+						<CodeMirrorEditor
+							content={initialConfiguration}
+							mode="json"
+							readOnly={readOnly}
+						/>
+					</div>
 				</ClayTabs.TabPane>
 			</ClayTabs.Content>
 		</div>

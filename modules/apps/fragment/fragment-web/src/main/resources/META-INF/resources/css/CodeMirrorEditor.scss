@@ -1,0 +1,9 @@
+@import 'variables';
+
+.codemirror-editor-wrapper {
+	.CodeMirror {
+		height: 100%;
+	}
+
+	height: calc(100% - #{$toolbarHeight});
+}

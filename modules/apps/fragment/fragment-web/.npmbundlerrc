@@ -1,0 +1,8 @@
+{
+    "rules": [
+		{
+			"test": "\\.css$",
+			"use": ["css-loader"]
+		}
+	]
+}

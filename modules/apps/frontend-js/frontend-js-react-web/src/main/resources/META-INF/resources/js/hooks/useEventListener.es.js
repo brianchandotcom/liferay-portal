@@ -26,10 +26,12 @@ import {useEffect} from 'react';
  */
 export default function useEventListener(eventName, handler, phase, target) {
 	useEffect(() => {
-		target.addEventListener(eventName, handler, phase);
+		if (target) {
+			target.addEventListener(eventName, handler, phase);
 
-		return () => {
-			target.removeEventListener(eventName, handler, phase);
-		};
+			return () => {
+				target.removeEventListener(eventName, handler, phase);
+			};
+		}
 	}, [eventName, handler, phase, target]);
 }

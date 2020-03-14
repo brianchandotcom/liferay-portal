@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FOOTER_DROP_TARGET</td>
+	<td>//button[contains(.,'Configure Allowed Fragments')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_GROUP_ITEM</td>
 	<td>//div[contains(@class,'list-group')]//a[contains(.,'${key_itemName}')]</td>
 	<td></td>

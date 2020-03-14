@@ -234,8 +234,7 @@ public class PortalInstances {
 				if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
 					webIdsList.add(0, webId);
 
-					DBPartitionUtil.setDefaultCompanyId(
-						company.getCompanyId());
+					DBPartitionUtil.setDefaultCompanyId(company.getCompanyId());
 				}
 				else {
 					webIdsList.add(webId);

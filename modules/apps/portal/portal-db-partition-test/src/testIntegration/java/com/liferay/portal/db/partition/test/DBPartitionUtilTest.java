@@ -78,8 +78,7 @@ public class DBPartitionUtilTest {
 
 		_currentDatabasePartitionEnabledValue =
 			ReflectionTestUtil.getAndSetFieldValue(
-				DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED",
-				true);
+				DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED", true);
 
 		_currentDatabasePartitionInstanceIdValue =
 			ReflectionTestUtil.getAndSetFieldValue(
@@ -92,8 +91,7 @@ public class DBPartitionUtilTest {
 		DataSource dbPartitionDataSource = DBPartitionUtil.wrapDataSource(
 			_currentDataSource);
 
-		DBPartitionUtil.setDefaultCompanyId(
-			_portal.getDefaultCompanyId());
+		DBPartitionUtil.setDefaultCompanyId(_portal.getDefaultCompanyId());
 
 		ReflectionTestUtil.setFieldValue(
 			DBInitUtil.class, "_dataSource", dbPartitionDataSource);

@@ -45,7 +45,9 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
-				fragmentName = "Button");
+				dropTarget = "Header",
+				fragmentName = "Button",
+				scope = "Master");
 
 			Button.click(button = "Publish Master");
 		}
@@ -924,9 +926,14 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
-			fragmentName = "Button");
+			dropTarget = "Header",
+			fragmentName = "Button",
+			scope = "Master");
 
-		PageEditor.addWidget(portletName = "Asset Publisher");
+		PageEditor.addWidget(
+			dropTarget = "Footer",
+			portletName = "Asset Publisher",
+			scope = "Master");
 
 		Button.click(button = "Publish Master");
 
@@ -946,7 +953,10 @@ definition {
 
 		PageEditor.viewFragment(fragmentName = "Asset Publisher");
 
-		PageEditor.addWidget(portletName = "Web Content Display");
+		PageEditor.addWidget(
+			dropTarget = "Header",
+			portletName = "Web Content Display",
+			scope = "Master");
 
 		MastersPageTemplates.propagateChange();
 
@@ -965,9 +975,14 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
-				fragmentName = "Heading");
+				dropTarget = "Header",
+				fragmentName = "Heading",
+				scope = "Master");
 
-			PageEditor.addWidget(portletName = "Asset Publisher");
+			PageEditor.addWidget(
+				dropTarget = "Footer",
+				portletName = "Asset Publisher",
+				scope = "Master");
 
 			Button.click(button = "Publish Master");
 		}
@@ -1074,7 +1089,9 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
-				fragmentName = "Heading");
+				dropTarget = "Header",
+				fragmentName = "Heading",
+				scope = "Master");
 
 			MastersPageTemplates.propagateChange();
 		}

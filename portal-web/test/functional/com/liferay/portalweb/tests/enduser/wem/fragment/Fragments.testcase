@@ -447,7 +447,7 @@ definition {
 		}
 
 		task ("Add a section") {
-			PageEditor.addLayoutSection();
+			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
 		}
 
 		task ("Configure the section") {

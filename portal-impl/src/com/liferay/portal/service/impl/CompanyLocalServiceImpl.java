@@ -21,7 +21,7 @@ import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.db.partition.DBPartitionHelperUtil;
+import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -182,7 +182,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			counterLocalService.increment());
 
 		if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-			DBPartitionHelperUtil.setDefaultCompanyId(company.getCompanyId());
+			DBPartitionUtil.setDefaultCompanyId(company.getCompanyId());
 		}
 
 		company.setWebId(webId);
@@ -201,7 +201,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				CompanyThreadLocal.setCompanyIdInitialization(
 					company.getCompanyId())) {
 
-			if (DBPartitionHelperUtil.addPartition(company.getCompanyId())) {
+			if (DBPartitionUtil.addPartition(company.getCompanyId())) {
 				dlFileEntryTypeLocalService.
 					createBasicDocumentDLFileEntryType();
 			}
@@ -1204,7 +1204,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		final Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		if (DBPartitionHelperUtil.removePartition(companyId)) {
+		if (DBPartitionUtil.removePartition(companyId)) {
 			return company;
 		}
 

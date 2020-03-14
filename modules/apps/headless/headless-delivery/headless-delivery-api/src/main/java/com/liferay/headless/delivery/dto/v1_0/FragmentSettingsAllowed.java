@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -39,26 +41,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Fragment")
+@GraphQLName("FragmentSettingsAllowed")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Fragment")
-public class Fragment {
+@XmlRootElement(name = "FragmentSettingsAllowed")
+public class FragmentSettingsAllowed {
 
 	@Schema
-	public String getCollectionName() {
-		return collectionName;
+	@Valid
+	public Fragment[] getAllowedFragments() {
+		return allowedFragments;
 	}
 
-	public void setCollectionName(String collectionName) {
-		this.collectionName = collectionName;
+	public void setAllowedFragments(Fragment[] allowedFragments) {
+		this.allowedFragments = allowedFragments;
 	}
 
 	@JsonIgnore
-	public void setCollectionName(
-		UnsafeSupplier<String, Exception> collectionNameUnsafeSupplier) {
+	public void setAllowedFragments(
+		UnsafeSupplier<Fragment[], Exception> allowedFragmentsUnsafeSupplier) {
 
 		try {
-			collectionName = collectionNameUnsafeSupplier.get();
+			allowedFragments = allowedFragmentsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -70,59 +73,7 @@ public class Fragment {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String collectionName;
-
-	@Schema
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
-
-	@JsonIgnore
-	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String key;
-
-	@Schema
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	protected Fragment[] allowedFragments;
 
 	@Override
 	public boolean equals(Object object) {
@@ -130,13 +81,14 @@ public class Fragment {
 			return true;
 		}
 
-		if (!(object instanceof Fragment)) {
+		if (!(object instanceof FragmentSettingsAllowed)) {
 			return false;
 		}
 
-		Fragment fragment = (Fragment)object;
+		FragmentSettingsAllowed fragmentSettingsAllowed =
+			(FragmentSettingsAllowed)object;
 
-		return Objects.equals(toString(), fragment.toString());
+		return Objects.equals(toString(), fragmentSettingsAllowed.toString());
 	}
 
 	@Override
@@ -151,46 +103,24 @@ public class Fragment {
 
 		sb.append("{");
 
-		if (collectionName != null) {
+		if (allowedFragments != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"collectionName\": ");
+			sb.append("\"allowedFragments\": ");
 
-			sb.append("\"");
+			sb.append("[");
 
-			sb.append(_escape(collectionName));
+			for (int i = 0; i < allowedFragments.length; i++) {
+				sb.append(String.valueOf(allowedFragments[i]));
 
-			sb.append("\"");
-		}
-
-		if (key != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+				if ((i + 1) < allowedFragments.length) {
+					sb.append(", ");
+				}
 			}
 
-			sb.append("\"key\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(key));
-
-			sb.append("\"");
-		}
-
-		if (name != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(name));
-
-			sb.append("\"");
+			sb.append("]");
 		}
 
 		sb.append("}");
@@ -199,7 +129,7 @@ public class Fragment {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Fragment",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentSettingsAllowed",
 		name = "x-class-name"
 	)
 	public String xClassName;

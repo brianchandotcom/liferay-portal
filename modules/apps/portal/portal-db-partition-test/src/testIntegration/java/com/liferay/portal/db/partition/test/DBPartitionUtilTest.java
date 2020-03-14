@@ -19,7 +19,7 @@ import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.init.DBInitUtil;
-import com.liferay.portal.db.partition.DBPartitionHelperUtil;
+import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -56,7 +56,7 @@ import org.junit.runner.RunWith;
  * @author Alberto Chaparro
  */
 @RunWith(Arquillian.class)
-public class DBPartitionHelperUtilTest {
+public class DBPartitionUtilTest {
 
 	@ClassRule
 	@Rule
@@ -78,21 +78,21 @@ public class DBPartitionHelperUtilTest {
 
 		_currentDatabasePartitionEnabledValue =
 			ReflectionTestUtil.getAndSetFieldValue(
-				DBPartitionHelperUtil.class, "_DATABASE_PARTITION_ENABLED",
+				DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED",
 				true);
 
 		_currentDatabasePartitionInstanceIdValue =
 			ReflectionTestUtil.getAndSetFieldValue(
-				DBPartitionHelperUtil.class, "_DATABASE_PARTITION_INSTANCE_ID",
+				DBPartitionUtil.class, "_DATABASE_PARTITION_INSTANCE_ID",
 				_DB_PARTITION_INSTANCE_ID);
 
 		_currentDataSource = ReflectionTestUtil.getFieldValue(
 			DBInitUtil.class, "_dataSource");
 
-		DataSource dbPartitionDataSource = DBPartitionHelperUtil.wrapDataSource(
+		DataSource dbPartitionDataSource = DBPartitionUtil.wrapDataSource(
 			_currentDataSource);
 
-		DBPartitionHelperUtil.setDefaultCompanyId(
+		DBPartitionUtil.setDefaultCompanyId(
 			_portal.getDefaultCompanyId());
 
 		ReflectionTestUtil.setFieldValue(
@@ -117,11 +117,11 @@ public class DBPartitionHelperUtilTest {
 			InfrastructureUtil.class, "_dataSource", _currentDataSource);
 
 		ReflectionTestUtil.setFieldValue(
-			DBPartitionHelperUtil.class, "_DATABASE_PARTITION_ENABLED",
+			DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED",
 			_currentDatabasePartitionEnabledValue);
 
 		ReflectionTestUtil.setFieldValue(
-			DBPartitionHelperUtil.class, "_DATABASE_PARTITION_INSTANCE_ID",
+			DBPartitionUtil.class, "_DATABASE_PARTITION_INSTANCE_ID",
 			_currentDatabasePartitionInstanceIdValue);
 	}
 
@@ -173,7 +173,7 @@ public class DBPartitionHelperUtilTest {
 	@Test
 	public void testAddDefaultPartition() throws PortalException {
 		Assert.assertFalse(
-			DBPartitionHelperUtil.addPartition(_portal.getDefaultCompanyId()));
+			DBPartitionUtil.addPartition(_portal.getDefaultCompanyId()));
 	}
 
 	@Test
@@ -195,7 +195,7 @@ public class DBPartitionHelperUtilTest {
 				CurrentConnectionUtil.class, "_currentConnection",
 				currentConnection);
 
-			DBPartitionHelperUtil.addPartition(_COMPANY_ID);
+			DBPartitionUtil.addPartition(_COMPANY_ID);
 
 			try (Statement statement = _connection.createStatement()) {
 				statement.execute(

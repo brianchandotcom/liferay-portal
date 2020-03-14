@@ -47,7 +47,7 @@ import javax.sql.DataSource;
 /**
  * @author Alberto Chaparro
  */
-public class DBPartitionHelperUtil {
+public class DBPartitionUtil {
 
 	public static boolean addPartition(long companyId) throws PortalException {
 		if (!_DATABASE_PARTITION_ENABLED || (companyId == _defaultCompanyId)) {

@@ -120,16 +120,6 @@ definition {
 	@description = "This is for LPS-102200. Can change master of a content page among any existing masters."
 	@priority = "5"
 	test ChangeMasterOfContentPageAmongExistingMasters {
-		task ("Delete the existing custom masters") {
-			if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE_FLOAT")) {
-				Click(locator1 = "Button#CLOSE_MESSAGE_FLOAT");
-			}
-
-			MastersPageTemplatesAdmin.deleteMasters(masterLayoutName = "Custom Masters Page Template");
-
-			Alert.viewSuccessMessage();
-		}
-
 		task ("Add header and footer in custom master") {
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",

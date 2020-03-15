@@ -28,69 +28,64 @@ import javax.annotation.Generated;
 @Generated("")
 public class Fragment implements Cloneable {
 
-	public String getFragmentCollectionName() {
-		return fragmentCollectionName;
+	public String getCollectionName() {
+		return collectionName;
 	}
 
-	public void setFragmentCollectionName(String fragmentCollectionName) {
-		this.fragmentCollectionName = fragmentCollectionName;
+	public void setCollectionName(String collectionName) {
+		this.collectionName = collectionName;
 	}
 
-	public void setFragmentCollectionName(
-		UnsafeSupplier<String, Exception>
-			fragmentCollectionNameUnsafeSupplier) {
+	public void setCollectionName(
+		UnsafeSupplier<String, Exception> collectionNameUnsafeSupplier) {
 
 		try {
-			fragmentCollectionName = fragmentCollectionNameUnsafeSupplier.get();
+			collectionName = collectionNameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String fragmentCollectionName;
+	protected String collectionName;
 
-	public String getFragmentKey() {
-		return fragmentKey;
+	public String getKey() {
+		return key;
 	}
 
-	public void setFragmentKey(String fragmentKey) {
-		this.fragmentKey = fragmentKey;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
-	public void setFragmentKey(
-		UnsafeSupplier<String, Exception> fragmentKeyUnsafeSupplier) {
-
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
 		try {
-			fragmentKey = fragmentKeyUnsafeSupplier.get();
+			key = keyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String fragmentKey;
+	protected String key;
 
-	public String getFragmentName() {
-		return fragmentName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFragmentName(String fragmentName) {
-		this.fragmentName = fragmentName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setFragmentName(
-		UnsafeSupplier<String, Exception> fragmentNameUnsafeSupplier) {
-
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
-			fragmentName = fragmentNameUnsafeSupplier.get();
+			name = nameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String fragmentName;
+	protected String name;
 
 	@Override
 	public Fragment clone() throws CloneNotSupportedException {

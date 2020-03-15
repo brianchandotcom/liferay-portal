@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -39,26 +41,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Fragment")
+@GraphQLName("DropZoneDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Fragment")
-public class Fragment {
+@XmlRootElement(name = "DropZoneDefinition")
+public class DropZoneDefinition {
 
 	@Schema
-	public String getCollectionName() {
-		return collectionName;
+	@Valid
+	public Object getFragmentSettings() {
+		return fragmentSettings;
 	}
 
-	public void setCollectionName(String collectionName) {
-		this.collectionName = collectionName;
+	public void setFragmentSettings(Object fragmentSettings) {
+		this.fragmentSettings = fragmentSettings;
 	}
 
 	@JsonIgnore
-	public void setCollectionName(
-		UnsafeSupplier<String, Exception> collectionNameUnsafeSupplier) {
+	public void setFragmentSettings(
+		UnsafeSupplier<Object, Exception> fragmentSettingsUnsafeSupplier) {
 
 		try {
-			collectionName = collectionNameUnsafeSupplier.get();
+			fragmentSettings = fragmentSettingsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -70,59 +73,7 @@ public class Fragment {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String collectionName;
-
-	@Schema
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
-
-	@JsonIgnore
-	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String key;
-
-	@Schema
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	protected Object fragmentSettings;
 
 	@Override
 	public boolean equals(Object object) {
@@ -130,13 +81,13 @@ public class Fragment {
 			return true;
 		}
 
-		if (!(object instanceof Fragment)) {
+		if (!(object instanceof DropZoneDefinition)) {
 			return false;
 		}
 
-		Fragment fragment = (Fragment)object;
+		DropZoneDefinition dropZoneDefinition = (DropZoneDefinition)object;
 
-		return Objects.equals(toString(), fragment.toString());
+		return Objects.equals(toString(), dropZoneDefinition.toString());
 	}
 
 	@Override
@@ -151,46 +102,14 @@ public class Fragment {
 
 		sb.append("{");
 
-		if (collectionName != null) {
+		if (fragmentSettings != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"collectionName\": ");
+			sb.append("\"fragmentSettings\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(collectionName));
-
-			sb.append("\"");
-		}
-
-		if (key != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"key\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(key));
-
-			sb.append("\"");
-		}
-
-		if (name != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(name));
-
-			sb.append("\"");
+			sb.append(String.valueOf(fragmentSettings));
 		}
 
 		sb.append("}");
@@ -199,7 +118,7 @@ public class Fragment {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Fragment",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.DropZoneDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

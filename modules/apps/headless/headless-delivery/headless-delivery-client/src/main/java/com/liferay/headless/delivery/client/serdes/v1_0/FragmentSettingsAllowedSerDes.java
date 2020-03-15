@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.Fragment;
+import com.liferay.headless.delivery.client.dto.v1_0.FragmentSettingsAllowed;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -30,22 +32,26 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentSerDes {
+public class FragmentSettingsAllowedSerDes {
 
-	public static Fragment toDTO(String json) {
-		FragmentJSONParser fragmentJSONParser = new FragmentJSONParser();
+	public static FragmentSettingsAllowed toDTO(String json) {
+		FragmentSettingsAllowedJSONParser fragmentSettingsAllowedJSONParser =
+			new FragmentSettingsAllowedJSONParser();
 
-		return fragmentJSONParser.parseToDTO(json);
+		return fragmentSettingsAllowedJSONParser.parseToDTO(json);
 	}
 
-	public static Fragment[] toDTOs(String json) {
-		FragmentJSONParser fragmentJSONParser = new FragmentJSONParser();
+	public static FragmentSettingsAllowed[] toDTOs(String json) {
+		FragmentSettingsAllowedJSONParser fragmentSettingsAllowedJSONParser =
+			new FragmentSettingsAllowedJSONParser();
 
-		return fragmentJSONParser.parseToDTOs(json);
+		return fragmentSettingsAllowedJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Fragment fragment) {
-		if (fragment == null) {
+	public static String toJSON(
+		FragmentSettingsAllowed fragmentSettingsAllowed) {
+
+		if (fragmentSettingsAllowed == null) {
 			return "null";
 		}
 
@@ -53,46 +59,31 @@ public class FragmentSerDes {
 
 		sb.append("{");
 
-		if (fragment.getCollectionName() != null) {
+		if (fragmentSettingsAllowed.getAllowedFragments() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"collectionName\": ");
+			sb.append("\"allowedFragments\": ");
 
-			sb.append("\"");
+			sb.append("[");
 
-			sb.append(_escape(fragment.getCollectionName()));
+			for (int i = 0;
+				 i < fragmentSettingsAllowed.getAllowedFragments().length;
+				 i++) {
 
-			sb.append("\"");
-		}
+				sb.append(
+					String.valueOf(
+						fragmentSettingsAllowed.getAllowedFragments()[i]));
 
-		if (fragment.getKey() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+				if ((i + 1) <
+						fragmentSettingsAllowed.getAllowedFragments().length) {
+
+					sb.append(", ");
+				}
 			}
 
-			sb.append("\"key\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(fragment.getKey()));
-
-			sb.append("\"");
-		}
-
-		if (fragment.getName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(fragment.getName()));
-
-			sb.append("\"");
+			sb.append("]");
 		}
 
 		sb.append("}");
@@ -101,73 +92,61 @@ public class FragmentSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FragmentJSONParser fragmentJSONParser = new FragmentJSONParser();
+		FragmentSettingsAllowedJSONParser fragmentSettingsAllowedJSONParser =
+			new FragmentSettingsAllowedJSONParser();
 
-		return fragmentJSONParser.parseToMap(json);
+		return fragmentSettingsAllowedJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Fragment fragment) {
-		if (fragment == null) {
+	public static Map<String, String> toMap(
+		FragmentSettingsAllowed fragmentSettingsAllowed) {
+
+		if (fragmentSettingsAllowed == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (fragment.getCollectionName() == null) {
-			map.put("collectionName", null);
+		if (fragmentSettingsAllowed.getAllowedFragments() == null) {
+			map.put("allowedFragments", null);
 		}
 		else {
 			map.put(
-				"collectionName", String.valueOf(fragment.getCollectionName()));
-		}
-
-		if (fragment.getKey() == null) {
-			map.put("key", null);
-		}
-		else {
-			map.put("key", String.valueOf(fragment.getKey()));
-		}
-
-		if (fragment.getName() == null) {
-			map.put("name", null);
-		}
-		else {
-			map.put("name", String.valueOf(fragment.getName()));
+				"allowedFragments",
+				String.valueOf(fragmentSettingsAllowed.getAllowedFragments()));
 		}
 
 		return map;
 	}
 
-	public static class FragmentJSONParser extends BaseJSONParser<Fragment> {
+	public static class FragmentSettingsAllowedJSONParser
+		extends BaseJSONParser<FragmentSettingsAllowed> {
 
 		@Override
-		protected Fragment createDTO() {
-			return new Fragment();
+		protected FragmentSettingsAllowed createDTO() {
+			return new FragmentSettingsAllowed();
 		}
 
 		@Override
-		protected Fragment[] createDTOArray(int size) {
-			return new Fragment[size];
+		protected FragmentSettingsAllowed[] createDTOArray(int size) {
+			return new FragmentSettingsAllowed[size];
 		}
 
 		@Override
 		protected void setField(
-			Fragment fragment, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			FragmentSettingsAllowed fragmentSettingsAllowed,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "collectionName")) {
+			if (Objects.equals(jsonParserFieldName, "allowedFragments")) {
 				if (jsonParserFieldValue != null) {
-					fragment.setCollectionName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "key")) {
-				if (jsonParserFieldValue != null) {
-					fragment.setKey((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					fragment.setName((String)jsonParserFieldValue);
+					fragmentSettingsAllowed.setAllowedFragments(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> FragmentSerDes.toDTO((String)object)
+						).toArray(
+							size -> new Fragment[size]
+						));
 				}
 			}
 			else {

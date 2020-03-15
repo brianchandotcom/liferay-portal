@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.Fragment;
+import com.liferay.headless.delivery.client.dto.v1_0.FragmentSettingsUnallowed;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -30,22 +32,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentSerDes {
+public class FragmentSettingsUnallowedSerDes {
 
-	public static Fragment toDTO(String json) {
-		FragmentJSONParser fragmentJSONParser = new FragmentJSONParser();
+	public static FragmentSettingsUnallowed toDTO(String json) {
+		FragmentSettingsUnallowedJSONParser
+			fragmentSettingsUnallowedJSONParser =
+				new FragmentSettingsUnallowedJSONParser();
 
-		return fragmentJSONParser.parseToDTO(json);
+		return fragmentSettingsUnallowedJSONParser.parseToDTO(json);
 	}
 
-	public static Fragment[] toDTOs(String json) {
-		FragmentJSONParser fragmentJSONParser = new FragmentJSONParser();
+	public static FragmentSettingsUnallowed[] toDTOs(String json) {
+		FragmentSettingsUnallowedJSONParser
+			fragmentSettingsUnallowedJSONParser =
+				new FragmentSettingsUnallowedJSONParser();
 
-		return fragmentJSONParser.parseToDTOs(json);
+		return fragmentSettingsUnallowedJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Fragment fragment) {
-		if (fragment == null) {
+	public static String toJSON(
+		FragmentSettingsUnallowed fragmentSettingsUnallowed) {
+
+		if (fragmentSettingsUnallowed == null) {
 			return "null";
 		}
 
@@ -53,46 +61,32 @@ public class FragmentSerDes {
 
 		sb.append("{");
 
-		if (fragment.getCollectionName() != null) {
+		if (fragmentSettingsUnallowed.getUnallowedFragments() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"collectionName\": ");
+			sb.append("\"unallowedFragments\": ");
 
-			sb.append("\"");
+			sb.append("[");
 
-			sb.append(_escape(fragment.getCollectionName()));
+			for (int i = 0;
+				 i < fragmentSettingsUnallowed.getUnallowedFragments().length;
+				 i++) {
 
-			sb.append("\"");
-		}
+				sb.append(
+					String.valueOf(
+						fragmentSettingsUnallowed.getUnallowedFragments()[i]));
 
-		if (fragment.getKey() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+				if ((i + 1) <
+						fragmentSettingsUnallowed.
+							getUnallowedFragments().length) {
+
+					sb.append(", ");
+				}
 			}
 
-			sb.append("\"key\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(fragment.getKey()));
-
-			sb.append("\"");
-		}
-
-		if (fragment.getName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(fragment.getName()));
-
-			sb.append("\"");
+			sb.append("]");
 		}
 
 		sb.append("}");
@@ -101,73 +95,63 @@ public class FragmentSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FragmentJSONParser fragmentJSONParser = new FragmentJSONParser();
+		FragmentSettingsUnallowedJSONParser
+			fragmentSettingsUnallowedJSONParser =
+				new FragmentSettingsUnallowedJSONParser();
 
-		return fragmentJSONParser.parseToMap(json);
+		return fragmentSettingsUnallowedJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Fragment fragment) {
-		if (fragment == null) {
+	public static Map<String, String> toMap(
+		FragmentSettingsUnallowed fragmentSettingsUnallowed) {
+
+		if (fragmentSettingsUnallowed == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (fragment.getCollectionName() == null) {
-			map.put("collectionName", null);
+		if (fragmentSettingsUnallowed.getUnallowedFragments() == null) {
+			map.put("unallowedFragments", null);
 		}
 		else {
 			map.put(
-				"collectionName", String.valueOf(fragment.getCollectionName()));
-		}
-
-		if (fragment.getKey() == null) {
-			map.put("key", null);
-		}
-		else {
-			map.put("key", String.valueOf(fragment.getKey()));
-		}
-
-		if (fragment.getName() == null) {
-			map.put("name", null);
-		}
-		else {
-			map.put("name", String.valueOf(fragment.getName()));
+				"unallowedFragments",
+				String.valueOf(
+					fragmentSettingsUnallowed.getUnallowedFragments()));
 		}
 
 		return map;
 	}
 
-	public static class FragmentJSONParser extends BaseJSONParser<Fragment> {
+	public static class FragmentSettingsUnallowedJSONParser
+		extends BaseJSONParser<FragmentSettingsUnallowed> {
 
 		@Override
-		protected Fragment createDTO() {
-			return new Fragment();
+		protected FragmentSettingsUnallowed createDTO() {
+			return new FragmentSettingsUnallowed();
 		}
 
 		@Override
-		protected Fragment[] createDTOArray(int size) {
-			return new Fragment[size];
+		protected FragmentSettingsUnallowed[] createDTOArray(int size) {
+			return new FragmentSettingsUnallowed[size];
 		}
 
 		@Override
 		protected void setField(
-			Fragment fragment, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			FragmentSettingsUnallowed fragmentSettingsUnallowed,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "collectionName")) {
+			if (Objects.equals(jsonParserFieldName, "unallowedFragments")) {
 				if (jsonParserFieldValue != null) {
-					fragment.setCollectionName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "key")) {
-				if (jsonParserFieldValue != null) {
-					fragment.setKey((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					fragment.setName((String)jsonParserFieldValue);
+					fragmentSettingsUnallowed.setUnallowedFragments(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> FragmentSerDes.toDTO((String)object)
+						).toArray(
+							size -> new Fragment[size]
+						));
 				}
 			}
 			else {

@@ -322,6 +322,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SECTION_CONTAINER</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__container')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -429,11 +434,6 @@
 <tr>
 	<td>PORTLET_INHERITED_FROM_CUSTOM_MASTERS</td>
 	<td>//div[@data-onclick='null'and contains(.,'${key_portletName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SECTION_CONTAINER</td>
-	<td>//section[@tabindex='0'][${key_position}]/div[contains(@class,'container py-3')]</td>
 	<td></td>
 </tr>
 </tbody>

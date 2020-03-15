@@ -21,6 +21,7 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.admin.web.internal.configuration.util.ExportImportMasterLayoutConfigurationUtil;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -49,6 +50,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -96,6 +98,13 @@ public class MasterLayoutActionDropdownItemsProvider {
 						add(_getRenameMasterLayoutActionUnsafeConsumer());
 
 						add(_getCopyMasterLayoutActionUnsafeConsumer());
+					}
+
+					if (ExportImportMasterLayoutConfigurationUtil.enabled() &&
+						(_layoutPageTemplateEntry.getLayoutPrototypeId() ==
+							0)) {
+
+						add(_getExportMasterLayoutActionUnsafeConsumer());
 					}
 
 					if (LayoutPageTemplateEntryPermission.contains(
@@ -247,6 +256,26 @@ public class MasterLayoutActionDropdownItemsProvider {
 
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getExportMasterLayoutActionUnsafeConsumer() {
+
+		ResourceURL exportMasterLayoutURL = _renderResponse.createResourceURL();
+
+		exportMasterLayoutURL.setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+		exportMasterLayoutURL.setResourceID(
+			"/layout_page_template/export_master_layout");
+
+		return dropdownItem -> {
+			dropdownItem.setDisabled(_layoutPageTemplateEntry.isDraft());
+			dropdownItem.setHref(exportMasterLayoutURL);
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "export"));
 		};
 	}
 

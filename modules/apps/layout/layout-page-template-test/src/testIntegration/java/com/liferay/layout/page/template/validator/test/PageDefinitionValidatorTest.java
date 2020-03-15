@@ -77,18 +77,17 @@ public class PageDefinitionValidatorTest {
 	}
 
 	@Test
-	public void testValidatePageDefinitionInvalidFragmentMissingFragmentKey()
+	public void testValidatePageDefinitionInvalidFragmentMissingKey()
 		throws Exception {
 
 		expectedException.expect(PageDefinitionValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith(
 				"/pageElement/pageElements/0/definition/fragment: required " +
-					"key [fragmentKey] not found"));
+					"key [key] not found"));
 
 		PageDefinitionValidator.validatePageDefinition(
-			_read(
-				"page_definition_invalid_fragment_missing_fragment_key.json"));
+			_read("page_definition_invalid_fragment_missing_key.json"));
 	}
 
 	@Test

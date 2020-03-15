@@ -4,7 +4,7 @@
 			{
 				"definition" : {
 					"fragment" : {
-						"fragmentKey" : "my-key"
+						"key" : "my-key"
 					},
 					"fragmentFields" : [
 						{

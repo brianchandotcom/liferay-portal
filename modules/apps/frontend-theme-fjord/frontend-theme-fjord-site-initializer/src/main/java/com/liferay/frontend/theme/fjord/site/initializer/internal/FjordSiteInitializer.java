@@ -14,18 +14,12 @@
 
 package com.liferay.frontend.theme.fjord.site.initializer.internal;
 
-import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.service.FragmentCollectionLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -33,11 +27,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -48,7 +39,6 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -60,10 +50,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -115,47 +102,7 @@ public class FjordSiteInitializer implements SiteInitializer {
 			_updateLogo(serviceContext);
 			_updateLookAndFeel(serviceContext);
 
-			FragmentCollection fragmentCollection = _addFragmentCollection(
-				serviceContext);
-
-			_addFileEntries(
-				fragmentCollection.getFragmentCollectionId(),
-				fragmentCollection.getResourcesFolderId(), serviceContext);
-
-			List<FragmentEntry> homeFragmentEntries = _addFragmentEntries(
-				fragmentCollection.getFragmentCollectionId(),
-				_PATH + "/fragments/home", serviceContext);
-
-			List<FragmentEntry> downloadFragmentEntries = _addFragmentEntries(
-				fragmentCollection.getFragmentCollectionId(),
-				_PATH + "/fragments/download", serviceContext);
-
-			homeFragmentEntries.addAll(downloadFragmentEntries);
-
-			List<FragmentEntry> featuresFragmentEntries = _addFragmentEntries(
-				fragmentCollection.getFragmentCollectionId(),
-				_PATH + "/fragments/features", serviceContext);
-
-			homeFragmentEntries.addAll(featuresFragmentEntries);
-
-			List<FragmentEntry> headerFragmentEntries = _addFragmentEntries(
-				fragmentCollection.getFragmentCollectionId(),
-				_PATH + "/fragments/common/header", serviceContext);
-
-			FragmentEntry headerFullscreenFragmentEntry = _getFragmentEntry(
-				headerFragmentEntries, "Header");
-
-			downloadFragmentEntries.add(0, headerFullscreenFragmentEntry);
-			featuresFragmentEntries.add(0, headerFullscreenFragmentEntry);
-			homeFragmentEntries.add(0, headerFullscreenFragmentEntry);
-
-			List<FragmentEntry> footerFragmentEntries = _addFragmentEntries(
-				fragmentCollection.getFragmentCollectionId(),
-				_PATH + "/fragments/common/footer", serviceContext);
-
-			downloadFragmentEntries.addAll(footerFragmentEntries);
-			featuresFragmentEntries.addAll(footerFragmentEntries);
-			homeFragmentEntries.addAll(footerFragmentEntries);
+			_importFragmentEntries(serviceContext);
 
 			_importLayoutPageTemplateEntries(serviceContext);
 
@@ -180,93 +127,6 @@ public class FjordSiteInitializer implements SiteInitializer {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundle = bundleContext.getBundle();
-	}
-
-	private void _addFileEntries(
-			long fragmentCollectionId, long folderId,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		Enumeration<URL> urls = _bundle.findEntries(
-			_PATH + "/images", StringPool.STAR, false);
-
-		while (urls.hasMoreElements()) {
-			URL url = urls.nextElement();
-
-			byte[] bytes = null;
-
-			try (InputStream is = url.openStream()) {
-				bytes = FileUtil.getBytes(is);
-			}
-
-			String fileName = FileUtil.getShortFileName(url.getPath());
-
-			PortletFileRepositoryUtil.addPortletFileEntry(
-				serviceContext.getScopeGroupId(), serviceContext.getUserId(),
-				FragmentCollection.class.getName(), fragmentCollectionId,
-				FragmentPortletKeys.FRAGMENT, folderId, bytes, fileName,
-				MimeTypesUtil.getContentType(fileName), false);
-		}
-	}
-
-	private FragmentCollection _addFragmentCollection(
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return _fragmentCollectionLocalService.addFragmentCollection(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			_THEME_NAME, null, serviceContext);
-	}
-
-	private List<FragmentEntry> _addFragmentEntries(
-			long fragmentCollectionId, String path,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		List<FragmentEntry> fragmentEntries = new ArrayList<>();
-
-		Enumeration<URL> enumeration = _bundle.findEntries(
-			path, "*.html", false);
-
-		while (enumeration.hasMoreElements()) {
-			URL url = enumeration.nextElement();
-
-			String shortFileName = FileUtil.getShortFileName(url.getPath());
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(path);
-			sb.append(StringPool.SLASH);
-			sb.append(FileUtil.stripExtension(shortFileName));
-			sb.append(".css");
-
-			URL cssURL = _bundle.getEntry(sb.toString());
-
-			FragmentEntry fragmentEntry =
-				_fragmentEntryLocalService.addFragmentEntry(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), fragmentCollectionId,
-					null,
-					StringUtil.upperCaseFirstLetter(
-						FileUtil.stripExtension(shortFileName)),
-					StringUtil.read(cssURL.openStream()),
-					StringUtil.read(url.openStream()), StringPool.BLANK,
-					StringPool.BLANK, 0, FragmentConstants.TYPE_SECTION,
-					WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-			long fragmentEntryPreviewFileEntryId = _getPreviewFileEntryId(
-				FragmentPortletKeys.FRAGMENT, FragmentEntry.class.getName(),
-				fragmentEntry.getFragmentEntryId(), path, shortFileName,
-				serviceContext);
-
-			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
-				fragmentEntry.getFragmentEntryId(),
-				fragmentEntryPreviewFileEntryId);
-
-			fragmentEntries.add(fragmentEntry);
-		}
-
-		return fragmentEntries;
 	}
 
 	private void _addLayout(String name, ServiceContext serviceContext)
@@ -341,61 +201,16 @@ public class FjordSiteInitializer implements SiteInitializer {
 		return serviceContext;
 	}
 
-	private FragmentEntry _getFragmentEntry(
-		List<FragmentEntry> fragmentEntries, String name) {
-
-		for (FragmentEntry fragmentEntry : fragmentEntries) {
-			if (name.equals(fragmentEntry.getName())) {
-				return fragmentEntry;
-			}
-		}
-
-		throw new IllegalArgumentException(
-			"Unable to get fragment entry " + name);
-	}
-
-	private long _getPreviewFileEntryId(
-			String portletId, String className, long classPK, String path,
-			String fileName, ServiceContext serviceContext)
+	private void _importFragmentEntries(ServiceContext serviceContext)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(4);
+		URL url = _bundle.getEntry("/fragments.zip");
 
-		sb.append(path);
-		sb.append(StringPool.SLASH);
-		sb.append(StringUtil.split(fileName, StringPool.PERIOD)[0]);
-		sb.append(".jpg");
+		File file = FileUtil.createTempFile(url.openStream());
 
-		URL url = _bundle.getEntry(sb.toString());
-
-		if (url == null) {
-			return 0;
-		}
-
-		Repository repository =
-			PortletFileRepositoryUtil.fetchPortletRepository(
-				serviceContext.getScopeGroupId(), portletId);
-
-		if (repository == null) {
-			repository = PortletFileRepositoryUtil.addPortletRepository(
-				serviceContext.getScopeGroupId(), portletId, serviceContext);
-		}
-
-		String imageFileName =
-			classPK + "_preview." + FileUtil.getExtension(url.getPath());
-
-		byte[] bytes = null;
-
-		try (InputStream is = url.openStream()) {
-			bytes = FileUtil.getBytes(is);
-		}
-
-		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-			serviceContext.getScopeGroupId(), serviceContext.getUserId(),
-			className, classPK, portletId, repository.getDlFolderId(), bytes,
-			imageFileName, MimeTypesUtil.getContentType(imageFileName), false);
-
-		return fileEntry.getFileEntryId();
+		_fragmentsImporter.importFile(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
+			file, false);
 	}
 
 	private void _importLayoutPageTemplateEntries(ServiceContext serviceContext)
@@ -456,10 +271,7 @@ public class FjordSiteInitializer implements SiteInitializer {
 	private Bundle _bundle;
 
 	@Reference
-	private FragmentCollectionLocalService _fragmentCollectionLocalService;
-
-	@Reference
-	private FragmentEntryLocalService _fragmentEntryLocalService;
+	private FragmentsImporter _fragmentsImporter;
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;

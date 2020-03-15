@@ -327,6 +327,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SECTION_CONTAINER_NESTED_ELEMENT</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[@class='container']${key_elementHeader}</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

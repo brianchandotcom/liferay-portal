@@ -55,7 +55,7 @@ export default withRouter(
 			createQuestion(
 				articleBody,
 				headline,
-				section.id || sectionId,
+				sectionId || section.id,
 				tags.map(tag => tag.value)
 			).then(() => debounceCallback());
 

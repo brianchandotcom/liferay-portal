@@ -36,7 +36,7 @@ definition {
 		}
 	}
 
-	@description = "Add a content page with fragments."
+	@description = "This is a test for LPS-108339. Add a content page with fragments. Can add fragments directly without Section to page."
 	@ignore = "true"
 	@priority = "5"
 	test AddContentPage {
@@ -56,6 +56,13 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Title");
+		}
+
+		task ("Assert Title fragment is not nested inside Section element") {
+			AssertElementNotPresent(
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 		}
 
 		task ("Add a Rich Text fragment to the content page") {

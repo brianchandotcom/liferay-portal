@@ -684,9 +684,15 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
-		WebContent.viewPGViaAP(
-			webContentContent = "WC WebContent Content Edit",
-			webContentTitle = "WC WebContent Title Edit");
+		AssertTextEquals(
+			key_assetTitle = "WC WebContent Title Edit",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "WC WebContent Title Edit");
+
+		AssertTextEquals.assertPartialText(
+			key_assetTitle = "WC WebContent Title Edit",
+			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+			value1 = "WC WebContent Content Edit");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

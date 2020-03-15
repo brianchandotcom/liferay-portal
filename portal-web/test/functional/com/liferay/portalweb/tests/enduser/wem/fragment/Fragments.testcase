@@ -73,6 +73,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-108339. Can add a Row fragment to Section. Can add several Row fragments to Section."
+	@priority = "5"
+	test AddRowToSection {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Assert add a Row fragment to Section") {
+			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+
+			Click(
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_elementType = "Row",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
+				locator2 = "PageEditor#SECTION_CONTAINER",
+				value1 = "");
+
+			AssertElementPresent(
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+		}
+
+		task ("Assert add second Row fragment to the same Section") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_elementType = "Row",
+				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
+				locator2 = "//div[contains(@class,'page-editor__row')]",
+				value1 = "");
+
+			AssertElementPresent(
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+		}
+	}
+
 	@description = "This is a test for LPS-98241. Basic Component Button can be configured."
 	@priority = "4"
 	test ConfigureBasicComponentButton {

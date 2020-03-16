@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
 import com.liferay.petra.string.StringBundler;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import java.io.Serializable;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import java.util.List;
 
@@ -53,6 +55,18 @@ public class SessionImpl implements Session {
 
 		_session = session;
 		_sessionFactoryClassLoader = sessionFactoryClassLoader;
+	}
+
+	@Override
+	public void apply(UnsafeConsumer<Connection, SQLException> unsafeConsumer)
+		throws ORMException {
+
+		try {
+			_session.doWork(unsafeConsumer::accept);
+		}
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
+		}
 	}
 
 	@Override

@@ -14,11 +14,13 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 
 import java.io.Serializable;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -28,6 +30,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface Session {
+
+	public void apply(UnsafeConsumer<Connection, SQLException> unsafeConsumer)
+		throws ORMException;
 
 	public void clear() throws ORMException;
 

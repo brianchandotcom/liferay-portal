@@ -54,6 +54,9 @@ export default function ItemSelector({
 						onActiveChange={setActive}
 						trigger={
 							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'select-content-button'
+								)}
 								displayType="secondary"
 								onClick={() => setActive(true)}
 								small
@@ -84,12 +87,15 @@ export default function ItemSelector({
 									)
 								}
 							>
-								{Liferay.Language.get('select-content')} ...
+								{Liferay.Language.get('select-content')}...
 							</ClayDropDown.Item>
 						</ClayDropDown.ItemList>
 					</ClayDropDown>
 				) : (
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get(
+							'select-content-button'
+						)}
 						displayType="secondary"
 						onClick={() =>
 							openInfoItemSelector(

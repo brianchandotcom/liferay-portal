@@ -1,0 +1,32 @@
+{
+	"items": {
+		"6124d33a-71fe-4601-8c0a-6c27c64bde13": {
+			"children": [
+				"ce501498-f2c9-4bc8-a684-bd82f4f29cd8"
+			],
+			"config": {},
+			"itemId": "6124d33a-71fe-4601-8c0a-6c27c64bde13",
+			"parentId": "",
+			"type": "root"
+		},
+		"ce501498-f2c9-4bc8-a684-bd82f4f29cd8": {
+			"children": [],
+			"config": {
+				"allowNewFragmentEntries": true,
+				"fragmentEntryKeys": [
+					"BASIC_COMPONENT-button",
+					"BASIC_COMPONENT-card",
+					"com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer"
+				]
+			},
+			"itemId": "ce501498-f2c9-4bc8-a684-bd82f4f29cd8",
+			"parentId": "6124d33a-71fe-4601-8c0a-6c27c64bde13",
+			"type": "drop-zone"
+		}
+	},
+	"rootItems": {
+		"dropZone": "ce501498-f2c9-4bc8-a684-bd82f4f29cd8",
+		"main": "6124d33a-71fe-4601-8c0a-6c27c64bde13"
+	},
+	"version": 1
+}

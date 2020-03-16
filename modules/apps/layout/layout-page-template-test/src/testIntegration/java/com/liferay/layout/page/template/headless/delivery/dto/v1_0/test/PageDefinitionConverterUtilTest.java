@@ -180,6 +180,58 @@ public class PageDefinitionConverterUtilTest {
 	}
 
 	@Test
+	public void testToPageDefinitionDropZoneUnallowedFragments()
+		throws Exception {
+
+		_addLayoutPageTemplateStructure(
+			"layout_data_drop_zone_unallowed_fragments.json", new HashMap<>());
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			_layoutPageTemplateEntry.getPlid());
+
+		PageDefinition pageDefinition =
+			PageDefinitionConverterUtil.toPageDefinition(
+				_fragmentCollectionContributorTracker,
+				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
+				layout);
+
+		PageElement rootPageElement = pageDefinition.getPageElement();
+
+		Assert.assertEquals(PageElement.Type.ROOT, rootPageElement.getType());
+
+		PageElement[] pageElements = rootPageElement.getPageElements();
+
+		Assert.assertEquals(
+			Arrays.toString(pageElements), 1, pageElements.length);
+
+		PageElement dropZonePageElement = pageElements[0];
+
+		Assert.assertEquals(
+			PageElement.Type.DROP_ZONE, dropZonePageElement.getType());
+
+		DropZoneDefinition dropZoneDefinition =
+			(DropZoneDefinition)dropZonePageElement.getDefinition();
+
+		Map<String, Fragment[]> fragmentSettingsMap =
+			(Map<String, Fragment[]>)dropZoneDefinition.getFragmentSettings();
+
+		Fragment[] unallowedFragments = fragmentSettingsMap.get(
+			"unallowedFragments");
+
+		Assert.assertEquals(
+			Arrays.toString(unallowedFragments), 3, unallowedFragments.length);
+
+		Assert.assertEquals(
+			"BASIC_COMPONENT-button", unallowedFragments[0].getKey());
+		Assert.assertEquals(
+			"BASIC_COMPONENT-card", unallowedFragments[1].getKey());
+		Assert.assertEquals(
+			"com.liferay.fragment.internal.renderer." +
+				"ContentObjectFragmentRenderer",
+			unallowedFragments[2].getKey());
+	}
+
+	@Test
 	public void testToPageDefinitionFragmentConfig() throws Exception {
 		FragmentInstanceDefinition fragmentInstanceDefinition =
 			_getFragmentInstanceDefinition(

@@ -18,13 +18,17 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
+import com.liferay.portal.workflow.metrics.search.index.TransitionWorkflowMetricsIndexer;
 
+import java.util.Date;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,44 +36,71 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = TransitionWorkflowMetricsIndexer.class)
+@Component(
+	immediate = true, service = TransitionWorkflowMetricsIndexerImpl.class
+)
 public class TransitionWorkflowMetricsIndexerImpl
-	extends BaseWorkflowMetricsIndexer {
+	extends BaseWorkflowMetricsIndexer
+	implements TransitionWorkflowMetricsIndexer {
 
-	public Document createDocument(KaleoTransition kaleoTransition)
-		throws PortalException {
+	@Override
+	public Document addTransition(
+		long companyId, Date createDate, Date modifiedDate, String name,
+		long nodeId, long processId, String processVersion, long sourceNodeId,
+		String sourceNodeName, long targetNodeId, String targetNodeName,
+		long transitionId, long userId) {
 
-		Document document = new DocumentImpl();
+		if (searchEngineAdapter == null) {
+			return null;
+		}
 
-		document.addUID(
-			"WorkflowMetricsTransition",
-			digest(
-				kaleoTransition.getCompanyId(),
-				kaleoTransition.getKaleoDefinitionVersionId(),
-				kaleoTransition.getKaleoTransitionId()));
-		document.addKeyword("companyId", kaleoTransition.getCompanyId());
-		document.addDateSortable("createDate", kaleoTransition.getCreateDate());
-		document.addKeyword("deleted", false);
-		document.addDateSortable(
-			"modifiedDate", kaleoTransition.getModifiedDate());
-		document.addKeyword("name", kaleoTransition.getName());
-		document.addKeyword(
-			"nodeId", _getNodeId(kaleoTransition.getKaleoNodeId()));
-		document.addKeyword(
-			"processId", kaleoTransition.getKaleoDefinitionId());
-		document.addKeyword(
-			"sourceNodeId", _getNodeId(kaleoTransition.getSourceKaleoNodeId()));
-		document.addKeyword(
-			"sourceNodeName", kaleoTransition.getSourceKaleoNodeName());
-		document.addKeyword(
-			"targetNodeId", _getNodeId(kaleoTransition.getSourceKaleoNodeId()));
-		document.addKeyword(
-			"targetNodeName", kaleoTransition.getTargetKaleoNodeName());
-		document.addKeyword(
-			"transitionId", kaleoTransition.getKaleoTransitionId());
-		document.addKeyword("userId", kaleoTransition.getUserId());
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		documentBuilder.setString(
+			Field.UID, digest(companyId, transitionId)
+		).setLong(
+			"companyId", companyId
+		).setDate(
+			"createDate", formatDate(createDate)
+		).setValue(
+			"deleted", false
+		).setDate(
+			"modifiedDate", formatDate(modifiedDate)
+		).setString(
+			"name", name
+		).setLong(
+			"nodeId", nodeId
+		).setLong(
+			"processId", processId
+		).setLong(
+			"sourceNodeId", sourceNodeId
+		).setString(
+			"sourceNodeName", sourceNodeName
+		).setLong(
+			"targetNodeId", targetNodeId
+		).setString(
+			"targetNodeName", targetNodeName
+		).setLong(
+			"userId", userId
+		).setString(
+			"version", processVersion
+		);
+
+		Document document = documentBuilder.build();
+
+		workflowMetricsPortalExecutor.execute(() -> addDocument(document));
 
 		return document;
+	}
+
+	@Override
+	public void deleteTransition(long companyId, long transitionId) {
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		documentBuilder.setString(Field.UID, digest(companyId, transitionId));
+
+		workflowMetricsPortalExecutor.execute(
+			() -> deleteDocument(documentBuilder));
 	}
 
 	@Override
@@ -95,9 +126,30 @@ public class TransitionWorkflowMetricsIndexerImpl
 				dynamicQuery.add(companyIdProperty.eq(companyId));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoTransition kaleoTransition) ->
-				workflowMetricsPortalExecutor.execute(
-					() -> addDocument(createDocument(kaleoTransition))));
+			(KaleoTransition kaleoTransition) -> {
+				KaleoDefinitionVersion kaleoDefinitionVersion =
+					getKaleoDefinitionVersion(
+						kaleoTransition.getKaleoDefinitionVersionId());
+
+				if (Objects.isNull(kaleoTransition)) {
+					return;
+				}
+
+				addTransition(
+					kaleoTransition.getCompanyId(),
+					kaleoTransition.getCreateDate(),
+					kaleoTransition.getModifiedDate(),
+					kaleoTransition.getName(),
+					_getNodeId(kaleoTransition.getKaleoNodeId()),
+					kaleoTransition.getKaleoDefinitionId(),
+					kaleoDefinitionVersion.getVersion(),
+					_getNodeId(kaleoTransition.getSourceKaleoNodeId()),
+					kaleoTransition.getSourceKaleoNodeName(),
+					_getNodeId(kaleoTransition.getTargetKaleoNodeId()),
+					kaleoTransition.getTargetKaleoNodeName(),
+					kaleoTransition.getKaleoTransitionId(),
+					kaleoTransition.getUserId());
+			});
 
 		actionableDynamicQuery.performActions();
 	}

@@ -18,8 +18,8 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -27,18 +27,18 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
-
-import java.text.ParseException;
+import com.liferay.portal.workflow.metrics.search.index.InstanceWorkflowMetricsIndexer;
 
 import java.time.Duration;
 
@@ -46,6 +46,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,59 +54,153 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = InstanceWorkflowMetricsIndexer.class)
-public class InstanceWorkflowMetricsIndexerImpl extends BaseWorkflowMetricsIndexer {
+@Component(
+	immediate = true,
+	service = {
+		InstanceWorkflowMetricsIndexer.class,
+		InstanceWorkflowMetricsIndexerImpl.class
+	}
+)
+public class InstanceWorkflowMetricsIndexerImpl
+	extends BaseWorkflowMetricsIndexer
+	implements InstanceWorkflowMetricsIndexer {
 
-	public Document createDocument(KaleoInstance kaleoInstance) {
-		Document document = new DocumentImpl();
+	@Override
+	public Document addInstance(
+		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
+		String className, long classPK, long companyId, Date completionDate,
+		Date createDate, long instanceId, Date modifiedDate, long processId,
+		String processVersion, long userId, String userName) {
 
-		document.addUID(
-			"WorkflowMetricsInstance",
-			digest(
-				kaleoInstance.getCompanyId(),
-				kaleoInstance.getKaleoDefinitionVersionId(),
-				kaleoInstance.getKaleoInstanceId()));
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		document.addLocalizedKeyword(
-			"assetTitle", _createAssetTitleLocalizationMap(kaleoInstance),
-			false, true);
-		document.addLocalizedKeyword(
-			"assetType", _createAssetTypeLocalizationMap(kaleoInstance), false,
-			true);
-		document.addKeyword("className", kaleoInstance.getClassName());
-		document.addKeyword("classPK", kaleoInstance.getClassPK());
-		document.addKeyword("companyId", kaleoInstance.getCompanyId());
-		document.addKeyword("completed", kaleoInstance.isCompleted());
+		documentBuilder.setString(
+			Field.UID, digest(companyId, instanceId)
+		).setLong(
+			"companyId", companyId
+		).setString(
+			"className", className
+		).setLong(
+			"classPK", classPK
+		).setString(
+			"className", className
+		).setValue(
+			"completed", completionDate != null
+		);
 
-		Date completionDate = kaleoInstance.getCompletionDate();
-
-		if (kaleoInstance.isCompleted()) {
-			document.addDateSortable("completionDate", completionDate);
+		if (completionDate != null) {
+			documentBuilder.setDate(
+				"completionDate", formatDate(completionDate)
+			).setValue(
+				Field.getSortableFieldName(
+					StringBundler.concat(
+						"completionDate", StringPool.UNDERLINE, "Number")),
+				completionDate.getTime()
+			);
 		}
 
-		Date createDate = kaleoInstance.getCreateDate();
+		documentBuilder.setDate(
+			"createDate", formatDate(createDate)
+		).setValue(
+			Field.getSortableFieldName(
+				StringBundler.concat(
+					"createDate", StringPool.UNDERLINE, "Number")),
+			createDate.getTime()
+		).setValue(
+			"deleted", Boolean.FALSE
+		);
 
-		document.addDateSortable("createDate", createDate);
-
-		document.addKeyword("deleted", false);
-
-		if (kaleoInstance.isCompleted()) {
-			Duration duration = Duration.between(
-				createDate.toInstant(), completionDate.toInstant());
-
-			document.addNumber("duration", duration.toMillis());
+		if (completionDate != null) {
+			documentBuilder.setLong(
+				"duration", _getDuration(completionDate, createDate));
 		}
 
-		document.addKeyword("instanceId", kaleoInstance.getKaleoInstanceId());
-		document.addDateSortable(
-			"modifiedDate", kaleoInstance.getModifiedDate());
-		document.addKeyword("processId", kaleoInstance.getKaleoDefinitionId());
-		document.addKeyword("userId", kaleoInstance.getUserId());
-		document.addKeyword("userName", kaleoInstance.getUserName());
-		document.addKeyword(
-			"version",
-			StringBundler.concat(
-				kaleoInstance.getKaleoDefinitionVersion(), CharPool.PERIOD, 0));
+		documentBuilder.setLong(
+			"instanceId", instanceId
+		).setDate(
+			"modifiedDate", formatDate(modifiedDate)
+		);
+
+		documentBuilder.setLong(
+			"processId", processId
+		).setString(
+			"version", processVersion
+		).setLong(
+			"userId", userId
+		).setString(
+			"userName", userName
+		);
+
+		setLocalizedField(documentBuilder, "assetTitle", assetTitleMap);
+		setLocalizedField(documentBuilder, "assetType", assetTypeMap);
+
+		Document document = documentBuilder.build();
+
+		workflowMetricsPortalExecutor.execute(() -> addDocument(document));
+
+		return document;
+	}
+
+	@Override
+	public Document completeInstance(
+		long companyId, Date completionDate, long duration, long instanceId,
+		Date modifiedDate) {
+
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		documentBuilder.setString(
+			Field.UID, digest(companyId, instanceId)
+		).setLong(
+			"companyId", companyId
+		).setValue(
+			"completed", completionDate != null
+		).setDate(
+			"completionDate", formatDate(completionDate)
+		).setValue(
+			Field.getSortableFieldName(
+				StringBundler.concat(
+					"completionDate", StringPool.UNDERLINE, "Number")),
+			completionDate.getTime()
+		).setLong(
+			"instanceId", instanceId
+		).setDate(
+			"modifiedDate", formatDate(modifiedDate)
+		).setLong(
+			"duration", duration
+		);
+
+		Document document = documentBuilder.build();
+
+		workflowMetricsPortalExecutor.execute(
+			() -> {
+				updateDocument(document);
+
+				BooleanQuery booleanQuery = queries.booleanQuery();
+
+				booleanQuery.addMustQueryClauses(
+					queries.term("companyId", document.getLong("companyId")),
+					queries.term("instanceId", document.getLong("instanceId")));
+
+				_slaInstanceResultWorkflowMetricsIndexer.updateDocuments(
+					HashMapBuilder.<String, Object>put(
+						"completionDate", document.getDate("completionDate")
+					).put(
+						"instanceCompleted", Boolean.TRUE
+					).build(),
+					booleanQuery);
+
+				_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
+					HashMapBuilder.<String, Object>put(
+						"instanceCompleted", Boolean.TRUE
+					).build(),
+					booleanQuery);
+
+				_taskWorkflowMetricsIndexerImpl.updateDocuments(
+					HashMapBuilder.<String, Object>put(
+						"instanceCompleted", Boolean.TRUE
+					).build(),
+					booleanQuery);
+			});
 
 		return document;
 	}
@@ -115,12 +210,20 @@ public class InstanceWorkflowMetricsIndexerImpl extends BaseWorkflowMetricsIndex
 		super.deleteDocument(document);
 
 		_slaInstanceResultWorkflowMetricsIndexer.deleteDocuments(
-			GetterUtil.getLong(document.get("companyId")),
-			GetterUtil.getLong(document.get("instanceId")));
+			document.getLong("companyId"), document.getLong("instanceId"));
 
 		_slaTaskResultWorkflowMetricsIndexer.deleteDocuments(
-			GetterUtil.getLong(document.get("companyId")),
-			GetterUtil.getLong(document.get("instanceId")));
+			document.getLong("companyId"), document.getLong("instanceId"));
+	}
+
+	@Override
+	public void deleteInstance(long companyId, long instanceId) {
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		documentBuilder.setString(Field.UID, digest(companyId, instanceId));
+
+		workflowMetricsPortalExecutor.execute(
+			() -> deleteDocument(documentBuilder));
 	}
 
 	@Override
@@ -146,66 +249,54 @@ public class InstanceWorkflowMetricsIndexerImpl extends BaseWorkflowMetricsIndex
 				dynamicQuery.add(companyIdProperty.eq(companyId));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoInstance kaleoInstance) ->
-				workflowMetricsPortalExecutor.execute(
-					() -> addDocument(createDocument(kaleoInstance))));
+			(KaleoInstance kaleoInstance) -> {
+				KaleoDefinitionVersion kaleoDefinitionVersion =
+					getKaleoDefinitionVersion(
+						kaleoInstance.getKaleoDefinitionVersionId());
+
+				if (Objects.isNull(kaleoDefinitionVersion)) {
+					return;
+				}
+
+				addInstance(
+					_createAssetTitleLocalizationMap(kaleoInstance),
+					_createAssetTypeLocalizationMap(kaleoInstance),
+					kaleoInstance.getClassName(), kaleoInstance.getClassPK(),
+					companyId, kaleoInstance.getCompletionDate(),
+					kaleoInstance.getCreateDate(),
+					kaleoInstance.getKaleoInstanceId(),
+					kaleoInstance.getModifiedDate(),
+					kaleoInstance.getKaleoDefinitionId(),
+					kaleoDefinitionVersion.getVersion(),
+					kaleoInstance.getUserId(), kaleoInstance.getUserName());
+			});
 
 		actionableDynamicQuery.performActions();
 	}
 
 	@Override
-	public void updateDocument(Document document) {
-		super.updateDocument(document);
+	public Document updateInstance(
+		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
+		long companyId, long instanceId, Date modifiedDate) {
 
-		if (!GetterUtil.getBoolean(document.get("completed"))) {
-			return;
-		}
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		BooleanQuery booleanQuery = queries.booleanQuery();
+		documentBuilder.setString(
+			Field.UID, digest(companyId, instanceId)
+		).setLong(
+			"companyId", companyId
+		).setDate(
+			"modifiedDate", formatDate(modifiedDate)
+		);
 
-		booleanQuery.addMustQueryClauses(
-			queries.term(
-				"companyId", GetterUtil.getLong(document.get("companyId"))),
-			queries.term(
-				"instanceId", GetterUtil.getLong(document.get("instanceId"))));
+		setLocalizedField(documentBuilder, "assetTitle", assetTitleMap);
+		setLocalizedField(documentBuilder, "assetType", assetTypeMap);
 
-		_slaInstanceResultWorkflowMetricsIndexer.updateDocuments(
-			documentImpl -> new DocumentImpl() {
-				{
-					try {
-						addDateSortable(
-							"completionDate",
-							document.getDate("completionDate"));
-					}
-					catch (ParseException parseException) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(parseException, parseException);
-						}
-					}
+		Document document = documentBuilder.build();
 
-					addKeyword("instanceCompleted", Boolean.TRUE);
-					addKeyword(Field.UID, documentImpl.getString(Field.UID));
-				}
-			},
-			booleanQuery);
+		workflowMetricsPortalExecutor.execute(() -> updateDocument(document));
 
-		_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
-			documentImpl -> new DocumentImpl() {
-				{
-					addKeyword("instanceCompleted", Boolean.TRUE);
-					addKeyword(Field.UID, documentImpl.getString(Field.UID));
-				}
-			},
-			booleanQuery);
-
-		_taskWorkflowMetricsIndexer.updateDocuments(
-			documentImpl -> new DocumentImpl() {
-				{
-					addKeyword("instanceCompleted", Boolean.TRUE);
-					addKeyword(Field.UID, documentImpl.getString(Field.UID));
-				}
-			},
-			booleanQuery);
+		return document;
 	}
 
 	private Map<Locale, String> _createAssetTitleLocalizationMap(
@@ -283,8 +374,15 @@ public class InstanceWorkflowMetricsIndexerImpl extends BaseWorkflowMetricsIndex
 			getAssetRendererFactoryByClassName(className);
 	}
 
+	private long _getDuration(Date completionDate, Date createDate) {
+		Duration duration = Duration.between(
+			createDate.toInstant(), completionDate.toInstant());
+
+		return duration.toMillis();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		InstanceWorkflowMetricsIndexer.class);
+		InstanceWorkflowMetricsIndexerImpl.class);
 
 	@Reference
 	private SLAInstanceResultWorkflowMetricsIndexer
@@ -295,6 +393,6 @@ public class InstanceWorkflowMetricsIndexerImpl extends BaseWorkflowMetricsIndex
 		_slaTaskResultWorkflowMetricsIndexer;
 
 	@Reference
-	private TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;
+	private TaskWorkflowMetricsIndexerImpl _taskWorkflowMetricsIndexerImpl;
 
 }

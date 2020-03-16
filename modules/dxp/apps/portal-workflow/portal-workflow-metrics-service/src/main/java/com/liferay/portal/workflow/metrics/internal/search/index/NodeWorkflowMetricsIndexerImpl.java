@@ -18,16 +18,17 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
+import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
 
 import java.util.Date;
 import java.util.Objects;
@@ -38,84 +39,68 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = NodeWorkflowMetricsIndexer.class)
-public class NodeWorkflowMetricsIndexerImpl extends BaseWorkflowMetricsIndexer {
+@Component(
+	immediate = true,
+	service = {
+		NodeWorkflowMetricsIndexer.class, NodeWorkflowMetricsIndexerImpl.class
+	}
+)
+public class NodeWorkflowMetricsIndexerImpl
+	extends BaseWorkflowMetricsIndexer implements NodeWorkflowMetricsIndexer {
 
 	@Override
-	public void addDocument(Document document) {
+	public Document addNode(
+		long companyId, Date createDate, boolean initial, Date modifiedDate,
+		String name, long nodeId, long processId, String processVersion,
+		boolean terminal, String type) {
+
 		if (searchEngineAdapter == null) {
-			return;
+			return null;
 		}
 
-		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		if (Objects.equals(
-				GetterUtil.getString(document.get("type")),
-				NodeType.TASK.name())) {
+		documentBuilder.setString(
+			Field.UID, digest(companyId, nodeId)
+		).setLong(
+			"companyId", companyId
+		).setDate(
+			"createDate", formatDate(createDate)
+		).setValue(
+			"deleted", false
+		).setValue(
+			"initial", initial
+		).setDate(
+			"modifiedDate", formatDate(modifiedDate)
+		).setString(
+			"name", name
+		).setLong(
+			"nodeId", nodeId
+		).setLong(
+			"processId", processId
+		).setValue(
+			"terminal", terminal
+		).setString(
+			"type", type
+		).setString(
+			"version", processVersion
+		);
 
-			bulkDocumentRequest.addBulkableDocumentRequest(
-				new IndexDocumentRequest(
-					_slaTaskResultWorkflowMetricsIndexer.getIndexName(),
-					_slaTaskResultWorkflowMetricsIndexer.creatDefaultDocument(
-						GetterUtil.getLong(document.get("companyId")),
-						GetterUtil.getLong(document.get("processId")),
-						GetterUtil.getLong(document.get("nodeId")),
-						GetterUtil.getString(document.get("name")))) {
+		Document document = documentBuilder.build();
 
-					{
-						setType(
-							_slaTaskResultWorkflowMetricsIndexer.
-								getIndexType());
-					}
-				});
+		workflowMetricsPortalExecutor.execute(() -> addDocument(document));
 
-			bulkDocumentRequest.addBulkableDocumentRequest(
-				new IndexDocumentRequest(
-					_taskWorkflowMetricsIndexer.getIndexName(),
-					_createWorkflowMetricsTokenDocument(
-						GetterUtil.getLong(document.get("companyId")),
-						GetterUtil.getLong(document.get("processId")),
-						GetterUtil.getLong(document.get("nodeId")),
-						GetterUtil.getString(document.get("name")),
-						GetterUtil.getString(document.get("version")))) {
-
-					{
-						setType(_taskWorkflowMetricsIndexer.getIndexType());
-					}
-				});
-		}
-
-		bulkDocumentRequest.addBulkableDocumentRequest(
-			new IndexDocumentRequest(getIndexName(), document) {
-				{
-					setType(getIndexType());
-				}
-			});
-
-		if (PortalRunMode.isTestMode()) {
-			bulkDocumentRequest.setRefresh(true);
-		}
-
-		searchEngineAdapter.execute(bulkDocumentRequest);
+		return document;
 	}
 
-	public Document createDocument(KaleoNode kaleoNode) {
-		return _createDocument(
-			kaleoNode.getCompanyId(), kaleoNode.getCreateDate(),
-			kaleoNode.isInitial(), kaleoNode.getKaleoDefinitionId(),
-			kaleoNode.getKaleoDefinitionVersionId(),
-			kaleoNode.getModifiedDate(), kaleoNode.getName(),
-			kaleoNode.getKaleoNodeId(), kaleoNode.isTerminal(),
-			kaleoNode.getType());
-	}
+	@Override
+	public void deleteNode(long companyId, long nodeId) {
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-	public Document createDocument(KaleoTask kaleoTask) {
-		return _createDocument(
-			kaleoTask.getCompanyId(), kaleoTask.getCreateDate(), false,
-			kaleoTask.getKaleoDefinitionId(),
-			kaleoTask.getKaleoDefinitionVersionId(),
-			kaleoTask.getModifiedDate(), kaleoTask.getName(),
-			kaleoTask.getKaleoTaskId(), false, NodeType.TASK.name());
+		documentBuilder.setString(Field.UID, digest(companyId, nodeId));
+
+		workflowMetricsPortalExecutor.execute(
+			() -> deleteDocument(documentBuilder));
 	}
 
 	@Override
@@ -134,58 +119,89 @@ public class NodeWorkflowMetricsIndexerImpl extends BaseWorkflowMetricsIndexer {
 		_reindexIndexWithKaleoTask(companyId);
 	}
 
-	private Document _createDocument(
-		long companyId, Date createDate, boolean initial,
-		long kaleoDefinitionId, long kaleoDefinitionVersionId,
-		Date modifiedDate, String name, long nodeId, boolean terminal,
-		String type) {
+	@Override
+	protected void addDocument(Document document) {
+		super.addDocument(document);
 
-		Document document = new DocumentImpl();
+		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
-		document.addUID(
-			"WorkflowMetricsNode",
-			digest(companyId, kaleoDefinitionVersionId, nodeId));
-		document.addKeyword("companyId", companyId);
-		document.addDateSortable("createDate", createDate);
-		document.addKeyword("deleted", false);
-		document.addKeyword("initial", initial);
-		document.addDateSortable("modifiedDate", modifiedDate);
-		document.addKeyword("name", name);
-		document.addKeyword("nodeId", nodeId);
-		document.addKeyword("processId", kaleoDefinitionId);
-		document.addKeyword("terminal", terminal);
-		document.addKeyword("type", type);
+		if (Objects.equals(document.getString("type"), "TASK")) {
+			bulkDocumentRequest.addBulkableDocumentRequest(
+				new IndexDocumentRequest(
+					_slaTaskResultWorkflowMetricsIndexer.getIndexName(),
+					_slaTaskResultWorkflowMetricsIndexer.creatDefaultDocument(
+						document.getLong("companyId"),
+						document.getLong("nodeId"),
+						document.getLong("processId"),
+						document.getString("name"))) {
 
-		KaleoDefinitionVersion kaleoDefinitionVersion =
-			getKaleoDefinitionVersion(kaleoDefinitionVersionId);
+					{
+						setType(
+							_slaTaskResultWorkflowMetricsIndexer.
+								getIndexType());
+					}
+				});
 
-		if (kaleoDefinitionVersion != null) {
-			document.addKeyword("version", kaleoDefinitionVersion.getVersion());
+			bulkDocumentRequest.addBulkableDocumentRequest(
+				new IndexDocumentRequest(
+					_taskWorkflowMetricsIndexerImpl.getIndexName(),
+					_createWorkflowMetricsTaskDocument(
+						document.getLong("companyId"),
+						document.getLong("processId"),
+						document.getLong("nodeId"), document.getString("name"),
+						document.getString("version"))) {
+
+					{
+						setType(_taskWorkflowMetricsIndexerImpl.getIndexType());
+					}
+				});
 		}
 
-		return document;
+		bulkDocumentRequest.addBulkableDocumentRequest(
+			new IndexDocumentRequest(getIndexName(), document) {
+				{
+					setType(getIndexType());
+				}
+			});
+
+		if (PortalRunMode.isTestMode()) {
+			bulkDocumentRequest.setRefresh(true);
+		}
+
+		searchEngineAdapter.execute(bulkDocumentRequest);
 	}
 
-	private Document _createWorkflowMetricsTokenDocument(
-		long companyId, long processId, long taskId, String taskName,
-		String version) {
+	private Document _createWorkflowMetricsTaskDocument(
+		long companyId, long processId, long nodeId, String name,
+		String processVersion) {
 
-		Document document = new DocumentImpl();
+		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		document.addUID(
-			"WorkflowMetricsToken", digest(companyId, processId, 0, taskId, 0));
-		document.addKeyword("companyId", companyId);
-		document.addKeyword("completed", false);
-		document.addKeyword("deleted", false);
-		document.addKeyword("instanceId", 0);
-		document.addKeyword("instanceCompleted", false);
-		document.addKeyword("processId", processId);
-		document.addKeyword("taskId", taskId);
-		document.addKeyword("taskName", taskName);
-		document.addKeyword("tokenId", 0);
-		document.addKeyword("version", version);
+		documentBuilder.setString(
+			Field.UID, digest(companyId, processId, processVersion, nodeId)
+		).setLong(
+			"companyId", companyId
+		).setValue(
+			"completed", false
+		).setValue(
+			"deleted", false
+		).setLong(
+			"instanceId", 0L
+		).setValue(
+			"instanceCompleted", false
+		).setLong(
+			"processId", processId
+		).setLong(
+			"nodeId", nodeId
+		).setString(
+			"name", name
+		).setLong(
+			"taskId", 0L
+		).setString(
+			"version", processVersion
+		);
 
-		return document;
+		return documentBuilder.build();
 	}
 
 	private void _reindexIndexWithKaleoNode(long companyId)
@@ -207,7 +223,23 @@ public class NodeWorkflowMetricsIndexerImpl extends BaseWorkflowMetricsIndexer {
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoNode kaleoNode) -> workflowMetricsPortalExecutor.execute(
-				() -> addDocument(createDocument(kaleoNode))));
+				() -> {
+					KaleoDefinitionVersion kaleoDefinitionVersion =
+						getKaleoDefinitionVersion(
+							kaleoNode.getKaleoDefinitionVersionId());
+
+					if (Objects.isNull(kaleoDefinitionVersion)) {
+						return;
+					}
+
+					addNode(
+						kaleoNode.getCompanyId(), kaleoNode.getCreateDate(),
+						kaleoNode.isInitial(), kaleoNode.getModifiedDate(),
+						kaleoNode.getName(), kaleoNode.getKaleoNodeId(),
+						kaleoNode.getKaleoDefinitionId(),
+						kaleoDefinitionVersion.getVersion(),
+						kaleoNode.isTerminal(), kaleoNode.getType());
+				}));
 
 		actionableDynamicQuery.performActions();
 	}
@@ -227,7 +259,23 @@ public class NodeWorkflowMetricsIndexerImpl extends BaseWorkflowMetricsIndexer {
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoTask kaleoTask) -> workflowMetricsPortalExecutor.execute(
-				() -> addDocument(createDocument(kaleoTask))));
+				() -> {
+					KaleoDefinitionVersion kaleoDefinitionVersion =
+						getKaleoDefinitionVersion(
+							kaleoTask.getKaleoDefinitionVersionId());
+
+					if (Objects.isNull(kaleoDefinitionVersion)) {
+						return;
+					}
+
+					addNode(
+						kaleoTask.getCompanyId(), kaleoTask.getCreateDate(),
+						false, kaleoTask.getModifiedDate(), kaleoTask.getName(),
+						kaleoTask.getKaleoTaskId(),
+						kaleoTask.getKaleoDefinitionId(),
+						kaleoDefinitionVersion.getVersion(), false,
+						NodeType.TASK.name());
+				}));
 
 		actionableDynamicQuery.performActions();
 	}
@@ -237,6 +285,6 @@ public class NodeWorkflowMetricsIndexerImpl extends BaseWorkflowMetricsIndexer {
 		_slaTaskResultWorkflowMetricsIndexer;
 
 	@Reference
-	private TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;
+	private TaskWorkflowMetricsIndexerImpl _taskWorkflowMetricsIndexerImpl;
 
 }

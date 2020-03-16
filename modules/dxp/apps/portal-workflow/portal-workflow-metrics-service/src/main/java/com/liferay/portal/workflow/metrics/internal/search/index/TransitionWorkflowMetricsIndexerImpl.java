@@ -39,7 +39,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true, service = TransitionWorkflowMetricsIndexerImpl.class
+	immediate = true,
+	property = "workflow.metrics.index.entity.name=transition",
+	service = {
+		TransitionWorkflowMetricsIndexer.class, WorkflowMetricsIndex.class
+	}
 )
 public class TransitionWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer
@@ -99,7 +103,13 @@ public class TransitionWorkflowMetricsIndexerImpl
 	public void deleteTransition(long companyId, long transitionId) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(Field.UID, digest(companyId, transitionId));
+		documentBuilder.setString(
+			Field.UID, digest(companyId, transitionId)
+		).setLong(
+			"companyId", companyId
+		).setLong(
+			"transitionId", transitionId
+		);
 
 		workflowMetricsPortalExecutor.execute(
 			() -> deleteDocument(documentBuilder));
@@ -107,7 +117,7 @@ public class TransitionWorkflowMetricsIndexerImpl
 
 	@Override
 	public String getIndexName(long companyId) {
-			return _transitionWorkflowMetricsIndexNameBuilder.getIndexName(
+		return _transitionWorkflowMetricsIndexNameBuilder.getIndexName(
 			companyId);
 	}
 

@@ -41,10 +41,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true,
-	service = {
-		NodeWorkflowMetricsIndexer.class, NodeWorkflowMetricsIndexerImpl.class
-	}
+	immediate = true, property = "workflow.metrics.index.entity.name=node",
+	service = {NodeWorkflowMetricsIndexer.class, WorkflowMetricsIndex.class}
 )
 public class NodeWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer implements NodeWorkflowMetricsIndexer {
@@ -98,15 +96,21 @@ public class NodeWorkflowMetricsIndexerImpl
 	public void deleteNode(long companyId, long nodeId) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(Field.UID, digest(companyId, nodeId));
+		documentBuilder.setString(
+			Field.UID, digest(companyId, nodeId)
+		).setLong(
+			"companyId", companyId
+		).setLong(
+			"nodeId", nodeId
+		);
 
 		workflowMetricsPortalExecutor.execute(
 			() -> deleteDocument(documentBuilder));
 	}
 
 	@Override
-	public String getIndexName() {
-		return "workflow-metrics-nodes";
+	public String getIndexName(long companyId) {
+		return _nodeWorkflowMetricsIndexNameBuilder.getIndexName(companyId);
 	}
 
 	@Override
@@ -130,7 +134,7 @@ public class NodeWorkflowMetricsIndexerImpl
 			bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
 					_slaTaskResultWorkflowMetricsIndexer.getIndexName(
-						GetterUtil.getLong(document.get("companyId"))),
+						document.getLong("companyId")),
 					_slaTaskResultWorkflowMetricsIndexer.creatDefaultDocument(
 						document.getLong("companyId"),
 						document.getLong("nodeId"),
@@ -146,8 +150,8 @@ public class NodeWorkflowMetricsIndexerImpl
 
 			bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
-					_taskWorkflowMetricsIndexerImpl.getIndexName(document.getLong("companyId")),
-						GetterUtil.getLong(document.get("companyId"))),
+					_taskWorkflowMetricsIndex.getIndexName(
+						document.getLong("companyId")),
 					_createWorkflowMetricsTaskDocument(
 						document.getLong("companyId"),
 						document.getLong("processId"),
@@ -155,15 +159,14 @@ public class NodeWorkflowMetricsIndexerImpl
 						document.getString("version"))) {
 
 					{
-						setType(_taskWorkflowMetricsIndexerImpl.getIndexType());
+						setType(_taskWorkflowMetricsIndex.getIndexType());
 					}
 				});
 		}
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
-				getIndexName(GetterUtil.getLong(document.get("companyId"))),
-				document) {
+				getIndexName(document.getLong("companyId")), document) {
 
 				{
 					setType(getIndexType());
@@ -294,7 +297,7 @@ public class NodeWorkflowMetricsIndexerImpl
 	private SLATaskResultWorkflowMetricsIndexer
 		_slaTaskResultWorkflowMetricsIndexer;
 
-	@Reference
-	private TaskWorkflowMetricsIndexerImpl _taskWorkflowMetricsIndexerImpl;
+	@Reference(target = "(workflow.metrics.index.entity.name=task)")
+	private WorkflowMetricsIndex _taskWorkflowMetricsIndex;
 
 }

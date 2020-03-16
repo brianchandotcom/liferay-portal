@@ -40,7 +40,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true, service = SLATaskResultWorkflowMetricsIndexer.class
+	immediate = true,
+	property = "workflow.metrics.index.entity.name=sla-task-result",
+	service = {
+		SLATaskResultWorkflowMetricsIndexer.class, WorkflowMetricsIndex.class
+	}
 )
 public class SLATaskResultWorkflowMetricsIndexer
 	extends BaseSLAWorkflowMetricsIndexer {

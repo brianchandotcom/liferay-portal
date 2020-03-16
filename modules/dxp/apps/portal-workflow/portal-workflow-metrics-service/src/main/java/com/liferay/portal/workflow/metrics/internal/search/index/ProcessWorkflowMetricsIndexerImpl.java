@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
@@ -34,7 +35,6 @@ import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsInde
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,11 +43,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true,
-	service = {
-		ProcessWorkflowMetricsIndexer.class,
-		ProcessWorkflowMetricsIndexerImpl.class
-	}
+	immediate = true, property = "workflow.metrics.index.entity.name=process",
+	service = {ProcessWorkflowMetricsIndexer.class, WorkflowMetricsIndex.class}
 )
 public class ProcessWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer
@@ -63,20 +60,20 @@ public class ProcessWorkflowMetricsIndexerImpl
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
-				_instanceWorkflowMetricsIndexerImpl.getIndexName(document.getLong("companyId")),
-					GetterUtil.getLong(document.get("companyId"))),
+				_instanceWorkflowMetricsIndex.getIndexName(
+					document.getLong("companyId")),
 				_createWorkflowMetricsInstanceDocument(
 					document.getLong("companyId"),
 					document.getLong("processId"))) {
 
 				{
-					setType(_instanceWorkflowMetricsIndexerImpl.getIndexType());
+					setType(_instanceWorkflowMetricsIndex.getIndexType());
 				}
 			});
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
 				_slaInstanceResultWorkflowMetricsIndexer.getIndexName(
-					GetterUtil.getLong(document.get("companyId"))),
+					document.getLong("companyId")),
 				_slaInstanceResultWorkflowMetricsIndexer.creatDefaultDocument(
 					document.getLong("companyId"),
 					document.getLong("processId"))) {
@@ -89,8 +86,7 @@ public class ProcessWorkflowMetricsIndexerImpl
 			});
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
-				getIndexName(GetterUtil.getLong(document.get("companyId"))),
-				document) {
+				getIndexName(document.getLong("companyId")), document) {
 
 				{
 					setType(getIndexType());
@@ -111,8 +107,8 @@ public class ProcessWorkflowMetricsIndexerImpl
 		Map<Locale, String> titleMap, String version) {
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
-		documentBuilder.setString(
 
+		documentBuilder.setString(
 			Field.UID, digest(companyId, processId)
 		).setLong(
 			"companyId", companyId
@@ -149,7 +145,13 @@ public class ProcessWorkflowMetricsIndexerImpl
 	public void deleteProcess(long companyId, long processId) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(Field.UID, digest(companyId, processId));
+		documentBuilder.setString(
+			Field.UID, digest(companyId, processId)
+		).setLong(
+			"companyId", companyId
+		).setLong(
+			"processId", processId
+		);
 
 		workflowMetricsPortalExecutor.execute(
 			() -> deleteDocument(documentBuilder));
@@ -201,11 +203,9 @@ public class ProcessWorkflowMetricsIndexerImpl
 
 	@Override
 	public Document updateProcess(
-		Optional<Boolean> activeOptional, long companyId,
-		Optional<String> descriptionOptional, Date modifiedDate, long processId,
-		Optional<String> titleOptional,
-		Optional<Map<Locale, String>> titleMapOptional,
-		Optional<String> versionOptional) {
+		Boolean active, long companyId, String description, Date modifiedDate,
+		long processId, String title, Map<Locale, String> titleMap,
+		String version) {
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
@@ -215,12 +215,13 @@ public class ProcessWorkflowMetricsIndexerImpl
 			"companyId", companyId
 		);
 
-		activeOptional.ifPresent(
-			active -> documentBuilder.setValue("active", active));
+		if (active != null) {
+			documentBuilder.setValue("active", active);
+		}
 
-		descriptionOptional.ifPresent(
-			description -> documentBuilder.setValue(
-				"description", description));
+		if (description != null) {
+			documentBuilder.setValue("description", description);
+		}
 
 		documentBuilder.setDate(
 			"modifiedDate", formatDate(modifiedDate)
@@ -228,14 +229,15 @@ public class ProcessWorkflowMetricsIndexerImpl
 			"processId", processId
 		);
 
-		titleOptional.ifPresent(
-			title -> documentBuilder.setValue("title", title));
+		if (title != null) {
+			documentBuilder.setValue("title", title);
+		}
 
-		titleMapOptional.ifPresent(
-			titleMap -> setLocalizedField(documentBuilder, "title", titleMap));
+		if (MapUtil.isNotEmpty(titleMap)) {
+			setLocalizedField(documentBuilder, "title", titleMap);
+		}
 
-		versionOptional.ifPresent(
-			version -> documentBuilder.setValue("version", version));
+		documentBuilder.setValue("version", version);
 
 		Document document = documentBuilder.build();
 
@@ -261,9 +263,8 @@ public class ProcessWorkflowMetricsIndexerImpl
 		return documentBuilder.build();
 	}
 
-	@Reference
-	private InstanceWorkflowMetricsIndexerImpl
-		_instanceWorkflowMetricsIndexerImpl;
+	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
+	private WorkflowMetricsIndex _instanceWorkflowMetricsIndex;
 
 	@Reference(target = "(workflow.metrics.index.entity.name=process)")
 	private WorkflowMetricsIndexNameBuilder

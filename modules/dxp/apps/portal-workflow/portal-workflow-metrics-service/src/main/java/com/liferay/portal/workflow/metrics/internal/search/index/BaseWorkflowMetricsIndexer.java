@@ -93,7 +93,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Inácio Nery
  */
-public abstract class BaseWorkflowMetricsIndexer {
+public abstract class BaseWorkflowMetricsIndexer
+	implements WorkflowMetricsIndex {
 
 	public void addDocuments(List<Document> documents) {
 		if (searchEngineAdapter == null) {
@@ -106,7 +107,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 			document -> bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
 					getIndexName(document.getLong("companyId")),
-					document.getUID(), document) {
+					document.getString(Field.UID), document) {
 
 					{
 						setType(getIndexType());
@@ -124,6 +125,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 		}
 	}
 
+	@Override
 	public void clearIndex(long companyId) throws PortalException {
 		if (searchEngineAdapter == null) {
 			return;
@@ -195,43 +197,6 @@ public abstract class BaseWorkflowMetricsIndexer {
 		_updateDocument(documentBuilder.build());
 	}
 
-	public void deleteIndex(long companyId) throws PortalException {
-		if (searchEngineAdapter == null) {
-			return;
-		}
-
-		if (!hasIndex(getIndexName())) {
-			return;
-		}
-
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
-
-		booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
-
-		BooleanFilter booleanFilter = new BooleanFilter();
-
-		booleanFilter.add(
-			new TermFilter("companyId", String.valueOf(companyId)),
-			BooleanClauseOccur.MUST);
-
-		booleanQuery.setPreBooleanFilter(booleanFilter);
-
-		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
-			new DeleteByQueryDocumentRequest(booleanQuery, getIndexName());
-
-		if (PortalRunMode.isTestMode()) {
-			deleteByQueryDocumentRequest.setRefresh(true);
-		}
-
-		searchEngineAdapter.execute(deleteByQueryDocumentRequest);
-	}
-
-	public abstract String getIndexName(long companyId);
-
-	public abstract String getIndexType();
-
-	public abstract void reindex(long companyId) throws PortalException;
-
 	public void removeIndex(long companyId) throws PortalException {
 		if (searchEngineAdapter == null) {
 			return;
@@ -272,7 +237,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 		}
 
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			getIndexName(), document);
+			getIndexName(document.getLong("companyId")), document);
 
 		if (PortalRunMode.isTestMode()) {
 			indexDocumentRequest.setRefresh(true);
@@ -362,7 +327,9 @@ public abstract class BaseWorkflowMetricsIndexer {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	protected void updateDocuments(long companyId, Map<String, Object> fieldsMap, Query query) {
+	protected void updateDocuments(
+		long companyId, Map<String, Object> fieldsMap, Query query) {
+
 		if (searchEngineAdapter == null) {
 			return;
 		}
@@ -485,7 +452,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
 			getIndexName(document.getLong("companyId")),
-			document.getUID(), document);
+			document.getString(Field.UID), document);
 
 		if (PortalRunMode.isTestMode()) {
 			updateDocumentRequest.setRefresh(true);

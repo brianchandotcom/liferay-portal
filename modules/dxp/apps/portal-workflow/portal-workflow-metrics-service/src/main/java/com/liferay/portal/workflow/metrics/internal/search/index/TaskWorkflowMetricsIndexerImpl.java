@@ -45,10 +45,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true,
-	service = {
-		TaskWorkflowMetricsIndexer.class, TaskWorkflowMetricsIndexerImpl.class
-	}
+	immediate = true, property = "workflow.metrics.index.entity.name=task",
+	service = {TaskWorkflowMetricsIndexer.class, WorkflowMetricsIndex.class}
 )
 public class TaskWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer implements TaskWorkflowMetricsIndexer {
@@ -166,10 +164,11 @@ public class TaskWorkflowMetricsIndexerImpl
 				BooleanQuery booleanQuery = queries.booleanQuery();
 
 				booleanQuery.addMustQueryClauses(
-					queries.term("companyId", document.getLong("companyId")),
-					queries.term("taskId", document.getLong("taskId")));
+					queries.term("companyId", companyId),
+					queries.term("taskId", taskId));
 
 				_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
+					companyId,
 					HashMapBuilder.<String, Object>put(
 						"completionDate", document.getDate("completionDate")
 					).put(
@@ -185,7 +184,13 @@ public class TaskWorkflowMetricsIndexerImpl
 	public void deleteTask(long companyId, long taskId) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(Field.UID, digest(companyId, taskId));
+		documentBuilder.setString(
+			Field.UID, digest(companyId, taskId)
+		).setLong(
+			"companyId", companyId
+		).setLong(
+			"taskId", taskId
+		);
 
 		workflowMetricsPortalExecutor.execute(
 			() -> deleteDocument(documentBuilder));
@@ -193,7 +198,7 @@ public class TaskWorkflowMetricsIndexerImpl
 
 	@Override
 	public String getIndexName(long companyId) {
-		return _tokenWorkflowMetricsIndexNameBuilder.getIndexName(companyId);
+		return _taskWorkflowMetricsIndexNameBuilder.getIndexName(companyId);
 	}
 
 	@Override
@@ -313,6 +318,7 @@ public class TaskWorkflowMetricsIndexerImpl
 					queries.term("taskId", document.getLong("taskId")));
 
 				_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
+					companyId,
 					HashMapBuilder.<String, Object>put(
 						"assigneeId", assigneeId
 					).build(),
@@ -333,8 +339,8 @@ public class TaskWorkflowMetricsIndexerImpl
 	private SLATaskResultWorkflowMetricsIndexer
 		_slaTaskResultWorkflowMetricsIndexer;
 
-	@Reference(target = "(workflow.metrics.index.entity.name=token)")
+	@Reference(target = "(workflow.metrics.index.entity.name=task)")
 	private WorkflowMetricsIndexNameBuilder
-		_tokenWorkflowMetricsIndexNameBuilder;
+		_taskWorkflowMetricsIndexNameBuilder;
 
 }

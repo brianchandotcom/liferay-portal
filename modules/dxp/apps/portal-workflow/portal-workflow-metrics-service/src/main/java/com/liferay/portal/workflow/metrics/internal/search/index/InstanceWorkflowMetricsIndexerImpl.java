@@ -56,11 +56,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true,
-	service = {
-		InstanceWorkflowMetricsIndexer.class,
-		InstanceWorkflowMetricsIndexerImpl.class
-	}
+	immediate = true, property = "workflow.metrics.index.entity.name=instance",
+	service = {InstanceWorkflowMetricsIndexer.class, WorkflowMetricsIndex.class}
 )
 public class InstanceWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer
@@ -179,10 +176,11 @@ public class InstanceWorkflowMetricsIndexerImpl
 				BooleanQuery booleanQuery = queries.booleanQuery();
 
 				booleanQuery.addMustQueryClauses(
-					queries.term("companyId", document.getLong("companyId")),
-					queries.term("instanceId", document.getLong("instanceId")));
+					queries.term("companyId", companyId),
+					queries.term("instanceId", instanceId));
 
 				_slaInstanceResultWorkflowMetricsIndexer.updateDocuments(
+					companyId,
 					HashMapBuilder.<String, Object>put(
 						"completionDate", document.getDate("completionDate")
 					).put(
@@ -191,12 +189,17 @@ public class InstanceWorkflowMetricsIndexerImpl
 					booleanQuery);
 
 				_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
+					companyId,
 					HashMapBuilder.<String, Object>put(
 						"instanceCompleted", Boolean.TRUE
 					).build(),
 					booleanQuery);
 
-				_taskWorkflowMetricsIndexerImpl.updateDocuments(
+				BaseWorkflowMetricsIndexer baseWorkflowMetricsIndexer =
+					(BaseWorkflowMetricsIndexer)_taskWorkflowMetricsIndex;
+
+				baseWorkflowMetricsIndexer.updateDocuments(
+					companyId,
 					HashMapBuilder.<String, Object>put(
 						"instanceCompleted", Boolean.TRUE
 					).build(),
@@ -221,7 +224,13 @@ public class InstanceWorkflowMetricsIndexerImpl
 	public void deleteInstance(long companyId, long instanceId) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(Field.UID, digest(companyId, instanceId));
+		documentBuilder.setString(
+			Field.UID, digest(companyId, instanceId)
+		).setLong(
+			"companyId", companyId
+		).setLong(
+			"instanceId", instanceId
+		);
 
 		workflowMetricsPortalExecutor.execute(
 			() -> deleteDocument(documentBuilder));
@@ -397,7 +406,7 @@ public class InstanceWorkflowMetricsIndexerImpl
 	private SLATaskResultWorkflowMetricsIndexer
 		_slaTaskResultWorkflowMetricsIndexer;
 
-	@Reference
-	private TaskWorkflowMetricsIndexerImpl _taskWorkflowMetricsIndexerImpl;
+	@Reference(target = "(workflow.metrics.index.entity.name=task)")
+	private WorkflowMetricsIndex _taskWorkflowMetricsIndex;
 
 }

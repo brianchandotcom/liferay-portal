@@ -31,9 +31,14 @@
 	&__remove-button {
 		color: $pageStructureGrayColor;
 		font-size: 12px;
+		opacity: 0;
 
 		.lexicon-icon {
 			transform: translateY(1px);
+		}
+
+		&--visible {
+			opacity: 1;
 		}
 	}
 

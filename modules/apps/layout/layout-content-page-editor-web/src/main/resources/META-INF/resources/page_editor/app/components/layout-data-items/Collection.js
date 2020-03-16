@@ -12,9 +12,11 @@
  * details.
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {COLLECTION_LIST_FORMATS} from '../../config/constants/collectionListFormats';
+import CollectionService from '../../services/CollectionService';
+import {useDispatch, useSelector} from '../../store/index';
 import {ControlsIdConverterContextProvider} from '../ControlsIdConverterContext';
 
 const COLLECTION_ID_DIVIDER = '$';
@@ -46,59 +48,6 @@ function fromControlsId(controlsItemId) {
 
 	return itemId;
 }
-
-const mockList = [
-	{
-		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
-		categories: '1',
-		title: 'title1',
-	},
-	{
-		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
-		categories: '2',
-		title: 'title2',
-	},
-	{
-		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
-		categories: '3',
-		title: 'title3',
-	},
-	{
-		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
-		categories: '4',
-		title: 'title4',
-	},
-	{
-		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
-		categories: '5',
-		title: 'title5',
-	},
-	{
-		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
-		categories: '6',
-		title: 'title6',
-	},
-	{
-		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
-		categories: '7',
-		title: 'title7',
-	},
-	{
-		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
-		categories: '8',
-		title: 'title8',
-	},
-	{
-		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
-		categories: '9',
-		title: 'title9',
-	},
-	{
-		authorProfileImage: {url: 'https://picsum.photos/id/237/200/300'},
-		categories: '10',
-		title: 'title10',
-	},
-];
 
 const collectionFields = [
 	{
@@ -181,6 +130,7 @@ const NotMappedMessage = () => (
 
 const Grid = ({
 	child,
+	collection,
 	collectionId,
 	collectionLength = 3,
 	numberOfColumns,
@@ -207,7 +157,7 @@ const Grid = ({
 								value={{
 									collectionFields,
 									collectionItem:
-										mockList[i * numberOfColumns + j],
+										collection[i * numberOfColumns + j],
 									fromControlsId,
 									toControlsId: getToControlsId(
 										collectionId,
@@ -233,7 +183,7 @@ const Grid = ({
 	return createRows();
 };
 
-const Stack = ({child, collectionId, collectionLength = 3, numberOfItems}) => {
+const Stack = ({child, collection, collectionId, collectionLength = 3, numberOfItems}) => {
 	const maxNumberOfItems = Math.min(collectionLength, numberOfItems);
 
 	return Array.from({length: maxNumberOfItems}).map((_element, idx) => (
@@ -241,7 +191,7 @@ const Stack = ({child, collectionId, collectionLength = 3, numberOfItems}) => {
 			key={idx}
 			value={{
 				collectionFields,
-				collectionItem: mockList[idx],
+				collectionItem: collection[idx],
 				fromControlsId,
 				toControlsId: getToControlsId(collectionId, idx),
 			}}
@@ -262,12 +212,30 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 			? Grid
 			: Stack;
 
+	const dispatch = useDispatch();
+
+	const store = useSelector(state => state);
+
+	const [collection, setCollection] = useState('');
+
+	useEffect(() => {
+		CollectionService.getCollectionField({
+			layoutObjectReference: JSON.stringify(item.config.collection),
+			onNetworkStatus: dispatch,
+			store,
+		}).then(response => {
+			setCollection(response);
+		});
+	}, [dispatch, item.config.collection, store]);
+
 	return (
 		<div className="page-editor__collection" ref={ref}>
 			{collectionIsMapped(collectionConfig) ? (
 				<ContentComponent
 					child={child}
+					collection={collection.items}
 					collectionId={item.itemId}
+					collectionLength={collection.length}
 					numberOfColumns={collectionConfig.numberOfColumns}
 					numberOfItems={collectionConfig.numberOfItems}
 				/>

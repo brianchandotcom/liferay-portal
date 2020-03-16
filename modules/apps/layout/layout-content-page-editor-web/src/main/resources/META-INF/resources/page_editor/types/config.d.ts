@@ -45,6 +45,7 @@ export interface Config {
 	getAssetFieldValueURL: string;
 	getAssetMappingFieldsURL: string;
 	getAvailableTemplatesURL: string;
+	getCollectionFieldURL: string;
 	getExperienceUsedPortletsURL: string;
 	getPageContentsURL: string;
 	imageSelectorURL: string;

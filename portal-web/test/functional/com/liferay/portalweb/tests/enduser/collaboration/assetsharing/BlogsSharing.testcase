@@ -46,6 +46,8 @@ definition {
 	@description = "This test asserts that proper notifications are sent based on sharing permissions granted."
 	@priority = "5"
 	test AssertNotifications {
+		property portal.acceptance = "true";
+
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
 		Asset.share(

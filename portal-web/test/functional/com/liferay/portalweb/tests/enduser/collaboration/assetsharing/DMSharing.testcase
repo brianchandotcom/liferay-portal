@@ -772,6 +772,8 @@ definition {
 	@description = "This test share an content to a user and disable the sharing option. This test asserts that a collaborator without sharing permissions will not be able to share this content."
 	@priority = "5"
 	test ShareWithNoSharingPermissions {
+		property portal.acceptance = "true";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",

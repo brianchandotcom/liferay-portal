@@ -75,6 +75,31 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			buildData.getPortalUpstreamBranchName(), ")");
 	}
 
+	protected String getTestPortalBuildProfile(String testSuite) {
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			S buildData = getBuildData();
+
+			String buildProfile = buildProperties.getProperty(
+				JenkinsResultsParserUtil.combine(
+					"portal.testsuite.upstream.test.portal.build.profile[",
+					buildData.getPortalUpstreamBranchName(), "][", testSuite,
+					"]"));
+
+			if (buildProfile == null) {
+				buildProfile = buildProperties.getProperty(
+					"portal.testsuite.upstream.test.portal.build.profile");
+			}
+
+			return buildProfile;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	@Override
 	protected void initWorkspace() {
 		setWorkspace(WorkspaceFactory.newSimpleWorkspace());

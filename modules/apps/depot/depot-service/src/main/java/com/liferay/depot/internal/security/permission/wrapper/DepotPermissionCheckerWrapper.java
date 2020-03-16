@@ -153,6 +153,17 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	}
 
 	@Override
+	public boolean isContentReviewer(long companyId, long groupId) {
+		if (super.isContentReviewer(companyId, groupId) ||
+			isGroupAdmin(groupId)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isGroupOwner(long groupId) {
 		try {
 			if (!isSignedIn()) {

@@ -86,7 +86,6 @@ definition {
 	@priority = "3"
 	test ViewBlogsEntryWithSocialBookmarksSites {
 		property osgi.app.includes = "social-bookmarks";
-		property test.assert.warning.exceptions = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

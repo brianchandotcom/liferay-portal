@@ -17,21 +17,34 @@ package com.liferay.roles.item.selector.web.internal;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleService;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portlet.rolesadmin.search.RoleSearch;
+import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
 import com.liferay.roles.item.selector.RoleItemSelectorCriterion;
 import com.liferay.roles.item.selector.web.internal.constants.RoleItemSelectorViewConstants;
 import com.liferay.roles.item.selector.web.internal.display.context.RoleItemSelectorViewDisplayContext;
+import com.liferay.roles.item.selector.web.internal.search.RoleItemSelectorChecker;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -79,10 +92,22 @@ public class RoleItemSelectorView
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)servletRequest;
 
+		RenderRequest renderRequest =
+			(RenderRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+		RenderResponse renderResponse =
+			(RenderResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
 		RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext =
 			new RoleItemSelectorViewDisplayContext(
-				_roleService, _usersAdmin, httpServletRequest, portletURL,
-				itemSelectedEventName, roleItemSelectorCriterion.getType());
+				httpServletRequest, itemSelectedEventName,
+				roleItemSelectorCriterion.getType(),
+				_getSearchContainer(
+					renderRequest, renderResponse,
+					roleItemSelectorCriterion.getType()),
+				_portal.getLiferayPortletRequest(renderRequest),
+				_portal.getLiferayPortletResponse(renderResponse));
 
 		servletRequest.setAttribute(
 			RoleItemSelectorViewConstants.
@@ -95,6 +120,51 @@ public class RoleItemSelectorView
 			servletContext.getRequestDispatcher("/role_item_selector.jsp");
 
 		requestDispatcher.include(servletRequest, servletResponse);
+	}
+
+	private SearchContainer<Role> _getSearchContainer(
+		RenderRequest renderRequest, RenderResponse renderResponse, int type) {
+
+		PortletURL currentURL = PortletURLUtil.getCurrent(
+			renderRequest, renderResponse);
+
+		SearchContainer<Role> searchContainer = new RoleSearch(
+			renderRequest, currentURL);
+
+		searchContainer.setEmptyResultsMessage("no-roles-were-found");
+
+		OrderByComparator<Role> orderByComparator =
+			_usersAdmin.getRoleOrderByComparator(
+				searchContainer.getOrderByCol(),
+				searchContainer.getOrderByType());
+
+		searchContainer.setOrderByComparator(orderByComparator);
+
+		searchContainer.setRowChecker(
+			new RoleItemSelectorChecker(
+				renderResponse,
+				ParamUtil.getLongValues(renderRequest, "checkedRoleIds")));
+
+		RoleSearchTerms searchTerms =
+			(RoleSearchTerms)searchContainer.getSearchTerms();
+
+		searchTerms.setType(type);
+
+		List<Role> results = _roleService.search(
+			CompanyThreadLocal.getCompanyId(), searchTerms.getKeywords(),
+			searchTerms.getTypesObj(), new LinkedHashMap<String, Object>(),
+			searchContainer.getStart(), searchContainer.getEnd(),
+			searchContainer.getOrderByComparator());
+
+		int total = _roleService.searchCount(
+			CompanyThreadLocal.getCompanyId(), searchTerms.getKeywords(),
+			searchTerms.getTypesObj(), new LinkedHashMap<String, Object>());
+
+		searchContainer.setTotal(total);
+
+		searchContainer.setResults(results);
+
+		return searchContainer;
 	}
 
 	private static final List<ItemSelectorReturnType>

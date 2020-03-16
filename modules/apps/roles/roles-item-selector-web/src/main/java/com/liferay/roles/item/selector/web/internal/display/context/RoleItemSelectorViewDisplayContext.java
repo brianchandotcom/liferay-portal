@@ -14,125 +14,53 @@
 
 package com.liferay.roles.item.selector.web.internal.display.context;
 
-import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
-import com.liferay.portal.kernel.service.RoleService;
-import com.liferay.portal.kernel.service.RoleServiceUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.rolesadmin.search.RoleSearch;
-import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
-import com.liferay.roles.item.selector.web.internal.search.RoleItemSelectorChecker;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class RoleItemSelectorViewDisplayContext {
+public class RoleItemSelectorViewDisplayContext
+	extends SearchContainerManagementToolbarDisplayContext {
 
 	public RoleItemSelectorViewDisplayContext(
-		RoleService roleService, UsersAdmin usersAdmin,
-		HttpServletRequest httpServletRequest, PortletURL portletURL,
-		String itemSelectedEventName, int type) {
+		HttpServletRequest httpServletRequest, String itemSelectedEventName,
+		int type, SearchContainer<Role> searchContainer,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
-		_roleService = roleService;
-		_usersAdmin = usersAdmin;
-		_httpServletRequest = httpServletRequest;
-		_portletURL = portletURL;
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			searchContainer);
+
 		_itemSelectedEventName = itemSelectedEventName;
 		_type = type;
-
-		_renderRequest = (RenderRequest)httpServletRequest.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-		_renderResponse = (RenderResponse)httpServletRequest.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
 	}
 
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
 	}
 
-	public String getOrderByCol() {
-		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "name");
-	}
-
-	public String getOrderByType() {
-		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "asc");
-	}
-
-	public PortletURL getPortletURL() throws PortletException {
-		PortletURL portletURL = PortletURLUtil.clone(
-			_portletURL, _renderResponse);
+	public PortletURL getPortletURL() {
+		PortletURL portletURL = super.getPortletURL();
 
 		portletURL.setParameter(
-			"keywords", ParamUtil.getString(_httpServletRequest, "keywords"));
+			"keywords", ParamUtil.getString(request, "keywords"));
 		portletURL.setParameter("type", String.valueOf(getType()));
 
 		return portletURL;
 	}
 
-	public SearchContainer<Role> getSearchContainer() throws Exception {
-		if (_searchContainer != null) {
-			return _searchContainer;
-		}
-
-		_searchContainer = new RoleSearch(_renderRequest, getPortletURL());
-
-		_searchContainer.setEmptyResultsMessage("no-roles-were-found");
-
-		OrderByComparator<Role> orderByComparator =
-			_usersAdmin.getRoleOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		RowChecker rowChecker = new RoleItemSelectorChecker(
-			_renderResponse, getCheckedRoleIds());
-
-		_searchContainer.setOrderByCol(getOrderByCol());
-		_searchContainer.setOrderByComparator(orderByComparator);
-		_searchContainer.setOrderByType(getOrderByType());
-		_searchContainer.setRowChecker(rowChecker);
-
-		RoleSearchTerms searchTerms =
-			(RoleSearchTerms)_searchContainer.getSearchTerms();
-
-		searchTerms.setType(getType());
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		List<Role> results = _roleService.search(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getTypesObj(), new LinkedHashMap<String, Object>(),
-			_searchContainer.getStart(), _searchContainer.getEnd(),
-			_searchContainer.getOrderByComparator());
-
-		int total = RoleServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getTypesObj(), new LinkedHashMap<String, Object>());
-
-		_searchContainer.setTotal(total);
-
-		_searchContainer.setResults(results);
-
-		return _searchContainer;
+	public SearchContainer<Role> getSearchContainer() {
+		return searchContainer;
 	}
 
 	public int getType() {
@@ -140,17 +68,10 @@ public class RoleItemSelectorViewDisplayContext {
 	}
 
 	protected long[] getCheckedRoleIds() {
-		return ParamUtil.getLongValues(_renderRequest, "checkedRoleIds");
+		return ParamUtil.getLongValues(request, "checkedRoleIds");
 	}
 
-	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
-	private final PortletURL _portletURL;
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
-	private final RoleService _roleService;
-	private SearchContainer<Role> _searchContainer;
 	private final int _type;
-	private final UsersAdmin _usersAdmin;
 
 }

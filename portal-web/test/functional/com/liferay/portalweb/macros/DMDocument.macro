@@ -236,11 +236,15 @@ definition {
 				value1 = "${viewableBy}");
 		}
 
+		AssertElementPresent(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
+
 		AssertClick(
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
-		AssertElementPresent(locator1 = "DocumentsAndMedia#BREADCRUMB_HOME");
+		AssertElementPresent.assertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_HOME");
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}

@@ -24,9 +24,7 @@ import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 
 export default function App() {
-	const mainItem = useSelector(
-		state => state.layoutData.items[state.layoutData.rootItems.main]
-	);
+	const mainItemId = useSelector(state => state.layoutData.rootItems.main);
 	const masterLayoutData = useSelector(state => state.masterLayoutData);
 	const languageId = useSelector(state => state.languageId);
 
@@ -47,7 +45,7 @@ export default function App() {
 			{masterLayoutData.items ? (
 				<MasterLayout />
 			) : (
-				<PageEditor mainItem={mainItem} />
+				<PageEditor mainItemId={mainItemId} />
 			)}
 			{createPortal(<Sidebar />, document.body)}
 		</>

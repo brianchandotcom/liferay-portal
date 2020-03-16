@@ -66,11 +66,12 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.row]: RowWithControls,
 };
 
-export default function PageEditor({mainItem, withinMasterPage = false}) {
+export default function PageEditor({mainItemId, withinMasterPage = false}) {
 	const activeItemId = useActiveItemId();
 	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
 	const layoutData = useSelector(state => state.layoutData);
+	const mainItem = layoutData.items[mainItemId];
 	const pageEditorRef = useRef(null);
 	const selectItem = useSelectItem();
 	const sidebarOpen = useSelector(
@@ -243,7 +244,7 @@ export default function PageEditor({mainItem, withinMasterPage = false}) {
 }
 
 PageEditor.propTypes = {
-	mainItem: getLayoutDataItemPropTypes().isRequired,
+	mainItemId: PropTypes.string.isRequired,
 	withinMasterPage: PropTypes.bool,
 };
 

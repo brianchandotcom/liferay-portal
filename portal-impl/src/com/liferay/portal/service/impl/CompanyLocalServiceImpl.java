@@ -198,7 +198,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		updateVirtualHostname(company.getCompanyId(), virtualHostname);
 
 		try (SafeClosable safeClosable =
-				CompanyThreadLocal.setCompanyIdInitialization(
+				CompanyThreadLocal.setInitializingCompanyId(
 					company.getCompanyId())) {
 
 			if (DBPartitionUtil.addPartition(company.getCompanyId())) {

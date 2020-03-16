@@ -309,7 +309,6 @@ definition {
 
 	macro clickEditableField {
 		var key_fragmentName = "${fragmentName}";
-		var key_id = "${id}";
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
 			Click(locator1 = "Fragment#FRAGMENT_BODY");

@@ -20,6 +20,24 @@ definition {
 
 		PageEditor.clickPublish();
 
+		task ("Sync Site with Analytics Cloud") {
+			Click(locator1 = "AnalyticsCloudConnection#CONTROL_PANEL_MENU");
+
+			Click(locator1 = "AnalyticsCloudConnection#CONFIGURATION_OPTION");
+
+			Click(locator1 = "AnalyticsCloudConnection#INSTANCE_SETTINGS_OPTION");
+
+			Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_BUTTON");
+
+			Click(locator1 = "AnalyticsCloudConnection#SYNCED_SITES_BUTTON");
+
+			Click(locator1 = "AnalyticsCloudConnection#ADD_NEW_PROPERTY_BUTTON");
+
+			Click(locator1 = "AnalyticsCloudConnection#INPUT_LIFERAY_DXP_CHECKBOX");
+
+			Click(locator1 = "AnalyticsCloudConnection#DONE_BUTTON");
+		}		
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/content-page");
 	}
 

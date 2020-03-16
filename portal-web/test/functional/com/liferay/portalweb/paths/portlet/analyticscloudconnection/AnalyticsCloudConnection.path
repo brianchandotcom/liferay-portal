@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>ACConnection</title>
+<title>AnalyticsCloudConnection</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ACConnection</td></tr>
+<tr><td rowspan="1" colspan="3">AnalyticsCloudConnection</td></tr>
 </thead>
 <tbody>
 <tr>

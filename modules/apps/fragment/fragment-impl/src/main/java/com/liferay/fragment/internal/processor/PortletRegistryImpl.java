@@ -132,27 +132,12 @@ public class PortletRegistryImpl implements PortletRegistry {
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		long plid = fragmentEntryLink.getClassPK();
+		List<String> portletIds = getPortletIds(
+			fragmentEntryLink, httpServletRequest);
 
-		if (fragmentEntryLink.getClassNameId() == _portal.getClassNameId(
-				LayoutPageTemplateEntry.class)) {
-
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
-					fragmentEntryLink.getClassPK());
-
-			plid = layoutPageTemplateEntry.getPlid();
-		}
-
-		List<PortletPreferences> portletPreferencesList =
-			_portletPreferencesLocalService.getPortletPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid);
-
-		for (PortletPreferences portletPreferences : portletPreferencesList) {
+		for (String portletId : portletIds) {
 			Portlet portlet = _portletLocalService.getPortletById(
-				fragmentEntryLink.getCompanyId(),
-				portletPreferences.getPortletId());
+				fragmentEntryLink.getCompanyId(), portletId);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -199,6 +184,44 @@ public class PortletRegistryImpl implements PortletRegistry {
 			properties, "javax.portlet.name");
 
 		_portletNames.remove(alias, portletName);
+	}
+
+	private List<String> getPortletIds(
+			FragmentEntryLink fragmentEntryLink,
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		Map<Long, List<String>> fragmentEntryLinkIdPortletIds =
+			(Map<Long, List<String>>)httpServletRequest.getAttribute(
+				"fragmentEntryLinkIdPortletIds");
+
+		if (Validator.isNull(fragmentEntryLinkIdPortletIds)) {
+			long plid = fragmentEntryLink.getClassPK();
+
+			if (fragmentEntryLink.getClassNameId() == _portal.getClassNameId(
+				LayoutPageTemplateEntry.class)) {
+
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
+					_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+						fragmentEntryLink.getClassPK());
+
+				plid = layoutPageTemplateEntry.getPlid();
+			}
+
+			List<PortletPreferences> portletPreferencesList =
+				_portletPreferencesLocalService.getPortletPreferences(
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid);
+
+			return (List<String>) portletPreferencesList.stream().map(
+				portletPreferences -> portletPreferences.getPortletId()
+			);
+
+		}
+		else {
+			return fragmentEntryLinkIdPortletIds.get(
+				fragmentEntryLink.getFragmentEntryLinkId());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -250,6 +250,44 @@
 		}
 	}
 
+	.form-control.form-control-edit {
+		&::placeholder {
+			border-color: #b0b4bb;
+			border-left: 2px solid;
+			color: #b0b4bb;
+			padding-left: 10px;
+		}
+
+		&:focus::placeholder {
+			border-color: transparent;
+		}
+	}
+
+	.has-error .form-control.form-control-edit:not(:focus)::placeholder {
+		border-color: #c67;
+	}
+
+	.form-control.form-control-edit-title {
+		color: #272833;
+		font-size: 60px;
+		line-height: 80px;
+		overflow: hidden;
+		resize: none;
+	}
+
+	.form-control.form-control-edit-subtitle {
+		color: #272833;
+		font-size: 32px;
+		font-weight: 200;
+		line-height: 45px;
+		overflow: hidden;
+		resize: none;
+	}
+
+	.help-block {
+		line-height: 1;
+	}
+
 	.info-bar-container {
 		min-height: 35px;
 		.info-bar-center {
@@ -308,6 +346,17 @@
 		.autofit-col + .autofit-col {
 			padding-left: 0.5rem;
 		}
+	}
+}
+
+.form-control.form-control-unstyled {
+	background: transparent;
+	border-width: 0;
+	box-shadow: none;
+	padding: 0;
+
+	&:focus {
+		box-shadow: none;
 	}
 }
 

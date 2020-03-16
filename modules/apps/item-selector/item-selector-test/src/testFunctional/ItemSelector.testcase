@@ -209,6 +209,8 @@ definition {
 	@description = "This ensures that users can preview the SVG image in item selector."
 	@priority = "5"
 	test PreviewSVG {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(

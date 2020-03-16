@@ -82,7 +82,7 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 		params: {
 			page,
 			pageSize,
-			sort: 'workflowInstanceId:asc'
+			sort: 'workflowInstanceId:asc',
 		},
 		url: `/workflow-tasks`,
 	});

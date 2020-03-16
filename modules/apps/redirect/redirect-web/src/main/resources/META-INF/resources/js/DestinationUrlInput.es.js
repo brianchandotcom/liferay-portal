@@ -14,16 +14,25 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useState} from 'react';
 
 const VALIDATION_TYPE = {
+	checking: 'checking',
 	error: 'has-error',
 	info: 'has-success',
 	warning: 'has-warning',
 };
 
 const Notification = ({type}) => {
-	if (type === VALIDATION_TYPE.error) {
+	if (type === VALIDATION_TYPE.checking) {
+		return (
+			<>
+				<ClayLoadingIndicator className="d-inline-block m-0" small />
+				{Liferay.Language.get('cheking-url')}
+			</>
+		);
+	} else if (type === VALIDATION_TYPE.error) {
 		return Liferay.Language.get('this-field-is-required');
 	} else if (type === VALIDATION_TYPE.info) {
 		return (
@@ -49,14 +58,18 @@ const DestinationUrlInput = ({initialUrl}) => {
 	const onInputBlur = event => {
 		const url = event.currentTarget.value;
 
-		setValidationType('');
-
 		if (!url) {
 			setValidationType(VALIDATION_TYPE.error);
-		} else if (url === 'a') {
-			setValidationType(VALIDATION_TYPE.warning);
 		} else {
-			setValidationType(VALIDATION_TYPE.info);
+			setValidationType(VALIDATION_TYPE.checking);
+
+			setTimeout(() => {
+				if (url === 'a') {
+					setValidationType(VALIDATION_TYPE.warning);
+				} else {
+					setValidationType(VALIDATION_TYPE.info);
+				}
+			}, 1000)
 		}
 	};
 

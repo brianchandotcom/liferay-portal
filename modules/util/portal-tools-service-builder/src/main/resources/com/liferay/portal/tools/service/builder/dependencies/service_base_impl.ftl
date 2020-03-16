@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.File;
@@ -740,6 +741,13 @@ import org.osgi.service.component.annotations.Reference;
 		@Override
 		public PersistedModel deletePersistedModel(PersistedModel persistedModel) throws PortalException {
 			return ${entity.varName}LocalService.delete${entity.name}((${entity.name})persistedModel);
+		}
+
+		<#if serviceBuilder.isVersionGTE_7_4_0()>
+			@Override
+		</#if>
+		public BasePersistence<${entity.name}> getBasePersistence() {
+			return ${entity.varName}Persistence;
 		}
 
 		/**

@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.filter.DateRangeFilterBuilder;
 import com.liferay.portal.search.filter.FilterBuilders;
@@ -343,17 +344,21 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			return;
 		}
 
-		BooleanFilter roleIdsBooleanFilter = new BooleanFilter();
+		TermsFilter assigneeClassPKsTermsFilter = new TermsFilter(
+			KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_PKS);
 
-		for (Long roleId : roleIds) {
-			roleIdsBooleanFilter.add(
-				new TermFilter(
-					KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_PKS,
-					roleId.toString()),
-				BooleanClauseOccur.SHOULD);
-		}
+		assigneeClassPKsTermsFilter.addValues(
+			Stream.of(
+				roleIds
+			).flatMap(
+				List::stream
+			).map(
+				String::valueOf
+			).toArray(
+				String[]::new
+			));
 
-		booleanFilter.add(roleIdsBooleanFilter, BooleanClauseOccur.MUST);
+		booleanFilter.add(assigneeClassPKsTermsFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected void appendSearchByUserRolesTerm(
@@ -486,12 +491,25 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 
 		BooleanFilter roleClassPKBooleanFilter = new BooleanFilter();
 
-		for (Long roleId : roleIds) {
-			roleClassPKBooleanFilter.add(
-				new TermFilter(
-					KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_PKS,
-					String.valueOf(roleId)));
+		if (ListUtil.isEmpty(roleIds)) {
+			return roleClassPKBooleanFilter;
 		}
+
+		TermsFilter assigneeClassPKsTermsFilter = new TermsFilter(
+			KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_PKS);
+
+		assigneeClassPKsTermsFilter.addValues(
+			Stream.of(
+				roleIds
+			).flatMap(
+				List::stream
+			).map(
+				String::valueOf
+			).toArray(
+				String[]::new
+			));
+
+		roleClassPKBooleanFilter.add(assigneeClassPKsTermsFilter);
 
 		return roleClassPKBooleanFilter;
 	}
@@ -510,17 +528,24 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 					String.valueOf(entry.getKey())),
 				BooleanClauseOccur.MUST);
 
-			BooleanFilter assigneeGroupIdsBooleanFilter = new BooleanFilter();
+			if (SetUtil.isNotEmpty(entry.getValue())) {
+				TermsFilter assigneeGroupIdsTermsFilter = new TermsFilter(
+					KaleoTaskInstanceTokenField.ASSIGNEE_GROUP_IDS);
 
-			for (Long assigneeGroupId : entry.getValue()) {
-				assigneeGroupIdsBooleanFilter.add(
-					new TermFilter(
-						KaleoTaskInstanceTokenField.ASSIGNEE_GROUP_IDS,
-						String.valueOf(assigneeGroupId)));
+				assigneeGroupIdsTermsFilter.addValues(
+					Stream.of(
+						entry.getValue()
+					).flatMap(
+						Set::stream
+					).map(
+						String::valueOf
+					).toArray(
+						String[]::new
+					));
+
+				roleIdGroupIdsBooleanFilter.add(
+					assigneeGroupIdsTermsFilter, BooleanClauseOccur.MUST);
 			}
-
-			roleIdGroupIdsBooleanFilter.add(
-				assigneeGroupIdsBooleanFilter, BooleanClauseOccur.MUST);
 
 			roleIdGroupIdsMapBooleanFilter.add(
 				roleIdGroupIdsBooleanFilter, BooleanClauseOccur.SHOULD);

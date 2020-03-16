@@ -257,7 +257,7 @@ public class DepotGroupItemSelectorView
 
 		@Override
 		public boolean isShowBreadcrumb() {
-			return _depotGroupItemSelectorCriterion.isShowBreadcrumb();
+			return false;
 		}
 
 		private final DepotGroupItemSelectorCriterion

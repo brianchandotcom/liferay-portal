@@ -187,12 +187,12 @@ public class LayoutPageTemplatesImporterTest {
 		Assert.assertEquals(
 			"danger",
 			containerLayoutStructureItem.getBackgroundColorCssClass());
+		Assert.assertEquals(
+			"fluid", containerLayoutStructureItem.getContainerType());
 		Assert.assertEquals(5, containerLayoutStructureItem.getPaddingBottom());
 		Assert.assertEquals(
 			5, containerLayoutStructureItem.getPaddingHorizontal());
 		Assert.assertEquals(5, containerLayoutStructureItem.getPaddingTop());
-		Assert.assertEquals(
-			"fluid", containerLayoutStructureItem.getContainerType());
 
 		JSONObject jsonObject =
 			containerLayoutStructureItem.getBackgroundImageJSONObject();
@@ -480,11 +480,11 @@ public class LayoutPageTemplatesImporterTest {
 			freeMarkerFragmentEntryProcessorJSONObject.getString(
 				"bottomSpacing"));
 		Assert.assertEquals(
-			"w-0",
-			freeMarkerFragmentEntryProcessorJSONObject.getString("imageSize"));
-		Assert.assertEquals(
 			"center",
 			freeMarkerFragmentEntryProcessorJSONObject.getString("imageAlign"));
+		Assert.assertEquals(
+			"w-0",
+			freeMarkerFragmentEntryProcessorJSONObject.getString("imageSize"));
 	}
 
 	private void _validateTextFragmentEntryLinkEditableValues(

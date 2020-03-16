@@ -441,9 +441,17 @@ public interface WebKeys {
 
 	public static final String PAGE_TOP = "PAGE_TOP";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String PARALLEL_RENDERING_MERGE_LOCK =
 		"PARALLEL_RENDERING_MERGE_LOCK";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String PARALLEL_RENDERING_TIMEOUT_ERROR =
 		"PARALLEL_RENDERING_TIMEOUT_ERROR";
 
@@ -498,6 +506,10 @@ public interface WebKeys {
 
 	public static final String PORTLET_ID = "PORTLET_ID";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String PORTLET_PARALLEL_RENDER =
 		"PORTLET_PARALLEL_RENDER";
 

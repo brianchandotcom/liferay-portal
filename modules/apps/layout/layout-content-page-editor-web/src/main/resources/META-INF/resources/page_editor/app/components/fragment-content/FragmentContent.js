@@ -26,6 +26,7 @@ import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperience
 import FragmentService from '../../services/FragmentService';
 import {useDispatch, useSelector} from '../../store/index';
 import {useGetFieldValue} from '../CollectionItemContext';
+import PageEditor from '../PageEditor';
 import UnsafeHTML from '../UnsafeHTML';
 import {
 	useEditableProcessorUniqueId,
@@ -147,6 +148,32 @@ const FragmentContent = React.forwardRef(
 			prefixedSegmentsExperienceId,
 		]);
 
+		const dropZones = useSelector(state => {
+			const fragmentEntryLink =
+				state.fragmentEntryLinks[fragmentEntryLinkId] || {};
+
+			return fragmentEntryLink.dropZones || {};
+		});
+
+		const getPortals = element =>
+			Array.from(element.querySelectorAll('lfr-dropzone')).map(
+				dropZoneElement => {
+					const mainItemId =
+						dropZones[dropZoneElement.getAttribute('id')];
+
+					return {
+						Component: () =>
+							mainItemId && (
+								<PageEditor
+									mainItemId={mainItemId}
+									withinMasterPage
+								/>
+							),
+						element: dropZoneElement,
+					};
+				}
+			);
+
 		const onFloatingToolbarButtonClick = (buttonId, editableId) => {
 			if (buttonId === EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit.id) {
 				setEditableProcessorUniqueId(
@@ -167,6 +194,7 @@ const FragmentContent = React.forwardRef(
 							'page-editor__fragment-content--portlet-topper-hidden': !canUpdateLayoutContent,
 						})}
 						contentRef={ref}
+						getPortals={getPortals}
 						markup={content}
 						onRender={updateEditables}
 					/>

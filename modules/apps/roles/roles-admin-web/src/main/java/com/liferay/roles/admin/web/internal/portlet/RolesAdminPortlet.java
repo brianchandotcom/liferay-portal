@@ -27,9 +27,11 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.petra.lang.SafeClosable;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.exception.RoleNameException;
@@ -750,12 +752,13 @@ public class RolesAdminPortlet extends MVCPortlet {
 					portletId, PanelCategoryKeys.SITE_ADMINISTRATION)) {
 
 			if (_depotConfiguration.isEnabled()) {
-				selResource = DepotEntry.class.getName();
-				actionId = ActionKeys.VIEW_SITE_ADMINISTRATION;
-
 				updateAction(
-					role, scopeGroupId, selResource, actionId, true, scope,
-					groupIds);
+					role, scopeGroupId, DepotEntry.class.getName(),
+					ActionKeys.VIEW_SITE_ADMINISTRATION, true, scope,
+					ArrayUtil.filter(
+						groupIds,
+						groupId -> _isDepotGroup(
+							role.getCompanyId(), groupId)));
 			}
 
 			selResource = Group.class.getName();
@@ -786,6 +789,21 @@ public class RolesAdminPortlet extends MVCPortlet {
 					role, scopeGroupId, modelResource, ActionKeys.VIEW, true,
 					scope, groupIds);
 			}
+		}
+	}
+
+	private boolean _isDepotGroup(long companyId, String groupKey) {
+		try {
+			Group group = _groupService.getGroup(companyId, groupKey);
+
+			if (group.getType() == GroupConstants.TYPE_DEPOT) {
+				return true;
+			}
+
+			return false;
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 

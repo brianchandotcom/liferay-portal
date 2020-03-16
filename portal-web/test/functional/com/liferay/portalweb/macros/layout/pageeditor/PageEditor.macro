@@ -748,6 +748,13 @@ definition {
 				value1 = "${paddingBottom}");
 		}
 
+		if (isSet(paddingHorizontal)) {
+			Select(
+				key_fieldLabel = "Padding Horizontal",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${paddingHorizontal}");
+		}
+
 		if (isSet(paddingTop)) {
 			Select(
 				key_fieldLabel = "Padding Top",

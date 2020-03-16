@@ -12,13 +12,13 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.internal.model.listener;
+package com.liferay.portal.workflow.kaleo.metrics.integration.internal.model.listener;
 
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.workflow.kaleo.model.KaleoTask;
+import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
-import com.liferay.portal.workflow.metrics.internal.search.index.NodeWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.TransitionWorkflowMetricsIndexer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,24 +27,27 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = ModelListener.class)
-public class KaleoTaskModelListener extends BaseModelListener<KaleoTask> {
+public class KaleoTransitionModelListener
+	extends BaseModelListener<KaleoTransition> {
 
 	@Override
-	public void onAfterCreate(KaleoTask kaleoTask) {
+	public void onAfterCreate(KaleoTransition kaleoTransition) {
 		_workflowMetricsPortalExecutor.execute(
-			() -> _nodeWorkflowMetricsIndexer.addDocument(
-				_nodeWorkflowMetricsIndexer.createDocument(kaleoTask)));
+			() -> _transitionWorkflowMetricsIndexer.addDocument(
+				_transitionWorkflowMetricsIndexer.createDocument(
+					kaleoTransition)));
 	}
 
 	@Override
-	public void onAfterRemove(KaleoTask kaleoTask) {
+	public void onAfterRemove(KaleoTransition kaleoTransition) {
 		_workflowMetricsPortalExecutor.execute(
-			() -> _nodeWorkflowMetricsIndexer.deleteDocument(
-				_nodeWorkflowMetricsIndexer.createDocument(kaleoTask)));
+			() -> _transitionWorkflowMetricsIndexer.deleteDocument(
+				_transitionWorkflowMetricsIndexer.createDocument(
+					kaleoTransition)));
 	}
 
 	@Reference
-	private NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;
+	private TransitionWorkflowMetricsIndexer _transitionWorkflowMetricsIndexer;
 
 	@Reference
 	private WorkflowMetricsPortalExecutor _workflowMetricsPortalExecutor;

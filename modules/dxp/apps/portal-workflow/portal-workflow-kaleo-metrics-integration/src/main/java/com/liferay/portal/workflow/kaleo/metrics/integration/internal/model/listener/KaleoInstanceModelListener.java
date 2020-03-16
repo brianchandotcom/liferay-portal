@@ -12,14 +12,13 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.internal.model.listener;
+package com.liferay.portal.workflow.kaleo.metrics.integration.internal.model.listener;
 
-import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
-import com.liferay.portal.workflow.metrics.internal.search.index.ProcessWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.InstanceWorkflowMetricsIndexer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,41 +27,32 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = ModelListener.class)
-public class KaleoDefinitionModelListener
-	extends BaseModelListener<KaleoDefinition> {
+public class KaleoInstanceModelListener
+	extends BaseModelListener<KaleoInstance> {
 
 	@Override
-	public void onAfterCreate(KaleoDefinition kaleoDefinition)
-		throws ModelListenerException {
-
+	public void onAfterCreate(KaleoInstance kaleoInstance) {
 		_workflowMetricsPortalExecutor.execute(
-			() -> _processWorkflowMetricsIndexer.addDocument(
-				_processWorkflowMetricsIndexer.createDocument(
-					kaleoDefinition)));
+			() -> _instanceWorkflowMetricsIndexer.addDocument(
+				_instanceWorkflowMetricsIndexer.createDocument(kaleoInstance)));
 	}
 
 	@Override
-	public void onAfterUpdate(KaleoDefinition kaleoDefinition)
-		throws ModelListenerException {
-
+	public void onAfterRemove(KaleoInstance kaleoInstance) {
 		_workflowMetricsPortalExecutor.execute(
-			() -> _processWorkflowMetricsIndexer.updateDocument(
-				_processWorkflowMetricsIndexer.createDocument(
-					kaleoDefinition)));
+			() -> _instanceWorkflowMetricsIndexer.deleteDocument(
+				_instanceWorkflowMetricsIndexer.createDocument(kaleoInstance)));
 	}
 
 	@Override
-	public void onBeforeRemove(KaleoDefinition kaleoDefinition)
-		throws ModelListenerException {
-
+	public void onAfterUpdate(KaleoInstance kaleoInstance) {
 		_workflowMetricsPortalExecutor.execute(
-			() -> _processWorkflowMetricsIndexer.deleteDocument(
-				_processWorkflowMetricsIndexer.createDocument(
-					kaleoDefinition)));
+			() -> _instanceWorkflowMetricsIndexer.updateDocument(
+				_instanceWorkflowMetricsIndexer.createDocument(kaleoInstance)));
 	}
 
 	@Reference
-	private ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;
+	private InstanceWorkflowMetricsIndexer _instanceWorkflowMetricsIndexer;
 
 	@Reference
 	private WorkflowMetricsPortalExecutor _workflowMetricsPortalExecutor;

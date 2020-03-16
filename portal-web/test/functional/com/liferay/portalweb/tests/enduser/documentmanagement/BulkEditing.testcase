@@ -69,6 +69,8 @@ definition {
 	@description = "This test covers LPS-94956. It ensures that users can delete common category tags by using the bulk append action."
 	@priority = "5"
 	test DeleteCommonCategoryTags {
+		property portal.acceptance = "true";
+
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg");
 
 		for (var categoryName : list "Books,Plants,Pets") {
@@ -122,6 +124,8 @@ definition {
 	@description = "This test covers LPS-94955. It ensures that users can edit category tags by using the bulk append action."
 	@priority = "5"
 	test EditAndAppendCategoryTags {
+		property portal.acceptance = "true";
+
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg");
 
 		ProductMenu.gotoPortlet(

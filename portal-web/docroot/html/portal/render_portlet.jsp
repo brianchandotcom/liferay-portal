@@ -850,15 +850,6 @@ if (portlet.isActive() && portlet.isInclude() && portlet.isReady() && supportsMi
 	catch (Exception e) {
 		portletException = true;
 
-		// Under parallel rendering context. An interrupted state means the call
-		// was cancelled and so we should terminate the render process.
-
-		Thread currentThread = Thread.currentThread();
-
-		if (currentThread.isInterrupted()) {
-			return;
-		}
-
 		LogUtil.log(_log, e);
 	}
 }

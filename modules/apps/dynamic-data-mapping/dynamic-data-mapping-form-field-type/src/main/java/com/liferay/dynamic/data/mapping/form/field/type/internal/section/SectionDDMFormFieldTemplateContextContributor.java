@@ -64,6 +64,10 @@ public class SectionDDMFormFieldTemplateContextContributor
 		}
 
 		return HashMapBuilder.<String, Object>put(
+			"dataDefinitionId",
+			DDMFormFieldTypeUtil.getPropertyValue(
+				ddmFormFieldRenderingContext, "dataDefinitionId")
+		).put(
 			"nestedFields",
 			getNestedFields(
 				nestedFieldsMap,

@@ -29,10 +29,17 @@ const handleFieldSetAdded = (props, state, event) => {
 		nestedFields.push(nestedField);
 	});
 
-	const sectionField = createSection(
+	let sectionField = createSection(
 		props,
 		{skipFieldNameGeneration: false},
 		nestedFields
+	);
+
+	sectionField = updateField(
+		props,
+		sectionField,
+		'dataDefinitionId',
+		fieldSet.id
 	);
 
 	return addField(props, {

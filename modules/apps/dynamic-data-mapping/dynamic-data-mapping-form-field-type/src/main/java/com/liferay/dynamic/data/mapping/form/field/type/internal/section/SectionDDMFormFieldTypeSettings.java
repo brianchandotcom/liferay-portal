@@ -42,7 +42,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"label", "name", "repeatable", "rows", "type"
+								"dataDefinitionId", "label", "name",
+								"repeatable", "rows", "type"
 							}
 						)
 					}
@@ -53,6 +54,9 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 )
 public interface SectionDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
+
+	@DDMFormField(type = "numeric", visibilityExpression = "FALSE")
+	public String dataDefinitionId();
 
 	@DDMFormField(
 		dataType = "json", type = "text", visibilityExpression = "FALSE"

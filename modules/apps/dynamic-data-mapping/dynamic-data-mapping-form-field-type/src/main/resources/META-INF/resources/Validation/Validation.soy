@@ -88,7 +88,7 @@
 			{param value: $enableValidation /}
 		{/call}
 
-		{call Select.render}
+		{call SelectAdapter.render}
 			{param disableEmptyOption: true /}
 			{param events: [
 				'fieldEdited': $_updateValue

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.servlet.TempAttributesServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -248,9 +247,7 @@ public class PortletContainerUtil {
 		String columnId, Integer columnPos, Integer columnCount,
 		Boolean boundary, Boolean decorate) {
 
-		if ((_LAYOUT_PARALLEL_RENDER_ENABLE && ServerDetector.isTomcat()) ||
-			_PORTLET_CONTAINER_RESTRICT) {
-
+		if (_PORTLET_CONTAINER_RESTRICT) {
 			RestrictPortletServletRequest restrictPortletServletRequest =
 				new RestrictPortletServletRequest(httpServletRequest);
 
@@ -404,8 +401,6 @@ public class PortletContainerUtil {
 			}
 		}
 	}
-
-	private static final boolean _LAYOUT_PARALLEL_RENDER_ENABLE = false;
 
 	private static final boolean _PORTLET_CONTAINER_RESTRICT =
 		GetterUtil.getBoolean(

@@ -27,7 +27,7 @@
 		<property name="minThreads" value="20" />
 		<property name="SPIAgentClassName" value="com.liferay.portal.resiliency.spi.agent.HttpClientSPIAgent" />
 		<property name="SPIPingInterval" value="5000" />
-		<property name="SPIPortalProperties" value="layout.parallel.render.enable=false,portal.resiliency.enabled=false" />
+		<property name="SPIPortalProperties" value="portal.resiliency.enabled=false" />
 		<property name="SPIProviderName" value="Tomcat SPI Provider" />
 		<property name="SPIRegisterTimeout" value="300000" />
 		<property name="SPIShutdownTimeout" value="300000" />

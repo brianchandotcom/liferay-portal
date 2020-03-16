@@ -62,7 +62,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	public boolean hasPermission(
 		Group group, String name, long primKey, String actionId) {
 
-		if ((group != null) && _hasAllPermissions(group.getGroupId())) {
+		if ((group != null) && isGroupOwner(group.getGroupId())) {
 			return true;
 		}
 
@@ -75,7 +75,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	public boolean hasPermission(
 		Group group, String name, String primKey, String actionId) {
 
-		if ((group != null) && _hasAllPermissions(group.getGroupId())) {
+		if ((group != null) && isGroupOwner(group.getGroupId())) {
 			return true;
 		}
 
@@ -86,7 +86,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	public boolean hasPermission(
 		long groupId, String name, long primKey, String actionId) {
 
-		if (_hasAllPermissions(groupId)) {
+		if (isGroupOwner(groupId)) {
 			return true;
 		}
 
@@ -99,7 +99,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	public boolean hasPermission(
 		long groupId, String name, String primKey, String actionId) {
 
-		if (_hasAllPermissions(groupId)) {
+		if (isGroupOwner(groupId)) {
 			return true;
 		}
 
@@ -224,14 +224,6 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		}
 
 		return value;
-	}
-
-	private boolean _hasAllPermissions(long groupId) {
-		if (isGroupAdmin(groupId) || isGroupOwner(groupId)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _hasPermission(

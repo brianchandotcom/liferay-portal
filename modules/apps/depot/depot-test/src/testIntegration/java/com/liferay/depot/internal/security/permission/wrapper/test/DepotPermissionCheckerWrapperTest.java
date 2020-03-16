@@ -129,25 +129,6 @@ public class DepotPermissionCheckerWrapperTest {
 	}
 
 	@Test
-	public void testHasPermissionReturnsTrueForAssetLibraryAdministrators()
-		throws Exception {
-
-		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
-
-		DepotTestUtil.withAssetLibraryAdministrator(
-			depotEntry,
-			user -> {
-				PermissionChecker permissionChecker =
-					_permissionCheckerFactory.create(user);
-
-				Assert.assertTrue(
-					permissionChecker.hasPermission(
-						depotEntry.getGroup(), DLFileEntry.class.getName(),
-						DLFileEntry.class.getName(), ActionKeys.UPDATE));
-			});
-	}
-
-	@Test
 	public void testHasPermissionReturnsTrueForAssetLibraryOwners()
 		throws Exception {
 

@@ -9,7 +9,7 @@
 	<div class="input-group ${searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope()?then("search-bar-scope","search-bar-simple")}">
 		<#if searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope()>
 			<div class="input-group-item input-group-item-shrink input-group-prepend">
-				<button ariaLabel="${languageUtil.get(locale, 'submit')}" class="btn btn-secondary" type="submit">
+				<button aria-label="${languageUtil.get(locale, "submit")}" class="btn btn-secondary" type="submit">
 					<@clay.icon symbol="search" />
 				</button>
 			</div>
@@ -48,7 +48,7 @@
 				label=""
 				name=htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())
 				placeholder=searchBarPortletDisplayContext.getInputPlaceholder()
-				title=languageUtil.get(locale, 'search')
+				title=languageUtil.get(locale, "search")
 				type="text"
 				useNamespace=false
 				value=htmlUtil.escape(searchBarPortletDisplayContext.getKeywords())
@@ -62,13 +62,13 @@
 					id="${namespace + stringUtil.randomId()}"
 					name="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())}"
 					placeholder="${searchBarPortletDisplayContext.getInputPlaceholder()}"
-					title="${languageUtil.get(locale, 'search')}"
+					title="${languageUtil.get(locale, "search")}"
 					type="text"
 					value="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywords())}"
 				/>
 
 				<div class="input-group-inset-item input-group-inset-item-before">
-					<button ariaLabel="${languageUtil.get(locale, 'submit')}" class="btn btn-unstyled" type="submit">
+					<button aria-label="${languageUtil.get(locale, "submit")}" class="btn btn-unstyled" type="submit">
 						<@clay.icon symbol="search" />
 					</button>
 				</div>

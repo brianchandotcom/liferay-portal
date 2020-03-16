@@ -3,7 +3,7 @@
 		<label>
 			<span class="text-truncate-inline">
 				<span class="text-truncate">
-					${languageUtil.get(locale, 'sort-by')}
+					${languageUtil.get(locale, "sort-by")}
 				</span>
 			</span>
 		</label>

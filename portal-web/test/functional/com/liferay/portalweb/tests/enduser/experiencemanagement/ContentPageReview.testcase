@@ -685,12 +685,6 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Comments");
 
-		Click(
-			key_content = "This is static text.",
-			key_fragmentClass = "static-text",
-			key_position = "1",
-			locator1 = "Fragment#FRAGMENT");
-
 		PageEditor.gotoCommentList();
 
 		PageEditor.viewCommentList(

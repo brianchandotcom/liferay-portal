@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -191,8 +192,8 @@ public class PortletRegistryImpl implements PortletRegistry {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		Map<Long, List<String>> fragmentEntryLinkIdPortletIds =
-			(Map<Long, List<String>>)httpServletRequest.getAttribute(
+		Map<Long, Map<String, String>> fragmentEntryLinkIdPortletIds =
+			(Map<Long, Map<String, String>>)httpServletRequest.getAttribute(
 				"fragmentEntryLinkIdPortletIds");
 
 		if (Validator.isNull(fragmentEntryLinkIdPortletIds)) {
@@ -219,8 +220,10 @@ public class PortletRegistryImpl implements PortletRegistry {
 
 		}
 		else {
-			return fragmentEntryLinkIdPortletIds.get(
+			Map <String, String> portletIds = fragmentEntryLinkIdPortletIds.get(
 				fragmentEntryLink.getFragmentEntryLinkId());
+
+			return new ArrayList<>(portletIds.values());
 		}
 	}
 

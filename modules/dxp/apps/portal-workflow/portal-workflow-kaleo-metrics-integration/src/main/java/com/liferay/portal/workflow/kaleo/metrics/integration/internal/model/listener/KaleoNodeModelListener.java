@@ -14,12 +14,11 @@
 
 package com.liferay.portal.workflow.kaleo.metrics.integration.internal.model.listener;
 
-import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
-import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
-import com.liferay.portal.workflow.metrics.internal.search.index.NodeWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
 
 import java.util.Objects;
 
@@ -30,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = ModelListener.class)
-public class KaleoNodeModelListener extends BaseModelListener<KaleoNode> {
+public class KaleoNodeModelListener extends BaseKaleoModelListener<KaleoNode> {
 
 	@Override
 	public void onAfterCreate(KaleoNode kaleoNode) {
@@ -38,9 +37,20 @@ public class KaleoNodeModelListener extends BaseModelListener<KaleoNode> {
 			return;
 		}
 
-		_workflowMetricsPortalExecutor.execute(
-			() -> _nodeWorkflowMetricsIndexer.addDocument(
-				_nodeWorkflowMetricsIndexer.createDocument(kaleoNode)));
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			getKaleoDefinitionVersion(kaleoNode.getKaleoDefinitionVersionId());
+
+		if (Objects.isNull(kaleoDefinitionVersion)) {
+			return;
+		}
+
+		_nodeWorkflowMetricsIndexer.addNode(
+			kaleoNode.getCompanyId(), kaleoNode.getCreateDate(),
+			kaleoNode.isInitial(), kaleoNode.getModifiedDate(),
+			kaleoNode.getName(), kaleoNode.getKaleoNodeId(),
+			kaleoNode.getKaleoDefinitionId(),
+			kaleoDefinitionVersion.getVersion(), kaleoNode.isTerminal(),
+			kaleoNode.getType());
 	}
 
 	@Override
@@ -49,15 +59,11 @@ public class KaleoNodeModelListener extends BaseModelListener<KaleoNode> {
 			return;
 		}
 
-		_workflowMetricsPortalExecutor.execute(
-			() -> _nodeWorkflowMetricsIndexer.deleteDocument(
-				_nodeWorkflowMetricsIndexer.createDocument(kaleoNode)));
+		_nodeWorkflowMetricsIndexer.deleteNode(
+			kaleoNode.getCompanyId(), kaleoNode.getKaleoNodeId());
 	}
 
 	@Reference
 	private NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;
-
-	@Reference
-	private WorkflowMetricsPortalExecutor _workflowMetricsPortalExecutor;
 
 }

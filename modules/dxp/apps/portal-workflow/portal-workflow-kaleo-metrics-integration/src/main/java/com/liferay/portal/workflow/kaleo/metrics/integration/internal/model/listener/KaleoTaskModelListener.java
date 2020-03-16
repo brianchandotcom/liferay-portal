@@ -14,11 +14,13 @@
 
 package com.liferay.portal.workflow.kaleo.metrics.integration.internal.model.listener;
 
-import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.workflow.kaleo.definition.NodeType;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
-import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
-import com.liferay.portal.workflow.metrics.internal.search.index.NodeWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,26 +29,31 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = ModelListener.class)
-public class KaleoTaskModelListener extends BaseModelListener<KaleoTask> {
+public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 
 	@Override
 	public void onAfterCreate(KaleoTask kaleoTask) {
-		_workflowMetricsPortalExecutor.execute(
-			() -> _nodeWorkflowMetricsIndexer.addDocument(
-				_nodeWorkflowMetricsIndexer.createDocument(kaleoTask)));
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			getKaleoDefinitionVersion(kaleoTask.getKaleoDefinitionVersionId());
+
+		if (Objects.isNull(kaleoDefinitionVersion)) {
+			return;
+		}
+
+		_nodeWorkflowMetricsIndexer.addNode(
+			kaleoTask.getCompanyId(), kaleoTask.getCreateDate(), false,
+			kaleoTask.getModifiedDate(), kaleoTask.getName(),
+			kaleoTask.getKaleoTaskId(), kaleoTask.getKaleoDefinitionId(),
+			kaleoDefinitionVersion.getVersion(), false, NodeType.TASK.name());
 	}
 
 	@Override
 	public void onAfterRemove(KaleoTask kaleoTask) {
-		_workflowMetricsPortalExecutor.execute(
-			() -> _nodeWorkflowMetricsIndexer.deleteDocument(
-				_nodeWorkflowMetricsIndexer.createDocument(kaleoTask)));
+		_nodeWorkflowMetricsIndexer.deleteNode(
+			kaleoTask.getCompanyId(), kaleoTask.getKaleoTaskId());
 	}
 
 	@Reference
 	private NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;
-
-	@Reference
-	private WorkflowMetricsPortalExecutor _workflowMetricsPortalExecutor;
 
 }

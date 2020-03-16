@@ -12,6 +12,26 @@
  * details.
  */
 
+export const containsFieldSet = (dataDefinition, dataDefinitionId) => {
+	let hasFieldSet = false;
+
+	forEachDataDefinitionField(dataDefinition, dataDefinitionField => {
+		const {customProperties, fieldType} = dataDefinitionField;
+
+		if (
+			fieldType === 'section' &&
+			customProperties &&
+			customProperties.dataDefinitionId == dataDefinitionId
+		) {
+			hasFieldSet = true;
+		}
+
+		return hasFieldSet;
+	});
+
+	return hasFieldSet;
+};
+
 export const forEachDataDefinitionField = (
 	dataDefinition = {dataDefinitionFields: []},
 	fn

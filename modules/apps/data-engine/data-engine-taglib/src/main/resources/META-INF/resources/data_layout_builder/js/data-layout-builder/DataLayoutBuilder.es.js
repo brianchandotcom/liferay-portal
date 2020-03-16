@@ -239,6 +239,7 @@ class DataLayoutBuilder extends React.Component {
 
 		return {
 			description: dataDefinition.description[editingLanguageId],
+			id: dataDefinition.id,
 			localizedDescription: dataDefinition.description,
 			localizedTitle: dataDefinition.name,
 			pages: dataLayout.dataLayoutPages.map(dataLayoutPage => ({

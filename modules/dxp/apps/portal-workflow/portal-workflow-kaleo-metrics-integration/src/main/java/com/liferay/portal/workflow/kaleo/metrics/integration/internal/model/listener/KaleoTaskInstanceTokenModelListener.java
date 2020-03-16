@@ -12,16 +12,13 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.internal.model.listener;
+package com.liferay.portal.workflow.kaleo.metrics.integration.internal.model.listener;
 
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.workflow.kaleo.definition.NodeType;
-import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
-import com.liferay.portal.workflow.metrics.internal.search.index.NodeWorkflowMetricsIndexer;
-
-import java.util.Objects;
+import com.liferay.portal.workflow.metrics.internal.search.index.TaskWorkflowMetricsIndexer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,32 +27,35 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = ModelListener.class)
-public class KaleoNodeModelListener extends BaseModelListener<KaleoNode> {
+public class KaleoTaskInstanceTokenModelListener
+	extends BaseModelListener<KaleoTaskInstanceToken> {
 
 	@Override
-	public void onAfterCreate(KaleoNode kaleoNode) {
-		if (!Objects.equals(kaleoNode.getType(), NodeType.STATE.name())) {
-			return;
-		}
-
+	public void onAfterCreate(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 		_workflowMetricsPortalExecutor.execute(
-			() -> _nodeWorkflowMetricsIndexer.addDocument(
-				_nodeWorkflowMetricsIndexer.createDocument(kaleoNode)));
+			() -> _taskWorkflowMetricsIndexer.addDocument(
+				_taskWorkflowMetricsIndexer.createDocument(
+					kaleoTaskInstanceToken)));
 	}
 
 	@Override
-	public void onAfterRemove(KaleoNode kaleoNode) {
-		if (!Objects.equals(kaleoNode.getType(), NodeType.STATE.name())) {
-			return;
-		}
-
+	public void onAfterRemove(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 		_workflowMetricsPortalExecutor.execute(
-			() -> _nodeWorkflowMetricsIndexer.deleteDocument(
-				_nodeWorkflowMetricsIndexer.createDocument(kaleoNode)));
+			() -> _taskWorkflowMetricsIndexer.deleteDocument(
+				_taskWorkflowMetricsIndexer.createDocument(
+					kaleoTaskInstanceToken)));
+	}
+
+	@Override
+	public void onAfterUpdate(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
+		_workflowMetricsPortalExecutor.execute(
+			() -> _taskWorkflowMetricsIndexer.updateDocument(
+				_taskWorkflowMetricsIndexer.createDocument(
+					kaleoTaskInstanceToken)));
 	}
 
 	@Reference
-	private NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;
+	private TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;
 
 	@Reference
 	private WorkflowMetricsPortalExecutor _workflowMetricsPortalExecutor;

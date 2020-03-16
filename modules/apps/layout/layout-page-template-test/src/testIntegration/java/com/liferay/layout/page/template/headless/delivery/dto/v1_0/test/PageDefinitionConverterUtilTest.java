@@ -26,6 +26,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.ColumnDefinition;
+import com.liferay.headless.delivery.dto.v1_0.DropZoneDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldBackgroundImage;
@@ -124,6 +125,58 @@ public class PageDefinitionConverterUtilTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				_serviceContext);
+	}
+
+	@Test
+	public void testToPageDefinitionDropZoneAllowedFragments()
+		throws Exception {
+
+		_addLayoutPageTemplateStructure(
+			"layout_data_drop_zone_allowed_fragments.json", new HashMap<>());
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			_layoutPageTemplateEntry.getPlid());
+
+		PageDefinition pageDefinition =
+			PageDefinitionConverterUtil.toPageDefinition(
+				_fragmentCollectionContributorTracker,
+				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
+				layout);
+
+		PageElement rootPageElement = pageDefinition.getPageElement();
+
+		Assert.assertEquals(PageElement.Type.ROOT, rootPageElement.getType());
+
+		PageElement[] pageElements = rootPageElement.getPageElements();
+
+		Assert.assertEquals(
+			Arrays.toString(pageElements), 1, pageElements.length);
+
+		PageElement dropZonePageElement = pageElements[0];
+
+		Assert.assertEquals(
+			PageElement.Type.DROP_ZONE, dropZonePageElement.getType());
+
+		DropZoneDefinition dropZoneDefinition =
+			(DropZoneDefinition)dropZonePageElement.getDefinition();
+
+		Map<String, Fragment[]> fragmentSettingsMap =
+			(Map<String, Fragment[]>)dropZoneDefinition.getFragmentSettings();
+
+		Fragment[] allowedFragments = fragmentSettingsMap.get(
+			"allowedFragments");
+
+		Assert.assertEquals(
+			Arrays.toString(allowedFragments), 3, allowedFragments.length);
+
+		Assert.assertEquals(
+			"BASIC_COMPONENT-button", allowedFragments[0].getKey());
+		Assert.assertEquals(
+			"BASIC_COMPONENT-card", allowedFragments[1].getKey());
+		Assert.assertEquals(
+			"com.liferay.fragment.internal.renderer." +
+				"ContentObjectFragmentRenderer",
+			allowedFragments[2].getKey());
 	}
 
 	@Test

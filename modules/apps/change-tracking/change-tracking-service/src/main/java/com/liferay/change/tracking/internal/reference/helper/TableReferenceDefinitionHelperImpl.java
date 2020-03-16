@@ -185,7 +185,8 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 
 	private static final Consumer<String> _emptyStringConsumer = string -> {
 	};
-	private static FromStep _validationFromStep = new ValidationFromStep();
+	private static final FromStep _validationFromStep =
+		new ValidationFromStep();
 	private static final Set<Operand> _validOperands = new HashSet<Operand>() {
 		{
 			add(Operand.AND);

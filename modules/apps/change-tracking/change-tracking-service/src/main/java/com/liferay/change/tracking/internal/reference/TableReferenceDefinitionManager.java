@@ -20,7 +20,6 @@ import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 
 import java.util.Map;
 import java.util.Objects;
@@ -31,7 +30,6 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -41,7 +39,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true, service = {})
 public class TableReferenceDefinitionManager {
 
-	public TableReferenceInfo getTableReferenceInfo(Table<?> table) {
+	public TableReferenceInfo<?> getTableReferenceInfo(Table<?> table) {
 		return _tableReferenceInfos.get(table);
 	}
 
@@ -63,19 +61,16 @@ public class TableReferenceDefinitionManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TableReferenceDefinitionManager.class);
 
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	private final Map<Table<?>, TableReferenceInfo> _tableReferenceInfos =
-		new ConcurrentHashMap<>();
 	private ServiceTracker<?, ?> _serviceTracker;
+	private final Map<Table<?>, TableReferenceInfo<?>> _tableReferenceInfos =
+		new ConcurrentHashMap<>();
 
 	private class TableReferenceDefinitionServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
-			<TableReferenceDefinition, TableReferenceInfo> {
+			<TableReferenceDefinition, TableReferenceInfo<?>> {
 
 		@Override
-		public TableReferenceInfo addingService(
+		public TableReferenceInfo<?> addingService(
 			ServiceReference<TableReferenceDefinition> serviceReference) {
 
 			TableReferenceDefinition<?> tableReferenceDefinition =
@@ -87,13 +82,13 @@ public class TableReferenceDefinitionManager {
 		@Override
 		public void modifiedService(
 			ServiceReference<TableReferenceDefinition> serviceReference,
-			TableReferenceInfo tableReferenceDefinition) {
+			TableReferenceInfo<?> tableReferenceDefinition) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<TableReferenceDefinition> serviceReference,
-			TableReferenceInfo tableReferenceDefinition) {
+			TableReferenceInfo<?> tableReferenceDefinition) {
 
 			_bundleContext.ungetService(serviceReference);
 		}
@@ -104,7 +99,7 @@ public class TableReferenceDefinitionManager {
 			_bundleContext = bundleContext;
 		}
 
-		private <T extends Table<T>> TableReferenceInfo
+		private <T extends Table<T>> TableReferenceInfo<?>
 			_createTableReferenceContext(
 				TableReferenceDefinition<T> tableReferenceDefinition) {
 
@@ -138,7 +133,7 @@ public class TableReferenceDefinitionManager {
 			tableReferenceDefinition.defineTableReferences(
 				tableReferenceDefinitionHelperImpl);
 
-			TableReferenceInfo tableReferenceInfo =
+			TableReferenceInfo<?> tableReferenceInfo =
 				tableReferenceDefinitionHelperImpl.getTableReferenceInfo();
 
 			if (tableReferenceInfo != null) {

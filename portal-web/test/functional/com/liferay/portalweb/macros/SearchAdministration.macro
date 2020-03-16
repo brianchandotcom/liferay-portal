@@ -104,9 +104,6 @@ definition {
 			}
 		}
 
-		while (IsElementNotPresent(locator1 = "Button#EXECUTE_ACTION", key_actionsDescription = "${actionsDescription}")) {
-			Pause(locator1 = "3000");
-		}
 		takeScreenshot();
 
 		if ("${reindexElapsedTime}" == "120") {

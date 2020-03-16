@@ -52,7 +52,7 @@ if (notificationUnread) {
 			<liferay-ui:message key="notification-no-longer-applies" />
 		</liferay-ui:search-container-column-text>
 	</c:when>
-	<c:when test="<%= !userNotificationFeedEntry.isApplicable() %>">
+	<c:when test="<%= (userNotificationFeedEntry != null) && !userNotificationFeedEntry.isApplicable() %>">
 		<liferay-ui:search-container-column-text
 			colspan="<%= 2 %>"
 		>

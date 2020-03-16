@@ -1,8 +1,8 @@
 components:
     schemas:
-        AssigneeUser:
+        Assignee:
             description:
-                https://schema.org/AssigneeUser
+                https://schema.org/Assignee
             properties:
                 durationTaskAvg:
                     format: int64
@@ -34,9 +34,9 @@ components:
                     format: int64
                     type: integer
             type: object
-        AssigneeUserBulkSelection:
+        AssigneeBulkSelection:
             description:
-                https://schema.org/AssigneeUserBulkSelection
+                https://schema.org/AssigneeBulkSelection
             properties:
                 completed:
                     type: boolean
@@ -74,9 +74,9 @@ components:
                 title:
                     type: string
             type: object
-        CreatorUser:
+        Creator:
             description:
-                https://schema.org/CreatorUser
+                https://schema.org/Creator
             properties:
                 id:
                     description:
@@ -117,12 +117,12 @@ components:
                     type: string
                 assetType:
                     type: string
-                assigneeUsers:
+                assignees:
                     items:
-                        $ref: "#/components/schemas/AssigneeUser"
+                        $ref: "#/components/schemas/Assignee"
                     type: array
-                creatorUser:
-                    $ref: "#/components/schemas/CreatorUser"
+                creator:
+                    $ref: "#/components/schemas/Creator"
                 dateCompletion:
                     format: date-time
                     type: string
@@ -464,9 +464,9 @@ paths:
                     description:
                         ""
             tags: ["Process"]
-    "/processes/{processId}/assignee-users":
+    "/processes/{processId}/assignees":
         post:
-            operationId: postProcessAssigneeUsersPage
+            operationId: postProcessAssigneesPage
             parameters:
                 - in: path
                   name: processId
@@ -490,26 +490,26 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/AssigneeUserBulkSelection"
+                            $ref: "#/components/schemas/AssigneeBulkSelection"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/AssigneeUserBulkSelection"
+                            $ref: "#/components/schemas/AssigneeBulkSelection"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/AssigneeUser"
+                                    $ref: "#/components/schemas/Assignee"
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/AssigneeUser"
+                                    $ref: "#/components/schemas/Assignee"
                                 type: array
                     description:
                         ""
-            tags: ["AssigneeUser"]
+            tags: ["Assignee"]
     "/processes/{processId}/instances":
         get:
             operationId: getProcessInstancesPage
@@ -521,7 +521,7 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: assigneeUserIds
+                  name: assigneeIds
                   schema:
                       items:
                           format: int64

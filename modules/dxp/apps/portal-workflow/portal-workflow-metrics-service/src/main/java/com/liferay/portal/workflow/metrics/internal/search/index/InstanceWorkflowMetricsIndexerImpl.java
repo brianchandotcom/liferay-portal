@@ -55,11 +55,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true,
-	service = {
-		InstanceWorkflowMetricsIndexer.class,
-		InstanceWorkflowMetricsIndexerImpl.class
-	}
+	immediate = true, property = "workflow.metrics.index.entity.name=instance",
+	service = {InstanceWorkflowMetricsIndexer.class, WorkflowMetricsIndex.class}
 )
 public class InstanceWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer
@@ -195,7 +192,10 @@ public class InstanceWorkflowMetricsIndexerImpl
 					).build(),
 					booleanQuery);
 
-				_taskWorkflowMetricsIndexerImpl.updateDocuments(
+				BaseWorkflowMetricsIndexer baseWorkflowMetricsIndexer =
+					(BaseWorkflowMetricsIndexer)_taskWorkflowMetricsIndex;
+
+				baseWorkflowMetricsIndexer.updateDocuments(
 					HashMapBuilder.<String, Object>put(
 						"instanceCompleted", Boolean.TRUE
 					).build(),
@@ -392,7 +392,7 @@ public class InstanceWorkflowMetricsIndexerImpl
 	private SLATaskResultWorkflowMetricsIndexer
 		_slaTaskResultWorkflowMetricsIndexer;
 
-	@Reference
-	private TaskWorkflowMetricsIndexerImpl _taskWorkflowMetricsIndexerImpl;
+	@Reference(target = "(workflow.metrics.index.entity.name=task)")
+	private WorkflowMetricsIndex _taskWorkflowMetricsIndex;
 
 }

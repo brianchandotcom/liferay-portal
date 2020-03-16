@@ -40,10 +40,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true,
-	service = {
-		NodeWorkflowMetricsIndexer.class, NodeWorkflowMetricsIndexerImpl.class
-	}
+	immediate = true, property = "workflow.metrics.index.entity.name=node",
+	service = {NodeWorkflowMetricsIndexer.class, WorkflowMetricsIndex.class}
 )
 public class NodeWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer implements NodeWorkflowMetricsIndexer {
@@ -144,7 +142,7 @@ public class NodeWorkflowMetricsIndexerImpl
 
 			bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
-					_taskWorkflowMetricsIndexerImpl.getIndexName(),
+					_taskWorkflowMetricsIndex.getIndexName(),
 					_createWorkflowMetricsTaskDocument(
 						document.getLong("companyId"),
 						document.getLong("processId"),
@@ -152,7 +150,7 @@ public class NodeWorkflowMetricsIndexerImpl
 						document.getString("version"))) {
 
 					{
-						setType(_taskWorkflowMetricsIndexerImpl.getIndexType());
+						setType(_taskWorkflowMetricsIndex.getIndexType());
 					}
 				});
 		}
@@ -284,7 +282,7 @@ public class NodeWorkflowMetricsIndexerImpl
 	private SLATaskResultWorkflowMetricsIndexer
 		_slaTaskResultWorkflowMetricsIndexer;
 
-	@Reference
-	private TaskWorkflowMetricsIndexerImpl _taskWorkflowMetricsIndexerImpl;
+	@Reference(target = "(workflow.metrics.index.entity.name=task)")
+	private WorkflowMetricsIndex _taskWorkflowMetricsIndex;
 
 }

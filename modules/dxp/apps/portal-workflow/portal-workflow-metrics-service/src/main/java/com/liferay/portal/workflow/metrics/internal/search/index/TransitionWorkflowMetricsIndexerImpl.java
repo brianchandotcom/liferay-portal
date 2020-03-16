@@ -37,7 +37,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true, service = TransitionWorkflowMetricsIndexerImpl.class
+	immediate = true,
+	property = "workflow.metrics.index.entity.name=transition",
+	service = {
+		TransitionWorkflowMetricsIndexer.class, WorkflowMetricsIndex.class
+	}
 )
 public class TransitionWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer

@@ -44,10 +44,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true,
-	service = {
-		TaskWorkflowMetricsIndexer.class, TaskWorkflowMetricsIndexerImpl.class
-	}
+	immediate = true, property = "workflow.metrics.index.entity.name=task",
+	service = {TaskWorkflowMetricsIndexer.class, WorkflowMetricsIndex.class}
 )
 public class TaskWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer implements TaskWorkflowMetricsIndexer {

@@ -1494,6 +1494,10 @@ definition {
 
 		UserNavigator.gotoMemberships();
 
+		AssertElementPresent.assertVisible(
+			locator1 = "UsersAndOrganizationsEditUser#DEPOT_SELECT_LINK",
+			value1 = "SELECT");
+
 		AssertClick(
 			locator1 = "UsersAndOrganizationsEditUser#DEPOT_SELECT_LINK",
 			value1 = "SELECT");

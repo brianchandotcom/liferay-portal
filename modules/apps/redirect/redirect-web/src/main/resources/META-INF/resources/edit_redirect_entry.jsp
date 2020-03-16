@@ -69,8 +69,6 @@ else {
 			</div>
 		</aui:field-wrapper>
 
-		<aui:input name="destinationURL" required="<%= true %>" value="<%= (redirectEntry != null) ? redirectEntry.getDestinationURL() : null %>" />
-
 		<%
 			Map<String, Object> data = HashMapBuilder.<String, Object>put(
 				"destinationUrl", (redirectEntry != null) ? redirectEntry.getDestinationURL() : null
@@ -78,6 +76,8 @@ else {
 		%>
 
 		<div class="destination-url">
+			<aui:input name="destinationURL" required="<%= true %>" value="<%= (redirectEntry != null) ? redirectEntry.getDestinationURL() : null %>" />
+
 			<react:component
 				data="<%= data %>"
 				module="js/DestinationUrlInput.es"

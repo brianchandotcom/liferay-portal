@@ -195,12 +195,6 @@ public class StartupAction extends SimpleAction {
 
 		ResourceActionLocalServiceUtil.checkResourceActions();
 
-		// Upgrade
-
-		if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
-			DBUpgrader.upgrade();
-		}
-
 		// Verify
 
 		if (_log.isDebugEnabled()) {

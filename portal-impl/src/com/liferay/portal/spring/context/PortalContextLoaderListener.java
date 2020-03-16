@@ -52,6 +52,7 @@ import com.liferay.portal.servlet.PortalSessionListener;
 import com.liferay.portal.spring.aop.DynamicProxyCreator;
 import com.liferay.portal.spring.compat.CompatBeanDefinitionRegistryPostProcessor;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
+import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
@@ -335,6 +336,18 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			portalClassLoader, applicationContext);
 
 		PortalBeanLocatorUtil.setBeanLocator(beanLocatorImpl);
+
+		try {
+
+			// Upgrade
+
+			if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
+				DBUpgrader.upgrade();
+			}
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 
 		ClassLoader classLoader = portalClassLoader;
 

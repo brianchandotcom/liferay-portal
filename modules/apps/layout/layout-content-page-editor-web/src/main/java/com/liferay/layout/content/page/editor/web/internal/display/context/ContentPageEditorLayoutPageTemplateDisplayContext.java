@@ -93,9 +93,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		Map<String, Object> configContext =
 			(Map<String, Object>)editorContext.get("config");
 
-		configContext.put(
-			"mappingFieldsURL",
-			getResourceURL("/content_layout/get_mapping_fields"));
 		configContext.put("selectedMappingTypes", _getSelectedMappingTypes());
 
 		return editorContext;

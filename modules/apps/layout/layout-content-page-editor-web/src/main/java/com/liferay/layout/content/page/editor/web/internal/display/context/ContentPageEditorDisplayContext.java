@@ -288,6 +288,9 @@ public class ContentPageEditorDisplayContext {
 				MultiSessionMessages.get(
 					_portletRequest, "layoutConversionWarningMessages")
 			).put(
+				"mappingFieldsURL",
+				getResourceURL("/content_layout/get_mapping_fields")
+			).put(
 				"masterUsed", _isMasterUsed()
 			).put(
 				"moveItemURL",

@@ -322,6 +322,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ROW_COLUMN</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Row')][${key_position}]//div[contains(@class,'col-4')][${key_columnNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SECTION_CONTAINER</td>
 	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__container')]</td>
 	<td></td>

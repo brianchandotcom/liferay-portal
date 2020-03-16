@@ -547,6 +547,14 @@
 	</target>
 
 	<target depends="init-build-app" name="get-app-properties">
+		<fail message="No app.properties was found in ${releng.app.dir}.">
+			<condition>
+				<not>
+					<available file="${releng.app.dir}/app.properties" />
+				</not>
+			</condition>
+		</fail>
+
 		<property file="${releng.app.dir}/app.properties" />
 
 		<condition property="app.version" value="${app.marketplace.version}">

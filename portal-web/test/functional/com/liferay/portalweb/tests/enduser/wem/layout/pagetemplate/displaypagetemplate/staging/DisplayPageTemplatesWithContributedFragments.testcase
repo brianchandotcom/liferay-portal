@@ -57,7 +57,7 @@ definition {
 
 		task ("Assert correct content is visible") {
 			AssertTextEquals.assertPartialTextAceEditor(
-				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
+				locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
 				value1 = "WC WebContent Content");
 		}
 	}

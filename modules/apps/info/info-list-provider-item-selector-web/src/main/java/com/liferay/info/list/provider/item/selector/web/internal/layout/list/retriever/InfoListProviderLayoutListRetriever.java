@@ -72,6 +72,34 @@ public class InfoListProviderLayoutListRetriever
 		return infoListProvider.getInfoList(infoListProviderContext);
 	}
 
+	@Override
+	public int getListCount(
+		KeyListObjectReference keyListObjectReference,
+		LayoutListRetrieverContext layoutListRetrieverContext) {
+
+		InfoListProvider infoListProvider =
+			_infoListProviderTracker.getInfoListProvider(
+				keyListObjectReference.getKey());
+
+		if (infoListProvider == null) {
+			return 0;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Group group = _groupLocalService.fetchGroup(
+			serviceContext.getScopeGroupId());
+
+		User user = _userLocalService.fetchUser(
+			PrincipalThreadLocal.getUserId());
+
+		InfoListProviderContext infoListProviderContext =
+			new DefaultInfoListProviderContext(group, user);
+
+		return infoListProvider.getInfoListCount(infoListProviderContext);
+	}
+
 	@Reference
 	private GroupLocalService _groupLocalService;
 

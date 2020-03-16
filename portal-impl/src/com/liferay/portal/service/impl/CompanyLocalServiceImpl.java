@@ -264,8 +264,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = getCompanyByWebId(webId);
 
-		long companyId = company.getCompanyId();
-
 		Locale localeThreadLocalDefaultLocale =
 			LocaleThreadLocal.getDefaultLocale();
 		Locale localeThreadSiteDefaultLocale =
@@ -283,11 +281,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			// Key
 
-			checkCompanyKey(companyId);
+			checkCompanyKey(company.getCompanyId());
 
 			// Default user
 
-			User defaultUser = userPersistence.fetchByC_DU(companyId, true);
+			User defaultUser = userPersistence.fetchByC_DU(
+				company.getCompanyId(), true);
 
 			if (defaultUser != null) {
 				if (!defaultUser.isAgreedToTermsOfUse()) {
@@ -302,37 +301,39 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			// System roles
 
-			roleLocalService.checkSystemRoles(companyId);
+			roleLocalService.checkSystemRoles(company.getCompanyId());
 
 			// System groups
 
-			groupLocalService.checkSystemGroups(companyId);
+			groupLocalService.checkSystemGroups(company.getCompanyId());
 
 			// Company group
 
-			groupLocalService.checkCompanyGroup(companyId);
+			groupLocalService.checkCompanyGroup(company.getCompanyId());
 
 			// Default password policy
 
-			passwordPolicyLocalService.checkDefaultPasswordPolicy(companyId);
+			passwordPolicyLocalService.checkDefaultPasswordPolicy(
+				company.getCompanyId());
 
 			// Default user must have the Guest role
 
 			Role guestRole = roleLocalService.getRole(
-				companyId, RoleConstants.GUEST);
+				company.getCompanyId(), RoleConstants.GUEST);
 
 			roleLocalService.setUserRoles(
 				defaultUser.getUserId(), new long[] {guestRole.getRoleId()});
 
 			// Default admin
 
-			if (userPersistence.countByCompanyId(companyId) == 0) {
+			if (userPersistence.countByCompanyId(company.getCompanyId()) == 0) {
 				String emailAddress =
 					PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" + mx;
 
 				userLocalService.addDefaultAdminUser(
-					companyId, PropsValues.DEFAULT_ADMIN_SCREEN_NAME,
-					emailAddress, defaultUser.getLocale(),
+					company.getCompanyId(),
+					PropsValues.DEFAULT_ADMIN_SCREEN_NAME, emailAddress,
+					defaultUser.getLocale(),
 					PropsValues.DEFAULT_ADMIN_FIRST_NAME,
 					PropsValues.DEFAULT_ADMIN_MIDDLE_NAME,
 					PropsValues.DEFAULT_ADMIN_LAST_NAME);
@@ -340,7 +341,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			// Portlets
 
-			portletLocalService.checkPortlets(companyId);
+			portletLocalService.checkPortlets(company.getCompanyId());
 
 			final Company finalCompany = company;
 

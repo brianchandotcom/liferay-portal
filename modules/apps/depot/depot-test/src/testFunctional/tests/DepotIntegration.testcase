@@ -562,6 +562,8 @@ definition {
 	@description = "This ensures that a depot web content can be searched from the connected site."
 	@priority = "5"
 	test SearchForWebContent {
+		property portal.acceptance = "true";
+
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name",

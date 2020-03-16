@@ -29,6 +29,8 @@ definition {
 	@description = "This ensures that the language can be set in a depot."
 	@priority = "5"
 	test Smoke {
+		property portal.acceptance = "true";
+
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");

@@ -29,6 +29,8 @@ definition {
 	@description = "This ensures that the user can perform operations to memberships with all permissions."
 	@priority = "5"
 	test AccessMembershipWithAllPermissions {
+		property portal.acceptance = "true";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",

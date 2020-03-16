@@ -223,6 +223,8 @@ definition {
 	@description = "This ensures that the web content can be restored from recycle bin."
 	@priority = "5"
 	test RestoreWebContent {
+		property portal.acceptance = "true";
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",

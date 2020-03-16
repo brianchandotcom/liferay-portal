@@ -60,6 +60,8 @@ definition {
 	@description = "This ensures that a user can redirect to the repository via Space icon."
 	@priority = "5"
 	test AccessViaSiteNavigation {
+		property portal.acceptance = "true";
+
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
@@ -78,6 +80,8 @@ definition {
 	@description = "This test covers LPS-104832. It ensures that the repositories can not connect to repositories."
 	@priority = "5"
 	test ViewRestrictionWhenConnectingSites {
+		property portal.acceptance = "true";
+
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");

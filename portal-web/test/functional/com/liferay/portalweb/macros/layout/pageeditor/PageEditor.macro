@@ -1206,6 +1206,50 @@ definition {
 			locator1 = "Fragment#FRAGMENT_HEADER");
 	}
 
+	macro viewSectionStyle {
+		if (isSet(backgroundColor)) {
+			AssertElementPresent(
+				key_paletteItem = "${backgroundColor}",
+				key_position = "${position}",
+				locator1 = "PageEditor#SECTION_CONFIGURATION_BACKGROUND_COLOR");
+		}
+
+		if (isSet(backgroundImage)) {
+			AssertElementPresent(
+				key_imageName = "${backgroundImage}",
+				key_position = "${position}",
+				locator1 = "PageEditor#SECTION_CONFIGURATION_BACKGROUND_IMAGE");
+		}
+
+		if (isSet(container)) {
+			AssertElementPresent(
+				key_container = "${container}",
+				key_position = "${position}",
+				locator1 = "PageEditor#SECTION_CONFIGURATION_CONTAINER");
+		}
+
+		if (isSet(paddingBottom)) {
+			AssertElementPresent(
+				key_paddingBottom = "${paddingBottom}",
+				key_position = "${position}",
+				locator1 = "PageEditor#SECTION_CONFIGURATION_PADDING_BOTTOM");
+		}
+
+		if (isSet(paddingHorizontal)) {
+			AssertElementPresent(
+				key_paddingHorizontal = "${paddingHorizontal}",
+				key_position = "${position}",
+				locator1 = "PageEditor#SECTION_CONFIGURATION_PADDING_HORIZONTAL");
+		}
+
+		if (isSet(paddingTop)) {
+			AssertElementPresent(
+				key_paddingTop = "${paddingTop}",
+				key_position = "${position}",
+				locator1 = "PageEditor#SECTION_CONFIGURATION_PADDING_TOP");
+		}
+	}
+
 	macro waitForAutoSave {
 		Pause(locator1 = "1000");
 

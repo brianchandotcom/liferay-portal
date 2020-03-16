@@ -133,7 +133,7 @@ public class DBPartitionUtilTest {
 	@Test
 	public void testAccessCompanyByCompanyThreadLocal() throws SQLException {
 		try (SafeClosable safeClosable =
-				CompanyThreadLocal.setCompanyIdInitialization(_COMPANY_ID);
+				CompanyThreadLocal.setInitializingCompanyId(_COMPANY_ID);
 			Connection connection = DataAccess.getConnection();
 			Statement statement = connection.createStatement()) {
 

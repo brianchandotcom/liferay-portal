@@ -78,16 +78,16 @@ public class CompanyThreadLocal {
 		CTCollectionThreadLocal.removeCTCollectionId();
 	}
 
-	public static SafeClosable setCompanyIdInitialization(long companyId) {
+	public static void setDeleteInProcess(boolean deleteInProcess) {
+		_deleteInProcess.set(deleteInProcess);
+	}
+
+	public static SafeClosable setInitializingCompanyId(long companyId) {
 		if (companyId > 0) {
 			return _companyId.setWithSafeClosable(companyId);
 		}
 
 		return _companyId.setWithSafeClosable(CompanyConstants.SYSTEM);
-	}
-
-	public static void setDeleteInProcess(boolean deleteInProcess) {
-		_deleteInProcess.set(deleteInProcess);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

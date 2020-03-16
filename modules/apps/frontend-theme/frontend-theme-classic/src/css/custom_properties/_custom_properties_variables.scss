@@ -47,6 +47,7 @@ $theme-colors-cp: map-deep-merge(
 	--gray-600: #{$gray-600};
 	--gray-700: #{$gray-700};
 	--gray-800: #{$gray-800};
+	--gray-900: #{$gray-900};
 	--black: #{$black};
 	--transparent: transparent;
 
@@ -256,15 +257,15 @@ $theme-colors-cp: map-deep-merge(
 
 	// Nav and Navbar
 
-	--navbar-active-color: #{$navbar-light-active-color};
-	--navbar-brand-color: #{$navbar-light-brand-color};
-	--navbar-brand-font-size: #{$navbar-brand-font-size};
-	--navbar-color: #{$navbar-light-color};
+	--navbar-active-color: var(--gray-900);
+	--navbar-brand-color: var(--navbar-active-color);
+	--navbar-brand-font-size: var(--font-size-lg);
+	--navbar-color: var(--gray-600);
 	--navbar-font-size: var(--font-size-sm);
-	--navbar-hover-color: #{$navbar-light-hover-color};
-	--navbar-light-active-color: #{$navbar-light-active-color};
-	--navbar-light-brand-hover-color: #{$navbar-light-brand-hover-color};
-	--navbar-light-hover-color: #{$navbar-light-hover-color};
+	--navbar-hover-color: var(--navbar-color);
+	--navbar-light-active-color: var(--gray-900);
+	--navbar-light-brand-hover-color: var(--navbar-light-active-color);
+	--navbar-light-hover-color: var(--gray-600);
 
 	--nav-font-size: var(--navbar-font-size);
 	--nav-link-active-color: inherit;

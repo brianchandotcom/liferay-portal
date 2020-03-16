@@ -3,7 +3,9 @@ definition {
 	macro addComment {
 		PageEditor.gotoTab(tabName = "Comments");
 
-		if (IsNotVisible(key_fragmentName = "${fragmentName}", locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME")) {
+		Pause(locator1 = "3000");
+
+		if (IsElementNotPresent(key_fragmentName = "${fragmentName}", locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME")) {
 			Click(
 				key_content = "${content}",
 				key_fragmentClass = "${fragmentClass}",

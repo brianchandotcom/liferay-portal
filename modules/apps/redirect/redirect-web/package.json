@@ -1,7 +1,9 @@
 {
 	"dependencies": {
+		"@clayui/form": "3.6.0",
 		"frontend-js-web": "*",
-		"metal-state": "2.16.8"
+		"metal-state": "2.16.8",
+		"react": "16.13.0"
 	},
 	"name": "redirect-web",
 	"scripts": {

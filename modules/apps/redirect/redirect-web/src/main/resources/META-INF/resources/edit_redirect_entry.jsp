@@ -71,6 +71,19 @@ else {
 
 		<aui:input name="destinationURL" required="<%= true %>" value="<%= (redirectEntry != null) ? redirectEntry.getDestinationURL() : null %>" />
 
+		<%
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"destinationUrl", (redirectEntry != null) ? redirectEntry.getDestinationURL() : null
+			).build();
+		%>
+
+		<div class="destination-url">
+			<react:component
+				data="<%= data %>"
+				module="js/DestinationUrlInput.es"
+			/>
+		</div>
+
 		<aui:select label="type" name="permanent">
 			<aui:option selected="<%= (redirectEntry != null) ? redirectEntry.isPermanent() : true %>" value="<%= true %>">
 				<liferay-ui:message arguments="<%= HttpServletResponse.SC_MOVED_PERMANENTLY %>" key="permanent-x" />

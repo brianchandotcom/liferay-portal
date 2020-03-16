@@ -102,16 +102,6 @@ describe('FloatingToolbar', () => {
 		expect(onButtonClick).toHaveBeenCalled();
 	});
 
-	it('calls handleButtonClick when second button is clicked', () => {
-		const onButtonClick = jest.fn();
-		const {getByTitle} = renderFloatingToolbar({onButtonClick});
-		const button = getByTitle('second button');
-
-		fireEvent.click(button);
-
-		expect(onButtonClick).toHaveBeenCalled();
-	});
-
 	it('opens the panel when the second button is clicked', () => {
 		const {getByRole, getByTitle} = renderFloatingToolbar({});
 		const button = getByTitle('second button');

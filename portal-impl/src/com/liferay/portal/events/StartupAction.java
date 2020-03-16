@@ -187,7 +187,9 @@ public class StartupAction extends SimpleAction {
 			_log.debug("Check resource actions");
 		}
 
-		if (StartupHelperUtil.isDBNew()) {
+		if (StartupHelperUtil.isDBNew() ||
+			PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
+
 			StartupHelperUtil.initResourceActions();
 
 			DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();

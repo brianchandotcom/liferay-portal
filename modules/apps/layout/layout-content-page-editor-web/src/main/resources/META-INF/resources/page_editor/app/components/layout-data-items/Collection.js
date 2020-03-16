@@ -16,6 +16,7 @@ import React, {useEffect, useState} from 'react';
 
 import {COLLECTION_LIST_FORMATS} from '../../config/constants/collectionListFormats';
 import CollectionService from '../../services/CollectionService';
+import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
 import {ControlsIdConverterContextProvider} from '../ControlsIdConverterContext';
 
@@ -49,79 +50,6 @@ function fromControlsId(controlsItemId) {
 	return itemId;
 }
 
-const collectionFields = [
-	{
-		key: 'categories',
-		label: 'Categories',
-		type: 'text',
-	},
-	{
-		key: 'displayPageURL',
-		label: 'Display Page URL',
-		type: 'text',
-	},
-	{
-		key: 'tagNames',
-		label: 'Tags',
-		type: 'text',
-	},
-	{
-		key: 'authorName',
-		label: 'Author Name',
-		type: 'text',
-	},
-	{
-		key: 'authorProfileImage',
-		label: 'Author Profile Image',
-		type: 'image',
-	},
-	{
-		key: 'description',
-		label: 'Description',
-		type: 'text',
-	},
-	{
-		key: 'lastEditorName',
-		label: 'Last Editor Name',
-		type: 'text',
-	},
-	{
-		key: 'lastEditorProfileImage',
-		label: 'Last Editor Profile Image',
-		type: 'image',
-	},
-	{
-		key: 'publishDate',
-		label: 'Publish Date',
-		type: 'text',
-	},
-	{
-		key: 'smallImage',
-		label: 'Small Image',
-		type: 'image',
-	},
-	{
-		key: 'summary',
-		label: 'Summary',
-		type: 'text',
-	},
-	{
-		key: 'title',
-		label: 'Title',
-		type: 'text',
-	},
-	{
-		key: 'content',
-		label: 'Content',
-		type: 'ddm-text-html',
-	},
-	{
-		key: 'ddmTemplate_BASIC_WEB_CONTENT',
-		label: 'Basic Web Content *',
-		type: 'text',
-	},
-];
-
 const NotMappedMessage = () => (
 	<div className="page-editor__collection__not-mapped-message">
 		{Liferay.Language.get('not-mapped')}
@@ -131,6 +59,7 @@ const NotMappedMessage = () => (
 const Grid = ({
 	child,
 	collection,
+	collectionFields,
 	collectionId,
 	collectionLength = 3,
 	numberOfColumns,
@@ -183,7 +112,14 @@ const Grid = ({
 	return createRows();
 };
 
-const Stack = ({child, collection, collectionId, collectionLength = 3, numberOfItems}) => {
+const Stack = ({
+	child,
+	collection,
+	collectionFields,
+	collectionId,
+	collectionLength = 3,
+	numberOfItems,
+}) => {
 	const maxNumberOfItems = Math.min(collectionLength, numberOfItems);
 
 	return Array.from({length: maxNumberOfItems}).map((_element, idx) => (
@@ -228,12 +164,31 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 		});
 	}, [dispatch, item.config.collection, store]);
 
+	const [collectionFields, setCollectionFields] = useState('');
+
+	if (item.config.collection) {
+		useEffect(() => {
+			InfoItemService.getAvailableStructureMappingFields({
+				classNameId: item.config.collection.itemType,
+				classTypeId: item.config.collection.itemSubtype,
+				onNetworkStatus: dispatch,
+			}).then(response => {
+				setCollectionFields(response);
+			});
+		}, [
+			dispatch,
+			item.config.collection.itemType,
+			item.config.collection.itemSubtype,
+		]);
+	}
+
 	return (
 		<div className="page-editor__collection" ref={ref}>
 			{collectionIsMapped(collectionConfig) ? (
 				<ContentComponent
 					child={child}
 					collection={collection.items}
+					collectionFields={collectionFields}
 					collectionId={item.itemId}
 					collectionLength={collection.length}
 					numberOfColumns={collectionConfig.numberOfColumns}

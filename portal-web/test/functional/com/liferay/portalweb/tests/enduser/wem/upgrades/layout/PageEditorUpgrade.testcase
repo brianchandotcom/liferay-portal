@@ -8,7 +8,7 @@ definition {
 	setUp {
 		SignIn.signIn();
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomePage(upgrade = "true");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

@@ -315,8 +315,6 @@ definition {
 			menuItem = "Configure",
 			pageName = "Home");
 
-		Page.viewSelectedLayoutColumn(columnName = "1 Column");
-
 		Page.editName(pageNameEdit = "Home Edit");
 
 		Navigator.gotoPage(pageName = "Home Edit");

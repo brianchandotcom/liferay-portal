@@ -128,13 +128,20 @@ definition {
 
 	@summary = "View default welcome page while signed in as '${userFirstName} ${userLastName}'"
 	macro viewWelcomePage {
-		AssertTextEquals(
-			locator1 = "HelloWorld#PORTLET_TITLE",
-			value1 = "Hello World");
+		if ("${upgrade}" == "true") {
+			AssertTextEquals(
+				locator1 = "HelloWorld#PORTLET_TITLE",
+				value1 = "Hello World");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "HelloWorld#PORTLET_CONTENT",
-			value1 = "Welcome to Liferay");
+			AssertTextEquals.assertPartialText(
+				locator1 = "HelloWorld#PORTLET_CONTENT",
+				value1 = "Welcome to Liferay");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "//h1[contains(@class,'fragment-heading-text-colored')]/div",
+				value1 = "Hello World");
+		}
 	}
 
 }

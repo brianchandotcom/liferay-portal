@@ -29,14 +29,18 @@ jest.mock(
 	})
 );
 
-function renderItemSelector() {
+function renderItemSelector({selectedItemTitle = ''}) {
 	const state = {
 		mappedInfoItems: [],
 	};
 
 	return render(
 		<StoreAPIContextProvider dispatch={() => {}} getState={() => state}>
-			<ItemSelector label="itemSelectorLabel" onItemSelect={() => {}} />
+			<ItemSelector
+				label="itemSelectorLabel"
+				onItemSelect={() => {}}
+				selectedItemTitle={selectedItemTitle}
+			/>
 		</StoreAPIContextProvider>
 	);
 }
@@ -47,8 +51,26 @@ describe('ItemSelector', () => {
 	});
 
 	it('renders correctly', () => {
-		const {getByText} = renderItemSelector();
+		const {getByText} = renderItemSelector({});
 
 		expect(getByText('itemSelectorLabel')).toBeInTheDocument();
+	});
+
+	it('shows selected item title correctly when receiving it in props', () => {
+		const selectedItemTitle = 'itemTitle';
+
+		const {getByLabelText} = renderItemSelector({
+			selectedItemTitle,
+		});
+
+		expect(getByLabelText('itemSelectorLabel')).toHaveValue(
+			selectedItemTitle
+		);
+	});
+
+	it('does not show any title when not receiving it in props', () => {
+		const {getByLabelText} = renderItemSelector({});
+
+		expect(getByLabelText('itemSelectorLabel')).toBeEmpty();
 	});
 });

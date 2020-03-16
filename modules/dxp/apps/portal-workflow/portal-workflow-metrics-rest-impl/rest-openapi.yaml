@@ -1,8 +1,8 @@
 components:
     schemas:
-        AssigneeUser:
+        Assignee:
             description:
-                https://schema.org/AssigneeUser
+                https://schema.org/Assignee
             properties:
                 durationTaskAvg:
                     format: int64
@@ -74,9 +74,9 @@ components:
                 title:
                     type: string
             type: object
-        CreatorUser:
+        Creator:
             description:
-                https://schema.org/CreatorUser
+                https://schema.org/Creator
             properties:
                 id:
                     description:

@@ -225,7 +225,7 @@ public abstract class BasePortalWorkspace
 			}
 			else if (databaseType.equals("oracle")) {
 				portalTestProperties.setProperty(
-					"database.oracle.host",
+					"database.oracle.url",
 					JenkinsResultsParserUtil.combine(
 						"jdbc:oracle:thin:@", databaseHost, ":1521/oracl"));
 			}

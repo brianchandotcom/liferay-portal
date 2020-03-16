@@ -20,8 +20,7 @@ import com.liferay.headless.admin.user.resource.v1_0.PhoneResource;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -32,6 +31,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -49,23 +49,26 @@ public class PhoneResourceFactoryImplTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() throws Exception {
+		_organization = OrganizationTestUtil.addOrganization();
+
+		_user = UserTestUtil.addCompanyAdminUser(
+			_companyLocalService.getCompany(_organization.getCompanyId()));
+	}
+
 	@Test
 	public void testBuildWithAdminUser() throws Exception {
-		Organization organization = OrganizationTestUtil.addOrganization();
-
 		com.liferay.portal.kernel.model.Phone serviceBuiderPhone =
-			OrganizationTestUtil.addPhone(organization);
-
-		User user = UserTestUtil.addCompanyAdminUser(
-			_companyLocalService.getCompany(organization.getCompanyId()));
+			OrganizationTestUtil.addPhone(_organization);
 
 		PhoneResource phoneResource = PhoneResource.builder(
 		).user(
-			user
+			_user
 		).build();
 
 		Page<Phone> page = phoneResource.getOrganizationPhonesPage(
-			String.valueOf(organization.getOrganizationId()));
+			String.valueOf(_organization.getOrganizationId()));
 
 		Assert.assertEquals(1, page.getTotalCount());
 
@@ -77,30 +80,23 @@ public class PhoneResourceFactoryImplTest {
 
 		Assert.assertEquals(
 			Long.valueOf(serviceBuiderPhone.getPhoneId()), phone.getId());
-
-		_organizationLocalService.deleteOrganization(organization);
-		_userLocalService.deleteUser(user);
 	}
 
 	@Ignore
 	@Test
 	public void testBuildWithRegularUser() throws Exception {
-		Organization organization = OrganizationTestUtil.addOrganization();
-
 		com.liferay.portal.kernel.model.Phone serviceBuiderPhone =
-			OrganizationTestUtil.addPhone(organization);
-
-		User user = UserTestUtil.addUser();
+			OrganizationTestUtil.addPhone(_organization);
 
 		PhoneResource phoneResource = PhoneResource.builder(
 		).checkPermissions(
 			false
 		).user(
-			user
+			_user
 		).build();
 
 		Page<Phone> page = phoneResource.getOrganizationPhonesPage(
-			String.valueOf(organization.getOrganizationId()));
+			String.valueOf(_organization.getOrganizationId()));
 
 		Assert.assertEquals(1, page.getTotalCount());
 
@@ -112,18 +108,15 @@ public class PhoneResourceFactoryImplTest {
 
 		Assert.assertEquals(
 			Long.valueOf(serviceBuiderPhone.getPhoneId()), phone.getId());
-
-		_organizationLocalService.deleteOrganization(organization);
-		_userLocalService.deleteUser(user);
 	}
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@Inject
-	private OrganizationLocalService _organizationLocalService;
+	@DeleteAfterTestRun
+	private Organization _organization;
 
-	@Inject
-	private UserLocalService _userLocalService;
+	@DeleteAfterTestRun
+	private User _user;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeSupplier;
 
 /**
  * @author Hugo Huijser
@@ -66,6 +67,61 @@ public class DropdownItemListBuilder {
 		return dropdownItemListWrapper.addRadioGroup(unsafeConsumer);
 	}
 
+	public static DropdownItemListWrapper conditionalAdd(
+		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+		UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
+
+		DropdownItemListWrapper dropdownItemListWrapper =
+			new DropdownItemListWrapper();
+
+		return dropdownItemListWrapper.conditionalAdd(
+			unsafeSupplier, unsafeConsumer);
+	}
+
+	public static DropdownItemListWrapper conditionalAddCheckbox(
+		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+		UnsafeConsumer<DropdownCheckboxItem, Exception> unsafeConsumer) {
+
+		DropdownItemListWrapper dropdownItemListWrapper =
+			new DropdownItemListWrapper();
+
+		return dropdownItemListWrapper.conditionalAddCheckbox(
+			unsafeSupplier, unsafeConsumer);
+	}
+
+	public static DropdownItemListWrapper conditionalAddGroup(
+		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+		UnsafeConsumer<DropdownGroupItem, Exception> unsafeConsumer) {
+
+		DropdownItemListWrapper dropdownItemListWrapper =
+			new DropdownItemListWrapper();
+
+		return dropdownItemListWrapper.conditionalAddGroup(
+			unsafeSupplier, unsafeConsumer);
+	}
+
+	public static DropdownItemListWrapper conditionalAddRadio(
+		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+		UnsafeConsumer<DropdownRadioItem, Exception> unsafeConsumer) {
+
+		DropdownItemListWrapper dropdownItemListWrapper =
+			new DropdownItemListWrapper();
+
+		return dropdownItemListWrapper.conditionalAddRadio(
+			unsafeSupplier, unsafeConsumer);
+	}
+
+	public static DropdownItemListWrapper conditionalAddRadioGroup(
+		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+		UnsafeConsumer<DropdownRadioGroupItem, Exception> unsafeConsumer) {
+
+		DropdownItemListWrapper dropdownItemListWrapper =
+			new DropdownItemListWrapper();
+
+		return dropdownItemListWrapper.conditionalAddRadioGroup(
+			unsafeSupplier, unsafeConsumer);
+	}
+
 	public static final class DropdownItemListWrapper {
 
 		public DropdownItemListWrapper add(
@@ -110,6 +166,86 @@ public class DropdownItemListBuilder {
 
 		public DropdownItemList build() {
 			return _dropdownItemList;
+		}
+
+		public DropdownItemListWrapper conditionalAdd(
+			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+			UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
+
+			try {
+				if (unsafeSupplier.get()) {
+					_dropdownItemList.add(unsafeConsumer);
+				}
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+
+			return this;
+		}
+
+		public DropdownItemListWrapper conditionalAddCheckbox(
+			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+			UnsafeConsumer<DropdownCheckboxItem, Exception> unsafeConsumer) {
+
+			try {
+				if (unsafeSupplier.get()) {
+					_dropdownItemList.addCheckbox(unsafeConsumer);
+				}
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+
+			return this;
+		}
+
+		public DropdownItemListWrapper conditionalAddGroup(
+			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+			UnsafeConsumer<DropdownGroupItem, Exception> unsafeConsumer) {
+
+			try {
+				if (unsafeSupplier.get()) {
+					_dropdownItemList.addGroup(unsafeConsumer);
+				}
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+
+			return this;
+		}
+
+		public DropdownItemListWrapper conditionalAddRadio(
+			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+			UnsafeConsumer<DropdownRadioItem, Exception> unsafeConsumer) {
+
+			try {
+				if (unsafeSupplier.get()) {
+					_dropdownItemList.addRadio(unsafeConsumer);
+				}
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+
+			return this;
+		}
+
+		public DropdownItemListWrapper conditionalAddRadioGroup(
+			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+			UnsafeConsumer<DropdownRadioGroupItem, Exception> unsafeConsumer) {
+
+			try {
+				if (unsafeSupplier.get()) {
+					_dropdownItemList.addRadioGroup(unsafeConsumer);
+				}
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+
+			return this;
 		}
 
 		private final DropdownItemList _dropdownItemList =

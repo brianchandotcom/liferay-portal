@@ -35,7 +35,7 @@ public class LiberalPermissionChecker implements PermissionChecker {
 
 	@Override
 	public PermissionChecker clone() {
-		return new LiberalPermissionChecker();
+		return this;
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class LiberalPermissionChecker implements PermissionChecker {
 	}
 
 	@Override
-	public UserBag getUserBag() throws Exception {
+	public UserBag getUserBag() {
 		return null;
 	}
 

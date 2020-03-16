@@ -825,6 +825,73 @@ definition {
 			webContentTitle = "WC WebContent Title Edit");
 	}
 
+	@description = "This is a test for LPS-107285. When the Section fragment is duplicated, the configuration of it and its components should also be duplicated."
+	@priority = "4"
+	test ViewConfigurationDuplicatedWhenDuplicateSectionWithHeading {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a Section to page") {
+			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+		}
+
+		task ("Add a Heading fragment into Section") {
+			Click(
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fragmentName = "Heading",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#SECTION_CONTAINER",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+
+			AssertElementPresent(
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+		}
+
+		task ("Configure the Section") {
+			PageEditor.editLayoutSection(backgroundColor = "success");
+
+			PageEditor.viewSectionStyle(
+				backgroundColor = "success",
+				position = "1");
+		}
+
+		task ("Configure the Heading") {
+			PageEditor.gotoConfiguration(fragmentName = "Heading");
+
+			PageEditor.configureFragment(textColor = "white");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "heading",
+				textColor = "white");
+		}
+
+		task ("Assert configuration duplicated with Section and Heading") {
+			PageEditor.gotoDuplicate(fragmentName = "Section");
+
+			PageEditor.viewSectionStyle(
+				backgroundColor = "success",
+				position = "2");
+
+			AssertElementPresent(
+				key_elementHeader = "//*[contains(@class,'component-heading')][contains(@class,'text-white')]",
+				key_position = "2",
+				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+		}
+	}
+
 	@description = "This is a test for LPS-81870. In edit mode the page should still show the elements of the page that are not from the page itself, like the header, footer, or elements defined by the theme."
 	@priority = "5"
 	test ViewEditModeHeaderFooterTheme {

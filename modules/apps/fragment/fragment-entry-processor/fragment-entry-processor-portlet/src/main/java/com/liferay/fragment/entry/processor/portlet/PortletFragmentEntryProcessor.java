@@ -235,8 +235,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			_addRenderedPortlet(
 				fragmentEntryProcessorContext.getHttpServletRequest(),
-				fragmentEntryLink.getFragmentEntryLinkId(),
-				portletName, instanceId);
+				fragmentEntryLink.getFragmentEntryLinkId(), portletName,
+				instanceId);
 
 			String portletHTML = _fragmentPortletRenderer.renderPortlet(
 				fragmentEntryProcessorContext.getHttpServletRequest(),
@@ -269,8 +269,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		_validateFragmentEntryHTMLDocument(document);
 	}
 
-	private void _addRenderedPortlet(HttpServletRequest httpServletRequest,
-		long fragmentEntryLinkId, String portletName, String instanceId) {
+	private void _addRenderedPortlet(
+		HttpServletRequest httpServletRequest, long fragmentEntryLinkId,
+		String portletName, String instanceId) {
 
 		String portletId = PortletIdCodec.encode(portletName, instanceId);
 
@@ -278,8 +279,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			(Map<Long, Map<String, String>>)httpServletRequest.getAttribute(
 				"fragmentEntryLinkIdPortletIds");
 
-		if (Validator.isNull(fragmentEntryLinkIdPortletIds)) {
+		if (fragmentEntryLinkIdPortletIds == null) {
 			fragmentEntryLinkIdPortletIds = new HashMap<>();
+
 			httpServletRequest.setAttribute(
 				"fragmentEntryLinkIdPortletIds", fragmentEntryLinkIdPortletIds);
 		}
@@ -287,8 +289,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		Map<String, String> portletIds = fragmentEntryLinkIdPortletIds.get(
 			fragmentEntryLinkId);
 
-		if (Validator.isNull(portletIds)) {
+		if (portletIds == null) {
 			portletIds = new HashMap<>();
+
 			fragmentEntryLinkIdPortletIds.put(fragmentEntryLinkId, portletIds);
 		}
 
@@ -446,8 +449,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _renderWidgetHTML(
-			long fragmentEntryLinkId,
-			String editableValues,
+			long fragmentEntryLinkId, String editableValues,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 

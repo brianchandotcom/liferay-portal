@@ -1,7 +1,12 @@
 {
 	"dependencies": {
+		"@clayui/form": "3.6.0",
+		"@clayui/icon": "3.0.4",
+		"@clayui/loading-indicator": "3.0.1",
 		"frontend-js-web": "*",
-		"metal-state": "2.16.8"
+		"metal-state": "2.16.8",
+		"prop-types": "15.7.2",
+		"react": "16.12.0"
 	},
 	"name": "redirect-web",
 	"scripts": {

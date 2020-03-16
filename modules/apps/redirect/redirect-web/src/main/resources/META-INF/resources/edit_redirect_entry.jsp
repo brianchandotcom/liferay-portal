@@ -41,6 +41,7 @@ else {
 	action="<%= editRedirectEntryURL %>"
 	method="post"
 	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveRedirectEntry();" %>'
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -74,7 +75,22 @@ else {
 			</div>
 		</aui:field-wrapper>
 
-		<aui:input autoFocus="<%= Validator.isNotNull(sourceURL) && Validator.isNull(destinationURL) %>" name="destinationURL" required="<%= true %>" value="<%= destinationURL %>" />
+		<%
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"initialDestinationUrl", (redirectEntry != null) ? redirectEntry.getDestinationURL() : StringPool.BLANK
+		).put(
+			"namespace", liferayPortletResponse.getNamespace()
+		).build();
+		%>
+
+		<div class="destination-url">
+			<aui:input autoFocus="<%= Validator.isNotNull(sourceURL) && Validator.isNull(destinationURL) %>" name="destinationURL" value="<%= destinationURL %>" />
+
+			<react:component
+				data="<%= data %>"
+				module="js/DestinationUrlInput"
+			/>
+		</div>
 
 		<aui:select label="type" name="permanent">
 			<aui:option selected="<%= (redirectEntry != null) ? redirectEntry.isPermanent() : false %>" value="<%= true %>">
@@ -95,3 +111,19 @@ else {
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
+
+<script>
+	function <portlet:namespace />saveRedirectEntry() {
+		var form = document.<portlet:namespace />fm;
+
+		var destinationURL = form.elements['<portlet:namespace />destinationURL'];
+
+		if (destinationURL.value) {
+			submitForm(form);
+		}
+		else {
+			destinationURL.focus();
+			destinationURL.blur();
+		}
+	}
+</script>

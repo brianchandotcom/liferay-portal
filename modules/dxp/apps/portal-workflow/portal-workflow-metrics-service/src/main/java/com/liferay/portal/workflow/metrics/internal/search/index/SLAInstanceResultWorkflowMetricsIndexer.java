@@ -47,7 +47,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Rafael Praxedes
  */
 @Component(
-	immediate = true, service = SLAInstanceResultWorkflowMetricsIndexer.class
+	immediate = true,
+	service = {
+		SLAInstanceResultWorkflowMetricsIndexer.class,
+		WorkflowMetricsIndex.class
+	}
 )
 public class SLAInstanceResultWorkflowMetricsIndexer
 	extends BaseSLAWorkflowMetricsIndexer {

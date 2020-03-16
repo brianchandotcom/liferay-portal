@@ -19,11 +19,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.workflow.metrics.internal.search.index.InstanceWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.internal.search.index.NodeWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.internal.search.index.ProcessWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.internal.search.index.TaskWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.internal.search.index.TransitionWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
 
 import java.util.Locale;
 
@@ -81,38 +77,38 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		_instanceWorkflowMetricsIndexer.deleteIndex(companyId);
-		_nodeWorkflowMetricsIndexer.deleteIndex(companyId);
-		_processWorkflowMetricsIndexer.deleteIndex(companyId);
-		_taskWorkflowMetricsIndexer.deleteIndex(companyId);
-		_transitionWorkflowMetricsIndexer.deleteIndex(companyId);
+		_instanceWorkflowMetricsIndex.deleteIndex(companyId);
+		_nodeWorkflowMetricsIndex.deleteIndex(companyId);
+		_processWorkflowMetricsIndex.deleteIndex(companyId);
+		_taskWorkflowMetricsIndex.deleteIndex(companyId);
+		_transitionWorkflowMetricsIndex.deleteIndex(companyId);
 
-		_instanceWorkflowMetricsIndexer.createIndex();
-		_nodeWorkflowMetricsIndexer.createIndex();
-		_processWorkflowMetricsIndexer.createIndex();
-		_taskWorkflowMetricsIndexer.createIndex();
-		_transitionWorkflowMetricsIndexer.createIndex();
+		_instanceWorkflowMetricsIndex.createIndex();
+		_nodeWorkflowMetricsIndex.createIndex();
+		_processWorkflowMetricsIndex.createIndex();
+		_taskWorkflowMetricsIndex.createIndex();
+		_transitionWorkflowMetricsIndex.createIndex();
 
-		_instanceWorkflowMetricsIndexer.reindex(companyId);
-		_nodeWorkflowMetricsIndexer.reindex(companyId);
-		_processWorkflowMetricsIndexer.reindex(companyId);
-		_taskWorkflowMetricsIndexer.reindex(companyId);
-		_transitionWorkflowMetricsIndexer.reindex(companyId);
+		_instanceWorkflowMetricsIndex.reindex(companyId);
+		_nodeWorkflowMetricsIndex.reindex(companyId);
+		_processWorkflowMetricsIndex.reindex(companyId);
+		_taskWorkflowMetricsIndex.reindex(companyId);
+		_transitionWorkflowMetricsIndex.reindex(companyId);
 	}
 
-	@Reference
-	private InstanceWorkflowMetricsIndexer _instanceWorkflowMetricsIndexer;
+	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
+	private WorkflowMetricsIndex _instanceWorkflowMetricsIndex;
 
-	@Reference
-	private NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;
+	@Reference(target = "(workflow.metrics.index.entity.name=node)")
+	private WorkflowMetricsIndex _nodeWorkflowMetricsIndex;
 
-	@Reference
-	private ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;
+	@Reference(target = "(workflow.metrics.index.entity.name=process)")
+	private WorkflowMetricsIndex _processWorkflowMetricsIndex;
 
-	@Reference
-	private TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;
+	@Reference(target = "(workflow.metrics.index.entity.name=task)")
+	private WorkflowMetricsIndex _taskWorkflowMetricsIndex;
 
-	@Reference
-	private TransitionWorkflowMetricsIndexer _transitionWorkflowMetricsIndexer;
+	@Reference(target = "(workflow.metrics.index.entity.name=transition)")
+	private WorkflowMetricsIndex _transitionWorkflowMetricsIndex;
 
 }

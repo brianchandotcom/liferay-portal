@@ -42,11 +42,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true,
-	service = {
-		ProcessWorkflowMetricsIndexer.class,
-		ProcessWorkflowMetricsIndexerImpl.class
-	}
+	immediate = true, property = "workflow.metrics.index.entity.name=process",
+	service = {ProcessWorkflowMetricsIndexer.class, WorkflowMetricsIndex.class}
 )
 public class ProcessWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer
@@ -62,13 +59,13 @@ public class ProcessWorkflowMetricsIndexerImpl
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
-				_instanceWorkflowMetricsIndexerImpl.getIndexName(),
+				_instanceWorkflowMetricsIndex.getIndexName(),
 				_createWorkflowMetricsInstanceDocument(
 					document.getLong("companyId"),
 					document.getLong("processId"))) {
 
 				{
-					setType(_instanceWorkflowMetricsIndexerImpl.getIndexType());
+					setType(_instanceWorkflowMetricsIndex.getIndexType());
 				}
 			});
 		bulkDocumentRequest.addBulkableDocumentRequest(
@@ -255,9 +252,8 @@ public class ProcessWorkflowMetricsIndexerImpl
 		return documentBuilder.build();
 	}
 
-	@Reference
-	private InstanceWorkflowMetricsIndexerImpl
-		_instanceWorkflowMetricsIndexerImpl;
+	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
+	private WorkflowMetricsIndex _instanceWorkflowMetricsIndex;
 
 	@Reference
 	private SLAInstanceResultWorkflowMetricsIndexer

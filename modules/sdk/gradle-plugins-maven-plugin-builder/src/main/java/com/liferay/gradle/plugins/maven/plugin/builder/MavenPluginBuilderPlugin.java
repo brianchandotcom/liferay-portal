@@ -18,6 +18,7 @@ import com.liferay.gradle.plugins.maven.plugin.builder.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.maven.plugin.builder.tasks.BuildPluginDescriptorTask;
 import com.liferay.gradle.plugins.maven.plugin.builder.tasks.WriteMavenSettingsTask;
 import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.OsgiHelper;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -35,7 +36,6 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
-import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;

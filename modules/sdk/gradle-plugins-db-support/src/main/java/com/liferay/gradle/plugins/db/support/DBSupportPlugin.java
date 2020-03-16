@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.db.support;
 import com.liferay.gradle.plugins.db.support.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.db.support.tasks.BaseDBSupportTask;
 import com.liferay.gradle.plugins.db.support.tasks.CleanServiceBuilderTask;
+import com.liferay.gradle.util.OsgiHelper;
 
 import java.util.concurrent.Callable;
 
@@ -26,7 +27,6 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.TaskContainer;

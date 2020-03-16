@@ -47,11 +47,11 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setAssigneeUserResourceComponentServiceObjects(
+			_assigneeUserResourceComponentServiceObjects);
 		Mutation.setSLAResourceComponentServiceObjects(
 			_slaResourceComponentServiceObjects);
 
-		Query.setAssigneeUserResourceComponentServiceObjects(
-			_assigneeUserResourceComponentServiceObjects);
 		Query.setCalendarResourceComponentServiceObjects(
 			_calendarResourceComponentServiceObjects);
 		Query.setInstanceResourceComponentServiceObjects(
@@ -88,12 +88,12 @@ public class ServletDataImpl implements ServletData {
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SLAResource>
-		_slaResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AssigneeUserResource>
 		_assigneeUserResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SLAResource>
+		_slaResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<CalendarResource>

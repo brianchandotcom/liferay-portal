@@ -75,6 +75,13 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 					getWorkflowMetricsSLADefinitionId(),
 				ServiceContextTestUtil.getServiceContext());
 
+		retryAssertCount(
+			0, "workflow-metrics-sla-instance-results",
+			"WorkflowMetricsSLAInstanceResultType", "companyId",
+			kaleoDefinition.getCompanyId(), "processId",
+			kaleoDefinition.getKaleoDefinitionId(), "slaDefinitionId",
+			_workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
+
 		BlogsEntry blogsEntry = addBlogsEntry();
 
 		KaleoInstance kaleoInstance = getKaleoInstance(blogsEntry);
@@ -105,6 +112,15 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 			kaleoInstance.getCompanyId(), "completed", false, "instanceId",
 			kaleoInstance.getKaleoInstanceId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId());
+
+		_workflowMetricsSLAProcessMessageListener.receive(new Message());
+
+		retryAssertCount(
+			0, "workflow-metrics-sla-instance-results",
+			"WorkflowMetricsSLAInstanceResultType", "companyId",
+			kaleoDefinition.getCompanyId(), "processId",
+			kaleoDefinition.getKaleoDefinitionId(), "slaDefinitionId",
+			_workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
 
 		_workflowMetricsSLADefinition =
 			_workflowMetricsSLADefinitionLocalService.

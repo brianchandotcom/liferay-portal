@@ -13,8 +13,8 @@ import React, {useMemo} from 'react';
 
 import Panel from '../../../shared/components/Panel.es';
 import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
-import {useFetch} from '../../../shared/hooks/useFetch.es';
 import {useFilter} from '../../../shared/hooks/useFilter.es';
+import {usePost} from '../../../shared/hooks/usePost.es';
 import ProcessStepFilter from '../../filter/ProcessStepFilter.es';
 import TimeRangeFilter from '../../filter/TimeRangeFilter.es';
 import {getTimeRangeParams} from '../../filter/util/timeRangeUtil.es';
@@ -81,19 +81,21 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 		[assigneeDateEnd, assigneeDateStart]
 	);
 
-	const {data, fetchData} = useFetch({
-		params: {
+	const {data, postData} = usePost({
+		body: {
 			completed: true,
+			taskKeys,
+			...timeRange,
+		},
+		params: {
 			page: 1,
 			pageSize: 10,
 			sort: 'durationTaskAvg:desc',
-			taskKeys,
-			...timeRange,
 		},
 		url: `/processes/${processId}/assignee-users`,
 	});
 
-	const promises = useMemo(() => [fetchData()], [fetchData]);
+	const promises = useMemo(() => [postData()], [postData]);
 
 	return (
 		<Panel elementClasses="dashboard-card">

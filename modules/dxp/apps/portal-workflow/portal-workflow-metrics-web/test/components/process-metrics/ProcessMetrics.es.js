@@ -83,7 +83,9 @@ describe('The ProcessMetrics component should', () => {
 
 	test('Active the tab by clicking it', () => {
 		const tabElements = getByTestId('tabElements');
+
 		fireEvent.click(tabElements.children[1].children[0]);
+
 		expect(tabElements.children[1].children[0]).toHaveClass('active');
 	});
 });

@@ -41,6 +41,14 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 		initialPageSize: 5,
 	});
 
+	const instanceIds = useMemo(() => {
+		const {selectedItem = {}} = singleModal || {};
+
+		return selectedItems.length
+			? selectedItems.map(({id}) => id)
+			: selectedItem.id;
+	}, [selectedItems, singleModal]);
+
 	const body = useMemo(() => {
 		const filterByUser = userIds && userIds.length;
 
@@ -50,7 +58,7 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 
 		const searchByRoles = filterByUser && userIds.includes('-1');
 
-		const params = {
+		const body = {
 			assigneeIds,
 			completed: false,
 			searchByRoles,
@@ -58,22 +66,25 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 		};
 
 		if (selectAll) {
-			params.workflowDefinitionId = processId;
+			body.workflowDefinitionId = processId;
 		}
 		else {
-			params.workflowInstanceIds = selectedItems.length
-				? selectedItems.map(item => item.id)
-				: singleModal.selectedItem.id;
+			body.workflowInstanceIds = instanceIds;
 		}
 
-		return params;
+		return body;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [workflowTaskNames, userIds]);
+	}, [instanceIds, userIds, workflowTaskNames]);
 
 	const {data, postData} = usePost({
 		admin: true,
 		body,
-		url: `/workflow-tasks?page=${page}&pageSize=${pageSize}&sort=workflowInstanceId:asc`,
+		params: {
+			page,
+			pageSize,
+			sort: 'workflowInstanceId:asc'
+		},
+		url: `/workflow-tasks`,
 	});
 
 	const paginationState = {
@@ -99,6 +110,7 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 			<PromisesResolver promises={promises}>
 				<BulkReassignSelectTasksStep.Header
 					filterKeys={prefixedKeys}
+					instanceIds={instanceIds}
 					prefixKey={prefixKey}
 					selectedFilters={selectedFilters}
 					{...data}

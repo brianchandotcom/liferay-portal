@@ -191,7 +191,7 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 			<#elseif stringUtil.equals(entityColumn.type, "Date")>
 				${entityColumn.name} = objectInput.readLong();
 			<#elseif stringUtil.equals(entityColumn.type, "String")>
-				<#if (serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) == "CLOB")>
+				<#if serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) == "CLOB">
 					${entityColumn.name} = (String)objectInput.readObject();
 				<#else>
 					${entityColumn.name} = objectInput.readUTF();
@@ -230,7 +230,7 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 			<#elseif stringUtil.equals(entityColumn.type, "Date")>
 				objectOutput.writeLong(${entityColumn.name});
 			<#elseif stringUtil.equals(entityColumn.type, "String")>
-				<#if (serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) == "CLOB")>
+				<#if serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) == "CLOB">
 					if (${entityColumn.name} == null) {
 						objectOutput.writeObject("");
 					}

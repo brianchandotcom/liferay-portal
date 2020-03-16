@@ -23,8 +23,7 @@
 							setup.wizard.enabled=false
 							terms.of.use.required=false
 							users.reminder.queries.enabled=false
-							users.reminder.queries.custom.question.enabled=false
-							layout.parallel.render.enable=false]]></echo>
+							users.reminder.queries.custom.question.enabled=false]]></echo>
 
 						<local name="portal.ext.properties" />
 

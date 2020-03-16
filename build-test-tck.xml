@@ -41,7 +41,6 @@
 		<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties"><![CDATA[
 			browser.launcher.url=
 			javascript.single.page.application.enabled=false
-			layout.parallel.render.enable=false
 			module.framework.auto.deploy.interval=2000
 			setup.wizard.enabled=false
 			terms.of.use.required=false

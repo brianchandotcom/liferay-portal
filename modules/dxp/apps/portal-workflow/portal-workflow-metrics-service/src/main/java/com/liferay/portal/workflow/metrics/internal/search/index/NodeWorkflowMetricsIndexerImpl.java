@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = NodeWorkflowMetricsIndexer.class)
-public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
+public class NodeWorkflowMetricsIndexerImpl extends BaseWorkflowMetricsIndexer {
 
 	@Override
 	public void addDocument(Document document) {

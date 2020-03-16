@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = TransitionWorkflowMetricsIndexer.class)
-public class TransitionWorkflowMetricsIndexer
+public class TransitionWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer {
 
 	public Document createDocument(KaleoTransition kaleoTransition)

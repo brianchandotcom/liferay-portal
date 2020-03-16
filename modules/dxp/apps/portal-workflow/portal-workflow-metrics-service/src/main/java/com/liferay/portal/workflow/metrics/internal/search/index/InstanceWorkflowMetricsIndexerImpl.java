@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = InstanceWorkflowMetricsIndexer.class)
-public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
+public class InstanceWorkflowMetricsIndexerImpl extends BaseWorkflowMetricsIndexer {
 
 	public Document createDocument(KaleoInstance kaleoInstance) {
 		Document document = new DocumentImpl();

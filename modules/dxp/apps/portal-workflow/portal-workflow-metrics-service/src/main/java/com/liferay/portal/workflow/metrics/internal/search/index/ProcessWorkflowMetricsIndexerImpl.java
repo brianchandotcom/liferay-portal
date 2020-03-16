@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = ProcessWorkflowMetricsIndexer.class)
-public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
+public class ProcessWorkflowMetricsIndexerImpl extends BaseWorkflowMetricsIndexer {
 
 	@Override
 	public void addDocument(Document document) {

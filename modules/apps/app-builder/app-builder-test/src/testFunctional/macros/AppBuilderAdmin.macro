@@ -47,6 +47,12 @@ definition {
 		AppBuilderAdmin.waitForSaveButtonVisible();
 	}
 
+	macro addEntry {
+
+		AppBuilderAdmin.add();
+		AppBuilderAdmin.waitForSaveButtonVisible();
+	}
+
 	macro addOrRemovePermissionFromRoles {
 		for (var roleTitle : list "${roleList}") {
 			var key_roleTitle = "${roleTitle}";
@@ -311,7 +317,8 @@ definition {
 
 	macro save {
 		Click(locator1 = "AppBuilder#SAVE_BUTTON");
-		Pause(locator1 = "2000");
+
+		AppBuilderAdmin.waitForSaveButtonNotVisible();
 	}
 
 	macro searchByItem {

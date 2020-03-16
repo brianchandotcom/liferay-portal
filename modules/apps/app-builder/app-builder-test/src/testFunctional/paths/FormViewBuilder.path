@@ -1,4 +1,3 @@
-
 <html>
 <head>
 <title>FormViewBuilder</title>
@@ -79,13 +78,7 @@
 
 <tr>
 	<td>SWITCHER_OPTION</td>
-	<td>//div[contains(@data-field-name,'${key_switcherOption}')]//span[@class='toggle-switch-bar']</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>SIDEBAR_BASIC_REQUIRED</td>
-	<td>//div[contains(@data-field-name,'required')]//span[@class='toggle-switch-bar']</td>
+	<td>//div[contains(@data-field-name,'${key_switcherOption}')]//input[@class='toggle-switch-check']</td>
 	<td></td>
 </tr>
 
@@ -116,24 +109,6 @@
 <tr>
 	<td>SIDEBAR_ADVANCED_REPEATABLE</td>
 	<td>//input[contains(@name,'repeatable')]</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>SIDEBAR_ADVANCED_PREDEFINED_TEXT</td>
-	<td>//input[contains(@name,'predefinedValue')]</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>SIDEBAR_ADVANCED_PREDEFINED_DATE</td>
-	<td>//input[contains(@name,'predefinedValue')]/preceding-sibling::input</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST</td>
-	<td>//p[contains(text(),'Predefined Value')]/following-sibling::div[contains(@class,'ddm-select-dropdown')]//button[contains(@ref,'triggerButton')]</td>
 	<td></td>
 </tr>
 
@@ -173,6 +148,36 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>SIDEBAR_ADVANCED_PREDEFINED_TEXT</td>
+	<td>//input[contains(@name,'predefinedValue')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>SIDEBAR_ADVANCED_PREDEFINED_DATE</td>
+	<td>//input[contains(@name,'predefinedValue')]/preceding-sibling::input</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST</td>
+	<td>//p[contains(text(),'Predefined Value')]/following-sibling::div[contains(@class,'ddm-select-dropdown')]//button[contains(@ref,'triggerButton')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>PREDEFINED_VALUE_AT_FORM</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/..//input[contains(@value,'${key_fieldValue}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>PREDEFINED_VALUE_AT_FORM_SELECTLIST</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/..//div[contains(@class,'option-selected') and contains(text(),'${key_fieldValue}')]</td>
+	<td></td>
+</tr>
+
 <!--FIELDS_AT_DEPLOYED_APP-->
 
 <tr>
@@ -193,7 +198,6 @@
 	<td>//div[contains(@class, 'dropdown-menu') and contains(@class, 'show')]//li[contains(.,'${key_selectOption}')]</td>
 	<td></td>
 </tr>
-
 
 <!--CHECKBOX-->
 <tr>
@@ -223,7 +227,7 @@
 <!--RADIO_BUTTON-->
 <tr>
 	<td>RADIO_OPTION_LABEL</td>
-	<td>//p[contains(text(),'${key_fieldName}')]/following-sibling::div//span[contains(.,'${key_radioOption}')]</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/..//input[contains(@value,'${key_radioOption}')]</td>
 	<td></td>
 </tr>
 
@@ -257,11 +261,6 @@
 <tr>
 	<td>OBJECT_FIELD_PLUS</td>
 	<td>//div[contains(@class,'custom-object-sidebar-header')]//*[contains(@class,'lexicon-icon-plus')]</td>
-<!--FORM VALUES PREDEFINED-->
-
-<tr>
-	<td>PREDEFINED_VALUE_AT_FORM</td>
-	<td>//p[contains(text(),'${key_fieldName}')]/..//input[contains(@value,'${key_fieldValue}')]</td>
 	<td></td>
 </tr>
 
@@ -284,12 +283,6 @@
 	<td>//div[contains(@class,'custom-object-sidebar-header')]//input</td>
 	<td></td>
 </tr>
-	<td>PREDEFINED_VALUE_AT_FORM_SELECTLIST</td>
-	<td>//p[contains(text(),'${key_fieldName}')]/..//div[contains(@class,'option-selected') and contains(text(),'${key_fieldValue}')]</td>
-	<td></td>
-</tr>
-
-
 
 <tr>
 	<td>OBJECT_FIELD_SEARCH_RESULT</td>

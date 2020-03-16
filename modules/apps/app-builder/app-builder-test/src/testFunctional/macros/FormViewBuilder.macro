@@ -248,6 +248,10 @@ definition {
 			locator1 = "1000");
 	}
 
+	macro openFormView {
+		AppBuilderAdmin.openItem(itemName = "${formViewName}");
+	}
+
 	macro openSidebar() {
 		Click(locator1 = "FormViewBuilder#OPEN_SIDEBAR");
 	}
@@ -356,7 +360,7 @@ definition {
 	}
 
 	macro setFieldRequired {
-		FormViewBuilder.clickOnSwitcher(propertyName = "required");
+		FormViewBuilder.checkSwitcher(propertyName = "required");
 	}
 
 	macro setName {

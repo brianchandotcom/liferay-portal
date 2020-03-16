@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ReleasePersistence;
 import com.liferay.portal.kernel.service.persistence.ServiceComponentFinder;
 import com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence;
@@ -296,6 +297,10 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 
 		return serviceComponentLocalService.deleteServiceComponent(
 			(ServiceComponent)persistedModel);
+	}
+
+	public BasePersistence<ServiceComponent> getBasePersistence() {
+		return serviceComponentPersistence;
 	}
 
 	/**

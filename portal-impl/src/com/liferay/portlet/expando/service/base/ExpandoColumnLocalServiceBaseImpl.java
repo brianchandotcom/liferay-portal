@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
@@ -293,6 +294,10 @@ public abstract class ExpandoColumnLocalServiceBaseImpl
 
 		return expandoColumnLocalService.deleteExpandoColumn(
 			(ExpandoColumn)persistedModel);
+	}
+
+	public BasePersistence<ExpandoColumn> getBasePersistence() {
+		return expandoColumnPersistence;
 	}
 
 	/**

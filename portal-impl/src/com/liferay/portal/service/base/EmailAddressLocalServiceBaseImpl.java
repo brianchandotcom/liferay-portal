@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.EmailAddressPersistence;
 import com.liferay.portal.kernel.service.persistence.ListTypePersistence;
@@ -405,6 +406,10 @@ public abstract class EmailAddressLocalServiceBaseImpl
 
 		return emailAddressLocalService.deleteEmailAddress(
 			(EmailAddress)persistedModel);
+	}
+
+	public BasePersistence<EmailAddress> getBasePersistence() {
+		return emailAddressPersistence;
 	}
 
 	/**

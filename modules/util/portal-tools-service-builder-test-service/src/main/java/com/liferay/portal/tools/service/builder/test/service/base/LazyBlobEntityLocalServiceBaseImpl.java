@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -312,6 +313,10 @@ public abstract class LazyBlobEntityLocalServiceBaseImpl
 
 		return lazyBlobEntityLocalService.deleteLazyBlobEntity(
 			(LazyBlobEntity)persistedModel);
+	}
+
+	public BasePersistence<LazyBlobEntity> getBasePersistence() {
+		return lazyBlobEntityPersistence;
 	}
 
 	/**

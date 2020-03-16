@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutFinder;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutRevisionPersistence;
@@ -313,6 +314,10 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 
 		return portletPreferencesLocalService.deletePortletPreferences(
 			(PortletPreferences)persistedModel);
+	}
+
+	public BasePersistence<PortletPreferences> getBasePersistence() {
+		return portletPreferencesPersistence;
 	}
 
 	/**

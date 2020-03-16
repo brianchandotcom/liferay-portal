@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.AddressPersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ContactPersistence;
 import com.liferay.portal.kernel.service.persistence.EmailAddressPersistence;
 import com.liferay.portal.kernel.service.persistence.PhonePersistence;
@@ -286,6 +287,10 @@ public abstract class ContactLocalServiceBaseImpl
 		throws PortalException {
 
 		return contactLocalService.deleteContact((Contact)persistedModel);
+	}
+
+	public BasePersistence<Contact> getBasePersistence() {
+		return contactPersistence;
 	}
 
 	/**

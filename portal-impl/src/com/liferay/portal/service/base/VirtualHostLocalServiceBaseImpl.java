@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
@@ -290,6 +291,10 @@ public abstract class VirtualHostLocalServiceBaseImpl
 
 		return virtualHostLocalService.deleteVirtualHost(
 			(VirtualHost)persistedModel);
+	}
+
+	public BasePersistence<VirtualHost> getBasePersistence() {
+		return virtualHostPersistence;
 	}
 
 	/**

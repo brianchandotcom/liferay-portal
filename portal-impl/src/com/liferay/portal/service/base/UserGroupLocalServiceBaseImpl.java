@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.TeamFinder;
@@ -397,6 +398,10 @@ public abstract class UserGroupLocalServiceBaseImpl
 		throws PortalException {
 
 		return userGroupLocalService.deleteUserGroup((UserGroup)persistedModel);
+	}
+
+	public BasePersistence<UserGroup> getBasePersistence() {
+		return userGroupPersistence;
 	}
 
 	/**

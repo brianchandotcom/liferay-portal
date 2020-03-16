@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.RoleFinder;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupFinder;
@@ -308,6 +309,10 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 
 		return userGroupGroupRoleLocalService.deleteUserGroupGroupRole(
 			(UserGroupGroupRole)persistedModel);
+	}
+
+	public BasePersistence<UserGroupGroupRole> getBasePersistence() {
+		return userGroupGroupRolePersistence;
 	}
 
 	/**

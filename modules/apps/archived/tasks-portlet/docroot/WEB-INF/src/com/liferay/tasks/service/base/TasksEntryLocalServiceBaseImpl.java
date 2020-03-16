@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserNotificationEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
@@ -293,6 +294,10 @@ public abstract class TasksEntryLocalServiceBaseImpl
 
 		return tasksEntryLocalService.deleteTasksEntry(
 			(TasksEntry)persistedModel);
+	}
+
+	public BasePersistence<TasksEntry> getBasePersistence() {
+		return tasksEntryPersistence;
 	}
 
 	/**

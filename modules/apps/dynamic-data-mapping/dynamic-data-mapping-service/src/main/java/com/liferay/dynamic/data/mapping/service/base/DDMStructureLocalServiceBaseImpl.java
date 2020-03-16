@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -416,6 +417,10 @@ public abstract class DDMStructureLocalServiceBaseImpl
 
 		return ddmStructureLocalService.deleteDDMStructure(
 			(DDMStructure)persistedModel);
+	}
+
+	public BasePersistence<DDMStructure> getBasePersistence() {
+		return ddmStructurePersistence;
 	}
 
 	/**

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.PortletItemPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
@@ -289,6 +290,10 @@ public abstract class PortletItemLocalServiceBaseImpl
 
 		return portletItemLocalService.deletePortletItem(
 			(PortletItem)persistedModel);
+	}
+
+	public BasePersistence<PortletItem> getBasePersistence() {
+		return portletItemPersistence;
 	}
 
 	/**

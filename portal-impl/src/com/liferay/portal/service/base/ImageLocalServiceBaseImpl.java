@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ImagePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -277,6 +278,10 @@ public abstract class ImageLocalServiceBaseImpl
 		throws PortalException {
 
 		return imageLocalService.deleteImage((Image)persistedModel);
+	}
+
+	public BasePersistence<Image> getBasePersistence() {
+		return imagePersistence;
 	}
 
 	/**

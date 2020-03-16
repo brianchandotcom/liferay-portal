@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.MembershipRequestLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
@@ -304,6 +305,10 @@ public abstract class MembershipRequestLocalServiceBaseImpl
 
 		return membershipRequestLocalService.deleteMembershipRequest(
 			(MembershipRequest)persistedModel);
+	}
+
+	public BasePersistence<MembershipRequest> getBasePersistence() {
+		return membershipRequestPersistence;
 	}
 
 	/**

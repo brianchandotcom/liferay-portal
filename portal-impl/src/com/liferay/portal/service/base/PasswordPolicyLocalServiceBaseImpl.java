@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.PasswordPolicyFinder;
 import com.liferay.portal.kernel.service.persistence.PasswordPolicyPersistence;
@@ -382,6 +383,10 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 
 		return passwordPolicyLocalService.deletePasswordPolicy(
 			(PasswordPolicy)persistedModel);
+	}
+
+	public BasePersistence<PasswordPolicy> getBasePersistence() {
+		return passwordPolicyPersistence;
 	}
 
 	/**

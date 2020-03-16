@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
@@ -402,6 +403,10 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 
 		return assetVocabularyLocalService.deleteAssetVocabulary(
 			(AssetVocabulary)persistedModel);
+	}
+
+	public BasePersistence<AssetVocabulary> getBasePersistence() {
+		return assetVocabularyPersistence;
 	}
 
 	/**

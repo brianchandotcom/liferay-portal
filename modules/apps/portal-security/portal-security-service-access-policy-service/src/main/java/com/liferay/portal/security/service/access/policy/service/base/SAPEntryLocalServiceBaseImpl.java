@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -369,6 +370,10 @@ public abstract class SAPEntryLocalServiceBaseImpl
 		throws PortalException {
 
 		return sapEntryLocalService.deleteSAPEntry((SAPEntry)persistedModel);
+	}
+
+	public BasePersistence<SAPEntry> getBasePersistence() {
+		return sapEntryPersistence;
 	}
 
 	/**

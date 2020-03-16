@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.CompanyInfoLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.CompanyInfoPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -286,6 +287,10 @@ public abstract class CompanyInfoLocalServiceBaseImpl
 
 		return companyInfoLocalService.deleteCompanyInfo(
 			(CompanyInfo)persistedModel);
+	}
+
+	public BasePersistence<CompanyInfo> getBasePersistence() {
+		return companyInfoPersistence;
 	}
 
 	/**

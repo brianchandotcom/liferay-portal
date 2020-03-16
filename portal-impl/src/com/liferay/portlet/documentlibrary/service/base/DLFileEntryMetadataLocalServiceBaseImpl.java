@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -322,6 +323,10 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 
 		return dlFileEntryMetadataLocalService.deleteDLFileEntryMetadata(
 			(DLFileEntryMetadata)persistedModel);
+	}
+
+	public BasePersistence<DLFileEntryMetadata> getBasePersistence() {
+		return dlFileEntryMetadataPersistence;
 	}
 
 	/**

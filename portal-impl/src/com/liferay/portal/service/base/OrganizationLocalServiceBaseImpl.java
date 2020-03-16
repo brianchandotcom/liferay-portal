@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.AddressPersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.CountryPersistence;
 import com.liferay.portal.kernel.service.persistence.EmailAddressPersistence;
@@ -417,6 +418,10 @@ public abstract class OrganizationLocalServiceBaseImpl
 
 		return organizationLocalService.deleteOrganization(
 			(Organization)persistedModel);
+	}
+
+	public BasePersistence<Organization> getBasePersistence() {
+		return organizationPersistence;
 	}
 
 	/**

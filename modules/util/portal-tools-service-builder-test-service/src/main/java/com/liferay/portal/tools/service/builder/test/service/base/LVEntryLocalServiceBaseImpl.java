@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.version.VersionService;
 import com.liferay.portal.kernel.service.version.VersionServiceListener;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -316,6 +317,10 @@ public abstract class LVEntryLocalServiceBaseImpl
 		throws PortalException {
 
 		return lvEntryLocalService.deleteLVEntry((LVEntry)persistedModel);
+	}
+
+	public BasePersistence<LVEntry> getBasePersistence() {
+		return lvEntryPersistence;
 	}
 
 	/**

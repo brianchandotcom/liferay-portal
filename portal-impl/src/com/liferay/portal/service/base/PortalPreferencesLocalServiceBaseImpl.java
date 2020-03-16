@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.PortalPreferencesPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -295,6 +296,10 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 
 		return portalPreferencesLocalService.deletePortalPreferences(
 			(PortalPreferences)persistedModel);
+	}
+
+	public BasePersistence<PortalPreferences> getBasePersistence() {
+		return portalPreferencesPersistence;
 	}
 
 	/**

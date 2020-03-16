@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserNotificationDeliveryPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
@@ -313,6 +314,10 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 		return userNotificationDeliveryLocalService.
 			deleteUserNotificationDelivery(
 				(UserNotificationDelivery)persistedModel);
+	}
+
+	public BasePersistence<UserNotificationDelivery> getBasePersistence() {
+		return userNotificationDeliveryPersistence;
 	}
 
 	/**

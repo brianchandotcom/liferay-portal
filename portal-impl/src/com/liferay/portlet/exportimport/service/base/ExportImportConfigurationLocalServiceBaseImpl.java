@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
@@ -316,6 +317,10 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 		return exportImportConfigurationLocalService.
 			deleteExportImportConfiguration(
 				(ExportImportConfiguration)persistedModel);
+	}
+
+	public BasePersistence<ExportImportConfiguration> getBasePersistence() {
+		return exportImportConfigurationPersistence;
 	}
 
 	/**

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserIdMapperLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.UserIdMapperPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -287,6 +288,10 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 
 		return userIdMapperLocalService.deleteUserIdMapper(
 			(UserIdMapper)persistedModel);
+	}
+
+	public BasePersistence<UserIdMapper> getBasePersistence() {
+		return userIdMapperPersistence;
 	}
 
 	/**

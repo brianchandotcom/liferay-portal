@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -281,6 +282,10 @@ public abstract class ClassNameLocalServiceBaseImpl
 		throws PortalException {
 
 		return classNameLocalService.deleteClassName((ClassName)persistedModel);
+	}
+
+	public BasePersistence<ClassName> getBasePersistence() {
+		return classNamePersistence;
 	}
 
 	/**

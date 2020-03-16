@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -328,6 +329,10 @@ public abstract class KaleoTaskAssignmentLocalServiceBaseImpl
 
 		return kaleoTaskAssignmentLocalService.deleteKaleoTaskAssignment(
 			(KaleoTaskAssignment)persistedModel);
+	}
+
+	public BasePersistence<KaleoTaskAssignment> getBasePersistence() {
+		return kaleoTaskAssignmentPersistence;
 	}
 
 	/**

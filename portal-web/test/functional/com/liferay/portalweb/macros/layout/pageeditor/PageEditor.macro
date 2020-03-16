@@ -686,27 +686,6 @@ definition {
 
 		Click.clickNoMouseOver(locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
-		if (isSet(container)) {
-			Select(
-				key_fieldLabel = "Container",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${container}");
-		}
-
-		if (isSet(paddingTop)) {
-			Select(
-				key_fieldLabel = "Padding Top",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${paddingTop}");
-		}
-
-		if (isSet(paddingBottom)) {
-			Select(
-				key_fieldLabel = "Padding Bottom",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${paddingBottom}");
-		}
-
 		if (isSet(backgroundColor)) {
 			Click(
 				key_paletteItem = "${backgroundColor}",
@@ -754,6 +733,28 @@ definition {
 				SelectFrame(value1 = "relative=top");
 			}
 		}
+
+		if (isSet(container)) {
+			Select(
+				key_fieldLabel = "Container",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${container}");
+		}
+
+		if (isSet(paddingBottom)) {
+			Select(
+				key_fieldLabel = "Padding Bottom",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${paddingBottom}");
+		}
+
+		if (isSet(paddingTop)) {
+			Select(
+				key_fieldLabel = "Padding Top",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${paddingTop}");
+		}
+
 		PageEditor.waitForAutoSave();
 	}
 

@@ -13,11 +13,12 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import ItemSelector from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/ItemSelector';
+import {openInfoItemSelector} from '../../../../src/main/resources/META-INF/resources/page_editor/core/openInfoItemSelector';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
@@ -29,9 +30,16 @@ jest.mock(
 	})
 );
 
-function renderItemSelector({selectedItemTitle = ''}) {
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/core/openInfoItemSelector',
+	() => ({
+		openInfoItemSelector: jest.fn(() => {}),
+	})
+);
+
+function renderItemSelector({mappedInfoItems = [], selectedItemTitle = ''}) {
 	const state = {
-		mappedInfoItems: [],
+		mappedInfoItems,
 	};
 
 	return render(
@@ -48,6 +56,8 @@ function renderItemSelector({selectedItemTitle = ''}) {
 describe('ItemSelector', () => {
 	afterEach(() => {
 		cleanup();
+
+		openInfoItemSelector.mockClear();
 	});
 
 	it('renders correctly', () => {
@@ -72,5 +82,29 @@ describe('ItemSelector', () => {
 		const {getByLabelText} = renderItemSelector({});
 
 		expect(getByLabelText('itemSelectorLabel')).toBeEmpty();
+	});
+
+	it('calls openInfoItemSelector when there are not mapping items and plus button is clicked', () => {
+		const {getByLabelText} = renderItemSelector({});
+
+		fireEvent.click(getByLabelText('select-content-button'));
+
+		expect(openInfoItemSelector).toBeCalled();
+	});
+
+	it('shows recent items dropdown instead of calling openInfoItemSelector when there are mapping items', () => {
+		const mappedInfoItems = [
+			{classNameId: '001', classPK: '002', title: 'Mapped Item Title'},
+		];
+
+		const {getByLabelText, getByText} = renderItemSelector({
+			mappedInfoItems,
+		});
+
+		fireEvent.click(getByLabelText('select-content-button'));
+
+		expect(getByText('Mapped Item Title')).toBeInTheDocument();
+
+		expect(openInfoItemSelector).not.toBeCalled();
 	});
 });

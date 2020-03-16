@@ -2410,7 +2410,7 @@ public class PropsValues {
 
 	public static final int SEARCH_CONTAINER_PAGE_DEFAULT_DELTA =
 		GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA), 20);
+			PropsUtil.get(PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA), 16);
 
 	public static final int[] SEARCH_CONTAINER_PAGE_DELTA_VALUES =
 		GetterUtil.getIntegerValues(

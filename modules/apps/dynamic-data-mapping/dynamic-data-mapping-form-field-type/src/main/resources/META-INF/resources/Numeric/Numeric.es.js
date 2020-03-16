@@ -55,7 +55,7 @@ const Numeric = ({
 	value: initialValue,
 	...otherProps
 }) => {
-	const [value, setValue] = useSyncValue(initialValue, disabled);
+	const [value, setValue] = useSyncValue(initialValue);
 	const inputRef = useRef(null);
 
 	useEffect(() => {

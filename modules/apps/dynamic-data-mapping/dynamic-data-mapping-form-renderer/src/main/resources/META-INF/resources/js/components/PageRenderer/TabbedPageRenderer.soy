@@ -128,8 +128,8 @@
 						'fieldBlurred': $_handleFieldBlurred,
 						'fieldEdited': $_handleFieldEdited
 					] /}
-					{param ref: $field.type + $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageIndex /}
-					{param key: $field.type + $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageIndex /}
+					{param ref: $field.type + $field.fieldName + $field.name + $field.instanceId + $field.label + $rowIndex + $columnIndex + $pageIndex /}
+					{param key: $field.type + $field.fieldName + $field.name + $field.instanceId + $field.label + $rowIndex + $columnIndex + $pageIndex /}
 					{param spritemap: $spritemap /}
 				{/delcall}
 			{/foreach}

@@ -14,10 +14,10 @@
 
 import './TextRegister.soy';
 
-import ClayAutocomplete from '@clayui/autocomplete';
-import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
+import ClayAutocomplete from '@clayui/autocomplete';
+import ClayDropDown from '@clayui/drop-down';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
@@ -26,19 +26,24 @@ import {connectStore} from '../util/connectStore.es';
 import templates from './TextAdapter.soy';
 
 /**
- * Uses the Sync Value to synchronize the updated initial value but only updates
- * when the Field is disabled, this to cover cases of the Form Builder when the
- * element is only in view but is being edited. Do not update the value when it
- * is not disabled to avoid possible unnecessary renderings and blinks in the text.
+ * Use Sync Value to synchronize the initial value with the current internal
+ * value, only update the internal value with the new initial value if the
+ * values are different and when the value is not changed for more than 400ms.
  */
-const useSyncValue = (initialValue, disabled) => {
+const useSyncValue = initialValue => {
 	const [value, setValue] = useState(initialValue);
 
 	useEffect(() => {
-		if (value !== initialValue && disabled) {
-			setValue(initialValue);
-		}
-	}, [disabled, initialValue, value]);
+		const handler = setTimeout(() => {
+			if (value !== initialValue) {
+				setValue(initialValue);
+			}
+		}, 400);
+
+		return () => {
+			clearTimeout(handler);
+		};
+	}, [initialValue, value]);
 
 	return [value, setValue];
 };
@@ -54,7 +59,7 @@ const Text = ({
 	placeholder,
 	value: initialValue,
 }) => {
-	const [value, setValue] = useSyncValue(initialValue, disabled);
+	const [value, setValue] = useSyncValue(initialValue);
 
 	return (
 		<ClayInput
@@ -90,7 +95,7 @@ const Textarea = ({
 	placeholder,
 	value: initialValue,
 }) => {
-	const [value, setValue] = useSyncValue(initialValue, disabled);
+	const [value, setValue] = useSyncValue(initialValue);
 
 	return (
 		<textarea
@@ -122,7 +127,7 @@ const Autocomplete = ({
 	placeholder,
 	value: initialValue,
 }) => {
-	const [value, setValue] = useSyncValue(initialValue, disabled);
+	const [value, setValue] = useSyncValue(initialValue);
 	const [visible, setVisible] = useState(false);
 	const inputRef = useRef(null);
 	const itemListRef = useRef(null);

@@ -24,6 +24,18 @@ public class LayoutPageTemplatesImporterResultEntry {
 		_status = status;
 	}
 
+	public LayoutPageTemplatesImporterResultEntry(
+		String name, Status status, String errorMessage) {
+
+		_name = name;
+		_status = status;
+		_errorMessage = errorMessage;
+	}
+
+	public String getErrorMessage() {
+		return _errorMessage;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -48,6 +60,7 @@ public class LayoutPageTemplatesImporterResultEntry {
 
 	}
 
+	private String _errorMessage;
 	private final String _name;
 	private final Status _status;
 

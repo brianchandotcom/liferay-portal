@@ -286,11 +286,9 @@ definition {
 		Button.clickPublish();
 	}
 
-	// This is not an acceptance test and is temporarily quarantined.
-
 	@priority = "5"
 	test AssertAdaptedImageInWebContent {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -333,6 +331,8 @@ definition {
 	@description = "This ensures that the SVG image can be added and optimized in a blog entry."
 	@priority = "5"
 	test AssertAdaptedSVGImageInBlogsEntry {
+		property portal.acceptance = "true";
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",

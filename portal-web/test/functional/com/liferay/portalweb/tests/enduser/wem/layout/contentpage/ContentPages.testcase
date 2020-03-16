@@ -499,6 +499,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-107285. Can duplicate the Row fragment in one Section fragment."
+	@priority = "5"
+	test DuplicateRowInSection {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a Section to page") {
+			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+		}
+
+		task ("Add a Row into Section") {
+			Click(
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_elementType = "Row",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
+				locator2 = "PageEditor#SECTION_CONTAINER",
+				value1 = "");
+
+			AssertElementPresent(
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+		}
+
+		task ("Assert duplicate Row in the Section") {
+			PageEditor.gotoDuplicate(fragmentName = "Row");
+
+			PageEditor.viewDuplicateFragment(fragmentName = "Row");
+
+			AssertElementPresent(
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+		}
+	}
+
 	@description = "This is a test for LPS-107285. When duplicate the Section fragment with the Row fragment, the Row fragment should also be duplicated."
 	@priority = "5"
 	test DuplicateSectionWithRow {

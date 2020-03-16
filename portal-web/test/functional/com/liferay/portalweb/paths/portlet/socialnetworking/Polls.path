@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>POLLS_TABLE_ACTION</td>
-	<td>//tr[contains(.,'${key_pollsQuestionTitle}')]/td[5]//div/a</td>
+	<td>//td/a[contains(.,'${key_pollsQuestionTitle}')]/../../td[6]//div/a</td>
 	<td></td>
 </tr>
 <tr>

@@ -123,16 +123,4 @@
 	right: 0;
 	top: 0;
 	transition: all 0.5s ease;
-
-	@at-root {
-		@include media-breakpoint-up(sm) {
-			.ie .product-menu-open & {
-				left: $sidenav-width;
-			}
-
-			.ie .open-admin-panel & {
-				right: $sidenav-width;
-			}
-		}
-	}
 }

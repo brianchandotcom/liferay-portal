@@ -44,6 +44,7 @@ definition {
 
 	macro addCommentViaFragment {
 		PageEditor.gotoCommentViaFragment(
+			fragmentName = "${fragmentName}",
 			key_content = "${content}",
 			key_fragmentClass = "${fragmentClass}",
 			key_position = "${position}");
@@ -782,19 +783,27 @@ definition {
 	}
 
 	macro gotoCommentViaFragment {
-		Click(
-			key_content = "${content}",
-			key_fragmentClass = "${fragmentClass}",
-			key_position = "${position}",
-			locator1 = "Fragment#FRAGMENT");
+		var key_fragmentName = "${fragmentName}";
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_COMMENT_ICON")) {
+			Click(
+				key_content = "${content}",
+				key_fragmentClass = "${fragmentClass}",
+				key_position = "${position}",
+				locator1 = "Fragment#FRAGMENT");
+		}
 
 		Click(locator1 = "Fragment#FRAGMENT_COMMENT_ICON");
 
-		Click(
-			key_content = "${content}",
-			key_fragmentClass = "${fragmentClass}",
-			key_position = "${position}",
-			locator1 = "Fragment#FRAGMENT");
+		Pause(locator1 = "3000");
+
+		if (IsElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME")) {
+			Click(
+				key_content = "${content}",
+				key_fragmentClass = "${fragmentClass}",
+				key_position = "${position}",
+				locator1 = "Fragment#FRAGMENT");
+		}
 	}
 
 	macro gotoConfiguration {

@@ -135,6 +135,42 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade721 {
+		property custom.properties = "upgrade.database.auto.run=true";
+		property data.archive.type = "data-archive-classic-search-portlet";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.1";
+		property skip.upgrade-legacy-database = "true";
+		property test.assert.warning.exceptions = "true";
+
+		Upgrade.viewClassicSearchPortletConfiguration();
+	}
+
+	@priority = "5"
+	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade730 {
+		property custom.properties = "upgrade.database.auto.run=true";
+		property data.archive.type = "data-archive-classic-search-portlet";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.0";
+		property skip.upgrade-legacy-database = "true";
+		property test.assert.warning.exceptions = "true";
+
+		Upgrade.viewClassicSearchPortletConfiguration();
+	}
+
+	@priority = "5"
+	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade72101 {
+		property custom.properties = "upgrade.database.auto.run=true";
+		property data.archive.type = "data-archive-classic-search-portlet";
+		property portal.version = "7.2.10.1";
+		property skip.upgrade-legacy-database = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.run.environment = "EE";
+
+		Upgrade.viewClassicSearchPortletConfiguration();
+	}
+
+	@priority = "5"
 	test ViewSearchPortletsConfigurationArchive713 {
 		property data.archive.type = "data-archive-search-portlets";
 		property database.types = "mariadb,mysql,postgresql";
@@ -193,6 +229,42 @@ definition {
 	test ViewSearchPortletsConfigurationArchive72101 {
 		property data.archive.type = "data-archive-search-portlets";
 		property portal.version = "7.2.10.1";
+		property test.assert.warning.exceptions = "true";
+		property test.run.environment = "EE";
+
+		Upgrade.viewSearchPortletsConfiguration();
+	}
+
+	@priority = "5"
+	test ViewSearchPortletsConfigurationArchiveAutoUpgrade721 {
+		property custom.properties = "upgrade.database.auto.run=true";
+		property data.archive.type = "data-archive-search-portlets";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.1";
+		property skip.upgrade-legacy-database = "true";
+		property test.assert.warning.exceptions = "true";
+
+		Upgrade.viewSearchPortletsConfiguration();
+	}
+
+	@priority = "5"
+	test ViewSearchPortletsConfigurationArchiveAutoUpgrade730 {
+		property custom.properties = "upgrade.database.auto.run=true";
+		property data.archive.type = "data-archive-search-portlets";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.0";
+		property skip.upgrade-legacy-database = "true";
+		property test.assert.warning.exceptions = "true";
+
+		Upgrade.viewSearchPortletsConfiguration();
+	}
+
+	@priority = "5"
+	test ViewSearchPortletsConfigurationArchiveAutoUpgrade72101 {
+		property custom.properties = "upgrade.database.auto.run=true";
+		property data.archive.type = "data-archive-search-portlets";
+		property portal.version = "7.2.10.1";
+		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.run.environment = "EE";
 

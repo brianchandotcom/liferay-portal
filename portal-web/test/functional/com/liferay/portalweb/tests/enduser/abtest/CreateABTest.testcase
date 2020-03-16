@@ -5,6 +5,8 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "A/B Test";
 
+	// User has to be connected to AC and logged in AC
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
@@ -20,13 +22,12 @@ definition {
 
 		PageEditor.clickPublish();
 
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
 		task ("Sync Site with Analytics Cloud") {
-			Click(locator1 = "AnalyticsCloudConnection#CONTROL_PANEL_MENU");
-
-			Click(locator1 = "AnalyticsCloudConnection#CONFIGURATION_OPTION");
-
-			Click(locator1 = "AnalyticsCloudConnection#INSTANCE_SETTINGS_OPTION");
-
 			Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_BUTTON");
 
 			Click(locator1 = "AnalyticsCloudConnection#SYNCED_SITES_BUTTON");
@@ -92,6 +93,11 @@ definition {
 
 			Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
 		}
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
 	}
 
 }

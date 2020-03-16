@@ -60,7 +60,7 @@ renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-te
 
 				<liferay-ui:input-editor
 					contents="<%= content %>"
-					editorName="alloyeditor"
+					editorName="ckeditor"
 					name="contentEditor"
 					placeholder="content"
 				/>

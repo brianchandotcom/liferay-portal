@@ -27,8 +27,8 @@ $transition-timing-function: ease;
 }
 
 @include media-breakpoint-up(sm) {
-	$control-menu-height: 65px;
-	$management-bar-height: 63px;
+	$control-menu-height: 56px;
+	$management-bar-height: 64px;
 
 	.contextual-sidebar {
 		height: calc(100vh - #{$management-bar-height});

@@ -187,16 +187,16 @@ $productMenuWidth: 320px;
 		.edit-article-sidebar {
 			border-left: 1px #e7e7ed solid;
 			box-shadow: none;
-			height: 95%;
+			margin-top: $toolbarHeight;
 			overflow-y: scroll;
-			padding-top: $toolbarHeight !important;
+			padding-top: 0;
 			position: fixed;
 			top: auto;
 			width: 100%;
 			z-index: 1;
 
 			@media (min-width: 768px) {
-				padding-top: $toolbarDesktopHeight !important;
+				margin-top: $toolbarDesktopHeight;
 				width: $productMenuWidth;
 			}
 

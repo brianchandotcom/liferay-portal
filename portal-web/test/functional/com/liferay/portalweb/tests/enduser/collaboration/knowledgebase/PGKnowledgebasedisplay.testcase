@@ -286,8 +286,10 @@ definition {
 		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title Edited 1");
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test EditKBArticle {
+		property portal.acceptance = "true";
+
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(

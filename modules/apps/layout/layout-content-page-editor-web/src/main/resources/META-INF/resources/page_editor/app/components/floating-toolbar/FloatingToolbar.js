@@ -146,44 +146,51 @@ export default function FloatingToolbar({
 			'.page-editor__sidebar__content'
 		);
 
-		const handleTransitionEnd = event => {
-			if (event.target === sidebarElement) {
-				alignElement(toolbarRef, itemRef, () => {
-					alignElement(panelRef, toolbarRef);
-				});
-				setHidden(false);
-			}
-		};
+		if (sidebarElement) {
+			const handleTransitionEnd = event => {
+				if (event.target === sidebarElement) {
+					alignElement(toolbarRef, itemRef, () => {
+						alignElement(panelRef, toolbarRef);
+					});
+					setHidden(false);
+				}
+			};
 
-		const handleTransitionStart = event => {
-			if (event.target === sidebarElement) {
-				setHidden(true);
-			}
-		};
+			const handleTransitionStart = event => {
+				if (event.target === sidebarElement) {
+					setHidden(true);
+				}
+			};
 
-		sidebarElement.addEventListener('transitionend', handleTransitionEnd);
-		sidebarElement.addEventListener(
-			'transitionstart',
-			handleTransitionStart
-		);
-
-		return () => {
-			sidebarElement.removeEventListener(
+			sidebarElement.addEventListener(
 				'transitionend',
 				handleTransitionEnd
 			);
-
-			sidebarElement.removeEventListener(
+			sidebarElement.addEventListener(
 				'transitionstart',
 				handleTransitionStart
 			);
-		};
+
+			return () => {
+				sidebarElement.removeEventListener(
+					'transitionend',
+					handleTransitionEnd
+				);
+
+				sidebarElement.removeEventListener(
+					'transitionstart',
+					handleTransitionStart
+				);
+			};
+		}
 	}, [alignElement, item, itemRef]);
 
 	useEffect(() => {
-		const sideNavigation = Liferay.SideNavigation.instance(
-			document.querySelector('.product-menu-toggle')
-		);
+		const sideNavigation =
+			Liferay.sideNavigation &&
+			Liferay.SideNavigation.instance(
+				document.querySelector('.product-menu-toggle')
+			);
 
 		const handleTransitionEnd = () => {
 			alignElement(toolbarRef, itemRef, () => {

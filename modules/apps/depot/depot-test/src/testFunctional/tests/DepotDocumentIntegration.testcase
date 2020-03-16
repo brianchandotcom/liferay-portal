@@ -111,7 +111,7 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		PageEditor.addLayoutSection();
+		PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
 
 		PageEditor.editLayoutSection(
 			backgroundImage = "Manual Selection",

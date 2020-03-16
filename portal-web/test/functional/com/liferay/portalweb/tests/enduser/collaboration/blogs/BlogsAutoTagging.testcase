@@ -250,6 +250,8 @@ definition {
 	@description = "This test asserts that a blog entry is auto tagged when OpenNLP Text Auto Tagging is enabled."
 	@priority = "5"
 	test Smoke {
+		property portal.acceptance = "true";
+
 		property test.name.skip.portal.instance = "BlogsAutoTagging#Smoke";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");

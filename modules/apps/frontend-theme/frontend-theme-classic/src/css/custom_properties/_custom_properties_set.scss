@@ -786,7 +786,6 @@ h6,
 // List group
 
 .list-group {
-	color: var(--list-group-color);
 	font-size: var(--list-group-font-size);
 
 	a,
@@ -833,6 +832,7 @@ h6,
 .list-group-item {
 	background-color: var(--list-group-bg);
 	border: var(--list-group-border-width) solid var(--list-group-border-color);
+	color: var(--list-group-color);
 
 	.quick-action-menu {
 		background-color: var(--list-group-bg);
@@ -840,6 +840,24 @@ h6,
 		padding-bottom: calc(1rem - 1px);
 		padding-top: calc(1rem - 1px);
 		top: 1px;
+	}
+
+	&.active {
+		background-color: var(--list-group-active-bg);
+		border-color: var(--list-group-active-border-color);
+		color: var(--list-group-active-color);
+
+		.list-group-title {
+			&,
+			a {
+				color: inherit;
+			}
+		}
+
+		.quick-action-menu {
+			background-color: var(--list-group-active-bg);
+			color: var(--list-group-active-color);
+		}
 	}
 }
 
@@ -853,4 +871,11 @@ h6,
 		inset 0 var(--list-group-border-width) var(--list-group-border-color),
 		inset 0 calc(var(--list-group-border-width) * -1)
 			var(--list-group-border-color);
+}
+
+.list-group-title,
+.list-group-subtitle,
+.list-group-text,
+.list-group-subtext {
+	color: inherit;
 }

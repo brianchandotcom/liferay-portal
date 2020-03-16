@@ -322,6 +322,10 @@ $theme-colors-cp: map-deep-merge(
 	--list-group-border-width: 0.0625rem;
 	--list-group-color: var(--gray-600);
 
+	--list-group-active-bg: var(--white);
+	--list-group-active-border-color: var(--gray-300);
+	--list-group-active-color: var(--gray-600);
+
 	--list-group-font-size: var(--font-size-sm);
 	--list-group-item-padding-x: #{$list-group-item-padding-x};
 	--list-group-item-padding-y: #{$list-group-item-padding-y};

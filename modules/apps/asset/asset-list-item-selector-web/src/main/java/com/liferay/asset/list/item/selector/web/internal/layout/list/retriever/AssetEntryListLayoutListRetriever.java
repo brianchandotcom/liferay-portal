@@ -61,6 +61,29 @@ public class AssetEntryListLayoutListRetriever
 			assetListEntry, segmentsExperienceIds[0]);
 	}
 
+	@Override
+	public int getListCount(
+		ClassedModelListObjectReference classedModelListObjectReference,
+		LayoutListRetrieverContext layoutListRetrieverContext) {
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.fetchAssetListEntry(
+				classedModelListObjectReference.getClassPK());
+
+		if (assetListEntry == null) {
+			return 0;
+		}
+
+		Optional<long[]> segmentsExperienceIdsOptional =
+			layoutListRetrieverContext.getSegmentsExperienceIdsOptional();
+
+		long[] segmentsExperienceIds = segmentsExperienceIdsOptional.orElse(
+			new long[] {0});
+
+		return _assetListAssetEntryProvider.getAssetEntriesCount(
+			assetListEntry, segmentsExperienceIds[0]);
+	}
+
 	@Reference
 	private AssetListAssetEntryProvider _assetListAssetEntryProvider;
 

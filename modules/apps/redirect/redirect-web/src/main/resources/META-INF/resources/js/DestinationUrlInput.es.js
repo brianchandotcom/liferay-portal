@@ -12,21 +12,83 @@
  * details.
  */
 
-import React from 'react';
+import ClayIcon from '@clayui/icon';
 import ClayForm, {ClayInput} from '@clayui/form';
+import React, {useState} from 'react';
 
-const DestinationUrlInput = ({destinationUrl}) => {
+const VALIDATION_TYPE = {
+	error: 'has-error',
+	info: 'has-success',
+	warning: 'has-warning',
+};
+
+const Notification = ({type}) => {
+	if (type === VALIDATION_TYPE.error) {
+		return Liferay.Language.get('this-field-is-required');
+	} else if (type === VALIDATION_TYPE.info) {
+		return (
+			<>
+				<ClayForm.FeedbackIndicator symbol="check-circle-full" />
+				{Liferay.Language.get('working-url')}
+			</>
+		);
+	} else if (type === VALIDATION_TYPE.warning) {
+		return (
+			<>
+				<ClayForm.FeedbackIndicator symbol="warning-full" />
+				{Liferay.Language.get('could-not-find-url')}
+			</>
+		);
+	}
+};
+
+const DestinationUrlInput = ({initialUrl}) => {
+	const [destinationUrl, setDestinationUrl] = useState(initialUrl);
+	const [validationType, setValidationType] = useState('');
+
+	const onInputBlur = event => {
+		const url = event.currentTarget.value;
+
+		setValidationType('');
+
+		if (!url) {
+			setValidationType(VALIDATION_TYPE.error);
+		} else if (url === 'a') {
+			setValidationType(VALIDATION_TYPE.warning);
+		} else {
+			setValidationType(VALIDATION_TYPE.info);
+		}
+	};
+
 	return (
-		<ClayForm.Group>
+		<ClayForm.Group className={validationType}>
 			<label htmlFor="destinationUrlInput">
 				{Liferay.Language.get('destination-url')}
+
+				<span className="inline-item-after reference-mark">
+					<ClayIcon symbol={'asterisk'} />
+
+					<span className="hide-accessible">
+						{Liferay.Language.get('required')}
+					</span>
+				</span>
 			</label>
+
 			<ClayInput
 				id="destinationUrlInput"
+				onBlur={onInputBlur}
 				required
 				value={destinationUrl}
 				type="text"
 			/>
+
+			{validationType && (
+				<ClayForm.FeedbackGroup>
+					<ClayForm.FeedbackItem>
+						<Notification type={validationType} />
+					</ClayForm.FeedbackItem>
+				</ClayForm.FeedbackGroup>
+			)}
 		</ClayForm.Group>
 	);
 };

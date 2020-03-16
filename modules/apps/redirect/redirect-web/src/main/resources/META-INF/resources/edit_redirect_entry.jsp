@@ -71,7 +71,7 @@ else {
 
 		<%
 			Map<String, Object> data = HashMapBuilder.<String, Object>put(
-				"destinationUrl", (redirectEntry != null) ? redirectEntry.getDestinationURL() : null
+				"initialUrl", (redirectEntry != null) ? redirectEntry.getDestinationURL() : null
 			).build();
 		%>
 

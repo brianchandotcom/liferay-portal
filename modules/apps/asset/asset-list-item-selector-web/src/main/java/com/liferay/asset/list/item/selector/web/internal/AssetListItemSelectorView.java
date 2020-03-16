@@ -114,6 +114,60 @@ public class AssetListItemSelectorView
 				infoListItemSelectorCriterion, portletURL));
 	}
 
+	private String _getClassName(AssetListEntry assetListEntry) {
+		if (assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_MANUAL) {
+
+			return AssetEntry.class.getName();
+		}
+
+		try {
+			String className = StringPool.BLANK;
+
+			List<AssetListEntrySegmentsEntryRel>
+				assetListEntrySegmentsEntryRels =
+					_assetListEntrySegmentsEntryRelLocalService.
+						getAssetListEntrySegmentsEntryRels(
+							assetListEntry.getAssetListEntryId(),
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel :
+					assetListEntrySegmentsEntryRels) {
+
+				UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+				unicodeProperties.load(
+					assetListEntrySegmentsEntryRel.getTypeSettings());
+
+				long defaultClassNameId = GetterUtil.getLong(
+					unicodeProperties.getProperty("anyAssetType", null));
+
+				if (defaultClassNameId <= 0) {
+					return AssetEntry.class.getName();
+				}
+
+				if (Validator.isNull(className)) {
+					className = _portal.getClassName(defaultClassNameId);
+				}
+				else if (!Objects.equals(
+							className,
+							_portal.getClassName(defaultClassNameId))) {
+
+					return AssetEntry.class.getName();
+				}
+			}
+
+			return className;
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException, ioException);
+			}
+		}
+
+		return AssetEntry.class.getName();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetListItemSelectorView.class);
 
@@ -185,6 +239,9 @@ public class AssetListItemSelectorView
 						_portal.getClassNameId(AssetListEntry.class)
 					).put(
 						"classPK", assetListEntry.getAssetListEntryId()
+					).put(
+						"itemType",
+						_portal.getClassNameId(_getClassName(assetListEntry))
 					).put(
 						"title", assetListEntry.getTitle()
 					).toString();
@@ -292,62 +349,6 @@ public class AssetListItemSelectorView
 		@Override
 		public boolean isShowSearch() {
 			return true;
-		}
-
-		private String _getClassName(AssetListEntry assetListEntry) {
-			if (assetListEntry.getType() ==
-					AssetListEntryTypeConstants.TYPE_MANUAL) {
-
-				return AssetEntry.class.getName();
-			}
-
-			try {
-				String className = StringPool.BLANK;
-
-				List<AssetListEntrySegmentsEntryRel>
-					assetListEntrySegmentsEntryRels =
-						_assetListEntrySegmentsEntryRelLocalService.
-							getAssetListEntrySegmentsEntryRels(
-								assetListEntry.getAssetListEntryId(),
-								QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-				for (AssetListEntrySegmentsEntryRel
-						assetListEntrySegmentsEntryRel :
-							assetListEntrySegmentsEntryRels) {
-
-					UnicodeProperties unicodeProperties =
-						new UnicodeProperties();
-
-					unicodeProperties.load(
-						assetListEntrySegmentsEntryRel.getTypeSettings());
-
-					long defaultClassNameId = GetterUtil.getLong(
-						unicodeProperties.getProperty("anyAssetType", null));
-
-					if (defaultClassNameId <= 0) {
-						return AssetEntry.class.getName();
-					}
-
-					if (Validator.isNull(className)) {
-						className = _portal.getClassName(defaultClassNameId);
-					}
-					else if (!Objects.equals(
-								className,
-								_portal.getClassName(defaultClassNameId))) {
-
-						return AssetEntry.class.getName();
-					}
-				}
-
-				return className;
-			}
-			catch (IOException ioException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(ioException, ioException);
-				}
-			}
-
-			return AssetEntry.class.getName();
 		}
 
 		private SearchContainer _getFilteredSearchContainer(

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -158,6 +159,9 @@ public class InfoListProviderItemSelectorView
 							WebKeys.THEME_DISPLAY);
 
 					return JSONUtil.put(
+						"itemType",
+						_portal.getClassNameId(_getClassName(infoListProvider))
+					).put(
 						"key", infoListProvider.getKey()
 					).put(
 						"title",
@@ -167,20 +171,11 @@ public class InfoListProviderItemSelectorView
 
 				@Override
 				public String getSubtitle(Locale locale) {
-					Class<?> clazz = infoListProvider.getClass();
+					String className = _getClassName(infoListProvider);
 
-					Type[] genericInterfaceTypes = clazz.getGenericInterfaces();
-
-					for (Type genericInterfaceType : genericInterfaceTypes) {
-						ParameterizedType parameterizedType =
-							(ParameterizedType)genericInterfaceType;
-
-						Class<?> typeClazz =
-							(Class<?>)
-								parameterizedType.getActualTypeArguments()[0];
-
+					if (Validator.isNotNull(className)) {
 						return ResourceActionsUtil.getModelResource(
-							locale, typeClazz.getName());
+							locale, className);
 					}
 
 					return StringPool.BLANK;
@@ -245,9 +240,31 @@ public class InfoListProviderItemSelectorView
 			return false;
 		}
 
+		private String _getClassName(InfoListProvider infoListProvider) {
+			Class<?> clazz = infoListProvider.getClass();
+
+			Type[] genericInterfaceTypes = clazz.getGenericInterfaces();
+
+			for (Type genericInterfaceType : genericInterfaceTypes) {
+				ParameterizedType parameterizedType =
+					(ParameterizedType)genericInterfaceType;
+
+				Class<?> typeClazz =
+					(Class<?>)parameterizedType.getActualTypeArguments()[0];
+
+				return typeClazz.getName();
+			}
+
+			return StringPool.BLANK;
+		}
+
 		private final HttpServletRequest _httpServletRequest;
 		private final InfoListProviderItemSelectorCriterion
 			_infoListProviderItemSelectorCriterion;
+
+		@Reference
+		private Portal _portal;
+
 		private final PortletURL _portletURL;
 
 	}

@@ -1,8 +1,6 @@
 @component-name = "portal-acceptance"
 definition {
 
-	property custom.properties = "layout.parallel.render.enable=false";
-
 	setUp {
 		TestCase.setUpPortalInstance();
 	}

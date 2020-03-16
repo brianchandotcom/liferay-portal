@@ -110,7 +110,11 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 		S buildData = getBuildData();
 
 		sb.append("&CI_TEST_SUITE=");
-		sb.append(buildData.getTestSuiteName());
+
+		String testSuiteName = buildData.getTestSuiteName();
+
+		sb.append(testSuiteName);
+
 		sb.append("&CONTROLLER_BUILD_URL=");
 		sb.append(buildData.getBuildURL());
 		sb.append("&JENKINS_GITHUB_BRANCH_NAME=");
@@ -129,6 +133,14 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 
 		sb.append("&PORTAL_GITHUB_URL=");
 		sb.append(buildData.getPortalGitHubURL());
+
+		String testPortalBuildProfile = getTestPortalBuildProfile(
+			testSuiteName);
+
+		if (testPortalBuildProfile != null) {
+			sb.append("&TEST_PORTAL_BUILD_PROFILE=");
+			sb.append(testPortalBuildProfile);
+		}
 
 		String testrayProjectName = buildData.getTestrayProjectName();
 

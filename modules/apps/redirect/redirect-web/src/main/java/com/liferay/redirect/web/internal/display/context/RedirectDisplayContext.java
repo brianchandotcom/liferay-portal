@@ -15,6 +15,7 @@
 package com.liferay.redirect.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -92,68 +93,56 @@ public class RedirectDisplayContext {
 		return _expirationDateFormat.format(expirationDate);
 	}
 
-	public DropdownItemList getActionDropdownItems(RedirectEntry redirectEntry)
-		throws PortalException {
+	public DropdownItemList getActionDropdownItems(
+		RedirectEntry redirectEntry) {
 
-		return new DropdownItemList() {
-			{
-				if (RedirectEntryPermission.contains(
-						_themeDisplay.getPermissionChecker(), redirectEntry,
-						ActionKeys.UPDATE)) {
+		return DropdownItemListBuilder.conditionalAdd(
+			() -> RedirectEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), redirectEntry,
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				RenderURL editRedirectEntryURL =
+					_liferayPortletResponse.createRenderURL();
 
-					add(
-						dropdownItem -> {
-							RenderURL editRedirectEntryURL =
-								_liferayPortletResponse.createRenderURL();
+				editRedirectEntryURL.setParameter(
+					"mvcRenderCommandName", "/redirect/edit_redirect_entry");
 
-							editRedirectEntryURL.setParameter(
-								"mvcRenderCommandName",
-								"/redirect/edit_redirect_entry");
+				PortletURL portletURL = _getPortletURL();
 
-							PortletURL portletURL = _getPortletURL();
+				editRedirectEntryURL.setParameter(
+					"redirect", portletURL.toString());
 
-							editRedirectEntryURL.setParameter(
-								"redirect", portletURL.toString());
+				editRedirectEntryURL.setParameter(
+					"redirectEntryId",
+					String.valueOf(redirectEntry.getRedirectEntryId()));
 
-							editRedirectEntryURL.setParameter(
-								"redirectEntryId",
-								String.valueOf(
-									redirectEntry.getRedirectEntryId()));
+				dropdownItem.setHref(editRedirectEntryURL);
 
-							dropdownItem.setHref(editRedirectEntryURL);
-
-							dropdownItem.setLabel(
-								LanguageUtil.get(_httpServletRequest, "edit"));
-						});
-				}
-
-				if (RedirectEntryPermission.contains(
-						_themeDisplay.getPermissionChecker(), redirectEntry,
-						ActionKeys.DELETE)) {
-
-					add(
-						dropdownItem -> {
-							ActionURL deleteRedirectEntryURL =
-								_liferayPortletResponse.createActionURL();
-
-							deleteRedirectEntryURL.setParameter(
-								ActionRequest.ACTION_NAME,
-								"/redirect/delete_redirect_entry");
-
-							deleteRedirectEntryURL.setParameter(
-								"redirectEntryId",
-								String.valueOf(
-									redirectEntry.getRedirectEntryId()));
-
-							dropdownItem.setHref(deleteRedirectEntryURL);
-
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, "delete"));
-						});
-				}
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "edit"));
 			}
-		};
+		).conditionalAdd(
+			() -> RedirectEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), redirectEntry,
+				ActionKeys.DELETE),
+			dropdownItem -> {
+				ActionURL deleteRedirectEntryURL =
+					_liferayPortletResponse.createActionURL();
+
+				deleteRedirectEntryURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/redirect/delete_redirect_entry");
+
+				deleteRedirectEntryURL.setParameter(
+					"redirectEntryId",
+					String.valueOf(redirectEntry.getRedirectEntryId()));
+
+				dropdownItem.setHref(deleteRedirectEntryURL);
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
+			}
+		).build();
 	}
 
 	public String getExpirationDateinputValue(RedirectEntry redirectEntry) {

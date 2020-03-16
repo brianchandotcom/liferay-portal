@@ -250,7 +250,7 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/w/webcontent-title");
 
 		AssertTextEquals.assertPartialTextAceEditor(
-			locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
+			locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
 			value1 = "WC WebContent Depot");
 	}
 

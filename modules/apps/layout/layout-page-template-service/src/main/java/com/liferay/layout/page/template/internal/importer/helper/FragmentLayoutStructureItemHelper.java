@@ -29,6 +29,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -82,6 +83,37 @@ public class FragmentLayoutStructureItemHelper
 
 		return layoutStructure.addFragmentLayoutStructureItem(
 			fragmentEntryLink.getFragmentEntryLinkId(), parentItemId, position);
+	}
+
+	private static Map<String, String> _getConfigurationTypes(
+			String configuration)
+		throws JSONException {
+
+		Map<String, String> configurationTypes = new HashMap<>();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(configuration);
+
+		JSONArray fieldSetsJSONArray = jsonObject.getJSONArray("fieldSets");
+
+		if (fieldSetsJSONArray == null) {
+			return configurationTypes;
+		}
+
+		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
+			JSONObject fieldsJSONObject = fieldSetsJSONArray.getJSONObject(i);
+
+			JSONArray fieldsJSONArray = fieldsJSONObject.getJSONArray("fields");
+
+			for (int j = 0; j < fieldsJSONArray.length(); j++) {
+				JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(j);
+
+				configurationTypes.put(
+					fieldJSONObject.getString("name"),
+					fieldJSONObject.getString("type"));
+			}
+		}
+
+		return configurationTypes;
 	}
 
 	private static Map<String, String> _getEditableTypes(String html) {
@@ -167,8 +199,12 @@ public class FragmentLayoutStructureItemHelper
 				editableFragmentEntryProcessorJSONObject);
 		}
 
+		Map<String, String> configurationTypes = _getConfigurationTypes(
+			configuration);
+
 		JSONObject freeMarkerFragmentEntryProcessorJSONObject =
 			_toFreeMarkerFragmentEntryProcessorJSONObject(
+				configurationTypes,
 				(Map<String, Object>)definitionMap.get("fragmentConfig"));
 
 		fragmentEntryValidator.validateConfigurationValues(
@@ -430,6 +466,7 @@ public class FragmentLayoutStructureItemHelper
 	}
 
 	private JSONObject _toFreeMarkerFragmentEntryProcessorJSONObject(
+		Map<String, String> configurationTypes,
 		Map<String, Object> fragmentConfigMap) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -440,7 +477,16 @@ public class FragmentLayoutStructureItemHelper
 
 		for (Map.Entry<String, Object> entry : fragmentConfigMap.entrySet()) {
 			if (entry.getValue() instanceof String) {
-				jsonObject.put(entry.getKey(), entry.getValue());
+				String type = configurationTypes.get(entry.getKey());
+
+				if (Objects.equals(type, "colorPalette")) {
+					jsonObject.put(
+						entry.getKey(),
+						JSONUtil.put("color", entry.getValue()));
+				}
+				else {
+					jsonObject.put(entry.getKey(), entry.getValue());
+				}
 			}
 			else if (entry.getValue() instanceof HashMap) {
 				Map<String, Object> childFragmentConfigMap =
@@ -449,7 +495,7 @@ public class FragmentLayoutStructureItemHelper
 				jsonObject.put(
 					entry.getKey(),
 					_toFreeMarkerFragmentEntryProcessorJSONObject(
-						childFragmentConfigMap));
+						configurationTypes, childFragmentConfigMap));
 			}
 		}
 

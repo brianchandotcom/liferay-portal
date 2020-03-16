@@ -187,10 +187,10 @@ public class UpgradeSchema extends UpgradeProcess {
 
 		sb1.append("select KaleoDefinition.kaleoDefinitionId, ");
 		sb1.append("KaleoDefinitionVersion.kaleoDefinitionVersionId from ");
-		sb1.append("KaleoDefinitionVersion join KaleoDefinition on ");
+		sb1.append("KaleoDefinitionVersion inner join KaleoDefinition on ");
 		sb1.append("KaleoDefinition.companyId = ");
 		sb1.append("KaleoDefinitionVersion.companyId and ");
-		sb1.append("KaleoDefinition.name = KaleoDefinitionVersion.name;");
+		sb1.append("KaleoDefinition.name = KaleoDefinitionVersion.name");
 
 		List<PreparedStatement> preparedStatements = new ArrayList<>(18);
 

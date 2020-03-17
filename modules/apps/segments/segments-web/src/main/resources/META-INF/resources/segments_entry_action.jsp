@@ -55,20 +55,23 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 		/>
 	</c:if>
 
-	<%
-	Map<String, Object> data = HashMapBuilder.<String, Object>put(
-		"roleIds", StringUtil.merge(segmentsEntry.getRoleIds())
-	).put(
-		"segmentsEntryId", segmentsEntry.getSegmentsEntryId()
-	).build();
-	%>
+	<c:if test="<%= SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.ASSIGN_USER_ROLES) %>">
 
-	<liferay-ui:icon
-		data="<%= data %>"
-		linkCssClass="assign-site-roles-link"
-		message="assign-site-roles"
-		url="javascript:;"
-	/>
+		<%
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"roleIds", StringUtil.merge(segmentsEntry.getRoleIds())
+		).put(
+			"segmentsEntryId", segmentsEntry.getSegmentsEntryId()
+		).build();
+		%>
+
+		<liferay-ui:icon
+			data="<%= data %>"
+			linkCssClass="assign-site-roles-link"
+			message="assign-site-roles"
+			url="javascript:;"
+		/>
+	</c:if>
 
 	<c:if test="<%= SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL

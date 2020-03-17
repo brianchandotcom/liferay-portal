@@ -147,7 +147,7 @@ definition {
 				key_fragmentClass = "image",
 				key_image = "Document_1.png",
 				key_position = "1",
-				locator1 = "Fragment#FRAGMENT_IMAGE");
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE");
 		}
 
 		ContentPages.clickPencil();

@@ -582,6 +582,8 @@ definition {
 			fragmentName = "Title",
 			position = "1");
 
+		PageEditor.gotoCommentList();
+
 		PageEditor.viewCommentList(
 			commentCount = "1 Comment",
 			fragmentName = "Title",

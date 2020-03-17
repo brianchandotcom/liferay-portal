@@ -137,20 +137,20 @@ public class NodeMetricResourceImpl
 			_createSLATaskResultsBooleanQuery(
 				completed, dateEnd, dateStart, processId, taskNames));
 
-		BooleanQuery tokensBooleanQuery = _queries.booleanQuery();
+		BooleanQuery tasksBooleanQuery = _queries.booleanQuery();
 
-		tokensBooleanQuery.addFilterQueryClauses(
+		tasksBooleanQuery.addFilterQueryClauses(
 			_queries.term(
 				"_index",
 				_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 					contextCompany.getCompanyId())));
-		tokensBooleanQuery.addMustQueryClauses(
+		tasksBooleanQuery.addMustQueryClauses(
 			_createTasksBooleanQuery(
 				completed, dateEnd, dateStart, processId, taskNames));
 
 		return filterBooleanQuery.addFilterQueryClauses(
 			booleanQuery.addShouldQueryClauses(
-				slaTaskResultsBooleanQuery, tokensBooleanQuery));
+				slaTaskResultsBooleanQuery, tasksBooleanQuery));
 	}
 
 	private BooleanQuery _createBooleanQuery(

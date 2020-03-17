@@ -33,14 +33,14 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewImportLayoutPageTemplateEntryMVCRenderCommand
+public class ViewImportLayoutPageTemplateEntriesMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/view_import_layout_page_template_entry.jsp";
+		return "/view_import_layout_page_template_entries.jsp";
 	}
 
 }

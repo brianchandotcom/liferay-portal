@@ -80,6 +80,12 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 					add(_getMoveFragmentCompositionActionUnsafeConsumer());
 					add(
 						_getUpdateFragmentCompositionPreviewActionUnsafeConsumer());
+
+					if (_fragmentComposition.getPreviewFileEntryId() > 0) {
+						add(
+							_getDeleteFragmentCompositionPreviewActionUnsafeConsumer());
+					}
+
 					add(_getDeleteFragmentCompositionActionUnsafeConsumer());
 				}
 			}
@@ -115,6 +121,33 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 				).build());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDeleteFragmentCompositionPreviewActionUnsafeConsumer() {
+
+		PortletURL deleteFragmentCompositionPreviewURL =
+			_renderResponse.createActionURL();
+
+		deleteFragmentCompositionPreviewURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/fragment/delete_fragment_composition_preview");
+		deleteFragmentCompositionPreviewURL.setParameter(
+			"fragmentCompositionId",
+			String.valueOf(_fragmentComposition.getFragmentCompositionId()));
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "deleteFragmentCompositionPreview");
+			dropdownItem.putData(
+				"deleteFragmentCompositionPreviewURL",
+				deleteFragmentCompositionPreviewURL.toString());
+			dropdownItem.putData(
+				"fragmentCompositionId",
+				String.valueOf(
+					_fragmentComposition.getFragmentCompositionId()));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "remove-thumbnail"));
 		};
 	}
 

@@ -29,6 +29,10 @@ class FragmentCompositionDropdownDefaultEventHandler extends DefaultEventHandler
 		}
 	}
 
+	deleteFragmentCompositionPreview(itemData) {
+		this._send(itemData.deleteFragmentCompositionPreviewURL);
+	}
+
 	moveFragmentComposition(itemData) {
 		this._selectFragmentCollection(
 			itemData.fragmentCompositionId,

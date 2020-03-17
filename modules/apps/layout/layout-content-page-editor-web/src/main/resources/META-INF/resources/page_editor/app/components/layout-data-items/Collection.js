@@ -56,7 +56,7 @@ const NotMappedMessage = () => (
 const Grid = ({
 	child,
 	collectionId,
-	collectionLength,
+	collectionLength = 3,
 	numberOfColumns,
 	numberOfItems,
 }) => {
@@ -106,7 +106,7 @@ const Grid = ({
 	return createRows();
 };
 
-const Stack = ({child, collectionId, collectionLength, numberOfItems}) => {
+const Stack = ({child, collectionId, collectionLength = 3, numberOfItems}) => {
 	const maxNumberOfItems = Math.min(collectionLength, numberOfItems);
 
 	return Array.from({length: maxNumberOfItems}).map((_element, idx) => (
@@ -141,7 +141,6 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 				<ContentComponent
 					child={child}
 					collectionId={item.itemId}
-					collectionLength={mockList.length}
 					numberOfColumns={collectionConfig.numberOfColumns}
 					numberOfItems={collectionConfig.numberOfItems}
 				/>

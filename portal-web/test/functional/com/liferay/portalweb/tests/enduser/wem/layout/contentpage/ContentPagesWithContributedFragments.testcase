@@ -70,6 +70,7 @@ definition {
 		PageEditor.addContentDisplay(fragmentName = "Content");
 
 		PageEditor.editContentDisplay(
+			fragmentName = "Content",
 			webcontent = "true",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WebContent Title");
@@ -120,7 +121,8 @@ definition {
 		PageEditor.editContentDisplay(
 			blogs = "true",
 			entryContent = "This content maps from blog content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			fragmentName = "Content");
 
 		Button.clickPublish();
 
@@ -151,6 +153,7 @@ definition {
 
 		PageEditor.editContentDisplay(
 			documentandmedia = "true",
+			fragmentName = "Content",
 			imageFileName = "Document_1.jpg");
 
 		Button.clickPublish();
@@ -184,6 +187,7 @@ definition {
 		PageEditor.addContentDisplay(fragmentName = "Content");
 
 		PageEditor.editContentDisplay(
+			fragmentName = "Content",
 			webcontent = "true",
 			webContentContent = "This content maps from web content",
 			webContentTitle = "Webcontent Title");
@@ -493,6 +497,7 @@ definition {
 
 		PageEditor.editContentDisplay(
 			customWebcontenttemplate = "WC Template Name",
+			fragmentName = "Content",
 			webcontent = "true",
 			webContentContent = "${siteID}",
 			webContentTitle = "Webcontent Title");

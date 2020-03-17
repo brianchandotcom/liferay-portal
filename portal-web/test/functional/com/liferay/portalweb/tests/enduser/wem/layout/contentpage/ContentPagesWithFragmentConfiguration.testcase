@@ -311,6 +311,7 @@ definition {
 			fragmentName = "itemSelector Fragment Example");
 
 		PageEditor.editContentDisplay(
+			fragmentName = "itemSelector Fragment Example",
 			webcontent = "true",
 			webContentContent = "WC WebContent Content 2",
 			webContentTitle = "WebContent Title 2");

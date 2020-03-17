@@ -43,6 +43,7 @@ definition {
 		PageEditor.addContentDisplay(fragmentName = "Content");
 
 		PageEditor.editContentDisplay(
+			fragmentName = "Content",
 			webcontent = "true",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WebContent Title");

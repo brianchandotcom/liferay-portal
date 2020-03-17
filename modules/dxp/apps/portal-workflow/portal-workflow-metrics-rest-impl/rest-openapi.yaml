@@ -4,9 +4,6 @@ components:
             description:
                 https://schema.org/Assignee
             properties:
-                durationTaskAvg:
-                    format: int64
-                    type: integer
                 id:
                     description:
                         The user's ID.
@@ -24,6 +21,26 @@ components:
                         The user's full name.
                     readOnly: true
                     type: string
+            type: object
+        AssigneeBulkSelection:
+            description:
+                https://schema.org/AssigneeMetricBulkSelection
+            properties:
+                instanceIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+            type: object
+        AssigneeMetric:
+            description:
+                https://schema.org/AssigneeMetric
+            properties:
+                assignee:
+                    $ref: "#/components/schemas/Assignee"
+                durationTaskAvg:
+                    format: int64
+                    type: integer
                 onTimeTaskCount:
                     format: int64
                     type: integer
@@ -34,9 +51,9 @@ components:
                     format: int64
                     type: integer
             type: object
-        AssigneeUserBulkSelection:
+        AssigneeMetricBulkSelection:
             description:
-                https://schema.org/AssigneeUserBulkSelection
+                https://schema.org/AssigneeMetricBulkSelection
             properties:
                 completed:
                     type: boolean
@@ -109,54 +126,9 @@ components:
                     format: double
                     type: number
             type: object
-        Instance:
+        HistogramMetric:
             description:
-                https://www.schema.org/Instance
-            properties:
-                assetTitle:
-                    type: string
-                assetType:
-                    type: string
-                assigneeUsers:
-                    items:
-                        $ref: "#/components/schemas/AssigneeUser"
-                    type: array
-                creatorUser:
-                    $ref: "#/components/schemas/CreatorUser"
-                dateCompletion:
-                    format: date-time
-                    type: string
-                dateCreated:
-                    format: date-time
-                    type: string
-                id:
-                    format: int64
-                    type: integer
-                processId:
-                    format: int64
-                    type: integer
-                slaResults:
-                    items:
-                        $ref: "#/components/schemas/SLAResult"
-                    type: array
-                slaStatus:
-                    enum: [OnTime, Overdue, Untracked]
-                    type: string
-                status:
-                    enum: [Completed, Pending]
-                    type: string
-                taskNames:
-                    items:
-                        type: string
-                    type: array
-                transitions:
-                    items:
-                        $ref: "#/components/schemas/Transition"
-                    type: array
-            type: object
-        Metric:
-            description:
-                https://www.schema.org/Metric
+                https://www.schema.org/HistogramMetric
             properties:
                 histograms:
                     items:
@@ -169,10 +141,91 @@ components:
                     format: double
                     type: number
             type: object
+        Instance:
+            description:
+                https://www.schema.org/Instance
+            properties:
+                assetTitle:
+                    readOnly: true
+                    type: string
+                assetTitle_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                assetType:
+                    readOnly: true
+                    type: string
+                assetType_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                assignees:
+                    items:
+                        $ref: "#/components/schemas/Assignee"
+                    readOnly: true
+                    type: array
+                className:
+                    type: string
+                classPK:
+                    format: int64
+                    type: integer
+                completed:
+                    type: boolean
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCompletion:
+                    format: date-time
+                    type: string
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                duration:
+                    format: int64
+                    type: integer
+                id:
+                    format: int64
+                    type: integer
+                processId:
+                    format: int64
+                    type: integer
+                processVersion:
+                    type: string
+                slaResults:
+                    items:
+                        $ref: "#/components/schemas/SLAResult"
+                    readOnly: true
+                    type: array
+                slaStatus:
+                    enum: [OnTime, Overdue, Untracked]
+                    readOnly: true
+                    type: string
+                status:
+                    enum: [Completed, Pending]
+                    readOnly: true
+                    type: string
+                taskNames:
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+                transitions:
+                    items:
+                        $ref: "#/components/schemas/Transition"
+                    type: array
+            type: object
         Node:
             description:
                 https://www.schema.org/Node
             properties:
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
                 id:
                     format: int64
                     type: integer
@@ -182,6 +235,11 @@ components:
                     readOnly: true
                     type: string
                 name:
+                    type: string
+                processId:
+                    format: int64
+                    type: integer
+                processVersion:
                     type: string
                 terminal:
                     type: boolean
@@ -197,13 +255,64 @@ components:
                 id:
                     type: string
             type: object
+        NodeMetric:
+            description:
+                https://www.schema.org/NodeMetric
+            properties:
+                breachedInstanceCount:
+                    format: int64
+                    type: integer
+                breachedInstancePercentage:
+                    format: double
+                    type: number
+                durationAvg:
+                    format: int64
+                    type: integer
+                instanceCount:
+                    format: int64
+                    type: integer
+                node:
+                    $ref: "#/components/schemas/Node"
+                onTimeInstanceCount:
+                    format: int64
+                    type: integer
+                overdueInstanceCount:
+                    format: int64
+                    type: integer
+            type: object
         Process:
             description:
                 https://www.schema.org/Process
             properties:
+                active:
+                    type: boolean
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
                 id:
                     format: int64
                     type: integer
+                name:
+                    type: string
+                title:
+                    readOnly: true
+                    type: string
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                version:
+                    type: string
+            type: object
+        ProcessMetric:
+            description:
+                https://www.schema.org/ProcessMetric
+            properties:
                 instanceCount:
                     format: int64
                     type: integer
@@ -213,8 +322,8 @@ components:
                 overdueInstanceCount:
                     format: int64
                     type: integer
-                title:
-                    type: string
+                process:
+                    $ref: "#/components/schemas/Process"
                 untrackedInstanceCount:
                     format: int64
                     type: integer
@@ -312,28 +421,50 @@ components:
             description:
                 https://www.schema.org/Task
             properties:
-                breachedInstanceCount:
+                assigneeId:
                     format: int64
                     type: integer
-                breachedInstancePercentage:
-                    format: double
-                    type: number
-                durationAvg:
+                className:
+                    type: string
+                classPK:
                     format: int64
                     type: integer
-                instanceCount:
+                completed:
+                    type: boolean
+                completionUserId:
                     format: int64
                     type: integer
-                key:
+                dateCompletion:
+                    format: date-time
+                    type: string
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                duration:
+                    format: int64
+                    type: integer
+                id:
+                    format: int64
+                    type: integer
+                instanceId:
+                    format: int64
+                    type: integer
+                label:
+                    readOnly: true
                     type: string
                 name:
                     type: string
-                onTimeInstanceCount:
+                nodeId:
                     format: int64
                     type: integer
-                overdueInstanceCount:
+                processId:
                     format: int64
                     type: integer
+                processVersion:
+                    type: string
             type: object
         TimeRange:
             description:

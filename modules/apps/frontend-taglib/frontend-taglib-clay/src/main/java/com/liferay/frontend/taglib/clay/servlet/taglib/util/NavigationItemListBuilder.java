@@ -31,14 +31,14 @@ public class NavigationItemListBuilder {
 		return navigationItemListWrapper.add(unsafeConsumer);
 	}
 
-	public static NavigationItemListWrapper conditionalAdd(
+	public static NavigationItemListWrapper add(
 		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
 		UnsafeConsumer<NavigationItem, Exception> unsafeConsumer) {
 
 		NavigationItemListWrapper navigationItemListWrapper =
 			new NavigationItemListWrapper();
 
-		return navigationItemListWrapper.conditionalAdd(
+		return navigationItemListWrapper.add(
 			unsafeSupplier, unsafeConsumer);
 	}
 
@@ -56,7 +56,7 @@ public class NavigationItemListBuilder {
 			return _navigationItemList;
 		}
 
-		public NavigationItemListWrapper conditionalAdd(
+		public NavigationItemListWrapper add(
 			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
 			UnsafeConsumer<NavigationItem, Exception> unsafeConsumer) {
 

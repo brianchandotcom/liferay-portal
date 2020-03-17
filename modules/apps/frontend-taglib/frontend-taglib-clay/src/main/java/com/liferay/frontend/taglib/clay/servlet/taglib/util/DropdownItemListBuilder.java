@@ -67,58 +67,58 @@ public class DropdownItemListBuilder {
 		return dropdownItemListWrapper.addRadioGroup(unsafeConsumer);
 	}
 
-	public static DropdownItemListWrapper conditionalAdd(
+	public static DropdownItemListWrapper add(
 		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
 		UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
 
 		DropdownItemListWrapper dropdownItemListWrapper =
 			new DropdownItemListWrapper();
 
-		return dropdownItemListWrapper.conditionalAdd(
+		return dropdownItemListWrapper.add(
 			unsafeSupplier, unsafeConsumer);
 	}
 
-	public static DropdownItemListWrapper conditionalAddCheckbox(
+	public static DropdownItemListWrapper addCheckbox(
 		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
 		UnsafeConsumer<DropdownCheckboxItem, Exception> unsafeConsumer) {
 
 		DropdownItemListWrapper dropdownItemListWrapper =
 			new DropdownItemListWrapper();
 
-		return dropdownItemListWrapper.conditionalAddCheckbox(
+		return dropdownItemListWrapper.addCheckbox(
 			unsafeSupplier, unsafeConsumer);
 	}
 
-	public static DropdownItemListWrapper conditionalAddGroup(
+	public static DropdownItemListWrapper addGroup(
 		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
 		UnsafeConsumer<DropdownGroupItem, Exception> unsafeConsumer) {
 
 		DropdownItemListWrapper dropdownItemListWrapper =
 			new DropdownItemListWrapper();
 
-		return dropdownItemListWrapper.conditionalAddGroup(
+		return dropdownItemListWrapper.addGroup(
 			unsafeSupplier, unsafeConsumer);
 	}
 
-	public static DropdownItemListWrapper conditionalAddRadio(
+	public static DropdownItemListWrapper addRadio(
 		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
 		UnsafeConsumer<DropdownRadioItem, Exception> unsafeConsumer) {
 
 		DropdownItemListWrapper dropdownItemListWrapper =
 			new DropdownItemListWrapper();
 
-		return dropdownItemListWrapper.conditionalAddRadio(
+		return dropdownItemListWrapper.addRadio(
 			unsafeSupplier, unsafeConsumer);
 	}
 
-	public static DropdownItemListWrapper conditionalAddRadioGroup(
+	public static DropdownItemListWrapper addRadioGroup(
 		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
 		UnsafeConsumer<DropdownRadioGroupItem, Exception> unsafeConsumer) {
 
 		DropdownItemListWrapper dropdownItemListWrapper =
 			new DropdownItemListWrapper();
 
-		return dropdownItemListWrapper.conditionalAddRadioGroup(
+		return dropdownItemListWrapper.addRadioGroup(
 			unsafeSupplier, unsafeConsumer);
 	}
 
@@ -168,7 +168,7 @@ public class DropdownItemListBuilder {
 			return _dropdownItemList;
 		}
 
-		public DropdownItemListWrapper conditionalAdd(
+		public DropdownItemListWrapper add(
 			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
 			UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
 
@@ -184,7 +184,7 @@ public class DropdownItemListBuilder {
 			return this;
 		}
 
-		public DropdownItemListWrapper conditionalAddCheckbox(
+		public DropdownItemListWrapper addCheckbox(
 			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
 			UnsafeConsumer<DropdownCheckboxItem, Exception> unsafeConsumer) {
 
@@ -200,7 +200,7 @@ public class DropdownItemListBuilder {
 			return this;
 		}
 
-		public DropdownItemListWrapper conditionalAddGroup(
+		public DropdownItemListWrapper addGroup(
 			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
 			UnsafeConsumer<DropdownGroupItem, Exception> unsafeConsumer) {
 
@@ -216,7 +216,7 @@ public class DropdownItemListBuilder {
 			return this;
 		}
 
-		public DropdownItemListWrapper conditionalAddRadio(
+		public DropdownItemListWrapper addRadio(
 			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
 			UnsafeConsumer<DropdownRadioItem, Exception> unsafeConsumer) {
 
@@ -232,7 +232,7 @@ public class DropdownItemListBuilder {
 			return this;
 		}
 
-		public DropdownItemListWrapper conditionalAddRadioGroup(
+		public DropdownItemListWrapper addRadioGroup(
 			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
 			UnsafeConsumer<DropdownRadioGroupItem, Exception> unsafeConsumer) {
 

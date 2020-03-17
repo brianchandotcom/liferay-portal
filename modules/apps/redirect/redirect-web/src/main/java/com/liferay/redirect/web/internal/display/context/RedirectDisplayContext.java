@@ -96,7 +96,7 @@ public class RedirectDisplayContext {
 	public DropdownItemList getActionDropdownItems(
 		RedirectEntry redirectEntry) {
 
-		return DropdownItemListBuilder.conditionalAdd(
+		return DropdownItemListBuilder.add(
 			() -> RedirectEntryPermission.contains(
 				_themeDisplay.getPermissionChecker(), redirectEntry,
 				ActionKeys.UPDATE),
@@ -121,7 +121,7 @@ public class RedirectDisplayContext {
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "edit"));
 			}
-		).conditionalAdd(
+		).add(
 			() -> RedirectEntryPermission.contains(
 				_themeDisplay.getPermissionChecker(), redirectEntry,
 				ActionKeys.DELETE),

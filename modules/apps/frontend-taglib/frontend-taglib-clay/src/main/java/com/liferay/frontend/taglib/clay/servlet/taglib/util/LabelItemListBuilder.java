@@ -30,13 +30,13 @@ public class LabelItemListBuilder {
 		return labelItemListWrapper.add(unsafeConsumer);
 	}
 
-	public static LabelItemListWrapper conditionalAdd(
+	public static LabelItemListWrapper add(
 		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
 		UnsafeConsumer<LabelItem, Exception> unsafeConsumer) {
 
 		LabelItemListWrapper labelItemListWrapper = new LabelItemListWrapper();
 
-		return labelItemListWrapper.conditionalAdd(
+		return labelItemListWrapper.add(
 			unsafeSupplier, unsafeConsumer);
 	}
 
@@ -54,7 +54,7 @@ public class LabelItemListBuilder {
 			return _labelItemList;
 		}
 
-		public LabelItemListWrapper conditionalAdd(
+		public LabelItemListWrapper add(
 			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
 			UnsafeConsumer<LabelItem, Exception> unsafeConsumer) {
 

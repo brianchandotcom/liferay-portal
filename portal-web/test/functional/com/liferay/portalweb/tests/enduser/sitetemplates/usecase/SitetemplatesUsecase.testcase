@@ -959,9 +959,9 @@ definition {
 
 		NavigationMenusAdmin.viewItem(itemName = "Google");
 
-		var siteTemplateURL = SiteTemplates.getSiteTemplateURL(siteTemplateName = "Site Template Name");
+		var siteTemplateID = SiteTemplates.getSiteTemplateID(siteTemplateName = "Site Template Name");
 
-		Navigator.openSpecificURL(url = "${siteTemplateURL}");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteTemplateID}");
 
 		NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 

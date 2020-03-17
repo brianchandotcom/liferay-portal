@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_0;
 
+import com.liferay.dynamic.data.mapping.internal.util.ExpressionParameterValueExtractor;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
@@ -27,14 +28,17 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * @author Inácio Nery
@@ -78,6 +82,9 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 			if (Validator.isNull(visibilityExpression)) {
 				continue;
 			}
+
+			visibilityExpression = _convertExpression(
+				ddmFormFieldsMap.values(), visibilityExpression);
 
 			DDMFormRule ddmFormRule = new DDMFormRule(
 				Arrays.asList(
@@ -163,6 +170,46 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 				ps2.executeBatch();
 			}
 		}
+	}
+
+	private String _convertExpression(
+		Collection<DDMFormField> ddmFormFields, String visibilityExpression) {
+
+		List<String> parameterValues =
+			ExpressionParameterValueExtractor.extractParameterValues(
+				visibilityExpression);
+
+		for (String parameterValue : parameterValues) {
+			if (Validator.isNull(parameterValue)) {
+				continue;
+			}
+
+			Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
+
+			boolean fieldName = ddmFormFieldsStream.anyMatch(
+				ddmFormField -> ddmFormField.getProperty(
+					"name"
+				).equals(
+					parameterValue
+				));
+
+			if (!fieldName) {
+				continue;
+			}
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("getValue(");
+			sb.append(StringPool.APOSTROPHE);
+			sb.append(parameterValue);
+			sb.append(StringPool.APOSTROPHE);
+			sb.append(")");
+
+			visibilityExpression = StringUtil.replace(
+				visibilityExpression, parameterValue, sb.toString());
+		}
+
+		return visibilityExpression;
 	}
 
 	private final DDMFormDeserializer _ddmFormDeserializer;

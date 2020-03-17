@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class ImportLayoutPageTemplateEntryMVCActionCommand
+public class ImportLayoutPageTemplateEntriesMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override

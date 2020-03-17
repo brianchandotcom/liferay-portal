@@ -31,6 +31,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +68,8 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 		setThrowExceptionOnMissing(false);
 
 		_addBaseFileName(componentName.concat(".properties"));
+
+		setProperty("include-and-override", _includeAndOverride);
 	}
 
 	public CompositeConfiguration getBaseConfiguration() {
@@ -225,6 +228,8 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 
 		String[] fileNames = tempCompositeConfiguration.getStringArray(
 			"include-and-override");
+
+		Collections.addAll(_includeAndOverride, fileNames);
 
 		ArrayUtil.reverse(fileNames);
 
@@ -408,6 +413,7 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 	private final String _componentName;
 	private final CompositeConfiguration _globalCompositeConfiguration =
 		new CompositeConfiguration();
+	private final List<String> _includeAndOverride = new ArrayList<>();
 	private final List<String> _loadedSources = new ArrayList<>();
 	private final Configuration _prefixedSystemConfiguration;
 	private final SystemConfiguration _systemConfiguration =

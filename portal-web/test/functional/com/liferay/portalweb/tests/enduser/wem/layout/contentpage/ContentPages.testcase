@@ -508,7 +508,7 @@ definition {
 	@priority = "5"
 	test EditContentPage {
 
-		// Ignore test until LRQA-56640is resolved
+		// Ignore test until LRQA-56640 is resolved
 
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";

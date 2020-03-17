@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -131,6 +132,10 @@ public class AssetEntryVerticalCard implements VerticalCard {
 
 	@Override
 	public List<LabelItem> getLabels() {
+		if (!_assetBrowserDisplayContext.isShowAssetEntryStatus()) {
+			return Collections.emptyList();
+		}
+
 		return LabelItemListBuilder.add(
 			labelItem -> labelItem.setStatus(_assetRenderer.getStatus())
 		).build();

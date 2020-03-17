@@ -359,6 +359,14 @@ public class AssetBrowserDisplayContext {
 		return _showAddButton;
 	}
 
+	public boolean isShowAssetEntryStatus() {
+		if (_isShowScheduled() || _isShowNonindexable()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected String getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;

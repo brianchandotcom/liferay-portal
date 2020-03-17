@@ -43,6 +43,11 @@
 	<td>//li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LIST_CUSTOM_LOGO</td>
+	<td>//li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//div[contains(@class,'bg-cover')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

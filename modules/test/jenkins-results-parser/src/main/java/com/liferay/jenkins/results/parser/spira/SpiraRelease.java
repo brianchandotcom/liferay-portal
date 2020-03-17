@@ -64,8 +64,8 @@ public class SpiraRelease extends PathSpiraArtifact {
 
 		requestJSONObject.put(
 			"Name", StringEscapeUtils.unescapeJava(releaseName));
-		requestJSONObject.put("ReleaseStatusId", STATUS_PLANNED);
-		requestJSONObject.put("ReleaseTypeId", TYPE_MAJOR_RELEASE);
+		requestJSONObject.put("ReleaseStatusId", Status.PLANNED);
+		requestJSONObject.put("ReleaseTypeId", Type.MAJOR_RELEASE);
 
 		Calendar calendar = Calendar.getInstance();
 
@@ -190,6 +190,38 @@ public class SpiraRelease extends PathSpiraArtifact {
 		return spiraReleaseBuilds.get(0);
 	}
 
+	public static enum Status {
+
+		CANCELED(5), CLOSED(3), DEFERRED(4), IN_PROGRESS(2), PLANNED(1);
+
+		public Integer getID() {
+			return _id;
+		}
+
+		private Status(Integer id) {
+			_id = id;
+		}
+
+		private final Integer _id;
+
+	}
+
+	public static enum Type {
+
+		MAJOR_RELEASE(1), MINOR_RELEASE(2), PHASE(4), SPRINT(3);
+
+		public Integer getID() {
+			return _id;
+		}
+
+		private Type(Integer id) {
+			_id = id;
+		}
+
+		private final Integer _id;
+
+	}
+
 	protected static List<SpiraRelease> getSpiraReleases(
 		final SpiraProject spiraProject,
 		final SearchQuery.SearchParameter... searchParameters) {
@@ -222,24 +254,6 @@ public class SpiraRelease extends PathSpiraArtifact {
 	}
 
 	protected static final String ID_KEY = "ReleaseId";
-
-	protected static final int STATUS_CANCELED = 5;
-
-	protected static final int STATUS_CLOSED = 3;
-
-	protected static final int STATUS_DEFERRED = 4;
-
-	protected static final int STATUS_IN_PROGRESS = 2;
-
-	protected static final int STATUS_PLANNED = 1;
-
-	protected static final int TYPE_MAJOR_RELEASE = 1;
-
-	protected static final int TYPE_MINOR_RELEASE = 2;
-
-	protected static final int TYPE_PHASE = 4;
-
-	protected static final int TYPE_SPRINT = 3;
 
 	private static List<JSONObject> _requestSpiraReleases(
 		int spiraProjectID, SearchQuery.SearchParameter... searchParameters) {

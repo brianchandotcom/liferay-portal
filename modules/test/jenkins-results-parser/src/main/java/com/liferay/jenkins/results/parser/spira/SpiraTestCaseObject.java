@@ -73,7 +73,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 		requestJSONObject.put(
 			"Name", StringEscapeUtils.unescapeJava(testCaseName));
-		requestJSONObject.put("TestCaseStatusId", STATUS_DRAFT);
+		requestJSONObject.put("TestCaseStatusId", Status.DRAFT);
 
 		if ((parentTestCaseFolderID != null) && (parentTestCaseFolderID != 0)) {
 			requestJSONObject.put(
@@ -184,6 +184,23 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		return SpiraTestCaseRun.getSpiraTestCaseRuns(getSpiraProject(), this);
 	}
 
+	public static enum Status {
+
+		APPROVED(4), DRAFT(1), OBSOLETE(9), READY_FOR_REVIEW(2),
+		READY_FOR_TEST(5), REJECTED(3), TESTED(7), VERIFIED(8);
+
+		public Integer getID() {
+			return _id;
+		}
+
+		private Status(Integer id) {
+			_id = id;
+		}
+
+		private final Integer _id;
+
+	}
+
 	protected static List<SpiraTestCaseObject> getSpiraTestCases(
 		final SpiraProject spiraProject,
 		final SearchQuery.SearchParameter... searchParameters) {
@@ -216,22 +233,6 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 	}
 
 	protected static final String ID_KEY = "TestCaseId";
-
-	protected static final int STATUS_APPROVED = 4;
-
-	protected static final int STATUS_DRAFT = 1;
-
-	protected static final int STATUS_OBSOLETE = 9;
-
-	protected static final int STATUS_READY_FOR_REVIEW = 2;
-
-	protected static final int STATUS_READY_FOR_TEST = 5;
-
-	protected static final int STATUS_REJECTED = 3;
-
-	protected static final int STATUS_TESTED = 7;
-
-	protected static final int STATUS_VERIFIED = 8;
 
 	private static List<JSONObject> _requestSpiraTestCases(
 		SpiraProject spiraProject,

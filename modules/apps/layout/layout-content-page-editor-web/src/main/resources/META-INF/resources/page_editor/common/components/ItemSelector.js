@@ -28,6 +28,7 @@ export default function ItemSelector({
 	label,
 	onItemSelect,
 	selectedItemTitle,
+	showMappedItems = true,
 }) {
 	const mappedInfoItems = useSelector(state => state.mappedInfoItems);
 	const [active, setActive] = useState(false);
@@ -48,7 +49,7 @@ export default function ItemSelector({
 					value={selectedItemTitle || ''}
 				/>
 
-				{mappedInfoItems.length > 0 ? (
+				{mappedInfoItems.length > 0 && showMappedItems ? (
 					<ClayDropDown
 						active={active}
 						onActiveChange={setActive}

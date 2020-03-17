@@ -135,7 +135,7 @@ public class PageDefinitionConverterUtil {
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentRendererTracker fragmentRendererTracker,
+		FragmentRendererTracker fragmentRendererTracker, long groupId,
 		LayoutStructure layoutStructure,
 		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
 		boolean saveMappingConfiguration, long segmentsExperienceId) {
@@ -314,7 +314,7 @@ public class PageDefinitionConverterUtil {
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentRendererTracker fragmentRendererTracker,
+		FragmentRendererTracker fragmentRendererTracker, long groupId,
 		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
 		boolean saveMappingConfiguration, long segmentsExperienceId) {
 

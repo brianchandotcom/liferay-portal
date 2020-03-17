@@ -38,6 +38,16 @@ public interface RoleTypeContributor {
 	}
 
 	/**
+	 * Returns a list of role names whose permissions cannot be manually
+	 * defined by users.
+	 *
+	 * @return
+	 */
+	public default String[] getExcludedRoleNames() {
+		return new String[0];
+	}
+
+	/**
 	 * Returns the css class of the icon that represents the role type.
 	 *
 	 * @return

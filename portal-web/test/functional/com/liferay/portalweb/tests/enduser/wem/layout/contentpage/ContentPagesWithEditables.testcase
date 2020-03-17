@@ -178,7 +178,7 @@ definition {
 
 		task ("Edit Rich Text text") {
 			PageEditor.editFragmentText(
-				fragmentName = "rich-text",
+				fragmentName = "Rich Text",
 				id = "rich-text",
 				text = "New editable fragment en-US text");
 
@@ -187,7 +187,7 @@ definition {
 			MenuItem.click(menuItem = "ca-ES");
 
 			PageEditor.editFragmentText(
-				fragmentName = "rich-text",
+				fragmentName = "Rich Text",
 				id = "rich-text",
 				text = "New editable fragment ca-ES text");
 

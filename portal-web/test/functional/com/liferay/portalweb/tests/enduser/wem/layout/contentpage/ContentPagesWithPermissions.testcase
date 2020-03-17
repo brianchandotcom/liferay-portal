@@ -616,7 +616,7 @@ definition {
 		ContentPages.clickPencil();
 
 		PageEditor.editFragmentText(
-			fragmentName = "rich-text",
+			fragmentName = "Rich Text",
 			id = "rich-text",
 			text = "New editable fragment text");
 

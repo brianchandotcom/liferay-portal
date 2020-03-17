@@ -194,6 +194,21 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteDataLayoutsDataDefinition(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataLayoutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataLayoutResource ->
+				dataLayoutResource.deleteDataLayoutsDataDefinition(
+					dataDefinitionId));
+
+		return true;
+	}
+
+	@GraphQLField
 	public DataLayout createDataDefinitionDataLayout(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("dataLayout") DataLayout dataLayout)

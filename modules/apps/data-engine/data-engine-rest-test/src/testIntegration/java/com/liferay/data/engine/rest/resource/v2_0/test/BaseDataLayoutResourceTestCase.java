@@ -202,6 +202,25 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteDataLayoutsDataDefinition() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataLayout dataLayout =
+			testDeleteDataLayoutsDataDefinition_addDataLayout();
+
+		assertHttpResponseStatusCode(
+			204,
+			dataLayoutResource.deleteDataLayoutsDataDefinitionHttpResponse(
+				null));
+	}
+
+	protected DataLayout testDeleteDataLayoutsDataDefinition_addDataLayout()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetDataDefinitionDataLayoutsPage() throws Exception {
 		Page<DataLayout> page =
 			dataLayoutResource.getDataDefinitionDataLayoutsPage(

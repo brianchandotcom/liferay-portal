@@ -46,6 +46,9 @@ public interface DataLayoutResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public void deleteDataLayoutsDataDefinition(Long dataDefinitionId)
+		throws Exception;
+
 	public Page<DataLayout> getDataDefinitionDataLayoutsPage(
 			Long dataDefinitionId, String keywords, Pagination pagination,
 			Sort[] sorts)

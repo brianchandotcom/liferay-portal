@@ -917,6 +917,8 @@ definition {
 			siteTemplateActive = "Yes",
 			siteTemplateName = "Site Template Name");
 
+		var siteTemplateID = SiteTemplates.getSiteTemplateID(siteTemplateName = "Site Template Name");
+
 		SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 		SiteTemplates.addSitePageViaSiteTemplateCP(
@@ -929,10 +931,7 @@ definition {
 			pageName = "Page2 Name",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Navigation Menus");
+		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "${siteTemplateID}");
 
 		NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
 
@@ -958,8 +957,6 @@ definition {
 			urlName = "Google");
 
 		NavigationMenusAdmin.viewItem(itemName = "Google");
-
-		var siteTemplateID = SiteTemplates.getSiteTemplateID(siteTemplateName = "Site Template Name");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteTemplateID}");
 

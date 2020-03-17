@@ -69,7 +69,10 @@ public class BlogsEntryCoverImageInfoDisplayContributorField
 		if (themeDisplay != null) {
 			try {
 				jsonObject.put(
-					"url", blogsEntry.getCoverImageURL(themeDisplay));
+					"alt", blogsEntry.getCoverImageAlt()
+				).put(
+					"url", blogsEntry.getCoverImageURL(themeDisplay)
+				);
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException, portalException);

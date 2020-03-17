@@ -57,7 +57,10 @@ public class FileEntryPreviewImageInfoDisplayContributorField
 	public Object getValue(FileEntry fileEntry, Locale locale) {
 		try {
 			return JSONUtil.put(
-				"url", _dlURLHelper.getImagePreviewURL(fileEntry, null));
+				"alt", fileEntry.getTitle()
+			).put(
+				"url", _dlURLHelper.getImagePreviewURL(fileEntry, null)
+			);
 		}
 		catch (Exception exception) {
 			return null;

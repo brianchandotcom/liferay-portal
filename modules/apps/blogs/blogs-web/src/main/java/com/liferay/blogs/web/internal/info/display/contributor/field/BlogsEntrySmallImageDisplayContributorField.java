@@ -69,7 +69,10 @@ public class BlogsEntrySmallImageDisplayContributorField
 		if (themeDisplay != null) {
 			try {
 				jsonObject.put(
-					"url", blogsEntry.getSmallImageURL(themeDisplay));
+					"alt", blogsEntry.getSmallImageAlt()
+				).put(
+					"url", blogsEntry.getSmallImageURL(themeDisplay)
+				);
 
 				return jsonObject;
 			}

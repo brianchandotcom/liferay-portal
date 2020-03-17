@@ -76,7 +76,10 @@ public class BlogsEntryAuthorProfileImageInfoDisplayContributorField
 		if (themeDisplay != null) {
 			try {
 				return JSONUtil.put(
-					"url", user.getPortraitURL(getThemeDisplay()));
+					"alt", user.getFullName()
+				).put(
+					"url", user.getPortraitURL(getThemeDisplay())
+				);
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {

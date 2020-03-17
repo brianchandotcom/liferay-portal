@@ -16,10 +16,6 @@
 	<bean class="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil" id="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil">
 		<property name="expandoColumnPermission" ref="com.liferay.expando.kernel.service.permission.ExpandoColumnPermission" />
 	</bean>
-	<bean class="com.liferay.portlet.expando.util.ExpandoBridgeFactoryImpl" id="com.liferay.expando.kernel.util.ExpandoBridgeFactory" />
-	<bean class="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil" id="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil">
-		<property name="expandoBridgeFactory" ref="com.liferay.expando.kernel.util.ExpandoBridgeFactory" />
-	</bean>
 	<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" id="com.liferay.expando.kernel.util.ExpandoBridgeIndexer" />
 	<bean class="com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil" id="com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil">
 		<property name="expandoBridgeIndexer" ref="com.liferay.expando.kernel.util.ExpandoBridgeIndexer" />

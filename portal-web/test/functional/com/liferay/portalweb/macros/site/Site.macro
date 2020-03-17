@@ -1178,6 +1178,34 @@ definition {
 		}
 	}
 
+	macro viewCustomSiteLogoInDifferentViews {
+		ProductMenuHelper.expandPanel(panel = "Site Administration");
+
+		ProductMenuHelper.openWorkspace();
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		Pause(locator1 = "3000");
+
+		Navigator.gotoNavItem(navItem = "My Sites");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
+
+		SiteSelector._searchSite(site = "${site}");
+
+		AssertElementPresent(
+			key_card = "${site}",
+			locator1 = "LexiconCard#CARD_CUSTOM_LOGO");
+
+		SiteSelector._searchSite(site = "${site}");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "List");
+
+		AssertElementPresent(
+			key_listEntry = "${site}",
+			locator1 = "LexiconList#LIST_CUSTOM_LOGO");
+	}
+
 	macro viewGlobalLandingDefault {
 		var key_portletName = "${portletName}";
 		var key_siteName = "${siteName}";
@@ -1387,34 +1415,6 @@ definition {
 				locator1 = "SiteSettingsSiteTemplate#SITE_NOT_CLONED_FROM_TEMPLATE_MESSAGE",
 				value1 = "This site is not related to a site template.");
 		}
-	}
-
-	macro viewSiteCustomLogoInViews {
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
-
-		ProductMenuHelper.openWorkspace();
-
-		SelectFrame(locator1 = "IFrame#DIALOG");
-
-		Pause(locator1 = "3000");
-
-		Navigator.gotoNavItem(navItem = "My Sites");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
-
-		SiteSelector._searchSite(site = "${site}");
-
-		AssertElementPresent(
-			key_card = "${site}",
-			locator1 = "LexiconCard#CARD_CUSTOM_LOGO");
-
-		SiteSelector._searchSite(site = "${site}");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "List");
-
-		AssertElementPresent(
-			key_listEntry = "${site}",
-			locator1 = "LexiconList#LIST_CUSTOM_LOGO");
 	}
 
 	macro viewSiteFriendlyURLPG {

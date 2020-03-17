@@ -1320,11 +1320,11 @@ definition {
 			logoFile = "Document_3.png",
 			pageName = "Public Pages");
 
-		Site.viewSiteCustomLogoInViews(site = "Site Name");
+		Site.viewCustomSiteLogoInDifferentViews(site = "Site Name");
 
 		IFrame.closeFrame();
 
-		Site.viewSiteCustomLogoInViews(site = "Child SiteName");
+		Site.viewCustomSiteLogoInDifferentViews(site = "Child SiteName");
 	}
 
 }

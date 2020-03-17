@@ -36,6 +36,7 @@
 		<weight>2</weight>
 		<permissions>
 			<supports>
+				<action-key>ASSIGN_USER_ROLES</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>

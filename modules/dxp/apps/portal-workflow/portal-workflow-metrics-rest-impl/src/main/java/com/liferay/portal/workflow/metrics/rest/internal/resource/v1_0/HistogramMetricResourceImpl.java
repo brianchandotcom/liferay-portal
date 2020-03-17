@@ -30,9 +30,9 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Histogram;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Metric;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.HistogramMetric;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.MetricResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.HistogramMetricResource;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -56,17 +56,18 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Inácio Nery
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/metric.properties",
-	scope = ServiceScope.PROTOTYPE, service = MetricResource.class
+	properties = "OSGI-INF/liferay/rest/v1_0/histogram-metric.properties",
+	scope = ServiceScope.PROTOTYPE, service = HistogramMetricResource.class
 )
-public class MetricResourceImpl extends BaseMetricResourceImpl {
+public class HistogramMetricResourceImpl
+	extends BaseHistogramMetricResourceImpl {
 
 	@Override
-	public Metric getProcessMetric(
+	public HistogramMetric getProcessHistogramMetric(
 			Long processId, Date dateEnd, Date dateStart, String unit)
 		throws Exception {
 
-		Metric metric = new Metric();
+		HistogramMetric histogramMetric = new HistogramMetric();
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -84,7 +85,7 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 		dateHistogramAggregation.setDateHistogramInterval(
 			_getDateHistogramInterval(unit));
 
-		if (Objects.equals(unit, Metric.Unit.WEEKS.getValue())) {
+		if (Objects.equals(unit, HistogramMetric.Unit.WEEKS.getValue())) {
 			dateHistogramAggregation.setOffset(-86400000L);
 		}
 
@@ -125,8 +126,8 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 			dateHistogramAggregationResult.getBuckets(), endLocalDateTime,
 			startLocalDateTime, unit);
 
-		metric.setHistograms(histograms.toArray(new Histogram[0]));
-		metric.setValue(
+		histogramMetric.setHistograms(histograms.toArray(new Histogram[0]));
+		histogramMetric.setValue(
 			_getMetricValue(
 				bucket, histograms,
 				TimeUnit.DAYS.convert(
@@ -134,7 +135,7 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 					TimeUnit.MILLISECONDS),
 				unit));
 
-		return metric;
+		return histogramMetric;
 	}
 
 	private DateRangeAggregation _createDateRangeAggregation(
@@ -170,9 +171,9 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 			LocalDateTime localDateTime = LocalDateTime.parse(
 				bucket.getKey(), _dateTimeFormatter);
 
-			if (Objects.equals(unit, Metric.Unit.MONTHS.getValue()) ||
-				Objects.equals(unit, Metric.Unit.WEEKS.getValue()) ||
-				Objects.equals(unit, Metric.Unit.YEARS.getValue())) {
+			if (Objects.equals(unit, HistogramMetric.Unit.MONTHS.getValue()) ||
+				Objects.equals(unit, HistogramMetric.Unit.WEEKS.getValue()) ||
+				Objects.equals(unit, HistogramMetric.Unit.YEARS.getValue())) {
 
 				localDateTime = _getHistogramLocalDateTime(
 					localDateTime, startLocalDateTime);
@@ -195,7 +196,7 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 
 		Map<String, Histogram> histograms = new LinkedHashMap<>();
 
-		if (Objects.equals(unit, Metric.Unit.HOURS.getValue())) {
+		if (Objects.equals(unit, HistogramMetric.Unit.HOURS.getValue())) {
 			startLocalDateTime = startLocalDateTime.withMinute(
 				LocalTime.MIN.getMinute());
 			startLocalDateTime = startLocalDateTime.withNano(
@@ -217,18 +218,20 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 			startLocalDateTime = startLocalDateTime.plus(
 				1, ChronoUnit.valueOf(StringUtil.toUpperCase(unit)));
 
-			if (Objects.equals(unit, Metric.Unit.MONTHS.getValue()) &&
+			if (Objects.equals(unit, HistogramMetric.Unit.MONTHS.getValue()) &&
 				(startLocalDateTime.getDayOfMonth() != 1)) {
 
 				startLocalDateTime = startLocalDateTime.withDayOfMonth(1);
 			}
-			else if (Objects.equals(unit, Metric.Unit.WEEKS.getValue()) &&
+			else if (Objects.equals(
+						unit, HistogramMetric.Unit.WEEKS.getValue()) &&
 					 (startLocalDateTime.getDayOfWeek() != DayOfWeek.SUNDAY)) {
 
 				startLocalDateTime = startLocalDateTime.minusWeeks(1);
 				startLocalDateTime = startLocalDateTime.with(DayOfWeek.SUNDAY);
 			}
-			else if (Objects.equals(unit, Metric.Unit.YEARS.getValue()) &&
+			else if (Objects.equals(
+						unit, HistogramMetric.Unit.YEARS.getValue()) &&
 					 (startLocalDateTime.getDayOfYear() != 1)) {
 
 				startLocalDateTime = startLocalDateTime.withDayOfYear(1);
@@ -239,16 +242,16 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 	}
 
 	private String _getDateHistogramInterval(String unit) {
-		if (Objects.equals(unit, Metric.Unit.DAYS.getValue())) {
+		if (Objects.equals(unit, HistogramMetric.Unit.DAYS.getValue())) {
 			return "1d";
 		}
-		else if (Objects.equals(unit, Metric.Unit.HOURS.getValue())) {
+		else if (Objects.equals(unit, HistogramMetric.Unit.HOURS.getValue())) {
 			return "1h";
 		}
-		else if (Objects.equals(unit, Metric.Unit.MONTHS.getValue())) {
+		else if (Objects.equals(unit, HistogramMetric.Unit.MONTHS.getValue())) {
 			return "1M";
 		}
-		else if (Objects.equals(unit, Metric.Unit.WEEKS.getValue())) {
+		else if (Objects.equals(unit, HistogramMetric.Unit.WEEKS.getValue())) {
 			return "1w";
 		}
 
@@ -271,13 +274,13 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 
 		double timeAmount = histograms.size();
 
-		if (Objects.equals(unit, Metric.Unit.MONTHS.getValue())) {
+		if (Objects.equals(unit, HistogramMetric.Unit.MONTHS.getValue())) {
 			timeAmount = timeRange / 30.0;
 		}
-		else if (Objects.equals(unit, Metric.Unit.WEEKS.getValue())) {
+		else if (Objects.equals(unit, HistogramMetric.Unit.WEEKS.getValue())) {
 			timeAmount = timeRange / 7.0;
 		}
-		else if (Objects.equals(unit, Metric.Unit.YEARS.getValue())) {
+		else if (Objects.equals(unit, HistogramMetric.Unit.YEARS.getValue())) {
 			timeAmount = timeRange / 365.0;
 		}
 

@@ -24,8 +24,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author ${configYAML.author}
+ * @generated
  */
 @Component(immediate = true, service = ${schemaName}Resource.Factory.class)
+@Generated("")
 public class ${schemaName}ResourceFactoryImpl implements ${schemaName}Resource.Factory {
 
 	@Override

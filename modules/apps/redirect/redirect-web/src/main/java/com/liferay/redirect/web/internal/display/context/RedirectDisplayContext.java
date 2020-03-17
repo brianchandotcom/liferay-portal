@@ -52,6 +52,7 @@ import com.liferay.redirect.web.internal.util.comparator.RedirectEntryModifiedDa
 import com.liferay.redirect.web.internal.util.comparator.RedirectEntrySourceURLComparator;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -84,8 +85,8 @@ public class RedirectDisplayContext {
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_expirationDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy/MM/dd", _themeDisplay.getLocale());
+		_expirationDateFormat = DateFormat.getDateInstance(
+			SimpleDateFormat.SHORT, _themeDisplay.getLocale());
 	}
 
 	public String formatExpirationDate(Date expirationDate) {

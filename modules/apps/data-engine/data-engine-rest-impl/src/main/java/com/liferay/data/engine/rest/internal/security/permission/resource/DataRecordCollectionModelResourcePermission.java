@@ -81,10 +81,17 @@ public class DataRecordCollectionModelResourcePermission
 			return false;
 		}
 
-		return dataDefinitionContentType.hasPermission(
-			permissionChecker, ddlRecordSet.getCompanyId(),
-			ddlRecordSet.getGroupId(), _getModelResourceName(ddlRecordSet),
-			ddlRecordSet.getRecordSetId(), ddlRecordSet.getUserId(), actionId);
+		if (permissionChecker.isOmniadmin() ||
+			dataDefinitionContentType.hasPermission(
+				permissionChecker, ddlRecordSet.getCompanyId(),
+				ddlRecordSet.getGroupId(), _getModelResourceName(ddlRecordSet),
+				ddlRecordSet.getRecordSetId(), ddlRecordSet.getUserId(),
+				actionId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

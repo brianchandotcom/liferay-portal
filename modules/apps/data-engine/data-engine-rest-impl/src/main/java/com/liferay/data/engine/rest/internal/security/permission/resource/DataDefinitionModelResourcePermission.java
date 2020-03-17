@@ -69,11 +69,13 @@ public class DataDefinitionModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		checkPortletPermission(
-			permissionChecker,
-			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
-				ddmStructure.getClassNameId()),
-			ddmStructure.getGroupId(), actionId);
+		if (!permissionChecker.isOmniadmin()) {
+			checkPortletPermission(
+				permissionChecker,
+				_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
+					ddmStructure.getClassNameId()),
+				ddmStructure.getGroupId(), actionId);
+		}
 	}
 
 	public void checkPortletPermission(
@@ -81,11 +83,13 @@ public class DataDefinitionModelResourcePermission
 			long groupId, String actionId)
 		throws PortalException {
 
-		checkPortletPermission(
-			permissionChecker,
-			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
-				contentType),
-			groupId, actionId);
+		if (!permissionChecker.isOmniadmin()) {
+			checkPortletPermission(
+				permissionChecker,
+				_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
+					contentType),
+				groupId, actionId);
+		}
 	}
 
 	@Override
@@ -102,10 +106,17 @@ public class DataDefinitionModelResourcePermission
 			return false;
 		}
 
-		return dataDefinitionContentType.hasPermission(
-			permissionChecker, ddmStructure.getCompanyId(),
-			ddmStructure.getGroupId(), _getModelResourceName(ddmStructure),
-			ddmStructure.getStructureId(), ddmStructure.getUserId(), actionId);
+		if (permissionChecker.isOmniadmin() ||
+			dataDefinitionContentType.hasPermission(
+				permissionChecker, ddmStructure.getCompanyId(),
+				ddmStructure.getGroupId(), _getModelResourceName(ddmStructure),
+				ddmStructure.getStructureId(), ddmStructure.getUserId(),
+				actionId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

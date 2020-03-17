@@ -22,7 +22,7 @@ import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
@@ -74,54 +74,42 @@ public class BlogsEntryActionDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws PortalException {
-		return new DropdownItemList() {
-			{
-				if (_hasUpdatePermission()) {
-					add(_getEditEntryActionUnsafeConsumer());
-				}
+		boolean sharingEnabled = BlogsEntrySharingUtil.isSharingEnabled(
+			_blogsEntry.getGroupId());
+		boolean hasDeletePermission = _hasDeletePermission();
+		boolean trashEnabled = _isTrashEnabled();
 
-				if (BlogsEntrySharingUtil.isSharingEnabled(
-						_blogsEntry.getGroupId())) {
-
-					if (BlogsEntrySharingUtil.containsSharePermission(
-							_permissionChecker, _blogsEntry)) {
-
-						add(
-							BlogsEntrySharingUtil.createShareDropdownItem(
-								_blogsEntry, _httpServletRequest));
-					}
-
-					if (BlogsEntrySharingUtil.
-							containsManageCollaboratorsPermission(
-								_permissionChecker, _blogsEntry)) {
-
-						add(
-							BlogsEntrySharingUtil.
-								createManageCollaboratorsDropdownItem(
-									_blogsEntry, _httpServletRequest));
-					}
-				}
-
-				if (_hasPermissionsPermission()) {
-					add(_getPermissionsActionUnsafeConsumer());
-				}
-
-				if (_hasDeletePermission()) {
-					if (_isTrashEnabled()) {
-						add(_getMoveEntryToTrashActionUnsafeConsumer());
-					}
-					else {
-						add(_getDeleteEntryActionUnsafeConsumer());
-					}
-				}
-
-				if (_isShowPublishMenuItem() &&
-					_hasExportImportPortletInfoPermission()) {
-
-					add(_getPublishToLiveEntryActionUnsafeConsumer());
-				}
-			}
-		};
+		return DropdownItemListBuilder.add(
+			() -> _hasUpdatePermission(), _getEditEntryActionUnsafeConsumer()
+		).add(
+			() ->
+				sharingEnabled &&
+				BlogsEntrySharingUtil.containsSharePermission(
+					_permissionChecker, _blogsEntry),
+			BlogsEntrySharingUtil.createShareDropdownItem(
+				_blogsEntry, _httpServletRequest)
+		).add(
+			() ->
+				sharingEnabled &&
+				BlogsEntrySharingUtil.containsManageCollaboratorsPermission(
+					_permissionChecker, _blogsEntry),
+			BlogsEntrySharingUtil.createManageCollaboratorsDropdownItem(
+				_blogsEntry, _httpServletRequest)
+		).add(
+			() -> _hasPermissionsPermission(),
+			_getPermissionsActionUnsafeConsumer()
+		).add(
+			() -> hasDeletePermission && trashEnabled,
+			_getMoveEntryToTrashActionUnsafeConsumer()
+		).add(
+			() -> hasDeletePermission && !trashEnabled,
+			_getDeleteEntryActionUnsafeConsumer()
+		).add(
+			() ->
+				_isShowPublishMenuItem() &&
+				_hasExportImportPortletInfoPermission(),
+			_getPublishToLiveEntryActionUnsafeConsumer()
+		).build();
 	}
 
 	/**

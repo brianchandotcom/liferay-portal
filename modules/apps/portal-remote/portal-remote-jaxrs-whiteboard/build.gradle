@@ -1,10 +1,10 @@
 dependencies {
-	compileInclude group: "org.apache.cxf", name: "cxf-core", version: "3.2.5"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-soap", version: "3.2.5"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-xml", version: "3.2.5"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-databinding-jaxb", version: "3.2.5"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-wsdl", version: "3.2.5"
-	compileInclude group: "org.apache.cxf", name: "cxf-tools-validator", version: "3.2.5"
+	compileInclude group: "org.apache.cxf", name: "cxf-core", version: "3.2.12"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-soap", version: "3.2.12"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-xml", version: "3.2.12"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-databinding-jaxb", version: "3.2.12"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-wsdl", version: "3.2.12"
+	compileInclude group: "org.apache.cxf", name: "cxf-tools-validator", version: "3.2.12"
 	compileInclude group: "wsdl4j", name: "wsdl4j", version: "1.6.3"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

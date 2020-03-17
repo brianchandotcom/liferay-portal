@@ -15,6 +15,24 @@
 package com.liferay.frontend.theme.fjord.site.initializer.test.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.exception.InitializationException;
+import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.initializer.SiteInitializerRegistry;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -22,5 +40,39 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class FjordSiteInitializerTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	public void testCreateFjordSite() throws InitializationException {
+		SiteInitializer siteInitializer =
+			_siteInitializerRegistry.getSiteInitializer(
+				"fjord-site-initializer");
+
+		siteInitializer.initialize(_group.getGroupId());
+	}
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@Inject
+	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

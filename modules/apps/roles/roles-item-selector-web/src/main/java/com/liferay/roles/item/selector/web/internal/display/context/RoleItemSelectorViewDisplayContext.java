@@ -68,6 +68,11 @@ public class RoleItemSelectorViewDisplayContext
 		return searchContainer;
 	}
 
+	@Override
+	protected String[] getOrderByKeys() {
+		return new String[] {"name", "description"};
+	}
+
 	private final String _itemSelectedEventName;
 	private final int _type;
 

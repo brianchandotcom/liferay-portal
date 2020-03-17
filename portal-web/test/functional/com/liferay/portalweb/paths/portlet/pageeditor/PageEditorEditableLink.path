@@ -20,17 +20,17 @@
 </tr>
 <tr>
 	<td>FIELD</td>
-	<td>//select[contains(@id,'floatingToolbarMappingPanelFieldSelect')]</td>
+	<td>//select[contains(@id,'mappingSelectorFieldSelect')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>URL</td>
-	<td>//div[contains(@class,'floating-toolbar-link-panel')]//input[contains(@id,'floatingToolbarLinkHrefPanelOption')]</td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@id,'floatingToolbarLinkHrefOption')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LINK_TYPE</td>
-	<td>//select[contains(@id,'floatingToolbarLinkTypePanelOption')]</td>
+	<td>//select[contains(@id,'floatingToolbarLinkSourceOption')]</td>
 	<td></td>
 </tr>
 <!--LAYOUT_BACKGROUND_IMAGE-->

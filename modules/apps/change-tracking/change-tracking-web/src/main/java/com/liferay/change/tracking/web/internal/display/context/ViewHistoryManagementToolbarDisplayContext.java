@@ -45,6 +45,7 @@ public class ViewHistoryManagementToolbarDisplayContext
 		_viewHistoryDisplayContext = viewHistoryDisplayContext;
 	}
 
+	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
 

@@ -69,10 +69,6 @@ public class ViewHistoryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public BackgroundTaskLocalService getBackgroundTaskLocalService() {
-		return _backgroundTaskLocalService;
-	}
-
 	public CTCollection getCtCollection(CTProcess ctProcess)
 		throws PortalException {
 

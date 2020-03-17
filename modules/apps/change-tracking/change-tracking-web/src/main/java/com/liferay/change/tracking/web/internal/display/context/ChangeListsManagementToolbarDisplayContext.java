@@ -48,6 +48,7 @@ public class ChangeListsManagementToolbarDisplayContext
 		_changeListsDisplayContext = changeListsDisplayContext;
 	}
 
+	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
 

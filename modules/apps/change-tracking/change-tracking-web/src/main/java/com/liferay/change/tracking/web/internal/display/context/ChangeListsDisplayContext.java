@@ -16,7 +16,6 @@ package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
@@ -88,19 +87,6 @@ public class ChangeListsDisplayContext {
 		else {
 			_ctCollectionId = ctPreferences.getCtCollectionId();
 		}
-	}
-
-	public String getChangeTypeName(CTEntry ctEntry) {
-		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_ADDITION) {
-			return "added";
-		}
-		else if (ctEntry.getChangeType() ==
-					CTConstants.CT_CHANGE_TYPE_DELETION) {
-
-			return "deleted";
-		}
-
-		return "modified";
 	}
 
 	public long getCtCollectionId() {

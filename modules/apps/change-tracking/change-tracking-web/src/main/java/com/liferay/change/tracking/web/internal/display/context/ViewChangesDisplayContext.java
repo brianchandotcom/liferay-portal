@@ -75,7 +75,7 @@ public class ViewChangesDisplayContext {
 			return _searchContainer;
 		}
 
-		SearchContainer<CTEntry> searchContainer = new SearchContainer(
+		SearchContainer<CTEntry> searchContainer = new SearchContainer<>(
 			_renderRequest, new DisplayTerms(_renderRequest), null,
 			SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA,
 			PortletURLUtil.getCurrent(_renderRequest, _renderResponse), null,

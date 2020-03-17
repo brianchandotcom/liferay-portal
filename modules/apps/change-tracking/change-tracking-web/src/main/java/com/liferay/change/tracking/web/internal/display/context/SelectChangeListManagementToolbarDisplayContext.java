@@ -41,6 +41,7 @@ public class SelectChangeListManagementToolbarDisplayContext
 			searchContainer);
 	}
 
+	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
 

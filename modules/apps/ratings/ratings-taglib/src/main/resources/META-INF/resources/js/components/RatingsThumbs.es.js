@@ -101,10 +101,6 @@ const RatingsThumbs = ({
 	}, [pressed, sendVoteRequest]);
 
 	const getTitle = useCallback(() => {
-		if (!signedIn) {
-			return '';
-		}
-
 		if (inTrash) {
 			return Liferay.Language.get(
 				'ratings-are-disabled-because-this-entry-is-in-the-recycle-bin'
@@ -115,7 +111,41 @@ const RatingsThumbs = ({
 		}
 
 		return '';
-	}, [signedIn, inTrash, enabled]);
+	}, [inTrash, enabled]);
+
+	const getTitleThumbsUp = useCallback(() => {
+		if (!signedIn) {
+			return '';
+		}
+
+		const title = getTitle();
+
+		if (!title) {
+			if (pressed === PRESSED_UP) {
+				return Liferay.Language.get('you-have-rated-this-as-good');
+			}
+			else {
+				return Liferay.Language.get('rate-this-as-good');
+			}
+		}
+	}, [getTitle, pressed, signedIn]);
+
+	const getTitleThumbsDown = useCallback(() => {
+		if (!signedIn) {
+			return '';
+		}
+
+		const title = getTitle();
+
+		if (!title) {
+			if (pressed === PRESSED_DOWN) {
+				return Liferay.Language.get('you-have-rated-this-as-bad');
+			}
+			else {
+				return Liferay.Language.get('rate-this-as-bad');
+			}
+		}
+	}, [getTitle, pressed, signedIn]);
 
 	const sendVoteRequest = useCallback(
 		score => {
@@ -163,7 +193,7 @@ const RatingsThumbs = ({
 				displayType="secondary"
 				onClick={voteUp}
 				small
-				title={getTitle()}
+				title={getTitleThumbsUp()}
 				value={positiveVotes}
 			>
 				<span className="inline-item inline-item-before">
@@ -178,7 +208,7 @@ const RatingsThumbs = ({
 				displayType="secondary"
 				onClick={voteDown}
 				small
-				title={getTitle()}
+				title={getTitleThumbsDown()}
 				value={negativeVotes}
 			>
 				<span className="inline-item inline-item-before">

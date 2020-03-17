@@ -33,8 +33,10 @@ import groovy.json.JsonSlurper;
 import groovy.lang.Closure;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.nio.file.FileSystem;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 
@@ -50,6 +52,7 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.UncheckedIOException;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.BasePlugin;
@@ -91,10 +94,10 @@ public class NodePlugin implements Plugin<Project> {
 		final NodeExtension nodeExtension = GradleUtil.addExtension(
 			project, EXTENSION_NAME, NodeExtension.class);
 
+		Delete cleanNpmTask = _addTaskCleanNpm(project, nodeExtension);
+
 		final DownloadNodeTask downloadNodeTask = _addTaskDownloadNode(
 			project, nodeExtension);
-
-		Delete cleanNpmTask = _addTaskCleanNpm(project);
 
 		NpmInstallTask npmInstallTask = _addTaskNpmInstall(
 			project, cleanNpmTask);
@@ -138,13 +141,39 @@ public class NodePlugin implements Plugin<Project> {
 			});
 	}
 
-	private Delete _addTaskCleanNpm(Project project) {
+	private Delete _addTaskCleanNpm(
+		final Project project, final NodeExtension nodeExtension) {
+
 		Delete delete = GradleUtil.addTask(
 			project, CLEAN_NPM_TASK_NAME, Delete.class);
 
-		delete.delete(
-			"node_modules", "npm-shrinkwrap.json", "package-lock.json");
+		delete.delete("node_modules", "npm-shrinkwrap.json");
 		delete.setDescription("Deletes NPM files from this project.");
+
+		delete.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					File file = project.file("package-lock.json");
+
+					if (!file.exists()) {
+						return;
+					}
+
+					try {
+						Files.delete(file.toPath());
+					}
+					catch (IOException ioException) {
+						throw new UncheckedIOException(ioException);
+					}
+
+					// LPS-110486
+
+					nodeExtension.setUseNpm(true);
+				}
+
+			});
 
 		return delete;
 	}

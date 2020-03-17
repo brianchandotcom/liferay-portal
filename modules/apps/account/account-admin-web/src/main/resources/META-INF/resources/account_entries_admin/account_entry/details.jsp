@@ -45,6 +45,8 @@ renderResponse.setTitle((accountEntryDisplay == null) ? LanguageUtil.get(request
 			<liferay-util:include page="/account_entries_admin/account_entry/display_data.jsp" servletContext="<%= application %>" />
 
 			<liferay-util:include page="/account_entries_admin/account_entry/domains.jsp" servletContext="<%= application %>" />
+
+			<liferay-util:include page="/account_entries_admin/account_entry/parent_account.jsp" servletContext="<%= application %>" />
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

@@ -535,10 +535,14 @@ public class JournalContentDisplayContext {
 		ItemSelector itemSelector = (ItemSelector)_portletRequest.getAttribute(
 			JournalWebKeys.ITEM_SELECTOR);
 
-		return itemSelector.getItemSelectorURL(
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory,
 			liferayRenderResponse.getNamespace() + "selectedItem",
 			assetEntryItemSelectorCriterion);
+
+		itemSelectorURL.setParameter("singleSelect", Boolean.TRUE.toString());
+
+		return itemSelectorURL;
 	}
 
 	public JournalArticle getLatestArticle() throws PortalException {

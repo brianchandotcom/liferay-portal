@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -105,15 +106,20 @@ public class AssetEntryItemSelectorView
 		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion,
 		ServletRequest servletRequest) {
 
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)servletRequest;
+
 		return new DynamicServletRequest(
-			(HttpServletRequest)servletRequest,
+			httpServletRequest,
 			HashMapBuilder.put(
 				"groupId",
 				_toStringArray(
 					_getGroupId(
 						assetEntryItemSelectorCriterion, servletRequest))
 			).put(
-				"multipleSelection", _toStringArray(false)
+				"multipleSelection",
+				_toStringArray(
+					!ParamUtil.getBoolean(httpServletRequest, "singleSelect"))
 			).put(
 				"selectedGroupIds",
 				_toStringArray(

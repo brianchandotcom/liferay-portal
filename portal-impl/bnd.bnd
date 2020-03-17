@@ -38,6 +38,7 @@ Export-Package:\
 	com.liferay.portlet.documentlibrary.service.permission,\
 	com.liferay.portlet.documentlibrary.store,\
 	com.liferay.portlet.documentlibrary.util,\
+	com.liferay.portlet.expando.model.impl,\
 	com.liferay.portlet.expando.util,\
 	com.liferay.portlet.layoutsadmin.display.context,\
 	com.liferay.portlet.trash,\

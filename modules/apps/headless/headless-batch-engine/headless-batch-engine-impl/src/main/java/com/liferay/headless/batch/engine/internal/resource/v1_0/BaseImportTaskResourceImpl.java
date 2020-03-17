@@ -80,7 +80,8 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL"),
+			@Parameter(in = ParameterIn.QUERY, name = "taskItemDelegateName")
 		}
 	)
 	@Path("/import-task/{className}")
@@ -91,6 +92,8 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 				className,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
+			@Parameter(hidden = true) @QueryParam("taskItemDelegateName") String
+				taskItemDelegateName,
 			Object object)
 		throws Exception {
 
@@ -109,7 +112,8 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL"),
+			@Parameter(in = ParameterIn.QUERY, name = "taskItemDelegateName")
 		}
 	)
 	@Path("/import-task/{className}")
@@ -120,6 +124,8 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 				className,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
+			@Parameter(hidden = true) @QueryParam("taskItemDelegateName") String
+				taskItemDelegateName,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -146,7 +152,8 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
 			@Parameter(in = ParameterIn.QUERY, name = "callbackURL"),
-			@Parameter(in = ParameterIn.QUERY, name = "fieldNameMapping")
+			@Parameter(in = ParameterIn.QUERY, name = "fieldNameMapping"),
+			@Parameter(in = ParameterIn.QUERY, name = "taskItemDelegateName")
 		}
 	)
 	@Path("/import-task/{className}")
@@ -159,6 +166,8 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 				callbackURL,
 			@Parameter(hidden = true) @QueryParam("fieldNameMapping") String
 				fieldNameMapping,
+			@Parameter(hidden = true) @QueryParam("taskItemDelegateName") String
+				taskItemDelegateName,
 			Object object)
 		throws Exception {
 
@@ -180,7 +189,8 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
 			@Parameter(in = ParameterIn.QUERY, name = "callbackURL"),
-			@Parameter(in = ParameterIn.QUERY, name = "fieldNameMapping")
+			@Parameter(in = ParameterIn.QUERY, name = "fieldNameMapping"),
+			@Parameter(in = ParameterIn.QUERY, name = "taskItemDelegateName")
 		}
 	)
 	@Path("/import-task/{className}")
@@ -193,6 +203,8 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 				callbackURL,
 			@Parameter(hidden = true) @QueryParam("fieldNameMapping") String
 				fieldNameMapping,
+			@Parameter(hidden = true) @QueryParam("taskItemDelegateName") String
+				taskItemDelegateName,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -216,7 +228,8 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL"),
+			@Parameter(in = ParameterIn.QUERY, name = "taskItemDelegateName")
 		}
 	)
 	@Path("/import-task/{className}")
@@ -227,6 +240,8 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 				className,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
+			@Parameter(hidden = true) @QueryParam("taskItemDelegateName") String
+				taskItemDelegateName,
 			Object object)
 		throws Exception {
 
@@ -245,7 +260,8 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL"),
+			@Parameter(in = ParameterIn.QUERY, name = "taskItemDelegateName")
 		}
 	)
 	@Path("/import-task/{className}")
@@ -256,6 +272,8 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 				className,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
+			@Parameter(hidden = true) @QueryParam("taskItemDelegateName") String
+				taskItemDelegateName,
 			MultipartBody multipartBody)
 		throws Exception {
 

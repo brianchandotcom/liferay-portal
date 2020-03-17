@@ -73,7 +73,8 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
 			@Parameter(in = ParameterIn.PATH, name = "contentType"),
 			@Parameter(in = ParameterIn.QUERY, name = "callbackURL"),
-			@Parameter(in = ParameterIn.QUERY, name = "fieldNames")
+			@Parameter(in = ParameterIn.QUERY, name = "fieldNames"),
+			@Parameter(in = ParameterIn.QUERY, name = "taskItemDelegateName")
 		}
 	)
 	@Path("/export-task/{className}/{contentType}")
@@ -87,7 +88,9 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			@Parameter(hidden = true) @QueryParam("fieldNames") String
-				fieldNames)
+				fieldNames,
+			@Parameter(hidden = true) @QueryParam("taskItemDelegateName") String
+				taskItemDelegateName)
 		throws Exception {
 
 		return new ExportTask();

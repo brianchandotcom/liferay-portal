@@ -81,8 +81,8 @@ public class BNDBundleCheck extends BaseFileCheck {
 					BNDSourceUtil.getModuleName(absolutePath))) {
 
 				String message =
-					"'Liferay-Releng-Restart-Required' can only be set to " +
-						"false if a POSHI tests exists. See LPS-110344.";
+					"The 'Liferay-Releng-Restart-Required' can only be set " +
+						"to false if a POSHI tests exists, see LPS-110344";
 
 				addMessage(fileName, message);
 

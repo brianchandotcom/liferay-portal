@@ -14,11 +14,18 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
+import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
+
+import java.io.File;
+import java.io.IOException;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -30,7 +37,8 @@ public class BNDBundleCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws IOException {
 
 		if (!absolutePath.endsWith("/app.bnd")) {
 			return content;
@@ -64,8 +72,26 @@ public class BNDBundleCheck extends BaseFileCheck {
 
 		content = BNDSourceUtil.updateInstruction(
 			content, "Liferay-Releng-Public", "${liferay.releng.public}");
-		content = BNDSourceUtil.updateInstruction(
-			content, "Liferay-Releng-Restart-Required", "true");
+
+		String liferayRelengRestartRequired = BNDSourceUtil.getDefinitionValue(
+			content, "Liferay-Releng-Restart-Required");
+
+		if (liferayRelengRestartRequired.equals("false")) {
+			if (!_isHotDeployOSGiAppIncludes(absolutePath)) {
+				String message =
+					"'Liferay-Releng-Restart-Required' can only be set to " +
+						"false if a POSHI tests exists. See LPS-110344.";
+
+				addMessage(fileName, message);
+
+				return content;
+			}
+		}
+		else {
+			content = BNDSourceUtil.updateInstruction(
+				content, "Liferay-Releng-Restart-Required", "true");
+		}
+
 		content = BNDSourceUtil.updateInstruction(
 			content, "Liferay-Releng-Support-Url", "http://www.liferay.com");
 		content = BNDSourceUtil.updateInstruction(
@@ -103,6 +129,41 @@ public class BNDBundleCheck extends BaseFileCheck {
 		}
 
 		return TextFormatter.format(shortDirName, TextFormatter.J);
+	}
+
+	private boolean _isHotDeployOSGiAppIncludes(String absolutePath)
+		throws IOException {
+
+		String testcaseDirLocation =
+			"/portal-web/test/functional/com/liferay/portalweb/tests";
+
+		File file = new File(getPortalDir() + testcaseDirLocation);
+
+		if (!file.exists()) {
+			return false;
+		}
+
+		List<String> testcaseFileNames = SourceFormatterUtil.scanForFiles(
+			getPortalDir() + testcaseDirLocation, new String[0],
+			new String[] {"**/*.testcase"}, new SourceFormatterExcludes(),
+			true);
+
+		for (String testcaseFileName : testcaseFileNames) {
+			testcaseFileName = StringUtil.replace(
+				testcaseFileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			String fileContent = FileUtil.read(new File(testcaseFileName));
+
+			String s =
+				"property hot.deploy.osgi.app.includes = \"" +
+					BNDSourceUtil.getModuleName(absolutePath) + "\"";
+
+			if (fileContent.indexOf(s) != -1) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final String _ALLOWED_FILE_NAMES_KEY = "allowedFileNames";

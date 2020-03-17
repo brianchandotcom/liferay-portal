@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.upgrade;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,22 +42,14 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 	protected long getCompanyId(String sql, long primaryKey) throws Exception {
 		long companyId = 0;
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(sql);
-
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setLong(1, primaryKey);
 
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				companyId = rs.getLong("companyId");
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					companyId = rs.getLong("companyId");
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return companyId;
@@ -67,25 +58,18 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 	protected Object[] getGroup(long groupId) throws Exception {
 		Object[] group = null;
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select companyId from Group_ where groupId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select companyId from Group_ where groupId = ?")) {
 
 			ps.setLong(1, groupId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long companyId = rs.getLong("companyId");
 
-			while (rs.next()) {
-				long companyId = rs.getLong("companyId");
-
-				group = new Object[] {groupId, companyId};
+					group = new Object[] {groupId, companyId};
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return group;
@@ -94,31 +78,24 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 	protected Object[] getLayout(long plid) throws Exception {
 		Object[] layout = null;
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select groupId, companyId, privateLayout, layoutId from " +
-					"Layout where plid = ?");
+					"Layout where plid = ?")) {
 
 			ps.setLong(1, plid);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+					long companyId = rs.getLong("companyId");
+					boolean privateLayout = rs.getBoolean("privateLayout");
+					long layoutId = rs.getLong("layoutId");
 
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				boolean privateLayout = rs.getBoolean("privateLayout");
-				long layoutId = rs.getLong("layoutId");
-
-				layout = new Object[] {
-					groupId, companyId, privateLayout, layoutId
-				};
+					layout = new Object[] {
+						groupId, companyId, privateLayout, layoutId
+					};
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		if (layout == null) {
@@ -133,31 +110,24 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 
 		Object[] layoutRevision = null;
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select groupId, companyId, privateLayout, layoutRevisionId " +
-					"from LayoutRevision where layoutRevisionId = ?");
+					"from LayoutRevision where layoutRevisionId = ?")) {
 
 			ps.setLong(1, layoutRevisionId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+					long companyId = rs.getLong("companyId");
+					boolean privateLayout = rs.getBoolean("privateLayout");
+					long layoutId = rs.getLong("layoutRevisionId");
 
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				boolean privateLayout = rs.getBoolean("privateLayout");
-				long layoutId = rs.getLong("layoutRevisionId");
-
-				layoutRevision = new Object[] {
-					groupId, companyId, privateLayout, layoutId
-				};
+					layoutRevision = new Object[] {
+						groupId, companyId, privateLayout, layoutId
+					};
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return layoutRevision;
@@ -172,13 +142,9 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 
 		String uuid = null;
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select uuid_ from Layout where groupId = ? and " +
-					"privateLayout = ? and layoutId = ?");
+					"privateLayout = ? and layoutId = ?")) {
 
 			long groupId = (Long)layout[0];
 			boolean privateLayout = (Boolean)layout[2];
@@ -187,14 +153,11 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 			ps.setBoolean(2, privateLayout);
 			ps.setLong(3, layoutId);
 
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				uuid = rs.getString("uuid_");
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					uuid = rs.getString("uuid_");
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return uuid;

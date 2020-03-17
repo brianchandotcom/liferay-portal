@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.rest.client.dto.v1_0;
 import com.liferay.portal.workflow.metrics.rest.client.function.UnsafeSupplier;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.TaskSerDes;
 
+import java.util.Date;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -28,112 +29,255 @@ import javax.annotation.Generated;
 @Generated("")
 public class Task implements Cloneable {
 
-	public Long getBreachedInstanceCount() {
-		return breachedInstanceCount;
+	public Long getAssigneeId() {
+		return assigneeId;
 	}
 
-	public void setBreachedInstanceCount(Long breachedInstanceCount) {
-		this.breachedInstanceCount = breachedInstanceCount;
+	public void setAssigneeId(Long assigneeId) {
+		this.assigneeId = assigneeId;
 	}
 
-	public void setBreachedInstanceCount(
-		UnsafeSupplier<Long, Exception> breachedInstanceCountUnsafeSupplier) {
+	public void setAssigneeId(
+		UnsafeSupplier<Long, Exception> assigneeIdUnsafeSupplier) {
 
 		try {
-			breachedInstanceCount = breachedInstanceCountUnsafeSupplier.get();
+			assigneeId = assigneeIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long breachedInstanceCount;
+	protected Long assigneeId;
 
-	public Double getBreachedInstancePercentage() {
-		return breachedInstancePercentage;
+	public String getClassName() {
+		return className;
 	}
 
-	public void setBreachedInstancePercentage(
-		Double breachedInstancePercentage) {
-
-		this.breachedInstancePercentage = breachedInstancePercentage;
+	public void setClassName(String className) {
+		this.className = className;
 	}
 
-	public void setBreachedInstancePercentage(
-		UnsafeSupplier<Double, Exception>
-			breachedInstancePercentageUnsafeSupplier) {
+	public void setClassName(
+		UnsafeSupplier<String, Exception> classNameUnsafeSupplier) {
 
 		try {
-			breachedInstancePercentage =
-				breachedInstancePercentageUnsafeSupplier.get();
+			className = classNameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Double breachedInstancePercentage;
+	protected String className;
 
-	public Long getDurationAvg() {
-		return durationAvg;
+	public Long getClassPK() {
+		return classPK;
 	}
 
-	public void setDurationAvg(Long durationAvg) {
-		this.durationAvg = durationAvg;
+	public void setClassPK(Long classPK) {
+		this.classPK = classPK;
 	}
 
-	public void setDurationAvg(
-		UnsafeSupplier<Long, Exception> durationAvgUnsafeSupplier) {
+	public void setClassPK(
+		UnsafeSupplier<Long, Exception> classPKUnsafeSupplier) {
 
 		try {
-			durationAvg = durationAvgUnsafeSupplier.get();
+			classPK = classPKUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long durationAvg;
+	protected Long classPK;
 
-	public Long getInstanceCount() {
-		return instanceCount;
+	public Boolean getCompleted() {
+		return completed;
 	}
 
-	public void setInstanceCount(Long instanceCount) {
-		this.instanceCount = instanceCount;
+	public void setCompleted(Boolean completed) {
+		this.completed = completed;
 	}
 
-	public void setInstanceCount(
-		UnsafeSupplier<Long, Exception> instanceCountUnsafeSupplier) {
+	public void setCompleted(
+		UnsafeSupplier<Boolean, Exception> completedUnsafeSupplier) {
 
 		try {
-			instanceCount = instanceCountUnsafeSupplier.get();
+			completed = completedUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long instanceCount;
+	protected Boolean completed;
 
-	public String getKey() {
-		return key;
+	public Long getCompletionUserId() {
+		return completionUserId;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setCompletionUserId(Long completionUserId) {
+		this.completionUserId = completionUserId;
 	}
 
-	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
+	public void setCompletionUserId(
+		UnsafeSupplier<Long, Exception> completionUserIdUnsafeSupplier) {
+
 		try {
-			key = keyUnsafeSupplier.get();
+			completionUserId = completionUserIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String key;
+	protected Long completionUserId;
+
+	public Date getDateCompletion() {
+		return dateCompletion;
+	}
+
+	public void setDateCompletion(Date dateCompletion) {
+		this.dateCompletion = dateCompletion;
+	}
+
+	public void setDateCompletion(
+		UnsafeSupplier<Date, Exception> dateCompletionUnsafeSupplier) {
+
+		try {
+			dateCompletion = dateCompletionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateCompletion;
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public void setDateCreated(
+		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
+
+		try {
+			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateCreated;
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
+	}
+
+	public void setDateModified(
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateModified;
+
+	public Long getDuration() {
+		return duration;
+	}
+
+	public void setDuration(Long duration) {
+		this.duration = duration;
+	}
+
+	public void setDuration(
+		UnsafeSupplier<Long, Exception> durationUnsafeSupplier) {
+
+		try {
+			duration = durationUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long duration;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long id;
+
+	public Long getInstanceId() {
+		return instanceId;
+	}
+
+	public void setInstanceId(Long instanceId) {
+		this.instanceId = instanceId;
+	}
+
+	public void setInstanceId(
+		UnsafeSupplier<Long, Exception> instanceIdUnsafeSupplier) {
+
+		try {
+			instanceId = instanceIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long instanceId;
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public void setLabel(
+		UnsafeSupplier<String, Exception> labelUnsafeSupplier) {
+
+		try {
+			label = labelUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String label;
 
 	public String getName() {
 		return name;
@@ -154,47 +298,68 @@ public class Task implements Cloneable {
 
 	protected String name;
 
-	public Long getOnTimeInstanceCount() {
-		return onTimeInstanceCount;
+	public Long getNodeId() {
+		return nodeId;
 	}
 
-	public void setOnTimeInstanceCount(Long onTimeInstanceCount) {
-		this.onTimeInstanceCount = onTimeInstanceCount;
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
 	}
 
-	public void setOnTimeInstanceCount(
-		UnsafeSupplier<Long, Exception> onTimeInstanceCountUnsafeSupplier) {
+	public void setNodeId(
+		UnsafeSupplier<Long, Exception> nodeIdUnsafeSupplier) {
 
 		try {
-			onTimeInstanceCount = onTimeInstanceCountUnsafeSupplier.get();
+			nodeId = nodeIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long onTimeInstanceCount;
+	protected Long nodeId;
 
-	public Long getOverdueInstanceCount() {
-		return overdueInstanceCount;
+	public Long getProcessId() {
+		return processId;
 	}
 
-	public void setOverdueInstanceCount(Long overdueInstanceCount) {
-		this.overdueInstanceCount = overdueInstanceCount;
+	public void setProcessId(Long processId) {
+		this.processId = processId;
 	}
 
-	public void setOverdueInstanceCount(
-		UnsafeSupplier<Long, Exception> overdueInstanceCountUnsafeSupplier) {
+	public void setProcessId(
+		UnsafeSupplier<Long, Exception> processIdUnsafeSupplier) {
 
 		try {
-			overdueInstanceCount = overdueInstanceCountUnsafeSupplier.get();
+			processId = processIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long overdueInstanceCount;
+	protected Long processId;
+
+	public String getProcessVersion() {
+		return processVersion;
+	}
+
+	public void setProcessVersion(String processVersion) {
+		this.processVersion = processVersion;
+	}
+
+	public void setProcessVersion(
+		UnsafeSupplier<String, Exception> processVersionUnsafeSupplier) {
+
+		try {
+			processVersion = processVersionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String processVersion;
 
 	@Override
 	public Task clone() throws CloneNotSupportedException {

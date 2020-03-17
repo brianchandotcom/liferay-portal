@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -38,28 +37,24 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
-import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.ProcessSerDes;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,9 +66,9 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
+import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -183,7 +178,10 @@ public abstract class BaseProcessResourceTestCase {
 
 		Process process = randomProcess();
 
+		process.setDescription(regex);
+		process.setName(regex);
 		process.setTitle(regex);
+		process.setVersion(regex);
 
 		String json = ProcessSerDes.toJSON(process);
 
@@ -191,156 +189,23 @@ public abstract class BaseProcessResourceTestCase {
 
 		process = ProcessSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, process.getDescription());
+		Assert.assertEquals(regex, process.getName());
 		Assert.assertEquals(regex, process.getTitle());
+		Assert.assertEquals(regex, process.getVersion());
 	}
 
 	@Test
-	public void testGetProcessesPage() throws Exception {
-		Page<Process> page = processResource.getProcessesPage(
-			RandomTestUtil.randomString(), Pagination.of(1, 2), null);
+	public void testPostProcess() throws Exception {
+		Process randomProcess = randomProcess();
 
-		Assert.assertEquals(0, page.getTotalCount());
+		Process postProcess = testPostProcess_addProcess(randomProcess);
 
-		Process process1 = testGetProcessesPage_addProcess(randomProcess());
-
-		Process process2 = testGetProcessesPage_addProcess(randomProcess());
-
-		page = processResource.getProcessesPage(
-			null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(process1, process2), (List<Process>)page.getItems());
-		assertValid(page);
+		assertEquals(randomProcess, postProcess);
+		assertValid(postProcess);
 	}
 
-	@Test
-	public void testGetProcessesPageWithPagination() throws Exception {
-		Process process1 = testGetProcessesPage_addProcess(randomProcess());
-
-		Process process2 = testGetProcessesPage_addProcess(randomProcess());
-
-		Process process3 = testGetProcessesPage_addProcess(randomProcess());
-
-		Page<Process> page1 = processResource.getProcessesPage(
-			null, Pagination.of(1, 2), null);
-
-		List<Process> processes1 = (List<Process>)page1.getItems();
-
-		Assert.assertEquals(processes1.toString(), 2, processes1.size());
-
-		Page<Process> page2 = processResource.getProcessesPage(
-			null, Pagination.of(2, 2), null);
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<Process> processes2 = (List<Process>)page2.getItems();
-
-		Assert.assertEquals(processes2.toString(), 1, processes2.size());
-
-		Page<Process> page3 = processResource.getProcessesPage(
-			null, Pagination.of(1, 3), null);
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(process1, process2, process3),
-			(List<Process>)page3.getItems());
-	}
-
-	@Test
-	public void testGetProcessesPageWithSortDateTime() throws Exception {
-		testGetProcessesPageWithSort(
-			EntityField.Type.DATE_TIME,
-			(entityField, process1, process2) -> {
-				BeanUtils.setProperty(
-					process1, entityField.getName(),
-					DateUtils.addMinutes(new Date(), -2));
-			});
-	}
-
-	@Test
-	public void testGetProcessesPageWithSortInteger() throws Exception {
-		testGetProcessesPageWithSort(
-			EntityField.Type.INTEGER,
-			(entityField, process1, process2) -> {
-				BeanUtils.setProperty(process1, entityField.getName(), 0);
-				BeanUtils.setProperty(process2, entityField.getName(), 1);
-			});
-	}
-
-	@Test
-	public void testGetProcessesPageWithSortString() throws Exception {
-		testGetProcessesPageWithSort(
-			EntityField.Type.STRING,
-			(entityField, process1, process2) -> {
-				Class<?> clazz = process1.getClass();
-
-				Method method = clazz.getMethod(
-					"get" +
-						StringUtil.upperCaseFirstLetter(entityField.getName()));
-
-				Class<?> returnType = method.getReturnType();
-
-				if (returnType.isAssignableFrom(Map.class)) {
-					BeanUtils.setProperty(
-						process1, entityField.getName(),
-						Collections.singletonMap("Aaa", "Aaa"));
-					BeanUtils.setProperty(
-						process2, entityField.getName(),
-						Collections.singletonMap("Bbb", "Bbb"));
-				}
-				else {
-					BeanUtils.setProperty(
-						process1, entityField.getName(),
-						"Aaa" + RandomTestUtil.randomString());
-					BeanUtils.setProperty(
-						process2, entityField.getName(),
-						"Bbb" + RandomTestUtil.randomString());
-				}
-			});
-	}
-
-	protected void testGetProcessesPageWithSort(
-			EntityField.Type type,
-			UnsafeTriConsumer<EntityField, Process, Process, Exception>
-				unsafeTriConsumer)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Process process1 = randomProcess();
-		Process process2 = randomProcess();
-
-		for (EntityField entityField : entityFields) {
-			unsafeTriConsumer.accept(entityField, process1, process2);
-		}
-
-		process1 = testGetProcessesPage_addProcess(process1);
-
-		process2 = testGetProcessesPage_addProcess(process2);
-
-		for (EntityField entityField : entityFields) {
-			Page<Process> ascPage = processResource.getProcessesPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":asc");
-
-			assertEquals(
-				Arrays.asList(process1, process2),
-				(List<Process>)ascPage.getItems());
-
-			Page<Process> descPage = processResource.getProcessesPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":desc");
-
-			assertEquals(
-				Arrays.asList(process2, process1),
-				(List<Process>)descPage.getItems());
-		}
-	}
-
-	protected Process testGetProcessesPage_addProcess(Process process)
+	protected Process testPostProcess_addProcess(Process process)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -348,63 +213,76 @@ public abstract class BaseProcessResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetProcessesPage() throws Exception {
-		List<GraphQLField> graphQLFields = new ArrayList<>();
+	public void testDeleteProcess() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Process process = testDeleteProcess_addProcess();
 
-		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+		assertHttpResponseStatusCode(
+			204, processResource.deleteProcessHttpResponse(process.getId()));
 
-		graphQLFields.add(
-			new GraphQLField(
-				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+		assertHttpResponseStatusCode(
+			404, processResource.getProcessHttpResponse(process.getId()));
 
-		graphQLFields.add(new GraphQLField("page"));
-		graphQLFields.add(new GraphQLField("totalCount"));
+		assertHttpResponseStatusCode(
+			404, processResource.getProcessHttpResponse(0L));
+	}
+
+	protected Process testDeleteProcess_addProcess() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteProcess() throws Exception {
+		Process process = testGraphQLProcess_addProcess();
 
 		GraphQLField graphQLField = new GraphQLField(
-			"query",
+			"mutation",
 			new GraphQLField(
-				"processes",
+				"deleteProcess",
 				new HashMap<String, Object>() {
 					{
-						put("page", 1);
-						put("pageSize", 2);
+						put("processId", process.getId());
 					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
+				}));
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			invoke(graphQLField.toString()));
 
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
-		JSONObject processesJSONObject = dataJSONObject.getJSONObject(
-			"processes");
+		Assert.assertTrue(dataJSONObject.getBoolean("deleteProcess"));
 
-		Assert.assertEquals(0, processesJSONObject.get("totalCount"));
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"graphql.execution.SimpleDataFetcherExceptionHandler",
+					Level.WARN)) {
 
-		Process process1 = testGraphQLProcess_addProcess();
-		Process process2 = testGraphQLProcess_addProcess();
+			graphQLField = new GraphQLField(
+				"query",
+				new GraphQLField(
+					"process",
+					new HashMap<String, Object>() {
+						{
+							put("processId", process.getId());
+						}
+					},
+					new GraphQLField("id")));
 
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			invoke(graphQLField.toString()));
+			jsonObject = JSONFactoryUtil.createJSONObject(
+				invoke(graphQLField.toString()));
 
-		dataJSONObject = jsonObject.getJSONObject("data");
+			JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
 
-		processesJSONObject = dataJSONObject.getJSONObject("processes");
-
-		Assert.assertEquals(2, processesJSONObject.get("totalCount"));
-
-		assertEqualsJSONArray(
-			Arrays.asList(process1, process2),
-			processesJSONObject.getJSONArray("items"));
+			Assert.assertTrue(errorsJSONArray.length() > 0);
+		}
 	}
 
 	@Test
 	public void testGetProcess() throws Exception {
 		Process postProcess = testGetProcess_addProcess();
 
-		Process getProcess = processResource.getProcess(
-			postProcess.getId(), null, null, null);
+		Process getProcess = processResource.getProcess(postProcess.getId());
 
 		assertEquals(postProcess, getProcess);
 		assertValid(getProcess);
@@ -439,6 +317,24 @@ public abstract class BaseProcessResourceTestCase {
 
 		Assert.assertTrue(
 			equalsJSONObject(process, dataJSONObject.getJSONObject("process")));
+	}
+
+	@Test
+	public void testPutProcess() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Process process = testPutProcess_addProcess();
+
+		assertHttpResponseStatusCode(
+			204,
+			processResource.putProcessHttpResponse(process.getId(), process));
+
+		assertHttpResponseStatusCode(
+			404, processResource.putProcessHttpResponse(0L, process));
+	}
+
+	protected Process testPutProcess_addProcess() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -521,6 +417,14 @@ public abstract class BaseProcessResourceTestCase {
 	protected void assertValid(Process process) {
 		boolean valid = true;
 
+		if (process.getDateCreated() == null) {
+			valid = false;
+		}
+
+		if (process.getDateModified() == null) {
+			valid = false;
+		}
+
 		if (process.getId() == null) {
 			valid = false;
 		}
@@ -528,28 +432,24 @@ public abstract class BaseProcessResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("instanceCount", additionalAssertFieldName)) {
-				if (process.getInstanceCount() == null) {
+			if (Objects.equals("active", additionalAssertFieldName)) {
+				if (process.getActive() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals(
-					"onTimeInstanceCount", additionalAssertFieldName)) {
-
-				if (process.getOnTimeInstanceCount() == null) {
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (process.getDescription() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals(
-					"overdueInstanceCount", additionalAssertFieldName)) {
-
-				if (process.getOverdueInstanceCount() == null) {
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (process.getName() == null) {
 					valid = false;
 				}
 
@@ -564,10 +464,16 @@ public abstract class BaseProcessResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"untrackedInstanceCount", additionalAssertFieldName)) {
+			if (Objects.equals("title_i18n", additionalAssertFieldName)) {
+				if (process.getTitle_i18n() == null) {
+					valid = false;
+				}
 
-				if (process.getUntrackedInstanceCount() == null) {
+				continue;
+			}
+
+			if (Objects.equals("version", additionalAssertFieldName)) {
+				if (process.getVersion() == null) {
 					valid = false;
 				}
 
@@ -627,6 +533,47 @@ public abstract class BaseProcessResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("active", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						process1.getActive(), process2.getActive())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						process1.getDateCreated(), process2.getDateCreated())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						process1.getDateModified(),
+						process2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						process1.getDescription(), process2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(process1.getId(), process2.getId())) {
 					return false;
@@ -635,36 +582,9 @@ public abstract class BaseProcessResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("instanceCount", additionalAssertFieldName)) {
+			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						process1.getInstanceCount(),
-						process2.getInstanceCount())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"onTimeInstanceCount", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						process1.getOnTimeInstanceCount(),
-						process2.getOnTimeInstanceCount())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"overdueInstanceCount", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						process1.getOverdueInstanceCount(),
-						process2.getOverdueInstanceCount())) {
+						process1.getName(), process2.getName())) {
 
 					return false;
 				}
@@ -682,12 +602,19 @@ public abstract class BaseProcessResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"untrackedInstanceCount", additionalAssertFieldName)) {
-
+			if (Objects.equals("title_i18n", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						process1.getUntrackedInstanceCount(),
-						process2.getUntrackedInstanceCount())) {
+						process1.getTitle_i18n(), process2.getTitle_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("version", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						process1.getVersion(), process2.getVersion())) {
 
 					return false;
 				}
@@ -705,6 +632,27 @@ public abstract class BaseProcessResourceTestCase {
 
 	protected boolean equalsJSONObject(Process process, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("active", fieldName)) {
+				if (!Objects.deepEquals(
+						process.getActive(), jsonObject.getBoolean("active"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", fieldName)) {
+				if (!Objects.deepEquals(
+						process.getDescription(),
+						jsonObject.getString("description"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", fieldName)) {
 				if (!Objects.deepEquals(
 						process.getId(), jsonObject.getLong("id"))) {
@@ -715,32 +663,9 @@ public abstract class BaseProcessResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("instanceCount", fieldName)) {
+			if (Objects.equals("name", fieldName)) {
 				if (!Objects.deepEquals(
-						process.getInstanceCount(),
-						jsonObject.getLong("instanceCount"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("onTimeInstanceCount", fieldName)) {
-				if (!Objects.deepEquals(
-						process.getOnTimeInstanceCount(),
-						jsonObject.getLong("onTimeInstanceCount"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("overdueInstanceCount", fieldName)) {
-				if (!Objects.deepEquals(
-						process.getOverdueInstanceCount(),
-						jsonObject.getLong("overdueInstanceCount"))) {
+						process.getName(), jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -758,10 +683,10 @@ public abstract class BaseProcessResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("untrackedInstanceCount", fieldName)) {
+			if (Objects.equals("version", fieldName)) {
 				if (!Objects.deepEquals(
-						process.getUntrackedInstanceCount(),
-						jsonObject.getLong("untrackedInstanceCount"))) {
+						process.getVersion(),
+						jsonObject.getString("version"))) {
 
 					return false;
 				}
@@ -826,24 +751,92 @@ public abstract class BaseProcessResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("active")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("dateCreated")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(process.getDateCreated(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(process.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(process.getDateCreated()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("dateModified")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(process.getDateModified(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(process.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(process.getDateModified()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("description")) {
+			sb.append("'");
+			sb.append(String.valueOf(process.getDescription()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("instanceCount")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
+		if (entityFieldName.equals("name")) {
+			sb.append("'");
+			sb.append(String.valueOf(process.getName()));
+			sb.append("'");
 
-		if (entityFieldName.equals("onTimeInstanceCount")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("overdueInstanceCount")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("title")) {
@@ -854,9 +847,17 @@ public abstract class BaseProcessResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("untrackedInstanceCount")) {
+		if (entityFieldName.equals("title_i18n")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("version")) {
+			sb.append("'");
+			sb.append(String.valueOf(process.getVersion()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
@@ -883,12 +884,14 @@ public abstract class BaseProcessResourceTestCase {
 	protected Process randomProcess() throws Exception {
 		return new Process() {
 			{
+				active = RandomTestUtil.randomBoolean();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				description = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
-				instanceCount = RandomTestUtil.randomLong();
-				onTimeInstanceCount = RandomTestUtil.randomLong();
-				overdueInstanceCount = RandomTestUtil.randomLong();
+				name = RandomTestUtil.randomString();
 				title = RandomTestUtil.randomString();
-				untrackedInstanceCount = RandomTestUtil.randomLong();
+				version = RandomTestUtil.randomString();
 			}
 		};
 	}

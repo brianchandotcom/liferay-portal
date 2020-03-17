@@ -17,11 +17,14 @@ package com.liferay.portal.workflow.metrics.rest.internal.graphql.servlet.v1_0;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.workflow.metrics.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.portal.workflow.metrics.rest.internal.graphql.query.v1_0.Query;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeUserResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeMetricResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.CalendarResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.HistogramMetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.MetricResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeMetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessMetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.RoleResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
@@ -47,21 +50,35 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		Mutation.setAssigneeUserResourceComponentServiceObjects(
-			_assigneeUserResourceComponentServiceObjects);
+		Mutation.setAssigneeResourceComponentServiceObjects(
+			_assigneeResourceComponentServiceObjects);
+		Mutation.setAssigneeMetricResourceComponentServiceObjects(
+			_assigneeMetricResourceComponentServiceObjects);
+		Mutation.setInstanceResourceComponentServiceObjects(
+			_instanceResourceComponentServiceObjects);
+		Mutation.setNodeResourceComponentServiceObjects(
+			_nodeResourceComponentServiceObjects);
+		Mutation.setProcessResourceComponentServiceObjects(
+			_processResourceComponentServiceObjects);
 		Mutation.setSLAResourceComponentServiceObjects(
 			_slaResourceComponentServiceObjects);
+		Mutation.setTaskResourceComponentServiceObjects(
+			_taskResourceComponentServiceObjects);
 
 		Query.setCalendarResourceComponentServiceObjects(
 			_calendarResourceComponentServiceObjects);
+		Query.setHistogramMetricResourceComponentServiceObjects(
+			_histogramMetricResourceComponentServiceObjects);
 		Query.setInstanceResourceComponentServiceObjects(
 			_instanceResourceComponentServiceObjects);
-		Query.setMetricResourceComponentServiceObjects(
-			_metricResourceComponentServiceObjects);
 		Query.setNodeResourceComponentServiceObjects(
 			_nodeResourceComponentServiceObjects);
+		Query.setNodeMetricResourceComponentServiceObjects(
+			_nodeMetricResourceComponentServiceObjects);
 		Query.setProcessResourceComponentServiceObjects(
 			_processResourceComponentServiceObjects);
+		Query.setProcessMetricResourceComponentServiceObjects(
+			_processMetricResourceComponentServiceObjects);
 		Query.setRoleResourceComponentServiceObjects(
 			_roleResourceComponentServiceObjects);
 		Query.setSLAResourceComponentServiceObjects(
@@ -88,24 +105,16 @@ public class ServletDataImpl implements ServletData {
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<AssigneeUserResource>
-		_assigneeUserResourceComponentServiceObjects;
+	private ComponentServiceObjects<AssigneeResource>
+		_assigneeResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SLAResource>
-		_slaResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<CalendarResource>
-		_calendarResourceComponentServiceObjects;
+	private ComponentServiceObjects<AssigneeMetricResource>
+		_assigneeMetricResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<InstanceResource>
 		_instanceResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<MetricResource>
-		_metricResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<NodeResource>
@@ -116,12 +125,32 @@ public class ServletDataImpl implements ServletData {
 		_processResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<RoleResource>
-		_roleResourceComponentServiceObjects;
+	private ComponentServiceObjects<SLAResource>
+		_slaResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TaskResource>
 		_taskResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<CalendarResource>
+		_calendarResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<HistogramMetricResource>
+		_histogramMetricResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<NodeMetricResource>
+		_nodeMetricResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ProcessMetricResource>
+		_processMetricResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<RoleResource>
+		_roleResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TimeRangeResource>

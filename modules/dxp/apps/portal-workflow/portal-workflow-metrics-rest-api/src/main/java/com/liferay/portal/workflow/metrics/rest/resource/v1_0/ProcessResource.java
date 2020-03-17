@@ -14,19 +14,15 @@
 
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0;
 
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
-
-import java.util.Date;
 
 import javax.annotation.Generated;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -47,12 +43,21 @@ public interface ProcessResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<Process> getProcessesPage(
-			String title, Pagination pagination, Sort[] sorts)
+	public Process postProcess(Process process) throws Exception;
+
+	public Response postProcessBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Process getProcess(
-			Long processId, Boolean completed, Date dateEnd, Date dateStart)
+	public void deleteProcess(Long processId) throws Exception;
+
+	public Response deleteProcessBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Process getProcess(Long processId) throws Exception;
+
+	public void putProcess(Long processId, Process process) throws Exception;
+
+	public Response putProcessBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public String getProcessTitle(Long processId) throws Exception;
@@ -90,6 +95,9 @@ public interface ProcessResource {
 		public ProcessResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
+
+		public Builder httpServletRequest(
+			HttpServletRequest httpServletRequest);
 
 		public Builder user(com.liferay.portal.kernel.model.User user);
 

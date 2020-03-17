@@ -23,6 +23,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -44,6 +45,14 @@ public interface NodeResource {
 	}
 
 	public Page<Node> getProcessNodesPage(Long processId) throws Exception;
+
+	public Node postProcessNode(Long processId, Node node) throws Exception;
+
+	public Response postProcessNodeBatch(
+			Long processId, String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteProcessNode(Long processId, Long nodeId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -78,6 +87,9 @@ public interface NodeResource {
 		public NodeResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
+
+		public Builder httpServletRequest(
+			HttpServletRequest httpServletRequest);
 
 		public Builder user(com.liferay.portal.kernel.model.User user);
 

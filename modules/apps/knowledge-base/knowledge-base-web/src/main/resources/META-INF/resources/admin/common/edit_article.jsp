@@ -360,9 +360,8 @@ if (portletTitleBasedNavigation) {
 		document.getElementById(
 			'<portlet:namespace />content'
 		).value = window.<portlet:namespace />contentEditor.getHTML();
-		document.getElementById(
-			'<portlet:namespace />title'
-		).value = window.<portlet:namespace />titleEditor.value;
+		document.getElementById('<portlet:namespace />title').value =
+			window.<portlet:namespace />titleEditor.value;
 		updateMultipleKBArticleAttachments();
 	});
 </aui:script>

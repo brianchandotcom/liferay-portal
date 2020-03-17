@@ -23,6 +23,10 @@ import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
+import com.liferay.portal.workflow.metrics.search.index.InstanceWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndexer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +49,9 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 		BaseNodeResourceTestCase.setUpClass();
 
 		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
-			_documentBuilderFactory, _queries, _searchEngineAdapter);
+			_documentBuilderFactory, _instanceWorkflowMetricsIndexer,
+			_nodeWorkflowMetricsIndexer, _processWorkflowMetricsIndexer,
+			_queries, _searchEngineAdapter, _taskWorkflowMetricsIndexer);
 	}
 
 	@Before
@@ -110,7 +116,12 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"id", "name"};
+		return new String[] {"name"};
+	}
+
+	@Override
+	protected Node testDeleteProcessNode_addNode() throws Exception {
+		return testGetProcessNodesPage_addNode(_process.getId(), randomNode());
 	}
 
 	@Override
@@ -147,10 +158,23 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 	private static DocumentBuilderFactory _documentBuilderFactory;
 
 	@Inject
+	private static InstanceWorkflowMetricsIndexer
+		_instanceWorkflowMetricsIndexer;
+
+	@Inject
+	private static NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;
+
+	@Inject
+	private static ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;
+
+	@Inject
 	private static Queries _queries;
 
 	@Inject(blocking = false, filter = "search.engine.impl=Elasticsearch")
 	private static SearchEngineAdapter _searchEngineAdapter;
+
+	@Inject
+	private static TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;
 
 	private static WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;
 

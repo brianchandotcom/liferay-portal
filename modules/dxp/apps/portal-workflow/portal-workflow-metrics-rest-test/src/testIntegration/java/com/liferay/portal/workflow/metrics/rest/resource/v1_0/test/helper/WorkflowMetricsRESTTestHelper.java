@@ -16,12 +16,14 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
@@ -33,15 +35,24 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.CreatorUser;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Creator;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.NodeMetric;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.ProcessMetric;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Task;
+import com.liferay.portal.workflow.metrics.search.index.InstanceWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndexer;
 
 import java.io.Serializable;
 
 import java.lang.reflect.Method;
+
+import java.text.DateFormat;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -49,6 +60,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -66,12 +78,20 @@ import org.osgi.framework.ServiceReference;
 public class WorkflowMetricsRESTTestHelper {
 
 	public WorkflowMetricsRESTTestHelper(
-		DocumentBuilderFactory documentBuilderFactory, Queries queries,
-		SearchEngineAdapter searchEngineAdapter) {
+		DocumentBuilderFactory documentBuilderFactory,
+		InstanceWorkflowMetricsIndexer instanceWorkflowMetricsIndexer,
+		NodeWorkflowMetricsIndexer nodeWorkflowMetricsIndexer,
+		ProcessWorkflowMetricsIndexer processWorkflowMetricsIndexer,
+		Queries queries, SearchEngineAdapter searchEngineAdapter,
+		TaskWorkflowMetricsIndexer taskWorkflowMetricsIndexer) {
 
 		_documentBuilderFactory = documentBuilderFactory;
+		_instanceWorkflowMetricsIndexer = instanceWorkflowMetricsIndexer;
+		_nodeWorkflowMetricsIndexer = nodeWorkflowMetricsIndexer;
+		_processWorkflowMetricsIndexer = processWorkflowMetricsIndexer;
 		_queries = queries;
 		_searchEngineAdapter = searchEngineAdapter;
+		_taskWorkflowMetricsIndexer = taskWorkflowMetricsIndexer;
 	}
 
 	public Instance addInstance(
@@ -80,26 +100,21 @@ public class WorkflowMetricsRESTTestHelper {
 
 		Instance instance = new Instance();
 
-		instance.setCreatorUser(new CreatorUser());
+		instance.setCreator(
+			new Creator() {
+				{
+					id = RandomTestUtil.nextLong();
+					name = RandomTestUtil.randomString();
+				}
+			});
+
+		instance.setCompleted(completed);
 
 		if (completed) {
 			instance.setDateCompletion(RandomTestUtil.nextDate());
+			instance.setDuration(1000L);
 		}
 
-		instance.setId(RandomTestUtil.randomLong());
-		instance.setProcessId(processId);
-
-		return addInstance(companyId, instance);
-	}
-
-	public Instance addInstance(
-			long companyId, Date dateCompletion, long processId)
-		throws Exception {
-
-		Instance instance = new Instance();
-
-		instance.setCreatorUser(new CreatorUser());
-		instance.setDateCompletion(dateCompletion);
 		instance.setId(RandomTestUtil.randomLong());
 		instance.setProcessId(processId);
 
@@ -109,16 +124,25 @@ public class WorkflowMetricsRESTTestHelper {
 	public Instance addInstance(long companyId, Instance instance)
 		throws Exception {
 
-		CreatorUser creatorUser = instance.getCreatorUser();
+		Creator creator = instance.getCreator();
 
-		_invokeAddDocument(
-			_getIndexer(_CLASS_NAME_INSTANCE_INDEXER),
-			_createWorkflowMetricsInstanceDocument(
-				instance.getAssetTitle(), instance.getAssetType(), companyId,
-				instance.getDateCompletion() != null,
-				instance.getDateCompletion(), instance.getDateCreated(),
-				instance.getId(), instance.getProcessId(), creatorUser.getId(),
-				creatorUser.getName()));
+		_instanceWorkflowMetricsIndexer.addInstance(
+			_createLocalizationMap(instance.getAssetTitle()),
+			_createLocalizationMap(instance.getAssetType()), StringPool.BLANK,
+			0, companyId, null,
+			Optional.ofNullable(
+				instance.getDateCreated()
+			).orElseGet(
+				Date::new
+			),
+			instance.getId(),
+			Optional.ofNullable(
+				instance.getDateModified()
+			).orElseGet(
+				Date::new
+			),
+			instance.getProcessId(), instance.getProcessVersion(),
+			creator.getId(), creator.getName());
 
 		_retryAssertCount(
 			"workflow-metrics-instances", "companyId", companyId, "deleted",
@@ -128,6 +152,24 @@ public class WorkflowMetricsRESTTestHelper {
 		return instance;
 	}
 
+	public Instance addInstance(long companyId, long processId)
+		throws Exception {
+
+		Instance instance = new Instance();
+
+		instance.setCreator(
+			new Creator() {
+				{
+					id = RandomTestUtil.randomLong();
+					name = RandomTestUtil.randomString();
+				}
+			});
+		instance.setId(RandomTestUtil.randomLong());
+		instance.setProcessId(processId);
+
+		return addInstance(companyId, instance);
+	}
+
 	public Node addNode(long companyId, long processId, String version)
 		throws Exception {
 
@@ -135,6 +177,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 		node.setId(RandomTestUtil.randomLong());
 		node.setName(RandomTestUtil.randomString());
+		node.setProcessVersion(version);
 
 		return addNode(companyId, node, processId, version);
 	}
@@ -143,11 +186,25 @@ public class WorkflowMetricsRESTTestHelper {
 			long companyId, Node node, long processId, String version)
 		throws Exception {
 
-		_invokeAddDocument(
-			_getIndexer(_CLASS_NAME_NODE_INDEXER),
-			_createWorkflowMetricsNodeDocument(
-				companyId, node.getName(), node.getId(), processId, "STATE",
-				version));
+		_nodeWorkflowMetricsIndexer.addNode(
+			companyId,
+			Optional.ofNullable(
+				node.getDateCreated()
+			).orElseGet(
+				Date::new
+			),
+			false,
+			Optional.ofNullable(
+				node.getDateModified()
+			).orElseGet(
+				Date::new
+			),
+			node.getName(), node.getId(), processId, version, false,
+			Optional.ofNullable(
+				node.getType()
+			).orElseGet(
+				() -> "TASK"
+			));
 
 		_retryAssertCount(
 			"workflow-metrics-nodes", "companyId", companyId, "deleted", false,
@@ -156,28 +213,179 @@ public class WorkflowMetricsRESTTestHelper {
 		return node;
 	}
 
+	public NodeMetric addNodeMetric(
+			long assigneeId, long companyId, long processId)
+		throws Exception {
+
+		String randomString = RandomTestUtil.randomString();
+
+		NodeMetric nodeMetric = new NodeMetric() {
+			{
+				durationAvg = 0L;
+				instanceCount = 1L;
+				node = new Node() {
+					{
+						id = RandomTestUtil.randomLong();
+						label = randomString;
+						name = randomString;
+					}
+				};
+
+				onTimeInstanceCount = 0L;
+				overdueInstanceCount = 0L;
+			}
+		};
+
+		return addNodeMetric(
+			assigneeId, companyId, processId, "RUNNING", nodeMetric, "1.0");
+	}
+
+	public NodeMetric addNodeMetric(
+			long assigneeId, long companyId, long processId, String status,
+			NodeMetric task, String version)
+		throws Exception {
+
+		return addNodeMetric(
+			assigneeId, companyId,
+			() -> addInstance(companyId, false, processId), processId, status,
+			task, version);
+	}
+
+	public NodeMetric addNodeMetric(
+			long assigneeId, long companyId,
+			UnsafeSupplier<Instance, Exception> instanceSuplier, long processId,
+			String status)
+		throws Exception {
+
+		String randomString = RandomTestUtil.randomString();
+
+		NodeMetric task = new NodeMetric() {
+			{
+				durationAvg = Objects.equals(status, "COMPLETED") ? 1000L : 0L;
+				instanceCount = 1L;
+				node = new Node() {
+					{
+						id = RandomTestUtil.randomLong();
+						label = randomString;
+						name = randomString;
+					}
+				};
+
+				onTimeInstanceCount = 0L;
+				overdueInstanceCount = 0L;
+			}
+		};
+
+		return addNodeMetric(
+			assigneeId, companyId, instanceSuplier, processId, status, task,
+			"1.0");
+	}
+
+	public NodeMetric addNodeMetric(
+			long assigneeId, long companyId,
+			UnsafeSupplier<Instance, Exception> instanceSuplier, long processId,
+			String status, NodeMetric nodeMetric, String version)
+		throws Exception {
+
+		Node node = addNode(
+			companyId, nodeMetric.getNode(), processId, version);
+
+		Long onTimeInstanceCount = nodeMetric.getOnTimeInstanceCount();
+		Long overdueInstanceCount = nodeMetric.getOverdueInstanceCount();
+
+		for (int i = 0; i < nodeMetric.getInstanceCount(); i++) {
+			Instance instance = instanceSuplier.get();
+			Long taskId = RandomTestUtil.nextLong();
+
+			if (onTimeInstanceCount > 0) {
+				addSLATaskResult(
+					assigneeId, false, companyId, instance, true, status,
+					node.getId(), taskId, node.getName());
+
+				onTimeInstanceCount--;
+			}
+			else if (overdueInstanceCount > 0) {
+				addSLATaskResult(
+					assigneeId, true, companyId, instance, false, status,
+					node.getId(), taskId, node.getName());
+
+				overdueInstanceCount--;
+			}
+
+			addTask(
+				assigneeId, companyId, nodeMetric.getDurationAvg(), instance,
+				processId, node.getId(), taskId, node.getName());
+
+			if (instance.getCompleted()) {
+				completeInstance(companyId, instance);
+			}
+		}
+
+		_retryAssertCount(
+			"workflow-metrics-nodes", "companyId", companyId, "deleted", false,
+			"name", node.getName(), "processId", processId);
+
+		return nodeMetric;
+	}
+
 	public Process addProcess(long companyId) throws Exception {
-		return addProcess(companyId, "1.0");
+		Process process = new Process() {
+			{
+				id = RandomTestUtil.randomLong();
+				title = RandomTestUtil.randomString();
+				version = "1.0";
+			}
+		};
+
+		return addProcess(companyId, process);
 	}
 
 	public Process addProcess(long companyId, Process process)
 		throws Exception {
 
-		return addProcess(companyId, process, "1.0");
+		_processWorkflowMetricsIndexer.addProcess(
+			Optional.ofNullable(
+				process.getActive()
+			).orElseGet(
+				() -> Boolean.TRUE
+			),
+			companyId,
+			Optional.ofNullable(
+				process.getDateCreated()
+			).orElseGet(
+				Date::new
+			),
+			process.getDescription(),
+			Optional.ofNullable(
+				process.getDateModified()
+			).orElseGet(
+				Date::new
+			),
+			process.getName(), process.getId(), process.getTitle(),
+			LocalizedMapUtil.getLocalizedMap(process.getTitle_i18n()),
+			process.getVersion());
+
+		_retryAssertCount(
+			"workflow-metrics-processes", "companyId", companyId, "deleted",
+			false, "processId", process.getId());
+
+		return process;
 	}
 
-	public Process addProcess(long companyId, Process process, String version)
+	public ProcessMetric addProcessMetric(long companyId) throws Exception {
+		return addProcessMetric(companyId, "1.0");
+	}
+
+	public ProcessMetric addProcessMetric(
+			long companyId, ProcessMetric processMetric)
 		throws Exception {
 
-		_invokeAddDocument(
-			_getIndexer(_CLASS_NAME_PROCESS_INDEXER),
-			_createWorkflowMetricsProcessDocument(
-				companyId, process.getId(), process.getTitle(), version));
+		Process process = addProcess(companyId, processMetric.getProcess());
 
-		Long onTimeInstanceCount = process.getOnTimeInstanceCount();
-		Long overdueInstanceCount = process.getOverdueInstanceCount();
+		Long onTimeInstanceCount = processMetric.getOnTimeInstanceCount();
+		Long overdueInstanceCount = processMetric.getOverdueInstanceCount();
 
-		for (int i = 0; i < process.getInstanceCount(); i++) {
+		for (int i = 0; i < processMetric.getInstanceCount(); i++) {
 			Instance instance = addInstance(companyId, false, process.getId());
 
 			if (onTimeInstanceCount > 0) {
@@ -192,26 +400,34 @@ public class WorkflowMetricsRESTTestHelper {
 			}
 		}
 
-		_retryAssertCount(
-			"workflow-metrics-processes", "companyId", companyId, "deleted",
-			false, "processId", process.getId());
-
-		return process;
+		return processMetric;
 	}
 
-	public Process addProcess(long companyId, String version) throws Exception {
-		Process process = new Process() {
+	public ProcessMetric addProcessMetric(long companyId, String version)
+		throws Exception {
+
+		ProcessMetric processMetric = new ProcessMetric() {
 			{
-				id = RandomTestUtil.randomLong();
 				instanceCount = 0L;
 				onTimeInstanceCount = 0L;
 				overdueInstanceCount = 0L;
-				title = RandomTestUtil.randomString();
+
+				setProcess(
+					() -> {
+						Process process = new Process();
+
+						process.setId(RandomTestUtil.randomLong());
+						process.setTitle(RandomTestUtil.randomString());
+						process.setVersion(version);
+
+						return process;
+					});
+
 				untrackedInstanceCount = 0L;
 			}
 		};
 
-		return addProcess(companyId, process, version);
+		return addProcessMetric(companyId, processMetric);
 	}
 
 	public void addSLAInstanceResult(
@@ -237,12 +453,11 @@ public class WorkflowMetricsRESTTestHelper {
 
 	public void addSLATaskResult(
 			long assigneeId, boolean breached, long companyId,
-			Instance instance, boolean onTime, String status, long taskId,
-			String taskName)
+			Instance instance, boolean onTime, String status, long nodeId,
+			long taskId, String taskName)
 		throws Exception {
 
 		long slaDefinitionId = RandomTestUtil.randomLong();
-		long tokenId = RandomTestUtil.randomLong();
 
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_SLA_TASK_RESULT_INDEXER),
@@ -250,7 +465,7 @@ public class WorkflowMetricsRESTTestHelper {
 				assigneeId, breached, companyId,
 				Objects.nonNull(instance.getDateCompletion()), instance.getId(),
 				onTime, instance.getProcessId(), slaDefinitionId, status,
-				taskId, taskName, tokenId));
+				nodeId, taskName, taskId));
 
 		_retryAssertCount(
 			"workflow-metrics-sla-task-results", "breached", breached,
@@ -261,160 +476,130 @@ public class WorkflowMetricsRESTTestHelper {
 			"taskId", taskId, "taskName", taskName);
 	}
 
-	public Task addTask(long assigneeId, long companyId, long processId)
+	public Task addTask(long companyId, Instance instance, Task task)
 		throws Exception {
 
-		String randomString = RandomTestUtil.randomString();
-
-		Task task = new Task() {
-			{
-				durationAvg = 0L;
-				instanceCount = 1L;
-				key = randomString;
-				name = randomString;
-				onTimeInstanceCount = 0L;
-				overdueInstanceCount = 0L;
-			}
-		};
-
-		return addTask(
-			assigneeId, companyId, processId, "RUNNING", task, "1.0");
-	}
-
-	public Task addTask(
-			long assigneeId, long companyId, long processId, String status,
-			Task task, String version)
-		throws Exception {
-
-		return addTask(
-			assigneeId, companyId,
-			() -> addInstance(companyId, false, processId), processId, status,
-			task, version);
-	}
-
-	public Task addTask(
-			long assigneeId, long companyId,
-			UnsafeSupplier<Instance, Exception> instanceSuplier, long processId,
-			String status)
-		throws Exception {
-
-		String randomString = RandomTestUtil.randomString();
-
-		Task task = new Task() {
-			{
-				durationAvg = Objects.equals(status, "COMPLETED") ? 1000L : 0L;
-				instanceCount = 1L;
-				key = randomString;
-				name = randomString;
-				onTimeInstanceCount = 0L;
-				overdueInstanceCount = 0L;
-			}
-		};
-
-		return addTask(
-			assigneeId, companyId, instanceSuplier, processId, status, task,
-			"1.0");
-	}
-
-	public Task addTask(
-			long assigneeId, long companyId,
-			UnsafeSupplier<Instance, Exception> instanceSuplier, long processId,
-			String status, Task task, String version)
-		throws Exception {
-
-		long taskId = RandomTestUtil.randomLong();
-
-		_invokeAddDocument(
-			_getIndexer(_CLASS_NAME_NODE_INDEXER),
-			_createWorkflowMetricsNodeDocument(
-				companyId, task.getKey(), taskId, processId, "TASK", version));
-
-		Long onTimeInstanceCount = task.getOnTimeInstanceCount();
-		Long overdueInstanceCount = task.getOverdueInstanceCount();
-
-		for (int i = 0; i < task.getInstanceCount(); i++) {
-			Instance instance = instanceSuplier.get();
-
-			if (onTimeInstanceCount > 0) {
-				addSLATaskResult(
-					assigneeId, false, companyId, instance, true, status,
-					taskId, task.getKey());
-
-				onTimeInstanceCount--;
-			}
-			else if (overdueInstanceCount > 0) {
-				addSLATaskResult(
-					assigneeId, true, companyId, instance, false, status,
-					taskId, task.getKey());
-
-				overdueInstanceCount--;
-			}
-
-			addToken(
-				assigneeId, companyId, task.getDurationAvg(), instance, taskId,
-				task.getKey());
-		}
+		_taskWorkflowMetricsIndexer.addTask(
+			task.getAssigneeId(), task.getClassName(), task.getClassPK(),
+			companyId, false, null, null, task.getDateCreated(), false,
+			instance.getId(), task.getDateModified(), task.getName(),
+			task.getNodeId(), task.getProcessId(), task.getProcessVersion(),
+			task.getId(), 0);
 
 		_retryAssertCount(
-			"workflow-metrics-nodes", "companyId", companyId, "deleted", false,
-			"name", task.getKey(), "processId", processId);
+			"workflow-metrics-tasks", "companyId", companyId, "deleted", false,
+			"instanceId", instance.getId(), "processId", task.getProcessId(),
+			"nodeId", task.getNodeId(), "name", task.getName(), "taskId",
+			task.getId());
+
+		if (task.getAssigneeId() != 0) {
+			_taskWorkflowMetricsIndexer.updateTask(
+				task.getAssigneeId(), companyId, new Date(), task.getId(), 0);
+
+			_retryAssertCount(
+				"workflow-metrics-tasks", "assigneeId", task.getAssigneeId(),
+				"companyId", companyId, "deleted", false, "instanceId",
+				instance.getId(), "processId", task.getProcessId(), "nodeId",
+				task.getNodeId(), "name", task.getName(), "taskId",
+				task.getId());
+		}
+
+		if (task.getCompleted()) {
+			_taskWorkflowMetricsIndexer.completeTask(
+				companyId, task.getDateCompletion(), task.getCompletionUserId(),
+				task.getDuration(), task.getDateModified(), task.getId(), 0);
+
+			_retryAssertCount(
+				"workflow-metrics-tasks", "companyId", companyId, "completed",
+				true, "completionUserId", task.getCompletionUserId(), "deleted",
+				false, "duration", task.getDuration(), "instanceId",
+				instance.getId(), "processId", task.getProcessId(), "nodeId",
+				task.getNodeId(), "name", task.getName(), "taskId",
+				task.getId());
+		}
 
 		return task;
 	}
 
-	public void addToken(long assigneeId, long companyId, Instance instance)
+	public Task addTask(long assigneeId, long companyId, Instance instance)
 		throws Exception {
 
-		addToken(
-			assigneeId, companyId, 0L, instance, RandomTestUtil.randomLong(),
+		return addTask(
+			assigneeId, companyId, 0L, instance, instance.getProcessId(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
 			RandomTestUtil.randomString());
 	}
 
-	public void addToken(
+	public Task addTask(
 			long assigneeId, long companyId, long durationAvg,
-			boolean instanceCompleted, long instanceId, long processId,
-			long taskId, String taskName)
+			Instance instance, long processId, long nodeId, long taskId,
+			String name)
 		throws Exception {
 
-		long tokenId = RandomTestUtil.randomLong();
+		Task task = new Task();
 
-		_invokeAddDocument(
-			_getIndexer(_CLASS_NAME_TOKEN_INDEXER),
-			_creatWorkflowMetricsTokenDocument(
-				assigneeId, companyId, durationAvg, instanceCompleted,
-				instanceId, processId, taskId, taskName, tokenId, "1.0"));
+		task.setAssigneeId(assigneeId);
+		task.setClassName(StringPool.BLANK);
+		task.setClassPK(0L);
+		task.setCompleted(durationAvg > 0);
+		task.setDateCompletion((durationAvg > 0) ? new Date() : null);
+		task.setCompletionUserId((durationAvg > 0) ? assigneeId : null);
+		task.setDateCreated(new Date());
+		task.setDateModified(new Date());
+		task.setDuration(durationAvg);
+		task.setId(taskId);
+		task.setInstanceId(instance.getId());
+		task.setName(name);
+		task.setNodeId(nodeId);
+		task.setProcessId(processId);
+		task.setProcessVersion("1.0");
 
-		_retryAssertCount(
-			"workflow-metrics-tasks", "assigneeId", assigneeId, "companyId",
-			companyId, "deleted", false, "instanceCompleted", instanceCompleted,
-			"instanceId", instanceId, "processId", processId, "taskId", taskId,
-			"taskName", taskName, "tokenId", tokenId);
+		return addTask(companyId, instance, task);
 	}
 
-	public void addToken(
-			long assigneeId, long companyId, long durationAvg,
-			Instance instance, long taskId, String taskName)
+	public void completeInstance(long companyId, Instance instance)
 		throws Exception {
 
-		addToken(
-			assigneeId, companyId, durationAvg,
-			Objects.nonNull(instance.getDateCompletion()), instance.getId(),
-			instance.getProcessId(), taskId, taskName);
+		_instanceWorkflowMetricsIndexer.completeInstance(
+			companyId,
+			Optional.ofNullable(
+				instance.getDateCompletion()
+			).orElseGet(
+				Date::new
+			),
+			Optional.ofNullable(
+				instance.getDuration()
+			).orElse(
+				1000L
+			),
+			instance.getId(),
+			Optional.ofNullable(
+				instance.getDateModified()
+			).orElseGet(
+				Date::new
+			));
+
+		_retryAssertCount(
+			"workflow-metrics-instances", "companyId", companyId, "completed",
+			true, "deleted", false, "instanceId", instance.getId(), "processId",
+			instance.getProcessId());
+	}
+
+	public Map<String, String> createI18nMap(String value) {
+		Map<String, String> localizationMap = new HashMap<>();
+
+		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
+			localizationMap.put(availableLocale.toLanguageTag(), value);
+		}
+
+		return localizationMap;
 	}
 
 	public void deleteInstance(long companyId, Instance instance)
 		throws Exception {
 
-		CreatorUser creatorUser = instance.getCreatorUser();
-
-		_invokeDeleteDocument(
-			_getIndexer(_CLASS_NAME_INSTANCE_INDEXER),
-			_createWorkflowMetricsInstanceDocument(
-				instance.getAssetTitle(), instance.getAssetType(), companyId,
-				instance.getDateCompletion() != null,
-				instance.getDateCompletion(), instance.getDateCreated(),
-				instance.getId(), instance.getProcessId(), creatorUser.getId(),
-				creatorUser.getName()));
+		_instanceWorkflowMetricsIndexer.deleteInstance(
+			companyId, instance.getId());
 
 		_retryAssertCount(
 			"workflow-metrics-instances", "companyId", companyId, "deleted",
@@ -425,33 +610,25 @@ public class WorkflowMetricsRESTTestHelper {
 	public void deleteNode(long companyId, Node node, long processId)
 		throws Exception {
 
-		_invokeDeleteDocument(
-			_getIndexer(_CLASS_NAME_NODE_INDEXER),
-			_createWorkflowMetricsNodeDocument(
-				companyId, node.getName(), node.getId(), processId, "STATE",
-				"1.0"));
+		_nodeWorkflowMetricsIndexer.deleteNode(companyId, node.getId());
 
 		_retryAssertCount(
 			"workflow-metrics-nodes", "companyId", companyId, "deleted", true,
 			"name", node.getName(), "processId", processId);
 	}
 
-	public void deleteProcess(Document document) throws Exception {
-		_invokeDeleteDocument(
-			_getIndexer(_CLASS_NAME_PROCESS_INDEXER), document);
+	public void deleteProcess(long companyId, long processId) throws Exception {
+		_processWorkflowMetricsIndexer.deleteProcess(companyId, processId);
 
 		_retryAssertCount(
-			"workflow-metrics-processes", "companyId",
-			document.get("companyId"), "deleted", true, "processId",
-			document.get("processId"));
+			"workflow-metrics-processes", "companyId", companyId, "deleted",
+			true, "processId", processId);
 	}
 
 	public void deleteProcess(long companyId, Process process)
 		throws Exception {
 
-		deleteProcess(
-			_createWorkflowMetricsProcessDocument(
-				companyId, process.getId(), process.getTitle(), "1.0"));
+		deleteProcess(companyId, process.getId());
 	}
 
 	public void deleteSLATaskResults(long companyId, long processId)
@@ -466,17 +643,14 @@ public class WorkflowMetricsRESTTestHelper {
 	public void deleteTask(long companyId, long processId, Task task)
 		throws Exception {
 
-		_invokeDeleteDocument(
-			_getIndexer(_CLASS_NAME_NODE_INDEXER),
-			_createWorkflowMetricsNodeDocument(
-				companyId, task.getKey(), 0, processId, "TASK", "1.0"));
+		_nodeWorkflowMetricsIndexer.deleteNode(companyId, task.getNodeId());
 
 		_retryAssertCount(
 			"workflow-metrics-nodes", "companyId", companyId, "deleted", true,
-			"name", task.getKey(), "processId", processId);
+			"name", task.getName(), "processId", processId);
 	}
 
-	public void deleteTokens(long companyId, long processId) throws Exception {
+	public void deleteTasks(long companyId, long processId) throws Exception {
 		_deleteDocuments(
 			"workflow-metrics-tasks", "WorkflowMetricsTaskType", "companyId",
 			companyId, "processId", processId);
@@ -503,198 +677,158 @@ public class WorkflowMetricsRESTTestHelper {
 		SearchSearchResponse searchSearchResponse =
 			_searchEngineAdapter.execute(searchSearchRequest);
 
-		Hits hits = searchSearchResponse.getHits();
-
-		return hits.getDocs();
+		return Stream.of(
+			searchSearchResponse.getSearchHits()
+		).map(
+			SearchHits::getSearchHits
+		).flatMap(
+			List::stream
+		).map(
+			SearchHit::getDocument
+		).toArray(
+			Document[]::new
+		);
 	}
 
 	public void restoreProcess(Document document) throws Exception {
-		document.addKeyword("deleted", false);
-
-		_invokeAddDocument(_getIndexer(_CLASS_NAME_PROCESS_INDEXER), document);
+		_processWorkflowMetricsIndexer.addProcess(
+			document.getBoolean("active"), document.getLong("companyId"),
+			_parseDate(document.getDate("createDate")),
+			document.getString("description"),
+			_parseDate(document.getDate("modifiedDate")),
+			document.getString("name"), document.getLong("processId"),
+			document.getString("title"),
+			_createLocalizationMap(document.getString("title")),
+			document.getString("version"));
 
 		_retryAssertCount(
 			"workflow-metrics-processes", "companyId",
-			document.get("companyId"), "deleted", false, "processId",
-			document.get("processId"));
+			document.getLong("companyId"), "deleted", false, "processId",
+			document.getLong("processId"));
 	}
 
 	public void updateProcess(long companyId, long processId, String version)
 		throws Exception {
 
-		_invokeUpdateDocument(
-			_getIndexer(_CLASS_NAME_PROCESS_INDEXER),
-			_createWorkflowMetricsProcessDocument(
-				companyId, processId, null, version));
+		_processWorkflowMetricsIndexer.updateProcess(
+			Optional.empty(), companyId, Optional.empty(), new Date(),
+			processId, Optional.empty(), Optional.empty(),
+			Optional.of(version));
 
 		_retryAssertCount(
 			"workflow-metrics-processes", "companyId", companyId, "deleted",
 			false, "processId", processId, "version", version);
 	}
 
-	private Map<Locale, String> _createLocalizationMap(String title) {
+	protected String formatDate(Date date) {
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyyMMddHHmmss");
+
+		try {
+			return dateFormat.format(date);
+		}
+		catch (Exception exception) {
+			return null;
+		}
+	}
+
+	private Map<Locale, String> _createLocalizationMap(String value) {
 		Map<Locale, String> localizationMap = new HashMap<>();
 
 		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
-			localizationMap.put(availableLocale, title);
+			localizationMap.put(availableLocale, value);
 		}
 
 		return localizationMap;
-	}
-
-	private Document _createWorkflowMetricsInstanceDocument(
-		String assetTitle, String assetType, long companyId, boolean completed,
-		Date completionDate, Date createDate, long instanceId, long processId,
-		Long userId, String userName) {
-
-		Document document = new DocumentImpl();
-
-		document.addUID(
-			"WorkflowMetricsInstance",
-			_digest(companyId, processId, instanceId));
-		document.addLocalizedKeyword(
-			"assetTitle", _createLocalizationMap(assetTitle), false, true);
-		document.addLocalizedKeyword(
-			"assetType", _createLocalizationMap(assetType), false, true);
-		document.addKeyword("companyId", companyId);
-		document.addKeyword("completed", completed);
-		document.addDateSortable("completionDate", completionDate);
-		document.addDateSortable("createDate", createDate);
-		document.addKeyword("deleted", false);
-		document.addKeyword("instanceId", instanceId);
-		document.addKeyword("processId", processId);
-		document.addKeyword("userId", userId);
-		document.addKeyword("userName", userName);
-		document.addKeyword("version", "1.0");
-
-		return document;
-	}
-
-	private Document _createWorkflowMetricsNodeDocument(
-		long companyId, String name, long nodeId, long processId, String type,
-		String version) {
-
-		Document document = new DocumentImpl();
-
-		document.addUID(
-			"WorkflowMetricsNode", _digest(companyId, processId, name));
-		document.addKeyword("companyId", companyId);
-		document.addKeyword("deleted", false);
-		document.addKeyword("initial", false);
-		document.addKeyword("name", name);
-		document.addKeyword("nodeId", nodeId);
-		document.addKeyword("processId", processId);
-		document.addKeyword("terminal", false);
-		document.addKeyword("type", type);
-		document.addKeyword("version", version);
-
-		return document;
-	}
-
-	private Document _createWorkflowMetricsProcessDocument(
-		long companyId, long processId, String title, String version) {
-
-		Document document = new DocumentImpl();
-
-		document.addUID(
-			"WorkflowMetricsProcess", _digest(companyId, processId));
-		document.addKeyword("active", true);
-		document.addKeyword("companyId", companyId);
-		document.addKeyword("deleted", false);
-		document.addKeyword("name", RandomTestUtil.randomString());
-		document.addKeyword("processId", processId);
-		document.addLocalizedKeyword(
-			"title", _createLocalizationMap(title), false, true);
-		document.addKeyword("version", version);
-
-		return document;
 	}
 
 	private Document _creatWorkflowMetricsSLAInstanceResultDocument(
 		long companyId, boolean instanceCompleted, long instanceId,
 		boolean onTime, long processId, long slaDefinitionId) {
 
-		Document document = new DocumentImpl();
+		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
 
-		document.addUID(
-			"WorkflowMetricsSLAInstanceResult",
-			_digest(companyId, instanceId, processId, slaDefinitionId));
-		document.addKeyword("companyId", companyId);
-		document.addKeyword("deleted", false);
-		document.addKeyword("elapsedTime", onTime ? 1000 : -1000);
-		document.addKeyword("instanceCompleted", instanceCompleted);
-		document.addKeyword("instanceId", instanceId);
-		document.addKeyword("onTime", onTime);
-		document.addKeyword("processId", processId);
-		document.addKeyword("slaDefinitionId", slaDefinitionId);
-		document.addKeyword("status", "RUNNING");
+		documentBuilder.setString(
+			Field.UID,
+			"WorkflowMetricsSLAInstanceResult" +
+				_digest(companyId, instanceId, processId, slaDefinitionId)
+		).setValue(
+			"companyId", companyId
+		).setValue(
+			"deleted", false
+		).setValue(
+			"elapsedTime", onTime ? 1000 : -1000
+		).setValue(
+			"instanceCompleted", instanceCompleted
+		).setValue(
+			"instanceId", instanceId
+		).setValue(
+			"onTime", onTime
+		).setValue(
+			"processId", processId
+		).setValue(
+			"slaDefinitionId", slaDefinitionId
+		).setValue(
+			"status", "RUNNING"
+		);
 
-		return document;
+		return documentBuilder.build();
 	}
 
 	private Document _creatWorkflowMetricsSLATaskResultDocument(
 		long assigneeId, boolean breached, long companyId,
 		boolean instanceCompleted, long instanceId, boolean onTime,
-		long processId, long slaDefinitionId, String status, long taskId,
-		String taskName, long tokenId) {
+		long processId, long slaDefinitionId, String status, long nodeId,
+		String taskName, long taskId) {
 
-		Document document = new DocumentImpl();
+		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
 
-		document.addUID(
-			"WorkflowMetricsSLATaskResult",
-			_digest(companyId, instanceId, processId, slaDefinitionId, taskId));
-		document.addKeyword("assigneeId", assigneeId);
-		document.addKeyword("breached", breached);
-		document.addKeyword("companyId", companyId);
-		document.addDateSortable(
-			"completionDate",
-			Objects.equals(status, "COMPLETED") ? new Date() : null);
-		document.addKeyword(
-			"completionUserId",
-			Objects.equals(status, "COMPLETED") ? assigneeId : null);
-		document.addKeyword("deleted", false);
-		document.addKeyword("elapsedTime", onTime ? 1000 : -1000);
-		document.addKeyword("instanceCompleted", instanceCompleted);
-		document.addKeyword("instanceId", instanceId);
-		document.addKeyword("onTime", onTime);
-		document.addKeyword("processId", processId);
-		document.addKeyword("slaDefinitionId", slaDefinitionId);
-		document.addKeyword("status", status);
-		document.addKeyword("taskId", taskId);
-		document.addKeyword("taskName", taskName);
-		document.addKeyword("tokenId", tokenId);
+		String digest = _digest(
+			companyId, instanceId, processId, slaDefinitionId, taskId);
 
-		return document;
-	}
+		documentBuilder.setString(
+			Field.UID, "WorkflowMetricsSLATaskResult" + digest
+		).setValue(
+			"assigneeId", assigneeId
+		).setValue(
+			"breached", breached
+		).setValue(
+			"companyId", companyId
+		);
 
-	private Document _creatWorkflowMetricsTokenDocument(
-		long assigneeId, long companyId, long durationAvg,
-		boolean instanceCompleted, long instanceId, long processId, long taskId,
-		String taskName, long tokenId, String version) {
+		if (Objects.equals(status, "COMPLETED")) {
+			documentBuilder.setDate(
+				"completionDate", formatDate(new Date())
+			).setValue(
+				"completionUserId", assigneeId
+			);
+		}
 
-		Document document = new DocumentImpl();
+		documentBuilder.setValue(
+			"deleted", false
+		).setValue(
+			"elapsedTime", onTime ? 1000 : -1000
+		).setValue(
+			"instanceCompleted", instanceCompleted
+		).setValue(
+			"instanceId", instanceId
+		).setValue(
+			"onTime", onTime
+		).setValue(
+			"processId", processId
+		).setValue(
+			"slaDefinitionId", slaDefinitionId
+		).setValue(
+			"status", status
+		).setValue(
+			"nodeId", nodeId
+		).setValue(
+			"taskName", taskName
+		).setValue(
+			"taskId", taskId
+		);
 
-		document.addUID(
-			"WorkflowMetricsToken",
-			_digest(companyId, instanceId, processId, taskId, tokenId));
-		document.addKeyword("assigneeId", assigneeId);
-		document.addKeyword("companyId", companyId);
-		document.addKeyword("completed", durationAvg > 0);
-		document.addDateSortable(
-			"completionDate", (durationAvg > 0) ? new Date() : null);
-		document.addKeyword(
-			"completionUserId", (durationAvg > 0) ? assigneeId : null);
-		document.addKeyword("deleted", false);
-		document.addKeyword("duration", durationAvg);
-		document.addKeyword("instanceCompleted", instanceCompleted);
-		document.addKeyword("instanceId", instanceId);
-		document.addKeyword("processId", processId);
-		document.addKeyword("taskId", taskId);
-		document.addKeyword("taskName", taskName);
-		document.addKeyword("tokenId", tokenId);
-		document.addKeyword("version", version);
-
-		return document;
+		return documentBuilder.build();
 	}
 
 	private void _deleteDocuments(
@@ -819,12 +953,6 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeMethod(indexer, "addDocument", document);
 	}
 
-	private void _invokeDeleteDocument(Object indexer, Document document)
-		throws Exception {
-
-		_invokeMethod(indexer, "deleteDocument", document);
-	}
-
 	private void _invokeMethod(
 			Object indexer, String methodName, Document document)
 		throws Exception {
@@ -847,10 +975,16 @@ public class WorkflowMetricsRESTTestHelper {
 		method.invoke(indexer, document);
 	}
 
-	private void _invokeUpdateDocument(Object indexer, Document document)
-		throws Exception {
+	private Date _parseDate(String formattedDate) {
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyyMMddHHmmss");
 
-		_invokeMethod(indexer, "updateDocument", document);
+		try {
+			return dateFormat.parse(formattedDate);
+		}
+		catch (Exception exception) {
+			return new Date();
+		}
 	}
 
 	private void _retryAssertCount(
@@ -887,7 +1021,9 @@ public class WorkflowMetricsRESTTestHelper {
 		CountSearchResponse countSearchResponse = _searchEngineAdapter.execute(
 			countSearchRequest);
 
-		Assert.assertEquals(expectedCount, countSearchResponse.getCount());
+		Assert.assertEquals(
+			countSearchResponse.getSearchRequestString(), expectedCount,
+			countSearchResponse.getCount());
 	}
 
 	private void _retryAssertCount(String indexName, Object... parameters)
@@ -895,18 +1031,6 @@ public class WorkflowMetricsRESTTestHelper {
 
 		_retryAssertCount(1, indexName, parameters);
 	}
-
-	private static final String _CLASS_NAME_INSTANCE_INDEXER =
-		"com.liferay.portal.workflow.metrics.internal.search.index." +
-			"InstanceWorkflowMetricsIndexer";
-
-	private static final String _CLASS_NAME_NODE_INDEXER =
-		"com.liferay.portal.workflow.metrics.internal.search.index." +
-			"NodeWorkflowMetricsIndexer";
-
-	private static final String _CLASS_NAME_PROCESS_INDEXER =
-		"com.liferay.portal.workflow.metrics.internal.search.index." +
-			"ProcessWorkflowMetricsIndexer";
 
 	private static final String _CLASS_NAME_SLA_INSTANCE_RESULT_INDEXER =
 		"com.liferay.portal.workflow.metrics.internal.search.index." +
@@ -916,14 +1040,15 @@ public class WorkflowMetricsRESTTestHelper {
 		"com.liferay.portal.workflow.metrics.internal.search.index." +
 			"SLATaskResultWorkflowMetricsIndexer";
 
-	private static final String _CLASS_NAME_TOKEN_INDEXER =
-		"com.liferay.portal.workflow.metrics.internal.search.index." +
-			"TaskWorkflowMetricsIndexer";
-
 	private static Map<String, Object> _indexers = new HashMap<>();
 
 	private final DocumentBuilderFactory _documentBuilderFactory;
+	private final InstanceWorkflowMetricsIndexer
+		_instanceWorkflowMetricsIndexer;
+	private final NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;
+	private final ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;
 	private final Queries _queries;
 	private final SearchEngineAdapter _searchEngineAdapter;
+	private final TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;
 
 }

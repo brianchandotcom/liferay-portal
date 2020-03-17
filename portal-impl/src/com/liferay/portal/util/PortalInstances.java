@@ -185,25 +185,15 @@ public class PortalInstances {
 	public static long[] getCompanyIdsBySQL() throws SQLException {
 		List<Long> companyIds = new ArrayList<>();
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(_GET_COMPANY_IDS);
-
-			rs = ps.executeQuery();
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(_GET_COMPANY_IDS);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long companyId = rs.getLong("companyId");
 
 				companyIds.add(companyId);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 
 		return ArrayUtil.toArray(companyIds.toArray(new Long[0]));

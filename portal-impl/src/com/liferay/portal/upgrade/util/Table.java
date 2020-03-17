@@ -140,20 +140,12 @@ public class Table {
 	}
 
 	public void generateTempFile() throws Exception {
-		Connection con = DataAccess.getConnection();
-
-		try {
+		try (Connection con = DataAccess.getConnection()) {
 			generateTempFile(con);
-		}
-		finally {
-			DataAccess.cleanUp(con);
 		}
 	}
 
 	public void generateTempFile(Connection con) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
 		boolean empty = true;
 
 		Path tempFilePath = Files.createTempFile(
@@ -172,13 +164,10 @@ public class Table {
 					"Starting backup of ", _tableName, " to ", tempFileName));
 		}
 
-		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(
-			new FileWriter(tempFileName));
-
-		try {
-			ps = getSelectPreparedStatement(con);
-
-			rs = ps.executeQuery();
+		try (UnsyncBufferedWriter unsyncBufferedWriter =
+				new UnsyncBufferedWriter(new FileWriter(tempFileName));
+			PreparedStatement ps = getSelectPreparedStatement(con);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				String data = null;
@@ -213,11 +202,6 @@ public class Table {
 			FileUtil.delete(tempFileName);
 
 			throw exception;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-
-			unsyncBufferedWriter.close();
 		}
 
 		if (!empty) {
@@ -488,13 +472,8 @@ public class Table {
 	}
 
 	public void populateTable() throws Exception {
-		Connection con = DataAccess.getConnection();
-
-		try {
+		try (Connection con = DataAccess.getConnection()) {
 			populateTable(con);
-		}
-		finally {
-			DataAccess.cleanUp(con);
 		}
 	}
 
@@ -664,9 +643,6 @@ public class Table {
 	public void updateColumnValue(
 		String columnName, String oldValue, String newValue) {
 
-		Connection con = null;
-		PreparedStatement ps = null;
-
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("update ");
@@ -679,10 +655,8 @@ public class Table {
 
 		String sql = sb.toString();
 
-		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(sql);
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setString(1, newValue);
 			ps.setString(2, oldValue);
@@ -694,9 +668,6 @@ public class Table {
 
 			throw new RuntimeException(
 				"Unable to execute " + sql, sqlException);
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
 		}
 	}
 

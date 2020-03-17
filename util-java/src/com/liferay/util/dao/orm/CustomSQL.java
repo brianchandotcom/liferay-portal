@@ -376,12 +376,10 @@ public class CustomSQL {
 	public void reloadCustomSQL() throws SQLException {
 		PortalUtil.initCustomSQL();
 
-		Connection con = DataAccess.getConnection();
-
 		String functionIsNull = PortalUtil.getCustomSQLFunctionIsNull();
 		String functionIsNotNull = PortalUtil.getCustomSQLFunctionIsNotNull();
 
-		try {
+		try (Connection con = DataAccess.getConnection()) {
 			if (Validator.isNotNull(functionIsNull) &&
 				Validator.isNotNull(functionIsNotNull)) {
 
@@ -478,9 +476,6 @@ public class CustomSQL {
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
-		}
-		finally {
-			DataAccess.cleanUp(con);
 		}
 
 		try {

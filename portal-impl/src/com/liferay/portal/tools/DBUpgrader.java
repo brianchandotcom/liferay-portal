@@ -388,44 +388,29 @@ public class DBUpgrader {
 	}
 
 	private static int _getReleaseState() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
-				"select state_ from Release_ where releaseId = ?");
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"select state_ from Release_ where releaseId = ?")) {
 
 			ps.setLong(1, ReleaseConstants.DEFAULT_ID);
 
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				return rs.getInt("state_");
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt("state_");
+				}
 			}
 
 			throw new IllegalArgumentException(
 				"No Release exists with the primary key " +
 					ReleaseConstants.DEFAULT_ID);
 		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
 	}
 
 	private static long _getResourceCodesCount() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement("select count(*) from ResourceCode");
-
-			rs = ps.executeQuery();
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"select count(*) from ResourceCode");
+			ResultSet rs = ps.executeQuery()) {
 
 			if (rs.next()) {
 				return rs.getInt(1);
@@ -435,9 +420,6 @@ public class DBUpgrader {
 		}
 		catch (Exception exception) {
 			return 0;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 
@@ -468,24 +450,16 @@ public class DBUpgrader {
 	}
 
 	private static void _updateReleaseState(int state) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
 				"update Release_ set modifiedDate = ?, state_ = ? where " +
-					"releaseId = ?");
+					"releaseId = ?")) {
 
 			ps.setDate(1, new Date(System.currentTimeMillis()));
 			ps.setInt(2, state);
 			ps.setLong(3, ReleaseConstants.DEFAULT_ID);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
 		}
 	}
 

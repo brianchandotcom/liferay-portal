@@ -23,7 +23,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.concurrent.CompeteLatch;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.ObjectNotFoundException;
@@ -60,16 +59,10 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 
 	@Override
 	public List<String> getNames() {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-
-		try {
-			connection = getConnection();
-
-			preparedStatement = connection.prepareStatement(_SQL_SELECT_NAMES);
-
-			resultSet = preparedStatement.executeQuery();
+		try (Connection connection = getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				_SQL_SELECT_NAMES);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			List<String> list = new ArrayList<>();
 
@@ -81,9 +74,6 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 		}
 		catch (SQLException sqlException) {
 			throw processException(sqlException);
-		}
-		finally {
-			DataAccess.cleanUp(connection, preparedStatement, resultSet);
 		}
 	}
 
@@ -127,14 +117,9 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 						"Cannot rename ", oldName, " to ", newName));
 			}
 
-			Connection connection = null;
-			PreparedStatement preparedStatement = null;
-
-			try {
-				connection = getConnection();
-
-				preparedStatement = connection.prepareStatement(
-					_SQL_UPDATE_NAME_BY_NAME);
+			try (Connection connection = getConnection();
+				PreparedStatement preparedStatement =
+					connection.prepareStatement(_SQL_UPDATE_NAME_BY_NAME)) {
 
 				preparedStatement.setString(1, newName);
 				preparedStatement.setString(2, oldName);
@@ -145,9 +130,6 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 			}
 			catch (Exception exception) {
 				throw processException(exception);
-			}
-			finally {
-				DataAccess.cleanUp(connection, preparedStatement);
 			}
 
 			counterRegister.setName(newName);

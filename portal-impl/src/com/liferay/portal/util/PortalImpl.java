@@ -1623,30 +1623,21 @@ public class PortalImpl implements Portal {
 			return ClassNameLocalServiceUtil.getClassNameId(value);
 		}
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
-				"select classNameId from ClassName_ where value = ?");
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"select classNameId from ClassName_ where value = ?")) {
 
 			ps.setString(1, value);
 
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				return rs.getLong("classNameId");
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return rs.getLong("classNameId");
+				}
 			}
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(
 				"Unable to get class name ID from value " + value, exception);
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 
 		return 0;

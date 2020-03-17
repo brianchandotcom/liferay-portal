@@ -18,7 +18,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -61,22 +60,17 @@ public class MySQLDB extends BaseDB {
 	public List<Index> getIndexes(Connection con) throws SQLException {
 		List<Index> indexes = new ArrayList<>();
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(4);
 
-		try {
-			StringBundler sb = new StringBundler(4);
+		sb.append("select distinct(index_name), table_name, non_unique from ");
+		sb.append("information_schema.statistics where index_schema = ");
+		sb.append("database() and (index_name like 'LIFERAY_%' or index_name ");
+		sb.append("like 'IX_%')");
 
-			sb.append("select distinct(index_name), table_name, non_unique ");
-			sb.append("from information_schema.statistics where index_schema ");
-			sb.append("= database() and (index_name like 'LIFERAY_%' or ");
-			sb.append("index_name like 'IX_%')");
+		String sql = sb.toString();
 
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				String indexName = rs.getString("index_name");
@@ -85,9 +79,6 @@ public class MySQLDB extends BaseDB {
 
 				indexes.add(new Index(indexName, tableName, unique));
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return indexes;

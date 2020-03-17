@@ -124,20 +124,13 @@ public class StartupHelperUtil {
 	public static void updateIndexes(boolean dropIndexes) {
 		DB db = DBManagerUtil.getDB();
 
-		Connection connection = null;
-
-		try {
-			connection = DataAccess.getConnection();
-
+		try (Connection connection = DataAccess.getConnection()) {
 			updateIndexes(db, connection, dropIndexes);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception, exception);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(connection);
 		}
 	}
 

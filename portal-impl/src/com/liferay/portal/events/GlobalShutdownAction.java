@@ -148,21 +148,13 @@ public class GlobalShutdownAction extends SimpleAction {
 		DB db = DBManagerUtil.getDB();
 
 		if (db.getDBType() == DBType.HYPERSONIC) {
-			Connection connection = null;
-			Statement statement = null;
-
-			try {
-				connection = DataAccess.getConnection();
-
-				statement = connection.createStatement();
+			try (Connection connection = DataAccess.getConnection();
+				Statement statement = connection.createStatement()) {
 
 				statement.executeUpdate("SHUTDOWN");
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
-			}
-			finally {
-				DataAccess.cleanUp(connection, statement);
 			}
 		}
 

@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -114,21 +113,15 @@ public class PostgreSQLDB extends BaseDB {
 	public List<Index> getIndexes(Connection con) throws SQLException {
 		List<Index> indexes = new ArrayList<>();
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(2);
 
-		try {
-			StringBundler sb = new StringBundler(3);
+		sb.append("select indexname, tablename, indexdef from pg_indexes ");
+		sb.append("where indexname like 'liferay_%' or indexname like 'ix_%'");
 
-			sb.append("select indexname, tablename, indexdef from pg_indexes ");
-			sb.append("where indexname like 'liferay_%' or indexname like ");
-			sb.append("'ix_%'");
+		String sql = sb.toString();
 
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				String indexName = rs.getString("indexname");
@@ -144,9 +137,6 @@ public class PostgreSQLDB extends BaseDB {
 
 				indexes.add(new Index(indexName, tableName, unique));
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return indexes;

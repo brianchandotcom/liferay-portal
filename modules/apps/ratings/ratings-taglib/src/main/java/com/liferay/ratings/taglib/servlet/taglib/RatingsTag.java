@@ -165,13 +165,13 @@ public class RatingsTag extends IncludeTag {
 				).put(
 					"enabled", _isEnabled(themeDisplay, inTrash)
 				).put(
+					"initialLiked", thumbUp
+				).put(
 					"initialNegativeVotes", totalEntries - positiveVotes
 				).put(
 					"initialPositiveVotes", positiveVotes
 				).put(
 					"inTrash", inTrash
-				).put(
-					"isLiked", thumbUp
 				).put(
 					"positiveVotes", positiveVotes
 				).put(

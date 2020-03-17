@@ -70,6 +70,8 @@ import com.liferay.portlet.configuration.web.internal.constants.PortletConfigura
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationWebKeys;
 import com.liferay.portlet.portletconfiguration.action.ActionUtil;
 import com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration;
+import com.liferay.roles.admin.constants.RolesAdminWebKeys;
+import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 
 import java.io.IOException;
 
@@ -619,6 +621,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			if (mvcPath.equals("/edit_permissions.jsp")) {
 				checkEditPermissionsJSP(renderRequest);
 
+				renderRequest.setAttribute(
+					RolesAdminWebKeys.ROLE_TYPE_CONTRIBUTOR_PROVIDER,
+					_roleTypeContributorProvider);
+
 				super.doDispatch(renderRequest, renderResponse);
 
 				return;
@@ -1090,6 +1096,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	private final ThreadLocal<PortletRequest> _portletRequestThreadLocal =
 		new CentralizedThreadLocal<>("_portletRequestThreadLocal");
 	private ResourcePermissionService _resourcePermissionService;
+
+	@Reference
+	private RoleTypeContributorProvider _roleTypeContributorProvider;
 
 	private class PortletConfigurationPortletPortletConfig
 		extends LiferayPortletConfigWrapper {

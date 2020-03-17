@@ -17,7 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletConfigurationPermissionsDisplayContext portletConfigurationPermissionsDisplayContext = new PortletConfigurationPermissionsDisplayContext(request, renderRequest);
+	RoleTypeContributorProvider roleTypeContributorProvider = (RoleTypeContributorProvider)request.getAttribute(RolesAdminWebKeys.ROLE_TYPE_CONTRIBUTOR_PROVIDER);
+
+PortletConfigurationPermissionsDisplayContext portletConfigurationPermissionsDisplayContext = new PortletConfigurationPermissionsDisplayContext(request, renderRequest, roleTypeContributorProvider);
 
 Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
 SearchContainer roleSearchContainer = portletConfigurationPermissionsDisplayContext.getRoleSearchContainer();
@@ -61,30 +63,14 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 					>
 
 						<%
-						String icon = "user";
-						String message = "regular-role";
-
-						int roleType = role.getType();
-
-						if (roleType == RoleConstants.TYPE_SITE) {
-							icon = "sites";
-							message = "site-role";
-						}
-						else if (roleType == RoleConstants.TYPE_ORGANIZATION) {
-							icon = "organizations";
-							message = "organization-role";
-						}
-						else if (roleType == RoleConstants.TYPE_DEPOT) {
-							icon = "books";
-							message = "asset-library-role";
-						}
+						RoleTypeContributor roleTypeContributor = roleTypeContributorProvider.getRoleTypeContributor(role.getType());
 						%>
 
 						<liferay-ui:icon
-							icon="<%= icon %>"
+							icon="<%= roleTypeContributor.getIcon() %>"
 							label="<%= false %>"
 							markupView="lexicon"
-							message="<%= LanguageUtil.get(request, message) %>"
+							message="<%= LanguageUtil.get(request, roleTypeContributor.getTitle(locale)) %>"
 						/>
 
 						<%= role.getTitle(locale) %>

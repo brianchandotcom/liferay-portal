@@ -76,7 +76,7 @@ public class BNDBundleCheck extends BaseFileCheck {
 		String liferayRelengRestartRequired = BNDSourceUtil.getDefinitionValue(
 			content, "Liferay-Releng-Restart-Required");
 
-		if (liferayRelengRestartRequired.equals("false")) {
+		if (StringUtil.equals(liferayRelengRestartRequired, "false")) {
 			if (!_isHotDeployOSGiAppIncludes(
 					BNDSourceUtil.getModuleName(absolutePath))) {
 

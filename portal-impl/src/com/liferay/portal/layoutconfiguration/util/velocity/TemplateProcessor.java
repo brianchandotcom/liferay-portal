@@ -90,10 +90,6 @@ public class TemplateProcessor implements ColumnProcessor {
 		return _portletRenderers;
 	}
 
-	public boolean isPortletAjaxRender() {
-		return _portletAjaxRender;
-	}
-
 	@Override
 	public String processColumn(String columnId) throws Exception {
 		return processColumn(columnId, StringPool.BLANK);

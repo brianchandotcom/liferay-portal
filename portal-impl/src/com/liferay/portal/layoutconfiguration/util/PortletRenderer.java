@@ -77,17 +77,6 @@ public class PortletRenderer {
 		return _render(httpServletRequest, httpServletResponse);
 	}
 
-	public StringBundler renderError(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws PortletContainerException {
-
-		httpServletRequest = PortletContainerUtil.setupOptionalRenderParameters(
-			httpServletRequest, null, _columnId, _columnPos, _columnCount);
-
-		return _render(httpServletRequest, httpServletResponse);
-	}
-
 	public Map<String, Object> renderHeaders(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,

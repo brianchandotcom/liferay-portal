@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.resource;
+package com.liferay.redirect.web.internal.security.permission.resource;
 
-import com.liferay.depot.constants.DepotConstants;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.redirect.constants.RedirectConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = {})
-public class DepotPermission {
+public class RedirectPermission {
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
@@ -35,7 +35,7 @@ public class DepotPermission {
 	}
 
 	@Reference(
-		target = "(resource.name=" + DepotConstants.RESOURCE_NAME + ")",
+		target = "(resource.name=" + RedirectConstants.RESOURCE_NAME + ")",
 		unbind = "-"
 	)
 	protected void setPortletResourcePermission(

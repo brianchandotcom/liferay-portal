@@ -15,7 +15,7 @@
 package com.liferay.depot.web.internal.servlet.taglib.util;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.web.internal.resource.DepotEntryPermission;
+import com.liferay.depot.web.internal.roles.admin.group.type.contributor.DepotEntryPermission;
 import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;

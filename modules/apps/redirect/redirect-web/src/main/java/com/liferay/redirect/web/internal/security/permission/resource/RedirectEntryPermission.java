@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.redirect.web.internal.resource;
+package com.liferay.redirect.web.internal.security.permission.resource;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;

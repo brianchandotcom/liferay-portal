@@ -16,8 +16,8 @@ package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.depot.constants.DepotActionKeys;
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.web.internal.resource.DepotEntryPermission;
-import com.liferay.depot.web.internal.resource.DepotPermission;
+import com.liferay.depot.web.internal.roles.admin.group.type.contributor.DepotEntryPermission;
+import com.liferay.depot.web.internal.security.permission.resource.DepotPermission;
 import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;

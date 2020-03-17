@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.model.RedirectEntry;
-import com.liferay.redirect.web.internal.resource.RedirectEntryPermission;
-import com.liferay.redirect.web.internal.resource.RedirectPermission;
+import com.liferay.redirect.web.internal.security.permission.resource.RedirectEntryPermission;
+import com.liferay.redirect.web.internal.security.permission.resource.RedirectPermission;
 
 import java.util.List;
 import java.util.Map;

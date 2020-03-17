@@ -132,6 +132,7 @@ public class PageDefinitionConverterUtil {
 	}
 
 	public static PageElement toPageElement(
+		long groupId,
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
@@ -312,6 +313,7 @@ public class PageDefinitionConverterUtil {
 	}
 
 	private static PageElement _toPageElement(
+		long groupId,
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,

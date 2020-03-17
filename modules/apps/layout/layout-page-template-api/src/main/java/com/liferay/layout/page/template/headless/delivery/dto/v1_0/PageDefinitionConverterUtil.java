@@ -115,6 +115,13 @@ public class PageDefinitionConverterUtil {
 		};
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #toPageElement(FragmentCollectionContributorTracker,
+	 FragmentEntryConfigurationParser, FragmentRendererTracker, long,
+	 LayoutStructure,  LayoutStructureItem, boolean, boolean, long)}
+	 */
+	@Deprecated
 	public static PageElement toPageElement(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
@@ -124,11 +131,26 @@ public class PageDefinitionConverterUtil {
 		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
 		boolean saveMappingConfiguration) {
 
-		return toPageElement(
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #toPageElement(FragmentCollectionContributorTracker,
+	 FragmentEntryConfigurationParser, FragmentRendererTracker, long,
+	 LayoutStructure,  LayoutStructureItem, boolean, boolean, long)}
+	 */
+	@Deprecated
+	public static PageElement toPageElement(
+		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
-			fragmentEntryConfigurationParser, fragmentRendererTracker,
-			layoutStructure, layoutStructureItem, saveInlineContent,
-			saveMappingConfiguration, 0);
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentRendererTracker fragmentRendererTracker,
+		LayoutStructure layoutStructure,
+		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
+		boolean saveMappingConfiguration, long segmentsExperienceId) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	public static PageElement toPageElement(

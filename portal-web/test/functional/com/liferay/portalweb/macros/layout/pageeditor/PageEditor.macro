@@ -492,7 +492,7 @@ definition {
 	}
 
 	macro editContentDisplay {
-		var key_fragmentName = "Content";
+		var key_fragmentName = "${fragmentName}";
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
 			Click(locator1 = "Fragment#FRAGMENT_BODY");

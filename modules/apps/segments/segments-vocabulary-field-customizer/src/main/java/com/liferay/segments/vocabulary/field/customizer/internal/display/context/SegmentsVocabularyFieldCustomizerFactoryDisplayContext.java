@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.vocabulary.field.customizer.internal.configuration.SegmentsVocabularyFieldCustomizerConfiguration;
 import com.liferay.segments.vocabulary.field.customizer.internal.constants.SegmentsVocabularyFieldCustomizerWebKeys;
 
 import java.util.List;
@@ -50,7 +51,17 @@ public class SegmentsVocabularyFieldCustomizerFactoryDisplayContext {
 	}
 
 	public PortletURL getAddConfigurationURL() {
-		return _renderResponse.createRenderURL();
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName",
+			"/edit_segments_vocabulary_field_customizer");
+		portletURL.setParameter(
+			"factoryPid",
+			SegmentsVocabularyFieldCustomizerConfiguration.class.
+				getCanonicalName());
+
+		return portletURL;
 	}
 
 	public PortletURL getEditConfigurationURL(Configuration configuration) {

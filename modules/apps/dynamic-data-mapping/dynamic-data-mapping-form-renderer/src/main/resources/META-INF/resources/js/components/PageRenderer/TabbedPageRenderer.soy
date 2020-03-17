@@ -43,7 +43,6 @@
 				{param _handleFieldEdited: $_handleFieldEdited /}
 				{param editable: $editable /}
 				{param page: $page /}
-				{param pageIndex: $activePage /}
 				{param spritemap: $spritemap /}
 			{/call}
 		</div>
@@ -57,7 +56,6 @@
 	{@param? _handleFieldEdited: any}
 	{@param? editable: bool}
 	{@param? page: ?}
-	{@param? pageIndex: number}
 
 	{foreach $row in $page.rows}
 		{call .row}
@@ -65,10 +63,8 @@
 			{param _handleFieldClicked: $_handleFieldClicked /}
 			{param _handleFieldEdited: $_handleFieldEdited /}
 			{param editable: $editable /}
-			{param pageIndex: $pageIndex /}
 			{param row: $row /}
 			{param key: 'row' + index($row) /}
-			{param rowIndex: index($row) /}
 			{param spritemap: $spritemap /}
 		{/call}
 	{/foreach}
@@ -80,9 +76,7 @@
 	{@param? _handleFieldClicked: any}
 	{@param? _handleFieldEdited: any}
 	{@param? editable: bool}
-	{@param? pageIndex: number}
 	{@param? row: ?}
-	{@param? rowIndex: number}
 
 	<div class="position-relative row">
 		{foreach $column in $row.columns}
@@ -94,8 +88,6 @@
 				{param columnIndex: index($column) /}
 				{param key: 'column' + index($column) /}
 				{param editable: $editable /}
-				{param pageIndex: $pageIndex /}
-				{param rowIndex: $rowIndex /}
 				{param spritemap: $spritemap /}
 			{/call}
 		{/foreach}
@@ -109,8 +101,6 @@
 	{@param? column: ?}
 	{@param? columnIndex: number}
 	{@param? editable: bool}
-	{@param? pageIndex: number}
-	{@param? rowIndex: number}
 
 	{if length($column.fields) != 0}
 		{let $attributes kind="attributes"}
@@ -128,8 +118,8 @@
 						'fieldBlurred': $_handleFieldBlurred,
 						'fieldEdited': $_handleFieldEdited
 					] /}
-					{param ref: $field.type + $field.fieldName + $field.name + $field.instanceId + $field.label + $rowIndex + $columnIndex + $pageIndex /}
-					{param key: $field.type + $field.fieldName + $field.name + $field.instanceId + $field.label + $rowIndex + $columnIndex + $pageIndex /}
+					{param ref: $field.instanceId /}
+					{param key: $field.instanceId /}
 					{param spritemap: $spritemap /}
 				{/delcall}
 			{/foreach}

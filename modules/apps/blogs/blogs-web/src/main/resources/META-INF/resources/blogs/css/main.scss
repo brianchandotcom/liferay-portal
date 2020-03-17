@@ -155,18 +155,6 @@
 			width: 100%;
 		}
 
-		.entry-title p {
-			line-height: 80px;
-		}
-
-		.entry-subtitle {
-			margin-bottom: 30px;
-
-			p {
-				line-height: 45px;
-			}
-		}
-
 		.cover-image-caption .alloy-editor {
 			padding-left: 0;
 			text-align: center;
@@ -177,6 +165,9 @@
 		}
 
 		.form-control.form-control-edit {
+			overflow: hidden;
+			resize: none;
+
 			&::placeholder {
 				border-color: #b0b4bb;
 				border-left: 2px solid;
@@ -191,23 +182,6 @@
 
 		.has-error .form-control.form-control-edit:not(:focus)::placeholder {
 			border-color: #c67;
-		}
-
-		.form-control.form-control-edit-title {
-			color: #272833;
-			font-size: 60px;
-			line-height: 80px;
-			overflow: hidden;
-			resize: none;
-		}
-
-		.form-control.form-control-edit-subtitle {
-			color: #272833;
-			font-size: 32px;
-			font-weight: 200;
-			line-height: 45px;
-			overflow: hidden;
-			resize: none;
 		}
 
 		.form-control.form-control-unstyled {
@@ -376,23 +350,21 @@
 			color: #a7a9bc;
 		}
 
-		.entry-title {
+		.entry-title textarea {
+			color: #272833;
 			font-size: 60px;
 			line-height: 80px;
-			margin-bottom: 25px;
 		}
 
-		.entry-title,
-		.entry-content {
-			.alloy-editor-placeholder {
-				color: #272833;
-			}
+		.entry-content .alloy-editor-placeholder {
+			color: #272833;
 		}
 
-		.entry-subtitle {
-			.alloy-editor-placeholder {
-				color: #a7a9bc;
-			}
+		.entry-subtitle textarea {
+			color: #a7a9bc;
+			font-size: 32px;
+			font-weight: 200;
+			line-height: 45px;
 		}
 	}
 

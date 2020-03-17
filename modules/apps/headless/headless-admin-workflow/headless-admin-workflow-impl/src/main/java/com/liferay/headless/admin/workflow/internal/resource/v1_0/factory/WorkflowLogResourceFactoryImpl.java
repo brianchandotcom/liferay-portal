@@ -37,8 +37,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Javier Gamarra
+ * @generated
  */
 @Component(immediate = true, service = WorkflowLogResource.Factory.class)
+@Generated("")
 public class WorkflowLogResourceFactoryImpl
 	implements WorkflowLogResource.Factory {
 

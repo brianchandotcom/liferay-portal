@@ -37,10 +37,12 @@ import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Javier Gamarra
+ * @generated
  */
 @Component(
 	immediate = true, service = MessageBoardMessageResource.Factory.class
 )
+@Generated("")
 public class MessageBoardMessageResourceFactoryImpl
 	implements MessageBoardMessageResource.Factory {
 

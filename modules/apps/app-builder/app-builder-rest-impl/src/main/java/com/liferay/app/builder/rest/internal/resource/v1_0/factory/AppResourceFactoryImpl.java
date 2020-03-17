@@ -37,8 +37,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Gabriel Albuquerque
+ * @generated
  */
 @Component(immediate = true, service = AppResource.Factory.class)
+@Generated("")
 public class AppResourceFactoryImpl implements AppResource.Factory {
 
 	@Override

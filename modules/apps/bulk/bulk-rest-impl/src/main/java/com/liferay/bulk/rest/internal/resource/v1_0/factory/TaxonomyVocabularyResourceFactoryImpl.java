@@ -37,8 +37,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Alejandro Tardín
+ * @generated
  */
 @Component(immediate = true, service = TaxonomyVocabularyResource.Factory.class)
+@Generated("")
 public class TaxonomyVocabularyResourceFactoryImpl
 	implements TaxonomyVocabularyResource.Factory {
 

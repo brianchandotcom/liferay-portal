@@ -37,8 +37,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Ivica Cardic
+ * @generated
  */
 @Component(immediate = true, service = ExportTaskResource.Factory.class)
+@Generated("")
 public class ExportTaskResourceFactoryImpl
 	implements ExportTaskResource.Factory {
 

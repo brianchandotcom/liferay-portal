@@ -37,8 +37,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Jeyvison Nascimento
+ * @generated
  */
 @Component(immediate = true, service = DataLayoutResource.Factory.class)
+@Generated("")
 public class DataLayoutResourceFactoryImpl
 	implements DataLayoutResource.Factory {
 

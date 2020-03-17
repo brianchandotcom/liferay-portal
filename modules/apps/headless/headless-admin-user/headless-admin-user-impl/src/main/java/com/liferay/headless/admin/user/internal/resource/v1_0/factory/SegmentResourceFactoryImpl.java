@@ -37,8 +37,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Javier Gamarra
+ * @generated
  */
 @Component(immediate = true, service = SegmentResource.Factory.class)
+@Generated("")
 public class SegmentResourceFactoryImpl implements SegmentResource.Factory {
 
 	@Override

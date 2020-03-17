@@ -37,10 +37,12 @@ import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Jeyvison Nascimento
+ * @generated
  */
 @Component(
 	immediate = true, service = DataRecordCollectionResource.Factory.class
 )
+@Generated("")
 public class DataRecordCollectionResourceFactoryImpl
 	implements DataRecordCollectionResource.Factory {
 

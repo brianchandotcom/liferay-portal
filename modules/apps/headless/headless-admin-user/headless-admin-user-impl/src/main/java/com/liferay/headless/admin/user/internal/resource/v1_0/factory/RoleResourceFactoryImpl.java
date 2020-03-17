@@ -37,8 +37,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Javier Gamarra
+ * @generated
  */
 @Component(immediate = true, service = RoleResource.Factory.class)
+@Generated("")
 public class RoleResourceFactoryImpl implements RoleResource.Factory {
 
 	@Override

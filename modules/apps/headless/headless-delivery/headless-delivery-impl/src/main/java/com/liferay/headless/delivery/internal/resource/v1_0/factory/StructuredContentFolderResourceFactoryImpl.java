@@ -37,10 +37,12 @@ import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Javier Gamarra
+ * @generated
  */
 @Component(
 	immediate = true, service = StructuredContentFolderResource.Factory.class
 )
+@Generated("")
 public class StructuredContentFolderResourceFactoryImpl
 	implements StructuredContentFolderResource.Factory {
 

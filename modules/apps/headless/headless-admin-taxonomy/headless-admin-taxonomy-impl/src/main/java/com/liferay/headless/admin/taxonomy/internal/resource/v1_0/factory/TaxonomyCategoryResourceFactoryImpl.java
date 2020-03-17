@@ -37,8 +37,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Javier Gamarra
+ * @generated
  */
 @Component(immediate = true, service = TaxonomyCategoryResource.Factory.class)
+@Generated("")
 public class TaxonomyCategoryResourceFactoryImpl
 	implements TaxonomyCategoryResource.Factory {
 

@@ -37,8 +37,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Drew Brokke
+ * @generated
  */
 @Component(immediate = true, service = AccountUserResource.Factory.class)
+@Generated("")
 public class AccountUserResourceFactoryImpl
 	implements AccountUserResource.Factory {
 

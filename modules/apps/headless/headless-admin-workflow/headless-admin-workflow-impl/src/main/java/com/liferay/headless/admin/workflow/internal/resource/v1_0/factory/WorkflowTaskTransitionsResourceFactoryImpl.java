@@ -37,10 +37,12 @@ import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Javier Gamarra
+ * @generated
  */
 @Component(
 	immediate = true, service = WorkflowTaskTransitionsResource.Factory.class
 )
+@Generated("")
 public class WorkflowTaskTransitionsResourceFactoryImpl
 	implements WorkflowTaskTransitionsResource.Factory {
 

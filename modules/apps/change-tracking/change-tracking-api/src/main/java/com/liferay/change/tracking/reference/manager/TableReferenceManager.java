@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.reference.helper;
+package com.liferay.change.tracking.reference.manager;
 
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
@@ -24,7 +24,7 @@ import java.util.function.Function;
 /**
  * @author Preston Crary
  */
-public interface TableReferenceDefinitionHelper<T extends Table<T>> {
+public interface TableReferenceManager<T extends Table<T>> {
 
 	public void defineNonreferenceColumn(Column<T, ?> column);
 

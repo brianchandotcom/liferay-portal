@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.helper;
+package com.liferay.change.tracking.internal.reference.manager;
 
 import com.liferay.change.tracking.internal.reference.TableReferenceInfo;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.helper.TableReferenceDefinitionHelper;
+import com.liferay.change.tracking.reference.manager.TableReferenceManager;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
@@ -46,7 +46,7 @@ import org.junit.Test;
 /**
  * @author Preston Crary
  */
-public class TableReferenceDefinitionHelperImplTest {
+public class TableReferenceManagerImplTest {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
@@ -63,28 +63,28 @@ public class TableReferenceDefinitionHelperImplTest {
 					ReferenceExampleTable.INSTANCE.mainExampleId)
 			);
 
-		Consumer<TableReferenceDefinitionHelper<MainExampleTable>> consumer =
-			tableReferenceDefinitionHelper -> {
-				tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		Consumer<TableReferenceManager<MainExampleTable>> consumer =
+			tableReferenceManager -> {
+				tableReferenceManager.defineNonreferenceColumn(
 					MainExampleTable.INSTANCE.mvccVersion);
-				tableReferenceDefinitionHelper.defineNonreferenceColumn(
+				tableReferenceManager.defineNonreferenceColumn(
 					MainExampleTable.INSTANCE.description);
-				tableReferenceDefinitionHelper.defineNonreferenceColumn(
+				tableReferenceManager.defineNonreferenceColumn(
 					MainExampleTable.INSTANCE.flag);
-				tableReferenceDefinitionHelper.defineNonreferenceColumn(
+				tableReferenceManager.defineNonreferenceColumn(
 					MainExampleTable.INSTANCE.name);
 
-				tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+				tableReferenceManager.defineReferenceInnerJoin(
 					childJoinFunction);
 			};
 
-		TableReferenceDefinitionHelperImpl<MainExampleTable>
-			tableReferenceDefinitionHelperImpl = _defineTableReferences(
+		TableReferenceManagerImpl<MainExampleTable> tableReferenceManagerImpl =
+			_defineTableReferences(
 				MainExampleTable.INSTANCE,
 				MainExampleTable.INSTANCE.mainExampleId, consumer);
 
 		TableReferenceInfo<MainExampleTable> tableReferenceInfo =
-			tableReferenceDefinitionHelperImpl.getTableReferenceInfo();
+			tableReferenceManagerImpl.getTableReferenceInfo();
 
 		Assert.assertNotNull(tableReferenceInfo);
 
@@ -120,22 +120,22 @@ public class TableReferenceDefinitionHelperImplTest {
 					ReferenceExampleTable.INSTANCE.mainExampleId)
 			);
 
-		Consumer<TableReferenceDefinitionHelper<ReferenceExampleTable>>
-			consumer = tableReferenceDefinitionHelper -> {
-				tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		Consumer<TableReferenceManager<ReferenceExampleTable>> consumer =
+			tableReferenceManager -> {
+				tableReferenceManager.defineNonreferenceColumn(
 					ReferenceExampleTable.INSTANCE.name);
 
-				tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+				tableReferenceManager.defineReferenceInnerJoin(
 					parentJoinFunction);
 			};
 
-		TableReferenceDefinitionHelperImpl<ReferenceExampleTable>
-			tableReferenceDefinitionHelperImpl = _defineTableReferences(
+		TableReferenceManagerImpl<ReferenceExampleTable>
+			tableReferenceManagerImpl = _defineTableReferences(
 				ReferenceExampleTable.INSTANCE,
 				ReferenceExampleTable.INSTANCE.referenceExampleId, consumer);
 
 		TableReferenceInfo<ReferenceExampleTable> tableReferenceInfo =
-			tableReferenceDefinitionHelperImpl.getTableReferenceInfo();
+			tableReferenceManagerImpl.getTableReferenceInfo();
 
 		Assert.assertNotNull(tableReferenceInfo);
 
@@ -163,19 +163,19 @@ public class TableReferenceDefinitionHelperImplTest {
 
 	@Test
 	public void testTableReferenceDefinitionInnerJoinValidation() {
-		Consumer<TableReferenceDefinitionHelper<MainExampleTable>> consumer =
-			tableReferenceDefinitionHelper -> {
-				tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		Consumer<TableReferenceManager<MainExampleTable>> consumer =
+			tableReferenceManager -> {
+				tableReferenceManager.defineNonreferenceColumn(
 					MainExampleTable.INSTANCE.flag);
 
-				tableReferenceDefinitionHelper.defineNonreferenceColumn(
+				tableReferenceManager.defineNonreferenceColumn(
 					MainExampleTable.INSTANCE.name);
 
-				tableReferenceDefinitionHelper.defineNonreferenceColumn(
+				tableReferenceManager.defineNonreferenceColumn(
 					MainExampleTable.INSTANCE.description);
 
 				try {
-					tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+					tableReferenceManager.defineReferenceInnerJoin(
 						fromStep -> DSLQueryFactoryUtil.select(
 						).from(
 							MainExampleTable.INSTANCE
@@ -190,7 +190,7 @@ public class TableReferenceDefinitionHelperImplTest {
 				}
 
 				try {
-					tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+					tableReferenceManager.defineReferenceInnerJoin(
 						fromStep -> DSLQueryFactoryUtil.select(
 						).from(
 							MainExampleTable.INSTANCE
@@ -213,7 +213,7 @@ public class TableReferenceDefinitionHelperImplTest {
 				}
 
 				try {
-					tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+					tableReferenceManager.defineReferenceInnerJoin(
 						fromStep -> fromStep.from(
 							ReferenceExampleTable.INSTANCE
 						).innerJoinON(
@@ -236,7 +236,7 @@ public class TableReferenceDefinitionHelperImplTest {
 				}
 
 				try {
-					tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+					tableReferenceManager.defineReferenceInnerJoin(
 						fromStep -> fromStep.from(
 							ReferenceExampleTable.INSTANCE
 						).leftJoinOn(
@@ -262,7 +262,7 @@ public class TableReferenceDefinitionHelperImplTest {
 				}
 
 				try {
-					tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+					tableReferenceManager.defineReferenceInnerJoin(
 						fromStep -> fromStep.from(
 							MainExampleTable.INSTANCE
 						).innerJoinON(
@@ -292,7 +292,7 @@ public class TableReferenceDefinitionHelperImplTest {
 				}
 
 				try {
-					tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+					tableReferenceManager.defineReferenceInnerJoin(
 						fromStep -> fromStep.from(
 							MainExampleTable.INSTANCE
 						).innerJoinON(
@@ -316,7 +316,7 @@ public class TableReferenceDefinitionHelperImplTest {
 				}
 
 				try {
-					tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+					tableReferenceManager.defineReferenceInnerJoin(
 						fromStep -> {
 							fromStep.as("test");
 
@@ -332,7 +332,7 @@ public class TableReferenceDefinitionHelperImplTest {
 				}
 
 				try {
-					tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+					tableReferenceManager.defineReferenceInnerJoin(
 						fromStep -> {
 							fromStep.union(null);
 
@@ -348,7 +348,7 @@ public class TableReferenceDefinitionHelperImplTest {
 				}
 
 				try {
-					tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+					tableReferenceManager.defineReferenceInnerJoin(
 						fromStep -> {
 							fromStep.unionAll(null);
 
@@ -364,13 +364,13 @@ public class TableReferenceDefinitionHelperImplTest {
 				}
 			};
 
-		TableReferenceDefinitionHelperImpl<MainExampleTable>
-			tableReferenceDefinitionHelperImpl = _defineTableReferences(
+		TableReferenceManagerImpl<MainExampleTable> tableReferenceManagerImpl =
+			_defineTableReferences(
 				MainExampleTable.INSTANCE,
 				MainExampleTable.INSTANCE.mainExampleId, consumer);
 
 		TableReferenceInfo<MainExampleTable> tableReferenceInfo =
-			tableReferenceDefinitionHelperImpl.getTableReferenceInfo();
+			tableReferenceManagerImpl.getTableReferenceInfo();
 
 		Assert.assertNotNull(tableReferenceInfo);
 
@@ -391,9 +391,9 @@ public class TableReferenceDefinitionHelperImplTest {
 
 	@Test
 	public void testTableReferenceDefinitionTableColumnValidation() {
-		Consumer<TableReferenceDefinitionHelper<MainExampleTable>> consumer =
-			tableReferenceDefinitionHelper -> {
-				tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+		Consumer<TableReferenceManager<MainExampleTable>> consumer =
+			tableReferenceManager -> {
+				tableReferenceManager.defineReferenceInnerJoin(
 					fromStep -> fromStep.from(
 						ReferenceExampleTable.INSTANCE
 					).innerJoinON(
@@ -402,22 +402,21 @@ public class TableReferenceDefinitionHelperImplTest {
 							MainExampleTable.INSTANCE.mainExampleId)
 					));
 
-				tableReferenceDefinitionHelper.defineNonreferenceColumn(
+				tableReferenceManager.defineNonreferenceColumn(
 					MainExampleTable.INSTANCE.name);
 			};
 
-		TableReferenceDefinitionHelperImpl<MainExampleTable>
-			tableReferenceDefinitionHelperImpl = _defineTableReferences(
+		TableReferenceManagerImpl<MainExampleTable> tableReferenceManagerImpl =
+			_defineTableReferences(
 				MainExampleTable.INSTANCE,
 				MainExampleTable.INSTANCE.mainExampleId, consumer);
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
-					TableReferenceDefinitionHelperImpl.class.getName(),
-					Level.WARNING)) {
+					TableReferenceManagerImpl.class.getName(), Level.WARNING)) {
 
 			TableReferenceInfo<MainExampleTable> tableReferenceInfo =
-				tableReferenceDefinitionHelperImpl.getTableReferenceInfo();
+				tableReferenceManagerImpl.getTableReferenceInfo();
 
 			Assert.assertNull(tableReferenceInfo);
 
@@ -436,23 +435,22 @@ public class TableReferenceDefinitionHelperImplTest {
 		}
 	}
 
-	private <T extends Table<T>> TableReferenceDefinitionHelperImpl<T>
+	private <T extends Table<T>> TableReferenceManagerImpl<T>
 		_defineTableReferences(
 			T table, Column<T, ?> primaryKeyColumn,
-			Consumer<TableReferenceDefinitionHelper<T>> consumer) {
+			Consumer<TableReferenceManager<T>> consumer) {
 
 		TestTableReferenceDefinition<T> testTableReferenceDefinition =
 			new TestTableReferenceDefinition<>(table, consumer);
 
-		TableReferenceDefinitionHelperImpl<T>
-			tableReferenceDefinitionHelperImpl =
-				new TableReferenceDefinitionHelperImpl<>(
-					testTableReferenceDefinition, primaryKeyColumn);
+		TableReferenceManagerImpl<T> tableReferenceManagerImpl =
+			new TableReferenceManagerImpl<>(
+				testTableReferenceDefinition, primaryKeyColumn);
 
 		testTableReferenceDefinition.defineTableReferences(
-			tableReferenceDefinitionHelperImpl);
+			tableReferenceManagerImpl);
 
-		return tableReferenceDefinitionHelperImpl;
+		return tableReferenceManagerImpl;
 	}
 
 	private static class MainExampleTable extends BaseTable<MainExampleTable> {
@@ -507,9 +505,9 @@ public class TableReferenceDefinitionHelperImplTest {
 
 		@Override
 		public void defineTableReferences(
-			TableReferenceDefinitionHelper<T> tableReferenceDefinitionHelper) {
+			TableReferenceManager<T> tableReferenceManager) {
 
-			_consumer.accept(tableReferenceDefinitionHelper);
+			_consumer.accept(tableReferenceManager);
 		}
 
 		@Override
@@ -528,13 +526,13 @@ public class TableReferenceDefinitionHelperImplTest {
 		}
 
 		private TestTableReferenceDefinition(
-			T table, Consumer<TableReferenceDefinitionHelper<T>> consumer) {
+			T table, Consumer<TableReferenceManager<T>> consumer) {
 
 			_table = table;
 			_consumer = consumer;
 		}
 
-		private final Consumer<TableReferenceDefinitionHelper<T>> _consumer;
+		private final Consumer<TableReferenceManager<T>> _consumer;
 		private final T _table;
 
 	}

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.PortletURL;
 
@@ -45,18 +44,24 @@ public class RoleItemSelectorViewDisplayContext
 		_type = type;
 	}
 
+	@Override
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", (String)null);
+
+		return clearResultsURL.toString();
+	}
+
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
 	}
 
-	public PortletURL getPortletURL() {
-		PortletURL portletURL = super.getPortletURL();
+	@Override
+	public String getSearchActionURL() {
+		PortletURL portletURL = getPortletURL();
 
-		portletURL.setParameter(
-			"keywords", ParamUtil.getString(request, "keywords"));
-		portletURL.setParameter("type", String.valueOf(getType()));
-
-		return portletURL;
+		return portletURL.toString();
 	}
 
 	public SearchContainer<Role> getSearchContainer() {

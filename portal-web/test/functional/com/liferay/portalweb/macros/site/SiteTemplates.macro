@@ -197,11 +197,11 @@ definition {
 	}
 
 	macro getSiteTemplateID {
-		SiteTemplatesNavigator.openSiteTemplatesAdmin();
-
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Manage",
 			rowEntry = "${siteTemplateName}");
+
+		Pause(locator1 = "1000");
 
 		var currentURL = Navigator.getCurrentURL();
 		var siteTemplateURL = StringUtil.extractFirst("${currentURL}", "/~/");

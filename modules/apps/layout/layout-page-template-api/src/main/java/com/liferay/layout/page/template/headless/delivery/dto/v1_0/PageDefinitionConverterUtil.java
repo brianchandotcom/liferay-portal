@@ -156,24 +156,24 @@ public class PageDefinitionConverterUtil {
 					_toPageElement(
 						fragmentCollectionContributorTracker,
 						fragmentEntryConfigurationParser,
-						fragmentRendererTracker, childLayoutStructureItem,
-						saveInlineContent, saveMappingConfiguration,
-						segmentsExperienceId));
+						fragmentRendererTracker, groupId,
+						childLayoutStructureItem, saveInlineContent,
+						saveMappingConfiguration, segmentsExperienceId));
 			}
 			else {
 				pageElements.add(
 					toPageElement(
 						fragmentCollectionContributorTracker,
 						fragmentEntryConfigurationParser,
-						fragmentRendererTracker, layoutStructure,
+						fragmentRendererTracker, groupId, layoutStructure,
 						childLayoutStructureItem, saveInlineContent,
-						saveMappingConfiguration));
+						saveMappingConfiguration, segmentsExperienceId));
 			}
 		}
 
 		PageElement pageElement = _toPageElement(
 			fragmentCollectionContributorTracker,
-			fragmentEntryConfigurationParser, fragmentRendererTracker,
+			fragmentEntryConfigurationParser, fragmentRendererTracker, groupId,
 			layoutStructureItem, saveInlineContent, saveMappingConfiguration,
 			segmentsExperienceId);
 
@@ -291,15 +291,15 @@ public class PageDefinitionConverterUtil {
 				toPageElement(
 					fragmentCollectionContributorTracker,
 					fragmentEntryConfigurationParser, fragmentRendererTracker,
-					layoutStructure,
+					layout.getGroupId(), layoutStructure,
 					layoutStructure.getLayoutStructureItem(childItemId),
-					saveInlineContent, saveMappingConfiguration));
+					saveInlineContent, saveMappingConfiguration, 0));
 		}
 
 		PageElement pageElement = _toPageElement(
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
-			mainLayoutStructureItem, saveInlineContent,
+			layout.getGroupId(), mainLayoutStructureItem, saveInlineContent,
 			saveMappingConfiguration, segmentsExperienceId);
 
 		if (!mainPageElements.isEmpty()) {

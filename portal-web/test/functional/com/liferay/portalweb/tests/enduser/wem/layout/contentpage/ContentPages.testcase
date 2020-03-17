@@ -224,6 +224,57 @@ definition {
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 	}
 
+	@description = "This is a test for LPS-107285. Can not duplicate Layout Elements with a widget that only allowed appear once in the page, there should be an error message shown."
+	@priority = "4"
+	test CannotDuplicateSectionWithOnlyAllowedAppearOnceWidget {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a Section to page") {
+			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+		}
+
+		task ("Add the Language Selector into Section") {
+			Click(
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			PageEditor.gotoTab(tabName = "Widgets");
+
+			Type.sendKeysApplicationSearch(
+				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+				value1 = "Language Selector");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_portletName = "Language Selector",
+				key_position = "1",
+				locator1 = "PageEditor#WIDGETS_ADD_PORTLET_DRAG_BUTTON",
+				locator2 = "PageEditor#SECTION_CONTAINER",
+				value1 = "Language Selector");
+
+			Pause(locator1 = "5000");
+
+			AssertElementPresent(
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Language Selector')]",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+		}
+
+		task ("Assert alert message when duplicate Section") {
+			PageEditor.gotoDuplicate(fragmentName = "Section");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "The layout could not be duplicated because it contains a widget (Language Selector) that can only appear once in the page.");
+
+			Pause(locator1 = "3000");
+		}
+	}
+
 	@description = "Users can only edit content pages in edit mode."
 	@priority = "5"
 	test CannotEditInViewMode {

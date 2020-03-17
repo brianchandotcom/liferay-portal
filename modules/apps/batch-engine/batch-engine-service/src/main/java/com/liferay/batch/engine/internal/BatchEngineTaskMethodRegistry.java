@@ -23,6 +23,7 @@ import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecuto
 public interface BatchEngineTaskMethodRegistry extends ItemClassRegistry {
 
 	public BatchEngineTaskItemDelegateExecutorCreator
-		getBatchEngineTaskItemDelegateExecutorCreator(String itemClassName);
+		getBatchEngineTaskItemDelegateExecutorCreator(
+			String itemClassName, String taskItemDelegateName);
 
 }

@@ -125,6 +125,7 @@ public class BatchEngineExportTaskExecutorImpl
 		try (BatchEngineTaskItemDelegateExecutor
 				batchEngineTaskItemDelegateExecutor =
 					_batchEngineTaskItemDelegateExecutorFactory.create(
+						batchEngineExportTask.getTaskItemDelegateName(),
 						batchEngineExportTask.getClassName(),
 						_companyLocalService.getCompany(
 							batchEngineExportTask.getCompanyId()),

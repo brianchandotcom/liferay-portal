@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_IMAGE</td>
-	<td>//div[contains(@class,'layout-content')]//section[${key_position}]//*[contains(@class,'fragment-${key_fragmentClass}')]//img[contains(@src,'${key_image}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRAGMENT_LAYOUT_BACKGROUND_IMAGE</td>
 	<td>//section[contains(@id,'content')]//div[contains(@style,'${key_imageName}')]</td>
 	<td></td>

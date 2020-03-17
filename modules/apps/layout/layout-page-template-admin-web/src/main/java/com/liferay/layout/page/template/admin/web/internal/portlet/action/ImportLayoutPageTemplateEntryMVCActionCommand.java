@@ -94,8 +94,6 @@ public class ImportLayoutPageTemplateEntryMVCActionCommand
 						layoutPageTemplateCollectionId, file, overwrite);
 
 			if (ListUtil.isEmpty(layoutPageTemplateImporterResultEntries)) {
-				SessionMessages.add(actionRequest, "success");
-
 				return;
 			}
 

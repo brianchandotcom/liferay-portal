@@ -460,6 +460,23 @@ paths:
                         ""
             tags: ["DataDefinition"]
     "/data-definitions/{dataDefinitionId}/data-layouts":
+        delete:
+            operationId: deleteDataLayoutsDataDefinition
+            parameters:
+                - in: path
+                  name: dataDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["DataLayout"]
         get:
             operationId: getDataDefinitionDataLayoutsPage
             parameters:

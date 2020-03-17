@@ -15,8 +15,8 @@
 package com.liferay.data.engine.taglib.servlet.taglib;
 
 import com.liferay.data.engine.renderer.DataLayoutRendererContext;
-import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
-import com.liferay.data.engine.rest.client.dto.v2_0.DataLayout;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.taglib.servlet.taglib.base.BaseDataLayoutRendererTag;
 import com.liferay.data.engine.taglib.servlet.taglib.util.DataLayoutTaglibUtil;
 import com.liferay.petra.string.StringPool;

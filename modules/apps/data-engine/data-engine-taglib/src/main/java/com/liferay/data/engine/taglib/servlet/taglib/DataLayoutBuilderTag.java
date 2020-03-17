@@ -17,6 +17,8 @@ package com.liferay.data.engine.taglib.servlet.taglib;
 import com.liferay.data.engine.taglib.servlet.taglib.base.BaseDataLayoutBuilderTag;
 import com.liferay.data.engine.taglib.servlet.taglib.util.DataLayoutTaglibUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -41,18 +43,27 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	public int doStartTag() throws JspException {
 		int result = super.doStartTag();
 
-		setNamespacedAttribute(
-			request, "dataLayoutBuilderModule",
-			DataLayoutTaglibUtil.resolveModule(
-				"data-engine-taglib/data_layout_builder/js" +
-					"/DataLayoutBuilder.es"));
-		setNamespacedAttribute(
-			request, "fieldTypes",
-			DataLayoutTaglibUtil.getFieldTypesJSONArray(request, getScopes()));
-		setNamespacedAttribute(
-			request, "fieldTypesModules",
-			DataLayoutTaglibUtil.resolveFieldTypesModules());
-		setNamespacedAttribute(request, "sidebarPanels", _getSidebarPanels());
+		try {
+			setNamespacedAttribute(
+				request, "dataLayoutBuilderModule",
+				DataLayoutTaglibUtil.resolveModule(
+					"data-engine-taglib/data_layout_builder/js" +
+						"/DataLayoutBuilder.es"));
+			setNamespacedAttribute(
+				request, "fieldTypes",
+				DataLayoutTaglibUtil.getFieldTypesJSONArray(
+					request, getScopes()));
+			setNamespacedAttribute(
+				request, "fieldTypesModules",
+				DataLayoutTaglibUtil.resolveFieldTypesModules());
+			setNamespacedAttribute(
+				request, "sidebarPanels", _getSidebarPanels());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
 
 		return result;
 	}
@@ -126,5 +137,8 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 		return sidebarPanels;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DataLayoutBuilderTag.class);
 
 }

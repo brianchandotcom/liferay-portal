@@ -74,6 +74,6 @@ SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementTo
 <aui:script>
 	Liferay.Util.selectEntityHandler(
 		'#<portlet:namespace />selectAccountEntry',
-		'<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "addAccountUser") %>'
+		'<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "selectAccountEntry") %>'
 	);
 </aui:script>

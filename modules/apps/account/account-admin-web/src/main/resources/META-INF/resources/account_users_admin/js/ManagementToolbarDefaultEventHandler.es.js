@@ -70,7 +70,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 					constrain: true,
 					modal: true,
 				},
-				eventName: this.ns('addAccountUser'),
+				eventName: this.ns('selectAccountEntry'),
 				id: this.ns('addAccountUser'),
 				title: Liferay.Language.get(itemData.dialogTitle),
 				uri: itemData.accountEntrySelectorURL,

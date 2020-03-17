@@ -674,14 +674,16 @@ as a timeout request processing. The time unit is millisecond.
 <!ELEMENT render-timeout (#PCDATA)>
 
 <!--
-The default value of render-weight is 1. If set to a value less than 1, the
-portlet is rendered in parallel. If set to a value of 1 or greater, the portlet
-is rendered serially. Portlets with a greater render weight have greater
-priority and will be rendered before portlets with a lower render weight.
+The default value of render-weight is 1.
 
-If the ajaxable value is set to false, the render-weight is always set to 1 if
-it is set to a value less than 1. This means ajaxable can override render-weight
-if ajaxable is set to false.
+If set to a value of 1 or greater, the portlet is rendered serially. Portlets
+with a greater render weight have greater priority and will be rendered before
+portlets with a lower render weight.
+
+If set to a value less than 1, when the ajaxable value is set to true the
+portlet is rendered in parallel, when the ajaxable value is set to false the
+render-weight is always set to 1 which means the portlet is rendered in serial.
+This means ajaxable can override render-weight if ajaxable is set to false.
 -->
 <!ELEMENT render-weight (#PCDATA)>
 

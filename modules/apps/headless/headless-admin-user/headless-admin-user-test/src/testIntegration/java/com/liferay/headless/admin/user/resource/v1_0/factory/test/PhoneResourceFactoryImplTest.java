@@ -175,7 +175,7 @@ public class PhoneResourceFactoryImplTest {
 
 				Collection<Phone> phones = page.getItems();
 
-				Assert.assertTrue(phones.isEmpty());
+				Assert.assertTrue(phones.toString(), phones.isEmpty());
 
 				return null;
 			});

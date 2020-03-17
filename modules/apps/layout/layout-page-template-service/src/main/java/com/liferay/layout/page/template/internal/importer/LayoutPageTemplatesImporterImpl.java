@@ -419,11 +419,13 @@ public class LayoutPageTemplatesImporterImpl
 
 		int pos = path.lastIndexOf(CharPool.SLASH);
 
-		if (pos == -1) {
-			return _DEFAULT_PAGE_TEMPLATE_COLLECTION_KEY;
+		String layoutPageTemplateCollectionKey = path.substring(pos + 1);
+
+		if (Validator.isNotNull(layoutPageTemplateCollectionKey)) {
+			return layoutPageTemplateCollectionKey;
 		}
 
-		return path.substring(pos + 1);
+		return _DEFAULT_PAGE_TEMPLATE_COLLECTION_KEY;
 	}
 
 	private String _getPageTemplateEntryKey(

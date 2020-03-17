@@ -81,7 +81,7 @@ public class BatchEngineExportTaskModelImpl
 		{"contentType", Types.VARCHAR}, {"endTime", Types.TIMESTAMP},
 		{"errorMessage", Types.VARCHAR}, {"fieldNames", Types.VARCHAR},
 		{"executeStatus", Types.VARCHAR}, {"parameters", Types.CLOB},
-		{"startTime", Types.TIMESTAMP}
+		{"startTime", Types.TIMESTAMP}, {"taskItemDelegateName", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -105,10 +105,11 @@ public class BatchEngineExportTaskModelImpl
 		TABLE_COLUMNS_MAP.put("executeStatus", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("parameters", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("startTime", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("taskItemDelegateName", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchEngineExportTask (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,batchEngineExportTaskId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,callbackURL VARCHAR(75) null,className VARCHAR(255) null,content BLOB,contentType VARCHAR(75) null,endTime DATE null,errorMessage VARCHAR(1000) null,fieldNames VARCHAR(75) null,executeStatus VARCHAR(75) null,parameters TEXT null,startTime DATE null)";
+		"create table BatchEngineExportTask (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,batchEngineExportTaskId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,callbackURL VARCHAR(75) null,className VARCHAR(255) null,content BLOB,contentType VARCHAR(75) null,endTime DATE null,errorMessage VARCHAR(1000) null,fieldNames VARCHAR(75) null,executeStatus VARCHAR(75) null,parameters TEXT null,startTime DATE null,taskItemDelegateName VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table BatchEngineExportTask";
@@ -375,6 +376,13 @@ public class BatchEngineExportTaskModelImpl
 			"startTime",
 			(BiConsumer<BatchEngineExportTask, Date>)
 				BatchEngineExportTask::setStartTime);
+		attributeGetterFunctions.put(
+			"taskItemDelegateName",
+			BatchEngineExportTask::getTaskItemDelegateName);
+		attributeSetterBiConsumers.put(
+			"taskItemDelegateName",
+			(BiConsumer<BatchEngineExportTask, String>)
+				BatchEngineExportTask::setTaskItemDelegateName);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -664,6 +672,21 @@ public class BatchEngineExportTaskModelImpl
 	}
 
 	@Override
+	public String getTaskItemDelegateName() {
+		if (_taskItemDelegateName == null) {
+			return "";
+		}
+		else {
+			return _taskItemDelegateName;
+		}
+	}
+
+	@Override
+	public void setTaskItemDelegateName(String taskItemDelegateName) {
+		_taskItemDelegateName = taskItemDelegateName;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(BatchEngineExportTask.class.getName()));
@@ -724,6 +747,8 @@ public class BatchEngineExportTaskModelImpl
 		batchEngineExportTaskImpl.setExecuteStatus(getExecuteStatus());
 		batchEngineExportTaskImpl.setParameters(getParameters());
 		batchEngineExportTaskImpl.setStartTime(getStartTime());
+		batchEngineExportTaskImpl.setTaskItemDelegateName(
+			getTaskItemDelegateName());
 
 		batchEngineExportTaskImpl.resetOriginalValues();
 
@@ -914,12 +939,24 @@ public class BatchEngineExportTaskModelImpl
 			batchEngineExportTaskCacheModel.startTime = Long.MIN_VALUE;
 		}
 
+		batchEngineExportTaskCacheModel.taskItemDelegateName =
+			getTaskItemDelegateName();
+
+		String taskItemDelegateName =
+			batchEngineExportTaskCacheModel.taskItemDelegateName;
+
+		if ((taskItemDelegateName != null) &&
+			(taskItemDelegateName.length() == 0)) {
+
+			batchEngineExportTaskCacheModel.taskItemDelegateName = null;
+		}
+
 		return batchEngineExportTaskCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -953,6 +990,8 @@ public class BatchEngineExportTaskModelImpl
 		sb.append(getParameters());
 		sb.append(", startTime=");
 		sb.append(getStartTime());
+		sb.append(", taskItemDelegateName=");
+		sb.append(getTaskItemDelegateName());
 		sb.append("}");
 
 		return sb.toString();
@@ -960,7 +999,7 @@ public class BatchEngineExportTaskModelImpl
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.batch.engine.model.BatchEngineExportTask");
@@ -1030,6 +1069,10 @@ public class BatchEngineExportTaskModelImpl
 			"<column><column-name>startTime</column-name><column-value><![CDATA[");
 		sb.append(getStartTime());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>taskItemDelegateName</column-name><column-value><![CDATA[");
+		sb.append(getTaskItemDelegateName());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1068,6 +1111,7 @@ public class BatchEngineExportTaskModelImpl
 	private String _originalExecuteStatus;
 	private Map<String, Serializable> _parameters;
 	private Date _startTime;
+	private String _taskItemDelegateName;
 	private long _columnBitmask;
 	private BatchEngineExportTask _escapedModel;
 

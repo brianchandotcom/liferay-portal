@@ -80,7 +80,7 @@ public class BatchEngineExportTaskCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -114,6 +114,8 @@ public class BatchEngineExportTaskCacheModel
 		sb.append(parameters);
 		sb.append(", startTime=");
 		sb.append(startTime);
+		sb.append(", taskItemDelegateName=");
+		sb.append(taskItemDelegateName);
 		sb.append("}");
 
 		return sb.toString();
@@ -210,6 +212,14 @@ public class BatchEngineExportTaskCacheModel
 			batchEngineExportTaskImpl.setStartTime(new Date(startTime));
 		}
 
+		if (taskItemDelegateName == null) {
+			batchEngineExportTaskImpl.setTaskItemDelegateName("");
+		}
+		else {
+			batchEngineExportTaskImpl.setTaskItemDelegateName(
+				taskItemDelegateName);
+		}
+
 		batchEngineExportTaskImpl.resetOriginalValues();
 
 		return batchEngineExportTaskImpl;
@@ -238,6 +248,7 @@ public class BatchEngineExportTaskCacheModel
 		executeStatus = objectInput.readUTF();
 		parameters = (Map<String, Serializable>)objectInput.readObject();
 		startTime = objectInput.readLong();
+		taskItemDelegateName = objectInput.readUTF();
 	}
 
 	@Override
@@ -305,6 +316,13 @@ public class BatchEngineExportTaskCacheModel
 
 		objectOutput.writeObject(parameters);
 		objectOutput.writeLong(startTime);
+
+		if (taskItemDelegateName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(taskItemDelegateName);
+		}
 	}
 
 	public long mvccVersion;
@@ -323,5 +341,6 @@ public class BatchEngineExportTaskCacheModel
 	public String executeStatus;
 	public Map<String, Serializable> parameters;
 	public long startTime;
+	public String taskItemDelegateName;
 
 }

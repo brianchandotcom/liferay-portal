@@ -362,4 +362,19 @@ public interface BatchEngineImportTaskModel
 	 */
 	public void setStartTime(Date startTime);
 
+	/**
+	 * Returns the task item delegate name of this batch engine import task.
+	 *
+	 * @return the task item delegate name of this batch engine import task
+	 */
+	@AutoEscape
+	public String getTaskItemDelegateName();
+
+	/**
+	 * Sets the task item delegate name of this batch engine import task.
+	 *
+	 * @param taskItemDelegateName the task item delegate name of this batch engine import task
+	 */
+	public void setTaskItemDelegateName(String taskItemDelegateName);
+
 }

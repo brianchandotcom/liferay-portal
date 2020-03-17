@@ -15,7 +15,8 @@ create table BatchEngineExportTask (
 	fieldNames VARCHAR(75) null,
 	executeStatus VARCHAR(75) null,
 	parameters TEXT null,
-	startTime DATE null
+	startTime DATE null,
+	taskItemDelegateName VARCHAR(75) null
 );
 
 create table BatchEngineImportTask (
@@ -37,5 +38,6 @@ create table BatchEngineImportTask (
 	fieldNameMapping TEXT null,
 	operation VARCHAR(75) null,
 	parameters TEXT null,
-	startTime DATE null
+	startTime DATE null,
+	taskItemDelegateName VARCHAR(75) null
 );

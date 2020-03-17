@@ -68,6 +68,7 @@ public class BatchEngineImportTaskWrapper
 		attributes.put("operation", getOperation());
 		attributes.put("parameters", getParameters());
 		attributes.put("startTime", getStartTime());
+		attributes.put("taskItemDelegateName", getTaskItemDelegateName());
 
 		return attributes;
 	}
@@ -189,6 +190,13 @@ public class BatchEngineImportTaskWrapper
 
 		if (startTime != null) {
 			setStartTime(startTime);
+		}
+
+		String taskItemDelegateName = (String)attributes.get(
+			"taskItemDelegateName");
+
+		if (taskItemDelegateName != null) {
+			setTaskItemDelegateName(taskItemDelegateName);
 		}
 	}
 
@@ -370,6 +378,16 @@ public class BatchEngineImportTaskWrapper
 	@Override
 	public Date getStartTime() {
 		return model.getStartTime();
+	}
+
+	/**
+	 * Returns the task item delegate name of this batch engine import task.
+	 *
+	 * @return the task item delegate name of this batch engine import task
+	 */
+	@Override
+	public String getTaskItemDelegateName() {
+		return model.getTaskItemDelegateName();
 	}
 
 	/**
@@ -587,6 +605,16 @@ public class BatchEngineImportTaskWrapper
 	@Override
 	public void setStartTime(Date startTime) {
 		model.setStartTime(startTime);
+	}
+
+	/**
+	 * Sets the task item delegate name of this batch engine import task.
+	 *
+	 * @param taskItemDelegateName the task item delegate name of this batch engine import task
+	 */
+	@Override
+	public void setTaskItemDelegateName(String taskItemDelegateName) {
+		model.setTaskItemDelegateName(taskItemDelegateName);
 	}
 
 	/**

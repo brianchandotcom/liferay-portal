@@ -194,7 +194,7 @@ class WikiPortlet extends PortletBase {
 			const titleEditor = window[this.ns('titleEditor')];
 
 			if (titleEditor) {
-				this.one('#title').value = titleEditor.getText();
+				this.one('#title').value = titleEditor.value;
 			}
 
 			const contentEditor = window[this.ns('contentEditor')];

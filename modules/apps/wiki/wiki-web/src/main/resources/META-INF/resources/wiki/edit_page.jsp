@@ -201,7 +201,7 @@ if (portletTitleBasedNavigation) {
 							<c:when test="<%= editTitle %>">
 								<aui:field-wrapper required="<%= true %>">
 									<div class="entry-title">
-										<h1><liferay-ui:input-editor contents="<%= HtmlUtil.escape(title) %>" editorName="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h1>
+										<aui:input label="" name="titleEditor" placeholder='<%= LanguageUtil.get(request, "title") %>' type="text" value="<%= HtmlUtil.escape(title) %>" />
 									</div>
 								</aui:field-wrapper>
 							</c:when>

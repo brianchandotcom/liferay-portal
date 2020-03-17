@@ -148,6 +148,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 				workflowMetricsSLADefinitionId);
 
 		workflowMetricsSLADefinition.setActive(false);
+		workflowMetricsSLADefinition.setVersion(
+			getNextVersion(workflowMetricsSLADefinition.getVersion()));
 
 		workflowMetricsSLADefinition =
 			workflowMetricsSLADefinitionPersistence.update(

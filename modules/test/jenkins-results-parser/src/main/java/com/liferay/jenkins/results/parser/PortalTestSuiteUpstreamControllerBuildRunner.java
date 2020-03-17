@@ -96,7 +96,10 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			return buildProfile;
 		}
 		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+			throw new RuntimeException(
+				"Unable to get portal build profile for test suite " +
+					testSuite,
+				ioException);
 		}
 	}
 

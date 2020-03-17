@@ -77,7 +77,9 @@ public class BNDBundleCheck extends BaseFileCheck {
 			content, "Liferay-Releng-Restart-Required");
 
 		if (liferayRelengRestartRequired.equals("false")) {
-			if (!_isHotDeployOSGiAppIncludes(absolutePath)) {
+			if (!_isHotDeployOSGiAppIncludes(
+					BNDSourceUtil.getModuleName(absolutePath))) {
+
 				String message =
 					"'Liferay-Releng-Restart-Required' can only be set to " +
 						"false if a POSHI tests exists. See LPS-110344.";
@@ -131,7 +133,7 @@ public class BNDBundleCheck extends BaseFileCheck {
 		return TextFormatter.format(shortDirName, TextFormatter.J);
 	}
 
-	private boolean _isHotDeployOSGiAppIncludes(String absolutePath)
+	private boolean _isHotDeployOSGiAppIncludes(String moduleName)
 		throws IOException {
 
 		String testcaseDirLocation =
@@ -155,8 +157,8 @@ public class BNDBundleCheck extends BaseFileCheck {
 			String fileContent = FileUtil.read(new File(testcaseFileName));
 
 			String s =
-				"property hot.deploy.osgi.app.includes = \"" +
-					BNDSourceUtil.getModuleName(absolutePath) + "\"";
+				"property hot.deploy.osgi.app.includes = \"" + moduleName +
+					"\"";
 
 			if (fileContent.indexOf(s) != -1) {
 				return true;

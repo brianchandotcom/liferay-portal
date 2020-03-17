@@ -49,6 +49,24 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	}
 
 	@Override
+	public void testDeleteDataLayoutsDataDefinition() throws Exception {
+		dataLayoutResource.postDataDefinitionDataLayout(
+			_dataDefinition.getId(), randomDataLayout());
+
+		dataLayoutResource.postDataDefinitionDataLayout(
+			_dataDefinition.getId(), randomDataLayout());
+
+		dataLayoutResource.deleteDataLayoutsDataDefinition(
+			_dataDefinition.getId());
+
+		Page<DataLayout> page =
+			dataLayoutResource.getDataDefinitionDataLayoutsPage(
+				_dataDefinition.getId(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
+	@Override
 	@Test
 	public void testGetDataDefinitionDataLayoutsPage() throws Exception {
 		super.testGetDataDefinitionDataLayoutsPage();

@@ -53,7 +53,7 @@ function reducer(state, action) {
 					state.pressed !== PRESSED_UP
 						? state.positiveVotes
 						: state.positiveVotes - 1,
-				pressed: state.pressed !== PRESSED_UP ? PRESSED_UP : null,
+				pressed: state.pressed !== PRESSED_DOWN ? PRESSED_DOWN : null,
 			};
 		case UPDATE_VOTES:
 			return {

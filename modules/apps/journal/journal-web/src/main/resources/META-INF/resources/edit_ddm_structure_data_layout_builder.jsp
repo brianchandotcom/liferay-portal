@@ -229,26 +229,26 @@ if (ddmStructure != null) {
 	}
 
 	function <portlet:namespace />saveDDMStructure() {
-		Liferay.componentReady(
-			'<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
-		).then(function(dataLayoutBuilder) {
-			var name = <portlet:namespace />getInputLocalizedValues('name');
-			var formData = dataLayoutBuilder.getFormData();
+		Liferay.componentReady('<portlet:namespace />dataLayoutBuilder').then(
+			function(dataLayoutBuilder) {
+				var name = <portlet:namespace />getInputLocalizedValues('name');
+				var formData = dataLayoutBuilder.getFormData();
 
-			var dataDefinition = formData.definition;
+				var dataDefinition = formData.definition;
 
-			dataDefinition.name = name;
+				dataDefinition.name = name;
 
-			var dataLayout = formData.layout;
+				var dataLayout = formData.layout;
 
-			dataLayout.name = name;
+				dataLayout.name = name;
 
-			Liferay.Util.postForm(document.<portlet:namespace />fm, {
-				data: {
-					dataDefinition: JSON.stringify(dataDefinition),
-					dataLayout: JSON.stringify(dataLayout),
-				},
-			});
-		});
+				Liferay.Util.postForm(document.<portlet:namespace />fm, {
+					data: {
+						dataDefinition: JSON.stringify(dataDefinition),
+						dataLayout: JSON.stringify(dataLayout),
+					},
+				});
+			}
+		);
 	}
 </aui:script>

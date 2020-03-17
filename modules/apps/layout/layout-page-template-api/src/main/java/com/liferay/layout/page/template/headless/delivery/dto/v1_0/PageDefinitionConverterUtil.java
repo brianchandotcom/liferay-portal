@@ -15,7 +15,10 @@
 package com.liferay.layout.page.template.headless.delivery.dto.v1_0;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.ColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.DropZoneDefinition;
@@ -180,6 +183,39 @@ public class PageDefinitionConverterUtil {
 		}
 
 		return pageElement;
+	}
+
+	private static boolean _isFragmentEntryKey(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		String fragmentEntryKey,
+		FragmentRendererTracker fragmentRendererTracker, long groupId) {
+
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+				groupId, fragmentEntryKey);
+
+		if (fragmentEntry != null) {
+			return true;
+		}
+
+		Map<String, FragmentEntry> fragmentEntries =
+			fragmentCollectionContributorTracker.getFragmentEntries();
+
+		fragmentEntry = fragmentEntries.get(fragmentEntryKey);
+
+		if (fragmentEntry != null) {
+			return true;
+		}
+
+		FragmentRenderer fragmentRenderer =
+			fragmentRendererTracker.getFragmentRenderer(fragmentEntryKey);
+
+		if (fragmentRenderer != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static Fragment[] _toFragments(List<String> fragmentEntryKeys) {

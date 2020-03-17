@@ -26,11 +26,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.roles.item.selector.web.internal.constants.RoleItemSelectorViewConstants" %><%@
 page import="com.liferay.roles.item.selector.web.internal.display.context.RoleItemSelectorViewDisplayContext" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.Map" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

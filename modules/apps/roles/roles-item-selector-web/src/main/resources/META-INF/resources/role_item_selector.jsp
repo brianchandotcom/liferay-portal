@@ -18,35 +18,22 @@
 
 <%
 RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext = (RoleItemSelectorViewDisplayContext)request.getAttribute(RoleItemSelectorViewConstants.ROLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
-
-String itemSelectedEventName = roleItemSelectorViewDisplayContext.getItemSelectedEventName();
 %>
 
 <clay:management-toolbar
 	displayContext="<%= roleItemSelectorViewDisplayContext %>"
 />
 
-<div class="container-fluid-1280" id="<portlet:namespace />roleSelectorWrapper">
+<div class="container-fluid container-fluid-max-xl container-form-lg container-view" id="<portlet:namespace />roleSelectorWrapper">
 	<liferay-ui:search-container
-		id="roles"
 		searchContainer="<%= roleItemSelectorViewDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Role"
-			cssClass="role-row"
+			cssClass="entry"
 			keyProperty="roleId"
 			modelVar="role"
 		>
-
-			<%
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("id", role.getRoleId());
-			data.put("name", role.getName());
-
-			row.setData(data);
-			%>
-
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				property="name"
@@ -61,31 +48,37 @@ String itemSelectedEventName = roleItemSelectorViewDisplayContext.getItemSelecte
 		<liferay-ui:search-iterator
 			displayStyle="list"
 			markupView="lexicon"
-			searchContainer="<%= roleItemSelectorViewDisplayContext.getSearchContainer() %>"
 		/>
 	</liferay-ui:search-container>
 </div>
 
-<aui:script use="aui-parse-content,liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />roles');
+<aui:script require="metal-dom/src/all/dom as dom">
+	var selectItemHandler = dom.delegate(
+		document.getElementById('<portlet:namespace />roleSelectorWrapper'),
+		'change',
+		'.entry input',
+		function(event) {
+			var checked = Liferay.Util.listCheckedExcept(
+				document.getElementById(
+					'<portlet:namespace /><%= roleItemSelectorViewDisplayContext.getSearchContainerId() %>'
+				),
+				'<portlet:namespace />allRowIds'
+			);
 
-	searchContainer.on('rowToggled', function(event) {
-		var allSelectedElements = event.elements.allSelectedElements;
-		var arr = [];
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= HtmlUtil.escapeJS(roleItemSelectorViewDisplayContext.getItemSelectedEventName()) %>',
+				{
+					data: {
+						value: checked,
+					},
+				}
+			);
+		}
+	);
 
-		allSelectedElements.each(function() {
-			var row = this.ancestor('tr');
+	Liferay.on('destroyPortlet', function removeListener() {
+		selectItemHandler.removeListener();
 
-			var data = row.getDOM().dataset;
-
-			arr.push({id: data.id, name: data.name});
-		});
-
-		Liferay.Util.getOpener().Liferay.fire(
-			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
-			{
-				data: arr,
-			}
-		);
+		Liferay.detach('destroyPortlet', removeListener);
 	});
 </aui:script>

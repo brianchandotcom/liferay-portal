@@ -38,8 +38,7 @@ public class NavigationItemListBuilder {
 		NavigationItemListWrapper navigationItemListWrapper =
 			new NavigationItemListWrapper();
 
-		return navigationItemListWrapper.add(
-			unsafeSupplier, unsafeConsumer);
+		return navigationItemListWrapper.add(unsafeSupplier, unsafeConsumer);
 	}
 
 	public static final class NavigationItemListWrapper {
@@ -50,10 +49,6 @@ public class NavigationItemListBuilder {
 			_navigationItemList.add(unsafeConsumer);
 
 			return this;
-		}
-
-		public NavigationItemList build() {
-			return _navigationItemList;
 		}
 
 		public NavigationItemListWrapper add(
@@ -70,6 +65,10 @@ public class NavigationItemListBuilder {
 			}
 
 			return this;
+		}
+
+		public NavigationItemList build() {
+			return _navigationItemList;
 		}
 
 		private final NavigationItemList _navigationItemList =

@@ -36,8 +36,7 @@ public class LabelItemListBuilder {
 
 		LabelItemListWrapper labelItemListWrapper = new LabelItemListWrapper();
 
-		return labelItemListWrapper.add(
-			unsafeSupplier, unsafeConsumer);
+		return labelItemListWrapper.add(unsafeSupplier, unsafeConsumer);
 	}
 
 	public static final class LabelItemListWrapper {
@@ -48,10 +47,6 @@ public class LabelItemListBuilder {
 			_labelItemList.add(unsafeConsumer);
 
 			return this;
-		}
-
-		public LabelItemList build() {
-			return _labelItemList;
 		}
 
 		public LabelItemListWrapper add(
@@ -68,6 +63,10 @@ public class LabelItemListBuilder {
 			}
 
 			return this;
+		}
+
+		public LabelItemList build() {
+			return _labelItemList;
 		}
 
 		private final LabelItemList _labelItemList = new LabelItemList();

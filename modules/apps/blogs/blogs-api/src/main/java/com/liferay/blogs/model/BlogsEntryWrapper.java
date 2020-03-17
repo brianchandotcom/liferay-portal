@@ -302,6 +302,13 @@ public class BlogsEntryWrapper
 		return model.getContent();
 	}
 
+	@Override
+	public String getCoverImageAlt()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getCoverImageAlt();
+	}
+
 	/**
 	 * Returns the cover image caption of this blogs entry.
 	 *
@@ -438,6 +445,13 @@ public class BlogsEntryWrapper
 	@Override
 	public boolean getSmallImage() {
 		return model.getSmallImage();
+	}
+
+	@Override
+	public String getSmallImageAlt()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getSmallImageAlt();
 	}
 
 	/**

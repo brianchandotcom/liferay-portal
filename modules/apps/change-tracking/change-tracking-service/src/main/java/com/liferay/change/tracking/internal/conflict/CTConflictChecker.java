@@ -394,11 +394,11 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		sb.append("update ");
 		sb.append(ctPersistence.getTableName());
-		sb.append(" t1 set t1.ctCollectionId = ");
+		sb.append(" set ctCollectionId = ");
 		sb.append(tempCTCollectionId);
-		sb.append(" where t1.ctCollectionId = ");
+		sb.append(" where ctCollectionId = ");
 		sb.append(_sourceCTCollectionId);
-		sb.append(" and t1.");
+		sb.append(" and ");
 		sb.append(primaryKeyName);
 		sb.append(" in (");
 

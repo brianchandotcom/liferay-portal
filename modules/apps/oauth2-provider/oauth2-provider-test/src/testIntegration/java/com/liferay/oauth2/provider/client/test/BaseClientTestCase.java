@@ -331,16 +331,14 @@ public abstract class BaseClientTestCase {
 		};
 	}
 
-	protected <T> T getCodeResponse(
+	protected Response getCodeResponse(
 		String login, String password, String hostname,
 		Function<Function<WebTarget, Invocation.Builder>, Response>
-			authorizationResponseFunction,
-		Function<Response, T> codeParser) {
+			authorizationResponseFunction) {
 
-		return codeParser.apply(
-			authorizationResponseFunction.apply(
-				getAuthenticatedInvocationBuilderFunction(
-					login, password, hostname)));
+		return authorizationResponseFunction.apply(
+			getAuthenticatedInvocationBuilderFunction(
+				login, password, hostname));
 	}
 
 	protected BiFunction<String, Invocation.Builder, Response>

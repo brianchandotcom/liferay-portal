@@ -117,7 +117,7 @@ public class ImportLayoutPageTemplateEntryMVCActionCommand
 
 				SessionMessages.add(
 					actionRequest,
-					"invalidLayoutPageTemplateImportResultEntries",
+					"invalidLayoutPageTemplateImporterResultEntries",
 					invalidLayoutPageTemplateImporterResultEntries);
 			}
 			else {

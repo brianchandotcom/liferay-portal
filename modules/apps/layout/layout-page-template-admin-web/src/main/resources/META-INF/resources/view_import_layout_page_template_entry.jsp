@@ -42,13 +42,13 @@
 		</liferay-frontend:fieldset-group>
 
 		<%
-		List<LayoutPageTemplatesImporterResultEntry> invalidLayoutPageTemplateImportResultEntries = (List<LayoutPageTemplatesImporterResultEntry>)SessionMessages.get(renderRequest, "invalidLayoutPageTemplateImportResultEntries");
+		List<LayoutPageTemplatesImporterResultEntry> invalidLayoutPageTemplateImporterResultEntries = (List<LayoutPageTemplatesImporterResultEntry>)SessionMessages.get(renderRequest, "invalidLayoutPageTemplateImporterResultEntries");
 		%>
 
-		<c:if test="<%= ListUtil.isNotEmpty(invalidLayoutPageTemplateImportResultEntries) %>">
+		<c:if test="<%= ListUtil.isNotEmpty(invalidLayoutPageTemplateImporterResultEntries) %>">
 
 			<%
-			int total = invalidLayoutPageTemplateImportResultEntries.size();
+			int total = invalidLayoutPageTemplateImporterResultEntries.size();
 			int viewTotal = (total > 10) ? 10 : total;
 			%>
 
@@ -59,7 +59,7 @@
 
 					<%
 					for (int i = 0; i < viewTotal; i++) {
-						LayoutPageTemplatesImporterResultEntry layoutPageTemplatesImporterResultEntry = invalidLayoutPageTemplateImportResultEntries.get(i);
+						LayoutPageTemplatesImporterResultEntry layoutPageTemplatesImporterResultEntry = invalidLayoutPageTemplateImporterResultEntries.get(i);
 					%>
 
 						<li>

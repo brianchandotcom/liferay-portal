@@ -164,6 +164,10 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 				}
 			}
 
+			if (distinctSpiraArtifact == null) {
+				return new ArrayList<>();
+			}
+
 			cachedSpiraArtifacts.add(distinctSpiraArtifact);
 
 			searchQuery.addSpiraArtifact(distinctSpiraArtifact);
@@ -188,9 +192,13 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 			}
 		}
 
-		SearchQuery.cacheSearchQuery(searchQuery);
+		List<S> searchQuerySpiraArtifacts = searchQuery.getSpiraArtifacts();
 
-		return searchQuery.getSpiraArtifacts();
+		if (!searchQuerySpiraArtifacts.isEmpty()) {
+			SearchQuery.cacheSearchQuery(searchQuery);
+		}
+
+		return searchQuerySpiraArtifacts;
 	}
 
 	protected static void removeCachedSpiraArtifacts(

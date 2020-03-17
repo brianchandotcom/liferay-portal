@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
-import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -156,7 +156,8 @@ public class CTPublishBackgroundTaskExecutor
 		for (CTTableMapperHelper ctTableMapperHelper :
 				_ctServiceRegistry.getCTTableMapperHelpers()) {
 
-			ctTableMapperHelper.publish(ctCollectionId, _portalCacheManager);
+			ctTableMapperHelper.publish(
+				ctCollectionId, _multiVMPool.getPortalCacheManager());
 		}
 
 		_ctServiceRegistry.onAfterPublish(ctCollectionId);
@@ -212,6 +213,6 @@ public class CTPublishBackgroundTaskExecutor
 	private CTServiceRegistry _ctServiceRegistry;
 
 	@Reference
-	private PortalCacheManager<?, ?> _portalCacheManager;
+	private MultiVMPool _multiVMPool;
 
 }

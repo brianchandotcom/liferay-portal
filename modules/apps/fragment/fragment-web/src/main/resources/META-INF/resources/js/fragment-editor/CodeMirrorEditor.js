@@ -57,7 +57,24 @@ import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/xml/xml';
 import ClayIcon from '@clayui/icon';
 import CodeMirror from 'codemirror';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
+
+const AUTOCOMPLETE_EXCLUDED_KEY_CODES = new Set(
+	Object.values({
+		ALT: 18,
+		ARROW_DOWN: 40,
+		ARROW_LEFT: 37,
+		ARROW_RIGHT: 39,
+		ARROW_UP: 38,
+		BACKSPACE: 8,
+		CONTROL: 17,
+		ESCAPE: 27,
+		META: 91,
+		RETURN: 13,
+		SHIFT: 16,
+		SPACE: 32,
+	})
+);
 
 const MODES = {
 	css: {
@@ -65,6 +82,75 @@ const MODES = {
 		type: 'text/css',
 	},
 	html: {
+		hint: (cm, options) => {
+			const {
+				customEntities,
+				customEntitiesSymbolsRegex,
+				customTags,
+			} = options;
+
+			const cursor = cm.getCursor();
+			const token = cm.getTokenAt(cursor);
+
+			if (token.type) {
+				const content = token.string;
+
+				const htmlCompletion = CodeMirror.hint.html(cm, options);
+
+				if (!htmlCompletion) {
+					return;
+				}
+
+				const resultSet = new Set(htmlCompletion.list);
+
+				customTags.forEach(item => {
+					if (
+						item.name.startsWith(content) &&
+						!resultSet.has(item.content)
+					) {
+						resultSet.add({
+							displayText: item.name,
+							text: item.content,
+						});
+					}
+				});
+
+				return {
+					...htmlCompletion,
+					list: Array.from(resultSet),
+				};
+			}
+			else if (customEntities && customEntitiesSymbolsRegex) {
+				const line = cm.getLine(cursor.line).slice(0, cursor.ch);
+
+				const match = (
+					line.match(new RegExp(customEntitiesSymbolsRegex, 'g')) ||
+					[]
+				).pop();
+
+				if (!match) {
+					return;
+				}
+
+				const customEntity = customEntities.find(entity =>
+					match.startsWith(entity.start)
+				);
+
+				const content = match.slice(customEntity.start.length);
+
+				const results = customEntity.content
+					.filter(entityContent => entityContent.startsWith(content))
+					.map(
+						entityContent => `${customEntity.start}${entityContent}`
+					);
+
+				return {
+					from: CodeMirror.Pos(cursor.line, cursor.ch - match.length),
+					list: results,
+					to: CodeMirror.Pos(cursor.line, cursor.ch),
+				};
+			}
+		},
 		name: 'HTML',
 		type: 'text/html',
 	},
@@ -77,6 +163,8 @@ const MODES = {
 		type: 'application/json',
 	},
 };
+
+const escapeChars = string => string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
 
 const noop = () => {};
 
@@ -101,6 +189,8 @@ const FixedText = ({helpText, text = ''}) => {
 };
 
 const CodeMirrorEditor = ({
+	customEntities,
+	customTags,
 	onChange = noop,
 	mode = 'html',
 	codeFooterText,
@@ -112,6 +202,21 @@ const CodeMirrorEditor = ({
 	const editor = useRef();
 	const ref = useRef();
 
+	const customEntitiesSymbolsRegex = useMemo(() => {
+		if (!customEntities) {
+			return;
+		}
+
+		return `${customEntities
+			.map(entity => {
+				const start = escapeChars(entity.start);
+				const end = escapeChars(entity.end);
+
+				return `${start}((?!\\s|${end}).)*(?:${end})?`;
+			})
+			.join('|')}$`;
+	}, [customEntities]);
+
 	useEffect(() => {
 		if (ref.current) {
 			const codeMirror = CodeMirror(ref.current, {
@@ -122,6 +227,13 @@ const CodeMirrorEditor = ({
 				},
 				foldGutter: true,
 				gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+				hintOptions: {
+					completeSingle: false,
+					customEntities,
+					customEntitiesSymbolsRegex,
+					customTags,
+					hint: MODES[mode].hint,
+				},
 				indentWithTabs: true,
 				inputStyle: 'contenteditable',
 				lineNumbers: true,
@@ -138,6 +250,15 @@ const CodeMirrorEditor = ({
 				onChange(cm.getValue());
 			});
 
+			codeMirror.on('keyup', (cm, event) => {
+				if (
+					!cm.state.completionActive &&
+					!AUTOCOMPLETE_EXCLUDED_KEY_CODES.has(event.keyCode)
+				) {
+					codeMirror.showHint();
+				}
+			});
+
 			editor.current = codeMirror;
 		}
 	}, [ref]); // eslint-disable-line
@@ -148,9 +269,23 @@ const CodeMirrorEditor = ({
 				globalVars: true,
 				name: MODES[mode].type,
 			});
+
 			editor.current.setOption('readOnly', readOnly);
+
+			editor.current.setOption('hintOptions', {
+				...editor.current.getOption('hintOptions'),
+				customEntities,
+				customEntitiesSymbolsRegex,
+				customTags,
+			});
 		}
-	}, [mode, readOnly]);
+	}, [
+		customEntities,
+		customEntitiesSymbolsRegex,
+		customTags,
+		mode,
+		readOnly,
+	]);
 
 	useEffect(() => {
 		if (editor.current) {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.roles.admin.web.internal.role.type.contributor.provider;
+package com.liferay.roles.admin.role.type.contributor.provider;
 
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 

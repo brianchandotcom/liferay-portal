@@ -314,7 +314,7 @@ definition {
 		var key_fragmentName = "${fragmentName}";
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click(locator1 = "Fragment#FRAGMENT_BODY");
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
 		Click(locator1 = "Fragment#EDITABLE_FIELD");

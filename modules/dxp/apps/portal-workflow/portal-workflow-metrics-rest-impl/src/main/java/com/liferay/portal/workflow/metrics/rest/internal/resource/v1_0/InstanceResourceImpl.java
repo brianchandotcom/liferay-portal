@@ -275,7 +275,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		tokensBooleanQuery.addFilterQueryClauses(
 			_queries.term("_index", "workflow-metrics-tokens"));
 		tokensBooleanQuery.addMustQueryClauses(
-			_createTokenBooleanQuery(processId, instanceId));
+			_createTokensBooleanQuery(processId, instanceId));
 
 		BooleanQuery transitionsBooleanQuery = _queries.booleanQuery();
 
@@ -463,7 +463,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		};
 	}
 
-	private BooleanQuery _createTokenBooleanQuery(
+	private BooleanQuery _createTokensBooleanQuery(
 		long processId, long instanceId) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();

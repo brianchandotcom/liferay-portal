@@ -224,7 +224,7 @@ public class ResourceHelper {
 
 	public ScriptedMetricAggregation
 		creatInstanceCountScriptedMetricAggregation(
-			List<Long> assigneeUserIds, Date dateEnd, Date dateStart,
+			List<Long> assigneeIds, Date dateEnd, Date dateStart,
 			List<String> slaStatuses, List<String> statuses,
 			List<String> taskNames) {
 
@@ -239,9 +239,9 @@ public class ResourceHelper {
 			_workflowMetricsInstanceCountMapScript);
 		scriptedMetricAggregation.setParameters(
 			HashMapBuilder.<String, Object>put(
-				"assigneeUserIds",
+				"assigneeIds",
 				() -> Optional.ofNullable(
-					assigneeUserIds
+					assigneeIds
 				).filter(
 					ListUtil::isNotEmpty
 				).map(

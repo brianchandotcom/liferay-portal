@@ -57,8 +57,8 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.CreatorUser;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Creator;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Transition;
@@ -200,7 +200,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				).findFirst(
 				).ifPresent(
 					bucket -> {
-						_setAssigneeUsers(bucket, instance);
+						_setAssignees(bucket, instance);
 						_setSLAResults(bucket, instance);
 						_setSLAStatus(bucket, instance);
 						_setTaskNames(bucket, instance);
@@ -217,21 +217,21 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	@Override
 	public Page<Instance> getProcessInstancesPage(
-			Long processId, Long[] assigneeUserIds, Date dateEnd,
-			Date dateStart, String[] slaStatuses, String[] statuses,
-			String[] taskKeys, Pagination pagination)
+			Long processId, Long[] assigneeIds, Date dateEnd, Date dateStart,
+			String[] slaStatuses, String[] statuses, String[] taskKeys,
+			Pagination pagination)
 		throws Exception {
 
 		SearchSearchResponse searchSearchResponse = _getSearchSearchResponse(
-			assigneeUserIds, dateEnd, dateStart, processId, slaStatuses,
-			statuses, taskKeys);
+			assigneeIds, dateEnd, dateStart, processId, slaStatuses, statuses,
+			taskKeys);
 
 		int instanceCount = _getInstanceCount(searchSearchResponse);
 
 		if (instanceCount > 0) {
 			return Page.of(
 				_getInstances(
-					assigneeUserIds, dateEnd, dateStart,
+					assigneeIds, dateEnd, dateStart,
 					searchSearchResponse.getCount(), pagination, processId,
 					slaStatuses, statuses, taskKeys),
 				pagination, instanceCount);
@@ -240,20 +240,20 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		return Page.of(Collections.emptyList());
 	}
 
-	private BooleanQuery _createAssigneeUserIdsExistsBooleanQuery(
-		Long[] assigneeUserIds) {
+	private BooleanQuery _createAssigneeIdsExistsBooleanQuery(
+		Long[] assigneeIds) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		if (ArrayUtil.contains(assigneeUserIds, -1L)) {
+		if (ArrayUtil.contains(assigneeIds, -1L)) {
 			booleanQuery.addMustNotQueryClauses(_queries.exists("assigneeId"));
 		}
 
 		return booleanQuery;
 	}
 
-	private BooleanQuery _createAssigneeUserIdsTermsBooleanQuery(
-		Long[] assigneeUserIds) {
+	private BooleanQuery _createAssigneeIdsTermsBooleanQuery(
+		Long[] assigneeIds) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -261,9 +261,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		termsQuery.addValues(
 			Stream.of(
-				assigneeUserIds
+				assigneeIds
 			).filter(
-				assigneeUserId -> assigneeUserId > 0
+				assigneeId -> assigneeId > 0
 			).map(
 				String::valueOf
 			).toArray(
@@ -310,7 +310,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private BooleanQuery _createBooleanQuery(
-		Long[] assigneeUserIds, long processId, String[] statuses) {
+		Long[] assigneeIds, long processId, String[] statuses) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -344,7 +344,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 					contextCompany.getCompanyId())));
 		tasksBooleanQuery.addMustQueryClauses(
-			_createTasksBooleanQuery(assigneeUserIds, processId));
+			_createTasksBooleanQuery(assigneeIds, processId));
 
 		return booleanQuery.addShouldQueryClauses(
 			instancesBooleanQuery, slaInstanceResultsBooleanQuery,
@@ -415,7 +415,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				assetTitle = document.getString(
 					_getLocalizedName("assetTitle"));
 				assetType = document.getString(_getLocalizedName("assetType"));
-				creatorUser = _toCreatorUser(document.getLong("userId"));
+				creator = _toCreator(document.getLong("userId"));
 				dateCompletion = _toDate(document.getDate("completionDate"));
 				dateCreated = _toDate(document.getDate("createDate"));
 				id = document.getLong("instanceId");
@@ -433,7 +433,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					sourcesMap.get(_getLocalizedName("assetTitle")));
 				assetType = GetterUtil.getString(
 					sourcesMap.get(_getLocalizedName("assetType")));
-				creatorUser = _toCreatorUser(
+				creator = _toCreator(
 					GetterUtil.getLong(sourcesMap.get("userId")));
 				dateCompletion = _toDate(
 					GetterUtil.getString(sourcesMap.get("completionDate")));
@@ -513,16 +513,16 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private BooleanQuery _createTasksBooleanQuery(
-		Long[] assigneeUserIds, long processId) {
+		Long[] assigneeIds, long processId) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(_queries.term("taskId", 0));
 
-		if (assigneeUserIds.length > 0) {
+		if (assigneeIds.length > 0) {
 			booleanQuery.addShouldQueryClauses(
-				_createAssigneeUserIdsExistsBooleanQuery(assigneeUserIds),
-				_createAssigneeUserIdsTermsBooleanQuery(assigneeUserIds));
+				_createAssigneeIdsExistsBooleanQuery(assigneeIds),
+				_createAssigneeIdsTermsBooleanQuery(assigneeIds));
 		}
 
 		return booleanQuery.addMustQueryClauses(
@@ -532,7 +532,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_queries.term("processId", processId));
 	}
 
-	private List<AssigneeUser> _getAssigneeUsers(Bucket bucket) {
+	private List<Assignee> _getAssignees(Bucket bucket) {
 		FilterAggregationResult filterAggregationResult =
 			(FilterAggregationResult)bucket.getChildAggregationResult(
 				"tasksIndex");
@@ -550,10 +550,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		).map(
 			GetterUtil::getLong
 		).map(
-			this::_toAssigneeUser
+			this::_toAssignee
 		).sorted(
 			Comparator.comparing(
-				AssigneeUser::getName,
+				Assignee::getName,
 				Comparator.comparing(
 					(String name) -> Objects.equals(
 						name,
@@ -585,9 +585,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private List<Instance> _getInstances(
-		Long[] assigneeUserIds, Date dateEnd, Date dateStart,
-		long instanceCount, Pagination pagination, long processId,
-		String[] slaStatuses, String[] statuses, String[] taskKeys) {
+		Long[] assigneeIds, Date dateEnd, Date dateStart, long instanceCount,
+		Pagination pagination, long processId, String[] slaStatuses,
+		String[] statuses, String[] taskKeys) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -643,7 +643,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			overdueFilterAggregation, taskNameTermsAggregation,
 			tasksIndexFilterAggregation, _aggregations.topHits("topHits"),
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				ListUtil.fromArray(assigneeUserIds), dateEnd, dateStart,
+				ListUtil.fromArray(assigneeIds), dateEnd, dateStart,
 				ListUtil.fromArray(slaStatuses), ListUtil.fromArray(statuses),
 				ListUtil.fromArray(taskKeys)));
 
@@ -665,7 +665,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				contextCompany.getCompanyId()));
 
 		searchSearchRequest.setQuery(
-			_createBooleanQuery(assigneeUserIds, processId, statuses));
+			_createBooleanQuery(assigneeIds, processId, statuses));
 
 		return Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
@@ -700,7 +700,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				this::_createInstance
 			).map(
 				instance -> {
-					_setAssigneeUsers(bucket, instance);
+					_setAssignees(bucket, instance);
 					_setSLAStatus(bucket, instance);
 					_setTaskNames(bucket, instance);
 					_setTransitions(instance);
@@ -804,14 +804,14 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private SearchSearchResponse _getSearchSearchResponse(
-		Long[] assigneeUserIds, Date dateEnd, Date dateStart, long processId,
+		Long[] assigneeIds, Date dateEnd, Date dateStart, long processId,
 		String[] slaStatuses, String[] statuses, String[] taskKeys) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.addAggregation(
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				ListUtil.fromArray(assigneeUserIds), dateEnd, dateStart,
+				ListUtil.fromArray(assigneeIds), dateEnd, dateStart,
 				ListUtil.fromArray(slaStatuses), ListUtil.fromArray(statuses),
 				ListUtil.fromArray(taskKeys)));
 		searchSearchRequest.setIndexNames(
@@ -822,7 +822,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
-			_createBooleanQuery(assigneeUserIds, processId, statuses));
+			_createBooleanQuery(assigneeIds, processId, statuses));
 
 		return _searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 	}
@@ -904,14 +904,14 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		return false;
 	}
 
-	private void _setAssigneeUsers(Bucket bucket, Instance instance) {
-		List<AssigneeUser> assigneeUsers = _getAssigneeUsers(bucket);
+	private void _setAssignees(Bucket bucket, Instance instance) {
+		List<Assignee> assignees = _getAssignees(bucket);
 
-		if (ListUtil.isNull(assigneeUsers)) {
+		if (ListUtil.isNull(assignees)) {
 			return;
 		}
 
-		instance.setAssigneeUsers(assigneeUsers.toArray(new AssigneeUser[0]));
+		instance.setAssignees(assignees.toArray(new Assignee[0]));
 	}
 
 	private void _setSLAResults(Bucket bucket, Instance instance) {
@@ -969,27 +969,25 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private void _setTransitions(Instance instance) {
-		if (ArrayUtil.isEmpty(instance.getAssigneeUsers()) ||
+		if (ArrayUtil.isEmpty(instance.getAssignees()) ||
 			(ArrayUtil.getLength(instance.getTaskNames()) != 1)) {
 
 			return;
 		}
 
-		AssigneeUser[] assigneeUsers = instance.getAssigneeUsers();
+		Assignee[] assignees = instance.getAssignees();
 
-		if (!Objects.equals(
-				assigneeUsers[0].getId(), contextUser.getUserId())) {
-
+		if (!Objects.equals(assignees[0].getId(), contextUser.getUserId())) {
 			return;
 		}
 
 		instance.setTransitions(_toTransitions(instance));
 	}
 
-	private AssigneeUser _toAssigneeUser(long userId) {
+	private Assignee _toAssignee(long userId) {
 		User user = _userLocalService.fetchUser(userId);
 
-		return new AssigneeUser() {
+		return new Assignee() {
 			{
 				id = userId;
 
@@ -1032,14 +1030,14 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		};
 	}
 
-	private CreatorUser _toCreatorUser(Long userId) {
+	private Creator _toCreator(Long userId) {
 		if (Objects.isNull(userId)) {
 			return null;
 		}
 
 		User user = _userLocalService.fetchUser(userId);
 
-		return new CreatorUser() {
+		return new Creator() {
 			{
 				id = userId;
 

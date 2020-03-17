@@ -14,10 +14,10 @@
 
 import './TextRegister.soy';
 
-import {ClayInput} from '@clayui/form';
-import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
+import {ClayInput} from '@clayui/form';
+import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
@@ -28,22 +28,28 @@ import templates from './TextAdapter.soy';
 /**
  * Use Sync Value to synchronize the initial value with the current internal
  * value, only update the internal value with the new initial value if the
- * values are different and when the value is not changed for more than 400ms.
+ * values are different and when the value is not changed for more than ms.
  */
-const useSyncValue = initialValue => {
-	const [value, setValue] = useState(initialValue);
+const useSyncValue = newValue => {
+	// Maintains the reference of the last value to check in later renderings if the
+	// value is new or keeps the same, it covers cases where the value typed by
+	// the user is sent to LayoutProvider but it does not descend with the new changes.
+	const previousValueRef = useRef(newValue);
+
+	const [value, setValue] = useState(newValue);
 
 	useEffect(() => {
 		const handler = setTimeout(() => {
-			if (value !== initialValue) {
-				setValue(initialValue);
+			if (value !== newValue && previousValueRef.current !== newValue) {
+				previousValueRef.current = newValue;
+				setValue(newValue);
 			}
-		}, 400);
+		}, 300);
 
 		return () => {
 			clearTimeout(handler);
 		};
-	}, [initialValue, value]);
+	}, [newValue, value]);
 
 	return [value, setValue];
 };

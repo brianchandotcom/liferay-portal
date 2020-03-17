@@ -40,7 +40,8 @@ public class VulcanBatchEngineImportTaskResourceImpl
 
 		_initializeContext();
 
-		return _importTaskResource.deleteImportTask(name, callbackURL, object);
+		return _importTaskResource.deleteImportTask(
+			name, callbackURL, null, object);
 	}
 
 	public Object postImportTask(
@@ -50,7 +51,7 @@ public class VulcanBatchEngineImportTaskResourceImpl
 		_initializeContext();
 
 		return _importTaskResource.postImportTask(
-			name, callbackURL, fields, object);
+			name, callbackURL, fields, null, object);
 	}
 
 	public Object putImportTask(String name, String callbackURL, Object object)
@@ -58,7 +59,8 @@ public class VulcanBatchEngineImportTaskResourceImpl
 
 		_initializeContext();
 
-		return _importTaskResource.putImportTask(name, callbackURL, object);
+		return _importTaskResource.putImportTask(
+			name, callbackURL, null, object);
 	}
 
 	@Override

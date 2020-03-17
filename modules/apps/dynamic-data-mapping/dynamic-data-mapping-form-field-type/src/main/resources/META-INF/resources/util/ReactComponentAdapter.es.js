@@ -72,11 +72,13 @@ function getConnectedReactComponentAdapter(ReactComponent, templates) {
 		 */
 		constructor(config, parentElement) {
 			const props = {};
-			Object.keys(config).concat(CONFIG_DEFAULT).forEach(key => {
-				if (!CONFIG_BLACKLIST.includes(key)) {
-					props[key] = Config.any();
-				}
-			});
+			Object.keys(config)
+				.concat(CONFIG_DEFAULT)
+				.forEach(key => {
+					if (!CONFIG_BLACKLIST.includes(key)) {
+						props[key] = Config.any();
+					}
+				});
 
 			ReactComponentAdapter.PROPS = props;
 

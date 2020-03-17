@@ -118,7 +118,7 @@ const KeyValueWithFieldBase = ({
 };
 
 const KeyValueProxy = connectStore(
-	({emit, keyword: initialKeyword, keywordReadOnly, ...otherProps}) => {
+	({emit, keyword: initialKeyword, ...otherProps}) => {
 		const [keyword, setKeyword] = useSyncValue(initialKeyword);
 
 		return (

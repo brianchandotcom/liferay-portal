@@ -98,7 +98,7 @@ AUI.add(
 					var strings = instance.get('strings');
 
 					form.addRule(
-						instance.ns('titleEditor'),
+						instance.one('#title'),
 						'required',
 						strings.titleRequiredAtPublish
 					);
@@ -109,7 +109,7 @@ AUI.add(
 
 					var form = Liferay.Form.get(instance.ns('fm'));
 
-					form.removeRule(instance.ns('titleEditor'), 'required');
+					form.removeRule(instance.one('#title'), 'required');
 				},
 
 				_bindUI() {
@@ -323,9 +323,7 @@ AUI.add(
 					if (instance._automaticURL()) {
 						instance._lastCustomURL = urlTitleInput.val();
 
-						var title = window[
-							instance.ns('titleEditor')
-						].getText();
+						var title = instance.one('#title').val();
 
 						instance.updateFriendlyURL(title);
 
@@ -367,8 +365,8 @@ AUI.add(
 					var coverImageCaption = window[
 						instance.ns('coverImageCaptionEditor')
 					].getHTML();
-					var subtitle = window[instance.ns('subtitleEditor')].value;
-					var title = window[instance.ns('titleEditor')].value;
+					var subtitle = instance.one('#subtitle').val();
+					var title = instance.one('#title').val();
 
 					var automaticURL = instance
 						.one(
@@ -545,8 +543,6 @@ AUI.add(
 						instance
 							.one('#coverImageCaption')
 							.val(coverImageCaption);
-						instance.one('#subtitle').val(subtitle);
-						instance.one('#title').val(title);
 						instance
 							.one('#workflowAction')
 							.val(

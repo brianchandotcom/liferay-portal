@@ -30,6 +30,7 @@ import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
 import com.liferay.sharing.display.context.util.SharingToolbarItemFactory;
 import com.liferay.sharing.security.permission.SharingPermission;
+import com.liferay.sharing.service.SharingEntryLocalService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -99,8 +100,9 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 			return new SharingDLViewFileVersionDisplayContext(
 				parentDLViewFileVersionDisplayContext, httpServletRequest,
 				httpServletResponse, fileEntry, fileVersion,
-				_sharingMenuItemFactory, _sharingToolbarItemFactory,
-				_sharingPermission, sharingConfiguration);
+				_sharingEntryLocalService, _sharingMenuItemFactory,
+				_sharingToolbarItemFactory, _sharingPermission,
+				sharingConfiguration);
 		}
 		catch (PortalException portalException) {
 			throw new SystemException(
@@ -112,6 +114,9 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 
 	@Reference
 	private SharingConfigurationFactory _sharingConfigurationFactory;
+
+	@Reference
+	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
 	private SharingMenuItemFactory _sharingMenuItemFactory;

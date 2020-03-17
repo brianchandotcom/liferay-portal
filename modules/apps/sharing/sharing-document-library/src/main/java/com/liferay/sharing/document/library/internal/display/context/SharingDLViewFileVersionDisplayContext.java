@@ -37,6 +37,7 @@ import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
 import com.liferay.sharing.display.context.util.SharingToolbarItemFactory;
 import com.liferay.sharing.security.permission.SharingPermission;
+import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.List;
 import java.util.UUID;
@@ -54,7 +55,9 @@ public class SharingDLViewFileVersionDisplayContext
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, FileEntry fileEntry,
-		FileVersion fileVersion, SharingMenuItemFactory sharingMenuItemFactory,
+		FileVersion fileVersion,
+		SharingEntryLocalService sharingEntryLocalService,
+		SharingMenuItemFactory sharingMenuItemFactory,
 		SharingToolbarItemFactory sharingToolbarItemFactory,
 		SharingPermission sharingPermission,
 		SharingConfiguration sharingConfiguration) {
@@ -67,6 +70,7 @@ public class SharingDLViewFileVersionDisplayContext
 		_fileEntry = fileEntry;
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+		_sharingEntryLocalService = sharingEntryLocalService;
 		_sharingMenuItemFactory = sharingMenuItemFactory;
 		_sharingToolbarItemFactory = sharingToolbarItemFactory;
 		_sharingPermission = sharingPermission;
@@ -105,6 +109,23 @@ public class SharingDLViewFileVersionDisplayContext
 				_fileEntry.getFileEntryId(), _httpServletRequest));
 
 		return toolbarItems;
+	}
+
+	@Override
+	public boolean isShared() throws PortalException {
+		if (_themeDisplay.isSignedIn() && isSharingLinkVisible()) {
+			int sharingEntriesCount =
+				_sharingEntryLocalService.getSharingEntriesCount(
+					PortalUtil.getClassNameId(
+						DLFileEntryConstants.getClassName()),
+					_fileEntry.getFileEntryId());
+
+			if (sharingEntriesCount > 0) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
@@ -190,6 +211,7 @@ public class SharingDLViewFileVersionDisplayContext
 	private final FileEntry _fileEntry;
 	private final HttpServletRequest _httpServletRequest;
 	private final SharingConfiguration _sharingConfiguration;
+	private final SharingEntryLocalService _sharingEntryLocalService;
 	private final SharingMenuItemFactory _sharingMenuItemFactory;
 	private final SharingPermission _sharingPermission;
 	private final SharingToolbarItemFactory _sharingToolbarItemFactory;

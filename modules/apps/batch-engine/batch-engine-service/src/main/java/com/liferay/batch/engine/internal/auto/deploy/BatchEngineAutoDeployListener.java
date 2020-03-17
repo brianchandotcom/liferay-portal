@@ -181,7 +181,8 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				batchEngineImportConfiguration.fieldNameMappingMap,
 				BatchEngineTaskOperation.CREATE.name(),
-				batchEngineImportConfiguration.parameters);
+				batchEngineImportConfiguration.parameters,
+				batchEngineImportConfiguration.taskItemDelegateName);
 
 		executorService.submit(
 			() -> {
@@ -229,6 +230,9 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 
 		@JsonProperty
 		protected Map<String, Serializable> parameters;
+
+		@JsonProperty
+		protected String taskItemDelegateName;
 
 		@JsonProperty
 		protected long userId;

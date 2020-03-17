@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -76,6 +77,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -195,7 +197,24 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				kaleoInstanceToken, kaleoTaskInstanceToken, workflowContext,
 				serviceContext);
 
-			_kaleoSignaler.signalExit(transitionName, executionContext);
+			TransactionCommitCallbackUtil.registerCallback(
+				new Callable<Void>() {
+
+					@Override
+					public Void call() throws Exception {
+						try {
+							_kaleoSignaler.signalExit(
+								transitionName, executionContext);
+						}
+						catch (Exception exception) {
+							throw new WorkflowException(
+								"Unable to signal next transition", exception);
+						}
+
+						return null;
+					}
+
+				});
 
 			return workflowTask;
 		}

@@ -22,6 +22,13 @@ import com.liferay.petra.function.UnsafeSupplier;
  */
 public class NavigationItemListBuilder {
 
+	public static NavigationItemListWrapper add(NavigationItem navigationItem) {
+		NavigationItemListWrapper navigationItemListWrapper =
+			new NavigationItemListWrapper();
+
+		return navigationItemListWrapper.add(navigationItem);
+	}
+
 	public static NavigationItemListWrapper add(
 		UnsafeConsumer<NavigationItem, Exception> unsafeConsumer) {
 
@@ -29,6 +36,16 @@ public class NavigationItemListBuilder {
 			new NavigationItemListWrapper();
 
 		return navigationItemListWrapper.add(unsafeConsumer);
+	}
+
+	public static NavigationItemListWrapper add(
+		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+		NavigationItem navigationItem) {
+
+		NavigationItemListWrapper navigationItemListWrapper =
+			new NavigationItemListWrapper();
+
+		return navigationItemListWrapper.add(unsafeSupplier, navigationItem);
 	}
 
 	public static NavigationItemListWrapper add(
@@ -43,10 +60,32 @@ public class NavigationItemListBuilder {
 
 	public static final class NavigationItemListWrapper {
 
+		public NavigationItemListWrapper add(NavigationItem navigationItem) {
+			_navigationItemList.add(navigationItem);
+
+			return this;
+		}
+
 		public NavigationItemListWrapper add(
 			UnsafeConsumer<NavigationItem, Exception> unsafeConsumer) {
 
 			_navigationItemList.add(unsafeConsumer);
+
+			return this;
+		}
+
+		public NavigationItemListWrapper add(
+			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+			NavigationItem navigationItem) {
+
+			try {
+				if (unsafeSupplier.get()) {
+					_navigationItemList.add(navigationItem);
+				}
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
 
 			return this;
 		}

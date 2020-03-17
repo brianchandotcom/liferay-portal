@@ -22,12 +22,27 @@ import com.liferay.petra.function.UnsafeSupplier;
  */
 public class LabelItemListBuilder {
 
+	public static LabelItemListWrapper add(LabelItem labelItem) {
+		LabelItemListWrapper labelItemListWrapper = new LabelItemListWrapper();
+
+		return labelItemListWrapper.add(labelItem);
+	}
+
 	public static LabelItemListWrapper add(
 		UnsafeConsumer<LabelItem, Exception> unsafeConsumer) {
 
 		LabelItemListWrapper labelItemListWrapper = new LabelItemListWrapper();
 
 		return labelItemListWrapper.add(unsafeConsumer);
+	}
+
+	public static LabelItemListWrapper add(
+		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+		LabelItem labelItem) {
+
+		LabelItemListWrapper labelItemListWrapper = new LabelItemListWrapper();
+
+		return labelItemListWrapper.add(unsafeSupplier, labelItem);
 	}
 
 	public static LabelItemListWrapper add(
@@ -41,10 +56,32 @@ public class LabelItemListBuilder {
 
 	public static final class LabelItemListWrapper {
 
+		public LabelItemListWrapper add(LabelItem labelItem) {
+			_labelItemList.add(labelItem);
+
+			return this;
+		}
+
 		public LabelItemListWrapper add(
 			UnsafeConsumer<LabelItem, Exception> unsafeConsumer) {
 
 			_labelItemList.add(unsafeConsumer);
+
+			return this;
+		}
+
+		public LabelItemListWrapper add(
+			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+			LabelItem labelItem) {
+
+			try {
+				if (unsafeSupplier.get()) {
+					_labelItemList.add(labelItem);
+				}
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
 
 			return this;
 		}

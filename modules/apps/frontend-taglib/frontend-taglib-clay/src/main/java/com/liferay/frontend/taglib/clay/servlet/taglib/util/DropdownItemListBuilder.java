@@ -22,6 +22,13 @@ import com.liferay.petra.function.UnsafeSupplier;
  */
 public class DropdownItemListBuilder {
 
+	public static DropdownItemListWrapper add(DropdownItem dropdownItem) {
+		DropdownItemListWrapper dropdownItemListWrapper =
+			new DropdownItemListWrapper();
+
+		return dropdownItemListWrapper.add(dropdownItem);
+	}
+
 	public static DropdownItemListWrapper add(
 		UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
 
@@ -29,6 +36,16 @@ public class DropdownItemListBuilder {
 			new DropdownItemListWrapper();
 
 		return dropdownItemListWrapper.add(unsafeConsumer);
+	}
+
+	public static DropdownItemListWrapper add(
+		UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+		DropdownItem dropdownItem) {
+
+		DropdownItemListWrapper dropdownItemListWrapper =
+			new DropdownItemListWrapper();
+
+		return dropdownItemListWrapper.add(unsafeSupplier, dropdownItem);
 	}
 
 	public static DropdownItemListWrapper add(
@@ -121,10 +138,32 @@ public class DropdownItemListBuilder {
 
 	public static final class DropdownItemListWrapper {
 
+		public DropdownItemListWrapper add(DropdownItem dropdownItem) {
+			_dropdownItemList.add(dropdownItem);
+
+			return this;
+		}
+
 		public DropdownItemListWrapper add(
 			UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
 
 			_dropdownItemList.add(unsafeConsumer);
+
+			return this;
+		}
+
+		public DropdownItemListWrapper add(
+			UnsafeSupplier<Boolean, Exception> unsafeSupplier,
+			DropdownItem dropdownItem) {
+
+			try {
+				if (unsafeSupplier.get()) {
+					_dropdownItemList.add(dropdownItem);
+				}
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
 
 			return this;
 		}

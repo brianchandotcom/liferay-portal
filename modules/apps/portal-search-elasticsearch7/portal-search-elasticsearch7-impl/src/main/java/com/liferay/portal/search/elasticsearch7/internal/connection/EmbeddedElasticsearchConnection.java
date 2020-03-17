@@ -80,8 +80,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class EmbeddedElasticsearchConnection
 	extends BaseElasticsearchConnection {
 
-	public static final String CONNECTION_ID = "EMBEDDED";
-
 	@Override
 	public void close() {
 		super.close();
@@ -148,7 +146,7 @@ public class EmbeddedElasticsearchConnection
 
 	@Override
 	public String getConnectionId() {
-		return CONNECTION_ID;
+		return String.valueOf(OperationMode.EMBEDDED);
 	}
 
 	public Node getNode() {
@@ -178,13 +176,6 @@ public class EmbeddedElasticsearchConnection
 		_jnaTmpDirName = tempDir.getAbsolutePath();
 
 		close();
-
-		if (elasticsearchConfiguration.operationMode() ==
-				com.liferay.portal.search.elasticsearch7.configuration.
-					OperationMode.EMBEDDED) {
-
-			connect();
-		}
 	}
 
 	@Reference(

@@ -17,7 +17,6 @@ package com.liferay.portal.dao.db;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -140,20 +139,15 @@ public class DB2DB extends BaseDB {
 
 		boolean reorgTableRequired = false;
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(4);
 
-		try {
-			StringBundler sb = new StringBundler(4);
+		sb.append("select num_reorg_rec_alters from table(");
+		sb.append("sysproc.admin_get_tab_info(current_schema, '");
+		sb.append(StringUtil.toUpperCase(tableName));
+		sb.append("')) where reorg_pending = 'Y'");
 
-			sb.append("select num_reorg_rec_alters from table(");
-			sb.append("sysproc.admin_get_tab_info(current_schema, '");
-			sb.append(StringUtil.toUpperCase(tableName));
-			sb.append("')) where reorg_pending = 'Y'");
-
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			if (rs.next()) {
 				int numReorgRecAlters = rs.getInt(1);
@@ -162,9 +156,6 @@ public class DB2DB extends BaseDB {
 					reorgTableRequired = true;
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return reorgTableRequired;
@@ -177,17 +168,12 @@ public class DB2DB extends BaseDB {
 			return;
 		}
 
-		CallableStatement callableStatement = null;
-
-		try {
-			callableStatement = con.prepareCall("call sysproc.admin_cmd(?)");
+		try (CallableStatement callableStatement = con.prepareCall(
+				"call sysproc.admin_cmd(?)")) {
 
 			callableStatement.setString(1, "reorg table " + tableName);
 
 			callableStatement.execute();
-		}
-		finally {
-			DataAccess.cleanUp(callableStatement);
 		}
 	}
 

@@ -15,7 +15,6 @@
 package com.liferay.portal.reports.engine.console.util;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -121,9 +120,6 @@ public class ReportsEngineConsoleUtil {
 			String driverPassword)
 		throws PortalException {
 
-		DataSource dataSource = null;
-		Connection connection = null;
-
 		try {
 			Properties properties = new Properties();
 
@@ -132,15 +128,14 @@ public class ReportsEngineConsoleUtil {
 			properties.setProperty("url", driverUrl);
 			properties.setProperty("username", driverUserName);
 
-			dataSource = BasicDataSourceFactory.createDataSource(properties);
+			DataSource dataSource = BasicDataSourceFactory.createDataSource(
+				properties);
 
-			connection = dataSource.getConnection();
+			try (Connection connection = dataSource.getConnection()) {
+			}
 		}
 		catch (Exception exception) {
 			throw new SourceJDBCConnectionException(exception);
-		}
-		finally {
-			DataAccess.cleanUp(connection);
 		}
 	}
 

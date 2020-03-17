@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -172,10 +171,9 @@ public class SampleSQLBuilderTest {
 		Connection connection = null;
 		Statement statement = null;
 
-		try {
-			connection = DriverManager.getConnection(
+		try (Connection connection = DriverManager.getConnection(
 				"jdbc:hsqldb:mem:testSampleSQLBuilderDB;shutdown=true", "sa",
-				"");
+				"")) {
 
 			HypersonicLoader.loadHypersonic(
 				connection, sqlDir + "/portal/portal-hypersonic.sql");
@@ -187,12 +185,9 @@ public class SampleSQLBuilderTest {
 			HypersonicLoader.loadHypersonic(
 				connection, outputDir + "/sample-hypersonic.sql");
 
-			statement = connection.createStatement();
-
-			statement.execute("SHUTDOWN COMPACT");
-		}
-		finally {
-			DataAccess.cleanUp(connection, statement);
+			try (Statement statement = connection.createStatement()) {
+				statement.execute("SHUTDOWN COMPACT");
+			}
 		}
 	}
 

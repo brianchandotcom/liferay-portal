@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -63,32 +62,24 @@ public class SQLServerDB extends BaseDB {
 	public List<Index> getIndexes(Connection con) throws SQLException {
 		List<Index> indexes = new ArrayList<>();
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		DatabaseMetaData databaseMetaData = con.getMetaData();
 
-		try {
-			DatabaseMetaData databaseMetaData = con.getMetaData();
+		if (databaseMetaData.getDatabaseMajorVersion() <= _SQL_SERVER_2000) {
+			return indexes;
+		}
 
-			if (databaseMetaData.getDatabaseMajorVersion() <=
-					_SQL_SERVER_2000) {
+		StringBundler sb = new StringBundler(5);
 
-				return indexes;
-			}
+		sb.append("select sys.tables.name as table_name, sys.indexes.name as ");
+		sb.append("index_name, is_unique from sys.indexes inner join ");
+		sb.append("sys.tables on sys.tables.object_id = ");
+		sb.append("sys.indexes.object_id where sys.indexes.name like ");
+		sb.append("'LIFERAY_%' or sys.indexes.name like 'IX_%'");
 
-			StringBundler sb = new StringBundler(6);
+		String sql = sb.toString();
 
-			sb.append("select sys.tables.name as table_name, ");
-			sb.append("sys.indexes.name as index_name, is_unique from ");
-			sb.append("sys.indexes inner join sys.tables on ");
-			sb.append("sys.tables.object_id = sys.indexes.object_id where ");
-			sb.append("sys.indexes.name like 'LIFERAY_%' or sys.indexes.name ");
-			sb.append("like 'IX_%'");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				String indexName = rs.getString("index_name");
@@ -97,9 +88,6 @@ public class SQLServerDB extends BaseDB {
 
 				indexes.add(new Index(indexName, tableName, unique));
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return indexes;

@@ -65,21 +65,16 @@ public class OracleDB extends BaseDB {
 	public List<Index> getIndexes(Connection con) throws SQLException {
 		List<Index> indexes = new ArrayList<>();
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(3);
 
-		try {
-			StringBundler sb = new StringBundler(3);
+		sb.append("select index_name, table_name, uniqueness from ");
+		sb.append("user_indexes where index_name like 'LIFERAY_%' or ");
+		sb.append("index_name like 'IX_%'");
 
-			sb.append("select index_name, table_name, uniqueness from ");
-			sb.append("user_indexes where index_name like 'LIFERAY_%' or ");
-			sb.append("index_name like 'IX_%'");
+		String sql = sb.toString();
 
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				String indexName = rs.getString("index_name");
@@ -94,9 +89,6 @@ public class OracleDB extends BaseDB {
 
 				indexes.add(new Index(indexName, tableName, unique));
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return indexes;

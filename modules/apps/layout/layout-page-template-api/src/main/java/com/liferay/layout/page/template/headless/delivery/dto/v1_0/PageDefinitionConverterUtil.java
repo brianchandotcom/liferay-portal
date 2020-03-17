@@ -246,18 +246,26 @@ public class PageDefinitionConverterUtil {
 	}
 
 	private static Map<String, Fragment[]> _toFragmentSettingsMap(
-		DropZoneLayoutStructureItem dropZoneLayoutStructureItem) {
+		long groupId, DropZoneLayoutStructureItem dropZoneLayoutStructureItem,
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentRendererTracker fragmentRendererTracker) {
 
 		if (dropZoneLayoutStructureItem.isAllowNewFragmentEntries()) {
 			return HashMapBuilder.put(
 				"unallowedFragments",
-				_toFragments(dropZoneLayoutStructureItem.getFragmentEntryKeys())
+				_toFragments(
+					groupId, dropZoneLayoutStructureItem.getFragmentEntryKeys(),
+					fragmentCollectionContributorTracker,
+					fragmentRendererTracker)
 			).build();
 		}
 
 		return HashMapBuilder.put(
 			"allowedFragments",
-			_toFragments(dropZoneLayoutStructureItem.getFragmentEntryKeys())
+			_toFragments(
+				groupId, dropZoneLayoutStructureItem.getFragmentEntryKeys(),
+				fragmentCollectionContributorTracker, fragmentRendererTracker)
 		).build();
 	}
 
@@ -428,7 +436,9 @@ public class PageDefinitionConverterUtil {
 					definition = new DropZoneDefinition() {
 						{
 							fragmentSettings = _toFragmentSettingsMap(
-								dropZoneLayoutStructureItem);
+								groupId, dropZoneLayoutStructureItem,
+								fragmentCollectionContributorTracker,
+								fragmentRendererTracker);
 						}
 					};
 					type = PageElement.Type.DROP_ZONE;

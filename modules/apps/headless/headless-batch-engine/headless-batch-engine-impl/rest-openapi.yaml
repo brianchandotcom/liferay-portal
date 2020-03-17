@@ -129,6 +129,10 @@ paths:
                   name: fieldNames
                   schema:
                       type: string
+                - in: query
+                  name: taskItemDelegateName
+                  schema:
+                      type: string
             responses:
                 202:
                     content:
@@ -205,6 +209,10 @@ paths:
                   name: callbackURL
                   schema:
                       type: string
+                - in: query
+                  name: taskItemDelegateName
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -256,6 +264,10 @@ paths:
                   name: fieldNameMapping
                   schema:
                       type: string
+                - in: query
+                  name: taskItemDelegateName
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -301,6 +313,10 @@ paths:
                       type: string
                 - in: query
                   name: callbackURL
+                  schema:
+                      type: string
+                - in: query
+                  name: taskItemDelegateName
                   schema:
                       type: string
             requestBody:

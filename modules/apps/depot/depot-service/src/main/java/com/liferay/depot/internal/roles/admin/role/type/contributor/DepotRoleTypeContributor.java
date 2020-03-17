@@ -38,6 +38,14 @@ import org.osgi.service.component.annotations.Reference;
 public class DepotRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
+	public String[] getExcludedRoleNames() {
+		return new String[] {
+			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+			DepotRolesConstants.ASSET_LIBRARY_OWNER
+		};
+	}
+
+	@Override
 	public String getIcon() {
 		return "globe";
 	}

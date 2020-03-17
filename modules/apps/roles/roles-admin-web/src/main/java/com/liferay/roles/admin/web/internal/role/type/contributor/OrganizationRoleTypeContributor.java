@@ -35,6 +35,14 @@ import org.osgi.service.component.annotations.Reference;
 public class OrganizationRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
+	public String[] getExcludedRoleNames() {
+		return new String[] {
+			RoleConstants.ORGANIZATION_ADMINISTRATOR,
+			RoleConstants.ORGANIZATION_OWNER
+		};
+	}
+
+	@Override
 	public String getIcon() {
 		return "community";
 	}

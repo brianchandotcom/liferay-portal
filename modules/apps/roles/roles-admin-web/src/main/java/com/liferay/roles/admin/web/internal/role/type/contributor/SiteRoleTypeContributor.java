@@ -35,6 +35,13 @@ import org.osgi.service.component.annotations.Reference;
 public class SiteRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
+	public String[] getExcludedRoleNames() {
+		return new String[] {
+			RoleConstants.SITE_ADMINISTRATOR, RoleConstants.SITE_OWNER
+		};
+	}
+
+	@Override
 	public String getIcon() {
 		return "globe";
 	}

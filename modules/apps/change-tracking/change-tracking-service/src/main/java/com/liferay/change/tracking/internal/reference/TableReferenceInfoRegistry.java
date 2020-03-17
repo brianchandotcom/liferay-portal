@@ -37,7 +37,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Preston Crary
  */
 @Component(immediate = true, service = {})
-public class TableReferenceDefinitionManager {
+public class TableReferenceInfoRegistry {
 
 	public TableReferenceInfo<?> getTableReferenceInfo(Table<?> table) {
 		return _tableReferenceInfos.get(table);
@@ -59,7 +59,7 @@ public class TableReferenceDefinitionManager {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TableReferenceDefinitionManager.class);
+		TableReferenceInfoRegistry.class);
 
 	private ServiceTracker<?, ?> _serviceTracker;
 	private final Map<Table<?>, TableReferenceInfo<?>> _tableReferenceInfos =

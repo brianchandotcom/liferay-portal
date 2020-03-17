@@ -40,4 +40,10 @@
 			</span>
 		</c:when>
 	</c:choose>
+
+	<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
+		<span class="file-icon-color-0">
+			<aui:icon image="users" markupView="lexicon" message="shared" />
+		</span>
+	</c:if>
 </liferay-frontend:vertical-card-footer>

@@ -38,6 +38,12 @@ FileVersion fileVersion = (FileVersion)request.getAttribute("file_entry_upper_tb
 								<aui:icon cssClass="icon-monospaced" image="lock" markupView="lexicon" message="locked" />
 							</span>
 						</c:if>
+
+						<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
+							<span>
+								<aui:icon cssClass="icon-monospaced" image="users" markupView="lexicon" message="shared" />
+							</span>
+						</c:if>
 					</div>
 				</li>
 				<li class="tbar-item">

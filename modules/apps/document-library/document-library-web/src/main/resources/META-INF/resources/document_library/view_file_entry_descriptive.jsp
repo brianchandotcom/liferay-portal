@@ -29,8 +29,6 @@ if (result instanceof AssetEntry) {
 
 	if (assetEntry.getClassName().equals(DLFileEntryConstants.getClassName())) {
 		fileEntry = DLAppLocalServiceUtil.getFileEntry(assetEntry.getClassPK());
-
-		fileEntry = fileEntry.toEscapedModel();
 	}
 	else {
 		fileShortcut = DLAppLocalServiceUtil.getFileShortcut(assetEntry.getClassPK());
@@ -62,6 +60,15 @@ latestFileVersion = latestFileVersion.toEscapedModel();
 Date modifiedDate = latestFileVersion.getModifiedDate();
 
 String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+
+DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = null;
+
+if (fileShortcut == null) {
+	dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, latestFileVersion);
+}
+else {
+	dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileShortcut);
+}
 
 PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
@@ -111,4 +118,10 @@ rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 			</span>
 		</c:when>
 	</c:choose>
+
+	<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
+		<span>
+			<aui:icon image="users" markupView="lexicon" message="shared" />
+		</span>
+	</c:if>
 </span>

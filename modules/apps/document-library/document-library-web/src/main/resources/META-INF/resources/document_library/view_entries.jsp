@@ -257,6 +257,10 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 										<aui:icon cssClass="inline-item inline-item-after" image="lock" markupView="lexicon" message="locked" />
 									</c:if>
 
+									<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
+										<aui:icon cssClass="inline-item inline-item-after" image="users" markupView="lexicon" message="shared" />
+									</c:if>
+
 									<c:if test="<%= fileShortcut != null %>">
 										<aui:icon cssClass="inline-item inline-item-after" image="shortcut" markupView="lexicon" message="shortcut" />
 									</c:if>

@@ -564,6 +564,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESTORE_VALUES</td>
+	<td>//button/span[contains(.,'Restore Values')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ROTATE_LEFT</td>
 	<td>//div[contains(@id,'rotate')]/a[contains(@class,'btn-link')][1]</td>
 	<td></td>

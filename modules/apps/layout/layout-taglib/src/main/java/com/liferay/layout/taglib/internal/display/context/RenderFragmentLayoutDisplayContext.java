@@ -17,6 +17,11 @@ package com.liferay.layout.taglib.internal.display.context;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
+import com.liferay.layout.list.retriever.LayoutListRetriever;
+import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
+import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
+import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -37,6 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,12 +57,16 @@ public class RenderFragmentLayoutDisplayContext {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		InfoDisplayObjectProvider infoDisplayObjectProvider) {
+		InfoDisplayObjectProvider infoDisplayObjectProvider,
+		LayoutListRetrieverTracker layoutListRetrieverTracker,
+		ListObjectReferenceFactoryTracker listObjectReferenceFactoryTracker) {
 
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
 		_infoDisplayContributorTracker = infoDisplayContributorTracker;
 		_infoDisplayObjectProvider = infoDisplayObjectProvider;
+		_layoutListRetrieverTracker = layoutListRetrieverTracker;
+		_listObjectReferenceFactoryTracker = listObjectReferenceFactoryTracker;
 	}
 
 	public String getBackgroundImage(JSONObject rowConfigJSONObject)
@@ -134,6 +144,40 @@ public class RenderFragmentLayoutDisplayContext {
 		return StringPool.BLANK;
 	}
 
+	public List getCollection(
+		JSONObject jsonObject, long[] segmentsExperienceIds) {
+
+		if (jsonObject.length() <= 0) {
+			return Collections.emptyList();
+		}
+
+		String type = jsonObject.getString("type");
+
+		LayoutListRetriever layoutListRetriever =
+			_layoutListRetrieverTracker.getLayoutListRetriever(type);
+
+		if (layoutListRetriever == null) {
+			return Collections.emptyList();
+		}
+
+		ListObjectReferenceFactory listObjectReferenceFactory =
+			_listObjectReferenceFactoryTracker.getListObjectReference(type);
+
+		if (listObjectReferenceFactory == null) {
+			return Collections.emptyList();
+		}
+
+		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
+			new DefaultLayoutListRetrieverContext();
+
+		defaultLayoutListRetrieverContext.setSegmentsExperienceIdsOptional(
+			segmentsExperienceIds);
+
+		return layoutListRetriever.getList(
+			listObjectReferenceFactory.getListObjectReference(jsonObject),
+			defaultLayoutListRetrieverContext);
+	}
+
 	public String getPortletPaths() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -182,5 +226,8 @@ public class RenderFragmentLayoutDisplayContext {
 	private final HttpServletResponse _httpServletResponse;
 	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;
 	private final InfoDisplayObjectProvider _infoDisplayObjectProvider;
+	private final LayoutListRetrieverTracker _layoutListRetrieverTracker;
+	private final ListObjectReferenceFactoryTracker
+		_listObjectReferenceFactoryTracker;
 
 }

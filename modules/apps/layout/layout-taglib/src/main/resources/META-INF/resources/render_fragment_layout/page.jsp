@@ -26,13 +26,11 @@ LayoutStructure layoutStructure = (LayoutStructure)request.getAttribute("liferay
 	try {
 		request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.TRUE);
 
-		RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = new RenderFragmentLayoutDisplayContext(request, response);
-
-		request.setAttribute("render_layout_structure.jsp-renderFragmentLayoutDisplayContext", renderFragmentLayoutDisplayContext);
-
 		LayoutStructureItem layoutStructureItem = layoutStructure.getMainLayoutStructureItem();
 
 		request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+
+		RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderFragmentLayoutDisplayContext)request.getAttribute("liferay-layout:render-fragment-layout:renderFragmentLayoutDisplayContext");
 	%>
 
 		<%= renderFragmentLayoutDisplayContext.getPortletPaths() %>

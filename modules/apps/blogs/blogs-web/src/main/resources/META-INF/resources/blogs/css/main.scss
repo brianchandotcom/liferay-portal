@@ -164,6 +164,14 @@
 			}
 		}
 
+		.entry-subtitle {
+			margin-bottom: 0;
+
+			> .form-group {
+				margin-bottom: 0;
+			}
+		}
+
 		.form-control.form-control-edit {
 			overflow: hidden;
 			resize: none;
@@ -363,7 +371,6 @@
 		.entry-subtitle textarea {
 			color: #a7a9bc;
 			font-size: 32px;
-			font-weight: 200;
 			line-height: 45px;
 		}
 	}

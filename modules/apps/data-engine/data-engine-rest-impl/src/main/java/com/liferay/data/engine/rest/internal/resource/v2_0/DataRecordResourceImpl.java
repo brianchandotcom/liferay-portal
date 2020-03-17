@@ -295,7 +295,7 @@ public class DataRecordResourceImpl
 
 		return _toDataRecord(
 			_ddlRecordLocalService.addRecord(
-				PrincipalThreadLocal.getUserId(), ddlRecordSet.getGroupId(),
+				contextUser.getUserId(), ddlRecordSet.getGroupId(),
 				ddmStorageId, dataRecord.getDataRecordCollectionId(),
 				new ServiceContext()));
 	}

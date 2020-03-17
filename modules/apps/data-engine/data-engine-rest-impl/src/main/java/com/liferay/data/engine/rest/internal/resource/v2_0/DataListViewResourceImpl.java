@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -194,7 +193,7 @@ public class DataListViewResourceImpl
 		dataListView = _toDataListView(
 			_deDataListViewLocalService.addDEDataListView(
 				ddmStructure.getGroupId(), contextCompany.getCompanyId(),
-				PrincipalThreadLocal.getUserId(),
+				contextUser.getUserId(),
 				_toJSON(dataListView.getAppliedFilters()), dataDefinitionId,
 				Arrays.toString(dataListView.getFieldNames()),
 				LocalizedValueUtil.toLocaleStringMap(dataListView.getName()),

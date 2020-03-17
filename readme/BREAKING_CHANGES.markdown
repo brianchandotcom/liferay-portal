@@ -478,3 +478,25 @@ This change was made to avoid bundling and serving additional library code on
 every page that was mostly unused and redundant.
 
 ---------------------------------------
+### Server-side parallel rendering is no longer supported
+- **Date:** 2020-Mar-16
+- **JIRA Ticket:** [LPS-110359](https://issues.liferay.com/browse/LPS-110359)
+
+#### What changed?
+
+Properties with `layout.parallel.render` as prefix are removed, which means
+parallel rendering is only supported when ajax rendering is enabled.
+
+#### Who is affected?
+
+This affects anyone used the removed properties.
+
+#### How should I update my code?
+
+Remove those properties from your properties file.
+
+#### Why was this change made?
+
+This feature has been deprecated.
+
+---------------------------------------

@@ -34,51 +34,151 @@ import org.json.JSONObject;
  */
 public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
-	public static SpiraTestCaseRun recordTestSpiraTestCaseRun(
-		SpiraProject spiraProject, SpiraTestCaseObject spiraTestCaseObject) {
-
-		List<SpiraTestCaseRun> spiraTestCaseRuns = recordTestSpiraTestCaseRuns(
-			spiraProject, spiraTestCaseObject);
-
-		if (spiraTestCaseRuns.isEmpty()) {
-			return null;
-		}
-
-		if (spiraTestCaseRuns.size() > 1) {
-			throw new RuntimeException("Duplicate records found");
-		}
-
-		return spiraTestCaseRuns.get(0);
-	}
-
 	public static List<SpiraTestCaseRun> recordTestSpiraTestCaseRuns(
-		SpiraProject spiraProject,
-		SpiraTestCaseObject... spiraTestCaseObjects) {
+		SpiraProject spiraProject, SpiraRelease spiraRelease,
+		SpiraReleaseBuild spiraReleaseBuild, Result... results) {
+
+		Integer releaseID = null;
+
+		if (spiraRelease != null) {
+			releaseID = spiraRelease.getID();
+		}
+
+		Integer releaseBuildID = null;
+
+		if (spiraReleaseBuild != null) {
+			releaseBuildID = spiraReleaseBuild.getID();
+		}
 
 		Calendar calendar = Calendar.getInstance();
 
-		List<JSONObject> requestJSONObjects = new ArrayList<>(
-			spiraTestCaseObjects.length);
+		JSONArray requestJSONArray = new JSONArray();
 
-		for (SpiraTestCaseObject spiraTestCase : spiraTestCaseObjects) {
+		for (Result result : results) {
 			JSONObject requestJSONObject = new JSONObject();
+
+			SpiraTestCaseObject spiraTestCase = result.getSpiraTestCase();
 
 			requestJSONObject.put(
 				SpiraTestCaseObject.ID_KEY, spiraTestCase.getID());
-			requestJSONObject.put("ExecutionStatusId", STATUS_PASSED);
+			requestJSONObject.put("ExecutionStatusId", result.getStatusID());
 			requestJSONObject.put("RunnerMessage", spiraTestCase.getPath());
 			requestJSONObject.put("RunnerName", "Liferay CI");
-			requestJSONObject.put("RunnerStackTrace", "");
+			requestJSONObject.put("RunnerStackTrace", result.getDescription());
 			requestJSONObject.put("RunnerTestName", spiraTestCase.getName());
 			requestJSONObject.put(
 				"StartDate", PathSpiraArtifact.toDateString(calendar));
-			requestJSONObject.put("TestRunFormatId", RUNNER_FORMAT_PLAIN);
+			requestJSONObject.put(
+				"TestRunFormatId", result.getRunnerFormatID());
 
-			requestJSONObjects.add(requestJSONObject);
+			if (releaseID != null) {
+				requestJSONObject.put("ReleaseId", releaseID);
+			}
+
+			if (releaseBuildID != null) {
+				requestJSONObject.put("BuildId", releaseBuildID);
+			}
+
+			requestJSONArray.put(requestJSONObject);
 		}
 
-		return recordSpiraTestCaseRuns(
-			spiraProject, requestJSONObjects.toArray(new JSONObject[0]));
+		String urlPath = "projects/{project_id}/test-runs/record-multiple";
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		try {
+			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
+				urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
+				requestJSONArray.toString());
+
+			List<SpiraTestCaseRun> spiraTestCaseRuns = new ArrayList<>();
+
+			for (int i = 0; i < responseJSONArray.length(); i++) {
+				JSONObject responseJSONObject = responseJSONArray.getJSONObject(
+					i);
+
+				responseJSONObject.put(
+					SpiraProject.ID_KEY, spiraProject.getID());
+
+				spiraTestCaseRuns.add(new SpiraTestCaseRun(responseJSONObject));
+			}
+
+			return spiraTestCaseRuns;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	public static class Result {
+
+		public Result(
+			SpiraTestCaseObject spiraTestCase, RunnerFormat runnerFormat,
+			String runnerStackTrace, Status status) {
+
+			_spiraTestCase = spiraTestCase;
+			_runnerFormat = runnerFormat;
+			_description = runnerStackTrace;
+			_status = status;
+		}
+
+		public String getDescription() {
+			return _description;
+		}
+
+		public Integer getRunnerFormatID() {
+			return _runnerFormat.getID();
+		}
+
+		public SpiraTestCaseObject getSpiraTestCase() {
+			return _spiraTestCase;
+		}
+
+		public Integer getStatusID() {
+			return _status.getID();
+		}
+
+		private final String _description;
+		private final RunnerFormat _runnerFormat;
+		private final SpiraTestCaseObject _spiraTestCase;
+		private final Status _status;
+
+	}
+
+	public static enum RunnerFormat {
+
+		HTML(2), PLAIN(1);
+
+		public Integer getID() {
+			return _id;
+		}
+
+		private RunnerFormat(Integer id) {
+			_id = id;
+		}
+
+		private final Integer _id;
+
+	}
+
+	public static enum Status {
+
+		BLOCKED(5), CAUTION(6), FAILED(1), NOT_APPLICABLE(4), NOT_RUN(3),
+		PASSED(2);
+
+		public Integer getID() {
+			return _id;
+		}
+
+		private Status(Integer id) {
+			_id = id;
+		}
+
+		private final Integer _id;
+
 	}
 
 	protected static List<SpiraTestCaseRun> getSpiraTestCaseRuns(
@@ -149,22 +249,6 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 	}
 
 	protected static final String ID_KEY = "TestRunId";
-
-	protected static final int RUNNER_FORMAT_HTML = 2;
-
-	protected static final int RUNNER_FORMAT_PLAIN = 1;
-
-	protected static final int STATUS_BLOCKED = 5;
-
-	protected static final int STATUS_CAUTION = 6;
-
-	protected static final int STATUS_FAILED = 1;
-
-	protected static final int STATUS_NOT_APPLICABLE = 4;
-
-	protected static final int STATUS_NOT_RUN = 3;
-
-	protected static final int STATUS_PASSED = 2;
 
 	private static List<JSONObject> _requestSpiraTestCaseRuns(
 		SpiraProject spiraProject, SpiraTestCaseObject spiraTestCase,

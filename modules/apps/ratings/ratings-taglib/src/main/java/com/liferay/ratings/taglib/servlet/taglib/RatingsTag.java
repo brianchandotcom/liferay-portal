@@ -76,7 +76,7 @@ public class RatingsTag extends IncludeTag {
 		_classPK = classPK;
 	}
 
-	public void setInTrash(Boolean inTrash) {
+	public void setInTrash(boolean inTrash) {
 		_inTrash = inTrash;
 	}
 
@@ -137,6 +137,8 @@ public class RatingsTag extends IncludeTag {
 
 			boolean inTrash = _isInTrash();
 
+			int positiveVotes = (int)Math.round(_getTotalScore());
+
 			RatingsStats ratingsStats = _getRatingsStats();
 
 			ThemeDisplay themeDisplay =
@@ -145,6 +147,12 @@ public class RatingsTag extends IncludeTag {
 
 			RatingsEntry ratingsEntry = _getRatingsEntry(
 				ratingsStats, themeDisplay);
+
+			double userScore = _getUserScore(ratingsEntry);
+
+			boolean thumbUp = _isThumbUp(userScore);
+
+			int totalEntries = _getTotalEntries(ratingsStats);
 
 			String url = _getURL(themeDisplay);
 
@@ -157,13 +165,21 @@ public class RatingsTag extends IncludeTag {
 				).put(
 					"enabled", _isEnabled(themeDisplay, inTrash)
 				).put(
+					"initialLiked", thumbUp
+				).put(
+					"initialNegativeVotes", totalEntries - positiveVotes
+				).put(
+					"initialPositiveVotes", positiveVotes
+				).put(
 					"inTrash", inTrash
 				).put(
-					"isLiked", _isLiked(ratingsEntry)
-				).put(
-					"positiveVotes", (int)Math.round(_getTotalScore())
+					"positiveVotes", positiveVotes
 				).put(
 					"signedIn", themeDisplay.isSignedIn()
+				).put(
+					"thumbDown", _isThumbDown(userScore)
+				).put(
+					"thumbUp", thumbUp
 				).put(
 					"url", url
 				).build());
@@ -201,6 +217,16 @@ public class RatingsTag extends IncludeTag {
 		}
 
 		return _ratingsStats;
+	}
+
+	private int _getTotalEntries(RatingsStats ratingsStats) {
+		int totalEntries = 0;
+
+		if (ratingsStats != null) {
+			totalEntries = ratingsStats.getTotalEntries();
+		}
+
+		return totalEntries;
 	}
 
 	private double _getTotalScore() {
@@ -260,6 +286,16 @@ public class RatingsTag extends IncludeTag {
 		return _url;
 	}
 
+	private double _getUserScore(RatingsEntry ratingsEntry) {
+		double userScore = -1.0;
+
+		if (ratingsEntry != null) {
+			userScore = ratingsEntry.getScore();
+		}
+
+		return userScore;
+	}
+
 	private boolean _isEnabled(ThemeDisplay themeDisplay, boolean inTrash) {
 		if (!inTrash) {
 			Group group = themeDisplay.getSiteGroup();
@@ -280,14 +316,20 @@ public class RatingsTag extends IncludeTag {
 		return _inTrash;
 	}
 
-	private Object _isLiked(RatingsEntry ratingsEntry) {
-		double yourScore = -1.0;
-
-		if (ratingsEntry != null) {
-			yourScore = ratingsEntry.getScore();
+	private boolean _isThumbDown(double userScore) {
+		if ((userScore != -1.0) && (userScore < 0.5)) {
+			return true;
 		}
 
-		return (yourScore != -1.0) && (yourScore >= 0.5);
+		return false;
+	}
+
+	private boolean _isThumbUp(double userScore) {
+		if ((userScore != -1.0) && (userScore >= 0.5)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _PAGE = "/page.jsp";

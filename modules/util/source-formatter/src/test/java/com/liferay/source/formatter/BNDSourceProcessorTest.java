@@ -32,10 +32,14 @@ public class BNDSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"moved to the archived folder");
 		test(
 			"FormatBndInstructions3/app.testbnd",
-			StringBundler.concat(
-				"The 'Liferay-Releng-Suite' can be blank or one of the ",
-				"following values collaboration, forms-and-workflow, ",
-				"foundation, static, web-experience"));
+			new String[] {
+				"The 'Liferay-Releng-Restart-Required' can only be set to " +
+					"false if a POSHI tests exists, see LPS-110344",
+				StringBundler.concat(
+					"The 'Liferay-Releng-Suite' can be blank or one of the ",
+					"following values collaboration, forms-and-workflow, ",
+					"foundation, static, web-experience")
+			});
 	}
 
 	@Test

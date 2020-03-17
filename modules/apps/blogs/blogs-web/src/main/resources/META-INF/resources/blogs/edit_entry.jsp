@@ -145,13 +145,13 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 							String onChangeTitle = renderResponse.getNamespace() + "onChangeTitle(event.target.value)";
 							%>
 
-							<aui:input cssClass="form-control-edit form-control-edit-title form-control-unstyled" label="" name="titleEditor" onChange="<%= onChangeTitle %>" placeholder="<%= LanguageUtil.get(request, "title") + StringPool.BLANK + \" *\" %>" required="<%= true %>" showRequiredLabel="<%= true %>" type="textarea" value="<%= HtmlUtil.escape(title) %>" />
+							<aui:input autoSize="<%= true %>" cssClass="form-control-edit form-control-edit-title form-control-unstyled" label="" name="titleEditor" onChange="<%= onChangeTitle %>" placeholder="<%= LanguageUtil.get(request, "title") + StringPool.BLANK + \" *\" %>" required="<%= true %>" showRequiredLabel="<%= true %>" type="textarea" value="<%= HtmlUtil.escape(title) %>" />
 						</div>
 
 						<aui:input name="title" type="hidden" />
 
 						<div class="entry-subtitle">
-							<aui:input cssClass="form-control-edit form-control-edit-subtitle form-control-unstyled" label="" name="subtitleEditor" placeholder='<%= LanguageUtil.get(request, "subtitle") %>' type="textarea" />
+							<aui:input autoSize="<%= true %>" cssClass="form-control-edit form-control-edit-subtitle form-control-unstyled" label="" name="subtitleEditor" placeholder='<%= LanguageUtil.get(request, "subtitle") %>' type="textarea" />
 						</div>
 
 						<aui:input name="subtitle" type="hidden" />

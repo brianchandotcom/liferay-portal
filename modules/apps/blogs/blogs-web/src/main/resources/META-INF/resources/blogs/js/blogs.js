@@ -19,8 +19,6 @@ AUI.add(
 
 		var CSS_INVISIBLE = 'invisible';
 
-		var KEY_DOWN = 'keydown';
-
 		var STR_BLANK = '';
 
 		var STR_CHANGE = 'change';
@@ -200,44 +198,6 @@ AUI.add(
 						)
 					);
 
-					var titleEditor = instance.one(
-						'#' + instance.ns('titleEditor')
-					);
-
-					if (titleEditor) {
-						instance._initialTitleHeight = titleEditor
-							.getDOM()
-							.getBoundingClientRect().height;
-
-						eventHandles.push(
-							titleEditor.delegate(
-								KEY_DOWN,
-								instance._onTitleKeyDown,
-								'textarea',
-								instance
-							)
-						);
-					}
-
-					var subtitleEditor = instance.one(
-						'#' + instance.ns('subtitleEditor')
-					);
-
-					if (subtitleEditor) {
-						instance._initialSubtitleHeight = subtitleEditor
-							.getDOM()
-							.getBoundingClientRect().height;
-
-						eventHandles.push(
-							subtitleEditor.delegate(
-								KEY_DOWN,
-								instance._onSubtitleKeyDown,
-								'textarea',
-								instance
-							)
-						);
-					}
-
 					instance._eventHandles = eventHandles;
 				},
 
@@ -380,40 +340,6 @@ AUI.add(
 						Liferay.Util.toggleDisabled(urlTitleInput, false);
 						Liferay.Util.toggleDisabled(urlTitleInputLabel, false);
 					}
-				},
-
-				_onSubtitleKeyDown(event) {
-					var instance = this;
-					var textarea = event.target.getDOM();
-
-					requestAnimationFrame(() => {
-						var value = textarea.value;
-
-						if (value) {
-							textarea.style.cssText = `height: ${textarea.scrollHeight}px`;
-						}
-						else {
-							textarea.style.cssText =
-								instance._initialSubtitleHeight;
-						}
-					});
-				},
-
-				_onTitleKeyDown(event) {
-					var instance = this;
-					var textarea = event.target.getDOM();
-
-					requestAnimationFrame(() => {
-						var value = textarea.value;
-
-						if (value) {
-							textarea.style.cssText = `height: ${textarea.scrollHeight}px`;
-						}
-						else {
-							textarea.style.cssText =
-								instance._initialTitleHeight;
-						}
-					});
 				},
 
 				_removeCaption() {

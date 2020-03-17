@@ -814,7 +814,8 @@ public class BatchEngineImportTaskExecutorTest
 				user.getCompanyId(), user.getUserId(), 10, null,
 				BlogPosting.class.getName(), content, contentType,
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
-				fieldNameMappingMap, batchEngineTaskOperation.name(), null);
+				fieldNameMappingMap, batchEngineTaskOperation.name(), null,
+				null);
 
 		_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
 	}

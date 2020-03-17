@@ -177,17 +177,17 @@ public abstract class BaseClientTestCase {
 			String user, String password, String hostname, String scope) {
 
 		return (clientId, invocationBuilder) -> {
-			String authorizationCode = getCodeResponse(
-				user, password, hostname,
-				getCodeFunction(
-					webTarget -> webTarget.queryParam(
-						"client_id", clientId
-					).queryParam(
-						"response_type", "code"
-					).queryParam(
-						"scope", scope
-					)),
-				this::parseAuthorizationCodeString);
+			String authorizationCode = parseAuthorizationCodeString(
+				getCodeResponse(
+					user, password, hostname,
+					getCodeFunction(
+						webTarget -> webTarget.queryParam(
+							"client_id", clientId
+						).queryParam(
+							"response_type", "code"
+						).queryParam(
+							"scope", scope
+						))));
 
 			BiFunction<String, Invocation.Builder, Response>
 				authorizationCodePKCEBiFunction =
@@ -218,17 +218,17 @@ public abstract class BaseClientTestCase {
 
 			final String codeChallenge = base64UrlDigest;
 
-			String authorizationCode = getCodeResponse(
-				userName, password, hostname,
-				getCodeFunction(
-					webTarget -> webTarget.queryParam(
-						"client_id", clientId
-					).queryParam(
-						"code_challenge", codeChallenge
-					).queryParam(
-						"response_type", "code"
-					)),
-				this::parseAuthorizationCodeString);
+			String authorizationCode = parseAuthorizationCodeString(
+				getCodeResponse(
+					userName, password, hostname,
+					getCodeFunction(
+						webTarget -> webTarget.queryParam(
+							"client_id", clientId
+						).queryParam(
+							"code_challenge", codeChallenge
+						).queryParam(
+							"response_type", "code"
+						))));
 
 			BiFunction<String, Invocation.Builder, Response>
 				authorizationCodePKCEBiFunction =

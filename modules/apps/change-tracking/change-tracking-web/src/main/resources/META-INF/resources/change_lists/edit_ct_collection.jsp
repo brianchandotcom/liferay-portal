@@ -32,7 +32,7 @@ boolean revert = ParamUtil.getBoolean(request, "revert");
 if (revert) {
 	actionName = "/change_lists/undo_ct_collection";
 	ctCollectionId = ctCollection.getCtCollectionId();
-	name = StringBundler.concat(LanguageUtil.get(request, "undo"), " \"", ctCollection.getName(), "\"");
+	name = StringBundler.concat(LanguageUtil.get(request, "revert"), " \"", ctCollection.getName(), "\"");
 	saveButtonLabel = "revert-and-create-publication";
 
 	renderResponse.setTitle(LanguageUtil.get(resourceBundle, "revert"));

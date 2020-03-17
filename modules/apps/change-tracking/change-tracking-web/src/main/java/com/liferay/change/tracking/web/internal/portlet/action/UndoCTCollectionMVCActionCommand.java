@@ -67,7 +67,7 @@ public class UndoCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 				_ctCollectionLocalService.getCTCollection(ctCollectionId);
 
 			name = StringBundler.concat(
-				_language.get(themeDisplay.getLocale(), "undo"), " \"",
+				_language.get(themeDisplay.getLocale(), "revert"), " \"",
 				ctCollection.getName(), "\"");
 		}
 

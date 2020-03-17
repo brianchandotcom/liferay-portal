@@ -53,32 +53,29 @@ public class CardsDisplayContext {
 	public List<LabelItem> getLabelItems() {
 		return new LabelItemList() {
 			{
+				int numItems = 1 + RandomUtil.nextInt(3);
+
 				LabelItem labelItem1 = new LabelItem();
 
 				labelItem1.setLabel("Approved");
 				labelItem1.setStyle("success");
 
-				LabelItem labelItem2 = new LabelItem();
+				add(labelItem1);
 
-				labelItem2.setLabel("Pending");
+				if (numItems > 1) {
+					LabelItem labelItem2 = new LabelItem();
 
-				LabelItem labelItem3 = new LabelItem();
+					labelItem2.setLabel("Pending");
 
-				labelItem3.setLabel("Canceled");
-				labelItem3.setStyle("danger");
-
-				int numItems = 1 + RandomUtil.nextInt(3);
-
-				if ((numItems == 0) || (numItems < 2)) {
-					add(labelItem1);
-				}
-				else if (numItems == 2) {
-					add(labelItem1);
 					add(labelItem2);
 				}
-				else if (numItems >= 3) {
-					add(labelItem1);
-					add(labelItem2);
+
+				if (numItems > 2) {
+					LabelItem labelItem3 = new LabelItem();
+
+					labelItem3.setLabel("Canceled");
+					labelItem3.setStyle("danger");
+
 					add(labelItem3);
 				}
 			}

@@ -361,7 +361,7 @@ boolean choiceField = checkboxField || radioField;
 
 						var initialInputHeight = inputElement.getBoundingClientRect().height;
 
-						inputElement.addEventListener('keydown', function(event) {
+						inputElement.addEventListener('input', function(event) {
 							requestAnimationFrame(() => {
 								var target = event.target;
 								var value = target.value;

@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>PAGE_EDITOR_FRAGMENT_IMAGE</td>
-	<td>//section[contains(@class,'fragment-entry-link')][${key_position}]//*[contains(@class,'fragment-${key_fragmentClass}')]//img[contains(@src,'${key_image}')]</td>
+	<td>//*[contains(@class,'fragment-${key_fragmentClass}')]//img[contains(@src,'${key_image}')]</td>
 	<td></td>
 </tr>
 <tr>

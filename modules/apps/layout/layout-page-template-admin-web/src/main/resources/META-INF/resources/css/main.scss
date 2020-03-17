@@ -1,0 +1,17 @@
+.portlet-layout-templates-admin {
+	.warning-dialog {
+		.error-list-items li {
+			list-style: disc inside;
+		}
+
+		.error-list-items .error-info {
+			font-size: 0.8em;
+			font-style: italic;
+			margin-left: 0.5em;
+		}
+
+		.error-message {
+			font-weight: bold;
+		}
+	}
+}

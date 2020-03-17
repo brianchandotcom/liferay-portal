@@ -1,0 +1,139 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.segments.vocabulary.field.customizer.internal.portal.settings.configuration.admin.display;
+
+import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.vocabulary.field.customizer.internal.configuration.SegmentsVocabularyFieldCustomizerConfiguration;
+import com.liferay.segments.vocabulary.field.customizer.internal.constants.SegmentsVocabularyFieldCustomizerWebKeys;
+
+import java.io.IOException;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Cristina González
+ */
+@Component(service = ConfigurationScreen.class)
+public class SegmentsVocabularyFieldCustomizerConfigurationScreen
+	implements ConfigurationScreen {
+
+	@Override
+	public String getCategoryKey() {
+		return "segments";
+	}
+
+	@Override
+	public String getKey() {
+		return "segments-vocabulary-field-customizer-configuration-name";
+	}
+
+	@Override
+	public String getName(Locale locale) {
+		return LanguageUtil.get(
+			ResourceBundleUtil.getBundle(locale, getClass()), getKey());
+	}
+
+	@Override
+	public String getScope() {
+		return "company";
+	}
+
+	@Override
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(
+					"/edit_segments_vocabulary_field_customizer_factory.jsp");
+
+			_setHttpServletRequestAttributes(httpServletRequest);
+
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
+		}
+		catch (Exception exception) {
+			throw new IOException(
+				"Unable to render " +
+					"edit_segments_vocabulary_field_customizer_factory.jsp",
+				exception);
+		}
+	}
+
+	private void _setHttpServletRequestAttributes(
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		ExtendedObjectClassDefinition.Scope scope =
+			ExtendedObjectClassDefinition.Scope.COMPANY;
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		List<Configuration> configurations = Stream.of(
+			Optional.ofNullable(
+				_configurationAdmin.listConfigurations(
+					StringBundler.concat(
+						"(&(", scope.getPropertyKey(), "=",
+						String.valueOf(themeDisplay.getCompanyId()), ")(",
+						ConfigurationAdmin.SERVICE_FACTORYPID, "=",
+						SegmentsVocabularyFieldCustomizerConfiguration.class.
+							getCanonicalName(),
+						"))"))
+			).orElse(
+				new Configuration[0]
+			)
+		).collect(
+			Collectors.toList()
+		);
+
+		httpServletRequest.setAttribute(
+			SegmentsVocabularyFieldCustomizerWebKeys.
+				SEGMENTS_VOCABULARY_FIELD_CUSTOMIZER_CONFIGURATIONS,
+			configurations);
+	}
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.segments.vocabulary.field.customizer)",
+		unbind = "-"
+	)
+	private ServletContext _servletContext;
+
+}

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -56,14 +55,18 @@ import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.CreatorUser;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Creator;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Transition;
+import com.liferay.portal.workflow.metrics.rest.exception.v1_0.NoSuchInstanceException;
+import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.AssigneeUtil;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
+import com.liferay.portal.workflow.metrics.search.index.InstanceWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
@@ -92,6 +95,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = InstanceResource.class
 )
 public class InstanceResourceImpl extends BaseInstanceResourceImpl {
+
+	@Override
+	public void deleteProcessInstance(Long processId, Long instanceId)
+		throws Exception {
+
+		_instanceWorkflowMetricsIndexer.deleteInstance(
+			contextCompany.getCompanyId(), instanceId);
+	}
 
 	@Override
 	public Instance getProcessInstance(Long processId, Long instanceId)
@@ -194,8 +205,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 				return instance;
 			}
-		).orElseGet(
-			Instance::new
+		).orElseThrow(
+			() -> new NoSuchInstanceException(
+				"No Instance exists with the id " + instanceId)
 		);
 	}
 
@@ -222,6 +234,48 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		}
 
 		return Page.of(Collections.emptyList());
+	}
+
+	public void patchProcessInstance(
+			Long processId, Long instanceId, Instance instance)
+		throws Exception {
+
+		getProcessInstance(processId, instanceId);
+
+		_instanceWorkflowMetricsIndexer.updateInstance(
+			LocalizedMapUtil.getLocalizedMap(instance.getAssetTitle_i18n()),
+			LocalizedMapUtil.getLocalizedMap(instance.getAssetType_i18n()),
+			contextCompany.getCompanyId(), instanceId,
+			instance.getDateModified());
+	}
+
+	@Override
+	public void patchProcessInstanceComplete(
+			Long processId, Long instanceId, Instance instance)
+		throws Exception {
+
+		getProcessInstance(processId, instanceId);
+
+		_instanceWorkflowMetricsIndexer.completeInstance(
+			contextCompany.getCompanyId(), instance.getDateCompletion(),
+			instance.getDuration(), instanceId, instance.getDateModified());
+	}
+
+	@Override
+	public Instance postProcessInstance(Long processId, Instance instance)
+		throws Exception {
+
+		Creator creator = instance.getCreator();
+
+		return _createInstance(
+			_instanceWorkflowMetricsIndexer.addInstance(
+				LocalizedMapUtil.getLocalizedMap(instance.getAssetTitle_i18n()),
+				LocalizedMapUtil.getLocalizedMap(instance.getAssetType_i18n()),
+				instance.getClassName(), instance.getClassPK(),
+				contextCompany.getCompanyId(), null, instance.getDateCreated(),
+				instance.getId(), instance.getDateModified(), processId,
+				instance.getProcessVersion(), creator.getId(),
+				creator.getName()));
 	}
 
 	private BooleanQuery _createAssigneeIdsExistsBooleanQuery(
@@ -515,7 +569,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		).map(
 			GetterUtil::getLong
 		).map(
-			this::_toAssignee
+			userId -> AssigneeUtil.toAssignee(
+				_portal, userId, _userLocalService::fetchUser)
 		).filter(
 			Objects::nonNull
 		).collect(
@@ -908,44 +963,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		instance.setTransitions(_toTransitions(instance));
 	}
 
-	private Assignee _toAssignee(long userId) {
-		User user = _userLocalService.fetchUser(userId);
-
-		return new AssigneeUser() {
-			{
-				id = userId;
-
-				setImage(
-					() -> {
-						if (user == null) {
-							return null;
-						}
-
-						if (user.getPortraitId() == 0) {
-							return null;
-						}
-
-						ThemeDisplay themeDisplay = new ThemeDisplay() {
-							{
-								setPathImage(_portal.getPathImage());
-							}
-						};
-
-						return user.getPortraitURL(themeDisplay);
-					});
-				setName(
-					() -> {
-						if (user == null) {
-							return String.valueOf(userId);
-						}
-
-						return user.getFullName();
-					});
-			}
-		};
-	}
-
-
 	private Creator _toCreator(Long userId) {
 		if (Objects.isNull(userId)) {
 			return null;
@@ -967,7 +984,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					});
 			}
 		};
-
 	}
 
 	private Date _toDate(String dateString) {
@@ -1014,6 +1030,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	@Reference
 	private Aggregations _aggregations;
+
+	@Reference
+	private InstanceWorkflowMetricsIndexer _instanceWorkflowMetricsIndexer;
 
 	@Reference
 	private Language _language;

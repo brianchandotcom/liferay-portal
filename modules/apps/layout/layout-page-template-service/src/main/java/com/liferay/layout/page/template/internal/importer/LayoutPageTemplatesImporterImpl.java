@@ -692,8 +692,8 @@ public class LayoutPageTemplatesImporterImpl
 						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
-							"x-was-not-imported-because-a-page-template-with-" +
-								"the-same-name-already-exists",
+							"x-could-not-be-imported-because-a-page-template-" +
+								"with-the-same-name-already-exists",
 							pageTemplateEntry.getZipPath())));
 			}
 		}

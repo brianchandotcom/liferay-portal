@@ -196,7 +196,7 @@ definition {
 		Button.clickSave();
 	}
 
-	macro getSiteTemplateURL {
+	macro getSiteTemplateID {
 		SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -205,10 +205,11 @@ definition {
 
 		var currentURL = Navigator.getCurrentURL();
 		var siteTemplateURL = StringUtil.extractFirst("${currentURL}", "/~/");
+		var siteTemplateID = StringUtil.extractLast("${siteTemplateURL}", "/");
 
-		echo("siteTemplateURL: ${siteTemplateURL}");
+		echo("siteTemplateID: ${siteTemplateID}");
 
-		return "${siteTemplateURL}";
+		return "${siteTemplateID}";
 	}
 
 	macro gotoSettingsCP {

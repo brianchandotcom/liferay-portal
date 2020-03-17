@@ -436,7 +436,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(
-			_queries.term("slaDefinitionId", 0));
+			_queries.term("slaDefinitionId", 0),
+			_queries.term("status", WorkflowMetricsSLAStatus.NEW.name()));
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),

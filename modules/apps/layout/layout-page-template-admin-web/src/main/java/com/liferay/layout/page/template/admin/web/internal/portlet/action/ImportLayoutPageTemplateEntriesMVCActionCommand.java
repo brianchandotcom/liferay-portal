@@ -101,22 +101,23 @@ public class ImportLayoutPageTemplateEntriesMVCActionCommand
 				layoutPageTemplateImporterResultEntries.stream();
 
 			List<LayoutPageTemplatesImporterResultEntry>
-				invalidLayoutPageTemplateImporterResultEntries = stream.filter(
-					layoutPageTemplateImportEntry ->
-						layoutPageTemplateImportEntry.getStatus() !=
-							LayoutPageTemplatesImporterResultEntry.Status.
-								IMPORTED
-				).collect(
-					Collectors.toList()
-				);
+				notImportedLayoutPageTemplateImporterResultEntries =
+					stream.filter(
+						layoutPageTemplateImportEntry ->
+							layoutPageTemplateImportEntry.getStatus() !=
+								LayoutPageTemplatesImporterResultEntry.Status.
+									IMPORTED
+					).collect(
+						Collectors.toList()
+					);
 
 			if (ListUtil.isNotEmpty(
-					invalidLayoutPageTemplateImporterResultEntries)) {
+					notImportedLayoutPageTemplateImporterResultEntries)) {
 
 				SessionMessages.add(
 					actionRequest,
-					"invalidLayoutPageTemplateImporterResultEntries",
-					invalidLayoutPageTemplateImporterResultEntries);
+					"notImportedLayoutPageTemplateImporterResultEntries",
+					notImportedLayoutPageTemplateImporterResultEntries);
 			}
 			else {
 				SessionMessages.add(actionRequest, "success");

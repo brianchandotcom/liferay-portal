@@ -40,10 +40,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -135,10 +137,20 @@ public class FragmentLayoutStructureItemHelper
 				"BackgroundImageFragmentEntryProcessor",
 			JSONFactoryUtil.createJSONObject());
 
+		boolean useSegmentsExperience = false;
+
+		Layout publishedLayout = LayoutLocalServiceUtil.fetchLayout(
+			layout.getClassPK());
+
+		if (publishedLayout != null) {
+			useSegmentsExperience = !publishedLayout.isSystem();
+		}
+
 		JSONObject editableFragmentEntryProcessorJSONObject =
 			_toEditableFragmentEntryProcessorJSONObject(
 				editableTypes,
-				(List<Object>)definitionMap.get("fragmentFields"));
+				(List<Object>)definitionMap.get("fragmentFields"),
+				useSegmentsExperience);
 
 		if (editableFragmentEntryProcessorJSONObject.length() > 0) {
 			fragmentEntryProcessorValuesJSONObject.put(
@@ -448,7 +460,8 @@ public class FragmentLayoutStructureItemHelper
 	}
 
 	private JSONObject _toEditableFragmentEntryProcessorJSONObject(
-		Map<String, String> editableTypes, List<Object> fragmentFields) {
+		Map<String, String> editableTypes, List<Object> fragmentFields,
+		boolean useSegmentsExperience) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -521,6 +534,13 @@ public class FragmentLayoutStructureItemHelper
 			}
 
 			try {
+				if (useSegmentsExperience) {
+					localizationJSONObject = JSONUtil.put(
+						SegmentsExperienceConstants.ID_PREFIX +
+							SegmentsExperienceConstants.ID_DEFAULT,
+						localizationJSONObject);
+				}
+
 				jsonObject.put(
 					fragmentFieldId,
 					JSONUtil.merge(

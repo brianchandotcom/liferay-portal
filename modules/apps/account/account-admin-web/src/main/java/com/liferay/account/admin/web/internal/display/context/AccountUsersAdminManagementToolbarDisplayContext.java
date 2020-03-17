@@ -228,22 +228,18 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
-		DropdownItemList filterDropdownItems = new DropdownItemList() {
-			{
-				List<DropdownItem> filterAccountEntriesDropdownItems =
-					_getFilterByAccountEntriesDropdownItems();
+		List<DropdownItem> filterAccountEntriesDropdownItems =
+			_getFilterByAccountEntriesDropdownItems();
 
-				if (filterAccountEntriesDropdownItems != null) {
-					addGroup(
-						dropdownGroupItem -> {
-							dropdownGroupItem.setDropdownItems(
-								_getFilterByAccountEntriesDropdownItems());
-							dropdownGroupItem.setLabel(
-								_getFilterByAccountEntriesDropdownItemsLabel());
-						});
-				}
+		DropdownItemList filterDropdownItems = DropdownItemListBuilder.addGroup(
+			() -> filterAccountEntriesDropdownItems != null,
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					filterAccountEntriesDropdownItems);
+				dropdownGroupItem.setLabel(
+					_getFilterByAccountEntriesDropdownItemsLabel());
 			}
-		};
+		).build();
 
 		filterDropdownItems.addAll(super.getFilterDropdownItems());
 

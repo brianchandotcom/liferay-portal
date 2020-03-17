@@ -19,7 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -57,38 +57,29 @@ public class AssetTagsManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList() {
-			{
-				if (_assetTagsDisplayContext.isShowTagsActions()) {
-					PortletURL mergeTagsURL =
-						liferayPortletResponse.createRenderURL();
+		return DropdownItemListBuilder.add(
+			_assetTagsDisplayContext::isShowTagsActions,
+			dropdownItem -> {
+				PortletURL mergeTagsURL =
+					liferayPortletResponse.createRenderURL();
 
-					mergeTagsURL.setParameter("mvcPath", "/merge_tag.jsp");
-					mergeTagsURL.setParameter(
-						"mergeTagIds", "[$MERGE_TAGS_IDS$]");
+				mergeTagsURL.setParameter("mvcPath", "/merge_tag.jsp");
+				mergeTagsURL.setParameter("mergeTagIds", "[$MERGE_TAGS_IDS$]");
 
-					add(
-						dropdownItem -> {
-							dropdownItem.putData("action", "mergeTags");
-							dropdownItem.putData(
-								"mergeTagsURL", mergeTagsURL.toString());
-							dropdownItem.setIcon("merge");
-							dropdownItem.setLabel(
-								LanguageUtil.get(request, "merge"));
-							dropdownItem.setQuickAction(true);
-						});
-				}
-
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "deleteTags");
-						dropdownItem.setIcon("times-circle");
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
+				dropdownItem.putData("action", "mergeTags");
+				dropdownItem.putData("mergeTagsURL", mergeTagsURL.toString());
+				dropdownItem.setIcon("merge");
+				dropdownItem.setLabel(LanguageUtil.get(request, "merge"));
+				dropdownItem.setQuickAction(true);
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "deleteTags");
+				dropdownItem.setIcon("times-circle");
+				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setQuickAction(true);
+			}
+		).build();
 	}
 
 	@Override

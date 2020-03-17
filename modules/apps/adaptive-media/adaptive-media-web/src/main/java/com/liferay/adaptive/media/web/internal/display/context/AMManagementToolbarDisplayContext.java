@@ -21,7 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -80,30 +80,23 @@ public class AMManagementToolbarDisplayContext {
 	public List<LabelItem> getFilterLabelItems() {
 		final String entriesNavigation = _getEntriesNavigation();
 
-		return new LabelItemList() {
-			{
-				if (entriesNavigation.equals("enabled") ||
-					entriesNavigation.equals("disabled")) {
+		return LabelItemListBuilder.add(
+			() ->
+				entriesNavigation.equals("enabled") ||
+				entriesNavigation.equals("disabled"),
+			labelItem -> {
+				PortletURL removeLabelURL = PortletURLUtil.clone(
+					_currentURLObj, _liferayPortletResponse);
 
-					add(
-						labelItem -> {
-							PortletURL removeLabelURL = PortletURLUtil.clone(
-								_currentURLObj, _liferayPortletResponse);
+				removeLabelURL.setParameter("entriesNavigation", (String)null);
 
-							removeLabelURL.setParameter(
-								"entriesNavigation", (String)null);
+				labelItem.putData("removeLabelURL", removeLabelURL.toString());
 
-							labelItem.putData(
-								"removeLabelURL", removeLabelURL.toString());
-
-							labelItem.setCloseable(true);
-							labelItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, entriesNavigation));
-						});
-				}
+				labelItem.setCloseable(true);
+				labelItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, entriesNavigation));
 			}
-		};
+		).build();
 	}
 
 	public List<AMImageConfigurationEntry> getSelectedConfigurationEntries() {

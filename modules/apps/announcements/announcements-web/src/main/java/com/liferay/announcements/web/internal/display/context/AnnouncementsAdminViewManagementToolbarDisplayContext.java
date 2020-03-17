@@ -21,7 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -158,31 +158,23 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 	}
 
 	public List<LabelItem> getFilterLabelItems() {
-		return new LabelItemList() {
-			{
-				String distributionScope = _getDistributionScope();
+		return LabelItemListBuilder.add(
+			() -> Validator.isNotNull(_getDistributionScope()),
+			labelItem -> {
+				PortletURL removeLabelURL = PortletURLUtil.clone(
+					_currentURLObj, _liferayPortletResponse);
 
-				if (Validator.isNotNull(distributionScope)) {
-					add(
-						labelItem -> {
-							PortletURL removeLabelURL = PortletURLUtil.clone(
-								_currentURLObj, _liferayPortletResponse);
+				removeLabelURL.setParameter("distributionScope", (String)null);
 
-							removeLabelURL.setParameter(
-								"distributionScope", (String)null);
+				labelItem.putData("removeLabelURL", removeLabelURL.toString());
 
-							labelItem.putData(
-								"removeLabelURL", removeLabelURL.toString());
+				labelItem.setCloseable(true);
 
-							labelItem.setCloseable(true);
-
-							labelItem.setLabel(
-								_announcementsAdminViewDisplayContext.
-									getCurrentDistributionScopeLabel());
-						});
-				}
+				labelItem.setLabel(
+					_announcementsAdminViewDisplayContext.
+						getCurrentDistributionScopeLabel());
 			}
-		};
+		).build();
 	}
 
 	public int getTotal() {

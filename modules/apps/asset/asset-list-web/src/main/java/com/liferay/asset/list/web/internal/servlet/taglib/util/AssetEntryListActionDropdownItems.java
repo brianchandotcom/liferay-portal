@@ -17,7 +17,7 @@ package com.liferay.asset.list.web.internal.servlet.taglib.util;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.web.internal.security.permission.resource.AssetListEntryPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -57,33 +57,29 @@ public class AssetEntryListActionDropdownItems {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
-		return new DropdownItemList() {
-			{
-				if (AssetListEntryPermission.contains(
-						_themeDisplay.getPermissionChecker(), _assetListEntry,
-						ActionKeys.UPDATE)) {
-
-					add(_getEditAssetListEntryActionUnsafeConsumer());
-					add(_getRenameAssetListEntryActionUnsafeConsumer());
-				}
-
-				if (AssetListEntryPermission.contains(
-						_themeDisplay.getPermissionChecker(), _assetListEntry,
-						ActionKeys.PERMISSIONS)) {
-
-					add(_getPermissionsAssetListEntryActionUnsafeConsumer());
-				}
-
-				add(_getViewAssetListEntryUsagesActionUnsafeConsumer());
-
-				if (AssetListEntryPermission.contains(
-						_themeDisplay.getPermissionChecker(), _assetListEntry,
-						ActionKeys.DELETE)) {
-
-					add(_getDeleteAssetListEntryActionUnsafeConsumer());
-				}
-			}
-		};
+		return DropdownItemListBuilder.add(
+			() -> AssetListEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), _assetListEntry,
+				ActionKeys.UPDATE),
+			_getEditAssetListEntryActionUnsafeConsumer()
+		).add(
+			() -> AssetListEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), _assetListEntry,
+				ActionKeys.UPDATE),
+			_getRenameAssetListEntryActionUnsafeConsumer()
+		).add(
+			() -> AssetListEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), _assetListEntry,
+				ActionKeys.PERMISSIONS),
+			_getPermissionsAssetListEntryActionUnsafeConsumer()
+		).add(
+			_getViewAssetListEntryUsagesActionUnsafeConsumer()
+		).add(
+			() -> AssetListEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), _assetListEntry,
+				ActionKeys.DELETE),
+			_getDeleteAssetListEntryActionUnsafeConsumer()
+		).build();
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

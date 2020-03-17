@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
@@ -176,34 +175,24 @@ public class AssetCategoriesManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getFilterNavigationDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(_isNavigationAll());
-						dropdownItem.setHref(
-							getPortletURL(), "navigation", "all");
-						dropdownItem.setLabel(LanguageUtil.get(request, "all"));
-					});
-
-				if (_assetCategoriesDisplayContext.
-						isFlattenedNavigationAllowed()) {
-
-					add(
-						dropdownItem -> {
-							dropdownItem.setActive(_isNavigationCategory());
-							dropdownItem.putData("action", "selectCategory");
-							dropdownItem.putData(
-								"categoriesSelectorURL",
-								_getCategoriesSelectorURL());
-							dropdownItem.putData(
-								"viewCategoriesURL", _getViewCategoriesURL());
-							dropdownItem.setLabel(
-								LanguageUtil.get(request, "category"));
-						});
-				}
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(_isNavigationAll());
+				dropdownItem.setHref(getPortletURL(), "navigation", "all");
+				dropdownItem.setLabel(LanguageUtil.get(request, "all"));
 			}
-		};
+		).add(
+			_assetCategoriesDisplayContext::isFlattenedNavigationAllowed,
+			dropdownItem -> {
+				dropdownItem.setActive(_isNavigationCategory());
+				dropdownItem.putData("action", "selectCategory");
+				dropdownItem.putData(
+					"categoriesSelectorURL", _getCategoriesSelectorURL());
+				dropdownItem.putData(
+					"viewCategoriesURL", _getViewCategoriesURL());
+				dropdownItem.setLabel(LanguageUtil.get(request, "category"));
+			}
+		).build();
 	}
 
 	@Override

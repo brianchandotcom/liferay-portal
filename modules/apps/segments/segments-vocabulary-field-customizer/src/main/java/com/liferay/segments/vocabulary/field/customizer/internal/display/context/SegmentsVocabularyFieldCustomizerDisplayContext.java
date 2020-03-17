@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -55,7 +56,14 @@ public class SegmentsVocabularyFieldCustomizerDisplayContext {
 	}
 
 	public ActionURL getActionURL() {
-		return _renderResponse.createActionURL();
+		ActionURL actionURL = _renderResponse.createActionURL();
+
+		actionURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/add_segments_vocabulary_field_customizer");
+		actionURL.setParameter("redirect", String.valueOf(getRedirect()));
+
+		return actionURL;
 	}
 
 	public String getDescription() {

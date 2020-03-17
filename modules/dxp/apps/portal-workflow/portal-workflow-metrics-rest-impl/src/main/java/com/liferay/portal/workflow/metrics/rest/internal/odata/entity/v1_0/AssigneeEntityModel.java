@@ -28,9 +28,9 @@ import java.util.stream.Stream;
 /**
  * @author Rafael Praxedes
  */
-public class AssigneeUserEntityModel implements EntityModel {
+public class AssigneeEntityModel implements EntityModel {
 
-	public AssigneeUserEntityModel() {
+	public AssigneeEntityModel() {
 		_entityFieldsMap = Stream.of(
 			new IntegerEntityField(
 				"durationTaskAvg", locale -> "durationTaskAvg"),
@@ -52,7 +52,7 @@ public class AssigneeUserEntityModel implements EntityModel {
 	@Override
 	public String getName() {
 		return StringUtil.replace(
-			AssigneeUserEntityModel.class.getName(), CharPool.PERIOD,
+			AssigneeEntityModel.class.getName(), CharPool.PERIOD,
 			CharPool.UNDERLINE);
 	}
 

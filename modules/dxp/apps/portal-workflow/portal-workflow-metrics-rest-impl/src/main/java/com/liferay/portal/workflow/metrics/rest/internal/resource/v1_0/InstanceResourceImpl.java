@@ -418,6 +418,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				creator = _toCreator(document.getLong("userId"));
 				dateCompletion = _toDate(document.getDate("completionDate"));
 				dateCreated = _toDate(document.getDate("createDate"));
+				dateModified = _toDate(document.getDate("modifiedDate"));
 				id = document.getLong("instanceId");
 				processId = document.getLong("processId");
 				status = _getStatus(
@@ -439,6 +440,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					GetterUtil.getString(sourcesMap.get("completionDate")));
 				dateCreated = _toDate(
 					GetterUtil.getString(sourcesMap.get("createDate")));
+				dateModified = _toDate(
+					GetterUtil.getString(sourcesMap.get("modifiedDate")));
 				id = GetterUtil.getLong(sourcesMap.get("instanceId"));
 				processId = GetterUtil.getLong(sourcesMap.get("processId"));
 				status = _getStatus(

@@ -54,6 +54,10 @@ SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementTo
 				<%
 				Map<String, Object> data = HashMapBuilder.<String, Object>put(
 					"accountentryid", accountEntryDisplay.getAccountEntryId()
+				).put(
+					"entityid", accountEntryDisplay.getAccountEntryId()
+				).put(
+					"entityname", accountEntryDisplay.getName()
 				).build();
 				%>
 

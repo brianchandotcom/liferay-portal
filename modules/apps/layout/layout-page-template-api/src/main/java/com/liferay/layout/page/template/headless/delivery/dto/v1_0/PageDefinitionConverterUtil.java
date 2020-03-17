@@ -155,7 +155,7 @@ public class PageDefinitionConverterUtil {
 			if (grandChildrenItemIds.isEmpty()) {
 				pageElements.add(
 					_toPageElement(
-						fragmentCollectionContributorTracker,
+						groupId, fragmentCollectionContributorTracker,
 						fragmentEntryConfigurationParser,
 						fragmentRendererTracker, childLayoutStructureItem,
 						saveInlineContent, saveMappingConfiguration,
@@ -164,16 +164,16 @@ public class PageDefinitionConverterUtil {
 			else {
 				pageElements.add(
 					toPageElement(
-						fragmentCollectionContributorTracker,
+						groupId, fragmentCollectionContributorTracker,
 						fragmentEntryConfigurationParser,
 						fragmentRendererTracker, layoutStructure,
 						childLayoutStructureItem, saveInlineContent,
-						saveMappingConfiguration));
+						saveMappingConfiguration, segmentsExperienceId));
 			}
 		}
 
 		PageElement pageElement = _toPageElement(
-			fragmentCollectionContributorTracker,
+			groupId, fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
 			layoutStructureItem, saveInlineContent, saveMappingConfiguration,
 			segmentsExperienceId);
@@ -291,15 +291,15 @@ public class PageDefinitionConverterUtil {
 
 			mainPageElements.add(
 				toPageElement(
-					fragmentCollectionContributorTracker,
+					layout.getGroupId(), fragmentCollectionContributorTracker,
 					fragmentEntryConfigurationParser, fragmentRendererTracker,
 					layoutStructure,
 					layoutStructure.getLayoutStructureItem(childItemId),
-					saveInlineContent, saveMappingConfiguration));
+					saveInlineContent, saveMappingConfiguration, 0));
 		}
 
 		PageElement pageElement = _toPageElement(
-			fragmentCollectionContributorTracker,
+			layout.getGroupId(), fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
 			mainLayoutStructureItem, saveInlineContent,
 			saveMappingConfiguration, segmentsExperienceId);

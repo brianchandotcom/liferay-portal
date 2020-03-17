@@ -102,7 +102,7 @@ public class LayoutStructureUtil {
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
 		PageElement pageElement = PageDefinitionConverterUtil.toPageElement(
-			fragmentCollectionContributorTracker,
+			groupId, fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
 			layoutStructure, layoutStructure.getLayoutStructureItem(itemId),
 			saveInlineContent, saveMappingConfiguration, segmentsExperienceId);

@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface KBGroupServiceConfiguration {
 
-	@Meta.AD(deflt = "alloyeditor", name = "get-editor-name", required = false)
+	@Meta.AD(deflt = "ckeditor", name = "get-editor-name", required = false)
 	public String getEditorName();
 
 	@Meta.AD(

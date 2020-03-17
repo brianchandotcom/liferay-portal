@@ -15,6 +15,7 @@
 package com.liferay.segments.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.segments.exception.NoSuchEntryException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRole;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -75,6 +77,20 @@ public class SegmentsEntryRoleLocalServiceTest {
 		Assert.assertEquals(
 			_segmentsEntry.getSegmentsEntryId(),
 			segmentsEntryRole.getSegmentsEntryId());
+	}
+
+	@Test(expected = NoSuchRoleException.class)
+	public void testAddSegmentsEntryRoleWithInvalidRoleId() throws Exception {
+		_segmentsEntryRoleLocalService.addSegmentsEntryRole(
+			_segmentsEntry.getSegmentsEntryId(), 0L, _serviceContext);
+	}
+
+	@Test(expected = NoSuchEntryException.class)
+	public void testAddSegmentsEntryRoleWithInvalidSegmentsEntryId()
+		throws Exception {
+
+		_segmentsEntryRoleLocalService.addSegmentsEntryRole(
+			0L, _role.getRoleId(), _serviceContext);
 	}
 
 	@Test

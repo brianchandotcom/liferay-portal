@@ -638,7 +638,7 @@ public class WorkflowTaskDisplayContext {
 			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
 			new String[] {searchTerms.getKeywords()},
 			_getAssetType(searchTerms.getKeywords()), null, null, null, null,
-			_getCompleted(), searchByUserRoles, null, false);
+			null, _getCompleted(), searchByUserRoles, null, null, false);
 
 		_workflowTaskSearch.setTotal(total);
 
@@ -647,7 +647,7 @@ public class WorkflowTaskDisplayContext {
 			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
 			new String[] {searchTerms.getKeywords()},
 			_getAssetType(searchTerms.getKeywords()), null, null, null, null,
-			_getCompleted(), searchByUserRoles, null, false,
+			null, _getCompleted(), searchByUserRoles, null, null, false,
 			_workflowTaskSearch.getStart(), _workflowTaskSearch.getEnd(),
 			_workflowTaskSearch.getOrderByComparator());
 

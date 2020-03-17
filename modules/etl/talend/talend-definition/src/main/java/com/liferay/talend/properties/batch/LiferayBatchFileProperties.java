@@ -189,7 +189,7 @@ public class LiferayBatchFileProperties
 	}
 
 	private String _getEntityName() {
-		return entity.getValue();
+		return entity.getPossibleValuesDisplayName(entity.getValue());
 	}
 
 	private JsonObject _getOASJsonObject() {

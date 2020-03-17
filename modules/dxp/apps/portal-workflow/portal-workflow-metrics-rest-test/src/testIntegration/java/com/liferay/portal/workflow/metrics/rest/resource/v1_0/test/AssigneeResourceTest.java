@@ -16,18 +16,17 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeBulkSelection;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Role;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 import com.liferay.portal.workflow.metrics.search.index.InstanceWorkflowMetricsIndexer;
@@ -35,11 +34,10 @@ import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndex
 import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndexer;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -49,11 +47,11 @@ import org.junit.runner.RunWith;
  * @author Rafael Praxedes
  */
 @RunWith(Arquillian.class)
-public class RoleResourceTest extends BaseRoleResourceTestCase {
+public class AssigneeResourceTest extends BaseAssigneeResourceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		BaseRoleResourceTestCase.setUpClass();
+		BaseNodeResourceTestCase.setUpClass();
 
 		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
 			_documentBuilderFactory, _instanceWorkflowMetricsIndexer,
@@ -68,92 +66,91 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 		_process = _workflowMetricsRESTTestHelper.addProcess(
 			testGroup.getCompanyId());
+
+		_instance = _workflowMetricsRESTTestHelper.addInstance(
+			testGroup.getCompanyId(), false, _process.getId());
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		if (_process != null) {
+			_workflowMetricsRESTTestHelper.deleteProcess(
+				testGroup.getCompanyId(), _process);
+		}
+
+		if (_instance != null) {
+			_workflowMetricsRESTTestHelper.deleteInstance(
+				testGroup.getCompanyId(), _instance);
+		}
 	}
 
 	@Override
-	public void testGetProcessRolesPage() throws Exception {
-		super.testGetProcessRolesPage();
+	public void testPostProcessAssigneesPage() throws Exception {
+		Assignee assignee1 = randomAssignee();
 
-		Role role1 = testGetProcessRolesPage_addRole(
-			_process.getId(), randomRole(), "COMPLETED");
+		_workflowMetricsRESTTestHelper.addTask(
+			assignee1.getId(), testGroup.getCompanyId(), _instance);
 
-		Role role2 = testGetProcessRolesPage_addRole(
-			_process.getId(), randomRole(), "COMPLETED");
+		Assignee assignee2 = randomAssignee();
 
-		Page<Role> page = roleResource.getProcessRolesPage(
-			_process.getId(), true);
+		_workflowMetricsRESTTestHelper.addTask(
+			assignee2.getId(), testGroup.getCompanyId(), _instance);
+
+		Page<Assignee> page = assigneeResource.postProcessAssigneesPage(
+			_process.getId(), new AssigneeBulkSelection());
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(role1, role2), (List<Role>)page.getItems());
+			Arrays.asList(assignee1, assignee2),
+			(List<Assignee>)page.getItems());
 		assertValid(page);
+
+		page = assigneeResource.postProcessAssigneesPage(
+			_process.getId(),
+			new AssigneeBulkSelection() {
+				{
+					instanceIds = new Long[] {_instance.getId()};
+				}
+			});
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(assignee1, assignee2),
+			(List<Assignee>)page.getItems());
+		assertValid(page);
+
+		page = assigneeResource.postProcessAssigneesPage(
+			_process.getId(),
+			new AssigneeBulkSelection() {
+				{
+					instanceIds = new Long[] {0L};
+				}
+			});
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Override
-	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"id", "name"};
-	}
-
-	@Override
-	protected Role randomRole() throws Exception {
-		com.liferay.portal.kernel.model.Role role1 = _addRole(
-			RoleConstants.TYPE_SITE);
-
-		return new Role() {
-			{
-				id = role1.getRoleId();
-				name = role1.getName();
-			}
-		};
-	}
-
-	@Override
-	protected Role testGetProcessRolesPage_addRole(Long processId, Role role)
-		throws Exception {
-
-		return testGetProcessRolesPage_addRole(processId, role, "RUNNING");
-	}
-
-	protected Role testGetProcessRolesPage_addRole(
-			Long processId, Role role, String status)
-		throws Exception {
-
+	protected Assignee randomAssignee() throws Exception {
 		User user = UserTestUtil.addUser();
 
-		com.liferay.portal.kernel.model.Role serviceBuilderRole =
-			_roleLocalService.getRole(
-				testCompany.getCompanyId(), RoleConstants.USER);
-
-		_userLocalService.deleteRoleUser(
-			serviceBuilderRole.getRoleId(), user.getUserId());
-
-		_userLocalService.addRoleUser(role.getId(), user);
-
-		_workflowMetricsRESTTestHelper.addNodeMetric(
-			user.getUserId(), testGroup.getCompanyId(),
-			() -> _workflowMetricsRESTTestHelper.addInstance(
-				testGroup.getCompanyId(), Objects.equals(status, "COMPLETED"),
-				processId),
-			processId, status);
-
-		return role;
-	}
-
-	@Override
-	protected Long testGetProcessRolesPage_getProcessId() throws Exception {
-		return _process.getId();
-	}
-
-	private com.liferay.portal.kernel.model.Role _addRole(int roleType)
-		throws Exception {
-
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			roleType);
-
-		_roles.add(role);
-
-		return role;
+		return new Assignee() {
+			{
+				id = user.getUserId();
+				image = user.getPortraitURL(
+					new ThemeDisplay() {
+						{
+							setPathImage(_portal.getPathImage());
+						}
+					});
+				name = user.getFullName();
+			}
+		};
 	}
 
 	@Inject
@@ -180,16 +177,11 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 	private static WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;
 
+	private Instance _instance;
+
+	@Inject
+	private Portal _portal;
+
 	private Process _process;
-
-	@Inject
-	private RoleLocalService _roleLocalService;
-
-	@DeleteAfterTestRun
-	private final List<com.liferay.portal.kernel.model.Role> _roles =
-		new ArrayList<>();
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

@@ -31,16 +31,21 @@ import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeUser;
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeUserBulkSelection;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeMetric;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeMetricBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.NodeMetric;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
+import com.liferay.portal.workflow.metrics.search.index.InstanceWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndexer;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -57,14 +62,17 @@ import org.junit.runner.RunWith;
  * @author Rafael Praxedes
  */
 @RunWith(Arquillian.class)
-public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
+public class AssigneeMetricResourceTest
+	extends BaseAssigneeMetricResourceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		BaseAssigneeUserResourceTestCase.setUpClass();
+		BaseAssigneeResourceTestCase.setUpClass();
 
 		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
-			_documentBuilderFactory, _queries, _searchEngineAdapter);
+			_documentBuilderFactory, _instanceWorkflowMetricsIndexer,
+			_nodeWorkflowMetricsIndexer, _processWorkflowMetricsIndexer,
+			_queries, _searchEngineAdapter, _taskWorkflowMetricsIndexer);
 	}
 
 	@Before
@@ -88,42 +96,57 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 
 		_deleteSLATaskResults();
 		_deleteTasks();
-		_deleteTokens();
 	}
 
 	@Override
 	@Test
-	public void testPostProcessAssigneeUsersPage() throws Exception {
-		AssigneeUser assigneeUser1 = randomAssigneeUser();
+	public void testPostProcessAssigneeMetricsPage() throws Exception {
+		AssigneeMetric assigneeMetric1 = randomAssigneeMetric();
 
-		assigneeUser1.setOnTimeTaskCount(0L);
-		assigneeUser1.setOverdueTaskCount(3L);
-		assigneeUser1.setTaskCount(3L);
+		assigneeMetric1.setOnTimeTaskCount(0L);
+		assigneeMetric1.setOverdueTaskCount(3L);
+		assigneeMetric1.setTaskCount(3L);
+
+		Assignee assignee1 = assigneeMetric1.getAssignee();
 
 		Instance instance1 = _workflowMetricsRESTTestHelper.addInstance(
 			testGroup.getCompanyId(), false, _process.getId());
 
-		_addTask(
-			assigneeUser1.getId(), () -> instance1, _process.getId(),
-			new Task() {
+		Long reviewNodeId = RandomTestUtil.nextLong();
+
+		_addNodeMetric(
+			assignee1.getId(), () -> instance1, _process.getId(),
+			new NodeMetric() {
 				{
 					durationAvg = 0L;
 					instanceCount = 1L;
-					key = "review";
-					name = "review";
+					node = new Node() {
+						{
+							id = reviewNodeId;
+							label = "review";
+							name = "review";
+						}
+					};
 					onTimeInstanceCount = 0L;
 					overdueInstanceCount = 1L;
 				}
 			});
 
-		_addTask(
-			assigneeUser1.getId(), () -> instance1, _process.getId(),
-			new Task() {
+		Long updateNodeId = RandomTestUtil.nextLong();
+
+		_addNodeMetric(
+			assignee1.getId(), () -> instance1, _process.getId(),
+			new NodeMetric() {
 				{
 					durationAvg = 0L;
 					instanceCount = 1L;
-					key = "update";
-					name = "update";
+					node = new Node() {
+						{
+							id = updateNodeId;
+							label = "update";
+							name = "update";
+						}
+					};
 					onTimeInstanceCount = 0L;
 					overdueInstanceCount = 1L;
 				}
@@ -132,14 +155,19 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 		Instance instance2 = _workflowMetricsRESTTestHelper.addInstance(
 			testGroup.getCompanyId(), false, _process.getId());
 
-		_addTask(
-			assigneeUser1.getId(), () -> instance2, _process.getId(),
-			new Task() {
+		_addNodeMetric(
+			assignee1.getId(), () -> instance2, _process.getId(),
+			new NodeMetric() {
 				{
 					durationAvg = 0L;
 					instanceCount = 1L;
-					key = "update";
-					name = "update";
+					node = new Node() {
+						{
+							id = updateNodeId;
+							label = "update";
+							name = "update";
+						}
+					};
 					onTimeInstanceCount = 0L;
 					overdueInstanceCount = 1L;
 				}
@@ -148,43 +176,57 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 		Role siteAdministrationRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
 
-		AssigneeUser assigneeUser2 = _randomAssigneeUser(
+		AssigneeMetric assigneeMetric2 = _randomAssigneeMetric(
 			siteAdministrationRole);
 
-		assigneeUser2.setOnTimeTaskCount(1L);
-		assigneeUser2.setOverdueTaskCount(1L);
-		assigneeUser2.setTaskCount(2L);
+		Assignee assignee2 = assigneeMetric2.getAssignee();
 
-		_addTask(
-			assigneeUser2.getId(), () -> instance1, _process.getId(),
-			new Task() {
+		assigneeMetric2.setOnTimeTaskCount(1L);
+		assigneeMetric2.setOverdueTaskCount(1L);
+		assigneeMetric2.setTaskCount(2L);
+
+		_addNodeMetric(
+			assignee2.getId(), () -> instance1, _process.getId(),
+			new NodeMetric() {
 				{
 					durationAvg = 0L;
 					instanceCount = 1L;
-					key = "review";
-					name = "review";
+					node = new Node() {
+						{
+							id = reviewNodeId;
+							label = "review";
+							name = "review";
+						}
+					};
 					onTimeInstanceCount = 1L;
 					overdueInstanceCount = 0L;
 				}
 			});
 
-		_addTask(
-			assigneeUser2.getId(), () -> instance2, _process.getId(),
-			new Task() {
+		Long submitNodeId = RandomTestUtil.nextLong();
+
+		_addNodeMetric(
+			assignee2.getId(), () -> instance2, _process.getId(),
+			new NodeMetric() {
 				{
 					durationAvg = 0L;
 					instanceCount = 1L;
-					key = "submit";
-					name = "submit";
+					node = new Node() {
+						{
+							id = submitNodeId;
+							label = "submit";
+							name = "submit";
+						}
+					};
 					onTimeInstanceCount = 0L;
 					overdueInstanceCount = 1L;
 				}
 			});
 
-		Page<AssigneeUser> page =
-			assigneeUserResource.postProcessAssigneeUsersPage(
+		Page<AssigneeMetric> page =
+			assigneeMetricResource.postProcessAssigneeMetricsPage(
 				_process.getId(), Pagination.of(1, 10), "taskCount:asc",
-				new AssigneeUserBulkSelection() {
+				new AssigneeMetricBulkSelection() {
 					{
 						completed = false;
 						taskKeys = new String[] {"update"};
@@ -195,21 +237,20 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 
 		assertEquals(
 			Arrays.asList(
-				new AssigneeUser() {
+				new AssigneeMetric() {
 					{
+						assignee = assignee1;
 						durationTaskAvg = 0L;
-						id = assigneeUser1.getId();
-						name = assigneeUser1.getName();
 						onTimeTaskCount = 0L;
 						overdueTaskCount = 2L;
 						taskCount = 2L;
 					}
 				}),
-			(List<AssigneeUser>)page.getItems());
+			(List<AssigneeMetric>)page.getItems());
 
-		page = assigneeUserResource.postProcessAssigneeUsersPage(
+		page = assigneeMetricResource.postProcessAssigneeMetricsPage(
 			_process.getId(), Pagination.of(1, 10), "overdueTaskCount:desc",
-			new AssigneeUserBulkSelection() {
+			new AssigneeMetricBulkSelection() {
 				{
 					completed = false;
 					taskKeys = new String[] {"review"};
@@ -220,31 +261,29 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 
 		assertEquals(
 			Arrays.asList(
-				new AssigneeUser() {
+				new AssigneeMetric() {
 					{
+						assignee = assignee1;
 						durationTaskAvg = 0L;
-						id = assigneeUser1.getId();
-						name = assigneeUser1.getName();
 						onTimeTaskCount = 0L;
 						overdueTaskCount = 1L;
 						taskCount = 1L;
 					}
 				},
-				new AssigneeUser() {
+				new AssigneeMetric() {
 					{
+						assignee = assignee2;
 						durationTaskAvg = 0L;
-						id = assigneeUser2.getId();
-						name = assigneeUser2.getName();
 						onTimeTaskCount = 1L;
 						overdueTaskCount = 0L;
 						taskCount = 1L;
 					}
 				}),
-			(List<AssigneeUser>)page.getItems());
+			(List<AssigneeMetric>)page.getItems());
 
-		page = assigneeUserResource.postProcessAssigneeUsersPage(
+		page = assigneeMetricResource.postProcessAssigneeMetricsPage(
 			_process.getId(), Pagination.of(1, 10), "overdueTaskCount:desc",
-			new AssigneeUserBulkSelection() {
+			new AssigneeMetricBulkSelection() {
 				{
 					completed = false;
 					roleIds = new Long[] {siteAdministrationRole.getRoleId()};
@@ -256,24 +295,23 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 
 		assertEquals(
 			Arrays.asList(
-				new AssigneeUser() {
+				new AssigneeMetric() {
 					{
+						assignee = assignee2;
 						durationTaskAvg = 0L;
-						id = assigneeUser2.getId();
-						name = assigneeUser2.getName();
 						onTimeTaskCount = 1L;
 						overdueTaskCount = 0L;
 						taskCount = 1L;
 					}
 				}),
-			(List<AssigneeUser>)page.getItems());
+			(List<AssigneeMetric>)page.getItems());
 
-		page = assigneeUserResource.postProcessAssigneeUsersPage(
+		page = assigneeMetricResource.postProcessAssigneeMetricsPage(
 			_process.getId(), Pagination.of(1, 10), "overdueTaskCount:desc",
-			new AssigneeUserBulkSelection() {
+			new AssigneeMetricBulkSelection() {
 				{
 					completed = false;
-					keywords = assigneeUser2.getName();
+					keywords = assignee2.getName();
 					roleIds = new Long[] {siteAdministrationRole.getRoleId()};
 					taskKeys = new String[] {"review"};
 				}
@@ -283,24 +321,23 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 
 		assertEquals(
 			Arrays.asList(
-				new AssigneeUser() {
+				new AssigneeMetric() {
 					{
+						assignee = assignee2;
 						durationTaskAvg = 0L;
-						id = assigneeUser2.getId();
-						name = assigneeUser2.getName();
 						onTimeTaskCount = 1L;
 						overdueTaskCount = 0L;
 						taskCount = 1L;
 					}
 				}),
-			(List<AssigneeUser>)page.getItems());
+			(List<AssigneeMetric>)page.getItems());
 
-		page = assigneeUserResource.postProcessAssigneeUsersPage(
+		page = assigneeMetricResource.postProcessAssigneeMetricsPage(
 			_process.getId(), Pagination.of(1, 10), "overdueTaskCount:desc",
-			new AssigneeUserBulkSelection() {
+			new AssigneeMetricBulkSelection() {
 				{
 					completed = false;
-					keywords = assigneeUser1.getName();
+					keywords = assignee1.getName();
 					roleIds = new Long[] {siteAdministrationRole.getRoleId()};
 					taskKeys = new String[] {"review"};
 				}
@@ -308,28 +345,35 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		AssigneeUser assigneeUser3 = randomAssigneeUser();
+		AssigneeMetric assigneeMetric3 = randomAssigneeMetric();
 
-		assigneeUser3.setOnTimeTaskCount(0L);
-		assigneeUser3.setOverdueTaskCount(0L);
-		assigneeUser3.setTaskCount(1L);
+		Assignee assignee3 = assigneeMetric3.getAssignee();
 
-		_addTask(
-			assigneeUser3.getId(), () -> instance1, _process.getId(),
-			new Task() {
+		assigneeMetric3.setOnTimeTaskCount(0L);
+		assigneeMetric3.setOverdueTaskCount(0L);
+		assigneeMetric3.setTaskCount(1L);
+
+		_addNodeMetric(
+			assignee3.getId(), () -> instance1, _process.getId(),
+			new NodeMetric() {
 				{
 					durationAvg = 0L;
 					instanceCount = 1L;
-					key = "review";
-					name = "review";
+					node = new Node() {
+						{
+							id = reviewNodeId;
+							label = "review";
+							name = "review";
+						}
+					};
 					onTimeInstanceCount = 0L;
 					overdueInstanceCount = 0L;
 				}
 			});
 
-		page = assigneeUserResource.postProcessAssigneeUsersPage(
+		page = assigneeMetricResource.postProcessAssigneeMetricsPage(
 			_process.getId(), Pagination.of(1, 10), "overdueTaskCount:desc",
-			new AssigneeUserBulkSelection() {
+			new AssigneeMetricBulkSelection() {
 				{
 					completed = false;
 				}
@@ -338,63 +382,81 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 		Assert.assertEquals(3, page.getTotalCount());
 
 		assertEquals(
-			Arrays.asList(assigneeUser1, assigneeUser2, assigneeUser3),
-			(List<AssigneeUser>)page.getItems());
+			Arrays.asList(assigneeMetric1, assigneeMetric2, assigneeMetric3),
+			(List<AssigneeMetric>)page.getItems());
 
 		Instance instance3 = _workflowMetricsRESTTestHelper.addInstance(
 			testGroup.getCompanyId(), true, _process.getId());
 
-		_addTask(
-			assigneeUser1.getId(), () -> instance3, _process.getId(),
-			"COMPLETED",
-			new Task() {
+		_addNodeMetric(
+			assignee1.getId(), () -> instance3, _process.getId(), "COMPLETED",
+			new NodeMetric() {
 				{
 					durationAvg = 1000L;
 					instanceCount = 1L;
-					key = "review";
-					name = "review";
+					node = new Node() {
+						{
+							id = reviewNodeId;
+							label = "review";
+							name = "review";
+						}
+					};
 					onTimeInstanceCount = 1L;
 					overdueInstanceCount = 0L;
 				}
 			},
-			new Task() {
+			new NodeMetric() {
 				{
 					durationAvg = 2000L;
 					instanceCount = 1L;
-					key = "update";
-					name = "update";
+					node = new Node() {
+						{
+							id = updateNodeId;
+							label = "update";
+							name = "update";
+						}
+					};
 					onTimeInstanceCount = 1L;
 					overdueInstanceCount = 0L;
 				}
 			});
 
-		_addTask(
-			assigneeUser2.getId(), () -> instance3, _process.getId(),
-			"COMPLETED",
-			new Task() {
+		_addNodeMetric(
+			assignee2.getId(), () -> instance3, _process.getId(), "COMPLETED",
+			new NodeMetric() {
 				{
 					durationAvg = 2000L;
 					instanceCount = 1L;
-					key = "review";
-					name = "review";
+					node = new Node() {
+						{
+							id = reviewNodeId;
+							label = "review";
+							name = "review";
+						}
+					};
 					onTimeInstanceCount = 1L;
 					overdueInstanceCount = 0L;
 				}
 			},
-			new Task() {
+			new NodeMetric() {
 				{
 					durationAvg = 4000L;
 					instanceCount = 1L;
-					key = "update";
-					name = "update";
+					node = new Node() {
+						{
+							id = updateNodeId;
+							label = "update";
+							name = "update";
+						}
+					};
 					onTimeInstanceCount = 1L;
 					overdueInstanceCount = 0L;
 				}
 			});
 
-		page = assigneeUserResource.postProcessAssigneeUsersPage(
+		page = assigneeMetricResource.postProcessAssigneeMetricsPage(
 			_process.getId(), Pagination.of(1, 10), "durationTaskAvg:asc",
-			new AssigneeUserBulkSelection() {
+			new AssigneeMetricBulkSelection() {
 				{
 					completed = true;
 					dateEnd = RandomTestUtil.nextDate();
@@ -407,34 +469,32 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 
 		assertEquals(
 			Arrays.asList(
-				new AssigneeUser() {
+				new AssigneeMetric() {
 					{
+						assignee = assignee1;
 						durationTaskAvg = 1500L;
-						id = assigneeUser1.getId();
-						name = assigneeUser1.getName();
 						onTimeTaskCount = 2L;
 						overdueTaskCount = 0L;
 						taskCount = 2L;
 					}
 				},
-				new AssigneeUser() {
+				new AssigneeMetric() {
 					{
+						assignee = assignee2;
 						durationTaskAvg = 3000L;
-						id = assigneeUser2.getId();
-						name = assigneeUser2.getName();
 						onTimeTaskCount = 2L;
 						overdueTaskCount = 0L;
 						taskCount = 2L;
 					}
 				}),
-			(List<AssigneeUser>)page.getItems());
+			(List<AssigneeMetric>)page.getItems());
 	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"durationTaskAvg", "id", "name", "onTimeTaskCount",
-			"overdueTaskCount", "taskCount"
+			"durationTaskAvg", "onTimeTaskCount", "overdueTaskCount",
+			"taskCount"
 		};
 	}
 
@@ -444,25 +504,52 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 	}
 
 	@Override
-	protected AssigneeUser randomAssigneeUser() throws Exception {
+	protected AssigneeMetric randomAssigneeMetric() throws Exception {
 		User user = UserTestUtil.addUser();
 
-		return new AssigneeUser() {
+		return new AssigneeMetric() {
 			{
+				assignee = new Assignee() {
+					{
+						id = user.getUserId();
+						image = user.getPortraitURL(
+							new ThemeDisplay() {
+								{
+									setPathImage(_portal.getPathImage());
+								}
+							});
+						name = user.getFullName();
+					}
+				};
 				durationTaskAvg = 0L;
-				id = user.getUserId();
-				image = user.getPortraitURL(
-					new ThemeDisplay() {
-						{
-							setPathImage(_portal.getPathImage());
-						}
-					});
-				name = user.getFullName();
 				onTimeTaskCount = 1L;
 				overdueTaskCount = 0L;
 				taskCount = 1L;
 			}
 		};
+	}
+
+	private void _addNodeMetric(
+			long assigneeId,
+			UnsafeSupplier<Instance, Exception> instanceSupplier,
+			long processId, NodeMetric... nodeMetrics)
+		throws Exception {
+
+		_addNodeMetric(
+			assigneeId, instanceSupplier, processId, "RUNNING", nodeMetrics);
+	}
+
+	private void _addNodeMetric(
+			long assigneeId,
+			UnsafeSupplier<Instance, Exception> instanceSupplier,
+			long processId, String status, NodeMetric... nodeMetrics)
+		throws Exception {
+
+		for (NodeMetric nodeMetric : nodeMetrics) {
+			_workflowMetricsRESTTestHelper.addNodeMetric(
+				assigneeId, testGroup.getCompanyId(), instanceSupplier,
+				processId, status, nodeMetric, "1.0");
+		}
 	}
 
 	private void _addRoleUser(Role role, long userId) throws Exception {
@@ -473,64 +560,47 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 			role.getRoleId());
 	}
 
-	private void _addTask(
-			long assigneeId,
-			UnsafeSupplier<Instance, Exception> instanceSupplier,
-			long processId, String status, Task... tasks)
-		throws Exception {
-
-		for (Task task : tasks) {
-			_tasks.add(
-				_workflowMetricsRESTTestHelper.addTask(
-					assigneeId, testGroup.getCompanyId(), instanceSupplier,
-					processId, status, task, "1.0"));
-		}
-	}
-
-	private void _addTask(
-			long assigneeId,
-			UnsafeSupplier<Instance, Exception> instanceSupplier,
-			long processId, Task... tasks)
-		throws Exception {
-
-		_addTask(assigneeId, instanceSupplier, processId, "RUNNING", tasks);
-	}
-
 	private void _deleteSLATaskResults() throws Exception {
 		_workflowMetricsRESTTestHelper.deleteSLATaskResults(
 			testGroup.getCompanyId(), _process.getId());
 	}
 
 	private void _deleteTasks() throws Exception {
-		for (Task task : _tasks) {
-			_workflowMetricsRESTTestHelper.deleteTask(
-				testGroup.getCompanyId(), _process.getId(), task);
-		}
-
-		_tasks.clear();
-	}
-
-	private void _deleteTokens() throws Exception {
-		_workflowMetricsRESTTestHelper.deleteTokens(
+		_workflowMetricsRESTTestHelper.deleteTasks(
 			testGroup.getCompanyId(), _process.getId());
 	}
 
-	private AssigneeUser _randomAssigneeUser(Role role) throws Exception {
-		AssigneeUser assigneeUser = randomAssigneeUser();
+	private AssigneeMetric _randomAssigneeMetric(Role role) throws Exception {
+		AssigneeMetric assigneeMetric = randomAssigneeMetric();
 
-		_addRoleUser(role, assigneeUser.getId());
+		Assignee assignee = assigneeMetric.getAssignee();
 
-		return assigneeUser;
+		_addRoleUser(role, assignee.getId());
+
+		return assigneeMetric;
 	}
 
 	@Inject
 	private static DocumentBuilderFactory _documentBuilderFactory;
 
 	@Inject
+	private static InstanceWorkflowMetricsIndexer
+		_instanceWorkflowMetricsIndexer;
+
+	@Inject
+	private static NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;
+
+	@Inject
+	private static ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;
+
+	@Inject
 	private static Queries _queries;
 
 	@Inject(blocking = false, filter = "search.engine.impl=Elasticsearch")
 	private static SearchEngineAdapter _searchEngineAdapter;
+
+	@Inject
+	private static TaskWorkflowMetricsIndexer _taskWorkflowMetricsIndexer;
 
 	private static WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;
 
@@ -541,8 +611,6 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
-
-	private final List<Task> _tasks = new ArrayList<>();
 
 	@Inject
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

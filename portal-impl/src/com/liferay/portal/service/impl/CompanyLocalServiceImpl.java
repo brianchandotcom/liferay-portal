@@ -18,6 +18,7 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.DBPartitionHelperUtil;
@@ -196,41 +197,58 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		updateVirtualHostname(company.getCompanyId(), virtualHostname);
 
-		// Account
+		try (SafeClosable safeClosable =
+				CompanyThreadLocal.setCompanyIdInitialization(
+					company.getCompanyId())) {
 
-		String name = webId;
+			try {
+				if (DBPartitionHelperUtil.addPartition(
+						company.getCompanyId())) {
 
-		if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-			name = PropsValues.COMPANY_DEFAULT_NAME;
+					dlFileEntryTypeLocalService.
+						createBasicDocumentDLFileEntryType();
+				}
+			}
+			catch (Exception exception) {
+				throw new PortalException(exception);
+			}
+
+			// Account
+
+			String name = webId;
+
+			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+				name = PropsValues.COMPANY_DEFAULT_NAME;
+			}
+
+			updateAccount(
+				company, name, null, null, null, null, null, null, null, null);
+
+			// Company info
+
+			try {
+				company.setKey(Encryptor.serializeKey(Encryptor.generateKey()));
+			}
+			catch (EncryptorException encryptorException) {
+				throw new SystemException(encryptorException);
+			}
+
+			companyInfoPersistence.update(company.getCompanyInfo());
+
+			// Demo settings
+
+			if (webId.equals("liferay.net")) {
+				_addDemoSettings(company);
+			}
+
+			_addDefaultUser(company);
+
+			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+				return company;
+			}
+
+			return checkCompany(webId, mx);
 		}
-
-		updateAccount(
-			company, name, null, null, null, null, null, null, null, null);
-
-		// Company info
-
-		try {
-			company.setKey(Encryptor.serializeKey(Encryptor.generateKey()));
-		}
-		catch (EncryptorException encryptorException) {
-			throw new SystemException(encryptorException);
-		}
-
-		companyInfoPersistence.update(company.getCompanyInfo());
-
-		// Demo settings
-
-		if (webId.equals("liferay.net")) {
-			_addDemoSettings(company);
-		}
-
-		_addDefaultUser(company);
-
-		if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-			return company;
-		}
-
-		return checkCompany(webId, mx);
 	}
 
 	/**

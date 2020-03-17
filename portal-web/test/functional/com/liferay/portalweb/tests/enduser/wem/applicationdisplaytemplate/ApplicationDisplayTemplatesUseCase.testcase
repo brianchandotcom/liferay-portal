@@ -239,8 +239,12 @@ definition {
 			assetTitle = "WC Title");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test ADTBreadcrumb {
+
+		// Ignore test until LRQA-54932 is resolved
+
 		property portal.acceptance = "true";
 		property testray.component.names = "Breadcrumb,Content and Application Templates";
 
@@ -481,8 +485,12 @@ definition {
 			vocabularyName2 = "Vocabulary Name 2");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test ADTTagsNavigationPortlet {
+
+		// Ignore test until LRQA-54932 is resolved
+
 		property portal.acceptance = "true";
 		property testray.component.names = "Content and Application Templates,Tags";
 

@@ -55,6 +55,21 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 		/>
 	</c:if>
 
+	<%
+	Map<String, Object> data = HashMapBuilder.<String, Object>put(
+		"roleIds", StringUtil.merge(segmentsEntry.getRoleIds())
+	).put(
+		"segmentsEntryId", segmentsEntry.getSegmentsEntryId()
+	).build();
+	%>
+
+	<liferay-ui:icon
+		data="<%= data %>"
+		linkCssClass="assign-site-roles-link"
+		message="assign-site-roles"
+		url="javascript:;"
+	/>
+
 	<c:if test="<%= SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= SegmentsEntry.class.getName() %>"
@@ -83,19 +98,4 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 			url="<%= deleteURL %>"
 		/>
 	</c:if>
-
-	<%
-	Map<String, Object> data = HashMapBuilder.<String, Object>put(
-		"roleIds", StringUtil.merge(segmentsEntry.getRoleIds())
-	).put(
-		"segmentsEntryId", segmentsEntry.getSegmentsEntryId()
-	).build();
-	%>
-
-	<liferay-ui:icon
-		data="<%= data %>"
-		linkCssClass="assign-site-roles-link"
-		message="assign-site-roles"
-		url="javascript:;"
-	/>
 </liferay-ui:icon-menu>

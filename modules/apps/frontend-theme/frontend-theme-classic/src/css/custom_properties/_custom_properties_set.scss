@@ -202,7 +202,7 @@
 		}
 	}
 
-	&.btn-monospaced {
+	&.btn-monospaced:not(.btn-outline-borderless) {
 		height: var(--btn-monospaced-size);
 		width: var(--btn-monospaced-size);
 
@@ -239,7 +239,7 @@
 			}
 		}
 
-		&.btn-monospaced {
+		&.btn-monospaced:not(.btn-outline-borderless) {
 			height: var(--btn-monospaced-size-lg);
 			width: var(--btn-monospaced-size-lg);
 
@@ -277,7 +277,7 @@
 			}
 		}
 
-		&.btn-monospaced {
+		&.btn-monospaced:not(.btn-outline-borderless) {
 			height: var(--btn-monospaced-size-sm);
 			width: var(--btn-monospaced-size-sm);
 

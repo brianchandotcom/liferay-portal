@@ -21,13 +21,13 @@ definition {
 			propertyName = "catalina.home",
 			propertyTitle = "System Properties");
 
-		Pagination.changePagination(itemsPerPage = "20");
+		Pagination.changePagination(itemsPerPage = "24");
 
 		ServerAdministration.viewProperties(
 			propertyName = "admin.email.from.name",
 			propertyTitle = "Portal Properties");
 
-		Pagination.changePagination(itemsPerPage = "20");
+		Pagination.changePagination(itemsPerPage = "24");
 	}
 
 }

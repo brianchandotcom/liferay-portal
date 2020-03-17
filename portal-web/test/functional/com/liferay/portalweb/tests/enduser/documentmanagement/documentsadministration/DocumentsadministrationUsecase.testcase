@@ -1599,9 +1599,9 @@ definition {
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt,Document_1.txt,Document_2.xls,Document_3.jpg,Document_4.jpg,Document_1.xls,Document_2.doc");
 
-		Pagination.changePagination(itemsPerPage = "5");
+		Pagination.changePagination(itemsPerPage = "4");
 
-		Pagination.viewResults(results = "Showing 1 to 5 of 10 entries.");
+		Pagination.viewResults(results = "Showing 1 to 4 of 10 entries.");
 
 		DMDocument.moveToFolderCP(
 			dmFolderName = "Home",
@@ -1609,15 +1609,17 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
+		Pagination.changePagination(itemsPerPage = "16");
+
 		Pagination.viewResults(results = "Showing 1 to 11 of 11 entries.");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "List");
 
-		Pagination.changePagination(itemsPerPage = "5");
+		Pagination.changePagination(itemsPerPage = "4");
 
-		Pagination.viewResults(results = "Showing 1 to 5 of 11 entries.");
+		Pagination.viewResults(results = "Showing 1 to 4 of 11 entries.");
 
 		DMDocument.checkDocumentCheckboxPG(dmDocumentTitle = "Document_2.jpg");
 
@@ -1631,7 +1633,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ManagementBar#NAVBAR_TEXT",
-			value1 = "6 of 11 Selected");
+			value1 = "5 of 11 Selected");
 	}
 
 	@priority = "4"

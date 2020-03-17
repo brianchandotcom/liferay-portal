@@ -165,9 +165,9 @@ definition {
 			Tag.viewCP(tagName = "tagname${i}");
 		}
 
-		Pagination.changePagination(itemsPerPage = "5");
+		Pagination.changePagination(itemsPerPage = "4");
 
-		Pagination.viewResults(results = "Showing 1 to 5 of 7 entries.");
+		Pagination.viewResults(results = "Showing 1 to 4 of 7 entries.");
 
 		for (var i : list "1,2,3") {
 			LexiconEntry.selectEntry(rowEntry = "tagname${i}");
@@ -224,13 +224,13 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
-			value1 = "20 Entries");
+			value1 = "16 Entries Per page");
 
-		Pagination.viewResults(results = "Showing 1 to 20 of 24 entries.");
+		Pagination.viewResults(results = "Showing 1 to 16 of 24 entries.");
 
-		Pagination.changePagination(itemsPerPage = "5");
+		Pagination.changePagination(itemsPerPage = "4");
 
-		Pagination.viewResults(results = "Showing 1 to 5 of 24 entries.");
+		Pagination.viewResults(results = "Showing 1 to 4 of 24 entries.");
 	}
 
 }

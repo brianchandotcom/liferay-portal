@@ -950,7 +950,7 @@ definition {
 			locator1 = "MessageBoards#PAGER_TITLE",
 			value1 = "Threads");
 
-		Pagination.changePagination(itemsPerPage = "5");
+		Pagination.changePagination(itemsPerPage = "4");
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
@@ -961,7 +961,7 @@ definition {
 
 		Click(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT_2");
 
-		MenuItem.click(menuItem = "5");
+		MenuItem.click(menuItem = "4");
 
 		Click(locator1 = "Pagination#NEXT_LINK_2");
 
@@ -1016,7 +1016,9 @@ definition {
 			locator1 = "MessageBoardsThread#THREAD_SUBJECT",
 			value1 = "MB Thread Message");
 
-		Pagination.viewResults(results = "Showing 1 to 5 of 6 entries.");
+		Pagination.changePagination(itemsPerPage = "8");
+
+		Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
 	}
 
 	@priority = "3"

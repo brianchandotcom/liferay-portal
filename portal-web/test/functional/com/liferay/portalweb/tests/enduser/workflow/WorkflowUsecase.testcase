@@ -1017,9 +1017,9 @@ definition {
 
 		AssertElementPresent(locator1 = "xpath=(//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(@class,'entry-display-style')])[6]");
 
-		Pagination.changePagination(itemsPerPage = "5");
+		Pagination.changePagination(itemsPerPage = "4");
 
-		Pagination.viewResults(results = "Showing 1 to 5 of 6 entries.");
+		Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 
 		AssertElementNotPresent(locator1 = "xpath=(//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(@class,'entry-display-style')])[6]");
 	}

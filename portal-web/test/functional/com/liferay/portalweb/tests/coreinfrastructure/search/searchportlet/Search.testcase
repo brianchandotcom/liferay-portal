@@ -213,13 +213,13 @@ definition {
 			searchAssetType = "Web Content Article",
 			searchTerm = "WC Title");
 
-		Pagination.changePagination(itemsPerPage = "5");
+		Pagination.changePagination(itemsPerPage = "4");
 
 		var currentURL = selenium.getCurrentUrl();
 
 		echo("Current URL: ${currentURL} ");
 
-		if ((!(contains("${currentURL}","delta=5"))) || (contains("${currentURL}", "start"))) {
+		if ((!(contains("${currentURL}","delta=4"))) || (contains("${currentURL}", "start"))) {
 			fail("URL should preserve delta, but not contain start.");
 		}
 
@@ -231,7 +231,7 @@ definition {
 
 		echo("Current URL: ${currentURL} ");
 
-		if ((!(contains("${currentURL}", "delta=5"))) || (!(contains("${currentURL}", "start=2")))) {
+		if ((!(contains("${currentURL}", "delta=4"))) || (!(contains("${currentURL}", "start=2")))) {
 			fail("URL should preserve delta and add start.");
 		}
 
@@ -243,11 +243,11 @@ definition {
 
 		echo("Current URL: ${currentURL} ");
 
-		if ((!(contains("${currentURL}", "delta=5"))) && (!(contains("${currentURL}", "start=3")))) {
+		if ((!(contains("${currentURL}", "delta=4"))) && (!(contains("${currentURL}", "start=3")))) {
 			fail("URL should preserve delta and modify start.");
 		}
 
-		Pagination.changePagination(itemsPerPage = "10");
+		Pagination.changePagination(itemsPerPage = "8");
 
 		//Workaround LPS-98391
 

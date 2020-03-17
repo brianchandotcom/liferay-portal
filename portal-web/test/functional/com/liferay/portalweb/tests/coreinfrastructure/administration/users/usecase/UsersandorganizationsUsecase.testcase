@@ -147,7 +147,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "User Groups");
 
-		Pagination.changePagination(itemsPerPage = "20");
+		Pagination.changePagination(itemsPerPage = "24");
 
 		Pagination.viewResults(results = "Showing 1 to 11 of 11 entries.");
 

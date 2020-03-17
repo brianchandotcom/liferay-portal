@@ -162,41 +162,41 @@ definition {
 			Button.clickSave();
 		}
 
-		Pagination.changePagination(itemsPerPage = "5");
+		Pagination.changePagination(itemsPerPage = "4");
 
-		for (var query : list "Article 1,Article 2,Article 3,Article 4,Article 5") {
+		for (var query : list "Article 1,Article 2,Article 3,Article 4") {
 			AssertElementPresent(
 				key_query = "${query}",
 				locator1 = "SearchTuning#RESULT_RANKINGS_ENTRY");
 		}
 
-		for (var query : list "Article 6,Article 7") {
+		for (var query : list "Article 5,Article 6,Article 7") {
 			AssertElementNotPresent(
 				key_query = "${query}",
 				locator1 = "SearchTuning#RESULT_RANKINGS_ENTRY");
 		}
 
-		Pagination.viewResults(results = "Showing 1 to 5 of 7 Entries");
+		Pagination.viewResults(results = "Showing 1 to 4 of 7 Entries");
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
-		for (var query : list "Article 6,Article 7") {
+		for (var query : list "Article 5,Article 6,Article 7") {
 			AssertElementPresent(
 				key_query = "${query}",
 				locator1 = "SearchTuning#RESULT_RANKINGS_ENTRY");
 		}
 
-		for (var query : list "Article 1,Article 2,Article 3,Article 4,Article 5") {
+		for (var query : list "Article 1,Article 2,Article 3,Article 4") {
 			AssertElementNotPresent(
 				key_query = "${query}",
 				locator1 = "SearchTuning#RESULT_RANKINGS_ENTRY");
 		}
 
-		Pagination.viewResults(results = "Showing 6 to 7 of 7 Entries");
+		Pagination.viewResults(results = "Showing 5 to 7 of 7 Entries");
 
 		Click(locator1 = "Pagination#PREVIOUS_LINK");
 
-		Pagination.viewResults(results = "Showing 1 to 5 of 7 Entries");
+		Pagination.viewResults(results = "Showing 1 to 4 of 7 Entries");
 
 		PortletEntry.deleteViaToolbar(rowEntries = "Article 1,Article 2,Article 3");
 

@@ -113,7 +113,7 @@ definition {
 
 		ReportsAdmin.gotoDefinitions();
 
-		Pagination.changePagination(itemsPerPage = "5");
+		Pagination.changePagination(itemsPerPage = "4");
 
 		var key_reportsDefinitionName = "Reports Definition 6";
 

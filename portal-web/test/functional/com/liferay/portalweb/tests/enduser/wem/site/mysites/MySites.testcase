@@ -55,11 +55,11 @@ definition {
 
 		// View pagination
 
-		Pagination.viewResults(results = "Showing 1 to 20 of 25 entries.");
+		Pagination.viewResults(results = "Showing 1 to 16 of 25 entries.");
 
-		Pagination.changePagination(itemsPerPage = "5");
+		Pagination.changePagination(itemsPerPage = "4");
 
-		Pagination.viewResults(results = "Showing 1 to 5 of 25 entries.");
+		Pagination.viewResults(results = "Showing 1 to 4 of 25 entries.");
 	}
 
 	@description = "Assert a default user can join a normal open site"

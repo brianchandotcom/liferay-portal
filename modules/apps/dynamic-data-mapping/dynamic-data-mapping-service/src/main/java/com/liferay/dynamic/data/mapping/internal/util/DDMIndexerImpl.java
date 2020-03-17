@@ -27,12 +27,15 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.search.FieldArray;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -53,7 +56,10 @@ import java.text.Format;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,6 +75,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 		Document document, DDMStructure ddmStructure,
 		DDMFormValues ddmFormValues) {
 
+		FieldArray fieldArray = new FieldArray("ddmFields");
+
 		Set<Locale> locales = ddmFormValues.getAvailableLocales();
 
 		Fields fields = toFields(ddmStructure, ddmFormValues);
@@ -83,6 +91,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 				}
 
 				String name = null;
+				String type = field.getType();
 				Serializable value = null;
 
 				if (GetterUtil.getBoolean(
@@ -95,7 +104,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 							locale, indexType);
 						value = field.getValue(locale);
 
-						addToDocument(document, field, name, value, indexType);
+						fieldArray.addField(
+							createField(indexType, name, type, value));
 					}
 				}
 				else {
@@ -104,7 +114,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 						indexType);
 					value = field.getValue(ddmFormValues.getDefaultLocale());
 
-					addToDocument(document, field, name, value, indexType);
+					fieldArray.addField(
+						createField(indexType, name, type, value));
 				}
 			}
 			catch (Exception exception) {
@@ -113,6 +124,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 				}
 			}
 		}
+
+		document.add(fieldArray);
 	}
 
 	@Override
@@ -154,7 +167,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 		}
 		else {
 			booleanQuery.addRequiredTerm(
-				ddmStructureFieldName,
+				"ddmFields.fieldName", ddmStructureFieldName);
+			booleanQuery.addRequiredTerm(
+				"ddmFields.ddmFieldValue",
 				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 		}
 
@@ -284,10 +299,13 @@ public class DDMIndexerImpl implements DDMIndexer {
 		return sb.toString();
 	}
 
-	protected void addToDocument(
-			Document document, Field field, String name, Serializable value,
-			String indexType)
-		throws PortalException {
+	protected Document createDocument(
+			String indexType, String type, Serializable value)
+		throws JSONException {
+
+		Document document = new DocumentImpl();
+
+		String name = "fieldValue" + StringUtil.upperCaseFirstLetter(indexType);
 
 		if (value instanceof BigDecimal) {
 			document.addNumberSortable(name, (BigDecimal)value);
@@ -355,8 +373,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 		else {
 			String valueString = String.valueOf(value);
 
-			String type = field.getType();
-
 			if (type.equals(DDMFormFieldType.GEOLOCATION)) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);
@@ -388,6 +404,73 @@ public class DDMIndexerImpl implements DDMIndexer {
 				}
 			}
 		}
+
+		return document;
+	}
+
+	protected com.liferay.portal.kernel.search.Field createField(
+			String indexType, String name, String type, Serializable value)
+		throws PortalException {
+
+		Document document = createDocument(indexType, type, value);
+
+		com.liferay.portal.kernel.search.Field field =
+			new com.liferay.portal.kernel.search.Field("");
+
+		field.addField(
+			new com.liferay.portal.kernel.search.Field("fieldName", name));
+
+		Stream.of(
+			document.getFields()
+		).map(
+			Map::entrySet
+		).flatMap(
+			Set::stream
+		).map(
+			Map.Entry::getValue
+		).forEach(
+			entry -> {
+				if (entry.getGeoLocationPoint() != null) {
+					com.liferay.portal.kernel.search.Field geolocationField =
+						new com.liferay.portal.kernel.search.Field(
+							entry.getName());
+
+					geolocationField.setGeoLocationPoint(
+						entry.getGeoLocationPoint());
+
+					field.addField(geolocationField);
+				}
+				else {
+					field.addField(
+						new com.liferay.portal.kernel.search.Field(
+							entry.getName(), entry.getValue()));
+				}
+
+				Stream<com.liferay.portal.kernel.search.Field> stream =
+					field.getFields(
+					).stream();
+
+				Optional<com.liferay.portal.kernel.search.Field>
+					valueFieldName = stream.filter(
+						currentField -> currentField.getName(
+						).equals(
+							"valueFieldName"
+						)
+					).findFirst();
+
+				if (!valueFieldName.isPresent() &&
+					!entry.getName().contains(
+						com.liferay.portal.kernel.search.Field.
+							SORTABLE_FIELD_SUFFIX)) {
+
+					field.addField(
+						new com.liferay.portal.kernel.search.Field(
+							"valueFieldName", entry.getName()));
+				}
+			}
+		);
+
+		return field;
 	}
 
 	protected String encodeName(

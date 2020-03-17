@@ -36,6 +36,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 	<c:when test="<%= type.equals(RatingsType.LIKE.getValue()) %>">
 		<div>
 			<clay:button
+				disabled="<%= true %>"
 				elementClasses="btn-outline-borderless btn-outline-secondary btn-sm"
 				icon="heart"
 			/>

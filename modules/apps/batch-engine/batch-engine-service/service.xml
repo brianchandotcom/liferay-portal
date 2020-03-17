@@ -29,6 +29,7 @@
 		<column name="executeStatus" type="String" />
 		<column name="parameters" type="Map" />
 		<column name="startTime" type="Date" />
+		<column name="taskItemDelegateName" type="String" />
 
 		<!-- Finder methods -->
 
@@ -63,6 +64,7 @@
 		<column name="operation" type="String" />
 		<column name="parameters" type="Map" />
 		<column name="startTime" type="Date" />
+		<column name="taskItemDelegateName" type="String" />
 
 		<!-- Finder methods -->
 

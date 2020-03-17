@@ -14,12 +14,10 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
@@ -27,7 +25,6 @@ import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -184,28 +181,8 @@ public class AddFragmentEntryLinkMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		FragmentEntryLink fragmentEntryLink = addFragmentEntryLink(
 			actionRequest);
-
-		DefaultFragmentRendererContext defaultFragmentRendererContext =
-			new DefaultFragmentRendererContext(fragmentEntryLink);
-
-		defaultFragmentRendererContext.setLocale(themeDisplay.getLocale());
-		defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.EDIT);
-		defaultFragmentRendererContext.setSegmentsExperienceIds(
-			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
-
-		JSONObject configurationJSONObject = JSONFactoryUtil.createJSONObject(
-			_fragmentRendererController.getConfiguration(
-				defaultFragmentRendererContext));
-
-		FragmentEntryLinkItemSelectorUtil.addFragmentEntryLinkFieldsSelectorURL(
-			_itemSelector, _portal.getHttpServletRequest(actionRequest),
-			_portal.getLiferayPortletResponse(actionResponse),
-			configurationJSONObject);
 
 		JSONObject jsonObject = _addFragmentEntryLinkToLayoutDataJSONObject(
 			actionRequest, fragmentEntryLink.getFragmentEntryLinkId());
@@ -217,7 +194,7 @@ public class AddFragmentEntryLinkMVCActionCommand
 				_fragmentEntryConfigurationParser, fragmentEntryLink,
 				_fragmentCollectionContributorTracker,
 				_fragmentRendererController, _fragmentRendererTracker,
-				StringPool.BLANK));
+				_itemSelector, StringPool.BLANK));
 	}
 
 	@Reference

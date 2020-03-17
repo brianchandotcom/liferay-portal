@@ -22,6 +22,7 @@ import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
@@ -136,7 +137,7 @@ public class AddFragmentEntryLinksMVCActionCommand
 					_fragmentEntryConfigurationParser, fragmentEntryLink,
 					_fragmentCollectionContributorTracker,
 					_fragmentRendererController, _fragmentRendererTracker,
-					StringPool.BLANK));
+					_itemSelector, StringPool.BLANK));
 		}
 
 		return JSONUtil.put(
@@ -161,6 +162,9 @@ public class AddFragmentEntryLinksMVCActionCommand
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;

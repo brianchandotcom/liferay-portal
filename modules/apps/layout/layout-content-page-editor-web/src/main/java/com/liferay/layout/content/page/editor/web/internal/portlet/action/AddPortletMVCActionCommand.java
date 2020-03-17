@@ -21,6 +21,7 @@ import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
@@ -171,7 +172,7 @@ public class AddPortletMVCActionCommand
 				_fragmentEntryConfigurationParser, fragmentEntryLink,
 				_fragmentCollectionContributorTracker,
 				_fragmentRendererController, _fragmentRendererTracker,
-				portletId));
+				_itemSelector, portletId));
 	}
 
 	private String _getPortletInstanceId(
@@ -224,6 +225,9 @@ public class AddPortletMVCActionCommand
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

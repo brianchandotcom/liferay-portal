@@ -27,6 +27,7 @@ import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -128,7 +129,8 @@ public class FragmentEntryLinkUtil {
 			FragmentCollectionContributorTracker
 				fragmentCollectionContributorTracker,
 			FragmentRendererController fragmentRendererController,
-			FragmentRendererTracker fragmentRendererTracker, String portletId)
+			FragmentRendererTracker fragmentRendererTracker,
+			ItemSelector itemSelector, String portletId)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -178,8 +180,16 @@ public class FragmentEntryLinkUtil {
 			}
 		}
 
+		JSONObject configurationJSONObject = JSONFactoryUtil.createJSONObject(
+			configuration);
+
+		FragmentEntryLinkItemSelectorUtil.addFragmentEntryLinkFieldsSelectorURL(
+			itemSelector, PortalUtil.getHttpServletRequest(actionRequest),
+			PortalUtil.getLiferayPortletResponse(actionResponse),
+			configurationJSONObject);
+
 		return JSONUtil.put(
-			"configuration", JSONFactoryUtil.createJSONObject(configuration)
+			"configuration", configurationJSONObject
 		).put(
 			"content",
 			fragmentRendererController.render(

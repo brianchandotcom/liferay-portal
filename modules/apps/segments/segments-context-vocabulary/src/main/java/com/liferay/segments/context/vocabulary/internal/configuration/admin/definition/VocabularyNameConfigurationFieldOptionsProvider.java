@@ -20,10 +20,9 @@ import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvi
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalService;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -48,8 +47,6 @@ public class VocabularyNameConfigurationFieldOptionsProvider
 
 	@Override
 	public List<Option> getOptions() {
-		List<Option> options = new ArrayList<>();
-
 		try {
 			Long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -57,46 +54,42 @@ public class VocabularyNameConfigurationFieldOptionsProvider
 				return Collections.emptyList();
 			}
 
-			List<AssetVocabulary> vocabularies =
+			List<AssetVocabulary> assetVocabularies =
 				_assetVocabularyLocalService.getCompanyVocabularies(companyId);
 
-			for (final AssetVocabulary vocabulary : vocabularies) {
-				final String value = vocabulary.getName();
+			Stream<AssetVocabulary> stream = assetVocabularies.stream();
 
-				options.add(
-					new Option() {
-
-						@Override
-						public String getLabel(Locale locale) {
-							return vocabulary.getTitle(locale);
-						}
-
-						@Override
-						public String getValue() {
-							return value;
-						}
-
-					});
-			}
+			return stream.map(
+				this::_toOption
+			).sorted(
+				Comparator.comparing(Option::getValue)
+			).collect(
+				Collectors.toList()
+			);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception, exception);
 			}
+
+			return Collections.emptyList();
 		}
+	}
 
-		Stream<Option> stream = options.stream();
+	private Option _toOption(AssetVocabulary assetVocabulary) {
+		return new Option() {
 
-		return stream.sorted(
-			(a, b) -> {
-				String valueA = a.getValue();
-				String valueB = b.getValue();
-
-				return valueA.compareTo(valueB);
+			@Override
+			public String getLabel(Locale locale) {
+				return assetVocabulary.getTitle(locale);
 			}
-		).collect(
-			Collectors.toList()
-		);
+
+			@Override
+			public String getValue() {
+				return assetVocabulary.getName();
+			}
+
+		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -104,8 +97,5 @@ public class VocabularyNameConfigurationFieldOptionsProvider
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 }

@@ -185,21 +185,6 @@ public class PageDefinitionConverterUtil {
 		return pageElement;
 	}
 
-	private static Fragment[] _toFragments(List<String> fragmentEntryKeys) {
-		List<Fragment> fragments = new ArrayList<>();
-
-		for (String fragmentEntryKey : fragmentEntryKeys) {
-			fragments.add(
-				new Fragment() {
-					{
-						key = fragmentEntryKey;
-					}
-				});
-		}
-
-		return fragments.toArray(new Fragment[0]);
-	}
-
 	private static boolean _isFragmentEntryKey(
 		long groupId,
 		FragmentCollectionContributorTracker
@@ -232,6 +217,31 @@ public class PageDefinitionConverterUtil {
 		}
 
 		return false;
+	}
+
+	private static Fragment[] _toFragments(
+		long groupId, List<String> fragmentEntryKeys,
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentRendererTracker fragmentRendererTracker) {
+
+		List<Fragment> fragments = new ArrayList<>();
+
+		for (String fragmentEntryKey : fragmentEntryKeys) {
+			if (_isFragmentEntryKey(
+					groupId, fragmentCollectionContributorTracker,
+					fragmentEntryKey, fragmentRendererTracker)) {
+
+				fragments.add(
+					new Fragment() {
+						{
+							key = fragmentEntryKey;
+						}
+					});
+			}
+		}
+
+		return fragments.toArray(new Fragment[0]);
 	}
 
 	private static Map<String, Fragment[]> _toFragmentSettingsMap(

@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useReducer} from 'react';
+import React, {useCallback, useReducer} from 'react';
 
 const PRESSED_DOWN = 'DOWN';
 const PRESSED_UP = 'UP';
@@ -86,21 +86,21 @@ const RatingsThumbs = ({
 
 	const {negativeVotes, positiveVotes, pressed} = state;
 
-	const voteUp = () => {
+	const voteUp = useCallback(() => {
 		dispatch({type: VOTE_UP});
 
 		const score = pressed !== PRESSED_UP ? SCORE_UP : SCORE_UNVOTE;
 		sendVoteRequest(score);
-	};
+	}, [pressed, sendVoteRequest]);
 
-	const voteDown = () => {
+	const voteDown = useCallback(() => {
 		dispatch({type: VOTE_DOWN});
 
 		const score = pressed !== PRESSED_DOWN ? SCORE_DOWN : SCORE_UNVOTE;
 		sendVoteRequest(score);
-	};
+	}, [pressed, sendVoteRequest]);
 
-	const getTitle = () => {
+	const getTitle = useCallback(() => {
 		if (!signedIn) {
 			return '';
 		}
@@ -115,41 +115,44 @@ const RatingsThumbs = ({
 		}
 
 		return '';
-	};
+	}, [signedIn, inTrash, enabled]);
 
-	const sendVoteRequest = score => {
-		Liferay.fire('ratings:vote', {
-			className,
-			classPK,
-			ratingType: RATING_TYPE,
-			score,
-		});
-
-		const body = objectToFormData({
-			className,
-			classPK,
-			p_auth: Liferay.authToken,
-			p_l_id: themeDisplay.getPlid(),
-			score,
-		});
-
-		fetch(url, {
-			body,
-			method: 'POST',
-		})
-			.then(response => response.json())
-			.then(({totalEntries, totalScore}) => {
-				if (totalEntries && totalScore) {
-					dispatch({
-						payload: {
-							negativeVotes: totalEntries - totalScore,
-							positiveVotes: totalScore,
-						},
-						type: UPDATE_VOTES,
-					});
-				}
+	const sendVoteRequest = useCallback(
+		score => {
+			Liferay.fire('ratings:vote', {
+				className,
+				classPK,
+				ratingType: RATING_TYPE,
+				score,
 			});
-	};
+
+			const body = objectToFormData({
+				className,
+				classPK,
+				p_auth: Liferay.authToken,
+				p_l_id: themeDisplay.getPlid(),
+				score,
+			});
+
+			fetch(url, {
+				body,
+				method: 'POST',
+			})
+				.then(response => response.json())
+				.then(({totalEntries, totalScore}) => {
+					if (totalEntries && totalScore) {
+						dispatch({
+							payload: {
+								negativeVotes: totalEntries - totalScore,
+								positiveVotes: totalScore,
+							},
+							type: UPDATE_VOTES,
+						});
+					}
+				});
+		},
+		[className, classPK, url]
+	);
 
 	return (
 		<div className="ratings-thumbs">

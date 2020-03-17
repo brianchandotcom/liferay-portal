@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -52,16 +51,16 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUserBulkSelection;
-import com.liferay.portal.workflow.metrics.rest.internal.odata.entity.v1_0.AssigneeUserEntityModel;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetric;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetricBulkSelection;
+import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.AssigneeUtil;
+import com.liferay.portal.workflow.metrics.rest.internal.odata.entity.v1_0.AssigneeMetricEntityModel;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeUserResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeMetricResource;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -76,14 +75,14 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
- * @author Inácio Nery
+ * @author Rafael Praxedes
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/assignee-user.properties",
-	scope = ServiceScope.PROTOTYPE, service = AssigneeUserResource.class
+	properties = "OSGI-INF/liferay/rest/v1_0/assignee-metric.properties",
+	scope = ServiceScope.PROTOTYPE, service = AssigneeMetricResource.class
 )
-public class AssigneeUserResourceImpl
-	extends BaseAssigneeUserResourceImpl implements EntityModelResource {
+public class AssigneeMetricResourceImpl
+	extends BaseAssigneeMetricResourceImpl implements EntityModelResource {
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
@@ -93,53 +92,42 @@ public class AssigneeUserResourceImpl
 	}
 
 	@Override
-	public Page<AssigneeUser> postProcessAssigneeUsersPage(
+	public Page<AssigneeMetric> postProcessAssigneeMetricsPage(
 			Long processId, Pagination pagination, Sort[] sorts,
-			AssigneeUserBulkSelection assigneeUserBulkSelection)
+			AssigneeMetricBulkSelection assigneeMetricBulkSelection)
 		throws Exception {
 
 		Set<Long> userIds = Collections.emptySet();
 
-		if (Validator.isNotNull(assigneeUserBulkSelection.getKeywords()) ||
-			ArrayUtil.isNotEmpty(assigneeUserBulkSelection.getRoleIds())) {
+		if (Validator.isNotNull(assigneeMetricBulkSelection.getKeywords()) ||
+			ArrayUtil.isNotEmpty(assigneeMetricBulkSelection.getRoleIds())) {
 
 			userIds = _getUserIds(
-				assigneeUserBulkSelection.getKeywords(),
-				assigneeUserBulkSelection.getRoleIds());
+				assigneeMetricBulkSelection.getKeywords(),
+				assigneeMetricBulkSelection.getRoleIds());
 
 			if (userIds.isEmpty()) {
 				return Page.of(Collections.emptyList());
 			}
 		}
 
-		if (pagination == null) {
-			return Page.of(
-				_getAssigneeUsers(
-					GetterUtil.getBoolean(
-						assigneeUserBulkSelection.getCompleted()),
-					assigneeUserBulkSelection.getDateEnd(),
-					assigneeUserBulkSelection.getDateStart(),
-					assigneeUserBulkSelection.getInstanceIds(), processId,
-					assigneeUserBulkSelection.getTaskKeys(), userIds));
-		}
-
-		long count = _getAssigneeUsersCount(
-			GetterUtil.getBoolean(assigneeUserBulkSelection.getCompleted()),
-			assigneeUserBulkSelection.getDateEnd(),
-			assigneeUserBulkSelection.getDateStart(),
-			assigneeUserBulkSelection.getInstanceIds(), processId,
-			assigneeUserBulkSelection.getTaskKeys(), userIds);
+		long count = _getAssigneeMetricsCount(
+			GetterUtil.getBoolean(assigneeMetricBulkSelection.getCompleted()),
+			assigneeMetricBulkSelection.getDateEnd(),
+			assigneeMetricBulkSelection.getDateStart(),
+			assigneeMetricBulkSelection.getInstanceIds(), processId,
+			assigneeMetricBulkSelection.getTaskKeys(), userIds);
 
 		if (count > 0) {
 			return Page.of(
-				_getAssigneeUsers(
+				_getAssigneeMetrics(
 					GetterUtil.getBoolean(
-						assigneeUserBulkSelection.getCompleted()),
-					assigneeUserBulkSelection.getDateEnd(),
-					assigneeUserBulkSelection.getDateStart(),
-					assigneeUserBulkSelection.getInstanceIds(),
+						assigneeMetricBulkSelection.getCompleted()),
+					assigneeMetricBulkSelection.getDateEnd(),
+					assigneeMetricBulkSelection.getDateStart(),
+					assigneeMetricBulkSelection.getInstanceIds(),
 					_toFieldSort(sorts), pagination, processId,
-					assigneeUserBulkSelection.getTaskKeys(), userIds),
+					assigneeMetricBulkSelection.getTaskKeys(), userIds),
 				pagination, count);
 		}
 
@@ -186,7 +174,7 @@ public class AssigneeUserResourceImpl
 		tokensBooleanQuery.addFilterQueryClauses(
 			_queries.term("_index", "workflow-metrics-tasks"));
 		tokensBooleanQuery.addMustQueryClauses(
-			_createTokensBooleanQuery(
+			_createTasksBooleanQuery(
 				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
 				userIds));
 
@@ -196,7 +184,7 @@ public class AssigneeUserResourceImpl
 
 	private BooleanQuery _createBooleanQuery(
 		BooleanQuery booleanQuery, boolean completed, Long[] instanceIds,
-		long processId, String[] taskKeys, Set<Long> userIds) {
+		long processId, Set<Long> userIds) {
 
 		if (ArrayUtil.isNotEmpty(instanceIds)) {
 			TermsQuery termsQuery = _queries.terms("instanceId");
@@ -211,14 +199,6 @@ public class AssigneeUserResourceImpl
 				).toArray(
 					Object[]::new
 				));
-
-			booleanQuery.addMustQueryClauses(termsQuery);
-		}
-
-		if (ArrayUtil.isNotEmpty(taskKeys)) {
-			TermsQuery termsQuery = _queries.terms("taskName");
-
-			termsQuery.addValues(taskKeys);
 
 			booleanQuery.addMustQueryClauses(termsQuery);
 		}
@@ -267,7 +247,7 @@ public class AssigneeUserResourceImpl
 		booleanQuery.addFilterQueryClauses(
 			_queries.term("_index", "workflow-metrics-tasks"));
 
-		return booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", 0));
+		return booleanQuery.addMustNotQueryClauses(_queries.term("taskId", 0));
 	}
 
 	private BooleanQuery _createSLATaskResultsBooleanQuery(
@@ -290,17 +270,25 @@ public class AssigneeUserResourceImpl
 					"status", WorkflowMetricsSLAStatus.COMPLETED.name()));
 		}
 
+		if (ArrayUtil.isNotEmpty(taskKeys)) {
+			TermsQuery termsQuery = _queries.terms("taskName");
+
+			termsQuery.addValues(taskKeys);
+
+			booleanQuery.addMustQueryClauses(termsQuery);
+		}
+
 		return _createBooleanQuery(
-			booleanQuery, completed, instanceIds, processId, taskKeys, userIds);
+			booleanQuery, completed, instanceIds, processId, userIds);
 	}
 
-	private BooleanQuery _createTokensBooleanQuery(
+	private BooleanQuery _createTasksBooleanQuery(
 		boolean completed, Date dateEnd, Date dateStart, Long[] instanceIds,
 		long processId, String[] taskKeys, Set<Long> userIds) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", "0"));
+		booleanQuery.addMustNotQueryClauses(_queries.term("taskId", "0"));
 
 		if (completed && (dateEnd != null) && (dateStart != null)) {
 			booleanQuery.addMustQueryClauses(
@@ -312,11 +300,19 @@ public class AssigneeUserResourceImpl
 
 		booleanQuery.addMustQueryClauses(_queries.term("completed", completed));
 
+		if (ArrayUtil.isNotEmpty(taskKeys)) {
+			TermsQuery termsQuery = _queries.terms("name");
+
+			termsQuery.addValues(taskKeys);
+
+			booleanQuery.addMustQueryClauses(termsQuery);
+		}
+
 		return _createBooleanQuery(
-			booleanQuery, completed, instanceIds, processId, taskKeys, userIds);
+			booleanQuery, completed, instanceIds, processId, userIds);
 	}
 
-	private List<AssigneeUser> _getAssigneeUsers(
+	private List<AssigneeMetric> _getAssigneeMetrics(
 			boolean completed, Date dateEnd, Date dateStart, Long[] instanceIds,
 			FieldSort fieldSort, Pagination pagination, Long processId,
 			String[] taskKeys, Set<Long> userIds)
@@ -384,55 +380,13 @@ public class AssigneeUserResourceImpl
 		).flatMap(
 			Collection::stream
 		).map(
-			this::_toAssigneeUser
+			this::_toAssigneeMetric
 		).collect(
 			Collectors.toList()
 		);
 	}
 
-	private List<AssigneeUser> _getAssigneeUsers(
-			boolean completed, Date dateEnd, Date dateStart, Long[] instanceIds,
-			long processId, String[] taskKeys, Set<Long> userIds)
-		throws Exception {
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		TermsAggregation termsAggregation = _aggregations.terms(
-			"assigneeId", completed ? "completionUserId" : "assigneeId");
-
-		termsAggregation.setSize(10000);
-
-		searchSearchRequest.addAggregation(termsAggregation);
-
-		searchSearchRequest.setIndexNames("workflow-metrics-tasks");
-		searchSearchRequest.setQuery(
-			_createTokensBooleanQuery(
-				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
-				userIds));
-
-		return Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getAggregationResultsMap
-		).map(
-			aggregationResultsMap ->
-				(TermsAggregationResult)aggregationResultsMap.get("assigneeId")
-		).map(
-			TermsAggregationResult::getBuckets
-		).flatMap(
-			Collection::stream
-		).map(
-			this::_toAssigneeUser
-		).sorted(
-			Comparator.comparing(
-				AssigneeUser::getName,
-				Comparator.nullsLast(String::compareToIgnoreCase))
-		).collect(
-			Collectors.toList()
-		);
-	}
-
-	private long _getAssigneeUsersCount(
+	private long _getAssigneeMetricsCount(
 			boolean completed, Date dateEnd, Date dateStart, Long[] instanceIds,
 			long processId, String[] taskKeys, Set<Long> userIds)
 		throws Exception {
@@ -444,7 +398,7 @@ public class AssigneeUserResourceImpl
 				"assigneeId", completed ? "completionUserId" : "assigneeId"));
 		searchSearchRequest.setIndexNames("workflow-metrics-tasks");
 		searchSearchRequest.setQuery(
-			_createTokensBooleanQuery(
+			_createTasksBooleanQuery(
 				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
 				userIds));
 
@@ -572,45 +526,16 @@ public class AssigneeUserResourceImpl
 		return false;
 	}
 
-	private AssigneeUser _toAssigneeUser(Bucket bucket) {
-		long userId = GetterUtil.getLong(bucket.getKey());
-
-		User user = _userLocalService.fetchUser(userId);
-
-		return new AssigneeUser() {
+	private AssigneeMetric _toAssigneeMetric(Bucket bucket) {
+		return new AssigneeMetric() {
 			{
+				assignee = AssigneeUtil.toAssignee(
+					_portal, GetterUtil.getLong(bucket.getKey()),
+					_userLocalService::fetchUser);
 				durationTaskAvg = _getDurationTaskAvg(bucket);
-				id = userId;
 				onTimeTaskCount = _resourceHelper.getOnTimeTaskCount(bucket);
 				overdueTaskCount = _resourceHelper.getOverdueTaskCount(bucket);
 				taskCount = _getTaskCount(bucket);
-
-				setImage(
-					() -> {
-						if (user == null) {
-							return null;
-						}
-
-						if (user.getPortraitId() == 0) {
-							return null;
-						}
-
-						ThemeDisplay themeDisplay = new ThemeDisplay() {
-							{
-								setPathImage(_portal.getPathImage());
-							}
-						};
-
-						return user.getPortraitURL(themeDisplay);
-					});
-				setName(
-					() -> {
-						if (user == null) {
-							return String.valueOf(userId);
-						}
-
-						return user.getFullName();
-					});
 			}
 		};
 	}
@@ -649,7 +574,7 @@ public class AssigneeUserResourceImpl
 	}
 
 	private static final EntityModel _entityModel =
-		new AssigneeUserEntityModel();
+		new AssigneeMetricEntityModel();
 
 	@Reference
 	private Aggregations _aggregations;

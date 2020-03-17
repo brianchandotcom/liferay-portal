@@ -227,6 +227,14 @@
 			});
 		</aui:script>
 	</c:when>
+	<c:when test="<%= assetBrowserDisplayContext.isLegacySingleSelection() %>">
+		<aui:script>
+			Liferay.Util.selectEntityHandler(
+				'#<portlet:namespace />selectAssetFm',
+				'<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>'
+			);
+		</aui:script>
+	</c:when>
 	<c:otherwise>
 		<aui:script require="metal-dom/src/all/dom as dom">
 			var delegateHandler = dom.delegate(

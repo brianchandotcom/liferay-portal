@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -335,6 +336,24 @@ public class AssetBrowserDisplayContext {
 			_httpServletRequest, "typeSelection");
 
 		return _typeSelection;
+	}
+
+	public boolean isLegacySingleSelection() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		if (Objects.equals(
+				AssetBrowserPortletKeys.ASSET_BROWSER,
+				portletDisplay.getPortletName()) &&
+			!isMultipleSelection()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isMultipleSelection() {

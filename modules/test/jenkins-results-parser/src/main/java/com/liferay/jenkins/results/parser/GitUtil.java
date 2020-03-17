@@ -221,7 +221,7 @@ public class GitUtil {
 		}
 		else {
 			command = JenkinsResultsParserUtil.combine(
-				"git ls-remote -h -t ", remoteURL);
+				"git ls-remote -h ", remoteURL);
 		}
 
 		ExecutionResult executionResult = executeBashCommands(

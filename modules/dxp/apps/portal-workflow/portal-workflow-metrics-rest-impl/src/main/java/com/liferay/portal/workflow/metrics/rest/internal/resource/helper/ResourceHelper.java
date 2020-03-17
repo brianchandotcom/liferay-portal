@@ -202,7 +202,7 @@ public class ResourceHelper {
 				clazz.getResourceAsStream("dependencies/" + resourceName)));
 	}
 
-	public BooleanQuery createTokensBooleanQuery(boolean instanceCompleted) {
+	public BooleanQuery createTasksBooleanQuery(boolean instanceCompleted) {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(
@@ -217,7 +217,7 @@ public class ResourceHelper {
 
 	public ScriptedMetricAggregation
 		creatInstanceCountScriptedMetricAggregation(
-			List<Long> assigneeUserIds, Date dateEnd, Date dateStart,
+			List<Long> assigneeIds, Date dateEnd, Date dateStart,
 			List<String> slaStatuses, List<String> statuses,
 			List<String> taskNames) {
 
@@ -232,11 +232,11 @@ public class ResourceHelper {
 			_workflowMetricsInstanceCountMapScript);
 		scriptedMetricAggregation.setParameters(
 			HashMapBuilder.<String, Object>put(
-				"assigneeUserIds",
+				"assigneeIds",
 				() -> {
-					if (!assigneeUserIds.isEmpty()) {
+					if (!assigneeIds.isEmpty()) {
 						return Stream.of(
-							assigneeUserIds
+							assigneeIds
 						).flatMap(
 							List::parallelStream
 						).map(

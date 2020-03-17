@@ -32,7 +32,7 @@ public class RoleItemSelectorViewDisplayContext
 
 	public RoleItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest, String itemSelectedEventName,
-		int type, SearchContainer<Role> searchContainer,
+		SearchContainer<Role> searchContainer,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
@@ -41,7 +41,6 @@ public class RoleItemSelectorViewDisplayContext
 			searchContainer);
 
 		_itemSelectedEventName = itemSelectedEventName;
-		_type = type;
 	}
 
 	@Override
@@ -74,6 +73,5 @@ public class RoleItemSelectorViewDisplayContext
 	}
 
 	private final String _itemSelectedEventName;
-	private final int _type;
 
 }

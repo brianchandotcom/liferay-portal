@@ -102,7 +102,6 @@ public class RoleItemSelectorView
 		RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext =
 			new RoleItemSelectorViewDisplayContext(
 				httpServletRequest, itemSelectedEventName,
-				roleItemSelectorCriterion.getType(),
 				_getSearchContainer(
 					renderRequest, renderResponse,
 					roleItemSelectorCriterion.getType()),

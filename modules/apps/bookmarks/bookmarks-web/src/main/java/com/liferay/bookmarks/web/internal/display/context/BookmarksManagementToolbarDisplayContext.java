@@ -25,7 +25,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -166,45 +166,38 @@ public class BookmarksManagementToolbarDisplayContext {
 	}
 
 	public List<LabelItem> getFilterLabelItems() {
-		return new LabelItemList() {
-			{
-				String navigation = _getNavigation();
+		String navigation = _getNavigation();
 
-				if (navigation.equals("mine")) {
-					add(
-						labelItem -> {
-							labelItem.putData(
-								"removeLabelURL",
-								_removeNavigartionParameter(_currentURLObj));
+		return LabelItemListBuilder.add(
+			() -> navigation.equals("mine"),
+			labelItem -> {
+				labelItem.putData(
+					"removeLabelURL",
+					_removeNavigartionParameter(_currentURLObj));
 
-							labelItem.setCloseable(true);
+				labelItem.setCloseable(true);
 
-							User user = _themeDisplay.getUser();
+				User user = _themeDisplay.getUser();
 
-							String label = String.format(
-								"%s: %s",
-								LanguageUtil.get(_httpServletRequest, "owner"),
-								user.getFullName());
+				String label = String.format(
+					"%s: %s", LanguageUtil.get(_httpServletRequest, "owner"),
+					user.getFullName());
 
-							labelItem.setLabel(label);
-						});
-				}
-				else if (navigation.equals("recent")) {
-					add(
-						labelItem -> {
-							labelItem.putData(
-								"removeLabelURL",
-								_removeNavigartionParameter(_currentURLObj));
-
-							labelItem.setCloseable(true);
-
-							labelItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, "recent"));
-						});
-				}
+				labelItem.setLabel(label);
 			}
-		};
+		).add(
+			() -> navigation.equals("recent"),
+			labelItem -> {
+				labelItem.putData(
+					"removeLabelURL",
+					_removeNavigartionParameter(_currentURLObj));
+
+				labelItem.setCloseable(true);
+
+				labelItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "recent"));
+			}
+		).build();
 	}
 
 	public String getSearchActionURL() {

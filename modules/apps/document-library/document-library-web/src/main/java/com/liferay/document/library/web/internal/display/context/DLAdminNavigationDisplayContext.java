@@ -17,7 +17,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -59,25 +59,20 @@ public class DLAdminNavigationDisplayContext {
 		String navigation = ParamUtil.getString(
 			_httpServletRequest, "navigation");
 
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> _populateDocumentLibraryNavigationItem(
-						navigationItem, navigation));
-
-				if (DLPortletKeys.DOCUMENT_LIBRARY_ADMIN.equals(
-						_dlRequestHelper.getPortletName())) {
-
-					add(
-						navigationItem -> _populateFileEntryTypesNavigationItem(
-							navigationItem, navigation));
-
-					add(
-						navigationItem -> _populateMetadataSetsNavigationItem(
-							navigationItem, navigation));
-				}
-			}
-		};
+		return NavigationItemListBuilder.add(
+			navigationItem -> _populateDocumentLibraryNavigationItem(
+				navigationItem, navigation)
+		).add(
+			() -> DLPortletKeys.DOCUMENT_LIBRARY_ADMIN.equals(
+				_dlRequestHelper.getPortletName()),
+			navigationItem -> _populateFileEntryTypesNavigationItem(
+				navigationItem, navigation)
+		).add(
+			() -> DLPortletKeys.DOCUMENT_LIBRARY_ADMIN.equals(
+				_dlRequestHelper.getPortletName()),
+			navigationItem -> _populateMetadataSetsNavigationItem(
+				navigationItem, navigation)
+		).build();
 	}
 
 	private void _populateDocumentLibraryNavigationItem(

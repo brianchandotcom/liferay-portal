@@ -213,8 +213,7 @@ public class ElasticsearchConnectionManager
 		ElasticsearchConnection elasticsearchConnection) {
 
 		_elasticsearchConnections.put(
-			EmbeddedElasticsearchConnection.CONNECTION_ID,
-			elasticsearchConnection);
+			elasticsearchConnection.getConnectionId(), elasticsearchConnection);
 	}
 
 	public void setOperationMode(OperationMode operationMode) {
@@ -262,6 +261,14 @@ public class ElasticsearchConnectionManager
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		setConfiguration(properties);
+
+		if (_operationMode == OperationMode.EMBEDDED) {
+			ElasticsearchConnection elasticsearchConnection =
+				_elasticsearchConnections.get(
+					String.valueOf(OperationMode.EMBEDDED));
+
+			elasticsearchConnection.connect();
+		}
 	}
 
 	protected synchronized void createCompanyIndexes() {
@@ -320,7 +327,7 @@ public class ElasticsearchConnectionManager
 			}
 
 			return _elasticsearchConnections.get(
-				EmbeddedElasticsearchConnection.CONNECTION_ID);
+				String.valueOf(OperationMode.EMBEDDED));
 		}
 
 		if (preferLocalCluster && isCrossClusterReplicationEnabled()) {

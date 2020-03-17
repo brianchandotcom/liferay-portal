@@ -31,9 +31,9 @@ import java.util.stream.Stream;
 /**
  * @author Inácio Nery
  */
-public class ProcessEntityModel implements EntityModel {
+public class ProcessMetricEntityModel implements EntityModel {
 
-	public ProcessEntityModel() {
+	public ProcessMetricEntityModel() {
 		_entityFieldsMap = Stream.of(
 			new IntegerEntityField("instanceCount", locale -> "instanceCount"),
 			new IntegerEntityField(
@@ -58,7 +58,7 @@ public class ProcessEntityModel implements EntityModel {
 	@Override
 	public String getName() {
 		return StringUtil.replace(
-			ProcessEntityModel.class.getName(), CharPool.PERIOD,
+			ProcessMetricEntityModel.class.getName(), CharPool.PERIOD,
 			CharPool.UNDERLINE);
 	}
 

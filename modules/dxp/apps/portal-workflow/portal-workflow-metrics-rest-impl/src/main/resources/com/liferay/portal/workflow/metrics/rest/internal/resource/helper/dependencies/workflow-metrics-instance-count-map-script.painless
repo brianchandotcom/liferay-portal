@@ -1,12 +1,12 @@
 def instanceId = doc.instanceId.value;
 
 if (doc.uid.value.startsWith("WorkflowMetricsTask") &&
-	((state.assigneeUserIds == null) ||
+	((state.assigneeIds == null) ||
 	 (((doc.assigneeId.size() != 0) &&
-	  state.assigneeUserIds.contains(doc.assigneeId.value)) || 
-	 (state.assigneeUserIds.contains("-1") && (doc.assigneeId.size() == 0))))) {
+	  state.assigneeIds.contains(doc.assigneeId.value)) || 
+	 (state.assigneeIds.contains("-1") && (doc.assigneeId.size() == 0))))) {
 
-	state.assigneeUserIdInstanceIds.add(instanceId);
+	state.assigneeIdInstanceIds.add(instanceId);
 }
 
 if (doc.uid.value.startsWith("WorkflowMetricsSLAInstanceResult")) {

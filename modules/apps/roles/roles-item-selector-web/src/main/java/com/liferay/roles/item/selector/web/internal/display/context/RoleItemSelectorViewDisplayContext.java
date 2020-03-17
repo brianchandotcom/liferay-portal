@@ -68,14 +68,6 @@ public class RoleItemSelectorViewDisplayContext
 		return searchContainer;
 	}
 
-	public int getType() {
-		return _type;
-	}
-
-	protected long[] getCheckedRoleIds() {
-		return ParamUtil.getLongValues(request, "checkedRoleIds");
-	}
-
 	private final String _itemSelectedEventName;
 	private final int _type;
 

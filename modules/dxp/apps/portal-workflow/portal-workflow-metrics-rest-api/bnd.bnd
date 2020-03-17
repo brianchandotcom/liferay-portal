@@ -4,4 +4,5 @@ Bundle-Version: 5.0.1
 Export-Package:\
 	com.liferay.portal.workflow.metrics.rest.dto.v1_0,\
 	com.liferay.portal.workflow.metrics.rest.dto.v1_0.util,\
+	com.liferay.portal.workflow.metrics.rest.exception.v1_0,\
 	com.liferay.portal.workflow.metrics.rest.resource.v1_0

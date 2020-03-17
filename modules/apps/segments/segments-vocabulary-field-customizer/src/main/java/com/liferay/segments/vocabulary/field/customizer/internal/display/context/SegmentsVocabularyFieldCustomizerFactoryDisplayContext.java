@@ -65,7 +65,15 @@ public class SegmentsVocabularyFieldCustomizerFactoryDisplayContext {
 	}
 
 	public PortletURL getEditConfigurationURL(Configuration configuration) {
-		return _renderResponse.createRenderURL();
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName",
+			"/edit_segments_vocabulary_field_customizer");
+		portletURL.setParameter("factoryPid", configuration.getFactoryPid());
+		portletURL.setParameter("pid", configuration.getPid());
+
+		return portletURL;
 	}
 
 	public String getEmptyResultMessage() {

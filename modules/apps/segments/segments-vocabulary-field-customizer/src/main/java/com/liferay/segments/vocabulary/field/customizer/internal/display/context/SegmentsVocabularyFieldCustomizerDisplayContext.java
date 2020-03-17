@@ -15,15 +15,20 @@
 package com.liferay.segments.vocabulary.field.customizer.internal.display.context;
 
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -32,6 +37,9 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+
 /**
  * @author Cristina González
  */
@@ -39,12 +47,14 @@ public class SegmentsVocabularyFieldCustomizerDisplayContext {
 
 	public SegmentsVocabularyFieldCustomizerDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
+		ConfigurationAdmin configurationAdmin,
 		ExtendedObjectClassDefinition extendedObjectClassDefinition,
 		List<ConfigurationFieldOptionsProvider.Option> fieldNameOptions,
 		List<ConfigurationFieldOptionsProvider.Option> vocabularyNameOptions) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_configurationAdmin = configurationAdmin;
 		_extendedObjectClassDefinition = extendedObjectClassDefinition;
 		_fieldNameOptions = fieldNameOptions;
 		_vocabularyNameOptions = vocabularyNameOptions;
@@ -60,7 +70,7 @@ public class SegmentsVocabularyFieldCustomizerDisplayContext {
 
 		actionURL.setParameter(
 			ActionRequest.ACTION_NAME,
-			"/add_segments_vocabulary_field_customizer");
+			"/update_segments_vocabulary_field_customizer");
 		actionURL.setParameter("redirect", String.valueOf(getRedirect()));
 
 		return actionURL;
@@ -76,6 +86,18 @@ public class SegmentsVocabularyFieldCustomizerDisplayContext {
 
 	public String getFactoryPid() {
 		return ParamUtil.getString(_renderRequest, "factoryPid");
+	}
+
+	public String getFieldName() throws IOException {
+		return Optional.ofNullable(
+			_getConfiguration()
+		).map(
+			Configuration::getProperties
+		).map(
+			properties -> String.valueOf(properties.get("fieldName"))
+		).orElse(
+			StringPool.BLANK
+		);
 	}
 
 	public List<ConfigurationFieldOptionsProvider.Option>
@@ -100,12 +122,47 @@ public class SegmentsVocabularyFieldCustomizerDisplayContext {
 		return portletURL;
 	}
 
+	public String getTitle() throws IOException {
+		return Optional.ofNullable(
+			_getConfiguration()
+		).map(
+			Configuration::getProperties
+		).map(
+			properties -> String.valueOf(properties.get("fieldName"))
+		).orElseGet(
+			() -> LanguageUtil.get(_locale, "add")
+		);
+	}
+
+	public String getVocabularyName() throws IOException {
+		return Optional.ofNullable(
+			_getConfiguration()
+		).map(
+			Configuration::getProperties
+		).map(
+			properties -> String.valueOf(properties.get("vocabularyName"))
+		).orElse(
+			StringPool.BLANK
+		);
+	}
+
 	public List<ConfigurationFieldOptionsProvider.Option>
 		getVocabularyNameOptions() {
 
 		return _vocabularyNameOptions;
 	}
 
+	private Configuration _getConfiguration() throws IOException {
+		String pid = getPid();
+
+		if (Validator.isNull(pid)) {
+			return null;
+		}
+
+		return _configurationAdmin.getConfiguration(pid, StringPool.QUESTION);
+	}
+
+	private final ConfigurationAdmin _configurationAdmin;
 	private final ExtendedObjectClassDefinition _extendedObjectClassDefinition;
 	private final List<ConfigurationFieldOptionsProvider.Option>
 		_fieldNameOptions;

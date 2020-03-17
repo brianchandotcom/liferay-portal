@@ -17,8 +17,19 @@
 <%@ include file="/init.jsp" %>
 
 <%
+PortalUtil.addPortletBreadcrumbEntry(request, portletDisplay.getPortletDisplayName(), String.valueOf(renderResponse.createRenderURL()));
+
 SegmentsVocabularyFieldCustomizerDisplayContext segmentsVocabularyFieldCustomizerDisplayContext = (SegmentsVocabularyFieldCustomizerDisplayContext)renderRequest.getAttribute(SegmentsVocabularyFieldCustomizerWebKeys.SEGMENTS_VOCABULARY_FIELD_CUSTOMIZER_DISPLAY_CONTEXT);
 %>
+
+<liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>">
+
+	<%
+	ConfigurationModelListenerException cmle = (ConfigurationModelListenerException)errorException;
+	%>
+
+	<liferay-ui:message key="<%= cmle.causeMessage %>" localizeKey="<%= false %>" />
+</liferay-ui:error>
 
 <div class="container-fluid container-fluid-max-xl">
 	<div class="col-12">
@@ -44,12 +55,14 @@ SegmentsVocabularyFieldCustomizerDisplayContext segmentsVocabularyFieldCustomize
 					<aui:input name="pid" type="hidden" value="<%= segmentsVocabularyFieldCustomizerDisplayContext.getPid() %>" />
 
 					<h2>
-						<%= HtmlUtil.escape(LanguageUtil.get(request, "add")) %>
+						<%= HtmlUtil.escape(segmentsVocabularyFieldCustomizerDisplayContext.getTitle()) %>
 					</h2>
 
-					<aui:alert closeable="<%= false %>" id="errorAlert" type="info">
-						<liferay-ui:message key="this-configuration-is-not-saved-yet" />
-					</aui:alert>
+					<c:if test="<%= Validator.isBlank(segmentsVocabularyFieldCustomizerDisplayContext.getPid()) %>">
+						<aui:alert closeable="<%= false %>" id="errorAlert" type="info">
+							<liferay-ui:message key="this-configuration-is-not-saved-yet" />
+						</aui:alert>
+					</c:if>
 
 					<%
 					String description = segmentsVocabularyFieldCustomizerDisplayContext.getDescription();
@@ -68,7 +81,7 @@ SegmentsVocabularyFieldCustomizerDisplayContext segmentsVocabularyFieldCustomize
 							for (ConfigurationFieldOptionsProvider.Option option : segmentsVocabularyFieldCustomizerDisplayContext.getFieldNameOptions()) {
 							%>
 
-								<aui:option label="<%= option.getLabel(locale) %>" value="<%= option.getValue() %>" />
+								<aui:option label="<%= option.getLabel(locale) %>" selected="<%= Objects.equals(segmentsVocabularyFieldCustomizerDisplayContext.getFieldName(), option.getValue()) %>" value="<%= option.getValue() %>" />
 
 							<%
 							}
@@ -86,7 +99,7 @@ SegmentsVocabularyFieldCustomizerDisplayContext segmentsVocabularyFieldCustomize
 							for (ConfigurationFieldOptionsProvider.Option option : segmentsVocabularyFieldCustomizerDisplayContext.getVocabularyNameOptions()) {
 							%>
 
-								<aui:option label="<%= option.getLabel(locale) %>" value="<%= option.getValue() %>" />
+								<aui:option label="<%= option.getLabel(locale) %>" selected="<%= Objects.equals(segmentsVocabularyFieldCustomizerDisplayContext.getVocabularyName(), option.getValue()) %>" value="<%= option.getValue() %>" />
 
 							<%
 							}
@@ -98,7 +111,14 @@ SegmentsVocabularyFieldCustomizerDisplayContext segmentsVocabularyFieldCustomize
 					</div>
 
 					<aui:button-row>
-						<aui:button name="save" type="submit" value="save" />
+						<c:choose>
+							<c:when test="<%= !Validator.isBlank(segmentsVocabularyFieldCustomizerDisplayContext.getPid()) %>">
+								<aui:button name="update" type="submit" value="update" />
+							</c:when>
+							<c:otherwise>
+								<aui:button name="save" type="submit" value="save" />
+							</c:otherwise>
+						</c:choose>
 
 						<aui:button href="<%= String.valueOf(segmentsVocabularyFieldCustomizerDisplayContext.getRedirect()) %>" name="cancel" type="cancel" />
 					</aui:button-row>

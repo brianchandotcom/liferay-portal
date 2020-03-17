@@ -61,11 +61,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
-		"mvc.command.name=/add_segments_vocabulary_field_customizer"
+		"mvc.command.name=/update_segments_vocabulary_field_customizer"
 	},
 	service = MVCActionCommand.class
 )
-public class AddSegmentsVocabularyFieldCustomizerMVCActionCommand
+public class UpdateSegmentsVocabularyFieldCustomizerMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -205,7 +205,7 @@ public class AddSegmentsVocabularyFieldCustomizerMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AddSegmentsVocabularyFieldCustomizerMVCActionCommand.class);
+		UpdateSegmentsVocabularyFieldCustomizerMVCActionCommand.class);
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

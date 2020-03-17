@@ -38,6 +38,7 @@ import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -83,7 +84,7 @@ public class EditSegmentsVocabularyFieldCustomizerMVCRenderCommand
 				SegmentsVocabularyFieldCustomizerWebKeys.
 					SEGMENTS_VOCABULARY_FIELD_CUSTOMIZER_DISPLAY_CONTEXT,
 				new SegmentsVocabularyFieldCustomizerDisplayContext(
-					renderRequest, renderResponse,
+					renderRequest, renderResponse, _configurationAdmin,
 					extendedObjectClassDefinition,
 					_fieldNameConfigurationFieldOptionsProvider.getOptions(),
 					_vocabularyConfigurationFieldOptionsProvider.getOptions()));
@@ -111,6 +112,9 @@ public class EditSegmentsVocabularyFieldCustomizerMVCRenderCommand
 	}
 
 	private Bundle _bundle;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private ExtendedMetaTypeService _extendedMetaTypeService;

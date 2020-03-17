@@ -33,6 +33,20 @@ import java.util.Date;
 public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 
 	@Override
+	public String getCoverImageAlt() throws PortalException {
+		long coverImageFileEntryId = getCoverImageFileEntryId();
+
+		if (coverImageFileEntryId == 0) {
+			return null;
+		}
+
+		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			coverImageFileEntryId);
+
+		return fileEntry.getTitle();
+	}
+
+	@Override
 	public String getCoverImageURL(ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -48,6 +62,30 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 		return DLURLHelperUtil.getPreviewURL(
 			fileEntry, fileEntry.getFileVersion(), themeDisplay,
 			StringPool.BLANK);
+	}
+
+	@Override
+	public String getSmallImageAlt() throws PortalException {
+		if (Validator.isNotNull(getSmallImageURL())) {
+			return StringPool.BLANK;
+		}
+
+		long smallImageFileEntryId = getSmallImageFileEntryId();
+
+		if (smallImageFileEntryId != 0) {
+			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+				smallImageFileEntryId);
+
+			return fileEntry.getTitle();
+		}
+
+		long smallImageId = getSmallImageId();
+
+		if ((smallImageId != 0) && isSmallImage()) {
+			return StringPool.BLANK;
+		}
+
+		return getCoverImageAlt();
 	}
 
 	@Override

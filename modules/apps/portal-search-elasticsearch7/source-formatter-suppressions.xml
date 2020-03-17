@@ -2,7 +2,6 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="BNDBundleCheck" files="app\.bnd" />
 		<suppress checks="JavaComponentActivateCheck" files="portal-search-elasticsearch7-impl/src/main/java/com/liferay/portal/search/elasticsearch7/internal/index/IndexSynchronizationPortalInitializedListener\.java" />
 	</source-check>
 </suppressions>

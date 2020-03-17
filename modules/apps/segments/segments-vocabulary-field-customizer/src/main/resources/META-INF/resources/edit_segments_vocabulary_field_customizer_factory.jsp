@@ -68,6 +68,12 @@ SegmentsVocabularyFieldCustomizerFactoryDisplayContext segmentsVocabularyFieldCu
 					method="post"
 					url="<%= String.valueOf(segmentsVocabularyFieldCustomizerFactoryDisplayContext.getEditConfigurationURL(configuration)) %>"
 				/>
+
+				<liferay-ui:icon
+					message="delete"
+					method="post"
+					url="<%= String.valueOf(segmentsVocabularyFieldCustomizerFactoryDisplayContext.getDeleteConfigurationURL(configuration)) %>"
+				/>
 			</liferay-ui:icon-menu>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>

@@ -25,6 +25,7 @@ import com.liferay.segments.vocabulary.field.customizer.internal.constants.Segme
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -60,6 +61,19 @@ public class SegmentsVocabularyFieldCustomizerFactoryDisplayContext {
 			"factoryPid",
 			SegmentsVocabularyFieldCustomizerConfiguration.class.
 				getCanonicalName());
+
+		return portletURL;
+	}
+
+	public PortletURL getDeleteConfigurationURL(Configuration configuration) {
+		PortletURL portletURL = _renderResponse.createActionURL();
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/delete_segments_vocabulary_field_customizer");
+		portletURL.setParameter("factoryPid", configuration.getFactoryPid());
+		portletURL.setParameter("pid", configuration.getPid());
+		portletURL.setParameter("redirect", String.valueOf(_getRedirect()));
 
 		return portletURL;
 	}
@@ -111,6 +125,18 @@ public class SegmentsVocabularyFieldCustomizerFactoryDisplayContext {
 
 	public int getTotal() {
 		return _configurations.size();
+	}
+
+	private PortletURL _getRedirect() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/view_configuration_screen");
+		portletURL.setParameter(
+			"configurationScreenKey",
+			"segments-vocabulary-field-customizer-configuration-name");
+
+		return portletURL;
 	}
 
 	private final List<Configuration> _configurations;

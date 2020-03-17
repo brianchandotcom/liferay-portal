@@ -472,6 +472,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
+			_queries.term("completed", Boolean.FALSE),
 			_queries.term("deleted", Boolean.FALSE),
 			_queries.term("instanceId", instanceId),
 			_queries.term("processId", processId));

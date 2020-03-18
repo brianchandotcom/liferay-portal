@@ -943,7 +943,14 @@ information.
 
 					<trycatch>
 						<try>
-							<echo message="Executing Gradle task: ${gradle.executable.task}" />
+							<if>
+								<not>
+									<equals arg1="${gradle.executable.task}" arg2="" />
+								</not>
+								<then>
+									<echo message="Executing Gradle task: ${gradle.executable.task}" />
+								</then>
+							</if>
 
 							<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 								<args />
@@ -1080,6 +1087,12 @@ information.
 					<available file="${project.dir}/.gradle/wrapper" type="dir" />
 				</and>
 				<then>
+					<local name="gradle.execute.silent" />
+
+					<property name="gradle.execute.silent" value="false" />
+
+					<echo message="Stopping all running Gradle Daemon processes." />
+
 					<gradle-execute dir="." forcedcacheenabled="false" setupbinariescache="false" task="">
 						<arg value="--stop" />
 					</gradle-execute>

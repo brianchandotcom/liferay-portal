@@ -85,7 +85,7 @@ renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-te
 			data: {
 				<%= Constants.CMD %>:
 					'<%= (kbTemplate == null) ? Constants.ADD : Constants.UPDATE %>',
-				title: window.<portlet:namespace />titleEditor.value,
+				title: document.getElementById('<portlet:namespace />titleEditor').value,
 				content: window.<portlet:namespace />contentEditor.getHTML(),
 			},
 		});

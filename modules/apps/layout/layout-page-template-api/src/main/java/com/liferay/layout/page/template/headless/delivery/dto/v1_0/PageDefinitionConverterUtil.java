@@ -218,16 +218,26 @@ public class PageDefinitionConverterUtil {
 		return false;
 	}
 
-	private static Fragment[] _toFragments(List<String> fragmentEntryKeys) {
+	private static Fragment[] _toFragments(
+		List<String> fragmentEntryKeys,
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentRendererTracker fragmentRendererTracker, long groupId) {
+
 		List<Fragment> fragments = new ArrayList<>();
 
 		for (String fragmentEntryKey : fragmentEntryKeys) {
-			fragments.add(
-				new Fragment() {
-					{
-						key = fragmentEntryKey;
-					}
-				});
+			if (_isFragmentEntryKey(
+					fragmentCollectionContributorTracker, fragmentEntryKey,
+					fragmentRendererTracker, groupId)) {
+
+				fragments.add(
+					new Fragment() {
+						{
+							key = fragmentEntryKey;
+						}
+					});
+			}
 		}
 
 		return fragments.toArray(new Fragment[0]);

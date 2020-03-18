@@ -202,7 +202,8 @@ public class WorkflowTaskDisplayContext {
 		return new Object[] {
 			HtmlUtil.escape(
 				PortalUtil.getUserName(
-					workflowLog.getAuditUserId(), StringPool.BLANK)),
+					workflowLog.getAuditUserId(),
+					String.valueOf(workflowLog.getAuditUserId()))),
 			HtmlUtil.escape(_getActorName(workflowLog))
 		};
 	}
@@ -353,7 +354,8 @@ public class WorkflowTaskDisplayContext {
 
 	public String getPreviousAssigneeMessageArguments(WorkflowLog workflowLog) {
 		String userName = PortalUtil.getUserName(
-			workflowLog.getPreviousUserId(), StringPool.BLANK);
+			workflowLog.getPreviousUserId(),
+			String.valueOf(workflowLog.getPreviousUserId()));
 
 		return HtmlUtil.escape(userName);
 	}
@@ -601,7 +603,8 @@ public class WorkflowTaskDisplayContext {
 
 	public String getWorkflowTaskAssigneeUserName(WorkflowTask workflowTask) {
 		return PortalUtil.getUserName(
-			workflowTask.getAssigneeUserId(), StringPool.BLANK);
+			workflowTask.getAssigneeUserId(),
+			String.valueOf(workflowTask.getAssigneeUserId()));
 	}
 
 	public String getWorkflowTaskRandomId() {

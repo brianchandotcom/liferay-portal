@@ -14,13 +14,12 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -910,62 +909,63 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private AssigneeUser _toAssigneeUser(long userId) {
-		try {
-			User user = _userService.getUserById(userId);
+		User user = _userLocalService.fetchUser(userId);
 
-			return new AssigneeUser() {
-				{
-					id = user.getUserId();
-					name = user.getFullName();
+		return new AssigneeUser() {
+			{
+				id = userId;
 
-					setImage(
-						() -> {
-							if (user.getPortraitId() == 0) {
-								return null;
+				setImage(
+					() -> {
+						if (user == null) {
+							return null;
+						}
+
+						if (user.getPortraitId() == 0) {
+							return null;
+						}
+
+						ThemeDisplay themeDisplay = new ThemeDisplay() {
+							{
+								setPathImage(_portal.getPathImage());
 							}
+						};
 
-							ThemeDisplay themeDisplay = new ThemeDisplay() {
-								{
-									setPathImage(_portal.getPathImage());
-								}
-							};
+						return user.getPortraitURL(themeDisplay);
+					});
+				setName(
+					() -> {
+						if (user == null) {
+							return String.valueOf(userId);
+						}
 
-							return user.getPortraitURL(themeDisplay);
-						});
-				}
-			};
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
+						return user.getFullName();
+					});
 			}
-
-			return null;
-		}
+		};
 	}
 
 	private CreatorUser _toCreatorUser(Long userId) {
-		try {
-			if (Objects.isNull(userId)) {
-				return null;
-			}
-
-			User user = _userService.getUserById(userId);
-
-			return new CreatorUser() {
-				{
-					id = user.getUserId();
-					name = user.getFullName();
-				}
-			};
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
-			}
-
+		if (Objects.isNull(userId)) {
 			return null;
 		}
+
+		User user = _userLocalService.fetchUser(userId);
+
+		return new CreatorUser() {
+			{
+				id = userId;
+
+				setName(
+					() -> {
+						if (user == null) {
+							return String.valueOf(userId);
+						}
+
+						return user.getFullName();
+					});
+			}
+		};
 	}
 
 	private Date _toDate(String dateString) {
@@ -1035,7 +1035,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	private Sorts _sorts;
 
 	@Reference
-	private UserService _userService;
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private WorkflowMetricsSLADefinitionLocalService

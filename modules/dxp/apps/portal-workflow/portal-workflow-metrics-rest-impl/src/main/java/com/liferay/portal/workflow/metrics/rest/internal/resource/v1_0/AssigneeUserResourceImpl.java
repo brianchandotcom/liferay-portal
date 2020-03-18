@@ -606,7 +606,7 @@ public class AssigneeUserResourceImpl
 				setName(
 					() -> {
 						if (user == null) {
-							return null;
+							return String.valueOf(userId);
 						}
 
 						return user.getFullName();

@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
@@ -92,6 +94,9 @@ public class UserModelListener extends BaseModelListener<User> {
 			_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
 				kaleoTaskAssignmentInstance.getKaleoTaskInstanceTokenId());
 
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		ExecutionContext executionContext = new ExecutionContext(
 			kaleoInstanceToken, kaleoTaskInstanceToken,
 			WorkflowContextUtil.convert(
@@ -100,7 +105,7 @@ public class UserModelListener extends BaseModelListener<User> {
 				{
 					setCompanyId(kaleoInstanceToken.getCompanyId());
 					setScopeGroupId(kaleoInstanceToken.getGroupId());
-					setUserId(kaleoInstanceToken.getUserId());
+					setUserId(permissionChecker.getUserId());
 				}
 			});
 

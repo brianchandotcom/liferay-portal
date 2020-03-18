@@ -108,7 +108,7 @@ public class WorkflowInstanceEditDisplayContext
 
 		User user = _getUser(workflowLog.getUserId());
 
-		if (user.isMale()) {
+		if ((user == null) || user.isMale()) {
 			return "x-assigned-the-task-to-himself";
 		}
 
@@ -121,7 +121,8 @@ public class WorkflowInstanceEditDisplayContext
 		return new Object[] {
 			HtmlUtil.escape(
 				PortalUtil.getUserName(
-					workflowLog.getAuditUserId(), StringPool.BLANK)),
+					workflowLog.getAuditUserId(),
+					String.valueOf(workflowLog.getAuditUserId()))),
 			HtmlUtil.escape(_getActorName(workflowLog))
 		};
 	}
@@ -151,7 +152,8 @@ public class WorkflowInstanceEditDisplayContext
 	public Object getPreviousAssigneeMessageArguments(WorkflowLog workflowLog) {
 		return HtmlUtil.escape(
 			PortalUtil.getUserName(
-				workflowLog.getPreviousUserId(), StringPool.BLANK));
+				workflowLog.getPreviousUserId(),
+				String.valueOf(workflowLog.getPreviousUserId())));
 	}
 
 	public String getTaskCompleted(WorkflowTask workflowTask) {
@@ -232,6 +234,10 @@ public class WorkflowInstanceEditDisplayContext
 
 	public String getUserFullName(WorkflowLog workflowLog) {
 		User user = _getUser(workflowLog.getUserId());
+
+		if (user == null) {
+			return String.valueOf(workflowLog.getUserId());
+		}
 
 		return HtmlUtil.escape(user.getFullName());
 	}

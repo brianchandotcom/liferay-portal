@@ -83,9 +83,9 @@ public class UserNotificationRecipientBuilder
 			userId = kaleoInstance.getUserId();
 		}
 
-		User user = _userLocalService.getUser(userId);
+		User user = _userLocalService.fetchUser(userId);
 
-		if (user.isActive()) {
+		if ((user != null) && user.isActive()) {
 			NotificationRecipient notificationRecipient =
 				new NotificationRecipient(user, notificationReceptionType);
 

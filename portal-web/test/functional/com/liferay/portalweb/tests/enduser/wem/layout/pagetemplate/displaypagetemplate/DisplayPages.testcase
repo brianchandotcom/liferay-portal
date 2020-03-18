@@ -165,13 +165,13 @@ definition {
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1",
+				key_position = "2",
 				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 
 			AssertVisible(
 				key_content = "Editing Finished",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
+				key_position = "3",
 				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 
 			AssertElementNotPresent(
@@ -185,7 +185,7 @@ definition {
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
 				key_fragmentClass = "body",
-				key_position = "3",
+				key_position = "1",
 				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 		}
 	}
@@ -298,13 +298,13 @@ definition {
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
-				key_position = "1",
+				key_position = "2",
 				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 
 			AssertVisible(
 				key_content = "Editing Finished",
 				key_fragmentClass = "rich-text",
-				key_position = "2",
+				key_position = "3",
 				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 
 			AssertElementNotPresent(
@@ -318,7 +318,7 @@ definition {
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
 				key_fragmentClass = "body",
-				key_position = "3",
+				key_position = "1",
 				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
 		}
 	}

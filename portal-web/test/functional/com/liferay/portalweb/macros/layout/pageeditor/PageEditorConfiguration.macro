@@ -4,7 +4,7 @@ definition {
 		var key_fragmentName = "${fragmentName}";
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click(locator1 = "Fragment#FRAGMENT_HEADER");
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
 		Click.clickNoMouseOver(
@@ -24,7 +24,7 @@ definition {
 		var key_fragmentName = "${fragmentName}";
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click(locator1 = "Fragment#FRAGMENT_HEADER");
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
 		Click.clickNoMouseOver(
@@ -46,7 +46,7 @@ definition {
 		var key_fragmentName = "${fragmentName}";
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click(locator1 = "Fragment#FRAGMENT_HEADER");
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
 		Click.clickNoMouseOver(
@@ -68,7 +68,7 @@ definition {
 		var key_fragmentName = "${fragmentName}";
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click(locator1 = "Fragment#FRAGMENT_HEADER");
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
 		Click.clickNoMouseOver(
@@ -88,7 +88,7 @@ definition {
 		var key_fragmentName = "${fragmentName}";
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click(locator1 = "Fragment#FRAGMENT_HEADER");
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
 		Click.clickNoMouseOver(

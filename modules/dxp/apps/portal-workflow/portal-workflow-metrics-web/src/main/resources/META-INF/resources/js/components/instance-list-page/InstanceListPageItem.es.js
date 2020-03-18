@@ -59,8 +59,8 @@ const Item = ({totalCount, ...instance}) => {
 	const {
 		assetTitle,
 		assetType,
-		assigneeUsers = [],
-		creatorUser,
+		assignees = [],
+		creator,
 		dateCreated,
 		id,
 		status,
@@ -73,18 +73,16 @@ const Item = ({totalCount, ...instance}) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedItems]);
 
-	const assignedToUser = !!assigneeUsers.find(
-		({id}) => id === Number(userId)
-	);
-	const assigneeUserNames = assigneeUsers.map(user => user.name).join(', ');
+	const assignedToUser = !!assignees.find(({id}) => id === Number(userId));
+	const assigneeNames = assignees.map(user => user.name).join(', ');
 	const completed = status === processStatusConstants.completed;
-	const unassigned = !!assigneeUsers.find(({id}) => id === -1);
+	const unassigned = !!assignees.find(({id}) => id === -1);
 
 	const disableCheckbox = (!assignedToUser && !unassigned) || completed;
 	const slaStatusIcon = getSLAStatusIcon(slaStatus);
 
 	const formattedAssignees = !completed
-		? assigneeUserNames
+		? assigneeNames
 		: Liferay.Language.get('not-available');
 
 	const formattedTaskNames = !completed
@@ -158,7 +156,7 @@ const Item = ({totalCount, ...instance}) => {
 			</ClayTable.Cell>
 
 			<ClayTable.Cell data-testid="creatorUserCell">
-				{creatorUser ? creatorUser.name : ''}
+				{creator ? creator.name : ''}
 			</ClayTable.Cell>
 
 			<ClayTable.Cell data-testid="dateCreatedCell">

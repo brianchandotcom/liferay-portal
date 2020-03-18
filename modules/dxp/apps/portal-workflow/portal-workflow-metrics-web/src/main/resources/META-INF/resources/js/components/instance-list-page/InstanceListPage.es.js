@@ -39,7 +39,7 @@ const InstanceListPage = ({routeParams}) => {
 
 	const {
 		filterValues: {
-			assigneeUserIds,
+			assigneeIds,
 			dateEnd,
 			dateStart,
 			slaStatuses,
@@ -61,7 +61,7 @@ const InstanceListPage = ({routeParams}) => {
 
 	const {data, fetchData} = useFetch({
 		params: {
-			assigneeUserIds,
+			assigneeIds,
 			page,
 			pageSize,
 			slaStatuses,

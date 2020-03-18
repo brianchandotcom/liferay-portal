@@ -7,11 +7,14 @@ apply plugin: "org.ysb33r.gradletest"
 
 task copyDistBundleZipPluginsSdk(type: Copy)
 task copyGradleTestDependencies(type: Copy)
+task copyHotFixZip(type: Copy)
 task copyRepo(type: Copy)
+task downloadHotFixZip(type: Download)
 task downloadPluginsSdk(type: Download)
 
 String bundleUrl = "https://releases-cdn.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
 String gradleVersion = "5.6.4"
+String hotFixZipUrl = "https://dl.bintray.com/gamerson/liferay-ide-files/zips/liferay-hotfix-1072-7210.zip"
 String pluginsSdkUrl = "https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/com/liferay/portal/com.liferay.portal.plugins.sdk/1.0.22/com.liferay.portal.plugins.sdk-1.0.22-withdependencies.zip"
 
 if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
@@ -37,6 +40,20 @@ copyDistBundleZipPluginsSdk {
 
 	includeEmptyDirs = false
 	into "src/gradleTest/distBundleZip/plugins-sdk"
+}
+
+copyHotFixZip {
+	ext {
+		autoClean = false
+	}
+
+	dependsOn downloadHotFixZip
+
+	from {
+		downloadHotFixZip.dest
+	}
+
+	into "src/gradleTest/startDockerContainerWithPatch/configs/common/patching"
 }
 
 copyGradleTestDependencies {
@@ -70,6 +87,11 @@ dependencies {
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 }
 
+downloadHotFixZip {
+	dest new File(buildDir, "liferay-hotfix-1072-7210.zip")
+	src hotFixZipUrl
+}
+
 downloadPluginsSdk {
 	dest new File(buildDir, "plugins-sdk.zip")
 	src pluginsSdkUrl
@@ -78,6 +100,7 @@ downloadPluginsSdk {
 gradleTest {
 	dependsOn copyDistBundleZipPluginsSdk
 	dependsOn copyGradleTestDependencies
+	dependsOn copyHotFixZip
 	dependsOn copyRepo
 	dependsOn jar
 

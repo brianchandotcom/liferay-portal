@@ -14,6 +14,7 @@
 
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
+import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
 function usePrevious(value) {
@@ -30,6 +31,7 @@ function SlidingText({current, previous}) {
 	const [animating, setAnimating] = useState(false);
 	const direction = current > previous ? 'up' : 'down';
 	const isMounted = useIsMounted();
+	const maxLength = current.toString().length + 1;
 
 	const finishAnimation = () => {
 		if (isMounted) {
@@ -53,6 +55,9 @@ function SlidingText({current, previous}) {
 				[`animating-${direction}`]: animating,
 			})}
 			onAnimationEnd={finishAnimation}
+			style={{
+				minWidth: `${maxLength}ch`,
+			}}
 		>
 			<span className="current">{current}</span>
 			{animating && <span className="previous">{previous}</span>}
@@ -65,5 +70,9 @@ function AnimatedCounter({counter}) {
 
 	return <SlidingText current={counter} previous={prevCounter} />;
 }
+
+AnimatedCounter.propTypes = {
+	counter: PropTypes.number.isRequired,
+};
 
 export default AnimatedCounter;

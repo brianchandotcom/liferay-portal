@@ -22,7 +22,7 @@ import {Link, withRouter} from 'react-router-dom';
 import {AppContext} from '../AppContext.es';
 import SectionSubscription from '../components/SectionSubscription.es';
 import useSection from '../hooks/useSection.es';
-import {useDebounceCallback} from '../utils/utils.es';
+import {useDebounceCallback, stringToSlug, slugToText} from '../utils/utils.es';
 
 function getFilterOptions() {
 	return [
@@ -63,7 +63,7 @@ export default withRouter(
 			searchChange(value);
 		}, 500);
 
-		const section = useSection(sectionTitle, context.siteKey);
+		const section = useSection(slugToText(sectionTitle), context.siteKey);
 
 		useEffect(() => {
 			sectionChange(section);
@@ -113,8 +113,8 @@ export default withRouter(
 						<Link
 							to={`/questions/${(section &&
 								section.parentSection &&
-								section.parentSection.title) ||
-								sectionTitle}`}
+								slugToText(section.parentSection.title)) ||
+								slugToText(sectionTitle)}`}
 						>
 							<ClayDropDown.Help>
 								{Liferay.Language.get('all')}
@@ -125,7 +125,7 @@ export default withRouter(
 							<ClayDropDown.Group>
 								{getParentSubSections().map((item, i) => (
 									<ClayDropDown.Item href={item.href} key={i}>
-										<Link to={'/questions/' + item.title}>
+										<Link to={'/questions/' + stringToSlug(item.title)}>
 											{item.title}
 										</Link>
 									</ClayDropDown.Item>
@@ -200,7 +200,7 @@ export default withRouter(
 									displayType="primary"
 									onClick={() =>
 										history.push(
-											`/questions/${sectionTitle}/new`
+											`/questions/${stringToSlug(sectionTitle)}/new`
 										)
 									}
 								>
@@ -212,7 +212,7 @@ export default withRouter(
 									displayType="primary"
 									onClick={() =>
 										history.push(
-											`/questions/${sectionTitle}/new`
+											`/questions/${stringToSlug(sectionTitle)}/new`
 										)
 									}
 								>

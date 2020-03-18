@@ -22,7 +22,7 @@ import {Link, withRouter} from 'react-router-dom';
 import {AppContext} from '../../AppContext.es';
 import TagSelector from '../../components/TagSelector.es';
 import {getThreadContent, updateThread} from '../../utils/client.es';
-import {getCKEditorConfig, onBeforeLoadCKEditor} from '../../utils/utils.es';
+import {getCKEditorConfig, onBeforeLoadCKEditor, stringToSlug} from '../../utils/utils.es';
 
 export default withRouter(
 	({
@@ -179,7 +179,7 @@ export default withRouter(
 
 								<Link
 									className="btn btn-secondary c-ml-sm-3"
-									to={`/questions/${sectionTitle}/${questionId}`}
+									to={`/questions/${stringToSlug(sectionTitle)}/${questionId}`}
 								>
 									{Liferay.Language.get('cancel')}
 								</Link>

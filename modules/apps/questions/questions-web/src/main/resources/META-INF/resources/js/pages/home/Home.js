@@ -19,6 +19,7 @@ import {Link} from 'react-router-dom';
 import {AppContext} from '../../AppContext.es';
 import {getSections} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
+import {stringToSlug} from '../../utils/utils.es';
 
 export default () => {
 	const context = useContext(AppContext);
@@ -48,7 +49,7 @@ export default () => {
 						>
 							<Link
 								className="d-block h-100 questions-card text-decoration-none text-secondary"
-								to={`/questions/${section.title}`}
+								to={`/questions/${stringToSlug(section.title)}`}
 							>
 								<ClayCard>
 									<ClayCard.Body>

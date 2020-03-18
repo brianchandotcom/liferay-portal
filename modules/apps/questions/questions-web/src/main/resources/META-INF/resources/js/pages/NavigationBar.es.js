@@ -18,6 +18,7 @@ import React, {useContext, useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
+import {stringToSlug} from '../utils/utils.es';
 
 export default withRouter(
 	({

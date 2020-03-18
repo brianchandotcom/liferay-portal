@@ -20,7 +20,7 @@ import {Link, withRouter} from 'react-router-dom';
 import {AppContext} from '../../AppContext.es';
 import {getTags} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
-import {dateToInternationalHuman} from '../../utils/utils.es';
+import {dateToInternationalHuman, stringToSlug} from '../../utils/utils.es';
 
 export default withRouter(
 	({
@@ -49,7 +49,7 @@ export default withRouter(
 								>
 									<Link
 										className="questions-disabled-link"
-										to={`/questions/${sectionTitle}/tag/${tag.taxonomyCategoryId}`}
+										to={`/questions/${stringToSlug(sectionTitle)}/tag/${tag.taxonomyCategoryId}`}
 									>
 										<ClayCardWithNavigation>
 											<ClayCard.Body>

@@ -16,6 +16,7 @@ import React from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
 import UserPopover from './UserPopover.es';
+import {stringToSlug} from '../utils/utils.es';
 
 export default withRouter(
 	({
@@ -27,7 +28,7 @@ export default withRouter(
 	}) => (
 		<Link
 			className="border-0 btn btn-block btn-secondary position-relative questions-user text-left text-md-right"
-			to={`/questions/${sectionTitle}/creator/${creator.id}`}
+			to={`/questions/${stringToSlug(sectionTitle)}/creator/${creator.id}`}
 		>
 			<p className="c-mb-0 small">
 				{Liferay.Language.get('answered-by')}

@@ -42,6 +42,7 @@ import {
 	dateToBriefInternationalHuman,
 	getCKEditorConfig,
 	onBeforeLoadCKEditor,
+	stringToSlug
 } from '../../utils/utils.es';
 
 export default withRouter(
@@ -58,6 +59,7 @@ export default withRouter(
 		const [articleBody, setArticleBody] = useState();
 		const [page, setPage] = useState(1);
 		const [question, setQuestion] = useState();
+		const [sectionTitle, setSectionTitle] = useState('');
 		const [filter, setFilter] = useState('active');
 
 		useEffect(() => {
@@ -69,6 +71,7 @@ export default withRouter(
 				getThread(questionId, context.siteKey, page).then(data => {
 					setQuestion(data);
 					setAnswers(data.messageBoardMessages.items);
+					setSectionTitle(data.messageBoardSection.title);
 				}),
 			[context.siteKey, page, questionId]
 		);
@@ -180,7 +183,7 @@ export default withRouter(
 								<div className="align-items-end flex-column-reverse flex-md-row row">
 									<div className="c-mt-4 c-mt-md-0 col-md-9">
 										<Link
-											to={`/questions/${question.messageBoardSection.title}`}
+											to={`/questions/${stringToSlug(sectionTitle)}`}
 										>
 											<SectionLabel
 												section={

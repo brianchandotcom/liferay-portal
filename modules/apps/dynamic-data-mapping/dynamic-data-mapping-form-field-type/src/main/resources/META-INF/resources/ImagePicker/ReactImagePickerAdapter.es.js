@@ -209,7 +209,7 @@ const ReactImagePicker = ({
 						</div>
 					</div>
 
-					<ClayForm.Group className="has-error">
+					<ClayForm.Group>
 						<ClayInput
 							defaultValue={imageValues.description}
 							disabled={readOnly}

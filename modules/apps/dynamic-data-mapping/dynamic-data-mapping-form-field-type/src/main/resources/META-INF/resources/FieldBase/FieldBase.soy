@@ -38,7 +38,15 @@
 		{/if}
 	{/let}
 
-	<div class="{$fieldCssClassAttribute}" data-field-name="{$name}" data-onclick="{$_handleFieldClicked}">
+	{let $attributesContainer kind="attributes"}
+		class="{$fieldCssClassAttribute}"
+		data-field-name="{$name}"
+		{if $readOnly}
+			data-onclick="{$_handleFieldClicked}"
+		{/if}
+	{/let}
+
+	<div {$attributesContainer}>
 		{if $repeatable}
 			<div class="lfr-ddm-form-field-repeatable-toolbar">
 				{if $showRepeatableRemoveButton}

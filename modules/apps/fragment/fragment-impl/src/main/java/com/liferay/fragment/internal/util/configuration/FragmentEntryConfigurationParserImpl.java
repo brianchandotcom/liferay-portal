@@ -440,7 +440,9 @@ public class FragmentEntryConfigurationParserImpl
 			JSONObject validationJSONObject =
 				typeOptionsJSONObject.getJSONObject("validation");
 
-			if (validationJSONObject.has("errorMessage")) {
+			if ((validationJSONObject != null) &&
+				validationJSONObject.has("errorMessage")) {
+
 				String errorMessage = validationJSONObject.getString(
 					"errorMessage");
 

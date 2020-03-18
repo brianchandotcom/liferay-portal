@@ -31,6 +31,7 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -86,6 +87,30 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		_ctService.updateWithUnsafeFunction(this::_publish);
 	}
 
+	private int _getPreDeletedRowCount(
+			Connection connection, String primaryKeyName, String tableName)
+		throws SQLException {
+
+		String sql = StringBundler.concat(
+			"select count(*) from CTEntry left join ", tableName,
+			" on CTEntry.modelClassPK = ", tableName, ".", primaryKeyName,
+			" and ", tableName, ".ctCollectionId = ", _sourceCTCollectionId,
+			" where CTEntry.changeType = ", CTConstants.CT_CHANGE_TYPE_DELETION,
+			" and CTEntry.ctCollectionId = ", _sourceCTCollectionId,
+			" and CTEntry.modelClassNameId = ", _modelClassNameId, " and ",
+			tableName, ".", primaryKeyName, " is null");
+
+		try (PreparedStatement ps = connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
+
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		}
+
+		return 0;
+	}
+
 	private Void _publish(CTPersistence<T> ctPersistence) throws Exception {
 		String tableName = ctPersistence.getTableName();
 
@@ -125,10 +150,25 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		}
 
 		if (_deletionCTEntries != null) {
-			_updateCTCollectionId(
+			int updatedRowCount = _updateCTCollectionId(
 				connection, tableName, primaryKeyName,
 				_deletionCTEntries.values(), _targetCTCollectionId,
-				_sourceCTCollectionId, true, true);
+				_sourceCTCollectionId, true, false);
+
+			if (updatedRowCount != _deletionCTEntries.size()) {
+				int preDeletedRowCount = _getPreDeletedRowCount(
+					connection, primaryKeyName, tableName);
+
+				if ((updatedRowCount + preDeletedRowCount) !=
+						_deletionCTEntries.size()) {
+
+					throw new SystemException(
+						StringBundler.concat(
+							"Size mismatch expected ",
+							_deletionCTEntries.size(), " but was ",
+							updatedRowCount));
+				}
+			}
 
 			_updateModelMvccVersion(
 				connection, tableName, primaryKeyName, _deletionCTEntries,

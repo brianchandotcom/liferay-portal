@@ -329,7 +329,9 @@ definition {
 
 		Refresh();
 
-		Click(locator1 = "Staging#SITE_PAGES_VARIATION_DROPDOWN");
+		AssertClick(
+			locator1 = "Staging#SITE_PAGES_VARIATION_DROPDOWN",
+			value1 = "${sitePagesVariationName}");
 
 		var key_sitePagesVariationName = "${sitePagesVariationMenulistName}";
 

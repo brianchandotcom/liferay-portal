@@ -500,12 +500,8 @@ definition {
 	}
 
 	@description = "Edit an existing content page that has fragments. This testcase covers the bug found in LPS-85872. This test has been extended to cover LPS-78726. Changes to content pages only appear after they are published."
-	@ignore = "true"
 	@priority = "5"
 	test EditContentPage {
-
-		// Ignore test until LRQA-56640 is resolved
-
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 

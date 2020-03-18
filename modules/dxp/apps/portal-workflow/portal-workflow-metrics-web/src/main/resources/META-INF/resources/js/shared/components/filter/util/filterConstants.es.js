@@ -11,7 +11,7 @@
 
 const filterConstants = {
 	assignee: {
-		key: 'assigneeUserIds',
+		key: 'assigneeIds',
 		pinned: false,
 		title: Liferay.Language.get('assignee'),
 	},

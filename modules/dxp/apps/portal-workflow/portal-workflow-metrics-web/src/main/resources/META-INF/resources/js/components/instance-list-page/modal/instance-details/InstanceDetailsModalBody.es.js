@@ -22,7 +22,7 @@ import {Item} from './InstanceDetailsModalItem.es';
 const Body = ({
 	assetTitle,
 	assetType,
-	assigneeUsers = [{name: Liferay.Language.get('unassigned')}],
+	assignees = [{name: Liferay.Language.get('unassigned')}],
 	creatorUser,
 	dateCompletion,
 	dateCreated,
@@ -148,7 +148,7 @@ const Body = ({
 				{!completed && (
 					<Body.SectionAttribute
 						description={Liferay.Language.get('current-assignee')}
-						detail={assigneeUsers.map(user => user.name).join(', ')}
+						detail={assignees.map(user => user.name).join(', ')}
 					/>
 				)}
 

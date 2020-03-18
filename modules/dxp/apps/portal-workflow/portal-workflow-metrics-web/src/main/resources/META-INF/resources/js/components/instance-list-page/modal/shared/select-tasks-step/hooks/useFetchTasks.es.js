@@ -30,7 +30,7 @@ const useFetchTasks = (options = {}) => {
 		dispatch,
 		filterState,
 		filterValues: {
-			bulkAssigneeUserIds: userIds = [],
+			bulkAssigneeIds: userIds = [],
 			bulkTaskKeys: workflowTaskNames,
 		},
 	} = useFilter({withoutRouteParams: true});
@@ -40,7 +40,7 @@ const useFetchTasks = (options = {}) => {
 	const clearFilters = useCallback(() => {
 		dispatch({
 			...filterState,
-			bulkAssigneeUserIds: [],
+			bulkAssigneeIds: [],
 			bulkTaskKeys: [],
 		});
 	}, [dispatch, filterState]);

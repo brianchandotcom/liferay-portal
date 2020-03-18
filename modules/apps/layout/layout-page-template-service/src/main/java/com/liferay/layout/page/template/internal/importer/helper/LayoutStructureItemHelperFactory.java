@@ -32,6 +32,10 @@ public class LayoutStructureItemHelperFactory {
 			return new ColumnLayoutStructureItemHelper();
 		}
 
+		if (pageElementType == PageElement.Type.DROP_ZONE) {
+			return new DropZoneLayoutStructureItemHelper();
+		}
+
 		if (pageElementType == PageElement.Type.ROW) {
 			return new RowLayoutStructureItemHelper();
 		}

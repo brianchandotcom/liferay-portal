@@ -14,3 +14,14 @@ create table RedirectEntry (
 	permanent_ BOOLEAN,
 	sourceURL STRING null
 );
+
+create table RedirectNotFoundEntry (
+	mvccVersion LONG default 0 not null,
+	redirectNotFoundEntryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	createDate DATE null,
+	modifiedDate DATE null,
+	hits LONG,
+	url VARCHAR(75) null
+);

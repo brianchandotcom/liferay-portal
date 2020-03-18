@@ -34,14 +34,14 @@ FileVersion fileVersion = (FileVersion)request.getAttribute("file_entry_upper_tb
 						</h2>
 
 						<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
-							<span>
-								<aui:icon cssClass="icon-monospaced" image="lock" markupView="lexicon" message="locked" />
+							<span class="file-icon-color-0 inline-item inline-item-after">
+								<aui:icon image="lock" markupView="lexicon" message="locked" />
 							</span>
 						</c:if>
 
 						<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
-							<span>
-								<aui:icon cssClass="icon-monospaced" image="users" markupView="lexicon" message="shared" />
+							<span class="file-icon-color-0 inline-item inline-item-after lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "shared") %>">
+								<aui:icon image="users" markupView="lexicon" message="shared" />
 							</span>
 						</c:if>
 					</div>

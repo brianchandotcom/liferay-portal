@@ -255,16 +255,8 @@ definition {
 	}
 
 	macro configureDisplaySettings {
-		if ("${displayPage}" == "true") {
-			var key_portletName = "${portletName}";
+		AssetPublisherPortlet.gotoConfigurationPG(portletName = "${portletName}");
 
-			Click.clickNoWaitForVisible(locator1 = "PageEditor#WIDGETS_OPTIONS_ICON");
-
-			SelectFrame(locator1 = "IFrame#DIALOG");
-		}
-		else {
-			AssetPublisherPortlet.gotoConfigurationPG(portletName = "${portletName}");
-		}
 		Navigator.gotoNavTab(navTab = "Display Settings");
 
 		Panel.expandPanel(panel = "Set and Enable");

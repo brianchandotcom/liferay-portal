@@ -361,6 +361,12 @@ class LayoutProvider extends Component {
 	}
 
 	_handleFieldClicked(event) {
+		const {originalEvent} = event;
+
+		if (originalEvent) {
+			originalEvent.stopPropagation();
+		}
+
 		this.setState(handleFieldClicked(this.props, this.state, event));
 	}
 

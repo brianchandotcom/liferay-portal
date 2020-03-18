@@ -330,7 +330,8 @@ public class ContentFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "value")) {
 				if (jsonParserFieldValue != null) {
 					contentField.setValue(
-						ValueSerDes.toDTO((String)jsonParserFieldValue));
+						ContentFieldValueSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "value_i18n")) {

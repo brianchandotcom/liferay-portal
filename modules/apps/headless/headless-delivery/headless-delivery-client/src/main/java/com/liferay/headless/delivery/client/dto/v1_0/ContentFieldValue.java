@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.ValueSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.ContentFieldValueSerDes;
 
 import java.util.Objects;
 
@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Value implements Cloneable {
+public class ContentFieldValue implements Cloneable {
 
 	public String getData() {
 		return data;
@@ -152,8 +152,8 @@ public class Value implements Cloneable {
 	protected StructuredContentLink structuredContentLink;
 
 	@Override
-	public Value clone() throws CloneNotSupportedException {
-		return (Value)super.clone();
+	public ContentFieldValue clone() throws CloneNotSupportedException {
+		return (ContentFieldValue)super.clone();
 	}
 
 	@Override
@@ -162,13 +162,13 @@ public class Value implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof Value)) {
+		if (!(object instanceof ContentFieldValue)) {
 			return false;
 		}
 
-		Value value = (Value)object;
+		ContentFieldValue contentFieldValue = (ContentFieldValue)object;
 
-		return Objects.equals(toString(), value.toString());
+		return Objects.equals(toString(), contentFieldValue.toString());
 	}
 
 	@Override
@@ -179,7 +179,7 @@ public class Value implements Cloneable {
 	}
 
 	public String toString() {
-		return ValueSerDes.toJSON(this);
+		return ContentFieldValueSerDes.toJSON(this);
 	}
 
 }

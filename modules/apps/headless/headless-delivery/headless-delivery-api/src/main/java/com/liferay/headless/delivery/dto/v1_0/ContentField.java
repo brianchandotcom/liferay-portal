@@ -262,16 +262,18 @@ public class ContentField {
 
 	@Schema
 	@Valid
-	public Value getValue() {
+	public ContentFieldValue getValue() {
 		return value;
 	}
 
-	public void setValue(Value value) {
+	public void setValue(ContentFieldValue value) {
 		this.value = value;
 	}
 
 	@JsonIgnore
-	public void setValue(UnsafeSupplier<Value, Exception> valueUnsafeSupplier) {
+	public void setValue(
+		UnsafeSupplier<ContentFieldValue, Exception> valueUnsafeSupplier) {
+
 		try {
 			value = valueUnsafeSupplier.get();
 		}
@@ -285,21 +287,21 @@ public class ContentField {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Value value;
+	protected ContentFieldValue value;
 
 	@Schema
 	@Valid
-	public Map<String, Object> getValue_i18n() {
+	public Map<String, ContentFieldValue> getValue_i18n() {
 		return value_i18n;
 	}
 
-	public void setValue_i18n(Map<String, Object> value_i18n) {
+	public void setValue_i18n(Map<String, ContentFieldValue> value_i18n) {
 		this.value_i18n = value_i18n;
 	}
 
 	@JsonIgnore
 	public void setValue_i18n(
-		UnsafeSupplier<Map<String, Object>, Exception>
+		UnsafeSupplier<Map<String, ContentFieldValue>, Exception>
 			value_i18nUnsafeSupplier) {
 
 		try {
@@ -315,7 +317,7 @@ public class ContentField {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Object> value_i18n;
+	protected Map<String, ContentFieldValue> value_i18n;
 
 	@Override
 	public boolean equals(Object object) {

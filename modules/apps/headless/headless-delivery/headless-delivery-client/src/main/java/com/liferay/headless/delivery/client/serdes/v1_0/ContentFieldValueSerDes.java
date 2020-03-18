@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.Value;
+import com.liferay.headless.delivery.client.dto.v1_0.ContentFieldValue;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,22 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ValueSerDes {
+public class ContentFieldValueSerDes {
 
-	public static Value toDTO(String json) {
-		ValueJSONParser valueJSONParser = new ValueJSONParser();
+	public static ContentFieldValue toDTO(String json) {
+		ContentFieldValueJSONParser contentFieldValueJSONParser =
+			new ContentFieldValueJSONParser();
 
-		return valueJSONParser.parseToDTO(json);
+		return contentFieldValueJSONParser.parseToDTO(json);
 	}
 
-	public static Value[] toDTOs(String json) {
-		ValueJSONParser valueJSONParser = new ValueJSONParser();
+	public static ContentFieldValue[] toDTOs(String json) {
+		ContentFieldValueJSONParser contentFieldValueJSONParser =
+			new ContentFieldValueJSONParser();
 
-		return valueJSONParser.parseToDTOs(json);
+		return contentFieldValueJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Value value) {
-		if (value == null) {
+	public static String toJSON(ContentFieldValue contentFieldValue) {
+		if (contentFieldValue == null) {
 			return "null";
 		}
 
@@ -53,7 +55,7 @@ public class ValueSerDes {
 
 		sb.append("{");
 
-		if (value.getData() != null) {
+		if (contentFieldValue.getData() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -62,42 +64,42 @@ public class ValueSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(value.getData()));
+			sb.append(_escape(contentFieldValue.getData()));
 
 			sb.append("\"");
 		}
 
-		if (value.getDocument() != null) {
+		if (contentFieldValue.getDocument() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"document\": ");
 
-			sb.append(String.valueOf(value.getDocument()));
+			sb.append(String.valueOf(contentFieldValue.getDocument()));
 		}
 
-		if (value.getGeo() != null) {
+		if (contentFieldValue.getGeo() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"geo\": ");
 
-			sb.append(String.valueOf(value.getGeo()));
+			sb.append(String.valueOf(contentFieldValue.getGeo()));
 		}
 
-		if (value.getImage() != null) {
+		if (contentFieldValue.getImage() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"image\": ");
 
-			sb.append(String.valueOf(value.getImage()));
+			sb.append(String.valueOf(contentFieldValue.getImage()));
 		}
 
-		if (value.getLink() != null) {
+		if (contentFieldValue.getLink() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -106,19 +108,20 @@ public class ValueSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(value.getLink()));
+			sb.append(_escape(contentFieldValue.getLink()));
 
 			sb.append("\"");
 		}
 
-		if (value.getStructuredContentLink() != null) {
+		if (contentFieldValue.getStructuredContentLink() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"structuredContentLink\": ");
 
-			sb.append(String.valueOf(value.getStructuredContentLink()));
+			sb.append(
+				String.valueOf(contentFieldValue.getStructuredContentLink()));
 		}
 
 		sb.append("}");
@@ -127,116 +130,122 @@ public class ValueSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ValueJSONParser valueJSONParser = new ValueJSONParser();
+		ContentFieldValueJSONParser contentFieldValueJSONParser =
+			new ContentFieldValueJSONParser();
 
-		return valueJSONParser.parseToMap(json);
+		return contentFieldValueJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Value value) {
-		if (value == null) {
+	public static Map<String, String> toMap(
+		ContentFieldValue contentFieldValue) {
+
+		if (contentFieldValue == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (value.getData() == null) {
+		if (contentFieldValue.getData() == null) {
 			map.put("data", null);
 		}
 		else {
-			map.put("data", String.valueOf(value.getData()));
+			map.put("data", String.valueOf(contentFieldValue.getData()));
 		}
 
-		if (value.getDocument() == null) {
+		if (contentFieldValue.getDocument() == null) {
 			map.put("document", null);
 		}
 		else {
-			map.put("document", String.valueOf(value.getDocument()));
+			map.put(
+				"document", String.valueOf(contentFieldValue.getDocument()));
 		}
 
-		if (value.getGeo() == null) {
+		if (contentFieldValue.getGeo() == null) {
 			map.put("geo", null);
 		}
 		else {
-			map.put("geo", String.valueOf(value.getGeo()));
+			map.put("geo", String.valueOf(contentFieldValue.getGeo()));
 		}
 
-		if (value.getImage() == null) {
+		if (contentFieldValue.getImage() == null) {
 			map.put("image", null);
 		}
 		else {
-			map.put("image", String.valueOf(value.getImage()));
+			map.put("image", String.valueOf(contentFieldValue.getImage()));
 		}
 
-		if (value.getLink() == null) {
+		if (contentFieldValue.getLink() == null) {
 			map.put("link", null);
 		}
 		else {
-			map.put("link", String.valueOf(value.getLink()));
+			map.put("link", String.valueOf(contentFieldValue.getLink()));
 		}
 
-		if (value.getStructuredContentLink() == null) {
+		if (contentFieldValue.getStructuredContentLink() == null) {
 			map.put("structuredContentLink", null);
 		}
 		else {
 			map.put(
 				"structuredContentLink",
-				String.valueOf(value.getStructuredContentLink()));
+				String.valueOf(contentFieldValue.getStructuredContentLink()));
 		}
 
 		return map;
 	}
 
-	public static class ValueJSONParser extends BaseJSONParser<Value> {
+	public static class ContentFieldValueJSONParser
+		extends BaseJSONParser<ContentFieldValue> {
 
 		@Override
-		protected Value createDTO() {
-			return new Value();
+		protected ContentFieldValue createDTO() {
+			return new ContentFieldValue();
 		}
 
 		@Override
-		protected Value[] createDTOArray(int size) {
-			return new Value[size];
+		protected ContentFieldValue[] createDTOArray(int size) {
+			return new ContentFieldValue[size];
 		}
 
 		@Override
 		protected void setField(
-			Value value, String jsonParserFieldName,
+			ContentFieldValue contentFieldValue, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "data")) {
 				if (jsonParserFieldValue != null) {
-					value.setData((String)jsonParserFieldValue);
+					contentFieldValue.setData((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "document")) {
 				if (jsonParserFieldValue != null) {
-					value.setDocument(
+					contentFieldValue.setDocument(
 						ContentDocumentSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "geo")) {
 				if (jsonParserFieldValue != null) {
-					value.setGeo(GeoSerDes.toDTO((String)jsonParserFieldValue));
+					contentFieldValue.setGeo(
+						GeoSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "image")) {
 				if (jsonParserFieldValue != null) {
-					value.setImage(
+					contentFieldValue.setImage(
 						ContentDocumentSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "link")) {
 				if (jsonParserFieldValue != null) {
-					value.setLink((String)jsonParserFieldValue);
+					contentFieldValue.setLink((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "structuredContentLink")) {
 
 				if (jsonParserFieldValue != null) {
-					value.setStructuredContentLink(
+					contentFieldValue.setStructuredContentLink(
 						StructuredContentLinkSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}

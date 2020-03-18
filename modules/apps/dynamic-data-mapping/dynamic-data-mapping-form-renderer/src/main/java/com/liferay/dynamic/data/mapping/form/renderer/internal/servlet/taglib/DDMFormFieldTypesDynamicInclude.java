@@ -33,9 +33,9 @@ import org.osgi.service.component.annotations.Component;
 public class DDMFormFieldTypesDynamicInclude
 	extends BaseDDMFormFieldTypesDynamicInclude {
 
-	public static final String FIELD_TYPES_REQUESTED_ATTRIBUTE_NAME =
-		DDMFormFieldTypesDynamicInclude.class.getName() +
-			"#fieldTypesRequested";
+	public static final String LIFERAY_SHARED_FIELD_TYPES_REQUESTED_ATTRIBUTE =
+		"LIFERAY_SHARED_" + DDMFormFieldTypesDynamicInclude.class.getName() +
+			"_fieldTypesRequested";
 
 	@Override
 	public void include(
@@ -50,11 +50,12 @@ public class DDMFormFieldTypesDynamicInclude
 		if (themeDisplay.isAjax()) {
 			include(httpServletResponse);
 
-			httpServletRequest.removeAttribute(FIELD_TYPES_REQUESTED_ATTRIBUTE_NAME);
+			httpServletRequest.removeAttribute(
+				LIFERAY_SHARED_FIELD_TYPES_REQUESTED_ATTRIBUTE);
 		}
 		else {
 			httpServletRequest.setAttribute(
-				FIELD_TYPES_REQUESTED_ATTRIBUTE_NAME, Boolean.TRUE);
+				LIFERAY_SHARED_FIELD_TYPES_REQUESTED_ATTRIBUTE, Boolean.TRUE);
 		}
 	}
 

@@ -39,7 +39,7 @@ public class DDMFormRendererBottomDynamicInclude
 
 		Object fieldTypesRequested = httpServletRequest.getAttribute(
 			DDMFormFieldTypesDynamicInclude.
-				FIELD_TYPES_REQUESTED_ATTRIBUTE_NAME);
+				LIFERAY_SHARED_FIELD_TYPES_REQUESTED_ATTRIBUTE);
 
 		if (fieldTypesRequested != null) {
 			include(httpServletResponse);
@@ -47,7 +47,7 @@ public class DDMFormRendererBottomDynamicInclude
 
 		httpServletRequest.removeAttribute(
 			DDMFormFieldTypesDynamicInclude.
-				FIELD_TYPES_REQUESTED_ATTRIBUTE_NAME);
+				LIFERAY_SHARED_FIELD_TYPES_REQUESTED_ATTRIBUTE);
 	}
 
 	@Override

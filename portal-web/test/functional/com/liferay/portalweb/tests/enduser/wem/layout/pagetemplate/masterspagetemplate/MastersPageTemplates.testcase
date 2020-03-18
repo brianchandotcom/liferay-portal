@@ -256,16 +256,6 @@ definition {
 	@description = "This is for LPS-102200. Can change master of a content page template among any existing masters"
 	@priority = "5"
 	test ChangeMasterOfContentPageTemplateAmongExistingMasters {
-		task ("Delete the existing custom masters") {
-			if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE_FLOAT")) {
-				Click(locator1 = "Button#CLOSE_MESSAGE_FLOAT");
-			}
-
-			MastersPageTemplatesAdmin.deleteMasters(masterLayoutName = "Custom Masters Page Template");
-
-			Alert.viewSuccessMessage();
-		}
-
 		task ("Add header and footer in custom master") {
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",
@@ -408,16 +398,6 @@ definition {
 	@description = "This is for LPS-102200. Can change master of a display page template among any existing masters."
 	@priority = "5"
 	test ChangeMasterOfDisplayPageTemplateAmongExistingMasters {
-		task ("Delete the existing custom masters") {
-			if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE_FLOAT")) {
-				Click(locator1 = "Button#CLOSE_MESSAGE_FLOAT");
-			}
-
-			MastersPageTemplatesAdmin.deleteMasters(masterLayoutName = "Custom Masters Page Template");
-
-			Alert.viewSuccessMessage();
-		}
-
 		task ("Add header and footer in custom master") {
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",
@@ -801,10 +781,6 @@ definition {
 	@description = "This is for LPS-102200. Assert the content in Drop Zone is not changed when change master of page."
 	@priority = "3"
 	test ContentInDropZoneIsNotChangedWhenChangeMasterofPage {
-		task ("Delete the existing custom masters") {
-			MastersPageTemplatesAdmin.deleteMasters(masterLayoutName = "Custom Masters Page Template");
-		}
-
 		task ("Add header and footer in custom master") {
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",

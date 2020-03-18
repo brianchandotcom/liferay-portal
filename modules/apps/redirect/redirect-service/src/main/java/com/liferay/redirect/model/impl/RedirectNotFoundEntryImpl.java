@@ -25,7 +25,7 @@ package com.liferay.redirect.model.impl;
  */
 public class RedirectNotFoundEntryImpl extends RedirectNotFoundEntryBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a redirect not found entry model instance should use the {@link com.liferay.redirect.model.RedirectNotFoundEntry} interface instead.

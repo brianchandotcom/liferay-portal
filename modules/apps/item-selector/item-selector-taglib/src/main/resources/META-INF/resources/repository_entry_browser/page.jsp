@@ -318,6 +318,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 									Map<String, Object> data = new HashMap<>();
 
 									data.put("description", fileEntry.getDescription());
+									data.put("fileEntryId", fileEntry.getFileEntryId());
 
 									String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 

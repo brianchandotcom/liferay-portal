@@ -14,9 +14,12 @@
 
 package com.liferay.document.library.web.internal.upload;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.util.DLValidator;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -83,6 +86,22 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), uploadPortletRequest);
 
+			try {
+				long fileEntryId = Long.valueOf(
+					uploadPortletRequest.getParameter("fileEntryId"));
+
+				DLFileEntry fileEntry = _dlFileEntryLocalService.getFileEntry(
+					fileEntryId);
+
+				ExpandoBridge expandoBridge = fileEntry.getExpandoBridge();
+
+				serviceContext.setExpandoBridgeAttributes(
+					expandoBridge.getAttributes());
+			}
+			catch (NoSuchFileEntryException noSuchFileEntryException) {
+				_log.error("Unable to copy metadata", noSuchFileEntryException);
+			}
+
 			return _dlAppService.addFileEntry(
 				themeDisplay.getScopeGroupId(), folderId, uniqueFileName,
 				contentType, uniqueFileName, description, StringPool.BLANK,
@@ -116,6 +135,9 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
 	private DLValidator _dlValidator;

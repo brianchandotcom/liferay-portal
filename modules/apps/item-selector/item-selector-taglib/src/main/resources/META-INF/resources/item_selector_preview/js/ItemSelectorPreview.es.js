@@ -131,6 +131,7 @@ const ItemSelectorPreview = ({
 				urlParams: {
 					entityURL: currentItem.url,
 					saveFileDescription: currentItem.description,
+					saveFileEntryId: currentItem.fileentryid,
 					saveFileName: itemTitle,
 					saveParamName: 'imageSelectorFileName',
 					saveURL: uploadItemURL,

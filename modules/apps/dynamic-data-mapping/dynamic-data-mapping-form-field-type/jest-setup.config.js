@@ -13,6 +13,7 @@
  */
 
 window.AlloyEditor = {
+	...window.AlloyEditor,
 	Selections: [
 		{
 			buttons: ['linkEdit'],
@@ -33,6 +34,7 @@ window.AlloyEditor = {
 };
 
 window.AUI = () => ({
+	...window.AUI,
 	use: (...modules) => {
 		const callback = modules[modules.length - 1];
 
@@ -54,15 +56,22 @@ window.AUI = () => ({
 	},
 });
 
+window.Liferay.PortletKeys = {
+	DOCUMENT_LIBRARY: 'DOCUMENT_LIBRARY',
+	ITEM_SELECTOR: 'ITEM_SELECTOR',
+};
+
 window.themeDisplay = {
+	...window.themeDisplay,
 	getDefaultLanguageId: () => 'en_US',
-	getLanguageId: () => 'en_US',
-	getPathContext: () => '/',
-	getPathThemeImages: () => 'http://localhost:8080/o/admin-theme/images',
+	getLayoutRelativeControlPanelURL: () => 'layoutRelativeControlPanelURL',
+	getLayoutRelativeURL: () => 'getLayoutRelativeURL',
+	getScopeGroupId: () => 'scopeGroupId',
 };
 
 window.util = {
-	isEqual: (a, b) => a === b,
+	...window.util,
+	selectEntity: () => {},
 };
 
 const languageMap = {

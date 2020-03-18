@@ -42,7 +42,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,81 +65,55 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 		super.setUp();
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testBaseModelUserPermissions() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testLocalizedSearch() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testParentBaseModelUserPermissions() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchAttachments() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchBaseModelWithTrash() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchByDDMStructureField() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchByKeywordsInsideParentBaseModel() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchComments() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchCommentsByKeywords() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchExpireAllVersions() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchExpireLatestVersion() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchMyEntries() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchRecentEntries() {
 	}
 
@@ -196,21 +169,15 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 				true));
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchStatus() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchVersions() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchWithinDDMStructure() {
 	}
 

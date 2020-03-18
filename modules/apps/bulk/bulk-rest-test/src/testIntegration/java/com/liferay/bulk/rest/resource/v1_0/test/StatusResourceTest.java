@@ -16,13 +16,32 @@ package com.liferay.bulk.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
  * @author Alejandro Tardín
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class StatusResourceTest extends BaseStatusResourceTestCase {
+
+	@Override
+	public void testClientSerDesToDTO() {
+	}
+
+	@Override
+	public void testClientSerDesToJSON() {
+	}
+
+	@Override
+	public void testEscapeRegexInStringFields() {
+	}
+
+	@Override
+	public void testGetStatus() {
+	}
+
+	@Override
+	public void testGraphQLGetStatus() {
+	}
+
 }

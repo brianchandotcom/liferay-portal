@@ -37,6 +37,12 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.redirect.service.impl.RedirectNotFoundEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.redirect.model.RedirectNotFoundEntry
+		addOrUpdateRedirectNotFoundEntry(
+			com.liferay.portal.kernel.model.Group group, String url) {
+
+		return getService().addOrUpdateRedirectNotFoundEntry(group, url);
+	}
 
 	/**
 	 * Adds the redirect not found entry to the database. Also notifies the appropriate model listeners.

@@ -19,23 +19,12 @@
 <%
 AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 
-AccountEntry accountEntry = null;
-long accountEntryId = AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT;
-Long parentAccountEntryId = AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT;
-String parentAccountEntryName = StringPool.BLANK;
-
 AccountEntry parentAccountEntry = null;
 
 if (accountEntryDisplay != null) {
-	accountEntryId = accountEntryDisplay.getAccountEntryId();
+	AccountEntry accountEntry = AccountEntryLocalServiceUtil.fetchAccountEntry(accountEntryDisplay.getAccountEntryId());
 
-	accountEntry = AccountEntryLocalServiceUtil.fetchAccountEntry(accountEntryId);
-
-	parentAccountEntryId = accountEntry.getParentAccountEntryId();
-
-	parentAccountEntryName = accountEntryDisplay.getParentAccountEntryName();
-
-	parentAccountEntry = AccountEntryLocalServiceUtil.fetchAccountEntry(parentAccountEntryId);
+	parentAccountEntry = AccountEntryLocalServiceUtil.fetchAccountEntry(accountEntry.getParentAccountEntryId());
 }
 %>
 
@@ -69,7 +58,7 @@ if (accountEntryDisplay != null) {
 		</span>
 	</h3>
 
-	<aui:input name="parentAccountEntryId" type="hidden" value="<%= String.valueOf(parentAccountEntryId) %>" />
+	<aui:input name="parentAccountEntryId" type="hidden" value="<%= (parentAccountEntry != null) ? String.valueOf(parentAccountEntry.getAccountEntryId()) : AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT %>" />
 
 	<liferay-ui:search-container
 		compactEmptyResultsMessage="<%= true %>"
@@ -80,7 +69,7 @@ if (accountEntryDisplay != null) {
 		total="<%= 1 %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= (parentAccountEntryId == AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT) ? Collections.emptyList() : Arrays.asList(parentAccountEntry) %>"
+			results="<%= (parentAccountEntry == null) ? Collections.emptyList() : Arrays.asList(parentAccountEntry) %>"
 		/>
 
 		<liferay-ui:search-container-row
@@ -91,11 +80,11 @@ if (accountEntryDisplay != null) {
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="name"
-				value="<%= parentAccountEntryName %>"
+				value="<%= curParentAccountEntry.getName() %>"
 			/>
 
 			<liferay-ui:search-container-column-text>
-				<a class="modify-link pull-right" data-rowId="<%= parentAccountEntryId %>" href="javascript:;"><%= removeParentAccountEntryIcon %></a>
+				<a class="modify-link pull-right" data-rowId="<%= curParentAccountEntry.getAccountEntryId() %>" href="javascript:;"><%= removeParentAccountEntryIcon %></a>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
@@ -115,10 +104,6 @@ if (accountEntryDisplay != null) {
 	var parentAccountEntryInput =
 		document.<portlet:namespace />fm.<portlet:namespace />parentAccountEntryId;
 
-	var parentAccountEntry = parentAccountEntryInput.value
-		.split(',')
-		.filter(Boolean);
-
 	searchContainerContentBox.delegate(
 		'click',
 		function(event) {
@@ -130,9 +115,7 @@ if (accountEntryDisplay != null) {
 
 			searchContainer.deleteRow(tr, rowId);
 
-			A.Array.removeItem(parentAccountEntry, rowId);
-
-			parentAccountEntryInput.value = 0;
+			parentAccountEntryInput.value = '';
 		},
 		'.modify-link'
 	);
@@ -160,8 +143,8 @@ if (accountEntryDisplay != null) {
 					id:
 						'<%= liferayPortletResponse.getNamespace() + "selectParentAccountEntry" %>',
 					selectedData: [
-						'<%= accountEntryId %>',
-						'<%= parentAccountEntryId %>',
+						'<%= (accountEntryDisplay != null) ? accountEntryDisplay.getAccountEntryId() : "" %>',
+						parentAccountEntryInput.value,
 					],
 					title: '<liferay-ui:message key="assign-parent-account" />',
 
@@ -175,9 +158,7 @@ if (accountEntryDisplay != null) {
 					uri: '<%= selectParentAccountEntryURL.toString() %>',
 				},
 				function(event) {
-					var newParentAccountEntry = event.accountentryid;
-
-					parentAccountEntryInput.value = newParentAccountEntry;
+					parentAccountEntryInput.value = event.accountentryid;
 
 					var rowColumns = [];
 

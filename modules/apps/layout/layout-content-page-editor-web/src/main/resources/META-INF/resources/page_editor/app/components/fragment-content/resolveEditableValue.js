@@ -54,6 +54,7 @@ export default function(
 			classPK: editableValue.config.classPK,
 			collectionFieldId: editableValue.config.collectionFieldId,
 			fieldId: editableValue.config.fieldId,
+			languageId,
 		}).then(href => {
 			return {...editableValue.config, href};
 		});

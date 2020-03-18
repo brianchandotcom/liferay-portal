@@ -18,6 +18,8 @@ import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useReducer} from 'react';
 
+import AnimatedCounter from './AnimatedCounter.es';
+
 const PRESSED_DOWN = 'DOWN';
 const PRESSED_UP = 'UP';
 const RATING_TYPE = 'thumbs';
@@ -185,7 +187,7 @@ const RatingsThumbs = ({
 	);
 
 	return (
-		<div className="ratings-thumbs">
+		<div className="ratings ratings-thumbs">
 			<ClayButton
 				aria-pressed={pressed === PRESSED_UP}
 				borderless
@@ -199,7 +201,7 @@ const RatingsThumbs = ({
 				<span className="inline-item inline-item-before">
 					<ClayIcon symbol="thumbs-up" />
 				</span>
-				{positiveVotes}
+				<AnimatedCounter counter={positiveVotes} />
 			</ClayButton>
 			<ClayButton
 				aria-pressed={pressed === PRESSED_DOWN}
@@ -214,7 +216,7 @@ const RatingsThumbs = ({
 				<span className="inline-item inline-item-before">
 					<ClayIcon symbol="thumbs-down" />
 				</span>
-				{negativeVotes}
+				<AnimatedCounter counter={negativeVotes} />
 			</ClayButton>
 		</div>
 	);

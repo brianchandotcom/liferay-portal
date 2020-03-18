@@ -18,6 +18,8 @@ import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import AnimatedCounter from './AnimatedCounter.es';
+
 const RATING_TYPE = 'like';
 const SCORE_LIKE = 1;
 const SCORE_UNLIKE = -1;
@@ -87,7 +89,7 @@ const RatingsLike = ({
 	};
 
 	return (
-		<div className="ratings-like">
+		<div className="ratings ratings-like">
 			<ClayButton
 				borderless
 				disabled={!signedIn || !enabled}
@@ -98,7 +100,9 @@ const RatingsLike = ({
 			>
 				<ClayIcon className={liked ? 'liked' : ''} symbol="heart" />
 
-				<strong className="likes">{totalLikes}</strong>
+				<strong className="likes">
+					<AnimatedCounter counter={totalLikes} />
+				</strong>
 			</ClayButton>
 		</div>
 	);

@@ -172,6 +172,8 @@ message.
 	</target>
 
 	<target name="clean">
+		<gradle-stop-daemon />
+
 		<execute>
 			${build.git.clean.command}
 		</execute>

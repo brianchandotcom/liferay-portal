@@ -1072,6 +1072,19 @@ information.
 		</sequential>
 	</macrodef>
 
+	<macrodef name="gradle-stop-daemon">
+		<sequential>
+			<if>
+				<equals arg1="${org.gradle.daemon}" arg2="true" />
+				<then>
+					<gradle-execute dir="." forcedcacheenabled="false" task="">
+						<arg value="--stop" />
+					</gradle-execute>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="install-portal-artifact">
 		<attribute default="jar" name="packaging" />
 		<attribute default="false" name="snapshot" />

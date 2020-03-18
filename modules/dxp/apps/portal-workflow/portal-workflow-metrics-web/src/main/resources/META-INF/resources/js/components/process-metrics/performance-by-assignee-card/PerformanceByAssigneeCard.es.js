@@ -92,7 +92,7 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 			pageSize: 10,
 			sort: 'durationTaskAvg:desc',
 		},
-		url: `/processes/${processId}/assignees`,
+		url: `/processes/${processId}/assignees/metrics`,
 	});
 
 	const promises = useMemo(() => [postData()], [postData]);

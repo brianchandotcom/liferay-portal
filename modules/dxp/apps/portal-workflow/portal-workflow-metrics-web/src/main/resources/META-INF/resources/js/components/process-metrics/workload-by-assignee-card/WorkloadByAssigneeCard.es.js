@@ -74,7 +74,7 @@ const WorkloadByAssigneeCard = ({routeParams}) => {
 			pageSize: 10,
 			sort,
 		},
-		url: `/processes/${processId}/assignees`,
+		url: `/processes/${processId}/assignees/metrics`,
 	});
 
 	const promises = useMemo(() => [postData()], [postData]);

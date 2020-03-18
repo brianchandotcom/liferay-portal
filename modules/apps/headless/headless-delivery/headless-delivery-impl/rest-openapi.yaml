@@ -331,6 +331,12 @@ components:
                 Represents the value of each field in structured content. Fields can contain different information types
                 (e.g., geolocation, documents, etc.).
             properties:
+                contentFieldValue:
+                    $ref: "#/components/schemas/ContentFieldValue"
+                contentFieldValue_i18n:
+                    additionalProperties:
+                        $ref: "#/components/schemas/ContentFieldValue"
+                    type: object
                 dataType:
                     description:
                         The field type (e.g., image, text, etc.).
@@ -366,63 +372,62 @@ components:
                         A flag that indicates whether this field can be rendered multiple times.
                     readOnly: true
                     type: boolean
-                value:
+        ContentFieldValue:
+            description:
+                # @review
+                Represents the value of a content field. Can contain different information types
+                (e.g., geolocation, documents, etc.).
+            properties:
+                data:
+                    description:
+                        The field's content for simple types.
+                    type: string
+                document:
+                    allOf:
+                        - $ref: "#/components/schemas/ContentDocument"
+                    description:
+                        A content document element.
+                geo:
+                    description:
+                        A point determined by latitude and longitude.
                     properties:
-                        data:
+                        latitude:
                             description:
-                                The field's content for simple types.
-                            type: string
-                        document:
-                            allOf:
-                                - $ref: "#/components/schemas/ContentDocument"
+                                The latitude of a point in space.
+                            format: double
+                            type: number
+                        longitude:
                             description:
-                                A content document element.
-                        geo:
-                            description:
-                                A point determined by latitude and longitude.
-                            properties:
-                                latitude:
-                                    description:
-                                        The latitude of a point in space.
-                                    format: double
-                                    type: number
-                                longitude:
-                                    description:
-                                        The longitude of a point in space.
-                                    format: double
-                                    type: number
-                            type: object
-                        image:
-                            allOf:
-                                - $ref: "#/components/schemas/ContentDocument"
-                            description:
-                                A content document element that stores an image file.
-                        link:
-                            description:
-                                A link to a page on the server.
-                            format: uri
-                            type: string
-                        structuredContentLink:
-                            description:
-                                A link to structured content on the server.
-                            properties:
-                                contentType:
-                                    readOnly: true
-                                    type: string
-                                id:
-                                    description:
-                                        The resource's ID.
-                                    format: int64
-                                    type: integer
-                                title:
-                                    description:
-                                        The resource's title.
-                                    type: string
-                            type: object
+                                The longitude of a point in space.
+                            format: double
+                            type: number
                     type: object
-                value_i18n:
-                    additionalProperties:
-                        type: object
+                image:
+                    allOf:
+                        - $ref: "#/components/schemas/ContentDocument"
+                    description:
+                        A content document element that stores an image file.
+                link:
+                    description:
+                        A link to a page on the server.
+                    format: uri
+                    type: string
+                structuredContentLink:
+                    description:
+                        A link to structured content on the server.
+                    properties:
+                        contentType:
+                            readOnly: true
+                            type: string
+                        id:
+                            description:
+                                The resource's ID.
+                            format: int64
+                            type: integer
+                        title:
+                            description:
+                                The resource's title.
+                            type: string
                     type: object
         ContentSetElement:
             description:

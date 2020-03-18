@@ -30,6 +30,9 @@ export default withRouter(
 		const isActive = value => location.pathname.includes(value);
 
 		const context = useContext(AppContext);
+		if (sectionTitle) {
+			context.setSection(sectionTitle);
+		}  
 
 		return (
 			<section className="border-bottom questions-section questions-section-nav">
@@ -43,8 +46,8 @@ export default withRouter(
 										onClick={() => {
 											if (!sectionTitle) {
 												return history.push(
-													'/questions'
-												);
+													`/questions/${context.section}`
+												)
 											}
 
 											return history.push(
@@ -85,6 +88,7 @@ export default withRouter(
 									<ClayNavigationBar.Item 
 										active={isActive('activity')}
 										onClick={() => {
+											if (!sectionTitle) {}
 											return history.push(
 												`/activity/${context.userId}`
 											);
@@ -103,6 +107,7 @@ export default withRouter(
 							</div>
 						)}
 					</div>
+					
 				</div>
 			</section>
 		);

@@ -15,20 +15,16 @@
 package com.liferay.redirect.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
-
-import java.util.Dictionary;
+import com.liferay.redirect.test.util.RedirectTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -55,7 +51,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 
 	@Test
 	public void testAddOrUpdateRedirectNotFoundEntry() throws Exception {
-		_withRedirectEnabled(
+		RedirectTestUtil.withRedirectEnabled(
 			() -> {
 				_redirectNotFoundEntry =
 					_redirectNotFoundEntryLocalService.
@@ -69,7 +65,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 	public void testAddOrUpdateRedirectNotFoundEntryWithDifferentURL()
 		throws Exception {
 
-		_withRedirectEnabled(
+		RedirectTestUtil.withRedirectEnabled(
 			() -> {
 				_redirectNotFoundEntry =
 					_redirectNotFoundEntryLocalService.
@@ -90,7 +86,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 	public void testAddOrUpdateRedirectNotFoundEntryWithExistingEntry()
 		throws Exception {
 
-		_withRedirectEnabled(
+		RedirectTestUtil.withRedirectEnabled(
 			() -> {
 				_redirectNotFoundEntry =
 					_redirectNotFoundEntryLocalService.
@@ -104,23 +100,6 @@ public class RedirectNotFoundEntryLocalServiceTest {
 					_redirectNotFoundEntry, redirectNotFoundEntry);
 				Assert.assertEquals(2, redirectNotFoundEntry.getHits());
 			});
-	}
-
-	private void _withRedirectEnabled(UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
-
-		dictionary.put("enabled", true);
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.redirect.web.internal.configuration." +
-						"FFRedirectConfiguration",
-					dictionary)) {
-
-			unsafeRunnable.run();
-		}
 	}
 
 	private Group _group;

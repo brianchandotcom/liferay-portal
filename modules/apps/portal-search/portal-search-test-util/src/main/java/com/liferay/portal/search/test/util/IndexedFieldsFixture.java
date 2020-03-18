@@ -145,7 +145,12 @@ public class IndexedFieldsFixture {
 		Document document = documentBuilder.build();
 
 		map.put(Field.UID, document.getString(Field.UID));
-		map.put("uidm", document.getString("uidm"));
+
+		String uidm = document.getString("uidm");
+
+		if (uidm != null) {
+			map.put("uidm", uidm);
+		}
 	}
 
 	public void populateUID(

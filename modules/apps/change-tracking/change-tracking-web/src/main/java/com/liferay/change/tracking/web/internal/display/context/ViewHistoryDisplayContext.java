@@ -51,22 +51,24 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewHistoryDisplayContext {
 
 	public ViewHistoryDisplayContext(
-		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse,
 		BackgroundTaskLocalService backgroundTaskLocalService,
 		CTCollectionLocalService ctCollectionLocalService,
-		CTProcessLocalService ctProcessLocalService, Language language) {
+		CTProcessLocalService ctProcessLocalService,
+		HttpServletRequest httpServletRequest, Language language,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_httpServletRequest = httpServletRequest;
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
 		_backgroundTaskLocalService = backgroundTaskLocalService;
 		_ctCollectionLocalService = ctCollectionLocalService;
 		_ctProcessLocalService = ctProcessLocalService;
+		_httpServletRequest = httpServletRequest;
 		_language = language;
+
+		_renderRequest = renderRequest;
 
 		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_renderResponse = renderResponse;
 	}
 
 	public CTCollection getCtCollection(CTProcess ctProcess)

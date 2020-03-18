@@ -73,9 +73,9 @@ public class ChangeListsPortlet extends BaseChangeListsPortlet {
 
 		ChangeListsDisplayContext changeListsDisplayContext =
 			new ChangeListsDisplayContext(
-				renderRequest, renderResponse, _ctCollectionLocalService,
-				_ctDisplayRendererRegistry, _ctEntryLocalService,
-				_ctPreferencesLocalService, _language, _portal);
+				_ctCollectionLocalService, _ctDisplayRendererRegistry,
+				_ctEntryLocalService, _ctPreferencesLocalService, _language,
+				_portal, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			CTWebKeys.CHANGE_LISTS_DISPLAY_CONTEXT, changeListsDisplayContext);

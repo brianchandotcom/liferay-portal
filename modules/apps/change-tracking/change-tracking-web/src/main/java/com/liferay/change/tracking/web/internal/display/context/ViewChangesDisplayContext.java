@@ -42,16 +42,16 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewChangesDisplayContext {
 
 	public ViewChangesDisplayContext(
-		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse, CTCollection ctCollection,
-		CTEntryLocalService ctEntryLocalService, Language language) {
+		CTCollection ctCollection, CTEntryLocalService ctEntryLocalService,
+		HttpServletRequest httpServletRequest, Language language,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_httpServletRequest = httpServletRequest;
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
 		_ctCollection = ctCollection;
 		_ctEntryLocalService = ctEntryLocalService;
+		_httpServletRequest = httpServletRequest;
 		_language = language;
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 	}
 
 	public String getBackURL() {

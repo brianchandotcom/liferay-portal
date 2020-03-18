@@ -56,15 +56,13 @@ import javax.servlet.http.HttpServletRequest;
 public class ChangeListsDisplayContext {
 
 	public ChangeListsDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
 		CTCollectionLocalService ctCollectionLocalService,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
 		CTEntryLocalService ctEntryLocalService,
 		CTPreferencesLocalService ctPreferencesLocalService, Language language,
-		Portal portal) {
+		Portal portal, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
 		_ctCollectionLocalService = ctCollectionLocalService;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntryLocalService = ctEntryLocalService;
@@ -73,6 +71,8 @@ public class ChangeListsDisplayContext {
 		_portal = portal;
 
 		_httpServletRequest = _portal.getHttpServletRequest(renderRequest);
+
+		_renderRequest = renderRequest;
 
 		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -87,6 +87,8 @@ public class ChangeListsDisplayContext {
 		else {
 			_ctCollectionId = ctPreferences.getCtCollectionId();
 		}
+
+		_renderResponse = renderResponse;
 	}
 
 	public long getCtCollectionId() {

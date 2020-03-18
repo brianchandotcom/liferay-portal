@@ -38,13 +38,11 @@ import javax.servlet.http.HttpServletRequest;
 public class ChangeListsConfigurationDisplayContext {
 
 	public ChangeListsConfigurationDisplayContext(
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
 		CTPreferencesLocalService ctPreferencesLocalService,
-		Language language) {
+		HttpServletRequest httpServletRequest, Language language,
+		RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
-		_renderResponse = renderResponse;
-		_language = language;
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -60,6 +58,9 @@ public class ChangeListsConfigurationDisplayContext {
 		else {
 			_changeListsEnabled = false;
 		}
+
+		_language = language;
+		_renderResponse = renderResponse;
 	}
 
 	public String getActionURL() {

@@ -63,8 +63,9 @@ public class ChangeListsConfigurationPortlet extends BaseChangeListsPortlet {
 		ChangeListsConfigurationDisplayContext
 			changeListsConfigurationDisplayContext =
 				new ChangeListsConfigurationDisplayContext(
-					_portal.getHttpServletRequest(renderRequest),
-					renderResponse, _ctPreferencesLocalService, _language);
+					_ctPreferencesLocalService,
+					_portal.getHttpServletRequest(renderRequest), _language,
+					renderResponse);
 
 		renderRequest.setAttribute(
 			CTWebKeys.CHANGE_LISTS_CONFIGURATION_DISPLAY_CONTEXT,

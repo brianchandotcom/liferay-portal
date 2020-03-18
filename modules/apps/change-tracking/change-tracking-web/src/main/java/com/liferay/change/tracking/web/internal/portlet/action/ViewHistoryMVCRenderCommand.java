@@ -49,9 +49,10 @@ public class ViewHistoryMVCRenderCommand implements MVCRenderCommand {
 
 		ViewHistoryDisplayContext viewHistoryDisplayContext =
 			new ViewHistoryDisplayContext(
-				_portal.getHttpServletRequest(renderRequest), renderRequest,
-				renderResponse, _backgroundTaskLocalService,
-				_ctCollectionLocalService, _ctProcessLocalService, _language);
+				_backgroundTaskLocalService, _ctCollectionLocalService,
+				_ctProcessLocalService,
+				_portal.getHttpServletRequest(renderRequest), _language,
+				renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			CTWebKeys.VIEW_HISTORY_DISPLAY_CONTEXT, viewHistoryDisplayContext);

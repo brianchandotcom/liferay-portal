@@ -56,10 +56,10 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 		try {
 			ViewChangesDisplayContext viewChangesDisplayContext =
 				new ViewChangesDisplayContext(
-					_portal.getHttpServletRequest(renderRequest), renderRequest,
-					renderResponse,
 					_ctCollectionLocalService.getCTCollection(ctCollectionId),
-					_ctEntryLocalService, _language);
+					_ctEntryLocalService,
+					_portal.getHttpServletRequest(renderRequest), _language,
+					renderRequest, renderResponse);
 
 			renderRequest.setAttribute(
 				CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT,

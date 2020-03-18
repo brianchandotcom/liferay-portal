@@ -142,8 +142,8 @@ Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 			>
 				<liferay-portlet:renderURL var="revertURL">
 					<portlet:param name="mvcRenderCommandName" value="/change_lists/undo_ct_collection" />
-					<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
 					<portlet:param name="revert" value="true" />
 				</liferay-portlet:renderURL>
 

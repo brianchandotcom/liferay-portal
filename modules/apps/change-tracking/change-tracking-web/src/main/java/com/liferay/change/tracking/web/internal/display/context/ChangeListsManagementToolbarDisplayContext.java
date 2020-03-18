@@ -35,10 +35,10 @@ public class ChangeListsManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public ChangeListsManagementToolbarDisplayContext(
+		ChangeListsDisplayContext changeListsDisplayContext,
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		ChangeListsDisplayContext changeListsDisplayContext,
 		SearchContainer<CTCollection> searchContainer) {
 
 		super(

@@ -172,9 +172,17 @@ message.
 	</target>
 
 	<target name="clean">
-		<execute>
-			${build.git.clean.command}
-		</execute>
+		<if>
+			<available file="${project.dir}/.git" type="dir" />
+			<then>
+				<execute>
+					${build.git.clean.command}
+				</execute>
+			</then>
+			<else>
+				<echo>Skipped project directory clean because Git repository is not initialized</echo>
+			</else>
+		</if>
 
 		<clean-liferay-home />
 

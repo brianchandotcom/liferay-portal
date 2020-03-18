@@ -23,10 +23,10 @@ import {AppContext} from '../../AppContext.es';
 import TagSelector from '../../components/TagSelector.es';
 import useSection from '../../hooks/useSection.es';
 import {createQuestion} from '../../utils/client.es';
-import {stringToSlug} from '../../utils/utils.es';
 import {
 	getCKEditorConfig,
 	onBeforeLoadCKEditor,
+	stringToSlug,
 	useDebounceCallback,
 } from '../../utils/utils.es';
 
@@ -186,7 +186,9 @@ export default withRouter(
 
 								<Link
 									className="btn btn-secondary c-ml-sm-3"
-									to={`/questions/${stringToSlug(sectionTitle)}`}
+									to={`/questions/${stringToSlug(
+										sectionTitle
+									)}`}
 								>
 									{Liferay.Language.get('cancel')}
 								</Link>

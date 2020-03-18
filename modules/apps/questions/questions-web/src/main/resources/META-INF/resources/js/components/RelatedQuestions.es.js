@@ -17,7 +17,11 @@ import {Link, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
 import {getRelatedThreads} from '../utils/client.es';
-import {dateToInternationalHuman, normalizeRating, stringToSlug} from '../utils/utils.es';
+import {
+	dateToInternationalHuman,
+	normalizeRating,
+	stringToSlug,
+} from '../utils/utils.es';
 import QuestionBadge from './QuestionsBadge.es';
 import SectionLabel from './SectionLabel.es';
 import UserIcon from './UserIcon.es';
@@ -87,7 +91,9 @@ export default withRouter(
 
 									<Link
 										className="c-mt-2 d-block questions-title stretched-link text-reset"
-										to={`/questions/${stringToSlug(sectionTitle)}/${relatedQuestion.friendlyUrlPath}`}
+										to={`/questions/${stringToSlug(
+											sectionTitle
+										)}/${relatedQuestion.friendlyUrlPath}`}
 									>
 										<h3 className="h2 stretched-link-layer">
 											{relatedQuestion.headline}

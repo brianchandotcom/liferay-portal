@@ -22,7 +22,7 @@ import {Link, withRouter} from 'react-router-dom';
 import {AppContext} from '../AppContext.es';
 import SectionSubscription from '../components/SectionSubscription.es';
 import useSection from '../hooks/useSection.es';
-import {useDebounceCallback, stringToSlug, slugToText} from '../utils/utils.es';
+import {slugToText, stringToSlug, useDebounceCallback} from '../utils/utils.es';
 
 function getFilterOptions() {
 	return [
@@ -125,7 +125,12 @@ export default withRouter(
 							<ClayDropDown.Group>
 								{getParentSubSections().map((item, i) => (
 									<ClayDropDown.Item href={item.href} key={i}>
-										<Link to={'/questions/' + stringToSlug(item.title)}>
+										<Link
+											to={
+												'/questions/' +
+												stringToSlug(item.title)
+											}
+										>
 											{item.title}
 										</Link>
 									</ClayDropDown.Item>
@@ -200,7 +205,9 @@ export default withRouter(
 									displayType="primary"
 									onClick={() =>
 										history.push(
-											`/questions/${stringToSlug(sectionTitle)}/new`
+											`/questions/${stringToSlug(
+												sectionTitle
+											)}/new`
 										)
 									}
 								>
@@ -212,7 +219,9 @@ export default withRouter(
 									displayType="primary"
 									onClick={() =>
 										history.push(
-											`/questions/${stringToSlug(sectionTitle)}/new`
+											`/questions/${stringToSlug(
+												sectionTitle
+											)}/new`
 										)
 									}
 								>

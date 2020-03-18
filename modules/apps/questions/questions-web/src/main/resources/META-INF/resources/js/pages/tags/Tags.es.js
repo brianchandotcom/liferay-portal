@@ -49,7 +49,9 @@ export default withRouter(
 								>
 									<Link
 										className="questions-disabled-link"
-										to={`/questions/${stringToSlug(sectionTitle)}/tag/${tag.taxonomyCategoryId}`}
+										to={`/questions/${stringToSlug(
+											sectionTitle
+										)}/tag/${tag.taxonomyCategoryId}`}
 									>
 										<ClayCardWithNavigation>
 											<ClayCard.Body>

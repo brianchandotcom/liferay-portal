@@ -42,7 +42,7 @@ import {
 	dateToBriefInternationalHuman,
 	getCKEditorConfig,
 	onBeforeLoadCKEditor,
-	stringToSlug
+	stringToSlug,
 } from '../../utils/utils.es';
 
 export default withRouter(
@@ -183,7 +183,9 @@ export default withRouter(
 								<div className="align-items-end flex-column-reverse flex-md-row row">
 									<div className="c-mt-4 c-mt-md-0 col-md-9">
 										<Link
-											to={`/questions/${stringToSlug(sectionTitle)}`}
+											to={`/questions/${stringToSlug(
+												sectionTitle
+											)}`}
 										>
 											<SectionLabel
 												section={

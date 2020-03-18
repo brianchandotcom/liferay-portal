@@ -39,7 +39,7 @@ export default withRouter(
 							<div className="align-items-center col d-flex justify-content-between">
 								<ClayNavigationBar triggerLabel="Questions">
 									<ClayNavigationBar.Item
-										active={!isActive('tags')}
+										active={!isActive('activity') && !isActive('tags')}
 										onClick={() => {
 											if (!sectionTitle) {
 												return history.push(
@@ -81,15 +81,25 @@ export default withRouter(
 											{Liferay.Language.get('tags')}
 										</ClayLink>
 									</ClayNavigationBar.Item>
+
+									<ClayNavigationBar.Item 
+										active={isActive('activity')}
+										onClick={() => {
+											return history.push(
+												`/activity/${context.userId}`
+											);
+										}}
+									>
+										<ClayLink
+											className="nav-link"
+											displayType="unstyled"
+										>
+											{Liferay.Language.get('my-activity')}
+										</ClayLink>
+									</ClayNavigationBar.Item>
+
 								</ClayNavigationBar>
 
-								<Link
-									className="nav-link small text-secondary"
-									displayType="unstyled"
-									to={`/activity/${context.userId}`}
-								>
-									{Liferay.Language.get('my-activity')}
-								</Link>
 							</div>
 						)}
 					</div>

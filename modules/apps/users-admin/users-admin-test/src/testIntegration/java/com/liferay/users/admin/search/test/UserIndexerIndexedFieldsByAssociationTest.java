@@ -17,7 +17,6 @@ package com.liferay.users.admin.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -109,13 +108,13 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 		_userGroups = userGroupSearchFixture.getUserGroups();
 
 		indexedFieldsFixture = new IndexedFieldsFixture(
-			_resourcePermissionLocalService, _searchEngineHelper,
+			_resourcePermissionLocalService, _searchEngineHelper, _uidFactory,
 			_documentBuilderFactory);
 	}
 
 	@Test
 	public void testAssociationsThatDoNotIndexGroupIdFields() {
-		String[] fieldNames = {Field.GROUP_ID, Field.SCOPE_GROUP_ID};
+		String[] fieldNames = {Field.GROUP_ID, Field.SCOPE_GROUP_ID, Field.UID};
 
 		UserGroup userGroup = addUserGroup();
 
@@ -124,6 +123,8 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 		User user = addUser();
 
 		final Map<String, String> map = getBaseFieldValuesMap(user);
+
+		indexedFieldsFixture.populateUID(user, map);
 
 		assertFieldValues(user, fieldNames, map);
 
@@ -154,12 +155,12 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 		final Map<String, String> map1 = HashMapBuilder.putAll(
 			getBaseFieldValuesMap(user)
 		).put(
-			Field.UID, getUid(user)
-		).put(
 			Field.USER_ID, String.valueOf(user.getPrimaryKeyObj())
 		).put(
 			"organizationCount", "0"
 		).build();
+
+		indexedFieldsFixture.populateUID(user, map1);
 
 		assertFieldValues(user, fieldNames, map1);
 
@@ -289,10 +290,6 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 		).withSearchContext(
 			searchContext -> searchContext.setCompanyId(companyId)
 		);
-	}
-
-	protected String getUid(ClassedModel classedModel) {
-		return _uidFactory.getUID(classedModel);
 	}
 
 	protected Document searchUser(User user, String[] fieldNames) {

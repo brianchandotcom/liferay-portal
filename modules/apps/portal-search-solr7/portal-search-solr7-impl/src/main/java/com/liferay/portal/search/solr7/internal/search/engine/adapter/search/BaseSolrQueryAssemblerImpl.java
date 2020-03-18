@@ -32,6 +32,7 @@ import com.liferay.portal.search.solr7.internal.facet.CompositeFacetProcessor;
 import com.liferay.portal.search.solr7.internal.facet.FacetProcessor;
 import com.liferay.portal.search.solr7.internal.facet.FacetUtil;
 import com.liferay.portal.search.solr7.internal.filter.FilterTranslator;
+import com.liferay.portal.search.solr7.internal.query.translator.SolrQueryTranslator;
 import com.liferay.portal.search.solr7.internal.stats.StatsTranslator;
 import com.liferay.portal.search.stats.StatsRequest;
 
@@ -123,6 +124,23 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		);
 	}
 
+	protected String getQueryString(BaseSearchRequest baseSearchRequest) {
+		com.liferay.portal.search.query.Query query =
+			baseSearchRequest.getQuery();
+
+		if (query != null) {
+			return _solrQueryTranslator.translate(query);
+		}
+
+		Query legacyQuery = baseSearchRequest.getQuery71();
+
+		if (legacyQuery != null) {
+			return _queryTranslator.translate(legacyQuery, null);
+		}
+
+		return null;
+	}
+
 	protected void setExplain(
 		SolrQuery solrQuery, BaseSearchRequest baseSearchRequest) {
 
@@ -210,13 +228,7 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 	protected void setQuery(
 		SolrQuery solrQuery, BaseSearchRequest baseSearchRequest) {
 
-		Query query = baseSearchRequest.getQuery71();
-
-		if (query == null) {
-			return;
-		}
-
-		String queryString = _queryTranslator.translate(query, null);
+		String queryString = getQueryString(baseSearchRequest);
 
 		if (!Validator.isBlank(queryString)) {
 			solrQuery.setQuery(queryString);
@@ -267,6 +279,8 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 	private FacetProcessor<SolrQuery> _facetProcessor;
 	private FilterTranslator<String> _filterTranslator;
 	private QueryTranslator<String> _queryTranslator;
+	private final SolrQueryTranslator _solrQueryTranslator =
+		new SolrQueryTranslator();
 	private StatsTranslator _statsTranslator;
 
 }

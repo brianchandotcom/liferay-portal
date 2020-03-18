@@ -293,7 +293,7 @@
 <!--FIELD_ELLIPSIS-->
 <tr>
 	<td>FIELD_ELLIPSIS</td>
-	<td>//div[contains(@class,'dropdown-action')]//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
+	<td>//div[@class='dropdown dropdown-action']//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 

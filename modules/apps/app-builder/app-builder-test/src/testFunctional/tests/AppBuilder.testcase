@@ -1566,7 +1566,7 @@ definition {
 		FormViewBuilder.setName(formViewName = "My Form View 2");
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Date");
 		FormViewBuilder.closeSidebar();
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+		FormViewBuilder.addFromObjectField(fieldName = "Text");
 		FormViewBuilder.save();
 
 		FormViewBuilder.switchToFormViewTab();

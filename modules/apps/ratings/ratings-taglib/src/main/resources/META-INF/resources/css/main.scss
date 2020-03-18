@@ -46,6 +46,8 @@
 	}
 
 	.animated-counter {
+		$animation-duration: 300ms;
+
 		display: inline-flex;
 		justify-content: center;
 		position: relative;
@@ -56,22 +58,22 @@
 
 		&.animating-up {
 			.previous {
-				animation-duration: 300ms;
+				animation-duration: $animation-duration;
 				animation-name: fadeOutUp;
 			}
 			.current {
-				animation-duration: 300ms;
+				animation-duration: $animation-duration;
 				animation-name: fadeInUp;
 			}
 		}
 
 		&.animating-down {
 			.previous {
-				animation-duration: 300ms;
+				animation-duration: $animation-duration;
 				animation-name: fadeOutDown;
 			}
 			.current {
-				animation-duration: 300ms;
+				animation-duration: $animation-duration;
 				animation-name: fadeInDown;
 			}
 		}

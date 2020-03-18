@@ -1300,6 +1300,7 @@ definition {
 	@priority = "5"
 	test TrashEntryReferencePublishing {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "StagingUsecase#TrashEntryReferencePublishing";
 		property testray.component.names = "Training";
 
 		Navigator.gotoStagedSitePage(

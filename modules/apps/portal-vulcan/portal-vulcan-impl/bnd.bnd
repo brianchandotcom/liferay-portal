@@ -20,6 +20,4 @@ Import-Package:\
 	\
 	!org.jsoup.*,\
 	\
-	com.liferay.oauth2.provider.scope.*;resolution:=optional,\
-	\
 	*

@@ -20,7 +20,7 @@ const Item = ({
 	breachedInstanceCount,
 	breachedInstancePercentage,
 	durationAvg,
-	name,
+	node: {label},
 }) => {
 	const formattedDuration = formatDuration(durationAvg);
 	const formattedPercentage = getFormattedPercentage(
@@ -31,7 +31,7 @@ const Item = ({
 	return (
 		<ClayTable.Row>
 			<ClayTable.Cell className="table-title" data-testid="stepName">
-				{name}
+				{label}
 			</ClayTable.Cell>
 
 			<ClayTable.Cell className="text-right" data-testid="stepSla">

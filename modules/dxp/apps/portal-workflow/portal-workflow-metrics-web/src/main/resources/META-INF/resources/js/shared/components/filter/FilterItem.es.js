@@ -12,18 +12,21 @@
 import getClassName from 'classnames';
 import React, {useEffect, useMemo, useState} from 'react';
 
-const FilterItem = ({
-	active = false,
-	description,
-	dividerAfter,
-	hideControl,
-	itemKey,
-	multiple,
-	name,
-	onChange,
-	onClick,
-}) => {
+const FilterItem = properties => {
 	const [checked, setChecked] = useState(active);
+
+	const {
+		active = false,
+		description,
+		dividerAfter,
+		hideControl,
+		itemKey,
+		labelPropertyName = 'name',
+		multiple,
+		name,
+		onChange,
+		onClick,
+	} = properties;
 
 	const classes = useMemo(
 		() => ({
@@ -69,7 +72,7 @@ const FilterItem = ({
 							className="custom-control-label-text"
 							data-testid="filterItemName"
 						>
-							{name}
+							{properties[labelPropertyName] || name}
 						</span>
 
 						{description && (

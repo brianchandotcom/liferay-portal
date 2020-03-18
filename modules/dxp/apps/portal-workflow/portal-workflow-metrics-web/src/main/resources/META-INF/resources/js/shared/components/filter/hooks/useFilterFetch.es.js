@@ -24,6 +24,7 @@ const useFilterFetch = ({
 	filterKey,
 	prefixKey,
 	requestBody: data = {},
+	propertyKey = 'key',
 	requestMethod: method = 'get',
 	requestParams: params = {},
 	requestUrl: url,
@@ -41,7 +42,11 @@ const useFilterFetch = ({
 	const fetchCallback = useCallback(
 		({data = {}}) => {
 			const mergedItems = mergeItemsArray(staticItems, data.items);
-			const mappedItems = buildFilterItems(mergedItems, selectedKeys);
+			const mappedItems = buildFilterItems({
+				items: mergedItems,
+				propertyKey,
+				selectedKeys,
+			});
 
 			setItems(mappedItems);
 		},

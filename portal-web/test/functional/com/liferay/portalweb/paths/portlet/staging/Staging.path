@@ -144,7 +144,7 @@
 </tr>
 <tr>
 	<td>PAGE_VARIATION_DROPDOWN</td>
-	<td>//a[contains(@class,'staging-variation-selector') and contains(.,'${key_pageVariationName}')]/span</td>
+	<td>//a[contains(@class,'staging-variation-selector') and contains(.,'${key_pageVariationName}')]</td>
 	<td></td>
 </tr>
 <tr>

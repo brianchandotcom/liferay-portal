@@ -315,7 +315,9 @@ definition {
 	macro changePageVariationPG {
 		var key_pageVariationName = "${pageVariationName}";
 
-		Click(locator1 = "Staging#PAGE_VARIATION_DROPDOWN");
+		AssertClick(
+			locator1 = "Staging#PAGE_VARIATION_DROPDOWN",
+			value1 = "${pageVariationName}");
 
 		var key_pageVariationName = "${pageVariationNameMenulistName}";
 

@@ -634,6 +634,12 @@ definition {
 
 		Portlet.deletePG(portletName = "Web Content Display");
 
+		takeScreenshot();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Home",
 			siteName = "Site Name");

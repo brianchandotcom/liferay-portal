@@ -739,9 +739,7 @@ definition {
 
 		Check(locator1 = "Fragment#FRAGMENT_SITE_USAGE_CHECKBOX");
 
-		MouseOver(locator1 = "Fragment#FRAGMENT_SITE_USAGE_NAV_ITEM");
-
-		Click(locator1 = "Button#PROPAGATE");
+		Click.clickNoMouseOver(locator1 = "Button#PROPAGATE");
 
 		Alert.viewSuccessMessage();
 

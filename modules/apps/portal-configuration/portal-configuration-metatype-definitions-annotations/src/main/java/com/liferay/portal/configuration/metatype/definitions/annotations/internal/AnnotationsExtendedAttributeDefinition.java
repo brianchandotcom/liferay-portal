@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -102,12 +103,40 @@ public class AnnotationsExtendedAttributeDefinition
 
 	@Override
 	public int getType() {
+		try {
+			Method method = _configurationBeanClass.getMethod(
+				_attributeDefinition.getID());
+
+			Class<?> returnType = method.getReturnType();
+
+			if (returnType.isAssignableFrom(LocalizedValuesMap.class)) {
+				return LOCALIZED_VALUES_MAP;
+			}
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			_handleNoSuchMethodException(noSuchMethodException);
+		}
+
 		return _attributeDefinition.getType();
 	}
 
 	@Override
 	public String validate(String value) {
 		return _attributeDefinition.validate(value);
+	}
+
+	private void _handleNoSuchMethodException(
+		NoSuchMethodException noSuchMethodException) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"The configuration bean class ",
+					_configurationBeanClass.getName(),
+					" does not have a method for the attribute definition ",
+					_attributeDefinition.getID()),
+				noSuchMethodException);
+		}
 	}
 
 	private void _processExtendedMetatypeFields() {
@@ -137,15 +166,7 @@ public class AnnotationsExtendedAttributeDefinition
 			}
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"The configuration bean class ",
-						_configurationBeanClass.getName(),
-						" does not have a method for the attribute definition ",
-						_attributeDefinition.getID()),
-					noSuchMethodException);
-			}
+			_handleNoSuchMethodException(noSuchMethodException);
 		}
 	}
 

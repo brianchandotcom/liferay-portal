@@ -15,6 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 const VALIDATION_TYPE = {
@@ -63,13 +64,19 @@ const DestinationUrlInput = ({initialUrl}) => {
 		} else {
 			setValidationType(VALIDATION_TYPE.checking);
 
-			setTimeout(() => {
-				if (url === 'a') {
+			fetch(url)
+				.then(response => {
+					console.log(response);
+					if (!response.ok) {
+						setValidationType(VALIDATION_TYPE.warning);
+					} else {
+						setValidationType(VALIDATION_TYPE.info);
+					}
+				})
+				.catch(xhr =>  {
+					console.log(xhr);
 					setValidationType(VALIDATION_TYPE.warning);
-				} else {
-					setValidationType(VALIDATION_TYPE.info);
-				}
-			}, 1000)
+				});
 		}
 	};
 

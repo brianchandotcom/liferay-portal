@@ -18,6 +18,10 @@ import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {
+	useFromControlsId,
+	useToControlsId,
+} from './../components/CollectionItemContext';
 
 const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
 	[LAYOUT_DATA_ITEM_TYPES.root]: [
@@ -143,6 +147,9 @@ export default function useDragAndDrop({
 		targetPositionWithoutMiddle,
 	} = state;
 
+	const fromControlsId = useFromControlsId();
+	const toControlsId = useToControlsId();
+
 	const [dragOptions, drag, preview] = useDrag({
 		collect: _monitor => {
 			return {
@@ -189,7 +196,7 @@ export default function useDragAndDrop({
 			if (!_monitor.didDrop() && dropTargetItemId) {
 				const {parentId, position} = getParentItemIdAndPositon({
 					dropItem,
-					dropTargetItemId,
+					dropTargetItemId: fromControlsId(dropTargetItemId),
 					items: layoutData.items,
 					targetPositionWithMiddle,
 				});
@@ -266,7 +273,7 @@ export default function useDragAndDrop({
 				case RULES_TYPE.MIDDLE:
 					dispatch({
 						dropItem,
-						dropTargetItemId: dropTargetItem.itemId,
+						dropTargetItemId: toControlsId(dropTargetItem.itemId),
 						droppable: true,
 						targetPositionWithMiddle: TARGET_POSITION.MIDDLE,
 						targetPositionWithoutMiddle: newTargetPositionWithoutMiddle,
@@ -278,7 +285,7 @@ export default function useDragAndDrop({
 						dropTargetItemId:
 							getAncestorId(
 								layoutData.items[dropTargetItem.parentId]
-							) || dropTargetItem.itemId,
+							) || toControlsId(dropTargetItem.itemId),
 						droppable: true,
 						targetPositionWithMiddle: newTargetPositionWithMiddle,
 						targetPositionWithoutMiddle: newTargetPositionWithoutMiddle,
@@ -287,7 +294,7 @@ export default function useDragAndDrop({
 				case RULES_TYPE.VALID_MOVE:
 					dispatch({
 						dropItem,
-						dropTargetItemId: dropTargetItem.itemId,
+						dropTargetItemId: toControlsId(dropTargetItem.itemId),
 						droppable: true,
 						targetPositionWithMiddle: newTargetPositionWithMiddle,
 						targetPositionWithoutMiddle: newTargetPositionWithoutMiddle,

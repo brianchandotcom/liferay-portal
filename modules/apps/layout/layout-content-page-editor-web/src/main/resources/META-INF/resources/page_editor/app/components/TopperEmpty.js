@@ -21,12 +21,15 @@ import {
 } from '../../prop-types/index';
 import {useSelector} from '../store/index';
 import useDragAndDrop, {TARGET_POSITION} from '../utils/useDragAndDrop';
+import {useToControlsId} from './CollectionItemContext';
 import getLabelName from './layout-data-items/getLabelName';
 
 export default function TopperEmpty({children, item, layoutData}) {
 	const containerRef = useRef(null);
 	const store = useSelector(state => state);
 	const fragmentEntryLinks = store.fragmentEntryLinks;
+
+	const toControlsId = useToControlsId();
 
 	const {
 		canDrop,
@@ -54,7 +57,7 @@ export default function TopperEmpty({children, item, layoutData}) {
 
 	const isDraggableInPosition = position =>
 		targetPositionWithMiddle === position &&
-		dropTargetItemId === item.itemId;
+		dropTargetItemId === toControlsId(item.itemId);
 
 	const dataAdvice =
 		!droppable && isDraggableInPosition(TARGET_POSITION.MIDDLE)

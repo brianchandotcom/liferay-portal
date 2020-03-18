@@ -30,6 +30,7 @@ import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
 import moveItem from '../thunks/moveItem';
 import useDragAndDrop, {TARGET_POSITION} from '../utils/useDragAndDrop';
+import {useToControlsId} from './CollectionItemContext';
 import {
 	useActiveItemId,
 	useHoverItem,
@@ -74,6 +75,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 	const isHovered = useIsHovered();
 	const isSelected = useIsSelected();
 	const selectItem = useSelectItem();
+	const toControlsId = useToControlsId();
 
 	const {
 		canDrop,
@@ -171,7 +173,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 
 	const isDraggableInPosition = position =>
 		targetPositionWithMiddle === position &&
-		dropTargetItemId === item.itemId;
+		dropTargetItemId === toControlsId(item.itemId);
 
 	const dataAdvice =
 		!droppable && isDraggableInPosition(TARGET_POSITION.MIDDLE)

@@ -59,6 +59,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.AsyncPortletServletRequest;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryLocalService;
+import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 import com.liferay.site.model.SiteFriendlyURL;
 import com.liferay.site.service.SiteFriendlyURLLocalService;
 
@@ -284,6 +285,9 @@ public class FriendlyURLServlet extends HttpServlet {
 					return new Redirect(redirect);
 				}
 			}
+
+			redirectNotFoundEntryLocalService.addOrUpdateRedirectNotFoundEntry(
+				group, _normalizeFriendlyURL(friendlyURL));
 
 			throw noSuchLayoutException;
 		}
@@ -619,6 +623,10 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	@Reference
 	protected RedirectEntryLocalService redirectEntryLocalService;
+
+	@Reference
+	protected RedirectNotFoundEntryLocalService
+		redirectNotFoundEntryLocalService;
 
 	@Reference
 	protected SiteFriendlyURLLocalService siteFriendlyURLLocalService;

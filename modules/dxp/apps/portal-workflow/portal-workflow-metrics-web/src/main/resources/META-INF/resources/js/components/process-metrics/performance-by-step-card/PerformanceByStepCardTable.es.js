@@ -21,7 +21,7 @@ const Item = ({
 	breachedInstanceCount,
 	breachedInstancePercentage,
 	durationAvg,
-	name,
+	node: {label},
 }) => {
 	const formattedDuration = formatDuration(durationAvg);
 	const formattedPercentage = getFormattedPercentage(
@@ -32,7 +32,7 @@ const Item = ({
 	return (
 		<tr>
 			<td className="table-cell-expand" data-testid="stepName">
-				{name}
+				{label}
 			</td>
 
 			<td className="text-right" data-testid="slaBreached">

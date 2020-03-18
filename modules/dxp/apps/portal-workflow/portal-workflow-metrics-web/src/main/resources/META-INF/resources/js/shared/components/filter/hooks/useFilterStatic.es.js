@@ -26,7 +26,10 @@ const useFilterStatic = (
 	);
 
 	useEffect(() => {
-		const mappedItems = buildFilterItems(staticItems, selectedKeys);
+		const mappedItems = buildFilterItems({
+			items: staticItems,
+			selectedKeys,
+		});
 
 		setItems(mappedItems);
 		// eslint-disable-next-line react-hooks/exhaustive-deps

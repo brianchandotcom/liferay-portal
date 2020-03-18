@@ -19,9 +19,8 @@ import {processStatusConstants} from '../../filter/ProcessStatusFilter.es';
 import {slaStatusConstants} from '../../filter/SLAStatusFilter.es';
 
 const Item = ({
+	assignee: {id, name},
 	currentTab,
-	id,
-	name,
 	onTimeTaskCount,
 	overdueTaskCount,
 	processId,

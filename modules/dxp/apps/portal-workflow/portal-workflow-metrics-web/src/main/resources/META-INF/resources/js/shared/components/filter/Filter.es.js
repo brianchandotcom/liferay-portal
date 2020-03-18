@@ -38,6 +38,7 @@ const Filter = ({
 	filterKey,
 	hideControl = false,
 	items,
+	labelPropertyName = 'name',
 	multiple = true,
 	name,
 	onClickFilter,
@@ -235,6 +236,7 @@ const Filter = ({
 								hideControl={hideControl}
 								itemKey={item.key}
 								key={index}
+								labelPropertyName={labelPropertyName}
 								multiple={multiple}
 								onChange={onInputChange}
 								onClick={onClickHandler(item)}

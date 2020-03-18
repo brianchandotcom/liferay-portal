@@ -17,6 +17,9 @@ package com.liferay.portal.search.solr7.internal.search.engine.adapter.search;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.internal.groupby.GroupByResponseFactoryImpl;
+import com.liferay.portal.search.internal.hits.SearchHitBuilderFactoryImpl;
+import com.liferay.portal.search.internal.hits.SearchHitsBuilderFactoryImpl;
+import com.liferay.portal.search.internal.legacy.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.groupby.GroupByRequestFactoryImpl;
 import com.liferay.portal.search.internal.legacy.stats.StatsRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.stats.StatsResultsTranslatorImpl;
@@ -158,7 +161,10 @@ public class SearchRequestExecutorFixture {
 
 		return new DefaultSearchSearchResponseAssemblerHelperImpl() {
 			{
+				setDocumentBuilderFactory(new DocumentBuilderFactoryImpl());
 				setGroupByResponseFactory(new GroupByResponseFactoryImpl());
+				setSearchHitBuilderFactory(new SearchHitBuilderFactoryImpl());
+				setSearchHitsBuilderFactory(new SearchHitsBuilderFactoryImpl());
 				setStatsTranslator(createStatsTranslator());
 				setStatsResultsTranslator(new StatsResultsTranslatorImpl());
 			}

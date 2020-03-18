@@ -215,6 +215,7 @@ const ItemSelectorPreview = ({
 		};
 
 		const editedItem = {
+			fileentryid: currentItem.fileentryid,
 			metadata: JSON.stringify(editedItemMetadata),
 			returntype: uploadItemReturnType,
 			title: itemData.title,

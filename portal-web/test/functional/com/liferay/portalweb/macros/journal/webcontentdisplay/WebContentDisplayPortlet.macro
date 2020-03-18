@@ -300,7 +300,7 @@ definition {
 
 		Click(
 			key_card = "${otherSiteName}",
-			locator1 = "LexiconCard#CARD_TITLE");
+			locator1 = "LexiconCard#CARD_TITLE_LINK");
 
 		var key_listEntry = "${webContentTitle}";
 

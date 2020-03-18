@@ -335,12 +335,8 @@ definition {
 	}
 
 	@description = "This is a test for LPS-78726. Discarding a draft will revert a content page back to its most recent published version."
-	@ignore = "true"
 	@priority = "5"
 	test DiscardContentPageDraft {
-
-		// Ignore test until LRQA-56638 is resolved
-
 		property portal.acceptance = "true";
 
 		task ("Add a content page") {

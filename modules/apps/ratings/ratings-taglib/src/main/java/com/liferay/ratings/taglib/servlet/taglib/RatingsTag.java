@@ -162,7 +162,7 @@ public class RatingsTag extends IncludeTag {
 				).put(
 					"initialPositiveVotes", positiveVotes
 				).put(
-					"inTrash", _inTrash
+					"inTrash", _isInTrash()
 				).put(
 					"positiveVotes", positiveVotes
 				).put(
@@ -176,7 +176,7 @@ public class RatingsTag extends IncludeTag {
 				).build());
 
 			httpServletRequest.setAttribute(
-				"liferay-ratings:ratings:inTrash", _inTrash);
+				"liferay-ratings:ratings:inTrash", _isInTrash());
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:ratingsEntry", ratingsEntry);
 			httpServletRequest.setAttribute(
@@ -288,8 +288,10 @@ public class RatingsTag extends IncludeTag {
 		return userScore;
 	}
 
-	private boolean _isEnabled(ThemeDisplay themeDisplay) {
-		if (!_inTrash) {
+	private boolean _isEnabled(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (!_isInTrash()) {
 			Group group = themeDisplay.getSiteGroup();
 
 			if (!group.isStagingGroup() && !group.isStagedRemotely()) {

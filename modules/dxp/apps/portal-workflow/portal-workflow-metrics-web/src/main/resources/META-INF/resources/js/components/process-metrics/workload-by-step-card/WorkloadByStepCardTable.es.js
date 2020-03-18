@@ -65,7 +65,6 @@ const Table = ({items, processId}) => {
 							{...step}
 							key={index}
 							processId={processId}
-							taskKey={step.key}
 						/>
 					))}
 				</tbody>

@@ -49,6 +49,7 @@ const ProcessStepFilter = ({
 	const {items, selectedItems} = useFilterFetch({
 		filterKey,
 		prefixKey,
+		propertyKey: 'name',
 		requestUrl: `/processes/${processId}/tasks?page=0&pageSize=0`,
 		staticItems,
 		withoutRouteParams: options.withoutRouteParams,
@@ -75,6 +76,7 @@ const ProcessStepFilter = ({
 			elementClasses={className}
 			filterKey={filterKey}
 			items={items}
+			labelPropertyName="label"
 			name={filterName}
 			prefixKey={prefixKey}
 			{...options}

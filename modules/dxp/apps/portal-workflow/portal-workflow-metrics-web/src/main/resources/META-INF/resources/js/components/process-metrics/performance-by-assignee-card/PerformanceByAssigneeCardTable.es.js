@@ -14,7 +14,7 @@ import React from 'react';
 import UserAvatar from '../../../shared/components/user-avatar/UserAvatar.es';
 import {formatDuration} from '../../../shared/util/duration.es';
 
-const Item = ({durationTaskAvg, id, image, name, taskCount}) => {
+const Item = ({assignee: {image, name}, durationTaskAvg, id, taskCount}) => {
 	const formattedDuration = formatDuration(durationTaskAvg);
 
 	return (

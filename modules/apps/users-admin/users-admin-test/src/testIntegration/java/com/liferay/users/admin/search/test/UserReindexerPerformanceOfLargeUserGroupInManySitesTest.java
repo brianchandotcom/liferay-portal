@@ -65,7 +65,6 @@ import java.util.stream.Stream;
 import org.apache.commons.lang.time.StopWatch;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -239,18 +238,7 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 		measure(timesMap, "full test", () -> doTestTiming(timesMap));
 
 		if (_REPORT_TIMES_AND_FAIL) {
-			Set<Map.Entry<String, String>> set = timesMap.entrySet();
-
-			Stream<Map.Entry<String, String>> stream = set.stream();
-
-			Assert.fail(
-				stream.map(
-					String::valueOf
-				).collect(
-					Collectors.joining(
-						StringPool.NEW_LINE, StringPool.NEW_LINE,
-						StringPool.NEW_LINE)
-				));
+			throw new RuntimeException(_getTimesReport(timesMap));
 		}
 	}
 
@@ -406,6 +394,19 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 		Map<String, String> map) {
 
 		return new HashMapDictionary<>(new HashMap<String, Object>(map));
+	}
+
+	private String _getTimesReport(Map<String, String> map) {
+		Set<Map.Entry<String, String>> set = map.entrySet();
+
+		Stream<Map.Entry<String, String>> stream = set.stream();
+
+		return stream.map(
+			String::valueOf
+		).collect(
+			Collectors.joining(
+				StringPool.NEW_LINE, StringPool.NEW_LINE, StringPool.NEW_LINE)
+		);
 	}
 
 	private static final String _CLASS_NAME = User.class.getName();

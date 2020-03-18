@@ -268,6 +268,8 @@ definition {
 	}
 
 	macro viewNumberOfAdaptedImages {
+		AssertElementPresent(locator1 = "AdaptiveMediaTable#INFO_ICON");
+
 		Click(locator1 = "AdaptiveMediaTable#INFO_ICON");
 
 		var key_numberOfAdaptedImages = "${numberOfAdaptedImages}";

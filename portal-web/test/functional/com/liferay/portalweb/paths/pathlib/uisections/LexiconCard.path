@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CARD_TITLE_LINK</td>
+	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//*[contains(@class,'card-title')]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CARD_SUBTITLE</td>
 	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//div[contains(@class,'card-subtitle')]</td>
 	<td></td>

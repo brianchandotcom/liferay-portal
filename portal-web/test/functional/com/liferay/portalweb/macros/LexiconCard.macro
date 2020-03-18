@@ -22,6 +22,12 @@ definition {
 			locator1 = "LexiconCard#CARD_TITLE");
 	}
 
+	macro clickCardTitleLink {
+		Click.waitForMenuToggleJSClick(
+			key_card = "${card}",
+			locator1 = "LexiconCard#CARD_TITLE_LINK");
+	}
+
 	macro clickCardWithConfirmation {
 		ClickNoError(
 			key_card = "${card}",

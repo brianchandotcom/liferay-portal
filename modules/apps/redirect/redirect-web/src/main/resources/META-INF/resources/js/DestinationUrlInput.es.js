@@ -28,7 +28,7 @@ const Notification = ({type}) => {
 	if (type === VALIDATION_TYPE.checking) {
 		return (
 			<>
-				<ClayLoadingIndicator className="d-inline-block m-0" small />
+				<ClayLoadingIndicator className="d-inline-block m-0 mr-2" small />
 				{Liferay.Language.get('cheking-url')}
 			</>
 		);

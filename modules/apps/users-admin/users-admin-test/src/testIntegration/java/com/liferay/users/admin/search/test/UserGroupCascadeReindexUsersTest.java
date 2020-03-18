@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery.PerformActionMethod;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -45,6 +46,7 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.test.util.DocumentsAssert;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -56,6 +58,7 @@ import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -164,21 +167,16 @@ public class UserGroupCascadeReindexUsersTest {
 
 		_userLocalService.addUserGroupUsers(userGroupId, users);
 
-		SearchResponse searchResponse1 = _searcher.search(
-			getSearchRequestBuilder(
-				userGroup.getCompanyId()
-			).fields(
-				"userGroupIds"
-			).modelIndexerClasses(
-				User.class
-			).query(
-				_queries.term("userGroupIds", userGroupId)
-			).build());
+		doAssert(
+			() -> {
+				SearchResponse searchResponse = searchUsersInUserGroup(
+					userGroup);
 
-		DocumentsAssert.assertValues(
-			searchResponse1.getRequestString(),
-			searchResponse1.getDocumentsStream(), "userGroupIds",
-			_repeat(String.valueOf(userGroupId), users.size()));
+				DocumentsAssert.assertValues(
+					searchResponse.getRequestString(),
+					searchResponse.getDocumentsStream(), "userGroupIds",
+					_repeat(String.valueOf(userGroupId), users.size()));
+			});
 
 		List<Group> groups = addGroups(_groupCount);
 
@@ -187,12 +185,16 @@ public class UserGroupCascadeReindexUsersTest {
 				group.getGroupId(), userGroup);
 		}
 
-		SearchResponse searchResponse2 = searchUsersInGroup(groups.get(0));
+		doAssert(
+			() -> {
+				SearchResponse searchResponse = searchUsersInGroup(
+					groups.get(0));
 
-		DocumentsAssert.assertValues(
-			searchResponse2.getRequestString(),
-			searchResponse2.getDocumentsStream(), Field.GROUP_ID,
-			_repeat(_getAllGroupIdsString(groups), users.size()));
+				DocumentsAssert.assertValues(
+					searchResponse.getRequestString(),
+					searchResponse.getDocumentsStream(), Field.GROUP_ID,
+					_repeat(_getAllGroupIdsString(groups), users.size()));
+			});
 	}
 
 	protected Group addGroup() {
@@ -227,6 +229,10 @@ public class UserGroupCascadeReindexUsersTest {
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	protected void doAssert(Runnable runnable) throws Exception {
+		IdempotentRetryAssert.retryAssert(10, TimeUnit.SECONDS, runnable);
 	}
 
 	protected void doTraverseWithActionableDynamicQuery(
@@ -273,14 +279,23 @@ public class UserGroupCascadeReindexUsersTest {
 		);
 	}
 
-	protected SearchResponse searchUsersInGroup(Group group) throws Exception {
+	protected long getTestUserId() {
+		try {
+			return TestPropsValues.getUserId();
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	protected SearchResponse searchUsersInGroup(Group group) {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustQueryClauses(
 			_queries.term(Field.GROUP_ID, group.getGroupId()));
 
 		booleanQuery.addMustNotQueryClauses(
-			_queries.term(Field.USER_ID, TestPropsValues.getUserId()));
+			_queries.term(Field.USER_ID, getTestUserId()));
 
 		return _searcher.search(
 			getSearchRequestBuilder(
@@ -291,6 +306,19 @@ public class UserGroupCascadeReindexUsersTest {
 				User.class
 			).query(
 				booleanQuery
+			).build());
+	}
+
+	protected SearchResponse searchUsersInUserGroup(UserGroup userGroup) {
+		return _searcher.search(
+			getSearchRequestBuilder(
+				userGroup.getCompanyId()
+			).fields(
+				"userGroupIds"
+			).modelIndexerClasses(
+				User.class
+			).query(
+				_queries.term("userGroupIds", userGroup.getUserGroupId())
 			).build());
 	}
 

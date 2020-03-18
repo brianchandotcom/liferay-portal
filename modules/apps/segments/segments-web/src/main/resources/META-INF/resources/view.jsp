@@ -206,7 +206,7 @@ PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortle
 
 		var itemSelectorDialog = new ItemSelectorDialog.default({
 			eventName: '<%= eventName %>',
-			title: 'assign-site-roles',
+			title: '<liferay-ui:message key="assign-site-roles" />',
 			url: url.toString(),
 		});
 

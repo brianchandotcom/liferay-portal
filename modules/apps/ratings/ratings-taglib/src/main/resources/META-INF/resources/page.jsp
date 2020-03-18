@@ -45,7 +45,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 				data="<%= data %>"
 				module="js/components/RatingsLike.es"
 			/>
-		<div>
+		</div>
 	</c:when>
 	<c:when test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
 		<div>
@@ -65,7 +65,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 				data="<%= data %>"
 				module="js/components/RatingsThumbs.es"
 			/>
-		<div>
+		</div>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:ratings

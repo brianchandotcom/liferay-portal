@@ -23,4 +23,14 @@
 			<sanitize content-type="text/plain" modes="ALL" />
 		</field>
 	</model>
+	<model name="com.liferay.redirect.model.RedirectNotFoundEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="redirectNotFoundEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="hits" type="long" />
+		<field name="url" type="String" />
+	</model>
 </model-hints>

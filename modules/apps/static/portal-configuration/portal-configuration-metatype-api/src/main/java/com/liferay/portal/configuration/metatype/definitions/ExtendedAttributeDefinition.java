@@ -24,6 +24,8 @@ import org.osgi.service.metatype.AttributeDefinition;
  */
 public interface ExtendedAttributeDefinition extends AttributeDefinition {
 
+	public static final int LOCALIZED_VALUES_MAP = 100;
+
 	public Map<String, String> getExtensionAttributes(String uri);
 
 	public Set<String> getExtensionUris();

@@ -1,13 +1,13 @@
-@import 'variables';
+@import 'atlas-variables';
 
 .fragment-composition-sticker {
-	background-color: $fragmentCompositionStrickerBackgroundColor;
-	color: $fragmentStrickerIconColor;
+	background-color: $indigo;
+	color: $white;
 }
 
 .fragment-entry-sticker {
-	background-color: $fragmentEntryStrickerBackgroundColor;
-	color: $fragmentStrickerIconColor;
+	background-color: $teal;
+	color: $white;
 
 	.lexicon-icon {
 		font-size: 22px;

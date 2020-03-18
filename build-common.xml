@@ -1075,9 +1075,12 @@ information.
 	<macrodef name="gradle-stop-daemon">
 		<sequential>
 			<if>
-				<equals arg1="${org.gradle.daemon}" arg2="true" />
+				<and>
+					<equals arg1="${org.gradle.daemon}" arg2="true" />
+					<available file="${project.dir}/.gradle/wrapper" type="dir" />
+				</and>
 				<then>
-					<gradle-execute dir="." forcedcacheenabled="false" task="">
+					<gradle-execute dir="." forcedcacheenabled="false" setupbinariescache="false" task="">
 						<arg value="--stop" />
 					</gradle-execute>
 				</then>

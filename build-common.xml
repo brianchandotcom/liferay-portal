@@ -1083,6 +1083,7 @@ information.
 		<sequential>
 			<if>
 				<and>
+					<equals arg1="${gradle.stop.daemon.enabled}" arg2="true" />
 					<equals arg1="${org.gradle.daemon}" arg2="true" />
 					<available file="${project.dir}/.gradle/wrapper" type="dir" />
 				</and>

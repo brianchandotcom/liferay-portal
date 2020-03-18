@@ -155,10 +155,14 @@ public class LayoutsSEODisplayContext {
 		}
 
 		try {
-			return _dlurlHelper.getImagePreviewURL(
-				_dlAppService.getFileEntry(
-					layoutSEOSite.getOpenGraphImageFileEntryId()),
-				_themeDisplay);
+			FileEntry fileEntry = _dlAppService.getFileEntry(
+				layoutSEOSite.getOpenGraphImageFileEntryId());
+
+			if (fileEntry.isInTrash()) {
+				return StringPool.BLANK;
+			}
+
+			return _dlurlHelper.getImagePreviewURL(fileEntry, _themeDisplay);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);

@@ -34,7 +34,7 @@ String url = StringPool.BLANK;
 String urlAnchor = StringPool.BLANK;
 int pages = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:page-iterator:pages"));
 
-int initialPages = 16;
+int initialPages = 20;
 
 if (portletURL != null) {
 	String[] urlArray = PortalUtil.stripURLAnchor(portletURL.toString(), StringPool.POUND);

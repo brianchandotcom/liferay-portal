@@ -12,6 +12,8 @@
  * details.
  */
 
+import './GridRegister.soy';
+
 import {ClayInput, ClayRadio} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import React, {useState} from 'react';

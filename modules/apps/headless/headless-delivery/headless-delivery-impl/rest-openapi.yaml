@@ -1348,6 +1348,15 @@ components:
             required:
                 - name
             type: object
+        MasterPage:
+            description:
+                ""
+            properties:
+                key:
+                    type: string
+                name:
+                    type: string
+            type: object
         MessageBoardAttachment:
             description:
                 A binary file attached to a message on a message board (`MessageBoardMessage`).
@@ -1803,10 +1812,7 @@ components:
                         javascript:
                             type: string
                         masterPage:
-                            properties:
-                                name:
-                                    type: string
-                            type: object
+                            $ref: "#/components/schemas/MasterPage"
                         themeName:
                             type: string
                         themeSettings:

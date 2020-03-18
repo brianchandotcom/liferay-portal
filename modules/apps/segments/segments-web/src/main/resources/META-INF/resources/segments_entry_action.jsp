@@ -55,7 +55,11 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.ASSIGN_USER_ROLES) %>">
+	<%
+	Group group = GroupLocalServiceUtil.getGroup(segmentsEntry.getGroupId());
+	%>
+
+	<c:if test="<%= !group.isCompany() && SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.ASSIGN_USER_ROLES) %>">
 
 		<%
 		Map<String, Object> data = HashMapBuilder.<String, Object>put(

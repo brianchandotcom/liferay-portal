@@ -1181,9 +1181,11 @@ public class DLAppHelperLocalServiceImpl
 		if (dlFileEntry.isInTrashExplicitly()) {
 			restoreFileEntryFromTrash(userId, newFolderId, fileEntry);
 
-			fileEntry = dlAppLocalService.moveFileEntry(
-				userId, fileEntry.getFileEntryId(), newFolderId,
-				serviceContext);
+			if (fileEntry.getFolderId() != newFolderId) {
+				fileEntry = dlAppLocalService.moveFileEntry(
+					userId, fileEntry.getFileEntryId(), newFolderId,
+					serviceContext);
+			}
 
 			// Indexer
 

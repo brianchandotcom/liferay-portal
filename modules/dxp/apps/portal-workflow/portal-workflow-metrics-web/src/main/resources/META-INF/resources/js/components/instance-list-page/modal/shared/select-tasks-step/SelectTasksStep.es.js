@@ -27,7 +27,7 @@ const SelectTasksStep = ({setErrorToast, withoutUnassigned}) => {
 	const {setSelectTasks} = useContext(ModalContext);
 	const [retry, setRetry] = useState(0);
 	const {
-		filterValues: {bulkAssigneeUserIds, bulkTaskKeys},
+		filterValues: {bulkAssigneeIds, bulkTaskKeys},
 	} = useFilter({withoutRouteParams: true});
 	const {page, pageSize, pagination} = usePaginationState({
 		initialPageSize,
@@ -52,7 +52,7 @@ const SelectTasksStep = ({setErrorToast, withoutUnassigned}) => {
 			pagination.setPage(1);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [bulkAssigneeUserIds, bulkTaskKeys]);
+	}, [bulkAssigneeIds, bulkTaskKeys]);
 
 	const promises = useMemo(() => {
 		setErrorToast(false);

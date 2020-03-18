@@ -15,7 +15,7 @@ import React from 'react';
 import AssigneeFilter from '../../../src/main/resources/META-INF/resources/js/components/filter/AssigneeFilter.es';
 import {MockRouter} from '../../mock/MockRouter.es';
 
-const query = '?filters.assigneeUserIds%5B0%5D=1';
+const query = '?filters.assigneeIds%5B0%5D=1';
 
 const items = [
 	{id: 1, name: 'User 1'},

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -60,6 +61,8 @@ public interface RedirectNotFoundEntryLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RedirectNotFoundEntryLocalServiceUtil} to access the redirect not found entry local service. Add custom service methods to <code>com.liferay.redirect.service.impl.RedirectNotFoundEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public RedirectNotFoundEntry addOrUpdateRedirectNotFoundEntry(
+		Group group, String url);
 
 	/**
 	 * Adds the redirect not found entry to the database. Also notifies the appropriate model listeners.

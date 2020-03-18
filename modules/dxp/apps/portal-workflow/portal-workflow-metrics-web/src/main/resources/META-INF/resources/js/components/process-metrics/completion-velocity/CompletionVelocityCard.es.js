@@ -64,7 +64,7 @@ const CompletionVelocityCard = ({routeParams}) => {
 			...timeRange,
 			unit,
 		},
-		url: `processes/${processId}/metric`,
+		url: `processes/${processId}/metrics`,
 	});
 
 	const promises = useMemo(() => {

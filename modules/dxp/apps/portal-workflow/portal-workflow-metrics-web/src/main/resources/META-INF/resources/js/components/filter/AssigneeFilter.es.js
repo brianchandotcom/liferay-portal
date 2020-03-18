@@ -54,7 +54,7 @@ const AssigneeFilter = ({
 		filterKey,
 		prefixKey,
 		requestMethod: 'post',
-		requestUrl: `/processes/${processId}/assignee-users?page=0&pageSize=0`,
+		requestUrl: `/processes/${processId}/assignees?page=0&pageSize=0`,
 		staticData,
 		staticItems,
 		withoutRouteParams: options.withoutRouteParams,

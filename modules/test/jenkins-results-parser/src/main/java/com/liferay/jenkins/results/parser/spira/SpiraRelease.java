@@ -64,8 +64,8 @@ public class SpiraRelease extends PathSpiraArtifact {
 
 		requestJSONObject.put(
 			"Name", StringEscapeUtils.unescapeJava(releaseName));
-		requestJSONObject.put("ReleaseStatusId", Status.PLANNED);
-		requestJSONObject.put("ReleaseTypeId", Type.MAJOR_RELEASE);
+		requestJSONObject.put("ReleaseStatusId", Status.PLANNED.getID());
+		requestJSONObject.put("ReleaseTypeId", Type.MAJOR_RELEASE.getID());
 
 		Calendar calendar = Calendar.getInstance();
 

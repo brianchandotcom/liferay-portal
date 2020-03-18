@@ -36,7 +36,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 	public static List<SpiraTestCaseRun> recordTestSpiraTestCaseRuns(
 		SpiraProject spiraProject, SpiraRelease spiraRelease,
-		SpiraReleaseBuild spiraReleaseBuild, Result... results) {
+		SpiraReleaseBuild spiraReleaseBuild, List<Result> results) {
 
 		Integer releaseID = null;
 

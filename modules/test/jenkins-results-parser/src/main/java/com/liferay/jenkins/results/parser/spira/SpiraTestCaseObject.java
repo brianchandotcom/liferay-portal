@@ -73,7 +73,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 		requestJSONObject.put(
 			"Name", StringEscapeUtils.unescapeJava(testCaseName));
-		requestJSONObject.put("TestCaseStatusId", Status.DRAFT);
+		requestJSONObject.put("TestCaseStatusId", Status.DRAFT.getID());
 
 		if ((parentTestCaseFolderID != null) && (parentTestCaseFolderID != 0)) {
 			requestJSONObject.put(

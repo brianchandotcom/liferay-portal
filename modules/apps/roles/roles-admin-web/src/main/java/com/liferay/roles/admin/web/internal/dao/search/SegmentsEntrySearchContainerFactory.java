@@ -88,6 +88,7 @@ public class SegmentsEntrySearchContainerFactory {
 			SegmentsEntryLocalServiceUtil.searchSegmentsEntries(
 				_buildSearchContext(
 					themeDisplay.getCompanyId(),
+					themeDisplay.getCompanyGroupId(),
 					ParamUtil.getString(renderRequest, "keywords"), params,
 					searchContainer.getStart(), searchContainer.getEnd(),
 					_getSort(orderByCol, orderByType, themeDisplay)));
@@ -99,8 +100,8 @@ public class SegmentsEntrySearchContainerFactory {
 	}
 
 	private static SearchContext _buildSearchContext(
-		long companyId, String keywords, LinkedHashMap<String, Object> params,
-		int start, int end, Sort sort) {
+		long companyId, long groupId, String keywords,
+		LinkedHashMap<String, Object> params, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -122,6 +123,7 @@ public class SegmentsEntrySearchContainerFactory {
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {groupId});
 
 		if (Validator.isNotNull(keywords)) {
 			searchContext.setKeywords(keywords);

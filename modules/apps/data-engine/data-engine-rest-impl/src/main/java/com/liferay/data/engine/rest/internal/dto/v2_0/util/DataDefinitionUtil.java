@@ -57,6 +57,24 @@ import java.util.stream.Stream;
 public class DataDefinitionUtil {
 
 	public static DataDefinition toDataDefinition(
+		DDMForm ddmForm,
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
+
+		return new DataDefinition() {
+			{
+				setAvailableLanguageIds(
+					_toLanguageIds(ddmForm.getAvailableLocales()));
+				setDataDefinitionFields(
+					_toDataDefinitionFields(
+						ddmForm.getDDMFormFields(),
+						ddmFormFieldTypeServicesTracker));
+				setDefaultLanguageId(
+					LanguageUtil.getLanguageId(ddmForm.getDefaultLocale()));
+			}
+		};
+	}
+
+	public static DataDefinition toDataDefinition(
 			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 			DDMStructure ddmStructure)
 		throws Exception {

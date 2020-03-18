@@ -1560,7 +1560,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 		"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js";
 
 	private static ExecutorService _executorService =
-		JenkinsResultsParserUtil.getNewThreadPoolExecutor(20, true);
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);
 
 	private boolean _compareToUpstream = true;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;

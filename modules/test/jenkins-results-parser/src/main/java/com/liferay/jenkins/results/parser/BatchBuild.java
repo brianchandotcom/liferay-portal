@@ -623,7 +623,7 @@ public class BatchBuild extends BaseBuild {
 		"((\\d+)\\.?(\\d+?)).*");
 
 	private static ExecutorService _executorService =
-		JenkinsResultsParserUtil.getNewThreadPoolExecutor(20, true);
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);
 	private static final Pattern _jobVariantPattern = Pattern.compile(
 		"(?<batchName>[^/]+)(/.*)?");
 

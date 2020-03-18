@@ -15,6 +15,8 @@
 package com.liferay.redirect.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.base.RedirectNotFoundEntryLocalServiceBaseImpl;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,9 +41,30 @@ import org.osgi.service.component.annotations.Component;
 public class RedirectNotFoundEntryLocalServiceImpl
 	extends RedirectNotFoundEntryLocalServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.redirect.service.RedirectNotFoundEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.redirect.service.RedirectNotFoundEntryLocalServiceUtil</code>.
-	 */
+	@Override
+	public RedirectNotFoundEntry addOrUpdateRedirectNotFoundEntry(
+		Group group, String url) {
+
+		RedirectNotFoundEntry redirectNotFoundEntry =
+			redirectNotFoundEntryPersistence.fetchByG_U(
+				group.getGroupId(), url);
+
+		if (redirectNotFoundEntry == null) {
+			redirectNotFoundEntry = redirectNotFoundEntryPersistence.create(
+				counterLocalService.increment());
+
+			redirectNotFoundEntry.setGroupId(group.getGroupId());
+
+			redirectNotFoundEntry.setCompanyId(group.getCompanyId());
+			redirectNotFoundEntry.setUrl(url);
+
+			redirectNotFoundEntry = redirectNotFoundEntryPersistence.update(
+				redirectNotFoundEntry);
+		}
+
+		redirectNotFoundEntry.setHits(redirectNotFoundEntry.getHits() + 1);
+
+		return redirectNotFoundEntryPersistence.update(redirectNotFoundEntry);
+	}
+
 }

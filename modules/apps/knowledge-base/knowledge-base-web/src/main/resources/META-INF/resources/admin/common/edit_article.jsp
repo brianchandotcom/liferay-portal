@@ -150,10 +150,8 @@ if (portletTitleBasedNavigation) {
 						String onChangeMethod = (kbArticle == null) ? renderResponse.getNamespace() + "onChangeEditor" : StringPool.BLANK;
 						%>
 
-						<aui:input autocomplete="off" label="" name="titleEditor" onChange="<%= onChangeMethod %>" placeholder='<%= LanguageUtil.get(request, "title") %>' type="text" value="<%= HtmlUtil.escape(title) %>" />
+						<aui:input autocomplete="off" label="" name="title" onChange="<%= onChangeMethod %>" placeholder='<%= LanguageUtil.get(request, "title") %>' type="text" value="<%= HtmlUtil.escape(title) %>" />
 					</h1>
-
-					<aui:input name="title" type="hidden" />
 
 					<div class="kb-entity-body">
 
@@ -360,8 +358,6 @@ if (portletTitleBasedNavigation) {
 		document.getElementById(
 			'<portlet:namespace />content'
 		).value = window.<portlet:namespace />contentEditor.getHTML();
-		document.getElementById('<portlet:namespace />title').value =
-			window.<portlet:namespace />titleEditor.value;
 		updateMultipleKBArticleAttachments();
 	});
 </aui:script>

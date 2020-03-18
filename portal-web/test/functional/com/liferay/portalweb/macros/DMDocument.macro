@@ -118,7 +118,7 @@ definition {
 			value1 = "Sites and Libraries");
 
 		if (isSet(siteName)) {
-			LexiconCard.clickCard(card = "${siteName}");
+			LexiconCard.clickCardTitleLink(card = "${siteName}");
 		}
 
 		if (isSet(depotName)) {

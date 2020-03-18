@@ -1,4 +1,4 @@
-# Checks for .properties
+# Checks for .prettierignore or .properties
 
 Check | Category | Description
 ----- | -------- | -----------

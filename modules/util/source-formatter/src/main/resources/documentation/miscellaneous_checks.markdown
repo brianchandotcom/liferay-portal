@@ -230,25 +230,25 @@ PoshiStylingCheck | .function, .macro or .testcase | |
 PoshiWhitespaceCheck | .function, .macro or .testcase | |
 PrimitiveWrapperInstantiationCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 PrincipalExceptionCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-PropertiesBuildIncludeDirsCheck | .properties | |
-PropertiesCommentsCheck | .properties | |
-PropertiesDefinitionKeysCheck | .properties | |
-PropertiesDependenciesFileCheck | .properties | |
-PropertiesEmptyLinesCheck | .properties | |
-PropertiesImportedFilesContentCheck | .properties | |
-PropertiesLanguageKeysOrderCheck | .properties | |
-PropertiesLiferayPluginPackageFileCheck | .properties | |
-PropertiesLiferayPluginPackageLiferayVersionsCheck | .properties | |
-PropertiesLongLinesCheck | .properties | |
-PropertiesPortalEnvironmentVariablesCheck | .properties | |
-PropertiesPortalFileCheck | .properties | |
-PropertiesPortletFileCheck | .properties | |
-PropertiesServiceKeysCheck | .properties | |
-PropertiesSourceFormatterContentCheck | .properties | |
-PropertiesSourceFormatterFileCheck | .properties | |
-PropertiesStylingCheck | .properties | |
-PropertiesVerifyPropertiesCheck | .properties | |
-PropertiesWhitespaceCheck | .properties | |
+PropertiesBuildIncludeDirsCheck | .prettierignore or .properties | |
+PropertiesCommentsCheck | .prettierignore or .properties | |
+PropertiesDefinitionKeysCheck | .prettierignore or .properties | |
+PropertiesDependenciesFileCheck | .prettierignore or .properties | |
+PropertiesEmptyLinesCheck | .prettierignore or .properties | |
+PropertiesImportedFilesContentCheck | .prettierignore or .properties | |
+PropertiesLanguageKeysOrderCheck | .prettierignore or .properties | |
+PropertiesLiferayPluginPackageFileCheck | .prettierignore or .properties | |
+PropertiesLiferayPluginPackageLiferayVersionsCheck | .prettierignore or .properties | |
+PropertiesLongLinesCheck | .prettierignore or .properties | |
+PropertiesPortalEnvironmentVariablesCheck | .prettierignore or .properties | |
+PropertiesPortalFileCheck | .prettierignore or .properties | |
+PropertiesPortletFileCheck | .prettierignore or .properties | |
+PropertiesServiceKeysCheck | .prettierignore or .properties | |
+PropertiesSourceFormatterContentCheck | .prettierignore or .properties | |
+PropertiesSourceFormatterFileCheck | .prettierignore or .properties | |
+PropertiesStylingCheck | .prettierignore or .properties | |
+PropertiesVerifyPropertiesCheck | .prettierignore or .properties | |
+PropertiesWhitespaceCheck | .prettierignore or .properties | |
 RedundantBranchingStatementCheck | .java | |
 RedundantVariableDeclarationCheck | .java | |
 ReferenceAnnotationCheck | .java | |

@@ -3,7 +3,7 @@
 Check | Category | Description
 ----- | -------- | -----------
 [BNDBundleActivatorCheck](checks/bnd_bundle_activator_check.markdown#bndbundleactivatorcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates property value for `Bundle-Activator` |
-BNDBundleCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates `Liferay-Releng-*` properties |
+[BNDBundleCheck](checks/bnd_bundle_check.markdown#bndbundlecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates `Liferay-Releng-*` properties |
 [BNDBundleInformationCheck](checks/bnd_bundle_information_check.markdown#bndbundleinformationcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates property values for `Bundle-Version`, `Bundle-Name` and `Bundle-SymbolicName` |
 BNDCapabilityCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts and applies logic to fix line breaks to property values for `Provide-Capability` and `Require-Capability` |
 [BNDDefinitionKeysCheck](checks/bnd_definition_keys_check.markdown#bnddefinitionkeyscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates definition keys in `.bnd` files |

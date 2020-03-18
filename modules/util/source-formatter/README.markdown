@@ -111,7 +111,7 @@ Checks are configured in the following files:
    - [.jsp, .jspf, .tag, .tpl or .vm](src/main/resources/documentation/jsp_source_processor_checks.markdown#checks-for-jsp-jspf-tag-tpl-or-vm)
    - [.lfrbuild-*](src/main/resources/documentation/lfr_build_source_processor_checks.markdown#checks-for-lfrbuild)
    - [.markdown or .md](src/main/resources/documentation/markdown_source_processor_checks.markdown#checks-for-markdown-or-md)
-   - [.properties](src/main/resources/documentation/properties_source_processor_checks.markdown#checks-for-properties)
+   - [.prettierignore or .properties](src/main/resources/documentation/properties_source_processor_checks.markdown#checks-for-prettierignore-or-properties)
    - [.soy](src/main/resources/documentation/soy_source_processor_checks.markdown#checks-for-soy)
    - [.sql](src/main/resources/documentation/sql_source_processor_checks.markdown#checks-for-sql)
    - [.tld](src/main/resources/documentation/tld_source_processor_checks.markdown#checks-for-tld)

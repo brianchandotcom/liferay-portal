@@ -14,7 +14,7 @@ AttributeOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneou
 [AvoidNestedBlocksCheck](https://checkstyle.sourceforge.io/config_blocks.html#AvoidNestedBlocks) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | Finds nested blocks (blocks that are used freely in the code). |
 [AvoidStarImportCheck](https://checkstyle.sourceforge.io/config_imports.html#AvoidStarImport) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks that there are no import statements that use the * notation. |
 [BNDBundleActivatorCheck](checks/bnd_bundle_activator_check.markdown#bndbundleactivatorcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Validates property value for `Bundle-Activator` |
-BNDBundleCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Validates `Liferay-Releng-*` properties |
+[BNDBundleCheck](checks/bnd_bundle_check.markdown#bndbundlecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Validates `Liferay-Releng-*` properties |
 [BNDBundleInformationCheck](checks/bnd_bundle_information_check.markdown#bndbundleinformationcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Validates property values for `Bundle-Version`, `Bundle-Name` and `Bundle-SymbolicName` |
 BNDCapabilityCheck | [Styling](styling_checks.markdown#styling-checks) | .bnd | Sorts and applies logic to fix line breaks to property values for `Provide-Capability` and `Require-Capability` |
 [BNDDefinitionKeysCheck](checks/bnd_definition_keys_check.markdown#bnddefinitionkeyscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Validates definition keys in `.bnd` files |
@@ -307,26 +307,26 @@ PoshiStylingCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-
 PoshiWhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .function, .macro or .testcase | |
 PrimitiveWrapperInstantiationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 PrincipalExceptionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-PropertiesBuildIncludeDirsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesCommentsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesDefinitionKeysCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesDependenciesFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesEmptyLinesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesImportedFilesContentCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-[PropertiesLanguageKeysCheck](checks/properties_language_keys_check.markdown#propertieslanguagekeyscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .properties | Checks that there is no HTML markup in language keys |
-PropertiesLanguageKeysOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesLiferayPluginPackageFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesLiferayPluginPackageLiferayVersionsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesLongLinesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesPortalEnvironmentVariablesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesPortalFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesPortletFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesServiceKeysCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesSourceFormatterContentCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesSourceFormatterFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesStylingCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesVerifyPropertiesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
-PropertiesWhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .properties | |
+PropertiesBuildIncludeDirsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesCommentsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesDefinitionKeysCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesDependenciesFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesEmptyLinesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesImportedFilesContentCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+[PropertiesLanguageKeysCheck](checks/properties_language_keys_check.markdown#propertieslanguagekeyscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .prettierignore or .properties | Checks that there is no HTML markup in language keys |
+PropertiesLanguageKeysOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesLiferayPluginPackageFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesLiferayPluginPackageLiferayVersionsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesLongLinesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesPortalEnvironmentVariablesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesPortalFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesPortletFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesServiceKeysCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesSourceFormatterContentCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesSourceFormatterFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesStylingCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesVerifyPropertiesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
+PropertiesWhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .prettierignore or .properties | |
 RedundantBranchingStatementCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 RedundantVariableDeclarationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 ReferenceAnnotationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |

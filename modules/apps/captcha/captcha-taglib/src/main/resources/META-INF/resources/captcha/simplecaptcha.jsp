@@ -56,7 +56,9 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 						'<%= HtmlUtil.escapeJS(url) %>'
 					);
 
-					var captcha = document.getElementById('<portlet:namespace />captcha');
+					var captcha = document.getElementById(
+						'<portlet:namespace />captcha'
+					);
 
 					if (captcha) {
 						captcha.setAttribute('src', url);

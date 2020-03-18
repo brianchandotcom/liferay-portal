@@ -876,6 +876,16 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static long getCacheFileSize(String key) {
+		File cacheFile = _getCacheFile(key);
+
+		if ((cacheFile == null) || !cacheFile.exists()) {
+			return 0;
+		}
+
+		return cacheFile.length();
+	}
+
 	public static String getCanonicalPath(File file) {
 		File canonicalFile = null;
 

@@ -57,7 +57,14 @@ public class JenkinsConsoleTextLoader {
 
 		update();
 
-		return JenkinsResultsParserUtil.getCachedText(consoleLogFileKey);
+		String consoleText = JenkinsResultsParserUtil.getCachedText(
+			consoleLogFileKey);
+
+		if (truncated) {
+			consoleText = consoleText + "\n[TRUNCATED]";
+		}
+
+		return consoleText;
 	}
 
 	public int getLineCount() {
@@ -75,7 +82,10 @@ public class JenkinsConsoleTextLoader {
 	protected void update() {
 		boolean hasMoreData = true;
 
-		while (hasMoreData) {
+		long cacheFileSize = JenkinsResultsParserUtil.getCacheFileSize(
+			consoleLogFileKey);
+
+		while (hasMoreData && (cacheFileSize < _BYTES_MAX_SIZE_CONSOLE_LOG)) {
 			String url =
 				buildURL + "/logText/progressiveHtml?start=" + serverLogSize;
 
@@ -109,6 +119,33 @@ public class JenkinsConsoleTextLoader {
 						JenkinsResultsParserUtil.appendToCacheFile(
 							consoleLogFileKey, line);
 
+						cacheFileSize =
+							JenkinsResultsParserUtil.getCacheFileSize(
+								consoleLogFileKey);
+
+						if (cacheFileSize >= _BYTES_MAX_SIZE_CONSOLE_LOG) {
+							try {
+								truncated = true;
+
+								break;
+							}
+							finally {
+								String message =
+									JenkinsResultsParserUtil.combine(
+										"Jenkins console log for ", buildURL,
+										" has exceeded ",
+										String.valueOf(
+											_BYTES_MAX_SIZE_CONSOLE_LOG),
+										" bytes.");
+
+								System.out.println(message);
+
+								NotificationUtil.sendEmail(
+									message, "jenkins", "Large console log",
+									"qa-slave-verify-fail@liferay.com");
+							}
+						}
+
 						line = bufferedReader.readLine();
 					}
 
@@ -137,6 +174,9 @@ public class JenkinsConsoleTextLoader {
 	protected String consoleLogFileKey;
 	protected boolean hasMoreData = true;
 	protected long serverLogSize;
+	protected boolean truncated;
+
+	private static final long _BYTES_MAX_SIZE_CONSOLE_LOG = 1024 * 1024 * 20;
 
 	private static final Pattern _anchorPattern = Pattern.compile(
 		"\\<a[^>]*\\>(?<text>[^<]*)\\</a\\>");

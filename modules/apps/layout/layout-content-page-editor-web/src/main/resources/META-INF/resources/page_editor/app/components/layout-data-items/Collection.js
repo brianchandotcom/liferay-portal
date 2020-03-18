@@ -44,7 +44,7 @@ function fromControlsId(controlsItemId) {
 
 	const [, itemId] = controlsItemId.split(COLLECTION_ID_DIVIDER);
 
-	return itemId;
+	return itemId || controlsItemId;
 }
 
 const NotMappedMessage = () => (

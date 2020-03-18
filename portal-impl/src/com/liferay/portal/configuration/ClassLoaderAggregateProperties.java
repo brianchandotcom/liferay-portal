@@ -68,8 +68,6 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 		setThrowExceptionOnMissing(false);
 
 		_addBaseFileName(componentName.concat(".properties"));
-
-		setProperty("include-and-override", _includeAndOverride);
 	}
 
 	public CompositeConfiguration getBaseConfiguration() {
@@ -178,6 +176,8 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 		else if (configuration.isEmpty() && _log.isDebugEnabled()) {
 			_log.debug("Empty configuration " + fileName);
 		}
+
+		setProperty("include-and-override", _includeAndOverride);
 	}
 
 	private Configuration _addFileProperties(

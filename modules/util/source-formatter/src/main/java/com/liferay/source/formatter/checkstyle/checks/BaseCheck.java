@@ -752,9 +752,19 @@ public abstract class BaseCheck extends AbstractCheck {
 		TokenTypes.STAR
 	};
 
+	protected static final int[] CONDITIONAL_OPERATOR_TOKEN_TYPES = {
+		TokenTypes.BAND, TokenTypes.BOR, TokenTypes.BXOR, TokenTypes.LAND,
+		TokenTypes.LOR
+	};
+
 	protected static final int[] RELATIONAL_OPERATOR_TOKEN_TYPES = {
 		TokenTypes.EQUAL, TokenTypes.GE, TokenTypes.GT, TokenTypes.LE,
 		TokenTypes.LT, TokenTypes.NOT_EQUAL
+	};
+
+	protected static final int[] UNARY_OPERATOR_TOKEN_TYPES = {
+		TokenTypes.DEC, TokenTypes.INC, TokenTypes.LNOT, TokenTypes.POST_DEC,
+		TokenTypes.POST_INC, TokenTypes.UNARY_MINUS, TokenTypes.UNARY_PLUS
 	};
 
 	private String _getVariableName(DetailAST variableDefinitionDetailAST) {

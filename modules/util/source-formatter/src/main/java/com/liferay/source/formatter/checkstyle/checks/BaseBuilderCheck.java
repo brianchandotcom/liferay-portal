@@ -682,8 +682,13 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 					ARITHMETIC_OPERATOR_TOKEN_TYPES,
 					parentDetailAST.getType()) ||
 				ArrayUtil.contains(
+					CONDITIONAL_OPERATOR_TOKEN_TYPES,
+					parentDetailAST.getType()) ||
+				ArrayUtil.contains(
 					RELATIONAL_OPERATOR_TOKEN_TYPES,
-					parentDetailAST.getType())) {
+					parentDetailAST.getType()) ||
+				ArrayUtil.contains(
+					UNARY_OPERATOR_TOKEN_TYPES, parentDetailAST.getType())) {
 
 				variableNames.add(variableName);
 			}

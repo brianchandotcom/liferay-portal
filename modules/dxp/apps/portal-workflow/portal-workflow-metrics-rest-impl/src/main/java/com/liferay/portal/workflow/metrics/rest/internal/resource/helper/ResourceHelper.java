@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
@@ -52,6 +53,7 @@ import java.text.DateFormat;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -233,66 +235,66 @@ public class ResourceHelper {
 		scriptedMetricAggregation.setParameters(
 			HashMapBuilder.<String, Object>put(
 				"assigneeUserIds",
-				() -> {
-					if (!assigneeUserIds.isEmpty()) {
-						return Stream.of(
-							assigneeUserIds
-						).flatMap(
-							List::parallelStream
-						).map(
-							String::valueOf
-						).collect(
-							Collectors.toList()
-						);
-					}
-
-					return null;
-				}
+				() -> Optional.ofNullable(
+					assigneeUserIds
+				).filter(
+					ListUtil::isNotEmpty
+				).map(
+					List::parallelStream
+				).map(
+					stream -> stream.map(
+						String::valueOf
+					).collect(
+						Collectors.toList()
+					)
+				).orElseGet(
+					() -> null
+				)
 			).put(
 				"endDate",
-				() -> {
-					if (dateEnd != null) {
-						return dateEnd.getTime();
-					}
-
-					return null;
-				}
+				() -> Optional.ofNullable(
+					dateEnd
+				).map(
+					Date::getTime
+				).orElseGet(
+					() -> null
+				)
 			).put(
 				"slaStatuses",
-				() -> {
-					if (!slaStatuses.isEmpty()) {
-						return slaStatuses;
-					}
-
-					return null;
-				}
+				() -> Optional.ofNullable(
+					slaStatuses
+				).filter(
+					ListUtil::isNotEmpty
+				).orElseGet(
+					() -> null
+				)
 			).put(
 				"startDate",
-				() -> {
-					if (dateStart != null) {
-						return dateStart.getTime();
-					}
-
-					return null;
-				}
+				() -> Optional.ofNullable(
+					dateStart
+				).map(
+					Date::getTime
+				).orElseGet(
+					() -> null
+				)
 			).put(
 				"statuses",
-				() -> {
-					if (!statuses.isEmpty()) {
-						return statuses;
-					}
-
-					return null;
-				}
+				() -> Optional.ofNullable(
+					statuses
+				).filter(
+					ListUtil::isNotEmpty
+				).orElseGet(
+					() -> null
+				)
 			).put(
 				"taskNames",
-				() -> {
-					if (!taskNames.isEmpty()) {
-						return taskNames;
-					}
-
-					return null;
-				}
+				() -> Optional.ofNullable(
+					taskNames
+				).filter(
+					ListUtil::isNotEmpty
+				).orElseGet(
+					() -> null
+				)
 			).build());
 		scriptedMetricAggregation.setReduceScript(
 			_workflowMetricsInstanceCountReduceScript);

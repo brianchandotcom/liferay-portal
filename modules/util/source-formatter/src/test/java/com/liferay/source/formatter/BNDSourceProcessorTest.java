@@ -34,7 +34,7 @@ public class BNDSourceProcessorTest extends BaseSourceProcessorTestCase {
 			"FormatBndInstructions3/app.testbnd",
 			new String[] {
 				"The 'Liferay-Releng-Restart-Required' can only be set to " +
-					"false if a POSHI tests exists, see LPS-110344",
+					"false if a POSHI tests exists",
 				StringBundler.concat(
 					"The 'Liferay-Releng-Suite' can be blank or one of the ",
 					"following values collaboration, forms-and-workflow, ",

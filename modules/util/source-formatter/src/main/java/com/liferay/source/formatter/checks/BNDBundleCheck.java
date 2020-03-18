@@ -83,7 +83,7 @@ public class BNDBundleCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					"The 'Liferay-Releng-Restart-Required' can only be set " +
-						"to false if a POSHI tests exists, see LPS-110344");
+						"to false if a POSHI tests exists");
 
 				return content;
 			}

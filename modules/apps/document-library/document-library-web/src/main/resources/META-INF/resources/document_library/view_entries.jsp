@@ -254,15 +254,21 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									<aui:a href="<%= rowURL.toString() %>"><%= latestFileVersion.getTitle() %></aui:a>
 
 									<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
-										<aui:icon cssClass="inline-item inline-item-after" image="lock" markupView="lexicon" message="locked" />
+										<span class="file-icon-color-0 inline-item inline-item-after">
+											<aui:icon image="lock" markupView="lexicon" message="locked" />
+										</span>
 									</c:if>
 
 									<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
-										<aui:icon cssClass="inline-item inline-item-after" image="users" markupView="lexicon" message="shared" />
+										<span class="file-icon-color-0 inline-item inline-item-after lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "shared") %>">
+											<aui:icon image="users" markupView="lexicon" message="shared" />
+										</span>
 									</c:if>
 
 									<c:if test="<%= fileShortcut != null %>">
-										<aui:icon cssClass="inline-item inline-item-after" image="shortcut" markupView="lexicon" message="shortcut" />
+										<span class="file-icon-color-0 inline-item inline-item-after">
+											<aui:icon image="shortcut" markupView="lexicon" message="shortcut" />
+										</span>
 									</c:if>
 								</liferay-ui:search-container-column-text>
 							</c:if>

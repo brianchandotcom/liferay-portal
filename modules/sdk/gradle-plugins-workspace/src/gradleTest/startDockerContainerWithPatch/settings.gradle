@@ -32,7 +32,6 @@ gradle.projectsEvaluated {
 		}
 
 		String expectedLine = "[LIFERAY] Patch applied successfully."
-
 		boolean expectedLineDetected = false
 
 		sink new PrintWriter(new StringWriter()) {

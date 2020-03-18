@@ -126,6 +126,10 @@ function EditableDecorationMask({classNames: elementsClassNames, elements}) {
 			'.page-editor__sidebar__content'
 		);
 
+		if (!sidebarElement) {
+			return;
+		}
+
 		const handleTransitionEnd = event => {
 			if (event.target === sidebarElement) {
 				requestComputeRects();
@@ -160,6 +164,12 @@ function EditableDecorationMask({classNames: elementsClassNames, elements}) {
 
 	// - Product menu
 	useEffect(() => {
+		const productMenu = document.querySelector('.product-menu-toggle');
+
+		if (!productMenu) {
+			return;
+		}
+
 		const sideNavigation = Liferay.SideNavigation.instance(
 			document.querySelector('.product-menu-toggle')
 		);

@@ -92,10 +92,10 @@ function selectEditableValueContent(
 
 function editableIsMappedToInfoItem(editableValue) {
 	return (
-		(editableValue &&
-			editableValue.classNameId &&
+		editableValue &&
+		((editableValue.classNameId &&
 			editableValue.classPK &&
 			editableValue.fieldId) ||
-		editableValue.collectionFieldId
+			editableValue.collectionFieldId)
 	);
 }

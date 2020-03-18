@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -151,6 +152,29 @@ public class EditFragmentEntryDisplayContext {
 
 		freeMarkerVariables.add("configuration");
 
+		List<Map<String, Object>> htmlEditorCustomEntities = new ArrayList<>();
+
+		Map<String, Object> htmlEditorFreeMarkerTaglibs =
+			HashMapBuilder.<String, Object>put(
+				"content", freeMarkerTaglibs
+			).put(
+				"end", "]"
+			).put(
+				"start", "[@"
+			).build();
+
+		Map<String, Object> htmlEditorFreeMarkerVariables =
+			HashMapBuilder.<String, Object>put(
+				"content", freeMarkerVariables
+			).put(
+				"end", "}"
+			).put(
+				"start", "${"
+			).build();
+
+		htmlEditorCustomEntities.add(htmlEditorFreeMarkerTaglibs);
+		htmlEditorCustomEntities.add(htmlEditorFreeMarkerVariables);
+
 		soyContext.put(
 			"allowedStatus", allowedStatusSoyContext
 		).put(
@@ -166,6 +190,8 @@ public class EditFragmentEntryDisplayContext {
 			"freeMarkerTaglibs", freeMarkerTaglibs
 		).put(
 			"freeMarkerVariables", freeMarkerVariables
+		).put(
+			"htmlEditorCustomEntities", htmlEditorCustomEntities
 		).put(
 			"initialConfiguration", _getConfigurationContent()
 		).put(

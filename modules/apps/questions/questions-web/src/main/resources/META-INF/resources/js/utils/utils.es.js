@@ -140,3 +140,13 @@ export function normalizeRating(aggregateRating) {
 export function normalize(ratingValue) {
 	return ratingValue * 2 - 1;
 }
+
+export function stringToSlug(text) {
+	const whiteSpaces = /\s+/g;
+	return text.replace(whiteSpaces, '-').toLowerCase();
+}
+
+export function slugToText(slug) {
+	const hyphens = /-+/g;
+	return slug.replace(hyphens, ' ').toLowerCase();
+}

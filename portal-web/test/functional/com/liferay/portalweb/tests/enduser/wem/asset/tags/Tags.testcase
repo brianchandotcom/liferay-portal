@@ -224,9 +224,9 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
-			value1 = "16 Entries Per page");
+			value1 = "20 Entries Per page");
 
-		Pagination.viewResults(results = "Showing 1 to 16 of 24 entries.");
+		Pagination.viewResults(results = "Showing 1 to 20 of 24 entries.");
 
 		Pagination.changePagination(itemsPerPage = "4");
 

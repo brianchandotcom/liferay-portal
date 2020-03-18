@@ -1609,7 +1609,7 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		Pagination.changePagination(itemsPerPage = "16");
+		Pagination.changePagination(itemsPerPage = "20");
 
 		Pagination.viewResults(results = "Showing 1 to 11 of 11 entries.");
 

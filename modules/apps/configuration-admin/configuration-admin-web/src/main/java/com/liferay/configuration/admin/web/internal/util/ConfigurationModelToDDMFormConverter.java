@@ -269,6 +269,9 @@ public class ConfigurationModelToDDMFormConverter {
 		else if (type == AttributeDefinition.PASSWORD) {
 			return DDMFormFieldType.PASSWORD;
 		}
+		else if (type == ExtendedAttributeDefinition.LOCALIZED_VALUES_MAP) {
+			return DDMFormFieldType.LOCALIZABLE_TEXT;
+		}
 
 		if (!SetUtil.isEmpty(ddmFormFieldOptions.getOptionsValues())) {
 			return DDMFormFieldType.SELECT;

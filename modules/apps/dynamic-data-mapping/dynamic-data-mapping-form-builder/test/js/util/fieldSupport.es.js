@@ -16,7 +16,7 @@ import {isFieldSetChild} from '../../../src/main/resources/META-INF/resources/js
 
 describe('Field Support Utilities', () => {
 	describe('isFieldSetChild', () => {
-		it('should return true when a field is a child of a FieldSet', () => {
+		it('returns true when a field is a child of a FieldSet', () => {
 			const pages = [
 				{
 					rows: [
@@ -25,26 +25,26 @@ describe('Field Support Utilities', () => {
 								{
 									fields: [
 										{
-											fieldName: 'myFieldSet',
-											type: 'section',
 											dataDefinitionId: 123,
+											fieldName: 'myFieldSet',
 											nestedFields: [
 												{
 													fieldName: 'fieldSetChild',
 												},
 											],
+											type: 'section',
 										},
 										{
 											fieldName: 'notAFieldSet',
 										},
 										{
 											fieldName: 'otherFieldset',
-											type: 'section',
 											nestedFields: [
 												{
 													fieldName: 'sectionChild',
 												},
 											],
+											type: 'section',
 										},
 									],
 								},
@@ -55,9 +55,9 @@ describe('Field Support Utilities', () => {
 			];
 
 			expect(isFieldSetChild(pages, 'fieldSetChild')).toBe(true);
-			expect(isFieldSetChild(pages, 'sectionChild')).toBe(false);
-			expect(isFieldSetChild(pages, 'notAFieldSet')).toBe(false);
 			expect(isFieldSetChild(pages, 'myFieldSet')).toBe(false);
+			expect(isFieldSetChild(pages, 'notAFieldSet')).toBe(false);
+			expect(isFieldSetChild(pages, 'sectionChild')).toBe(false);
 		});
 	});
 });

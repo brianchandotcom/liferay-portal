@@ -323,12 +323,12 @@
 </tr>
 <tr>
 	<td>ROW_COLUMN</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Row')][${key_position}]//div[contains(@class,'col-4')][${key_columnNumber}]</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Row')][${key_position}]//div[contains(@class,'page-editor__col')][${key_columnNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROW_COLUMN_NESTED_ELEMENT</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Row')][${key_position}]//div[contains(@class,'col-4')][${key_columnNumber}]${key_elementHeader}</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Row')][${key_position}]//div[contains(@class,'page-editor__col')][${key_columnNumber}]${key_elementHeader}</td>
 	<td></td>
 </tr>
 <tr>

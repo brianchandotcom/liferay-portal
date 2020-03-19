@@ -55,18 +55,17 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testGetAccountUsersPageWithSortString() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testGraphQLGetAccountUsersPage() throws Exception {
 	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"emailAddress", "screenName"};
+		return new String[] {"firstName", "lastName", "screenName"};
+	}
+
+	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"emailAddress"};
 	}
 
 	@Override

@@ -374,7 +374,7 @@
 </tr>
 <tr>
 	<td>SECTION_CONFIGURATION_PADDING_TOP</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'px-${key_paddingTop}')]</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'pt-${key_paddingTop}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1342,7 +1342,9 @@ public class JournalArticleStagedModelDataHandler
 				_portal.getClassNameId(JournalArticle.class),
 				article.getResourcePrimKey());
 
-		if (assetDisplayPageEntry != null) {
+		if ((assetDisplayPageEntry != null) &&
+			(assetDisplayPageEntry.getPlid() != portletDataContext.getPlid())) {
+
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, article, assetDisplayPageEntry,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);

@@ -146,7 +146,7 @@ function normalizeOptions({fixedOptions, multiple, options, valueArray}) {
 	return newOptions;
 }
 
-function handleDropdownItemClick ({currentValue, multiple, option}) {
+function handleDropdownItemClick({currentValue, multiple, option}) {
 	const itemValue = option.value;
 
 	let newValue;
@@ -175,13 +175,24 @@ function handleDropdownItemClick ({currentValue, multiple, option}) {
 	}
 
 	return newValue;
-};
+}
 
 const Trigger = forwardRef(
-	({onCloseButtonClicked, onTriggerClicked, value, ...otherProps}, ref) => {
+	(
+		{
+			onCloseButtonClicked,
+			onTriggerClicked,
+			readOnly,
+			value,
+			...otherProps
+		},
+		ref
+	) => {
 		return (
 			<>
-				<HiddenSelectInput value={value} {...otherProps} />
+				{!readOnly && (
+					<HiddenSelectInput value={value} {...otherProps} />
+				)}
 				<VisibleSelectInput
 					onClick={onTriggerClicked}
 					onCloseButtonClicked={onCloseButtonClicked}

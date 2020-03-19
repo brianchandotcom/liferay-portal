@@ -15,44 +15,34 @@
 import {ClaySelect} from '@clayui/form';
 import React from 'react';
 
-const HiddenSelectInput = ({multiple, name, options, readOnly, value}) => {
-	if (!readOnly) {
-		return (
-			<ClaySelect
-				aria-label="select"
-				className="form-control hide"
-				id={name}
-				multiple={multiple}
-				name={name}
-				size={multiple ? options.length : null}
-			>
-				{value.length ? (
-					options.map((option, index) => {
-						const isSelected = value.includes(option.value);
+const HiddenSelectInput = ({multiple, name, options, value}) => (
+	<ClaySelect
+		aria-label="select"
+		className="form-control hide"
+		id={name}
+		multiple={multiple}
+		name={name}
+		size={multiple ? options.length : null}
+	>
+		{value.length ? (
+			options.map((option, index) => {
+				const isSelected = value.includes(option.value);
 
-						if (isSelected) {
-							return (
-								<ClaySelect.Option
-									defaultValue={isSelected}
-									key={`hiddenSelect${index}`}
-									label={option.label}
-									value={option.value}
-								/>
-							);
-						}
-					})
-				) : (
-					<ClaySelect.Option
-						defaultValue={value.length}
-						disabled
-						value=""
-					/>
-				)}
-			</ClaySelect>
-		);
-	}
-
-	return null;
-};
+				if (isSelected) {
+					return (
+						<ClaySelect.Option
+							defaultValue={isSelected}
+							key={`hiddenSelect${index}`}
+							label={option.label}
+							value={option.value}
+						/>
+					);
+				}
+			})
+		) : (
+			<ClaySelect.Option defaultValue={value.length} disabled value="" />
+		)}
+	</ClaySelect>
+);
 
 export default HiddenSelectInput;

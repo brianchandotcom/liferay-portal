@@ -43,11 +43,11 @@ export default () => {
 				<div className="row">
 					{sections.map(section => (
 						<div
-							className="col-lg-4 col-md-6 col-xl-3 c-mb-4"
+							className="c-mb-4 col-lg-4 col-md-6 col-xl-3"
 							key={section.id}
 						>
 							<Link
-								className="d-block questions-card h-100 text-decoration-none text-secondary"
+								className="d-block h-100 questions-card text-decoration-none text-secondary"
 								to={`/questions/${section.title}`}
 							>
 								<ClayCard>

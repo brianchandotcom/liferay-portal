@@ -197,6 +197,61 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-109590. Assert no Section fragment is outside when add a Row fragment to content page. Can nest a Row fragment or multiple Row inside one column of another one."
+	@priority = "5"
+	test AddRowToColumnOfAnotherRow {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Assert add Row without Section") {
+			PageEditor.addLayoutRow();
+
+			AssertElementNotPresent(
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+		}
+
+		task ("Assert add the second Row in column 1 of the first Row") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_columnNumber = "1",
+				key_elementType = "Row",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
+				locator2 = "PageEditor#ROW_COLUMN",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+		}
+
+		task ("Assert add the third Row in column 1 of the first Row") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_columnNumber = "1",
+				key_elementType = "Row",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
+				locator2 = "PageEditor#ROW_COLUMN",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Row')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+		}
+	}
+
 	@description = "This is a test for LPS-102887. A user can access content in a web content display widget through content panel"
 	@priority = "5"
 	test CanAccessContentPanel {

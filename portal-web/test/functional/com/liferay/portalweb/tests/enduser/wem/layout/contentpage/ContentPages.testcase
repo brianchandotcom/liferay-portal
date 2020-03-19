@@ -977,6 +977,70 @@ definition {
 			webContentTitle = "WC WebContent Title Edit");
 	}
 
+	@description = "This is a test for LPS-109169. Topper only visible when the element is selected but not hover."
+	@priority = "5"
+	test HeaderOnlyShownWhenElementSelected {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a Heading fragment and an Asset Publisher portlet to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("Assert only header of Heading shown when Heading selected") {
+			if (IsNotVisible(key_fragmentName = "Heading", locator1 = "Fragment#FRAGMENT_HEADER")) {
+				Click.clickNoWaitForVisible(
+					key_fragmentName = "Heading",
+					locator1 = "Fragment#FRAGMENT_HEADER");
+			}
+
+			AssertVisible(
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertNotVisible(
+				key_fragmentName = "Asset Publisher",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			MouseOver.mouseOverInvisible(
+				key_fragmentName = "Asset Publisher",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertNotVisible(
+				key_fragmentName = "Asset Publisher",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+		}
+
+		task ("Assert only header of Asset Publisher shown when Asset Publisher selected") {
+			Click.clickNoWaitForVisible(
+				key_fragmentName = "Asset Publisher",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertVisible(
+				key_fragmentName = "Asset Publisher",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertNotVisible(
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			MouseOver.mouseOverInvisible(
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertNotVisible(
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+		}
+	}
+
 	@description = "This is a test for LPS-107285. When the Section fragment is duplicated, the configuration of it and its components should also be duplicated."
 	@priority = "4"
 	test ViewConfigurationDuplicatedWhenDuplicateSectionWithHeading {

@@ -328,13 +328,6 @@ definition {
 				spaceBetweenColumns = "true");
 		}
 
-		task ("Assert the section fragment is not added after adding a row") {
-			AssertElementNotPresent(
-				key_elementType = "Section",
-				key_position = "1",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
-		}
-
 		task ("Assert the layout by default has space between columns") {
 			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'row')][not(contains(@class,'no-gutters'))]");
 		}

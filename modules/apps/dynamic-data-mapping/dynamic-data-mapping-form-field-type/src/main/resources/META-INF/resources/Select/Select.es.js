@@ -124,22 +124,18 @@ function normalizeOptions({fixedOptions, multiple, options, valueArray}) {
 		value: '',
 	};
 
-	const newOptions = [...options]
-		.map((option, index) => {
-			return {
-				...assertOptionParameters({multiple, option, valueArray}),
-				separator:
-					Array.isArray(fixedOptions) &&
-					fixedOptions.length > 0 &&
-					index === options.length - 1,
-			};
-		})
-		.concat(
-			fixedOptions.map(option =>
-				assertOptionParameters({multiple, option, valueArray})
-			)
-		)
-		.filter(({value}) => value !== '');
+	const newOptions = [
+		...options.map((option, index) => ({
+			...assertOptionParameters({multiple, option, valueArray}),
+			separator:
+				Array.isArray(fixedOptions) &&
+				fixedOptions.length > 0 &&
+				index === options.length - 1,
+		})),
+		...fixedOptions.map(option =>
+			assertOptionParameters({multiple, option, valueArray})
+		),
+	].filter(({value}) => value !== '');
 
 	if (!multiple) {
 		return [emptyOption, ...newOptions];

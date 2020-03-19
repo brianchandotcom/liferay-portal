@@ -234,9 +234,6 @@ const Select = ({
 
 		setCurrentValue(newValue);
 
-		event.preventDefault();
-		event.stopPropagation();
-
 		onDropdownItemClicked({event, value: newValue});
 
 		setExpand(false);

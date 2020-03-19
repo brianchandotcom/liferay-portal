@@ -27,6 +27,7 @@ import {
 	getCKEditorConfig,
 	onBeforeLoadCKEditor,
 	stringToSlug,
+	historyPushWithSlug,
 	useDebounceCallback,
 } from '../../utils/utils.es';
 
@@ -44,11 +45,12 @@ export default withRouter(
 		const [tags, setTags] = useState([]);
 
 		const context = useContext(AppContext);
+		const historyPushParser = historyPushWithSlug(history.push);
 
 		const section = useSection(sectionTitle, context.siteKey);
 
 		const [debounceCallback] = useDebounceCallback(
-			() => history.push(`/questions/${stringToSlug(sectionTitle)}/`),
+			() => historyPushParser(`/questions/${sectionTitle}/`),
 			500
 		);
 

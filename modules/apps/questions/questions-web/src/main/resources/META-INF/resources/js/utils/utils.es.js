@@ -152,3 +152,7 @@ export function slugToText(slug) {
 
 	return slug.replace(hyphens, ' ').toLowerCase();
 }
+
+export function historyPushWithSlug (push) {
+	return (url) => push(stringToSlug(url))
+}

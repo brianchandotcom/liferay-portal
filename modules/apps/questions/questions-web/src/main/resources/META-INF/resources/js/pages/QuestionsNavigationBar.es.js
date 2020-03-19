@@ -22,7 +22,7 @@ import {Link, withRouter} from 'react-router-dom';
 import {AppContext} from '../AppContext.es';
 import SectionSubscription from '../components/SectionSubscription.es';
 import useSection from '../hooks/useSection.es';
-import {slugToText, stringToSlug, useDebounceCallback} from '../utils/utils.es';
+import {slugToText, historyPushWithSlug,stringToSlug, useDebounceCallback} from '../utils/utils.es';
 
 function getFilterOptions() {
 	return [
@@ -56,6 +56,8 @@ export default withRouter(
 		sectionChange,
 	}) => {
 		const context = useContext(AppContext);
+
+		const historyPushParser = historyPushWithSlug(history.push);
 
 		const [active, setActive] = useState(false);
 
@@ -204,10 +206,8 @@ export default withRouter(
 									className="c-ml-3 d-none d-sm-block text-nowrap"
 									displayType="primary"
 									onClick={() =>
-										history.push(
-											`/questions/${stringToSlug(
-												sectionTitle
-											)}/new`
+										historyPushParser(
+											`/questions/${sectionTitle}/new`
 										)
 									}
 								>
@@ -218,10 +218,8 @@ export default withRouter(
 									className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
 									displayType="primary"
 									onClick={() =>
-										history.push(
-											`/questions/${stringToSlug(
-												sectionTitle
-											)}/new`
+										historyPushParser(
+											`/questions/${sectionTitle}/new`
 										)
 									}
 								>

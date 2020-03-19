@@ -18,7 +18,7 @@ import React, {useContext, useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
-import {stringToSlug} from '../utils/utils.es';
+import {historyPushWithSlug} from '../utils/utils.es';
 
 export default withRouter(
 	({
@@ -38,6 +38,8 @@ export default withRouter(
 			}
 		}, [context, sectionTitle]);
 
+		const historyPushParser = historyPushWithSlug(history.push);
+
 		return (
 			<section className="border-bottom questions-section questions-section-nav">
 				<div className="questions-container">
@@ -48,7 +50,7 @@ export default withRouter(
 									<ClayNavigationBar.Item
 										active={!isActive('activity')}
 										onClick={() =>
-											history.push(
+											historyPushParser(
 												`/questions/${context.section}`
 											)
 										}
@@ -64,7 +66,7 @@ export default withRouter(
 									<ClayNavigationBar.Item
 										active={isActive('activity')}
 										onClick={() =>
-											history.push(
+											historyPushParser(
 												`/activity/${context.userId}`
 											)
 										}

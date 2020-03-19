@@ -41,14 +41,14 @@ public abstract class BaseASTNode implements ASTNode, Cloneable {
 	public void toSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		if (astNodeListener != null) {
-			astNodeListener.process(this);
-		}
-
 		if (_childASTNode != null) {
 			_childASTNode.toSQL(consumer, astNodeListener);
 
 			consumer.accept(" ");
+		}
+
+		if (astNodeListener != null) {
+			astNodeListener.process(this);
 		}
 
 		doToSQL(consumer, astNodeListener);

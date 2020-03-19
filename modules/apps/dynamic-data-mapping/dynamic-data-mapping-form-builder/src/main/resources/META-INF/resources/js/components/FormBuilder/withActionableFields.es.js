@@ -18,6 +18,7 @@ import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
+import {isFieldSetChild} from '../../util/fieldSupport.es';
 import FieldActionsDropDown from './FieldActionsDropDown.es';
 import formBuilderProps from './props.es';
 
@@ -182,11 +183,15 @@ const withActionableFields = ChildComponent => {
 		}
 
 		_handleMouseEnterField(event) {
+			const {pages} = this.props;
 			const {delegateTarget} = event;
 			const {fieldName} = delegateTarget.dataset;
 			const {hoveredFieldActions, selectedFieldActions} = this.refs;
 
-			if (selectedFieldActions.state.fieldName === fieldName) {
+			if (
+				selectedFieldActions.state.fieldName === fieldName ||
+				isFieldSetChild(pages, fieldName)
+			) {
 				this._handleMouseLeaveField(event);
 
 				return;
@@ -206,8 +211,14 @@ const withActionableFields = ChildComponent => {
 		}
 
 		_handleMouseLeaveActions(event) {
+			const {delegateTarget, relatedTarget} = event;
+			const {fieldName} = delegateTarget.dataset;
 			const {hoveredFieldActions} = this.refs;
-			const {relatedTarget} = event;
+			const {pages} = this.props;
+
+			if (isFieldSetChild(pages, fieldName)) {
+				return;
+			}
 
 			const closestRelatedParent = this._getClosestParent(relatedTarget);
 

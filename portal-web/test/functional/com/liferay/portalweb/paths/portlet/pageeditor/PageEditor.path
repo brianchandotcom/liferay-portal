@@ -348,6 +348,11 @@
 </tr>
 <!--LAYOUT_ELEMENTS_CONFIGURATION-->
 <tr>
+	<td>ROW_CONFIGURATION_COLUMNS_NO_GUTTER</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Row')][${key_position}]//div[contains(@class,'page-editor__row') and contains(@class,'no-gutters')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SECTION_CONFIGURATION_BACKGROUND_COLOR</td>
 	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'bg-${key_paletteItem}')]</td>
 	<td></td>

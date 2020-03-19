@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.util.regex.Matcher;
@@ -42,6 +43,10 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 
 		while (matcher.find()) {
 			int lineNumber = getLineNumber(content, matcher.start());
+
+			if (Validator.isNull(matcher.group(4))) {
+				return content;
+			}
 
 			String nextSQLClause = _getSQLClause(
 				SourceUtil.getLine(content, lineNumber + 1));
@@ -77,6 +82,6 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _sqlPattern = Pattern.compile(
-		"\\s(\\(.* ([!=]=|~) .+\\))( (AND|OR) )?\\\\");
+		"\\s(\\(.* ([!=]=|~) .+\\))( (AND|OR) )?(\\\\)?");
 
 }

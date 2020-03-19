@@ -608,7 +608,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			assigneesTotal += userLocalService.getRoleUsersCount(roleId);
 		}
 
-		if (type == RoleConstants.TYPE_SITE) {
+		if ((type == RoleConstants.TYPE_DEPOT) ||
+			(type == RoleConstants.TYPE_SITE)) {
+
 			DynamicQuery userGroupGroupRoleDynamicQuery =
 				userGroupGroupRoleLocalService.dynamicQuery();
 
@@ -627,8 +629,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			assigneesTotal += count.intValue();
 		}
 
-		if ((type == RoleConstants.TYPE_SITE) ||
-			(type == RoleConstants.TYPE_ORGANIZATION)) {
+		if ((type == RoleConstants.TYPE_DEPOT) ||
+			(type == RoleConstants.TYPE_ORGANIZATION) ||
+			(type == RoleConstants.TYPE_SITE)) {
 
 			DynamicQuery userGroupRoleDynamicQuery =
 				userGroupRoleLocalService.dynamicQuery();

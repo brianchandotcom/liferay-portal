@@ -27,8 +27,8 @@ export default withRouter(({tags = [], match: {params: {sectionTitle}}}) => (
 						className="questions-disabled-link"
 						key={tag.taxonomyCategoryId}
 						to={`/questions/${stringToSlug(
-							sectionTitle || ''
-						)}/tag/${tag.taxonomyCategoryId}`}
+							sectionTitle ? sectionTitle + '/' : ''
+						)}tag/${tag.taxonomyCategoryId}`}
 					>
 						{tag.taxonomyCategoryName}
 					</Link>

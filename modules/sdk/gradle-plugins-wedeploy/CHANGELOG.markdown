@@ -83,15 +83,14 @@ wedeploy.json file (864ca6888a)
 - [LPS-84094]: prep nexxt (cd4504bc9e)
 - [LPS-84094]: Read properties from gradle-ext.properties (b32cca1fb7)
 
-## Markdown Links
-[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
-[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
-[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
-[LPS-86581](https://issues.liferay.com/browse/LPS-86581)
-[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
-[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
-[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
-[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
-[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
-[LPS-105380](https://issues.liferay.com/browse/LPS-105380)
-[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
+[LPS-71117]: https://issues.liferay.com/browse/LPS-71117
+[LPS-84094]: https://issues.liferay.com/browse/LPS-84094
+[LPS-85609]: https://issues.liferay.com/browse/LPS-85609
+[LPS-86581]: https://issues.liferay.com/browse/LPS-86581
+[LPS-86589]: https://issues.liferay.com/browse/LPS-86589
+[LPS-87192]: https://issues.liferay.com/browse/LPS-87192
+[LPS-87466]: https://issues.liferay.com/browse/LPS-87466
+[LPS-96247]: https://issues.liferay.com/browse/LPS-96247
+[LPS-100515]: https://issues.liferay.com/browse/LPS-100515
+[LPS-105380]: https://issues.liferay.com/browse/LPS-105380
+[LPS-106149]: https://issues.liferay.com/browse/LPS-106149

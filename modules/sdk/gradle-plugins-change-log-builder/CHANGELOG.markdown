@@ -134,39 +134,38 @@ repositories.
 - [LPS-61088]: Remove classes and resources dir from Include-Resource
 (1b0e1275bc)
 
-## Markdown Links
-[LPS-61088](https://issues.liferay.com/browse/LPS-61088)
-[LPS-61099](https://issues.liferay.com/browse/LPS-61099)
-[LPS-61720](https://issues.liferay.com/browse/LPS-61720)
-[LPS-61848](https://issues.liferay.com/browse/LPS-61848)
-[LPS-62883](https://issues.liferay.com/browse/LPS-62883)
-[LPS-62942](https://issues.liferay.com/browse/LPS-62942)
-[LPS-63943](https://issues.liferay.com/browse/LPS-63943)
-[LPS-64816](https://issues.liferay.com/browse/LPS-64816)
-[LPS-65086](https://issues.liferay.com/browse/LPS-65086)
-[LPS-65749](https://issues.liferay.com/browse/LPS-65749)
-[LPS-65810](https://issues.liferay.com/browse/LPS-65810)
-[LPS-66709](https://issues.liferay.com/browse/LPS-66709)
-[LPS-66951](https://issues.liferay.com/browse/LPS-66951)
-[LPS-67352](https://issues.liferay.com/browse/LPS-67352)
-[LPS-67653](https://issues.liferay.com/browse/LPS-67653)
-[LPS-67658](https://issues.liferay.com/browse/LPS-67658)
-[LPS-70411](https://issues.liferay.com/browse/LPS-70411)
-[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
-[LPS-72914](https://issues.liferay.com/browse/LPS-72914)
-[LPS-73584](https://issues.liferay.com/browse/LPS-73584)
-[LPS-76644](https://issues.liferay.com/browse/LPS-76644)
-[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
-[LPS-80950](https://issues.liferay.com/browse/LPS-80950)
-[LPS-82857](https://issues.liferay.com/browse/LPS-82857)
-[LPS-82960](https://issues.liferay.com/browse/LPS-82960)
-[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
-[LPS-84119](https://issues.liferay.com/browse/LPS-84119)
-[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
-[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
-[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
-[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
-[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
-[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
-[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
-[LRDOCS-4129](https://issues.liferay.com/browse/LRDOCS-4129)
+[LPS-61088]: https://issues.liferay.com/browse/LPS-61088
+[LPS-61099]: https://issues.liferay.com/browse/LPS-61099
+[LPS-61720]: https://issues.liferay.com/browse/LPS-61720
+[LPS-61848]: https://issues.liferay.com/browse/LPS-61848
+[LPS-62883]: https://issues.liferay.com/browse/LPS-62883
+[LPS-62942]: https://issues.liferay.com/browse/LPS-62942
+[LPS-63943]: https://issues.liferay.com/browse/LPS-63943
+[LPS-64816]: https://issues.liferay.com/browse/LPS-64816
+[LPS-65086]: https://issues.liferay.com/browse/LPS-65086
+[LPS-65749]: https://issues.liferay.com/browse/LPS-65749
+[LPS-65810]: https://issues.liferay.com/browse/LPS-65810
+[LPS-66709]: https://issues.liferay.com/browse/LPS-66709
+[LPS-66951]: https://issues.liferay.com/browse/LPS-66951
+[LPS-67352]: https://issues.liferay.com/browse/LPS-67352
+[LPS-67653]: https://issues.liferay.com/browse/LPS-67653
+[LPS-67658]: https://issues.liferay.com/browse/LPS-67658
+[LPS-70411]: https://issues.liferay.com/browse/LPS-70411
+[LPS-71117]: https://issues.liferay.com/browse/LPS-71117
+[LPS-72914]: https://issues.liferay.com/browse/LPS-72914
+[LPS-73584]: https://issues.liferay.com/browse/LPS-73584
+[LPS-76644]: https://issues.liferay.com/browse/LPS-76644
+[LPS-77425]: https://issues.liferay.com/browse/LPS-77425
+[LPS-80950]: https://issues.liferay.com/browse/LPS-80950
+[LPS-82857]: https://issues.liferay.com/browse/LPS-82857
+[LPS-82960]: https://issues.liferay.com/browse/LPS-82960
+[LPS-84094]: https://issues.liferay.com/browse/LPS-84094
+[LPS-84119]: https://issues.liferay.com/browse/LPS-84119
+[LPS-85609]: https://issues.liferay.com/browse/LPS-85609
+[LPS-86589]: https://issues.liferay.com/browse/LPS-86589
+[LPS-87192]: https://issues.liferay.com/browse/LPS-87192
+[LPS-87466]: https://issues.liferay.com/browse/LPS-87466
+[LPS-96247]: https://issues.liferay.com/browse/LPS-96247
+[LPS-100515]: https://issues.liferay.com/browse/LPS-100515
+[LPS-106149]: https://issues.liferay.com/browse/LPS-106149
+[LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129

@@ -66,24 +66,23 @@
 - [LPS-70060]: Test plugins with Gradle 3.3 (09bed59a42)
 - [LPS-67688]: minor README edits (448366ef14)
 
-## Markdown Links
-[LPS-62970](https://issues.liferay.com/browse/LPS-62970)
-[LPS-66709](https://issues.liferay.com/browse/LPS-66709)
-[LPS-67573](https://issues.liferay.com/browse/LPS-67573)
-[LPS-67688](https://issues.liferay.com/browse/LPS-67688)
-[LPS-70060](https://issues.liferay.com/browse/LPS-70060)
-[LPS-70677](https://issues.liferay.com/browse/LPS-70677)
-[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
-[LPS-72914](https://issues.liferay.com/browse/LPS-72914)
-[LPS-73584](https://issues.liferay.com/browse/LPS-73584)
-[LPS-76644](https://issues.liferay.com/browse/LPS-76644)
-[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
-[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
-[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
-[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
-[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
-[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
-[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
-[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
-[LPS-105380](https://issues.liferay.com/browse/LPS-105380)
-[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
+[LPS-62970]: https://issues.liferay.com/browse/LPS-62970
+[LPS-66709]: https://issues.liferay.com/browse/LPS-66709
+[LPS-67573]: https://issues.liferay.com/browse/LPS-67573
+[LPS-67688]: https://issues.liferay.com/browse/LPS-67688
+[LPS-70060]: https://issues.liferay.com/browse/LPS-70060
+[LPS-70677]: https://issues.liferay.com/browse/LPS-70677
+[LPS-71117]: https://issues.liferay.com/browse/LPS-71117
+[LPS-72914]: https://issues.liferay.com/browse/LPS-72914
+[LPS-73584]: https://issues.liferay.com/browse/LPS-73584
+[LPS-76644]: https://issues.liferay.com/browse/LPS-76644
+[LPS-77425]: https://issues.liferay.com/browse/LPS-77425
+[LPS-84094]: https://issues.liferay.com/browse/LPS-84094
+[LPS-85609]: https://issues.liferay.com/browse/LPS-85609
+[LPS-86589]: https://issues.liferay.com/browse/LPS-86589
+[LPS-87192]: https://issues.liferay.com/browse/LPS-87192
+[LPS-87466]: https://issues.liferay.com/browse/LPS-87466
+[LPS-96247]: https://issues.liferay.com/browse/LPS-96247
+[LPS-100515]: https://issues.liferay.com/browse/LPS-100515
+[LPS-105380]: https://issues.liferay.com/browse/LPS-105380
+[LPS-106149]: https://issues.liferay.com/browse/LPS-106149

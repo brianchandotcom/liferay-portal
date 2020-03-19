@@ -219,58 +219,57 @@ resolution (5343a0699e)
 - [LPS-51081]: Use Gradle utilities (be5dfc70dc)
 - [LPS-51081]: Rename (0285936b82)
 
-## Markdown Links
-[LPS-51081](https://issues.liferay.com/browse/LPS-51081)
-[LPS-51801](https://issues.liferay.com/browse/LPS-51801)
-[LPS-55043](https://issues.liferay.com/browse/LPS-55043)
-[LPS-55187](https://issues.liferay.com/browse/LPS-55187)
-[LPS-55608](https://issues.liferay.com/browse/LPS-55608)
-[LPS-56469](https://issues.liferay.com/browse/LPS-56469)
-[LPS-58330](https://issues.liferay.com/browse/LPS-58330)
-[LPS-58467](https://issues.liferay.com/browse/LPS-58467)
-[LPS-59564](https://issues.liferay.com/browse/LPS-59564)
-[LPS-60310](https://issues.liferay.com/browse/LPS-60310)
-[LPS-61088](https://issues.liferay.com/browse/LPS-61088)
-[LPS-61099](https://issues.liferay.com/browse/LPS-61099)
-[LPS-61420](https://issues.liferay.com/browse/LPS-61420)
-[LPS-62883](https://issues.liferay.com/browse/LPS-62883)
-[LPS-63943](https://issues.liferay.com/browse/LPS-63943)
-[LPS-64021](https://issues.liferay.com/browse/LPS-64021)
-[LPS-64816](https://issues.liferay.com/browse/LPS-64816)
-[LPS-65086](https://issues.liferay.com/browse/LPS-65086)
-[LPS-65749](https://issues.liferay.com/browse/LPS-65749)
-[LPS-66064](https://issues.liferay.com/browse/LPS-66064)
-[LPS-66709](https://issues.liferay.com/browse/LPS-66709)
-[LPS-67658](https://issues.liferay.com/browse/LPS-67658)
-[LPS-68231](https://issues.liferay.com/browse/LPS-68231)
-[LPS-69259](https://issues.liferay.com/browse/LPS-69259)
-[LPS-69271](https://issues.liferay.com/browse/LPS-69271)
-[LPS-70060](https://issues.liferay.com/browse/LPS-70060)
-[LPS-70677](https://issues.liferay.com/browse/LPS-70677)
-[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
-[LPS-72914](https://issues.liferay.com/browse/LPS-72914)
-[LPS-73584](https://issues.liferay.com/browse/LPS-73584)
-[LPS-73855](https://issues.liferay.com/browse/LPS-73855)
-[LPS-73967](https://issues.liferay.com/browse/LPS-73967)
-[LPS-76644](https://issues.liferay.com/browse/LPS-76644)
-[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
-[LPS-78772](https://issues.liferay.com/browse/LPS-78772)
-[LPS-79799](https://issues.liferay.com/browse/LPS-79799)
-[LPS-82128](https://issues.liferay.com/browse/LPS-82128)
-[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
-[LPS-84119](https://issues.liferay.com/browse/LPS-84119)
-[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
-[LPS-86406](https://issues.liferay.com/browse/LPS-86406)
-[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
-[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
-[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
-[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
-[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
-[LPS-101089](https://issues.liferay.com/browse/LPS-101089)
-[LPS-102700](https://issues.liferay.com/browse/LPS-102700)
-[LPS-105247](https://issues.liferay.com/browse/LPS-105247)
-[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
-[LPS-106167](https://issues.liferay.com/browse/LPS-106167)
-[LPS-107008](https://issues.liferay.com/browse/LPS-107008)
-[LPS-108328](https://issues.liferay.com/browse/LPS-108328)
-[LRDOCS-4319](https://issues.liferay.com/browse/LRDOCS-4319)
+[LPS-51081]: https://issues.liferay.com/browse/LPS-51081
+[LPS-51801]: https://issues.liferay.com/browse/LPS-51801
+[LPS-55043]: https://issues.liferay.com/browse/LPS-55043
+[LPS-55187]: https://issues.liferay.com/browse/LPS-55187
+[LPS-55608]: https://issues.liferay.com/browse/LPS-55608
+[LPS-56469]: https://issues.liferay.com/browse/LPS-56469
+[LPS-58330]: https://issues.liferay.com/browse/LPS-58330
+[LPS-58467]: https://issues.liferay.com/browse/LPS-58467
+[LPS-59564]: https://issues.liferay.com/browse/LPS-59564
+[LPS-60310]: https://issues.liferay.com/browse/LPS-60310
+[LPS-61088]: https://issues.liferay.com/browse/LPS-61088
+[LPS-61099]: https://issues.liferay.com/browse/LPS-61099
+[LPS-61420]: https://issues.liferay.com/browse/LPS-61420
+[LPS-62883]: https://issues.liferay.com/browse/LPS-62883
+[LPS-63943]: https://issues.liferay.com/browse/LPS-63943
+[LPS-64021]: https://issues.liferay.com/browse/LPS-64021
+[LPS-64816]: https://issues.liferay.com/browse/LPS-64816
+[LPS-65086]: https://issues.liferay.com/browse/LPS-65086
+[LPS-65749]: https://issues.liferay.com/browse/LPS-65749
+[LPS-66064]: https://issues.liferay.com/browse/LPS-66064
+[LPS-66709]: https://issues.liferay.com/browse/LPS-66709
+[LPS-67658]: https://issues.liferay.com/browse/LPS-67658
+[LPS-68231]: https://issues.liferay.com/browse/LPS-68231
+[LPS-69259]: https://issues.liferay.com/browse/LPS-69259
+[LPS-69271]: https://issues.liferay.com/browse/LPS-69271
+[LPS-70060]: https://issues.liferay.com/browse/LPS-70060
+[LPS-70677]: https://issues.liferay.com/browse/LPS-70677
+[LPS-71117]: https://issues.liferay.com/browse/LPS-71117
+[LPS-72914]: https://issues.liferay.com/browse/LPS-72914
+[LPS-73584]: https://issues.liferay.com/browse/LPS-73584
+[LPS-73855]: https://issues.liferay.com/browse/LPS-73855
+[LPS-73967]: https://issues.liferay.com/browse/LPS-73967
+[LPS-76644]: https://issues.liferay.com/browse/LPS-76644
+[LPS-77425]: https://issues.liferay.com/browse/LPS-77425
+[LPS-78772]: https://issues.liferay.com/browse/LPS-78772
+[LPS-79799]: https://issues.liferay.com/browse/LPS-79799
+[LPS-82128]: https://issues.liferay.com/browse/LPS-82128
+[LPS-84094]: https://issues.liferay.com/browse/LPS-84094
+[LPS-84119]: https://issues.liferay.com/browse/LPS-84119
+[LPS-85609]: https://issues.liferay.com/browse/LPS-85609
+[LPS-86406]: https://issues.liferay.com/browse/LPS-86406
+[LPS-86589]: https://issues.liferay.com/browse/LPS-86589
+[LPS-87192]: https://issues.liferay.com/browse/LPS-87192
+[LPS-87466]: https://issues.liferay.com/browse/LPS-87466
+[LPS-96247]: https://issues.liferay.com/browse/LPS-96247
+[LPS-100515]: https://issues.liferay.com/browse/LPS-100515
+[LPS-101089]: https://issues.liferay.com/browse/LPS-101089
+[LPS-102700]: https://issues.liferay.com/browse/LPS-102700
+[LPS-105247]: https://issues.liferay.com/browse/LPS-105247
+[LPS-106149]: https://issues.liferay.com/browse/LPS-106149
+[LPS-106167]: https://issues.liferay.com/browse/LPS-106167
+[LPS-107008]: https://issues.liferay.com/browse/LPS-107008
+[LPS-108328]: https://issues.liferay.com/browse/LPS-108328
+[LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319

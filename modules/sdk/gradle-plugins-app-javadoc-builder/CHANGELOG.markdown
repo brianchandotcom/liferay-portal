@@ -108,27 +108,26 @@ test (864be6a959)
 - [LRDOCS-2841]: Avoid crashing if subproject "javadoc" is not a Javadoc task
 (5416a3c23b)
 
-## Markdown Links
-[LPS-66709](https://issues.liferay.com/browse/LPS-66709)
-[LPS-67573](https://issues.liferay.com/browse/LPS-67573)
-[LPS-67658](https://issues.liferay.com/browse/LPS-67658)
-[LPS-68231](https://issues.liferay.com/browse/LPS-68231)
-[LPS-68506](https://issues.liferay.com/browse/LPS-68506)
-[LPS-68666](https://issues.liferay.com/browse/LPS-68666)
-[LPS-69259](https://issues.liferay.com/browse/LPS-69259)
-[LPS-70060](https://issues.liferay.com/browse/LPS-70060)
-[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
-[LPS-72914](https://issues.liferay.com/browse/LPS-72914)
-[LPS-73584](https://issues.liferay.com/browse/LPS-73584)
-[LPS-76644](https://issues.liferay.com/browse/LPS-76644)
-[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
-[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
-[LPS-84119](https://issues.liferay.com/browse/LPS-84119)
-[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
-[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
-[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
-[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
-[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
-[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
-[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
-[LRDOCS-2841](https://issues.liferay.com/browse/LRDOCS-2841)
+[LPS-66709]: https://issues.liferay.com/browse/LPS-66709
+[LPS-67573]: https://issues.liferay.com/browse/LPS-67573
+[LPS-67658]: https://issues.liferay.com/browse/LPS-67658
+[LPS-68231]: https://issues.liferay.com/browse/LPS-68231
+[LPS-68506]: https://issues.liferay.com/browse/LPS-68506
+[LPS-68666]: https://issues.liferay.com/browse/LPS-68666
+[LPS-69259]: https://issues.liferay.com/browse/LPS-69259
+[LPS-70060]: https://issues.liferay.com/browse/LPS-70060
+[LPS-71117]: https://issues.liferay.com/browse/LPS-71117
+[LPS-72914]: https://issues.liferay.com/browse/LPS-72914
+[LPS-73584]: https://issues.liferay.com/browse/LPS-73584
+[LPS-76644]: https://issues.liferay.com/browse/LPS-76644
+[LPS-77425]: https://issues.liferay.com/browse/LPS-77425
+[LPS-84094]: https://issues.liferay.com/browse/LPS-84094
+[LPS-84119]: https://issues.liferay.com/browse/LPS-84119
+[LPS-85609]: https://issues.liferay.com/browse/LPS-85609
+[LPS-86589]: https://issues.liferay.com/browse/LPS-86589
+[LPS-87192]: https://issues.liferay.com/browse/LPS-87192
+[LPS-87466]: https://issues.liferay.com/browse/LPS-87466
+[LPS-96247]: https://issues.liferay.com/browse/LPS-96247
+[LPS-100515]: https://issues.liferay.com/browse/LPS-100515
+[LPS-106149]: https://issues.liferay.com/browse/LPS-106149
+[LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

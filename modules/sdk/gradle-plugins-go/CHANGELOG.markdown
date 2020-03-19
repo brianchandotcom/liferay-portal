@@ -16,10 +16,9 @@
 - [LPS-106149]: Update the com.liferay.gradle.util dependency to version 1.0.35.
 - [LPS-96247]: Update the com.liferay.gradle.util dependency to version 1.0.34.
 
-## Markdown Links
-[LPS-84119](https://issues.liferay.com/browse/LPS-84119)
-[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
-[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
-[LPS-105380](https://issues.liferay.com/browse/LPS-105380)
-[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
-[LRDOCS-6405](https://issues.liferay.com/browse/LRDOCS-6405)
+[LPS-84119]: https://issues.liferay.com/browse/LPS-84119
+[LPS-96247]: https://issues.liferay.com/browse/LPS-96247
+[LPS-100515]: https://issues.liferay.com/browse/LPS-100515
+[LPS-105380]: https://issues.liferay.com/browse/LPS-105380
+[LPS-106149]: https://issues.liferay.com/browse/LPS-106149
+[LRDOCS-6405]: https://issues.liferay.com/browse/LRDOCS-6405

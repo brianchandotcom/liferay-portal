@@ -93,32 +93,31 @@
 - [LPS-57123]: Update Gradle plugin up-to-date check (79756db97c)
 - [LPS-59564]: Update directory layout for "sdk" modules (ea19635556)
 
-## Markdown Links
-[LPS-57123](https://issues.liferay.com/browse/LPS-57123)
-[LPS-59564](https://issues.liferay.com/browse/LPS-59564)
-[LPS-61088](https://issues.liferay.com/browse/LPS-61088)
-[LPS-61099](https://issues.liferay.com/browse/LPS-61099)
-[LPS-61848](https://issues.liferay.com/browse/LPS-61848)
-[LPS-64816](https://issues.liferay.com/browse/LPS-64816)
-[LPS-65086](https://issues.liferay.com/browse/LPS-65086)
-[LPS-65612](https://issues.liferay.com/browse/LPS-65612)
-[LPS-65749](https://issues.liferay.com/browse/LPS-65749)
-[LPS-66709](https://issues.liferay.com/browse/LPS-66709)
-[LPS-67658](https://issues.liferay.com/browse/LPS-67658)
-[LPS-68231](https://issues.liferay.com/browse/LPS-68231)
-[LPS-69259](https://issues.liferay.com/browse/LPS-69259)
-[LPS-70060](https://issues.liferay.com/browse/LPS-70060)
-[LPS-70677](https://issues.liferay.com/browse/LPS-70677)
-[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
-[LPS-72914](https://issues.liferay.com/browse/LPS-72914)
-[LPS-73584](https://issues.liferay.com/browse/LPS-73584)
-[LPS-76644](https://issues.liferay.com/browse/LPS-76644)
-[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
-[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
-[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
-[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
-[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
-[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
-[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
-[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
-[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
+[LPS-57123]: https://issues.liferay.com/browse/LPS-57123
+[LPS-59564]: https://issues.liferay.com/browse/LPS-59564
+[LPS-61088]: https://issues.liferay.com/browse/LPS-61088
+[LPS-61099]: https://issues.liferay.com/browse/LPS-61099
+[LPS-61848]: https://issues.liferay.com/browse/LPS-61848
+[LPS-64816]: https://issues.liferay.com/browse/LPS-64816
+[LPS-65086]: https://issues.liferay.com/browse/LPS-65086
+[LPS-65612]: https://issues.liferay.com/browse/LPS-65612
+[LPS-65749]: https://issues.liferay.com/browse/LPS-65749
+[LPS-66709]: https://issues.liferay.com/browse/LPS-66709
+[LPS-67658]: https://issues.liferay.com/browse/LPS-67658
+[LPS-68231]: https://issues.liferay.com/browse/LPS-68231
+[LPS-69259]: https://issues.liferay.com/browse/LPS-69259
+[LPS-70060]: https://issues.liferay.com/browse/LPS-70060
+[LPS-70677]: https://issues.liferay.com/browse/LPS-70677
+[LPS-71117]: https://issues.liferay.com/browse/LPS-71117
+[LPS-72914]: https://issues.liferay.com/browse/LPS-72914
+[LPS-73584]: https://issues.liferay.com/browse/LPS-73584
+[LPS-76644]: https://issues.liferay.com/browse/LPS-76644
+[LPS-77425]: https://issues.liferay.com/browse/LPS-77425
+[LPS-84094]: https://issues.liferay.com/browse/LPS-84094
+[LPS-85609]: https://issues.liferay.com/browse/LPS-85609
+[LPS-86589]: https://issues.liferay.com/browse/LPS-86589
+[LPS-87192]: https://issues.liferay.com/browse/LPS-87192
+[LPS-87466]: https://issues.liferay.com/browse/LPS-87466
+[LPS-96247]: https://issues.liferay.com/browse/LPS-96247
+[LPS-100515]: https://issues.liferay.com/browse/LPS-100515
+[LPS-106149]: https://issues.liferay.com/browse/LPS-106149

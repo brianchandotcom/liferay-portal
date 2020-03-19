@@ -87,7 +87,7 @@ const KeyValueWithFieldBase = ({
 
 					if (generateKeywordRef.current) {
 						const newKeyword = normalizeFieldName(value);
-						onKeywordChange(event, newKeyword);
+						onKeywordChange(event, newKeyword, true);
 					}
 
 					onTextChange(event);
@@ -109,7 +109,7 @@ const KeyValueWithFieldBase = ({
 					const {value} = event.target;
 
 					generateKeywordRef.current = false;
-					onKeywordChange(event, value);
+					onKeywordChange(event, value, false);
 				}}
 				value={keyword}
 			/>

@@ -14,13 +14,16 @@
 
 package com.liferay.portal.search.test.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.Field;
+import com.liferay.portal.search.searcher.SearchResponse;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -31,83 +34,145 @@ import java.util.stream.Stream;
  */
 public class FieldValuesAssert {
 
-	public static void assertFieldValues(
-		Map<String, String> expected,
-		com.liferay.portal.kernel.search.Document document, String message) {
+	public static void assertFieldValue(
+		String fieldName, Object fieldValue, SearchResponse searchResponse) {
 
-		AssertUtils.assertEquals(message, expected, _toMap(document));
+		assertFieldValues(
+			Collections.singletonMap(fieldName, fieldValue),
+			Predicate.isEqual(fieldName), searchResponse);
 	}
 
 	public static void assertFieldValues(
-		Map<String, String> expected, String prefix,
+		Map<String, ?> expected,
 		com.liferay.portal.kernel.search.Document document, String message) {
 
 		AssertUtils.assertEquals(
-			message, expected,
-			_filterOnKey(_toMap(document), name -> name.startsWith(prefix)));
+			message, _toStringValuesMap(expected),
+			_toLegacyFieldValuesMap(document));
+	}
+
+	public static void assertFieldValues(
+		Map<String, ?> expected, Predicate<String> keysPredicate,
+		SearchResponse searchResponse) {
+
+		Map<String, String> expectedFieldValuesMap = _toStringValuesMap(
+			expected);
+
+		Stream<Document> stream = searchResponse.getDocumentsStream();
+
+		List<Document> documents = stream.collect(Collectors.toList());
+
+		if (documents.size() == 1) {
+			Map<String, String> actualFieldValuesMap = _toFieldValuesMap(
+				documents.get(0));
+
+			Map<String, String> filteredFieldValuesMap = _filterOnKey(
+				actualFieldValuesMap, keysPredicate);
+
+			AssertUtils.assertEquals(
+				() -> StringBundler.concat(
+					searchResponse.getRequestString(), "->",
+					actualFieldValuesMap, "->", filteredFieldValuesMap),
+				expectedFieldValuesMap, filteredFieldValuesMap);
+		}
+		else {
+			AssertUtils.assertEquals(
+				() -> StringBundler.concat(
+					searchResponse.getRequestString(), "->", documents),
+				expectedFieldValuesMap, documents);
+		}
+	}
+
+	public static void assertFieldValues(
+		Map<String, ?> expected, SearchResponse searchResponse) {
+
+		assertFieldValues(expected, null, searchResponse);
+	}
+
+	public static void assertFieldValues(
+		Map<String, ?> expected, String prefix,
+		com.liferay.portal.kernel.search.Document document, String message) {
+
+		AssertUtils.assertEquals(
+			message, _toStringValuesMap(expected),
+			_filterOnKey(
+				_toLegacyFieldValuesMap(document),
+				name -> name.startsWith(prefix)));
 	}
 
 	public static void assertFieldValues(
 		String message, Document document, Map<?, ?> expected) {
 
-		AssertUtils.assertEquals(message, expected, _toMap(document));
+		AssertUtils.assertEquals(
+			message, expected, _toFieldValuesMap(document));
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static void assertFieldValues(
-		String message, Document document, Predicate<String> predicate,
+		String message, Document document, Predicate<String> keysPredicate,
 		Map<?, ?> expected) {
 
 		AssertUtils.assertEquals(
-			message, expected, _filterOnKey(_toMap(document), predicate));
+			message, expected,
+			_filterOnKey(_toFieldValuesMap(document), keysPredicate));
 	}
 
 	private static Map<String, String> _filterOnKey(
-		Map<String, String> stringsMap, Predicate<String> predicate) {
+		Map<String, String> map, Predicate<String> predicate) {
 
-		Set<Map.Entry<String, String>> entrySet = stringsMap.entrySet();
+		if (predicate == null) {
+			return map;
+		}
 
-		Stream<Map.Entry<String, String>> stream = entrySet.stream();
+		Stream<Map.Entry<String, String>> stream = SearchStreamUtil.stream(
+			map.entrySet());
 
 		return stream.filter(
 			entry -> predicate.test(entry.getKey())
 		).collect(
-			Collectors.toMap(map -> map.getKey(), map -> map.getValue())
+			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
 		);
 	}
 
-	private static Map<String, String> _toMap(
-		com.liferay.portal.kernel.search.Document document) {
+	private static <E> List<E> _sort(List<E> list) {
+		ArrayList<E> sortedList = new ArrayList<>(list);
 
-		return _toMap(document.getFields(), FieldValuesAssert::_toString);
+		try {
+			Collections.sort(sortedList, null);
+		}
+		catch (ClassCastException | NullPointerException exception) {
+			return list;
+		}
+
+		return sortedList;
 	}
 
-	private static Map<String, String> _toMap(Document document) {
-		return _toMap(document.getFields(), FieldValuesAssert::_toString);
+	private static String _toFieldString(Field field) {
+		return _toListString(field.getValues());
 	}
 
-	private static <T> Map<String, String> _toMap(
-		Map<String, T> map, Function<T, String> function) {
-
-		Set<Map.Entry<String, T>> entrySet = map.entrySet();
-
-		Stream<Map.Entry<String, T>> stream = entrySet.stream();
-
-		return stream.collect(
-			Collectors.toMap(
-				Map.Entry::getKey, entry -> function.apply(entry.getValue())));
+	private static Map<String, String> _toFieldValuesMap(Document document) {
+		return _toStringValuesMap(
+			document.getFields(), FieldValuesAssert::_toFieldString);
 	}
 
-	private static String _toString(
+	private static String _toLegacyFieldString(
 		com.liferay.portal.kernel.search.Field field) {
 
-		return _toString(Arrays.asList(field.getValues()));
+		return _toListString(Arrays.asList(field.getValues()));
 	}
 
-	private static String _toString(Field field) {
-		return _toString(field.getValues());
+	private static Map<String, String> _toLegacyFieldValuesMap(
+		com.liferay.portal.kernel.search.Document document) {
+
+		return _toStringValuesMap(
+			document.getFields(), FieldValuesAssert::_toLegacyFieldString);
 	}
 
-	private static String _toString(List<?> values) {
+	private static String _toListString(List<?> values) {
 		if (values == null) {
 			return null;
 		}
@@ -116,7 +181,39 @@ public class FieldValuesAssert {
 			return String.valueOf(values.get(0));
 		}
 
-		return String.valueOf(values);
+		if (!values.isEmpty()) {
+			return String.valueOf(_sort(values));
+		}
+
+		return "[]";
+	}
+
+	private static String _toObjectString(Object value) {
+		if (value == null) {
+			return null;
+		}
+
+		if (value instanceof List) {
+			return _toListString((List)value);
+		}
+
+		return String.valueOf(value);
+	}
+
+	private static Map<String, String> _toStringValuesMap(Map map) {
+		return _toStringValuesMap(map, FieldValuesAssert::_toObjectString);
+	}
+
+	private static <T> Map<String, String> _toStringValuesMap(
+		Map<String, T> map, Function<T, String> function) {
+
+		Stream<Map.Entry<String, T>> stream = SearchStreamUtil.stream(
+			map.entrySet());
+
+		return stream.collect(
+			Collectors.toMap(
+				entry -> entry.getKey(),
+				entry -> function.apply(entry.getValue())));
 	}
 
 }

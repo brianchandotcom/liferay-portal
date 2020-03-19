@@ -27,15 +27,30 @@ import org.junit.Assert;
 public class HitsAssert {
 
 	public static void assertNoHits(Hits hits) {
-		Assert.assertEquals(hits.toString(), 0, hits.getLength());
+		List<Document> documents = hits.toList();
+
+		Assert.assertEquals(String.valueOf(documents), 0, hits.getLength());
 	}
 
 	public static Document assertOnlyOne(Hits hits) {
 		List<Document> documents = hits.toList();
 
-		Assert.assertEquals(hits.toString(), 1, documents.size());
+		Assert.assertEquals(String.valueOf(documents), 1, documents.size());
 
 		return documents.get(0);
+	}
+
+	public static Document assertOnlyOne(String message, Hits hits) {
+		List<Document> documents = hits.toList();
+
+		Assert.assertEquals(
+			_getMessage(message, documents), 1, documents.size());
+
+		return documents.get(0);
+	}
+
+	private static String _getMessage(String message, Object actual) {
+		return message + "->" + actual;
 	}
 
 }

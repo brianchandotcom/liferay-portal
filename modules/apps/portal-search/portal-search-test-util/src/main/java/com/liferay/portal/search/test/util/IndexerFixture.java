@@ -156,7 +156,8 @@ public class IndexerFixture<T> {
 
 			Hits hits = _indexer.search(searchContext);
 
-			return HitsAssert.assertOnlyOne(hits);
+			return HitsAssert.assertOnlyOne(
+				(String)searchContext.getAttribute("queryString"), hits);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

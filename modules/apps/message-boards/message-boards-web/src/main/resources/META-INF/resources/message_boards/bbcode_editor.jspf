@@ -24,15 +24,15 @@ if (Validator.isNull(body)) {
 	}
 }
 
-Editor editor = InputEditorTag.getEditor(request, PropsUtil.get(com.liferay.message.boards.util.MBUtil.BB_CODE_EDITOR_WYSIWYG_IMPL_KEY));
+Editor editor = InputEditorTag.getEditor(request, "ckeditor_bbcode");
 
 String bbcodeEditorName = editor.getName();
 
 if (bbcodeEditorName.equals("bbcode")) {
-	bbcodeEditorName = "alloyeditor_bbcode";
+	bbcodeEditorName = "ckeditor_bbcode";
 
 	if (_log.isWarnEnabled()) {
-		_log.warn("Replacing unsupported BBCode editor with AlloyEditor BBCode");
+		_log.warn("Replacing unsupported BBCode editor with CKEditor BBCode");
 	}
 }
 

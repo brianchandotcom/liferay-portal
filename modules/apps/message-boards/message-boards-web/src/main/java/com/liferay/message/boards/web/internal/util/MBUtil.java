@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -112,23 +111,7 @@ public class MBUtil {
 	}
 
 	public static String getEditorName(String messageFormat) {
-		String editorName = PropsUtil.get(
-			"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards." +
-				"edit_message.html.jsp");
-
-		if (!messageFormat.equals("bbcode")) {
-			return editorName;
-		}
-
-		String bbCodeEditorName = PropsUtil.get(
-			com.liferay.message.boards.util.MBUtil.
-				BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
-
-		if (!bbCodeEditorName.equals("bbcode")) {
-			return bbCodeEditorName;
-		}
-
-		return "alloyeditor_bbcode";
+		return "ckeditor_bbcode";
 	}
 
 	public static String getHtmlQuoteBody(

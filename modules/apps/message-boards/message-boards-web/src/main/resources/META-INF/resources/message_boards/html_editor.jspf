@@ -24,7 +24,7 @@ if (Validator.isNull(body)) {
 	}
 }
 
-Editor editor = InputEditorTag.getEditor(request, PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp"));
+Editor editor = InputEditorTag.getEditor(request, "ckeditor");
 
 String editorName = editor.getName();
 

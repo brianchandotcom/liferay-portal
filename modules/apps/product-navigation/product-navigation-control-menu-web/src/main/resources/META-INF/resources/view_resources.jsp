@@ -147,7 +147,9 @@ if (Validator.isNotNull(keywords)) {
 				BaseModelSearchResult<AssetEntry> baseModelSearchResult = assetHelper.searchAssetEntries(request, assetEntryQuery, 0, delta);
 
 				long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
+
 				Layout controlPanelLayout = LayoutLocalServiceUtil.getLayout(controlPanelPlid);
+
 				ThemeDisplay controlPanelThemeDisplay = (ThemeDisplay)themeDisplay.clone();
 
 				controlPanelThemeDisplay.setPlid(controlPanelPlid);

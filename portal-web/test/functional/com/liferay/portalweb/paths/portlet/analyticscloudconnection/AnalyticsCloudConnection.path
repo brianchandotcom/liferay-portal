@@ -19,13 +19,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIGURATION_OPTION</td>
-	<td>//*[contains(@class, 'active collapse-icon collapse-icon-middle list-group-heading panel-header collapsed')]</td>
+	<td>ANALYTICS_CLOUD_USER_LOGIN_FIELD</td>
+	<td>//*[contains(@class, 'lfield clearable form-control')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTROL_PANEL_MENU</td>
-	<td>//*[contains(@class, 'category-name text-truncate') and text()='Control Panel']</td>
+	<td>ANALYTICS_CLOUD_LOGIN_BUTTON</td>
+	<td>//*[contains(@class, 'btn btn-lg btn-primary btn-default')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANALYTICS_CLOUD_PASSWORD_LOGIN_FIELD</td>
+	<td>//*[contains(@name, '_com_liferay_login_web_portlet_LoginPortlet_password')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,11 +41,6 @@
 <tr>
 	<td>INPUT_LIFERAY_DXP_CHECKBOX</td>
 	<td>//*[contains(@type, 'checkbox')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INSTANCE_SETTINGS_OPTION</td>
-	<td>//*[contains(@id, '_com_liferay_product_navigation_product_menu_web_portlet_ProductMenuPortlet_portlet_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet')]</td>
 	<td></td>
 </tr>
 <tr>

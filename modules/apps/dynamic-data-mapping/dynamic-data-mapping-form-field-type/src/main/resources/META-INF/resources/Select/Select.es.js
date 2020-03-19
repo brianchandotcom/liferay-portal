@@ -198,6 +198,7 @@ const Trigger = forwardRef(
 				<VisibleSelectInput
 					onClick={onTriggerClicked}
 					onCloseButtonClicked={onCloseButtonClicked}
+					readOnly={readOnly}
 					ref={ref}
 					value={value}
 					{...otherProps}

@@ -16,7 +16,7 @@ import './SelectRegister.soy';
 
 import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
-import React, {forwardRef, useRef, useState} from 'react';
+import React, {forwardRef, useMemo, useRef, useState} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
@@ -334,19 +334,27 @@ const SelectProxy = connectStore(
 		const predefinedValueArray = toArray(predefinedValue);
 		const valueArray = toArray(value);
 
-		const normalizedOptions = normalizeOptions({
-			fixedOptions,
-			multiple,
-			options,
-			valueArray,
-		});
+		const normalizedOptions = useMemo(
+			() =>
+				normalizeOptions({
+					fixedOptions,
+					multiple,
+					options,
+					valueArray,
+				}),
+			[fixedOptions, multiple, options, valueArray]
+		);
 
-		value = normalizeValue({
-			multiple,
-			normalizedOptions,
-			predefinedValueArray,
-			valueArray,
-		});
+		value = useMemo(
+			() =>
+				normalizeValue({
+					multiple,
+					normalizedOptions,
+					predefinedValueArray,
+					valueArray,
+				}),
+			[multiple, normalizedOptions, predefinedValueArray, valueArray]
+		);
 
 		return (
 			<FieldBaseProxy

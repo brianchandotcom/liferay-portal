@@ -396,6 +396,10 @@ public class DataDefinitionResourceImpl
 		if (dataLayout != null) {
 			dataLayout.setDataLayoutKey(ddmStructure.getStructureKey());
 
+			if (Validator.isNull(dataLayout.getName())) {
+				dataLayout.setName(dataDefinition.getName());
+			}
+
 			DataLayoutResource dataLayoutResource = _getDataLayoutResource(
 				false);
 

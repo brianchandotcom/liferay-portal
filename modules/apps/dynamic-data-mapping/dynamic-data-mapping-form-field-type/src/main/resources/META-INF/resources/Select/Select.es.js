@@ -105,7 +105,6 @@ function normalizeValue({
  * Some parameters on each option
  * needs to be prepared in case of
  * multiple selected values(when the value state is an array).
- *
  */
 function assertOptionParameters({multiple, option, valueArray}) {
 	const included = valueArray.includes(option.value);

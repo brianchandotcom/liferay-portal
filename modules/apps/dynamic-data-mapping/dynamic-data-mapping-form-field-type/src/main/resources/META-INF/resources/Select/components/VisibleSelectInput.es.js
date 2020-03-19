@@ -77,6 +77,7 @@ const VisibleSelectInput = forwardRef(
 					className={classNames(
 						'form-control results-chosen select-field-trigger',
 						{
+							disabled: readOnly,
 							'multiple-label-list': multiple,
 						}
 					)}

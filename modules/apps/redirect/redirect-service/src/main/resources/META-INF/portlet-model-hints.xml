@@ -12,14 +12,14 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="destinationURL" type="String">
-			<hint-collection name="CLOB" />
+			<hint-collection name="URL" />
 			<sanitize content-type="text/plain" modes="ALL" />
 		</field>
 		<field name="expirationDate" type="Date" />
 		<field name="lastOccurrenceDate" type="Date" />
 		<field name="permanent" type="boolean" />
 		<field name="sourceURL" type="String">
-			<hint-collection name="CLOB" />
+			<hint-collection name="URL" />
 			<sanitize content-type="text/plain" modes="ALL" />
 		</field>
 	</model>

@@ -1230,10 +1230,23 @@ definition {
 		}
 
 		if (isSet(container)) {
-			AssertElementPresent(
-				key_container = "${container}",
-				key_position = "${position}",
-				locator1 = "PageEditor#SECTION_CONFIGURATION_CONTAINER");
+			if ("${container}" == "Fixed Width") {
+				AssertElementNotPresent(
+					key_container = "fluid",
+					key_position = "${position}",
+					locator1 = "PageEditor#SECTION_CONFIGURATION_CONTAINER");
+
+				AssertElementNotPresent(
+					key_paddingHorizontal = "",
+					key_position = "${position}",
+					locator1 = "PageEditor#SECTION_CONFIGURATION_PADDING_HORIZONTAL");
+			}
+			else if ("${container}" == "Fluid") {
+				AssertElementPresent(
+					key_container = "fluid",
+					key_position = "${position}",
+					locator1 = "PageEditor#SECTION_CONFIGURATION_CONTAINER");
+			}
 		}
 
 		if (isSet(paddingBottom)) {

@@ -2,30 +2,30 @@ definition {
 
 	macro addFieldByDoubleClick {
 
-		var key_fieldType = "${fieldType}";
+		var key_fieldLabel = "${fieldType}";
 
-		DoubleClick(locator1 = "FormViewBuilder#ADD_FIELD_TYPE");
+		DoubleClick(locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL");
 
 		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");
 	}
 
 	macro addFieldByDoubleClickFromObjectSidebar {
 
-		var key_fieldType = "${fieldType}";
+		var key_fieldLabel = "${fieldLabel}";
 
-		DoubleClick(locator1 = "FormViewBuilder#VALIDATE_OBJECT_SIDEBAR_FIELD_NAME");
+		DoubleClick(locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL");
 
-		AssertElementPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldLabel}");
 	}
 
 	macro addFieldByDragAndDrop {
 
 		Pause(locator1 = "10000");
 
-		var key_fieldType = "${fieldType}";
+		var key_fieldLabel = "${fieldType}";
 
 		DragAndDrop.javaScriptDragAndDropToObject(
-			locator1 = "FormViewBuilder#ADD_FIELD_TYPE",
+			locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL",
 			locator2 = "Form#ADD_FIELD_POSITION",
 			value1 = "${fieldType}");
 
@@ -71,14 +71,6 @@ definition {
 		AppBuilderAdmin.gotoBack();
 	}
 
-	macro addFromObjectField {
-		var key_fieldName = "${fieldName}";
-
-		DoubleClick(locator1 = "FormViewBuilder#OBJECT_FIELD_NAME");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldName}");
-	}
-
 	macro cancelButtonInDeleteFromObject {
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_CANCEL_BUTTON");
 	}
@@ -99,8 +91,8 @@ definition {
 
 	macro deleteFromObjectViaX {
 		MouseOver(
-			fieldName = "${fieldName}",
-			locator1 = "FormViewBuilder#VALIDATE_OBJECT_SIDEBAR_FIELD_NAME");
+			key_fieldLabel = "${fieldName}",
+			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL");
 
 		Click(
 			fieldName = "${fieldName}",
@@ -108,7 +100,7 @@ definition {
 	}
 
 	macro deleteObjectSidebarField {
-		MouseOver(locator1 = "FormViewBuilder#VALIDATE_OBJECT_SIDEBAR_FIELD_NAME");
+		MouseOver(locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL");
 
 		Click(locator1 = "FormViewBuilder#DELETE_FROM_OBJECT_X_BUTTON");
 
@@ -312,10 +304,10 @@ definition {
 	}
 
 	macro validateFieldInObject {
-		var key_fieldName = "${fieldLabel}";
+		var key_fieldLabel = "${fieldLabel}";
 
 		AssertTextEquals(
-			locator1 = "FormViewBuilder#OBJECT_FIELD_NAME",
+			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL",
 			value1 = "${fieldLabel}");
 	}
 
@@ -374,13 +366,15 @@ definition {
 
 	macro validateNoObjectFieldName {
 		AssertElementNotPresent(
-			locator1 = "FormViewBuilder#VALIDATE_OBJECT_SIDEBAR_FIELD_NAME",
+			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL",
 			value1 = "${fieldName}");
 	}
 
 	macro validateObjectFieldName {
+		var key_fieldLabel = "${fieldName}";
+
 		AssertTextEquals(
-			locator1 = "FormViewBuilder#VALIDATE_OBJECT_SIDEBAR_FIELD_NAME",
+			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL",
 			value1 = "${fieldName}");
 	}
 

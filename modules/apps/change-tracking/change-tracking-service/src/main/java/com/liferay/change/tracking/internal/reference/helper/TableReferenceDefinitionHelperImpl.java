@@ -53,7 +53,7 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 
 	public TableReferenceDefinitionHelperImpl(
 		TableReferenceDefinition<T> tableReferenceDefinition,
-		Column<T, ?> primaryKeyColumn) {
+		Column<T, Long> primaryKeyColumn) {
 
 		_tableReferenceDefinition = tableReferenceDefinition;
 		_primaryKeyColumn = primaryKeyColumn;
@@ -200,7 +200,7 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 	private final Set<Column<?, ?>> _definedColumns = new HashSet<>();
 	private final Map<Table<?>, List<Function<FromStep, JoinStep>>>
 		_parentJoinMap = new HashMap<>();
-	private final Column<T, ?> _primaryKeyColumn;
+	private final Column<T, Long> _primaryKeyColumn;
 	private final TableReferenceDefinition<T> _tableReferenceDefinition;
 
 	private static class ValidationFromStep implements FromStep {

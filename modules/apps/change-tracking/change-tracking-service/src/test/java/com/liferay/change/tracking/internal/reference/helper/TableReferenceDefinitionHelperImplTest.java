@@ -438,7 +438,7 @@ public class TableReferenceDefinitionHelperImplTest {
 
 	private <T extends Table<T>> TableReferenceDefinitionHelperImpl<T>
 		_defineTableReferences(
-			T table, Column<T, ?> primaryKeyColumn,
+			T table, Column<T, Long> primaryKeyColumn,
 			Consumer<TableReferenceDefinitionHelper<T>> consumer) {
 
 		TestTableReferenceDefinition<T> testTableReferenceDefinition =

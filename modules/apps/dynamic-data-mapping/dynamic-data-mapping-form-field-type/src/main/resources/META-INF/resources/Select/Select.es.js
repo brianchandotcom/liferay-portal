@@ -12,6 +12,8 @@
  * details.
  */
 
+import './SelectRegister.soy';
+
 import ClayDropDown from '@clayui/drop-down';
 import React, {forwardRef, useRef, useState} from 'react';
 

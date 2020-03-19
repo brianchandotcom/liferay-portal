@@ -44,7 +44,10 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2217,6 +2220,51 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		EmailCommands.replyToEmail(to, body);
 
 		pause("3000");
+	}
+
+	@Override
+	public void robotType(String value) {
+		Keyboard keyboard = new DesktopKeyboard();
+
+		keyboard.type(value);
+	}
+
+	@Override
+	public void robotTypeShortcut(String value) {
+		Keyboard keyboard = new DesktopKeyboard();
+
+		List<String> keys = Arrays.asList(value.split("\\s\\+\\s"));
+
+		Map<String, Integer> keyCodeMap = new Hashtable<>();
+
+		keyCodeMap.put("ALT", Integer.valueOf(KeyEvent.VK_ALT));
+		keyCodeMap.put("COMMAND", Integer.valueOf(KeyEvent.VK_META));
+		keyCodeMap.put("CONTROL", Integer.valueOf(KeyEvent.VK_CONTROL));
+		keyCodeMap.put("CTRL", Integer.valueOf(KeyEvent.VK_CONTROL));
+		keyCodeMap.put("SHIFT", Integer.valueOf(KeyEvent.VK_SHIFT));
+
+		Collections.sort(keys, Comparator.comparing(String::length));
+
+		Collections.reverse(keys);
+
+		for (String key : keys) {
+			if (key.length() == 1) {
+				keyboard.type(key);
+			}
+			else {
+				keyboard.keyDown(keyCodeMap.get(key.toUpperCase()));
+			}
+		}
+
+		Collections.reverse(keys);
+
+		for (String key : keys) {
+			if (key.length() == 1) {
+			}
+			else {
+				keyboard.keyUp(keyCodeMap.get(key.toUpperCase()));
+			}
+		}
 	}
 
 	@Override

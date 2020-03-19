@@ -357,6 +357,10 @@ public interface LiferaySelenium {
 
 	public void replyToEmail(String to, String body) throws Exception;
 
+	public void robotType(String script);
+
+	public void robotTypeShortcut(String script);
+
 	public void runScript(String script);
 
 	public void saveScreenshot() throws Exception;

@@ -50,8 +50,7 @@ const tasks = range =>
 		workflowInstanceId: id + 1,
 	}));
 
-const {assignees, data, items, processSteps} = {
-	assignees: [{id: 1, name: 'Test Test'}],
+const {data, items, processSteps} = {
 	data: {
 		workflowTaskTransitions: [
 			{
@@ -146,7 +145,7 @@ const ContainerMockPrimary = ({children}) => {
 	const processId = '12345';
 
 	const [bulkTransition, setBulkTransition] = useState({
-		transition: {errors: [], onGoing: false},
+		transition: {errors: {}, onGoing: false},
 		transitionTasks: [],
 	});
 	const [selectedItems, setSelectedItems] = useState([
@@ -192,11 +191,8 @@ const ContainerMockPrimary = ({children}) => {
 		request: jest
 			.fn()
 			.mockResolvedValueOnce({data: {items: processSteps}})
-			.mockResolvedValueOnce({data: {items: assignees}})
 			.mockResolvedValueOnce({data: {items: processSteps}})
-			.mockResolvedValueOnce({data: {items: assignees}})
-			.mockResolvedValueOnce({data: {items: processSteps}})
-			.mockResolvedValueOnce({data: {items: assignees}}),
+			.mockResolvedValueOnce({data: {items: processSteps}}),
 	};
 
 	return (
@@ -229,7 +225,7 @@ const ContainerMockSecondary = ({children}) => {
 	const processId = '12345';
 
 	const [bulkTransition, setBulkTransition] = useState({
-		transition: {errors: [], onGoing: false},
+		transition: {errors: {}, onGoing: false},
 		transitionTasks: [],
 	});
 	const selectAll = true;
@@ -262,10 +258,7 @@ const ContainerMockSecondary = ({children}) => {
 		post: jest.fn().mockResolvedValue({
 			data: {items, totalCount: items.length + 1},
 		}),
-		request: jest
-			.fn()
-			.mockResolvedValueOnce({data: {items: processSteps}})
-			.mockResolvedValueOnce({data: {items: assignees}}),
+		request: jest.fn().mockResolvedValueOnce({data: {items: processSteps}}),
 	};
 
 	return (
@@ -333,7 +326,6 @@ describe('The BulkTransitionModal component should', () => {
 		const checkbox = getAllByTestId('itemCheckbox');
 		const checkAllButton = getByTestId('checkAllButton');
 		const processStepFilter = getByTestId('processStepFilter');
-		const assigneeFilter = getByTestId('assigneeFilter');
 
 		const content = modal.children[0].children[0].children[0];
 		const header = content.children[0].children[0];
@@ -344,7 +336,6 @@ describe('The BulkTransitionModal component should', () => {
 		expect(stepBar.children[1]).toHaveTextContent('step-x-of-x');
 
 		expect(processStepFilter).not.toBeUndefined();
-		expect(assigneeFilter).not.toBeUndefined();
 
 		expect(cancelBtn).toHaveTextContent('cancel');
 		expect(nextBtn).toHaveTextContent('next');
@@ -449,7 +440,7 @@ describe('The BulkTransitionModal component should', () => {
 		const nextBtn = getByTestId('nextButton');
 
 		expect(alertError).toHaveTextContent(
-			'your-connection-was-unexpectedly-lost select-done-to-retry'
+			'your-request-has-failed select-done-to-retry'
 		);
 
 		fireEvent.click(nextBtn);
@@ -458,9 +449,7 @@ describe('The BulkTransitionModal component should', () => {
 	test('Show alert message when attempt to transition without selecting any transition go to previous step and foward', () => {
 		const alertError = getByTestId('alertError');
 
-		expect(alertError).toHaveTextContent(
-			'your-connection-was-unexpectedly-lost'
-		);
+		expect(alertError).toHaveTextContent('your-request-has-failed');
 
 		const nextBtn = getByTestId('nextButton');
 		const modal = getByTestId('bulkTransitionModal');

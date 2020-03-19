@@ -30,6 +30,19 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-108463. Assert no Section fragment is outside when add a Row fragment to content page template."
+	@priority = "4"
+	test AddRowWithoutSection {
+		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+
+		PageEditor.addLayoutRow();
+
+		AssertElementNotPresent(
+			key_elementType = "Section",
+			key_position = "1",
+			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+	}
+
 	@description = "This case ensures that a user can select content via content display in content page template editor."
 	@ignore = "true"
 	@priority = "4"

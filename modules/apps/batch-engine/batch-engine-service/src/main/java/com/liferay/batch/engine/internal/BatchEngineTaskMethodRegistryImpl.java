@@ -206,16 +206,8 @@ public class BatchEngineTaskMethodRegistryImpl
 			_getBatchEngineTaskItemDelegateExecutorCreatorMap(
 				Class<?> itemClass) {
 
-			return _batchEngineTaskItemDelegateExecutorCreators.compute(
-				itemClass,
-				(key, batchEngineTaskItemDelegateExecutorCreatorMap) -> {
-					if (batchEngineTaskItemDelegateExecutorCreatorMap == null) {
-						batchEngineTaskItemDelegateExecutorCreatorMap =
-							new ConcurrentHashMap<>();
-					}
-
-					return batchEngineTaskItemDelegateExecutorCreatorMap;
-				});
+			return _batchEngineTaskItemDelegateExecutorCreators.computeIfAbsent(
+				itemClass, key -> new ConcurrentHashMap<>());
 		}
 
 		private String _getBatchEngineTaskItemDelegateName(

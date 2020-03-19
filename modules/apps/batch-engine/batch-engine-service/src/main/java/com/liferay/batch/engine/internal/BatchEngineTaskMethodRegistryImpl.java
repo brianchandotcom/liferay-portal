@@ -21,6 +21,7 @@ import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecuto
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.ParameterizedType;
@@ -221,15 +222,10 @@ public class BatchEngineTaskMethodRegistryImpl
 			ServiceReference<BatchEngineTaskItemDelegate<Object>>
 				serviceReference) {
 
-			String batchEngineTaskItemDelegateName =
-				(String)serviceReference.getProperty(
-					"batch.engine.task.item.delegate.name");
-
-			if (Validator.isNull(batchEngineTaskItemDelegateName)) {
-				batchEngineTaskItemDelegateName = "DEFAULT";
-			}
-
-			return batchEngineTaskItemDelegateName;
+			return GetterUtil.getString(
+				serviceReference.getProperty(
+					"batch.engine.task.item.delegate.name"),
+				"DEFAULT");
 		}
 
 		private Class<?> _getItemClass(

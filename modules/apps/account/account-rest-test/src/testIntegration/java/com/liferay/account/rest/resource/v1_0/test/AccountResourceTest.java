@@ -32,8 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -48,12 +46,6 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		super.tearDown();
 
 		_deleteAccountEntries(_accountEntries);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPatchAccount() throws Exception {
 	}
 
 	@Override

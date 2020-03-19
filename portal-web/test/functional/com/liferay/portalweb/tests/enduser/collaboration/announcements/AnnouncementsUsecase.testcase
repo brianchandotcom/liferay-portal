@@ -170,11 +170,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
-		AnnouncementsPortlet.configureDisplayCountPG(maxDisplayItems = "5");
+		AnnouncementsPortlet.configureDisplayCountPG(maxDisplayItems = "4");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
-		for (var viewEntryCount : list "3,4,5,6,7") {
+		for (var viewEntryCount : list "4,5,6,7") {
 			AnnouncementsEntry.viewViaEntriesPG(
 				distributionScope = "General",
 				entryContent = "Announcements Entry Content ${viewEntryCount}",
@@ -182,7 +182,7 @@ definition {
 				entryURL = "http://www.liferay.com");
 		}
 
-		for (var viewEntryCount : list "1,2") {
+		for (var viewEntryCount : list "1,2,3") {
 			AssertElementNotPresent(
 				key_entryTitle = "Announcements Entry Title ${viewEntryCount}",
 				locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE");
@@ -192,7 +192,7 @@ definition {
 			locator1 = "Pagination#NEXT_LINK",
 			value1 = "Next");
 
-		for (var viewEntryCount : list "1,2") {
+		for (var viewEntryCount : list "1,2,3") {
 			AnnouncementsEntry.viewViaEntriesPG(
 				distributionScope = "General",
 				entryContent = "Announcements Entry Content ${viewEntryCount}",
@@ -200,7 +200,7 @@ definition {
 				entryURL = "http://www.liferay.com");
 		}
 
-		for (var viewEntryCount : list "3,4,5,6,7") {
+		for (var viewEntryCount : list "4,5,6,7") {
 			AssertElementNotPresent(
 				key_entryTitle = "Announcements Entry Title ${viewEntryCount}",
 				locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE");
@@ -210,7 +210,7 @@ definition {
 			locator1 = "Pagination#PREVIOUS_LINK",
 			value1 = "Previous");
 
-		for (var viewEntryCount : list "3,4,5,6,7") {
+		for (var viewEntryCount : list "4,5,6,7") {
 			AnnouncementsEntry.viewViaEntriesPG(
 				distributionScope = "General",
 				entryContent = "Announcements Entry Content ${viewEntryCount}",
@@ -218,7 +218,7 @@ definition {
 				entryURL = "http://www.liferay.com");
 		}
 
-		for (var viewEntryCount : list "1,2") {
+		for (var viewEntryCount : list "1,2,3") {
 			AssertElementNotPresent(
 				key_entryTitle = "Announcements Entry Title ${viewEntryCount}",
 				locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE");
@@ -229,15 +229,15 @@ definition {
 			panel = "Control Panel",
 			portlet = "Announcements and Alerts");
 
-		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = "5");
+		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = "4");
 
-		for (var viewEntryCount : list "1,2,3,4,5") {
+		for (var viewEntryCount : list "1,2,3,4") {
 			AnnouncementsEntry.viewList(
 				distributionScope = "General",
 				entryTitle = "Announcements Entry Title ${viewEntryCount}");
 		}
 
-		for (var viewEntryCount : list "6,7") {
+		for (var viewEntryCount : list "5,6,7") {
 			AssertElementNotPresent(
 				key_entryTitle = "Announcements Entry Title ${viewEntryCount}",
 				locator1 = "Blogs#ENTRY_TABLE_TITLE");
@@ -245,13 +245,13 @@ definition {
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
-		for (var viewEntryCount : list "6,7") {
+		for (var viewEntryCount : list "5,6,7") {
 			AnnouncementsEntry.viewList(
 				distributionScope = "General",
 				entryTitle = "Announcements Entry Title ${viewEntryCount}");
 		}
 
-		for (var viewEntryCount : list "1,2,3,4,5") {
+		for (var viewEntryCount : list "1,2,3,4") {
 			AssertElementNotPresent(
 				key_entryTitle = "Announcements Entry Title ${viewEntryCount}",
 				locator1 = "Blogs#ENTRY_TABLE_TITLE");
@@ -259,13 +259,13 @@ definition {
 
 		Click(locator1 = "Pagination#PREVIOUS_LINK");
 
-		for (var viewEntryCount : list "1,2,3,4,5") {
+		for (var viewEntryCount : list "1,2,3,4") {
 			AnnouncementsEntry.viewList(
 				distributionScope = "General",
 				entryTitle = "Announcements Entry Title ${viewEntryCount}");
 		}
 
-		for (var viewEntryCount : list "6,7") {
+		for (var viewEntryCount : list "5,6,7") {
 			AssertElementNotPresent(
 				key_entryTitle = "Announcements Entry Title ${viewEntryCount}",
 				locator1 = "Blogs#ENTRY_TABLE_TITLE");

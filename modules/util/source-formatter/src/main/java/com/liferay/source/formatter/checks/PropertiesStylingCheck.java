@@ -77,6 +77,6 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _sqlPattern = Pattern.compile(
-		"\\s(\\(.* ~ \".*\"\\))( (AND|OR) )?\\\\");
+		"\\s(\\(.* ([!=]=|~) .+\\))( (AND|OR) )?\\\\");
 
 }

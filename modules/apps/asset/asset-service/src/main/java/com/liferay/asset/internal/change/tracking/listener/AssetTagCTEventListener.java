@@ -15,20 +15,17 @@
 package com.liferay.asset.internal.change.tracking.listener;
 
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.change.tracking.exception.CTEventException;
+import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 import com.liferay.change.tracking.listener.CTEventListener;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.petra.lang.SafeClosable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.Session;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,8 +38,7 @@ public class AssetTagCTEventListener implements CTEventListener {
 
 	@Override
 	public void onAfterCopy(
-			CTCollection sourceCTCollection, CTCollection targetCTCollection)
-		throws CTEventException {
+		CTCollection sourceCTCollection, CTCollection targetCTCollection) {
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(
@@ -53,57 +49,61 @@ public class AssetTagCTEventListener implements CTEventListener {
 	}
 
 	@Override
-	public void onBeforePublish(long ctCollectionId) throws CTEventException {
+	public void onBeforePublish(long ctCollectionId) {
 		_recalculateAssetCount(ctCollectionId);
 	}
 
-	private void _recalculateAssetCount(long ctCollectionId)
-		throws CTEventException {
+	private void _recalculateAssetCount(long ctCollectionId) {
+		_assetTagLocalService.updateWithUnsafeFunction(
+			assetTagCTPersistence -> {
+				AssetTagPersistence assetTagPersistence =
+					(AssetTagPersistence)assetTagCTPersistence;
 
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select distinct tagId from AssetEntries_AssetTags where " +
-					"ctCollectionId = " + ctCollectionId);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+				Session session = assetTagCTPersistence.getCurrentSession();
 
-			while (resultSet.next()) {
-				long tagId = resultSet.getLong(1);
+				session.apply(
+					connection -> {
+						String sql = StringBundler.concat(
+							"select distinct tagId from ",
+							"AssetEntries_AssetTags where ctCollectionId = ",
+							ctCollectionId);
 
-				AssetTag assetTag = _assetTagLocalService.fetchAssetTag(tagId);
+						try (PreparedStatement preparedStatement =
+								connection.prepareStatement(sql);
+							ResultSet resultSet =
+								preparedStatement.executeQuery()) {
 
-				if (assetTag == null) {
-					continue;
-				}
+							while (resultSet.next()) {
+								long tagId = resultSet.getLong(1);
 
-				int count =
-					_assetEntryLocalService.getAssetTagAssetEntriesCount(tagId);
+								AssetTag assetTag =
+									assetTagPersistence.fetchByPrimaryKey(
+										tagId);
 
-				if (assetTag.getAssetCount() != count) {
-					assetTag.setAssetCount(count);
+								if (assetTag == null) {
+									continue;
+								}
 
-					_assetTagLocalService.updateAssetTag(assetTag);
+								int assetCount =
+									assetTagPersistence.getAssetEntriesSize(
+										tagId);
 
-					_assetTagLocalService.updateWithUnsafeFunction(
-						assetTagPersistence -> {
-							Session session =
-								assetTagPersistence.getCurrentSession();
+								if (assetTag.getAssetCount() != assetCount) {
+									assetTag.setAssetCount(assetCount);
 
-							session.flush();
+									assetTagPersistence.update(assetTag);
+								}
+							}
+						}
+					});
 
-							session.clear();
+				session.flush();
 
-							return null;
-						});
-				}
-			}
-		}
-		catch (SQLException sqlException) {
-			throw new CTEventException(sqlException);
-		}
+				session.clear();
+
+				return null;
+			});
 	}
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

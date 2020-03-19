@@ -12,18 +12,29 @@
  * details.
  */
 
-import React from 'react';
+import React, {useContext} from 'react';
 
-export default function CollectionItem({children}) {
+import {ControlsIdConverterContext} from '../ControlsIdConverterContext';
+import TopperEmpty from '../TopperEmpty';
+
+const CollectionItem = React.forwardRef(({children, item, layoutData}, ref) => {
+	const {collectionItem} = useContext(ControlsIdConverterContext);
+
 	if (React.Children.count(children) === 0) {
 		return (
-			<div className="page-editor__collection-item">
-				<p className="page-editor__collection-item__title">
-					some title
-				</p>
-			</div>
+			<TopperEmpty item={item} layoutData={layoutData}>
+				{() => (
+					<div className="page-editor__collection-item" ref={ref}>
+						<p className="page-editor__collection-item__title">
+							{collectionItem.title}
+						</p>
+					</div>
+				)}
+			</TopperEmpty>
 		);
 	}
 
 	return children;
-}
+});
+
+export default CollectionItem;

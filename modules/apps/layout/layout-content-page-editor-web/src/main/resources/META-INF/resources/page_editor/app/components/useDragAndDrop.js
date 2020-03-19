@@ -28,6 +28,10 @@ const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
 		LAYOUT_DATA_ITEM_TYPES.fragment,
 	],
 	[LAYOUT_DATA_ITEM_TYPES.collection]: [],
+	[LAYOUT_DATA_ITEM_TYPES.collectionItem]: [
+		LAYOUT_DATA_ITEM_TYPES.row,
+		LAYOUT_DATA_ITEM_TYPES.fragment,
+	],
 	[LAYOUT_DATA_ITEM_TYPES.dropZone]: [],
 	[LAYOUT_DATA_ITEM_TYPES.container]: [
 		LAYOUT_DATA_ITEM_TYPES.collection,

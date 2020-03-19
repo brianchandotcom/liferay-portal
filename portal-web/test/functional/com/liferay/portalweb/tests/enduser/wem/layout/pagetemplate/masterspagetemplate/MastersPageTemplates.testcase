@@ -519,6 +519,284 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-105864. Can change master of a widget page among any existing masters."
+	@priority = "5"
+	test ChangeMasterOfWidgetPageAmongExistingMasters {
+		task ("Add header and footer in custom master") {
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Edit",
+				masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Navigation Bars",
+				dropTarget = "Header",
+				fragmentName = "Header Dark",
+				scope = "Master");
+
+			PageEditor.addFragment(
+				collectionName = "Footers",
+				dropTarget = "Footer",
+				fragmentName = "Footer Nav Dark",
+				scope = "Master");
+
+			Button.click(button = "Publish Master");
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Assert can change master from Blank to custom master") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(
+				key_pageName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.click(menuItem = "Configure");
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Blank",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
+
+			AssertClick(
+				key_text = "Change Master",
+				locator1 = "Button#ANY",
+				value1 = "Change Master");
+
+			MastersPageTemplates.selectMaster(masterLayoutName = "Custom Masters Page Template");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Custom Masters Page Template",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
+
+			AssertElementNotPresent(
+				key_sectionTitle = "Theme",
+				locator1 = "SitePagesEditPage#SECTION_TITLE");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			AssertVisible(
+				key_text = "Edit Master",
+				locator1 = "Button#ANY");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+		}
+
+		task ("Assert can change master from custom master to Blank") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(
+				key_pageName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.click(menuItem = "Configure");
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Custom Masters Page Template",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
+
+			AssertVisible(
+				key_text = "Edit Master",
+				locator1 = "Button#ANY");
+
+			AssertClick(
+				key_text = "Change Master",
+				locator1 = "Button#ANY",
+				value1 = "Change Master");
+
+			MastersPageTemplates.selectMaster(masterLayoutName = "Blank");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Blank",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
+
+			AssertVisible(
+				key_sectionTitle = "Theme",
+				locator1 = "SitePagesEditPage#SECTION_TITLE");
+
+			AssertNotVisible(
+				key_text = "Edit Master",
+				locator1 = "Button#ANY");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+		}
+	}
+
+	@description = "This is for LPS-105864. Can change master of a widget page template among any existing masters."
+	@priority = "5"
+	test ChangeMasterOfWidgetPageTemplateAmongExistingMasters {
+		task ("Add header and footer in custom master") {
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Edit",
+				masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Navigation Bars",
+				dropTarget = "Header",
+				fragmentName = "Header Dark",
+				scope = "Master");
+
+			PageEditor.addFragment(
+				collectionName = "Footers",
+				dropTarget = "Footer",
+				fragmentName = "Footer Nav Dark",
+				scope = "Master");
+
+			Button.click(button = "Publish Master");
+		}
+
+		task ("Add a page template collection") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+		}
+
+		task ("Add a widget page template") {
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Page Template Name",
+				pageTemplateType = "Widget Page Template");
+		}
+
+		task ("Assert can change master from Blank to custom master") {
+			Click.pauseClickAt(locator1 = "ControlMenu#EDIT_COG");
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Blank",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
+
+			AssertClick(
+				key_text = "Change Master",
+				locator1 = "Button#ANY",
+				value1 = "Change Master");
+
+			MastersPageTemplates.selectMaster(masterLayoutName = "Custom Masters Page Template");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Custom Masters Page Template",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
+
+			AssertElementNotPresent(
+				key_sectionTitle = "Theme",
+				locator1 = "SitePagesEditPage#SECTION_TITLE");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			AssertVisible(
+				key_text = "Edit Master",
+				locator1 = "Button#ANY");
+
+			Navigator.gotoBack();
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+		}
+
+		task ("Assert can change master from custom master to Blank") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			Click.pauseClickAt(locator1 = "ControlMenu#EDIT_COG");
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Custom Masters Page Template",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
+
+			AssertVisible(
+				key_text = "Edit Master",
+				locator1 = "Button#ANY");
+
+			AssertClick(
+				key_text = "Change Master",
+				locator1 = "Button#ANY",
+				value1 = "Change Master");
+
+			MastersPageTemplates.selectMaster(masterLayoutName = "Blank");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Blank",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
+
+			AssertVisible(
+				key_sectionTitle = "Theme",
+				locator1 = "SitePagesEditPage#SECTION_TITLE");
+
+			AssertNotVisible(
+				key_text = "Edit Master",
+				locator1 = "Button#ANY");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			Navigator.gotoBack();
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+		}
+	}
+
 	@description = "This is a test for LPS-102194. Assert contents in drop zone shouldn't be changed and available fragments should be changed in sidebar after changing master page which set allowed fragments in drop zone."
 	@priority = "4"
 	test ChangeMasterPageWithAllowedFragments {
@@ -836,6 +1114,102 @@ definition {
 
 		task ("Assert the content in drop zone is not changed") {
 			PageEditor.viewFragment(fragmentName = "Heading");
+		}
+	}
+
+	@description = "This is for LPS-105864. Assert the content of widget page is not changed when change master of page."
+	@priority = "4"
+	test ContentInWidgetPageIsNotChangedWhenChangeMasterofPage {
+		task ("Add header and footer in custom master") {
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Edit",
+				masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Navigation Bars",
+				dropTarget = "Header",
+				fragmentName = "Header Dark",
+				scope = "Master");
+
+			PageEditor.addFragment(
+				collectionName = "Footers",
+				dropTarget = "Footer",
+				fragmentName = "Footer Nav Dark",
+				scope = "Master");
+
+			Button.click(button = "Publish Master");
+		}
+
+		task ("Add a widget page and Add an Asset Publisher and Web Content Display portlet to page ") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				layoutTemplate = "1 Column");
+
+			for (var portletName : list "Asset Publisher,Web Content Display") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${portletName}");
+			}
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			for (var portletName : list "Asset Publisher,Web Content Display") {
+				Portlet.viewPG(portletName = "${portletName}");
+			}
+		}
+
+		task ("Change master from Blank to custom master") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(
+				key_pageName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.click(menuItem = "Configure");
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			AssertClick(
+				key_text = "Change Master",
+				locator1 = "Button#ANY",
+				value1 = "Change Master");
+
+			MastersPageTemplates.selectMaster(masterLayoutName = "Custom Masters Page Template");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Custom Masters Page Template",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert content in widget page not changed") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+
+			for (var portletName : list "Asset Publisher,Web Content Display") {
+				Portlet.viewPG(portletName = "${portletName}");
+			}
 		}
 	}
 

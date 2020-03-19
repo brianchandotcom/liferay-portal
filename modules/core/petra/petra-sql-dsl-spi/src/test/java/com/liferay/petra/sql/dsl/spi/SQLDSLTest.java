@@ -155,6 +155,29 @@ public class SQLDSLTest {
 	}
 
 	@Test
+	public void testASTNodeListenerOrder() {
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+		).from(
+			MainExampleTable.INSTANCE
+		);
+
+		StringBundler sb = new StringBundler();
+
+		dslQuery.toSQL(
+			sb::append,
+			astNode -> {
+				if (astNode instanceof Select) {
+					Assert.assertEquals("", sb.toString());
+				}
+				else if (astNode instanceof From) {
+					Assert.assertEquals("select * ", sb.toString());
+				}
+			});
+
+		Assert.assertEquals("select * from MainExample", sb.toString());
+	}
+
+	@Test
 	public void testBaseASTNode() {
 		FromStep fromStep = DSLQueryFactoryUtil.select();
 

@@ -189,6 +189,7 @@ definition {
 
 		PageEditor.editContentDisplay(
 			depotName = "Test Depot Name",
+			fragmentName = "Content",
 			webcontent = "true",
 			webContentContent = "WC WebContent Depot",
 			webContentTitle = "WC WebContent Title");
@@ -227,6 +228,7 @@ definition {
 
 		PageEditor.editContentDisplay(
 			depotName = "Test Depot Name",
+			fragmentName = "Content",
 			webcontent = "true",
 			webContentContent = "WC WebContent Depot",
 			webContentTitle = "WC WebContent Title");

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.redirect.exception.DuplicateRedirectEntrySourceURLException;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 
@@ -48,6 +49,56 @@ public class RedirectEntryLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test(expected = DuplicateRedirectEntrySourceURLException.class)
+	public void testAddRedirectEntryFailsWhenDuplicateSourceURL()
+		throws Exception {
+
+		_withRedirectEnabled(
+			() -> {
+				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+					TestPropsValues.getGroupId(), "destinationURL", null, false,
+					"sourceURL", ServiceContextTestUtil.getServiceContext());
+
+				_redirectEntryLocalService.addRedirectEntry(
+					TestPropsValues.getGroupId(), "destinationURL", null, false,
+					"sourceURL", ServiceContextTestUtil.getServiceContext());
+			});
+	}
+
+	@Test(expected = DuplicateRedirectEntrySourceURLException.class)
+	public void testAddRedirectEntryFailsWhenDuplicateSourceURLAndDifferentType()
+		throws Exception {
+
+		_withRedirectEnabled(
+			() -> {
+				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+					TestPropsValues.getGroupId(), "destinationURL", null, true,
+					"sourceURL", ServiceContextTestUtil.getServiceContext());
+
+				_redirectEntryLocalService.addRedirectEntry(
+					TestPropsValues.getGroupId(), "destinationURL", null, false,
+					"sourceURL", ServiceContextTestUtil.getServiceContext());
+			});
+	}
+
+	@Test(expected = DuplicateRedirectEntrySourceURLException.class)
+	public void testAddRedirectEntryFailsWhenDuplicateSourceURLAndExpirationDate()
+		throws Exception {
+
+		_withRedirectEnabled(
+			() -> {
+				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+					TestPropsValues.getGroupId(), "destinationURL", new Date(),
+					true, "sourceURL",
+					ServiceContextTestUtil.getServiceContext());
+
+				_redirectEntryLocalService.addRedirectEntry(
+					TestPropsValues.getGroupId(), "destinationURL", new Date(),
+					false, "sourceURL",
+					ServiceContextTestUtil.getServiceContext());
+			});
+	}
 
 	@Test
 	public void testFetchExpiredRedirectEntry() throws Exception {

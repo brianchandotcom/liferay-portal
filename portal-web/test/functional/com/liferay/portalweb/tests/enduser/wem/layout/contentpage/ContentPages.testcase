@@ -328,22 +328,23 @@ definition {
 				spaceBetweenColumns = "true");
 		}
 
-		task ("Assert the layout by default has space between columns") {
-			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'row')][not(contains(@class,'no-gutters'))]");
-		}
-
-		task ("Assert the layout has exactly 2 columns") {
-			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][1]");
-			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][2]");
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][3]");
+		task ("Assert the Row has space between columns and 2 columns") {
+			PageEditor.viewRowStyle(
+				columnCount = "3",
+				position = "1",
+				spaceBetweenColumns = "true");
 		}
 
 		task ("Add a section layout") {
 			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__row')]");
 		}
 
-		task ("Assert the layout by default has padding x1") {
-			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'pb-3')]");
+		task ("Assert the Section has Fixed Width, padding bottom x1 and padding top x1") {
+			PageEditor.viewSectionStyle(
+				container = "Fixed Width",
+				paddingBottom = "3",
+				paddingTop = "3",
+				position = "1");
 		}
 
 		task ("Edit the row's properties") {
@@ -354,27 +355,26 @@ definition {
 
 		task ("Edit the section's properties") {
 			PageEditor.editLayoutSection(
+				container = "Fluid",
 				paddingBottom = "4",
+				paddingHorizontal = "2",
 				paddingTop = "10");
 		}
 
-		task ("Assert the layout now has exactly 3 columns") {
-			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][1]");
-			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][2]");
-			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][3]");
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][4]");
+		task ("Assert the Row has exactly 3 columns and no space between columns") {
+			PageEditor.viewRowStyle(
+				columnCount = "3",
+				position = "1",
+				spaceBetweenColumns = "false");
 		}
 
-		task ("Assert the layout now has vertical padding x4") {
-			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'pb-5')]");
-		}
-
-		task ("Assert the layout now has horizontal padding x10") {
-			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'pt-8')]");
-		}
-
-		task ("Assert the layout now has no space between columns") {
-			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'row')][contains(@class,'no-gutters')]");
+		task ("Assert the Section has Fluid, padding bottom x4, padding horizontal x2 and padding top x10") {
+			PageEditor.viewSectionStyle(
+				container = "Fluid",
+				paddingBottom = "5",
+				paddingHorizontal = "4",
+				paddingTop = "8",
+				position = "1");
 		}
 	}
 

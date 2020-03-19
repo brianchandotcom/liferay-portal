@@ -2608,10 +2608,10 @@ public class RedirectEntryPersistenceImpl
 		"redirectEntry.groupId = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_S_SOURCEURL_2 =
-		"CAST_CLOB_TEXT(redirectEntry.sourceURL) = ?";
+		"redirectEntry.sourceURL = ?";
 
 	private static final String _FINDER_COLUMN_G_S_SOURCEURL_3 =
-		"(redirectEntry.sourceURL IS NULL OR CAST_CLOB_TEXT(redirectEntry.sourceURL) = '')";
+		"(redirectEntry.sourceURL IS NULL OR redirectEntry.sourceURL = '')";
 
 	public RedirectEntryPersistenceImpl() {
 		setModelClass(RedirectEntry.class);

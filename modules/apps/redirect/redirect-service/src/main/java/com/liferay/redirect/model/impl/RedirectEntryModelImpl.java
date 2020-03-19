@@ -78,10 +78,10 @@ public class RedirectEntryModelImpl
 		{"redirectEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"destinationURL", Types.CLOB},
+		{"modifiedDate", Types.TIMESTAMP}, {"destinationURL", Types.VARCHAR},
 		{"expirationDate", Types.TIMESTAMP},
 		{"lastOccurrenceDate", Types.TIMESTAMP}, {"permanent", Types.BOOLEAN},
-		{"sourceURL", Types.CLOB}
+		{"sourceURL", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -97,15 +97,15 @@ public class RedirectEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("destinationURL", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("destinationURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastOccurrenceDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("permanent", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("sourceURL", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("sourceURL", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RedirectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,redirectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,destinationURL TEXT null,expirationDate DATE null,lastOccurrenceDate DATE null,permanent BOOLEAN,sourceURL TEXT null)";
+		"create table RedirectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,redirectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,destinationURL STRING null,expirationDate DATE null,lastOccurrenceDate DATE null,permanent BOOLEAN,sourceURL STRING null)";
 
 	public static final String TABLE_SQL_DROP = "drop table RedirectEntry";
 

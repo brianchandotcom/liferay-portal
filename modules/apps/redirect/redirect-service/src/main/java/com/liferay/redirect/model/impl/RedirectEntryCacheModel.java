@@ -188,9 +188,7 @@ public class RedirectEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput)
-		throws ClassNotFoundException, IOException {
-
+	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -204,12 +202,12 @@ public class RedirectEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		destinationURL = (String)objectInput.readObject();
+		destinationURL = objectInput.readUTF();
 		expirationDate = objectInput.readLong();
 		lastOccurrenceDate = objectInput.readLong();
 
 		permanent = objectInput.readBoolean();
-		sourceURL = (String)objectInput.readObject();
+		sourceURL = objectInput.readUTF();
 	}
 
 	@Override
@@ -242,10 +240,10 @@ public class RedirectEntryCacheModel
 		objectOutput.writeLong(modifiedDate);
 
 		if (destinationURL == null) {
-			objectOutput.writeObject("");
+			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeObject(destinationURL);
+			objectOutput.writeUTF(destinationURL);
 		}
 
 		objectOutput.writeLong(expirationDate);
@@ -254,10 +252,10 @@ public class RedirectEntryCacheModel
 		objectOutput.writeBoolean(permanent);
 
 		if (sourceURL == null) {
-			objectOutput.writeObject("");
+			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeObject(sourceURL);
+			objectOutput.writeUTF(sourceURL);
 		}
 	}
 

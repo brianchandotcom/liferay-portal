@@ -12,6 +12,7 @@
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
+import getCN from 'classnames';
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import MaskedInput from 'react-text-mask';
 
@@ -26,7 +27,7 @@ import {toUppercase} from '../../../../shared/util/util.es';
 import {AppContext} from '../../../AppContext.es';
 import {ModalContext} from '../ModalProvider.es';
 
-const UpdateDueDateStep = ({dueDate = new Date()}) => {
+const UpdateDueDateStep = ({className, dueDate = new Date()}) => {
 	const {isAmPm} = useContext(AppContext);
 	const {setUpdateDueDate, updateDueDate} = useContext(ModalContext);
 
@@ -70,49 +71,52 @@ const UpdateDueDateStep = ({dueDate = new Date()}) => {
 	}, [comment, setUpdateDueDate]);
 
 	return (
-		<ClayModal.Body>
-			<div className="form-group-autofit">
-				<div
-					className={`form-group-item ${invalidDate && 'has-error'}`}
-				>
-					<label htmlFor="dateInput">
-						{Liferay.Language.get('new-due-date')}{' '}
-						<span className="reference-mark">
-							<ClayIcon symbol="asterisk" />
-						</span>
-					</label>
+		<div className={getCN('bg-white', className)}>
+			<ClayModal.Body>
+				<div className="form-group-autofit">
+					<div
+						className={`form-group-item ${invalidDate &&
+							'has-error'}`}
+					>
+						<label htmlFor="dateInput">
+							{Liferay.Language.get('new-due-date')}{' '}
+							<span className="reference-mark">
+								<ClayIcon symbol="asterisk" />
+							</span>
+						</label>
 
-					<MaskedInput
-						className="form-control"
-						data-testid="dateInput"
-						mask={dateMask}
-						onChange={({target}) => setDate(target.value)}
-						placeholder={dateFormat}
-						value={date}
+						<MaskedInput
+							className="form-control"
+							data-testid="dateInput"
+							mask={dateMask}
+							onChange={({target}) => setDate(target.value)}
+							placeholder={dateFormat}
+							value={date}
+						/>
+					</div>
+
+					<UpdateDueDateStep.TimePickerInput
+						format={timeFormat}
+						isAmPm={isAmPm}
+						setValue={setTime}
+						value={time}
 					/>
 				</div>
 
-				<UpdateDueDateStep.TimePickerInput
-					format={timeFormat}
-					isAmPm={isAmPm}
-					setValue={setTime}
-					value={time}
-				/>
-			</div>
+				<div className="form-group-item mb-4">
+					<label htmlFor="commentTextArea">
+						{Liferay.Language.get('comment')}
+					</label>
 
-			<div className="form-group-item">
-				<label htmlFor="commentTextArea">
-					{Liferay.Language.get('comment')}
-				</label>
-
-				<textarea
-					className="form-control"
-					data-testid="commentInput"
-					onChange={({target}) => setComment(target.value)}
-					placeholder={Liferay.Language.get('write-a-note')}
-				/>
-			</div>
-		</ClayModal.Body>
+					<textarea
+						className="form-control"
+						data-testid="commentInput"
+						onChange={({target}) => setComment(target.value)}
+						placeholder={Liferay.Language.get('write-a-note')}
+					/>
+				</div>
+			</ClayModal.Body>
+		</div>
 	);
 };
 

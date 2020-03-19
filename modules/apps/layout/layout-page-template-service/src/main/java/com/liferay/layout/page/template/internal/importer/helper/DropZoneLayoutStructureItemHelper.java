@@ -109,6 +109,6 @@ public class DropZoneLayoutStructureItemHelper
 
 	private static final String _KEY_FRAGMENT_KEY = "fragmentKey";
 
-	private static final String _KEY_UNALLOWED_FRAGMENTS = "allowedFragments";
+	private static final String _KEY_UNALLOWED_FRAGMENTS = "unallowedFragments";
 
 }

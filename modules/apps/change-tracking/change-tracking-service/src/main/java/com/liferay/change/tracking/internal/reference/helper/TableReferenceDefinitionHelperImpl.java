@@ -94,6 +94,13 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 					"\" is unused in JoinStep \"", joinStep, "\""));
 		}
 
+		if (joinStepASTNodeListener._invalidJoin != null) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"Invalid join for JoinStep \"", joinStep,
+					"\", ensure table alias is used for self joins"));
+		}
+
 		if (joinStepASTNodeListener._invalidJoinType != null) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
@@ -284,13 +291,19 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 
 				JoinType joinType = join.getJoinType();
 
-				if ((joinType != JoinType.INNER) &&
-					(_invalidJoinType == null)) {
-
+				if (joinType != JoinType.INNER) {
 					_invalidJoinType = joinType;
 				}
 
-				_tables.add(join.getTable());
+				Table<?> table = join.getTable();
+
+				if (table.equals(_fromTable) &&
+					Objects.equals(_fromTable.getName(), table.getName())) {
+
+					_invalidJoin = join;
+				}
+
+				_tables.add(table);
 			}
 		}
 
@@ -300,6 +313,7 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 		private Set<Table<?>> _columnTables = new HashSet<>();
 		private Table<?> _fromTable;
 		private boolean _hasRequiredTable;
+		private Join _invalidJoin;
 		private JoinType _invalidJoinType;
 		private Operand _invalidOperand;
 		private boolean _parentJoinFunction;

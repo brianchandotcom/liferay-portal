@@ -14,6 +14,12 @@
 
 package com.liferay.portal.kernel.settings;
 
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.util.LocalizationImpl;
@@ -30,7 +36,67 @@ import org.junit.Test;
  */
 public class TypedSettingsTest {
 
-	public TypedSettingsTest() {
+	@Test
+	public void testGetLocalizedValue() {
+		_setUpPropertiesLocalizedValues();
+
+		LocalizedValuesMap localizedValuesMap =
+			_typedSettings.getLocalizedValuesMap(_KEY);
+
+		Assert.assertEquals(
+			"value_en_GB", localizedValuesMap.get(LocaleUtil.UK));
+		Assert.assertEquals(
+			"value_en_US", localizedValuesMap.get(LocaleUtil.US));
+		Assert.assertEquals(
+			"value_es_ES", localizedValuesMap.get(LocaleUtil.SPAIN));
+		Assert.assertEquals(
+			"valueDefault", localizedValuesMap.get(LocaleUtil.BRAZIL));
+	}
+
+	@Test
+	public void testGetLocalizedValueFromJSON() {
+		_setUpJSONLocalizedValues();
+
+		LocalizedValuesMap localizedValuesMap =
+			_typedSettings.getLocalizedValuesMap(_KEY);
+
+		Assert.assertEquals(
+			"value_en_GB", localizedValuesMap.get(LocaleUtil.UK));
+		Assert.assertEquals(
+			"value_en_US", localizedValuesMap.get(LocaleUtil.US));
+		Assert.assertEquals(
+			"value_es_ES", localizedValuesMap.get(LocaleUtil.SPAIN));
+		Assert.assertEquals(
+			"value_en_US", localizedValuesMap.get(LocaleUtil.BRAZIL));
+	}
+
+	private void _setUpJSONLocalizedValues() {
+		LocalizationUtil localizationUtil = new LocalizationUtil();
+
+		localizationUtil.setLocalization(new LocalizationImpl());
+
+		ModifiableSettings modifiableSettings = new MemorySettings();
+
+		JSONFactory jsonFactory = new JSONFactoryImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			JSONFactoryUtil.class, "_jsonFactory", jsonFactory);
+
+		JSONObject jsonObject = JSONUtil.put(
+			"en_GB", "value_en_GB"
+		).put(
+			"en_US", "value_en_US"
+		).put(
+			"es_ES", "value_es_ES"
+		);
+
+		modifiableSettings.setValue(_KEY, jsonObject.toJSONString());
+
+		_typedSettings = new TypedSettings(
+			modifiableSettings, _availableLocales);
+	}
+
+	private void _setUpPropertiesLocalizedValues() {
 		LocalizationUtil localizationUtil = new LocalizationUtil();
 
 		localizationUtil.setLocalization(new LocalizationImpl());
@@ -46,26 +112,11 @@ public class TypedSettingsTest {
 			modifiableSettings, _availableLocales);
 	}
 
-	@Test
-	public void testGetLocalizedValue() {
-		LocalizedValuesMap localizedValuesMap =
-			_typedSettings.getLocalizedValuesMap(_KEY);
-
-		Assert.assertEquals(
-			"value_en_GB", localizedValuesMap.get(LocaleUtil.UK));
-		Assert.assertEquals(
-			"value_en_US", localizedValuesMap.get(LocaleUtil.US));
-		Assert.assertEquals(
-			"value_es_ES", localizedValuesMap.get(LocaleUtil.SPAIN));
-		Assert.assertEquals(
-			"valueDefault", localizedValuesMap.get(LocaleUtil.BRAZIL));
-	}
-
 	private static final String _KEY = "key";
 
 	private static final List<Locale> _availableLocales = Arrays.asList(
 		LocaleUtil.SPAIN, LocaleUtil.UK, LocaleUtil.US);
 
-	private final TypedSettings _typedSettings;
+	private TypedSettings _typedSettings;
 
 }

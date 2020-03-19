@@ -1566,7 +1566,7 @@ definition {
 		FormViewBuilder.setName(formViewName = "My Form View 2");
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Date");
 		FormViewBuilder.closeSidebar();
-		FormViewBuilder.addFromObjectField(fieldName = "Text");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Text");
 		FormViewBuilder.save();
 
 		FormViewBuilder.switchToFormViewTab();
@@ -2676,7 +2676,7 @@ definition {
 
 		//TODO: Remove this comment once LPS-110060 is fixed.
 
-		FormViewBuilder.addFromObjectField(fieldName = "Hobbies");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Hobbies");
 
 		FormViewBuilder.setFieldLabel(fieldLabel = "Hobbies edited");
 
@@ -2685,13 +2685,13 @@ definition {
 			fieldName = "Hobbies edited");
 		*/
 
-		FormViewBuilder.addFromObjectField(fieldName = "Marital Status");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Marital Status");
 		FormViewBuilder.validateFormMultipleSelectionField(
 			fieldLabel = "Marital Status 3",
 			fieldName = "Marital Status");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Marital Status");
 
-		FormViewBuilder.addFromObjectField(fieldName = "Occupation");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Occupation");
 		FormViewBuilder.validateSelectFromListField(
 			optionValue = "Occupation 2",
 			rowNumber = "2");
@@ -2701,10 +2701,10 @@ definition {
 			fieldLabel = "Testing Changed Name",
 			fieldName = "Nickname");
 
-		FormViewBuilder.addFromObjectField(fieldName = "Full name");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Full name");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Full name");
 
-		FormViewBuilder.addFromObjectField(fieldName = "Number of children");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Number of children");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Number of children");
 
 		FormViewBuilder.addFieldToObject(fieldName = "Text");
@@ -2713,7 +2713,7 @@ definition {
 
 		FormViewBuilder.searchObjectField(fieldValue = "Date of birth");
 		FormViewBuilder.validateSearchResult(fieldLabel = "Date of birth");
-		FormViewBuilder.addFromObjectField(fieldName = "Date of birth");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Date of birth");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
 
 		FormViewBuilder.save();

@@ -18,7 +18,8 @@ import React from 'react';
 const HiddenSelectInput = ({multiple, name, options, value}) => (
 	<ClaySelect
 		aria-label="select"
-		className="form-control hide"
+		className="form-control"
+		hidden
 		id={name}
 		multiple={multiple}
 		name={name}

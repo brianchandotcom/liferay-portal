@@ -41,6 +41,7 @@ else {
 	action="<%= editRedirectEntryURL %>"
 	method="post"
 	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveRedirectEntry();" %>'
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -78,7 +79,7 @@ else {
 		%>
 
 		<div class="destination-url">
-			<aui:input name="destinationURL" required="<%= true %>" value="<%= (redirectEntry != null) ? redirectEntry.getDestinationURL() : null %>" />
+			<aui:input name="destinationURL" value="<%= (redirectEntry != null) ? redirectEntry.getDestinationURL() : null %>" />
 
 			<react:component
 				data="<%= data %>"
@@ -105,3 +106,18 @@ else {
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
+
+<script>
+	function <portlet:namespace />saveRedirectEntry() {
+		var form = document.<portlet:namespace />fm;
+
+		var destinationURL = form.elements['<portlet:namespace />destinationURL'];
+
+		if (destinationURL.value) {
+			submitForm(form);
+		} else {
+			destinationURL.focus();
+			destinationURL.blur();
+		}
+	}
+</script>

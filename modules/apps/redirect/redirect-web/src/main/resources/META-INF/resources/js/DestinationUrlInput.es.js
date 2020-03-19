@@ -67,7 +67,6 @@ const DestinationUrlInput = ({initialUrl, namespace}) => {
 
 			fetch(url)
 				.then(response => {
-					console.log(response);
 					if (!response.ok) {
 						setValidationType(VALIDATION_TYPE.warning);
 					} else {
@@ -75,7 +74,6 @@ const DestinationUrlInput = ({initialUrl, namespace}) => {
 					}
 				})
 				.catch(xhr =>  {
-					console.log(xhr);
 					setValidationType(VALIDATION_TYPE.warning);
 				});
 		}
@@ -99,7 +97,6 @@ const DestinationUrlInput = ({initialUrl, namespace}) => {
 				id={`${namespace}destinationURL`}
 				onBlur={onInputBlur}
 				name={`${namespace}destinationURL`}
-				required
 				value={destinationUrl}
 				type="text"
 			/>

@@ -1725,16 +1725,22 @@ definition {
 
 		App.clickDeploy();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page");
 
-		SitePages.addPublicPage(pageName = "App Builder Test Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page",
+			layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "App Builder Test Page");
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
 
-		Portlet.addPG(portletName = "My First App");
+		Portlet.addPG(
+			pageName = "App Builder Test Page",
+			portletName = "My First App");
 
 		AppBuilderAdmin.addEntry();
 
@@ -1742,9 +1748,11 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Content of form deployed as widget.");
 
-		App.saveApp();
+		AppBuilderAdmin.save();
 
-		Portlet.addPG(portletName = "My First App (Table View)");
+		Portlet.addPG(
+			pageName = "App Builder Test Page",
+			portletName = "My First App (Table View)");
 
 		TableViewBuilder.validatePortletFieldTypeInTV(fieldType = "Text");
 
@@ -1765,9 +1773,11 @@ definition {
 
 		App.selectTableView(tableViewName = "My Table View 2");
 
-		AppBuilderAdmin.save();
+		App.saveApp();
 
-		Navigator.gotoPage(pageName = "App Builder Test Page");
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
 
 		TableViewBuilder.validatePortletFieldTypeInTV(fieldType = "Upload");
 
@@ -1786,9 +1796,11 @@ definition {
 
 		App.selectTableView(tableViewName = "My Table View 1");
 
-		AppBuilderAdmin.save();
+		App.saveApp();
 
-		Navigator.gotoPage(pageName = "App Builder Test Page");
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
 
 		TableViewBuilder.validatePortletTextInputInTV(textInput = "Content of form deployed as widget.");
 	}

@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JavaHelperUtilCheck" files="layout-admin-web/src/main/java/com/liferay/layout/admin/web/internal/portlet/action/ActionUtil\.java" />
-	</source-check>
-</suppressions>

@@ -32,6 +32,18 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function mouseOverInvisible {
+		WaitForSPARefresh();
+
+		selenium.waitForElementPresent();
+
+		selenium.mouseOver();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 	function mouseOverNotVisible {
 		WaitForSPARefresh();
 

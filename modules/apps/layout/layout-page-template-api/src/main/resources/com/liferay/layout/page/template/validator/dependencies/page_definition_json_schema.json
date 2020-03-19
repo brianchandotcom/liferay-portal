@@ -16,6 +16,28 @@
 			"title": "The ColumnDefinition Schema",
 			"type": "object"
 		},
+		"Fragment": {
+			"additionalProperties": false,
+			"properties": {
+				"collectionName": {
+					"title": "The collectionName Schema",
+					"type": "string"
+				},
+				"key": {
+					"title": "The key Schema",
+					"type": "string"
+				},
+				"name": {
+					"title": "The name Schema",
+					"type": "string"
+				}
+			},
+			"required": [
+				"key"
+			],
+			"title": "The fragment Schema",
+			"type": "object"
+		},
 		"FragmentField": {
 			"oneOf": [
 				{
@@ -122,26 +144,7 @@
 			"additionalProperties": false,
 			"properties": {
 				"fragment": {
-					"additionalProperties": false,
-					"properties": {
-						"collectionName": {
-							"title": "The collectionName Schema",
-							"type": "string"
-						},
-						"key": {
-							"title": "The key Schema",
-							"type": "string"
-						},
-						"name": {
-							"title": "The name Schema",
-							"type": "string"
-						}
-					},
-					"required": [
-						"key"
-					],
-					"title": "The fragment Schema",
-					"type": "object"
+					"$ref": "#/definitions/Fragment"
 				},
 				"fragmentConfig": {
 					"title": "The fragmentConfig Schema",

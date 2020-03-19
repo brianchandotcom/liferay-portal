@@ -146,6 +146,37 @@ function normalizeOptions({fixedOptions, multiple, options, valueArray}) {
 	return newOptions;
 }
 
+function handleDropdownItemClick ({currentValue, multiple, option}) {
+	const itemValue = option.value;
+
+	let newValue;
+
+	if (multiple) {
+		if (currentValue.includes(itemValue)) {
+			newValue = removeValue({
+				value: currentValue,
+				valueToBeRemoved: itemValue,
+			});
+
+			// Forces the active element to be blurred.
+			if (document.activeElement) {
+				document.activeElement.blur();
+			}
+		}
+		else {
+			newValue = appendValue({
+				value: currentValue,
+				valueToBeAppended: itemValue,
+			});
+		}
+	}
+	else {
+		newValue = toArray(itemValue);
+	}
+
+	return newValue;
+};
+
 const Trigger = forwardRef(
 	({onCloseButtonClicked, onTriggerClicked, value, ...otherProps}, ref) => {
 		return (
@@ -227,32 +258,11 @@ const Select = ({
 							key={`dropdown-option-${index}`}
 							label={option.label}
 							onClick={event => {
-								const itemValue = option.value;
-
-								let newValue;
-
-								if (multiple) {
-									if (currentValue.includes(itemValue)) {
-										newValue = removeValue({
-											value: currentValue,
-											valueToBeRemoved: itemValue,
-										});
-
-										// Forces the active element to be blurred.
-										if (document.activeElement) {
-											document.activeElement.blur();
-										}
-									}
-									else {
-										newValue = appendValue({
-											value: currentValue,
-											valueToBeAppended: itemValue,
-										});
-									}
-								}
-								else {
-									newValue = toArray(itemValue);
-								}
+								const newValue = handleDropdownItemClick({
+									currentValue,
+									multiple,
+									option,
+								});
 
 								setCurrentValue(newValue);
 

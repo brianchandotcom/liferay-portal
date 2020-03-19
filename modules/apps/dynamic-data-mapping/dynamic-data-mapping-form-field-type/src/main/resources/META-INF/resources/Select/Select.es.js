@@ -15,6 +15,7 @@
 import './SelectRegister.soy';
 
 import ClayDropDown from '@clayui/drop-down';
+import {ClayCheckbox} from '@clayui/form';
 import React, {forwardRef, useRef, useState} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';

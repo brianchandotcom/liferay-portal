@@ -313,12 +313,12 @@
 <!--LAYOUT ELEMENTS-->
 <tr>
 	<td>LAYOUT_ELEMENTS_HEADER</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'${key_elementType}')][${key_position}]//li[contains(@class,'title')]</td>
+	<td>//div[contains(@class,'page-editor__root page-editor__topper')]/div[contains(.,'${key_elementType}')][${key_position}]//li[contains(@class,'title')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LAYOUT_ELEMENTS_HEADER_DELETE_BUTTON</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'${key_elementType}')][${key_position}]//button[*[name()='svg'][*[contains(@class,'times-circle')]]]</td>
+	<td>//div[contains(@class,'page-editor__root page-editor__topper')]/div[contains(.,'${key_elementType}')][${key_position}]//button[*[name()='svg'][*[contains(@class,'times-circle')]]]</td>
 	<td></td>
 </tr>
 <tr>

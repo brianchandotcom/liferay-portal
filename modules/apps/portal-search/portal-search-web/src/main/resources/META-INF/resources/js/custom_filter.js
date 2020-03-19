@@ -18,7 +18,7 @@ AUI.add(
 		var FacetUtil = Liferay.Search.FacetUtil;
 
 		var CustomFilter = function(form) {
-			if (form == null) {
+			if (!form) {
 				return;
 			}
 

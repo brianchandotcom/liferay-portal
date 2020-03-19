@@ -30,7 +30,6 @@
 			"FormBuilder",
 			"FormRenderer",
 			"LayoutProvider.es",
-			"LayoutProvider/handlers/columnResizedHandler",
 			"LayoutProvider/handlers/fieldDeletedHandler",
 			"LayoutProvider/handlers/fieldSetAddedHandler",
 			"LayoutProvider/util",

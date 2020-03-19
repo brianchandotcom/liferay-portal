@@ -281,24 +281,12 @@ export const visitNestedFields = ({nestedFields}, fn) => {
 	}
 };
 
-export const findFieldByName = (pages, name) => {
-	let field = null;
+export const findFieldByName = (pages, fieldName) => {
 	const visitor = new PagesVisitor(pages);
 
-	visitor.mapFields(currentField => {
-		if (currentField.fieldName === name) {
-			field = currentField;
-		}
-		else if (currentField.nestedFields) {
-			visitNestedFields(currentField, nestedField => {
-				if (nestedField.fieldName === name) {
-					field = nestedField;
-				}
-			});
-		}
-	});
-
-	return field;
+	return visitor.findField(
+		field => field.fieldName === fieldName
+	);
 };
 
 export const getColumn = (pages, pageIndex, rowIndex, columnIndex) => {

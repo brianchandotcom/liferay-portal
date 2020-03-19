@@ -25,27 +25,22 @@ class PagesVisitor {
 		this._pages = null;
 	}
 
-	containsField(fieldName, includeNestedFields = false) {
-		return !!this.findField(
-			field => field.fieldName === fieldName,
-			includeNestedFields
-		);
+	containsField(fieldName) {
+		return !!this.findField(field => field.fieldName === fieldName);
 	}
 
-	findField(condition, includeNestedFields = false) {
+	findField(condition) {
 		let conditionField;
 
-		this.mapFields(
-			(field, ...args) => {
-				if (condition(field, ...args)) {
-					conditionField = field;
-				}
+		this.visitFields(field => {
+			if (condition(field)) {
+				conditionField = field;
 
-				return field;
-			},
-			false,
-			includeNestedFields
-		);
+				return true;
+			}
+
+			return false;
+		});
 
 		return conditionField;
 	}
@@ -112,6 +107,35 @@ class PagesVisitor {
 
 	setPages(pages) {
 		this._pages = [...pages];
+	}
+
+	visitFields(fn) {
+		const getChildren = node => {
+			return (
+				node.fields ||
+				node.nestedFields ||
+				node.rows ||
+				node.columns ||
+				[]
+			);
+		};
+
+		const collection = [...this._pages];
+
+		while (collection.length) {
+			const node = collection.shift();
+
+			if (
+				Object.prototype.hasOwnProperty.call(node, 'fieldName') &&
+				fn(node)
+			) {
+				return true;
+			}
+
+			collection.unshift(...getChildren(node));
+		}
+
+		return false;
 	}
 
 	_map(pageMapper, rowMapper, columnMapper, fieldFn) {

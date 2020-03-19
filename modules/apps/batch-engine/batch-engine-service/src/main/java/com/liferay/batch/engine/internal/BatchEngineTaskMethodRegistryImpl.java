@@ -122,8 +122,9 @@ public class BatchEngineTaskMethodRegistryImpl
 
 			Map<String, BatchEngineTaskItemDelegateExecutorCreator>
 				batchEngineTaskItemDelegateExecutorCreatorMap =
-					_getBatchEngineTaskItemDelegateExecutorCreatorMap(
-						itemClass);
+					_batchEngineTaskItemDelegateExecutorCreators.
+						computeIfAbsent(
+							itemClass, key -> new ConcurrentHashMap<>());
 
 			if (batchEngineTaskItemDelegateExecutorCreatorMap.containsKey(
 					batchEngineTaskItemDelegateName)) {
@@ -200,14 +201,6 @@ public class BatchEngineTaskMethodRegistryImpl
 			BundleContext bundleContext) {
 
 			_bundleContext = bundleContext;
-		}
-
-		private Map<String, BatchEngineTaskItemDelegateExecutorCreator>
-			_getBatchEngineTaskItemDelegateExecutorCreatorMap(
-				Class<?> itemClass) {
-
-			return _batchEngineTaskItemDelegateExecutorCreators.computeIfAbsent(
-				itemClass, key -> new ConcurrentHashMap<>());
 		}
 
 		private String _getBatchEngineTaskItemDelegateName(

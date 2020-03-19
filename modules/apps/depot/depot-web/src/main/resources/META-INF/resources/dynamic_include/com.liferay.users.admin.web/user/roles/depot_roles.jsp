@@ -20,7 +20,11 @@
 DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDisplayContext)request.getAttribute(DepotAdminRolesDisplayContext.class.getName());
 %>
 
-<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/depot/update_roles" />
+<aui:input
+	name="<%= ActionRequest.ACTION_NAME %>"
+	type="hidden"
+	value="/depot/update_roles"
+/>
 
 <h3 class="autofit-row sheet-subtitle">
 	<span class="autofit-col autofit-col-expand">
@@ -44,9 +48,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 	</c:if>
 </h3>
 
-<liferay-util:buffer
-	var="removeDepotRoleIcon"
->
+<liferay-util:buffer var="removeDepotRoleIcon">
 	<liferay-ui:icon
 		icon="times-circle"
 		markupView="lexicon"
@@ -69,9 +71,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= depotAdminRolesDisplayContext.getUserGroupRolesCount() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= depotAdminRolesDisplayContext.getUserGroupRoles(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= depotAdminRolesDisplayContext.getUserGroupRoles(searchContainer.getStart(), searchContainer.getResultEnd()) %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.UserGroupRole"
@@ -79,10 +79,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 		keyProperty="roleId"
 		modelVar="userGroupRole"
 	>
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="title"
-		>
+		<liferay-ui:search-container-column-text cssClass="table-cell-content" name="title">
 			<liferay-ui:icon
 				iconCssClass="<%= RolesAdminUtil.getIconCssClass(userGroupRole.getRole()) %>"
 				label="<%= true %>"
@@ -90,13 +87,8 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 			/>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="<%= depotAdminRolesDisplayContext.getAssetLibraryLabel() %>"
-		>
-			<liferay-staging:descriptive-name
-				group="<%= userGroupRole.getGroup() %>"
-			/>
+		<liferay-ui:search-container-column-text cssClass="table-cell-content" name="<%= depotAdminRolesDisplayContext.getAssetLibraryLabel() %>">
+			<liferay-staging:descriptive-name group="<%= userGroupRole.getGroup() %>" />
 		</liferay-ui:search-container-column-text>
 
 		<c:if test="<%= depotAdminRolesDisplayContext.isDeletable() %>">
@@ -106,9 +98,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
 <c:if test="<%= depotAdminRolesDisplayContext.isSelectable() %>">

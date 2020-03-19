@@ -73,9 +73,7 @@ boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader", G
 		KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNavigationDisplayContext(request, liferayPortletResponse);
 		%>
 
-		<clay:navigation-bar
-			navigationItems="<%= kbAdminNavigationDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<clay:navigation-bar navigationItems="<%= kbAdminNavigationDisplayContext.getInfoPanelNavigationItems() %>" />
 
 		<div class="sidebar-body">
 			<dl class="sidebar-block">
@@ -204,9 +202,7 @@ boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader", G
 		KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNavigationDisplayContext(request, liferayPortletResponse);
 		%>
 
-		<clay:navigation-bar
-			navigationItems="<%= kbAdminNavigationDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<clay:navigation-bar navigationItems="<%= kbAdminNavigationDisplayContext.getInfoPanelNavigationItems() %>" />
 
 		<div class="sidebar-body">
 			<h5><liferay-ui:message arguments="<%= kbFolders.size() + kbArticles.size() %>" key="x-items-are-selected" /></h5>

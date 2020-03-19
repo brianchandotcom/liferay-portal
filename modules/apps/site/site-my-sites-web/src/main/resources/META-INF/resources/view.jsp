@@ -18,20 +18,23 @@
 
 <liferay-ui:success key="membershipRequestSent" message="your-request-was-sent-you-will-receive-a-reply-by-email" />
 
-<liferay-ui:error embed="<%= false %>" key="membershipAlreadyRequested" message="membership-was-already-requested" />
-
-<clay:navigation-bar
-	navigationItems="<%= siteMySitesDisplayContext.getNavigationItems() %>"
+<liferay-ui:error
+	embed="<%= false %>"
+	key="membershipAlreadyRequested"
+	message="membership-was-already-requested"
 />
 
-<clay:management-toolbar
-	displayContext="<%= new SiteMySitesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteMySitesDisplayContext) %>"
-/>
+<clay:navigation-bar navigationItems="<%= siteMySitesDisplayContext.getNavigationItems() %>" />
 
-<aui:form action="<%= siteMySitesDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="get" name="fm">
-	<liferay-ui:search-container
-		searchContainer="<%= siteMySitesDisplayContext.getGroupSearchContainer() %>"
-	>
+<clay:management-toolbar displayContext="<%= new SiteMySitesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteMySitesDisplayContext) %>" />
+
+<aui:form
+	action="<%= siteMySitesDisplayContext.getPortletURL() %>"
+	cssClass="container-fluid-1280"
+	method="get"
+	name="fm"
+>
+	<liferay-ui:search-container searchContainer="<%= siteMySitesDisplayContext.getGroupSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Group"
 			keyProperty="groupId"
@@ -56,20 +59,14 @@
 				<c:when test='<%= Objects.equals(siteMySitesDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<c:choose>
 						<c:when test="<%= Validator.isNotNull(siteImageURL) %>">
-							<liferay-ui:search-container-column-image
-								src="<%= siteImageURL %>"
-							/>
+							<liferay-ui:search-container-column-image src="<%= siteImageURL %>" />
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:search-container-column-icon
-								icon="sites"
-							/>
+							<liferay-ui:search-container-column-icon icon="sites" />
 						</c:otherwise>
 					</c:choose>
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h5>
 							<c:choose>
 								<c:when test="<%= Validator.isNotNull(rowURL) %>">
@@ -90,10 +87,7 @@
 						</c:if>
 
 						<h6 class="text-default">
-							<liferay-asset:asset-tags-summary
-								className="<%= Group.class.getName() %>"
-								classPK="<%= group.getGroupId() %>"
-							/>
+							<liferay-asset:asset-tags-summary className="<%= Group.class.getName() %>" classPK="<%= group.getGroupId() %>" />
 						</h6>
 
 						<h6 class="text-default">
@@ -108,10 +102,7 @@
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text>
-						<clay:dropdown-actions
-							defaultEventHandler="<%= MySitesWebKeys.SITES_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-							dropdownItems="<%= siteMySitesDisplayContext.getArticleActionDropdownItems(group) %>"
-						/>
+						<clay:dropdown-actions defaultEventHandler="<%= MySitesWebKeys.SITES_DROPDOWN_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= siteMySitesDisplayContext.getArticleActionDropdownItems(group) %>" />
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(siteMySitesDisplayContext.getDisplayStyle(), "icon") %>'>
@@ -121,9 +112,7 @@
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:vertical-card
-							verticalCard="<%= new SiteVerticalCard(group, renderRequest, renderResponse, siteMySitesDisplayContext.getTabs1(), siteMySitesDisplayContext.getGroupUsersCounts(group.getGroupId())) %>"
-						/>
+						<clay:vertical-card verticalCard="<%= new SiteVerticalCard(group, renderRequest, renderResponse, siteMySitesDisplayContext.getTabs1(), siteMySitesDisplayContext.getGroupUsersCounts(group.getGroupId())) %>" />
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(siteMySitesDisplayContext.getDisplayStyle(), "list") %>'>
@@ -150,45 +139,25 @@
 						</c:if>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						name="members"
-						value="<%= String.valueOf(siteMySitesDisplayContext.getGroupUsersCounts(group.getGroupId())) %>"
-					/>
+					<liferay-ui:search-container-column-text name="members" value="<%= String.valueOf(siteMySitesDisplayContext.getGroupUsersCounts(group.getGroupId())) %>" />
 
 					<c:if test='<%= Objects.equals(siteMySitesDisplayContext.getTabs1(), "my-sites") && PropsValues.LIVE_USERS_ENABLED %>'>
-						<liferay-ui:search-container-column-text
-							name="online-now"
-							value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), group.getGroupId())) %>"
-						/>
+						<liferay-ui:search-container-column-text name="online-now" value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), group.getGroupId())) %>" />
 					</c:if>
 
-					<liferay-ui:search-container-column-text
-						name="tags"
-					>
-						<liferay-asset:asset-tags-summary
-							className="<%= Group.class.getName() %>"
-							classPK="<%= group.getGroupId() %>"
-						/>
+					<liferay-ui:search-container-column-text name="tags">
+						<liferay-asset:asset-tags-summary className="<%= Group.class.getName() %>" classPK="<%= group.getGroupId() %>" />
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text>
-						<clay:dropdown-actions
-							defaultEventHandler="<%= MySitesWebKeys.SITES_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-							dropdownItems="<%= siteMySitesDisplayContext.getArticleActionDropdownItems(group) %>"
-						/>
+						<clay:dropdown-actions defaultEventHandler="<%= MySitesWebKeys.SITES_DROPDOWN_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= siteMySitesDisplayContext.getArticleActionDropdownItems(group) %>" />
 					</liferay-ui:search-container-column-text>
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= siteMySitesDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= siteMySitesDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
-<liferay-frontend:component
-	componentId="<%= MySitesWebKeys.SITES_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/SiteDropdownDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= MySitesWebKeys.SITES_DROPDOWN_DEFAULT_EVENT_HANDLER %>" module="js/SiteDropdownDefaultEventHandler.es" />

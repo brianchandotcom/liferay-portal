@@ -77,7 +77,11 @@ if (wikiPage != null) {
 
 <c:if test="<%= attachmentsFileEntries != null %>">
 	<c:if test="<%= (templatePage != null) && !attachmentsFileEntries.isEmpty() %>">
-		<aui:input name="copyPageAttachments" type="checkbox" value="<%= copyPageAttachments %>" />
+		<aui:input
+			name="copyPageAttachments"
+			type="checkbox"
+			value="<%= copyPageAttachments %>"
+		/>
 	</c:if>
 
 	<%

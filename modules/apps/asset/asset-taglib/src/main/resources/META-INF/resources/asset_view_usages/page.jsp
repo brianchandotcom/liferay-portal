@@ -24,17 +24,9 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 %>
 
 <div id="<portlet:namespace />assetEntryUsagesList">
-	<liferay-ui:search-container
-		compactEmptyResultsMessage="<%= true %>"
-		searchContainer="<%= assetEntryUsagesDisplayContext.getSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.asset.model.AssetEntryUsage"
-			modelVar="assetEntryUsage"
-		>
-			<liferay-ui:search-container-column-text
-				name="pages"
-			>
+	<liferay-ui:search-container compactEmptyResultsMessage="<%= true %>" searchContainer="<%= assetEntryUsagesDisplayContext.getSearchContainer() %>">
+		<liferay-ui:search-container-row className="com.liferay.asset.model.AssetEntryUsage" modelVar="assetEntryUsage">
+			<liferay-ui:search-container-column-text name="pages">
 				<h5>
 					<%= HtmlUtil.escape(assetEntryUsagesDisplayContext.getAssetEntryUsageName(assetEntryUsage)) %>
 				</h5>
@@ -44,9 +36,7 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 				</div>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="text-right"
-			>
+			<liferay-ui:search-container-column-text cssClass="text-right">
 				<c:if test="<%= assetEntryUsagesDisplayContext.isShowPreview(assetEntryUsage) %>">
 
 					<%

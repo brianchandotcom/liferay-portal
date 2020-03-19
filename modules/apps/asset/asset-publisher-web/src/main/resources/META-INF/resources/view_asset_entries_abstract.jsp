@@ -93,9 +93,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 				<div class="autofit-row mb-4 metadata-author">
 					<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
 						<div class="asset-avatar autofit-col inline-item-before mr-3 pt-1">
-							<liferay-ui:user-portrait
-								userId="<%= assetRenderer.getUserId() %>"
-							/>
+							<liferay-ui:user-portrait userId="<%= assetRenderer.getUserId() %>" />
 						</div>
 					</c:if>
 
@@ -220,10 +218,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 				<div class="asset-details autofit-float autofit-row autofit-row-center">
 					<c:if test="<%= assetPublisherDisplayContext.isEnableRatings() && assetRenderer.isRatable() %>">
 						<div class="asset-ratings autofit-col mr-3">
-							<liferay-ui:ratings
-								className="<%= assetEntry.getClassName() %>"
-								classPK="<%= assetEntry.getClassPK() %>"
-							/>
+							<liferay-ui:ratings className="<%= assetEntry.getClassName() %>" classPK="<%= assetEntry.getClassPK() %>" />
 						</div>
 					</c:if>
 
@@ -347,7 +342,12 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 						%>
 
 							<div class="autofit-col export-action">
-								<aui:a cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm" data="<%= data %>" href="<%= exportAssetURL.toString() %>" label='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", title, StringUtil.toUpperCase(HtmlUtil.escape(extension))}, false) %>' />
+								<aui:a
+									cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm"
+									data="<%= data %>"
+									href="<%= exportAssetURL.toString() %>"
+									label='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", title, StringUtil.toUpperCase(HtmlUtil.escape(extension))}, false) %>'
+								/>
 							</div>
 
 						<%

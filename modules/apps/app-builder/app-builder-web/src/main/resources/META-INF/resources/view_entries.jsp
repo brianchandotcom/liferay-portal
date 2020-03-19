@@ -33,8 +33,5 @@
 	data.put("showTableView", request.getAttribute(AppBuilderWebKeys.SHOW_TABLE_VIEW));
 	%>
 
-	<react:component
-		data="<%= data %>"
-		module="js/pages/entry/ViewEntriesApp.es"
-	/>
+	<react:component data="<%= data %>" module="js/pages/entry/ViewEntriesApp.es" />
 </div>

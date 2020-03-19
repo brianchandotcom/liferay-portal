@@ -36,10 +36,7 @@ OAuth2Authorization oAuth2Authorization = (OAuth2Authorization)row.getObject();
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="view"
-		url="<%= viewURL.toString() %>"
-	/>
+	<liferay-ui:icon message="view" url="<%= viewURL.toString() %>" />
 
 	<portlet:actionURL name="/connected_applications/revoke_oauth2_authorizations" var="revokeOAuth2AuthorizationURL">
 		<portlet:param name="mvcRenderCommandName" value="/connected_applications/view" />
@@ -47,8 +44,5 @@ OAuth2Authorization oAuth2Authorization = (OAuth2Authorization)row.getObject();
 		<portlet:param name="backURL" value="<%= currentURL %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		message="remove-access"
-		url="<%= revokeOAuth2AuthorizationURL.toString() %>"
-	/>
+	<liferay-ui:icon-delete message="remove-access" url="<%= revokeOAuth2AuthorizationURL.toString() %>" />
 </liferay-ui:icon-menu>

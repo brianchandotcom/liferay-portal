@@ -58,15 +58,48 @@ renderResponse.setTitle(headerTitle);
 		<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_entry" />
 	</portlet:actionURL>
 
-	<aui:form action="<%= editEntryURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
+	<aui:form
+		action="<%= editEntryURL %>"
+		method="post"
+		name="fm"
+		onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'
+	>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-		<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
-		<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
-		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
-		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
-		<aui:input name="showFolderSelector" type="hidden" value="<%= showFolderSelector %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="backURL"
+			type="hidden"
+			value="<%= backURL %>"
+		/>
+		<aui:input
+			name="portletResource"
+			type="hidden"
+			value='<%= ParamUtil.getString(request, "portletResource") %>'
+		/>
+		<aui:input
+			name="referringPortletResource"
+			type="hidden"
+			value="<%= referringPortletResource %>"
+		/>
+		<aui:input
+			name="entryId"
+			type="hidden"
+			value="<%= entryId %>"
+		/>
+		<aui:input
+			name="folderId"
+			type="hidden"
+			value="<%= folderId %>"
+		/>
+		<aui:input
+			name="showFolderSelector"
+			type="hidden"
+			value="<%= showFolderSelector %>"
+		/>
 
 		<div class="lfr-form-content">
 			<liferay-ui:error exception="<%= EntryURLException.class %>" message="please-enter-a-valid-url" />
@@ -94,7 +127,12 @@ renderResponse.setTitle(headerTitle);
 						%>
 
 						<div class="form-group">
-							<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
+							<aui:input
+								label="folder"
+								name="folderName"
+								type="resource"
+								value="<%= folderName %>"
+							/>
 
 							<aui:button name="selectFolderButton" value="select" />
 
@@ -140,7 +178,12 @@ renderResponse.setTitle(headerTitle);
 							String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('folderId', 'folderName', this, '" + renderResponse.getNamespace() + "');";
 							%>
 
-							<aui:button disabled="<%= folderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+							<aui:button
+								disabled="<%= folderId <= 0 %>"
+								name="removeFolderButton"
+								onClick="<%= taglibRemoveFolder %>"
+								value="remove"
+							/>
 						</div>
 					</c:if>
 
@@ -151,10 +194,12 @@ renderResponse.setTitle(headerTitle);
 					<aui:input name="description" />
 				</aui:fieldset>
 
-				<liferay-expando:custom-attributes-available
-					className="<%= BookmarksEntry.class.getName() %>"
-				>
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+				<liferay-expando:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
+					<aui:fieldset
+						collapsed="<%= true %>"
+						collapsible="<%= true %>"
+						label="custom-fields"
+					>
 						<liferay-expando:custom-attribute-list
 							className="<%= BookmarksEntry.class.getName() %>"
 							classPK="<%= entryId %>"
@@ -164,30 +209,31 @@ renderResponse.setTitle(headerTitle);
 					</aui:fieldset>
 				</liferay-expando:custom-attributes-available>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-					<liferay-asset:asset-categories-selector
-						className="<%= BookmarksEntry.class.getName() %>"
-						classPK="<%= entryId %>"
-					/>
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="categorization"
+				>
+					<liferay-asset:asset-categories-selector className="<%= BookmarksEntry.class.getName() %>" classPK="<%= entryId %>" />
 
-					<liferay-asset:asset-tags-selector
-						className="<%= BookmarksEntry.class.getName() %>"
-						classPK="<%= entryId %>"
-					/>
+					<liferay-asset:asset-tags-selector className="<%= BookmarksEntry.class.getName() %>" classPK="<%= entryId %>" />
 				</aui:fieldset>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
-					<liferay-asset:input-asset-links
-						className="<%= BookmarksEntry.class.getName() %>"
-						classPK="<%= entryId %>"
-					/>
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="related-assets"
+				>
+					<liferay-asset:input-asset-links className="<%= BookmarksEntry.class.getName() %>" classPK="<%= entryId %>" />
 				</aui:fieldset>
 
 				<c:if test="<%= entry == null %>">
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-						<liferay-ui:input-permissions
-							modelName="<%= BookmarksEntry.class.getName() %>"
-						/>
+					<aui:fieldset
+						collapsed="<%= true %>"
+						collapsible="<%= true %>"
+						label="permissions"
+					>
+						<liferay-ui:input-permissions modelName="<%= BookmarksEntry.class.getName() %>" />
 					</aui:fieldset>
 				</c:if>
 			</aui:fieldset-group>

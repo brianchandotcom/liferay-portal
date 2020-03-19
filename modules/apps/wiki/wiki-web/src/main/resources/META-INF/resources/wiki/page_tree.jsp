@@ -34,7 +34,11 @@ childPages.remove(wikiPage);
 childPages = ListUtil.sort(childPages);
 %>
 
-<aui:option label="<%= preface + parentPage.getTitle() %>" selected="<%= parentPage.getTitle().equals(wikiPage.getParentTitle()) %>" value="<%= parentPage.getTitle() %>" />
+<aui:option
+	label="<%= preface + parentPage.getTitle() %>"
+	selected="<%= parentPage.getTitle().equals(wikiPage.getParentTitle()) %>"
+	value="<%= parentPage.getTitle() %>"
+/>
 
 <%
 for (WikiPage childPage : childPages) {

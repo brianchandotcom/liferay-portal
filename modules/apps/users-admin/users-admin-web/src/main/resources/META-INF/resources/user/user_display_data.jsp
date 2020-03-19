@@ -59,16 +59,48 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 			}
 			%>
 
-			<liferay-ui:message arguments="<%= sb.toString() %>" key="your-portal-administrator-has-disabled-the-ability-to-modify-the-following-fields" translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments="<%= sb.toString() %>"
+				key="your-portal-administrator-has-disabled-the-ability-to-modify-the-following-fields"
+				translateArguments="<%= false %>"
+			/>
 		</liferay-ui:error>
 
-		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeDuplicate.class %>" focusField="screenName" message="the-screen-name-you-requested-is-already-taken" />
-		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeNull.class %>" focusField="screenName" message="the-screen-name-cannot-be-blank" />
-		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeNumeric.class %>" focusField="screenName" message="the-screen-name-cannot-contain-only-numeric-values" />
-		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeReserved.class %>" focusField="screenName" message="the-screen-name-you-requested-is-reserved" />
-		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeReservedForAnonymous.class %>" focusField="screenName" message="the-screen-name-you-requested-is-reserved-for-the-anonymous-user" />
-		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeUsedByGroup.class %>" focusField="screenName" message="the-screen-name-you-requested-is-already-taken-by-a-site" />
-		<liferay-ui:error exception="<%= UserScreenNameException.MustProduceValidFriendlyURL.class %>" focusField="screenName" message="the-screen-name-you-requested-must-produce-a-valid-friendly-url" />
+		<liferay-ui:error
+			exception="<%= UserScreenNameException.MustNotBeDuplicate.class %>"
+			focusField="screenName"
+			message="the-screen-name-you-requested-is-already-taken"
+		/>
+		<liferay-ui:error
+			exception="<%= UserScreenNameException.MustNotBeNull.class %>"
+			focusField="screenName"
+			message="the-screen-name-cannot-be-blank"
+		/>
+		<liferay-ui:error
+			exception="<%= UserScreenNameException.MustNotBeNumeric.class %>"
+			focusField="screenName"
+			message="the-screen-name-cannot-contain-only-numeric-values"
+		/>
+		<liferay-ui:error
+			exception="<%= UserScreenNameException.MustNotBeReserved.class %>"
+			focusField="screenName"
+			message="the-screen-name-you-requested-is-reserved"
+		/>
+		<liferay-ui:error
+			exception="<%= UserScreenNameException.MustNotBeReservedForAnonymous.class %>"
+			focusField="screenName"
+			message="the-screen-name-you-requested-is-reserved-for-the-anonymous-user"
+		/>
+		<liferay-ui:error
+			exception="<%= UserScreenNameException.MustNotBeUsedByGroup.class %>"
+			focusField="screenName"
+			message="the-screen-name-you-requested-is-already-taken-by-a-site"
+		/>
+		<liferay-ui:error
+			exception="<%= UserScreenNameException.MustProduceValidFriendlyURL.class %>"
+			focusField="screenName"
+			message="the-screen-name-you-requested-must-produce-a-valid-friendly-url"
+		/>
 
 		<liferay-ui:error exception="<%= UserScreenNameException.MustValidate.class %>" focusField="screenName">
 
@@ -101,12 +133,36 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 			</c:choose>
 		</c:if>
 
-		<liferay-ui:error exception="<%= UserEmailAddressException.MustNotBeDuplicate.class %>" focusField="emailAddress" message="the-email-address-you-requested-is-already-taken" />
-		<liferay-ui:error exception="<%= UserEmailAddressException.MustNotBeNull.class %>" focusField="emailAddress" message="please-enter-an-email-address" />
-		<liferay-ui:error exception="<%= UserEmailAddressException.MustNotBePOP3User.class %>" focusField="emailAddress" message="the-email-address-you-requested-is-reserved" />
-		<liferay-ui:error exception="<%= UserEmailAddressException.MustNotBeReserved.class %>" focusField="emailAddress" message="the-email-address-you-requested-is-reserved" />
-		<liferay-ui:error exception="<%= UserEmailAddressException.MustNotUseCompanyMx.class %>" focusField="emailAddress" message="the-email-address-you-requested-is-not-valid-because-its-domain-is-reserved" />
-		<liferay-ui:error exception="<%= UserEmailAddressException.MustValidate.class %>" focusField="emailAddress" message="please-enter-a-valid-email-address" />
+		<liferay-ui:error
+			exception="<%= UserEmailAddressException.MustNotBeDuplicate.class %>"
+			focusField="emailAddress"
+			message="the-email-address-you-requested-is-already-taken"
+		/>
+		<liferay-ui:error
+			exception="<%= UserEmailAddressException.MustNotBeNull.class %>"
+			focusField="emailAddress"
+			message="please-enter-an-email-address"
+		/>
+		<liferay-ui:error
+			exception="<%= UserEmailAddressException.MustNotBePOP3User.class %>"
+			focusField="emailAddress"
+			message="the-email-address-you-requested-is-reserved"
+		/>
+		<liferay-ui:error
+			exception="<%= UserEmailAddressException.MustNotBeReserved.class %>"
+			focusField="emailAddress"
+			message="the-email-address-you-requested-is-reserved"
+		/>
+		<liferay-ui:error
+			exception="<%= UserEmailAddressException.MustNotUseCompanyMx.class %>"
+			focusField="emailAddress"
+			message="the-email-address-you-requested-is-not-valid-because-its-domain-is-reserved"
+		/>
+		<liferay-ui:error
+			exception="<%= UserEmailAddressException.MustValidate.class %>"
+			focusField="emailAddress"
+			message="please-enter-a-valid-email-address"
+		/>
 
 		<c:choose>
 			<c:when test='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "emailAddress") %>'>
@@ -124,7 +180,11 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 				}
 				%>
 
-				<aui:input bean="<%= displayEmailAddressUser %>" model="<%= User.class %>" name="emailAddress">
+				<aui:input
+					bean="<%= displayEmailAddressUser %>"
+					model="<%= User.class %>"
+					name="emailAddress"
+				>
 					<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
 						<aui:validator name="required" />
 					</c:if>
@@ -136,7 +196,11 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 			<liferay-ui:error exception="<%= UserIdException.MustNotBeNull.class %>" message="please-enter-a-user-id" />
 			<liferay-ui:error exception="<%= UserIdException.MustNotBeReserved.class %>" message="the-user-id-you-requested-is-reserved" />
 
-			<aui:input name="userId" type="resource" value="<%= String.valueOf(selUser.getUserId()) %>" />
+			<aui:input
+				name="userId"
+				type="resource"
+				value="<%= String.valueOf(selUser.getUserId()) %>"
+			/>
 		</c:if>
 	</div>
 

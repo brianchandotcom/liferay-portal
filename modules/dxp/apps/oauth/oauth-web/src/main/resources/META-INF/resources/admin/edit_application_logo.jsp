@@ -39,16 +39,30 @@ OAuthApplication oAuthApplication = OAuthApplicationLocalServiceUtil.fetchOAuthA
 			<portlet:param name="oAuthApplicationId" value="<%= String.valueOf(oAuthApplicationId) %>" />
 		</portlet:actionURL>
 
-		<aui:form action="<%= updateLogoURL %>" enctype="multipart/form-data" method="post" name="fm">
+		<aui:form
+			action="<%= updateLogoURL %>"
+			enctype="multipart/form-data"
+			method="post"
+			name="fm"
+		>
 			<liferay-ui:error exception="<%= UploadException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 
 			<aui:fieldset>
-				<aui:input label="" name="fileName" size="50" type="file" />
+				<aui:input
+					label=""
+					name="fileName"
+					size="50"
+					type="file"
+				/>
 
 				<aui:button-row>
 					<aui:button type="submit" />
 
-					<aui:button onClick="window.close();" type="cancel" value="close" />
+					<aui:button
+						onClick="window.close();"
+						type="cancel"
+						value="close"
+					/>
 				</aui:button-row>
 			</aui:fieldset>
 		</aui:form>

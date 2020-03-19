@@ -40,7 +40,11 @@
 				</div>
 
 				<div class="list-group-subtitle">
-					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(fileVersion.getUserName()), dateFormatDateTime.format(fileVersion.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= new Object[] {HtmlUtil.escape(fileVersion.getUserName()), dateFormatDateTime.format(fileVersion.getCreateDate())} %>"
+						key="by-x-on-x"
+						translateArguments="<%= false %>"
+					/>
 				</div>
 
 				<div class="list-group-subtext">

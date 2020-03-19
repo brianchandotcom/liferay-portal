@@ -72,7 +72,11 @@ if (recurrence != null) {
 
 <div class="calendar-portlet-recurrence-container hide" id="<portlet:namespace />recurrenceContainer">
 	<table>
-		<aui:input name="exceptionDates" type="hidden" value="<%= exceptionDatesString %>" />
+		<aui:input
+			name="exceptionDates"
+			type="hidden"
+			value="<%= exceptionDatesString %>"
+		/>
 
 		<tbody>
 			<tr>
@@ -142,13 +146,24 @@ if (recurrence != null) {
 							String weekdayLabel = "weekday." + weekday.getValue();
 						%>
 
-							<aui:input checked="<%= weekdays.contains(weekday) %>" id="<%= weekday.getValue() %>" label="<%= weekdayLabel %>" name="weekdays" type="checkbox" value="<%= weekday.getValue() %>" />
+							<aui:input
+								checked="<%= weekdays.contains(weekday) %>"
+								id="<%= weekday.getValue() %>"
+								label="<%= weekdayLabel %>"
+								name="weekdays"
+								type="checkbox"
+								value="<%= weekday.getValue() %>"
+							/>
 
 						<%
 						}
 						%>
 
-						<aui:input name="weekdays" type="hidden" value="<%= startTimeWeekday.getValue() %>" />
+						<aui:input
+							name="weekdays"
+							type="hidden"
+							value="<%= startTimeWeekday.getValue() %>"
+						/>
 					</aui:field-wrapper>
 				</td>
 			</tr>
@@ -160,9 +175,23 @@ if (recurrence != null) {
 					<liferay-ui:message key="repeat-on" />:
 				</th>
 				<td class="calendar-portlet-recurrence-content calendar-recurrence-month-radio">
-					<aui:input checked="<%= ListUtil.isEmpty(weekdays) %>" inlineField="<%= true %>" label="day-of-the-month" name="repeatOnWeekday" type="radio" value="false" />
+					<aui:input
+						checked="<%= ListUtil.isEmpty(weekdays) %>"
+						inlineField="<%= true %>"
+						label="day-of-the-month"
+						name="repeatOnWeekday"
+						type="radio"
+						value="false"
+					/>
 
-					<aui:input checked="<%= ListUtil.isNotEmpty(weekdays) %>" inlineField="<%= true %>" label="day-of-the-week" name="repeatOnWeekday" type="radio" value="true" />
+					<aui:input
+						checked="<%= ListUtil.isNotEmpty(weekdays) %>"
+						inlineField="<%= true %>"
+						label="day-of-the-week"
+						name="repeatOnWeekday"
+						type="radio"
+						value="true"
+					/>
 
 					<div class="<%= ListUtil.isEmpty(weekdays) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />viewPositionalWeekday">
 
@@ -170,11 +199,24 @@ if (recurrence != null) {
 						Weekday weekday = positionalWeekday.getWeekday();
 						%>
 
-						<aui:input checked="<%= positionalWeekday.getPosition() == -1 %>" label="repeat-on-month-last-day-of-the-week" name="lastPosition" type="checkbox" />
+						<aui:input
+							checked="<%= positionalWeekday.getPosition() == -1 %>"
+							label="repeat-on-month-last-day-of-the-week"
+							name="lastPosition"
+							type="checkbox"
+						/>
 
-						<aui:input name="position" type="hidden" value="<%= positionalWeekday.getPosition() %>" />
+						<aui:input
+							name="position"
+							type="hidden"
+							value="<%= positionalWeekday.getPosition() %>"
+						/>
 
-						<aui:input name="weekday" type="hidden" value="<%= weekday.getValue() %>" />
+						<aui:input
+							name="weekday"
+							type="hidden"
+							value="<%= weekday.getValue() %>"
+						/>
 					</div>
 				</td>
 			</tr>
@@ -187,23 +229,48 @@ if (recurrence != null) {
 				</th>
 				<td class="calendar-portlet-recurrence-content">
 					<aui:field-wrapper cssClass="calendar-portlet-recurrence-limit" label="">
-						<aui:input checked="<%= !afterChecked && !onChecked %>" label="<%= StringPool.BLANK %>" name="ends" type="radio" value="never" />
+						<aui:input
+							checked="<%= !afterChecked && !onChecked %>"
+							label="<%= StringPool.BLANK %>"
+							name="ends"
+							type="radio"
+							value="never"
+						/>
 
 						<label><liferay-ui:message key="never" /></label>
 					</aui:field-wrapper>
 
 					<aui:field-wrapper cssClass="calendar-portlet-recurrence-limit" label="">
-						<aui:input checked="<%= afterChecked %>" label="<%= StringPool.BLANK %>" name="ends" type="radio" value="after" />
+						<aui:input
+							checked="<%= afterChecked %>"
+							label="<%= StringPool.BLANK %>"
+							name="ends"
+							type="radio"
+							value="after"
+						/>
 
 						<label><liferay-ui:message key="after" /></label>
 
-						<aui:input disabled="<%= !afterChecked %>" label="<%= StringPool.BLANK %>" name="count" size="5" type="text" value="<%= afterChecked ? count : StringPool.BLANK %>" />
+						<aui:input
+							disabled="<%= !afterChecked %>"
+							label="<%= StringPool.BLANK %>"
+							name="count"
+							size="5"
+							type="text"
+							value="<%= afterChecked ? count : StringPool.BLANK %>"
+						/>
 
 						<label><liferay-ui:message key="occurrences" /></label>
 					</aui:field-wrapper>
 
 					<aui:field-wrapper cssClass="calendar-portlet-field-date calendar-portlet-recurrence-limit" label="">
-						<aui:input checked="<%= onChecked %>" label="<%= StringPool.BLANK %>" name="ends" type="radio" value="on" />
+						<aui:input
+							checked="<%= onChecked %>"
+							label="<%= StringPool.BLANK %>"
+							name="ends"
+							type="radio"
+							value="on"
+						/>
 
 						<div class="calendar-portlet-field-datepicker clearfix">
 							<label><liferay-ui:message key="stop-repeating-on" /></label>

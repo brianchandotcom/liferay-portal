@@ -28,4 +28,11 @@ String xml = LocalizationUtil.getLocalizationXmlFromPreferences(organization.get
 	<liferay-ui:message key="specify-custom-security-questions-for-the-users-of-this-organization" />
 </div>
 
-<aui:input id="reminderQueries" label="security-questions" localized="<%= true %>" name="reminderQueries" type="textarea" value="<%= xml %>" />
+<aui:input
+	id="reminderQueries"
+	label="security-questions"
+	localized="<%= true %>"
+	name="reminderQueries"
+	type="textarea"
+	value="<%= xml %>"
+/>

@@ -24,14 +24,10 @@ SearchContainer organizationSearchContainer = AssignableAccountOrganizationSearc
 SelectAccountOrganizationsManagementToolbarDisplayContext selectAccountOrganizationsManagementToolbarDisplayContext = new SelectAccountOrganizationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, organizationSearchContainer);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= selectAccountOrganizationsManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= selectAccountOrganizationsManagementToolbarDisplayContext %>" />
 
 <aui:container cssClass="container-fluid container-fluid-max-xl">
-	<liferay-ui:search-container
-		searchContainer="<%= organizationSearchContainer %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= organizationSearchContainer %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Organization"
 			keyProperty="organizationId"
@@ -50,9 +46,7 @@ SelectAccountOrganizationsManagementToolbarDisplayContext selectAccountOrganizat
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:container>
 

@@ -69,10 +69,7 @@ if (kbArticle != null) {
 					String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteFileEntry('" + fileEntry.getFileEntryId() + "');";
 					%>
 
-					<liferay-ui:icon-delete
-						label="<%= true %>"
-						url="<%= taglibURL %>"
-					/>
+					<liferay-ui:icon-delete label="<%= true %>" url="<%= taglibURL %>" />
 				</div>
 
 			<%

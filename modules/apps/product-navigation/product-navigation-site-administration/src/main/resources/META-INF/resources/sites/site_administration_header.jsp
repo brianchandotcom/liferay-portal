@@ -178,9 +178,17 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 				<span class="panel-notifications-count sticker sticker-rounded sticker-sm sticker-top-right sticker-warning"><%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %></span>
 			</c:if>
 
-			<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+			<aui:icon
+				cssClass="collapse-icon-closed"
+				image="angle-right"
+				markupView="lexicon"
+			/>
 
-			<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+			<aui:icon
+				cssClass="collapse-icon-open"
+				image="angle-down"
+				markupView="lexicon"
+			/>
 		</a>
 	</c:when>
 	<c:when test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteSelector() %>">

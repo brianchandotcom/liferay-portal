@@ -55,17 +55,30 @@ if (portletTitleBasedNavigation) {
 %>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
+	<aui:form
+		method="post"
+		name="fm"
+		onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'
+	>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
-		<aui:input name="alert" type="hidden" value="<%= alert %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="entryId"
+			type="hidden"
+			value="<%= entryId %>"
+		/>
+		<aui:input
+			name="alert"
+			type="hidden"
+			value="<%= alert %>"
+		/>
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				backURL="<%= redirect %>"
-				title="entry"
-			/>
+			<liferay-ui:header backURL="<%= redirect %>" title="entry" />
 		</c:if>
 
 		<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
@@ -91,7 +104,11 @@ if (portletTitleBasedNavigation) {
 				<aui:input name="content" type="hidden" />
 			</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+			<aui:fieldset
+				collapsed="<%= true %>"
+				collapsible="<%= true %>"
+				label="configuration"
+			>
 				<c:choose>
 					<c:when test="<%= entry != null %>">
 						<%@ include file="/announcements/entry_scope.jspf" %>
@@ -137,18 +154,34 @@ if (portletTitleBasedNavigation) {
 				<c:choose>
 					<c:when test="<%= alert %>">
 						<aui:select disabled="<%= true %>" name="priority">
-							<aui:option label="important" selected="<%= true %>" value="1" />
+							<aui:option
+								label="important"
+								selected="<%= true %>"
+								value="1"
+							/>
 						</aui:select>
 					</c:when>
 					<c:otherwise>
 						<aui:select name="priority">
-							<aui:option label="normal" selected="<%= (entry != null) && (entry.getPriority() == 0) %>" value="0" />
-							<aui:option label="important" selected="<%= (entry != null) && (entry.getPriority() == 1) %>" value="1" />
+							<aui:option
+								label="normal"
+								selected="<%= (entry != null) && (entry.getPriority() == 0) %>"
+								value="0"
+							/>
+							<aui:option
+								label="important"
+								selected="<%= (entry != null) && (entry.getPriority() == 1) %>"
+								value="1"
+							/>
 						</aui:select>
 					</c:otherwise>
 				</c:choose>
 
-				<aui:input dateTogglerCheckboxLabel="display-immediately" disabled="<%= displayImmediately %>" name="displayDate" />
+				<aui:input
+					dateTogglerCheckboxLabel="display-immediately"
+					disabled="<%= displayImmediately %>"
+					name="displayDate"
+				/>
 
 				<aui:input name="expirationDate" />
 			</aui:fieldset>

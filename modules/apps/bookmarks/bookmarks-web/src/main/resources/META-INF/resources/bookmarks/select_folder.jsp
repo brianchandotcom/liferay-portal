@@ -51,26 +51,16 @@ if (folder != null) {
 
 		<br />
 
-		<liferay-ui:search-container
-			iteratorURL="<%= portletURL %>"
-			total="<%= BookmarksFolderServiceUtil.getFoldersCount(scopeGroupId, folderId) %>"
-		>
-			<liferay-ui:search-container-results
-				results="<%= BookmarksFolderServiceUtil.getFolders(scopeGroupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
+		<liferay-ui:search-container iteratorURL="<%= portletURL %>" total="<%= BookmarksFolderServiceUtil.getFoldersCount(scopeGroupId, folderId) %>">
+			<liferay-ui:search-container-results results="<%= BookmarksFolderServiceUtil.getFolders(scopeGroupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
-			<liferay-ui:search-container-row
-				className="com.liferay.bookmarks.model.BookmarksFolder"
-				modelVar="curFolder"
-			>
+			<liferay-ui:search-container-row className="com.liferay.bookmarks.model.BookmarksFolder" modelVar="curFolder">
 				<portlet:renderURL var="viewFolderURL">
 					<portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" />
 					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 				</portlet:renderURL>
 
-				<liferay-ui:search-container-column-text
-					name="folder"
-				>
+				<liferay-ui:search-container-column-text name="folder">
 
 					<%
 					AssetRendererFactory<BookmarksFolder> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksFolder.class);
@@ -110,7 +100,11 @@ if (folder != null) {
 					).build();
 					%>
 
-					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+					<aui:button
+						cssClass="selector-button"
+						data="<%= data %>"
+						value="choose"
+					/>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
@@ -133,7 +127,11 @@ if (folder != null) {
 				).build();
 				%>
 
-				<aui:button cssClass="selector-button" data="<%= data %>" value="choose-this-folder" />
+				<aui:button
+					cssClass="selector-button"
+					data="<%= data %>"
+					value="choose-this-folder"
+				/>
 			</aui:button-row>
 
 			<liferay-ui:search-iterator />

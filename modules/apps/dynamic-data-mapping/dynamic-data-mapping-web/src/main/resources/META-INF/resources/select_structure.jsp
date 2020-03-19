@@ -41,24 +41,21 @@ SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSe
 	sortingURL="<%= ddmDisplayContext.getSortingURL() %>"
 />
 
-<aui:form action="<%= ddmDisplayContext.getSelectStructureSearchActionURL() %>" cssClass="container-fluid-1280" method="post" name="selectStructureFm">
-	<liferay-ui:search-container
-		searchContainer="<%= structureSearch %>"
-	>
+<aui:form
+	action="<%= ddmDisplayContext.getSelectStructureSearchActionURL() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="selectStructureFm"
+>
+	<liferay-ui:search-container searchContainer="<%= structureSearch %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMStructure"
 			keyProperty="structureId"
 			modelVar="structure"
 		>
-			<liferay-ui:search-container-column-text
-				name="id"
-				value="<%= String.valueOf(structure.getStructureId()) %>"
-			/>
+			<liferay-ui:search-container-column-text name="id" value="<%= String.valueOf(structure.getStructureId()) %>" />
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="name"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-content" name="name">
 				<c:choose>
 					<c:when test="<%= ddmDisplay.isEnableSelectStructureLink(structure, classPK) %>">
 
@@ -75,7 +72,11 @@ SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSe
 						data.put("name", structure.getName(locale));
 						%>
 
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+						<aui:a
+							cssClass="selector-button"
+							data="<%= data %>"
+							href="javascript:;"
+						>
 							<%= HtmlUtil.escape(structure.getUnambiguousName(structureSearch.getResults(), themeDisplay.getScopeGroupId(), locale)) %>
 						</aui:a>
 					</c:when>
@@ -92,16 +93,10 @@ SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSe
 				value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
 			/>
 
-			<liferay-ui:search-container-column-date
-				name="modified-date"
-				value="<%= structure.getModifiedDate() %>"
-			/>
+			<liferay-ui:search-container-column-date name="modified-date" value="<%= structure.getModifiedDate() %>" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

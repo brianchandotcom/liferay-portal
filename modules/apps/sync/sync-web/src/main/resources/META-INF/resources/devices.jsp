@@ -42,10 +42,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 		</liferay-frontend:management-bar-buttons>
 
 		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
+			<liferay-frontend:management-bar-navigation navigationKeys='<%= new String[] {"all"} %>' portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>" />
 
 			<liferay-frontend:management-bar-sort
 				orderByCol="<%= orderByCol %>"
@@ -62,10 +59,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 
 			<li>
 				<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search
-						markupView="lexicon"
-						placeholder='<%= LanguageUtil.get(request, "search") %>'
-					/>
+					<liferay-ui:input-search markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "search") %>' />
 				</aui:form>
 			</li>
 		</liferay-frontend:management-bar-filters>
@@ -74,12 +68,13 @@ portletURL.setParameter("delta", String.valueOf(delta));
 
 <div class="container-fluid-1280">
 	<aui:form method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= currentURL %>"
+		/>
 
-		<liferay-ui:search-container
-			emptyResultsMessage="no-devices-were-found"
-			iteratorURL="<%= portletURL %>"
-		>
+		<liferay-ui:search-container emptyResultsMessage="no-devices-were-found" iteratorURL="<%= portletURL %>">
 
 			<%
 			List<SyncDevice> syncDevices = new ArrayList<>();
@@ -109,9 +104,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 			}
 			%>
 
-			<liferay-ui:search-container-results
-				results="<%= syncDevices %>"
-			/>
+			<liferay-ui:search-container-results results="<%= syncDevices %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.sync.model.SyncDevice"
@@ -125,25 +118,13 @@ portletURL.setParameter("delta", String.valueOf(delta));
 					property="userName"
 				/>
 
-				<liferay-ui:search-container-column-text
-					name="location"
-					value="<%= syncDevice.getHostname() %>"
-				/>
+				<liferay-ui:search-container-column-text name="location" value="<%= syncDevice.getHostname() %>" />
 
-				<liferay-ui:search-container-column-text
-					name="type"
-					orderable="<%= true %>"
-				/>
+				<liferay-ui:search-container-column-text name="type" orderable="<%= true %>" />
 
-				<liferay-ui:search-container-column-text
-					name="build"
-					property="buildNumber"
-				/>
+				<liferay-ui:search-container-column-text name="build" property="buildNumber" />
 
-				<liferay-ui:search-container-column-date
-					name="last-seen"
-					property="modifiedDate"
-				/>
+				<liferay-ui:search-container-column-date name="last-seen" property="modifiedDate" />
 
 				<liferay-ui:search-container-column-text
 					name="status"
@@ -158,9 +139,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

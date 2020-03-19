@@ -40,10 +40,7 @@ portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoProcessId()));
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= kaleoFormsViewRecordsDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= kaleoFormsViewRecordsDisplayContext.getNavigationItems() %>" />
 
 <clay:management-toolbar
 	actionDropdownItems="<%= kaleoFormsViewRecordsDisplayContext.getActionItemsDropdownItems() %>"
@@ -61,13 +58,14 @@ portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoPr
 />
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
-	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
+	<aui:form
+		action="<%= portletURL.toString() %>"
+		method="post"
+		name="searchContainerForm"
+	>
 		<aui:input name="ddlRecordIds" type="hidden" />
 
-		<liferay-ui:search-container
-			id="<%= kaleoFormsViewRecordsDisplayContext.getSearchContainerId() %>"
-			searchContainer="<%= kaleoFormsViewRecordsDisplayContext.getSearch() %>"
-		>
+		<liferay-ui:search-container id="<%= kaleoFormsViewRecordsDisplayContext.getSearchContainerId() %>" searchContainer="<%= kaleoFormsViewRecordsDisplayContext.getSearch() %>">
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.lists.model.DDLRecord"
 				keyProperty="recordId"
@@ -105,10 +103,7 @@ portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoPr
 					}
 				%>
 
-					<liferay-ui:search-container-column-text
-						name="<%= HtmlUtil.escape(kaleoFormsViewRecordsDisplayContext.getColumnName(ddmFormField)) %>"
-						value="<%= value %>"
-					/>
+					<liferay-ui:search-container-column-text name="<%= HtmlUtil.escape(kaleoFormsViewRecordsDisplayContext.getColumnName(ddmFormField)) %>" value="<%= value %>" />
 
 				<%
 				}
@@ -122,20 +117,12 @@ portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoPr
 						statusDate="<%= recordVersion.getStatusDate() %>"
 					/>
 
-					<liferay-ui:search-container-column-date
-						name="modified-date"
-						value="<%= record.getModifiedDate() %>"
-					/>
+					<liferay-ui:search-container-column-date name="modified-date" value="<%= record.getModifiedDate() %>" />
 
-					<liferay-ui:search-container-column-text
-						name="author"
-						value="<%= HtmlUtil.escape(PortalUtil.getUserName(recordVersion)) %>"
-					/>
+					<liferay-ui:search-container-column-text name="author" value="<%= HtmlUtil.escape(PortalUtil.getUserName(recordVersion)) %>" />
 				</c:if>
 
-				<liferay-ui:search-container-column-jsp
-					path="/admin/record_action.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp path="/admin/record_action.jsp" />
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator
@@ -149,9 +136,7 @@ portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoPr
 </div>
 
 <div class="container-fluid-1280">
-	<liferay-ui:search-paginator
-		searchContainer="<%= kaleoFormsViewRecordsDisplayContext.getSearch() %>"
-	/>
+	<liferay-ui:search-paginator searchContainer="<%= kaleoFormsViewRecordsDisplayContext.getSearch() %>" />
 </div>
 
 <%@ include file="/admin/export_kaleo_process.jspf" %>

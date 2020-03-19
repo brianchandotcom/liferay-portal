@@ -20,23 +20,20 @@
 AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementToolbarDisplayContext = new AssetVocabulariesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetCategoriesDisplayContext);
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= assetCategoriesDisplayContext.getAssetVocabulariesNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= assetCategoriesDisplayContext.getAssetVocabulariesNavigationItems() %>" />
 
-<clay:management-toolbar
-	displayContext="<%= assetVocabulariesManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= assetVocabulariesManagementToolbarDisplayContext %>" />
 
 <portlet:actionURL name="deleteVocabulary" var="deleteVocabularyURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteVocabularyURL %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
-	<liferay-site-navigation:breadcrumb
-		breadcrumbEntries="<%= AssetCategoryUtil.getAssetVocabulariesBreadcrumbEntries(request) %>"
-	/>
+<aui:form
+	action="<%= deleteVocabularyURL %>"
+	cssClass="container-fluid container-fluid-max-xl"
+	name="fm"
+>
+	<liferay-site-navigation:breadcrumb breadcrumbEntries="<%= AssetCategoryUtil.getAssetVocabulariesBreadcrumbEntries(request) %>" />
 
 	<liferay-ui:error exception="<%= InvalidAssetCategoryException.class %>">
 
@@ -47,10 +44,7 @@ AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementTool
 		<liferay-ui:message arguments="<%= iace.getMessageArgument(locale) %>" key="<%= iace.getMessageKey() %>" />
 	</liferay-ui:error>
 
-	<liferay-ui:search-container
-		id="assetVocabularies"
-		searchContainer="<%= assetCategoriesDisplayContext.getVocabulariesSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="assetVocabularies" searchContainer="<%= assetCategoriesDisplayContext.getVocabulariesSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.asset.kernel.model.AssetVocabulary"
 			keyProperty="vocabularyId"
@@ -72,16 +66,15 @@ AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementTool
 
 			<c:choose>
 				<c:when test='<%= Objects.equals(assetCategoriesDisplayContext.getDisplayStyle(), "descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="vocabulary"
-						toggleRowChecker="<%= true %>"
-					/>
+					<liferay-ui:search-container-column-icon icon="vocabulary" toggleRowChecker="<%= true %>" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<span class="text-default">
-							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - vocabulary.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - vocabulary.getCreateDate().getTime(), true) %>"
+								key="x-ago"
+								translateArguments="<%= false %>"
+							/>
 						</span>
 
 						<h2 class="h5">
@@ -96,7 +89,11 @@ AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementTool
 
 							<c:choose>
 								<c:when test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">
-									<liferay-ui:message arguments="<%= vocabulary.getCategoriesCount() %>" key="flatten-x" translateArguments="<%= false %>" />
+									<liferay-ui:message
+										arguments="<%= vocabulary.getCategoriesCount() %>"
+										key="flatten-x"
+										translateArguments="<%= false %>"
+									/>
 								</c:when>
 								<c:otherwise>
 									<%= vocabulary.getCategoriesCount() %>
@@ -108,9 +105,7 @@ AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementTool
 						</span>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/vocabulary_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/vocabulary_action.jsp" />
 				</c:when>
 				<c:when test='<%= Objects.equals(assetCategoriesDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
@@ -132,13 +127,14 @@ AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementTool
 						property="createDate"
 					/>
 
-					<liferay-ui:search-container-column-text
-						cssClass="table-column-text-center"
-						name="number-of-categories"
-					>
+					<liferay-ui:search-container-column-text cssClass="table-column-text-center" name="number-of-categories">
 						<c:choose>
 							<c:when test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">
-								<liferay-ui:message arguments="<%= vocabulary.getCategoriesCount() %>" key="flatten-x" translateArguments="<%= false %>" />
+								<liferay-ui:message
+									arguments="<%= vocabulary.getCategoriesCount() %>"
+									key="flatten-x"
+									translateArguments="<%= false %>"
+								/>
 							</c:when>
 							<c:otherwise>
 								<%= vocabulary.getCategoriesCount() %>
@@ -152,21 +148,13 @@ AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementTool
 						value="<%= assetCategoriesDisplayContext.getAssetType(vocabulary) %>"
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/vocabulary_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/vocabulary_action.jsp" />
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= assetCategoriesDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= assetCategoriesDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
-<liferay-frontend:component
-	componentId="<%= assetVocabulariesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/AssetVocabulariesManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= assetVocabulariesManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/AssetVocabulariesManagementToolbarDefaultEventHandler.es" />

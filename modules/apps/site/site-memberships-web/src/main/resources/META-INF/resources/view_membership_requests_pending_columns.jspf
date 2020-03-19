@@ -21,16 +21,16 @@ User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipReques
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
 		<liferay-ui:search-container-column-text>
-			<liferay-ui:user-portrait
-				userId="<%= membershipRequest.getUserId() %>"
-			/>
+			<liferay-ui:user-portrait userId="<%= membershipRequest.getUserId() %>" />
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<h6 class="text-default">
-				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getCreateDate().getTime(), true) %>"
+					key="x-ago"
+					translateArguments="<%= false %>"
+				/>
 			</h6>
 
 			<h5><%= HtmlUtil.escape(membershipRequestUser.getFullName()) %> (<%= membershipRequestUser.getEmailAddress() %>)</h5>
@@ -41,9 +41,7 @@ User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipReques
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text>
-			<clay:dropdown-actions
-				dropdownItems="<%= viewMembershipRequestsDisplayContext.getActionDropdownItems(membershipRequest) %>"
-			/>
+			<clay:dropdown-actions dropdownItems="<%= viewMembershipRequestsDisplayContext.getActionDropdownItems(membershipRequest) %>" />
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
@@ -53,9 +51,7 @@ User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipReques
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<clay:user-card
-				userCard="<%= new ViewMembershipRequestsPendingUserCard(membershipRequest, membershipRequestUser, renderRequest, renderResponse) %>"
-			/>
+			<clay:user-card userCard="<%= new ViewMembershipRequestsPendingUserCard(membershipRequest, membershipRequestUser, renderRequest, renderResponse) %>" />
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("list") %>'>
@@ -77,15 +73,10 @@ User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipReques
 			value="<%= membershipRequestUser.getEmailAddress() %>"
 		/>
 
-		<liferay-ui:search-container-column-date
-			name="date"
-			value="<%= membershipRequest.getCreateDate() %>"
-		/>
+		<liferay-ui:search-container-column-date name="date" value="<%= membershipRequest.getCreateDate() %>" />
 
 		<liferay-ui:search-container-column-text>
-			<clay:dropdown-actions
-				dropdownItems="<%= viewMembershipRequestsDisplayContext.getActionDropdownItems(membershipRequest) %>"
-			/>
+			<clay:dropdown-actions dropdownItems="<%= viewMembershipRequestsDisplayContext.getActionDropdownItems(membershipRequest) %>" />
 		</liferay-ui:search-container-column-text>
 	</c:when>
 </c:choose>

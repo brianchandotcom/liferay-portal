@@ -49,7 +49,12 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 	<c:if test="<%= commentSectionDisplayContext.isDiscussionVisible() %>">
 		<div class="taglib-discussion" id="<%= namespace %>discussionContainer">
-			<aui:form action="<%= discussionTaglibHelper.getFormAction() %>" method="post" name="<%= discussionTaglibHelper.getFormName() %>" portletNamespace="<%= namespace + randomNamespace %>">
+			<aui:form
+				action="<%= discussionTaglibHelper.getFormAction() %>"
+				method="post"
+				name="<%= discussionTaglibHelper.getFormName() %>"
+				portletNamespace="<%= namespace + randomNamespace %>"
+			>
 				<input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
 				<input name="namespace" type="hidden" value="<%= namespace + randomNamespace %>" />
 
@@ -61,24 +66,64 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 				<input name="contentURL" type="hidden" value="<%= contentURL %>" />
 
-				<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
-				<aui:input id="<%= Constants.CMD %>" name="<%= Constants.CMD %>" type="hidden" />
-				<aui:input name="redirect" type="hidden" value="<%= discussionTaglibHelper.getRedirect() %>" />
-				<aui:input name="assetEntryVisible" type="hidden" value="<%= discussionTaglibHelper.isAssetEntryVisible() %>" />
-				<aui:input name="className" type="hidden" value="<%= discussionTaglibHelper.getClassName() %>" />
-				<aui:input name="classPK" type="hidden" value="<%= discussionTaglibHelper.getClassPK() %>" />
+				<aui:input
+					name="randomNamespace"
+					type="hidden"
+					value="<%= randomNamespace %>"
+				/>
+				<aui:input
+					id="<%= Constants.CMD %>"
+					name="<%= Constants.CMD %>"
+					type="hidden"
+				/>
+				<aui:input
+					name="redirect"
+					type="hidden"
+					value="<%= discussionTaglibHelper.getRedirect() %>"
+				/>
+				<aui:input
+					name="assetEntryVisible"
+					type="hidden"
+					value="<%= discussionTaglibHelper.isAssetEntryVisible() %>"
+				/>
+				<aui:input
+					name="className"
+					type="hidden"
+					value="<%= discussionTaglibHelper.getClassName() %>"
+				/>
+				<aui:input
+					name="classPK"
+					type="hidden"
+					value="<%= discussionTaglibHelper.getClassPK() %>"
+				/>
 				<aui:input name="commentId" type="hidden" />
 				<aui:input name="parentCommentId" type="hidden" />
 				<aui:input name="body" type="hidden" />
-				<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
-				<aui:input name="ajax" type="hidden" value="<%= true %>" />
+				<aui:input
+					name="workflowAction"
+					type="hidden"
+					value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>"
+				/>
+				<aui:input
+					name="ajax"
+					type="hidden"
+					value="<%= true %>"
+				/>
 
 				<c:if test="<%= commentSectionDisplayContext.isControlsVisible() %>">
 					<aui:fieldset cssClass="add-comment" id='<%= randomNamespace + "messageScroll0" %>'>
 						<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">
 							<div id="<%= randomNamespace %>messageScroll<%= rootDiscussionComment.getCommentId() %>">
-								<aui:input name="commentId0" type="hidden" value="<%= rootDiscussionComment.getCommentId() %>" />
-								<aui:input name="parentCommentId0" type="hidden" value="<%= rootDiscussionComment.getCommentId() %>" />
+								<aui:input
+									name="commentId0"
+									type="hidden"
+									value="<%= rootDiscussionComment.getCommentId() %>"
+								/>
+								<aui:input
+									name="parentCommentId0"
+									type="hidden"
+									value="<%= rootDiscussionComment.getCommentId() %>"
+								/>
 							</div>
 						</c:if>
 
@@ -122,9 +167,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 									<div class="lfr-discussion-reply-container">
 										<div class="autofit-padded-no-gutters autofit-row">
 											<div class="autofit-col lfr-discussion-details">
-												<liferay-ui:user-portrait
-													user="<%= user %>"
-												/>
+												<liferay-ui:user-portrait user="<%= user %>" />
 											</div>
 
 											<div class="autofit-col autofit-col-expand lfr-discussion-editor">
@@ -142,7 +185,13 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 												<aui:input name="postReplyBody0" type="hidden" />
 
 												<aui:button-row>
-													<aui:button cssClass="btn-comment btn-primary btn-sm" disabled="<%= true %>" id="postReplyButton0" onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
+													<aui:button
+														cssClass="btn-comment btn-primary btn-sm"
+														disabled="<%= true %>"
+														id="postReplyButton0"
+														onClick='<%= randomNamespace + "postReply(0);" %>'
+														value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>'
+													/>
 												</aui:button-row>
 											</div>
 										</div>
@@ -216,8 +265,16 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 							<div class="lfr-discussion-more-comments" id="<%= namespace %>moreCommentsContainer">
 								<button class="btn btn-secondary btn-sm" id="<%= namespace %>moreCommentsTrigger" type="button"><liferay-ui:message key="more-comments" /></button>
 
-								<aui:input name="rootIndexPage" type="hidden" value="<%= String.valueOf(rootIndexPage) %>" />
-								<aui:input name="index" type="hidden" value="<%= String.valueOf(index) %>" />
+								<aui:input
+									name="rootIndexPage"
+									type="hidden"
+									value="<%= String.valueOf(rootIndexPage) %>"
+								/>
+								<aui:input
+									name="index"
+									type="hidden"
+									value="<%= String.valueOf(index) %>"
+								/>
 							</div>
 						</c:if>
 					</div>

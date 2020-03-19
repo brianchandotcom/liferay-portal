@@ -32,10 +32,23 @@ renderResponse.setTitle((node == null) ? LanguageUtil.get(request, "new-wiki-nod
 <portlet:actionURL name="/wiki/edit_node" var="editNodeURL" />
 
 <div class="container-fluid-1280">
-	<aui:form action="<%= editNodeURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveNode();" %>'>
+	<aui:form
+		action="<%= editNodeURL %>"
+		method="post"
+		name="fm"
+		onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveNode();" %>'
+	>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="nodeId"
+			type="hidden"
+			value="<%= nodeId %>"
+		/>
 
 		<liferay-ui:error exception="<%= DuplicateNodeNameException.class %>" message="please-enter-a-unique-node-name" />
 		<liferay-ui:error exception="<%= NodeNameException.class %>" message="please-enter-a-valid-name" />
@@ -56,10 +69,12 @@ renderResponse.setTitle((node == null) ? LanguageUtil.get(request, "new-wiki-nod
 			</aui:fieldset>
 
 			<c:if test="<%= node == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= WikiNode.class.getName() %>"
-					/>
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="permissions"
+				>
+					<liferay-ui:input-permissions modelName="<%= WikiNode.class.getName() %>" />
 				</aui:fieldset>
 			</c:if>
 		</aui:fieldset-group>

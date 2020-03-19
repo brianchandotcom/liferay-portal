@@ -36,9 +36,6 @@ MBBan ban = (MBBan)row.getObject();
 			<portlet:param name="banUserId" value="<%= String.valueOf(ban.getBanUserId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="unban-this-user"
-			url="<%= unbanUserURL %>"
-		/>
+		<liferay-ui:icon message="unban-this-user" url="<%= unbanUserURL %>" />
 	</liferay-ui:icon-menu>
 </c:if>

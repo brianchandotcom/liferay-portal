@@ -64,7 +64,13 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="group-statistics-add-counter-first-text" />
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= portletResourceNamespace + "displayActivityCounterName" + index %>' title="display-activity-counter-name" useNamespace="<%= false %>">
+	<aui:select
+		inlineField="<%= true %>"
+		label=""
+		name='<%= portletResourceNamespace + "displayActivityCounterName" + index %>'
+		title="display-activity-counter-name"
+		useNamespace="<%= false %>"
+	>
 
 		<%
 		for (String activityCounterName : activityCounterNames) {
@@ -73,7 +79,11 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 			}
 		%>
 
-			<aui:option label='<%= LanguageUtil.get(request, "group.statistics.config."+ activityCounterName) %>' selected="<%= activityCounterName.equals(displayActivityCounterName) %>" value="<%= activityCounterName %>" />
+			<aui:option
+				label='<%= LanguageUtil.get(request, "group.statistics.config."+ activityCounterName) %>'
+				selected="<%= activityCounterName.equals(displayActivityCounterName) %>"
+				value="<%= activityCounterName %>"
+			/>
 
 		<%
 		}
@@ -85,7 +95,14 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="group-statistics-add-counter-second-text" />
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= portletResourceNamespace + "chartType" + index %>' title="chart-type" useNamespace="<%= false %>" value="<%= chartType %>">
+	<aui:select
+		inlineField="<%= true %>"
+		label=""
+		name='<%= portletResourceNamespace + "chartType" + index %>'
+		title="chart-type"
+		useNamespace="<%= false %>"
+		value="<%= chartType %>"
+	>
 		<aui:option label="group-statistics-chart-type-area-diagram" value="area" />
 		<aui:option label="group-statistics-chart-type-column-diagram" value="column" />
 		<aui:option label="group-statistics-chart-type-activity-distribution" value="pie" />
@@ -96,7 +113,14 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="group-statistics-add-counter-third-text" />
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= portletResourceNamespace + "dataRange" + index %>' title="date-range" useNamespace="<%= false %>" value="<%= dataRange %>">
+	<aui:select
+		inlineField="<%= true %>"
+		label=""
+		name='<%= portletResourceNamespace + "dataRange" + index %>'
+		title="date-range"
+		useNamespace="<%= false %>"
+		value="<%= dataRange %>"
+	>
 		<aui:option label="group-statistics-data-range-this-year" value="year" />
 		<aui:option label="group-statistics-data-range-last-12-months" value="12months" />
 	</aui:select>
@@ -107,13 +131,23 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="chart-width" />:
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= portletResourceNamespace + "chartWidth" + index %>' title="chart-width" useNamespace="<%= false %>">
+	<aui:select
+		inlineField="<%= true %>"
+		label=""
+		name='<%= portletResourceNamespace + "chartWidth" + index %>'
+		title="chart-width"
+		useNamespace="<%= false %>"
+	>
 
 		<%
 		for (int i = 5; i < 100; i = i + 5) {
 		%>
 
-			<aui:option label="<%= i + StringPool.PERCENT %>" selected="<%= chartWidth == i %>" value="<%= i %>" />
+			<aui:option
+				label="<%= i + StringPool.PERCENT %>"
+				selected="<%= chartWidth == i %>"
+				value="<%= i %>"
+			/>
 
 		<%
 		}

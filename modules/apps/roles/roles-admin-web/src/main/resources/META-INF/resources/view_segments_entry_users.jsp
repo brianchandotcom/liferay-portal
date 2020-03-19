@@ -27,9 +27,7 @@ long segmentsEntryId = ParamUtil.getLong(request, "segmentsEntryId");
 		total="<%= SegmentsEntryDisplayContext.getSegmentsEntryUsersCount(segmentsEntryId) %>"
 		var="segmentsEntryUsersSearchContainer"
 	>
-		<liferay-ui:search-container-results
-			results="<%= SegmentsEntryDisplayContext.getSegmentsEntryUsers(segmentsEntryId, segmentsEntryUsersSearchContainer.getStart(), segmentsEntryUsersSearchContainer.getEnd()) %>"
-		/>
+		<liferay-ui:search-container-results results="<%= SegmentsEntryDisplayContext.getSegmentsEntryUsers(segmentsEntryId, segmentsEntryUsersSearchContainer.getStart(), segmentsEntryUsersSearchContainer.getEnd()) %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
@@ -38,9 +36,7 @@ long segmentsEntryId = ParamUtil.getLong(request, "segmentsEntryId");
 			modelVar="user2"
 		>
 			<liferay-ui:search-container-column-text>
-				<liferay-ui:user-portrait
-					userId="<%= user2.getUserId() %>"
-				/>
+				<liferay-ui:user-portrait userId="<%= user2.getUserId() %>" />
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
@@ -50,9 +46,6 @@ long segmentsEntryId = ParamUtil.getLong(request, "segmentsEntryId");
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="descriptive"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

@@ -23,5 +23,10 @@ boolean enabled = openIdConfiguration.enabled();
 %>
 
 <aui:fieldset>
-	<aui:input label="enabled" name='<%= PortalSettingsOpenIdConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= enabled %>" />
+	<aui:input
+		label="enabled"
+		name='<%= PortalSettingsOpenIdConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>'
+		type="checkbox"
+		value="<%= enabled %>"
+	/>
 </aui:fieldset>

@@ -51,10 +51,7 @@ SearchResultContentDisplayContext searchResultContentDisplayContext = searchResu
 %>
 
 <c:if test="<%= searchResultContentDisplayContext.isVisible() %>">
-	<liferay-ui:header
-		localizeTitle="<%= false %>"
-		title="<%= searchResultContentDisplayContext.getHeaderTitle() %>"
-	/>
+	<liferay-ui:header localizeTitle="<%= false %>" title="<%= searchResultContentDisplayContext.getHeaderTitle() %>" />
 
 	<c:if test="<%= searchResultContentDisplayContext.hasEditPermission() %>">
 		<div class="asset-actions lfr-meta-actions">

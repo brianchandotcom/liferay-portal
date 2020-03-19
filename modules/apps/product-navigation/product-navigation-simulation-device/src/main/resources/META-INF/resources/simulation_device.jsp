@@ -21,44 +21,88 @@
 		<div class="container-fluid devices">
 			<div class="default-devices row">
 				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item selected text-center" data-device="desktop" type="button">
-					<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
+					<aui:icon
+						cssClass="icon icon-monospaced"
+						image="desktop"
+						markupView="lexicon"
+					/>
 
 					<small><%= LanguageUtil.get(resourceBundle, "desktop") %></small>
 				</button>
 
 				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="tablet" type="button">
-					<aui:icon cssClass="icon icon-monospaced" image="tablet-portrait" markupView="lexicon" />
+					<aui:icon
+						cssClass="icon icon-monospaced"
+						image="tablet-portrait"
+						markupView="lexicon"
+					/>
 
-					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="tablet-landscape" markupView="lexicon" />
+					<aui:icon
+						cssClass="hide icon icon-monospaced icon-rotate"
+						image="tablet-landscape"
+						markupView="lexicon"
+					/>
 
 					<small><%= LanguageUtil.get(resourceBundle, "tablet") %></small>
 				</button>
 
 				<button class="btn btn-unstyled col-4 lfr-device-item text-center" data-device="smartphone" type="button">
-					<aui:icon cssClass="icon icon-monospaced" image="mobile-portrait" markupView="lexicon" />
+					<aui:icon
+						cssClass="icon icon-monospaced"
+						image="mobile-portrait"
+						markupView="lexicon"
+					/>
 
-					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="mobile-landscape" markupView="lexicon" />
+					<aui:icon
+						cssClass="hide icon icon-monospaced icon-rotate"
+						image="mobile-landscape"
+						markupView="lexicon"
+					/>
 
 					<small><%= LanguageUtil.get(resourceBundle, "mobile") %></small>
 				</button>
 
 				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="autosize" type="button">
-					<aui:icon cssClass="icon icon-monospaced" image="autosize" markupView="lexicon" />
+					<aui:icon
+						cssClass="icon icon-monospaced"
+						image="autosize"
+						markupView="lexicon"
+					/>
 
 					<small><%= LanguageUtil.get(resourceBundle, "autosize") %></small>
 				</button>
 
 				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="custom" type="button">
-					<aui:icon cssClass="icon icon-monospaced" image="custom-size" markupView="lexicon" />
+					<aui:icon
+						cssClass="icon icon-monospaced"
+						image="custom-size"
+						markupView="lexicon"
+					/>
 
 					<small><liferay-ui:message key="custom" /></small>
 				</button>
 			</div>
 
 			<div class="custom-devices d-lg-flex d-none hide row" id="<portlet:namespace />customDeviceContainer">
-				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "height") + " (px):" %>' name="height" size="4" value="600" wrapperCssClass="col-6" />
+				<aui:input
+					cssClass="input-sm"
+					inlineField="<%= true %>"
+					label='<%= LanguageUtil.get(request, "height") + " (px):" %>'
+					name="height"
+					size="4"
+					value="600"
+					wrapperCssClass="col-6"
+				/>
 
-				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "width") + " (px):" %>' name="width" size="4" value="600" wrapperCssClass="col-6" />
+				<aui:input
+					cssClass="input-sm"
+					inlineField="<%= true %>"
+					label='<%= LanguageUtil.get(request, "width") + " (px):" %>'
+					name="width"
+					size="4"
+					value="600"
+					wrapperCssClass="col-6"
+				/>
 			</div>
 		</div>
 	</div>

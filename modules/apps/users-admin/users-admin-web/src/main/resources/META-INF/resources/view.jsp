@@ -59,10 +59,7 @@ else {
 <liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-activate-user-because-that-would-exceed-the-maximum-number-of-users-allowed" />
 
 <c:if test="<%= !portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) && !usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
-	<clay:navigation-bar
-		inverted="<%= true %>"
-		navigationItems="<%= userDisplayContext.getViewNavigationItems() %>"
-	/>
+	<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= userDisplayContext.getViewNavigationItems() %>" />
 </c:if>
 
 <c:choose>

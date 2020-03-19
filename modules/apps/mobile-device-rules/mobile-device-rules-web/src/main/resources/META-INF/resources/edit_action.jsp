@@ -33,11 +33,32 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
 </portlet:actionURL>
 
-<aui:form action="<%= editActionURL %>" enctype="multipart/form-data" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (action == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="actionId" type="hidden" value="<%= actionId %>" />
-	<aui:input name="ruleGroupInstanceId" type="hidden" value="<%= ruleGroupInstance.getRuleGroupInstanceId() %>" />
+<aui:form
+	action="<%= editActionURL %>"
+	enctype="multipart/form-data"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= (action == null) ? Constants.ADD : Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="actionId"
+		type="hidden"
+		value="<%= actionId %>"
+	/>
+	<aui:input
+		name="ruleGroupInstanceId"
+		type="hidden"
+		value="<%= ruleGroupInstance.getRuleGroupInstanceId() %>"
+	/>
 
 	<liferay-ui:error exception="<%= ActionTypeException.class %>" message="please-select-a-valid-action-type" />
 	<liferay-ui:error exception="<%= NoSuchActionException.class %>" message="action-does-not-exist" />
@@ -60,7 +81,13 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 
 					<aui:input name="description" placeholder="description" />
 
-					<aui:select changesContext="<%= true %>" name="type" onChange='<%= renderResponse.getNamespace() + "changeType();" %>' required="<%= true %>" showEmptyOption="<%= true %>">
+					<aui:select
+						changesContext="<%= true %>"
+						name="type"
+						onChange='<%= renderResponse.getNamespace() + "changeType();" %>'
+						required="<%= true %>"
+						showEmptyOption="<%= true %>"
+					>
 
 						<%
 						for (ActionHandler actionHandler : ActionHandlerManagerUtil.getActionHandlers()) {
@@ -93,7 +120,11 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 
 <aui:script>
 	function <portlet:namespace />changeDisplay() {
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/mobile_device_rules/site_url_layouts" var="siteURLLayoutsURL" />
+		<liferay-portlet:resourceURL
+			copyCurrentRenderParameters="<%= false %>"
+			id="/mobile_device_rules/site_url_layouts"
+			var="siteURLLayoutsURL"
+		/>
 
 		var form = document.<portlet:namespace />fm;
 
@@ -132,7 +163,11 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 	}
 
 	function <portlet:namespace />changeType() {
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/mobile_device_rules/edit_action" var="editorURL">
+		<liferay-portlet:resourceURL
+			copyCurrentRenderParameters="<%= false %>"
+			id="/mobile_device_rules/edit_action"
+			var="editorURL"
+		>
 			<portlet:param name="ajax" value="<%= Boolean.TRUE.toString() %>" />
 		</liferay-portlet:resourceURL>
 

@@ -38,10 +38,7 @@ LayoutPageTemplateCollection layoutPageTemplateCollection = layoutPageTemplateDi
 			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editLayoutPageTemplateCollectionURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editLayoutPageTemplateCollectionURL %>" />
 	</c:if>
 
 	<c:if test="<%= LayoutPageTemplateCollectionPermission.contains(permissionChecker, layoutPageTemplateCollection, ActionKeys.PERMISSIONS) %>">
@@ -71,8 +68,6 @@ LayoutPageTemplateCollection layoutPageTemplateCollection = layoutPageTemplateDi
 			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteLayoutPageTemplateCollectionURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteLayoutPageTemplateCollectionURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

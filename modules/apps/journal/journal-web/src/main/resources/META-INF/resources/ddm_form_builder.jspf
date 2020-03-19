@@ -32,13 +32,17 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 
 <div class="alert alert-danger hide lfr-message-response" id="<portlet:namespace />messageContainer"></div>
 
-<liferay-ui:tabs
-	names='<%= LanguageUtil.get(request, "view[action]") + "," + LanguageUtil.get(request, "source") %>'
-	refresh="<%= false %>"
->
+<liferay-ui:tabs names='<%= LanguageUtil.get(request, "view[action]") + "," + LanguageUtil.get(request, "source") %>' refresh="<%= false %>">
 	<liferay-ui:section>
 		<div id="<portlet:namespace />formBuilderTab">
-			<aui:translation-manager availableLocales="<%= journalEditDDMStructuresDisplayContext.getAvailableLocales() %>" changeableDefaultLanguage="<%= changeableDefaultLanguage %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" initialize="<%= false %>" readOnly="<%= false %>" />
+			<aui:translation-manager
+				availableLocales="<%= journalEditDDMStructuresDisplayContext.getAvailableLocales() %>"
+				changeableDefaultLanguage="<%= changeableDefaultLanguage %>"
+				defaultLanguageId="<%= defaultLanguageId %>"
+				id="translationManager"
+				initialize="<%= false %>"
+				readOnly="<%= false %>"
+			/>
 
 			<div class="diagram-builder form-builder" id="<portlet:namespace />formBuilder">
 				<div class="diagram-builder-content" id="<portlet:namespace />formBuilderContent">

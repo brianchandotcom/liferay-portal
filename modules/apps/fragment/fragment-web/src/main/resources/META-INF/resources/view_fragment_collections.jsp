@@ -20,15 +20,10 @@
 FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = new FragmentCollectionsDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new FragmentCollectionsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentCollectionsDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new FragmentCollectionsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentCollectionsDisplayContext) %>" />
 
 <aui:form cssClass="container-fluid-1280" name="fm">
-	<liferay-ui:search-container
-		id="fragmentCollections"
-		searchContainer="<%= fragmentCollectionsDisplayContext.getSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="fragmentCollections" searchContainer="<%= fragmentCollectionsDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.fragment.model.FragmentCollection"
 			keyProperty="fragmentCollectionId"
@@ -46,22 +41,13 @@ FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = new Fragme
 				Group group = GroupLocalServiceUtil.fetchGroup(fragmentCollection.getGroupId());
 				%>
 
-				<liferay-ui:search-container-column-text
-					name="scope"
-					value="<%= group.getDescriptiveName(locale) %>"
-				/>
+				<liferay-ui:search-container-column-text name="scope" value="<%= group.getDescriptiveName(locale) %>" />
 			</c:if>
 
-			<liferay-ui:search-container-column-date
-				name="create-date"
-				property="createDate"
-			/>
+			<liferay-ui:search-container-column-date name="create-date" property="createDate" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="list"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

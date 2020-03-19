@@ -48,14 +48,16 @@ renderResponse.setTitle(userName);
 
 			<div class="nameplate">
 				<div class="nameplate-field">
-					<liferay-ui:user-portrait
-						userId="<%= membershipRequest.getUserId() %>"
-					/>
+					<liferay-ui:user-portrait userId="<%= membershipRequest.getUserId() %>" />
 				</div>
 
 				<div class="nameplate-content">
 					<small class="text-default">
-						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getCreateDate().getTime(), true) %>"
+							key="x-ago"
+							translateArguments="<%= false %>"
+						/>
 					</small>
 
 					<p>
@@ -91,15 +93,17 @@ renderResponse.setTitle(userName);
 			<div class="nameplate">
 				<c:if test="<%= membershipRequestReplierUser != null %>">
 					<div class="nameplate-field">
-						<liferay-ui:user-portrait
-							user="<%= membershipRequestReplierUser %>"
-						/>
+						<liferay-ui:user-portrait user="<%= membershipRequestReplierUser %>" />
 					</div>
 				</c:if>
 
 				<div class="nameplate-content">
 					<small class="text-default">
-						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getReplyDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getReplyDate().getTime(), true) %>"
+							key="x-ago"
+							translateArguments="<%= false %>"
+						/>
 					</small>
 
 					<p>

@@ -21,7 +21,12 @@
 </h4>
 
 <c:if test="<%= assetPublisherDisplayContext.isShowEnableAddContentButton() %>">
-	<aui:input helpMessage="show-add-content-button-help" name="preferences--showAddContentButton--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowAddContentButton() %>" />
+	<aui:input
+		helpMessage="show-add-content-button-help"
+		name="preferences--showAddContentButton--"
+		type="checkbox"
+		value="<%= assetPublisherDisplayContext.isShowAddContentButton() %>"
+	/>
 </c:if>
 
 <%
@@ -29,17 +34,42 @@ String helpMessage1 = "<em>" + LanguageUtil.format(request, "content-related-to-
 String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x", StringPool.DOUBLE_PERIOD, false) + "</em>";
 %>
 
-<aui:input helpMessage='<%= LanguageUtil.format(request, "such-as-x-or-x", new Object[] {helpMessage1, helpMessage2}, false) %>' name="preferences--showMetadataDescriptions--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>" />
+<aui:input
+	helpMessage='<%= LanguageUtil.format(request, "such-as-x-or-x", new Object[] {helpMessage1, helpMessage2}, false) %>'
+	name="preferences--showMetadataDescriptions--"
+	type="checkbox"
+	value="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>"
+/>
 
-<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowAvailableLocales() %>" />
+<aui:input
+	name="preferences--showAvailableLocales--"
+	type="checkbox"
+	value="<%= assetPublisherDisplayContext.isShowAvailableLocales() %>"
+/>
 
 <c:if test="<%= assetPublisherDisplayContext.isEnableSetAsDefaultAssetPublisher() %>">
-	<aui:input helpMessage="set-as-the-default-asset-publisher-for-this-page-help" label="set-as-the-default-asset-publisher-for-this-page" name="defaultAssetPublisher" type="checkbox" value="<%= assetPublisherWebHelper.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) %>" />
+	<aui:input
+		helpMessage="set-as-the-default-asset-publisher-for-this-page-help"
+		label="set-as-the-default-asset-publisher-for-this-page"
+		name="defaultAssetPublisher"
+		type="checkbox"
+		value="<%= assetPublisherWebHelper.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) %>"
+	/>
 </c:if>
 
-<aui:input label='<%= LanguageUtil.format(request, "show-only-assets-with-x-as-its-display-page-template", HtmlUtil.escape(layout.getName(locale)), false) %>' name="preferences--showOnlyLayoutAssets--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowOnlyLayoutAssets() %>" />
+<aui:input
+	label='<%= LanguageUtil.format(request, "show-only-assets-with-x-as-its-display-page-template", HtmlUtil.escape(layout.getName(locale)), false) %>'
+	name="preferences--showOnlyLayoutAssets--"
+	type="checkbox"
+	value="<%= assetPublisherDisplayContext.isShowOnlyLayoutAssets() %>"
+/>
 
-<aui:input label="include-tags-specified-in-the-url" name="preferences--mergeUrlTags--" type="checkbox" value="<%= assetPublisherDisplayContext.isMergeURLTags() %>" />
+<aui:input
+	label="include-tags-specified-in-the-url"
+	name="preferences--mergeUrlTags--"
+	type="checkbox"
+	value="<%= assetPublisherDisplayContext.isMergeURLTags() %>"
+/>
 
 <h4 class="sheet-tertiary-title">
 	<liferay-ui:message key="enable" />
@@ -47,43 +77,104 @@ String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x"
 
 <aui:row>
 	<aui:col width="<%= 50 %>">
-		<aui:input label="print" name="preferences--enablePrint--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnablePrint() %>" />
+		<aui:input
+			label="print"
+			name="preferences--enablePrint--"
+			type="checkbox"
+			value="<%= assetPublisherDisplayContext.isEnablePrint() %>"
+		/>
 
-		<aui:input label="flags" name="preferences--enableFlags--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableFlags() %>" />
+		<aui:input
+			label="flags"
+			name="preferences--enableFlags--"
+			type="checkbox"
+			value="<%= assetPublisherDisplayContext.isEnableFlags() %>"
+		/>
 
-		<aui:input label="ratings" name="preferences--enableRatings--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableRatings() %>" />
+		<aui:input
+			label="ratings"
+			name="preferences--enableRatings--"
+			type="checkbox"
+			value="<%= assetPublisherDisplayContext.isEnableRatings() %>"
+		/>
 
 		<c:choose>
 			<c:when test="<%= !assetPublisherDisplayContext.isShowEnableRelatedAssets() %>">
-				<aui:input label="related-assets" name="preferences--enableRelatedAssets--" type="hidden" value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>" />
+				<aui:input
+					label="related-assets"
+					name="preferences--enableRelatedAssets--"
+					type="hidden"
+					value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>"
+				/>
 			</c:when>
 			<c:otherwise>
-				<aui:input label="related-assets" name="preferences--enableRelatedAssets--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>" />
+				<aui:input
+					label="related-assets"
+					name="preferences--enableRelatedAssets--"
+					type="checkbox"
+					value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>"
+				/>
 			</c:otherwise>
 		</c:choose>
 	</aui:col>
 
 	<aui:col width="<%= 50 %>">
-		<aui:input label="subscribe" name="preferences--enableSubscriptions--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableSubscriptions() %>" />
+		<aui:input
+			label="subscribe"
+			name="preferences--enableSubscriptions--"
+			type="checkbox"
+			value="<%= assetPublisherDisplayContext.isEnableSubscriptions() %>"
+		/>
 
-		<aui:input label="comments" name="preferences--enableComments--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableComments() %>" />
+		<aui:input
+			label="comments"
+			name="preferences--enableComments--"
+			type="checkbox"
+			value="<%= assetPublisherDisplayContext.isEnableComments() %>"
+		/>
 
-		<aui:input label="comment-ratings" name="preferences--enableCommentRatings--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableCommentRatings() %>" />
+		<aui:input
+			label="comment-ratings"
+			name="preferences--enableCommentRatings--"
+			type="checkbox"
+			value="<%= assetPublisherDisplayContext.isEnableCommentRatings() %>"
+		/>
 
 		<c:if test="<%= PropsValues.ASSET_ENTRY_BUFFERED_INCREMENT_ENABLED %>">
-			<aui:input label="view-count-increment" name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableViewCountIncrement() %>" />
+			<aui:input
+				label="view-count-increment"
+				name="preferences--enableViewCountIncrement--"
+				type="checkbox"
+				value="<%= assetPublisherDisplayContext.isEnableViewCountIncrement() %>"
+			/>
 		</c:if>
 
 		<c:if test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
-			<aui:input helpMessage="enable-tag-based-navigation-help" label="tag-based-navigation" name="preferences--enableTagBasedNavigation--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableTagBasedNavigation() %>" />
+			<aui:input
+				helpMessage="enable-tag-based-navigation-help"
+				label="tag-based-navigation"
+				name="preferences--enableTagBasedNavigation--"
+				type="checkbox"
+				value="<%= assetPublisherDisplayContext.isEnableTagBasedNavigation() %>"
+			/>
 		</c:if>
 
 		<c:choose>
 			<c:when test="<%= !assetPublisherDisplayContext.isShowEnablePermissions() %>">
-				<aui:input label="permissions" name="preferences--enablePermissions--" type="hidden" value="<%= assetPublisherDisplayContext.isEnablePermissions() %>" />
+				<aui:input
+					label="permissions"
+					name="preferences--enablePermissions--"
+					type="hidden"
+					value="<%= assetPublisherDisplayContext.isEnablePermissions() %>"
+				/>
 			</c:when>
 			<c:otherwise>
-				<aui:input label="permissions" name="preferences--enablePermissions--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnablePermissions() %>" />
+				<aui:input
+					label="permissions"
+					name="preferences--enablePermissions--"
+					type="checkbox"
+					value="<%= assetPublisherDisplayContext.isEnablePermissions() %>"
+				/>
 			</c:otherwise>
 		</c:choose>
 	</aui:col>
@@ -109,7 +200,14 @@ String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x"
 				String conversion = conversions[i];
 			%>
 
-				<aui:input checked="<%= ArrayUtil.contains(assetPublisherDisplayContext.getExtensions(), conversion) %>" id='<%= "extensions" + conversion %>' label="<%= StringUtil.toUpperCase(conversion) %>" name="extensions" type="checkbox" value="<%= conversion %>" />
+				<aui:input
+					checked="<%= ArrayUtil.contains(assetPublisherDisplayContext.getExtensions(), conversion) %>"
+					id='<%= "extensions" + conversion %>'
+					label="<%= StringUtil.toUpperCase(conversion) %>"
+					name="extensions"
+					type="checkbox"
+					value="<%= conversion %>"
+				/>
 
 			<%
 			}
@@ -124,7 +222,14 @@ String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x"
 				String conversion = conversions[i];
 			%>
 
-				<aui:input checked="<%= ArrayUtil.contains(assetPublisherDisplayContext.getExtensions(), conversion) %>" id='<%= "extensions" + conversion %>' label="<%= StringUtil.toUpperCase(conversion) %>" name="extensions" type="checkbox" value="<%= conversion %>" />
+				<aui:input
+					checked="<%= ArrayUtil.contains(assetPublisherDisplayContext.getExtensions(), conversion) %>"
+					id='<%= "extensions" + conversion %>'
+					label="<%= StringUtil.toUpperCase(conversion) %>"
+					name="extensions"
+					type="checkbox"
+					value="<%= conversion %>"
+				/>
 
 			<%
 			}
@@ -138,7 +243,4 @@ String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x"
 	<liferay-ui:message key="social-bookmarks" />
 </h4>
 
-<liferay-social-bookmarks:bookmarks-settings
-	displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
-	types="<%= assetPublisherDisplayContext.getSocialBookmarksTypes() %>"
-/>
+<liferay-social-bookmarks:bookmarks-settings displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>" types="<%= assetPublisherDisplayContext.getSocialBookmarksTypes() %>" />

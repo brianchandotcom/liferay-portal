@@ -26,9 +26,22 @@ String redirect = ParamUtil.getString(request, "redirect");
 </portlet:actionURL>
 
 <div class="portlet-configuration-add-template">
-	<aui:form action="<%= updateArchivedSetupURL %>" cssClass="form" method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
+	<aui:form
+		action="<%= updateArchivedSetupURL %>"
+		cssClass="form"
+		method="post"
+		name="fm"
+	>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="portletResource"
+			type="hidden"
+			value="<%= portletResource %>"
+		/>
 
 		<div class="portlet-configuration-body-content">
 			<div class="container-fluid-1280">
@@ -47,7 +60,13 @@ String redirect = ParamUtil.getString(request, "redirect");
 						}
 						%>
 
-						<aui:input name="name" placeholder="name" required="<%= true %>" type="text" value="<%= name %>">
+						<aui:input
+							name="name"
+							placeholder="name"
+							required="<%= true %>"
+							type="text"
+							value="<%= name %>"
+						>
 							<aui:validator name="maxLength">75</aui:validator>
 						</aui:input>
 					</aui:fieldset>

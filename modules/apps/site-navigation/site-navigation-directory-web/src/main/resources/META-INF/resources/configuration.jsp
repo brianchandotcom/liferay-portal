@@ -26,16 +26,22 @@
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<aui:row>
 			<aui:col width="<%= 50 %>">
 				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset
-						cssClass="ml-3"
-					>
+					<liferay-frontend:fieldset cssClass="ml-3">
 						<aui:row>
 							<aui:select name="preferences--sites--" value="<%= sitesDirectoryDisplayContext.getSites() %>">
 								<aui:option label="<%= SitesDirectoryTag.SITES_TOP_LEVEL %>" />

@@ -50,25 +50,21 @@ SearchContainer<DDMTemplate> templateSearch = ddmDisplayContext.getTemplateSearc
 	sortingURL="<%= ddmDisplayContext.getSortingURL() %>"
 />
 
-<aui:form action="<%= ddmDisplayContext.getSelectTemplateSearchActionURL() %>" method="post" name="selectTemplateFm">
+<aui:form
+	action="<%= ddmDisplayContext.getSelectTemplateSearchActionURL() %>"
+	method="post"
+	name="selectTemplateFm"
+>
 	<div class="container-fluid-1280">
-		<liferay-ui:search-container
-			searchContainer="<%= templateSearch %>"
-		>
+		<liferay-ui:search-container searchContainer="<%= templateSearch %>">
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
 				keyProperty="templateId"
 				modelVar="template"
 			>
-				<liferay-ui:search-container-column-text
-					name="id"
-					value="<%= String.valueOf(template.getTemplateId()) %>"
-				/>
+				<liferay-ui:search-container-column-text name="id" value="<%= String.valueOf(template.getTemplateId()) %>" />
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					name="name"
-				>
+				<liferay-ui:search-container-column-text cssClass="table-cell-content" name="name">
 					<c:choose>
 						<c:when test="<%= template.getTemplateId() != templateId %>">
 
@@ -87,7 +83,11 @@ SearchContainer<DDMTemplate> templateSearch = ddmDisplayContext.getTemplateSearc
 							data.put("name", template.getName(locale));
 							%>
 
-							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<aui:a
+								cssClass="selector-button"
+								data="<%= data %>"
+								href="javascript:;"
+							>
 								<%= HtmlUtil.escape(template.getName(locale)) %>
 							</aui:a>
 						</c:when>
@@ -103,15 +103,10 @@ SearchContainer<DDMTemplate> templateSearch = ddmDisplayContext.getTemplateSearc
 					path="/template_description.jsp"
 				/>
 
-				<liferay-ui:search-container-column-date
-					name="modified-date"
-					value="<%= template.getModifiedDate() %>"
-				/>
+				<liferay-ui:search-container-column-date name="modified-date" value="<%= template.getModifiedDate() %>" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</div>
 </aui:form>

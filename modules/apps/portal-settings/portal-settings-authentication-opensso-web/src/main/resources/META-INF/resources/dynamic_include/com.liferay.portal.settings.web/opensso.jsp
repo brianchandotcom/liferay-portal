@@ -32,26 +32,80 @@ String version = openSSOConfiguration.version();
 %>
 
 <aui:fieldset>
-	<aui:input id='<%= PortalUtil.generateRandomKey(request, "portal_settings_authentication_opensso") %>' name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/opensso" />
+	<aui:input
+		id='<%= PortalUtil.generateRandomKey(request, "portal_settings_authentication_opensso") %>'
+		name="<%= ActionRequest.ACTION_NAME %>"
+		type="hidden"
+		value="/portal_settings/opensso"
+	/>
 
-	<aui:input label="enabled" name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= enabled %>" />
+	<aui:input
+		label="enabled"
+		name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>'
+		type="checkbox"
+		value="<%= enabled %>"
+	/>
 
-	<aui:select label="version" name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "version" %>' value="<%= version %>">
+	<aui:select
+		label="version"
+		name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "version" %>'
+		value="<%= version %>"
+	>
 		<aui:option label="openam-12" value="<%= OpenSSOConfigurationKeys.VERSION_OPENAM_12 %>" />
 		<aui:option label="openam-13" value="<%= OpenSSOConfigurationKeys.VERSION_OPENAM_13 %>" />
 	</aui:select>
 
-	<aui:input helpMessage="import-opensso-users-from-ldap-help" label="import-opensso-users-from-ldap" name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "importFromLDAP" %>' type="checkbox" value="<%= importFromLDAP %>" />
+	<aui:input
+		helpMessage="import-opensso-users-from-ldap-help"
+		label="import-opensso-users-from-ldap"
+		name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "importFromLDAP" %>'
+		type="checkbox"
+		value="<%= importFromLDAP %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="login-url-for-opensso-help" label="login-url" name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "loginURL" %>' type="text" value="<%= loginURL %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		helpMessage="login-url-for-opensso-help"
+		label="login-url"
+		name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "loginURL" %>'
+		type="text"
+		value="<%= loginURL %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="logout-url-for-opensso-help" label="logout-url" name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "logoutURL" %>' type="text" value="<%= logoutURL %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		helpMessage="logout-url-for-opensso-help"
+		label="logout-url"
+		name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "logoutURL" %>'
+		type="text"
+		value="<%= logoutURL %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="service-url-for-opensso-help" label="service-url" name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "serviceURL" %>' type="text" value="<%= serviceURL %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		helpMessage="service-url-for-opensso-help"
+		label="service-url"
+		name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "serviceURL" %>'
+		type="text"
+		value="<%= serviceURL %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="mappings-for-opensso-help" label="screen-name-attribute" name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "screenNameAttr" %>' type="text" value="<%= screenNameAttr %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		helpMessage="mappings-for-opensso-help"
+		label="screen-name-attribute"
+		name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "screenNameAttr" %>'
+		type="text"
+		value="<%= screenNameAttr %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" label="email-address-attribute" name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "emailAddressAttr" %>' type="text" value="<%= emailAddressAttr %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		label="email-address-attribute"
+		name='<%= PortalSettingsOpenSSOConstants.FORM_PARAMETER_NAMESPACE + "emailAddressAttr" %>'
+		type="text"
+		value="<%= emailAddressAttr %>"
+	/>
 
 	<%@ include file="/dynamic_include/com.liferay.portal.settings.web/opensso_user_name.jspf" %>
 </aui:fieldset>

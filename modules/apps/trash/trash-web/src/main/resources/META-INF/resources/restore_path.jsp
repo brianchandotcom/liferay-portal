@@ -17,9 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <c:if test="<%= SessionMessages.contains(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA) %>">
-	<liferay-util:buffer
-		var="alertMessage"
-	>
+	<liferay-util:buffer var="alertMessage">
 
 		<%
 		Map<String, List<String>> data = (HashMap<String, List<String>>)SessionMessages.get(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA);
@@ -45,19 +43,19 @@
 					}
 				%>
 
-					<liferay-util:buffer
-						var="entityLink"
-					>
+					<liferay-util:buffer var="entityLink">
 						<em class="restore-entry-title"><aui:a cssClass="alert-link" href="<%= restoreEntryLinks.get(i) %>" label="<%= HtmlUtil.escape(restoreEntryMessages.get(i)) %>" /></em>
 					</liferay-util:buffer>
 
-					<liferay-util:buffer
-						var="link"
-					>
+					<liferay-util:buffer var="link">
 						<em class="restore-entry-title"><aui:a cssClass="alert-link" href="<%= restoreLinks.get(i) %>" label="<%= HtmlUtil.escape(restoreMessages.get(i)) %>" /></em>
 					</liferay-util:buffer>
 
-					<liferay-ui:message arguments="<%= new Object[] {type, entityLink.trim(), link.trim()} %>" key="the-x-x-was-restored-to-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= new Object[] {type, entityLink.trim(), link.trim()} %>"
+						key="the-x-x-was-restored-to-x"
+						translateArguments="<%= false %>"
+					/>
 
 				<%
 				}
@@ -75,9 +73,29 @@
 
 <portlet:actionURL name="moveEntry" var="selectContainerURL" />
 
-<aui:form action="<%= selectContainerURL.toString() %>" method="post" name="selectContainerForm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="className" type="hidden" value="" />
-	<aui:input name="classPK" type="hidden" value="" />
-	<aui:input name="containerModelId" type="hidden" value="" />
+<aui:form
+	action="<%= selectContainerURL.toString() %>"
+	method="post"
+	name="selectContainerForm"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
+	<aui:input
+		name="className"
+		type="hidden"
+		value=""
+	/>
+	<aui:input
+		name="classPK"
+		type="hidden"
+		value=""
+	/>
+	<aui:input
+		name="containerModelId"
+		type="hidden"
+		value=""
+	/>
 </aui:form>

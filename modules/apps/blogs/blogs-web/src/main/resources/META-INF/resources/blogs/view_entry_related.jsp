@@ -53,9 +53,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 							<portlet:param name="urlTitle" value="<%= blogsEntry.getUrlTitle() %>" />
 						</portlet:renderURL>
 
-						<liferay-util:html-top
-							outputKey="blogs_previous_entry_link"
-						>
+						<liferay-util:html-top outputKey="blogs_previous_entry_link">
 							<link href="<%= blogsEntryURL.toString() %>" rel="prev" />
 						</liferay-util:html-top>
 
@@ -78,9 +76,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						}
 						%>
 
-						<liferay-ui:user-portrait
-							user="<%= blogsEntryUser %>"
-						/>
+						<liferay-ui:user-portrait user="<%= blogsEntryUser %>" />
 					</div>
 
 					<div class="autofit-col autofit-col-expand">

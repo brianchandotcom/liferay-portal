@@ -33,9 +33,23 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group_instance" />
 </portlet:actionURL>
 
-<aui:form action="<%= editRuleGroupInstancesURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "saveRuleGroupInstancesPriorities(event)" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+<aui:form
+	action="<%= editRuleGroupInstancesURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+	onSubmit='<%= renderResponse.getNamespace() + "saveRuleGroupInstancesPriorities(event)" %>'
+>
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
 	<aui:input name="ruleGroupsInstancesJSON" type="hidden" />
 
 	<div class="alert alert-info">
@@ -52,7 +66,11 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 		%>
 
 			<div class="list-group-item" data-rule-group-instance-id="<%= ruleGroupInstance.getRuleGroupInstanceId() %>">
-				<aui:icon cssClass="rule-group-handle" image="ellipsis-v" markupView="lexicon" />
+				<aui:icon
+					cssClass="rule-group-handle"
+					image="ellipsis-v"
+					markupView="lexicon"
+				/>
 
 				<strong><%= HtmlUtil.escape(ruleGroup.getName(locale)) %></strong>
 

@@ -75,7 +75,4 @@ if (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE))
 
 <%@ include file="/wiki/page_name.jspf" %>
 
-<liferay-ui:tabs
-	names="<%= StringUtil.merge(tabs1Names) %>"
-	urls="<%= tabs1URLs %>"
-/>
+<liferay-ui:tabs names="<%= StringUtil.merge(tabs1Names) %>" urls="<%= tabs1URLs %>" />

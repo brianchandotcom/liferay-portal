@@ -24,17 +24,9 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 %>
 
 <div id="<portlet:namespace />layoutClassedModelUsagesList">
-	<liferay-ui:search-container
-		compactEmptyResultsMessage="<%= true %>"
-		searchContainer="<%= layoutClassedModelUsagesDisplayContext.getSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.layout.model.LayoutClassedModelUsage"
-			modelVar="layoutClassedModelUsage"
-		>
-			<liferay-ui:search-container-column-text
-				name="pages"
-			>
+	<liferay-ui:search-container compactEmptyResultsMessage="<%= true %>" searchContainer="<%= layoutClassedModelUsagesDisplayContext.getSearchContainer() %>">
+		<liferay-ui:search-container-row className="com.liferay.layout.model.LayoutClassedModelUsage" modelVar="layoutClassedModelUsage">
+			<liferay-ui:search-container-column-text name="pages">
 				<h5>
 					<%= HtmlUtil.escape(layoutClassedModelUsagesDisplayContext.getLayoutClassedModelUsageName(layoutClassedModelUsage)) %>
 				</h5>
@@ -44,9 +36,7 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 				</div>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="text-right"
-			>
+			<liferay-ui:search-container-column-text cssClass="text-right">
 				<c:if test="<%= layoutClassedModelUsagesDisplayContext.isShowPreview(layoutClassedModelUsage) %>">
 
 					<%

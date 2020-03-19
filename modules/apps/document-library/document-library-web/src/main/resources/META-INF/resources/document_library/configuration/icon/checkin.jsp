@@ -16,6 +16,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:menu-item
-	menuItem='<%= (MenuItem)request.getAttribute("checkin.jsp-menuItem") %>'
-/>
+<liferay-ui:menu-item menuItem='<%= (MenuItem)request.getAttribute("checkin.jsp-menuItem") %>' />

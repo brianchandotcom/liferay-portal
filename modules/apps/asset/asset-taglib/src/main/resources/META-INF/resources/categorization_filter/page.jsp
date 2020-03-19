@@ -50,9 +50,7 @@ if (assetCategoryId != 0) {
 }
 %>
 
-<liferay-util:buffer
-	var="removeCategory"
->
+<liferay-util:buffer var="removeCategory">
 	<c:if test="<%= assetCategory != null %>">
 		<portlet:renderURL var="viewURLWithoutCategory">
 			<portlet:param name="categoryId" value="0" />
@@ -70,9 +68,7 @@ if (assetCategoryId != 0) {
 	</c:if>
 </liferay-util:buffer>
 
-<liferay-util:buffer
-	var="removeTag"
->
+<liferay-util:buffer var="removeTag">
 	<c:if test="<%= Validator.isNotNull(assetTagName) %>">
 		<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="viewURLWithoutTag">
 			<liferay-portlet:param name="tag" value="" />
@@ -103,7 +99,11 @@ if (assetCategoryId != 0) {
 		%>
 
 		<h2 class="entry-title taglib-categorization-filter">
-			<liferay-ui:message arguments="<%= new String[] {assetVocabularyTitle, removeCategory, removeTag} %>" key='<%= assetType.concat("-with-x-x-and-tag-x") %>' translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments="<%= new String[] {assetVocabularyTitle, removeCategory, removeTag} %>"
+				key='<%= assetType.concat("-with-x-x-and-tag-x") %>'
+				translateArguments="<%= false %>"
+			/>
 		</h2>
 	</c:when>
 	<c:when test="<%= assetCategory != null %>">
@@ -115,7 +115,11 @@ if (assetCategoryId != 0) {
 		%>
 
 		<h2 class="entry-title taglib-categorization-filter">
-			<liferay-ui:message arguments="<%= new String[] {assetVocabularyTitle, removeCategory} %>" key='<%= assetType.concat("-with-x-x") %>' translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments="<%= new String[] {assetVocabularyTitle, removeCategory} %>"
+				key='<%= assetType.concat("-with-x-x") %>'
+				translateArguments="<%= false %>"
+			/>
 		</h2>
 	</c:when>
 	<c:when test="<%= Validator.isNotNull(assetTagName) %>">
@@ -127,7 +131,11 @@ if (assetCategoryId != 0) {
 		%>
 
 		<h2 class="entry-title taglib-categorization-filter">
-			<liferay-ui:message arguments="<%= removeTag %>" key='<%= assetType.concat("-with-tag-x") %>' translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments="<%= removeTag %>"
+				key='<%= assetType.concat("-with-tag-x") %>'
+				translateArguments="<%= false %>"
+			/>
 		</h2>
 	</c:when>
 </c:choose>

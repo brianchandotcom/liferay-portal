@@ -24,28 +24,36 @@ UserGroupsManagementToolbarDisplayContext userGroupsManagementToolbarDisplayCont
 Role role = userGroupsDisplayContext.getRole();
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>" />
 
-<clay:management-toolbar
-	displayContext="<%= userGroupsManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= userGroupsManagementToolbarDisplayContext %>" />
 
 <portlet:actionURL name="deleteGroupUserGroups" var="deleteGroupUserGroupsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteGroupUserGroupsURL %>" cssClass="container-fluid-1280 portlet-site-memberships-user-groups" name="fm">
-	<aui:input name="tabs1" type="hidden" value="user-groups" />
-	<aui:input name="navigation" type="hidden" value="<%= userGroupsDisplayContext.getNavigation() %>" />
-	<aui:input name="roleId" type="hidden" value="<%= (role != null) ? role.getRoleId() : 0 %>" />
+<aui:form
+	action="<%= deleteGroupUserGroupsURL %>"
+	cssClass="container-fluid-1280 portlet-site-memberships-user-groups"
+	name="fm"
+>
+	<aui:input
+		name="tabs1"
+		type="hidden"
+		value="user-groups"
+	/>
+	<aui:input
+		name="navigation"
+		type="hidden"
+		value="<%= userGroupsDisplayContext.getNavigation() %>"
+	/>
+	<aui:input
+		name="roleId"
+		type="hidden"
+		value="<%= (role != null) ? role.getRoleId() : 0 %>"
+	/>
 
-	<liferay-ui:search-container
-		id="userGroups"
-		searchContainer="<%= userGroupsDisplayContext.getUserGroupSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="userGroups" searchContainer="<%= userGroupsDisplayContext.getUserGroupSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.UserGroup"
 			escapedModel="<%= true %>"
@@ -62,10 +70,7 @@ Role role = userGroupsDisplayContext.getRole();
 			<%@ include file="/user_group_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= userGroupsDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= userGroupsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
@@ -73,25 +78,46 @@ Role role = userGroupsDisplayContext.getRole();
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= addGroupUserGroupsURL %>" cssClass="hide" name="addGroupUserGroupsFm">
-	<aui:input name="tabs1" type="hidden" value="user-groups" />
+<aui:form
+	action="<%= addGroupUserGroupsURL %>"
+	cssClass="hide"
+	name="addGroupUserGroupsFm"
+>
+	<aui:input
+		name="tabs1"
+		type="hidden"
+		value="user-groups"
+	/>
 </aui:form>
 
 <portlet:actionURL name="addUserGroupGroupRole" var="addUserGroupGroupRoleURL" />
 
-<aui:form action="<%= addUserGroupGroupRoleURL %>" cssClass="hide" name="addUserGroupGroupRoleFm">
-	<aui:input name="tabs1" type="hidden" value="user-groups" />
+<aui:form
+	action="<%= addUserGroupGroupRoleURL %>"
+	cssClass="hide"
+	name="addUserGroupGroupRoleFm"
+>
+	<aui:input
+		name="tabs1"
+		type="hidden"
+		value="user-groups"
+	/>
 	<aui:input name="userGroupId" type="hidden" />
 </aui:form>
 
 <portlet:actionURL name="unassignUserGroupGroupRole" var="unassignUserGroupGroupRoleURL" />
 
-<aui:form action="<%= unassignUserGroupGroupRoleURL %>" cssClass="hide" name="unassignUserGroupGroupRoleFm">
-	<aui:input name="tabs1" type="hidden" value="user-groups" />
+<aui:form
+	action="<%= unassignUserGroupGroupRoleURL %>"
+	cssClass="hide"
+	name="unassignUserGroupGroupRoleFm"
+>
+	<aui:input
+		name="tabs1"
+		type="hidden"
+		value="user-groups"
+	/>
 	<aui:input name="userGroupId" type="hidden" />
 </aui:form>
 
-<liferay-frontend:component
-	componentId="<%= userGroupsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/UserGroupsManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= userGroupsManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/UserGroupsManagementToolbarDefaultEventHandler.es" />

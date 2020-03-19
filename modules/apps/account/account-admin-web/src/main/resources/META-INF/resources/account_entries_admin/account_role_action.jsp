@@ -41,10 +41,7 @@ Role role = accountRoleDisplay.getRole();
 			<portlet:param name="accountRoleId" value="<%= String.valueOf(accountRoleDisplay.getAccountRoleId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editAccountRoleURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editAccountRoleURL %>" />
 
 		<portlet:actionURL name="/account_admin/delete_account_roles" var="deleteAccountRolesURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -67,12 +67,25 @@ renderResponse.setTitle(selLayout.getName(locale));
 
 <c:choose>
 	<c:when test="<%= incomplete %>">
-		<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(selLayout.getName(locale)), HtmlUtil.escape(layoutSetBranchName)} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= new Object[] {HtmlUtil.escape(selLayout.getName(locale)), HtmlUtil.escape(layoutSetBranchName)} %>"
+			key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations"
+			translateArguments="<%= false %>"
+		/>
 
 		<aui:button-row>
-			<aui:button id="enableLayoutButton" name="enableLayout" value='<%= LanguageUtil.format(request, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>' />
+			<aui:button
+				id="enableLayoutButton"
+				name="enableLayout"
+				value='<%= LanguageUtil.format(request, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>'
+			/>
 
-			<aui:button cssClass="remove-layout" id="deleteLayoutButton" name="deleteLayout" value="delete-in-all-pages-variations" />
+			<aui:button
+				cssClass="remove-layout"
+				id="deleteLayoutButton"
+				name="deleteLayout"
+				value="delete-in-all-pages-variations"
+			/>
 
 			<script>
 				(function() {
@@ -116,17 +129,63 @@ renderResponse.setTitle(selLayout.getName(locale));
 			<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout" />
 		</portlet:actionURL>
 
-		<aui:form action='<%= HttpUtil.addParameter(editLayoutURL, "refererPlid", plid) %>' enctype="multipart/form-data" method="post" name="editLayoutFm" onSubmit="event.preventDefault();">
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
-			<aui:input name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getGroupId() %>" />
-			<aui:input name="liveGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getLiveGroupId() %>" />
-			<aui:input name="stagingGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getStagingGroupId() %>" />
-			<aui:input name="selPlid" type="hidden" value="<%= layoutsAdminDisplayContext.getSelPlid() %>" />
-			<aui:input name="privateLayout" type="hidden" value="<%= layoutsAdminDisplayContext.isPrivateLayout() %>" />
-			<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
-			<aui:input name="type" type="hidden" value="<%= selLayout.getType() %>" />
+		<aui:form
+			action='<%= HttpUtil.addParameter(editLayoutURL, "refererPlid", plid) %>'
+			enctype="multipart/form-data"
+			method="post"
+			name="editLayoutFm"
+			onSubmit="event.preventDefault();"
+		>
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value="<%= currentURL %>"
+			/>
+			<aui:input
+				name="backURL"
+				type="hidden"
+				value="<%= backURL %>"
+			/>
+			<aui:input
+				name="portletResource"
+				type="hidden"
+				value="<%= portletResource %>"
+			/>
+			<aui:input
+				name="groupId"
+				type="hidden"
+				value="<%= layoutsAdminDisplayContext.getGroupId() %>"
+			/>
+			<aui:input
+				name="liveGroupId"
+				type="hidden"
+				value="<%= layoutsAdminDisplayContext.getLiveGroupId() %>"
+			/>
+			<aui:input
+				name="stagingGroupId"
+				type="hidden"
+				value="<%= layoutsAdminDisplayContext.getStagingGroupId() %>"
+			/>
+			<aui:input
+				name="selPlid"
+				type="hidden"
+				value="<%= layoutsAdminDisplayContext.getSelPlid() %>"
+			/>
+			<aui:input
+				name="privateLayout"
+				type="hidden"
+				value="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
+			/>
+			<aui:input
+				name="layoutId"
+				type="hidden"
+				value="<%= layoutsAdminDisplayContext.getLayoutId() %>"
+			/>
+			<aui:input
+				name="type"
+				type="hidden"
+				value="<%= selLayout.getType() %>"
+			/>
 			<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
 			<c:if test="<%= layoutsAdminDisplayContext.isLayoutPageTemplateEntry() || ((selLayout.isTypeAssetDisplay() || selLayout.isTypeContent()) && layoutsAdminDisplayContext.isDraft()) %>">
@@ -135,7 +194,11 @@ renderResponse.setTitle(selLayout.getName(locale));
 				for (String languageId : group.getAvailableLanguageIds()) {
 				%>
 
-					<aui:input name='<%= "name_" + languageId %>' type="hidden" value="<%= selLayout.getName(LocaleUtil.fromLanguageId(languageId)) %>" />
+					<aui:input
+						name='<%= "name_" + languageId %>'
+						type="hidden"
+						value="<%= selLayout.getName(LocaleUtil.fromLanguageId(languageId)) %>"
+					/>
 
 				<%
 				}
@@ -192,7 +255,11 @@ renderResponse.setTitle(selLayout.getName(locale));
 					<liferay-ui:error exception="<%= RequiredSegmentsExperienceException.MustNotDeleteSegmentsExperienceReferencedBySegmentsExperiments.class %>" message="this-page-cannot-be-deleted-because-it-has-ab-tests-in-progress" />
 
 					<c:if test="<%= layoutRevision != null %>">
-						<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutRevision.getLayoutSetBranchId() %>" />
+						<aui:input
+							name="layoutSetBranchId"
+							type="hidden"
+							value="<%= layoutRevision.getLayoutSetBranchId() %>"
+						/>
 					</c:if>
 
 					<c:if test="<%= !group.isLayoutPrototype() %>">
@@ -226,7 +293,11 @@ renderResponse.setTitle(selLayout.getName(locale));
 							%>
 
 							<div class="alert alert-warning">
-								<liferay-ui:message arguments="<%= HtmlUtil.escape(userGroup.getName()) %>" key="this-page-cannot-be-modified-because-it-belongs-to-the-user-group-x" translateArguments="<%= false %>" />
+								<liferay-ui:message
+									arguments="<%= HtmlUtil.escape(userGroup.getName()) %>"
+									key="this-page-cannot-be-modified-because-it-belongs-to-the-user-group-x"
+									translateArguments="<%= false %>"
+								/>
 							</div>
 						</c:if>
 					</c:if>
@@ -243,7 +314,11 @@ renderResponse.setTitle(selLayout.getName(locale));
 						<aui:button type="submit" />
 
 						<c:if test="<%= Validator.isNotNull(backURL) %>">
-							<aui:button href="<%= backURL %>" name="cancelButton" type="cancel" />
+							<aui:button
+								href="<%= backURL %>"
+								name="cancelButton"
+								type="cancel"
+							/>
 						</c:if>
 					</c:if>
 				</div>

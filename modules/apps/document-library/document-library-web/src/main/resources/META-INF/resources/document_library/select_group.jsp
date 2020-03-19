@@ -32,9 +32,7 @@ portletURL.setParameter("mvcPath", "/document_library/select_group.jsp");
 	/>
 
 	<aui:form method="post" name="selectGroupFm">
-		<liferay-ui:search-container
-			searchContainer="<%= new GroupSearch(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse)) %>"
-		>
+		<liferay-ui:search-container searchContainer="<%= new GroupSearch(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse)) %>">
 
 			<%
 			GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
@@ -130,13 +128,15 @@ portletURL.setParameter("mvcPath", "/document_library/select_group.jsp");
 					data.put("groupid", group.getGroupId());
 					%>
 
-					<aui:button cssClass="selector-button" data="<%= data %>" value="select" />
+					<aui:button
+						cssClass="selector-button"
+						data="<%= data %>"
+						value="select"
+					/>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

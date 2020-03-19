@@ -55,10 +55,7 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getO
 			url="javascript:;"
 		/>
 
-		<liferay-ui:icon
-			message="restore"
-			url="<%= revertURL %>"
-		/>
+		<liferay-ui:icon message="restore" url="<%= revertURL %>" />
 	</liferay-ui:icon-menu>
 </c:if>
 

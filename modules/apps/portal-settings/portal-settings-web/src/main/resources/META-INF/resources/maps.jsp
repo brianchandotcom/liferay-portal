@@ -20,7 +20,11 @@
 String mapProviderKey = (String)request.getAttribute(MapProviderWebKeys.MAP_PROVIDER_KEY);
 %>
 
-<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+<aui:input
+	name="<%= Constants.CMD %>"
+	type="hidden"
+	value="<%= Constants.UPDATE %>"
+/>
 
 <liferay-map:map-provider-selector
 	configurationPrefix="settings"

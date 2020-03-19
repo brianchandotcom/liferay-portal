@@ -53,10 +53,7 @@ activityCounters.remove(SocialActivityCounterConstants.NAME_CONTRIBUTION);
 activityCounters.remove(SocialActivityCounterConstants.NAME_PARTICIPATION);
 %>
 
-<liferay-ui:user-display
-	userId="<%= GetterUtil.getLong(row.getPrimaryKey()) %>"
-	userName=""
->
+<liferay-ui:user-display userId="<%= GetterUtil.getLong(row.getPrimaryKey()) %>" userName="">
 	<c:if test="<%= userDisplay != null %>">
 		<div class="user-rank">
 			<span class="statistics-label"><liferay-ui:message key="rank" />:</span> <%= searchContainer.getStart() + row.getPos() + 1 %>

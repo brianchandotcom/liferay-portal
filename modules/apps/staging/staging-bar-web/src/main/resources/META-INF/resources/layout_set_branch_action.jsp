@@ -39,10 +39,7 @@ long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute(
 			<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editLayoutSetBranchURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editLayoutSetBranchURL %>" />
 	</c:if>
 
 	<c:if test="<%= LayoutSetBranchPermissionUtil.contains(permissionChecker, layoutSetBranch, ActionKeys.PERMISSIONS) %>">
@@ -71,10 +68,7 @@ long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute(
 			<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="merge"
-			url="<%= mergeLayoutSetBranchURL %>"
-		/>
+		<liferay-ui:icon message="merge" url="<%= mergeLayoutSetBranchURL %>" />
 	</c:if>
 
 	<c:if test="<%= !layoutSetBranch.isMaster() && LayoutSetBranchPermissionUtil.contains(permissionChecker, layoutSetBranch, ActionKeys.DELETE) %>">
@@ -85,8 +79,6 @@ long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute(
 			<portlet:param name="currentLayoutSetBranchId" value="<%= String.valueOf(currentLayoutSetBranchId) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteLayoutSetBranchURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteLayoutSetBranchURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

@@ -26,9 +26,18 @@ String sectionName = StringPool.BLANK;
 %>
 
 <aui:fieldset>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
 
-	<aui:input label="enabled" name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED + "--" %>' type="checkbox" value="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED) %>" />
+	<aui:input
+		label="enabled"
+		name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED + "--" %>'
+		type="checkbox"
+		value="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED) %>"
+	/>
 
 	<liferay-ui:error key="emailUserAddedSubject" message="please-enter-a-valid-subject" />
 
@@ -75,8 +84,19 @@ String adminEmailUserAddedBody = LocalizationUtil.getLocalizationXmlFromPreferen
 %>
 
 <c:if test="<%= Validator.isNotNull(adminEmailUserAddedBody) %>">
-	<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="legacy-template-no-longer-used" markupView="lexicon">
-		<aui:input checked="<%= false %>" label="discard" name="discardLegacyKey" type="checkbox" value="adminEmailUserAddedBody" />
+	<aui:fieldset
+		collapsed="<%= true %>"
+		collapsible="<%= true %>"
+		label="legacy-template-no-longer-used"
+		markupView="lexicon"
+	>
+		<aui:input
+			checked="<%= false %>"
+			label="discard"
+			name="discardLegacyKey"
+			type="checkbox"
+			value="adminEmailUserAddedBody"
+		/>
 
 		<div class="alert alert-info">
 			<liferay-ui:message key="sending-of-passwords-by-email-is-no-longer-supported-the-template-below-is-not-used-and-can-be-discarded" />

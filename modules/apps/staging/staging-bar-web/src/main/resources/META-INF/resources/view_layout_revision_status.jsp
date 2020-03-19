@@ -61,7 +61,13 @@ else {
 
 			<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-			<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' />
+			<aui:workflow-status
+				markupView="lexicon"
+				showIcon="<%= false %>"
+				showLabel="<%= false %>"
+				status="<%= layoutRevision.getStatus() %>"
+				statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>'
+			/>
 		</div>
 	</div>
 </span>
@@ -77,7 +83,11 @@ else {
 						</svg>
 					</span>
 
-					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(layoutRevision.getName(locale)), layoutSetBranchName} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= new Object[] {HtmlUtil.escape(layoutRevision.getName(locale)), layoutSetBranchName} %>"
+						key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations"
+						translateArguments="<%= false %>"
+					/>
 				</div>
 			</div>
 		</div>

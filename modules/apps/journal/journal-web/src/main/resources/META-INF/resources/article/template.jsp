@@ -25,7 +25,11 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 %>
 
-<aui:input name="ddmTemplateKey" type="hidden" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : StringPool.BLANK %>" />
+<aui:input
+	name="ddmTemplateKey"
+	type="hidden"
+	value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : StringPool.BLANK %>"
+/>
 
 <c:choose>
 	<c:when test="<%= ListUtil.isNotEmpty(ddmStructure.getTemplates()) %>">

@@ -86,14 +86,10 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 				<c:choose>
 					<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "descriptive") %>'>
 						<liferay-ui:search-container-column-text>
-							<liferay-ui:user-portrait
-								userId="<%= curArticle.getUserId() %>"
-							/>
+							<liferay-ui:user-portrait userId="<%= curArticle.getUserId() %>" />
 						</liferay-ui:search-container-column-text>
 
-						<liferay-ui:search-container-column-text
-							colspan="<%= 2 %>"
-						>
+						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 							<%
 							Date createDate = curArticle.getModifiedDate();
@@ -131,10 +127,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text>
-							<clay:dropdown-actions
-								defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-								dropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
-							/>
+							<clay:dropdown-actions defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>" />
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "icon") %>'>
@@ -144,17 +137,12 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 						%>
 
 						<liferay-ui:search-container-column-text>
-							<clay:vertical-card
-								verticalCard="<%= new JournalArticleVerticalCard(curArticle, renderRequest, renderResponse, searchContainer.getRowChecker(), assetDisplayPageFriendlyURLProvider, trashHelper) %>"
-							/>
+							<clay:vertical-card verticalCard="<%= new JournalArticleVerticalCard(curArticle, renderRequest, renderResponse, searchContainer.getRowChecker(), assetDisplayPageFriendlyURLProvider, trashHelper) %>" />
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
 						<c:if test="<%= !journalWebConfiguration.journalArticleForceAutogenerateId() || journalWebConfiguration.journalArticleShowId() %>">
-							<liferay-ui:search-container-column-text
-								name="id"
-								value="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
-							/>
+							<liferay-ui:search-container-column-text name="id" value="<%= HtmlUtil.escape(curArticle.getArticleId()) %>" />
 						</c:if>
 
 						<liferay-ui:search-container-column-jsp
@@ -184,10 +172,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 							value="<%= HtmlUtil.escape(PortalUtil.getUserName(curArticle)) %>"
 						/>
 
-						<liferay-ui:search-container-column-text
-							cssClass="text-nowrap"
-							name="status"
-						>
+						<liferay-ui:search-container-column-text cssClass="text-nowrap" name="status">
 							<c:if test="<%= !curArticle.isApproved() && curArticle.hasApprovedVersion() %>">
 								<span class="label label-success text-uppercase">
 									<liferay-ui:message key="approved" />
@@ -222,10 +207,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 						/>
 
 						<liferay-ui:search-container-column-text>
-							<clay:dropdown-actions
-								defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-								dropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
-							/>
+							<clay:dropdown-actions defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>" />
 						</liferay-ui:search-container-column-text>
 					</c:otherwise>
 				</c:choose>
@@ -253,14 +235,9 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 
 				<c:choose>
 					<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "descriptive") %>'>
-						<liferay-ui:search-container-column-icon
-							icon="folder"
-							toggleRowChecker="<%= true %>"
-						/>
+						<liferay-ui:search-container-column-icon icon="folder" toggleRowChecker="<%= true %>" />
 
-						<liferay-ui:search-container-column-text
-							colspan="<%= 2 %>"
-						>
+						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 							<%
 							Date createDate = curFolder.getCreateDate();
@@ -285,15 +262,17 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 							</c:if>
 
 							<span class="text-default">
-								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curFolder.getStatus() %>" />
+								<aui:workflow-status
+									markupView="lexicon"
+									showIcon="<%= false %>"
+									showLabel="<%= false %>"
+									status="<%= curFolder.getStatus() %>"
+								/>
 							</span>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text>
-							<clay:dropdown-actions
-								defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-								dropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>"
-							/>
+							<clay:dropdown-actions defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>" />
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "icon") %>'>
@@ -302,20 +281,13 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 						row.setCssClass("entry-card lfr-asset-folder " + row.getCssClass());
 						%>
 
-						<liferay-ui:search-container-column-text
-							colspan="<%= 2 %>"
-						>
-							<clay:horizontal-card
-								horizontalCard="<%= new JournalFolderHorizontalCard(curFolder, journalDisplayContext.getDisplayStyle(), renderRequest, renderResponse, searchContainer.getRowChecker(), trashHelper) %>"
-							/>
+						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+							<clay:horizontal-card horizontalCard="<%= new JournalFolderHorizontalCard(curFolder, journalDisplayContext.getDisplayStyle(), renderRequest, renderResponse, searchContainer.getRowChecker(), trashHelper) %>" />
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
 						<c:if test="<%= !journalWebConfiguration.journalArticleForceAutogenerateId() || journalWebConfiguration.journalArticleShowId() %>">
-							<liferay-ui:search-container-column-text
-								name="id"
-								value="<%= HtmlUtil.escape(String.valueOf(curFolder.getFolderId())) %>"
-							/>
+							<liferay-ui:search-container-column-text name="id" value="<%= HtmlUtil.escape(String.valueOf(curFolder.getFolderId())) %>" />
 						</c:if>
 
 						<liferay-ui:search-container-column-text
@@ -345,10 +317,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 							value="<%= HtmlUtil.escape(PortalUtil.getUserName(curFolder)) %>"
 						/>
 
-						<liferay-ui:search-container-column-text
-							name="status"
-							value="--"
-						/>
+						<liferay-ui:search-container-column-text name="status" value="--" />
 
 						<liferay-ui:search-container-column-date
 							cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
@@ -369,10 +338,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 						/>
 
 						<liferay-ui:search-container-column-text>
-							<clay:dropdown-actions
-								defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-								dropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>"
-							/>
+							<clay:dropdown-actions defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>" />
 						</liferay-ui:search-container-column-text>
 					</c:otherwise>
 				</c:choose>

@@ -51,13 +51,41 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 	method="post"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= redirectURL.toString() %>" />
-	<aui:input name="groupId" type="hidden" value="<%= selGroup.getGroupId() %>" />
-	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
-	<aui:input name="stagingGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getStagingGroupId() %>" />
-	<aui:input name="selPlid" type="hidden" value="<%= layoutsAdminDisplayContext.getSelPlid() %>" />
-	<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />
-	<aui:input name="layoutSetId" type="hidden" value="<%= selLayoutSet.getLayoutSetId() %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirectURL.toString() %>"
+	/>
+	<aui:input
+		name="groupId"
+		type="hidden"
+		value="<%= selGroup.getGroupId() %>"
+	/>
+	<aui:input
+		name="liveGroupId"
+		type="hidden"
+		value="<%= liveGroupId %>"
+	/>
+	<aui:input
+		name="stagingGroupId"
+		type="hidden"
+		value="<%= layoutsAdminDisplayContext.getStagingGroupId() %>"
+	/>
+	<aui:input
+		name="selPlid"
+		type="hidden"
+		value="<%= layoutsAdminDisplayContext.getSelPlid() %>"
+	/>
+	<aui:input
+		name="privateLayout"
+		type="hidden"
+		value="<%= privateLayout %>"
+	/>
+	<aui:input
+		name="layoutSetId"
+		type="hidden"
+		value="<%= selLayoutSet.getLayoutSetId() %>"
+	/>
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
 	<liferay-frontend:edit-form-body>

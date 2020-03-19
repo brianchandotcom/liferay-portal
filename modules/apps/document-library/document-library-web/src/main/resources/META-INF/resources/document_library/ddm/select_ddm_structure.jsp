@@ -22,28 +22,22 @@ DLSelectDDMStructureDisplayContext dlSelectDDMStructureDisplayContext = new DLSe
 SearchContainer<com.liferay.dynamic.data.mapping.model.DDMStructure> ddmStructureSearch = dlSelectDDMStructureDisplayContext.getDDMStructureSearch();
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new DLSelectDDMStructureManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dlSelectDDMStructureDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new DLSelectDDMStructureManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dlSelectDDMStructureDisplayContext) %>" />
 
-<aui:form cssClass="container-fluid-1280" method="post" name="selectDDMStructureFm">
-	<liferay-ui:search-container
-		searchContainer="<%= ddmStructureSearch %>"
-	>
+<aui:form
+	cssClass="container-fluid-1280"
+	method="post"
+	name="selectDDMStructureFm"
+>
+	<liferay-ui:search-container searchContainer="<%= ddmStructureSearch %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMStructure"
 			keyProperty="structureId"
 			modelVar="ddmStructure"
 		>
-			<liferay-ui:search-container-column-text
-				name="id"
-				value="<%= String.valueOf(ddmStructure.getStructureId()) %>"
-			/>
+			<liferay-ui:search-container-column-text name="id" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="name"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-content" name="name">
 				<c:choose>
 					<c:when test="<%= ddmStructure.getStructureId() != dlSelectDDMStructureDisplayContext.getDDMStructureId() %>">
 
@@ -55,7 +49,11 @@ SearchContainer<com.liferay.dynamic.data.mapping.model.DDMStructure> ddmStructur
 						data.put("name", ddmStructure.getName(locale));
 						%>
 
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+						<aui:a
+							cssClass="selector-button"
+							data="<%= data %>"
+							href="javascript:;"
+						>
 							<%= HtmlUtil.escape(ddmStructure.getUnambiguousName(ddmStructureSearch.getResults(), themeDisplay.getScopeGroupId(), locale)) %>
 						</aui:a>
 					</c:when>
@@ -72,16 +70,10 @@ SearchContainer<com.liferay.dynamic.data.mapping.model.DDMStructure> ddmStructur
 				value="<%= HtmlUtil.escape(ddmStructure.getDescription(locale)) %>"
 			/>
 
-			<liferay-ui:search-container-column-date
-				name="modified-date"
-				value="<%= ddmStructure.getModifiedDate() %>"
-			/>
+			<liferay-ui:search-container-column-date name="modified-date" value="<%= ddmStructure.getModifiedDate() %>" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="list"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

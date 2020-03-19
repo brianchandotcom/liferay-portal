@@ -27,7 +27,4 @@ data.put("nodes", journalDisplayContext.getFoldersJSONArray());
 data.put("pathThemeImages", themeDisplay.getPathThemeImages());
 %>
 
-<react:component
-	data="<%= data %>"
-	module="js/SelectFolder.es"
-/>
+<react:component data="<%= data %>" module="js/SelectFolder.es" />

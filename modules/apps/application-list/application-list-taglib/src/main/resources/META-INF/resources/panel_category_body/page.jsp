@@ -23,9 +23,7 @@
 		for (PanelApp panelApp : panelApps) {
 		%>
 
-			<liferay-application-list:panel-app
-				panelApp="<%= panelApp %>"
-			/>
+			<liferay-application-list:panel-app panelApp="<%= panelApp %>" />
 
 		<%
 		}
@@ -34,6 +32,4 @@
 	</ul>
 </c:if>
 
-<liferay-application-list:panel
-	panelCategory="<%= panelCategory %>"
-/>
+<liferay-application-list:panel panelCategory="<%= panelCategory %>" />

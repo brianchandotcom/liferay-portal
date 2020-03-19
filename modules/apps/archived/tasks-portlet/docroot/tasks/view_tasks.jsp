@@ -71,9 +71,7 @@ taskListURL.setParameter("tabs2", tabs2);
 	iteratorURL="<%= portletURL %>"
 	total="<%= TasksEntryLocalServiceUtil.getTasksEntriesCount(groupId, userId, 0, assigneeUserId, status, assetTagIds, new long[0]) %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= TasksEntryLocalServiceUtil.getTasksEntries(groupId, userId, 0, assigneeUserId, status, assetTagIds, new long[0], searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= TasksEntryLocalServiceUtil.getTasksEntries(groupId, userId, 0, assigneeUserId, status, assetTagIds, new long[0], searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.tasks.model.TasksEntry"
@@ -97,9 +95,7 @@ taskListURL.setParameter("tabs2", tabs2);
 		}
 		%>
 
-		<liferay-ui:search-container-column-text
-			name="description"
-		>
+		<liferay-ui:search-container-column-text name="description">
 
 			<%
 			String cssClass = "tasks-title";
@@ -165,9 +161,7 @@ taskListURL.setParameter("tabs2", tabs2);
 			</div>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			name="due"
-		>
+		<liferay-ui:search-container-column-text name="due">
 			<c:choose>
 				<c:when test="<%= TasksEntryPermission.contains(permissionChecker, tasksEntry, ActionKeys.UPDATE) %>">
 
@@ -215,7 +209,11 @@ taskListURL.setParameter("tabs2", tabs2);
 								for (int i = TasksEntryConstants.STATUS_PERCENT_TWENTY; i <= TasksEntryConstants.STATUS_RESOLVED; i++) {
 								%>
 
-									<portlet:actionURL name="updateTasksEntryStatus" var="statusURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+									<portlet:actionURL
+										name="updateTasksEntryStatus"
+										var="statusURL"
+										windowState="<%= WindowState.MAXIMIZED.toString() %>"
+									>
 										<portlet:param name="redirect" value="<%= taskListURL.toString() %>" />
 										<portlet:param name="tasksEntryId" value="<%= String.valueOf(tasksEntry.getTasksEntryId()) %>" />
 										<portlet:param name="resolverUserId" value="<%= String.valueOf(user.getUserId()) %>" />
@@ -238,9 +236,7 @@ taskListURL.setParameter("tabs2", tabs2);
 			</c:choose>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			name="<%= StringPool.BLANK %>"
-		>
+		<liferay-ui:search-container-column-text name="<%= StringPool.BLANK %>">
 
 			<%
 			List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(TasksEntry.class.getName(), tasksEntry.getTasksEntryId());

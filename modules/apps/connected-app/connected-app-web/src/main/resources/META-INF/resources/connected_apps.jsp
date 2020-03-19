@@ -28,15 +28,33 @@
 	<div class="sheet-section">
 		<liferay-portlet:actionURL name="/users_admin/revoke_connected_app" varImpl="actionCommandURL" />
 
-		<aui:form action="<%= actionCommandURL.toString() %>" cssClass="portlet-users-admin-edit-user" data-senna-off="true" method="post" name="fm">
+		<aui:form
+			action="<%= actionCommandURL.toString() %>"
+			cssClass="portlet-users-admin-edit-user"
+			data-senna-off="true"
+			method="post"
+			name="fm"
+		>
 
 			<%
 			User selUser = PortalUtil.getSelectedUser(request);
 			%>
 
-			<aui:input name="p_u_i_d" type="hidden" value="<%= selUser.getUserId() %>" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="connectedAppKey" type="hidden" value="<%= StringPool.BLANK %>" />
+			<aui:input
+				name="p_u_i_d"
+				type="hidden"
+				value="<%= selUser.getUserId() %>"
+			/>
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value="<%= currentURL %>"
+			/>
+			<aui:input
+				name="connectedAppKey"
+				type="hidden"
+				value="<%= StringPool.BLANK %>"
+			/>
 
 			<%
 			ConnectedAppManager connectedAppManager = (ConnectedAppManager)request.getAttribute(ConnectedAppManager.class.getName());

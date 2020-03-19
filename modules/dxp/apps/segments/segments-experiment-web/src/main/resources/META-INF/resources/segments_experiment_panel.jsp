@@ -27,18 +27,12 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 				<span aria-hidden="true" class="loading-animation"></span>
 			</div>
 
-			<react:component
-				data="<%= segmentsExperimentDisplayContext.getData() %>"
-				module="js/SegmentsExperimentApp.es"
-			/>
+			<react:component data="<%= segmentsExperimentDisplayContext.getData() %>" module="js/SegmentsExperimentApp.es" />
 		</div>
 	</c:when>
 	<c:otherwise>
 		<div class="p-3 pt-5 text-center">
-			<liferay-ui:icon
-				alt="connect-to-liferay-analytics-cloud"
-				src='<%= PortalUtil.getPathContext(request) + "/assets/ac-icon.svg" %>'
-			/>
+			<liferay-ui:icon alt="connect-to-liferay-analytics-cloud" src='<%= PortalUtil.getPathContext(request) + "/assets/ac-icon.svg" %>' />
 
 			<c:choose>
 				<c:when test="<%= SegmentsExperimentUtil.isAnalyticsConnected(themeDisplay.getCompanyId()) %>">

@@ -51,11 +51,19 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 
 <div class="container-fluid-1280 workflow-definition-container">
 	<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
-		<liferay-ui:message arguments="<%= workflowDefinitionDisplayContext.getMessageArguments((RequiredWorkflowDefinitionException)errorException) %>" key="<%= workflowDefinitionDisplayContext.getMessageKey((RequiredWorkflowDefinitionException)errorException) %>" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= workflowDefinitionDisplayContext.getMessageArguments((RequiredWorkflowDefinitionException)errorException) %>"
+			key="<%= workflowDefinitionDisplayContext.getMessageKey((RequiredWorkflowDefinitionException)errorException) %>"
+			translateArguments="<%= false %>"
+		/>
 	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= IncompleteWorkflowInstancesException.class %>">
-		<liferay-ui:message arguments="<%= workflowDefinitionDisplayContext.getMessageArguments((IncompleteWorkflowInstancesException)errorException) %>" key="<%= workflowDefinitionDisplayContext.getMessageKey((IncompleteWorkflowInstancesException)errorException) %>" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= workflowDefinitionDisplayContext.getMessageArguments((IncompleteWorkflowInstancesException)errorException) %>"
+			key="<%= workflowDefinitionDisplayContext.getMessageKey((IncompleteWorkflowInstancesException)errorException) %>"
+			translateArguments="<%= false %>"
+		/>
 	</liferay-ui:error>
 
 	<liferay-ui:search-container
@@ -68,10 +76,7 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 		request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
 		%>
 
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.workflow.WorkflowDefinition"
-			modelVar="workflowDefinition"
-		>
+		<liferay-ui:search-container-row className="com.liferay.portal.kernel.workflow.WorkflowDefinition" modelVar="workflowDefinition">
 
 			<%
 			PortletURL rowURL = renderResponse.createRenderURL();
@@ -104,9 +109,7 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 				value="<%= workflowDefinition.getModifiedDate() %>"
 			/>
 
-			<liferay-ui:search-container-column-jsp
-				path="/definition/workflow_definition_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp path="/definition/workflow_definition_action.jsp" />
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

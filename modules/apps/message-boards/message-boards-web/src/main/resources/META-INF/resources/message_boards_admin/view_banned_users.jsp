@@ -44,9 +44,17 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 />
 
 <div class="container-fluid-1280">
-	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
+	<aui:form
+		action="<%= portletURL.toString() %>"
+		method="get"
+		name="fm"
+	>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= currentURL %>"
+		/>
 
 		<liferay-ui:search-container
 			emptyResultsMessage="there-are-no-banned-users"
@@ -56,9 +64,7 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			total="<%= totalBannedUsers %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= MBBanLocalServiceUtil.getBans(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
+			<liferay-ui:search-container-results results="<%= MBBanLocalServiceUtil.getBans(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.message.boards.model.MBBan"
@@ -74,14 +80,9 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 				row.setData(rowData);
 				%>
 
-				<liferay-ui:search-container-column-user
-					showDetails="<%= false %>"
-					userId="<%= ban.getBanUserId() %>"
-				/>
+				<liferay-ui:search-container-column-user showDetails="<%= false %>" userId="<%= ban.getBanUserId() %>" />
 
-				<liferay-ui:search-container-column-text
-					colspan="<%= 2 %>"
-				>
+				<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 					<%
 					Date createDate = ban.getCreateDate();
@@ -118,15 +119,10 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 					</span>
 				</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-jsp
-					path="/message_boards/ban_user_action.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp path="/message_boards/ban_user_action.jsp" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				displayStyle="<%= mbBannedUsersManagementToolbarDisplayContext.getDisplayStyle() %>"
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator displayStyle="<%= mbBannedUsersManagementToolbarDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

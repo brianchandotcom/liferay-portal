@@ -29,10 +29,7 @@ else {
 }
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="analytics"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="analytics" />
 
 <%
 String[] analyticsTypes = PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES, StringPool.NEW_LINE);
@@ -47,19 +44,37 @@ for (String analyticsType : analyticsTypes) {
 			String googleAnalyticsId = PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalyticsId");
 			%>
 
-			<aui:input helpMessage="set-the-google-analytics-id-that-is-used-for-this-set-of-pages" label="google-analytics-id" name="googleAnalyticsId" type="text" value="<%= googleAnalyticsId %>" />
+			<aui:input
+				helpMessage="set-the-google-analytics-id-that-is-used-for-this-set-of-pages"
+				label="google-analytics-id"
+				name="googleAnalyticsId"
+				type="text"
+				value="<%= googleAnalyticsId %>"
+			/>
 
 			<%
 			String googleAnalyticsCreateCustomConfiguration = PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalyticsCreateCustomConfiguration");
 			%>
 
-			<aui:input helpMessage="set-the-google-analytics-create-custom-options-that-are-used-for-this-set-of-pages" label="google-analytics-create-custom-configuration" name="googleAnalyticsCreateCustomConfiguration" type="textarea" value="<%= googleAnalyticsCreateCustomConfiguration %>" />
+			<aui:input
+				helpMessage="set-the-google-analytics-create-custom-options-that-are-used-for-this-set-of-pages"
+				label="google-analytics-create-custom-configuration"
+				name="googleAnalyticsCreateCustomConfiguration"
+				type="textarea"
+				value="<%= googleAnalyticsCreateCustomConfiguration %>"
+			/>
 
 			<%
 			String googleAnalyticsCustomConfiguration = PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalyticsCustomConfiguration");
 			%>
 
-			<aui:input helpMessage="set-the-google-analytics-custom-options-that-are-used-for-this-set-of-pages" label="google-analytics-custom-configuration" name="googleAnalyticsCustomConfiguration" type="textarea" value="<%= googleAnalyticsCustomConfiguration %>" />
+			<aui:input
+				helpMessage="set-the-google-analytics-custom-options-that-are-used-for-this-set-of-pages"
+				label="google-analytics-custom-configuration"
+				name="googleAnalyticsCustomConfiguration"
+				type="textarea"
+				value="<%= googleAnalyticsCustomConfiguration %>"
+			/>
 		</c:when>
 		<c:otherwise>
 
@@ -69,7 +84,14 @@ for (String analyticsType : analyticsTypes) {
 			String analyticsScript = PropertiesParamUtil.getString(groupTypeSettings, request, Sites.ANALYTICS_PREFIX + analyticsType);
 			%>
 
-			<aui:input helpMessage='<%= LanguageUtil.format(request, "set-the-script-for-x-that-is-used-for-this-set-of-pages", analyticsName, false) %>' label="<%= analyticsName %>" name="<%= Sites.ANALYTICS_PREFIX + analyticsType %>" type="textarea" value="<%= analyticsScript %>" wrap="soft" />
+			<aui:input
+				helpMessage='<%= LanguageUtil.format(request, "set-the-script-for-x-that-is-used-for-this-set-of-pages", analyticsName, false) %>'
+				label="<%= analyticsName %>"
+				name="<%= Sites.ANALYTICS_PREFIX + analyticsType %>"
+				type="textarea"
+				value="<%= analyticsScript %>"
+				wrap="soft"
+			/>
 		</c:otherwise>
 	</c:choose>
 

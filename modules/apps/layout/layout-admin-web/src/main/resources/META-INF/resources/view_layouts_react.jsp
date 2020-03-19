@@ -26,11 +26,13 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 
 <liferay-ui:success key="layoutPublished" message="the-page-was-published-succesfully" />
 
-<liferay-ui:error embed="<%= false %>" exception="<%= GroupInheritContentException.class %>" message="this-page-cannot-be-deleted-and-cannot-have-child-pages-because-it-is-associated-with-a-site-template" />
-
-<clay:management-toolbar
-	displayContext="<%= layoutsManagementToolbarDisplayContext %>"
+<liferay-ui:error
+	embed="<%= false %>"
+	exception="<%= GroupInheritContentException.class %>"
+	message="this-page-cannot-be-deleted-and-cannot-have-child-pages-because-it-is-associated-with-a-site-template"
 />
+
+<clay:management-toolbar displayContext="<%= layoutsManagementToolbarDisplayContext %>" />
 
 <liferay-ui:error exception="<%= LayoutTypeException.class %>">
 
@@ -71,10 +73,7 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 					%>
 
 					<div>
-						<react:component
-							data="<%= layoutData %>"
-							module="js/layout/Layout"
-						/>
+						<react:component data="<%= layoutData %>" module="js/layout/Layout" />
 					</div>
 				</c:otherwise>
 			</c:choose>
@@ -89,7 +88,4 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 	</c:choose>
 </aui:form>
 
-<liferay-frontend:component
-	componentId="<%= layoutsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/LayoutsManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= layoutsManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/LayoutsManagementToolbarDefaultEventHandler.es" />

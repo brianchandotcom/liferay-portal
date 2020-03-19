@@ -16,17 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:header
-	title="requests"
-/>
+<liferay-ui:header title="requests" />
 
-<liferay-ui:search-container
-	emptyResultsMessage="you-have-no-pending-requests"
-	total="<%= SocialRequestLocalServiceUtil.getReceiverUserRequestsCount(themeDisplay.getUserId(), SocialRequestConstants.STATUS_PENDING) %>"
->
-	<liferay-ui:search-container-results
-		results="<%= SocialRequestLocalServiceUtil.getReceiverUserRequests(themeDisplay.getUserId(), SocialRequestConstants.STATUS_PENDING, searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
+<liferay-ui:search-container emptyResultsMessage="you-have-no-pending-requests" total="<%= SocialRequestLocalServiceUtil.getReceiverUserRequestsCount(themeDisplay.getUserId(), SocialRequestConstants.STATUS_PENDING) %>">
+	<liferay-ui:search-container-results results="<%= SocialRequestLocalServiceUtil.getReceiverUserRequests(themeDisplay.getUserId(), SocialRequestConstants.STATUS_PENDING, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.social.kernel.model.SocialRequest"
@@ -39,9 +32,7 @@
 		User user2 = UserLocalServiceUtil.getUser(socialRequest.getUserId());
 		%>
 
-		<liferay-ui:search-container-column-text
-			name="requests"
-		>
+		<liferay-ui:search-container-column-text name="requests">
 			<liferay-portlet:renderURL varImpl="rowURL">
 				<portlet:param name="mvcPath" value="/view_user.jsp" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
@@ -58,7 +49,11 @@
 
 			<div class="lfr-user-data">
 				<div class="lfr-user-data-title">
-					<liferay-ui:message arguments="<%= creatorUserName %>" key="request-social-networking-summary-add-connection" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= creatorUserName %>"
+						key="request-social-networking-summary-add-connection"
+						translateArguments="<%= false %>"
+					/>
 				</div>
 			</div>
 

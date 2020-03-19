@@ -60,21 +60,25 @@
 		<div class="panel panel-secondary<c:if test="<%= scopeAliases.size() == 0 %>"> removed-scope</c:if>" data-master="<%= scopeAliasesString %>" id="<portlet:namespace /><%= id %>">
 			<div class="collapse-icon panel-header panel-header-link" id="<portlet:namespace />globalAccordionHeading<%= id %>">
 				<div class="inline">
-					<aui:input checked="<%= !assignedScopeAliases.isEmpty() %>" id='<%= "scopeAlias" + id %>' label="<%= sb.toString() %>" name="scopeAliases" onChange='<%= renderResponse.getNamespace() + "recalculateDependants(this)" %>' type="checkbox" value="<%= scopeAliasesString %>" />
+					<aui:input
+						checked="<%= !assignedScopeAliases.isEmpty() %>"
+						id='<%= "scopeAlias" + id %>'
+						label="<%= sb.toString() %>"
+						name="scopeAliases"
+						onChange='<%= renderResponse.getNamespace() + "recalculateDependants(this)" %>'
+						type="checkbox"
+						value="<%= scopeAliasesString %>"
+					/>
 				</div>
 
 				<a aria-controls="<portlet:namespace />globalAccordion<%= id %>" aria-expanded="false" class="collapsed" data-toggle="liferay-collapse" href="#<portlet:namespace />globalAccordion<%= id %>" role="tab">
 					<span>(<liferay-ui:message key="details" />)</span>
 
 					<span class="collapse-icon-closed">
-						<clay:icon
-							symbol="angle-right"
-						/>
+						<clay:icon symbol="angle-right" />
 					</span>
 					<span class="collapse-icon-open">
-						<clay:icon
-							symbol="angle-down"
-						/>
+						<clay:icon symbol="angle-down" />
 					</span>
 				</a>
 			</div>
@@ -103,9 +107,7 @@
 						<ul class="list-group">
 							<li class="list-group-item list-group-item-flex">
 								<div class="autofit-col">
-									<clay:icon
-										symbol="search"
-									/>
+									<clay:icon symbol="search" />
 								</div>
 
 								<div class="autofit-col autofit-col-expand">

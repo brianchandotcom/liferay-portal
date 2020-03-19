@@ -54,10 +54,7 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 			).build();
 			%>
 
-			<react:component
-				data="<%= data %>"
-				module="js/pages/form-view/EditFormViewApp.es"
-			/>
+			<react:component data="<%= data %>" module="js/pages/form-view/EditFormViewApp.es" />
 		</div>
 
 		<div class="app-builder-form-view-body">

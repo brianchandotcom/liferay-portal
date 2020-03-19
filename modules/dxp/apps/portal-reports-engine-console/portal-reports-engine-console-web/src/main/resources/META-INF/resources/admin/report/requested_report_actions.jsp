@@ -62,10 +62,7 @@ Entry entry = (Entry)row.getObject();
 				<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 			</portlet:actionURL>
 
-			<liferay-ui:icon
-				message="unschedule"
-				url="<%= unscheduleURL %>"
-			/>
+			<liferay-ui:icon message="unschedule" url="<%= unscheduleURL %>" />
 		</c:if>
 	</c:if>
 
@@ -81,8 +78,6 @@ Entry entry = (Entry)row.getObject();
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

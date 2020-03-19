@@ -26,10 +26,7 @@ User user2 = UserLocalServiceUtil.fetchUser(userId);
 %>
 
 <div class="user-info">
-	<liferay-ui:user-portrait
-		cssClass="<%= cssClass %>"
-		user="<%= user2 %>"
-	/>
+	<liferay-ui:user-portrait cssClass="<%= cssClass %>" user="<%= user2 %>" />
 
 	<c:if test="<%= showDetails %>">
 		<div class="user-details">
@@ -39,7 +36,11 @@ User user2 = UserLocalServiceUtil.fetchUser(userId);
 
 			<c:if test="<%= date != null %>">
 				<div class="date-info">
-					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - date.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - date.getTime(), true) %>"
+						key="x-ago"
+						translateArguments="<%= false %>"
+					/>
 				</div>
 			</c:if>
 		</div>

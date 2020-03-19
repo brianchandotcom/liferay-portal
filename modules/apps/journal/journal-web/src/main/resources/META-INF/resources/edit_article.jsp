@@ -33,24 +33,87 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	<portlet:param name="mvcPath" value="/edit_article.jsp" />
 </portlet:renderURL>
 
-<aui:form action="<%= editArticleActionURL %>" cssClass="edit-article-form" enctype="multipart/form-data" method="post" name="fm1" onSubmit="event.preventDefault();">
+<aui:form
+	action="<%= editArticleActionURL %>"
+	cssClass="edit-article-form"
+	enctype="multipart/form-data"
+	method="post"
+	name="fm1"
+	onSubmit="event.preventDefault();"
+>
 	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
-	<aui:input name="hideDefaultSuccessMessage" type="hidden" value="<%= journalEditArticleDisplayContext.getClassNameId() == PortalUtil.getClassNameId(DDMStructure.class) %>" />
-	<aui:input name="redirect" type="hidden" value="<%= journalEditArticleDisplayContext.getRedirect() %>" />
-	<aui:input name="portletResource" type="hidden" value="<%= journalEditArticleDisplayContext.getPortletResource() %>" />
-	<aui:input name="refererPlid" type="hidden" value="<%= journalEditArticleDisplayContext.getRefererPlid() %>" />
-	<aui:input name="referringPortletResource" type="hidden" value="<%= journalEditArticleDisplayContext.getReferringPortletResource() %>" />
-	<aui:input name="groupId" type="hidden" value="<%= journalEditArticleDisplayContext.getGroupId() %>" />
-	<aui:input name="folderId" type="hidden" value="<%= journalEditArticleDisplayContext.getFolderId() %>" />
-	<aui:input name="classNameId" type="hidden" value="<%= journalEditArticleDisplayContext.getClassNameId() %>" />
-	<aui:input name="classPK" type="hidden" value="<%= journalEditArticleDisplayContext.getClassPK() %>" />
-	<aui:input name="articleId" type="hidden" value="<%= journalEditArticleDisplayContext.getArticleId() %>" />
-	<aui:input name="version" type="hidden" value="<%= ((article == null) || article.isNew()) ? journalEditArticleDisplayContext.getVersion() : article.getVersion() %>" />
-	<aui:input name="articleURL" type="hidden" value="<%= editArticleRenderURL %>" />
+	<aui:input
+		name="hideDefaultSuccessMessage"
+		type="hidden"
+		value="<%= journalEditArticleDisplayContext.getClassNameId() == PortalUtil.getClassNameId(DDMStructure.class) %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= journalEditArticleDisplayContext.getRedirect() %>"
+	/>
+	<aui:input
+		name="portletResource"
+		type="hidden"
+		value="<%= journalEditArticleDisplayContext.getPortletResource() %>"
+	/>
+	<aui:input
+		name="refererPlid"
+		type="hidden"
+		value="<%= journalEditArticleDisplayContext.getRefererPlid() %>"
+	/>
+	<aui:input
+		name="referringPortletResource"
+		type="hidden"
+		value="<%= journalEditArticleDisplayContext.getReferringPortletResource() %>"
+	/>
+	<aui:input
+		name="groupId"
+		type="hidden"
+		value="<%= journalEditArticleDisplayContext.getGroupId() %>"
+	/>
+	<aui:input
+		name="folderId"
+		type="hidden"
+		value="<%= journalEditArticleDisplayContext.getFolderId() %>"
+	/>
+	<aui:input
+		name="classNameId"
+		type="hidden"
+		value="<%= journalEditArticleDisplayContext.getClassNameId() %>"
+	/>
+	<aui:input
+		name="classPK"
+		type="hidden"
+		value="<%= journalEditArticleDisplayContext.getClassPK() %>"
+	/>
+	<aui:input
+		name="articleId"
+		type="hidden"
+		value="<%= journalEditArticleDisplayContext.getArticleId() %>"
+	/>
+	<aui:input
+		name="version"
+		type="hidden"
+		value="<%= ((article == null) || article.isNew()) ? journalEditArticleDisplayContext.getVersion() : article.getVersion() %>"
+	/>
+	<aui:input
+		name="articleURL"
+		type="hidden"
+		value="<%= editArticleRenderURL %>"
+	/>
 	<aui:input name="ddmStructureId" type="hidden" />
 	<aui:input name="ddmTemplateId" type="hidden" />
-	<aui:input name="languageId" type="hidden" value="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>" />
-	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
+	<aui:input
+		name="languageId"
+		type="hidden"
+		value="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>"
+	/>
+	<aui:input
+		name="workflowAction"
+		type="hidden"
+		value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>"
+	/>
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-article">
 		<div class="container-fluid container-fluid-max-xl">
@@ -61,11 +124,27 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 					DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 					%>
 
-					<aui:input autoFocus="<%= (article == null) || article.isNew() %>" cssClass="form-control-inline" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" label="" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' required="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>" selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>" type="text" wrapperCssClass="article-content-title mb-0" />
+					<aui:input
+						autoFocus="<%= (article == null) || article.isNew() %>"
+						cssClass="form-control-inline"
+						defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"
+						label=""
+						localized="<%= true %>"
+						name="titleMapAsXML"
+						placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>'
+						required="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
+						selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>"
+						type="text"
+						wrapperCssClass="article-content-title mb-0"
+					/>
 				</li>
 				<li class="tbar-item">
 					<div class="journal-article-button-row tbar-section text-right">
-						<aui:button cssClass="btn-outline-borderless btn-outline-secondary btn-sm mr-3" href="<%= journalEditArticleDisplayContext.getRedirect() %>" type="cancel" />
+						<aui:button
+							cssClass="btn-outline-borderless btn-outline-secondary btn-sm mr-3"
+							href="<%= journalEditArticleDisplayContext.getRedirect() %>"
+							type="cancel"
+						/>
 
 						<c:if test="<%= journalEditArticleDisplayContext.getClassNameId() > JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 							<portlet:actionURL name="/journal/reset_values_ddm_structure" var="resetValuesDDMStructureURL">
@@ -76,15 +155,34 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 								<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
 							</portlet:actionURL>
 
-							<aui:button cssClass="btn-secondary btn-sm mr-3" data-url="<%= resetValuesDDMStructureURL %>" name="resetValuesButton" value="reset-values" />
+							<aui:button
+								cssClass="btn-secondary btn-sm mr-3"
+								data-url="<%= resetValuesDDMStructureURL %>"
+								name="resetValuesButton"
+								value="reset-values"
+							/>
 						</c:if>
 
 						<c:if test="<%= journalEditArticleDisplayContext.hasSavePermission() %>">
 							<c:if test="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-								<aui:button cssClass="btn-sm mr-3" data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "/journal/add_article" : "/journal/update_article" %>' name="saveButton" primary="<%= false %>" type="submit" value="<%= journalEditArticleDisplayContext.getSaveButtonLabel() %>" />
+								<aui:button
+									cssClass="btn-sm mr-3"
+									data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "/journal/add_article" : "/journal/update_article" %>'
+									name="saveButton"
+									primary="<%= false %>"
+									type="submit"
+									value="<%= journalEditArticleDisplayContext.getSaveButtonLabel() %>"
+								/>
 							</c:if>
 
-							<aui:button cssClass="btn-sm mr-3" data-actionname="<%= Constants.PUBLISH %>" disabled="<%= journalEditArticleDisplayContext.isPending() %>" name="publishButton" type="submit" value="<%= journalEditArticleDisplayContext.getPublishButtonLabel() %>" />
+							<aui:button
+								cssClass="btn-sm mr-3"
+								data-actionname="<%= Constants.PUBLISH %>"
+								disabled="<%= journalEditArticleDisplayContext.isPending() %>"
+								name="publishButton"
+								type="submit"
+								value="<%= journalEditArticleDisplayContext.getPublishButtonLabel() %>"
+							/>
 						</c:if>
 
 						<clay:button
@@ -127,10 +225,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 
 				<c:if test="<%= (article != null) && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
 					<liferay-ui:section>
-						<liferay-layout:layout-classed-model-usages-view
-							className="<%= JournalArticle.class.getName() %>"
-							classPK="<%= article.getResourcePrimKey() %>"
-						/>
+						<liferay-layout:layout-classed-model-usages-view className="<%= JournalArticle.class.getName() %>" classPK="<%= article.getResourcePrimKey() %>" />
 					</liferay-ui:section>
 				</c:if>
 			</liferay-ui:tabs>
@@ -140,7 +235,11 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	<div class="contextual-sidebar-content">
 		<div class="container-fluid container-fluid-max-xl container-view">
 			<div class="sheet sheet-lg">
-				<aui:model-context bean="<%= article %>" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" model="<%= JournalArticle.class %>" />
+				<aui:model-context
+					bean="<%= article %>"
+					defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"
+					model="<%= JournalArticle.class %>"
+				/>
 
 				<liferay-ui:error exception="<%= ArticleContentException.class %>" message="please-enter-valid-content" />
 				<liferay-ui:error exception="<%= ArticleContentSizeException.class %>" message="you-have-exceeded-the-maximum-web-content-size-allowed" />
@@ -190,13 +289,21 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 				</liferay-ui:error>
 
 				<liferay-ui:error exception="<%= FileSizeException.class %>">
-					<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(DLValidatorUtil.getMaxAllowableSize(), locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= LanguageUtil.formatStorageSize(DLValidatorUtil.getMaxAllowableSize(), locale) %>"
+						key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x"
+						translateArguments="<%= false %>"
+					/>
 				</liferay-ui:error>
 
 				<liferay-ui:error exception="<%= InvalidDDMStructureException.class %>" message="the-structure-you-selected-is-not-valid-for-this-folder" />
 
 				<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
-					<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= LanguageUtil.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>"
+						key="please-enter-valid-content-with-valid-content-size-no-larger-than-x"
+						translateArguments="<%= false %>"
+					/>
 				</liferay-ui:error>
 
 				<liferay-ui:error exception="<%= LocaleException.class %>">

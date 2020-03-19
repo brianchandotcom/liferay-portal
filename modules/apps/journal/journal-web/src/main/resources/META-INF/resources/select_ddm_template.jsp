@@ -20,14 +20,14 @@
 JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = new JournalSelectDDMTemplateDisplayContext(renderRequest, renderResponse);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new JournalSelectDDMTemplateManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalSelectDDMTemplateDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new JournalSelectDDMTemplateManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalSelectDDMTemplateDisplayContext) %>" />
 
-<aui:form cssClass="container-fluid-1280" method="post" name="selectDDMTemplateFm">
-	<liferay-ui:search-container
-		searchContainer="<%= journalSelectDDMTemplateDisplayContext.getTemplateSearch() %>"
-	>
+<aui:form
+	cssClass="container-fluid-1280"
+	method="post"
+	name="selectDDMTemplateFm"
+>
+	<liferay-ui:search-container searchContainer="<%= journalSelectDDMTemplateDisplayContext.getTemplateSearch() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
 			keyProperty="templateId"
@@ -41,16 +41,11 @@ JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = 
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:vertical-card
-							verticalCard="<%= new JournalSelectDDMTemplateVerticalCard(ddmTemplate, renderRequest, journalSelectDDMTemplateDisplayContext) %>"
-						/>
+						<clay:vertical-card verticalCard="<%= new JournalSelectDDMTemplateVerticalCard(ddmTemplate, renderRequest, journalSelectDDMTemplateDisplayContext) %>" />
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						name="name"
-					>
+					<liferay-ui:search-container-column-text cssClass="table-cell-content" name="name">
 						<c:choose>
 							<c:when test="<%= ddmTemplate.getTemplateId() != journalSelectDDMTemplateDisplayContext.getDDMTemplateId() %>">
 
@@ -64,7 +59,11 @@ JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = 
 								data.put("name", ddmTemplate.getName(locale));
 								%>
 
-								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<aui:a
+									cssClass="selector-button"
+									data="<%= data %>"
+									href="javascript:;"
+								>
 									<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>
 								</aui:a>
 							</c:when>
@@ -80,18 +79,12 @@ JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = 
 						value="<%= HtmlUtil.escape(ddmTemplate.getDescription(locale)) %>"
 					/>
 
-					<liferay-ui:search-container-column-date
-						name="modified-date"
-						value="<%= ddmTemplate.getModifiedDate() %>"
-					/>
+					<liferay-ui:search-container-column-date name="modified-date" value="<%= ddmTemplate.getModifiedDate() %>" />
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= journalSelectDDMTemplateDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= journalSelectDDMTemplateDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

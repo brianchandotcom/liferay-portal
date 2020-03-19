@@ -20,28 +20,22 @@
 AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarDisplayContext = new AssetCategoriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetCategoriesDisplayContext);
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= assetCategoriesDisplayContext.getAssetCategoriesNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= assetCategoriesDisplayContext.getAssetCategoriesNavigationItems() %>" />
 
-<clay:management-toolbar
-	displayContext="<%= assetCategoriesManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= assetCategoriesManagementToolbarDisplayContext %>" />
 
 <portlet:actionURL name="deleteCategory" var="deleteCategoryURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteCategoryURL %>" cssClass="container-fluid-1280" name="fm">
-	<liferay-site-navigation:breadcrumb
-		breadcrumbEntries="<%= AssetCategoryUtil.getAssetCategoriesBreadcrumbEntries(assetCategoriesDisplayContext.getVocabulary(), assetCategoriesDisplayContext.getCategory(), request, renderResponse) %>"
-	/>
+<aui:form
+	action="<%= deleteCategoryURL %>"
+	cssClass="container-fluid-1280"
+	name="fm"
+>
+	<liferay-site-navigation:breadcrumb breadcrumbEntries="<%= AssetCategoryUtil.getAssetCategoriesBreadcrumbEntries(assetCategoriesDisplayContext.getVocabulary(), assetCategoriesDisplayContext.getCategory(), request, renderResponse) %>" />
 
-	<liferay-ui:search-container
-		id="assetCategories"
-		searchContainer="<%= assetCategoriesDisplayContext.getCategoriesSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="assetCategories" searchContainer="<%= assetCategoriesDisplayContext.getCategoriesSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.asset.kernel.model.AssetCategory"
 			keyProperty="categoryId"
@@ -65,16 +59,15 @@ AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarD
 
 			<c:choose>
 				<c:when test='<%= Objects.equals(assetCategoriesDisplayContext.getDisplayStyle(), "descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="categories"
-						toggleRowChecker="<%= true %>"
-					/>
+					<liferay-ui:search-container-column-icon icon="categories" toggleRowChecker="<%= true %>" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<span class="text-default">
-							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - curCategory.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - curCategory.getCreateDate().getTime(), true) %>"
+								key="x-ago"
+								translateArguments="<%= false %>"
+							/>
 						</span>
 
 						<h2 class="h5">
@@ -89,9 +82,7 @@ AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarD
 						</span>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/category_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/category_action.jsp" />
 				</c:when>
 				<c:when test='<%= Objects.equals(assetCategoriesDisplayContext.getDisplayStyle(), "list") %>'>
 					<c:choose>
@@ -102,10 +93,7 @@ AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarD
 								value="<%= HtmlUtil.escape(curCategory.getTitle(locale)) %>"
 							/>
 
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-expand table-cell-minw-200"
-								name="path"
-							>
+							<liferay-ui:search-container-column-text cssClass="table-cell-expand table-cell-minw-200" name="path">
 								<%= HtmlUtil.escape(curCategory.getPath(locale, true)) %> > <strong><%= HtmlUtil.escape(curCategory.getTitle(locale)) %></strong>
 							</liferay-ui:search-container-column-text>
 						</c:when>
@@ -137,17 +125,12 @@ AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarD
 						property="createDate"
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/category_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/category_action.jsp" />
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= assetCategoriesDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= assetCategoriesDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
@@ -162,7 +145,4 @@ AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarD
 	<aui:input name="vocabularyId" type="hidden" />
 </aui:form>
 
-<liferay-frontend:component
-	componentId="<%= assetCategoriesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/AssetCategoriesManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= assetCategoriesManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/AssetCategoriesManagementToolbarDefaultEventHandler.es" />

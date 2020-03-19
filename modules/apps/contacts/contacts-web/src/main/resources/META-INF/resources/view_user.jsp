@@ -49,10 +49,7 @@ request.setAttribute("view_user.jsp-user", user2);
 						<div class="lfr-asset-metadata">
 							<c:if test="<%= connection %>">
 								<span class="lfr-asset-icon lfr-asset-connection<%= (following || follower) ? StringPool.BLANK : " last" %>">
-									<liferay-ui:icon
-										icon="user"
-										markupView="lexicon"
-									/>
+									<liferay-ui:icon icon="user" markupView="lexicon" />
 
 									<liferay-ui:message key="connection" />
 								</span>
@@ -60,10 +57,7 @@ request.setAttribute("view_user.jsp-user", user2);
 
 							<c:if test="<%= following %>">
 								<span class="lfr-asset-icon lfr-asset-following<%= follower ? StringPool.BLANK : " last" %>">
-									<liferay-ui:icon
-										icon="user"
-										markupView="lexicon"
-									/>
+									<liferay-ui:icon icon="user" markupView="lexicon" />
 
 									<liferay-ui:message key="following" />
 								</span>
@@ -71,10 +65,7 @@ request.setAttribute("view_user.jsp-user", user2);
 
 							<c:if test="<%= follower %>">
 								<span class="last lfr-asset-follower lfr-asset-icon">
-									<liferay-ui:icon
-										icon="user"
-										markupView="lexicon"
-									/>
+									<liferay-ui:icon icon="user" markupView="lexicon" />
 
 									<liferay-ui:message key="follower" />
 								</span>
@@ -273,7 +264,11 @@ request.setAttribute("view_user.jsp-user", user2);
 											</c:when>
 											<c:otherwise>
 												<div class="empty">
-													<liferay-ui:message arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(user2.getUserId(), scopeGroup.getDescriptiveName(locale))) %>" key="x-does-not-belong-to-any-sites" translateArguments="<%= false %>" />
+													<liferay-ui:message
+														arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(user2.getUserId(), scopeGroup.getDescriptiveName(locale))) %>"
+														key="x-does-not-belong-to-any-sites"
+														translateArguments="<%= false %>"
+													/>
 												</div>
 											</c:otherwise>
 										</c:choose>
@@ -331,7 +326,11 @@ request.setAttribute("view_user.jsp-user", user2);
 											</div>
 										</c:when>
 										<c:otherwise>
-											<liferay-ui:message arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(user2.getUserId(), scopeGroup.getDescriptiveName(locale))) %>" key="x-does-not-have-any-tags" translateArguments="<%= false %>" />
+											<liferay-ui:message
+												arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(user2.getUserId(), scopeGroup.getDescriptiveName(locale))) %>"
+												key="x-does-not-have-any-tags"
+												translateArguments="<%= false %>"
+											/>
 										</c:otherwise>
 									</c:choose>
 								</c:if>
@@ -346,10 +345,7 @@ request.setAttribute("view_user.jsp-user", user2);
 					<liferay-ui:message key="recent-activity" />
 				</div>
 
-				<liferay-social-activities:social-activities
-					activities="<%= SocialActivityLocalServiceUtil.getUserActivities(user2.getUserId(), 0, 10) %>"
-					feedEnabled="<%= false %>"
-				/>
+				<liferay-social-activities:social-activities activities="<%= SocialActivityLocalServiceUtil.getUserActivities(user2.getUserId(), 0, 10) %>" feedEnabled="<%= false %>" />
 			</c:if>
 		</c:if>
 	</div>

@@ -28,9 +28,7 @@ portletURL.setParameter("tabs1", "service-provider-connections");
 	iteratorURL="<%= portletURL %>"
 	total="<%= GetterUtil.getInteger(renderRequest.getAttribute(SamlWebKeys.SAML_IDP_SP_CONNECTIONS_COUNT)) %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= (List<SamlIdpSpConnection>)renderRequest.getAttribute(SamlWebKeys.SAML_IDP_SP_CONNECTIONS) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= (List<SamlIdpSpConnection>)renderRequest.getAttribute(SamlWebKeys.SAML_IDP_SP_CONNECTIONS) %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.saml.persistence.model.SamlIdpSpConnection"
@@ -76,7 +74,11 @@ portletURL.setParameter("tabs1", "service-provider-connections");
 	</portlet:renderURL>
 
 	<aui:button-row>
-		<aui:button href="<%= addServiceProviderURL %>" label="add-service-provider" value="add-service-provider" />
+		<aui:button
+			href="<%= addServiceProviderURL %>"
+			label="add-service-provider"
+			value="add-service-provider"
+		/>
 	</aui:button-row>
 
 	<liferay-ui:search-iterator />

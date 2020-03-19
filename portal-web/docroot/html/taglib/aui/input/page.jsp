@@ -23,16 +23,12 @@ if (type.equals("textarea") && BrowserSnifferUtil.isIe(request) && ((BrowserSnif
 %>
 
 <c:if test="<%= Validator.isNotNull(helpMessage) %>">
-	<liferay-util:buffer
-		var="helpMessageContent"
-	>
+	<liferay-util:buffer var="helpMessageContent">
 		<liferay-ui:icon-help message="<%= helpMessage %>" />
 	</liferay-util:buffer>
 </c:if>
 
-<liferay-util:buffer
-	var="labelContent"
->
+<liferay-util:buffer var="labelContent">
 	<c:if test="<%= Validator.isNotNull(label) %>">
 		<c:if test='<%= type.equals("toggle-switch") %>'>
 			<span class="toggle-switch-label">
@@ -45,7 +41,11 @@ if (type.equals("textarea") && BrowserSnifferUtil.isIe(request) && ((BrowserSnif
 		</c:if>
 
 		<c:if test='<%= required && showRequiredLabel && !type.equals("radio") %>'>
-			<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
+			<aui:icon
+				cssClass="reference-mark text-warning"
+				image="asterisk"
+				markupView="lexicon"
+			/>
 
 			<span class="hide-accessible"><liferay-ui:message key="required" /></span>
 		</c:if>

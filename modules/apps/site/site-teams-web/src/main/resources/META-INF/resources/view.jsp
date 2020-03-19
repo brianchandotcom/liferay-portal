@@ -22,18 +22,18 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 SiteTeamsManagementToolbarDisplayContext siteTeamsManagementToolbarDisplayContext = new SiteTeamsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteTeamsDisplayContext);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= siteTeamsManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= siteTeamsManagementToolbarDisplayContext %>" />
 
 <portlet:actionURL name="deleteTeams" var="deleteTeamsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteTeamsURL %>" cssClass="container-fluid-1280" name="fm">
-	<liferay-ui:search-container
-		searchContainer="<%= siteTeamsDisplayContext.getSearchContainer() %>"
-	>
+<aui:form
+	action="<%= deleteTeamsURL %>"
+	cssClass="container-fluid-1280"
+	name="fm"
+>
+	<liferay-ui:search-container searchContainer="<%= siteTeamsDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Team"
 			cssClass="selectable"
@@ -61,14 +61,9 @@ SiteTeamsManagementToolbarDisplayContext siteTeamsManagementToolbarDisplayContex
 
 			<c:choose>
 				<c:when test="<%= siteTeamsDisplayContext.isDescriptiveView() %>">
-					<liferay-ui:search-container-column-icon
-						icon="users"
-						toggleRowChecker="<%= true %>"
-					/>
+					<liferay-ui:search-container-column-icon icon="users" toggleRowChecker="<%= true %>" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h5>
 							<aui:a href="<%= (rowURL != null) ? rowURL.toString() : null %>"><%= team.getName() %></aui:a>
 						</h5>
@@ -78,9 +73,7 @@ SiteTeamsManagementToolbarDisplayContext siteTeamsManagementToolbarDisplayContex
 						</h6>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/team_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/team_action.jsp" />
 				</c:when>
 				<c:when test="<%= siteTeamsDisplayContext.isListView() %>">
 					<liferay-ui:search-container-column-text
@@ -97,21 +90,13 @@ SiteTeamsManagementToolbarDisplayContext siteTeamsManagementToolbarDisplayContex
 						property="description"
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/team_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/team_action.jsp" />
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= siteTeamsDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= siteTeamsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
-<liferay-frontend:component
-	componentId="<%= siteTeamsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/SiteTeamsManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= siteTeamsManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/SiteTeamsManagementToolbarDefaultEventHandler.es" />

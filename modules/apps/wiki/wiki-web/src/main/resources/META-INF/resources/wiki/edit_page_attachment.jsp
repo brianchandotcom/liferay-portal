@@ -28,25 +28,41 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 </div>
 
 <div class="hide lfr-fallback" id="<portlet:namespace />fallback">
-	<aui:input name="numOfFiles" type="hidden" value="3" />
+	<aui:input
+		name="numOfFiles"
+		type="hidden"
+		value="3"
+	/>
 
 	<%
 	String acceptedExtensions = StringUtil.merge(dlConfiguration.fileExtensions(), StringPool.COMMA_AND_SPACE);
 	%>
 
-	<aui:input label='<%= LanguageUtil.get(request, "file") + " 1" %>' name="file1" type="file">
+	<aui:input
+		label='<%= LanguageUtil.get(request, "file") + " 1" %>'
+		name="file1"
+		type="file"
+	>
 		<aui:validator name="acceptFiles">
 			'<%= acceptedExtensions %>'
 		</aui:validator>
 	</aui:input>
 
-	<aui:input label='<%= LanguageUtil.get(request, "file") + " 2" %>' name="file2" type="file">
+	<aui:input
+		label='<%= LanguageUtil.get(request, "file") + " 2" %>'
+		name="file2"
+		type="file"
+	>
 		<aui:validator name="acceptFiles">
 			'<%= acceptedExtensions %>'
 		</aui:validator>
 	</aui:input>
 
-	<aui:input label='<%= LanguageUtil.get(request, "file") + " 3" %>' name="file3" type="file">
+	<aui:input
+		label='<%= LanguageUtil.get(request, "file") + " 3" %>'
+		name="file3"
+		type="file"
+	>
 		<aui:validator name="acceptFiles">
 			'<%= acceptedExtensions %>'
 		</aui:validator>

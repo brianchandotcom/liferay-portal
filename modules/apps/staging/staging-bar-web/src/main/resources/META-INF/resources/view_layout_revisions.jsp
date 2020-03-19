@@ -42,14 +42,24 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 <div class="container-fluid-1280">
 	<c:if test="<%= !rootLayoutRevisions.isEmpty() %>">
 		<c:if test="<%= rootLayoutRevisions.size() > 1 %>">
-			<aui:select cssClass="variation-selector" inlineLabel="left" label="" name="variationsSelector">
+			<aui:select
+				cssClass="variation-selector"
+				inlineLabel="left"
+				label=""
+				name="variationsSelector"
+			>
 
 				<%
 				for (LayoutRevision rootLayoutRevision : rootLayoutRevisions) {
 					LayoutBranch layoutBranch = rootLayoutRevision.getLayoutBranch();
 				%>
 
-					<aui:option label="<%= HtmlUtil.escape(layoutBranchDisplayContext.getLayoutBranchDisplayName(layoutBranch)) %>" localizeLabel="<%= false %>" selected="<%= recentLayoutRevision.getLayoutBranchId() == rootLayoutRevision.getLayoutBranchId() %>" value="<%= rootLayoutRevision.getLayoutRevisionId() %>" />
+					<aui:option
+						label="<%= HtmlUtil.escape(layoutBranchDisplayContext.getLayoutBranchDisplayName(layoutBranch)) %>"
+						localizeLabel="<%= false %>"
+						selected="<%= recentLayoutRevision.getLayoutBranchId() == rootLayoutRevision.getLayoutBranchId() %>"
+						value="<%= rootLayoutRevision.getLayoutRevisionId() %>"
+					/>
 
 				<%
 				}
@@ -75,12 +85,8 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 						<h3 class="layout-variation-name"><liferay-ui:message key="<%= HtmlUtil.escape(layoutBranchDisplayContext.getLayoutBranchDisplayName(layoutBranch)) %>" translateArguments="<%= false %>" /></h3>
 					</c:if>
 
-					<liferay-ui:search-container
-						total="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisionsCount(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getLayoutBranchId(), rootLayoutRevision.getPlid()) %>"
-					>
-						<liferay-ui:search-container-results
-							results="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisions(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getLayoutBranchId(), rootLayoutRevision.getPlid(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionIdComparator(false)) %>"
-						/>
+					<liferay-ui:search-container total="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisionsCount(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getLayoutBranchId(), rootLayoutRevision.getPlid()) %>">
+						<liferay-ui:search-container-results results="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisions(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getLayoutBranchId(), rootLayoutRevision.getPlid(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionIdComparator(false)) %>" />
 
 						<liferay-ui:search-container-row
 							className="com.liferay.portal.kernel.model.LayoutRevision"
@@ -88,14 +94,9 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 							keyProperty="layoutRevisionId"
 							modelVar="curLayoutRevision"
 						>
-							<liferay-ui:search-container-column-date
-								name="date"
-								value="<%= curLayoutRevision.getCreateDate() %>"
-							/>
+							<liferay-ui:search-container-column-date name="date" value="<%= curLayoutRevision.getCreateDate() %>" />
 
-							<liferay-ui:search-container-column-text
-								name="status"
-							>
+							<liferay-ui:search-container-column-text name="status">
 								<aui:model-context bean="<%= curLayoutRevision %>" model="<%= LayoutRevision.class %>" />
 
 								<%
@@ -104,17 +105,24 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 
 								<c:choose>
 									<c:when test="<%= curLayoutRevision.isHead() %>">
-										<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" statusMessage="ready-for-publication" />
+										<aui:workflow-status
+											showIcon="<%= false %>"
+											showLabel="<%= false %>"
+											status="<%= status %>"
+											statusMessage="ready-for-publication"
+										/>
 									</c:when>
 									<c:otherwise>
-										<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
+										<aui:workflow-status
+											showIcon="<%= false %>"
+											showLabel="<%= false %>"
+											status="<%= status %>"
+										/>
 									</c:otherwise>
 								</c:choose>
 							</liferay-ui:search-container-column-text>
 
-							<liferay-ui:search-container-column-text
-								name="version"
-							>
+							<liferay-ui:search-container-column-text name="version">
 								<c:choose>
 									<c:when test="<%= curLayoutRevision.getLayoutRevisionId() == currentLayoutRevisionId %>">
 										<span class="layout-revision-current"><%= curLayoutRevision.getLayoutRevisionId() %></span>
@@ -128,9 +136,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 								</c:choose>
 							</liferay-ui:search-container-column-text>
 
-							<liferay-ui:search-container-column-text
-								name="user"
-							>
+							<liferay-ui:search-container-column-text name="user">
 
 								<%
 								User curUser = UserLocalServiceUtil.fetchUserById(curLayoutRevision.getUserId());

@@ -40,12 +40,17 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" varImpl="configurationRenderURL" />
 
 <div class="portlet-configuration-body-content">
-	<liferay-ui:tabs
-		names='<%= (selRecordSet == null) ? "lists" : "lists,optional-configuration" %>'
-		refresh="<%= false %>"
-	>
-		<aui:form action="<%= configurationRenderURL %>" method="post" name="fm1">
-			<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
+	<liferay-ui:tabs names='<%= (selRecordSet == null) ? "lists" : "lists,optional-configuration" %>' refresh="<%= false %>">
+		<aui:form
+			action="<%= configurationRenderURL %>"
+			method="post"
+			name="fm1"
+		>
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value="<%= configurationRenderURL.toString() %>"
+			/>
 
 			<liferay-ui:section>
 				<div class="container-fluid-1280">
@@ -71,15 +76,10 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 									total="<%= searchTotal %>"
 								>
 									<div class="form-search input-append">
-										<liferay-ui:input-search
-											autoFocus="<%= true %>"
-											placeholder='<%= LanguageUtil.get(request, "keywords") %>'
-										/>
+										<liferay-ui:input-search autoFocus="<%= true %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
 									</div>
 
-									<liferay-ui:search-container-results
-										results="<%= DDLRecordSetServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, searchContainer.getStart(), searchContainer.getEnd(), getDDLRecordSetOrderByComparator(orderByCol, orderByType)) %>"
-									/>
+									<liferay-ui:search-container-results results="<%= DDLRecordSetServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, searchContainer.getStart(), searchContainer.getEnd(), getDDLRecordSetOrderByComparator(orderByCol, orderByType)) %>" />
 
 									<liferay-ui:search-container-row
 										className="com.liferay.dynamic.data.lists.model.DDLRecordSet"
@@ -126,9 +126,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 									<div class="separator"></div>
 
-									<liferay-ui:search-iterator
-										searchResultCssClass="show-quick-actions-on-hover table table-autofit"
-									/>
+									<liferay-ui:search-iterator searchResultCssClass="show-quick-actions-on-hover table table-autofit" />
 								</liferay-ui:search-container>
 							</div>
 						</div>
@@ -137,10 +135,26 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 			</liferay-ui:section>
 		</aui:form>
 
-		<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-			<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur" + cur %>' />
-			<aui:input name="preferences--recordSetId--" type="hidden" value="<%= recordSetId %>" />
+		<aui:form
+			action="<%= configurationActionURL %>"
+			method="post"
+			name="fm"
+		>
+			<aui:input
+				name="<%= Constants.CMD %>"
+				type="hidden"
+				value="<%= Constants.UPDATE %>"
+			/>
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value='<%= configurationRenderURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur" + cur %>'
+			/>
+			<aui:input
+				name="preferences--recordSetId--"
+				type="hidden"
+				value="<%= recordSetId %>"
+			/>
 
 			<c:if test="<%= selRecordSet != null %>">
 				<liferay-ui:section>
@@ -154,7 +168,11 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 						<aui:fieldset>
 							<div class="lfr-ddl-content">
 								<div class="sheet sheet-lg">
-									<aui:select helpMessage="select-the-display-template-used-to-diplay-the-list-records" label="display-template" name="preferences--displayDDMTemplateId--">
+									<aui:select
+										helpMessage="select-the-display-template-used-to-diplay-the-list-records"
+										label="display-template"
+										name="preferences--displayDDMTemplateId--"
+									>
 										<aui:option label="default" value="<%= 0 %>" />
 
 										<%
@@ -178,7 +196,11 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 											}
 										%>
 
-											<aui:option label="<%= HtmlUtil.escape(template.getName(locale)) %>" selected="<%= selected %>" value="<%= template.getTemplateId() %>" />
+											<aui:option
+												label="<%= HtmlUtil.escape(template.getName(locale)) %>"
+												selected="<%= selected %>"
+												value="<%= template.getTemplateId() %>"
+											/>
 
 										<%
 										}
@@ -186,7 +208,11 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 									</aui:select>
 
-									<aui:select helpMessage="select-the-form-template-used-to-add-records-to-the-list" label="form-template" name="preferences--formDDMTemplateId--">
+									<aui:select
+										helpMessage="select-the-form-template-used-to-add-records-to-the-list"
+										label="form-template"
+										name="preferences--formDDMTemplateId--"
+									>
 										<aui:option label="default" value="<%= 0 %>" />
 
 										<%
@@ -210,7 +236,11 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 											}
 										%>
 
-											<aui:option label="<%= HtmlUtil.escape(template.getName(locale)) %>" selected="<%= selected %>" value="<%= template.getTemplateId() %>" />
+											<aui:option
+												label="<%= HtmlUtil.escape(template.getName(locale)) %>"
+												selected="<%= selected %>"
+												value="<%= template.getTemplateId() %>"
+											/>
 
 										<%
 										}
@@ -218,11 +248,28 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 									</aui:select>
 
-									<aui:input helpMessage="check-to-allow-users-to-add-records-to-the-list" name="preferences--editable--" type="checkbox" value="<%= editable %>" />
+									<aui:input
+										helpMessage="check-to-allow-users-to-add-records-to-the-list"
+										name="preferences--editable--"
+										type="checkbox"
+										value="<%= editable %>"
+									/>
 
-									<aui:input helpMessage="check-to-display-the-form-entry-view" label="form-view" name="preferences--formView--" type="checkbox" value="<%= formView %>" />
+									<aui:input
+										helpMessage="check-to-display-the-form-entry-view"
+										label="form-view"
+										name="preferences--formView--"
+										type="checkbox"
+										value="<%= formView %>"
+									/>
 
-									<aui:input helpMessage="check-to-view-the-list-records-in-a-spreadsheet" label="spreadsheet-view" name="preferences--spreadsheet--" type="checkbox" value="<%= spreadsheet %>" />
+									<aui:input
+										helpMessage="check-to-view-the-list-records-in-a-spreadsheet"
+										label="spreadsheet-view"
+										name="preferences--spreadsheet--"
+										type="checkbox"
+										value="<%= spreadsheet %>"
+									/>
 								</div>
 							</div>
 						</aui:fieldset>

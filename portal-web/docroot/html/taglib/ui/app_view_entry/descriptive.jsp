@@ -46,7 +46,11 @@
 			</c:if>
 
 			<c:if test="<%= !folder && (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">
-				<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
+				<aui:workflow-status
+					showIcon="<%= false %>"
+					showLabel="<%= false %>"
+					status="<%= status %>"
+				/>
 			</c:if>
 		</div>
 	</c:if>
@@ -139,7 +143,11 @@
 					</c:choose>
 
 					<dd class="entry-author">
-						<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - modifiedDate.getTime(), true), HtmlUtil.escape(author)} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - modifiedDate.getTime(), true), HtmlUtil.escape(author)} %>"
+							key="x-ago-by-x"
+							translateArguments="<%= false %>"
+						/>
 					</dd>
 				</c:if>
 
@@ -177,19 +185,13 @@
 
 			<c:if test="<%= Validator.isNotNull(assetCategoryClassName) && (assetCategoryClassPK > 0) %>">
 				<span class="entry-categories">
-					<liferay-ui:asset-categories-summary
-						className="<%= assetCategoryClassName %>"
-						classPK="<%= assetCategoryClassPK %>"
-					/>
+					<liferay-ui:asset-categories-summary className="<%= assetCategoryClassName %>" classPK="<%= assetCategoryClassPK %>" />
 				</span>
 			</c:if>
 
 			<c:if test="<%= Validator.isNotNull(assetTagClassName) && (assetTagClassPK > 0) %>">
 				<span class="entry-tags">
-					<liferay-ui:asset-tags-summary
-						className="<%= assetTagClassName %>"
-						classPK="<%= assetTagClassPK %>"
-					/>
+					<liferay-ui:asset-tags-summary className="<%= assetTagClassName %>" classPK="<%= assetTagClassPK %>" />
 				</span>
 			</c:if>
 
@@ -230,6 +232,14 @@
 	<liferay-util:include page="<%= actionJsp %>" servletContext="<%= actionJspServletContext %>" />
 
 	<c:if test="<%= showCheckbox %>">
-		<aui:input cssClass="entry-selector overlay" id="<%= rowCheckerId %>" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" title='<%= LanguageUtil.format(request, "select-x", HtmlUtil.escapeAttribute(shortTitle)) %>' type="checkbox" value="<%= rowCheckerId %>" />
+		<aui:input
+			cssClass="entry-selector overlay"
+			id="<%= rowCheckerId %>"
+			label=""
+			name="<%= RowChecker.ROW_IDS + rowCheckerName %>"
+			title='<%= LanguageUtil.format(request, "select-x", HtmlUtil.escapeAttribute(shortTitle)) %>'
+			type="checkbox"
+			value="<%= rowCheckerId %>"
+		/>
 	</c:if>
 </div>

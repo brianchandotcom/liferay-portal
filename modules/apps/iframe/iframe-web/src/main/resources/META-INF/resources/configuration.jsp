@@ -38,8 +38,16 @@ String htmlAttributes =
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
@@ -48,9 +56,22 @@ String htmlAttributes =
 				collapsible="<%= true %>"
 				label="source"
 			>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="lfr-input-text-container" label="source-url" name="preferences--src--" prefix="<%= iFramePortletInstanceConfiguration.relative() ? StringPool.TRIPLE_PERIOD : StringPool.BLANK %>" type="text" value="<%= iFramePortletInstanceConfiguration.src() %>" />
+				<aui:input
+					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>"
+					cssClass="lfr-input-text-container"
+					label="source-url"
+					name="preferences--src--"
+					prefix="<%= iFramePortletInstanceConfiguration.relative() ? StringPool.TRIPLE_PERIOD : StringPool.BLANK %>"
+					type="text"
+					value="<%= iFramePortletInstanceConfiguration.src() %>"
+				/>
 
-				<aui:input label="relative-to-context-path" name="preferences--relative--" type="toggle-switch" value="<%= iFramePortletInstanceConfiguration.relative() %>" />
+				<aui:input
+					label="relative-to-context-path"
+					name="preferences--relative--"
+					type="toggle-switch"
+					value="<%= iFramePortletInstanceConfiguration.relative() %>"
+				/>
 			</liferay-frontend:fieldset>
 
 			<liferay-frontend:fieldset
@@ -58,7 +79,12 @@ String htmlAttributes =
 				collapsible="<%= true %>"
 				label="authenticate"
 			>
-				<aui:input label="authenticate" name="preferences--auth--" type="toggle-switch" value="<%= iFramePortletInstanceConfiguration.auth() %>" />
+				<aui:input
+					label="authenticate"
+					name="preferences--auth--"
+					type="toggle-switch"
+					value="<%= iFramePortletInstanceConfiguration.auth() %>"
+				/>
 
 				<div id="<portlet:namespace />authenticationOptions">
 					<div class="alert alert-info" id="<portlet:namespace />currentLoginMsg">
@@ -72,7 +98,11 @@ String htmlAttributes =
 						</c:choose>
 					</div>
 
-					<aui:select label="authentication-type" name="preferences--authType--" value="<%= iFrameDisplayContext.getAuthType() %>">
+					<aui:select
+						label="authentication-type"
+						name="preferences--authType--"
+						value="<%= iFrameDisplayContext.getAuthType() %>"
+					>
 						<aui:option label="basic" />
 						<aui:option label="form" />
 					</aui:select>
@@ -87,10 +117,22 @@ String htmlAttributes =
 							<table class="lfr-table">
 								<tr>
 									<td>
-										<aui:input cssClass="lfr-input-text-container" label="field-name" name="preferences--userNameField--" type="text" value="<%= iFramePortletInstanceConfiguration.userNameField() %>" />
+										<aui:input
+											cssClass="lfr-input-text-container"
+											label="field-name"
+											name="preferences--userNameField--"
+											type="text"
+											value="<%= iFramePortletInstanceConfiguration.userNameField() %>"
+										/>
 									</td>
 									<td>
-										<aui:input cssClass="lfr-input-text-container" label="value" name="preferences--formUserName--" type="text" value="<%= iFramePortletInstanceConfiguration.formUserName() %>" />
+										<aui:input
+											cssClass="lfr-input-text-container"
+											label="value"
+											name="preferences--formUserName--"
+											type="text"
+											value="<%= iFramePortletInstanceConfiguration.formUserName() %>"
+										/>
 									</td>
 								</tr>
 							</table>
@@ -100,22 +142,51 @@ String htmlAttributes =
 							<table class="lfr-table">
 								<tr>
 									<td>
-										<aui:input cssClass="lfr-input-text-container" label="field-name" name="preferences--passwordField--" type="text" value="<%= iFramePortletInstanceConfiguration.passwordField() %>" />
+										<aui:input
+											cssClass="lfr-input-text-container"
+											label="field-name"
+											name="preferences--passwordField--"
+											type="text"
+											value="<%= iFramePortletInstanceConfiguration.passwordField() %>"
+										/>
 									</td>
 									<td>
-										<aui:input cssClass="lfr-input-text-container" label="value" name="preferences--formPassword--" type="text" value="<%= iFramePortletInstanceConfiguration.formPassword() %>" />
+										<aui:input
+											cssClass="lfr-input-text-container"
+											label="value"
+											name="preferences--formPassword--"
+											type="text"
+											value="<%= iFramePortletInstanceConfiguration.formPassword() %>"
+										/>
 									</td>
 								</tr>
 							</table>
 
-							<aui:input cssClass="lfr-input-text-container" name="preferences--hiddenVariables--" type="text" value="<%= iFrameDisplayContext.getHiddenVariables() %>" />
+							<aui:input
+								cssClass="lfr-input-text-container"
+								name="preferences--hiddenVariables--"
+								type="text"
+								value="<%= iFrameDisplayContext.getHiddenVariables() %>"
+							/>
 						</aui:field-wrapper>
 					</div>
 
 					<div id="<portlet:namespace />basicAuthOptions">
-						<aui:input cssClass="lfr-input-text-container" label="user-name" name="preferences--basicUserName--" type="text" value="<%= iFramePortletInstanceConfiguration.basicUserName() %>" />
+						<aui:input
+							cssClass="lfr-input-text-container"
+							label="user-name"
+							name="preferences--basicUserName--"
+							type="text"
+							value="<%= iFramePortletInstanceConfiguration.basicUserName() %>"
+						/>
 
-						<aui:input cssClass="lfr-input-text-container" label="password" name="preferences--basicPassword--" type="text" value="<%= iFramePortletInstanceConfiguration.basicPassword() %>" />
+						<aui:input
+							cssClass="lfr-input-text-container"
+							label="password"
+							name="preferences--basicPassword--"
+							type="text"
+							value="<%= iFramePortletInstanceConfiguration.basicPassword() %>"
+						/>
 					</div>
 				</div>
 			</liferay-frontend:fieldset>
@@ -125,23 +196,48 @@ String htmlAttributes =
 				collapsible="<%= true %>"
 				label="display-settings"
 			>
-				<aui:input helpMessage="resize-automatically-help" label="resize-automatically" name="preferences--resizeAutomatically--" type="toggle-switch" value="<%= iFramePortletInstanceConfiguration.resizeAutomatically() %>" />
+				<aui:input
+					helpMessage="resize-automatically-help"
+					label="resize-automatically"
+					name="preferences--resizeAutomatically--"
+					type="toggle-switch"
+					value="<%= iFramePortletInstanceConfiguration.resizeAutomatically() %>"
+				/>
 
 				<div id="<portlet:namespace />displaySettings">
-					<aui:input name="preferences--heightMaximized--" type="text" value="<%= iFramePortletInstanceConfiguration.heightMaximized() %>">
+					<aui:input
+						name="preferences--heightMaximized--"
+						type="text"
+						value="<%= iFramePortletInstanceConfiguration.heightMaximized() %>"
+					>
 						<aui:validator name="digits" />
 						<aui:validator name="required" />
 					</aui:input>
 
-					<aui:input name="preferences--heightNormal--" type="text" value="<%= iFramePortletInstanceConfiguration.heightNormal() %>">
+					<aui:input
+						name="preferences--heightNormal--"
+						type="text"
+						value="<%= iFramePortletInstanceConfiguration.heightNormal() %>"
+					>
 						<aui:validator name="digits" />
 						<aui:validator name="required" />
 					</aui:input>
 
-					<aui:input name="preferences--width--" type="text" value="<%= iFramePortletInstanceConfiguration.width() %>" />
+					<aui:input
+						name="preferences--width--"
+						type="text"
+						value="<%= iFramePortletInstanceConfiguration.width() %>"
+					/>
 				</div>
 
-				<aui:input cssClass="lfr-textarea-container" name="preferences--htmlAttributes--" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" value="<%= htmlAttributes %>" wrap="soft" />
+				<aui:input
+					cssClass="lfr-textarea-container"
+					name="preferences--htmlAttributes--"
+					onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();"
+					type="textarea"
+					value="<%= htmlAttributes %>"
+					wrap="soft"
+				/>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

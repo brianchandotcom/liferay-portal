@@ -24,14 +24,27 @@ JournalPreviewArticleContentTemplateDisplayContext journalPreviewArticleContentT
 	<nav class="component-tbar subnav-tbar-light tbar tbar-article">
 		<ul class="tbar-nav">
 			<li class="tbar-item">
-				<aui:select label="" name="ddmTemplateId" onChange="previewArticleContentTemplate()" wrapperCssClass="form-group-sm mb-0 ml-4">
-					<aui:option label="no-template" selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId(), -1) %>" value="<%= -1 %>" />
+				<aui:select
+					label=""
+					name="ddmTemplateId"
+					onChange="previewArticleContentTemplate()"
+					wrapperCssClass="form-group-sm mb-0 ml-4"
+				>
+					<aui:option
+						label="no-template"
+						selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId(), -1) %>"
+						value="<%= -1 %>"
+					/>
 
 					<%
 					for (DDMTemplate ddTemplate : journalPreviewArticleContentTemplateDisplayContext.getDDMTemplates()) {
 					%>
 
-						<aui:option label="<%= HtmlUtil.escape(ddTemplate.getName(locale)) %>" selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId(), ddTemplate.getTemplateId()) %>" value="<%= ddTemplate.getTemplateId() %>" />
+						<aui:option
+							label="<%= HtmlUtil.escape(ddTemplate.getName(locale)) %>"
+							selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId(), ddTemplate.getTemplateId()) %>"
+							value="<%= ddTemplate.getTemplateId() %>"
+						/>
 
 					<%
 					}
@@ -48,7 +61,11 @@ JournalPreviewArticleContentTemplateDisplayContext journalPreviewArticleContentT
 					data.put("ddmtemplateid", journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId());
 					%>
 
-					<aui:button cssClass="btn-sm selector-button" data="<%= data %>" value="apply" />
+					<aui:button
+						cssClass="btn-sm selector-button"
+						data="<%= data %>"
+						value="apply"
+					/>
 				</div>
 			</li>
 		</ul>

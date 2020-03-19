@@ -76,9 +76,21 @@ else {
 %>
 
 <form action="<liferay-portlet:actionURL name="sendMessage" />" enctype="multipart/form-data" id="<portlet:namespace />fm" method="post" name="<portlet:namespace />fm">
-	<aui:input name="accountId" type="hidden" value="<%= accountId %>" />
-	<aui:input name="messageId" type="hidden" value="<%= messageId %>" />
-	<aui:input name="attachmentCount" type="hidden" value="0" />
+	<aui:input
+		name="accountId"
+		type="hidden"
+		value="<%= accountId %>"
+	/>
+	<aui:input
+		name="messageId"
+		type="hidden"
+		value="<%= messageId %>"
+	/>
+	<aui:input
+		name="attachmentCount"
+		type="hidden"
+		value="0"
+	/>
 
 	<aui:fieldset>
 		<div class="row-fluid">
@@ -118,11 +130,23 @@ else {
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button cssClass="send-message" data-messageId="<%= messageId %>" value="send" />
+		<aui:button
+			cssClass="send-message"
+			data-messageId="<%= messageId %>"
+			value="send"
+		/>
 
-		<aui:button cssClass="save-draft" data-messageId="<%= messageId %>" value="save" />
+		<aui:button
+			cssClass="save-draft"
+			data-messageId="<%= messageId %>"
+			value="save"
+		/>
 
-		<aui:button cssClass="discard-draft" data-messageId="<%= messageId %>" value="discard" />
+		<aui:button
+			cssClass="discard-draft"
+			data-messageId="<%= messageId %>"
+			value="discard"
+		/>
 	</aui:button-row>
 </form>
 

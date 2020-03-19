@@ -99,9 +99,7 @@ else if (metadataField.equals("view-count")) {
 
 		<div class="metadata-author">
 			<div class="asset-avatar">
-				<liferay-ui:user-portrait
-					user="<%= assetRendererUser %>"
-				/>
+				<liferay-ui:user-portrait user="<%= assetRendererUser %>" />
 			</div>
 
 			<div class="asset-user-info">
@@ -112,7 +110,12 @@ else if (metadataField.equals("view-count")) {
 		</div>
 	</c:when>
 	<c:when test="<%= Validator.isNotNull(value) %>">
-		<aui:col cssClass="form-feedback-item" md="3" sm="4" xs="6">
+		<aui:col
+			cssClass="form-feedback-item"
+			md="3"
+			sm="4"
+			xs="6"
+		>
 			<dt class="metadata-entry-label <%= showLabel ? StringPool.BLANK : "hide" %>"><%= label %></dt>
 
 			<dd class="metadata-entry <%= metadataFieldCssClass %>">

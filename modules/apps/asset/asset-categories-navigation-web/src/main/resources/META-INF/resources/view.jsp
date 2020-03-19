@@ -31,15 +31,10 @@ Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
 >
 	<c:choose>
 		<c:when test="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>">
-			<liferay-asset:asset-categories-navigation
-				hidePortletWhenEmpty="<%= true %>"
-			/>
+			<liferay-asset:asset-categories-navigation hidePortletWhenEmpty="<%= true %>" />
 		</c:when>
 		<c:otherwise>
-			<liferay-asset:asset-categories-navigation
-				hidePortletWhenEmpty="<%= true %>"
-				vocabularyIds="<%= assetCategoriesNavigationDisplayContext.getAssetVocabularyIds() %>"
-			/>
+			<liferay-asset:asset-categories-navigation hidePortletWhenEmpty="<%= true %>" vocabularyIds="<%= assetCategoriesNavigationDisplayContext.getAssetVocabularyIds() %>" />
 		</c:otherwise>
 	</c:choose>
 </liferay-ddm:template-renderer>

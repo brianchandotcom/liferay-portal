@@ -31,5 +31,11 @@ boolean directoryIndexingEnabled = PropertiesParamUtil.getBoolean(typeSettingsPr
 	cssClass="panel-group-flush"
 	label='<%= LanguageUtil.get(request, "documents-and-media") %>'
 >
-	<aui:input helpMessage='<%= LanguageUtil.format(request, "directory-indexing-help", new Object[] {HtmlUtil.escape(group.getDescriptiveName(themeDisplay.getLocale())), themeDisplay.getPortalURL() + "/documents" + group.getFriendlyURL()}, false) %>' label="enable-directory-indexing" name="TypeSettingsProperties--directoryIndexingEnabled--" type="toggle-switch" value="<%= directoryIndexingEnabled %>" />
+	<aui:input
+		helpMessage='<%= LanguageUtil.format(request, "directory-indexing-help", new Object[] {HtmlUtil.escape(group.getDescriptiveName(themeDisplay.getLocale())), themeDisplay.getPortalURL() + "/documents" + group.getFriendlyURL()}, false) %>'
+		label="enable-directory-indexing"
+		name="TypeSettingsProperties--directoryIndexingEnabled--"
+		type="toggle-switch"
+		value="<%= directoryIndexingEnabled %>"
+	/>
 </liferay-frontend:fieldset>

@@ -16,10 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:header
-	showBackURL="<%= false %>"
-	title="error"
-/>
+<liferay-ui:header showBackURL="<%= false %>" title="error" />
 
 <liferay-ui:error exception="<%= NoSuchRecordException.class %>" message="the-record-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchRecordSetException.class %>" message="the-recordSet-could-not-be-found" />

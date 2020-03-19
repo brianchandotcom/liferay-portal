@@ -53,9 +53,7 @@ if (liveGroup == null) {
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<liferay-trash:undo
-	portletURL="<%= restoreTrashEntriesURL %>"
-/>
+<liferay-trash:undo portletURL="<%= restoreTrashEntriesURL %>" />
 
 <%
 ExportTemplatesToolbarDisplayContext exportTemplatesToolbarDisplayContext = new ExportTemplatesToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, liveGroupId, company, portletURL);
@@ -71,18 +69,13 @@ ExportTemplatesToolbarDisplayContext exportTemplatesToolbarDisplayContext = new 
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= portletURL %>">
-		<liferay-ui:search-container
-			searchContainer="<%= exportTemplatesToolbarDisplayContext.getSearchContainer() %>"
-		>
+		<liferay-ui:search-container searchContainer="<%= exportTemplatesToolbarDisplayContext.getSearchContainer() %>">
 			<liferay-ui:search-container-row
 				className="com.liferay.exportimport.kernel.model.ExportImportConfiguration"
 				keyProperty="exportImportConfigurationId"
 				modelVar="exportImportConfiguration"
 			>
-				<liferay-ui:search-container-column-text
-					cssClass="export-configuration-user-column"
-					name="user"
-				>
+				<liferay-ui:search-container-column-text cssClass="export-configuration-user-column" name="user">
 					<liferay-ui:user-display
 						displayStyle="3"
 						showUserDetails="<%= false %>"
@@ -114,10 +107,7 @@ ExportTemplatesToolbarDisplayContext exportTemplatesToolbarDisplayContext = new 
 					value="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>"
 				/>
 
-				<liferay-ui:search-container-column-date
-					name="create-date"
-					value="<%= exportImportConfiguration.getCreateDate() %>"
-				/>
+				<liferay-ui:search-container-column-date name="create-date" value="<%= exportImportConfiguration.getCreateDate() %>" />
 
 				<%
 				request.setAttribute("view.jsp-groupId", groupId);
@@ -125,14 +115,10 @@ ExportTemplatesToolbarDisplayContext exportTemplatesToolbarDisplayContext = new 
 				request.setAttribute("view.jsp-privateLayout", privateLayout);
 				%>
 
-				<liferay-ui:search-container-column-jsp
-					path="/export/export_templates/actions.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp path="/export/export_templates/actions.jsp" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

@@ -21,9 +21,7 @@ PreviewSegmentsEntryUsersDisplayContext previewSegmentsEntryUsersDisplayContext 
 %>
 
 <div class="container-fluid-1280 main-content-body">
-	<liferay-ui:search-container
-		searchContainer="<%= previewSegmentsEntryUsersDisplayContext.getSearchContainer() %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= previewSegmentsEntryUsersDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
 			escapedModel="<%= true %>"
@@ -46,8 +44,6 @@ PreviewSegmentsEntryUsersDisplayContext previewSegmentsEntryUsersDisplayContext 
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

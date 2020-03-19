@@ -75,5 +75,9 @@ else if (company.getAuthType().equals(CompanyConstants.AUTH_TYPE_ID)) {
 		<%= LanguageUtil.format(request, "your-account-with-login-x-is-not-active", new LanguageWrapper[] {new LanguageWrapper("", HtmlUtil.escape(user.getFullName()), ""), new LanguageWrapper("<strong><em>", HtmlUtil.escape(userLogin), "</em></strong>")}, false) %><br /><br />
 	</div>
 
-	<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="if-you-are-not-x-log-out-and-try-again" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= HtmlUtil.escape(user.getFullName()) %>"
+		key="if-you-are-not-x-log-out-and-try-again"
+		translateArguments="<%= false %>"
+	/>
 </c:if>

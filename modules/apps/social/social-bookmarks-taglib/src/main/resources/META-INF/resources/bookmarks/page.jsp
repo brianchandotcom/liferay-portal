@@ -22,9 +22,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu";
 %>
 
-<liferay-util:html-top
-	outputKey="social_bookmarks_css"
->
+<liferay-util:html-top outputKey="social_bookmarks_css">
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
@@ -89,9 +87,7 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 		</c:otherwise>
 	</c:choose>
 
-	<liferay-util:html-bottom
-		outputKey="social_bookmarks"
-	>
+	<liferay-util:html-bottom outputKey="social_bookmarks">
 		<aui:script>
 			function socialBookmarks_handleItemClick(
 				event,

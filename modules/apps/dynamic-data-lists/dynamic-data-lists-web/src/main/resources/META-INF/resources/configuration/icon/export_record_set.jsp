@@ -20,7 +20,11 @@
 long recordSetId = ParamUtil.getLong(request, renderResponse.getNamespace() + "recordSetId");
 %>
 
-<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportRecordSet" var="exportRecordSetURL">
+<liferay-portlet:resourceURL
+	copyCurrentRenderParameters="<%= false %>"
+	id="exportRecordSet"
+	var="exportRecordSetURL"
+>
 	<portlet:param name="recordSetId" value="<%= String.valueOf(recordSetId) %>" />
 </liferay-portlet:resourceURL>
 
@@ -34,7 +38,4 @@ sb.append(exportRecordSetURL);
 sb.append("');");
 %>
 
-<liferay-ui:icon
-	message="export"
-	url="<%= sb.toString() %>"
-/>
+<liferay-ui:icon message="export" url="<%= sb.toString() %>" />

@@ -53,10 +53,7 @@ if (publicLayoutSet != null) {
 }
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="pages"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="pages" />
 
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
@@ -80,8 +77,17 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 			</div>
 		</c:if>
 
-		<aui:select disabled="<%= disableLayoutSetPrototypeInput %>" helpMessage="site-templates-with-an-incompatible-application-adapter-are-disabled" label="site-template" name="publicLayoutSetPrototypeId">
-			<aui:option label="none" selected="<%= true %>" value="" />
+		<aui:select
+			disabled="<%= disableLayoutSetPrototypeInput %>"
+			helpMessage="site-templates-with-an-incompatible-application-adapter-are-disabled"
+			label="site-template"
+			name="publicLayoutSetPrototypeId"
+		>
+			<aui:option
+				label="none"
+				selected="<%= true %>"
+				value=""
+			/>
 
 			<%
 			for (LayoutSetPrototype curLayoutSetPrototype : layoutSetPrototypes) {
@@ -108,11 +114,22 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 							</div>
 						</c:if>
 
-						<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="toggle-switch" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+						<aui:input
+							disabled="<%= disableLayoutSetPrototypeInput %>"
+							helpMessage="enable-propagation-of-changes-from-the-site-template-help"
+							label="enable-propagation-of-changes-from-the-site-template"
+							name="publicLayoutSetPrototypeLinkEnabled"
+							type="toggle-switch"
+							value="<%= publicLayoutSetPrototypeLinkEnabled %>"
+						/>
 					</div>
 				</c:when>
 				<c:otherwise>
-					<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+					<aui:input
+						name="publicLayoutSetPrototypeLinkEnabled"
+						type="hidden"
+						value="<%= true %>"
+					/>
 				</c:otherwise>
 			</c:choose>
 		</c:if>
@@ -120,7 +137,11 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 	<c:otherwise>
 		<c:choose>
 			<c:when test="<%= group.getPublicLayoutsPageCount() > 0 %>">
-				<aui:a href="<%= group.getDisplayURL(themeDisplay, false) %>" label="open-public-pages" target="_blank" />
+				<aui:a
+					href="<%= group.getDisplayURL(themeDisplay, false) %>"
+					label="open-public-pages"
+					target="_blank"
+				/>
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:message key="this-site-does-not-have-any-public-pages" />
@@ -135,7 +156,13 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 					</div>
 				</c:if>
 
-				<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(publicLayoutSetPrototype.getName(locale)), false) %>' name="publicLayoutSetPrototypeLinkEnabled" type="toggle-switch" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+				<aui:input
+					disabled="<%= disableLayoutSetPrototypeInput %>"
+					label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(publicLayoutSetPrototype.getName(locale)), false) %>'
+					name="publicLayoutSetPrototypeLinkEnabled"
+					type="toggle-switch"
+					value="<%= publicLayoutSetPrototypeLinkEnabled %>"
+				/>
 
 				<div class="<%= publicLayoutSetPrototypeLinkEnabled ? "" : "hide" %>" id="<portlet:namespace />publicLayoutSetPrototypeMergeAlert">
 
@@ -150,9 +177,17 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 				</div>
 			</c:when>
 			<c:when test="<%= publicLayoutSetPrototype != null %>">
-				<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(publicLayoutSetPrototype.getName(locale))} %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= new Object[] {HtmlUtil.escape(publicLayoutSetPrototype.getName(locale))} %>"
+					key="these-pages-are-linked-to-site-template-x"
+					translateArguments="<%= false %>"
+				/>
 
-				<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+				<aui:input
+					name="publicLayoutSetPrototypeLinkEnabled"
+					type="hidden"
+					value="<%= publicLayoutSetPrototypeLinkEnabled %>"
+				/>
 			</c:when>
 		</c:choose>
 	</c:otherwise>
@@ -168,8 +203,17 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 			</div>
 		</c:if>
 
-		<aui:select disabled="<%= disableLayoutSetPrototypeInput %>" helpMessage="site-templates-with-an-incompatible-application-adapter-are-disabled" label="site-template" name="privateLayoutSetPrototypeId">
-			<aui:option label="none" selected="<%= true %>" value="" />
+		<aui:select
+			disabled="<%= disableLayoutSetPrototypeInput %>"
+			helpMessage="site-templates-with-an-incompatible-application-adapter-are-disabled"
+			label="site-template"
+			name="privateLayoutSetPrototypeId"
+		>
+			<aui:option
+				label="none"
+				selected="<%= true %>"
+				value=""
+			/>
 
 			<%
 			for (LayoutSetPrototype curLayoutSetPrototype : layoutSetPrototypes) {
@@ -196,11 +240,22 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 							</div>
 						</c:if>
 
-						<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="toggle-switch" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+						<aui:input
+							disabled="<%= disableLayoutSetPrototypeInput %>"
+							helpMessage="enable-propagation-of-changes-from-the-site-template-help"
+							label="enable-propagation-of-changes-from-the-site-template"
+							name="privateLayoutSetPrototypeLinkEnabled"
+							type="toggle-switch"
+							value="<%= privateLayoutSetPrototypeLinkEnabled %>"
+						/>
 					</div>
 				</c:when>
 				<c:otherwise>
-					<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+					<aui:input
+						name="privateLayoutSetPrototypeLinkEnabled"
+						type="hidden"
+						value="<%= true %>"
+					/>
 				</c:otherwise>
 			</c:choose>
 		</c:if>
@@ -208,7 +263,11 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 	<c:otherwise>
 		<c:choose>
 			<c:when test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
-				<aui:a href="<%= group.getDisplayURL(themeDisplay, true) %>" label="open-private-pages" target="_blank" />
+				<aui:a
+					href="<%= group.getDisplayURL(themeDisplay, true) %>"
+					label="open-private-pages"
+					target="_blank"
+				/>
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:message key="this-site-does-not-have-any-private-pages" />
@@ -223,7 +282,13 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 					</div>
 				</c:if>
 
-				<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(privateLayoutSetPrototype.getName(locale)), false) %>' name="privateLayoutSetPrototypeLinkEnabled" type="toggle-switch" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+				<aui:input
+					disabled="<%= disableLayoutSetPrototypeInput %>"
+					label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(privateLayoutSetPrototype.getName(locale)), false) %>'
+					name="privateLayoutSetPrototypeLinkEnabled"
+					type="toggle-switch"
+					value="<%= privateLayoutSetPrototypeLinkEnabled %>"
+				/>
 
 				<div class="<%= privateLayoutSetPrototypeLinkEnabled ? "" : "hide" %>" id="<portlet:namespace />privateLayoutSetPrototypeMergeAlert">
 
@@ -238,9 +303,17 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 				</div>
 			</c:when>
 			<c:when test="<%= privateLayoutSetPrototype != null %>">
-				<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(privateLayoutSetPrototype.getName(locale))} %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= new Object[] {HtmlUtil.escape(privateLayoutSetPrototype.getName(locale))} %>"
+					key="these-pages-are-linked-to-site-template-x"
+					translateArguments="<%= false %>"
+				/>
 
-				<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+				<aui:input
+					name="privateLayoutSetPrototypeLinkEnabled"
+					type="hidden"
+					value="<%= privateLayoutSetPrototypeLinkEnabled %>"
+				/>
 			</c:when>
 		</c:choose>
 	</c:otherwise>

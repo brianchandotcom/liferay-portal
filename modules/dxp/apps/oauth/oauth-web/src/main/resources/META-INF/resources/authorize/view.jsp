@@ -66,23 +66,47 @@
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(oAuthVerifier) %>">
 					<div class="portlet-msg-info">
-						<liferay-ui:message arguments="<%= oAuthVerifier %>" key="authorization-was-successful.-verification-code-is-x" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= oAuthVerifier %>"
+							key="authorization-was-successful.-verification-code-is-x"
+							translateArguments="<%= false %>"
+						/>
 					</div>
 				</c:when>
 				<c:otherwise>
 					<portlet:actionURL name="authorize" var="authorizeURL" />
 
-					<aui:form action="<%= authorizeURL %>" method="post" name="fm">
-						<aui:input name="mvcPath" type="hidden" value="/authorize/view.jsp" />
-						<aui:input name="<%= net.oauth.OAuth.OAUTH_CALLBACK %>" type="hidden" value="<%= oAuthCallback %>" />
-						<aui:input name="<%= net.oauth.OAuth.OAUTH_TOKEN %>" type="hidden" value="<%= oAuthAccessor.getRequestToken() %>" />
+					<aui:form
+						action="<%= authorizeURL %>"
+						method="post"
+						name="fm"
+					>
+						<aui:input
+							name="mvcPath"
+							type="hidden"
+							value="/authorize/view.jsp"
+						/>
+						<aui:input
+							name="<%= net.oauth.OAuth.OAUTH_CALLBACK %>"
+							type="hidden"
+							value="<%= oAuthCallback %>"
+						/>
+						<aui:input
+							name="<%= net.oauth.OAuth.OAUTH_TOKEN %>"
+							type="hidden"
+							value="<%= oAuthAccessor.getRequestToken() %>"
+						/>
 
 						<aui:row>
 							<aui:col width="<%= (oAuthApplication.getLogoId() != 0) ? 50 : 100 %>">
 								<liferay-ui:message key="the-application-listed-below-is-requesting-access-to-your-account" />
 
 								<h3>
-									<aui:a href="<%= oAuthApplication.getWebsiteURL() %>" label="<%= HtmlUtil.escape(oAuthApplication.getName()) %>" target="_blank" />
+									<aui:a
+										href="<%= oAuthApplication.getWebsiteURL() %>"
+										label="<%= HtmlUtil.escape(oAuthApplication.getName()) %>"
+										target="_blank"
+									/>
 
 									<c:if test="<%= Validator.isNotNull(oAuthApplication.getDescription()) %>">
 										<liferay-ui:icon-help message="<%= HtmlUtil.escape(oAuthApplication.getDescription()) %>" />

@@ -27,10 +27,7 @@ data.put("eventName", itemSelectorURLViewDisplayContext.getItemSelectedEventName
 <div class="lfr-form-content">
 	<div class="sheet sheet-lg">
 		<div class="panel-group panel-group-flush">
-			<react:component
-				data="<%= data %>"
-				module="js/ItemSelectorUrl.es"
-			/>
+			<react:component data="<%= data %>" module="js/ItemSelectorUrl.es" />
 		</div>
 	</div>
 </div>

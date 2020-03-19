@@ -59,10 +59,7 @@ else {
 }
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= appManagerDisplayContext.getModuleNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= appManagerDisplayContext.getModuleNavigationItems() %>" />
 
 <clay:management-toolbar
 	searchActionURL="<%= viewModuleManagementToolbarDisplayContext.getSearchActionURL() %>"
@@ -87,10 +84,7 @@ else {
 		searchContainer="<%= searchContainer %>"
 		var="pluginSearch"
 	>
-		<liferay-ui:search-container-row
-			className="org.osgi.framework.ServiceReference"
-			modelVar="serviceReference"
-		>
+		<liferay-ui:search-container-row className="org.osgi.framework.ServiceReference" modelVar="serviceReference">
 			<liferay-ui:search-container-column-text>
 				<c:choose>
 					<c:when test='<%= pluginType.equals("portlets") %>'>
@@ -106,9 +100,7 @@ else {
 				</c:choose>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				colspan="<%= 2 %>"
-			>
+			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 				<%
 				String description = StringPool.BLANK;
@@ -142,9 +134,6 @@ else {
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="descriptive"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

@@ -16,7 +16,4 @@
 
 <%@ include file="/manage_collaborators/init.jsp" %>
 
-<react:component
-	data="<%= (Map<String, Object>)request.getAttribute(SharingWebKeys.SHARING_REACT_DATA) %>"
-	module="manage_collaborators/js/ManageCollaborators.es"
-/>
+<react:component data="<%= (Map<String, Object>)request.getAttribute(SharingWebKeys.SHARING_REACT_DATA) %>" module="manage_collaborators/js/ManageCollaborators.es" />

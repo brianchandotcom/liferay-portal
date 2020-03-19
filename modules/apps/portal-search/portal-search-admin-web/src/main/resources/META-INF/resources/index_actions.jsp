@@ -56,8 +56,16 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 	<portlet:param name="tabs1" value="index-actions" />
 </portlet:renderURL>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
+<aui:form
+	action="<%= portletURL.toString() %>"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirectURL %>"
+	/>
 
 	<liferay-ui:panel-container
 		extended="<%= true %>"
@@ -116,7 +124,13 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 								long timeout = ParamUtil.getLong(request, "timeout");
 								%>
 
-								<aui:button cssClass="save-server-button" data-blocking='<%= ParamUtil.getBoolean(request, "blocking") %>' data-cmd="reindex" data-timeout="<%= (timeout == 0) ? StringPool.BLANK : timeout %>" value="execute" />
+								<aui:button
+									cssClass="save-server-button"
+									data-blocking='<%= ParamUtil.getBoolean(request, "blocking") %>'
+									data-cmd="reindex"
+									data-timeout="<%= (timeout == 0) ? StringPool.BLANK : timeout %>"
+									value="execute"
+								/>
 							</c:when>
 							<c:otherwise>
 								<%= backgroundTaskDisplay.renderDisplayTemplate() %>
@@ -130,7 +144,11 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 					</div>
 
 					<div class="float-right">
-						<aui:button cssClass="save-server-button" data-cmd="reindexDictionaries" value="execute" />
+						<aui:button
+							cssClass="save-server-button"
+							data-cmd="reindexDictionaries"
+							value="execute"
+						/>
 					</div>
 				</li>
 
@@ -151,7 +169,13 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 						<div class="float-right index-action-wrapper" data-type="<%= indexer.getClassName() %>">
 							<c:choose>
 								<c:when test="<%= (backgroundTaskDisplay == null) || !backgroundTaskDisplay.hasPercentage() %>">
-									<aui:button cssClass="save-server-button" data-classname="<%= indexer.getClassName() %>" data-cmd="reindex" disabled="<%= !indexer.isIndexerEnabled() %>" value="execute" />
+									<aui:button
+										cssClass="save-server-button"
+										data-classname="<%= indexer.getClassName() %>"
+										data-cmd="reindex"
+										disabled="<%= !indexer.isIndexerEnabled() %>"
+										value="execute"
+									/>
 								</c:when>
 								<c:otherwise>
 									<%= backgroundTaskDisplay.renderDisplayTemplate() %>

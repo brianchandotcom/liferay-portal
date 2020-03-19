@@ -45,16 +45,11 @@ if (mvcPath.startsWith("/edit_entry.jsp")) {
 				</div>
 
 				<div style="display: none;">
-					<liferay-portlet:runtime
-						portletName="<%= PortletKeys.LOGIN %>"
-					/>
+					<liferay-portlet:runtime portletName="<%= PortletKeys.LOGIN %>" />
 				</div>
 
 				<div class="autofit-col text-right">
-					<liferay-portlet:runtime
-						portletProviderAction="<%= PortletProvider.Action.VIEW %>"
-						portletProviderClassName="com.liferay.admin.kernel.util.PortalUserPersonalBarApplicationType$UserPersonalBar"
-					/>
+					<liferay-portlet:runtime portletProviderAction="<%= PortletProvider.Action.VIEW %>" portletProviderClassName="com.liferay.admin.kernel.util.PortalUserPersonalBarApplicationType$UserPersonalBar" />
 				</div>
 			</div>
 
@@ -63,8 +58,6 @@ if (mvcPath.startsWith("/edit_entry.jsp")) {
 	</header>
 
 	<div class="app-builder-standalone-content container <%= editEntryCssClass %> sheet">
-		<liferay-portlet:runtime
-			portletName="<%= portletName %>"
-		/>
+		<liferay-portlet:runtime portletName="<%= portletName %>" />
 	</div>
 </div>

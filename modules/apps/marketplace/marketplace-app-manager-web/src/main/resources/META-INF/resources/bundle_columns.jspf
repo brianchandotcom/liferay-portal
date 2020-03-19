@@ -20,9 +20,7 @@
 	</liferay-util:include>
 </liferay-ui:search-container-column-text>
 
-<liferay-ui:search-container-column-text
-	colspan="<%= 2 %>"
->
+<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 	<%
 	Dictionary<String, String> headers = bundle.getHeaders(StringPool.BLANK);
@@ -75,6 +73,4 @@
 	</div>
 </liferay-ui:search-container-column-text>
 
-<liferay-ui:search-container-column-jsp
-	path="/bundle_action.jsp"
-/>
+<liferay-ui:search-container-column-jsp path="/bundle_action.jsp" />

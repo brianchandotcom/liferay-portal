@@ -35,8 +35,6 @@ FileEntry fileEntry = (FileEntry)row.getObject();
 			<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteFragmentCollectionResourcesURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteFragmentCollectionResourcesURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

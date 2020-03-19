@@ -16,20 +16,14 @@
 
 <liferay-ui:error exception="<%= WorkflowTaskDueDateException.class %>" message="please-enter-a-valid-due-date" />
 
-<liferay-ui:search-container
-	id="workflowTasks"
-	searchContainer="<%= workflowTaskDisplayContext.getWorkflowTaskSearch() %>"
->
+<liferay-ui:search-container id="workflowTasks" searchContainer="<%= workflowTaskDisplayContext.getWorkflowTaskSearch() %>">
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.workflow.WorkflowTask"
 		cssClass="entry-display-style"
 		modelVar="workflowTask"
 		stringKey="<%= true %>"
 	>
-		<liferay-ui:search-container-row-parameter
-			name="workflowTask"
-			value="<%= workflowTask %>"
-		/>
+		<liferay-ui:search-container-row-parameter name="workflowTask" value="<%= workflowTask %>" />
 
 		<portlet:renderURL var="rowURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
@@ -39,14 +33,9 @@
 
 		<c:choose>
 			<c:when test='<%= displayStyle.equals("descriptive") %>'>
-				<liferay-ui:search-container-column-icon
-					cssClass="asset-icon"
-					icon="<%= workflowTaskDisplayContext.getAssetIconCssClass(workflowTask) %>"
-				/>
+				<liferay-ui:search-container-column-icon cssClass="asset-icon" icon="<%= workflowTaskDisplayContext.getAssetIconCssClass(workflowTask) %>" />
 
-				<liferay-ui:search-container-column-text
-					colspan="<%= 2 %>"
-				>
+				<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 					<h5 class="text-default">
 
 						<%
@@ -85,15 +74,10 @@
 
 				<c:choose>
 					<c:when test="<%= !workflowTask.isCompleted() %>">
-						<liferay-ui:search-container-column-jsp
-							align="right"
-							path="/workflow_task_action.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp align="right" path="/workflow_task_action.jsp" />
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:search-container-column-text
-							value="<%= StringPool.BLANK %>"
-						/>
+						<liferay-ui:search-container-column-text value="<%= StringPool.BLANK %>" />
 					</c:otherwise>
 				</c:choose>
 			</c:when>
@@ -111,10 +95,7 @@
 					value="<%= workflowTaskDisplayContext.getAssetType(workflowTask) %>"
 				/>
 
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="task"
-				>
+				<liferay-ui:search-container-column-text href="<%= rowURL %>" name="task">
 					<span class="task-name" id="<%= workflowTask.getWorkflowTaskId() %>">
 						<liferay-ui:message key="<%= workflowTaskDisplayContext.getTaskName(workflowTask) %>" />
 					</span>
@@ -135,15 +116,10 @@
 
 				<c:choose>
 					<c:when test="<%= !workflowTask.isCompleted() %>">
-						<liferay-ui:search-container-column-jsp
-							align="right"
-							path="/workflow_task_action.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp align="right" path="/workflow_task_action.jsp" />
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:search-container-column-text
-							value="<%= StringPool.BLANK %>"
-						/>
+						<liferay-ui:search-container-column-text value="<%= StringPool.BLANK %>" />
 					</c:otherwise>
 				</c:choose>
 			</c:otherwise>

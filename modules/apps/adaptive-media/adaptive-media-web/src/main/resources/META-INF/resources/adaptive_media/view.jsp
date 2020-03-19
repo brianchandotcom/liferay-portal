@@ -36,12 +36,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/adaptive_media/info_panel" var="sidebarPanelURL" />
+	<liferay-portlet:resourceURL
+		copyCurrentRenderParameters="<%= false %>"
+		id="/adaptive_media/info_panel"
+		var="sidebarPanelURL"
+	/>
 
-	<liferay-frontend:sidebar-panel
-		resourceURL="<%= sidebarPanelURL %>"
-		searchContainerId="imageConfigurationEntries"
-	>
+	<liferay-frontend:sidebar-panel resourceURL="<%= sidebarPanelURL %>" searchContainerId="imageConfigurationEntries">
 		<liferay-util:include page="/adaptive_media/info_panel.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:sidebar-panel>
 
@@ -56,7 +57,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 				%>
 
 				<div class="alert alert-success">
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(amImageConfigurationEntry.getName()) %>" key="x-saved-successfully" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= HtmlUtil.escape(amImageConfigurationEntry.getName()) %>"
+						key="x-saved-successfully"
+						translateArguments="<%= false %>"
+					/>
 				</div>
 			</c:when>
 		</c:choose>
@@ -83,7 +88,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		List<AMImageConfigurationEntry> selectedConfigurationEntries = amManagementToolbarDisplayContext.getSelectedConfigurationEntries();
 		%>
 
-		<aui:form action="<%= deleteImageConfigurationEntryURL.toString() %>" method="post" name="fm">
+		<aui:form
+			action="<%= deleteImageConfigurationEntryURL.toString() %>"
+			method="post"
+			name="fm"
+		>
 			<liferay-ui:search-container
 				emptyResultsMessage="there-are-no-image-resolutions"
 				id="imageConfigurationEntries"
@@ -91,14 +100,9 @@ PortletURL portletURL = renderResponse.createRenderURL();
 				rowChecker="<%= new ImageConfigurationEntriesChecker(liferayPortletResponse) %>"
 				total="<%= selectedConfigurationEntries.size() %>"
 			>
-				<liferay-ui:search-container-results
-					results="<%= ListUtil.subList(selectedConfigurationEntries, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				/>
+				<liferay-ui:search-container-results results="<%= ListUtil.subList(selectedConfigurationEntries, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
-				<liferay-ui:search-container-row
-					className="com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry"
-					modelVar="amImageConfigurationEntry"
-				>
+				<liferay-ui:search-container-row className="com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry" modelVar="amImageConfigurationEntry">
 
 					<%
 					row.setPrimaryKey(String.valueOf(amImageConfigurationEntry.getUUID()));
@@ -125,10 +129,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 						value='<%= LanguageUtil.get(request, amImageConfigurationEntry.isEnabled() ? "enabled" : "disabled") %>'
 					/>
 
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand table-cell-minw-200"
-						name="adapted-images"
-					>
+					<liferay-ui:search-container-column-text cssClass="table-cell-expand table-cell-minw-200" name="adapted-images">
 
 						<%
 						String rowId = row.getRowId();
@@ -164,10 +165,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 							).build();
 							%>
 
-							<react:component
-								data="<%= data %>"
-								module="adaptive_media/js/AdaptiveMediaProgress.es"
-							/>
+							<react:component data="<%= data %>" module="adaptive_media/js/AdaptiveMediaProgress.es" />
 						</div>
 					</liferay-ui:search-container-column-text>
 
@@ -197,15 +195,10 @@ PortletURL portletURL = renderResponse.createRenderURL();
 						value='<%= (Validator.isNull(maxHeight) || maxHeight.equals("0")) ? LanguageUtil.get(request, "auto") : maxHeight + "px" %>'
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/adaptive_media/image_configuration_entry_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/adaptive_media/image_configuration_entry_action.jsp" />
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					displayStyle="list"
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>

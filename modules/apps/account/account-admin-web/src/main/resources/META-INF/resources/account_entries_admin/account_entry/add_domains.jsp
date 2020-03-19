@@ -38,7 +38,11 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 	</aui:field-wrapper>
 
 	<aui:button-row>
-		<aui:button onClick='<%= renderResponse.getNamespace() + "addDomains();" %>' primary="<%= true %>" value="save" />
+		<aui:button
+			onClick='<%= renderResponse.getNamespace() + "addDomains();" %>'
+			primary="<%= true %>"
+			value="save"
+		/>
 
 		<aui:button type="cancel" />
 	</aui:button-row>

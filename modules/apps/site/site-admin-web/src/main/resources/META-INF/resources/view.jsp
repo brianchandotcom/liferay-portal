@@ -33,17 +33,16 @@ if (group != null) {
 }
 %>
 
-<clay:management-toolbar
-	displayContext="<%= siteAdminManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= siteAdminManagementToolbarDisplayContext %>" />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/site/info_panel" var="sidebarPanelURL" />
+	<liferay-portlet:resourceURL
+		copyCurrentRenderParameters="<%= false %>"
+		id="/site/info_panel"
+		var="sidebarPanelURL"
+	/>
 
-	<liferay-frontend:sidebar-panel
-		resourceURL="<%= sidebarPanelURL %>"
-		searchContainerId="sites"
-	>
+	<liferay-frontend:sidebar-panel resourceURL="<%= sidebarPanelURL %>" searchContainerId="sites">
 		<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:sidebar-panel>
 
@@ -51,11 +50,13 @@ if (group != null) {
 		<portlet:actionURL name="deleteGroups" var="deleteGroupsURL" />
 
 		<aui:form action="<%= deleteGroupsURL %>" name="fm">
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-			<liferay-site-navigation:breadcrumb
-				breadcrumbEntries="<%= siteAdminDisplayContext.getBreadcrumbEntries() %>"
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value="<%= currentURL %>"
 			/>
+
+			<liferay-site-navigation:breadcrumb breadcrumbEntries="<%= siteAdminDisplayContext.getBreadcrumbEntries() %>" />
 
 			<liferay-ui:error exception="<%= NoSuchLayoutSetException.class %>">
 
@@ -76,7 +77,11 @@ if (group != null) {
 				%>
 
 				<c:if test="<%= curGroup != null %>">
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" key="site-x-does-not-have-any-private-pages" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>"
+						key="site-x-does-not-have-any-private-pages"
+						translateArguments="<%= false %>"
+					/>
 				</c:if>
 			</liferay-ui:error>
 
@@ -89,7 +94,4 @@ if (group != null) {
 	</div>
 </div>
 
-<liferay-frontend:component
-	componentId="<%= siteAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/ManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= siteAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/ManagementToolbarDefaultEventHandler.es" />

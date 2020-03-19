@@ -38,11 +38,13 @@ SearchContainer roleSearchContainer = selectRoleManagementToolbarDisplayContext.
 	viewTypeItems="<%= selectRoleManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="selectRegularRoleFm">
-	<liferay-ui:search-container
-		headerNames="name"
-		searchContainer="<%= roleSearchContainer %>"
-	>
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid container-fluid-max-xl container-form-lg"
+	method="post"
+	name="selectRegularRoleFm"
+>
+	<liferay-ui:search-container headerNames="name" searchContainer="<%= roleSearchContainer %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Role"
 			keyProperty="roleId"
@@ -72,14 +74,17 @@ SearchContainer roleSearchContainer = selectRoleManagementToolbarDisplayContext.
 					boolean disabled = ArrayUtil.contains(roleIds, role.getRoleId());
 					%>
 
-					<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= disabled %>" value="choose" />
+					<aui:button
+						cssClass="selector-button"
+						data="<%= data %>"
+						disabled="<%= disabled %>"
+						value="choose"
+					/>
 				</c:if>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

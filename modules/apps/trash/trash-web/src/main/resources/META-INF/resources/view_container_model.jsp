@@ -21,13 +21,19 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 %>
 
 <div class="alert alert-block">
-	<liferay-ui:message arguments="<%= trashContainerModelDisplayContext.getMissingContainerMessageArguments() %>" key="the-original-x-does-not-exist-anymore" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= trashContainerModelDisplayContext.getMissingContainerMessageArguments() %>"
+		key="the-original-x-does-not-exist-anymore"
+		translateArguments="<%= false %>"
+	/>
 </div>
 
-<aui:form cssClass="container-fluid-1280" method="post" name="selectContainerFm">
-	<liferay-site-navigation:breadcrumb
-		breadcrumbEntries="<%= trashDisplayContext.getContainerModelBreadcrumbEntries(trashContainerModelDisplayContext.getContainerModelClassName(), trashContainerModelDisplayContext.getContainerModelId(), trashContainerModelDisplayContext.getContainerURL()) %>"
-	/>
+<aui:form
+	cssClass="container-fluid-1280"
+	method="post"
+	name="selectContainerFm"
+>
+	<liferay-site-navigation:breadcrumb breadcrumbEntries="<%= trashDisplayContext.getContainerModelBreadcrumbEntries(trashContainerModelDisplayContext.getContainerModelClassName(), trashContainerModelDisplayContext.getContainerModelId(), trashContainerModelDisplayContext.getContainerURL()) %>" />
 
 	<aui:button-row>
 
@@ -40,16 +46,15 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 		data.put("redirect", trashContainerModelDisplayContext.getRedirect());
 		%>
 
-		<aui:button cssClass="selector-button" data="<%= data %>" value='<%= LanguageUtil.format(request, "choose-this-x", trashContainerModelDisplayContext.getContainerModelName()) %>' />
+		<aui:button
+			cssClass="selector-button"
+			data="<%= data %>"
+			value='<%= LanguageUtil.format(request, "choose-this-x", trashContainerModelDisplayContext.getContainerModelName()) %>'
+		/>
 	</aui:button-row>
 
-	<liferay-ui:search-container
-		searchContainer="<%= trashContainerModelDisplayContext.getSearchContainer() %>"
-		total="<%= trashContainerModelDisplayContext.getContainerModelsCount() %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= trashContainerModelDisplayContext.getContainerModels() %>"
-		/>
+	<liferay-ui:search-container searchContainer="<%= trashContainerModelDisplayContext.getSearchContainer() %>" total="<%= trashContainerModelDisplayContext.getContainerModelsCount() %>">
+		<liferay-ui:search-container-results results="<%= trashContainerModelDisplayContext.getContainerModels() %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.ContainerModel"
@@ -67,9 +72,7 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 			TrashHandler curContainerTrashHandler = TrashHandlerRegistryUtil.getTrashHandler(curContainerModel.getModelClassName());
 			%>
 
-			<liferay-ui:search-container-column-text
-				name="<%= LanguageUtil.get(request, trashContainerModelDisplayContext.getContainerModelName()) %>"
-			>
+			<liferay-ui:search-container-column-text name="<%= LanguageUtil.get(request, trashContainerModelDisplayContext.getContainerModelName()) %>">
 				<c:choose>
 					<c:when test="<%= curContainerModel.getContainerModelId() > 0 %>">
 						<liferay-ui:icon
@@ -85,10 +88,7 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 				</c:choose>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				name='<%= LanguageUtil.format(request, "num-of-x", trashContainerModelDisplayContext.getContainerModelName()) %>'
-				value="<%= String.valueOf(curContainerTrashHandler.getContainerModelsCount(curContainerModelId, curContainerModel.getParentContainerModelId())) %>"
-			/>
+			<liferay-ui:search-container-column-text name='<%= LanguageUtil.format(request, "num-of-x", trashContainerModelDisplayContext.getContainerModelName()) %>' value="<%= String.valueOf(curContainerTrashHandler.getContainerModelsCount(curContainerModelId, curContainerModel.getParentContainerModelId())) %>" />
 
 			<liferay-ui:search-container-column-text>
 
@@ -101,13 +101,15 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 				data.put("redirect", trashContainerModelDisplayContext.getRedirect());
 				%>
 
-				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+				<aui:button
+					cssClass="selector-button"
+					data="<%= data %>"
+					value="choose"
+				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

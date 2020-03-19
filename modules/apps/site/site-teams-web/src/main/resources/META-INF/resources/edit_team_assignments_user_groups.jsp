@@ -22,26 +22,35 @@ EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroup
 EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext editSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext = new EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, editSiteTeamAssignmentsUserGroupsDisplayContext);
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getNavigationItems() %>" />
 
-<clay:management-toolbar
-	displayContext="<%= editSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= editSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext %>" />
 
 <portlet:actionURL name="deleteTeamUserGroups" var="deleteTeamUserGroupsURL" />
 
-<aui:form action="<%= deleteTeamUserGroupsURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="tabs1" type="hidden" value="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getTabs1() %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamId()) %>" />
+<aui:form
+	action="<%= deleteTeamUserGroupsURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="tabs1"
+		type="hidden"
+		value="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getTabs1() %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
+	<aui:input
+		name="teamId"
+		type="hidden"
+		value="<%= String.valueOf(editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamId()) %>"
+	/>
 
-	<liferay-ui:search-container
-		id="userGroups"
-		searchContainer="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getUserGroupSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="userGroups" searchContainer="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getUserGroupSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.UserGroup"
 			cssClass="selectable"
@@ -60,14 +69,9 @@ EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext editSiteTeamAss
 
 			<c:choose>
 				<c:when test='<%= Objects.equals(editSiteTeamAssignmentsUserGroupsDisplayContext.getDisplayStyle(), "descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="users"
-						toggleRowChecker="<%= true %>"
-					/>
+					<liferay-ui:search-container-column-icon icon="users" toggleRowChecker="<%= true %>" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h5><%= userGroup.getName() %></h5>
 
 						<h6 class="text-default">
@@ -79,9 +83,7 @@ EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext editSiteTeamAss
 						</h6>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/edit_team_assignments_user_groups_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/edit_team_assignments_user_groups_action.jsp" />
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
@@ -98,34 +100,39 @@ EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext editSiteTeamAss
 						property="description"
 					/>
 
-					<liferay-ui:search-container-column-text
-						name="users"
-						value="<%= String.valueOf(usersCount) %>"
-					/>
+					<liferay-ui:search-container-column-text name="users" value="<%= String.valueOf(usersCount) %>" />
 
-					<liferay-ui:search-container-column-jsp
-						path="/edit_team_assignments_user_groups_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/edit_team_assignments_user_groups_action.jsp" />
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
 <portlet:actionURL name="addTeamUserGroups" var="addTeamUserGroupsURL" />
 
-<aui:form action="<%= addTeamUserGroupsURL %>" cssClass="hide" name="addTeamUserGroupsFm">
-	<aui:input name="tabs1" type="hidden" value="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getTabs1() %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamId()) %>" />
+<aui:form
+	action="<%= addTeamUserGroupsURL %>"
+	cssClass="hide"
+	name="addTeamUserGroupsFm"
+>
+	<aui:input
+		name="tabs1"
+		type="hidden"
+		value="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getTabs1() %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
+	<aui:input
+		name="teamId"
+		type="hidden"
+		value="<%= String.valueOf(editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamId()) %>"
+	/>
 </aui:form>
 
-<liferay-frontend:component
-	componentId="<%= editSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/EditTeamAssignmentsUserGroupsManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= editSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/EditTeamAssignmentsUserGroupsManagementToolbarDefaultEventHandler.es" />

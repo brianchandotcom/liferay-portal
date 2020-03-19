@@ -69,10 +69,18 @@ boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_S
 					<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
 				</c:when>
 				<c:when test="<%= previewBeforeRestore %>">
-					<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>"
+						key="revision-from-x-by-x"
+						translateArguments="<%= false %>"
+					/>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="x-by-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>"
+						key="x-by-x"
+						translateArguments="<%= false %>"
+					/>
 				</c:otherwise>
 			</c:choose>
 		</span>
@@ -82,7 +90,11 @@ boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_S
 <div class="<%= previewBeforeRestore ? "" : "container-fluid-1280" %>" id="container">
 	<aui:model-context bean="<%= workflowDefinition %>" model="<%= WorkflowDefinition.class %>" />
 
-	<aui:input name="content" type="hidden" value="<%= content %>" />
+	<aui:input
+		name="content"
+		type="hidden"
+		value="<%= content %>"
+	/>
 
 	<aui:form method="post" name="form">
 		<div class="card-horizontal main-content-card">
@@ -109,7 +121,11 @@ boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_S
 	<c:choose>
 		<c:when test="<%= !previewBeforeRestore %>">
 			<aui:button-row>
-				<aui:button href="<%= editWorkflowDefinitionURL %>" primary="<%= true %>" value="edit" />
+				<aui:button
+					href="<%= editWorkflowDefinitionURL %>"
+					primary="<%= true %>"
+					value="edit"
+				/>
 			</aui:button-row>
 		</c:when>
 	</c:choose>

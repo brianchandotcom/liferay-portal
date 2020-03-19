@@ -66,9 +66,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 	<aui:form method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 
-		<liferay-ui:search-container
-			searchContainer="<%= entriesSearchContainer %>"
-		>
+		<liferay-ui:search-container searchContainer="<%= entriesSearchContainer %>">
 			<liferay-ui:search-container-row
 				className="Object"
 				escapedModel="<%= true %>"
@@ -95,21 +93,21 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 							<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 						</liferay-portlet:renderURL>
 
-						<liferay-ui:search-container-column-icon
-							icon="folder"
-							toggleRowChecker="<%= true %>"
-						/>
+						<liferay-ui:search-container-column-icon icon="folder" toggleRowChecker="<%= true %>" />
 
-						<liferay-ui:search-container-column-text
-							colspan="<%= 2 %>"
-						>
+						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 							<h2 class="h5">
 								<aui:a href="<%= rowURL.toString() %>">
 									<%= curCategory.getName() %>
 								</aui:a>
 
 								<c:if test='<%= Objects.equals(curCategory.getDisplayStyle(), "question") %>'>
-									<aui:icon cssClass="icon-monospaced" image="question-circle" markupView="lexicon" message="question" />
+									<aui:icon
+										cssClass="icon-monospaced"
+										image="question-circle"
+										markupView="lexicon"
+										message="question"
+									/>
 								</c:if>
 							</h2>
 
@@ -131,9 +129,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 							</div>
 						</liferay-ui:search-container-column-text>
 
-						<liferay-ui:search-container-column-jsp
-							path="/message_boards/category_action.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp path="/message_boards/category_action.jsp" />
 					</c:when>
 					<c:otherwise>
 
@@ -166,14 +162,10 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 						</liferay-portlet:renderURL>
 
 						<liferay-ui:search-container-column-text>
-							<liferay-ui:user-portrait
-								userId="<%= thread.getLastPostByUserId() %>"
-							/>
+							<liferay-ui:user-portrait userId="<%= thread.getLastPostByUserId() %>" />
 						</liferay-ui:search-container-column-text>
 
-						<liferay-ui:search-container-column-text
-							colspan="<%= 2 %>"
-						>
+						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 							<h2 class="h5">
 								<aui:a href="<%= rowURL.toString() %>">
 									<c:if test="<%= message != null %>">
@@ -197,7 +189,12 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 								</c:if>
 
 								<c:if test="<%= thread.isQuestion() %>">
-									<aui:icon cssClass="icon-monospaced" image="question-circle" markupView="lexicon" message="question" />
+									<aui:icon
+										cssClass="icon-monospaced"
+										image="question-circle"
+										markupView="lexicon"
+										message="question"
+									/>
 								</c:if>
 							</h2>
 
@@ -273,7 +270,14 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 							</c:if>
 
 							<div>
-								<aui:workflow-status bean="<%= message %>" markupView="lexicon" model="<%= MBMessage.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
+								<aui:workflow-status
+									bean="<%= message %>"
+									markupView="lexicon"
+									model="<%= MBMessage.class %>"
+									showIcon="<%= false %>"
+									showLabel="<%= false %>"
+									status="<%= message.getStatus() %>"
+								/>
 
 								<c:if test="<%= thread.isLocked() %>">
 									<aui:icon image="lock" markupView="lexicon" />
@@ -288,9 +292,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 						%>
 
 						<c:if test="<%= message != null %>">
-							<liferay-ui:search-container-column-jsp
-								path="/message_boards/message_action.jsp"
-							/>
+							<liferay-ui:search-container-column-jsp path="/message_boards/message_action.jsp" />
 						</c:if>
 					</c:otherwise>
 				</c:choose>

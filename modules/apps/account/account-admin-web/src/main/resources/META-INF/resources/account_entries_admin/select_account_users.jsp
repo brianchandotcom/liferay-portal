@@ -24,21 +24,14 @@ SearchContainer userSearchContainer = AssignableAccountUserDisplaySearchContaine
 SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementToolbarDisplayContext = new SelectAccountUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, userSearchContainer);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= selectAccountUsersManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= selectAccountUsersManagementToolbarDisplayContext %>" />
 
 <aui:container cssClass="container-fluid container-fluid-max-xl">
 	<c:if test='<%= !Objects.equals(selectAccountUsersManagementToolbarDisplayContext.getNavigation(), "all-users") %>'>
-		<clay:alert
-			message='<%= LanguageUtil.get(request, "showing-users-with-valid-domains-only") %>'
-			title='<%= LanguageUtil.get(request, "info") %>'
-		/>
+		<clay:alert message='<%= LanguageUtil.get(request, "showing-users-with-valid-domains-only") %>' title='<%= LanguageUtil.get(request, "info") %>' />
 	</c:if>
 
-	<liferay-ui:search-container
-		searchContainer="<%= userSearchContainer %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= userSearchContainer %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
 			keyProperty="userId"
@@ -63,9 +56,7 @@ SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementTo
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:container>
 

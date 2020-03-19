@@ -96,7 +96,11 @@ List<DiffResult> targetResults = diffResults[1];
 			</table>
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(sourceName), HtmlUtil.escape(targetName)} %>" key="there-are-no-differences-between-x-and-x" translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments="<%= new Object[] {HtmlUtil.escape(sourceName), HtmlUtil.escape(targetName)} %>"
+				key="there-are-no-differences-between-x-and-x"
+				translateArguments="<%= false %>"
+			/>
 		</c:otherwise>
 	</c:choose>
 </div>

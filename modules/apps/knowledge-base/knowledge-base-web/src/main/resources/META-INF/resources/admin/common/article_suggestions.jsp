@@ -60,10 +60,26 @@ if (ratingsType == null) {
 			<portlet:param name="redirect" value="<%= viewKBArticleURL.toString() %>" />
 		</liferay-portlet:actionURL>
 
-		<aui:form action="<%= updateKBCommentURL %>" method="post" name="suggestionFm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-			<aui:input name="classNameId" type="hidden" value="<%= PortalUtil.getClassNameId(KBArticle.class) %>" />
-			<aui:input name="classPK" type="hidden" value="<%= kbArticle.getResourcePrimKey() %>" />
+		<aui:form
+			action="<%= updateKBCommentURL %>"
+			method="post"
+			name="suggestionFm"
+		>
+			<aui:input
+				name="<%= Constants.CMD %>"
+				type="hidden"
+				value="<%= Constants.ADD %>"
+			/>
+			<aui:input
+				name="classNameId"
+				type="hidden"
+				value="<%= PortalUtil.getClassNameId(KBArticle.class) %>"
+			/>
+			<aui:input
+				name="classPK"
+				type="hidden"
+				value="<%= kbArticle.getResourcePrimKey() %>"
+			/>
 
 			<liferay-ui:error exception="<%= KBCommentContentException.class %>" message="please-enter-valid-content" />
 
@@ -150,14 +166,9 @@ if (ratingsType == null) {
 					orderByComparator='<%= KBUtil.getKBCommentOrderByComparator("modified-date", "desc") %>'
 					total="<%= kbCommentsCount %>"
 				>
-					<liferay-ui:search-container-results
-						results="<%= KBCommentLocalServiceUtil.getKBComments(themeDisplay.getUserId(), KBArticle.class.getName(), kbArticle.getResourcePrimKey(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-					/>
+					<liferay-ui:search-container-results results="<%= KBCommentLocalServiceUtil.getKBComments(themeDisplay.getUserId(), KBArticle.class.getName(), kbArticle.getResourcePrimKey(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>" />
 
-					<liferay-ui:search-container-row
-						className="com.liferay.knowledge.base.model.KBComment"
-						modelVar="kbComment"
-					>
+					<liferay-ui:search-container-row className="com.liferay.knowledge.base.model.KBComment" modelVar="kbComment">
 						<liferay-ui:search-container-column-text
 							cssClass="kb-column-no-wrap"
 							name="comment"
@@ -183,9 +194,7 @@ if (ratingsType == null) {
 						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>
 
-					<liferay-ui:search-iterator
-						markupView="lexicon"
-					/>
+					<liferay-ui:search-iterator markupView="lexicon" />
 				</liferay-ui:search-container>
 			</c:otherwise>
 		</c:choose>

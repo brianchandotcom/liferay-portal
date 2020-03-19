@@ -34,10 +34,7 @@ SearchAdminDisplayContext searchAdminDisplayContext = (SearchAdminDisplayContext
 String selectedTab = searchAdminDisplayContext.getSelectedTab();
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= searchAdminDisplayContext.getNavigationItemList() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= searchAdminDisplayContext.getNavigationItemList() %>" />
 
 <c:choose>
 	<c:when test='<%= selectedTab.equals("connections") %>'>

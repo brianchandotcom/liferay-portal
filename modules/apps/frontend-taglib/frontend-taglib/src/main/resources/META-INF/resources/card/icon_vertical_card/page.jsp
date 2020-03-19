@@ -18,7 +18,11 @@
 
 <%@ include file="/card/vertical_card/start.jspf" %>
 
-<aui:icon cssClass="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon" image="<%= icon %>" markupView="lexicon" />
+<aui:icon
+	cssClass="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon"
+	image="<%= icon %>"
+	markupView="lexicon"
+/>
 
 <c:if test="<%= Validator.isNotNull(stickerBottom) %>">
 	<%= stickerBottom %>

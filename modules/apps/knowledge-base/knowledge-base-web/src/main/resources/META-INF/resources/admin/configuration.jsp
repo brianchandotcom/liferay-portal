@@ -36,7 +36,11 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
 
 	<liferay-ui:error key="emailKBArticleAddedBody" message="please-enter-a-valid-body" />
 	<liferay-ui:error key="emailKBArticleAddedSubject" message="please-enter-a-valid-subject" />
@@ -46,16 +50,23 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:tabs
-			names="<%= tabsNames %>"
-			refresh="<%= false %>"
-		>
+		<liferay-ui:tabs names="<%= tabsNames %>" refresh="<%= false %>">
 			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>
 					<liferay-frontend:fieldset>
-						<aui:input label="name" name="preferences--emailFromName--" value="<%= kbGroupServiceConfiguration.emailFromName() %>" wrapperCssClass="lfr-input-text-container" />
+						<aui:input
+							label="name"
+							name="preferences--emailFromName--"
+							value="<%= kbGroupServiceConfiguration.emailFromName() %>"
+							wrapperCssClass="lfr-input-text-container"
+						/>
 
-						<aui:input label="address" name="preferences--emailFromAddress--" value="<%= kbGroupServiceConfiguration.emailFromAddress() %>" wrapperCssClass="lfr-input-text-container" />
+						<aui:input
+							label="address"
+							name="preferences--emailFromAddress--"
+							value="<%= kbGroupServiceConfiguration.emailFromAddress() %>"
+							wrapperCssClass="lfr-input-text-container"
+						/>
 					</liferay-frontend:fieldset>
 
 					<liferay-frontend:fieldset

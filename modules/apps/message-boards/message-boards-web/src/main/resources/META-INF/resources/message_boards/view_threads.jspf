@@ -14,10 +14,7 @@
  */
 --%>
 
-<liferay-ui:search-container
-	headerNames="thread,started-by,posts,views,last-post"
-	iteratorURL="<%= portletURL %>"
->
+<liferay-ui:search-container headerNames="thread,started-by,posts,views,last-post" iteratorURL="<%= portletURL %>">
 
 	<%
 	String emptyResultsMessage = null;
@@ -95,7 +92,5 @@
 		<%@ include file="/message_boards/user_thread_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>

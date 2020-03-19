@@ -42,7 +42,11 @@ int defaultSpeed = 3000;
 		</aui:col>
 
 		<aui:col width="<%= 50 %>">
-			<aui:select inlineLabel="left" name="speed" onChange='<%= renderResponse.getNamespace() + "changeSpeed(this[this.selectedIndex].value * 1000);" %>'>
+			<aui:select
+				inlineLabel="left"
+				name="speed"
+				onChange='<%= renderResponse.getNamespace() + "changeSpeed(this[this.selectedIndex].value * 1000);" %>'
+			>
 
 				<%
 				for (int i = 1; i <= 10; i++) {

@@ -14,9 +14,7 @@
  */
 --%>
 
-<liferay-ui:search-container-column-text
-	name="category"
->
+<liferay-ui:search-container-column-text name="category">
 
 	<%
 	StringBundler sb = new StringBundler();

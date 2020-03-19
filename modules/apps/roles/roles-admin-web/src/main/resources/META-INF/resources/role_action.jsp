@@ -41,10 +41,7 @@ RoleTypeContributor currentRoleTypeContributor = RoleTypeContributorRetrieverUti
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<c:if test="<%= !name.equals(RoleConstants.OWNER) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.PERMISSIONS) %>">
@@ -81,9 +78,6 @@ RoleTypeContributor currentRoleTypeContributor = RoleTypeContributorRetrieverUti
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			confirmation="are-you-sure-you-want-to-delete-this-role"
-			url="<%= deleteRoleURL %>"
-		/>
+		<liferay-ui:icon-delete confirmation="are-you-sure-you-want-to-delete-this-role" url="<%= deleteRoleURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

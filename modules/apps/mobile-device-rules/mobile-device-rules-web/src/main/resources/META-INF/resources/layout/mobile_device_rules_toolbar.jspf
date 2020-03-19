@@ -33,7 +33,11 @@
 
 	function <portlet:namespace />updateRuleGroupInstances() {
 		Liferay.Util.fetch(
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/mobile_device_rules/rule_group_instances" var="viewRuleGroupInstancesURL">
+			<liferay-portlet:resourceURL
+				copyCurrentRenderParameters="<%= false %>"
+				id="/mobile_device_rules/rule_group_instances"
+				var="viewRuleGroupInstancesURL"
+			>
 				<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 				<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -114,7 +118,11 @@
 					title:
 						'<%= UnicodeLanguageUtil.get(resourceBundle, "device-families") %>',
 
-					<liferay-portlet:renderURL portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>" varImpl="selectRuleGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<liferay-portlet:renderURL
+						portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>"
+						varImpl="selectRuleGroupURL"
+						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+					>
 						<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/select_rule_group" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="className" value="<%= className %>" />
@@ -148,7 +156,11 @@
 				title:
 					'<%= UnicodeLanguageUtil.get(resourceBundle, "rule-priorities") %>',
 
-				<liferay-portlet:renderURL portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>" varImpl="managePrioritiesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<liferay-portlet:renderURL
+					portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>"
+					varImpl="managePrioritiesURL"
+					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+				>
 					<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group_instance" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="className" value="<%= className %>" />

@@ -28,12 +28,36 @@ if (Validator.isNull(backURL)) {
 }
 %>
 
-<aui:form action="<%= layoutsSEODisplayContext.getEditOpenGraphURL() %>" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= layoutsSEODisplayContext.getRedirectURL() %>" />
-	<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
-	<aui:input name="groupId" type="hidden" value="<%= layoutsSEODisplayContext.getGroupId() %>" />
-	<aui:input name="privateLayout" type="hidden" value="<%= layoutsSEODisplayContext.isPrivateLayout() %>" />
-	<aui:input name="layoutId" type="hidden" value="<%= layoutsSEODisplayContext.getLayoutId() %>" />
+<aui:form
+	action="<%= layoutsSEODisplayContext.getEditOpenGraphURL() %>"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= layoutsSEODisplayContext.getRedirectURL() %>"
+	/>
+	<aui:input
+		name="portletResource"
+		type="hidden"
+		value='<%= ParamUtil.getString(request, "portletResource") %>'
+	/>
+	<aui:input
+		name="groupId"
+		type="hidden"
+		value="<%= layoutsSEODisplayContext.getGroupId() %>"
+	/>
+	<aui:input
+		name="privateLayout"
+		type="hidden"
+		value="<%= layoutsSEODisplayContext.isPrivateLayout() %>"
+	/>
+	<aui:input
+		name="layoutId"
+		type="hidden"
+		value="<%= layoutsSEODisplayContext.getLayoutId() %>"
+	/>
 
 	<div class="sheet sheet-lg">
 		<div class="sheet-header">
@@ -52,7 +76,11 @@ if (Validator.isNull(backURL)) {
 			DDMFormValuesValidationException.RequiredValue rv = (DDMFormValuesValidationException.RequiredValue)errorException;
 			%>
 
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(rv.getFieldName()) %>" key="no-value-is-defined-for-field-x" translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments="<%= HtmlUtil.escape(rv.getFieldName()) %>"
+				key="no-value-is-defined-for-field-x"
+				translateArguments="<%= false %>"
+			/>
 		</liferay-ui:error>
 
 		<liferay-ddm:html

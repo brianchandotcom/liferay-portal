@@ -42,10 +42,7 @@ long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
 	editURL.setParameter("primaryKey", String.valueOf(orgLaborId));
 	%>
 
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editURL.toString() %>"
-	/>
+	<liferay-ui:icon message="edit" url="<%= editURL.toString() %>" />
 
 	<portlet:actionURL name="/users_admin/update_contact_information" var="removeOpeningHoursUrl">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
@@ -56,8 +53,5 @@ long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
 		<portlet:param name="primaryKey" value="<%= String.valueOf(orgLaborId) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon
-		message="remove"
-		url="<%= removeOpeningHoursUrl %>"
-	/>
+	<liferay-ui:icon message="remove" url="<%= removeOpeningHoursUrl %>" />
 </liferay-ui:icon-menu>

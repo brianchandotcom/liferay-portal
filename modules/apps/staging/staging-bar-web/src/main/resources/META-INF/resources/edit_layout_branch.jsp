@@ -45,11 +45,19 @@ if (layoutRevisionId <= 0) {
 	</c:if>
 
 	<c:if test="<%= lbne.getType() == LayoutBranchNameException.TOO_LONG %>">
-		<liferay-ui:message arguments="<%= new Object[] {4, 75} %>" key="please-enter-a-value-between-x-and-x-characters-long" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= new Object[] {4, 75} %>"
+			key="please-enter-a-value-between-x-and-x-characters-long"
+			translateArguments="<%= false %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= lbne.getType() == LayoutBranchNameException.TOO_SHORT %>">
-		<liferay-ui:message arguments="<%= new Object[] {4, 75} %>" key="please-enter-a-value-between-x-and-x-characters-long" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= new Object[] {4, 75} %>"
+			key="please-enter-a-value-between-x-and-x-characters-long"
+			translateArguments="<%= false %>"
+		/>
 	</c:if>
 </liferay-ui:error>
 
@@ -72,12 +80,36 @@ if (layoutBranch != null) {
 		<portlet:param name="mvcRenderCommandName" value="editLayoutBranch" />
 	</portlet:actionURL>
 
-	<aui:form action="<%= editLayoutBranchURL %>" method="post" name="fm3">
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="groupId" type="hidden" value="<%= String.valueOf(scopeGroupId) %>" />
-		<aui:input name="layoutBranchId" type="hidden" value="<%= layoutBranchId %>" />
-		<aui:input name="copyLayoutRevisionId" type="hidden" value="<%= String.valueOf(layoutRevisionId) %>" />
-		<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
+	<aui:form
+		action="<%= editLayoutBranchURL %>"
+		method="post"
+		name="fm3"
+	>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="groupId"
+			type="hidden"
+			value="<%= String.valueOf(scopeGroupId) %>"
+		/>
+		<aui:input
+			name="layoutBranchId"
+			type="hidden"
+			value="<%= layoutBranchId %>"
+		/>
+		<aui:input
+			name="copyLayoutRevisionId"
+			type="hidden"
+			value="<%= String.valueOf(layoutRevisionId) %>"
+		/>
+		<aui:input
+			name="workflowAction"
+			type="hidden"
+			value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>"
+		/>
 
 		<aui:input name="name" />
 

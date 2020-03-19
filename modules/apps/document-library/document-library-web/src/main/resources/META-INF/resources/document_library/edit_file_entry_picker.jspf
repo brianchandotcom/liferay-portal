@@ -20,7 +20,12 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 
 <c:choose>
 	<c:when test="<%= dlFilePicker == null %>">
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="file" onChange='<%= renderResponse.getNamespace() + "updateTitle();" %>' type="file">
+		<aui:input
+			autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>"
+			name="file"
+			onChange='<%= renderResponse.getNamespace() + "updateTitle();" %>'
+			type="file"
+		>
 			<aui:validator name="acceptFiles">
 				'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>'
 			</aui:validator>
@@ -30,7 +35,12 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 	</c:when>
 	<c:otherwise>
 		<aui:field-wrapper label="file">
-			<aui:button cssClass="customized-file-button disabled" disabled="<%= true %>" name="file" value="select-file" />
+			<aui:button
+				cssClass="customized-file-button disabled"
+				disabled="<%= true %>"
+				name="file"
+				value="select-file"
+			/>
 
 			<img id="<portlet:namespace />pickButtonIcon" />
 

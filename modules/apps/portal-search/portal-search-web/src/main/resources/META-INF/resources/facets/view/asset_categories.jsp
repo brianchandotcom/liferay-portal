@@ -36,7 +36,12 @@ AssetCategoriesSearchFacetDisplayContext assetCategoriesSearchFacetDisplayContex
 
 <c:choose>
 	<c:when test="<%= assetCategoriesSearchFacetDisplayContext.isRenderNothing() %>">
-		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(assetCategoriesSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= assetCategoriesSearchFacetDisplayContext.getParameterValue() %>" />
+		<aui:input
+			autocomplete="off"
+			name="<%= HtmlUtil.escapeAttribute(assetCategoriesSearchFacetDisplayContext.getParameterName()) %>"
+			type="hidden"
+			value="<%= assetCategoriesSearchFacetDisplayContext.getParameterValue() %>"
+		/>
 	</c:when>
 	<c:otherwise>
 		<div class="panel panel-default">
@@ -48,7 +53,12 @@ AssetCategoriesSearchFacetDisplayContext assetCategoriesSearchFacetDisplayContex
 
 			<div class="panel-body">
 				<div class="asset-tags <%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(assetCategoriesSearchFacetDisplayContext.getParameterName()) %>" id="<%= randomNamespace %>facet">
-					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(assetCategoriesSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= assetCategoriesSearchFacetDisplayContext.getParameterValue() %>" />
+					<aui:input
+						autocomplete="off"
+						name="<%= HtmlUtil.escapeAttribute(assetCategoriesSearchFacetDisplayContext.getParameterName()) %>"
+						type="hidden"
+						value="<%= assetCategoriesSearchFacetDisplayContext.getParameterValue() %>"
+					/>
 
 					<ul class="<%= assetCategoriesSearchFacetDisplayContext.isCloud() ? "tag-cloud" : "tag-list" %> list-unstyled">
 						<li class="default facet-value">

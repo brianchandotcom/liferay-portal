@@ -50,10 +50,7 @@ int startYear = ParamUtil.get(request, "schedulerStartDateYear", cal.get(Calenda
 				yearValue="<%= startYear %>"
 			/>
 
-			<liferay-ui:icon
-				icon="calendar"
-				markupView="lexicon"
-			/>
+			<liferay-ui:icon icon="calendar" markupView="lexicon" />
 
 			<liferay-ui:input-time
 				amPmParam="schedulerStartDateAmPm"
@@ -70,8 +67,22 @@ int startYear = ParamUtil.get(request, "schedulerStartDateYear", cal.get(Calenda
 	</aui:field-wrapper>
 
 	<aui:field-wrapper label="end-date">
-		<aui:input checked="<%= true %>" id="schedulerNoEndDate" label="no-end-date" name="endDateType" type="radio" value="0" />
-		<aui:input first="<%= true %>" id="schedulerEndBy" label="end-by" name="endDateType" type="radio" value="1" />
+		<aui:input
+			checked="<%= true %>"
+			id="schedulerNoEndDate"
+			label="no-end-date"
+			name="endDateType"
+			type="radio"
+			value="0"
+		/>
+		<aui:input
+			first="<%= true %>"
+			id="schedulerEndBy"
+			label="end-by"
+			name="endDateType"
+			type="radio"
+			value="1"
+		/>
 
 		<div class="flex-container hide" id="<portlet:namespace />schedulerEndDateType">
 			<liferay-ui:input-date
@@ -87,10 +98,7 @@ int startYear = ParamUtil.get(request, "schedulerStartDateYear", cal.get(Calenda
 				yearValue="<%= endYear %>"
 			/>
 
-			<liferay-ui:icon
-				icon="calendar"
-				markupView="lexicon"
-			/>
+			<liferay-ui:icon icon="calendar" markupView="lexicon" />
 
 			<liferay-ui:input-time
 				amPmParam="schedulerEndDateAmPm"

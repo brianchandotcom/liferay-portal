@@ -88,9 +88,17 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 		<a class="collapse-icon collapse-icon-middle collapsed list-group-heading panel-header panel-header-link" data-toggle="liferay-collapse" href="#<%= panelId %>">
 			<%= title %>
 
-			<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+			<aui:icon
+				cssClass="collapse-icon-closed"
+				image="angle-right"
+				markupView="lexicon"
+			/>
 
-			<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+			<aui:icon
+				cssClass="collapse-icon-open"
+				image="angle-down"
+				markupView="lexicon"
+			/>
 		</a>
 
 		<div class="collapse list-group-panel" id="<%= panelId %>">
@@ -157,7 +165,13 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 								%>
 
 								<li class="lfr-content-item" role="presentation">
-									<aui:icon cssClass="<%= cssClass %>" data="<%= data %>" image='<%= portletInstanceable ? "grid" : "live" %>' label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" markupView="lexicon" />
+									<aui:icon
+										cssClass="<%= cssClass %>"
+										data="<%= data %>"
+										image='<%= portletInstanceable ? "grid" : "live" %>'
+										label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
+										markupView="lexicon"
+									/>
 
 									<%
 									data.remove("draggable");
@@ -205,7 +219,13 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 										%>
 
 											<li class="lfr-archived-setup lfr-content-item" role="presentation">
-												<aui:icon cssClass="<%= cssClass %>" data="<%= portletItemData %>" image='<%= portletInstanceable ? "grid" : "live" %>' label="<%= HtmlUtil.escape(portletItem.getName()) %>" markupView="lexicon" />
+												<aui:icon
+													cssClass="<%= cssClass %>"
+													data="<%= portletItemData %>"
+													image='<%= portletInstanceable ? "grid" : "live" %>'
+													label="<%= HtmlUtil.escape(portletItem.getName()) %>"
+													markupView="lexicon"
+												/>
 
 												<%
 												portletItemData.remove("draggable");

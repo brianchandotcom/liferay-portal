@@ -45,8 +45,16 @@ if (amImageConfigurationEntry != null) {
 	method="post"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="uuid" type="hidden" value="<%= configurationEntryUuid %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="uuid"
+		type="hidden"
+		value="<%= configurationEntryUuid %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= AMImageConfigurationException.DuplicateAMImageConfigurationNameException.class %>" message="a-configuration-with-this-name-already-exists" />
@@ -65,14 +73,27 @@ if (amImageConfigurationEntry != null) {
 			</div>
 		</c:if>
 
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" required="<%= true %>" value="<%= (amImageConfigurationEntry != null) ? amImageConfigurationEntry.getName() : StringPool.BLANK %>" />
+		<aui:input
+			autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+			name="name"
+			required="<%= true %>"
+			value="<%= (amImageConfigurationEntry != null) ? amImageConfigurationEntry.getName() : StringPool.BLANK %>"
+		/>
 
-		<aui:input name="description" type="textarea" value="<%= (amImageConfigurationEntry != null) ? amImageConfigurationEntry.getDescription() : StringPool.BLANK %>" />
+		<aui:input
+			name="description"
+			type="textarea"
+			value="<%= (amImageConfigurationEntry != null) ? amImageConfigurationEntry.getDescription() : StringPool.BLANK %>"
+		/>
 
 		<div class="sheet-subtitle">
 			<liferay-ui:message key="size" />
 
-			<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
+			<aui:icon
+				cssClass="reference-mark text-warning"
+				image="asterisk"
+				markupView="lexicon"
+			/>
 
 			<span class="hide-accessible"><liferay-ui:message key="required" /></span>
 		</div>
@@ -98,7 +119,14 @@ if (amImageConfigurationEntry != null) {
 				}
 				%>
 
-				<aui:input disabled="<%= !configurationEntryEditable %>" label="max-width-px" min="0" name="maxWidth" type="number" value="<%= maxWidth %>">
+				<aui:input
+					disabled="<%= !configurationEntryEditable %>"
+					label="max-width-px"
+					min="0"
+					name="maxWidth"
+					type="number"
+					value="<%= maxWidth %>"
+				>
 					<aui:validator name="number" />
 				</aui:input>
 			</div>
@@ -117,14 +145,25 @@ if (amImageConfigurationEntry != null) {
 				}
 				%>
 
-				<aui:input disabled="<%= !configurationEntryEditable %>" label="max-height-px" min="0" name="maxHeight" type="number" value="<%= maxHeight %>">
+				<aui:input
+					disabled="<%= !configurationEntryEditable %>"
+					label="max-height-px"
+					min="0"
+					name="maxHeight"
+					type="number"
+					value="<%= maxHeight %>"
+				>
 					<aui:validator name="number" />
 				</aui:input>
 			</div>
 		</div>
 
 		<c:if test="<%= amImageConfigurationEntry == null %>">
-			<aui:input label="add-a-resolution-for-high-density-displays" name="addHighResolution" type="checkbox" />
+			<aui:input
+				label="add-a-resolution-for-high-density-displays"
+				name="addHighResolution"
+				type="checkbox"
+			/>
 		</c:if>
 
 		<%
@@ -145,12 +184,34 @@ if (amImageConfigurationEntry != null) {
 		</div>
 
 		<div class="form-group" id="<portlet:namespace />idOptions">
-			<aui:input checked="<%= automaticUuid %>" disabled="<%= !configurationEntryEditable %>" helpMessage="the-id-is-based-on-the-name-field" label="automatic" name="automaticUuid" type="radio" value="<%= true %>" />
+			<aui:input
+				checked="<%= automaticUuid %>"
+				disabled="<%= !configurationEntryEditable %>"
+				helpMessage="the-id-is-based-on-the-name-field"
+				label="automatic"
+				name="automaticUuid"
+				type="radio"
+				value="<%= true %>"
+			/>
 
-			<aui:input checked="<%= !automaticUuid %>" disabled="<%= !configurationEntryEditable %>" label="custom" name="automaticUuid" type="radio" value="<%= false %>" />
+			<aui:input
+				checked="<%= !automaticUuid %>"
+				disabled="<%= !configurationEntryEditable %>"
+				label="custom"
+				name="automaticUuid"
+				type="radio"
+				value="<%= false %>"
+			/>
 		</div>
 
-		<aui:input cssClass="input-medium" disabled="<%= automaticUuid || !configurationEntryEditable %>" label="id" name="newUuid" type="text" value="<%= configurationEntryUuid %>">
+		<aui:input
+			cssClass="input-medium"
+			disabled="<%= automaticUuid || !configurationEntryEditable %>"
+			label="id"
+			name="newUuid"
+			type="text"
+			value="<%= configurationEntryUuid %>"
+		>
 			<aui:validator errorMessage="please-enter-only-alphanumeric-characters-dashes-or-underscores" name="custom">
 				function(value) {
 					var radioButtons = document.getElementsByName('<portlet:namespace/>automaticUuid');
@@ -179,7 +240,5 @@ if (amImageConfigurationEntry != null) {
 </liferay-frontend:edit-form>
 
 <c:if test="<%= configurationEntryEditable %>">
-	<liferay-frontend:component
-		module="adaptive_media/js/EditAdaptiveMediaConfig.es"
-	/>
+	<liferay-frontend:component module="adaptive_media/js/EditAdaptiveMediaConfig.es" />
 </c:if>

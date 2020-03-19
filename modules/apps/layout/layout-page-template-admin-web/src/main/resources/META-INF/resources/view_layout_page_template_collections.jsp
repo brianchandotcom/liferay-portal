@@ -22,10 +22,7 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTemplateDisplayContext.getLayoutPageTemplateCollections();
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= layoutPageTemplatesAdminDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= layoutPageTemplatesAdminDisplayContext.getNavigationItems() %>" />
 
 <liferay-ui:success key="layoutPageTemplatePublished" message="the-page-template-was-published-succesfully" />
 
@@ -63,10 +60,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 											</c:if>
 
 											<li>
-												<clay:dropdown-actions
-													componentId="actionsComponent"
-													dropdownItems="<%= layoutPageTemplateDisplayContext.getCollectionsDropdownItems() %>"
-												/>
+												<clay:dropdown-actions componentId="actionsComponent" dropdownItems="<%= layoutPageTemplateDisplayContext.getCollectionsDropdownItems() %>" />
 											</li>
 										</ul>
 									</div>
@@ -184,7 +178,11 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 							<portlet:param name="tabs1" value="page-templates" />
 						</portlet:renderURL>
 
-						<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/layout_page_template/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">
+						<liferay-portlet:actionURL
+							copyCurrentRenderParameters="<%= false %>"
+							name="/layout_page_template/delete_layout_page_template_collection"
+							var="deleteLayoutPageTemplateCollectionURL"
+						>
 							<portlet:param name="redirect" value="<%= redirectURL %>" />
 						</liferay-portlet:actionURL>
 

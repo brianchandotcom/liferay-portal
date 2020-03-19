@@ -76,9 +76,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					}
 					%>
 
-					<liferay-ui:user-portrait
-						user="<%= entryUser %>"
-					/>
+					<liferay-ui:user-portrait user="<%= entryUser %>" />
 				</div>
 
 				<div class="autofit-col autofit-col-expand">
@@ -149,10 +147,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 			</div>
 
 			<c:if test="<%= blogsPortletInstanceConfiguration.displayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) %>">
-				<liferay-asset:asset-tags-available
-					className="<%= BlogsEntry.class.getName() %>"
-					classPK="<%= entry.getEntryId() %>"
-				>
+				<liferay-asset:asset-tags-available className="<%= BlogsEntry.class.getName() %>" classPK="<%= entry.getEntryId() %>">
 					<div class="entry-tags">
 						<liferay-asset:asset-tags-summary
 							className="<%= BlogsEntry.class.getName() %>"
@@ -177,10 +172,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					</div>
 				</c:if>
 
-				<liferay-asset:asset-categories-available
-					className="<%= BlogsEntry.class.getName() %>"
-					classPK="<%= entry.getEntryId() %>"
-				>
+				<liferay-asset:asset-categories-available className="<%= BlogsEntry.class.getName() %>" classPK="<%= entry.getEntryId() %>">
 					<div class="entry-categories">
 						<liferay-asset:asset-categories-summary
 							className="<%= BlogsEntry.class.getName() %>"

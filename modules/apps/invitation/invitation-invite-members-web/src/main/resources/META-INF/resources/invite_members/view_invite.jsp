@@ -27,13 +27,41 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		<portlet:param name="mvcPath" value="/invite_members/view_invite.jsp" />
 	</portlet:renderURL>
 
-	<aui:form action="<%= sendInvitesURL %>" method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
-		<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
-		<aui:input name="receiverUserIds" type="hidden" value="" />
-		<aui:input name="receiverEmailAddresses" type="hidden" value="" />
-		<aui:input name="invitedRoleId" type="hidden" value="" />
-		<aui:input name="invitedTeamId" type="hidden" value="" />
+	<aui:form
+		action="<%= sendInvitesURL %>"
+		method="post"
+		name="fm"
+	>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirectURL %>"
+		/>
+		<aui:input
+			name="groupId"
+			type="hidden"
+			value="<%= themeDisplay.getScopeGroupId() %>"
+		/>
+		<aui:input
+			name="receiverUserIds"
+			type="hidden"
+			value=""
+		/>
+		<aui:input
+			name="receiverEmailAddresses"
+			type="hidden"
+			value=""
+		/>
+		<aui:input
+			name="invitedRoleId"
+			type="hidden"
+			value=""
+		/>
+		<aui:input
+			name="invitedTeamId"
+			type="hidden"
+			value=""
+		/>
 
 		<div class="dialog-body">
 			<div class="container-fluid main-content-body">
@@ -51,7 +79,12 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 							/>
 						</small>
 
-						<aui:input id="inviteUserSearch" label="" name="userName" placeholder="search" />
+						<aui:input
+							id="inviteUserSearch"
+							label=""
+							name="userName"
+							placeholder="search"
+						/>
 
 						<div class="search" id="<portlet:namespace />membersList"></div>
 

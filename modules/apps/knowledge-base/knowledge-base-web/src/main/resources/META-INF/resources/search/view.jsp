@@ -21,12 +21,13 @@
 </liferay-portlet:renderURL>
 
 <div class="form-search">
-	<aui:form action="<%= searchURL %>" method="get" name="searchFm">
+	<aui:form
+		action="<%= searchURL %>"
+		method="get"
+		name="searchFm"
+	>
 		<liferay-portlet:renderURLParams varImpl="searchURL" />
 
-		<liferay-ui:input-search
-			name="keywords"
-			placeholder='<%= LanguageUtil.get(request, "keywords") %>'
-		/>
+		<liferay-ui:input-search name="keywords" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
 	</aui:form>
 </div>

@@ -40,13 +40,33 @@ if (ddmFormInstance != null) {
 			<c:when test="<%= isFormAvailable %>">
 				<div class="portlet-forms">
 					<c:if test="<%= Validator.isNull(redirectURL) %>">
-						<aui:input name="redirect" type="hidden" value='<%= ParamUtil.getString(request, "redirect", PortalUtil.getCurrentURL(request)) %>' />
+						<aui:input
+							name="redirect"
+							type="hidden"
+							value='<%= ParamUtil.getString(request, "redirect", PortalUtil.getCurrentURL(request)) %>'
+						/>
 					</c:if>
 
-					<aui:input name="groupId" type="hidden" value="<%= ddmFormInstance.getGroupId() %>" />
-					<aui:input name="formInstanceId" type="hidden" value="<%= ddmFormInstance.getFormInstanceId() %>" />
-					<aui:input name="languageId" type="hidden" value="<%= languageId %>" />
-					<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
+					<aui:input
+						name="groupId"
+						type="hidden"
+						value="<%= ddmFormInstance.getGroupId() %>"
+					/>
+					<aui:input
+						name="formInstanceId"
+						type="hidden"
+						value="<%= ddmFormInstance.getFormInstanceId() %>"
+					/>
+					<aui:input
+						name="languageId"
+						type="hidden"
+						value="<%= languageId %>"
+					/>
+					<aui:input
+						name="workflowAction"
+						type="hidden"
+						value="<%= WorkflowConstants.ACTION_PUBLISH %>"
+					/>
 
 					<liferay-ui:error exception="<%= DDMFormRenderingException.class %>" message="unable-to-render-the-selected-form" />
 					<liferay-ui:error exception="<%= DDMFormValuesValidationException.class %>" message="field-validation-failed" />
@@ -57,7 +77,11 @@ if (ddmFormInstance != null) {
 						DDMFormValuesValidationException.MustSetValidValue msvv = (DDMFormValuesValidationException.MustSetValidValue)errorException;
 						%>
 
-						<liferay-ui:message arguments="<%= HtmlUtil.escape(msvv.getFieldName()) %>" key="validation-failed-for-field-x" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= HtmlUtil.escape(msvv.getFieldName()) %>"
+							key="validation-failed-for-field-x"
+							translateArguments="<%= false %>"
+						/>
 					</liferay-ui:error>
 
 					<liferay-ui:error exception="<%= DDMFormValuesValidationException.RequiredValue.class %>">
@@ -66,7 +90,11 @@ if (ddmFormInstance != null) {
 						DDMFormValuesValidationException.RequiredValue rv = (DDMFormValuesValidationException.RequiredValue)errorException;
 						%>
 
-						<liferay-ui:message arguments="<%= HtmlUtil.escape(rv.getFieldName()) %>" key="no-value-is-defined-for-field-x" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= HtmlUtil.escape(rv.getFieldName()) %>"
+							key="no-value-is-defined-for-field-x"
+							translateArguments="<%= false %>"
+						/>
 					</liferay-ui:error>
 
 					<liferay-ui:error exception="<%= NoSuchFormInstanceException.class %>" message="the-selected-form-no-longer-exists" />
@@ -102,7 +130,11 @@ if (ddmFormInstance != null) {
 					<div class="container-fluid-1280 ddm-form-builder-app">
 						<%= ddmFormHTML %>
 
-						<aui:input name="empty" type="hidden" value="" />
+						<aui:input
+							name="empty"
+							type="hidden"
+							value=""
+						/>
 					</div>
 				</div>
 			</c:when>

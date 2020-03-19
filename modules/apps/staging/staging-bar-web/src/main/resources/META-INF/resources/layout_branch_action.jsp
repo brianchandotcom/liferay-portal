@@ -41,10 +41,7 @@ long currentLayoutBranchId = GetterUtil.getLong((String)request.getAttribute("vi
 			<portlet:param name="layoutBranchId" value="<%= String.valueOf(layoutBranch.getLayoutBranchId()) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editLayoutBranchURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editLayoutBranchURL %>" />
 
 		<c:if test="<%= !rootLayoutRevision.isPending() && !layoutBranch.isMaster() && LayoutBranchPermissionUtil.contains(permissionChecker, layoutBranch, ActionKeys.DELETE) %>">
 			<portlet:actionURL name="deleteLayoutBranch" var="deleteLayoutBranchURL">
@@ -54,9 +51,7 @@ long currentLayoutBranchId = GetterUtil.getLong((String)request.getAttribute("vi
 				<portlet:param name="currentLayoutBranchId" value="<%= String.valueOf(currentLayoutBranchId) %>" />
 			</portlet:actionURL>
 
-			<liferay-ui:icon-delete
-				url="<%= deleteLayoutBranchURL %>"
-			/>
+			<liferay-ui:icon-delete url="<%= deleteLayoutBranchURL %>" />
 		</c:if>
 	</c:if>
 </liferay-ui:icon-menu>

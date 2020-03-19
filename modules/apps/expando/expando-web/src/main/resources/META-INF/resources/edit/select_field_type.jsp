@@ -236,9 +236,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-cus
 
 								<div class="input-group-inset-item input-group-inset-item-after">
 									<div class="align-items-center btn btn-unstyled d-flex">
-										<clay:icon
-											symbol="calendar"
-										/>
+										<clay:icon symbol="calendar" />
 									</div>
 								</div>
 							</div>

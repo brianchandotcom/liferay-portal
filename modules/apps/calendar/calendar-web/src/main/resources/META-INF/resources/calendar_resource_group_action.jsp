@@ -36,8 +36,5 @@ Group group = (Group)row.getObject();
 		<portlet:param name="classPK" value="<%= String.valueOf(group.getGroupId()) %>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="view-calendars"
-		url="<%= calendarsURL %>"
-	/>
+	<liferay-ui:icon message="view-calendars" url="<%= calendarsURL %>" />
 </liferay-ui:icon-menu>

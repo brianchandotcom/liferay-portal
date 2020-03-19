@@ -16,7 +16,4 @@
 
 <%@ include file="/sharing/init.jsp" %>
 
-<react:component
-	data="<%= (Map<String, Object>)request.getAttribute(SharingWebKeys.SHARING_REACT_DATA) %>"
-	module="sharing/js/Sharing.es"
-/>
+<react:component data="<%= (Map<String, Object>)request.getAttribute(SharingWebKeys.SHARING_REACT_DATA) %>" module="sharing/js/Sharing.es" />

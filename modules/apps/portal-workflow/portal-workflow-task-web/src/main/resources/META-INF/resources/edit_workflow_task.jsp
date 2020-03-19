@@ -90,9 +90,7 @@ renderResponse.setTitle(headerTitle);
 									<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
 										<div class="card-col-field">
 											<div class="list-group-card-icon">
-												<liferay-ui:user-portrait
-													userId="<%= workflowTask.getAssigneeUserId() %>"
-												/>
+												<liferay-ui:user-portrait userId="<%= workflowTask.getAssigneeUserId() %>" />
 											</div>
 										</div>
 
@@ -146,10 +144,7 @@ renderResponse.setTitle(headerTitle);
 				</c:if>
 			</aui:fieldset>
 
-			<liferay-ui:panel-container
-				cssClass="task-panel-container"
-				extended="<%= false %>"
-			>
+			<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= false %>">
 				<c:if test="<%= assetRenderer != null %>">
 					<liferay-ui:panel
 						extended="<%= true %>"
@@ -247,10 +242,7 @@ renderResponse.setTitle(headerTitle);
 							/>
 						</h3>
 
-						<liferay-asset:asset-display
-							assetRenderer="<%= assetRenderer %>"
-							template="<%= AssetRenderer.TEMPLATE_ABSTRACT %>"
-						/>
+						<liferay-asset:asset-display assetRenderer="<%= assetRenderer %>" template="<%= AssetRenderer.TEMPLATE_ABSTRACT %>" />
 					</liferay-ui:panel>
 
 					<c:if test="<%= assetEntry != null %>">
@@ -272,10 +264,7 @@ renderResponse.setTitle(headerTitle);
 					</c:if>
 				</c:if>
 
-				<liferay-ui:panel
-					markupView="lexicon"
-					title="activities"
-				>
+				<liferay-ui:panel markupView="lexicon" title="activities">
 
 					<%
 					List<WorkflowLog> workflowLogs = workflowTaskDisplayContext.getWorkflowLogs(workflowTask);

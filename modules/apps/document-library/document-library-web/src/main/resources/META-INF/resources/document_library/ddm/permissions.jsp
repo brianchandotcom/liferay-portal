@@ -16,6 +16,4 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
-<liferay-ui:input-permissions
-	modelName="<%= DLFileEntryType.class.getName() %>"
-/>
+<liferay-ui:input-permissions modelName="<%= DLFileEntryType.class.getName() %>" />

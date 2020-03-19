@@ -25,7 +25,12 @@
 				<div class="card-row">
 					<div class="autofit-col autofit-col-expand">
 						<c:if test="<%= Validator.isNotNull(title) %>">
-							<aui:a cssClass="card-title text-truncate" href="<%= url %>" onClick="<%= onClick %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+							<aui:a
+								cssClass="card-title text-truncate"
+								href="<%= url %>"
+								onClick="<%= onClick %>"
+								title="<%= HtmlUtil.escapeAttribute(title) %>"
+							>
 								<%= HtmlUtil.escape(title) %>
 							</aui:a>
 						</c:if>
@@ -47,9 +52,7 @@
 						</div>
 					</div>
 
-					<liferay-util:buffer
-						var="actionJspBuffer"
-					>
+					<liferay-util:buffer var="actionJspBuffer">
 						<liferay-util:include page="<%= actionJsp %>" servletContext="<%= actionJspServletContext %>" />
 					</liferay-util:buffer>
 

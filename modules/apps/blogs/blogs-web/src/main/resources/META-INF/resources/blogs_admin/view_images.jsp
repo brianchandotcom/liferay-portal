@@ -72,13 +72,14 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 
 	<aui:form action="<%= editImageURL %>" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= portletURL.toString() %>"
+		/>
 		<aui:input name="deleteFileEntryIds" type="hidden" />
 
-		<liferay-ui:search-container
-			id="images"
-			searchContainer="<%= blogImagesSearchContainer %>"
-		>
+		<liferay-ui:search-container id="images" searchContainer="<%= blogImagesSearchContainer %>">
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.repository.model.FileEntry"
 				keyProperty="fileEntryId"
@@ -100,10 +101,7 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 				<%@ include file="/blogs_admin/image_search_columns.jspf" %>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				displayStyle="<%= displayStyle %>"
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

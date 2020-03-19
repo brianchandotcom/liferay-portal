@@ -16,14 +16,9 @@
 
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
-		<liferay-ui:search-container-column-icon
-			icon="users"
-			toggleRowChecker="<%= true %>"
-		/>
+		<liferay-ui:search-container-column-icon icon="users" toggleRowChecker="<%= true %>" />
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<h5>
 				<aui:a href="<%= String.valueOf(rowURL) %>"><%= organization.getName() %></aui:a>
 			</h5>
@@ -43,10 +38,7 @@
 			</h6>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/organization_action.jsp"
-		/>
+		<liferay-ui:search-container-column-jsp cssClass="entry-action-column" path="/organization_action.jsp" />
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 
@@ -114,9 +106,6 @@
 			/>
 		</c:if>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/organization_action.jsp"
-		/>
+		<liferay-ui:search-container-column-jsp cssClass="entry-action-column" path="/organization_action.jsp" />
 	</c:otherwise>
 </c:choose>

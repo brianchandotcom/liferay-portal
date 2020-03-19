@@ -21,8 +21,5 @@ List<NavigationItem> navigationItems = ddmDisplayContext.getNavigationItem();
 %>
 
 <c:if test="<%= navigationItems.size() > 1 %>">
-	<clay:navigation-bar
-		inverted="<%= true %>"
-		navigationItems="<%= navigationItems %>"
-	/>
+	<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= navigationItems %>" />
 </c:if>

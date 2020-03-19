@@ -60,61 +60,162 @@ X509Certificate x509Certificate = (X509Certificate)request.getAttribute(SamlWebK
 				<liferay-ui:error exception="<%= InvalidParameterException.class %>" message="please-enter-a-valid-key-length-and-algorithm" />
 				<liferay-ui:error key="certificateValidityDays" message="please-enter-a-valid-certificate-validity" />
 
-				<aui:input name="cmd" type="hidden" value="<%= cmd %>" />
+				<aui:input
+					name="cmd"
+					type="hidden"
+					value="<%= cmd %>"
+				/>
 
-				<aui:input name="certificateUsage" required="<%= true %>" type="hidden" value="<%= certificateUsage.name() %>" />
+				<aui:input
+					name="certificateUsage"
+					required="<%= true %>"
+					type="hidden"
+					value="<%= certificateUsage.name() %>"
+				/>
 
 				<c:choose>
 					<c:when test='<%= cmd.equals("replace") %>'>
-						<aui:input label="common-name" name="certificateCommonName" required="<%= true %>" value="<%= certificateCommonName %>" />
+						<aui:input
+							label="common-name"
+							name="certificateCommonName"
+							required="<%= true %>"
+							value="<%= certificateCommonName %>"
+						/>
 
-						<aui:input label="organization" name="certificateOrganization" value="<%= certificateOrganization %>" />
+						<aui:input
+							label="organization"
+							name="certificateOrganization"
+							value="<%= certificateOrganization %>"
+						/>
 
-						<aui:input label="organization-unit" name="certificateOrganizationUnit" value="<%= certificateOrganizationUnit %>" />
+						<aui:input
+							label="organization-unit"
+							name="certificateOrganizationUnit"
+							value="<%= certificateOrganizationUnit %>"
+						/>
 
-						<aui:input label="locality" name="certificateLocality" value="<%= certificateLocality %>" />
+						<aui:input
+							label="locality"
+							name="certificateLocality"
+							value="<%= certificateLocality %>"
+						/>
 
-						<aui:input label="state" name="certificateState" value="<%= certificateState %>" />
+						<aui:input
+							label="state"
+							name="certificateState"
+							value="<%= certificateState %>"
+						/>
 
-						<aui:input label="country" name="certificateCountry" value="<%= certificateCountry %>" />
+						<aui:input
+							label="country"
+							name="certificateCountry"
+							value="<%= certificateCountry %>"
+						/>
 
-						<aui:input label="validity-days" name="certificateValidityDays" value="<%= certificateValidityDays %>" />
+						<aui:input
+							label="validity-days"
+							name="certificateValidityDays"
+							value="<%= certificateValidityDays %>"
+						/>
 
 						<c:choose>
 							<c:when test="<%= certificateUsage == LocalEntityManager.CertificateUsage.SIGNING %>">
-								<aui:select label="key-algorithm" name="certificateKeyAlgorithm" required="<%= true %>">
-									<aui:option label="rsa" selected='<%= certificateKeyAlgorithm.equals("RSA") %>' value="RSA" />
-									<aui:option label="dsa" selected='<%= certificateKeyAlgorithm.equals("DSA") %>' value="DSA" />
+								<aui:select
+									label="key-algorithm"
+									name="certificateKeyAlgorithm"
+									required="<%= true %>"
+								>
+									<aui:option
+										label="rsa"
+										selected='<%= certificateKeyAlgorithm.equals("RSA") %>'
+										value="RSA"
+									/>
+									<aui:option
+										label="dsa"
+										selected='<%= certificateKeyAlgorithm.equals("DSA") %>'
+										value="DSA"
+									/>
 								</aui:select>
 							</c:when>
 							<c:when test="<%= certificateUsage == LocalEntityManager.CertificateUsage.ENCRYPTION %>">
-								<aui:input disabled="<%= true %>" label="key-algorithm" name="certificateKeyAlgorithm" value="RSA" />
-								<aui:input label="key-algorithm" name="certificateKeyAlgorithm" type="hidden" value="RSA" />
+								<aui:input
+									disabled="<%= true %>"
+									label="key-algorithm"
+									name="certificateKeyAlgorithm"
+									value="RSA"
+								/>
+								<aui:input
+									label="key-algorithm"
+									name="certificateKeyAlgorithm"
+									type="hidden"
+									value="RSA"
+								/>
 							</c:when>
 						</c:choose>
 
-						<aui:select label="key-length-bits" name="certificateKeyLength" required="<%= true %>">
-							<aui:option label="4096" selected='<%= certificateKeyLength.equals("4096") %>' value="4096" />
-							<aui:option label="2048" selected='<%= certificateKeyLength.equals("2048") %>' value="2048" />
-							<aui:option label="1024" selected='<%= certificateKeyLength.equals("1024") %>' value="1024" />
-							<aui:option label="512" selected='<%= certificateKeyLength.equals("512") %>' value="512" />
+						<aui:select
+							label="key-length-bits"
+							name="certificateKeyLength"
+							required="<%= true %>"
+						>
+							<aui:option
+								label="4096"
+								selected='<%= certificateKeyLength.equals("4096") %>'
+								value="4096"
+							/>
+							<aui:option
+								label="2048"
+								selected='<%= certificateKeyLength.equals("2048") %>'
+								value="2048"
+							/>
+							<aui:option
+								label="1024"
+								selected='<%= certificateKeyLength.equals("1024") %>'
+								value="1024"
+							/>
+							<aui:option
+								label="512"
+								selected='<%= certificateKeyLength.equals("512") %>'
+								value="512"
+							/>
 						</aui:select>
 					</c:when>
 				</c:choose>
 
 				<c:choose>
 					<c:when test="<%= certificateUsage == LocalEntityManager.CertificateUsage.SIGNING %>">
-						<aui:input label="key-password" name='<%= "settings--" + PortletPropsKeys.SAML_KEYSTORE_CREDENTIAL_PASSWORD + "--" %>' required="<%= true %>" type="password" value="" />
+						<aui:input
+							label="key-password"
+							name='<%= "settings--" + PortletPropsKeys.SAML_KEYSTORE_CREDENTIAL_PASSWORD + "--" %>'
+							required="<%= true %>"
+							type="password"
+							value=""
+						/>
 					</c:when>
 					<c:when test="<%= certificateUsage == LocalEntityManager.CertificateUsage.ENCRYPTION %>">
-						<aui:input label="key-password" name='<%= "settings--" + PortletPropsKeys.SAML_KEYSTORE_ENCRYPTION_CREDENTIAL_PASSWORD + "--" %>' required="<%= true %>" type="password" value="" />
+						<aui:input
+							label="key-password"
+							name='<%= "settings--" + PortletPropsKeys.SAML_KEYSTORE_ENCRYPTION_CREDENTIAL_PASSWORD + "--" %>'
+							required="<%= true %>"
+							type="password"
+							value=""
+						/>
 					</c:when>
 				</c:choose>
 			</div>
 
 			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" value="save" />
-				<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "requestCloseDialog(false);" %>' type="cancel" value="cancel" />
+				<aui:button
+					cssClass="btn-lg"
+					type="submit"
+					value="save"
+				/>
+				<aui:button
+					cssClass="btn-lg"
+					onClick='<%= renderResponse.getNamespace() + "requestCloseDialog(false);" %>'
+					type="cancel"
+					value="cancel"
+				/>
 			</aui:button-row>
 		</aui:form>
 	</c:when>

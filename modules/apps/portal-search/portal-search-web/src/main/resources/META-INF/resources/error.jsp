@@ -21,10 +21,7 @@
 <%@ page import="com.liferay.portal.kernel.security.auth.PrincipalException" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %>
 
-<liferay-ui:header
-	showBackURL="<%= false %>"
-	title="error"
-/>
+<liferay-ui:header showBackURL="<%= false %>" title="error" />
 
 <c:if test="<%= SessionErrors.contains(request, PrincipalException.getNestedClasses()) %>">
 	<liferay-ui:message key="you-do-not-have-permission-to-view-this-page" />

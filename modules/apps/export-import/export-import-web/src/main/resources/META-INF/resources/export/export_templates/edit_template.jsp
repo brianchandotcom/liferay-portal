@@ -87,32 +87,80 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 		<portlet:param name="mvcRenderCommandName" value="editExportConfiguration" />
 	</portlet:actionURL>
 
-	<aui:form action='<%= updateExportConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
-		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-		<aui:input name="exportImportConfigurationId" type="hidden" value="<%= exportImportConfigurationId %>" />
-		<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
-		<aui:input name="liveGroupId" type="hidden" value="<%= String.valueOf(liveGroupId) %>" />
-		<aui:input name="privateLayout" type="hidden" value="<%= String.valueOf(privateLayout) %>" />
-		<aui:input name="rootNodeName" type="hidden" value="<%= rootNodeName %>" />
-		<aui:input name="treeId" type="hidden" value="<%= treeId %>" />
-		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="hidden" value="<%= true %>" />
-		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="hidden" value="<%= true %>" />
-		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>" />
-		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="hidden" value="<%= true %>" />
+	<aui:form
+		action='<%= updateExportConfigurationURL + "&etag=0&strip=0" %>'
+		cssClass="lfr-export-dialog"
+		method="post"
+		name="fm1"
+	>
+		<aui:input
+			name="<%= Constants.CMD %>"
+			type="hidden"
+			value="<%= cmd %>"
+		/>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= portletURL.toString() %>"
+		/>
+		<aui:input
+			name="exportImportConfigurationId"
+			type="hidden"
+			value="<%= exportImportConfigurationId %>"
+		/>
+		<aui:input
+			name="groupId"
+			type="hidden"
+			value="<%= String.valueOf(groupId) %>"
+		/>
+		<aui:input
+			name="liveGroupId"
+			type="hidden"
+			value="<%= String.valueOf(liveGroupId) %>"
+		/>
+		<aui:input
+			name="privateLayout"
+			type="hidden"
+			value="<%= String.valueOf(privateLayout) %>"
+		/>
+		<aui:input
+			name="rootNodeName"
+			type="hidden"
+			value="<%= rootNodeName %>"
+		/>
+		<aui:input
+			name="treeId"
+			type="hidden"
+			value="<%= treeId %>"
+		/>
+		<aui:input
+			name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>"
+			type="hidden"
+			value="<%= true %>"
+		/>
+		<aui:input
+			name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>"
+			type="hidden"
+			value="<%= true %>"
+		/>
+		<aui:input
+			name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>"
+			type="hidden"
+			value="<%= true %>"
+		/>
+		<aui:input
+			name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>"
+			type="hidden"
+			value="<%= true %>"
+		/>
 
 		<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
 		<div class="export-dialog-tree">
 			<aui:fieldset-group markupView="lexicon">
-				<liferay-staging:configuration-header
-					exportImportConfiguration="<%= exportImportConfiguration %>"
-				/>
+				<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" />
 
-				<liferay-staging:deletions
-					cmd="<%= Constants.EXPORT %>"
-					exportImportConfigurationId="<%= exportImportConfigurationId %>"
-				/>
+				<liferay-staging:deletions cmd="<%= Constants.EXPORT %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" />
 
 				<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
 					<liferay-staging:select-pages

@@ -36,10 +36,7 @@ SAPEntry sapEntry = (SAPEntry)row.getObject();
 			<portlet:param name="sapEntryId" value="<%= String.valueOf(sapEntry.getSapEntryId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<c:if test="<%= SAPEntryPermission.contains(permissionChecker, sapEntry, ActionKeys.PERMISSIONS) %>">
@@ -65,8 +62,6 @@ SAPEntry sapEntry = (SAPEntry)row.getObject();
 			<portlet:param name="sapEntryId" value="<%= String.valueOf(sapEntry.getSapEntryId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

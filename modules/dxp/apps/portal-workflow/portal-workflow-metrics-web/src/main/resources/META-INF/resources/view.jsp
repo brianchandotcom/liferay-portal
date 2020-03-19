@@ -29,8 +29,5 @@ data.put("userId", themeDisplay.getUserId());
 <div>
 	<span aria-hidden="true" class="loading-animation"></span>
 
-	<react:component
-		data="<%= data %>"
-		module="js/index.es"
-	/>
+	<react:component data="<%= data %>" module="js/index.es" />
 </div>

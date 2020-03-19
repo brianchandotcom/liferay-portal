@@ -45,10 +45,7 @@ DDLRecordVersion ddlRecordVersion = ddlRecord.getLatestRecordVersion();
 		<portlet:param name="version" value="<%= ddlRecordVersion.getVersion() %>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="view[action]"
-		url="<%= viewDDLRecordURL %>"
-	/>
+	<liferay-ui:icon message="view[action]" url="<%= viewDDLRecordURL %>" />
 
 	<c:if test="<%= KaleoProcessPermission.contains(permissionChecker, kaleoProcessId, ActionKeys.UPDATE) %>">
 		<portlet:actionURL name="deleteDDLRecord" var="deleteDDLRecordURL">
@@ -57,8 +54,6 @@ DDLRecordVersion ddlRecordVersion = ddlRecord.getLatestRecordVersion();
 			<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteDDLRecordURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteDDLRecordURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

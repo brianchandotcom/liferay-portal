@@ -39,10 +39,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 		</div>
 	</c:when>
 	<c:when test="<%= exception instanceof DLPreviewGenerationInProcessException %>">
-		<clay:alert
-			message='<%= LanguageUtil.get(resourceBundle, "generating-preview-will-take-a-few-minutes") %>'
-			title='<%= LanguageUtil.get(request, "info") + ":" %>'
-		/>
+		<clay:alert message='<%= LanguageUtil.get(resourceBundle, "generating-preview-will-take-a-few-minutes") %>' title='<%= LanguageUtil.get(request, "info") + ":" %>' />
 	</c:when>
 	<c:otherwise>
 		<div class="preview-file-error-container">

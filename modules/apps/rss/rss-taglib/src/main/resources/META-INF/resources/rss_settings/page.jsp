@@ -27,20 +27,34 @@ boolean nameEnabled = GetterUtil.getBoolean((String)request.getAttribute("lifera
 %>
 
 <div class="taglib-rss-settings">
-	<aui:input label="enable-rss-subscription" name="preferences--enableRss--" type="toggle-switch" value="<%= enabled %>" />
+	<aui:input
+		label="enable-rss-subscription"
+		name="preferences--enableRss--"
+		type="toggle-switch"
+		value="<%= enabled %>"
+	/>
 
 	<div id="<portlet:namespace />rssOptions">
 		<c:if test="<%= nameEnabled %>">
 			<aui:row>
 				<aui:col>
-					<aui:input label="rss-feed-name" name="preferences--rssName--" type="text" value="<%= name %>" />
+					<aui:input
+						label="rss-feed-name"
+						name="preferences--rssName--"
+						type="text"
+						value="<%= name %>"
+					/>
 				</aui:col>
 			</aui:row>
 		</c:if>
 
 		<aui:row>
 			<aui:col width="<%= 33 %>">
-				<aui:select label="maximum-items-to-display" name="preferences--rssDelta--" value="<%= delta %>">
+				<aui:select
+					label="maximum-items-to-display"
+					name="preferences--rssDelta--"
+					value="<%= delta %>"
+				>
 					<aui:option label="1" />
 					<aui:option label="2" />
 					<aui:option label="3" />
@@ -84,7 +98,11 @@ boolean nameEnabled = GetterUtil.getBoolean((String)request.getAttribute("lifera
 					for (String type : RSSUtil.FEED_TYPES) {
 					%>
 
-						<aui:option label="<%= RSSUtil.getFeedTypeName(type) %>" selected="<%= feedType.equals(type) %>" value="<%= type %>" />
+						<aui:option
+							label="<%= RSSUtil.getFeedTypeName(type) %>"
+							selected="<%= feedType.equals(type) %>"
+							value="<%= type %>"
+						/>
 
 					<%
 					}

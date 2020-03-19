@@ -37,24 +37,20 @@ if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentRe
 </liferay-portlet:renderURL>
 
 <div class="container-fluid-1280">
-	<aui:form action="<%= portletURL.toString() %>" method="post" name="selectFileVersionFm">
+	<aui:form
+		action="<%= portletURL.toString() %>"
+		method="post"
+		name="selectFileVersionFm"
+	>
 		<liferay-ui:search-container
 			id="fileVersionSearchContainer"
 			iteratorURL="<%= portletURL %>"
 			total="<%= fileEntry.getFileVersionsCount(status) %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= fileEntry.getFileVersions(status) %>"
-			/>
+			<liferay-ui:search-container-results results="<%= fileEntry.getFileVersions(status) %>" />
 
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.repository.model.FileVersion"
-				modelVar="curFileVersion"
-			>
-				<liferay-ui:search-container-column-text
-					name="name"
-					truncate="<%= true %>"
-				>
+			<liferay-ui:search-container-row className="com.liferay.portal.kernel.repository.model.FileVersion" modelVar="curFileVersion">
+				<liferay-ui:search-container-column-text name="name" truncate="<%= true %>">
 					<c:choose>
 						<c:when test="<%= fileVersion.getFileVersionId() != curFileVersion.getFileVersionId() %>">
 
@@ -65,7 +61,11 @@ if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentRe
 							data.put("targetversion", fileVersion.getFileVersionId());
 							%>
 
-							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<aui:a
+								cssClass="selector-button"
+								data="<%= data %>"
+								href="javascript:;"
+							>
 								<%= HtmlUtil.escape(curFileVersion.getTitle()) %>
 							</aui:a>
 						</c:when>
@@ -75,20 +75,12 @@ if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentRe
 					</c:choose>
 				</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-text
-					name="version"
-					property="version"
-				/>
+				<liferay-ui:search-container-column-text name="version" property="version" />
 
-				<liferay-ui:search-container-column-date
-					name="date"
-					value="<%= curFileVersion.getModifiedDate() %>"
-				/>
+				<liferay-ui:search-container-column-date name="date" value="<%= curFileVersion.getModifiedDate() %>" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

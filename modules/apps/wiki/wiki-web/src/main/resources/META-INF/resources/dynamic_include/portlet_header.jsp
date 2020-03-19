@@ -32,10 +32,22 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, portletRespon
 PortletURL searchURL = wikiURLHelper.getSearchURL();
 %>
 
-<aui:form action="<%= searchURL %>" method="get" name="searchFm">
+<aui:form
+	action="<%= searchURL %>"
+	method="get"
+	name="searchFm"
+>
 	<liferay-portlet:renderURLParams portletURL="<%= searchURL %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
+	<aui:input
+		name="nodeId"
+		type="hidden"
+		value="<%= node.getNodeId() %>"
+	/>
 
 	<liferay-ui:input-search
 		id='<%= portletResponse.getNamespace() + "keywords1" %>'

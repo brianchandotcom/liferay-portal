@@ -22,10 +22,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="metadata"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="metadata" />
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 
@@ -73,7 +70,14 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 	ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"
 />
 
-<aui:input cssClass="form-control-sm" label="priority" name="assetPriority" type="text" value="<%= priority %>" wrapperCssClass="mb-3">
+<aui:input
+	cssClass="form-control-sm"
+	label="priority"
+	name="assetPriority"
+	type="text"
+	value="<%= priority %>"
+	wrapperCssClass="mb-3"
+>
 	<aui:validator name="number" />
 
 	<aui:validator name="min">[0]</aui:validator>

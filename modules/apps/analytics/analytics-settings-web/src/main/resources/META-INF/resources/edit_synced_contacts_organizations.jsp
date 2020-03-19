@@ -65,13 +65,23 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 	OrganizationDisplayContext organizationDisplayContext = new OrganizationDisplayContext(renderRequest, renderResponse);
 	%>
 
-	<clay:management-toolbar
-		displayContext="<%= new OrganizationManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, organizationDisplayContext) %>"
-	/>
+	<clay:management-toolbar displayContext="<%= new OrganizationManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, organizationDisplayContext) %>" />
 
-	<aui:form action="<%= editSyncedContactsURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="update_synced_organizations" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:form
+		action="<%= editSyncedContactsURL %>"
+		method="post"
+		name="fm"
+	>
+		<aui:input
+			name="<%= Constants.CMD %>"
+			type="hidden"
+			value="update_synced_organizations"
+		/>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
 
 		<liferay-ui:search-container
 			id="selectOrganizations"
@@ -91,15 +101,16 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-				searchResultCssClass="show-quick-actions-on-hover table table-autofit"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" searchResultCssClass="show-quick-actions-on-hover table table-autofit" />
 		</liferay-ui:search-container>
 
 		<aui:button-row>
 			<aui:button type="submit" value="save" />
-			<aui:button href="<%= redirect %>" type="cancel" value="cancel" />
+			<aui:button
+				href="<%= redirect %>"
+				type="cancel"
+				value="cancel"
+			/>
 		</aui:button-row>
 	</aui:form>
 </div>

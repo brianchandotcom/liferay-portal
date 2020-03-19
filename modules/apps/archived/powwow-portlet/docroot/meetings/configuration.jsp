@@ -31,11 +31,24 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+<aui:form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'
+>
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
 
 	<aui:fieldset>
-		<aui:select label="language" name="languageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this);" %>'>
+		<aui:select
+			label="language"
+			name="languageId"
+			onChange='<%= renderResponse.getNamespace() + "updateLanguage(this);" %>'
+		>
 
 			<%
 			Set<Locale> locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
@@ -48,7 +61,12 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 				}
 			%>
 
-				<aui:option label="<%= currentLocale.getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(currentLocale)) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(currentLocale) %>" />
+				<aui:option
+					label="<%= currentLocale.getDisplayName(locale) %>"
+					selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(currentLocale)) %>"
+					style="<%= style %>"
+					value="<%= LocaleUtil.toLanguageId(currentLocale) %>"
+				/>
 
 			<%
 			}
@@ -56,14 +74,21 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 
 		</aui:select>
 
-		<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailSubjectParam + "--" %>' value="<%= emailSubject %>" />
+		<aui:input
+			cssClass="lfr-input-text-container"
+			label="subject"
+			name='<%= "preferences--" + emailSubjectParam + "--" %>'
+			value="<%= emailSubject %>"
+		/>
 
 		<aui:field-wrapper label="body">
-			<liferay-ui:input-editor
-				editorImpl="ckeditor"
-			/>
+			<liferay-ui:input-editor editorImpl="ckeditor" />
 
-			<aui:input name='<%= "preferences--" + emailBodyParam + "--" %>' type="hidden" value="<%= emailBody %>" />
+			<aui:input
+				name='<%= "preferences--" + emailBodyParam + "--" %>'
+				type="hidden"
+				value="<%= emailBody %>"
+			/>
 		</aui:field-wrapper>
 	</aui:fieldset>
 

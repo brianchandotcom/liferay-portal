@@ -94,15 +94,11 @@ if (comment) {
 					<c:choose>
 						<c:when test="<%= (receiverUser != null) && receiverUser.isActive() %>">
 							<a href="<%= receiverUser.getDisplayURL(themeDisplay) %>">
-								<liferay-ui:user-portrait
-									userId="<%= (microblogsEntry != null) ? microblogsEntry.getUserId() : 0 %>"
-								/>
+								<liferay-ui:user-portrait userId="<%= (microblogsEntry != null) ? microblogsEntry.getUserId() : 0 %>" />
 							</a>
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:user-portrait
-								userId="<%= (microblogsEntry != null) ? microblogsEntry.getUserId() : 0 %>"
-							/>
+							<liferay-ui:user-portrait userId="<%= (microblogsEntry != null) ? microblogsEntry.getUserId() : 0 %>" />
 						</c:otherwise>
 					</c:choose>
 				</span>
@@ -127,35 +123,57 @@ if (comment) {
 
 <portlet:actionURL name="updateMicroblogsEntry" var="updateMicroblogsEntryURL" />
 
-<aui:form action="<%= updateMicroblogsEntryURL %>" cssClass="<%= formCssClass %>" name="<%= formName %>">
+<aui:form
+	action="<%= updateMicroblogsEntryURL %>"
+	cssClass="<%= formCssClass %>"
+	name="<%= formName %>"
+>
 	<portlet:renderURL var="commentsURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 		<portlet:param name="mvcPath" value="/microblogs/view_comments.jsp" />
 		<portlet:param name="parentMicroblogsEntryId" value="<%= String.valueOf(microblogsEntryId) %>" />
 	</portlet:renderURL>
 
-	<aui:input name="redirect" type="hidden" value="<%= comment ? commentsURL : redirect %>" />
-	<aui:input name="microblogsEntryId" type="hidden" value="<%= edit ? microblogsEntryId : 0 %>" />
-	<aui:input name="parentMicroblogsEntryId" type="hidden" value="<%= microblogsEntryId %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= comment ? commentsURL : redirect %>"
+	/>
+	<aui:input
+		name="microblogsEntryId"
+		type="hidden"
+		value="<%= edit ? microblogsEntryId : 0 %>"
+	/>
+	<aui:input
+		name="parentMicroblogsEntryId"
+		type="hidden"
+		value="<%= microblogsEntryId %>"
+	/>
 
 	<aui:model-context bean="<%= microblogsEntry %>" model="<%= MicroblogsEntry.class %>" />
 
 	<c:choose>
 		<c:when test="<%= repost %>">
-			<aui:input name="type" type="hidden" value="<%= MicroblogsEntryConstants.TYPE_REPOST %>" />
+			<aui:input
+				name="type"
+				type="hidden"
+				value="<%= MicroblogsEntryConstants.TYPE_REPOST %>"
+			/>
 
 			<aui:input name="content" type="hidden" />
 		</c:when>
 		<c:when test="<%= comment %>">
-			<aui:input name="type" type="hidden" value="<%= MicroblogsEntryConstants.TYPE_REPLY %>" />
+			<aui:input
+				name="type"
+				type="hidden"
+				value="<%= MicroblogsEntryConstants.TYPE_REPLY %>"
+			/>
 		</c:when>
 	</c:choose>
 
 	<c:if test="<%= !repost %>">
 		<c:if test="<%= comment %>">
 			<span class="thumbnail">
-				<liferay-ui:user-portrait
-					user="<%= user %>"
-				/>
+				<liferay-ui:user-portrait user="<%= user %>" />
 			</span>
 		</c:if>
 
@@ -176,7 +194,11 @@ if (comment) {
 			<div class="highlighter-content <%= (comment || edit || repost) ? StringPool.BLANK : "textbox" %>" id="<portlet:namespace />highlighterContent<%= formId %>"></div>
 		</div>
 
-		<aui:input label="" name="content" type="hidden" />
+		<aui:input
+			label=""
+			name="content"
+			type="hidden"
+		/>
 	</c:if>
 
 	<span class="microblogs-countdown-holder">
@@ -194,7 +216,12 @@ if (comment) {
 	%>
 
 	<div class="<%= rowCssClass %>">
-		<aui:button cssClass="float-left microblogs-post" disabled="<%= !repost %>" type="submit" value="post" />
+		<aui:button
+			cssClass="float-left microblogs-post"
+			disabled="<%= !repost %>"
+			type="submit"
+			value="post"
+		/>
 
 		<c:if test="<%= repost %>">
 			<aui:button onClick="Liferay.Microblogs.closePopup();" type="cancel" />
@@ -210,7 +237,13 @@ if (comment) {
 			}
 			%>
 
-			<aui:select inlineLabel="<%= Boolean.TRUE.toString() %>" label="viewable-by" name="socialRelationType" onChange='<%= renderResponse.getNamespace() + "relationTypeOnChange(event);" %>' value="<%= socialRelationType %>">
+			<aui:select
+				inlineLabel="<%= Boolean.TRUE.toString() %>"
+				label="viewable-by"
+				name="socialRelationType"
+				onChange='<%= renderResponse.getNamespace() + "relationTypeOnChange(event);" %>'
+				value="<%= socialRelationType %>"
+			>
 				<aui:option label="everyone" value="<%= MicroblogsEntryConstants.TYPE_EVERYONE %>" />
 				<aui:option label="connections" value="<%= SocialRelationConstants.TYPE_BI_CONNECTION %>" />
 				<aui:option label="followers" value="<%= SocialRelationConstants.TYPE_UNI_FOLLOWER %>" />
@@ -440,7 +473,11 @@ if (comment) {
 			autocompleteDiv.hide();
 		};
 
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/microblogs/autocomplete_user_mentions" var="userIdURL" />
+		<liferay-portlet:resourceURL
+			copyCurrentRenderParameters="<%= false %>"
+			id="/microblogs/autocomplete_user_mentions"
+			var="userIdURL"
+		/>
 
 		var createAutocomplete = function(contentTextarea) {
 			Liferay.Util.fetch(

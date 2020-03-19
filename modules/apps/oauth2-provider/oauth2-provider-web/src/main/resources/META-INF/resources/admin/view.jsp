@@ -41,8 +41,16 @@ String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDispl
 />
 
 <div class="closed container-fluid-1280">
-	<aui:form action="<%= currentURLObj %>" method="get" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:form
+		action="<%= currentURLObj %>"
+		method="get"
+		name="fm"
+	>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= currentURL %>"
+		/>
 		<aui:input name="oAuth2ApplicationIds" type="hidden" />
 
 		<liferay-ui:search-container
@@ -52,9 +60,7 @@ String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDispl
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			total="<%= oAuth2ApplicationsCount %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= OAuth2ApplicationServiceUtil.getOAuth2Applications(themeDisplay.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd(), oAuth2ApplicationsManagementToolbarDisplayContext.getOrderByComparator()) %>"
-			/>
+			<liferay-ui:search-container-results results="<%= OAuth2ApplicationServiceUtil.getOAuth2Applications(themeDisplay.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd(), oAuth2ApplicationsManagementToolbarDisplayContext.getOrderByComparator()) %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.oauth2.provider.model.OAuth2Application"
@@ -75,10 +81,7 @@ String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDispl
 						row.setCssClass("autofit-row-center");
 						%>
 
-						<liferay-ui:search-container-column-image
-							src="<%= oAuth2AdminPortletDisplayContext.getThumbnailURL(oAuth2Application) %>"
-							toggleRowChecker="<%= true %>"
-						/>
+						<liferay-ui:search-container-column-image src="<%= oAuth2AdminPortletDisplayContext.getThumbnailURL(oAuth2Application) %>" toggleRowChecker="<%= true %>" />
 
 						<c:choose>
 							<c:when test="<%= oAuth2AdminPortletDisplayContext.hasUpdatePermission(oAuth2Application) %>">
@@ -89,59 +92,34 @@ String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDispl
 								/>
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:search-container-column-text
-									colspan="<%= 2 %>"
-									property="name"
-								/>
+								<liferay-ui:search-container-column-text colspan="<%= 2 %>" property="name" />
 							</c:otherwise>
 						</c:choose>
 
-						<liferay-ui:search-container-column-jsp
-							align="right"
-							path="/admin/application_actions.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp align="right" path="/admin/application_actions.jsp" />
 					</c:when>
 					<c:otherwise>
 						<c:choose>
 							<c:when test="<%= oAuth2AdminPortletDisplayContext.hasUpdatePermission(oAuth2Application) %>">
-								<liferay-ui:search-container-column-text
-									href="<%= editURL %>"
-									property="name"
-								/>
+								<liferay-ui:search-container-column-text href="<%= editURL %>" property="name" />
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:search-container-column-text
-									property="name"
-								/>
+								<liferay-ui:search-container-column-text property="name" />
 							</c:otherwise>
 						</c:choose>
 
-						<liferay-ui:search-container-column-text
-							property="description"
-						/>
+						<liferay-ui:search-container-column-text property="description" />
 
-						<liferay-ui:search-container-column-text
-							name="client-id"
-							property="clientId"
-						/>
+						<liferay-ui:search-container-column-text name="client-id" property="clientId" />
 
-						<liferay-ui:search-container-column-text
-							name="authorizations"
-							value="<%= String.valueOf(oAuth2AdminPortletDisplayContext.getOAuth2AuthorizationsCount(oAuth2Application)) %>"
-						/>
+						<liferay-ui:search-container-column-text name="authorizations" value="<%= String.valueOf(oAuth2AdminPortletDisplayContext.getOAuth2AuthorizationsCount(oAuth2Application)) %>" />
 
-						<liferay-ui:search-container-column-jsp
-							align="right"
-							path="/admin/application_actions.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp align="right" path="/admin/application_actions.jsp" />
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				displayStyle="<%= displayStyle %>"
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

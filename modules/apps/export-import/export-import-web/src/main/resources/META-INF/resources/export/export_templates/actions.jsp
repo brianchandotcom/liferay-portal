@@ -42,10 +42,7 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="export"
-		url="<%= newExportProcessURL %>"
-	/>
+	<liferay-ui:icon message="export" url="<%= newExportProcessURL %>" />
 
 	<portlet:renderURL var="deleteRedirectURL">
 		<portlet:param name="mvcRenderCommandName" value="viewExportConfigurations" />
@@ -58,8 +55,5 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		trash="<%= trashHelper.isTrashEnabled(liveGroupId) %>"
-		url="<%= deleteExportConfigurationURL %>"
-	/>
+	<liferay-ui:icon-delete trash="<%= trashHelper.isTrashEnabled(liveGroupId) %>" url="<%= deleteExportConfigurationURL %>" />
 </liferay-ui:icon-menu>

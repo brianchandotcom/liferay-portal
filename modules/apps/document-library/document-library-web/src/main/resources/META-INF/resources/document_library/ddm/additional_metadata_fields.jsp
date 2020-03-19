@@ -34,23 +34,14 @@ if (fileEntryType != null) {
 }
 %>
 
-<liferay-util:buffer
-	var="removeStructureIcon"
->
-	<clay:icon
-		symbol="times-circle"
-	/>
+<liferay-util:buffer var="removeStructureIcon">
+	<clay:icon symbol="times-circle" />
 </liferay-util:buffer>
 
 <aui:model-context bean="<%= fileEntryType %>" model="<%= DLFileEntryType.class %>" />
 
-<liferay-ui:search-container
-	headerNames="name,null"
-	total="<%= (ddmStructures != null) ? ddmStructures.size() : 0 %>"
->
-	<liferay-ui:search-container-results
-		results="<%= ddmStructures %>"
-	/>
+<liferay-ui:search-container headerNames="name,null" total="<%= (ddmStructures != null) ? ddmStructures.size() : 0 %>">
+	<liferay-ui:search-container-results results="<%= ddmStructures %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.dynamic.data.mapping.kernel.DDMStructure"
@@ -58,20 +49,14 @@ if (fileEntryType != null) {
 		keyProperty="structureId"
 		modelVar="curDDMStructure"
 	>
-		<liferay-ui:search-container-column-text
-			name="name"
-			value="<%= HtmlUtil.escape(curDDMStructure.getName(locale)) %>"
-		/>
+		<liferay-ui:search-container-column-text name="name" value="<%= HtmlUtil.escape(curDDMStructure.getName(locale)) %>" />
 
 		<liferay-ui:search-container-column-text>
 			<a class="modify-link" data-rowId="<%= curDDMStructure.getStructureId() %>" href="javascript:;" title="<%= LanguageUtil.get(request, "remove") %>"><%= removeStructureIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-		paginate="<%= false %>"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
 <liferay-ui:icon

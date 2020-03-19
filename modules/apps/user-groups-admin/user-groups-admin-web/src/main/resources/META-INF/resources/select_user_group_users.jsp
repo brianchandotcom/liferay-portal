@@ -41,9 +41,7 @@ entriesNavigationItem.setLabel(LanguageUtil.get(request, "users"));
 navigationItems.add(entriesNavigationItem);
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= navigationItems %>"
-/>
+<clay:navigation-bar navigationItems="<%= navigationItems %>" />
 
 <%
 EditUserGroupAssignmentsManagementToolbarDisplayContext editUserGroupAssignmentsManagementToolbarDisplayContext = new EditUserGroupAssignmentsManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle, "/select_user_group_users.jsp");
@@ -71,7 +69,11 @@ SearchContainer searchContainer = editUserGroupAssignmentsManagementToolbarDispl
 	viewTypeItems="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:form cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
 	<liferay-ui:search-container
 		id="selectUsers"
 		searchContainer="<%= searchContainer %>"
@@ -92,10 +94,7 @@ SearchContainer searchContainer = editUserGroupAssignmentsManagementToolbarDispl
 			<%@ include file="/user_search_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

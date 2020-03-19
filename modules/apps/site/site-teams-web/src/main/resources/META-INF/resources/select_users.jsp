@@ -20,15 +20,10 @@
 SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new SelectUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectUsersDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new SelectUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectUsersDisplayContext) %>" />
 
 <aui:form cssClass="container-fluid-1280 portlet-site-teams-select-users" name="selectUserFm">
-	<liferay-ui:search-container
-		id="users"
-		searchContainer="<%= selectUsersDisplayContext.getUserSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="users" searchContainer="<%= selectUsersDisplayContext.getUserSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
 			cssClass="selectable"
@@ -45,22 +40,15 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:user-card
-							userCard="<%= new SelectUserUserCard(user2, renderRequest, searchContainer.getRowChecker()) %>"
-							userColorClass='<%= "user-icon " + LexiconUtil.getUserColorCssClass(user2) %>'
-						/>
+						<clay:user-card userCard="<%= new SelectUserUserCard(user2, renderRequest, searchContainer.getRowChecker()) %>" userColorClass='<%= "user-icon " + LexiconUtil.getUserColorCssClass(user2) %>' />
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(selectUsersDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-text>
-						<liferay-ui:user-portrait
-							userId="<%= user2.getUserId() %>"
-						/>
+						<liferay-ui:user-portrait userId="<%= user2.getUserId() %>" />
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h5><%= user2.getFullName() %></h5>
 
 						<h6 class="text-default">
@@ -84,10 +72,7 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= selectUsersDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= selectUsersDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

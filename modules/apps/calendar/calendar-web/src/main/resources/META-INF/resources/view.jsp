@@ -23,9 +23,7 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "calendar");
 <div id="<portlet:namespace />alert"></div>
 
 <c:if test="<%= themeDisplay.isSignedIn() && !displaySchedulerOnly %>">
-	<clay:navigation-bar
-		navigationItems="<%= calendarDisplayContext.getNavigationItems() %>"
-	/>
+	<clay:navigation-bar navigationItems="<%= calendarDisplayContext.getNavigationItems() %>" />
 </c:if>
 
 <c:choose>

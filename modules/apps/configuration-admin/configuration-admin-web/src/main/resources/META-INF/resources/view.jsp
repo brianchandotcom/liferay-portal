@@ -37,9 +37,7 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = Configuratio
 
 <div class="container-fluid container-fluid-max-xl container-view">
 	<c:if test="<%= configurationCategorySectionDisplays.isEmpty() %>">
-		<liferay-ui:empty-result-message
-			message="no-configurations-were-found"
-		/>
+		<liferay-ui:empty-result-message message="no-configurations-were-found" />
 	</c:if>
 
 	<ul class="list-group <%= configurationCategorySectionDisplays.isEmpty() ? "hide" : StringPool.BLANK %>">
@@ -69,10 +67,7 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = Configuratio
 
 						<li class="list-group-card-item">
 							<a href="<%= viewCategoryHREF %>">
-								<clay:icon
-									elementClasses="user-icon-sm"
-									symbol="<%= configurationCategoryDisplay.getCategoryIcon() %>"
-								/>
+								<clay:icon elementClasses="user-icon-sm" symbol="<%= configurationCategoryDisplay.getCategoryIcon() %>" />
 
 								<span class="list-group-card-item-text">
 									<%= HtmlUtil.escape(configurationCategoryDisplay.getCategoryLabel(locale)) %>

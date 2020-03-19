@@ -119,10 +119,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 	<c:if test="<%= PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.UPDATE) %>">
 		<br />
 
-		<liferay-ui:header
-			showBackURL="<%= false %>"
-			title="actual-votes"
-		/>
+		<liferay-ui:header showBackURL="<%= false %>" title="actual-votes" />
 
 		<%
 		PortletURL portletURL = renderResponse.createRenderURL();
@@ -190,9 +187,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 		}
 		%>
 
-		<liferay-ui:search-iterator
-			searchContainer="<%= searchContainer %>"
-		/>
+		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 	</c:if>
 </c:if>
 
@@ -200,7 +195,11 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 	<br />
 
 	<div style="font-size: xx-small;">
-		<liferay-ui:message arguments="<%= dateFormatDateTime.format(question.getExpirationDate()) %>" key="voting-is-disabled-because-this-poll-expired-on-x" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= dateFormatDateTime.format(question.getExpirationDate()) %>"
+			key="voting-is-disabled-because-this-poll-expired-on-x"
+			translateArguments="<%= false %>"
+		/>
 	</div>
 </c:if>
 

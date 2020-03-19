@@ -31,9 +31,20 @@
 				persistState="<%= true %>"
 				title="enabling-imagemagick-provides-document-preview-functionality"
 			>
-				<aui:input label="enabled" name="imageMagickEnabled" type="checkbox" value="<%= ImageMagickUtil.isEnabled() %>" />
+				<aui:input
+					label="enabled"
+					name="imageMagickEnabled"
+					type="checkbox"
+					value="<%= ImageMagickUtil.isEnabled() %>"
+				/>
 
-				<aui:input cssClass="lfr-input-text-container" label="path" name="imageMagickPath" type="text" value="<%= ImageMagickUtil.getGlobalSearchPath() %>" />
+				<aui:input
+					cssClass="lfr-input-text-container"
+					label="path"
+					name="imageMagickPath"
+					type="text"
+					value="<%= ImageMagickUtil.getGlobalSearchPath() %>"
+				/>
 
 				<aui:fieldset label="resource-limits">
 
@@ -44,7 +55,13 @@
 						String name = "imageMagickLimit" + StringUtil.upperCaseFirstLetter(label);
 					%>
 
-						<aui:input cssClass="lfr-input-text-container" label="<%= label %>" name="<%= name %>" type="text" value="<%= resourceLimitsProperties.getProperty(label) %>" />
+						<aui:input
+							cssClass="lfr-input-text-container"
+							label="<%= label %>"
+							name="<%= name %>"
+							type="text"
+							value="<%= resourceLimitsProperties.getProperty(label) %>"
+						/>
 
 					<%
 					}
@@ -67,7 +84,11 @@
 					XugglerInstallException xie = (XugglerInstallException)errorException;
 					%>
 
-					<liferay-ui:message arguments="<%= xie.getMessage() %>" key="an-unexpected-error-occurred-while-installing-xuggler-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= xie.getMessage() %>"
+						key="an-unexpected-error-occurred-while-installing-xuggler-x"
+						translateArguments="<%= false %>"
+					/>
 				</liferay-ui:error>
 
 				<c:choose>
@@ -76,7 +97,12 @@
 							<liferay-ui:message key="xuggler-installed" />
 						</div>
 
-						<aui:input label="enabled" name="xugglerEnabled" type="checkbox" value="<%= XugglerUtil.isEnabled() %>" />
+						<aui:input
+							label="enabled"
+							name="xugglerEnabled"
+							type="checkbox"
+							value="<%= XugglerUtil.isEnabled() %>"
+						/>
 					</c:when>
 					<c:when test="<%= XugglerUtil.isNativeLibraryCopied() %>">
 						<div class="alert alert-info">
@@ -143,7 +169,11 @@
 								String jarName = PropsUtil.get(PropsKeys.XUGGLER_JAR_NAME, new Filter(xugglerOption));
 							%>
 
-								<aui:option label='<%= jarName + " (" + jarFile + ")" %>' selected="<%= xugglerOption.equals(guess) %>" value="<%= jarFile %>" />
+								<aui:option
+									label='<%= jarName + " (" + jarFile + ")" %>'
+									selected="<%= xugglerOption.equals(guess) %>"
+									value="<%= jarFile %>"
+								/>
 
 							<%
 							}
@@ -152,7 +182,12 @@
 						</aui:select>
 
 						<aui:button-row>
-							<aui:button cssClass="save-server-button" data-cmd="installXuggler" name="installXugglerButton" value="install" />
+							<aui:button
+								cssClass="save-server-button"
+								data-cmd="installXuggler"
+								name="installXugglerButton"
+								value="install"
+							/>
 						</aui:button-row>
 					</c:otherwise>
 				</c:choose>
@@ -162,7 +197,11 @@
 </div>
 
 <aui:button-row>
-	<aui:button cssClass="save-server-button" data-cmd="updateExternalServices" value="save" />
+	<aui:button
+		cssClass="save-server-button"
+		data-cmd="updateExternalServices"
+		value="save"
+	/>
 </aui:button-row>
 
 <%!

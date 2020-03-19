@@ -30,7 +30,11 @@ String duplicateTitle = kaleoDesignerDisplayContext.getDuplicateTitle(kaleoDefin
 String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.KALEO_DESIGNER);
 %>
 
-<liferay-portlet:actionURL name="duplicateWorkflowDefinition" portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="duplicateWorkflowDefinition">
+<liferay-portlet:actionURL
+	name="duplicateWorkflowDefinition"
+	portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>"
+	var="duplicateWorkflowDefinition"
+>
 	<portlet:param name="mvcPath" value="/designer/edit_kaleo_definition_version.jsp" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </liferay-portlet:actionURL>
@@ -58,10 +62,7 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 			/>
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:icon
-				message="view"
-				url="<%= editURL %>"
-			/>
+			<liferay-ui:icon message="view" url="<%= editURL %>" />
 		</c:otherwise>
 	</c:choose>
 
@@ -93,21 +94,26 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 	<c:choose>
 		<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() %>">
 			<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
-				<liferay-portlet:actionURL name="unpublishKaleoDefinitionVersion" portletName="<%= KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW %>" var="unpublishURL">
+				<liferay-portlet:actionURL
+					name="unpublishKaleoDefinitionVersion"
+					portletName="<%= KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW %>"
+					var="unpublishURL"
+				>
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 					<portlet:param name="version" value="<%= String.valueOf(kaleoDefinition.getVersion()) %>" />
 				</liferay-portlet:actionURL>
 
-				<liferay-ui:icon
-					message="unpublish"
-					url="<%= unpublishURL %>"
-				/>
+				<liferay-ui:icon message="unpublish" url="<%= unpublishURL %>" />
 			</c:if>
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.DELETE) %>">
-				<liferay-portlet:actionURL name="deleteWorkflowDefinition" portletName="<%= KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW %>" var="deleteURL">
+				<liferay-portlet:actionURL
+					name="deleteWorkflowDefinition"
+					portletName="<%= KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW %>"
+					var="deleteURL"
+				>
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 					<portlet:param name="version" value="<%= kaleoDefinitionVersion.getVersion() %>" />
@@ -126,17 +132,50 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 <c:if test="<%= kaleoDefinition != null %>">
 	<div class="hide" id="<%= randomNamespace %>titleInputLocalized">
 		<aui:form name='<%= randomNamespace + "form" %>' portletNamespace="<%= kaleoNamespace %>">
-			<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="name" type="hidden" value="<%= PortalUUIDUtil.generate() %>" />
-			<aui:input name="content" type="hidden" value="<%= kaleoDefinition.getContent() %>" />
-			<aui:input name="duplicatedDefinitionTitle" type="hidden" value="<%= kaleoDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>" />
-			<aui:input name="defaultDuplicationTitle" type="hidden" value="<%= duplicateTitle %>" />
-			<aui:input name="duplicatedDefinitionName" type="hidden" value="<%= kaleoDefinition.getName() %>" />
+			<aui:input
+				name="randomNamespace"
+				type="hidden"
+				value="<%= randomNamespace %>"
+			/>
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value="<%= currentURL %>"
+			/>
+			<aui:input
+				name="name"
+				type="hidden"
+				value="<%= PortalUUIDUtil.generate() %>"
+			/>
+			<aui:input
+				name="content"
+				type="hidden"
+				value="<%= kaleoDefinition.getContent() %>"
+			/>
+			<aui:input
+				name="duplicatedDefinitionTitle"
+				type="hidden"
+				value="<%= kaleoDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>"
+			/>
+			<aui:input
+				name="defaultDuplicationTitle"
+				type="hidden"
+				value="<%= duplicateTitle %>"
+			/>
+			<aui:input
+				name="duplicatedDefinitionName"
+				type="hidden"
+				value="<%= kaleoDefinition.getName() %>"
+			/>
 
 			<aui:fieldset>
 				<aui:col>
-					<aui:input label="title" name='<%= randomNamespace + "title" %>' placeholder="<%= duplicateTitle %>" type="text" />
+					<aui:input
+						label="title"
+						name='<%= randomNamespace + "title" %>'
+						placeholder="<%= duplicateTitle %>"
+						type="text"
+					/>
 				</aui:col>
 
 				<aui:col>

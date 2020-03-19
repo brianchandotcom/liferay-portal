@@ -33,11 +33,31 @@ OAuthApplication oAuthApplication = OAuthApplicationLocalServiceUtil.fetchOAuthA
 
 <portlet:actionURL name='<%= (oAuthApplication == null) ? "addOAuthApplication" : "updateOAuthApplication" %>' var="editApplicationURL" />
 
-<aui:form action="<%= editApplicationURL %>" method="post" name="fm">
-	<aui:input name="mvcPath" type="hidden" value="/admin/edit_application.jsp" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-	<aui:input name="oAuthApplicationId" type="hidden" value="<%= String.valueOf(oAuthApplicationId) %>" />
+<aui:form
+	action="<%= editApplicationURL %>"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="mvcPath"
+		type="hidden"
+		value="/admin/edit_application.jsp"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="backURL"
+		type="hidden"
+		value="<%= backURL %>"
+	/>
+	<aui:input
+		name="oAuthApplicationId"
+		type="hidden"
+		value="<%= String.valueOf(oAuthApplicationId) %>"
+	/>
 
 	<liferay-ui:error exception="<%= MalformedURLException.class %>" message="please-enter-a-valid-url" />
 	<liferay-ui:error exception="<%= RequiredFieldException.class %>" message="this-field-is-required" />
@@ -53,7 +73,11 @@ OAuthApplication oAuthApplication = OAuthApplicationLocalServiceUtil.fetchOAuthA
 
 		<aui:input label="callback-uri" name="callbackURI" />
 
-		<aui:input helpMessage="check-to-allow-multiple-application-instances-per-user" label="share-access-token" name="shareableAccessToken" />
+		<aui:input
+			helpMessage="check-to-allow-multiple-application-instances-per-user"
+			label="share-access-token"
+			name="shareableAccessToken"
+		/>
 
 		<c:if test="<%= oAuthApplication == null %>">
 			<aui:select label="access-type" name="accessType">

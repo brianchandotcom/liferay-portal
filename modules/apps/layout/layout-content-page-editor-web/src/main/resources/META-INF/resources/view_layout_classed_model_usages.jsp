@@ -21,7 +21,4 @@ String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
 %>
 
-<liferay-layout:layout-classed-model-usages-admin
-	className="<%= className %>"
-	classPK="<%= classPK %>"
-/>
+<liferay-layout:layout-classed-model-usages-admin className="<%= className %>" classPK="<%= classPK %>" />

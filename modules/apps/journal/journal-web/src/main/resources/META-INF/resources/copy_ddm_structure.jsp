@@ -38,8 +38,16 @@ renderResponse.setTitle(LanguageUtil.format(request, "copy-x", ddmStructure.getN
 	method="post"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="ddmStructureId" type="hidden" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="ddmStructureId"
+		type="hidden"
+		value="<%= String.valueOf(ddmStructure.getStructureId()) %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
@@ -52,7 +60,11 @@ renderResponse.setTitle(LanguageUtil.format(request, "copy-x", ddmStructure.getN
 
 				<aui:input name="description" />
 
-				<aui:input label="copy-templates" name="copyTemplates" type="checkbox" />
+				<aui:input
+					label="copy-templates"
+					name="copyTemplates"
+					type="checkbox"
+				/>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

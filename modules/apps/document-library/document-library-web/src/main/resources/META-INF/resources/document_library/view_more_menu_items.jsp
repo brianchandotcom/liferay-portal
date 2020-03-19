@@ -22,9 +22,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 DLViewMoreMenuItemsDisplayContext dlViewMoreMenuItemsDisplayContext = new DLViewMoreMenuItemsDisplayContext(folderId, renderRequest, renderResponse);
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= dlViewMoreMenuItemsDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar navigationItems="<%= dlViewMoreMenuItemsDisplayContext.getNavigationItems() %>" />
 
 <clay:management-toolbar
 	clearResultsURL="<%= dlViewMoreMenuItemsDisplayContext.getClearResultsURL() %>"
@@ -37,9 +35,7 @@ DLViewMoreMenuItemsDisplayContext dlViewMoreMenuItemsDisplayContext = new DLView
 />
 
 <aui:form cssClass="container-fluid-1280" name="addMenuItemFm">
-	<liferay-ui:search-container
-		searchContainer="<%= dlViewMoreMenuItemsDisplayContext.getSearchContainer() %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= dlViewMoreMenuItemsDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.document.library.kernel.model.DLFileEntryType"
 			escapedModel="<%= true %>"
@@ -53,28 +49,22 @@ DLViewMoreMenuItemsDisplayContext dlViewMoreMenuItemsDisplayContext = new DLView
 			data.put("fileEntryTypeId", String.valueOf(fileEntryType.getFileEntryTypeId()));
 			%>
 
-			<liferay-ui:search-container-column-text
-				name="name"
-			>
-				<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+			<liferay-ui:search-container-column-text name="name">
+				<aui:a
+					cssClass="selector-button"
+					data="<%= data %>"
+					href="javascript:;"
+				>
 					<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>
 				</aui:a>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= HtmlUtil.escape(fileEntryType.getDescription(locale)) %>"
-			/>
+			<liferay-ui:search-container-column-text name="description" value="<%= HtmlUtil.escape(fileEntryType.getDescription(locale)) %>" />
 
-			<liferay-ui:search-container-column-date
-				name="modified-date"
-				value="<%= fileEntryType.getModifiedDate() %>"
-			/>
+			<liferay-ui:search-container-column-date name="modified-date" value="<%= fileEntryType.getModifiedDate() %>" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

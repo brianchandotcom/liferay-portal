@@ -42,7 +42,11 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 		<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
 	</liferay-portlet:renderURL>
 
-	<aui:form action="<%= searchURL %>" method="get" name="fm">
+	<aui:form
+		action="<%= searchURL %>"
+		method="get"
+		name="fm"
+	>
 		<liferay-portlet:renderURLParams varImpl="searchURL" />
 		<aui:input name="kbTemplateIds" type="hidden" />
 
@@ -66,14 +70,9 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 					row.setData(rowData);
 					%>
 
-					<liferay-ui:search-container-column-user
-						showDetails="<%= false %>"
-						userId="<%= kbTemplate.getUserId() %>"
-					/>
+					<liferay-ui:search-container-column-user showDetails="<%= false %>" userId="<%= kbTemplate.getUserId() %>" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 						<%
 						Date modifiedDate = kbTemplate.getModifiedDate();
@@ -98,15 +97,10 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 						</h2>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/admin/template_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/admin/template_action.jsp" />
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					displayStyle="descriptive"
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</aui:fieldset>
 	</aui:form>

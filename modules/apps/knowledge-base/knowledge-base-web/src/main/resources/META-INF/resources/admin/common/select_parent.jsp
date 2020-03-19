@@ -104,17 +104,16 @@ else {
 				data.put("title", parentTitle);
 				%>
 
-				<aui:button cssClass="selector-button" data="<%= data %>" value='<%= (parentResourceClassNameId == kbFolderClassNameId) ? "choose-this-folder" : "choose-this-article" %>' />
+				<aui:button
+					cssClass="selector-button"
+					data="<%= data %>"
+					value='<%= (parentResourceClassNameId == kbFolderClassNameId) ? "choose-this-folder" : "choose-this-article" %>'
+				/>
 			</aui:button-row>
 		</c:if>
 
-		<liferay-ui:search-container
-			searchContainer="<%= kbObjectSearchContainer %>"
-		>
-			<liferay-ui:search-container-row
-				className="Object"
-				modelVar="kbObject"
-			>
+		<liferay-ui:search-container searchContainer="<%= kbObjectSearchContainer %>">
+			<liferay-ui:search-container-row className="Object" modelVar="kbObject">
 				<c:choose>
 					<c:when test="<%= kbObject instanceof KBFolder %>">
 
@@ -170,9 +169,7 @@ else {
 							value="<%= String.valueOf(kbArticlesCount) %>"
 						/>
 
-						<liferay-ui:search-container-column-text
-							align="right"
-						>
+						<liferay-ui:search-container-column-text align="right">
 
 							<%
 							Map<String, Object> data = new HashMap<String, Object>();
@@ -183,7 +180,12 @@ else {
 							data.put("title", kbFolder.getName());
 							%>
 
-							<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= (kbFolder.getKbFolderId() == resourcePrimKey) || (kbFolder.getKbFolderId() == originalParentResourcePrimKey) || !ArrayUtil.contains(selectableClassNameIds, kbFolderClassNameId) %>" value="select" />
+							<aui:button
+								cssClass="selector-button"
+								data="<%= data %>"
+								disabled="<%= (kbFolder.getKbFolderId() == resourcePrimKey) || (kbFolder.getKbFolderId() == originalParentResourcePrimKey) || !ArrayUtil.contains(selectableClassNameIds, kbFolderClassNameId) %>"
+								value="select"
+							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
@@ -241,9 +243,7 @@ else {
 							value="<%= String.valueOf(kbArticlesCount) %>"
 						/>
 
-						<liferay-ui:search-container-column-text
-							align="right"
-						>
+						<liferay-ui:search-container-column-text align="right">
 
 							<%
 							Map<String, Object> data = new HashMap<String, Object>();
@@ -254,16 +254,18 @@ else {
 							data.put("title", kbArticle.getTitle());
 							%>
 
-							<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= (kbArticle.getResourcePrimKey() == resourcePrimKey) || (kbArticle.getResourcePrimKey() == originalParentResourcePrimKey) || !ArrayUtil.contains(selectableClassNameIds, kbArticleClassNameId) %>" value="select" />
+							<aui:button
+								cssClass="selector-button"
+								data="<%= data %>"
+								disabled="<%= (kbArticle.getResourcePrimKey() == resourcePrimKey) || (kbArticle.getResourcePrimKey() == originalParentResourcePrimKey) || !ArrayUtil.contains(selectableClassNameIds, kbArticleClassNameId) %>"
+								value="select"
+							/>
 						</liferay-ui:search-container-column-text>
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-				resultRowSplitter="<%= kbFolderView ? null : new KBResultRowSplitter() %>"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= kbFolderView ? null : new KBResultRowSplitter() %>" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

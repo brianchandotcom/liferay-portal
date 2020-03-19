@@ -27,24 +27,15 @@ portletDisplay.setURLBack(backURL.toString());
 renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= viewMembershipRequestsDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar navigationItems="<%= viewMembershipRequestsDisplayContext.getNavigationItems() %>" />
 
-<clay:management-toolbar
-	displayContext="<%= new ViewMembershipRequestsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, viewMembershipRequestsDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new ViewMembershipRequestsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, viewMembershipRequestsDisplayContext) %>" />
 
 <liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />
 
 <div class="container-fluid-1280">
-	<liferay-ui:search-container
-		searchContainer="<%= viewMembershipRequestsDisplayContext.getSiteMembershipSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.model.MembershipRequest"
-			modelVar="membershipRequest"
-		>
+	<liferay-ui:search-container searchContainer="<%= viewMembershipRequestsDisplayContext.getSiteMembershipSearchContainer() %>">
+		<liferay-ui:search-container-row className="com.liferay.portal.kernel.model.MembershipRequest" modelVar="membershipRequest">
 
 			<%
 			String displayStyle = viewMembershipRequestsDisplayContext.getDisplayStyle();
@@ -60,9 +51,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= viewMembershipRequestsDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= viewMembershipRequestsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

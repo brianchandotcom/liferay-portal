@@ -70,9 +70,7 @@ sortingURL.setParameter("orderByType", orderByType.equals("asc") ? "desc" : "asc
 				headerNames="session-id,user-id,name,screen-name,last-request,num-of-hits"
 				total="<%= userTrackers.size() %>"
 			>
-				<liferay-ui:search-container-results
-					results="<%= ListUtil.subList(userTrackers, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				/>
+				<liferay-ui:search-container-results results="<%= ListUtil.subList(userTrackers, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.model.UserTracker"
@@ -134,17 +132,22 @@ sortingURL.setParameter("orderByType", orderByType.equals("asc") ? "desc" : "asc
 					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					displayStyle="list"
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</c:when>
 		<c:when test="<%= !PropsValues.LIVE_USERS_ENABLED %>">
-			<liferay-ui:message arguments="<%= PropsKeys.LIVE_USERS_ENABLED %>" key="display-of-live-session-data-is-disabled" translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments="<%= PropsKeys.LIVE_USERS_ENABLED %>"
+				key="display-of-live-session-data-is-disabled"
+				translateArguments="<%= false %>"
+			/>
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:message arguments="<%= PropsKeys.SESSION_TRACKER_MEMORY_ENABLED %>" key="display-of-live-session-data-is-disabled" translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments="<%= PropsKeys.SESSION_TRACKER_MEMORY_ENABLED %>"
+				key="display-of-live-session-data-is-disabled"
+				translateArguments="<%= false %>"
+			/>
 		</c:otherwise>
 	</c:choose>
 </div>

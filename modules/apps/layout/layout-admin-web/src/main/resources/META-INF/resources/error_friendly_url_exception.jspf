@@ -39,7 +39,11 @@
 	Layout duplicateLayout = LayoutLocalServiceUtil.getLayout(duplicateClassPK);
 	%>
 
-	<liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getModelResource(locale, duplicateClassName), duplicateLayout.getName(locale)} %>" key="please-enter-a-unique-friendly-url" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= new Object[] {ResourceActionsUtil.getModelResource(locale, duplicateClassName), duplicateLayout.getName(locale)} %>"
+		key="please-enter-a-unique-friendly-url"
+		translateArguments="<%= false %>"
+	/>
 </c:if>
 
 <c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.ENDS_WITH_DASH %>">
@@ -55,7 +59,11 @@
 </c:if>
 
 <c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.KEYWORD_CONFLICT %>">
-	<liferay-ui:message arguments="<%= lfurle.getKeywordConflict() %>" key="please-enter-a-friendly-url-that-does-not-conflict-with-the-keyword-x" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= lfurle.getKeywordConflict() %>"
+		key="please-enter-a-friendly-url-that-does-not-conflict-with-the-keyword-x"
+		translateArguments="<%= false %>"
+	/>
 </c:if>
 
 <c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.POSSIBLE_DUPLICATE %>">

@@ -28,9 +28,23 @@ long mfaEmailOTPUserId = (Long)request.getAttribute(MFAEmailOTPWebKeys.MFA_EMAIL
 	<portlet:param name="mvcRenderCommandName" value="/mfa_email_otp_verify/verify" />
 </portlet:actionURL>
 
-<aui:form action="<%= verifyURL %>" cssClass="container-fluid-1280 sign-in-form" data-senna-off="true" method="post" name="fm">
-	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+<aui:form
+	action="<%= verifyURL %>"
+	cssClass="container-fluid-1280 sign-in-form"
+	data-senna-off="true"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="saveLastPath"
+		type="hidden"
+		value="<%= false %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
 
 	<liferay-ui:error key="mfaEmailOTPFailed" message="multi-factor-authentication-has-failed" />
 

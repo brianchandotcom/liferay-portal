@@ -30,10 +30,22 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	name="fm"
 	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 	<aui:input name="preferences--mimeTypes--" type="hidden" />
-	<aui:input name="preferences--rootFolderId--" type="hidden" value="<%= rootFolderId %>" />
+	<aui:input
+		name="preferences--rootFolderId--"
+		type="hidden"
+		value="<%= rootFolderId %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error key="rootFolderIdInvalid" message="please-enter-a-valid-root-folder" />
@@ -44,7 +56,12 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				id="imageGalleryDisplayDisplay"
 				label="display-settings"
 			>
-				<aui:input label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowActions() %>" />
+				<aui:input
+					label="show-actions"
+					name="preferences--showActions--"
+					type="checkbox"
+					value="<%= dlPortletInstanceSettings.isShowActions() %>"
+				/>
 
 				<aui:field-wrapper label="show-media-type">
 					<liferay-ui:input-move-boxes
@@ -76,7 +93,12 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 			>
 				<aui:field-wrapper>
 					<div class="form-group">
-						<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
+						<aui:input
+							label="root-folder"
+							name="rootFolderName"
+							type="resource"
+							value="<%= rootFolderName %>"
+						/>
 
 						<aui:button name="openFolderSelectorButton" value="select" />
 
@@ -84,7 +106,12 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + renderResponse.getNamespace() + "');";
 						%>
 
-						<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+						<aui:button
+							disabled="<%= rootFolderId <= 0 %>"
+							name="removeFolderButton"
+							onClick="<%= taglibRemoveFolder %>"
+							value="remove"
+						/>
 					</div>
 				</aui:field-wrapper>
 			</liferay-frontend:fieldset>
@@ -118,7 +145,11 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					title:
 						'<liferay-ui:message arguments="folder" key="select-x" />',
 
-					<liferay-portlet:renderURL portletName="<%= igRequestHelper.getPortletResource() %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<liferay-portlet:renderURL
+						portletName="<%= igRequestHelper.getPortletResource() %>"
+						var="selectFolderURL"
+						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+					>
 						<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
 						<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 						<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />

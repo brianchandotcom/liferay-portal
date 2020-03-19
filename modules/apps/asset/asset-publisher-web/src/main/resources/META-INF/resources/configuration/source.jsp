@@ -44,9 +44,21 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 	Arrays.sort(classNameIds);
 	%>
 
-	<aui:select label="" name="preferences--anyAssetType--" title="asset-type">
-		<aui:option label="any" selected="<%= assetPublisherDisplayContext.isAnyAssetType() %>" value="<%= true %>" />
-		<aui:option label='<%= LanguageUtil.get(request, "select-more-than-one") + StringPool.TRIPLE_PERIOD %>' selected="<%= !assetPublisherDisplayContext.isAnyAssetType() && (classNameIds.length > 1) %>" value="<%= false %>" />
+	<aui:select
+		label=""
+		name="preferences--anyAssetType--"
+		title="asset-type"
+	>
+		<aui:option
+			label="any"
+			selected="<%= assetPublisherDisplayContext.isAnyAssetType() %>"
+			value="<%= true %>"
+		/>
+		<aui:option
+			label='<%= LanguageUtil.get(request, "select-more-than-one") + StringPool.TRIPLE_PERIOD %>'
+			selected="<%= !assetPublisherDisplayContext.isAnyAssetType() && (classNameIds.length > 1) %>"
+			value="<%= false %>"
+		/>
 
 		<optgroup label="<liferay-ui:message key="asset-type" />">
 
@@ -59,7 +71,11 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 				}
 			%>
 
-				<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, className.getValue()) %>" selected="<%= (classNameIds.length == 1) && (classNameId == classNameIds[0]) %>" value="<%= classNameId %>" />
+				<aui:option
+					label="<%= ResourceActionsUtil.getModelResource(locale, className.getValue()) %>"
+					selected="<%= (classNameIds.length == 1) && (classNameId == classNameIds[0]) %>"
+					value="<%= classNameId %>"
+				/>
 
 			<%
 			}
@@ -134,8 +150,16 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 			%>
 
 			<aui:select label="<%= label %>" name='<%= "preferences--anyClassType" + className + "--" %>'>
-				<aui:option label="any" selected="<%= anyAssetSubtype %>" value="<%= true %>" />
-				<aui:option label='<%= LanguageUtil.get(request, "select-more-than-one") + StringPool.TRIPLE_PERIOD %>' selected="<%= !anyAssetSubtype && (assetSelectedClassTypeIds.length > 1) %>" value="<%= false %>" />
+				<aui:option
+					label="any"
+					selected="<%= anyAssetSubtype %>"
+					value="<%= true %>"
+				/>
+				<aui:option
+					label='<%= LanguageUtil.get(request, "select-more-than-one") + StringPool.TRIPLE_PERIOD %>'
+					selected="<%= !anyAssetSubtype && (assetSelectedClassTypeIds.length > 1) %>"
+					value="<%= false %>"
+				/>
 
 				<optgroup label="<%= assetRendererFactory.getSubtypeTitle(themeDisplay.getLocale()) %>">
 
@@ -146,7 +170,11 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 						}
 					%>
 
-						<aui:option label="<%= HtmlUtil.escapeAttribute(classType.getName()) %>" selected="<%= !anyAssetSubtype && (assetSelectedClassTypeIds.length == 1) && (assetSelectedClassTypeIds[0]).equals(classType.getClassTypeId()) %>" value="<%= classType.getClassTypeId() %>" />
+						<aui:option
+							label="<%= HtmlUtil.escapeAttribute(classType.getName()) %>"
+							selected="<%= !anyAssetSubtype && (assetSelectedClassTypeIds.length == 1) && (assetSelectedClassTypeIds[0]).equals(classType.getClassTypeId()) %>"
+							value="<%= classType.getClassTypeId() %>"
+						/>
 
 					<%
 					}
@@ -159,7 +187,12 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 
 			<c:if test="<%= assetPublisherDisplayContext.isShowSubtypeFieldsFilter() %>">
 				<div class="asset-subtypefields-wrapper-enable hide" id="<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper">
-					<aui:input label="filter-by-field" name='<%= "preferences--subtypeFieldsFilterEnabled" + className + "--" %>' type="toggle-switch" value="<%= assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>" />
+					<aui:input
+						label="filter-by-field"
+						name='<%= "preferences--subtypeFieldsFilterEnabled" + className + "--" %>'
+						type="toggle-switch"
+						value="<%= assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>"
+					/>
 				</div>
 
 				<span class="asset-subtypefields-message" id="<portlet:namespace /><%= className %>ddmStructureFieldMessage">
@@ -178,7 +211,11 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 					%>
 
 						<span class="asset-subtypefields hide" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>Options">
-							<liferay-portlet:renderURL portletName="<%= assetPublisherDisplayContext.getPortletResource() %>" var="selectStructureFieldURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<liferay-portlet:renderURL
+								portletName="<%= assetPublisherDisplayContext.getPortletResource() %>"
+								var="selectStructureFieldURL"
+								windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+							>
 								<portlet:param name="mvcPath" value="/select_structure_field.jsp" />
 								<portlet:param name="portletResource" value="<%= HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortletResource()) %>" />
 								<portlet:param name="className" value="<%= assetRendererFactory.getClassName() %>" />
@@ -187,7 +224,11 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 							</liferay-portlet:renderURL>
 
 							<span class="asset-subtypefields-popup" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>PopUpButton">
-								<aui:button data-href="<%= selectStructureFieldURL.toString() %>" disabled="<%= !assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>" value="select" />
+								<aui:button
+									data-href="<%= selectStructureFieldURL.toString() %>"
+									disabled="<%= !assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>"
+									value="select"
+								/>
 							</span>
 						</span>
 
@@ -219,11 +260,23 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 
 	<c:if test="<%= assetPublisherDisplayContext.isShowSubtypeFieldsFilter() %>">
 		<div class="asset-subtypefield-selected <%= Validator.isNull(assetPublisherDisplayContext.getDDMStructureFieldName()) ? "hide" : StringPool.BLANK %>">
-			<aui:input name="preferences--ddmStructureFieldName--" type="hidden" value="<%= assetPublisherDisplayContext.getDDMStructureFieldName() %>" />
+			<aui:input
+				name="preferences--ddmStructureFieldName--"
+				type="hidden"
+				value="<%= assetPublisherDisplayContext.getDDMStructureFieldName() %>"
+			/>
 
-			<aui:input name="preferences--ddmStructureFieldValue--" type="hidden" value="<%= assetPublisherDisplayContext.getDDMStructureFieldValue() %>" />
+			<aui:input
+				name="preferences--ddmStructureFieldValue--"
+				type="hidden"
+				value="<%= assetPublisherDisplayContext.getDDMStructureFieldValue() %>"
+			/>
 
-			<aui:input name="preferences--ddmStructureDisplayFieldValue--" type="hidden" value="<%= assetPublisherDisplayContext.getDDMStructureDisplayFieldValue() %>" />
+			<aui:input
+				name="preferences--ddmStructureDisplayFieldValue--"
+				type="hidden"
+				value="<%= assetPublisherDisplayContext.getDDMStructureDisplayFieldValue() %>"
+			/>
 		</div>
 	</c:if>
 </aui:fieldset>

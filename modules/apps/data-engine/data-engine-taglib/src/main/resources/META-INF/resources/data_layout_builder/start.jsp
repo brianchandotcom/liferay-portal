@@ -16,9 +16,7 @@
 
 <%@ include file="/data_layout_builder/init.jsp" %>
 
-<liferay-editor:resources
-	editorName="alloyeditor"
-/>
+<liferay-editor:resources editorName="alloyeditor" />
 
 <liferay-util:html-top>
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/dynamic-data-mapping-form-builder/css/main.css") %>" rel="stylesheet" />

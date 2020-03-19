@@ -39,10 +39,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editSiteNavigationMenuURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editSiteNavigationMenuURL %>" />
 	</c:if>
 
 	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.UPDATE) && siteNavigationAdminDisplayContext.hasEditPermission() %>">
@@ -161,9 +158,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			trash="<%= false %>"
-			url="<%= deleteSiteNavigationMenuURL %>"
-		/>
+		<liferay-ui:icon-delete trash="<%= false %>" url="<%= deleteSiteNavigationMenuURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

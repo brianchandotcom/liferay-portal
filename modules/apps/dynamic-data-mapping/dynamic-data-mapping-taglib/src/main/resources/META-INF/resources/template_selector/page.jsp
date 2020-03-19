@@ -27,9 +27,19 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 
 <div class="autofit-row autofit-row-center">
 	<div class="autofit-col inline-item-before">
-		<aui:input id="displayStyleGroupId" name="preferences--displayStyleGroupId--" type="hidden" value="<%= String.valueOf(displayStyleGroupId) %>" />
+		<aui:input
+			id="displayStyleGroupId"
+			name="preferences--displayStyleGroupId--"
+			type="hidden"
+			value="<%= String.valueOf(displayStyleGroupId) %>"
+		/>
 
-		<aui:select id="displayStyle" inlineField="<%= true %>" label="<%= HtmlUtil.escape(label) %>" name="preferences--displayStyle--">
+		<aui:select
+			id="displayStyle"
+			inlineField="<%= true %>"
+			label="<%= HtmlUtil.escape(label) %>"
+			name="preferences--displayStyle--"
+		>
 			<c:if test="<%= showEmptyOption %>">
 				<aui:option label="default" selected="<%= Validator.isNull(displayStyle) %>" />
 			</c:if>
@@ -61,7 +71,12 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 						data.put("displaystylegroupid", curDDMTemplate.getGroupId());
 			%>
 
-				<aui:option data="<%= data %>" label="<%= HtmlUtil.escape(curDDMTemplate.getName(locale)) %>" selected="<%= (portletDisplayDDMTemplate != null) && (curDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>" value="<%= PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + HtmlUtil.escape(curDDMTemplate.getTemplateKey()) %>" />
+				<aui:option
+					data="<%= data %>"
+					label="<%= HtmlUtil.escape(curDDMTemplate.getName(locale)) %>"
+					selected="<%= (portletDisplayDDMTemplate != null) && (curDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>"
+					value="<%= PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + HtmlUtil.escape(curDDMTemplate.getTemplateKey()) %>"
+				/>
 
 			<%
 			}
@@ -84,7 +99,11 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 	</c:if>
 </div>
 
-<liferay-portlet:renderURL plid="<%= themeDisplay.getPlid() %>" portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.VIEW) %>" var="basePortletURL">
+<liferay-portlet:renderURL
+	plid="<%= themeDisplay.getPlid() %>"
+	portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.VIEW) %>"
+	var="basePortletURL"
+>
 	<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 </liferay-portlet:renderURL>
 

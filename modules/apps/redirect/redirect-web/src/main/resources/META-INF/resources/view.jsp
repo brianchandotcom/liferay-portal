@@ -24,17 +24,20 @@ SearchContainer<RedirectEntry> redirectSearchContainer = redirectDisplayContext.
 RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext = new RedirectManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, redirectSearchContainer);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= redirectManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= redirectManagementToolbarDisplayContext %>" />
 
-<aui:form action="<%= redirectSearchContainer.getIteratorURL() %>" cssClass="container-fluid-1280" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+<aui:form
+	action="<%= redirectSearchContainer.getIteratorURL() %>"
+	cssClass="container-fluid-1280"
+	name="fm"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
 
-	<liferay-ui:search-container
-		id="<%= redirectDisplayContext.getSearchContainerId() %>"
-		searchContainer="<%= redirectSearchContainer %>"
-	>
+	<liferay-ui:search-container id="<%= redirectDisplayContext.getSearchContainerId() %>" searchContainer="<%= redirectSearchContainer %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.redirect.model.RedirectEntry"
 			keyProperty="redirectEntryId"
@@ -45,10 +48,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 			row.setData(HashMapBuilder.<String, Object>put("actions", redirectManagementToolbarDisplayContext.getAvailableActions(redirectEntry)).build());
 			%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="source-url"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-content" name="source-url">
 
 				<%
 				String url = redirectDisplayContext.getGroupBaseURL() + StringPool.SLASH + redirectEntry.getSourceURL();
@@ -59,26 +59,17 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 				</aui:a>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="destination-url"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-content" name="destination-url">
 				<aui:a href="<%= HtmlUtil.escapeAttribute(redirectEntry.getDestinationURL()) %>" target="_blank">
 					<%= HtmlUtil.escape(redirectEntry.getDestinationURL()) %>
 				</aui:a>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="type"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-content" name="type">
 				<liferay-ui:message key='<%= redirectEntry.isPermanent() ? "permanent" : "temporary" %>' />
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="expiration"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-content" name="expiration">
 				<c:choose>
 					<c:when test="<%= Validator.isNull(redirectEntry.getExpirationDate()) %>">
 						<%= StringPool.DASH %>
@@ -93,16 +84,11 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text>
-				<clay:dropdown-actions
-					dropdownItems="<%= redirectDisplayContext.getActionDropdownItems(redirectEntry) %>"
-				/>
+				<clay:dropdown-actions dropdownItems="<%= redirectDisplayContext.getActionDropdownItems(redirectEntry) %>" />
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-			searchContainer="<%= redirectSearchContainer %>"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= redirectSearchContainer %>" />
 	</liferay-ui:search-container>
 </aui:form>
 

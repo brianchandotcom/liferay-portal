@@ -30,8 +30,5 @@
 	portletURL.setParameter("portletId", portletDisplay.getId());
 	%>
 
-	<liferay-ui:icon
-		message="export"
-		url="<%= portletURL.toString() %>"
-	/>
+	<liferay-ui:icon message="export" url="<%= portletURL.toString() %>" />
 </c:if>

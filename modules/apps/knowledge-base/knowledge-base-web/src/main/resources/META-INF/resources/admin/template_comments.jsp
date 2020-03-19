@@ -34,11 +34,27 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 
 <c:if test="<%= themeDisplay.isSignedIn() %>">
 	<div class="kb-template-comments">
-		<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateKBComment();" %>'>
+		<aui:form
+			method="post"
+			name="fm"
+			onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateKBComment();" %>'
+		>
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
-			<aui:input name="kbCommentId" type="hidden" value="<%= kbCommentId %>" />
-			<aui:input name="classNameId" type="hidden" value="<%= PortalUtil.getClassNameId(KBTemplate.class) %>" />
-			<aui:input name="classPK" type="hidden" value="<%= kbTemplate.getKbTemplateId() %>" />
+			<aui:input
+				name="kbCommentId"
+				type="hidden"
+				value="<%= kbCommentId %>"
+			/>
+			<aui:input
+				name="classNameId"
+				type="hidden"
+				value="<%= PortalUtil.getClassNameId(KBTemplate.class) %>"
+			/>
+			<aui:input
+				name="classPK"
+				type="hidden"
+				value="<%= kbTemplate.getKbTemplateId() %>"
+			/>
 
 			<liferay-ui:error exception="<%= KBCommentContentException.class %>" message="please-enter-valid-content" />
 
@@ -73,9 +89,23 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 							<div class="kb-helpful-inputs">
 								<span class="kb-helpful-text"><liferay-ui:message key="was-this-information-helpful" /></span>
 
-								<aui:input checked="<%= helpful %>" inlineField="<%= true %>" label="yes" name="helpful" type="radio" value="1" />
+								<aui:input
+									checked="<%= helpful %>"
+									inlineField="<%= true %>"
+									label="yes"
+									name="helpful"
+									type="radio"
+									value="1"
+								/>
 
-								<aui:input checked="<%= !helpful %>" inlineField="<%= true %>" label="no" name="helpful" type="radio" value="0" />
+								<aui:input
+									checked="<%= !helpful %>"
+									inlineField="<%= true %>"
+									label="no"
+									name="helpful"
+									type="radio"
+									value="0"
+								/>
 							</div>
 
 							<aui:button-row cssClass="kb-submit-buttons">
@@ -90,13 +120,8 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 					<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
 				</liferay-portlet:renderURL>
 
-				<liferay-ui:search-container
-					iteratorURL="<%= iteratorURL %>"
-					total="<%= KBCommentLocalServiceUtil.getKBCommentsCount(KBTemplate.class.getName(), kbTemplate.getKbTemplateId()) %>"
-				>
-					<liferay-ui:search-container-results
-						results="<%= KBCommentLocalServiceUtil.getKBComments(KBTemplate.class.getName(), kbTemplate.getKbTemplateId(), searchContainer.getStart(), searchContainer.getEnd(), null) %>"
-					/>
+				<liferay-ui:search-container iteratorURL="<%= iteratorURL %>" total="<%= KBCommentLocalServiceUtil.getKBCommentsCount(KBTemplate.class.getName(), kbTemplate.getKbTemplateId()) %>">
+					<liferay-ui:search-container-results results="<%= KBCommentLocalServiceUtil.getKBComments(KBTemplate.class.getName(), kbTemplate.getKbTemplateId(), searchContainer.getStart(), searchContainer.getEnd(), null) %>" />
 
 					<c:if test="<%= total > 0 %>">
 						<div class="separator"><!-- --></div>
@@ -122,9 +147,7 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 
 					<c:if test="<%= total > searchContainer.getDelta() %>">
 						<div class="taglib-search-iterator-page-iterator-bottom">
-							<liferay-ui:search-paginator
-								searchContainer="<%= searchContainer %>"
-							/>
+							<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
 						</div>
 					</c:if>
 				</liferay-ui:search-container>

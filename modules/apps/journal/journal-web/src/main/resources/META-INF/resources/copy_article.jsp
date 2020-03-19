@@ -39,10 +39,26 @@ renderResponse.setTitle(LanguageUtil.get(request, "web-content"));
 	method="post"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-	<aui:input name="oldArticleId" type="hidden" value="<%= oldArticleId %>" />
-	<aui:input name="version" type="hidden" value="<%= version %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="groupId"
+		type="hidden"
+		value="<%= groupId %>"
+	/>
+	<aui:input
+		name="oldArticleId"
+		type="hidden"
+		value="<%= oldArticleId %>"
+	/>
+	<aui:input
+		name="version"
+		type="hidden"
+		value="<%= version %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= ArticleIdException.class %>" message="please-enter-a-valid-id" />
@@ -50,17 +66,39 @@ renderResponse.setTitle(LanguageUtil.get(request, "web-content"));
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<aui:input name="id" type="resource" value="<%= oldArticleId %>" />
+				<aui:input
+					name="id"
+					type="resource"
+					value="<%= oldArticleId %>"
+				/>
 
 				<c:choose>
 					<c:when test="<%= journalWebConfiguration.journalFeedForceAutogenerateId() %>">
-						<aui:input name="newId" type="resource" value='<%= LanguageUtil.get(request, "autogenerate-id") %>' />
+						<aui:input
+							name="newId"
+							type="resource"
+							value='<%= LanguageUtil.get(request, "autogenerate-id") %>'
+						/>
 
 						<aui:input name="newArticleId" type="hidden" />
-						<aui:input name="autoArticleId" type="hidden" value="<%= true %>" />
+						<aui:input
+							name="autoArticleId"
+							type="hidden"
+							value="<%= true %>"
+						/>
 					</c:when>
 					<c:otherwise>
-						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" bean="<%= null %>" cssClass="lfr-input-text-container" field="articleId" fieldParam="newArticleId" label="" model="<%= JournalArticle.class %>" name="newArticleId" value="<%= newArticleId %>" />
+						<aui:input
+							autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+							bean="<%= null %>"
+							cssClass="lfr-input-text-container"
+							field="articleId"
+							fieldParam="newArticleId"
+							label=""
+							model="<%= JournalArticle.class %>"
+							name="newArticleId"
+							value="<%= newArticleId %>"
+						/>
 					</c:otherwise>
 				</c:choose>
 			</liferay-frontend:fieldset>

@@ -45,10 +45,7 @@ long phoneId = phone.getPhoneId();
 	editURL.setParameter("primaryKey", String.valueOf(phoneId));
 	%>
 
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editURL.toString() %>"
-	/>
+	<liferay-ui:icon message="edit" url="<%= editURL.toString() %>" />
 
 	<%
 	PortletURL portletURL = renderResponse.createActionURL();
@@ -65,10 +62,7 @@ long phoneId = phone.getPhoneId();
 	makePrimaryURL.setParameter(Constants.CMD, "makePrimary");
 	%>
 
-	<liferay-ui:icon
-		message="make-primary"
-		url="<%= makePrimaryURL.toString() %>"
-	/>
+	<liferay-ui:icon message="make-primary" url="<%= makePrimaryURL.toString() %>" />
 
 	<%
 	PortletURL removePhoneURL = PortletURLUtil.clone(portletURL, renderResponse);
@@ -76,8 +70,5 @@ long phoneId = phone.getPhoneId();
 	removePhoneURL.setParameter(Constants.CMD, Constants.DELETE);
 	%>
 
-	<liferay-ui:icon
-		message="remove"
-		url="<%= removePhoneURL.toString() %>"
-	/>
+	<liferay-ui:icon message="remove" url="<%= removePhoneURL.toString() %>" />
 </liferay-ui:icon-menu>

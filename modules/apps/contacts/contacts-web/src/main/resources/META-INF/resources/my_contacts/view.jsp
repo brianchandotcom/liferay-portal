@@ -38,7 +38,11 @@
 		<c:choose>
 			<c:when test="<%= users.isEmpty() %>">
 				<div class="alert alert-info">
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(scopeGroup.getDescriptiveName(locale)) %>" key="x-has-no-connections" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= HtmlUtil.escape(scopeGroup.getDescriptiveName(locale)) %>"
+						key="x-has-no-connections"
+						translateArguments="<%= false %>"
+					/>
 				</div>
 			</c:when>
 			<c:otherwise>

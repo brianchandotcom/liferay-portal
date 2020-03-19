@@ -46,11 +46,25 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 <aui:field-wrapper>
 	<liferay-ui:message key="selected-field-set" />:
 
-	<aui:a cssClass="badge badge-info kaleo-process-preview-definition" data-definition-id="<%= ddmStructureId %>" href="javascript:;" id="ddmStructureDisplay" label="<%= HtmlUtil.escape(ddmStructureName) %>" />
+	<aui:a
+		cssClass="badge badge-info kaleo-process-preview-definition"
+		data-definition-id="<%= ddmStructureId %>"
+		href="javascript:;"
+		id="ddmStructureDisplay"
+		label="<%= HtmlUtil.escape(ddmStructureName) %>"
+	/>
 
-	<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
+	<aui:input
+		name="ddmStructureId"
+		type="hidden"
+		value="<%= ddmStructureId %>"
+	/>
 
-	<aui:input name="ddmStructureName" type="hidden" value="<%= ddmStructureName %>">
+	<aui:input
+		name="ddmStructureName"
+		type="hidden"
+		value="<%= ddmStructureName %>"
+	>
 		<aui:validator name="required" />
 	</aui:input>
 </aui:field-wrapper>
@@ -64,9 +78,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 	<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
 </liferay-portlet:renderURL>
 
-<liferay-ui:search-container
-	searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, iteratorURL, null, "there-are-no-results") %>'
->
+<liferay-ui:search-container searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, iteratorURL, null, "there-are-no-results") %>'>
 
 	<%
 	DisplayTerms displayTerms = searchContainer.getDisplayTerms();
@@ -87,7 +99,11 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 	</liferay-ui:search-container-results>
 
 	<c:if test="<%= DDMStructurePermission.containsAddStructurePermission(permissionChecker, scopeGroupId, scopeClassNameId) %>">
-		<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT) %>" var="addURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<liferay-portlet:renderURL
+			portletName="<%= PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT) %>"
+			var="addURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		>
 			<portlet:param name="mvcPath" value="/edit_structure.jsp" />
 			<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_STRUCTURE %>" />
 			<portlet:param name="closeRedirect" value="<%= backURL %>" />
@@ -99,7 +115,11 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 		</liferay-portlet:renderURL>
 
 		<aui:button-row>
-			<aui:button onClick='<%= "javascript:" + renderResponse.getNamespace() + "editStructure('" + LanguageUtil.format(request, "new-x", LanguageUtil.get(request, "field-set"), false) + "','" + addURL + "');" %>' primary="<%= true %>" value="add-field-set" />
+			<aui:button
+				onClick='<%= "javascript:" + renderResponse.getNamespace() + "editStructure('" + LanguageUtil.format(request, "new-x", LanguageUtil.get(request, "field-set"), false) + "','" + addURL + "');" %>'
+				primary="<%= true %>"
+				value="add-field-set"
+			/>
 		</aui:button-row>
 	</c:if>
 
@@ -108,14 +128,9 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 		keyProperty="structureId"
 		modelVar="structure"
 	>
-		<liferay-ui:search-container-row-parameter
-			name="backURL"
-			value="<%= backURL %>"
-		/>
+		<liferay-ui:search-container-row-parameter name="backURL" value="<%= backURL %>" />
 
-		<liferay-util:buffer
-			var="structureNameBuffer"
-		>
+		<liferay-util:buffer var="structureNameBuffer">
 
 			<%
 			JSONArray definitionFieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(structure, structure.getDefinition());
@@ -132,20 +147,11 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 			(<aui:a cssClass="kaleo-process-preview-definition" data-definition-id="<%= structure.getStructureId() %>" href="javascript:;" label="view-fields" />)
 		</liferay-util:buffer>
 
-		<liferay-ui:search-container-column-text
-			name="name"
-			value="<%= HtmlUtil.escape(structure.getName(locale)) + StringPool.SPACE + structureNameBuffer %>"
-		/>
+		<liferay-ui:search-container-column-text name="name" value="<%= HtmlUtil.escape(structure.getName(locale)) + StringPool.SPACE + structureNameBuffer %>" />
 
-		<liferay-ui:search-container-column-text
-			name="description"
-			value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
-		/>
+		<liferay-ui:search-container-column-text name="description" value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>" />
 
-		<liferay-ui:search-container-column-date
-			name="modified-date"
-			value="<%= structure.getModifiedDate() %>"
-		/>
+		<liferay-ui:search-container-column-date name="modified-date" value="<%= structure.getModifiedDate() %>" />
 
 		<liferay-ui:search-container-column-jsp
 			align="right"
@@ -154,9 +160,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
 <aui:script>

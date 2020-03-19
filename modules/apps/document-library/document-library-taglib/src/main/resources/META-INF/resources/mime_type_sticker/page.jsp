@@ -22,7 +22,5 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = (DLViewFileVer
 %>
 
 <div class="sticker sticker-document <%= cssClass %> <%= dlViewFileVersionDisplayContext.getCssClassFileMimeType() %>">
-	<clay:icon
-		symbol="<%= dlViewFileVersionDisplayContext.getIconFileMimeType() %>"
-	/>
+	<clay:icon symbol="<%= dlViewFileVersionDisplayContext.getIconFileMimeType() %>" />
 </div>

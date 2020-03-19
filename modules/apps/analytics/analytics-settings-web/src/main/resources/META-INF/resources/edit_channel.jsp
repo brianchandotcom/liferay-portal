@@ -51,9 +51,21 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 	</div>
 </div>
 
-<aui:form action="<%= editChannelURL %>" method="post" name="fm">
-	<aui:input name="channelId" type="hidden" value="<%= channelId %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+<aui:form
+	action="<%= editChannelURL %>"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="channelId"
+		type="hidden"
+		value="<%= channelId %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
 
 	<div class="portlet-analytics-settings sheet sheet-lg">
 		<h2 class="autofit-row">
@@ -64,9 +76,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 			<liferay-ui:message key="sites-can-only-be-assigned-to-a-single-property-at-a-time" />
 		</p>
 
-		<clay:management-toolbar
-			displayContext="<%= new GroupManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, groupDisplayContext) %>"
-		/>
+		<clay:management-toolbar displayContext="<%= new GroupManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, groupDisplayContext) %>" />
 
 		<liferay-ui:search-container
 			id="selectGroups"
@@ -104,10 +114,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-				searchResultCssClass="show-quick-actions-on-hover table table-autofit"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" searchResultCssClass="show-quick-actions-on-hover table table-autofit" />
 		</liferay-ui:search-container>
 
 		<div class="text-right">

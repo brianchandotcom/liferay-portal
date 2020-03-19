@@ -29,9 +29,7 @@ List<AssetEntry> assetEntries = assetPublisherHelper.getAssetEntries(renderReque
 	iteratorURL="<%= configurationRenderURL %>"
 	total="<%= assetEntries.size() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= assetEntries.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= assetEntries.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.asset.kernel.model.AssetEntry"
@@ -46,10 +44,7 @@ List<AssetEntry> assetEntries = assetPublisherHelper.getAssetEntries(renderReque
 		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
 		%>
 
-		<liferay-ui:search-container-column-text
-			name="title"
-			truncate="<%= true %>"
-		>
+		<liferay-ui:search-container-column-text name="title" truncate="<%= true %>">
 			<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 
 			<c:if test="<%= !assetEntry.isVisible() %>">
@@ -63,30 +58,16 @@ List<AssetEntry> assetEntries = assetPublisherHelper.getAssetEntries(renderReque
 			</c:if>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			name="type"
-			value="<%= assetRendererFactory.getTypeName(locale) %>"
-		/>
+		<liferay-ui:search-container-column-text name="type" value="<%= assetRendererFactory.getTypeName(locale) %>" />
 
-		<liferay-ui:search-container-column-date
-			name="modified-date"
-			value="<%= assetEntry.getModifiedDate() %>"
-		/>
+		<liferay-ui:search-container-column-date name="modified-date" value="<%= assetEntry.getModifiedDate() %>" />
 
-		<liferay-ui:search-container-column-jsp
-			path="/configuration/asset_selection_action.jsp"
-		/>
+		<liferay-ui:search-container-column-jsp path="/configuration/asset_selection_action.jsp" />
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/configuration/asset_selection_order_action.jsp"
-		/>
+		<liferay-ui:search-container-column-jsp cssClass="entry-action-column" path="/configuration/asset_selection_order_action.jsp" />
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-		paginate="<%= total > SearchContainer.DEFAULT_DELTA %>"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= total > SearchContainer.DEFAULT_DELTA %>" />
 </liferay-ui:search-container>
 
 <c:if test='<%= SessionMessages.contains(renderRequest, "deletedMissingAssetEntries") %>'>

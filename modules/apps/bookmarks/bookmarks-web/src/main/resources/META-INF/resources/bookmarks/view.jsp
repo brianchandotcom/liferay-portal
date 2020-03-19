@@ -163,23 +163,22 @@ BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<liferay-trash:undo
-	portletURL="<%= restoreTrashEntriesURL %>"
-/>
+<liferay-trash:undo portletURL="<%= restoreTrashEntriesURL %>" />
 
 <liferay-util:include page="/bookmarks/toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="searchContainerId" value="entries" />
 </liferay-util:include>
 
 <div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/bookmarks/info_panel" var="sidebarPanelURL">
+	<liferay-portlet:resourceURL
+		copyCurrentRenderParameters="<%= false %>"
+		id="/bookmarks/info_panel"
+		var="sidebarPanelURL"
+	>
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 	</liferay-portlet:resourceURL>
 
-	<liferay-frontend:sidebar-panel
-		resourceURL="<%= sidebarPanelURL %>"
-		searchContainerId="entries"
-	>
+	<liferay-frontend:sidebar-panel resourceURL="<%= sidebarPanelURL %>" searchContainerId="entries">
 		<liferay-util:include page="/bookmarks/info_panel.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:sidebar-panel>
 
@@ -199,9 +198,17 @@ BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 			<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_entry" />
 		</liferay-portlet:actionURL>
 
-		<aui:form action="<%= editEntryURL.toString() %>" method="get" name="fm">
+		<aui:form
+			action="<%= editEntryURL.toString() %>"
+			method="get"
+			name="fm"
+		>
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value="<%= currentURL %>"
+			/>
 			<aui:input name="newFolderId" type="hidden" />
 
 			<liferay-util:include page="/bookmarks/view_entries.jsp" servletContext="<%= application %>">

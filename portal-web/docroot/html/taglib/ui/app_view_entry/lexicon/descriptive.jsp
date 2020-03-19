@@ -91,7 +91,11 @@
 			</c:choose>
 		</strong>
 
-		<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - modifiedDate.getTime(), true), HtmlUtil.escape(author)} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - modifiedDate.getTime(), true), HtmlUtil.escape(author)} %>"
+			key="x-ago-by-x"
+			translateArguments="<%= false %>"
+		/>
 	</h6>
 </c:if>
 
@@ -119,19 +123,13 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 <c:if test="<%= Validator.isNotNull(assetCategoryClassName) && (assetCategoryClassPK > 0) %>">
 	<span class="entry-categories">
-		<liferay-ui:asset-categories-summary
-			className="<%= assetCategoryClassName %>"
-			classPK="<%= assetCategoryClassPK %>"
-		/>
+		<liferay-ui:asset-categories-summary className="<%= assetCategoryClassName %>" classPK="<%= assetCategoryClassPK %>" />
 	</span>
 </c:if>
 
 <c:if test="<%= Validator.isNotNull(assetTagClassName) && (assetTagClassPK > 0) %>">
 	<span class="entry-tags">
-		<liferay-ui:asset-tags-summary
-			className="<%= assetTagClassName %>"
-			classPK="<%= assetTagClassPK %>"
-		/>
+		<liferay-ui:asset-tags-summary className="<%= assetTagClassName %>" classPK="<%= assetTagClassPK %>" />
 	</span>
 </c:if>
 
@@ -143,7 +141,12 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 </c:if>
 
 <c:if test="<%= !folder && (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">
-	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
+	<aui:workflow-status
+		markupView="lexicon"
+		showIcon="<%= false %>"
+		showLabel="<%= false %>"
+		status="<%= status %>"
+	/>
 
 	<c:if test="<%= locked %>">
 		<small class="text-default"><liferay-ui:message key="locked" /></small>

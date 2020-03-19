@@ -26,9 +26,7 @@ int roleType = (Integer)request.getAttribute("edit_roles.jsp-roleType");
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portletURL");
 %>
 
-<liferay-ui:search-container
-	searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
->
+<liferay-ui:search-container searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>">
 
 	<%
 	RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();
@@ -42,9 +40,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 	searchContainer.setTotal(total);
 	%>
 
-	<liferay-ui:search-container-results
-		results="<%= ListUtil.subList(roles, searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= ListUtil.subList(roles, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Role"
@@ -81,7 +77,5 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>

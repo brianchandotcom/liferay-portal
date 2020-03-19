@@ -30,10 +30,20 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-category"));
 	<portlet:param name="redirect" value="<%= String.valueOf(redirect) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= addLogCategoryURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form
+	action="<%= addLogCategoryURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input cssClass="lfr-input-text-container" label="logger-name" name="loggerName" type="text" />
+			<aui:input
+				cssClass="lfr-input-text-container"
+				label="logger-name"
+				name="loggerName"
+				type="text"
+			/>
 
 			<aui:select label="log-level" name="priority">
 

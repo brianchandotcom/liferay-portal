@@ -18,15 +18,40 @@
 	<liferay-ui:message key="use-the-form-below-to-rename-a-page,-moving-all-of-its-history-to-the-new-name" />
 </div>
 
-<aui:form action="<%= movePageURL %>" method="post" name="renameFm" onSubmit='<%= renderResponse.getNamespace() + "renamePage();" %>'>
+<aui:form
+	action="<%= movePageURL %>"
+	method="post"
+	name="renameFm"
+	onSubmit='<%= renderResponse.getNamespace() + "renamePage();" %>'
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
-	<aui:input name="title" type="hidden" value="<%= title %>" />
-	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
+	<aui:input
+		name="nodeId"
+		type="hidden"
+		value="<%= node.getNodeId() %>"
+	/>
+	<aui:input
+		name="title"
+		type="hidden"
+		value="<%= title %>"
+	/>
+	<aui:input
+		name="workflowAction"
+		type="hidden"
+		value="<%= WorkflowConstants.ACTION_PUBLISH %>"
+	/>
 
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
 
-	<aui:input name="currentTitle" type="resource" value="<%= wikiPage.getTitle() %>" />
+	<aui:input
+		name="currentTitle"
+		type="resource"
+		value="<%= wikiPage.getTitle() %>"
+	/>
 
 	<aui:input name="newTitle" value="<%= newTitle %>" />
 
@@ -37,7 +62,11 @@
 	</c:if>
 
 	<aui:button-row>
-		<aui:button disabled="<%= pending %>" type="submit" value='<%= hasWorkflowDefinitionLink ? "submit-for-publication" : "rename" %>' />
+		<aui:button
+			disabled="<%= pending %>"
+			type="submit"
+			value='<%= hasWorkflowDefinitionLink ? "submit-for-publication" : "rename" %>'
+		/>
 
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>

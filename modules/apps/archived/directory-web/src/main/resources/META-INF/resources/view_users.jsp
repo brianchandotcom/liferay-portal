@@ -32,7 +32,11 @@ boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 %>
 
 <c:if test="<%= Validator.isNotNull(viewUsersRedirect) %>">
-	<aui:input name="viewUsersRedirect" type="hidden" value="<%= viewUsersRedirect %>" />
+	<aui:input
+		name="viewUsersRedirect"
+		type="hidden"
+		value="<%= viewUsersRedirect %>"
+	/>
 </c:if>
 
 <liferay-frontend:management-bar>
@@ -45,10 +49,7 @@ boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
+		<liferay-frontend:management-bar-navigation navigationKeys='<%= new String[] {"all"} %>' portletURL="<%= portletURL %>" />
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= orderByCol %>"
@@ -66,11 +67,13 @@ boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
-	<liferay-ui:search-container
-		searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
-		var="userSearchContainer"
-	>
-		<aui:input disabled="<%= true %>" name="usersRedirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<liferay-ui:search-container searchContainer="<%= new UserSearch(renderRequest, portletURL) %>" var="userSearchContainer">
+		<aui:input
+			disabled="<%= true %>"
+			name="usersRedirect"
+			type="hidden"
+			value="<%= portletURL.toString() %>"
+		/>
 
 		<%
 		UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
@@ -92,18 +95,34 @@ boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 		%>
 
 		<c:if test="<%= organization != null %>">
-			<aui:input name="<%= UserDisplayTerms.ORGANIZATION_ID %>" type="hidden" value="<%= organization.getOrganizationId() %>" />
+			<aui:input
+				name="<%= UserDisplayTerms.ORGANIZATION_ID %>"
+				type="hidden"
+				value="<%= organization.getOrganizationId() %>"
+			/>
 
 			<h3>
-				<liferay-ui:message arguments="<%= HtmlUtil.escape(organization.getName()) %>" key="users-of-x" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= HtmlUtil.escape(organization.getName()) %>"
+					key="users-of-x"
+					translateArguments="<%= false %>"
+				/>
 			</h3>
 		</c:if>
 
 		<c:if test="<%= userGroup != null %>">
-			<aui:input name="<%= UserDisplayTerms.USER_GROUP_ID %>" type="hidden" value="<%= userGroup.getUserGroupId() %>" />
+			<aui:input
+				name="<%= UserDisplayTerms.USER_GROUP_ID %>"
+				type="hidden"
+				value="<%= userGroup.getUserGroupId() %>"
+			/>
 
 			<h3>
-				<liferay-ui:message arguments="<%= HtmlUtil.escape(userGroup.getName()) %>" key="users-of-x" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= HtmlUtil.escape(userGroup.getName()) %>"
+					key="users-of-x"
+					translateArguments="<%= false %>"
+				/>
 			</h3>
 		</c:if>
 
@@ -140,9 +159,7 @@ boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 		}
 		%>
 
-		<liferay-ui:user-search-container-results
-			userParams="<%= userParams %>"
-		/>
+		<liferay-ui:user-search-container-results userParams="<%= userParams %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
@@ -166,19 +183,25 @@ boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 		</c:if>
 
 		<c:if test="<%= organization != null %>">
-			<aui:input name="<%= UserDisplayTerms.ORGANIZATION_ID %>" type="hidden" value="<%= organization.getOrganizationId() %>" />
+			<aui:input
+				name="<%= UserDisplayTerms.ORGANIZATION_ID %>"
+				type="hidden"
+				value="<%= organization.getOrganizationId() %>"
+			/>
 
 			<liferay-ui:message key="filter-by-organization" />: <%= HtmlUtil.escape(organization.getName()) %><br />
 		</c:if>
 
 		<c:if test="<%= userGroup != null %>">
-			<aui:input name="<%= UserDisplayTerms.USER_GROUP_ID %>" type="hidden" value="<%= userGroup.getUserGroupId() %>" />
+			<aui:input
+				name="<%= UserDisplayTerms.USER_GROUP_ID %>"
+				type="hidden"
+				value="<%= userGroup.getUserGroupId() %>"
+			/>
 
 			<liferay-ui:message key="filter-by-user-group" />: <%= HtmlUtil.escape(userGroup.getName()) %><br />
 		</c:if>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

@@ -53,8 +53,17 @@
 					boolean defaultDatabase = SetupWizardUtil.isDefaultDatabase(request);
 					%>
 
-					<aui:form action='<%= themeDisplay.getPathMain() + "/portal/setup_wizard" %>' method="post" name="fm" onSubmit="event.preventDefault();">
-						<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+					<aui:form
+						action='<%= themeDisplay.getPathMain() + "/portal/setup_wizard" %>'
+						method="post"
+						name="fm"
+						onSubmit="event.preventDefault();"
+					>
+						<aui:input
+							name="<%= Constants.CMD %>"
+							type="hidden"
+							value="<%= Constants.UPDATE %>"
+						/>
 
 						<div class="row">
 							<aui:fieldset cssClass="col-md-6">
@@ -62,7 +71,11 @@
 									<liferay-ui:message key="portal" />
 								</h3>
 
-								<aui:input label="portal-name" name="companyName" value="<%= PropsValues.COMPANY_DEFAULT_NAME %>">
+								<aui:input
+									label="portal-name"
+									name="companyName"
+									value="<%= PropsValues.COMPANY_DEFAULT_NAME %>"
+								>
 									<aui:validator name="required" />
 								</aui:input>
 
@@ -77,7 +90,11 @@
 												for (Locale curLocale : LanguageUtil.getAvailableLocales()) {
 												%>
 
-													<aui:option label="<%= curLocale.getDisplayName(curLocale) %>" selected="<%= languageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
+													<aui:option
+														label="<%= curLocale.getDisplayName(curLocale) %>"
+														selected="<%= languageId.equals(LocaleUtil.toLanguageId(curLocale)) %>"
+														value="<%= LocaleUtil.toLanguageId(curLocale) %>"
+													/>
 
 												<%
 												}
@@ -90,7 +107,12 @@
 									</div>
 								</aui:field-wrapper>
 
-								<aui:input label="time-zone" name="companyTimeZoneId" type="timeZone" value="<%= SetupWizardUtil.getDefaultTimeZoneId() %>" />
+								<aui:input
+									label="time-zone"
+									name="companyTimeZoneId"
+									type="timeZone"
+									value="<%= SetupWizardUtil.getDefaultTimeZoneId() %>"
+								/>
 							</aui:fieldset>
 
 							<aui:fieldset cssClass="col-md-6">
@@ -113,7 +135,11 @@
 									<liferay-ui:message key="database" />
 								</h3>
 
-								<aui:input name="defaultDatabase" type="hidden" value="<%= defaultDatabase %>" />
+								<aui:input
+									name="defaultDatabase"
+									type="hidden"
+									value="<%= defaultDatabase %>"
+								/>
 
 								<div id="defaultDatabaseOptions">
 									<c:choose>
@@ -201,7 +227,12 @@
 											data.put("url", url);
 										%>
 
-											<aui:option data="<%= data %>" label='<%= "database." + dbTypeString %>' selected="<%= PropsValues.JDBC_DEFAULT_URL.contains(dbTypeString) %>" value="<%= dbTypeString %>" />
+											<aui:option
+												data="<%= data %>"
+												label='<%= "database." + dbTypeString %>'
+												selected="<%= PropsValues.JDBC_DEFAULT_URL.contains(dbTypeString) %>"
+												value="<%= dbTypeString %>"
+											/>
 
 										<%
 										}
@@ -209,17 +240,38 @@
 
 									</aui:select>
 
-									<aui:input id="jdbcDefaultURL" label="jdbc-url" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_URL + "--" %>' value="<%= PropsValues.JDBC_DEFAULT_URL %>">
+									<aui:input
+										id="jdbcDefaultURL"
+										label="jdbc-url"
+										name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_URL + "--" %>'
+										value="<%= PropsValues.JDBC_DEFAULT_URL %>"
+									>
 										<aui:validator name="required" />
 									</aui:input>
 
-									<aui:input id="jdbcDefaultDriverName" label="jdbc-driver-class-name" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME + "--" %>' value="<%= PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME %>">
+									<aui:input
+										id="jdbcDefaultDriverName"
+										label="jdbc-driver-class-name"
+										name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME + "--" %>'
+										value="<%= PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME %>"
+									>
 										<aui:validator name="required" />
 									</aui:input>
 
-									<aui:input id="jdbcDefaultUserName" label="user-name" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_USERNAME + "--" %>' value="<%= PropsValues.JDBC_DEFAULT_USERNAME %>" />
+									<aui:input
+										id="jdbcDefaultUserName"
+										label="user-name"
+										name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_USERNAME + "--" %>'
+										value="<%= PropsValues.JDBC_DEFAULT_USERNAME %>"
+									/>
 
-									<aui:input id="jdbcDefaultPassword" label="password" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_PASSWORD + "--" %>' type="password" value="<%= PropsValues.JDBC_DEFAULT_PASSWORD %>" />
+									<aui:input
+										id="jdbcDefaultPassword"
+										label="password"
+										name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_PASSWORD + "--" %>'
+										type="password"
+										value="<%= PropsValues.JDBC_DEFAULT_PASSWORD %>"
+									/>
 								</div>
 							</aui:fieldset>
 						</div>
@@ -230,12 +282,24 @@
 									<liferay-ui:message key="sample-data" />
 								</h3>
 
-								<aui:input disabled="<%= true %>" helpMessage="add-sample-data-help" id="addSampleData" label="add-sample-data" name='<%= "properties--" + PropsKeys.SETUP_WIZARD_ADD_SAMPLE_DATA + "--" %>' type="checkbox" value="<%= PropsValues.SETUP_WIZARD_ADD_SAMPLE_DATA %>" />
+								<aui:input
+									disabled="<%= true %>"
+									helpMessage="add-sample-data-help"
+									id="addSampleData"
+									label="add-sample-data"
+									name='<%= "properties--" + PropsKeys.SETUP_WIZARD_ADD_SAMPLE_DATA + "--" %>'
+									type="checkbox"
+									value="<%= PropsValues.SETUP_WIZARD_ADD_SAMPLE_DATA %>"
+								/>
 							</aui:fieldset>
 						</div>
 
 						<aui:button-row>
-							<aui:button name="finishButton" type="submit" value="finish-configuration" />
+							<aui:button
+								name="finishButton"
+								type="submit"
+								value="finish-configuration"
+							/>
 						</aui:button-row>
 					</aui:form>
 
@@ -424,7 +488,11 @@
 								String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + StringPool.SLASH + SetupWizardUtil.PROPERTIES_FILE_NAME + "</span>";
 								%>
 
-								<liferay-ui:message arguments="<%= taglibArguments %>" key="the-configuration-was-saved-in" translateArguments="<%= false %>" />
+								<liferay-ui:message
+									arguments="<%= taglibArguments %>"
+									key="the-configuration-was-saved-in"
+									translateArguments="<%= false %>"
+								/>
 							</p>
 
 							<%
@@ -433,7 +501,11 @@
 
 							<c:if test="<%= !passwordUpdated %>">
 								<p class="lfr-setup-notice">
-									<liferay-ui:message arguments="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" key="your-password-is-x.-you-will-be-required-to-change-your-password-the-next-time-you-log-into-the-portal" translateArguments="<%= false %>" />
+									<liferay-ui:message
+										arguments="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>"
+										key="your-password-is-x.-you-will-be-required-to-change-your-password-the-next-time-you-log-into-the-portal"
+										translateArguments="<%= false %>"
+									/>
 								</p>
 							</c:if>
 
@@ -464,7 +536,14 @@
 								</div>
 							</p>
 
-							<aui:input cssClass="properties-text" label="" name="portal-ext" type="textarea" value="<%= unicodeProperties.toString() %>" wrap="soft" />
+							<aui:input
+								cssClass="properties-text"
+								label=""
+								name="portal-ext"
+								type="textarea"
+								value="<%= unicodeProperties.toString() %>"
+								wrap="soft"
+							/>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>

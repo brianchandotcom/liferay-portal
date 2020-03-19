@@ -27,9 +27,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
-	<liferay-ui:empty-result-message
-		message="you-have-successfully-anonymized-all-remaining-data"
-	/>
+	<liferay-ui:empty-result-message message="you-have-successfully-anonymized-all-remaining-data" />
 </div>
 
 <portlet:actionURL name="/delete_user" var="deleteUserURL">

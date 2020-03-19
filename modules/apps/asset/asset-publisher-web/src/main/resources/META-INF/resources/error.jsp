@@ -20,10 +20,7 @@
 	<portlet:param name="mvcPath" value="/view.jsp" />
 </portlet:renderURL>
 
-<liferay-ui:header
-	backURL="<%= portletURL.toString() %>"
-	title="error"
-/>
+<liferay-ui:header backURL="<%= portletURL.toString() %>" title="error" />
 
 <liferay-ui:error exception="<%= NoSuchGroupException.class %>" message="the-site-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchModelException.class %>" message="the-asset-could-not-be-found" />

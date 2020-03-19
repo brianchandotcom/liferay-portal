@@ -31,9 +31,7 @@ List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPage
 			%>
 
 				<li class="card-page-item col-md-4 col-sm-6">
-					<clay:vertical-card
-						verticalCard="<%= new SelectBasicTemplatesVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse) %>"
-					/>
+					<clay:vertical-card verticalCard="<%= new SelectBasicTemplatesVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse) %>" />
 				</li>
 
 			<%
@@ -55,9 +53,7 @@ List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPage
 			%>
 
 				<li class="card-page-item col-md-4 col-sm-6">
-					<clay:horizontal-card
-						horizontalCard="<%= new SelectBasicTemplatesHorizontalCard(type, renderRequest, renderResponse) %>"
-					/>
+					<clay:horizontal-card horizontalCard="<%= new SelectBasicTemplatesHorizontalCard(type, renderRequest, renderResponse) %>" />
 				</li>
 
 			<%

@@ -50,9 +50,17 @@
 										<a aria-controls="<portlet:namespace />addApplicationCollapse" aria-expanded="<%= selectedTab.equals("applications") %>" class="<%= selectedTab.equals("applications") ? StringPool.BLANK : "collapsed" %> collapse-icon collapse-icon-middle panel-toggler" data-qa-id="addMenuAddApplicationCategory" data-toggle="liferay-collapse" href="#<portlet:namespace />addApplicationCollapse" role="button">
 											<span class="category-name"><liferay-ui:message key="widgets" /></span>
 
-											<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+											<aui:icon
+												cssClass="collapse-icon-closed"
+												image="angle-right"
+												markupView="lexicon"
+											/>
 
-											<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+											<aui:icon
+												cssClass="collapse-icon-open"
+												image="angle-down"
+												markupView="lexicon"
+											/>
 										</a>
 									</div>
 								</div>
@@ -72,9 +80,17 @@
 										<a aria-controls="<portlet:namespace />addContentCollapse" aria-expanded="<%= selectedTab.equals("content") %>" class="<%= selectedTab.equals("content") ? StringPool.BLANK : "collapsed" %> collapse-icon collapse-icon-middle panel-toggler" data-qa-id="addMenuAddContentCategory" data-toggle="liferay-collapse" href="#<portlet:namespace />addContentCollapse" role="button">
 											<span class="category-name"><liferay-ui:message key="content" /></span>
 
-											<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+											<aui:icon
+												cssClass="collapse-icon-closed"
+												image="angle-right"
+												markupView="lexicon"
+											/>
 
-											<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+											<aui:icon
+												cssClass="collapse-icon-open"
+												image="angle-down"
+												markupView="lexicon"
+											/>
 										</a>
 									</div>
 								</div>

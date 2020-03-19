@@ -59,14 +59,9 @@ context.put("validExtensions", ArrayUtil.isEmpty(itemSelectorUploadViewDisplayCo
 		</div>
 	</div>
 
-	<liferay-ui:drop-here-info
-		message="drop-files-here"
-	/>
+	<liferay-ui:drop-here-info message="drop-files-here" />
 
 	<div class="item-selector-preview-container"></div>
 </div>
 
-<liferay-frontend:component
-	context="<%= context %>"
-	module="js/index.es"
-/>
+<liferay-frontend:component context="<%= context %>" module="js/index.es" />

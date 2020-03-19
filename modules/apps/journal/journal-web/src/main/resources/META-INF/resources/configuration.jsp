@@ -33,8 +33,16 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<%
 	String tabs1Names = "email-from,web-content-added-email,web-content-moved-from-folder-email,web-content-moved-to-folder-email,web-content-review-email,web-content-updated-email";
@@ -45,10 +53,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 	%>
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:tabs
-			names="<%= tabs1Names %>"
-			refresh="<%= false %>"
-		>
+		<liferay-ui:tabs names="<%= tabs1Names %>" refresh="<%= false %>">
 			<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 			<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 			<liferay-ui:error key="emailArticleAddedBody" message="please-enter-a-valid-body" />
@@ -67,9 +72,21 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>
 					<liferay-frontend:fieldset>
-						<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" type="text" value="<%= emailFromName %>" />
+						<aui:input
+							cssClass="lfr-input-text-container"
+							label="name"
+							name="preferences--emailFromName--"
+							type="text"
+							value="<%= emailFromName %>"
+						/>
 
-						<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" type="text" value="<%= emailFromAddress %>" />
+						<aui:input
+							cssClass="lfr-input-text-container"
+							label="address"
+							name="preferences--emailFromAddress--"
+							type="text"
+							value="<%= emailFromAddress %>"
+						/>
 					</liferay-frontend:fieldset>
 				</liferay-frontend:fieldset-group>
 			</liferay-ui:section>

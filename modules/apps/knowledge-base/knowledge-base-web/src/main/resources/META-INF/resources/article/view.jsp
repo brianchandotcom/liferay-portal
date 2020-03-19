@@ -31,7 +31,11 @@ KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_K
 		%>
 
 		<div class="alert alert-info portlet-configuration">
-			<aui:a href="<%= portletDisplay.getURLConfiguration() %>" label="please-configure-this-portlet-to-make-it-visible-to-all-users" onClick="<%= portletDisplay.getURLConfigurationJS() %>" />
+			<aui:a
+				href="<%= portletDisplay.getURLConfiguration() %>"
+				label="please-configure-this-portlet-to-make-it-visible-to-all-users"
+				onClick="<%= portletDisplay.getURLConfigurationJS() %>"
+			/>
 		</div>
 	</c:otherwise>
 </c:choose>

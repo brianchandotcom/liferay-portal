@@ -43,15 +43,24 @@ portletURL.setParameter("nodeId", String.valueOf(nodeId));
 portletURL.setParameter("keywords", keywords);
 %>
 
-<aui:form action="<%= wikiURLHelper.getSearchURL() %>" method="get" name="fm">
+<aui:form
+	action="<%= wikiURLHelper.getSearchURL() %>"
+	method="get"
+	name="fm"
+>
 	<liferay-portlet:renderURLParams portletURL="<%= wikiURLHelper.getSearchURL() %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="search"
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
 	/>
+	<aui:input
+		name="nodeId"
+		type="hidden"
+		value="<%= nodeId %>"
+	/>
+
+	<liferay-ui:header backURL="<%= redirect %>" title="search" />
 
 	<div class="form-search">
 		<liferay-ui:input-search
@@ -61,10 +70,7 @@ portletURL.setParameter("keywords", keywords);
 		/>
 	</div>
 
-	<liferay-ui:search-container
-		emptyResultsMessage='<%= LanguageUtil.format(request, "no-pages-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false) %>'
-		iteratorURL="<%= portletURL %>"
-	>
+	<liferay-ui:search-container emptyResultsMessage='<%= LanguageUtil.format(request, "no-pages-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false) %>' iteratorURL="<%= portletURL %>">
 
 		<%
 		Indexer<WikiPage> indexer = IndexerRegistryUtil.getIndexer(WikiPage.class);
@@ -88,14 +94,9 @@ portletURL.setParameter("keywords", keywords);
 		searchContainer.setTotal(hits.getLength());
 		%>
 
-		<liferay-ui:search-container-results
-			results="<%= SearchResultUtil.getSearchResults(hits, locale) %>"
-		/>
+		<liferay-ui:search-container-results results="<%= SearchResultUtil.getSearchResults(hits, locale) %>" />
 
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.search.SearchResult"
-			modelVar="searchResult"
-		>
+		<liferay-ui:search-container-row className="com.liferay.portal.kernel.search.SearchResult" modelVar="searchResult">
 
 			<%
 			WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(searchResult.getClassPK());
@@ -158,10 +159,7 @@ portletURL.setParameter("keywords", keywords);
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-paginator
-			searchContainer="<%= searchContainer %>"
-			type="more"
-		/>
+		<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="more" />
 	</liferay-ui:search-container>
 
 	<c:if test="<%= createNewPage %>">

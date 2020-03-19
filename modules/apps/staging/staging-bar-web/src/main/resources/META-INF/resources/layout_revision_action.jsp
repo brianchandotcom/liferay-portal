@@ -53,10 +53,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 			String taglibURL = "javascript:submitForm(document.hrefFm, '" + HtmlUtil.escapeJS(publishURL) + "');";
 			%>
 
-			<liferay-ui:icon
-				message='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName()) ? "submit-for-publication" : "mark-as-ready-for-publication" %>'
-				url="<%= taglibURL %>"
-			/>
+			<liferay-ui:icon message='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName()) ? "submit-for-publication" : "mark-as-ready-for-publication" %>' url="<%= taglibURL %>" />
 		</c:if>
 
 		<c:if test="<%= !layoutRevision.isHead() && !layoutRevision.isPending() %>">
@@ -75,9 +72,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 					/>
 				</c:when>
 				<c:when test="<%= layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE %>">
-					<liferay-ui:icon-delete
-						url="<%= deleteURL %>"
-					/>
+					<liferay-ui:icon-delete url="<%= deleteURL %>" />
 				</c:when>
 			</c:choose>
 		</c:if>

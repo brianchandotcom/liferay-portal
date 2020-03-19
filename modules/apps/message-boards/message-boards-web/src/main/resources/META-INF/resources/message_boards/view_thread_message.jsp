@@ -38,9 +38,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 		<div class="autofit-padded autofit-row card-body">
 			<div class="autofit-col">
 				<div class="list-group-card-icon">
-					<liferay-ui:user-portrait
-						userId="<%= !message.isAnonymous() ? message.getUserId() : 0 %>"
-					/>
+					<liferay-ui:user-portrait userId="<%= !message.isAnonymous() ? message.getUserId() : 0 %>" />
 				</div>
 			</div>
 
@@ -150,7 +148,12 @@ if (message.isAnonymous() || thread.isInTrash()) {
 
 					<c:if test="<%= !message.isApproved() %>">
 						<span class="h5 text-default">
-							<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
+							<aui:workflow-status
+								markupView="lexicon"
+								showIcon="<%= false %>"
+								showLabel="<%= false %>"
+								status="<%= message.getStatus() %>"
+							/>
 						</span>
 					</c:if>
 				</c:if>
@@ -231,10 +234,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 											<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 										</portlet:actionURL>
 
-										<liferay-ui:icon
-											message="mark-as-an-answer"
-											url="<%= addAnswerURL %>"
-										/>
+										<liferay-ui:icon message="mark-as-an-answer" url="<%= addAnswerURL %>" />
 									</c:when>
 									<c:otherwise>
 										<portlet:actionURL name="/message_boards/edit_message" var="deleteAnswerURL">
@@ -243,10 +243,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 											<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 										</portlet:actionURL>
 
-										<liferay-ui:icon
-											message="unmark-as-an-answer"
-											url="<%= deleteAnswerURL %>"
-										/>
+										<liferay-ui:icon message="unmark-as-an-answer" url="<%= deleteAnswerURL %>" />
 									</c:otherwise>
 								</c:choose>
 							</c:if>
@@ -257,10 +254,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 								String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + message.getMessageId() + "', '');";
 								%>
 
-								<liferay-ui:icon
-									message="reply"
-									url="<%= taglibReplyToMessageURL %>"
-								/>
+								<liferay-ui:icon message="reply" url="<%= taglibReplyToMessageURL %>" />
 
 								<portlet:renderURL var="quoteURL">
 									<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
@@ -276,10 +270,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 								String taglibReplyWithQuoteToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + message.getMessageId() + "', true);";
 								%>
 
-								<liferay-ui:icon
-									message="reply-with-quote"
-									url="<%= taglibReplyWithQuoteToMessageURL %>"
-								/>
+								<liferay-ui:icon message="reply-with-quote" url="<%= taglibReplyWithQuoteToMessageURL %>" />
 							</c:if>
 
 							<c:if test="<%= hasUpdatePermission %>">
@@ -289,10 +280,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 									<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 								</portlet:renderURL>
 
-								<liferay-ui:icon
-									message="edit"
-									url="<%= editURL %>"
-								/>
+								<liferay-ui:icon message="edit" url="<%= editURL %>" />
 							</c:if>
 
 							<c:if test="<%= hasBanUserPermission %>">
@@ -304,10 +292,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 											<portlet:param name="banUserId" value="<%= String.valueOf(messageUser.getUserId()) %>" />
 										</portlet:actionURL>
 
-										<liferay-ui:icon
-											message="unban-this-user"
-											url="<%= unbanUserURL.toString() %>"
-										/>
+										<liferay-ui:icon message="unban-this-user" url="<%= unbanUserURL.toString() %>" />
 									</c:when>
 									<c:otherwise>
 										<portlet:actionURL name="/message_boards/ban_user" var="banUserURL">
@@ -316,10 +301,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 											<portlet:param name="banUserId" value="<%= String.valueOf(messageUser.getUserId()) %>" />
 										</portlet:actionURL>
 
-										<liferay-ui:icon
-											message="ban-this-user"
-											url="<%= banUserURL.toString() %>"
-										/>
+										<liferay-ui:icon message="ban-this-user" url="<%= banUserURL.toString() %>" />
 									</c:otherwise>
 								</c:choose>
 							</c:if>
@@ -349,10 +331,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 									<portlet:param name="splitThread" value="<%= Boolean.TRUE.toString() %>" />
 								</portlet:renderURL>
 
-								<liferay-ui:icon
-									message="split-thread"
-									url="<%= splitThreadURL %>"
-								/>
+								<liferay-ui:icon message="split-thread" url="<%= splitThreadURL %>" />
 							</c:if>
 
 							<c:if test="<%= hasDeletePermission %>">
@@ -375,10 +354,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 									<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 								</portlet:actionURL>
 
-								<liferay-ui:icon-delete
-									label="<%= true %>"
-									url="<%= deleteURL %>"
-								/>
+								<liferay-ui:icon-delete label="<%= true %>" url="<%= deleteURL %>" />
 							</c:if>
 						</liferay-ui:icon-menu>
 					</c:if>
@@ -416,9 +392,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 			/>
 		</div>
 
-		<liferay-expando:custom-attributes-available
-			className="<%= MBMessage.class.getName() %>"
-		>
+		<liferay-expando:custom-attributes-available className="<%= MBMessage.class.getName() %>">
 			<div class="card-body custom-attributes">
 				<liferay-expando:custom-attribute-list
 					className="<%= MBMessage.class.getName() %>"
@@ -430,10 +404,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 		</liferay-expando:custom-attributes-available>
 
 		<div class="card-body entry-links">
-			<liferay-asset:asset-links
-				className="<%= MBMessage.class.getName() %>"
-				classPK="<%= message.getMessageId() %>"
-			/>
+			<liferay-asset:asset-links className="<%= MBMessage.class.getName() %>" classPK="<%= message.getMessageId() %>" />
 		</div>
 
 		<c:if test="<%= message.getMessageId() > 0 %>">

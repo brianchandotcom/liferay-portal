@@ -18,8 +18,18 @@
 
 <portlet:actionURL name="installLocalApp" var="installLocalAppURL" />
 
-<aui:form action="<%= installLocalAppURL %>" cssClass="container-fluid container-fluid-max-xl container-view install-apps" enctype="multipart/form-data" method="post" name="fm1">
-	<aui:input name="mvcPath" type="hidden" value="/install_local_app.jsp" />
+<aui:form
+	action="<%= installLocalAppURL %>"
+	cssClass="container-fluid container-fluid-max-xl container-view install-apps"
+	enctype="multipart/form-data"
+	method="post"
+	name="fm1"
+>
+	<aui:input
+		name="mvcPath"
+		type="hidden"
+		value="/install_local_app.jsp"
+	/>
 
 	<div class="sheet sheet-lg">
 		<c:if test="<%= CompanyLocalServiceUtil.getCompaniesCount(false) > 1 %>">
@@ -38,7 +48,12 @@
 			<liferay-ui:message key="install" />
 		</h2>
 
-		<aui:input cssClass="file-input" label="" name="file" type="file" />
+		<aui:input
+			cssClass="file-input"
+			label=""
+			name="file"
+			type="file"
+		/>
 
 		<div class="sheet-footer">
 			<aui:button type="submit" value="install" />

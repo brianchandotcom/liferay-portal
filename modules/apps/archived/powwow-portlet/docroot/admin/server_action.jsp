@@ -35,17 +35,12 @@ PowwowServer powwowServer = (PowwowServer)row.getObject();
 		<portlet:param name="powwowServerId" value="<%= String.valueOf(powwowServer.getPowwowServerId()) %>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editURL %>"
-	/>
+	<liferay-ui:icon message="edit" url="<%= editURL %>" />
 
 	<portlet:actionURL name="deletePowwowServer" var="deleteURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="powwowServerId" value="<%= String.valueOf(powwowServer.getPowwowServerId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		url="<%= deleteURL %>"
-	/>
+	<liferay-ui:icon-delete url="<%= deleteURL %>" />
 </liferay-ui:icon-menu>

@@ -22,20 +22,13 @@
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<clay:vertical-card
-				verticalCard="<%= new OrganizationsVerticalCard(organization, !selectOrganizations, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
-			/>
+			<clay:vertical-card verticalCard="<%= new OrganizationsVerticalCard(organization, !selectOrganizations, renderRequest, renderResponse, searchContainer.getRowChecker()) %>" />
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
-		<liferay-ui:search-container-column-icon
-			icon="users"
-			toggleRowChecker="<%= true %>"
-		/>
+		<liferay-ui:search-container-column-icon icon="users" toggleRowChecker="<%= true %>" />
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<h5><%= organization.getName() %></h5>
 
 			<h6 class="text-default">
@@ -60,10 +53,7 @@
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:dropdown-actions
-					defaultEventHandler="<%= SiteMembershipWebKeys.ORGANIZATION_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-					dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
-				/>
+				<clay:dropdown-actions defaultEventHandler="<%= SiteMembershipWebKeys.ORGANIZATION_DROPDOWN_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>" />
 			</liferay-ui:search-container-column-text>
 		</c:if>
 	</c:when>
@@ -113,10 +103,7 @@
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:dropdown-actions
-					defaultEventHandler="<%= SiteMembershipWebKeys.ORGANIZATION_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-					dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
-				/>
+				<clay:dropdown-actions defaultEventHandler="<%= SiteMembershipWebKeys.ORGANIZATION_DROPDOWN_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>" />
 			</liferay-ui:search-container-column-text>
 		</c:if>
 	</c:otherwise>

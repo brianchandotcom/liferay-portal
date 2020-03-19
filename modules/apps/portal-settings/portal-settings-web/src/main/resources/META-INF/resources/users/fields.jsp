@@ -23,11 +23,30 @@ boolean fieldEnableBirthday = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 %>
 
 <aui:fieldset>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
 
-	<aui:input label="autogenerate-user-screen-names" name='<%= "settings--" + PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE + "--" %>' type="checkbox" value="<%= usersScreenNameAlwaysAutogenerate %>" />
+	<aui:input
+		label="autogenerate-user-screen-names"
+		name='<%= "settings--" + PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE + "--" %>'
+		type="checkbox"
+		value="<%= usersScreenNameAlwaysAutogenerate %>"
+	/>
 
-	<aui:input label="enable-birthday" name='<%= "settings--" + PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_BIRTHDAY + "--" %>' type="checkbox" value="<%= fieldEnableBirthday %>" />
+	<aui:input
+		label="enable-birthday"
+		name='<%= "settings--" + PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_BIRTHDAY + "--" %>'
+		type="checkbox"
+		value="<%= fieldEnableBirthday %>"
+	/>
 
-	<aui:input label="enable-gender" name='<%= "settings--" + PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE + "--" %>' type="checkbox" value="<%= fieldEnableMale %>" />
+	<aui:input
+		label="enable-gender"
+		name='<%= "settings--" + PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE + "--" %>'
+		type="checkbox"
+		value="<%= fieldEnableMale %>"
+	/>
 </aui:fieldset>

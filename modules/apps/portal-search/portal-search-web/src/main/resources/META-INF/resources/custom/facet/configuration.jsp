@@ -53,15 +53,20 @@ CustomFacetPortletPreferences customFacetPortletPreferences = new CustomFacetPor
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="display-settings"
-			>
+			<liferay-frontend:fieldset collapsible="<%= true %>" label="display-settings">
 				<div class="display-template">
 					<liferay-ddm:template-selector
 						className="<%= CustomFacetTermDisplayContext.class.getName() %>"
@@ -73,23 +78,54 @@ CustomFacetPortletPreferences customFacetPortletPreferences = new CustomFacetPor
 				</div>
 			</liferay-frontend:fieldset>
 
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="advanced-configuration"
-			>
-				<aui:input helpMessage="aggregation-field-help" label="aggregation-field" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_AGGREGATION_FIELD) %>" value="<%= customFacetPortletPreferences.getAggregationFieldString() %>" />
+			<liferay-frontend:fieldset collapsible="<%= true %>" label="advanced-configuration">
+				<aui:input
+					helpMessage="aggregation-field-help"
+					label="aggregation-field"
+					name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_AGGREGATION_FIELD) %>"
+					value="<%= customFacetPortletPreferences.getAggregationFieldString() %>"
+				/>
 
-				<aui:input helpMessage="custom-heading-help" label="custom-heading" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_CUSTOM_HEADING) %>" value="<%= customFacetPortletPreferences.getCustomHeadingString() %>" />
+				<aui:input
+					helpMessage="custom-heading-help"
+					label="custom-heading"
+					name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_CUSTOM_HEADING) %>"
+					value="<%= customFacetPortletPreferences.getCustomHeadingString() %>"
+				/>
 
-				<aui:input helpMessage="custom-parameter-name-help" label="custom-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>" value="<%= customFacetPortletPreferences.getParameterNameString() %>" />
+				<aui:input
+					helpMessage="custom-parameter-name-help"
+					label="custom-parameter-name"
+					name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>"
+					value="<%= customFacetPortletPreferences.getParameterNameString() %>"
+				/>
 
-				<aui:input label="max-terms" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>" value="<%= customFacetPortletPreferences.getMaxTerms() %>" />
+				<aui:input
+					label="max-terms"
+					name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>"
+					value="<%= customFacetPortletPreferences.getMaxTerms() %>"
+				/>
 
-				<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= customFacetPortletPreferences.getFrequencyThreshold() %>" />
+				<aui:input
+					label="frequency-threshold"
+					name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>"
+					value="<%= customFacetPortletPreferences.getFrequencyThreshold() %>"
+				/>
 
-				<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= customFacetPortletPreferences.isFrequenciesVisible() %>" />
+				<aui:input
+					label="display-frequencies"
+					name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>"
+					type="checkbox"
+					value="<%= customFacetPortletPreferences.isFrequenciesVisible() %>"
+				/>
 
-				<aui:input helpMessage="federated-search-key-help" label="federated-search-key" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY) %>" type="text" value="<%= customFacetPortletPreferences.getFederatedSearchKeyString() %>" />
+				<aui:input
+					helpMessage="federated-search-key-help"
+					label="federated-search-key"
+					name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY) %>"
+					type="text"
+					value="<%= customFacetPortletPreferences.getFederatedSearchKeyString() %>"
+				/>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

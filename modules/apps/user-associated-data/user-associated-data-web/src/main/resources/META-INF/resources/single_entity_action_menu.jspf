@@ -23,24 +23,15 @@
 	triggerCssClass="component-action"
 >
 	<c:if test="<%= uadEntity.getViewURL() != null %>">
-		<liferay-ui:icon
-			message="view"
-			url="<%= uadEntity.getViewURL() %>"
-		/>
+		<liferay-ui:icon message="view" url="<%= uadEntity.getViewURL() %>" />
 	</c:if>
 
 	<c:if test="<%= uadEntity.getEditURL() == StringPool.BLANK %>">
-		<liferay-ui:icon
-			cssClass="disabled dropdown-item"
-			message="edit"
-		/>
+		<liferay-ui:icon cssClass="disabled dropdown-item" message="edit" />
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(uadEntity.getEditURL()) %>">
-		<liferay-ui:icon
-			message="edit"
-			url="<%= uadEntity.getEditURL() %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= uadEntity.getEditURL() %>" />
 	</c:if>
 
 	<%

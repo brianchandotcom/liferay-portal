@@ -68,7 +68,11 @@ summary.setQueryTerms(queryTerms);
 				<%= summary.getHighlightedTitle() %>
 
 				<c:if test="<%= (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">
-					<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
+					<aui:workflow-status
+						showIcon="<%= false %>"
+						showLabel="<%= false %>"
+						status="<%= status %>"
+					/>
 				</c:if>
 			</span>
 
@@ -168,9 +172,7 @@ summary.setQueryTerms(queryTerms);
 			<div class="entry-discussion">
 				<aui:a class="lfr-discussion-details" href="<%= url %>">
 					<div class="image">
-						<liferay-ui:user-portrait
-							userId="<%= userDisplay.getUserId() %>"
-						/>
+						<liferay-ui:user-portrait userId="<%= userDisplay.getUserId() %>" />
 					</div>
 
 					<span class="title">
@@ -193,7 +195,13 @@ summary.setQueryTerms(queryTerms);
 	</c:if>
 
 	<c:if test="<%= showCheckbox %>">
-		<aui:input cssClass="entry-selector overlay" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" type="checkbox" value="<%= rowCheckerId %>" />
+		<aui:input
+			cssClass="entry-selector overlay"
+			label=""
+			name="<%= RowChecker.ROW_IDS + rowCheckerName %>"
+			type="checkbox"
+			value="<%= rowCheckerId %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(actionJsp) %>">

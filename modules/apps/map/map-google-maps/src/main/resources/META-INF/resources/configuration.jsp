@@ -16,4 +16,11 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:input helpMessage='<%= LanguageUtil.get(resourceBundle, "set-the-google-maps-api-key-that-is-used-for-this-set-of-pages") %>' label='<%= LanguageUtil.get(resourceBundle, "google-maps-api-key") + " (" + LanguageUtil.get(request, "optional") + ")" %>' name='<%= googleMapDisplayContext.getConfigurationPrefix() + "--googleMapsAPIKey--" %>' size="40" type="text" value="<%= googleMapDisplayContext.getGoogleMapsAPIKey() %>" />
+<aui:input
+	helpMessage='<%= LanguageUtil.get(resourceBundle, "set-the-google-maps-api-key-that-is-used-for-this-set-of-pages") %>'
+	label='<%= LanguageUtil.get(resourceBundle, "google-maps-api-key") + " (" + LanguageUtil.get(request, "optional") + ")" %>'
+	name='<%= googleMapDisplayContext.getConfigurationPrefix() + "--googleMapsAPIKey--" %>'
+	size="40"
+	type="text"
+	value="<%= googleMapDisplayContext.getGoogleMapsAPIKey() %>"
+/>

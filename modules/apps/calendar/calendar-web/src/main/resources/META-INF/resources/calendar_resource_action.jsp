@@ -36,10 +36,7 @@ CalendarResource calendarResource = (CalendarResource)row.getObject();
 			<portlet:param name="calendarResourceId" value="<%= String.valueOf(calendarResource.getCalendarResourceId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<c:if test="<%= CalendarResourcePermission.contains(permissionChecker, calendarResource, ActionKeys.PERMISSIONS) %>">
@@ -66,10 +63,7 @@ CalendarResource calendarResource = (CalendarResource)row.getObject();
 		<portlet:param name="calendarResourceId" value="<%= String.valueOf(calendarResource.getCalendarResourceId()) %>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="view-calendars"
-		url="<%= calendarsURL %>"
-	/>
+	<liferay-ui:icon message="view-calendars" url="<%= calendarsURL %>" />
 
 	<c:if test="<%= CalendarResourcePermission.contains(permissionChecker, calendarResource, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteCalendarResource" var="deleteURL">
@@ -78,8 +72,6 @@ CalendarResource calendarResource = (CalendarResource)row.getObject();
 			<portlet:param name="calendarResourceId" value="<%= String.valueOf(calendarResource.getCalendarResourceId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

@@ -29,7 +29,11 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
 
 	<%
 	resourceClassNameId = kbDisplayPortletInstanceConfiguration.resourceClassNameId();
@@ -39,14 +43,19 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 	}
 	%>
 
-	<aui:input name="preferences--resourceClassNameId--" type="hidden" value="<%= resourceClassNameId %>" />
-	<aui:input name="preferences--resourcePrimKey--" type="hidden" value="<%= kbDisplayPortletInstanceConfiguration.resourcePrimKey() %>" />
+	<aui:input
+		name="preferences--resourceClassNameId--"
+		type="hidden"
+		value="<%= resourceClassNameId %>"
+	/>
+	<aui:input
+		name="preferences--resourcePrimKey--"
+		type="hidden"
+		value="<%= kbDisplayPortletInstanceConfiguration.resourcePrimKey() %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:tabs
-			names="<%= tabsNames %>"
-			refresh="<%= false %>"
-		>
+		<liferay-ui:tabs names="<%= tabsNames %>" refresh="<%= false %>">
 			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>
 					<liferay-frontend:fieldset>
@@ -74,7 +83,12 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 							}
 							%>
 
-							<aui:input label="article-or-folder" name="configurationKBObject" type="resource" value="<%= title %>" />
+							<aui:input
+								label="article-or-folder"
+								name="configurationKBObject"
+								type="resource"
+								value="<%= title %>"
+							/>
 
 							<aui:button name="selectKBObjectButton" value="select" />
 						</div>
@@ -85,36 +99,88 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>
 					<liferay-frontend:fieldset>
-						<aui:input label="enable-description" name="preferences--enableKBArticleDescription--" type="checkbox" value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleDescription() %>" />
+						<aui:input
+							label="enable-description"
+							name="preferences--enableKBArticleDescription--"
+							type="checkbox"
+							value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleDescription() %>"
+						/>
 
-						<aui:input label="enable-ratings" name="preferences--enableKBArticleRatings--" type="checkbox" value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleRatings() %>" />
+						<aui:input
+							label="enable-ratings"
+							name="preferences--enableKBArticleRatings--"
+							type="checkbox"
+							value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleRatings() %>"
+						/>
 
-						<aui:input label="show-asset-entries" name="preferences--showKBArticleAssetEntries--" type="checkbox" value="<%= kbDisplayPortletInstanceConfiguration.showKBArticleAssetEntries() %>" />
+						<aui:input
+							label="show-asset-entries"
+							name="preferences--showKBArticleAssetEntries--"
+							type="checkbox"
+							value="<%= kbDisplayPortletInstanceConfiguration.showKBArticleAssetEntries() %>"
+						/>
 
-						<aui:input label="show-attachments" name="preferences--showKBArticleAttachments--" type="checkbox" value="<%= kbDisplayPortletInstanceConfiguration.showKBArticleAttachments() %>" />
+						<aui:input
+							label="show-attachments"
+							name="preferences--showKBArticleAttachments--"
+							type="checkbox"
+							value="<%= kbDisplayPortletInstanceConfiguration.showKBArticleAttachments() %>"
+						/>
 
-						<aui:input label="enable-related-assets" name="preferences--enableKBArticleAssetLinks--" type="checkbox" value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleAssetLinks() %>" />
+						<aui:input
+							label="enable-related-assets"
+							name="preferences--enableKBArticleAssetLinks--"
+							type="checkbox"
+							value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleAssetLinks() %>"
+						/>
 
-						<aui:input label="enable-view-count-increment" name="preferences--enableKBArticleViewCountIncrement--" type="checkbox" value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleViewCountIncrement() %>" />
+						<aui:input
+							label="enable-view-count-increment"
+							name="preferences--enableKBArticleViewCountIncrement--"
+							type="checkbox"
+							value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleViewCountIncrement() %>"
+						/>
 
-						<aui:input label="enable-subscriptions" name="preferences--enableKBArticleSubscriptions--" type="checkbox" value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleSubscriptions() %>" />
+						<aui:input
+							label="enable-subscriptions"
+							name="preferences--enableKBArticleSubscriptions--"
+							type="checkbox"
+							value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleSubscriptions() %>"
+						/>
 
-						<aui:input label="enable-history" name="preferences--enableKBArticleHistory--" type="checkbox" value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleHistory() %>" />
+						<aui:input
+							label="enable-history"
+							name="preferences--enableKBArticleHistory--"
+							type="checkbox"
+							value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleHistory() %>"
+						/>
 
-						<aui:input label="enable-print" name="preferences--enableKBArticlePrint--" type="checkbox" value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticlePrint() %>" />
+						<aui:input
+							label="enable-print"
+							name="preferences--enableKBArticlePrint--"
+							type="checkbox"
+							value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticlePrint() %>"
+						/>
 
 						<h4 class="section-header">
 							<liferay-ui:message key="social-bookmarks" />
 						</h4>
 
-						<liferay-social-bookmarks:bookmarks-settings
-							displayStyle="<%= kbDisplayPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
-							types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(kbDisplayPortletInstanceConfiguration.socialBookmarksTypes()) %>"
+						<liferay-social-bookmarks:bookmarks-settings displayStyle="<%= kbDisplayPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>" types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(kbDisplayPortletInstanceConfiguration.socialBookmarksTypes()) %>" />
+
+						<aui:input
+							label="content-root-prefix"
+							name="preferences--contentRootPrefix--"
+							type="input"
+							value="<%= kbDisplayPortletInstanceConfiguration.contentRootPrefix() %>"
 						/>
 
-						<aui:input label="content-root-prefix" name="preferences--contentRootPrefix--" type="input" value="<%= kbDisplayPortletInstanceConfiguration.contentRootPrefix() %>" />
-
-						<aui:input label="maximum-nesting-level" name="preferences--maxNestingLevel--" type="input" value="<%= kbDisplayPortletInstanceConfiguration.maxNestingLevel() %>" />
+						<aui:input
+							label="maximum-nesting-level"
+							name="preferences--maxNestingLevel--"
+							type="input"
+							value="<%= kbDisplayPortletInstanceConfiguration.maxNestingLevel() %>"
+						/>
 					</liferay-frontend:fieldset>
 				</liferay-frontend:fieldset-group>
 			</liferay-ui:section>
@@ -148,7 +214,11 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 						id: '<portlet:namespace />selectKBObject',
 						title: '<liferay-ui:message key="select-entry" />',
 
-						<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<liferay-portlet:renderURL
+							portletName="<%= portletResource %>"
+							var="selectKBObjectURL"
+							windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+						>
 							<portlet:param name="mvcPath" value="/display/select_parent.jsp" />
 							<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
 							<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbDisplayPortletInstanceConfiguration.resourcePrimKey()) %>" />

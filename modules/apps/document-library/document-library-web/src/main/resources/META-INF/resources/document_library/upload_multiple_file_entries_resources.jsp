@@ -96,12 +96,37 @@ else {
 
 <portlet:actionURL name="/document_library/upload_multiple_file_entries" var="uploadMultipleFileEntriesURL" />
 
-<aui:form action="<%= uploadMultipleFileEntriesURL %>" method="post" name="fm2" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "updateMultipleFiles();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
-	<aui:input name="repositoryId" type="hidden" value="<%= String.valueOf(repositoryId) %>" />
-	<aui:input name="folderId" type="hidden" value="<%= String.valueOf(folderId) %>" />
+<aui:form
+	action="<%= uploadMultipleFileEntriesURL %>"
+	method="post"
+	name="fm2"
+	onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "updateMultipleFiles();" %>'
+>
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.ADD_MULTIPLE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="portletResource"
+		type="hidden"
+		value='<%= ParamUtil.getString(request, "portletResource") %>'
+	/>
+	<aui:input
+		name="repositoryId"
+		type="hidden"
+		value="<%= String.valueOf(repositoryId) %>"
+	/>
+	<aui:input
+		name="folderId"
+		type="hidden"
+		value="<%= String.valueOf(folderId) %>"
+	/>
 
 	<div class="alert alert-info hide no-files-selected-info" id="<portlet:namespace />metadataExplanationContainer">
 		<liferay-ui:message key="select-documents-from-the-left-to-add-them-to-the-documents-and-media" />
@@ -130,8 +155,16 @@ else {
 					persistState="<%= true %>"
 					title="document-type"
 				>
-					<aui:input name="fileEntryTypeId" type="hidden" value="<%= (fileEntryTypeId > 0) ? fileEntryTypeId : 0 %>" />
-					<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
+					<aui:input
+						name="fileEntryTypeId"
+						type="hidden"
+						value="<%= (fileEntryTypeId > 0) ? fileEntryTypeId : 0 %>"
+					/>
+					<aui:input
+						name="defaultLanguageId"
+						type="hidden"
+						value="<%= themeDisplay.getLanguageId() %>"
+					/>
 
 					<div class="document-type-selector" id="<portlet:namespace />documentTypeSelector">
 						<liferay-ui:icon-menu
@@ -145,7 +178,11 @@ else {
 							for (DLFileEntryType curFileEntryType : fileEntryTypes) {
 							%>
 
-								<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/document_library/upload_multiple_file_entries" var="viewFileEntryTypeURL">
+								<liferay-portlet:resourceURL
+									copyCurrentRenderParameters="<%= false %>"
+									id="/document_library/upload_multiple_file_entries"
+									var="viewFileEntryTypeURL"
+								>
 									<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 									<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(curFileEntryType.getFileEntryTypeId()) %>" />
@@ -187,7 +224,11 @@ else {
 								}
 					%>
 
-								<aui:input name="ddmFormFieldNamespace" type="hidden" value="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>" />
+								<aui:input
+									name="ddmFormFieldNamespace"
+									type="hidden"
+									value="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
+								/>
 
 								<div class="document-type-fields">
 									<liferay-ddm:html
@@ -287,9 +328,7 @@ else {
 				</liferay-ui:panel>
 			</c:if>
 
-			<liferay-expando:custom-attributes-available
-				className="<%= DLFileEntryConstants.getClassName() %>"
-			>
+			<liferay-expando:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
 				<liferay-expando:custom-attribute-list
 					className="<%= DLFileEntryConstants.getClassName() %>"
 					classPK="<%= fileVersionId %>"
@@ -336,10 +375,7 @@ else {
 						classTypePK="<%= fileEntryTypeId %>"
 					/>
 
-					<liferay-asset:asset-tags-selector
-						className="<%= DLFileEntry.class.getName() %>"
-						classPK="<%= assetClassPK %>"
-					/>
+					<liferay-asset:asset-tags-selector className="<%= DLFileEntry.class.getName() %>" classPK="<%= assetClassPK %>" />
 				</aui:fieldset>
 			</liferay-ui:panel>
 		</c:if>
@@ -353,9 +389,7 @@ else {
 			persistState="<%= true %>"
 			title="permissions"
 		>
-			<liferay-ui:input-permissions
-				modelName="<%= DLFileEntryConstants.getClassName() %>"
-			/>
+			<liferay-ui:input-permissions modelName="<%= DLFileEntryConstants.getClassName() %>" />
 		</liferay-ui:panel>
 	</liferay-ui:panel-container>
 

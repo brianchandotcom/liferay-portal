@@ -33,7 +33,11 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 				<portlet:param name="emailAddress" value="<%= emailAddress %>" />
 			</portlet:actionURL>
 
-			<aui:form action="<%= updateIncompleteUserURL %>" method="post" name="fm">
+			<aui:form
+				action="<%= updateIncompleteUserURL %>"
+				method="post"
+				name="fm"
+			>
 				<div class="alert alert-success">
 					<liferay-ui:message key="your-comment-has-already-been-posted.-would-you-like-to-create-an-account-with-the-provided-information" />
 				</div>

@@ -61,10 +61,7 @@ else {
 				<portlet:param name="version" value="<%= String.valueOf(version) %>" />
 			</portlet:actionURL>
 
-			<liferay-ui:icon
-				message='<%= LanguageUtil.get(request, "restore-version") + " " + String.valueOf(version) %>'
-				url="<%= revertURL %>"
-			/>
+			<liferay-ui:icon message='<%= LanguageUtil.get(request, "restore-version") + " " + String.valueOf(version) %>' url="<%= revertURL %>" />
 		</c:if>
 
 		<portlet:renderURL var="compareVersionsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

@@ -62,12 +62,20 @@ if (liveLayout != null) {
 								<c:choose>
 									<c:when test="<%= !remoteSiteURL.isEmpty() %>">
 										<a class="nav-link" href="<%= HtmlUtil.escape(remoteSiteURL) %>" value="go-to-remote-live">
-											<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
+											<aui:icon
+												image="home"
+												label="go-to-remote-live"
+												markupView="lexicon"
+											/>
 										</a>
 									</c:when>
 									<c:when test="<%= SessionErrors.contains(renderRequest, AuthException.class) %>">
 										<a class="nav-link" value="go-to-remote-live">
-											<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
+											<aui:icon
+												image="home"
+												label="go-to-remote-live"
+												markupView="lexicon"
+											/>
 										</a>
 
 										<liferay-ui:icon
@@ -79,7 +87,11 @@ if (liveLayout != null) {
 									</c:when>
 									<c:when test="<%= SessionErrors.contains(renderRequest, RemoteExportException.class) %>">
 										<a class="nav-link" value="go-to-remote-live">
-											<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
+											<aui:icon
+												image="home"
+												label="go-to-remote-live"
+												markupView="lexicon"
+											/>
 										</a>
 
 										<liferay-ui:icon
@@ -91,7 +103,11 @@ if (liveLayout != null) {
 									</c:when>
 									<c:otherwise>
 										<a class="nav-link" value="go-to-remote-live">
-											<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
+											<aui:icon
+												image="home"
+												label="go-to-remote-live"
+												markupView="lexicon"
+											/>
 										</a>
 
 										<liferay-ui:icon
@@ -124,15 +140,9 @@ if (liveLayout != null) {
 				</ul>
 
 				<button class="btn btn-monospaced staging-toggle" id="closeStagingOptions" title="<%= LanguageUtil.get(request, "view-page-staging-options") %>">
-					<liferay-ui:icon
-						icon="info-circle"
-						markupView="lexicon"
-					/>
+					<liferay-ui:icon icon="info-circle" markupView="lexicon" />
 
-					<liferay-ui:icon
-						icon="times-circle"
-						markupView="lexicon"
-					/>
+					<liferay-ui:icon icon="times-circle" markupView="lexicon" />
 				</button>
 			</div>
 		</nav>
@@ -179,7 +189,11 @@ if (liveLayout != null) {
 												<c:choose>
 													<c:when test="<%= liveLayout == null %>">
 														<span class="last-publication-branch">
-															<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(layout.getName(locale)) + "</strong>" %>' key="page-x-has-not-been-published-to-live-yet" translateArguments="<%= false %>" />
+															<liferay-ui:message
+																arguments='<%= "<strong>" + HtmlUtil.escape(layout.getName(locale)) + "</strong>" %>'
+																key="page-x-has-not-been-published-to-live-yet"
+																translateArguments="<%= false %>"
+															/>
 														</span>
 													</c:when>
 													<c:otherwise>
@@ -189,10 +203,7 @@ if (liveLayout != null) {
 											</div>
 
 											<div class="col-md-2 col-sm-3 staging-button-container">
-												<liferay-staging:menu
-													cssClass="publish-link test5"
-													onlyActions="<%= true %>"
-												/>
+												<liferay-staging:menu cssClass="publish-link test5" onlyActions="<%= true %>" />
 											</div>
 										</c:otherwise>
 									</c:choose>

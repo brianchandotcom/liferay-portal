@@ -49,8 +49,5 @@ boolean onlyIcon = GetterUtil.getBoolean(request.getAttribute("liferay-flags:fla
 		</c:otherwise>
 	</c:choose>
 
-	<react:component
-		data="<%= data %>"
-		module="flags/js/index.es"
-	/>
+	<react:component data="<%= data %>" module="flags/js/index.es" />
 </div>

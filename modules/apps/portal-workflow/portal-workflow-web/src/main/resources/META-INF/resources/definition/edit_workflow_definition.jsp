@@ -82,7 +82,11 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 						<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="x-by-x" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>"
+							key="x-by-x"
+							translateArguments="<%= false %>"
+						/>
 					</c:otherwise>
 				</c:choose>
 			</span>
@@ -107,7 +111,12 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 						<div class="container-fluid">
 							<ul class="tbar-nav">
 								<li class="tbar-item">
-									<aui:icon cssClass="component-action sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
+									<aui:icon
+										cssClass="component-action sidenav-close"
+										image="times"
+										markupView="lexicon"
+										url="javascript:;"
+									/>
 								</li>
 							</ul>
 						</div>
@@ -150,7 +159,11 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 												<%= dateFormatTime.format(workflowDefinitionDisplayContext.getCreatedDate(workflowDefinition)) %>
 											</c:when>
 											<c:otherwise>
-												<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinitionDisplayContext.getCreatedDate(workflowDefinition)), HtmlUtil.escape(creatorUserName)} %>" key="x-by-x" translateArguments="<%= false %>" />
+												<liferay-ui:message
+													arguments="<%= new String[] {dateFormatTime.format(workflowDefinitionDisplayContext.getCreatedDate(workflowDefinition)), HtmlUtil.escape(creatorUserName)} %>"
+													key="x-by-x"
+													translateArguments="<%= false %>"
+												/>
 											</c:otherwise>
 										</c:choose>
 									</dd>
@@ -163,7 +176,11 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 												<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
 											</c:when>
 											<c:otherwise>
-												<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="x-by-x" translateArguments="<%= false %>" />
+												<liferay-ui:message
+													arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>"
+													key="x-by-x"
+													translateArguments="<%= false %>"
+												/>
 											</c:otherwise>
 										</c:choose>
 									</dd>
@@ -171,7 +188,11 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 										<liferay-ui:message key="total-modifications" />
 									</dt>
 									<dd class="sidebar-dd">
-										<liferay-ui:message arguments='<%= new String[] {workflowDefinitionDisplayContext.getWorkflowDefinitionsCount(workflowDefinition) + ""} %>' key="x-revisions" translateArguments="<%= false %>" />
+										<liferay-ui:message
+											arguments='<%= new String[] {workflowDefinitionDisplayContext.getWorkflowDefinitionsCount(workflowDefinition) + ""} %>'
+											key="x-revisions"
+											translateArguments="<%= false %>"
+										/>
 									</dd>
 									<dt class="sidebar-dt"></dt>
 									<dd class="sidebar-dd"></dd>
@@ -193,16 +214,40 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	<div class="container-fluid-1280">
 		<div class="sidenav-content">
 			<aui:form method="post" name="fm">
-				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-				<aui:input name="name" type="hidden" value="<%= name %>" />
-				<aui:input name="version" type="hidden" value="<%= version %>" />
-				<aui:input name="content" type="hidden" value="<%= content %>" />
-				<aui:input name="successMessage" type="hidden" value='<%= active ? LanguageUtil.get(request, "workflow-updated-successfully") : LanguageUtil.get(request, "workflow-published-successfully") %>' />
+				<aui:input
+					name="redirect"
+					type="hidden"
+					value="<%= redirect %>"
+				/>
+				<aui:input
+					name="name"
+					type="hidden"
+					value="<%= name %>"
+				/>
+				<aui:input
+					name="version"
+					type="hidden"
+					value="<%= version %>"
+				/>
+				<aui:input
+					name="content"
+					type="hidden"
+					value="<%= content %>"
+				/>
+				<aui:input
+					name="successMessage"
+					type="hidden"
+					value='<%= active ? LanguageUtil.get(request, "workflow-updated-successfully") : LanguageUtil.get(request, "workflow-published-successfully") %>'
+				/>
 
 				<div class="card-horizontal main-content-card">
 					<div class="card-row-padded">
 						<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
-							<liferay-ui:message arguments="<%= workflowDefinitionDisplayContext.getMessageArguments((RequiredWorkflowDefinitionException)errorException) %>" key="<%= workflowDefinitionDisplayContext.getMessageKey((RequiredWorkflowDefinitionException)errorException) %>" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments="<%= workflowDefinitionDisplayContext.getMessageArguments((RequiredWorkflowDefinitionException)errorException) %>"
+								key="<%= workflowDefinitionDisplayContext.getMessageKey((RequiredWorkflowDefinitionException)errorException) %>"
+								translateArguments="<%= false %>"
+							/>
 						</liferay-ui:error>
 
 						<liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>">
@@ -230,15 +275,17 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 							</aui:col>
 
 							<aui:col cssClass="workflow-definition-upload">
-								<liferay-util:buffer
-									var="importFileMark"
-								>
+								<liferay-util:buffer var="importFileMark">
 									<aui:a href="#" id="uploadLink">
 										<%= StringUtil.toLowerCase(LanguageUtil.get(request, "import-a-file")) %>
 									</aui:a>
 								</liferay-util:buffer>
 
-								<liferay-ui:message arguments="<%= importFileMark %>" key="write-your-definition-or-x" translateArguments="<%= false %>" />
+								<liferay-ui:message
+									arguments="<%= importFileMark %>"
+									key="write-your-definition-or-x"
+									translateArguments="<%= false %>"
+								/>
 
 								<input accept="application/xml" class="workflow-definition-upload-source" id="<portlet:namespace />upload" type="file" />
 							</aui:col>
@@ -257,7 +304,11 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 						String taglibUpdateOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "publishDefinition');";
 						%>
 
-						<aui:button onClick="<%= taglibUpdateOnClick %>" primary="<%= true %>" value='<%= ((workflowDefinition == null) || !active) ? "publish" : "update" %>' />
+						<aui:button
+							onClick="<%= taglibUpdateOnClick %>"
+							primary="<%= true %>"
+							value='<%= ((workflowDefinition == null) || !active) ? "publish" : "update" %>'
+						/>
 					</c:if>
 
 					<c:if test="<%= (workflowDefinition == null) || !active %>">
@@ -277,20 +328,41 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 <div class="hide" id="<%= randomNamespace %>titleInputLocalized">
 	<c:if test="<%= workflowDefinition != null %>">
 		<aui:form name='<%= randomNamespace + "form" %>'>
-			<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
-			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-			<aui:input name="name" type="hidden" value="<%= PortalUUIDUtil.generate() %>" />
-			<aui:input name="content" type="hidden" value="<%= workflowDefinition.getContent() %>" />
-			<aui:input name="defaultDuplicationTitle" type="hidden" value="<%= duplicateTitle %>" />
-			<aui:input name="duplicatedDefinitionTitle" type="hidden" value="<%= workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>" />
+			<aui:input
+				name="randomNamespace"
+				type="hidden"
+				value="<%= randomNamespace %>"
+			/>
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value="<%= redirect %>"
+			/>
+			<aui:input
+				name="name"
+				type="hidden"
+				value="<%= PortalUUIDUtil.generate() %>"
+			/>
+			<aui:input
+				name="content"
+				type="hidden"
+				value="<%= workflowDefinition.getContent() %>"
+			/>
+			<aui:input
+				name="defaultDuplicationTitle"
+				type="hidden"
+				value="<%= duplicateTitle %>"
+			/>
+			<aui:input
+				name="duplicatedDefinitionTitle"
+				type="hidden"
+				value="<%= workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>"
+			/>
 
 			<aui:fieldset>
 				<aui:col>
 					<aui:field-wrapper label="title">
-						<liferay-ui:input-localized
-							name='<%= randomNamespace + "title" %>'
-							xml="<%= duplicateTitle %>"
-						/>
+						<liferay-ui:input-localized name='<%= randomNamespace + "title" %>' xml="<%= duplicateTitle %>" />
 					</aui:field-wrapper>
 				</aui:col>
 

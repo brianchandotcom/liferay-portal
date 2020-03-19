@@ -41,22 +41,14 @@ Set<String> groupTypes = groupSelectorDisplayContext.getGroupTypes();
 </c:if>
 
 <div class="container-fluid-1280 lfr-item-viewer">
-	<liferay-ui:search-container
-		searchContainer="<%= groupSelectorDisplayContext.getSearchContainer() %>"
-		var="listSearchContainer"
-	>
+	<liferay-ui:search-container searchContainer="<%= groupSelectorDisplayContext.getSearchContainer() %>" var="listSearchContainer">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Group"
 			cssClass="entry-card lfr-asset-item"
 			modelVar="curGroup"
 		>
-			<liferay-ui:search-container-column-text
-				colspan="<%= 3 %>"
-			>
-				<liferay-frontend:horizontal-card
-					text="<%= curGroup.getDescriptiveName(locale) %>"
-					url="<%= groupSelectorDisplayContext.getViewGroupURL(curGroup) %>"
-				>
+			<liferay-ui:search-container-column-text colspan="<%= 3 %>">
+				<liferay-frontend:horizontal-card text="<%= curGroup.getDescriptiveName(locale) %>" url="<%= groupSelectorDisplayContext.getViewGroupURL(curGroup) %>">
 					<liferay-frontend:horizontal-card-col>
 						<c:choose>
 							<c:when test="<%= Validator.isNotNull(curGroup.getLogoURL(themeDisplay, false)) %>">
@@ -67,9 +59,7 @@ Set<String> groupTypes = groupSelectorDisplayContext.getGroupTypes();
 								</span>
 							</c:when>
 							<c:otherwise>
-								<liferay-frontend:horizontal-card-icon
-									icon="<%= groupSelectorDisplayContext.getGroupItemSelectorIcon() %>"
-								/>
+								<liferay-frontend:horizontal-card-icon icon="<%= groupSelectorDisplayContext.getGroupItemSelectorIcon() %>" />
 							</c:otherwise>
 						</c:choose>
 					</liferay-frontend:horizontal-card-col>
@@ -77,9 +67,6 @@ Set<String> groupTypes = groupSelectorDisplayContext.getGroupTypes();
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="icon"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

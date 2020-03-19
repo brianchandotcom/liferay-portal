@@ -32,8 +32,5 @@ String questionsRootElementId = renderResponse.getNamespace() + "-questions-root
 	data.put("userId", String.valueOf(themeDisplay.getUserId()));
 	%>
 
-	<react:component
-		data="<%= data %>"
-		module="js/index.es"
-	/>
+	<react:component data="<%= data %>" module="js/index.es" />
 </div>

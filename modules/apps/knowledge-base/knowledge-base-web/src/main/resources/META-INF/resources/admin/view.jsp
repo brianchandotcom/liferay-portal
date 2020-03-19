@@ -68,16 +68,17 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="infoPanel" var="sidebarPanelURL">
+	<liferay-portlet:resourceURL
+		copyCurrentRenderParameters="<%= false %>"
+		id="infoPanel"
+		var="sidebarPanelURL"
+	>
 		<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(parentResourceClassNameId) %>" />
 		<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
 		<portlet:param name="showSidebarHeader" value="<%= Boolean.TRUE.toString() %>" />
 	</liferay-portlet:resourceURL>
 
-	<liferay-frontend:sidebar-panel
-		resourceURL="<%= sidebarPanelURL %>"
-		searchContainerId="kbObjects"
-	>
+	<liferay-frontend:sidebar-panel resourceURL="<%= sidebarPanelURL %>" searchContainerId="kbObjects">
 
 		<%
 		request.setAttribute(KBWebKeys.SHOW_SIDEBAR_HEADER, Boolean.TRUE);
@@ -104,9 +105,17 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		<liferay-portlet:actionURL name="deleteKBArticlesAndFolders" varImpl="deleteKBArticlesAndFoldersURL" />
 
 		<aui:form action="<%= deleteKBArticlesAndFoldersURL %>" name="fm">
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value="<%= currentURL %>"
+			/>
 
-			<liferay-ui:error exception="<%= KBArticlePriorityException.class %>" message='<%= LanguageUtil.format(request, "please-enter-a-priority-that-is-greater-than-x", "0", false) %>' translateMessage="<%= false %>" />
+			<liferay-ui:error
+				exception="<%= KBArticlePriorityException.class %>"
+				message='<%= LanguageUtil.format(request, "please-enter-a-priority-that-is-greater-than-x", "0", false) %>'
+				translateMessage="<%= false %>"
+			/>
 
 			<c:if test='<%= SessionMessages.contains(renderRequest, "importedKBArticlesCount") %>'>
 
@@ -130,14 +139,8 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 				</c:choose>
 			</c:if>
 
-			<liferay-ui:search-container
-				id="kbObjects"
-				searchContainer="<%= kbAdminManagementToolbarDisplayContext.getSearchContainer() %>"
-			>
-				<liferay-ui:search-container-row
-					className="Object"
-					modelVar="kbObject"
-				>
+			<liferay-ui:search-container id="kbObjects" searchContainer="<%= kbAdminManagementToolbarDisplayContext.getSearchContainer() %>">
+				<liferay-ui:search-container-row className="Object" modelVar="kbObject">
 					<c:choose>
 						<c:when test="<%= kbObject instanceof KBFolder %>">
 
@@ -153,14 +156,9 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 							row.setPrimaryKey(String.valueOf(kbFolder.getKbFolderId()));
 							%>
 
-							<liferay-ui:search-container-column-icon
-								icon="folder"
-								toggleRowChecker="<%= true %>"
-							/>
+							<liferay-ui:search-container-column-icon icon="folder" toggleRowChecker="<%= true %>" />
 
-							<liferay-ui:search-container-column-text
-								colspan="<%= 2 %>"
-							>
+							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 								<span class="text-default">
 
 									<%
@@ -219,9 +217,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 								</span>
 							</liferay-ui:search-container-column-text>
 
-							<liferay-ui:search-container-column-jsp
-								path="/admin/folder_action.jsp"
-							/>
+							<liferay-ui:search-container-column-jsp path="/admin/folder_action.jsp" />
 						</c:when>
 						<c:otherwise>
 
@@ -237,14 +233,9 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 							row.setPrimaryKey(String.valueOf(kbArticle.getResourcePrimKey()));
 							%>
 
-							<liferay-ui:search-container-column-user
-								showDetails="<%= false %>"
-								userId="<%= kbArticle.getUserId() %>"
-							/>
+							<liferay-ui:search-container-column-user showDetails="<%= false %>" userId="<%= kbArticle.getUserId() %>" />
 
-							<liferay-ui:search-container-column-text
-								colspan="<%= 2 %>"
-							>
+							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 								<span class="text-default">
 
 									<%
@@ -268,7 +259,12 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 								</h2>
 
 								<span class="text-default">
-									<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
+									<aui:workflow-status
+										markupView="lexicon"
+										showIcon="<%= false %>"
+										showLabel="<%= false %>"
+										status="<%= kbArticle.getStatus() %>"
+									/>
 
 									<%
 									int childKBArticlesCount = KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);

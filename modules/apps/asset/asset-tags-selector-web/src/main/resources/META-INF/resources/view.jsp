@@ -16,15 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:management-toolbar
-	displayContext="<%= new AssetTagsSelectorManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetTagsSelectorDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new AssetTagsSelectorManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetTagsSelectorDisplayContext) %>" />
 
 <div class="container-fluid-1280">
-	<liferay-ui:search-container
-		id="tags"
-		searchContainer="<%= assetTagsSelectorDisplayContext.getTagsSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="tags" searchContainer="<%= assetTagsSelectorDisplayContext.getTagsSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.asset.kernel.model.AssetTag"
 			keyProperty="name"
@@ -38,10 +33,7 @@
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="list"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>
 

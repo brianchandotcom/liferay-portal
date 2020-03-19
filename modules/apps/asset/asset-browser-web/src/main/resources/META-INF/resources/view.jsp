@@ -16,18 +16,23 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:management-toolbar
-	displayContext="<%= new AssetBrowserManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetBrowserDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new AssetBrowserManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetBrowserDisplayContext) %>" />
 
-<aui:form action="<%= assetBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectAssetFm">
+<aui:form
+	action="<%= assetBrowserDisplayContext.getPortletURL() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="selectAssetFm"
+>
 	<c:if test="<%= assetBrowserDisplayContext.isMultipleSelection() %>">
-		<liferay-site-navigation:breadcrumb
-			breadcrumbEntries="<%= assetBrowserDisplayContext.getPortletBreadcrumbEntries() %>"
-		/>
+		<liferay-site-navigation:breadcrumb breadcrumbEntries="<%= assetBrowserDisplayContext.getPortletBreadcrumbEntries() %>" />
 	</c:if>
 
-	<aui:input name="typeSelection" type="hidden" value="<%= assetBrowserDisplayContext.getTypeSelection() %>" />
+	<aui:input
+		name="typeSelection"
+		type="hidden"
+		value="<%= assetBrowserDisplayContext.getTypeSelection() %>"
+	/>
 
 	<liferay-ui:search-container
 		id="selectAssetEntries"
@@ -72,14 +77,10 @@
 			<c:choose>
 				<c:when test='<%= Objects.equals(assetBrowserDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-text>
-						<liferay-ui:user-portrait
-							userId="<%= assetEntry.getUserId() %>"
-						/>
+						<liferay-ui:user-portrait userId="<%= assetEntry.getUserId() %>" />
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 						<%
 						Date modifiedDate = assetEntry.getModifiedDate();
@@ -94,7 +95,11 @@
 						<h5>
 							<c:choose>
 								<c:when test="<%= (assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId()) && !assetBrowserDisplayContext.isMultipleSelection() %>">
-									<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
+									<aui:a
+										cssClass="<%= cssClass %>"
+										data="<%= data %>"
+										href="javascript:;"
+									>
 										<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 									</aui:a>
 								</c:when>
@@ -122,19 +127,18 @@
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:vertical-card
-							verticalCard="<%= new AssetEntryVerticalCard(assetEntry, renderRequest, assetBrowserDisplayContext) %>"
-						/>
+						<clay:vertical-card verticalCard="<%= new AssetEntryVerticalCard(assetEntry, renderRequest, assetBrowserDisplayContext) %>" />
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(assetBrowserDisplayContext.getDisplayStyle(), "list") %>'>
-					<liferay-ui:search-container-column-text
-						name="title"
-						truncate="<%= true %>"
-					>
+					<liferay-ui:search-container-column-text name="title" truncate="<%= true %>">
 						<c:choose>
 							<c:when test="<%= (assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId()) && !assetBrowserDisplayContext.isMultipleSelection() %>">
-								<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
+								<aui:a
+									cssClass="<%= cssClass %>"
+									data="<%= data %>"
+									href="javascript:;"
+								>
 									<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 								</aui:a>
 							</c:when>
@@ -158,28 +162,16 @@
 						value="<%= HtmlUtil.escape(assetRenderer.getSummary(renderRequest, renderResponse)) %>"
 					/>
 
-					<liferay-ui:search-container-column-text
-						name="author"
-						value="<%= PortalUtil.getUserName(assetEntry) %>"
-					/>
+					<liferay-ui:search-container-column-text name="author" value="<%= PortalUtil.getUserName(assetEntry) %>" />
 
-					<liferay-ui:search-container-column-date
-						name="modified-date"
-						value="<%= assetEntry.getModifiedDate() %>"
-					/>
+					<liferay-ui:search-container-column-date name="modified-date" value="<%= assetEntry.getModifiedDate() %>" />
 
-					<liferay-ui:search-container-column-text
-						name="<%= assetBrowserDisplayContext.getGroupTypeTitle() %>"
-						value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-					/>
+					<liferay-ui:search-container-column-text name="<%= assetBrowserDisplayContext.getGroupTypeTitle() %>" value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" />
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= assetBrowserDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= assetBrowserDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

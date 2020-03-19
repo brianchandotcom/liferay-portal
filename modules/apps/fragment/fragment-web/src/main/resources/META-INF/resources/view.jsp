@@ -57,10 +57,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												</c:if>
 											</li>
 											<li>
-												<clay:dropdown-actions
-													componentId='<%= renderResponse.getNamespace() + "actionsComponent" %>'
-													dropdownItems="<%= fragmentDisplayContext.getCollectionsDropdownItems() %>"
-												/>
+												<clay:dropdown-actions componentId='<%= renderResponse.getNamespace() + "actionsComponent" %>' dropdownItems="<%= fragmentDisplayContext.getCollectionsDropdownItems() %>" />
 											</li>
 										</ul>
 									</div>
@@ -244,9 +241,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 					</h2>
 
 					<div class="sheet-section">
-						<clay:navigation-bar
-							navigationItems="<%= fragmentDisplayContext.getNavigationItems() %>"
-						/>
+						<clay:navigation-bar navigationItems="<%= fragmentDisplayContext.getNavigationItems() %>" />
 
 						<c:choose>
 							<c:when test="<%= fragmentDisplayContext.isSelectedFragmentCollectionContributor() %>">
@@ -273,7 +268,4 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 <aui:form cssClass="hide" name="fragmentCollectionsFm">
 </aui:form>
 
-<liferay-frontend:component
-	context="<%= fragmentDisplayContext.getFragmentCollectionsViewContext() %>"
-	module="js/FragmentCollectionsView.es"
-/>
+<liferay-frontend:component context="<%= fragmentDisplayContext.getFragmentCollectionsViewContext() %>" module="js/FragmentCollectionsView.es" />

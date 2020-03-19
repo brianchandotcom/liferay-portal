@@ -30,15 +30,27 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	name="fm"
 	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-ui:error key="displayViewsInvalid" message="display-style-views-cannot-be-empty" />
 	<liferay-ui:error key="rootFolderIdInvalid" message="please-enter-a-valid-root-folder" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<aui:input name="preferences--rootFolderId--" type="hidden" value="<%= rootFolderId %>" />
+			<aui:input
+				name="preferences--rootFolderId--"
+				type="hidden"
+				value="<%= rootFolderId %>"
+			/>
 			<aui:input name="preferences--displayViews--" type="hidden" />
 			<aui:input name="preferences--entryColumns--" type="hidden" />
 
@@ -47,11 +59,27 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				id="documentLibraryDisplay"
 				label="display-settings"
 			>
-				<aui:input id="showActions" label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowActions() %>" />
+				<aui:input
+					id="showActions"
+					label="show-actions"
+					name="preferences--showActions--"
+					type="checkbox"
+					value="<%= dlPortletInstanceSettings.isShowActions() %>"
+				/>
 
-				<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>" />
+				<aui:input
+					label="show-search"
+					name="preferences--showFoldersSearch--"
+					type="checkbox"
+					value="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>"
+				/>
 
-				<aui:input label="show-related-assets" name="preferences--enableRelatedAssets--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableRelatedAssets() %>" />
+				<aui:input
+					label="show-related-assets"
+					name="preferences--enableRelatedAssets--"
+					type="checkbox"
+					value="<%= dlPortletInstanceSettings.isEnableRelatedAssets() %>"
+				/>
 
 				<aui:select label="maximum-entries-to-display" name="preferences--entriesPerPage--">
 
@@ -86,7 +114,12 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				label="folders-listing"
 			>
 				<div class="form-group">
-					<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
+					<aui:input
+						label="root-folder"
+						name="rootFolderName"
+						type="resource"
+						value="<%= rootFolderName %>"
+					/>
 
 					<aui:button name="selectFolderButton" value="select" />
 
@@ -94,7 +127,12 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + renderResponse.getNamespace() + "');";
 					%>
 
-					<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+					<aui:button
+						disabled="<%= rootFolderId <= 0 %>"
+						name="removeFolderButton"
+						onClick="<%= taglibRemoveFolder %>"
+						value="remove"
+					/>
 				</div>
 			</liferay-frontend:fieldset>
 
@@ -123,8 +161,17 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				id="documentLibraryDocumentsRatingsPanel"
 				label="ratings"
 			>
-				<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableRatings() %>" />
-				<aui:input label="enable-ratings-for-comments" name="preferences--enableCommentRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>" />
+				<aui:input
+					name="preferences--enableRatings--"
+					type="checkbox"
+					value="<%= dlPortletInstanceSettings.isEnableRatings() %>"
+				/>
+				<aui:input
+					label="enable-ratings-for-comments"
+					name="preferences--enableCommentRatings--"
+					type="checkbox"
+					value="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>"
+				/>
 			</liferay-frontend:fieldset>
 
 			<aui:script require="metal-dom/src/dom as dom">
@@ -147,7 +194,11 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 								title:
 									'<liferay-ui:message arguments="folder" key="select-x" />',
 
-								<liferay-portlet:renderURL portletName="<%= dlRequestHelper.getPortletResource() %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+								<liferay-portlet:renderURL
+									portletName="<%= dlRequestHelper.getPortletResource() %>"
+									var="selectFolderURL"
+									windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+								>
 									<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
 									<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 									<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />

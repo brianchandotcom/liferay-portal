@@ -24,6 +24,4 @@ SharingEntry sharingEntry = (SharingEntry)row.getObject();
 SharedAssetsViewDisplayContext sharedAssetsViewDisplayContext = (SharedAssetsViewDisplayContext)renderRequest.getAttribute(SharedAssetsViewDisplayContext.class.getName());
 %>
 
-<liferay-ui:menu
-	menu="<%= sharedAssetsViewDisplayContext.getSharingEntryMenu(sharingEntry) %>"
-/>
+<liferay-ui:menu menu="<%= sharedAssetsViewDisplayContext.getSharingEntryMenu(sharingEntry) %>" />

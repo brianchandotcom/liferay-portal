@@ -22,14 +22,17 @@ LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 String virtualHostname = layoutsAdminDisplayContext.getVirtualHostname();
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="robots"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="robots" />
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(virtualHostname) %>">
-		<aui:input label="set-the-robots-txt" name='<%= "TypeSettingsProperties--" + layoutSet.isPrivateLayout() + "-robots.txt--" %>' placeholder="robots" type="textarea" value="<%= layoutsAdminDisplayContext.getRobots() %>" />
+		<aui:input
+			label="set-the-robots-txt"
+			name='<%= "TypeSettingsProperties--" + layoutSet.isPrivateLayout() + "-robots.txt--" %>'
+			placeholder="robots"
+			type="textarea"
+			value="<%= layoutsAdminDisplayContext.getRobots() %>"
+		/>
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-info">

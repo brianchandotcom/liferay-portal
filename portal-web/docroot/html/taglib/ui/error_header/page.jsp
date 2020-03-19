@@ -20,7 +20,4 @@
 String referer = request.getHeader(HttpHeaders.REFERER);
 %>
 
-<liferay-ui:header
-	backURL='<%= Validator.isNotNull(referer) ? referer : "javascript:history.go(-1);" %>'
-	title="error"
-/>
+<liferay-ui:header backURL='<%= Validator.isNotNull(referer) ? referer : "javascript:history.go(-1);" %>' title="error" />

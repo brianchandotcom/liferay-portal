@@ -22,20 +22,14 @@ String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
 		<c:choose>
 			<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
-				<liferay-ui:search-container-column-icon
-					icon="documents-and-media"
-				/>
+				<liferay-ui:search-container-column-icon icon="documents-and-media" />
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:search-container-column-image
-					src="<%= thumbnailSrc %>"
-				/>
+				<liferay-ui:search-container-column-image src="<%= thumbnailSrc %>" />
 			</c:otherwise>
 		</c:choose>
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 			<%
 			Date createDate = fileEntry.getCreateDate();
@@ -58,9 +52,7 @@ String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 			BlogsEntryImageActionDropdownItemsProvider blogsEntryImageActionDropdownItemsProvider = new BlogsEntryImageActionDropdownItemsProvider(fileEntry, renderRequest, renderResponse);
 			%>
 
-			<clay:dropdown-actions
-				dropdownItems="<%= blogsEntryImageActionDropdownItemsProvider.getActionDropdownItems() %>"
-			/>
+			<clay:dropdown-actions dropdownItems="<%= blogsEntryImageActionDropdownItemsProvider.getActionDropdownItems() %>" />
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
@@ -70,16 +62,11 @@ String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<clay:vertical-card
-				verticalCard="<%= new BlogsEntryImageVerticalCard(fileEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
-			/>
+			<clay:vertical-card verticalCard="<%= new BlogsEntryImageVerticalCard(fileEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>" />
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-expand table-cell-minw-200 table-title"
-			name="title"
-		>
+		<liferay-ui:search-container-column-text cssClass="table-cell-expand table-cell-minw-200 table-title" name="title">
 			<%= HtmlUtil.escape(fileEntry.getTitle()) %>
 		</liferay-ui:search-container-column-text>
 
@@ -89,11 +76,12 @@ String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 			value="<%= LanguageUtil.formatStorageSize(fileEntry.getSize(), locale) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-expand-smaller table-cell-minw-150"
-			name="modified-date"
-		>
-			<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+		<liferay-ui:search-container-column-text cssClass="table-cell-expand-smaller table-cell-minw-150" name="modified-date">
+			<liferay-ui:message
+				arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(fileEntry.getUserName())} %>"
+				key="x-ago-by-x"
+				translateArguments="<%= false %>"
+			/>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text>
@@ -102,9 +90,7 @@ String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 			BlogsEntryImageActionDropdownItemsProvider blogsEntryImageActionDropdownItemsProvider = new BlogsEntryImageActionDropdownItemsProvider(fileEntry, renderRequest, renderResponse);
 			%>
 
-			<clay:dropdown-actions
-				dropdownItems="<%= blogsEntryImageActionDropdownItemsProvider.getActionDropdownItems() %>"
-			/>
+			<clay:dropdown-actions dropdownItems="<%= blogsEntryImageActionDropdownItemsProvider.getActionDropdownItems() %>" />
 		</liferay-ui:search-container-column-text>
 	</c:otherwise>
 </c:choose>

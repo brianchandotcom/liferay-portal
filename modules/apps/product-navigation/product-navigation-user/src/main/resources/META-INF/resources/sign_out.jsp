@@ -17,5 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <c:if test="<%= themeDisplay.isShowSignOutIcon() %>">
-	<aui:a cssClass="list-group-heading" href="<%= themeDisplay.getURLSignOut() %>" label="sign-out" />
+	<aui:a
+		cssClass="list-group-heading"
+		href="<%= themeDisplay.getURLSignOut() %>"
+		label="sign-out"
+	/>
 </c:if>

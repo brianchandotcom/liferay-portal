@@ -62,9 +62,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 					<h4><liferay-ui:message key="sites" /></h4>
 				</div>
 
-				<clay:navigation-bar
-					navigationItems="<%= navigationItems %>"
-				/>
+				<clay:navigation-bar navigationItems="<%= navigationItems %>" />
 
 				<div class="sidebar-body">
 					<h5><liferay-ui:message key="num-of-sites" /></h5>
@@ -78,19 +76,14 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				<div class="sidebar-header">
 					<ul class="sidebar-header-actions">
 						<li>
-							<clay:dropdown-actions
-								defaultEventHandler="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-								dropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems(group) %>"
-							/>
+							<clay:dropdown-actions defaultEventHandler="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems(group) %>" />
 						</li>
 					</ul>
 
 					<h4><%= HtmlUtil.escape(group.getDescriptiveName()) %></h4>
 				</div>
 
-				<clay:navigation-bar
-					navigationItems="<%= navigationItems %>"
-				/>
+				<clay:navigation-bar navigationItems="<%= navigationItems %>" />
 
 				<div class="sidebar-body">
 					<p>
@@ -104,7 +97,11 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 						%>
 
 						<p>
-							<liferay-ui:message arguments="<%= new String[] {groupOrganization.getName(), LanguageUtil.get(request, groupOrganization.getType())} %>" key="this-site-belongs-to-x-which-is-an-organization-of-type-x" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments="<%= new String[] {groupOrganization.getName(), LanguageUtil.get(request, groupOrganization.getType())} %>"
+								key="this-site-belongs-to-x-which-is-an-organization-of-type-x"
+								translateArguments="<%= false %>"
+							/>
 						</p>
 					</c:if>
 
@@ -171,15 +168,9 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 						</p>
 					</c:if>
 
-					<liferay-asset:asset-categories-summary
-						className="<%= Group.class.getName() %>"
-						classPK="<%= group.getGroupId() %>"
-					/>
+					<liferay-asset:asset-categories-summary className="<%= Group.class.getName() %>" classPK="<%= group.getGroupId() %>" />
 
-					<liferay-asset:asset-tags-summary
-						className="<%= Group.class.getName() %>"
-						classPK="<%= group.getGroupId() %>"
-					/>
+					<liferay-asset:asset-tags-summary className="<%= Group.class.getName() %>" classPK="<%= group.getGroupId() %>" />
 				</div>
 			</c:otherwise>
 		</c:choose>
@@ -189,9 +180,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 			<h4><liferay-ui:message arguments="<%= groups.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= navigationItems %>"
-		/>
+		<clay:navigation-bar navigationItems="<%= navigationItems %>" />
 
 		<div class="sidebar-body">
 			<h5><liferay-ui:message arguments="<%= groups.size() %>" key="x-items-are-selected" /></h5>
@@ -199,7 +188,4 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 	</c:otherwise>
 </c:choose>
 
-<liferay-frontend:component
-	componentId="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/SiteDropdownDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>" module="js/SiteDropdownDefaultEventHandler.es" />

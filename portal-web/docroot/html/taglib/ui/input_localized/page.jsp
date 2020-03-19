@@ -111,7 +111,14 @@
 			}
 		%>
 
-			<aui:input dir="<%= curLanguageDir %>" disabled="<%= disabled %>" id="<%= HtmlUtil.escapeAttribute(id + StringPool.UNDERLINE + curLanguageId) %>" name="<%= HtmlUtil.escapeAttribute(fieldNamePrefix + name + StringPool.UNDERLINE + curLanguageId + fieldNameSuffix) %>" type="hidden" value="<%= languageValue %>" />
+			<aui:input
+				dir="<%= curLanguageDir %>"
+				disabled="<%= disabled %>"
+				id="<%= HtmlUtil.escapeAttribute(id + StringPool.UNDERLINE + curLanguageId) %>"
+				name="<%= HtmlUtil.escapeAttribute(fieldNamePrefix + name + StringPool.UNDERLINE + curLanguageId + fieldNameSuffix) %>"
+				type="hidden"
+				value="<%= languageValue %>"
+			/>
 
 		<%
 		}
@@ -175,9 +182,7 @@
 							}
 						%>
 
-							<liferay-util:buffer
-								var="linkContent"
-							>
+							<liferay-util:buffer var="linkContent">
 								<%= StringUtil.replace(curLanguageId, '_', '-') %>
 
 								<span class="label label-<%= translationStatusCssClass %>"><%= translationStatus %></span>

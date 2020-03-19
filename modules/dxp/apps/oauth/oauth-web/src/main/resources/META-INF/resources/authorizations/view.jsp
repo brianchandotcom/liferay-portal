@@ -25,33 +25,19 @@
 	iteratorURL="<%= iteratorURL %>"
 	total="<%= OAuthUserLocalServiceUtil.getUserOAuthUsersCount(themeDisplay.getUserId()) %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= OAuthUserLocalServiceUtil.getUserOAuthUsers(themeDisplay.getUserId(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= OAuthUserLocalServiceUtil.getUserOAuthUsers(themeDisplay.getUserId(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>" />
 
-	<liferay-ui:search-container-row
-		className="com.liferay.oauth.model.OAuthUser"
-		modelVar="oAuthUser"
-	>
+	<liferay-ui:search-container-row className="com.liferay.oauth.model.OAuthUser" modelVar="oAuthUser">
 
 		<%
 		OAuthApplication oAuthApplication = OAuthApplicationLocalServiceUtil.getOAuthApplication(oAuthUser.getOAuthApplicationId());
 		%>
 
-		<liferay-ui:search-container-column-text
-			name="application-name"
-			value="<%= oAuthApplication.getName() %>"
-		/>
+		<liferay-ui:search-container-column-text name="application-name" value="<%= oAuthApplication.getName() %>" />
 
-		<liferay-ui:search-container-column-text
-			name="access-token"
-			property="accessToken"
-		/>
+		<liferay-ui:search-container-column-text name="access-token" property="accessToken" />
 
-		<liferay-ui:search-container-column-text
-			name="access-secret"
-			property="accessSecret"
-		/>
+		<liferay-ui:search-container-column-text name="access-secret" property="accessSecret" />
 
 		<liferay-ui:search-container-column-text
 			name="access-type"

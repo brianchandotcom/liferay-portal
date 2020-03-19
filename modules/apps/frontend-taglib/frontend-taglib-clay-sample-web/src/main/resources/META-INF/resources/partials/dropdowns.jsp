@@ -24,20 +24,12 @@
 
 <div class="row">
 	<div class="col-md-2">
-		<clay:dropdown-menu
-			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
-			label="Default"
-		/>
+		<clay:dropdown-menu dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>" label="Default" />
 	</div>
 
 	<div class="col-md-2">
-		<liferay-util:buffer
-			var="userSticker"
-		>
-			<clay:sticker
-				icon="picture"
-				shape="circle"
-			/>
+		<liferay-util:buffer var="userSticker">
+			<clay:sticker icon="picture" shape="circle" />
 		</liferay-util:buffer>
 
 		<clay:dropdown-menu
@@ -48,10 +40,7 @@
 	</div>
 
 	<div class="col-md-2">
-		<clay:dropdown-menu
-			dropdownItems="<%= dropdownsDisplayContext.getGroupDropdownItems() %>"
-			label="Dividers"
-		/>
+		<clay:dropdown-menu dropdownItems="<%= dropdownsDisplayContext.getGroupDropdownItems() %>" label="Dividers" />
 	</div>
 
 	<div class="col-md-2">
@@ -92,9 +81,7 @@
 	</div>
 
 	<div class="col-md-2">
-		<clay:dropdown-actions
-			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
-		/>
+		<clay:dropdown-actions dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>" />
 	</div>
 
 	<div class="col-md-2">

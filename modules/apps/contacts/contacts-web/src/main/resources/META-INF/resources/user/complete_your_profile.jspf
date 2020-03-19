@@ -28,10 +28,7 @@
 				<a href="<%= editCommentsURL.toString() %>">
 					<li class="action-field component lfr-token settings-field" data-title="<%= LanguageUtil.get(request, "introduction") %>">
 						<div class="settings-field-content">
-							<liferay-ui:icon
-								icon="plus"
-								markupView="lexicon"
-							/>
+							<liferay-ui:icon icon="plus" markupView="lexicon" />
 
 							<span class="settings-label"><liferay-ui:message key="introduction" /></span>
 						</div>
@@ -48,10 +45,7 @@
 				<a href="<%= editCategorizationURL.toString() %>">
 					<li class="action-field component lfr-token settings-field" data-title="<%= LanguageUtil.get(request, "tags") %>">
 						<div class="settings-field-content">
-							<liferay-ui:icon
-								icon="plus"
-								markupView="lexicon"
-							/>
+							<liferay-ui:icon icon="plus" markupView="lexicon" />
 
 							<span class="settings-label"><liferay-ui:message key="tags" /></span>
 						</div>
@@ -71,10 +65,7 @@
 				<a href="<%= editPhonesURL.toString() %>">
 					<li class="action-field component lfr-token settings-field" data-title="<%= LanguageUtil.get(request, "phone-numbers") %>">
 						<div class="settings-field-content">
-							<liferay-ui:icon
-								icon="plus"
-								markupView="lexicon"
-							/>
+							<liferay-ui:icon icon="plus" markupView="lexicon" />
 
 							<span class="settings-label"><liferay-ui:message key="phones" /></span>
 						</div>
@@ -94,10 +85,7 @@
 				<a href="<%= editAdditionalEmailAddressesURL.toString() %>">
 					<li class="action-field component lfr-token settings-field" data-title="<%= LanguageUtil.get(request, "additional-email-addresses") %>">
 						<div class="settings-field-content">
-							<liferay-ui:icon
-								icon="plus"
-								markupView="lexicon"
-							/>
+							<liferay-ui:icon icon="plus" markupView="lexicon" />
 
 							<span class="settings-label"><liferay-ui:message key="email-address" /></span>
 						</div>
@@ -116,10 +104,7 @@
 				<a href="<%= editAddressesURL.toString() %>">
 					<li class="action-field component lfr-token settings-field" data-title="<%= LanguageUtil.get(request, "addresses") %>">
 						<div class="settings-field-content">
-							<liferay-ui:icon
-								icon="plus"
-								markupView="lexicon"
-							/>
+							<liferay-ui:icon icon="plus" markupView="lexicon" />
 
 							<span class="settings-label"><liferay-ui:message key="addresses" /></span>
 						</div>
@@ -139,10 +124,7 @@
 				<a href="<%= editWebsitesURL.toString() %>">
 					<li class="action-field component lfr-token settings-field" data-title="<%= LanguageUtil.get(request, "websites") %>">
 						<div class="settings-field-content">
-							<liferay-ui:icon
-								icon="plus"
-								markupView="lexicon"
-							/>
+							<liferay-ui:icon icon="plus" markupView="lexicon" />
 
 							<span class="settings-label"><liferay-ui:message key="websites" /></span>
 						</div>
@@ -162,10 +144,7 @@
 				<a href="<%= editSocialNetworkURL.toString() %>">
 					<li class="action-field component lfr-token settings-field" data-title="<%= LanguageUtil.get(request, "social-network") %>">
 						<div class="settings-field-content">
-							<liferay-ui:icon
-								icon="plus"
-								markupView="lexicon"
-							/>
+							<liferay-ui:icon icon="plus" markupView="lexicon" />
 
 							<span class="settings-label"><liferay-ui:message key="social-network" /></span>
 						</div>
@@ -185,10 +164,7 @@
 				<a href="<%= editSmsURL.toString() %>">
 					<li class="action-field component lfr-token settings-field" data-title="<%= LanguageUtil.get(request, "sms") %>">
 						<div class="settings-field-content">
-							<liferay-ui:icon
-								icon="pencil"
-								markupView="lexicon"
-							/>
+							<liferay-ui:icon icon="pencil" markupView="lexicon" />
 
 							<span class="settings-label"><liferay-ui:message key="sms" /></span>
 						</div>

@@ -42,12 +42,36 @@ String ticketKey = ParamUtil.getString(request, "ticketKey");
 	</div>
 
 	<div class="sheet-text">
-		<aui:form action='<%= themeDisplay.getPathMain() + "/portal/verify_email_address" %>' method="post" name="fm">
-			<aui:input name="p_l_id" type="hidden" value="<%= layout.getPlid() %>" />
-			<aui:input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
-			<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-			<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />
+		<aui:form
+			action='<%= themeDisplay.getPathMain() + "/portal/verify_email_address" %>'
+			method="post"
+			name="fm"
+		>
+			<aui:input
+				name="p_l_id"
+				type="hidden"
+				value="<%= layout.getPlid() %>"
+			/>
+			<aui:input
+				name="p_auth"
+				type="hidden"
+				value="<%= AuthTokenUtil.getToken(request) %>"
+			/>
+			<aui:input
+				name="doAsUserId"
+				type="hidden"
+				value="<%= themeDisplay.getDoAsUserId() %>"
+			/>
+			<aui:input
+				name="<%= Constants.CMD %>"
+				type="hidden"
+				value="<%= Constants.UPDATE %>"
+			/>
+			<aui:input
+				name="<%= WebKeys.REFERER %>"
+				type="hidden"
+				value="<%= referer %>"
+			/>
 
 			<div class="alert alert-info">
 				<liferay-ui:message key="please-enter-your-verification-code" />
@@ -59,7 +83,15 @@ String ticketKey = ParamUtil.getString(request, "ticketKey");
 				</div>
 			</c:if>
 
-			<aui:input autoFocus="<%= true %>" class="lfr-input-text-container" label="email-verification-code" name="ticketKey" size="36" type="text" value="<%= ticketKey %>" />
+			<aui:input
+				autoFocus="<%= true %>"
+				class="lfr-input-text-container"
+				label="email-verification-code"
+				name="ticketKey"
+				size="36"
+				type="text"
+				value="<%= ticketKey %>"
+			/>
 
 			<aui:button-row>
 				<aui:button type="submit" value="verify" />

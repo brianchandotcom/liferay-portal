@@ -41,10 +41,7 @@ request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", s
 			<div class="card-body site-navigation-menu-item__card">
 				<div class="card-row">
 					<div class="autofit-col site-navigation-menu-item__drag-icon">
-						<liferay-ui:icon
-							icon="drag"
-							markupView="lexicon"
-						/>
+						<liferay-ui:icon icon="drag" markupView="lexicon" />
 					</div>
 
 					<div class="autofit-col autofit-col-expand autofit-col-gutters">

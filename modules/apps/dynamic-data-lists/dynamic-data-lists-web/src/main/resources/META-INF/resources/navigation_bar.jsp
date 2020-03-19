@@ -16,7 +16,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= ddlDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= ddlDisplayContext.getNavigationItems() %>" />

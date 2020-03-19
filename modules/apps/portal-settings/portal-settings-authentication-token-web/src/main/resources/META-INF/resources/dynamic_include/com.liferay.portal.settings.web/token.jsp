@@ -32,17 +32,51 @@ String userTokenName = tokenConfiguration.userTokenName();
 	<liferay-ui:error key="logoutRedirectURLInvalid" message="the-logout-redirect-url-is-invalid" />
 
 	<aui:fieldset>
-		<aui:input label="enabled" name='<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= enabled %>" />
+		<aui:input
+			label="enabled"
+			name='<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>'
+			type="checkbox"
+			value="<%= enabled %>"
+		/>
 
-		<aui:input helpMessage="import-from-ldap-help" label="import-from-ldap" name='<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + "importFromLDAP" %>' type="checkbox" value="<%= importFromLDAP %>" />
+		<aui:input
+			helpMessage="import-from-ldap-help"
+			label="import-from-ldap"
+			name='<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + "importFromLDAP" %>'
+			type="checkbox"
+			value="<%= importFromLDAP %>"
+		/>
 
-		<aui:input cssClass="lfr-input-text-container" helpMessage="user-token-name-help" label="user-token-name" name="<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + TokenConfigurationKeys.USER_TOKEN_NAME %>" type="text" value="<%= userTokenName %>" />
+		<aui:input
+			cssClass="lfr-input-text-container"
+			helpMessage="user-token-name-help"
+			label="user-token-name"
+			name="<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + TokenConfigurationKeys.USER_TOKEN_NAME %>"
+			type="text"
+			value="<%= userTokenName %>"
+		/>
 
-		<aui:select helpMessage="token-location-help" label="token-location" name="<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + TokenConfigurationKeys.TOKEN_LOCATION %>">
+		<aui:select
+			helpMessage="token-location-help"
+			label="token-location"
+			name="<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + TokenConfigurationKeys.TOKEN_LOCATION %>"
+		>
 			<aui:option label="<%= "token-location-" + TokenLocation.COOKIE %>" selected="<%= tokenLocation.equals(TokenLocation.COOKIE) %>" value="TokenLocation.COOKIE %>" />
-			<aui:option label='<%= "token-location-" + TokenLocation.REQUEST %>' selected="<%= tokenLocation.equals(TokenLocation.REQUEST) %>" value="<%= TokenLocation.REQUEST %>" />
-			<aui:option label='<%= "token-location-" + TokenLocation.REQUEST_HEADER %>' selected="<%= tokenLocation.equals(TokenLocation.REQUEST_HEADER) %>" value="<%= TokenLocation.REQUEST_HEADER %>" />
-			<aui:option label='<%= "token-location-" + TokenLocation.SESSION %>' selected="<%= tokenLocation.equals(TokenLocation.SESSION) %>" value="<%= TokenLocation.SESSION %>" />
+			<aui:option
+				label='<%= "token-location-" + TokenLocation.REQUEST %>'
+				selected="<%= tokenLocation.equals(TokenLocation.REQUEST) %>"
+				value="<%= TokenLocation.REQUEST %>"
+			/>
+			<aui:option
+				label='<%= "token-location-" + TokenLocation.REQUEST_HEADER %>'
+				selected="<%= tokenLocation.equals(TokenLocation.REQUEST_HEADER) %>"
+				value="<%= TokenLocation.REQUEST_HEADER %>"
+			/>
+			<aui:option
+				label='<%= "token-location-" + TokenLocation.SESSION %>'
+				selected="<%= tokenLocation.equals(TokenLocation.SESSION) %>"
+				value="<%= TokenLocation.SESSION %>"
+			/>
 		</aui:select>
 	</aui:fieldset>
 
@@ -60,7 +94,15 @@ String userTokenName = tokenConfiguration.userTokenName();
 
 			<div class="lfr-form-row">
 				<div class="form-group-item">
-					<aui:input cssClass="lfr-input-text-container" fieldParam="<%= TokenConfigurationKeys.AUTHENTICATION_COOKIES + i %>" helpMessage="authentication-cookies-help" label="authentication-cookies" name="<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + TokenConfigurationKeys.AUTHENTICATION_COOKIES + i %>" type="text" value="<%= authenticationCookie %>" />
+					<aui:input
+						cssClass="lfr-input-text-container"
+						fieldParam="<%= TokenConfigurationKeys.AUTHENTICATION_COOKIES + i %>"
+						helpMessage="authentication-cookies-help"
+						label="authentication-cookies"
+						name="<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + TokenConfigurationKeys.AUTHENTICATION_COOKIES + i %>"
+						type="text"
+						value="<%= authenticationCookie %>"
+					/>
 				</div>
 			</div>
 
@@ -68,11 +110,22 @@ String userTokenName = tokenConfiguration.userTokenName();
 		}
 		%>
 
-		<aui:input name='<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + "authenticationCookiesIndexes" %>' type="hidden" value="<%= StringUtil.merge(authenticationCookiesIndexes) %>" />
+		<aui:input
+			name='<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + "authenticationCookiesIndexes" %>'
+			type="hidden"
+			value="<%= StringUtil.merge(authenticationCookiesIndexes) %>"
+		/>
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:input cssClass="lfr-input-text-container" helpMessage="logout-redirect-url-help" label="logout-redirect-url" name="<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + TokenConfigurationKeys.LOGOUT_REDIRECT_URL %>" type="text" value="<%= logoutRedirectURL %>" />
+		<aui:input
+			cssClass="lfr-input-text-container"
+			helpMessage="logout-redirect-url-help"
+			label="logout-redirect-url"
+			name="<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + TokenConfigurationKeys.LOGOUT_REDIRECT_URL %>"
+			type="text"
+			value="<%= logoutRedirectURL %>"
+		/>
 	</aui:fieldset>
 </aui:fieldset>
 

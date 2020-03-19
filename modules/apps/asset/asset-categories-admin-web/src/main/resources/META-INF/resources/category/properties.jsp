@@ -74,12 +74,17 @@ long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 	<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
 </portlet:actionURL>
 
-<liferay-frontend:edit-form
-	action="<%= editPropertiesURL %>"
-	name="fm"
->
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
+<liferay-frontend:edit-form action="<%= editPropertiesURL %>" name="fm">
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="categoryId"
+		type="hidden"
+		value="<%= categoryId %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= CategoryPropertyKeyException.class %>" message="please-enter-a-valid-property-key" />
@@ -104,9 +109,17 @@ long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 
 						<div class="lfr-form-row lfr-form-row-inline">
 							<div class="row-fields">
-								<aui:input fieldParam='<%= "key" + categoryPropertiesIndex %>' id='<%= "key" + categoryPropertiesIndex %>' name="key" />
+								<aui:input
+									fieldParam='<%= "key" + categoryPropertiesIndex %>'
+									id='<%= "key" + categoryPropertiesIndex %>'
+									name="key"
+								/>
 
-								<aui:input fieldParam='<%= "value" + categoryPropertiesIndex %>' id='<%= "value" + categoryPropertiesIndex %>' name="value" />
+								<aui:input
+									fieldParam='<%= "value" + categoryPropertiesIndex %>'
+									id='<%= "value" + categoryPropertiesIndex %>'
+									name="value"
+								/>
 							</div>
 						</div>
 
@@ -116,7 +129,11 @@ long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 
 				</div>
 
-				<aui:input name="categoryPropertiesIndexes" type="hidden" value="<%= StringUtil.merge(categoryPropertiesIndexes) %>" />
+				<aui:input
+					name="categoryPropertiesIndexes"
+					type="hidden"
+					value="<%= StringUtil.merge(categoryPropertiesIndexes) %>"
+				/>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

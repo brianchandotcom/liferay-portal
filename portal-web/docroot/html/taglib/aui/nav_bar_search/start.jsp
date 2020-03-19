@@ -19,10 +19,7 @@
 <div class="collapse navbar-collapse <%= searchResults ? "open" : StringPool.BLANK %>" id="<%= id %>NavbarSearchCollapse">
 	<div class="navbar-search <%= cssClass %>" id="<%= id %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 		<c:if test="<%= Validator.isNotNull(file) %>">
-			<liferay-ui:search-form
-				page="<%= file %>"
-				searchContainer="<%= searchContainer %>"
-			/>
+			<liferay-ui:search-form page="<%= file %>" searchContainer="<%= searchContainer %>" />
 		</c:if>
 
 		<aui:script use="aui-base,event-outside">

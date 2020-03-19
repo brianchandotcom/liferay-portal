@@ -59,10 +59,7 @@ Group group = layout.getGroup();
 	<c:when test="<%= themeDisplay.isStatePopUp() %>">
 		<div class="portlet-body">
 			<c:if test='<%= !tilesPortletContent.endsWith("/error.jsp") %>'>
-				<liferay-theme:portlet-messages
-					group="<%= group %>"
-					portlet="<%= portlet %>"
-				/>
+				<liferay-theme:portlet-messages group="<%= group %>" portlet="<%= portlet %>" />
 			</c:if>
 
 			<c:choose>
@@ -80,9 +77,7 @@ Group group = layout.getGroup();
 		</div>
 	</c:when>
 	<c:otherwise>
-		<liferay-theme:wrap-portlet
-			page="portlet.jsp"
-		>
+		<liferay-theme:wrap-portlet page="portlet.jsp">
 			<div class="<%= portletDisplay.isStateMin() ? "hide" : "" %> portlet-content-container">
 				<%@ include file="/html/common/themes/portlet_content_wrapper.jspf" %>
 			</div>

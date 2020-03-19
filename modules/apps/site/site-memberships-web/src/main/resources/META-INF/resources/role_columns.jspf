@@ -22,20 +22,13 @@
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<clay:vertical-card
-				verticalCard="<%= new RoleVerticalCard(role, renderRequest, searchContainer.getRowChecker()) %>"
-			/>
+			<clay:vertical-card verticalCard="<%= new RoleVerticalCard(role, renderRequest, searchContainer.getRowChecker()) %>" />
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
-		<liferay-ui:search-container-column-icon
-			icon="users"
-			toggleRowChecker="<%= true %>"
-		/>
+		<liferay-ui:search-container-column-icon icon="users" toggleRowChecker="<%= true %>" />
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<h5><%= HtmlUtil.escape(role.getTitle(locale)) %></h5>
 
 			<h6 class="text-default">

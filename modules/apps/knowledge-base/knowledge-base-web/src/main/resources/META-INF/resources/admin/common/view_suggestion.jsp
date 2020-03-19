@@ -32,9 +32,7 @@ renderResponse.setTitle(kbCommentTitle);
 		<div class="card-body">
 			<div class="card-col-field">
 				<div class="list-group-card-icon">
-					<liferay-ui:user-portrait
-						userId="<%= kbComment.getUserId() %>"
-					/>
+					<liferay-ui:user-portrait userId="<%= kbComment.getUserId() %>" />
 				</div>
 			</div>
 
@@ -97,7 +95,12 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 					<portlet:param name="kbCommentStatus" value="<%= String.valueOf(previousStatus) %>" />
 				</liferay-portlet:actionURL>
 
-				<aui:button href="<%= previousStatusURL.toString() %>" name="previousStatusButton" type="submit" value="<%= KBUtil.getStatusTransitionLabel(previousStatus) %>" />
+				<aui:button
+					href="<%= previousStatusURL.toString() %>"
+					name="previousStatusButton"
+					type="submit"
+					value="<%= KBUtil.getStatusTransitionLabel(previousStatus) %>"
+				/>
 			</c:if>
 
 			<c:if test="<%= nextStatus != KBCommentConstants.STATUS_NONE %>">
@@ -107,7 +110,12 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 					<portlet:param name="kbCommentStatus" value="<%= String.valueOf(nextStatus) %>" />
 				</liferay-portlet:actionURL>
 
-				<aui:button href="<%= nextStatusURL.toString() %>" name="nextStatusButton" type="submit" value="<%= KBUtil.getStatusTransitionLabel(nextStatus) %>" />
+				<aui:button
+					href="<%= nextStatusURL.toString() %>"
+					name="nextStatusButton"
+					type="submit"
+					value="<%= KBUtil.getStatusTransitionLabel(nextStatus) %>"
+				/>
 			</c:if>
 		</c:if>
 
@@ -117,7 +125,11 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 				<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
 			</liferay-portlet:actionURL>
 
-			<aui:button href="<%= deleteURL.toString() %>" name="deleteButton" value="<%= Constants.DELETE %>" />
+			<aui:button
+				href="<%= deleteURL.toString() %>"
+				name="deleteButton"
+				value="<%= Constants.DELETE %>"
+			/>
 		</c:if>
 	</aui:button-row>
 </c:if>

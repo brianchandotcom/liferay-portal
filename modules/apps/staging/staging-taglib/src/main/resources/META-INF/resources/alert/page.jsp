@@ -16,9 +16,7 @@
 
 <%@ include file="/alert/init.jsp" %>
 
-<liferay-util:buffer
-	var="icon"
->
+<liferay-util:buffer var="icon">
 	<c:choose>
 		<c:when test="<%= type == AlertType.ERROR.getAlertCode() %>">
 			<svg aria-hidden="true" class="lexicon-icon lexicon-icon-exclamation-full">
@@ -47,9 +45,7 @@
 	</c:choose>
 </liferay-util:buffer>
 
-<liferay-util:buffer
-	var="close"
->
+<liferay-util:buffer var="close">
 
 	<%
 	if (dismissible) {

@@ -21,9 +21,7 @@ for (int j = 0; j < entryColumns.length; j++) {
 
 	<c:choose>
 		<c:when test='<%= curEntryColumn.equals("action") %>'>
-			<liferay-ui:search-container-column-jsp
-				path="/bookmarks/entry_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp path="/bookmarks/entry_action.jsp" />
 		</c:when>
 		<c:when test='<%= curEntryColumn.equals("modified-date") %>'>
 			<liferay-ui:search-container-column-date

@@ -105,16 +105,11 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 	</portlet:actionURL>
 
-	<liferay-trash:undo
-		portletURL="<%= restoreTrashEntriesURL %>"
-	/>
+	<liferay-trash:undo portletURL="<%= restoreTrashEntriesURL %>" />
 
 	<c:choose>
 		<c:when test="<%= useAssetEntryQuery %>">
-			<liferay-asset:categorization-filter
-				assetType="images"
-				portletURL="<%= portletURL %>"
-			/>
+			<liferay-asset:categorization-filter assetType="images" portletURL="<%= portletURL %>" />
 
 			<%
 			SearchContainer igSearchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
@@ -144,10 +139,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 		</c:when>
 		<c:when test='<%= topLink.equals("home") %>'>
 			<c:if test="<%= folder != null %>">
-				<liferay-ui:header
-					localizeTitle="<%= false %>"
-					title="<%= folder.getName() %>"
-				/>
+				<liferay-ui:header localizeTitle="<%= false %>" title="<%= folder.getName() %>" />
 			</c:if>
 
 			<%
@@ -177,7 +169,11 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 
 					<div class="lfr-asset-metadata">
 						<div class="icon-calendar lfr-asset-icon">
-							<liferay-ui:message arguments="<%= dateFormatDate.format(folder.getModifiedDate()) %>" key="last-updated-x" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments="<%= dateFormatDate.format(folder.getModifiedDate()) %>"
+								key="last-updated-x"
+								translateArguments="<%= false %>"
+							/>
 						</div>
 
 						<%
@@ -185,10 +181,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 						%>
 
 						<div class="lfr-asset-icon">
-							<liferay-ui:icon
-								icon="<%= dlFolderAssetRendererFactory.getIconCssClass() %>"
-								markupView="lexicon"
-							/>
+							<liferay-ui:icon icon="<%= dlFolderAssetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
 
 							<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "folder" : "folders" %>' />
 						</div>
@@ -198,18 +191,13 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 						%>
 
 						<div class="last lfr-asset-icon">
-							<liferay-ui:icon
-								icon="<%= dlFileEntryAssetRendererFactory.getIconCssClass() %>"
-								markupView="lexicon"
-							/>
+							<liferay-ui:icon icon="<%= dlFileEntryAssetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
 
 							<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
 						</div>
 					</div>
 
-					<liferay-expando:custom-attributes-available
-						className="<%= DLFolderConstants.getClassName() %>"
-					>
+					<liferay-expando:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
 						<liferay-expando:custom-attribute-list
 							className="<%= DLFolderConstants.getClassName() %>"
 							classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
@@ -258,9 +246,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 			%>
 
 			<aui:row>
-				<liferay-ui:header
-					title="<%= topLink %>"
-				/>
+				<liferay-ui:header title="<%= topLink %>" />
 
 				<liferay-util:include page="/image_gallery_display/view_images.jsp" servletContext="<%= application %>" />
 			</aui:row>

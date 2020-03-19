@@ -20,15 +20,10 @@
 SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = (SelectOrganizationsDisplayContext)request.getAttribute(SegmentsWebKeys.SELECT_ORGANIZATIONS_DISPLAY_CONTEXT);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new SelectOrganizationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectOrganizationsDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new SelectOrganizationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectOrganizationsDisplayContext) %>" />
 
 <aui:form cssClass="container-fluid-1280" name="fm">
-	<liferay-ui:search-container
-		id="selectSegmentsEntryOrganizations"
-		searchContainer="<%= selectOrganizationsDisplayContext.getOrganizationSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="selectSegmentsEntryOrganizations" searchContainer="<%= selectOrganizationsDisplayContext.getOrganizationSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Organization"
 			escapedModel="<%= true %>"
@@ -51,10 +46,7 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = (SelectOrg
 				property="name"
 			/>
 
-			<liferay-ui:search-container-column-text
-				name="parent-organization"
-				value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
-			/>
+			<liferay-ui:search-container-column-text name="parent-organization" value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>" />
 
 			<liferay-ui:search-container-column-text
 				name="type"
@@ -63,10 +55,7 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = (SelectOrg
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= selectOrganizationsDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= selectOrganizationsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

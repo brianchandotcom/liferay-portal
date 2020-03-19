@@ -33,9 +33,7 @@ WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wi
 	PortletURL undoTrashURL = wikiURLHelper.getUndoTrashURL();
 	%>
 
-	<liferay-trash:undo
-		portletURL="<%= undoTrashURL.toString() %>"
-	/>
+	<liferay-trash:undo portletURL="<%= undoTrashURL.toString() %>" />
 </c:if>
 
 <%
@@ -66,7 +64,11 @@ if (portletTitleBasedNavigation) {
 				PortletURL viewPageURL = wikiURLHelper.getViewFrontPagePageURL(curNode);
 			%>
 
-				<aui:nav-item cssClass="<%= cssClass %>" href="<%= viewPageURL.toString() %>" label="<%= HtmlUtil.escape(curNode.getName()) %>" />
+				<aui:nav-item
+					cssClass="<%= cssClass %>"
+					href="<%= viewPageURL.toString() %>"
+					label="<%= HtmlUtil.escape(curNode.getName()) %>"
+				/>
 
 			<%
 			}

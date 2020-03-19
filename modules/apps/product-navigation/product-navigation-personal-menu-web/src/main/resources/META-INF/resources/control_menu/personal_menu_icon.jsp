@@ -41,9 +41,7 @@
 
 <li class="control-menu-nav-item">
 	<span class="user-avatar-link">
-		<liferay-product-navigation:personal-menu
-			user="<%= user %>"
-		/>
+		<liferay-product-navigation:personal-menu user="<%= user %>" />
 
 		<%
 		int notificationsCount = GetterUtil.getInteger(request.getAttribute(PersonalMenuWebKeys.NOTIFICATIONS_COUNT));

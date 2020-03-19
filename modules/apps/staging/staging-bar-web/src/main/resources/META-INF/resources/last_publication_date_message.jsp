@@ -94,7 +94,11 @@ if (Validator.isNull(publisherName)) {
 					</svg>
 				</span>
 				<span class="last-publication-branch">
-					<liferay-ui:message arguments='<%= new String[] {"<strong>" + HtmlUtil.escape(layout.getName(locale)) + "</strong>", "<em>" + HtmlUtil.escape(layoutSetBranchDisplayContext.getLayoutSetBranchDisplayName(lastImportLayoutSetBranchName)) + "</em>"} %>' key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "page-x-was-last-published-to-live" : "page-x-was-last-published-from-x" %>' translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments='<%= new String[] {"<strong>" + HtmlUtil.escape(layout.getName(locale)) + "</strong>", "<em>" + HtmlUtil.escape(layoutSetBranchDisplayContext.getLayoutSetBranchDisplayName(lastImportLayoutSetBranchName)) + "</em>"} %>'
+						key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "page-x-was-last-published-to-live" : "page-x-was-last-published-from-x" %>'
+						translateArguments="<%= false %>"
+					/>
 
 					<c:if test="<%= (Validator.isNotNull(lastImportLayoutBranchName) && (layoutRevisions.size() > 1)) || Validator.isNotNull(lastImportLayoutRevisionId) %>">
 						<span class="last-publication-variation-details">(
@@ -113,7 +117,11 @@ if (Validator.isNull(publisherName)) {
 					</c:if>
 				</span>
 				<span class="last-publication-user">
-					<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(StringUtil.toLowerCase(LanguageUtil.getTimeDescription(request, (System.currentTimeMillis() - lastImportDate), true))), HtmlUtil.escape(publisherName)} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= new String[] {HtmlUtil.escape(StringUtil.toLowerCase(LanguageUtil.getTimeDescription(request, (System.currentTimeMillis() - lastImportDate), true))), HtmlUtil.escape(publisherName)} %>"
+						key="x-ago-by-x"
+						translateArguments="<%= false %>"
+					/>
 				</span>
 			</div>
 		</c:if>
@@ -126,9 +134,17 @@ if (Validator.isNull(publisherName)) {
 				</svg>
 			</span>
 
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key="x-is-staged" translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>"
+				key="x-is-staged"
+				translateArguments="<%= false %>"
+			/>
 
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : !PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED ? "staging-live-help2-x" : "staging-live-help-x" %>' translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>"
+				key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : !PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED ? "staging-live-help2-x" : "staging-live-help-x" %>'
+				translateArguments="<%= false %>"
+			/>
 		</div>
 	</c:otherwise>
 </c:choose>

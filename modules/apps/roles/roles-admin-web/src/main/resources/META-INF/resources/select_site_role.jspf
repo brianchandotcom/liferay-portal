@@ -75,7 +75,12 @@ SearchContainer roleSearchContainer = selectRoleManagementToolbarDisplayContext.
 	viewTypeItems="<%= selectRoleManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="selectSiteRoleFm">
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid container-fluid-max-xl container-form-lg"
+	method="post"
+	name="selectSiteRoleFm"
+>
 	<c:choose>
 		<c:when test="<%= step == 1 %>">
 			<aui:input name="groupId" type="hidden" />
@@ -84,13 +89,8 @@ SearchContainer roleSearchContainer = selectRoleManagementToolbarDisplayContext.
 				<liferay-ui:message key="please-select-a-site-to-which-you-will-assign-a-site-role" />
 			</div>
 
-			<liferay-ui:search-container
-				searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
-				total="<%= groups.size() %>"
-			>
-				<liferay-ui:search-container-results
-					results="<%= ListUtil.subList(groups, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				/>
+			<liferay-ui:search-container searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>" total="<%= groups.size() %>">
+				<liferay-ui:search-container-results results="<%= ListUtil.subList(groups, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.model.Group"
@@ -99,15 +99,9 @@ SearchContainer roleSearchContainer = selectRoleManagementToolbarDisplayContext.
 					modelVar="group"
 					rowIdProperty="friendlyURL"
 				>
-					<liferay-ui:search-container-column-text
-						name="name"
-						value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-					/>
+					<liferay-ui:search-container-column-text name="name" value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" />
 
-					<liferay-ui:search-container-column-text
-						name="roleType"
-						value="<%= LanguageUtil.get(request, group.getTypeLabel()) %>"
-					/>
+					<liferay-ui:search-container-column-text name="roleType" value="<%= LanguageUtil.get(request, group.getTypeLabel()) %>" />
 
 					<liferay-ui:search-container-column-text>
 
@@ -117,13 +111,15 @@ SearchContainer roleSearchContainer = selectRoleManagementToolbarDisplayContext.
 						data.put("groupid", group.getGroupId());
 						%>
 
-						<aui:button cssClass="group-selector-button" data="<%= data %>" value="choose" />
+						<aui:button
+							cssClass="group-selector-button"
+							data="<%= data %>"
+							value="choose"
+						/>
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator markupView="lexicon" />
 			</liferay-ui:search-container>
 
 			<aui:script require="metal-dom/src/dom as dom">
@@ -153,8 +149,16 @@ SearchContainer roleSearchContainer = selectRoleManagementToolbarDisplayContext.
 			portletURL.setParameter("groupId", String.valueOf(groupId));
 			%>
 
-			<aui:input name="step" type="hidden" value="<%= step %>" />
-			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
+			<aui:input
+				name="step"
+				type="hidden"
+				value="<%= step %>"
+			/>
+			<aui:input
+				name="groupId"
+				type="hidden"
+				value="<%= String.valueOf(groupId) %>"
+			/>
 
 			<c:if test="<%= selUser != null %>">
 
@@ -171,10 +175,7 @@ SearchContainer roleSearchContainer = selectRoleManagementToolbarDisplayContext.
 				</div>
 			</c:if>
 
-			<liferay-ui:search-container
-				headerNames="name"
-				searchContainer="<%= roleSearchContainer %>"
-			>
+			<liferay-ui:search-container headerNames="name" searchContainer="<%= roleSearchContainer %>">
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.model.Role"
 					keyProperty="roleId"
@@ -221,14 +222,17 @@ SearchContainer roleSearchContainer = selectRoleManagementToolbarDisplayContext.
 							}
 							%>
 
-							<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= disabled %>" value="choose" />
+							<aui:button
+								cssClass="selector-button"
+								data="<%= data %>"
+								disabled="<%= disabled %>"
+								value="choose"
+							/>
 						</c:if>
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator markupView="lexicon" />
 			</liferay-ui:search-container>
 
 			<aui:script use="aui-base">

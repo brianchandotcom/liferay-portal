@@ -20,31 +20,27 @@
 MasterLayoutDisplayContext masterLayoutDisplayContext = new MasterLayoutDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= layoutPageTemplatesAdminDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= layoutPageTemplatesAdminDisplayContext.getNavigationItems() %>" />
 
 <%
 MasterLayoutManagementToolbarDisplayContext masterLayoutManagementToolbarDisplayContext = new MasterLayoutManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, masterLayoutDisplayContext);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= masterLayoutManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= masterLayoutManagementToolbarDisplayContext %>" />
 
 <portlet:actionURL name="/layout_page_template/delete_master_layout" var="deleteMasterLayoutURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteMasterLayoutURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form
+	action="<%= deleteMasterLayoutURL %>"
+	cssClass="container-fluid-1280"
+	name="fm"
+>
 	<liferay-ui:error key="<%= PortalException.class.getName() %>" message="one-or-more-entries-could-not-be-deleted" />
 	<liferay-ui:error key="<%= RequiredLayoutPageTemplateEntryException.class.getName() %>" message="you-cannot-delete-master-pages-that-are-used-by-a-page,-a-page-template,-or-a-display-page-template" />
 
-	<liferay-ui:search-container
-		id="<%= masterLayoutManagementToolbarDisplayContext.getSearchContainerId() %>"
-		searchContainer="<%= masterLayoutDisplayContext.getMasterLayoutsSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="<%= masterLayoutManagementToolbarDisplayContext.getSearchContainerId() %>" searchContainer="<%= masterLayoutDisplayContext.getMasterLayoutsSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.layout.page.template.model.LayoutPageTemplateEntry"
 			cssClass="selectable"
@@ -64,16 +60,11 @@ MasterLayoutManagementToolbarDisplayContext masterLayoutManagementToolbarDisplay
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:vertical-card
-					verticalCard="<%= new MasterLayoutVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
-				/>
+				<clay:vertical-card verticalCard="<%= new MasterLayoutVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>" />
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="icon"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
@@ -86,12 +77,6 @@ MasterLayoutManagementToolbarDisplayContext masterLayoutManagementToolbarDisplay
 	<aui:input name="fileEntryId" type="hidden" />
 </aui:form>
 
-<liferay-frontend:component
-	componentId="<%= LayoutPageTemplateAdminWebKeys.MASTER_LAYOUT_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/MasterLayoutDropdownDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= LayoutPageTemplateAdminWebKeys.MASTER_LAYOUT_DROPDOWN_DEFAULT_EVENT_HANDLER %>" module="js/MasterLayoutDropdownDefaultEventHandler.es" />
 
-<liferay-frontend:component
-	componentId="<%= masterLayoutManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/MasterLayoutManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= masterLayoutManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/MasterLayoutManagementToolbarDefaultEventHandler.es" />

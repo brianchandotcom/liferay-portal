@@ -45,10 +45,7 @@ else {
 			<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<c:if test="<%= (AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE) && rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) || (DisplayPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE) && DisplayPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADMINISTRATOR) && rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) %>">
@@ -59,10 +56,7 @@ else {
 			<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-ui:icon
-			message="add-child-article"
-			url="<%= addKBArticleURL %>"
-		/>
+		<liferay-ui:icon message="add-child-article" url="<%= addKBArticleURL %>" />
 	</c:if>
 
 	<c:if test="<%= kbArticle.isRoot() && KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.PERMISSIONS) %>">
@@ -89,10 +83,7 @@ else {
 					<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 				</liferay-portlet:actionURL>
 
-				<liferay-ui:icon
-					message="unsubscribe"
-					url="<%= unsubscribeKBArticleURL %>"
-				/>
+				<liferay-ui:icon message="unsubscribe" url="<%= unsubscribeKBArticleURL %>" />
 			</c:when>
 			<c:otherwise>
 				<liferay-portlet:actionURL name="subscribeKBArticle" var="subscribeKBArticleURL">
@@ -100,10 +91,7 @@ else {
 					<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 				</liferay-portlet:actionURL>
 
-				<liferay-ui:icon
-					message="subscribe"
-					url="<%= subscribeKBArticleURL %>"
-				/>
+				<liferay-ui:icon message="subscribe" url="<%= subscribeKBArticleURL %>" />
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -118,10 +106,7 @@ else {
 			<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getParentResourcePrimKey()) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-ui:icon
-			message="move"
-			url="<%= moveKBArticleURL %>"
-		/>
+		<liferay-ui:icon message="move" url="<%= moveKBArticleURL %>" />
 	</c:if>
 
 	<c:if test="<%= KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.DELETE) %>">
@@ -131,8 +116,6 @@ else {
 			<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 		</liferay-portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

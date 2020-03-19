@@ -20,26 +20,19 @@
 UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportProcessDisplayContext(request, renderResponse);
 %>
 
-<liferay-ui:search-container
-	searchContainer="<%= uadExportProcessDisplayContext.getSearchContainer() %>"
->
+<liferay-ui:search-container searchContainer="<%= uadExportProcessDisplayContext.getSearchContainer() %>">
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.backgroundtask.BackgroundTask"
 		keyProperty="backgroundTaskId"
 		modelVar="backgroundTask"
 	>
-		<liferay-ui:search-container-column-text
-			cssClass="lfr-title-column"
-		>
+		<liferay-ui:search-container-column-text cssClass="lfr-title-column">
 			<div id="<portlet:namespace />exportStatus">
 				<h5>
 					<liferay-ui:message key="<%= UADLanguageUtil.getApplicationName(UADExportProcessUtil.getApplicationKey(backgroundTask), locale) %>" />
 				</h5>
 
-				<clay:label
-					label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, backgroundTask.getStatusLabel()), locale) %>"
-					style="<%= UADExportProcessUtil.getStatusStyle(backgroundTask.getStatus()) %>"
-				/>
+				<clay:label label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, backgroundTask.getStatusLabel()), locale) %>" style="<%= UADExportProcessUtil.getStatusStyle(backgroundTask.getStatus()) %>" />
 			</div>
 		</liferay-ui:search-container-column-text>
 
@@ -47,9 +40,7 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 		Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy.MM.dd - hh:mm a", locale, themeDisplay.getTimeZone());
 		%>
 
-		<liferay-ui:search-container-column-text
-			cssClass="lfr-create-date-column table-cell-expand"
-		>
+		<liferay-ui:search-container-column-text cssClass="lfr-create-date-column table-cell-expand">
 			<%= LanguageUtil.get(request, "create-date") + ": " + dateFormat.format(backgroundTask.getCreateDate()) %>
 
 			<c:if test="<%= backgroundTask.isInProgress() %>">
@@ -64,9 +55,7 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 			</c:if>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			cssClass="lfr-completion-date-column table-cell-expand"
-		>
+		<liferay-ui:search-container-column-text cssClass="lfr-completion-date-column table-cell-expand">
 			<c:choose>
 				<c:when test="<%= backgroundTask.isCompleted() %>">
 					<%= LanguageUtil.get(request, "completion-date") + ": " + dateFormat.format(backgroundTask.getCompletionDate()) %>
@@ -77,14 +66,8 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 			</c:choose>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/export_process_action.jsp"
-		/>
+		<liferay-ui:search-container-column-jsp cssClass="entry-action-column" path="/export_process_action.jsp" />
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-		resultRowSplitter="<%= new UADExportProcessResultRowSplitter() %>"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new UADExportProcessResultRowSplitter() %>" />
 </liferay-ui:search-container>

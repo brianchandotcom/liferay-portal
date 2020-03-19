@@ -36,10 +36,7 @@ PollsQuestion question = (PollsQuestion)row.getObject();
 			<portlet:param name="questionId" value="<%= String.valueOf(question.getQuestionId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<c:if test="<%= PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.PERMISSIONS) %>">
@@ -67,8 +64,6 @@ PollsQuestion question = (PollsQuestion)row.getObject();
 			<portlet:param name="questionId" value="<%= String.valueOf(question.getQuestionId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

@@ -33,17 +33,31 @@ String smallImageSource = journalEditDDMTemplateDisplayContext.getSmallImageSour
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
-	<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(journalEditDDMTemplateDisplayContext.smallImageMaxSize(), locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= LanguageUtil.formatStorageSize(journalEditDDMTemplateDisplayContext.smallImageMaxSize(), locale) %>"
+		key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x"
+		translateArguments="<%= false %>"
+	/>
 </liferay-ui:error>
 
-<aui:select label="" name="smallImageSource" value="<%= smallImageSource %>" wrapperCssClass="mb-3">
+<aui:select
+	label=""
+	name="smallImageSource"
+	value="<%= smallImageSource %>"
+	wrapperCssClass="mb-3"
+>
 	<aui:option label="no-image" value="none" />
 	<aui:option label="from-url" value="url" />
 	<aui:option label="from-your-computer" value="file" />
 </aui:select>
 
 <div class="<%= Objects.equals(smallImageSource, "url") ? "" : "hide" %>" id="<portlet:namespace/>smallImageURLContainer">
-	<aui:input label="" name="smallImageURL" title="small-image-url" wrapperCssClass="mb-3" />
+	<aui:input
+		label=""
+		name="smallImageURL"
+		title="small-image-url"
+		wrapperCssClass="mb-3"
+	/>
 
 	<c:if test="<%= journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) && Validator.isNotNull(ddmTemplate.getSmallImageURL()) %>">
 		<p>
@@ -57,7 +71,12 @@ String smallImageSource = journalEditDDMTemplateDisplayContext.getSmallImageSour
 </div>
 
 <div class="<%= Objects.equals(smallImageSource, "file") ? "" : "hide" %>" id="<portlet:namespace/>smallImageFileContainer">
-	<aui:input label="" name="smallImageFile" type="file" wrapperCssClass="mb-3" />
+	<aui:input
+		label=""
+		name="smallImageFile"
+		type="file"
+		wrapperCssClass="mb-3"
+	/>
 
 	<c:if test="<%= journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) && (ddmTemplate.getSmallImageId() > 0) %>">
 		<p>

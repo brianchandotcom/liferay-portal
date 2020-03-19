@@ -31,9 +31,7 @@
 	%>
 
 		<div class="col-md-3">
-			<clay:icon
-				symbol="<%= icons[i] %>"
-			/>
+			<clay:icon symbol="<%= icons[i] %>" />
 
 			<span class="ml-2"><%= icons[i] %></span>
 		</div>
@@ -55,9 +53,7 @@
 	%>
 
 		<div class="col-md-3">
-			<clay:icon
-				symbol="<%= flags[i] %>"
-			/>
+			<clay:icon symbol="<%= flags[i] %>" />
 
 			<span class="ml-2"><%= flags[i] %></span>
 		</div>

@@ -25,13 +25,41 @@
 				String orderByColumn1 = editAssetListDisplayContext.getOrderByColumn1();
 				%>
 
-				<aui:select label="order-by" name="TypeSettingsProperties--orderByColumn1--" wrapperCssClass="field-inline w80">
-					<aui:option label="title" selected='<%= Objects.equals(orderByColumn1, "title") %>' value="title" />
-					<aui:option label="create-date" selected='<%= Objects.equals(orderByColumn1, "createDate") %>' value="createDate" />
-					<aui:option label="modified-date" selected='<%= Objects.equals(orderByColumn1, "modifiedDate") %>' value="modifiedDate" />
-					<aui:option label="publish-date" selected='<%= Objects.equals(orderByColumn1, "publishDate") %>' value="publishDate" />
-					<aui:option label="expiration-date" selected='<%= Objects.equals(orderByColumn1, "expirationDate") %>' value="expirationDate" />
-					<aui:option label="priority" selected='<%= Objects.equals(orderByColumn1, "priority") %>' value="priority" />
+				<aui:select
+					label="order-by"
+					name="TypeSettingsProperties--orderByColumn1--"
+					wrapperCssClass="field-inline w80"
+				>
+					<aui:option
+						label="title"
+						selected='<%= Objects.equals(orderByColumn1, "title") %>'
+						value="title"
+					/>
+					<aui:option
+						label="create-date"
+						selected='<%= Objects.equals(orderByColumn1, "createDate") %>'
+						value="createDate"
+					/>
+					<aui:option
+						label="modified-date"
+						selected='<%= Objects.equals(orderByColumn1, "modifiedDate") %>'
+						value="modifiedDate"
+					/>
+					<aui:option
+						label="publish-date"
+						selected='<%= Objects.equals(orderByColumn1, "publishDate") %>'
+						value="publishDate"
+					/>
+					<aui:option
+						label="expiration-date"
+						selected='<%= Objects.equals(orderByColumn1, "expirationDate") %>'
+						value="expirationDate"
+					/>
+					<aui:option
+						label="priority"
+						selected='<%= Objects.equals(orderByColumn1, "priority") %>'
+						value="priority"
+					/>
 				</aui:select>
 
 				<%
@@ -57,7 +85,12 @@
 						url="javascript:;"
 					/>
 
-					<aui:input cssClass="order-by-type-field" name="TypeSettingsProperties--orderByType1--" type="hidden" value="<%= orderByType1 %>" />
+					<aui:input
+						cssClass="order-by-type-field"
+						name="TypeSettingsProperties--orderByType1--"
+						type="hidden"
+						value="<%= orderByType1 %>"
+					/>
 				</aui:field-wrapper>
 			</aui:col>
 
@@ -67,13 +100,41 @@
 				String orderByColumn2 = editAssetListDisplayContext.getOrderByColumn2();
 				%>
 
-				<aui:select label="and-then-by" name="TypeSettingsProperties--orderByColumn2--" wrapperCssClass="field-inline w80">
-					<aui:option label="title" selected='<%= Objects.equals(orderByColumn2, "title") %>' value="title" />
-					<aui:option label="create-date" selected='<%= Objects.equals(orderByColumn2, "createDate") %>' value="createDate" />
-					<aui:option label="modified-date" selected='<%= Objects.equals(orderByColumn2, "modifiedDate") %>' value="modifiedDate" />
-					<aui:option label="publish-date" selected='<%= Objects.equals(orderByColumn2, "publishDate") %>' value="publishDate" />
-					<aui:option label="expiration-date" selected='<%= Objects.equals(orderByColumn2, "expirationDate") %>' value="expirationDate" />
-					<aui:option label="priority" selected='<%= Objects.equals(orderByColumn2, "priority") %>' value="priority" />
+				<aui:select
+					label="and-then-by"
+					name="TypeSettingsProperties--orderByColumn2--"
+					wrapperCssClass="field-inline w80"
+				>
+					<aui:option
+						label="title"
+						selected='<%= Objects.equals(orderByColumn2, "title") %>'
+						value="title"
+					/>
+					<aui:option
+						label="create-date"
+						selected='<%= Objects.equals(orderByColumn2, "createDate") %>'
+						value="createDate"
+					/>
+					<aui:option
+						label="modified-date"
+						selected='<%= Objects.equals(orderByColumn2, "modifiedDate") %>'
+						value="modifiedDate"
+					/>
+					<aui:option
+						label="publish-date"
+						selected='<%= Objects.equals(orderByColumn2, "publishDate") %>'
+						value="publishDate"
+					/>
+					<aui:option
+						label="expiration-date"
+						selected='<%= Objects.equals(orderByColumn2, "expirationDate") %>'
+						value="expirationDate"
+					/>
+					<aui:option
+						label="priority"
+						selected='<%= Objects.equals(orderByColumn2, "priority") %>'
+						value="priority"
+					/>
 				</aui:select>
 
 				<%
@@ -99,7 +160,12 @@
 						url="javascript:;"
 					/>
 
-					<aui:input cssClass="order-by-type-field" name="TypeSettingsProperties--orderByType2--" type="hidden" value="<%= orderByType2 %>" />
+					<aui:input
+						cssClass="order-by-type-field"
+						name="TypeSettingsProperties--orderByType2--"
+						type="hidden"
+						value="<%= orderByType2 %>"
+					/>
 				</aui:field-wrapper>
 			</aui:col>
 		</aui:row>

@@ -57,7 +57,12 @@ userGroupSearch.setResults(userGroups);
 boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 %>
 
-<aui:input disabled="<%= true %>" name="userGroupsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
+<aui:input
+	disabled="<%= true %>"
+	name="userGroupsRedirect"
+	type="hidden"
+	value="<%= portletURL.toString() %>"
+/>
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
@@ -69,10 +74,7 @@ boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
+		<liferay-frontend:management-bar-navigation navigationKeys='<%= new String[] {"all"} %>' portletURL="<%= portletURL %>" />
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= userGroupSearch.getOrderByCol() %>"
@@ -83,18 +85,14 @@ boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 
 		<c:if test="<%= showSearch %>">
 			<li>
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
+				<liferay-ui:input-search markupView="lexicon" />
 			</li>
 		</c:if>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
-	<liferay-ui:search-container
-		searchContainer="<%= userGroupSearch %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= userGroupSearch %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.UserGroup"
 			escapedModel="<%= true %>"
@@ -120,8 +118,6 @@ boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

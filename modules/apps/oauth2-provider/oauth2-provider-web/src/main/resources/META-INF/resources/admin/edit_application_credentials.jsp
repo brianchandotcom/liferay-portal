@@ -31,21 +31,46 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 	<portlet:param name="backURL" value="<%= redirect %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= updateOAuth2ApplicationURL %>" id="oauth2-application-fm" method="post" name="oauth2-application-fm">
+<aui:form
+	action="<%= updateOAuth2ApplicationURL %>"
+	id="oauth2-application-fm"
+	method="post"
+	name="oauth2-application-fm"
+>
 	<div class="container-fluid container-fluid-max-xl container-view">
 		<div class="sheet">
 			<div class="row">
 				<div class="col-lg-12">
-					<liferay-ui:error exception="<%= DuplicateOAuth2ApplicationClientIdException.class %>" focusField="clientId" message="client-id-already-exists" />
+					<liferay-ui:error
+						exception="<%= DuplicateOAuth2ApplicationClientIdException.class %>"
+						focusField="clientId"
+						message="client-id-already-exists"
+					/>
 
 					<liferay-ui:error exception="<%= OAuth2ApplicationClientGrantTypeException.class %>">
 						<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuth2ApplicationClientGrantTypeException)errorException).getMessage()) %>" key="grant-type-x-is-unsupported-for-this-client-type" />
 					</liferay-ui:error>
 
-					<liferay-ui:error exception="<%= OAuth2ApplicationHomePageURLException.class %>" focusField="homePageURL" message="home-page-url-is-invalid" />
-					<liferay-ui:error exception="<%= OAuth2ApplicationHomePageURLSchemeException.class %>" focusField="homePageURL" message="home-page-url-scheme-is-invalid" />
-					<liferay-ui:error exception="<%= OAuth2ApplicationNameException.class %>" focusField="name" message="missing-application-name" />
-					<liferay-ui:error exception="<%= OAuth2ApplicationPrivacyPolicyURLException.class %>" focusField="privacyPolicyURL" message="privacy-policy-url-is-invalid" />
+					<liferay-ui:error
+						exception="<%= OAuth2ApplicationHomePageURLException.class %>"
+						focusField="homePageURL"
+						message="home-page-url-is-invalid"
+					/>
+					<liferay-ui:error
+						exception="<%= OAuth2ApplicationHomePageURLSchemeException.class %>"
+						focusField="homePageURL"
+						message="home-page-url-scheme-is-invalid"
+					/>
+					<liferay-ui:error
+						exception="<%= OAuth2ApplicationNameException.class %>"
+						focusField="name"
+						message="missing-application-name"
+					/>
+					<liferay-ui:error
+						exception="<%= OAuth2ApplicationPrivacyPolicyURLException.class %>"
+						focusField="privacyPolicyURL"
+						message="privacy-policy-url-is-invalid"
+					/>
 
 					<liferay-ui:error exception="<%= OAuth2ApplicationPrivacyPolicyURLSchemeException.class %>" focusField="privacyPolicyURL">
 						<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuth2ApplicationPrivacyPolicyURLSchemeException)errorException).getMessage()) %>" key="privacy-policy-url-scheme-is-invalid" />
@@ -92,20 +117,48 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 					<c:if test="<%= oAuth2Application != null %>">
 						<aui:fieldset style="margin-bottom: 1em; border-bottom: 2px solid #F0F0F0;">
 							<div class="pencil-wrapper">
-								<aui:button href="" onClick='<%= renderResponse.getNamespace() + "showEditClientIdModal();" %>' value="edit" />
+								<aui:button
+									href=""
+									onClick='<%= renderResponse.getNamespace() + "showEditClientIdModal();" %>'
+									value="edit"
+								/>
 
-								<aui:input helpMessage="client-id-help" name="clientId" readonly="true" required="<%= true %>" type="text" />
+								<aui:input
+									helpMessage="client-id-help"
+									name="clientId"
+									readonly="true"
+									required="<%= true %>"
+									type="text"
+								/>
 							</div>
 
-							<aui:input name="originalClientId" type="hidden" value="<%= clientId %>" />
+							<aui:input
+								name="originalClientId"
+								type="hidden"
+								value="<%= clientId %>"
+							/>
 
 							<div class="pencil-wrapper">
-								<aui:button href="" onClick='<%= renderResponse.getNamespace() + "showEditClientSecretModal();" %>' value="edit" />
+								<aui:button
+									href=""
+									onClick='<%= renderResponse.getNamespace() + "showEditClientSecretModal();" %>'
+									value="edit"
+								/>
 
-								<aui:input helpMessage="client-secret-help" name="clientSecret" readonly="true" type="password" value="<%= clientSecret %>" />
+								<aui:input
+									helpMessage="client-secret-help"
+									name="clientSecret"
+									readonly="true"
+									type="password"
+									value="<%= clientSecret %>"
+								/>
 							</div>
 
-							<aui:input name="originalClientSecret" type="hidden" value="<%= clientSecret %>" />
+							<aui:input
+								name="originalClientSecret"
+								type="hidden"
+								value="<%= clientSecret %>"
+							/>
 						</aui:fieldset>
 					</c:if>
 				</div>
@@ -165,9 +218,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 	<div id="<portlet:namespace />edit-client-id-modal">
 		<div>
 			<div class="portlet-msg-error">
-				<clay:icon
-					symbol="info-panel-open"
-				/>
+				<clay:icon symbol="info-panel-open" />
 
 				<b><liferay-ui:message key="warning" />:</b>
 
@@ -184,10 +235,22 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 				</div>
 			</div>
 
-			<aui:input helpMessage="client-id-help" label="client-id" name="newClientId" onKeyup='<%= renderResponse.getNamespace() + "updatePadlock('clientIdPadlock', this.value, '" + HtmlUtil.escapeJS(clientId) + "')" %>' type="text" value="<%= clientId %>" />
+			<aui:input
+				helpMessage="client-id-help"
+				label="client-id"
+				name="newClientId"
+				onKeyup='<%= renderResponse.getNamespace() + "updatePadlock('clientIdPadlock', this.value, '" + HtmlUtil.escapeJS(clientId) + "')" %>'
+				type="text"
+				value="<%= clientId %>"
+			/>
 
 			<aui:button-row>
-				<aui:button href="" icon="icon-undo" onClick='<%= renderResponse.getNamespace() + "setControlEqualTo('newClientId', 'originalClientId')" %>' value="revert" />
+				<aui:button
+					href=""
+					icon="icon-undo"
+					onClick='<%= renderResponse.getNamespace() + "setControlEqualTo('newClientId', 'originalClientId')" %>'
+					value="revert"
+				/>
 			</aui:button-row>
 		</div>
 	</div>
@@ -195,9 +258,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 	<div id="<portlet:namespace />edit-client-secret-modal">
 		<div>
 			<div class="portlet-msg-error">
-				<clay:icon
-					symbol="info-panel-open"
-				/>
+				<clay:icon symbol="info-panel-open" />
 
 				<b><liferay-ui:message key="warning" />:</b>
 
@@ -214,12 +275,29 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 				</div>
 			</div>
 
-			<aui:input helpMessage="client-secret-id" label="client-secret" name="newClientSecret" onKeyup='<%= renderResponse.getNamespace() + "updatePadlock('clientSecretPadlock', this.value, '" + HtmlUtil.escapeJS(clientSecret) + "')" %>' type="text" value="<%= clientSecret %>" />
+			<aui:input
+				helpMessage="client-secret-id"
+				label="client-secret"
+				name="newClientSecret"
+				onKeyup='<%= renderResponse.getNamespace() + "updatePadlock('clientSecretPadlock', this.value, '" + HtmlUtil.escapeJS(clientSecret) + "')" %>'
+				type="text"
+				value="<%= clientSecret %>"
+			/>
 
 			<aui:button-row>
-				<aui:button href="" icon="icon-plus" onClick='<%= renderResponse.getNamespace() + "generateRandomSecret()" %>' value="generate-new-secret" />
+				<aui:button
+					href=""
+					icon="icon-plus"
+					onClick='<%= renderResponse.getNamespace() + "generateRandomSecret()" %>'
+					value="generate-new-secret"
+				/>
 
-				<aui:button href="" icon="icon-undo" onClick='<%= renderResponse.getNamespace() + "setControlEqualTo('newClientSecret', 'originalClientSecret')" %>' value="revert" />
+				<aui:button
+					href=""
+					icon="icon-undo"
+					onClick='<%= renderResponse.getNamespace() + "setControlEqualTo('newClientSecret', 'originalClientSecret')" %>'
+					value="revert"
+				/>
 			</aui:button-row>
 		</div>
 	</div>

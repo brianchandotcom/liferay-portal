@@ -291,9 +291,7 @@
 
 <div class="row">
 	<div class="col-md-6" id="image-card-block">
-		<clay:horizontal-card
-			title="ReallySuperInsanelyJustIncrediblyLongAndTotallyNotPossibleWordButWeAreReallyTryingToCoverAllOurBasesHereJustInCaseSomeoneIsNutsAsPerUsual"
-		/>
+		<clay:horizontal-card title="ReallySuperInsanelyJustIncrediblyLongAndTotallyNotPossibleWordButWeAreReallyTryingToCoverAllOurBasesHereJustInCaseSomeoneIsNutsAsPerUsual" />
 	</div>
 
 	<div class="col-md-6" id="image-card-icon-block">

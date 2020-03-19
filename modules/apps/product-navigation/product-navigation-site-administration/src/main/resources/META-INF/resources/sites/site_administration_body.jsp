@@ -35,7 +35,11 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 
 				<div class="float-right staging-links">
 					<span class="<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL()) ? "active" : StringPool.BLANK %>">
-						<aui:a data="<%= data %>" href="<%= siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL() %>" label="staging" />
+						<aui:a
+							data="<%= data %>"
+							href="<%= siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL() %>"
+							label="staging"
+						/>
 					</span>
 					<span class="links-separator"> |</span>
 
@@ -47,7 +51,11 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 					%>
 
 						<span class="<%= Validator.isNull(liveGroupURL) ? "active" : StringPool.BLANK %>">
-							<aui:a data="<%= data %>" href="<%= liveGroupURL %>" label="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupLabel() %>" />
+							<aui:a
+								data="<%= data %>"
+								href="<%= liveGroupURL %>"
+								label="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupLabel() %>"
+							/>
 						</span>
 
 					<%
@@ -58,7 +66,12 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 						}
 					%>
 
-						<aui:a data="<%= data %>" href="" id="remoteLiveLink" label="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupLabel() %>" />
+						<aui:a
+							data="<%= data %>"
+							href=""
+							id="remoteLiveLink"
+							label="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupLabel() %>"
+						/>
 
 						<aui:script use="aui-tooltip">
 							new A.Tooltip({
@@ -80,15 +93,17 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 			</c:if>
 
 			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isDisplaySiteLink() %>">
-				<aui:a cssClass="goto-link list-group-heading panel-header-link" href="<%= siteAdministrationPanelCategoryDisplayContext.getGroupURL() %>" label="go-to-site" />
+				<aui:a
+					cssClass="goto-link list-group-heading panel-header-link"
+					href="<%= siteAdministrationPanelCategoryDisplayContext.getGroupURL() %>"
+					label="go-to-site"
+				/>
 			</c:if>
 		</div>
 	</div>
 
 	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteAdministration() %>">
-		<liferay-application-list:panel-category-body
-			panelCategory="<%= panelCategory %>"
-		/>
+		<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
 	</c:if>
 </c:if>
 

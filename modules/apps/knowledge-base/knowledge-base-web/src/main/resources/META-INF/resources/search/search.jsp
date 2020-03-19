@@ -77,10 +77,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 	searchContainer.setTotal(hits.getLength());
 	%>
 
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.util.Tuple"
-		modelVar="tuple"
-	>
+	<liferay-ui:search-container-row className="com.liferay.portal.kernel.util.Tuple" modelVar="tuple">
 		<liferay-portlet:renderURL varImpl="rowURL">
 			<portlet:param name="mvcPath" value="/search/view_article.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -107,10 +107,7 @@ fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-i
 		<div class="autofit-row mb-4 metadata-author">
 			<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
 				<div class="asset-avatar autofit-col inline-item-before mr-3 pt-1">
-					<liferay-ui:user-portrait
-						size="lg"
-						userId="<%= assetRenderer.getUserId() %>"
-					/>
+					<liferay-ui:user-portrait size="lg" userId="<%= assetRenderer.getUserId() %>" />
 				</div>
 			</c:if>
 
@@ -246,10 +243,7 @@ fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-i
 
 			<c:if test="<%= showRatings %>">
 				<div class="asset-ratings autofit-col mr-3">
-					<liferay-ui:ratings
-						className="<%= assetEntry.getClassName() %>"
-						classPK="<%= assetEntry.getClassPK() %>"
-					/>
+					<liferay-ui:ratings className="<%= assetEntry.getClassName() %>" classPK="<%= assetEntry.getClassPK() %>" />
 				</div>
 			</c:if>
 
@@ -395,7 +389,12 @@ fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-i
 				%>
 
 					<div class="autofit-col component-subtitle export-action">
-						<aui:a cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm" data="<%= data %>" href="<%= exportAssetURL.toString() %>" label='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", title, StringUtil.toUpperCase(HtmlUtil.escape(extension))}, false) %>' />
+						<aui:a
+							cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm"
+							data="<%= data %>"
+							href="<%= exportAssetURL.toString() %>"
+							label='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", title, StringUtil.toUpperCase(HtmlUtil.escape(extension))}, false) %>'
+						/>
 					</div>
 
 				<%

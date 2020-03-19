@@ -28,28 +28,29 @@ if (ddmStructure != null) {
 }
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems='<%= journalDisplayContext.getNavigationBarItems("templates") %>'
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems='<%= journalDisplayContext.getNavigationBarItems("templates") %>' />
 
-<clay:management-toolbar
-	displayContext="<%= journalDDMTemplateManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= journalDDMTemplateManagementToolbarDisplayContext %>" />
 
 <portlet:actionURL name="/journal/delete_ddm_template" var="deleteDDMTemplateURL">
 	<portlet:param name="mvcPath" value="/view_ddm_templates.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteDDMTemplateURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+<aui:form
+	action="<%= deleteDDMTemplateURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
 
 	<liferay-ui:error exception="<%= RequiredTemplateException.MustNotDeleteTemplateReferencedByTemplateLinks.class %>" message="the-template-cannot-be-deleted-because-it-is-required-by-one-or-more-template-links" />
 
-	<liferay-ui:search-container
-		id="ddmTemplates"
-		searchContainer="<%= journalDDMTemplateDisplayContext.getDDMTemplateSearch() %>"
-	>
+	<liferay-ui:search-container id="ddmTemplates" searchContainer="<%= journalDDMTemplateDisplayContext.getDDMTemplateSearch() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
 			keyProperty="templateId"
@@ -84,16 +85,11 @@ if (ddmStructure != null) {
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:vertical-card
-							verticalCard="<%= new JournalDDMTemplateVerticalCard(ddmTemplate, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
-						/>
+						<clay:vertical-card verticalCard="<%= new JournalDDMTemplateVerticalCard(ddmTemplate, renderRequest, renderResponse, searchContainer.getRowChecker()) %>" />
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:search-container-column-text
-						name="id"
-						property="templateId"
-					/>
+					<liferay-ui:search-container-column-text name="id" property="templateId" />
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
@@ -122,54 +118,30 @@ if (ddmStructure != null) {
 						}
 						%>
 
-						<liferay-ui:search-container-column-text
-							name="structure"
-							value="<%= HtmlUtil.escape(ddmStructureName) %>"
-						/>
+						<liferay-ui:search-container-column-text name="structure" value="<%= HtmlUtil.escape(ddmStructureName) %>" />
 					</c:if>
 
-					<liferay-ui:search-container-column-text
-						name="language"
-						value='<%= LanguageUtil.get(request, HtmlUtil.escape(ddmTemplate.getLanguage()) + "[stands-for]") %>'
-					/>
+					<liferay-ui:search-container-column-text name="language" value='<%= LanguageUtil.get(request, HtmlUtil.escape(ddmTemplate.getLanguage()) + "[stands-for]") %>' />
 
 					<%
 					Group group = GroupLocalServiceUtil.getGroup(ddmTemplate.getGroupId());
 					%>
 
-					<liferay-ui:search-container-column-text
-						name="scope"
-						value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
-					/>
+					<liferay-ui:search-container-column-text name="scope" value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>" />
 
-					<liferay-ui:search-container-column-date
-						name="modified-date"
-						value="<%= ddmTemplate.getModifiedDate() %>"
-					/>
+					<liferay-ui:search-container-column-date name="modified-date" value="<%= ddmTemplate.getModifiedDate() %>" />
 
 					<liferay-ui:search-container-column-text>
-						<clay:dropdown-actions
-							defaultEventHandler="<%= JournalWebConstants.JOURNAL_DDM_TEMPLATE_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-							dropdownItems="<%= journalDDMTemplateDisplayContext.getDDMTemplateActionDropdownItems(ddmTemplate) %>"
-						/>
+						<clay:dropdown-actions defaultEventHandler="<%= JournalWebConstants.JOURNAL_DDM_TEMPLATE_ELEMENTS_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= journalDDMTemplateDisplayContext.getDDMTemplateActionDropdownItems(ddmTemplate) %>" />
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= journalDDMTemplateDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= journalDDMTemplateDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
-<liferay-frontend:component
-	componentId="<%= journalDDMTemplateManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/DDMTemplatesManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= journalDDMTemplateManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/DDMTemplatesManagementToolbarDefaultEventHandler.es" />
 
-<liferay-frontend:component
-	componentId="<%= JournalWebConstants.JOURNAL_DDM_TEMPLATE_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-	module="js/DDMTemplateElementsDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= JournalWebConstants.JOURNAL_DDM_TEMPLATE_ELEMENTS_DEFAULT_EVENT_HANDLER %>" module="js/DDMTemplateElementsDefaultEventHandler.es" />

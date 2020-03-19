@@ -24,15 +24,11 @@ SearchContainer<CTCollection> searchContainer = selectChangeListDisplayContext.g
 SelectChangeListManagementToolbarDisplayContext selectChangeListManagementToolbarDisplayContext = new SelectChangeListManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, searchContainer);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= selectChangeListManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= selectChangeListManagementToolbarDisplayContext %>" />
 
 <c:if test="<%= !searchContainer.hasResults() %>">
 	<div class="contact-information-empty-results-message-wrapper">
-		<liferay-ui:empty-result-message
-			message="<%= searchContainer.getEmptyResultsMessage() %>"
-		/>
+		<liferay-ui:empty-result-message message="<%= searchContainer.getEmptyResultsMessage() %>" />
 	</div>
 </c:if>
 
@@ -50,9 +46,7 @@ SelectChangeListManagementToolbarDisplayContext selectChangeListManagementToolba
 
 					<tr>
 						<td>
-							<liferay-ui:user-portrait
-								userId="<%= ctCollection.getUserId() %>"
-							/>
+							<liferay-ui:user-portrait userId="<%= ctCollection.getUserId() %>" />
 						</td>
 						<td class="table-cell-expand">
 							<c:choose>
@@ -66,7 +60,11 @@ SelectChangeListManagementToolbarDisplayContext selectChangeListManagementToolba
 									</div>
 								</c:when>
 								<c:otherwise>
-									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<aui:a
+										cssClass="selector-button"
+										data="<%= data %>"
+										href="javascript:;"
+									>
 										<div class="change-list-name">
 											<%= HtmlUtil.escape(ctCollection.getName()) %>
 										</div>
@@ -88,10 +86,7 @@ SelectChangeListManagementToolbarDisplayContext selectChangeListManagementToolba
 		</table>
 	</div>
 
-	<liferay-ui:search-paginator
-		markupView="lexicon"
-		searchContainer="<%= searchContainer %>"
-	/>
+	<liferay-ui:search-paginator markupView="lexicon" searchContainer="<%= searchContainer %>" />
 </div>
 
 <aui:script>

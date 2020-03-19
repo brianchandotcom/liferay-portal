@@ -15,20 +15,14 @@
 --%>
 
 <c:if test="<%= liveGroupRemoteStaging %>">
-	<liferay-staging:alert
-		dismissible="<%= true %>"
-		type="WARNING"
-	>
+	<liferay-staging:alert dismissible="<%= true %>" type="WARNING">
 		<liferay-ui:message key='<%= LanguageUtil.get(request, "live-group-remote-staging-alert") %>' />
 		<liferay-ui:message arguments='<%= "javascript:" + renderResponse.getNamespace() + "saveGroup(true);" %>' key="you-can-also-forcibly-disable-remote-staging" />
 	</liferay-staging:alert>
 </c:if>
 
 <c:if test="<%= (lastCompletedInitialPublicationBackgroundTask != null) && (lastCompletedInitialPublicationBackgroundTask.getStatus() == BackgroundTaskConstants.STATUS_FAILED) %>">
-	<liferay-staging:alert
-		dismissible="<%= true %>"
-		type="WARNING"
-	>
+	<liferay-staging:alert dismissible="<%= true %>" type="WARNING">
 		<liferay-ui:message key="an-unexpected-error-occurred-with-the-initial-staging-publication" />
 
 		<portlet:actionURL name="deleteBackgroundTask" var="deleteBackgroundTaskURL">
@@ -50,9 +44,7 @@
 </c:if>
 
 <c:if test="<%= stagedLocally && (BackgroundTaskManagerUtil.getBackgroundTasksCount(liveGroupId, BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR, false) > 0) %>">
-	<liferay-staging:alert
-		type="WARNING"
-	>
+	<liferay-staging:alert type="WARNING">
 		<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
 
 		<a id="<portlet:namespace />publishProcessesLink"><liferay-ui:message key="the-status-of-the-publication-can-be-checked-on-the-publish-screen" /></a>
@@ -70,7 +62,11 @@
 						id: 'publishProcesses',
 						title: '<liferay-ui:message key="initial-publication" />',
 
-						<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="publishProcessesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<liferay-portlet:renderURL
+							portletName="<%= PortletKeys.EXPORT_IMPORT %>"
+							var="publishProcessesURL"
+							windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+						>
 							<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 							<portlet:param name="<%= Constants.CMD %>" value="view_processes" />
 							<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
@@ -88,15 +84,10 @@
 	</script>
 </c:if>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="staging"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="staging" />
 
 <c:if test="<%= privateLayoutSet.isLayoutSetPrototypeLinkActive() || publicLayoutSet.isLayoutSetPrototypeLinkActive() %>">
-	<liferay-staging:alert
-		type="WARNING"
-	>
+	<liferay-staging:alert type="WARNING">
 		<liferay-ui:message key="staging-cannot-be-used-for-this-site-because-the-propagation-of-changes-from-the-site-template-is-enabled" />
 
 		<c:choose>
@@ -123,11 +114,19 @@
 	%>
 
 	<c:if test="<%= (le.getType() == LocaleException.TYPE_DEFAULT) || (le.getType() == LocaleException.TYPE_EXPORT_IMPORT) %>">
-		<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>"
+			key="the-default-language-x-does-not-match-the-portal's-available-languages-x"
+			translateArguments="<%= false %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= le.getType() == LocaleException.TYPE_DISPLAY_SETTINGS %>">
-		<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-available-languages-x-do-not-match-the-site's-available-languages-x" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>"
+			key="the-available-languages-x-do-not-match-the-site's-available-languages-x"
+			translateArguments="<%= false %>"
+		/>
 	</c:if>
 </liferay-ui:error>
 

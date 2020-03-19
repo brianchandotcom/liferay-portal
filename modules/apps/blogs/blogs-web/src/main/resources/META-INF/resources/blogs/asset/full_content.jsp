@@ -39,9 +39,7 @@ String entryTitle = BlogsEntryUtil.getDisplayTitle(resourceBundle, entry);
 			<%= entry.getContent() %>
 		</div>
 
-		<liferay-expando:custom-attributes-available
-			className="<%= BlogsEntry.class.getName() %>"
-		>
+		<liferay-expando:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
 			<liferay-expando:custom-attribute-list
 				className="<%= BlogsEntry.class.getName() %>"
 				classPK="<%= (entry != null) ? entry.getEntryId() : 0 %>"

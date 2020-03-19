@@ -31,42 +31,51 @@ BlogsPortletInstanceSettingsHelper blogsPortletInstanceSettingsHelper = new Blog
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsible="<%= false %>"
-				label="general-settings"
-			>
-				<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= blogsPortletInstanceConfiguration.enableRatings() %>" />
+			<liferay-frontend:fieldset collapsible="<%= false %>" label="general-settings">
+				<aui:input
+					name="preferences--enableRatings--"
+					type="checkbox"
+					value="<%= blogsPortletInstanceConfiguration.enableRatings() %>"
+				/>
 
 				<c:if test="<%= PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED %>">
-					<aui:input name="preferences--enableComments--" type="checkbox" value="<%= blogsPortletInstanceConfiguration.enableComments() %>" />
+					<aui:input
+						name="preferences--enableComments--"
+						type="checkbox"
+						value="<%= blogsPortletInstanceConfiguration.enableComments() %>"
+					/>
 				</c:if>
 
-				<aui:input label="show-view-count" name="preferences--enableViewCount--" type="checkbox" value="<%= blogsPortletInstanceConfiguration.enableViewCount() %>" />
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
-
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsible="<%= false %>"
-				label="social-bookmarks"
-			>
-				<liferay-social-bookmarks:bookmarks-settings
-					displayStyle="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
-					types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(blogsPortletInstanceConfiguration) %>"
+				<aui:input
+					label="show-view-count"
+					name="preferences--enableViewCount--"
+					type="checkbox"
+					value="<%= blogsPortletInstanceConfiguration.enableViewCount() %>"
 				/>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsible="<%= false %>"
-				label="list-view"
-			>
+			<liferay-frontend:fieldset collapsible="<%= false %>" label="social-bookmarks">
+				<liferay-social-bookmarks:bookmarks-settings displayStyle="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>" types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(blogsPortletInstanceConfiguration) %>" />
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset collapsible="<%= false %>" label="list-view">
 				<aui:select label="maximum-items-to-display" name="preferences--pageDelta--">
 
 					<%
@@ -103,17 +112,29 @@ BlogsPortletInstanceSettingsHelper blogsPortletInstanceSettingsHelper = new Blog
 		</liferay-frontend:fieldset-group>
 
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsible="<%= false %>"
-				label="detail-view"
-			>
-				<aui:input label="enable-report-inappropriate-content" name="preferences--enableFlags--" type="checkbox" value="<%= blogsPortletInstanceConfiguration.enableFlags() %>" />
+			<liferay-frontend:fieldset collapsible="<%= false %>" label="detail-view">
+				<aui:input
+					label="enable-report-inappropriate-content"
+					name="preferences--enableFlags--"
+					type="checkbox"
+					value="<%= blogsPortletInstanceConfiguration.enableFlags() %>"
+				/>
 
 				<c:if test="<%= PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED %>">
-					<aui:input label="enable-ratings-for-comments" name="preferences--enableCommentRatings--" type="checkbox" value="<%= blogsPortletInstanceConfiguration.enableCommentRatings() %>" />
+					<aui:input
+						label="enable-ratings-for-comments"
+						name="preferences--enableCommentRatings--"
+						type="checkbox"
+						value="<%= blogsPortletInstanceConfiguration.enableCommentRatings() %>"
+					/>
 				</c:if>
 
-				<aui:input label="show-related-assets" name="preferences--enableRelatedAssets--" type="checkbox" value="<%= blogsPortletInstanceConfiguration.enableRelatedAssets() %>" />
+				<aui:input
+					label="show-related-assets"
+					name="preferences--enableRelatedAssets--"
+					type="checkbox"
+					value="<%= blogsPortletInstanceConfiguration.enableRelatedAssets() %>"
+				/>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

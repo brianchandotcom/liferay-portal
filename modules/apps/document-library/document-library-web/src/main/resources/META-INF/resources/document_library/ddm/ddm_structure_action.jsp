@@ -32,10 +32,7 @@ com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = (com.liferay.
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE) %>">
-		<liferay-ui:icon
-			message="edit"
-			url="<%= String.valueOf(dLViewFileEntryMetadataSetsDisplayContext.getEditDDMStructurePortletURL(ddmStructure)) %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= String.valueOf(dLViewFileEntryMetadataSetsDisplayContext.getEditDDMStructurePortletURL(ddmStructure)) %>" />
 	</c:if>
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.PERMISSIONS) %>">
@@ -56,15 +53,10 @@ com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = (com.liferay.
 	</c:if>
 
 	<c:if test="<%= dLViewFileEntryMetadataSetsDisplayContext.isShowAddStructureButton() %>">
-		<liferay-ui:icon
-			message="copy"
-			url="<%= String.valueOf(dLViewFileEntryMetadataSetsDisplayContext.getCopyDDMStructurePortletURL(ddmStructure)) %>"
-		/>
+		<liferay-ui:icon message="copy" url="<%= String.valueOf(dLViewFileEntryMetadataSetsDisplayContext.getCopyDDMStructurePortletURL(ddmStructure)) %>" />
 	</c:if>
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.DELETE) %>">
-		<liferay-ui:icon-delete
-			url="<%= String.valueOf(dLViewFileEntryMetadataSetsDisplayContext.getDeleteDDMStructurePortletURL(ddmStructure)) %>"
-		/>
+		<liferay-ui:icon-delete url="<%= String.valueOf(dLViewFileEntryMetadataSetsDisplayContext.getDeleteDDMStructurePortletURL(ddmStructure)) %>" />
 	</c:if>
 </liferay-ui:icon-menu>

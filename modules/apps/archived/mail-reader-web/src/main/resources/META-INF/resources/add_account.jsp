@@ -38,10 +38,7 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 }
 %>
 
-<liferay-ui:tabs
-	names="<%= tabs1Names %>"
-	refresh="<%= false %>"
->
+<liferay-ui:tabs names="<%= tabs1Names %>" refresh="<%= false %>">
 
 	<%
 	for (int i = 0; i < accountsJSONArray.length(); i++) {
@@ -65,22 +62,74 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 		<liferay-ui:section>
 			<div class="mail-status"></div>
 
-			<aui:form cssClass="account-form" name='<%= "dialogFm" + (i + 1) %>' onSubmit="event.preventDefault();">
-				<aui:input name="personalName" type="hidden" value="<%= user.getFullName() %>" />
-				<aui:input name="protocol" type="hidden" value="<%= protocol %>" />
+			<aui:form
+				cssClass="account-form"
+				name='<%= "dialogFm" + (i + 1) %>'
+				onSubmit="event.preventDefault();"
+			>
+				<aui:input
+					name="personalName"
+					type="hidden"
+					value="<%= user.getFullName() %>"
+				/>
+				<aui:input
+					name="protocol"
+					type="hidden"
+					value="<%= protocol %>"
+				/>
 				<aui:input name="signature" type="hidden" />
-				<aui:input name="useSignature" type="hidden" value="false" />
-				<aui:input name="folderPrefix" type="hidden" value="<%= folderPrefix %>" />
-				<aui:input name="defaultSender" type="hidden" value="false" />
-				<aui:input name="useLocalPartAsLogin" type="hidden" value="<%= useLocalPartAsLogin %>" />
+				<aui:input
+					name="useSignature"
+					type="hidden"
+					value="false"
+				/>
+				<aui:input
+					name="folderPrefix"
+					type="hidden"
+					value="<%= folderPrefix %>"
+				/>
+				<aui:input
+					name="defaultSender"
+					type="hidden"
+					value="false"
+				/>
+				<aui:input
+					name="useLocalPartAsLogin"
+					type="hidden"
+					value="<%= useLocalPartAsLogin %>"
+				/>
 
 				<c:if test="<%= hideSettings %>">
-					<aui:input name="incomingHostName" type="hidden" value="<%= incomingHostName %>" />
-					<aui:input name="incomingPort" type="hidden" value="<%= incomingPort %>" />
-					<aui:input name="incomingSecure" type="hidden" value="<%= incomingSecure %>" />
-					<aui:input name="outgoingHostName" type="hidden" value="<%= outgoingHostName %>" />
-					<aui:input name="outgoingPort" type="hidden" value="<%= outgoingPort %>" />
-					<aui:input name="outgoingSecure" type="hidden" value="<%= outgoingSecure %>" />
+					<aui:input
+						name="incomingHostName"
+						type="hidden"
+						value="<%= incomingHostName %>"
+					/>
+					<aui:input
+						name="incomingPort"
+						type="hidden"
+						value="<%= incomingPort %>"
+					/>
+					<aui:input
+						name="incomingSecure"
+						type="hidden"
+						value="<%= incomingSecure %>"
+					/>
+					<aui:input
+						name="outgoingHostName"
+						type="hidden"
+						value="<%= outgoingHostName %>"
+					/>
+					<aui:input
+						name="outgoingPort"
+						type="hidden"
+						value="<%= outgoingPort %>"
+					/>
+					<aui:input
+						name="outgoingSecure"
+						type="hidden"
+						value="<%= outgoingSecure %>"
+					/>
 				</c:if>
 
 				<c:if test="<%= useLocalPartAsLogin %>">
@@ -98,7 +147,11 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 
 					<aui:input name="password" type="password" />
 
-					<aui:input name="savePassword" type="checkbox" value="false" />
+					<aui:input
+						name="savePassword"
+						type="checkbox"
+						value="false"
+					/>
 				</aui:fieldset>
 
 				<c:if test="<%= !hideSettings %>">
@@ -119,7 +172,11 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 
 						</aui:select>
 
-						<aui:input label="use-secure-incoming-connection" name="incomingSecure" type="checkbox" />
+						<aui:input
+							label="use-secure-incoming-connection"
+							name="incomingSecure"
+							type="checkbox"
+						/>
 					</aui:fieldset>
 
 					<aui:fieldset label="outgoing-settings">
@@ -139,12 +196,20 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 
 						</aui:select>
 
-						<aui:input label="use-secure-outgoing-connection" name="outgoingSecure" type="checkbox" />
+						<aui:input
+							label="use-secure-outgoing-connection"
+							name="outgoingSecure"
+							type="checkbox"
+						/>
 					</aui:fieldset>
 				</c:if>
 
 				<aui:button-row>
-					<aui:button cssClass="add-account" type="submit" value="add-account" />
+					<aui:button
+						cssClass="add-account"
+						type="submit"
+						value="add-account"
+					/>
 				</aui:button-row>
 			</aui:form>
 		</liferay-ui:section>

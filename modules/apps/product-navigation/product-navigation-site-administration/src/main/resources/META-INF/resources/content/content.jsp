@@ -22,10 +22,7 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationLis
 ContentPanelCategoryDisplayContext contentPanelCategoryDisplayContext = new ContentPanelCategoryDisplayContext(renderRequest);
 %>
 
-<liferay-application-list:panel-category
-	panelCategory="<%= panelCategory %>"
-	showBody="<%= false %>"
->
+<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showBody="<%= false %>">
 
 	<%
 	Group curSite = themeDisplay.getSiteGroup();
@@ -35,9 +32,7 @@ ContentPanelCategoryDisplayContext contentPanelCategoryDisplayContext = new Cont
 
 	<c:choose>
 		<c:when test="<%= scopeLayouts.isEmpty() %>">
-			<liferay-application-list:panel-category-body
-				panelCategory="<%= panelCategory %>"
-			/>
+			<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
 		</c:when>
 		<c:otherwise>
 
@@ -77,9 +72,7 @@ ContentPanelCategoryDisplayContext contentPanelCategoryDisplayContext = new Cont
 						</div>
 					</div>
 
-					<liferay-application-list:panel-category-body
-						panelCategory="<%= panelCategory %>"
-					/>
+					<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
 				</div>
 			</c:if>
 		</c:otherwise>

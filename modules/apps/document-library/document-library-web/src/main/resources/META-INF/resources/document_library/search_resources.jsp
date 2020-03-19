@@ -51,12 +51,18 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 	<liferay-util:include page="/document_library/search_info.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
-<aui:input name="searchRepositoryId" type="hidden" value="<%= searchRepositoryId %>" />
+<aui:input
+	name="repositoryId"
+	type="hidden"
+	value="<%= repositoryId %>"
+/>
+<aui:input
+	name="searchRepositoryId"
+	type="hidden"
+	value="<%= searchRepositoryId %>"
+/>
 
-<liferay-util:buffer
-	var="searchResults"
->
+<liferay-util:buffer var="searchResults">
 
 	<%
 	SearchContainer dlSearchContainer = dlAdminDisplayContext.getSearchContainer();
@@ -69,10 +75,7 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 			searchContainer="<%= dlSearchContainer %>"
 			total="<%= dlSearchContainer.getTotal() %>"
 		>
-			<liferay-ui:search-container-row
-				className="Object"
-				modelVar="result"
-			>
+			<liferay-ui:search-container-row className="Object" modelVar="result">
 				<%@ include file="/document_library/cast_result.jspf" %>
 
 				<c:choose>
@@ -96,34 +99,21 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 
 						<c:choose>
 							<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
-								<liferay-ui:search-container-column-image
-									src="<%= thumbnailSrc %>"
-									toggleRowChecker="<%= true %>"
-								/>
+								<liferay-ui:search-container-column-image src="<%= thumbnailSrc %>" toggleRowChecker="<%= true %>" />
 							</c:when>
 							<c:when test="<%= Validator.isNotNull(latestFileVersion.getExtension()) %>">
 								<liferay-ui:search-container-column-text>
-									<liferay-document-library:mime-type-sticker
-										fileVersion="<%= fileEntry.getFileVersion() %>"
-									/>
+									<liferay-document-library:mime-type-sticker fileVersion="<%= fileEntry.getFileVersion() %>" />
 								</liferay-ui:search-container-column-text>
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:search-container-column-icon
-									icon="documents-and-media"
-									toggleRowChecker="<%= true %>"
-								/>
+								<liferay-ui:search-container-column-icon icon="documents-and-media" toggleRowChecker="<%= true %>" />
 							</c:otherwise>
 						</c:choose>
 
-						<liferay-ui:search-container-column-jsp
-							colspan="<%= 2 %>"
-							path="/document_library/view_file_entry_descriptive.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp colspan="<%= 2 %>" path="/document_library/view_file_entry_descriptive.jsp" />
 
-						<liferay-ui:search-container-column-jsp
-							path="/document_library/file_entry_action.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp path="/document_library/file_entry_action.jsp" />
 					</c:when>
 					<c:when test="<%= (curFolder != null) && DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.VIEW) %>">
 
@@ -135,24 +125,14 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 						row.setPrimaryKey(String.valueOf(curFolder.getPrimaryKey()));
 						%>
 
-						<liferay-ui:search-container-column-icon
-							icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
-							toggleRowChecker="<%= true %>"
-						/>
+						<liferay-ui:search-container-column-icon icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>' toggleRowChecker="<%= true %>" />
 
-						<liferay-ui:search-container-column-jsp
-							colspan="<%= 2 %>"
-							path="/document_library/view_folder_descriptive.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp colspan="<%= 2 %>" path="/document_library/view_folder_descriptive.jsp" />
 
-						<liferay-ui:search-container-column-jsp
-							path="/document_library/folder_action.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp path="/document_library/folder_action.jsp" />
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:search-container-column-icon
-							icon="minus-circle"
-						/>
+						<liferay-ui:search-container-column-icon icon="minus-circle" />
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-row>

@@ -45,7 +45,12 @@ ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = scopeSearchFacet
 
 <c:choose>
 	<c:when test="<%= scopeSearchFacetDisplayContext.isRenderNothing() %>">
-		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getParameterValue() %>" />
+		<aui:input
+			autocomplete="off"
+			name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getParameterName()) %>"
+			type="hidden"
+			value="<%= scopeSearchFacetDisplayContext.getParameterValue() %>"
+		/>
 	</c:when>
 	<c:otherwise>
 		<div class="panel panel-default">
@@ -57,7 +62,12 @@ ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = scopeSearchFacet
 
 			<div class="panel-body">
 				<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
-					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getParameterValue() %>" />
+					<aui:input
+						autocomplete="off"
+						name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getParameterName()) %>"
+						type="hidden"
+						value="<%= scopeSearchFacetDisplayContext.getParameterValue() %>"
+					/>
 
 					<ul class="list-unstyled scopes">
 						<li class="default facet-value">

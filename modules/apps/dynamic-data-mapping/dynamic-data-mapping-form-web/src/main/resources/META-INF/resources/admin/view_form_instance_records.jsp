@@ -24,10 +24,7 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getNavigationItems() %>" />
 
 <clay:alert
 	message='<%= LanguageUtil.get(resourceBundle, "view-current-fields-warning-message") %>'
@@ -51,7 +48,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 />
 
 <div class="container-fluid-1280" id="<portlet:namespace />viewEntriesContainer">
-	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
+	<aui:form
+		action="<%= portletURL.toString() %>"
+		method="post"
+		name="searchContainerForm"
+	>
 		<aui:input name="deleteFormInstanceRecordIds" type="hidden" />
 
 		<liferay-ui:search-container
@@ -80,10 +81,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 
 					<c:choose>
 						<c:when test='<%= StringUtil.equals(ddmFormField.getType(), "image") %>'>
-							<liferay-ui:search-container-column-image
-								name="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnName(ddmFormField) %>"
-								src="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(ddmFormFieldsMap.get(ddmFormField.getName()), ddmFormFieldValuesMap.get(ddmFormField.getName())) %>"
-							/>
+							<liferay-ui:search-container-column-image name="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnName(ddmFormField) %>" src="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(ddmFormFieldsMap.get(ddmFormField.getName()), ddmFormFieldValuesMap.get(ddmFormField.getName())) %>" />
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:search-container-column-text
@@ -98,24 +96,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 				}
 				%>
 
-				<liferay-ui:search-container-column-status
-					name="status"
-					status="<%= ddmFormViewFormInstanceRecordsDisplayContext.getStatus(formInstanceRecord) %>"
-				/>
+				<liferay-ui:search-container-column-status name="status" status="<%= ddmFormViewFormInstanceRecordsDisplayContext.getStatus(formInstanceRecord) %>" />
 
-				<liferay-ui:search-container-column-date
-					name="modified-date"
-					value="<%= formInstanceRecord.getModifiedDate() %>"
-				/>
+				<liferay-ui:search-container-column-date name="modified-date" value="<%= formInstanceRecord.getModifiedDate() %>" />
 
-				<liferay-ui:search-container-column-text
-					name="author"
-					value="<%= HtmlUtil.escape(PortalUtil.getUserName(formInstanceRecord)) %>"
-				/>
+				<liferay-ui:search-container-column-text name="author" value="<%= HtmlUtil.escape(PortalUtil.getUserName(formInstanceRecord)) %>" />
 
-				<liferay-ui:search-container-column-jsp
-					path="/admin/form_instance_record_action.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp path="/admin/form_instance_record_action.jsp" />
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator
@@ -129,9 +116,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 </div>
 
 <div class="container-fluid-1280">
-	<liferay-ui:search-paginator
-		searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearch() %>"
-	/>
+	<liferay-ui:search-paginator searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearch() %>" />
 </div>
 
 <%@ include file="/admin/export_form_instance.jspf" %>

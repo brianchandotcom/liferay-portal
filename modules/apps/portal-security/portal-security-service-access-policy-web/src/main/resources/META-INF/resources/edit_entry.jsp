@@ -54,8 +54,16 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 </portlet:actionURL>
 
 <aui:form action="<%= updateSAPEntryURL %>" cssClass="container-fluid-1280">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="sapEntryId" type="hidden" value="<%= sapEntryId %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="sapEntryId"
+		type="hidden"
+		value="<%= sapEntryId %>"
+	/>
 
 	<liferay-ui:error exception="<%= DuplicateSAPEntryNameException.class %>" message="please-enter-a-unique-service-access-policy-name" />
 	<liferay-ui:error exception="<%= PrincipalException.MustHavePermission.class %>" message="you-do-not-have-the-required-permissions" />
@@ -66,7 +74,11 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input disabled="<%= systemSAPEntry %>" name="name" required="<%= true %>">
+			<aui:input
+				disabled="<%= systemSAPEntry %>"
+				name="name"
+				required="<%= true %>"
+			>
 				<aui:validator errorMessage="this-field-is-required-and-must-contain-only-following-characters" name="custom">
 					function(val, fieldNode, ruleValue) {
 						var allowedCharacters = '<%= HtmlUtil.escapeJS(SAPEntryConstants.NAME_ALLOWED_CHARACTERS) %>';
@@ -80,13 +92,28 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 				</aui:validator>
 			</aui:input>
 
-			<aui:input name="enabled" type="toggle-switch" value="<%= (sapEntry != null) ? sapEntry.isEnabled() : false %>" />
+			<aui:input
+				name="enabled"
+				type="toggle-switch"
+				value="<%= (sapEntry != null) ? sapEntry.isEnabled() : false %>"
+			/>
 
-			<aui:input disabled="<%= systemSAPEntry %>" helpMessage="default-sap-entry-help" label="default" name="defaultSAPEntry" type="toggle-switch" value="<%= (sapEntry != null) ? sapEntry.isDefaultSAPEntry() : false %>" />
+			<aui:input
+				disabled="<%= systemSAPEntry %>"
+				helpMessage="default-sap-entry-help"
+				label="default"
+				name="defaultSAPEntry"
+				type="toggle-switch"
+				value="<%= (sapEntry != null) ? sapEntry.isDefaultSAPEntry() : false %>"
+			/>
 
 			<aui:input name="title" required="<%= true %>" />
 
-			<aui:input cssClass="hide" helpMessage="allowed-service-signatures-help" name="allowedServiceSignatures" />
+			<aui:input
+				cssClass="hide"
+				helpMessage="allowed-service-signatures-help"
+				name="allowedServiceSignatures"
+			/>
 
 			<div id="<portlet:namespace />allowedServiceSignaturesFriendlyContentBox">
 
@@ -109,11 +136,26 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 					<div class="lfr-form-row">
 						<div class="row-fields">
 							<aui:col md="6">
-								<aui:input cssClass="service-class-name" data-service-class-name="<%= serviceClassName %>" id='<%= "serviceClassName" + i %>' label="service-class" name="serviceClassName" type="text" value="<%= serviceClassName %>" />
+								<aui:input
+									cssClass="service-class-name"
+									data-service-class-name="<%= serviceClassName %>"
+									id='<%= "serviceClassName" + i %>'
+									label="service-class"
+									name="serviceClassName"
+									type="text"
+									value="<%= serviceClassName %>"
+								/>
 							</aui:col>
 
 							<aui:col md="6">
-								<aui:input cssClass="action-method-name" id='<%= "actionMethodName" + i %>' label="method-name" name="actionMethodName" type="text" value="<%= actionMethodName %>" />
+								<aui:input
+									cssClass="action-method-name"
+									id='<%= "actionMethodName" + i %>'
+									label="method-name"
+									name="actionMethodName"
+									type="text"
+									value="<%= actionMethodName %>"
+								/>
 							</aui:col>
 						</div>
 					</div>
@@ -131,7 +173,11 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 
 		<aui:button id="advancedMode" value="switch-to-advanced-mode" />
 
-		<aui:button cssClass="hide" id="friendlyMode" value="switch-to-friendly-mode" />
+		<aui:button
+			cssClass="hide"
+			id="friendlyMode"
+			value="switch-to-friendly-mode"
+		/>
 	</aui:button-row>
 </aui:form>
 

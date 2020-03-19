@@ -30,16 +30,10 @@ boolean privateLayout = (boolean)row.getObject();
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= layoutsAdminDisplayContext.isShowFirstColumnConfigureAction() %>">
-		<liferay-ui:icon
-			message="configure"
-			url="<%= layoutsAdminDisplayContext.getFirstColumnConfigureLayoutURL(privateLayout) %>"
-		/>
+		<liferay-ui:icon message="configure" url="<%= layoutsAdminDisplayContext.getFirstColumnConfigureLayoutURL(privateLayout) %>" />
 	</c:if>
 
 	<c:if test="<%= layoutsAdminDisplayContext.isShowAddRootLayoutButton() %>">
-		<liferay-ui:icon
-			message="add-page"
-			url="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(privateLayout) %>"
-		/>
+		<liferay-ui:icon message="add-page" url="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(privateLayout) %>" />
 	</c:if>
 </liferay-ui:icon-menu>

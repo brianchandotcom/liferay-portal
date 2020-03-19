@@ -72,7 +72,11 @@ if (size != null) {
 					<c:if test="<%= themeDisplay.isImpersonated() %>">
 						<span class="<%= impersonateStickerCssClasses + " sticker-bottom-right sticker-circle sticker-outside sticker-user-icon" %>" id="impersonate-user-sticker">
 							<span class="sticker-overlay">
-								<aui:icon id="impersonate-user-icon" image="user" markupView="lexicon" />
+								<aui:icon
+									id="impersonate-user-icon"
+									image="user"
+									markupView="lexicon"
+								/>
 							</span>
 						</span>
 					</c:if>
@@ -101,8 +105,5 @@ if (size != null) {
 	}
 	%>
 
-	<react:component
-		data="<%= data %>"
-		module="personal_menu/js/PersonalMenu.es"
-	/>
+	<react:component data="<%= data %>" module="personal_menu/js/PersonalMenu.es" />
 </div>

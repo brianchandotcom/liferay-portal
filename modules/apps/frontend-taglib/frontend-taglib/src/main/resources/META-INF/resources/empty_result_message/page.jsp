@@ -20,7 +20,11 @@
 	<div class="<%= animationTypeCssClass %>"></div>
 
 	<h1 class="taglib-empty-result-message-title">
-		<liferay-ui:message arguments="<%= elementType %>" key="no-x-yet" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= elementType %>"
+			key="no-x-yet"
+			translateArguments="<%= false %>"
+		/>
 	</h1>
 
 	<c:if test="<%= Validator.isNotNull(description) %>">

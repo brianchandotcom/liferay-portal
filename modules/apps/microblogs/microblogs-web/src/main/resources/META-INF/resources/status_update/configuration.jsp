@@ -24,14 +24,20 @@
 		method="post"
 		name="fm"
 	>
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+		<aui:input
+			name="<%= Constants.CMD %>"
+			type="hidden"
+			value="<%= Constants.UPDATE %>"
+		/>
 
 		<liferay-frontend:edit-form-body>
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="display-settings"
-			>
-				<aui:input label="display-most-recent-status" name="preferences--showStatus--" type="checkbox" value="<%= showStatus %>" />
+			<liferay-frontend:fieldset collapsible="<%= true %>" label="display-settings">
+				<aui:input
+					label="display-most-recent-status"
+					name="preferences--showStatus--"
+					type="checkbox"
+					value="<%= showStatus %>"
+				/>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:edit-form-body>
 

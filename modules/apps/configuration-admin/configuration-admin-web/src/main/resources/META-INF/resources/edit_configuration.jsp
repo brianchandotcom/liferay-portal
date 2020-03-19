@@ -100,10 +100,26 @@ renderResponse.setTitle(categoryDisplayName);
 
 		<div class="col-md-9">
 			<div class="sheet sheet-lg">
-				<aui:form action="<%= bindConfigurationActionURL %>" method="post" name="fm">
-					<aui:input name="redirect" type="hidden" value="<%= bindRedirectURL %>" />
-					<aui:input name="factoryPid" type="hidden" value="<%= configurationModel.getFactoryPid() %>" />
-					<aui:input name="pid" type="hidden" value="<%= configurationModel.getID() %>" />
+				<aui:form
+					action="<%= bindConfigurationActionURL %>"
+					method="post"
+					name="fm"
+				>
+					<aui:input
+						name="redirect"
+						type="hidden"
+						value="<%= bindRedirectURL %>"
+					/>
+					<aui:input
+						name="factoryPid"
+						type="hidden"
+						value="<%= configurationModel.getFactoryPid() %>"
+					/>
+					<aui:input
+						name="pid"
+						type="hidden"
+						value="<%= configurationModel.getID() %>"
+					/>
 
 					<%
 					String configurationTitle = null;
@@ -203,7 +219,11 @@ renderResponse.setTitle(categoryDisplayName);
 					</h2>
 
 					<c:if test="<%= !configurationModel.hasScopeConfiguration(configurationScopeDisplayContext.getScope()) %>">
-						<aui:alert closeable="<%= false %>" id="errorAlert" type="info">
+						<aui:alert
+							closeable="<%= false %>"
+							id="errorAlert"
+							type="info"
+						>
 							<liferay-ui:message key="this-configuration-is-not-saved-yet" />
 						</aui:alert>
 					</c:if>
@@ -227,14 +247,26 @@ renderResponse.setTitle(categoryDisplayName);
 					<aui:button-row>
 						<c:choose>
 							<c:when test="<%= configurationModel.hasScopeConfiguration(configurationScopeDisplayContext.getScope()) %>">
-								<aui:button name="update" type="submit" value="update" />
+								<aui:button
+									name="update"
+									type="submit"
+									value="update"
+								/>
 							</c:when>
 							<c:otherwise>
-								<aui:button name="save" type="submit" value="save" />
+								<aui:button
+									name="save"
+									type="submit"
+									value="save"
+								/>
 							</c:otherwise>
 						</c:choose>
 
-						<aui:button href="<%= redirect %>" name="cancel" type="cancel" />
+						<aui:button
+							href="<%= redirect %>"
+							name="cancel"
+							type="cancel"
+						/>
 					</aui:button-row>
 				</aui:form>
 			</div>

@@ -42,10 +42,7 @@ String modelResource = (String)row.getParameter("modelResource");
 			<portlet:param name="modelResource" value="<%= modelResource %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<c:if test="<%= ExpandoColumnPermissionUtil.contains(permissionChecker, expandoColumn, ActionKeys.PERMISSIONS) %>">
@@ -71,8 +68,6 @@ String modelResource = (String)row.getParameter("modelResource");
 			<portlet:param name="columnId" value="<%= String.valueOf(expandoColumn.getColumnId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteExpandoURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteExpandoURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

@@ -37,10 +37,7 @@ else {
 }
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="password"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="password" />
 
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
@@ -50,7 +47,11 @@ else {
 	UserPasswordException.MustBeLonger upe = (UserPasswordException.MustBeLonger)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= String.valueOf(upe.minLength) %>" key="that-password-is-too-short" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= String.valueOf(upe.minLength) %>"
+		key="that-password-is-too-short"
+		translateArguments="<%= false %>"
+	/>
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= UserPasswordException.MustComplyWithModelListeners.class %>" message="that-password-is-invalid-please-enter-a-different-password" />
@@ -61,7 +62,11 @@ else {
 	UserPasswordException.MustComplyWithRegex upe = (UserPasswordException.MustComplyWithRegex)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= upe.regex %>" key="that-password-does-not-comply-with-the-regular-expression" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= upe.regex %>"
+		key="that-password-does-not-comply-with-the-regular-expression"
+		translateArguments="<%= false %>"
+	/>
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= UserPasswordException.MustHaveMoreAlphanumeric.class %>">
@@ -70,7 +75,11 @@ else {
 	UserPasswordException.MustHaveMoreAlphanumeric upe = (UserPasswordException.MustHaveMoreAlphanumeric)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= String.valueOf(upe.minAlphanumeric) %>" key="that-password-must-contain-at-least-x-alphanumeric-characters" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= String.valueOf(upe.minAlphanumeric) %>"
+		key="that-password-must-contain-at-least-x-alphanumeric-characters"
+		translateArguments="<%= false %>"
+	/>
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= UserPasswordException.MustHaveMoreLowercase.class %>">
@@ -79,7 +88,11 @@ else {
 	UserPasswordException.MustHaveMoreLowercase upe = (UserPasswordException.MustHaveMoreLowercase)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= String.valueOf(upe.minLowercase) %>" key="that-password-must-contain-at-least-x-lowercase-characters" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= String.valueOf(upe.minLowercase) %>"
+		key="that-password-must-contain-at-least-x-lowercase-characters"
+		translateArguments="<%= false %>"
+	/>
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= UserPasswordException.MustHaveMoreNumbers.class %>">
@@ -88,7 +101,11 @@ else {
 	UserPasswordException.MustHaveMoreNumbers upe = (UserPasswordException.MustHaveMoreNumbers)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= String.valueOf(upe.minNumbers) %>" key="that-password-must-contain-at-least-x-numbers" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= String.valueOf(upe.minNumbers) %>"
+		key="that-password-must-contain-at-least-x-numbers"
+		translateArguments="<%= false %>"
+	/>
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= UserPasswordException.MustHaveMoreSymbols.class %>">
@@ -97,7 +114,11 @@ else {
 	UserPasswordException.MustHaveMoreSymbols upe = (UserPasswordException.MustHaveMoreSymbols)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= String.valueOf(upe.minSymbols) %>" key="that-password-must-contain-at-least-x-symbols" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= String.valueOf(upe.minSymbols) %>"
+		key="that-password-must-contain-at-least-x-symbols"
+		translateArguments="<%= false %>"
+	/>
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= UserPasswordException.MustHaveMoreUppercase.class %>">
@@ -106,7 +127,11 @@ else {
 	UserPasswordException.MustHaveMoreUppercase upe = (UserPasswordException.MustHaveMoreUppercase)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= String.valueOf(upe.minUppercase) %>" key="that-password-must-contain-at-least-x-uppercase-characters" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= String.valueOf(upe.minUppercase) %>"
+		key="that-password-must-contain-at-least-x-uppercase-characters"
+		translateArguments="<%= false %>"
+	/>
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= UserPasswordException.MustMatch.class %>" message="the-passwords-you-entered-do-not-match" />
@@ -119,7 +144,11 @@ else {
 	UserPasswordException.MustNotBeChangedYet upe = (UserPasswordException.MustNotBeChangedYet)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= String.valueOf(upe.changeableDate) %>" key="you-cannot-change-your-password-yet" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= String.valueOf(upe.changeableDate) %>"
+		key="you-cannot-change-your-password-yet"
+		translateArguments="<%= false %>"
+	/>
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= UserPasswordException.MustNotBeEqualToCurrent.class %>" message="your-new-password-cannot-be-the-same-as-your-old-password-please-enter-a-different-password" />
@@ -139,19 +168,46 @@ else {
 	<!-- End LPS-38289 and LPS-55993 and LPS-61876 -->
 
 	<c:if test="<%= portletName.equals(myAccountPortletId) %>">
-		<aui:input autocomplete="off" label="current-password" name="password0" required="<%= true %>" size="30" type="password" />
+		<aui:input
+			autocomplete="off"
+			label="current-password"
+			name="password0"
+			required="<%= true %>"
+			size="30"
+			type="password"
+		/>
 	</c:if>
 
-	<aui:input autocomplete="off" label="new-password" name="password1" required="<%= true %>" size="30" type="password" />
+	<aui:input
+		autocomplete="off"
+		label="new-password"
+		name="password1"
+		required="<%= true %>"
+		size="30"
+		type="password"
+	/>
 
-	<aui:input autocomplete="off" label="enter-again" name="password2" required="<%= true %>" size="30" type="password">
+	<aui:input
+		autocomplete="off"
+		label="enter-again"
+		name="password2"
+		required="<%= true %>"
+		size="30"
+		type="password"
+	>
 		<aui:validator name="equalTo">
 			'#<portlet:namespace />password1'
 		</aui:validator>
 	</aui:input>
 
 	<c:if test="<%= (selUser == null) || (user.getUserId() != selUser.getUserId()) %>">
-		<aui:input disabled="<%= passwordResetDisabled %>" label="require-password-reset" name="passwordReset" type="checkbox" value="<%= passwordReset %>" />
+		<aui:input
+			disabled="<%= passwordResetDisabled %>"
+			label="require-password-reset"
+			name="passwordReset"
+			type="checkbox"
+			value="<%= passwordReset %>"
+		/>
 	</c:if>
 </div>
 
@@ -167,11 +223,23 @@ else {
 
 		<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
 			<div class="<%= hasCustomQuestion ? "" : "hide" %>" id="<portlet:namespace />customQuestionDiv">
-				<aui:input autocomplete='<%= PropsValues.COMPANY_SECURITY_PASSWORD_REMINDER_QUERY_FORM_AUTOCOMPLETE ? "on" : "off" %>' fieldParam="reminderQueryCustomQuestion" label="custom-question" name="reminderQueryQuestion" />
+				<aui:input
+					autocomplete='<%= PropsValues.COMPANY_SECURITY_PASSWORD_REMINDER_QUERY_FORM_AUTOCOMPLETE ? "on" : "off" %>'
+					fieldParam="reminderQueryCustomQuestion"
+					label="custom-question"
+					name="reminderQueryQuestion"
+				/>
 			</div>
 		</c:if>
 
-		<aui:input autocomplete='<%= PropsValues.COMPANY_SECURITY_PASSWORD_REMINDER_QUERY_FORM_AUTOCOMPLETE ? "on" : "off" %>' label="answer" maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="reminderQueryAnswer" size="50" value="<%= selUser.getReminderQueryAnswer() %>" />
+		<aui:input
+			autocomplete='<%= PropsValues.COMPANY_SECURITY_PASSWORD_REMINDER_QUERY_FORM_AUTOCOMPLETE ? "on" : "off" %>'
+			label="answer"
+			maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>"
+			name="reminderQueryAnswer"
+			size="50"
+			value="<%= selUser.getReminderQueryAnswer() %>"
+		/>
 	</div>
 
 	<aui:script sandbox="<%= true %>">

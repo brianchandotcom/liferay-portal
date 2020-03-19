@@ -18,15 +18,11 @@
 	<c:when test="<%= !searchResultSummaryDisplayContext.isTemporarilyUnavailable() %>">
 		<c:if test="<%= searchResultSummaryDisplayContext.isUserPortraitVisible() %>">
 			<liferay-ui:search-container-column-text>
-				<liferay-ui:user-portrait
-					userId="<%= searchResultSummaryDisplayContext.getAssetEntryUserId() %>"
-				/>
+				<liferay-ui:user-portrait userId="<%= searchResultSummaryDisplayContext.getAssetEntryUserId() %>" />
 			</liferay-ui:search-container-column-text>
 		</c:if>
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<h5>
 				<a href="<%= searchResultSummaryDisplayContext.getViewURL() %>">
 					<strong><%= searchResultSummaryDisplayContext.getHighlightedTitle() %></strong>
@@ -43,10 +39,7 @@
 				<%= searchResultSummaryDisplayContext.getModelResource() %>
 
 				<c:if test="<%= searchResultSummaryDisplayContext.isLocaleReminderVisible() %>">
-					<liferay-ui:icon
-						image='<%= "../language/" + searchResultSummaryDisplayContext.getLocaleLanguageId() %>'
-						message="<%= searchResultSummaryDisplayContext.getLocaleReminder() %>"
-					/>
+					<liferay-ui:icon image='<%= "../language/" + searchResultSummaryDisplayContext.getLocaleLanguageId() %>' message="<%= searchResultSummaryDisplayContext.getLocaleReminder() %>" />
 				</c:if>
 			</h6>
 
@@ -118,11 +111,13 @@
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:search-container-column-text
-			colspan="<%= 3 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 3 %>">
 			<div class="alert alert-danger">
-				<liferay-ui:message arguments="result" key="is-temporarily-unavailable" translateArguments="<%= true %>" />
+				<liferay-ui:message
+					arguments="result"
+					key="is-temporarily-unavailable"
+					translateArguments="<%= true %>"
+				/>
 			</div>
 		</liferay-ui:search-container-column-text>
 	</c:otherwise>

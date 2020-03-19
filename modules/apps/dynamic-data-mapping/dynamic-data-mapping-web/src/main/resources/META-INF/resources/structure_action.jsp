@@ -36,10 +36,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<%
@@ -47,10 +44,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 	%>
 
 	<c:if test="<%= Validator.isNotNull(editStructureDefaultValuesURL) && DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
-		<liferay-ui:icon
-			message="edit-default-values"
-			url="<%= editStructureDefaultValuesURL %>"
-		/>
+		<liferay-ui:icon message="edit-default-values" url="<%= editStructureDefaultValuesURL %>" />
 	</c:if>
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.VIEW) && showManageTemplates %>">
@@ -93,10 +87,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="copy"
-			url="<%= copyURL %>"
-		/>
+		<liferay-ui:icon message="copy" url="<%= copyURL %>" />
 	</c:if>
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.DELETE) %>">
@@ -105,8 +96,6 @@ DDMStructure structure = (DDMStructure)row.getObject();
 			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

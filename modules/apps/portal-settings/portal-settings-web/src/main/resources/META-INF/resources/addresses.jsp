@@ -63,10 +63,7 @@
 		}
 		%>
 
-		<liferay-ui:error-marker
-			key="<%= WebKeys.ERROR_SECTION %>"
-			value="addresses"
-		/>
+		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="addresses" />
 
 		<div class="alert alert-info">
 			<liferay-ui:message key="street-1-and-city-are-required-fields.-postal-code-could-be-required-in-some-countries" />
@@ -123,7 +120,11 @@
 			}
 			%>
 
-			<aui:input name="addressesIndexes" type="hidden" value="<%= StringUtil.merge(addressesIndexes) %>" />
+			<aui:input
+				name="addressesIndexes"
+				type="hidden"
+				value="<%= StringUtil.merge(addressesIndexes) %>"
+			/>
 		</aui:fieldset>
 
 		<aui:script use="liferay-auto-fields,liferay-dynamic-select">

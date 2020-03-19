@@ -85,7 +85,12 @@ boolean ignoreRequestValue = index != formFieldsIndex;
 
 	<c:choose>
 		<c:when test="<%= !fieldsEditingDisabled %>">
-			<aui:select ignoreRequestValue="<%= ignoreRequestValue %>" label="type" name='<%= "fieldType" + index %>' value="<%= fieldType %>">
+			<aui:select
+				ignoreRequestValue="<%= ignoreRequestValue %>"
+				label="type"
+				name='<%= "fieldType" + index %>'
+				value="<%= fieldType %>"
+			>
 				<aui:option label="text" />
 				<aui:option label="text-box" value="textarea" />
 				<aui:option label="options" />
@@ -106,7 +111,14 @@ boolean ignoreRequestValue = index != formFieldsIndex;
 
 	<c:choose>
 		<c:when test="<%= !fieldsEditingDisabled %>">
-			<aui:input cssClass="optional-control" ignoreRequestValue="<%= ignoreRequestValue %>" label="optional" name='<%= "fieldOptional" + index %>' type="checkbox" value="<%= fieldOptional %>" />
+			<aui:input
+				cssClass="optional-control"
+				ignoreRequestValue="<%= ignoreRequestValue %>"
+				label="optional"
+				name='<%= "fieldOptional" + index %>'
+				type="checkbox"
+				value="<%= fieldOptional %>"
+			/>
 		</c:when>
 		<c:otherwise>
 				<dt>
@@ -120,7 +132,11 @@ boolean ignoreRequestValue = index != formFieldsIndex;
 
 	<c:choose>
 		<c:when test="<%= !fieldsEditingDisabled %>">
-			<aui:field-wrapper cssClass='<%= "options" + ((Validator.isNull(fieldType) || (!fieldType.equals("options") && !fieldType.equals("radio"))) ? " hide" : StringPool.BLANK) %>' helpMessage="add-options-separated-by-commas" label="options">
+			<aui:field-wrapper
+				cssClass='<%= "options" + ((Validator.isNull(fieldType) || (!fieldType.equals("options") && !fieldType.equals("radio"))) ? " hide" : StringPool.BLANK) %>'
+				helpMessage="add-options-separated-by-commas"
+				label="options"
+			>
 				<liferay-ui:input-localized
 					ignoreRequestValue="<%= ignoreRequestValue %>"
 					name='<%= "fieldOptions" + index %>'
@@ -170,9 +186,27 @@ boolean ignoreRequestValue = index != formFieldsIndex;
 
 					<div class="validation-input <%= Validator.isNull(fieldValidationScript) ? "hide" : "" %>">
 						<aui:col width="<%= 50 %>">
-							<aui:input cols="80" cssClass="validation-script" ignoreRequestValue="<%= ignoreRequestValue %>" label="validation-script" name='<%= "fieldValidationScript" + index %>' style="width: 95%;" type="textarea" value="<%= fieldValidationScript %>" wrap="off" />
+							<aui:input
+								cols="80"
+								cssClass="validation-script"
+								ignoreRequestValue="<%= ignoreRequestValue %>"
+								label="validation-script"
+								name='<%= "fieldValidationScript" + index %>'
+								style="width: 95%;"
+								type="textarea"
+								value="<%= fieldValidationScript %>"
+								wrap="off"
+							/>
 
-							<aui:input cols="80" ignoreRequestValue="<%= ignoreRequestValue %>" label="validation-error-message" name='<%= "fieldValidationErrorMessage" + index %>' size="80" value="<%= fieldValidationErrorMessage %>" wrapperCssClass="lfr-input-text-container" />
+							<aui:input
+								cols="80"
+								ignoreRequestValue="<%= ignoreRequestValue %>"
+								label="validation-error-message"
+								name='<%= "fieldValidationErrorMessage" + index %>'
+								size="80"
+								value="<%= fieldValidationErrorMessage %>"
+								wrapperCssClass="lfr-input-text-container"
+							/>
 						</aui:col>
 
 						<aui:col width="<%= 50 %>">

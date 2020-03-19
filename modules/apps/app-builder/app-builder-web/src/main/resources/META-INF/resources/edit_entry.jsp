@@ -66,10 +66,7 @@ AppBuilderApp appBuilderApp = (AppBuilderApp)request.getAttribute(AppBuilderWebK
 								).build();
 								%>
 
-								<react:component
-									data="<%= data %>"
-									module="js/pages/entry/EditEntryApp.es"
-								/>
+								<react:component data="<%= data %>" module="js/pages/entry/EditEntryApp.es" />
 							</div>
 						</aui:form>
 					</div>

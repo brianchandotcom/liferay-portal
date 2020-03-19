@@ -58,14 +58,14 @@ backURL.setParameter("templateId", String.valueOf(templateId));
 	</c:otherwise>
 </c:choose>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<liferay-ui:search-container
-		searchContainer="<%= new TemplateSearch(renderRequest, portletURL) %>"
-		total="<%= DDMTemplateVersionServiceUtil.getTemplateVersionsCount(templateId) %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= DDMTemplateVersionServiceUtil.getTemplateVersions(templateId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-		/>
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
+	<liferay-ui:search-container searchContainer="<%= new TemplateSearch(renderRequest, portletURL) %>" total="<%= DDMTemplateVersionServiceUtil.getTemplateVersionsCount(templateId) %>">
+		<liferay-ui:search-container-results results="<%= DDMTemplateVersionServiceUtil.getTemplateVersions(templateId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMTemplateVersion"
@@ -110,8 +110,6 @@ backURL.setParameter("templateId", String.valueOf(templateId));
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>

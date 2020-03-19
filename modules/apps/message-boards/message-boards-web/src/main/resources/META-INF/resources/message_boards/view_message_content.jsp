@@ -107,10 +107,7 @@ if (portletTitleBasedNavigation) {
 									<portlet:param name="messageId" value="<%= String.valueOf(rootMessage.getMessageId()) %>" />
 								</portlet:actionURL>
 
-								<liferay-ui:icon
-									message="unsubscribe"
-									url="<%= unsubscribeURL %>"
-								/>
+								<liferay-ui:icon message="unsubscribe" url="<%= unsubscribeURL %>" />
 							</c:when>
 							<c:otherwise>
 								<portlet:actionURL name="/message_boards/edit_message" var="subscribeURL">
@@ -119,10 +116,7 @@ if (portletTitleBasedNavigation) {
 									<portlet:param name="messageId" value="<%= String.valueOf(rootMessage.getMessageId()) %>" />
 								</portlet:actionURL>
 
-								<liferay-ui:icon
-									message="subscribe"
-									url="<%= subscribeURL %>"
-								/>
+								<liferay-ui:icon message="subscribe" url="<%= subscribeURL %>" />
 							</c:otherwise>
 						</c:choose>
 					</c:if>
@@ -136,10 +130,7 @@ if (portletTitleBasedNavigation) {
 									<portlet:param name="threadId" value="<%= String.valueOf(rootMessage.getThreadId()) %>" />
 								</portlet:actionURL>
 
-								<liferay-ui:icon
-									message="unlock"
-									url="<%= unlockThreadURL %>"
-								/>
+								<liferay-ui:icon message="unlock" url="<%= unlockThreadURL %>" />
 							</c:when>
 							<c:otherwise>
 								<portlet:actionURL name="/message_boards/edit_message" var="lockThreadURL">
@@ -148,10 +139,7 @@ if (portletTitleBasedNavigation) {
 									<portlet:param name="threadId" value="<%= String.valueOf(rootMessage.getThreadId()) %>" />
 								</portlet:actionURL>
 
-								<liferay-ui:icon
-									message="lock"
-									url="<%= lockThreadURL %>"
-								/>
+								<liferay-ui:icon message="lock" url="<%= lockThreadURL %>" />
 							</c:otherwise>
 						</c:choose>
 					</c:if>
@@ -164,10 +152,7 @@ if (portletTitleBasedNavigation) {
 							<portlet:param name="threadId" value="<%= String.valueOf(rootMessage.getThreadId()) %>" />
 						</portlet:renderURL>
 
-						<liferay-ui:icon
-							message="move"
-							url="<%= editThreadURL %>"
-						/>
+						<liferay-ui:icon message="move" url="<%= editThreadURL %>" />
 					</c:if>
 
 					<c:if test="<%= MBMessagePermission.contains(permissionChecker, rootMessage, ActionKeys.DELETE) && !thread.isLocked() %>">
@@ -189,10 +174,7 @@ if (portletTitleBasedNavigation) {
 							<portlet:param name="threadId" value="<%= String.valueOf(rootMessage.getThreadId()) %>" />
 						</portlet:actionURL>
 
-						<liferay-ui:icon-delete
-							trash="<%= trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId()) %>"
-							url="<%= deleteURL %>"
-						/>
+						<liferay-ui:icon-delete trash="<%= trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId()) %>" url="<%= deleteURL %>" />
 					</c:if>
 				</liferay-ui:icon-menu>
 			</div>
@@ -280,7 +262,11 @@ if (portletTitleBasedNavigation) {
 		String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + rootMessage.getMessageId() + "', '');";
 		%>
 
-		<aui:button onclick="<%= taglibReplyToMessageURL %>" primary="<%= true %>" value="reply" />
+		<aui:button
+			onclick="<%= taglibReplyToMessageURL %>"
+			primary="<%= true %>"
+			value="reply"
+		/>
 	</c:if>
 
 	<c:if test="<%= !thread.isInTrash() && moreMessagesPagination %>">
@@ -289,8 +275,16 @@ if (portletTitleBasedNavigation) {
 		</div>
 
 		<aui:form name="fm">
-			<aui:input name="rootIndexPage" type="hidden" value="<%= String.valueOf(rootIndexPage) %>" />
-			<aui:input name="index" type="hidden" value="<%= String.valueOf(index) %>" />
+			<aui:input
+				name="rootIndexPage"
+				type="hidden"
+				value="<%= String.valueOf(rootIndexPage) %>"
+			/>
+			<aui:input
+				name="index"
+				type="hidden"
+				value="<%= String.valueOf(index) %>"
+			/>
 		</aui:form>
 	</c:if>
 </div>

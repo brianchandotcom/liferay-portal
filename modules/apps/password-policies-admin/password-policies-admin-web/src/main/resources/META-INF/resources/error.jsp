@@ -20,10 +20,7 @@
 	<portlet:param name="mvcPath" value="/view.jsp" />
 </portlet:renderURL>
 
-<liferay-ui:header
-	backURL="<%= portletURL.toString() %>"
-	title="error"
-/>
+<liferay-ui:header backURL="<%= portletURL.toString() %>" title="error" />
 
 <liferay-ui:error exception="<%= NoSuchPasswordPolicyException.class %>" message="the-password-policy-could-not-be-found" />
 

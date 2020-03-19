@@ -18,9 +18,7 @@
 MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, categoryId);
 %>
 
-<liferay-ui:search-container
-	searchContainer="<%= categoryEntriesSearchContainer %>"
->
+<liferay-ui:search-container searchContainer="<%= categoryEntriesSearchContainer %>">
 	<liferay-ui:search-container-row
 		className="com.liferay.message.boards.model.MBCategory"
 		escapedModel="<%= true %>"
@@ -37,21 +35,21 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 			<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-ui:search-container-column-icon
-			icon="folder"
-			toggleRowChecker="<%= true %>"
-		/>
+		<liferay-ui:search-container-column-icon icon="folder" toggleRowChecker="<%= true %>" />
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<h4>
 				<aui:a href="<%= rowURL.toString() %>">
 					<%= curCategory.getName() %>
 				</aui:a>
 
 				<c:if test='<%= Objects.equals(curCategory.getDisplayStyle(), "question") %>'>
-					<aui:icon cssClass="icon-monospaced" image="question-circle" markupView="lexicon" message="question" />
+					<aui:icon
+						cssClass="icon-monospaced"
+						image="question-circle"
+						markupView="lexicon"
+						message="question"
+					/>
 				</c:if>
 			</h4>
 
@@ -72,9 +70,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 			</span>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			path="/message_boards/category_action.jsp"
-		/>
+		<liferay-ui:search-container-column-jsp path="/message_boards/category_action.jsp" />
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator

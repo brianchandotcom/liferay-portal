@@ -22,14 +22,14 @@ LayoutPortletsDisplayContext layoutPortletsDisplayContext = new LayoutPortletsDi
 LayoutPortletsManagementToolbarDisplayContext layoutPortletsManagementToolbarDisplayContext = new LayoutPortletsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutPortletsDisplayContext);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= layoutPortletsManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= layoutPortletsManagementToolbarDisplayContext %>" />
 
-<aui:form action="" cssClass="container-fluid-1280" name="fm">
-	<liferay-ui:search-container
-		searchContainer="<%= layoutPortletsDisplayContext.getSearchContainer() %>"
-	>
+<aui:form
+	action=""
+	cssClass="container-fluid-1280"
+	name="fm"
+>
+	<liferay-ui:search-container searchContainer="<%= layoutPortletsDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Portlet"
 			cssClass="selectable"
@@ -50,9 +50,6 @@ LayoutPortletsManagementToolbarDisplayContext layoutPortletsManagementToolbarDis
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= layoutPortletsDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= layoutPortletsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>

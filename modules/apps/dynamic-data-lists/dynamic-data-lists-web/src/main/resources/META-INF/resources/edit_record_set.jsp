@@ -62,14 +62,48 @@ if (ddlDisplayContext.isAdminPortlet()) {
 	<portlet:param name="mvcPath" value="/edit_record_set.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= (recordSet == null) ? addRecordSetURL : updateRecordSetURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveRecordSet();" %>'>
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
-	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
-	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-	<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />
-	<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
-	<aui:input name="scope" type="hidden" value="<%= DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS %>" />
+<aui:form
+	action="<%= (recordSet == null) ? addRecordSetURL : updateRecordSetURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveRecordSet();" %>'
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="closeRedirect"
+		type="hidden"
+		value="<%= closeRedirect %>"
+	/>
+	<aui:input
+		name="portletResource"
+		type="hidden"
+		value="<%= portletResource %>"
+	/>
+	<aui:input
+		name="groupId"
+		type="hidden"
+		value="<%= groupId %>"
+	/>
+	<aui:input
+		name="recordSetId"
+		type="hidden"
+		value="<%= recordSetId %>"
+	/>
+	<aui:input
+		name="ddmStructureId"
+		type="hidden"
+		value="<%= ddmStructureId %>"
+	/>
+	<aui:input
+		name="scope"
+		type="hidden"
+		value="<%= DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS %>"
+	/>
 
 	<liferay-ui:error exception="<%= RecordSetDDMStructureIdException.class %>" message="please-enter-a-valid-definition" />
 	<liferay-ui:error exception="<%= RecordSetNameException.class %>" message="please-enter-a-valid-name" />
@@ -93,7 +127,13 @@ if (ddlDisplayContext.isAdminPortlet()) {
 			<aui:input name="description" />
 
 			<div class="form-group">
-				<aui:input label="data-definition" name="ddmStructureNameDisplay" required="<%= true %>" type="resource" value="<%= ddmStructureName %>" />
+				<aui:input
+					label="data-definition"
+					name="ddmStructureNameDisplay"
+					required="<%= true %>"
+					type="resource"
+					value="<%= ddmStructureName %>"
+				/>
 
 				<liferay-ui:icon
 					label="<%= true %>"
@@ -133,7 +173,11 @@ if (ddlDisplayContext.isAdminPortlet()) {
 						}
 					%>
 
-						<aui:option label="<%= HtmlUtil.escape(workflowDefinition.getTitle(languageId)) %>" selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+						<aui:option
+							label="<%= HtmlUtil.escape(workflowDefinition.getTitle(languageId)) %>"
+							selected="<%= selected %>"
+							value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>"
+						/>
 
 					<%
 					}
@@ -144,18 +188,28 @@ if (ddlDisplayContext.isAdminPortlet()) {
 		</aui:fieldset>
 
 		<c:if test="<%= recordSet == null %>">
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-				<liferay-ui:input-permissions
-					modelName="<%= DDLRecordSet.class.getName() %>"
-				/>
+			<aui:fieldset
+				collapsed="<%= true %>"
+				collapsible="<%= true %>"
+				label="permissions"
+			>
+				<liferay-ui:input-permissions modelName="<%= DDLRecordSet.class.getName() %>" />
 			</aui:fieldset>
 		</c:if>
 	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button name="saveButton" type="submit" value="save" />
+		<aui:button
+			name="saveButton"
+			type="submit"
+			value="save"
+		/>
 
-		<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
+		<aui:button
+			href="<%= redirect %>"
+			name="cancelButton"
+			type="cancel"
+		/>
 	</aui:button-row>
 </aui:form>
 

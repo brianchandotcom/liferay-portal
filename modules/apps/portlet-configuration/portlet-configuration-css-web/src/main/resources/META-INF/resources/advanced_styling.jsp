@@ -30,14 +30,32 @@
 	</p>
 </div>
 
-<aui:input label="enter-your-custom-css-class-names" name="customCSSClassName" type="text" value="<%= portletConfigurationCSSPortletDisplayContext.getCustomCSSClassName() %>" />
+<aui:input
+	label="enter-your-custom-css-class-names"
+	name="customCSSClassName"
+	type="text"
+	value="<%= portletConfigurationCSSPortletDisplayContext.getCustomCSSClassName() %>"
+/>
 
-<aui:input label="enter-your-custom-css" name="customCSS" type="textarea" value="<%= portletConfigurationCSSPortletDisplayContext.getCustomCSS() %>" />
+<aui:input
+	label="enter-your-custom-css"
+	name="customCSS"
+	type="textarea"
+	value="<%= portletConfigurationCSSPortletDisplayContext.getCustomCSS() %>"
+/>
 
 <div id="lfr-add-rule-container">
-	<aui:button cssClass="btn btn-link" id="addId" value="add-a-css-rule-for-this-portlet" />
+	<aui:button
+		cssClass="btn btn-link"
+		id="addId"
+		value="add-a-css-rule-for-this-portlet"
+	/>
 
-	<aui:button cssClass="btn btn-link" id="addClass" value="add-a-css-rule-for-all-portlets-like-this-one" />
+	<aui:button
+		cssClass="btn btn-link"
+		id="addClass"
+		value="add-a-css-rule-for-all-portlets-like-this-one"
+	/>
 </div>
 
 <aui:script>

@@ -47,10 +47,26 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 		method="post"
 		name="fm"
 	>
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.SAVE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />
-		<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
+		<aui:input
+			name="<%= Constants.CMD %>"
+			type="hidden"
+			value="<%= Constants.SAVE %>"
+		/>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= currentURL %>"
+		/>
+		<aui:input
+			name="returnToFullPageURL"
+			type="hidden"
+			value="<%= returnToFullPageURL %>"
+		/>
+		<aui:input
+			name="portletResource"
+			type="hidden"
+			value="<%= portletResource %>"
+		/>
 
 		<liferay-frontend:edit-form-body>
 			<liferay-frontend:fieldset-group>
@@ -68,9 +84,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 						<liferay-ui:message key="share-this-application-on-any-website" />
 					</div>
 
-					<liferay-util:buffer
-						var="textAreaContent"
-					>
+					<liferay-util:buffer var="textAreaContent">
 						<iframe frameborder="0" height="100%" src="<%= HtmlUtil.escapeAttribute(widgetURL) %>" width="100%"></iframe>
 					</liferay-util:buffer>
 
@@ -78,7 +92,12 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 						<textarea class="field form-control lfr-textarea" id="<portlet:namespace />widgetScript" onClick="this.select();" readonly="true"><%= HtmlUtil.escape(textAreaContent) %></textarea>
 					</aui:field-wrapper>
 
-					<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-any-website", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="widgetShowAddAppLink" type="toggle-switch" value="<%= widgetShowAddAppLink %>" />
+					<aui:input
+						label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-any-website", HtmlUtil.escape(portletDisplay.getTitle()), false) %>'
+						name="widgetShowAddAppLink"
+						type="toggle-switch"
+						value="<%= widgetShowAddAppLink %>"
+					/>
 				</liferay-frontend:fieldset>
 
 				<liferay-frontend:fieldset
@@ -99,12 +118,27 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 						<aui:a href="http://developers.facebook.com" target="_blank"><liferay-ui:message key="get-the-api-key-and-canvas-page-url-from-facebook" /></aui:a>
 					</div>
 
-					<aui:input cssClass="lfr-input-text-container" label="api-key" name="facebookAPIKey" value="<%= HtmlUtil.toInputSafe(facebookAPIKey) %>" />
+					<aui:input
+						cssClass="lfr-input-text-container"
+						label="api-key"
+						name="facebookAPIKey"
+						value="<%= HtmlUtil.toInputSafe(facebookAPIKey) %>"
+					/>
 
-					<aui:field-wrapper cssClass="form-group" label="canvas-page-url" name="facebookCanvasPageURLWrapper">
+					<aui:field-wrapper
+						cssClass="form-group"
+						label="canvas-page-url"
+						name="facebookCanvasPageURLWrapper"
+					>
 						<div class="form-text">http://www.liferay.com/</div>
 
-						<aui:input cssClass="flexible lfr-input-text-container" label="" name="facebookCanvasPageURL" prefix="/" value="<%= HtmlUtil.toInputSafe(facebookCanvasPageURL) %>" />
+						<aui:input
+							cssClass="flexible lfr-input-text-container"
+							label=""
+							name="facebookCanvasPageURL"
+							prefix="/"
+							value="<%= HtmlUtil.toInputSafe(facebookCanvasPageURL) %>"
+						/>
 					</aui:field-wrapper>
 
 					<c:if test="<%= Validator.isNotNull(facebookCanvasPageURL) %>">
@@ -116,9 +150,18 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 							<liferay-ui:message key="this-application-is-exposed-to-facebook-via-an-iframe" />
 						</div>
 
-						<aui:input name="callbackURL" type="resource" value="<%= callbackURL %>" />
+						<aui:input
+							name="callbackURL"
+							type="resource"
+							value="<%= callbackURL %>"
+						/>
 
-						<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-facebook", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="facebookShowAddAppLink" type="toggle-switch" value="<%= facebookShowAddAppLink %>" />
+						<aui:input
+							label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-facebook", HtmlUtil.escape(portletDisplay.getTitle()), false) %>'
+							name="facebookShowAddAppLink"
+							type="toggle-switch"
+							value="<%= facebookShowAddAppLink %>"
+						/>
 					</c:if>
 				</liferay-frontend:fieldset>
 
@@ -136,9 +179,18 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 						<liferay-ui:message key="use-the-opensocial-gadget-url-to-create-an-opensocial-gadget" />
 					</div>
 
-					<aui:input name="opensocialGadgetURL" type="resource" value="<%= PortalUtil.getGoogleGadgetURL(portlet, themeDisplay) %>" />
+					<aui:input
+						name="opensocialGadgetURL"
+						type="resource"
+						value="<%= PortalUtil.getGoogleGadgetURL(portlet, themeDisplay) %>"
+					/>
 
-					<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-an-open-social-platform", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="iGoogleShowAddAppLink" type="toggle-switch" value="<%= iGoogleShowAddAppLink %>" />
+					<aui:input
+						label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-an-open-social-platform", HtmlUtil.escape(portletDisplay.getTitle()), false) %>'
+						name="iGoogleShowAddAppLink"
+						type="toggle-switch"
+						value="<%= iGoogleShowAddAppLink %>"
+					/>
 				</liferay-frontend:fieldset>
 
 				<liferay-frontend:fieldset
@@ -155,9 +207,18 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 						<liferay-ui:message key="use-the-netvibes-widget-url-to-create-a-netvibes-widget" />
 					</div>
 
-					<aui:input name="netvibesWidgetURL" type="resource" value="<%= PortalUtil.getNetvibesURL(portlet, themeDisplay) %>" />
+					<aui:input
+						name="netvibesWidgetURL"
+						type="resource"
+						value="<%= PortalUtil.getNetvibesURL(portlet, themeDisplay) %>"
+					/>
 
-					<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-netvibes-pages", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="netvibesShowAddAppLink" type="toggle-switch" value="<%= netvibesShowAddAppLink %>" />
+					<aui:input
+						label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-netvibes-pages", HtmlUtil.escape(portletDisplay.getTitle()), false) %>'
+						name="netvibesShowAddAppLink"
+						type="toggle-switch"
+						value="<%= netvibesShowAddAppLink %>"
+					/>
 				</liferay-frontend:fieldset>
 			</liferay-frontend:fieldset-group>
 		</liferay-frontend:edit-form-body>

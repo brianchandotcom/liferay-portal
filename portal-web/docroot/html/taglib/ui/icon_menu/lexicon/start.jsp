@@ -37,7 +37,11 @@ if (Validator.isNull(icon)) {
 	<c:choose>
 		<c:when test="<%= triggerType.equals(\"button\") %>">
 			<button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle <%= triggerCssClass %>" id="<%= id %>" title="<%= message %>" type="button">
-				<aui:icon cssClass="inline-item" image="<%= icon %>" markupView="lexicon" />
+				<aui:icon
+					cssClass="inline-item"
+					image="<%= icon %>"
+					markupView="lexicon"
+				/>
 
 				<c:if test="<%= Validator.isNotNull(triggerLabel) %>">
 					<span class="btn-section"><%= triggerLabel %></span>

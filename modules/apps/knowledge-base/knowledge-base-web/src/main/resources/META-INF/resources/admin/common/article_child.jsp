@@ -34,7 +34,11 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 
 <c:if test="<%= !childKBArticles.isEmpty() %>">
 	<h4 class="text-default">
-		<liferay-ui:message arguments="<%= childKBArticles.size() %>" key="child-articles-x" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= childKBArticles.size() %>"
+			key="child-articles-x"
+			translateArguments="<%= false %>"
+		/>
 	</h4>
 
 	<div class="panel">

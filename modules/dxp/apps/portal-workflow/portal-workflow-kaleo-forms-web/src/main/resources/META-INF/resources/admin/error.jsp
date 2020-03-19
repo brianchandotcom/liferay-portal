@@ -16,10 +16,7 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<liferay-ui:header
-	backURL="javascript:history.go(-1);"
-	title="error"
-/>
+<liferay-ui:header backURL="javascript:history.go(-1);" title="error" />
 
 <liferay-ui:error exception="<%= NoSuchKaleoProcessException.class %>" message="the-process-could-not-be-found" />
 <liferay-ui:error exception="<%= WorkflowException.class %>" message="an-unexpected-error-occurred" />

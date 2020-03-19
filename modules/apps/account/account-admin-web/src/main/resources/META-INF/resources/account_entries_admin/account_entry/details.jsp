@@ -29,12 +29,22 @@ renderResponse.setTitle((accountEntryDisplay == null) ? LanguageUtil.get(request
 
 <portlet:actionURL name="/account_admin/edit_account_entry" var="editAccountURL" />
 
-<liferay-frontend:edit-form
-	action="<%= editAccountURL %>"
->
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (accountEntryDisplay == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="accountEntryId" type="hidden" value='<%= (accountEntryDisplay == null) ? "0" : String.valueOf(accountEntryDisplay.getAccountEntryId()) %>' />
+<liferay-frontend:edit-form action="<%= editAccountURL %>">
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= (accountEntryDisplay == null) ? Constants.ADD : Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
+	<aui:input
+		name="accountEntryId"
+		type="hidden"
+		value='<%= (accountEntryDisplay == null) ? "0" : String.valueOf(accountEntryDisplay.getAccountEntryId()) %>'
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<h2 class="sheet-title">

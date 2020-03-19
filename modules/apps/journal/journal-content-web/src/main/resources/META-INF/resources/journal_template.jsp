@@ -42,9 +42,25 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 	}
 	%>
 
-	<aui:input checked="<%= journalContentDisplayContext.isDefaultTemplate() %>" id='<%= refererPortletName + "ddmTemplateTypeDefault" %>' label='<%= LanguageUtil.format(request, "use-default-template-x", defaultDDMTemplateName, false) %>' name='<%= refererPortletName + "ddmTemplateType" %>' type="radio" useNamespace="<%= false %>" value="default" />
+	<aui:input
+		checked="<%= journalContentDisplayContext.isDefaultTemplate() %>"
+		id='<%= refererPortletName + "ddmTemplateTypeDefault" %>'
+		label='<%= LanguageUtil.format(request, "use-default-template-x", defaultDDMTemplateName, false) %>'
+		name='<%= refererPortletName + "ddmTemplateType" %>'
+		type="radio"
+		useNamespace="<%= false %>"
+		value="default"
+	/>
 
-	<aui:input checked="<%= !journalContentDisplayContext.isDefaultTemplate() %>" id='<%= refererPortletName + "ddmTemplateTypeCustom" %>' label="use-a-specific-template" name='<%= refererPortletName + "ddmTemplateType" %>' type="radio" useNamespace="<%= false %>" value="custom" />
+	<aui:input
+		checked="<%= !journalContentDisplayContext.isDefaultTemplate() %>"
+		id='<%= refererPortletName + "ddmTemplateTypeCustom" %>'
+		label="use-a-specific-template"
+		name='<%= refererPortletName + "ddmTemplateType" %>'
+		type="radio"
+		useNamespace="<%= false %>"
+		value="custom"
+	/>
 
 	<div id="<%= refererPortletName + "customDDMTemplateContainer" %>">
 		<div class="template-preview-content">
@@ -60,9 +76,17 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 			</c:choose>
 		</div>
 
-		<aui:button id='<%= refererPortletName + "selectDDMTemplateButton" %>' useNamespace="<%= false %>" value="select" />
+		<aui:button
+			id='<%= refererPortletName + "selectDDMTemplateButton" %>'
+			useNamespace="<%= false %>"
+			value="select"
+		/>
 
-		<aui:button id='<%= refererPortletName + "clearddmTemplateButton" %>' useNamespace="<%= false %>" value="clear" />
+		<aui:button
+			id='<%= refererPortletName + "clearddmTemplateButton" %>'
+			useNamespace="<%= false %>"
+			value="clear"
+		/>
 	</div>
 </div>
 

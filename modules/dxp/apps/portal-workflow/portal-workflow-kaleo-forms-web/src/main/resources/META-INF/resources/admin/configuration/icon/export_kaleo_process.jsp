@@ -34,7 +34,4 @@ sb.append(exportURL);
 sb.append("');");
 %>
 
-<liferay-ui:icon
-	message="export"
-	url="<%= sb.toString() %>"
-/>
+<liferay-ui:icon message="export" url="<%= sb.toString() %>" />

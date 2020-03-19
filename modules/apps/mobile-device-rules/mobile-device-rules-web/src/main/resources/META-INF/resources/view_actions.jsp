@@ -20,15 +20,9 @@
 MDRActionDisplayContext mdrActionDisplayContext = new MDRActionDisplayContext(renderRequest, renderResponse, resourceBundle);
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="actionActions"
->
+<liferay-frontend:management-bar includeCheckBox="<%= true %>" searchContainerId="actionActions">
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= mdrActionDisplayContext.getPortletURL() %>"
-		/>
+		<liferay-frontend:management-bar-navigation navigationKeys='<%= new String[] {"all"} %>' portletURL="<%= mdrActionDisplayContext.getPortletURL() %>" />
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= mdrActionDisplayContext.getOrderByCol() %>"
@@ -64,9 +58,22 @@ MDRActionDisplayContext mdrActionDisplayContext = new MDRActionDisplayContext(re
 PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 %>
 
-<aui:form action="<%= deleteURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+<aui:form
+	action="<%= deleteURL.toString() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.DELETE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= portletURL.toString() %>"
+	/>
 
 	<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
 		<liferay-portlet:renderURL var="addURL">
@@ -80,10 +87,7 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 		</div>
 	</c:if>
 
-	<liferay-ui:search-container
-		id="actionActions"
-		searchContainer="<%= mdrActionDisplayContext.getActionSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="actionActions" searchContainer="<%= mdrActionDisplayContext.getActionSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.mobile.device.rules.model.MDRAction"
 			escapedModel="<%= true %>"
@@ -97,16 +101,15 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 
 			<c:choose>
 				<c:when test='<%= Objects.equals(mdrActionDisplayContext.getDisplayStyle(), "descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="mobile-portrait"
-						toggleRowChecker="<%= true %>"
-					/>
+					<liferay-ui:search-container-column-icon icon="mobile-portrait" toggleRowChecker="<%= true %>" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h6 class="text-default">
-							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - action.getModifiedDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - action.getModifiedDate().getTime(), true) %>"
+								key="x-ago"
+								translateArguments="<%= false %>"
+							/>
 						</h6>
 
 						<h5>
@@ -126,9 +129,7 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 						</h6>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/action_actions.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/action_actions.jsp" />
 				</c:when>
 				<c:when test='<%= Objects.equals(mdrActionDisplayContext.getDisplayStyle(), "icon") %>'>
 
@@ -147,7 +148,11 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 							title="<%= action.getName(locale) %>"
 						>
 							<liferay-frontend:vertical-card-header>
-								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - action.getModifiedDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+								<liferay-ui:message
+									arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - action.getModifiedDate().getTime(), true) %>"
+									key="x-ago"
+									translateArguments="<%= false %>"
+								/>
 							</liferay-frontend:vertical-card-header>
 
 							<liferay-frontend:vertical-card-footer>
@@ -164,10 +169,7 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= mdrActionDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= mdrActionDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

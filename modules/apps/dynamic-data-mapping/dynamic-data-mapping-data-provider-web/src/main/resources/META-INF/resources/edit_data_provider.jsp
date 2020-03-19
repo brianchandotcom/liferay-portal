@@ -42,21 +42,44 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 	<portlet:param name="mvcPath" value="/edit_data_provider.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= (ddmDataProviderInstance == null) ? addDataProviderURL : updateDataProviderURL %>" data-senna-off="true" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
-	<aui:input name="dataProviderInstanceId" type="hidden" value="<%= String.valueOf(dataProviderInstanceId) %>" />
-	<aui:input name="type" type="hidden" value="<%= type %>" />
-	<aui:input name="languageId" type="hidden" value="<%= String.valueOf(themeDisplay.getLanguageId()) %>" />
+<aui:form
+	action="<%= (ddmDataProviderInstance == null) ? addDataProviderURL : updateDataProviderURL %>"
+	data-senna-off="true"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="groupId"
+		type="hidden"
+		value="<%= String.valueOf(groupId) %>"
+	/>
+	<aui:input
+		name="dataProviderInstanceId"
+		type="hidden"
+		value="<%= String.valueOf(dataProviderInstanceId) %>"
+	/>
+	<aui:input
+		name="type"
+		type="hidden"
+		value="<%= type %>"
+	/>
+	<aui:input
+		name="languageId"
+		type="hidden"
+		value="<%= String.valueOf(themeDisplay.getLanguageId()) %>"
+	/>
 
 	<%@ include file="/exceptions.jspf" %>
 
 	<div class="container-fluid-1280 lfr-ddm-edit-data-provider">
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<liferay-util:buffer
-					var="requiredMark"
-				>
+				<liferay-util:buffer var="requiredMark">
 					<span class="hide-accessible"><liferay-ui:message key="required" />&nbsp;</span>
 
 					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
@@ -65,12 +88,27 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 				</liferay-util:buffer>
 
 				<label class="required-warning">
-					<liferay-ui:message arguments="<%= requiredMark %>" key="all-fields-marked-with-x-are-required" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= requiredMark %>"
+						key="all-fields-marked-with-x-are-required"
+						translateArguments="<%= false %>"
+					/>
 				</label>
 
-				<aui:input name="name" placeholder="enter-the-data-provider-name" required="<%= true %>" type="text" value="<%= ddmDataProviderDisplayContext.getDataProviderInstanceName() %>" />
+				<aui:input
+					name="name"
+					placeholder="enter-the-data-provider-name"
+					required="<%= true %>"
+					type="text"
+					value="<%= ddmDataProviderDisplayContext.getDataProviderInstanceName() %>"
+				/>
 
-				<aui:input name="description" placeholder="enter-a-short-description" type="textarea" value="<%= ddmDataProviderDisplayContext.getDataProviderInstanceDescription() %>" />
+				<aui:input
+					name="description"
+					placeholder="enter-a-short-description"
+					type="textarea"
+					value="<%= ddmDataProviderDisplayContext.getDataProviderInstanceDescription() %>"
+				/>
 			</aui:fieldset>
 
 			<aui:fieldset>
@@ -78,10 +116,12 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 			</aui:fieldset>
 
 			<c:if test="<%= ddmDataProviderInstance == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= DDMDataProviderInstance.class.getName() %>"
-					/>
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="permissions"
+				>
+					<liferay-ui:input-permissions modelName="<%= DDMDataProviderInstance.class.getName() %>" />
 				</aui:fieldset>
 			</c:if>
 		</aui:fieldset-group>
@@ -90,9 +130,17 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 	<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
 		<div class="container-fluid-1280">
 			<aui:button-row>
-				<aui:button id="submit" label="save" type="submit" />
+				<aui:button
+					id="submit"
+					label="save"
+					type="submit"
+				/>
 
-				<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
+				<aui:button
+					href="<%= redirect %>"
+					name="cancelButton"
+					type="cancel"
+				/>
 			</aui:button-row>
 		</div>
 	</c:if>

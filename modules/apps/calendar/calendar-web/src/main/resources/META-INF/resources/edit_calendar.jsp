@@ -66,7 +66,11 @@ navigationURL.setParameter("calendarResourceId", calendarResourceId);
 		navigationURL.setParameter("tabs2", "general");
 		%>
 
-		<aui:nav-item href="<%= navigationURL.toString() %>" label="general" selected='<%= tabs2.equals("general") %>' />
+		<aui:nav-item
+			href="<%= navigationURL.toString() %>"
+			label="general"
+			selected='<%= tabs2.equals("general") %>'
+		/>
 
 		<c:if test="<%= calendar != null %>">
 
@@ -74,7 +78,11 @@ navigationURL.setParameter("calendarResourceId", calendarResourceId);
 			navigationURL.setParameter("tabs2", "notification-templates");
 			%>
 
-			<aui:nav-item href="<%= navigationURL.toString() %>" label="notification-templates" selected='<%= tabs2.equals("notification-templates") %>' />
+			<aui:nav-item
+				href="<%= navigationURL.toString() %>"
+				label="notification-templates"
+				selected='<%= tabs2.equals("notification-templates") %>'
+			/>
 		</c:if>
 	</aui:nav>
 </aui:nav-bar>

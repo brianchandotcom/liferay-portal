@@ -16,14 +16,9 @@
 
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
-		<liferay-ui:search-container-column-icon
-			icon="users"
-			toggleRowChecker="<%= true %>"
-		/>
+		<liferay-ui:search-container-column-icon icon="users" toggleRowChecker="<%= true %>" />
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<h5><%= organization.getName() %></h5>
 
 			<h6 class="text-default">
@@ -79,19 +74,10 @@
 			value="<%= LanguageUtil.get(request, organization.getType()) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			name="city"
-			value="<%= HtmlUtil.escape(organization.getAddress().getCity()) %>"
-		/>
+		<liferay-ui:search-container-column-text name="city" value="<%= HtmlUtil.escape(organization.getAddress().getCity()) %>" />
 
-		<liferay-ui:search-container-column-text
-			name="region"
-			value="<%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
-		/>
+		<liferay-ui:search-container-column-text name="region" value="<%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>" />
 
-		<liferay-ui:search-container-column-text
-			name="country"
-			value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
-		/>
+		<liferay-ui:search-container-column-text name="country" value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>" />
 	</c:otherwise>
 </c:choose>

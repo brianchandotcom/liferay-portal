@@ -28,14 +28,19 @@
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:tabs
-			names="email-from,document-added-email,document-updated-email"
-			refresh="<%= false %>"
-		>
+		<liferay-ui:tabs names="email-from,document-added-email,document-updated-email" refresh="<%= false %>">
 			<liferay-ui:error key="emailFileEntryAddedBody" message="please-enter-a-valid-body" />
 			<liferay-ui:error key="emailFileEntryAddedSubject" message="please-enter-a-valid-subject" />
 			<liferay-ui:error key="emailFileEntryUpdatedBody" message="please-enter-a-valid-body" />
@@ -46,15 +51,22 @@
 			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>
 					<liferay-frontend:fieldset>
-						<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= dlGroupServiceSettings.getEmailFromName() %>" />
+						<aui:input
+							cssClass="lfr-input-text-container"
+							label="name"
+							name="preferences--emailFromName--"
+							value="<%= dlGroupServiceSettings.getEmailFromName() %>"
+						/>
 
-						<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= dlGroupServiceSettings.getEmailFromAddress() %>" />
+						<aui:input
+							cssClass="lfr-input-text-container"
+							label="address"
+							name="preferences--emailFromAddress--"
+							value="<%= dlGroupServiceSettings.getEmailFromAddress() %>"
+						/>
 					</liferay-frontend:fieldset>
 
-					<liferay-frontend:fieldset
-						collapsible="<%= true %>"
-						label="definition-of-terms"
-					>
+					<liferay-frontend:fieldset collapsible="<%= true %>" label="definition-of-terms">
 						<dl>
 
 							<%

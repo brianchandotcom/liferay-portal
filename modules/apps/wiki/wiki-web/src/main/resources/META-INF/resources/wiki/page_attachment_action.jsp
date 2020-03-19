@@ -43,10 +43,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 					<portlet:param name="fileName" value="<%= HtmlUtil.unescape(attachmentsFileEntry.getTitle()) %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon
-					message="restore"
-					url="<%= restoreEntryURL %>"
-				/>
+				<liferay-ui:icon message="restore" url="<%= restoreEntryURL %>" />
 			</c:if>
 
 			<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
@@ -58,9 +55,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 					<portlet:param name="fileName" value="<%= HtmlUtil.unescape(attachmentsFileEntry.getTitle()) %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon-delete
-					url="<%= deleteURL %>"
-				/>
+				<liferay-ui:icon-delete url="<%= deleteURL %>" />
 			</c:if>
 		</c:when>
 		<c:otherwise>
@@ -74,10 +69,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 				</portlet:actionURL>
 
 				<div class="delete-attachment" data-rowid="<%= attachmentsFileEntry.getFileEntryId() %>" data-url="<%= deleteURL.toString() %>">
-					<liferay-ui:icon-delete
-						trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
-						url="javascript:;"
-					/>
+					<liferay-ui:icon-delete trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>" url="javascript:;" />
 				</div>
 			</c:if>
 		</c:otherwise>

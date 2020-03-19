@@ -50,39 +50,36 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteSynonymSetActionURL %>" cssClass="container-fluid-1280" method="post" name="SynonymSetsEntriesFm">
-	<aui:input name="deletedSynonymSetsString" type="hidden" value="" />
+<aui:form
+	action="<%= deleteSynonymSetActionURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="SynonymSetsEntriesFm"
+>
+	<aui:input
+		name="deletedSynonymSetsString"
+		type="hidden"
+		value=""
+	/>
 
-	<liferay-ui:search-container
-		id="synonymSetsEntries"
-		searchContainer="<%= synonymsDisplayContext.getSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="synonymSetsEntries" searchContainer="<%= synonymsDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.search.tuning.synonyms.web.internal.display.context.SynonymSetDisplayContext"
 			keyProperty="synonymSetId"
 			modelVar="synonymSetDisplayContext"
 		>
-			<liferay-ui:search-container-column-text
-				colspan="<%= 2 %>"
-				cssClass="table-cell-expand table-title"
-			>
+			<liferay-ui:search-container-column-text colspan="<%= 2 %>" cssClass="table-cell-expand table-title">
 				<aui:a href="<%= synonymSetDisplayContext.getEditRenderURL() %>">
 					<%= HtmlUtil.escape(synonymSetDisplayContext.getDisplayedSynonymSet()) %>
 				</aui:a>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text>
-				<clay:dropdown-actions
-					defaultEventHandler="SynonymSetsDropdownDefaultEventHandler"
-					dropdownItems="<%= synonymSetDisplayContext.getDropdownItems() %>"
-				/>
+				<clay:dropdown-actions defaultEventHandler="SynonymSetsDropdownDefaultEventHandler" dropdownItems="<%= synonymSetDisplayContext.getDropdownItems() %>" />
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-			paginate="<%= false %>"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 	</liferay-ui:search-container>
 </aui:form>
 
@@ -90,7 +87,4 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 	new MultipleCheckboxAction.default('<portlet:namespace />');
 </aui:script>
 
-<liferay-frontend:component
-	componentId="SynonymSetsDropdownDefaultEventHandler"
-	module="js/SynonymSetsDropdownDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="SynonymSetsDropdownDefaultEventHandler" module="js/SynonymSetsDropdownDefaultEventHandler.es" />

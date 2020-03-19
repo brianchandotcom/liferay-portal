@@ -18,9 +18,21 @@
 
 <portlet:actionURL name="edit" var="editCurrency" />
 
-<aui:form action="<%= editCurrency %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="symbols" type="hidden" value="" />
+<aui:form
+	action="<%= editCurrency %>"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="symbols"
+		type="hidden"
+		value=""
+	/>
 
 	<%
 	List leftList = new ArrayList();
@@ -55,7 +67,11 @@
 		rightTitle="available"
 	/>
 
-	<aui:button onClick='<%= renderResponse.getNamespace() + "saveCurrency();" %>' primary="<%= true %>" value="save" />
+	<aui:button
+		onClick='<%= renderResponse.getNamespace() + "saveCurrency();" %>'
+		primary="<%= true %>"
+		value="save"
+	/>
 </aui:form>
 
 <aui:script>

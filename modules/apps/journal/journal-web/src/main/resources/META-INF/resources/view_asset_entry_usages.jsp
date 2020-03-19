@@ -30,7 +30,4 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(article.getTitle(themeDisplay.getLocale()));
 %>
 
-<liferay-layout:layout-classed-model-usages-admin
-	className="<%= JournalArticle.class.getName() %>"
-	classPK="<%= JournalArticleAssetRenderer.getClassPK(article) %>"
-/>
+<liferay-layout:layout-classed-model-usages-admin className="<%= JournalArticle.class.getName() %>" classPK="<%= JournalArticleAssetRenderer.getClassPK(article) %>" />

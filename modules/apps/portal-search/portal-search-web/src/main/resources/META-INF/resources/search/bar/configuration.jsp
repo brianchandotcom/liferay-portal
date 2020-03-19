@@ -47,15 +47,20 @@ SearchBarPortletPreferences searchBarPortletPreferences = new SearchBarPortletPr
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="display-settings"
-			>
+			<liferay-frontend:fieldset collapsible="<%= true %>" label="display-settings">
 				<liferay-ddm:template-selector
 					className="<%= SearchBarPortletDisplayContext.class.getName() %>"
 					displayStyle="<%= searchBarPortletInstanceConfiguration.displayStyle() %>"
@@ -65,29 +70,66 @@ SearchBarPortletPreferences searchBarPortletPreferences = new SearchBarPortletPr
 				/>
 			</liferay-frontend:fieldset>
 
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="advanced-configuration"
-			>
-				<aui:input label="keywords-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_KEYWORDS_PARAMETER_NAME) %>" value="<%= searchBarPortletPreferences.getKeywordsParameterName() %>" />
+			<liferay-frontend:fieldset collapsible="<%= true %>" label="advanced-configuration">
+				<aui:input
+					label="keywords-parameter-name"
+					name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_KEYWORDS_PARAMETER_NAME) %>"
+					value="<%= searchBarPortletPreferences.getKeywordsParameterName() %>"
+				/>
 
-				<aui:select label="scope" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE) %>" value="<%= searchBarPortletPreferences.getSearchScopePreferenceString() %>">
+				<aui:select
+					label="scope"
+					name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE) %>"
+					value="<%= searchBarPortletPreferences.getSearchScopePreferenceString() %>"
+				>
 					<aui:option label="this-site" value="this-site" />
 					<aui:option label="everything" value="everything" />
 					<aui:option label="let-the-user-choose" value="let-the-user-choose" />
 				</aui:select>
 
-				<aui:input label="scope-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SCOPE_PARAMETER_NAME) %>" value="<%= searchBarPortletPreferences.getScopeParameterName() %>" />
+				<aui:input
+					label="scope-parameter-name"
+					name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SCOPE_PARAMETER_NAME) %>"
+					value="<%= searchBarPortletPreferences.getScopeParameterName() %>"
+				/>
 
-				<aui:input helpMessage="destination-page-help" label="destination-page" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_DESTINATION) %>" value="<%= searchBarPortletPreferences.getDestinationString() %>" />
+				<aui:input
+					helpMessage="destination-page-help"
+					label="destination-page"
+					name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_DESTINATION) %>"
+					value="<%= searchBarPortletPreferences.getDestinationString() %>"
+				/>
 
-				<aui:input helpMessage="use-advanced-search-syntax-help" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_USE_ADVANCED_SEARCH_SYNTAX) %>" type="checkbox" value="<%= searchBarPortletPreferences.isUseAdvancedSearchSyntax() %>" />
+				<aui:input
+					helpMessage="use-advanced-search-syntax-help"
+					name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_USE_ADVANCED_SEARCH_SYNTAX) %>"
+					type="checkbox"
+					value="<%= searchBarPortletPreferences.isUseAdvancedSearchSyntax() %>"
+				/>
 
-				<aui:input helpMessage="invisible-help" label="invisible" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_INVISIBLE) %>" type="checkbox" value="<%= searchBarPortletPreferences.isInvisible() %>" />
+				<aui:input
+					helpMessage="invisible-help"
+					label="invisible"
+					name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_INVISIBLE) %>"
+					type="checkbox"
+					value="<%= searchBarPortletPreferences.isInvisible() %>"
+				/>
 
-				<aui:input helpMessage="show-results-from-staged-sites-help" label="show-results-from-staged-sites" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SHOW_STAGED_RESULTS) %>" type="checkbox" value="<%= searchBarPortletPreferences.isShowStagedResults() %>" />
+				<aui:input
+					helpMessage="show-results-from-staged-sites-help"
+					label="show-results-from-staged-sites"
+					name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SHOW_STAGED_RESULTS) %>"
+					type="checkbox"
+					value="<%= searchBarPortletPreferences.isShowStagedResults() %>"
+				/>
 
-				<aui:input helpMessage="federated-search-key-help" label="federated-search-key" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY) %>" type="text" value="<%= searchBarPortletPreferences.getFederatedSearchKeyString() %>" />
+				<aui:input
+					helpMessage="federated-search-key-help"
+					label="federated-search-key"
+					name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY) %>"
+					type="text"
+					value="<%= searchBarPortletPreferences.getFederatedSearchKeyString() %>"
+				/>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

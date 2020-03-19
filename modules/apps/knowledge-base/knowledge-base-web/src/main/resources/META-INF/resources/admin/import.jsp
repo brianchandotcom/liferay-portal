@@ -30,9 +30,23 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 </portlet:actionURL>
 
 <div class="container-fluid-1280">
-	<aui:form action="<%= importFileURL %>" class="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm">
-		<aui:input name="mvcPath" type="hidden" value="/admin/import.jsp" />
-		<aui:input name="parentKBFolderId" type="hidden" value="<%= String.valueOf(parentKBFolderId) %>" />
+	<aui:form
+		action="<%= importFileURL %>"
+		class="lfr-dynamic-form"
+		enctype="multipart/form-data"
+		method="post"
+		name="fm"
+	>
+		<aui:input
+			name="mvcPath"
+			type="hidden"
+			value="/admin/import.jsp"
+		/>
+		<aui:input
+			name="parentKBFolderId"
+			type="hidden"
+			value="<%= String.valueOf(parentKBFolderId) %>"
+		/>
 
 		<liferay-ui:error exception="<%= KBArticleImportException.MustHaveACategory.class %>">
 			<%= LanguageUtil.format(request, "an-unexpected-error-occurred-while-importing-articles-x", LanguageUtil.get(request, "there-are-one-or-more-mandatory-vocabularies-assigned-to-the-knowledge-base-article")) %>
@@ -48,7 +62,11 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= UploadRequestSizeException.class %>">
-			<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(UploadServletRequestConfigurationHelperUtil.getMaxSize(), locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments="<%= LanguageUtil.formatStorageSize(UploadServletRequestConfigurationHelperUtil.getMaxSize(), locale) %>"
+				key="request-is-larger-than-x-and-could-not-be-processed"
+				translateArguments="<%= false %>"
+			/>
 		</liferay-ui:error>
 
 		<aui:fieldset-group markupView="lexicon">
@@ -59,9 +77,20 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 					</div>
 				</aui:field-wrapper>
 
-				<aui:input id="file" label="upload-your-zip-file" name="file" type="file" />
+				<aui:input
+					id="file"
+					label="upload-your-zip-file"
+					name="file"
+					type="file"
+				/>
 
-				<aui:input helpMessage="apply-numerical-prefixes-of-article-files-as-priorities-help" label="apply-numerical-prefixes-of-article-files-as-priorities" name="prioritizeByNumericalPrefix" type="checkbox" value="true" />
+				<aui:input
+					helpMessage="apply-numerical-prefixes-of-article-files-as-priorities-help"
+					label="apply-numerical-prefixes-of-article-files-as-priorities"
+					name="prioritizeByNumericalPrefix"
+					type="checkbox"
+					value="true"
+				/>
 			</aui:fieldset>
 		</aui:fieldset-group>
 

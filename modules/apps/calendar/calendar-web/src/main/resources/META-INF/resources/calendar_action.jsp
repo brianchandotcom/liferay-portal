@@ -37,10 +37,7 @@ Calendar calendar = (Calendar)row.getObject();
 			<portlet:param name="calendarResourceId" value="<%= String.valueOf(calendar.getCalendarResourceId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<c:if test="<%= CalendarPermission.contains(permissionChecker, calendar, ActionKeys.VIEW) %>">
@@ -48,10 +45,7 @@ Calendar calendar = (Calendar)row.getObject();
 			<portlet:param name="calendarId" value="<%= String.valueOf(calendar.getCalendarId()) %>" />
 		</liferay-portlet:resourceURL>
 
-		<liferay-ui:icon
-			message="export"
-			url="<%= exportURL %>"
-		/>
+		<liferay-ui:icon message="export" url="<%= exportURL %>" />
 	</c:if>
 
 	<c:if test="<%= CalendarPermission.contains(permissionChecker, calendar, ActionKeys.UPDATE) %>">
@@ -69,10 +63,7 @@ Calendar calendar = (Calendar)row.getObject();
 		sb.append("');");
 		%>
 
-		<liferay-ui:icon
-			message="import"
-			url="<%= sb.toString() %>"
-		/>
+		<liferay-ui:icon message="import" url="<%= sb.toString() %>" />
 	</c:if>
 
 	<c:if test="<%= CalendarPermission.contains(permissionChecker, calendar, ActionKeys.PERMISSIONS) %>">
@@ -98,9 +89,7 @@ Calendar calendar = (Calendar)row.getObject();
 			<portlet:param name="calendarId" value="<%= String.valueOf(calendar.getCalendarId()) %>" />
 		</liferay-portlet:resourceURL>
 
-		<liferay-rss:rss
-			resourceURL="<%= calendarRSSURL %>"
-		/>
+		<liferay-rss:rss resourceURL="<%= calendarRSSURL %>" />
 	</c:if>
 
 	<c:if test="<%= CalendarPermission.contains(permissionChecker, calendar, ActionKeys.DELETE) && !calendar.isDefaultCalendar() %>">
@@ -110,8 +99,6 @@ Calendar calendar = (Calendar)row.getObject();
 			<portlet:param name="calendarId" value="<%= String.valueOf(calendar.getCalendarId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

@@ -122,13 +122,17 @@ if (portletTitleBasedNavigation) {
 	<div class="lfr-alert-container"></div>
 
 	<liferay-frontend:info-bar>
-		<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
+		<aui:workflow-status
+			markupView="lexicon"
+			showHelpMessage="<%= false %>"
+			showIcon="<%= false %>"
+			showLabel="<%= false %>"
+			status="<%= wikiPage.getStatus() %>"
+			version="<%= String.valueOf(wikiPage.getVersion()) %>"
+		/>
 
 		<liferay-frontend:info-bar-buttons>
-			<liferay-frontend:info-bar-sidenav-toggler-button
-				icon="info-circle-open"
-				label="info"
-			/>
+			<liferay-frontend:info-bar-sidenav-toggler-button icon="info-circle-open" label="info" />
 		</liferay-frontend:info-bar-buttons>
 	</liferay-frontend:info-bar>
 </c:if>
@@ -299,9 +303,7 @@ if (portletTitleBasedNavigation) {
 
 						<%@ include file="/wiki/view_page_content.jspf" %>
 
-						<liferay-expando:custom-attributes-available
-							className="<%= WikiPage.class.getName() %>"
-						>
+						<liferay-expando:custom-attributes-available className="<%= WikiPage.class.getName() %>">
 							<liferay-expando:custom-attribute-list
 								className="<%= WikiPage.class.getName() %>"
 								classPK="<%= wikiPage.getPrimaryKey() %>"
@@ -338,10 +340,7 @@ if (portletTitleBasedNavigation) {
 									</div>
 
 									<div class="page-tags">
-										<liferay-asset:asset-tags-available
-											className="<%= WikiPage.class.getName() %>"
-											classPK="<%= wikiPage.getResourcePrimKey() %>"
-										>
+										<liferay-asset:asset-tags-available className="<%= WikiPage.class.getName() %>" classPK="<%= wikiPage.getResourcePrimKey() %>">
 											<h5><liferay-ui:message key="tags" /></h5>
 
 											<liferay-asset:asset-tags-summary
@@ -367,9 +366,7 @@ if (portletTitleBasedNavigation) {
 
 								<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnableRelatedAssets() %>">
 									<div class="entry-links">
-										<liferay-asset:asset-links
-											assetEntryId="<%= assetEntry.getEntryId() %>"
-										/>
+										<liferay-asset:asset-links assetEntryId="<%= assetEntry.getEntryId() %>" />
 									</div>
 								</c:if>
 							</div>
@@ -427,7 +424,11 @@ if (portletTitleBasedNavigation) {
 
 		<c:if test="<%= Validator.isNotNull(formattedContent) && (followRedirect || (redirectPage == null)) && !childPages.isEmpty() %>">
 			<h4 class="text-default">
-				<liferay-ui:message arguments="<%= childPages.size() %>" key="child-pages-x" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= childPages.size() %>"
+					key="child-pages-x"
+					translateArguments="<%= false %>"
+				/>
 			</h4>
 
 			<div>

@@ -62,26 +62,24 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 		</liferay-frontend:management-bar-buttons>
 
 		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			/>
+			<liferay-frontend:management-bar-navigation navigationKeys='<%= new String[] {"all"} %>' portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>" />
 
 			<li>
 				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
+					<liferay-ui:input-search markupView="lexicon" />
 				</aui:form>
 			</li>
 		</liferay-frontend:management-bar-filters>
 	</liferay-frontend:management-bar>
 </c:if>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectRuleGroupFm">
-	<liferay-ui:search-container
-		searchContainer="<%= ruleGroupSearch %>"
-	>
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="selectRuleGroupFm"
+>
+	<liferay-ui:search-container searchContainer="<%= ruleGroupSearch %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.mobile.device.rules.model.MDRRuleGroup"
 			escapedModel="<%= true %>"
@@ -100,17 +98,17 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="mobile-portrait"
-					/>
+					<liferay-ui:search-container-column-icon icon="mobile-portrait" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h5>
 							<c:choose>
 								<c:when test="<%= ruleGroupInstance == null %>">
-									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<aui:a
+										cssClass="selector-button"
+										data="<%= data %>"
+										href="javascript:;"
+									>
 										<%= ruleGroup.getName(locale) %>
 									</aui:a>
 								</c:when>
@@ -142,13 +140,14 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						name="name"
-					>
+					<liferay-ui:search-container-column-text cssClass="table-cell-content" name="name">
 						<c:choose>
 							<c:when test="<%= ruleGroupInstance == null %>">
-								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<aui:a
+									cssClass="selector-button"
+									data="<%= data %>"
+									href="javascript:;"
+								>
 									<%= ruleGroup.getName(locale) %>
 								</aui:a>
 							</c:when>

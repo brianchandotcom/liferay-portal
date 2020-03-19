@@ -33,9 +33,7 @@ if (Validator.isNotNull(backURL)) {
 }
 %>
 
-<liferay-ui:search-container
-	emptyResultsMessage="no-processes-were-found"
->
+<liferay-ui:search-container emptyResultsMessage="no-processes-were-found">
 	<liferay-ui:search-container-results>
 
 		<%
@@ -66,14 +64,10 @@ if (Validator.isNotNull(backURL)) {
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<liferay-ui:user-portrait
-				userId="<%= curBackgroundTask.getUserId() %>"
-			/>
+			<liferay-ui:user-portrait userId="<%= curBackgroundTask.getUserId() %>" />
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 			<%
 			String backgroundTaskUserName = LanguageUtil.get(request, "deleted-user");
@@ -182,10 +176,7 @@ if (Validator.isNotNull(backURL)) {
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		displayStyle="descriptive"
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 </liferay-ui:search-container>
 
 <%

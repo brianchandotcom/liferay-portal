@@ -53,7 +53,11 @@ List<Tuple> assetLinkEntries = (List<Tuple>)request.getAttribute("liferay-asset:
 								</span>
 							</c:when>
 							<c:otherwise>
-								<aui:a cssClass="text-truncate" href="<%= (String)tuple.getObject(1) %>" target='<%= themeDisplay.isStatePopUp() ? "_blank" : "_self" %>'>
+								<aui:a
+									cssClass="text-truncate"
+									href="<%= (String)tuple.getObject(1) %>"
+									target='<%= themeDisplay.isStatePopUp() ? "_blank" : "_self" %>'
+								>
 									<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>
 								</aui:a>
 							</c:otherwise>

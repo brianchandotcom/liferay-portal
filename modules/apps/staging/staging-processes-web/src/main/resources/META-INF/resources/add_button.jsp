@@ -29,9 +29,7 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 %>
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroupId, ActionKeys.PUBLISH_STAGING) %>">
-	<liferay-frontend:add-menu
-		inline="<%= true %>"
-	>
+	<liferay-frontend:add-menu inline="<%= true %>">
 
 		<%
 		for (ExportImportConfiguration exportImportConfiguration : exportImportConfigurations) {
@@ -44,10 +42,7 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 				<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu-item
-				title="<%= exportImportConfiguration.getName() %>"
-				url="<%= addNewProcessURL %>"
-			/>
+			<liferay-frontend:add-menu-item title="<%= exportImportConfiguration.getName() %>" url="<%= addNewProcessURL %>" />
 
 		<%
 		}
@@ -60,9 +55,6 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 			<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 		</portlet:renderURL>
 
-		<liferay-frontend:add-menu-item
-			title='<%= LanguageUtil.get(request, "custom-publication") %>'
-			url="<%= addNewCustomProcessURL %>"
-		/>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "custom-publication") %>' url="<%= addNewCustomProcessURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>

@@ -27,9 +27,21 @@
 	method="post"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
-	<aui:input name="segmentsEntryId" type="hidden" value="<%= assetListDisplayContext.getSegmentsEntryId() %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
+	<aui:input
+		name="assetListEntryId"
+		type="hidden"
+		value="<%= assetListDisplayContext.getAssetListEntryId() %>"
+	/>
+	<aui:input
+		name="segmentsEntryId"
+		type="hidden"
+		value="<%= assetListDisplayContext.getSegmentsEntryId() %>"
+	/>
 	<aui:input name="assetEntryIds" type="hidden" />
 
 	<liferay-frontend:edit-form-body>
@@ -105,10 +117,7 @@
 				AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
 				%>
 
-				<liferay-ui:search-container-column-text
-					name="title"
-					truncate="<%= true %>"
-				>
+				<liferay-ui:search-container-column-text name="title" truncate="<%= true %>">
 					<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 
 					<c:if test="<%= !assetEntry.isVisible() %>">
@@ -122,32 +131,18 @@
 					</c:if>
 				</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-text
-					name="type"
-					value="<%= assetRendererFactory.getTypeName(locale) %>"
-				/>
+				<liferay-ui:search-container-column-text name="type" value="<%= assetRendererFactory.getTypeName(locale) %>" />
 
-				<liferay-ui:search-container-column-date
-					name="modified-date"
-					value="<%= assetEntry.getModifiedDate() %>"
-				/>
+				<liferay-ui:search-container-column-date name="modified-date" value="<%= assetEntry.getModifiedDate() %>" />
 
-				<liferay-ui:search-container-column-jsp
-					path="/asset_list/asset_selection_order_up_action.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp path="/asset_list/asset_selection_order_up_action.jsp" />
 
-				<liferay-ui:search-container-column-jsp
-					path="/asset_list/asset_selection_order_down_action.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp path="/asset_list/asset_selection_order_down_action.jsp" />
 
-				<liferay-ui:search-container-column-jsp
-					path="/asset_list/asset_selection_action.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp path="/asset_list/asset_selection_action.jsp" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>

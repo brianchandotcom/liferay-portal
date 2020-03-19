@@ -25,10 +25,7 @@ BlogsStatsUser statsUser = (BlogsStatsUser)objArray[0];
 String rowHREF = (String)objArray[1];
 %>
 
-<liferay-ui:user-display
-	url="<%= rowHREF %>"
-	userId="<%= statsUser.getUserId() %>"
->
+<liferay-ui:user-display url="<%= rowHREF %>" userId="<%= statsUser.getUserId() %>">
 	<div class="blogger-post-count">
 		<c:choose>
 			<c:when test="<%= statsUser.getEntryCount() == 1 %>">

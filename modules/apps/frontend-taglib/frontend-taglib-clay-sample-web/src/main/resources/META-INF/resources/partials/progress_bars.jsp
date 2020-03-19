@@ -33,6 +33,4 @@
 	value="<%= 70 %>"
 />
 
-<clay:progressbar
-	status="complete"
-/>
+<clay:progressbar status="complete" />

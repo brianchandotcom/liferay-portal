@@ -74,26 +74,61 @@ renderResponse.setTitle(title);
 	<portlet:param name="redirect" value="<%= backPortletURL.toString() %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editKaleoProcessURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="kaleoProcessId" type="hidden" value="<%= kaleoProcessId %>" />
-	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-	<aui:input name="scope" type="hidden" value="1" />
+<aui:form
+	action="<%= editKaleoProcessURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="kaleoProcessId"
+		type="hidden"
+		value="<%= kaleoProcessId %>"
+	/>
+	<aui:input
+		name="groupId"
+		type="hidden"
+		value="<%= groupId %>"
+	/>
+	<aui:input
+		name="scope"
+		type="hidden"
+		value="1"
+	/>
 
 	<liferay-ui:error exception="<%= KaleoProcessDDMTemplateIdException.class %>" message="please-enter-a-valid-initial-form" />
 	<liferay-ui:error exception="<%= RequiredStructureException.class %>" message="unable-to-delete-field-set-with-forms-associated-with-it" />
 	<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>" message="unable-to-delete-the-workflow-definition-that-is-in-use" />
 
-	<liferay-util:buffer
-		var="htmlBottom"
-	>
+	<liferay-util:buffer var="htmlBottom">
 		<aui:button-row cssClass="kaleo-process-buttons">
-			<aui:button cssClass='<%= (historyKey.equals("forms") ? StringPool.BLANK : "hide") + " kaleo-process-previous pull-left" %>' icon="icon-circle-arrow-left" value="previous" />
+			<aui:button
+				cssClass='<%= (historyKey.equals("forms") ? StringPool.BLANK : "hide") + " kaleo-process-previous pull-left" %>'
+				icon="icon-circle-arrow-left"
+				value="previous"
+			/>
 
-			<aui:button cssClass='<%= (historyKey.equals("forms") ? StringPool.BLANK : "hide") + " kaleo-process-submit pull-right" %>' disabled="<%= true %>" primary="<%= true %>" type="submit" />
+			<aui:button
+				cssClass='<%= (historyKey.equals("forms") ? StringPool.BLANK : "hide") + " kaleo-process-submit pull-right" %>'
+				disabled="<%= true %>"
+				primary="<%= true %>"
+				type="submit"
+			/>
 
-			<aui:button cssClass='<%= (historyKey.equals("forms") ? "hide" : StringPool.BLANK) + " kaleo-process-next pull-right" %>' disabled="<%= true %>" icon="icon-circle-arrow-right" iconAlign="right" primary="<%= true %>" value="next" />
+			<aui:button
+				cssClass='<%= (historyKey.equals("forms") ? "hide" : StringPool.BLANK) + " kaleo-process-next pull-right" %>'
+				disabled="<%= true %>"
+				icon="icon-circle-arrow-right"
+				iconAlign="right"
+				primary="<%= true %>"
+				value="next"
+			/>
 
-			<aui:button cssClass="kaleo-process-cancel pull-right" href="<%= redirect %>" value="cancel" />
+			<aui:button
+				cssClass="kaleo-process-cancel pull-right"
+				href="<%= redirect %>"
+				value="cancel"
+			/>
 		</aui:button-row>
 	</liferay-util:buffer>
 

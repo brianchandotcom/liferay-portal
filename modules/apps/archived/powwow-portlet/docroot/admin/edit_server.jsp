@@ -31,9 +31,22 @@ renderResponse.setTitle((powwowServer != null) ? powwowServer.getName() : Langua
 
 <liferay-portlet:actionURL name="updatePowwowServer" var="editURL" />
 
-<aui:form action="<%= editURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="powwowServerId" type="hidden" value="<%= String.valueOf(powwowServerId) %>" />
+<aui:form
+	action="<%= editURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="powwowServerId"
+		type="hidden"
+		value="<%= String.valueOf(powwowServerId) %>"
+	/>
 
 	<aui:model-context bean="<%= powwowServer %>" model="<%= PowwowServer.class %>" />
 
@@ -66,9 +79,17 @@ renderResponse.setTitle((powwowServer != null) ? powwowServer.getName() : Langua
 
 			</aui:select>
 
-			<aui:input cssClass="optional-field" label="api-url" name="url" />
+			<aui:input
+				cssClass="optional-field"
+				label="api-url"
+				name="url"
+			/>
 
-			<aui:input cssClass="optional-field" label="api-key" name="apiKey" />
+			<aui:input
+				cssClass="optional-field"
+				label="api-key"
+				name="apiKey"
+			/>
 
 			<aui:input cssClass="optional-field" name="secret" />
 		</aui:fieldset>

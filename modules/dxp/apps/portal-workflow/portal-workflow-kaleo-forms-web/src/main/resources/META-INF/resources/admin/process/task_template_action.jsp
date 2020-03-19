@@ -75,7 +75,11 @@ String backURL = (String)row.getParameter("backURL");
 			url="javascript:;"
 		/>
 
-		<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.EDIT) %>" var="editFormTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<liferay-portlet:renderURL
+			portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.EDIT) %>"
+			var="editFormTemplateURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		>
 			<portlet:param name="mvcPath" value="/edit_template.jsp" />
 			<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_TEMPLATE %>" />
 			<portlet:param name="closeRedirect" value="<%= backURL %>" />

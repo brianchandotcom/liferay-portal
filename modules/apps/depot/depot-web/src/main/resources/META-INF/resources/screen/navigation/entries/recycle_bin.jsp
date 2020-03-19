@@ -33,10 +33,23 @@ int trashEntriesMaxAge = PropertiesParamUtil.getInteger(typeSettingsProperties, 
 	cssClass="panel-group-flush"
 	label='<%= LanguageUtil.get(request, "recycle-bin") %>'
 >
-	<aui:input id="trashEnabled" label="enable-recycle-bin" name="TypeSettingsProperties--trashEnabled--" type="toggle-switch" value="<%= groupTrashEnabled %>" />
+	<aui:input
+		id="trashEnabled"
+		label="enable-recycle-bin"
+		name="TypeSettingsProperties--trashEnabled--"
+		type="toggle-switch"
+		value="<%= groupTrashEnabled %>"
+	/>
 
 	<div class="trash-entries-max-age">
-		<aui:input disabled="<%= !groupTrashEnabled %>" helpMessage="trash-entries-max-age-help" label="trash-entries-max-age" name="TypeSettingsProperties--trashEntriesMaxAge--" type="text" value="<%= ((trashEntriesMaxAge % 1) == 0) ? GetterUtil.getInteger(trashEntriesMaxAge) : String.valueOf(trashEntriesMaxAge) %>">
+		<aui:input
+			disabled="<%= !groupTrashEnabled %>"
+			helpMessage="trash-entries-max-age-help"
+			label="trash-entries-max-age"
+			name="TypeSettingsProperties--trashEntriesMaxAge--"
+			type="text"
+			value="<%= ((trashEntriesMaxAge % 1) == 0) ? GetterUtil.getInteger(trashEntriesMaxAge) : String.valueOf(trashEntriesMaxAge) %>"
+		>
 			<aui:validator name="min"><%= PropsValues.TRASH_ENTRY_CHECK_INTERVAL %></aui:validator>
 		</aui:input>
 	</div>

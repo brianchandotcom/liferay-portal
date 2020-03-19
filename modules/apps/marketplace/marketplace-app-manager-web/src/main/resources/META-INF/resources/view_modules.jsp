@@ -42,10 +42,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 	<portlet:param name="app" value="<%= app %>" />
 </portlet:renderURL>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "modules") %>'
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "modules") %>' />
 
 <clay:management-toolbar
 	filterDropdownItems="<%= viewModulesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
@@ -71,16 +68,10 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 		searchContainer="<%= searchContainer %>"
 		var="bundleSearch"
 	>
-		<liferay-ui:search-container-row
-			className="org.osgi.framework.Bundle"
-			modelVar="bundle"
-		>
+		<liferay-ui:search-container-row className="org.osgi.framework.Bundle" modelVar="bundle">
 			<%@ include file="/bundle_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="descriptive"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

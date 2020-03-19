@@ -51,10 +51,20 @@ if (organization != null) {
 			<c:when test="<%= PropsValues.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_ORGANIZATION_STATUS %>">
 				<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + Organization.class.getName() + ListTypeConstants.ORGANIZATION_STATUS %>" message="please-select-a-type" />
 
-				<aui:select label="status" listType="<%= ListTypeConstants.ORGANIZATION_STATUS %>" listTypeFieldName="statusId" name="statusId" showEmptyOption="<%= true %>" />
+				<aui:select
+					label="status"
+					listType="<%= ListTypeConstants.ORGANIZATION_STATUS %>"
+					listTypeFieldName="statusId"
+					name="statusId"
+					showEmptyOption="<%= true %>"
+				/>
 			</c:when>
 			<c:otherwise>
-				<aui:input name="statusId" type="hidden" value="<%= (organization != null) ? organization.getStatusId() : ListTypeConstants.ORGANIZATION_STATUS_DEFAULT %>" />
+				<aui:input
+					name="statusId"
+					type="hidden"
+					value="<%= (organization != null) ? organization.getStatusId() : ListTypeConstants.ORGANIZATION_STATUS_DEFAULT %>"
+				/>
 			</c:otherwise>
 		</c:choose>
 
@@ -75,12 +85,24 @@ if (organization != null) {
 				</aui:select>
 			</c:when>
 			<c:when test="<%= organization == null %>">
-				<aui:input name="type" type="hidden" value="<%= organizationsTypes[0] %>" />
+				<aui:input
+					name="type"
+					type="hidden"
+					value="<%= organizationsTypes[0] %>"
+				/>
 			</c:when>
 			<c:otherwise>
-				<aui:input name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, organization.getType()) %>" />
+				<aui:input
+					name="typeLabel"
+					type="resource"
+					value="<%= LanguageUtil.get(request, organization.getType()) %>"
+				/>
 
-				<aui:input name="type" type="hidden" value="<%= organization.getType() %>" />
+				<aui:input
+					name="type"
+					type="hidden"
+					value="<%= organization.getType() %>"
+				/>
 			</c:otherwise>
 		</c:choose>
 

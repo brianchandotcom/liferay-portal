@@ -38,11 +38,31 @@ renderResponse.setTitle(headerTitle);
 		<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
 	</portlet:actionURL>
 
-	<aui:form action="<%= editRepositoryURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (repository == null) ? Constants.ADD : Constants.UPDATE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
-		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
+	<aui:form
+		action="<%= editRepositoryURL %>"
+		method="post"
+		name="fm"
+	>
+		<aui:input
+			name="<%= Constants.CMD %>"
+			type="hidden"
+			value="<%= (repository == null) ? Constants.ADD : Constants.UPDATE %>"
+		/>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="repositoryId"
+			type="hidden"
+			value="<%= repositoryId %>"
+		/>
+		<aui:input
+			name="folderId"
+			type="hidden"
+			value="<%= folderId %>"
+		/>
 
 		<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-repository-name" />
 		<liferay-ui:error exception="<%= DuplicateRepositoryNameException.class %>" message="please-enter-a-unique-repository-name" />
@@ -59,10 +79,18 @@ renderResponse.setTitle(headerTitle);
 				<aui:input name="description" />
 			</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="repository-configuration">
+			<aui:fieldset
+				collapsed="<%= true %>"
+				collapsible="<%= true %>"
+				label="repository-configuration"
+			>
 				<c:choose>
 					<c:when test="<%= repository == null %>">
-						<aui:select id="repositoryTypes" label="repository-type" name="className">
+						<aui:select
+							id="repositoryTypes"
+							label="repository-type"
+							name="className"
+						>
 
 							<%
 							for (RepositoryClassDefinition repositoryClassDefinition : RepositoryClassDefinitionCatalogUtil.getExternalRepositoryClassDefinitions()) {
@@ -121,10 +149,12 @@ renderResponse.setTitle(headerTitle);
 			</aui:fieldset>
 
 			<c:if test="<%= repository == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= DLFolderConstants.getClassName() %>"
-					/>
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="permissions"
+				>
+					<liferay-ui:input-permissions modelName="<%= DLFolderConstants.getClassName() %>" />
 				</aui:fieldset>
 			</c:if>
 		</aui:fieldset-group>
@@ -152,7 +182,12 @@ renderResponse.setTitle(headerTitle);
 					for (RepositoryConfiguration.Parameter repositoryConfigurationParameter : repositoryConfiguration.getParameters()) {
 					%>
 
-						<aui:input label="<%= HtmlUtil.escape(repositoryConfigurationParameter.getLabel(locale)) %>" name='<%= "settings--" + HtmlUtil.escapeAttribute(repositoryConfigurationParameter.getName()) + "--" %>' type="text" value="" />
+						<aui:input
+							label="<%= HtmlUtil.escape(repositoryConfigurationParameter.getLabel(locale)) %>"
+							name='<%= "settings--" + HtmlUtil.escapeAttribute(repositoryConfigurationParameter.getName()) + "--" %>'
+							type="text"
+							value=""
+						/>
 
 					<%
 					}

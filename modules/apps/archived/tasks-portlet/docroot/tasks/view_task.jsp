@@ -35,9 +35,7 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 		tasksEntry = tasksEntry.toEscapedModel();
 		%>
 
-		<liferay-ui:header
-			title="<%= HtmlUtil.unescape(tasksEntry.getTitle()) %>"
-		/>
+		<liferay-ui:header title="<%= HtmlUtil.unescape(tasksEntry.getTitle()) %>" />
 
 		<div class="task-data-container">
 			<div class="task-data">
@@ -178,10 +176,7 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 					<liferay-ui:message key="tags" />
 				</td>
 				<td>
-					<liferay-asset:asset-tags-summary
-						className="<%= TasksEntry.class.getName() %>"
-						classPK="<%= tasksEntry.getTasksEntryId() %>"
-					/>
+					<liferay-asset:asset-tags-summary className="<%= TasksEntry.class.getName() %>" classPK="<%= tasksEntry.getTasksEntryId() %>" />
 				</td>
 			</tr>
 		</table>
@@ -199,7 +194,11 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 					<portlet:param name="status" value="<%= String.valueOf(resolved ? TasksEntryConstants.STATUS_REOPENED : TasksEntryConstants.STATUS_RESOLVED) %>" />
 				</portlet:actionURL>
 
-				<aui:button cssClass="btn-primary" onClick="<%= updateTasksEntryStatusURL %>" value='<%= resolved ? "reopen" : "resolve" %>' />
+				<aui:button
+					cssClass="btn-primary"
+					onClick="<%= updateTasksEntryStatusURL %>"
+					value='<%= resolved ? "reopen" : "resolve" %>'
+				/>
 
 				<portlet:renderURL var="editTasksEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcPath" value="/tasks/edit_task.jsp" />
@@ -239,9 +238,7 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 			</c:if>
 		</aui:button-row>
 
-		<liferay-ui:tabs
-			names="comments"
-		/>
+		<liferay-ui:tabs names="comments" />
 
 		<%@ include file="/tasks/view_comments.jspf" %>
 	</c:otherwise>

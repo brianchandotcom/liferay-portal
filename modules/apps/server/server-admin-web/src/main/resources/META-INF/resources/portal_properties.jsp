@@ -100,14 +100,9 @@ propertiesSearchContainer.setTotal(filteredPropertiesList.size());
 		iteratorURL="<%= serverURL %>"
 		total="<%= filteredPropertiesList.size() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= ListUtil.subList(filteredPropertiesList, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
+		<liferay-ui:search-container-results results="<%= ListUtil.subList(filteredPropertiesList, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
-		<liferay-ui:search-container-row
-			className="java.util.Map.Entry"
-			modelVar="entry"
-		>
+		<liferay-ui:search-container-row className="java.util.Map.Entry" modelVar="entry">
 
 			<%
 			String property = (String)entry.getKey();
@@ -116,14 +111,9 @@ propertiesSearchContainer.setTotal(filteredPropertiesList.size());
 			boolean overriddenPropertyValue = overriddenProperties.contains(property);
 			%>
 
-			<liferay-ui:search-container-column-text
-				name="property"
-				value="<%= HtmlUtil.escape(StringUtil.shorten(property, 80)) %>"
-			/>
+			<liferay-ui:search-container-column-text name="property" value="<%= HtmlUtil.escape(StringUtil.shorten(property, 80)) %>" />
 
-			<liferay-ui:search-container-column-text
-				name="value"
-			>
+			<liferay-ui:search-container-column-text name="value">
 				<c:if test="<%= Validator.isNotNull(value) %>">
 					<c:choose>
 						<c:when test="<%= value.length() > 80 %>">
@@ -138,18 +128,11 @@ propertiesSearchContainer.setTotal(filteredPropertiesList.size());
 				</c:if>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				name="source"
-			>
-				<liferay-ui:icon
-					iconCssClass='<%= overriddenPropertyValue ? "icon-hdd" : "icon-file-alt" %>'
-					message='<%= LanguageUtil.get(request, overriddenPropertyValue ? "the-value-of-this-property-was-overridden-using-the-control-panel-and-is-stored-in-the-database" : "the-value-of-this-property-is-read-from-a-portal.properties-file-or-one-of-its-extension-files") %>'
-				/>
+			<liferay-ui:search-container-column-text name="source">
+				<liferay-ui:icon iconCssClass='<%= overriddenPropertyValue ? "icon-hdd" : "icon-file-alt" %>' message='<%= LanguageUtil.get(request, overriddenPropertyValue ? "the-value-of-this-property-was-overridden-using-the-control-panel-and-is-stored-in-the-database" : "the-value-of-this-property-is-read-from-a-portal.properties-file-or-one-of-its-extension-files") %>' />
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

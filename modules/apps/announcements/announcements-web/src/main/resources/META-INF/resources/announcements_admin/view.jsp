@@ -83,18 +83,24 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 />
 
 <div class="container-fluid-1280">
-	<aui:form action="<%= currentURL %>" method="get" name="fm">
+	<aui:form
+		action="<%= currentURL %>"
+		method="get"
+		name="fm"
+	>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= currentURL %>"
+		/>
 
 		<liferay-ui:search-container
 			id="announcementsEntries"
 			searchContainer="<%= announcementsEntriesSearchContainer %>"
 			total="<%= announcementsEntriesSearchContainer.getTotal() %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= announcementsEntriesSearchContainer.getResults() %>"
-			/>
+			<liferay-ui:search-container-results results="<%= announcementsEntriesSearchContainer.getResults() %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.announcements.kernel.model.AnnouncementsEntry"
@@ -123,35 +129,18 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 					value="<%= HtmlUtil.escape(entry.getTitle()) %>"
 				/>
 
-				<liferay-ui:search-container-column-text
-					name="type"
-					value="<%= LanguageUtil.get(resourceBundle, entry.getType()) %>"
-				/>
+				<liferay-ui:search-container-column-text name="type" value="<%= LanguageUtil.get(resourceBundle, entry.getType()) %>" />
 
-				<liferay-ui:search-container-column-date
-					name="modified-date"
-					value="<%= entry.getModifiedDate() %>"
-				/>
+				<liferay-ui:search-container-column-date name="modified-date" value="<%= entry.getModifiedDate() %>" />
 
-				<liferay-ui:search-container-column-date
-					name="display-date"
-					value="<%= entry.getDisplayDate() %>"
-				/>
+				<liferay-ui:search-container-column-date name="display-date" value="<%= entry.getDisplayDate() %>" />
 
-				<liferay-ui:search-container-column-date
-					name="expiration-date"
-					value="<%= entry.getExpirationDate() %>"
-				/>
+				<liferay-ui:search-container-column-date name="expiration-date" value="<%= entry.getExpirationDate() %>" />
 
-				<liferay-ui:search-container-column-jsp
-					path="/announcements_admin/entry_action.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp path="/announcements_admin/entry_action.jsp" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-				searchContainer="<%= announcementsEntriesSearchContainer %>"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= announcementsEntriesSearchContainer %>" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

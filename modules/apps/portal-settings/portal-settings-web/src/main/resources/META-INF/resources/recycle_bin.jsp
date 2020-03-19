@@ -23,7 +23,14 @@ boolean trashEnabled = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKe
 <h3><liferay-ui:message key="recycle-bin" /></h3>
 
 <aui:fieldset>
-	<aui:input helpMessage="enable-recycle-bin-default" id="trashEnabled" label="enable-recycle-bin" name='<%= "settings--" + PropsKeys.TRASH_ENABLED + "--" %>' type="checkbox" value="<%= trashEnabled %>" />
+	<aui:input
+		helpMessage="enable-recycle-bin-default"
+		id="trashEnabled"
+		label="enable-recycle-bin"
+		name='<%= "settings--" + PropsKeys.TRASH_ENABLED + "--" %>'
+		type="checkbox"
+		value="<%= trashEnabled %>"
+	/>
 </aui:fieldset>
 
 <script>

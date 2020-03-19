@@ -64,23 +64,39 @@ if (!dlFileEntries.isEmpty()) {
 	<c:otherwise>
 		<c:if test="<%= (expandoBridgeAttributeNames != null) && !expandoBridgeAttributeNames.isEmpty() %>">
 			<div class="alert alert-danger">
-				<liferay-ui:message arguments="<%= StringUtil.merge(expandoBridgeAttributeNames) %>" key="custom-fields-already-exist-for-these-extra-settings-x" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= StringUtil.merge(expandoBridgeAttributeNames) %>"
+					key="custom-fields-already-exist-for-these-extra-settings-x"
+					translateArguments="<%= false %>"
+				/>
 			</div>
 		</c:if>
 
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="keys" type="hidden" value="<%= StringUtil.merge(keys) %>" />
+		<aui:input
+			name="keys"
+			type="hidden"
+			value="<%= StringUtil.merge(keys) %>"
+		/>
 
 		<%
 		for (String key : keys) {
 		%>
 
 			<aui:fieldset>
-				<liferay-ui:message arguments="<%= key %>" key="convert-extra-settings-key-from-x-to" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= key %>"
+					key="convert-extra-settings-key-from-x-to"
+					translateArguments="<%= false %>"
+				/>
 
 				<br />
 
-				<aui:select helpMessage="custom-field-type-help" label="type" name='<%= "type_" + key %>'>
+				<aui:select
+					helpMessage="custom-field-type-help"
+					label="type"
+					name='<%= "type_" + key %>'
+				>
 
 					<%
 					for (int curType : ExpandoColumnConstants.TYPES) {

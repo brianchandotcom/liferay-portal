@@ -35,10 +35,7 @@ Definition definition = (Definition)row.getObject();
 			<portlet:param name="definitionId" value="<%= String.valueOf(definition.getDefinitionId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<c:if test="<%= DefinitionPermissionChecker.contains(permissionChecker, definition, ActionKeys.PERMISSIONS) %>">
@@ -64,10 +61,7 @@ Definition definition = (Definition)row.getObject();
 			<portlet:param name="definitionId" value="<%= String.valueOf(definition.getDefinitionId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="add-report"
-			url="<%= addReportURL %>"
-		/>
+		<liferay-ui:icon message="add-report" url="<%= addReportURL %>" />
 	</c:if>
 
 	<c:if test="<%= DefinitionPermissionChecker.contains(permissionChecker, definition, ReportsActionKeys.ADD_REPORT) %>">
@@ -76,10 +70,7 @@ Definition definition = (Definition)row.getObject();
 			<portlet:param name="definitionId" value="<%= String.valueOf(definition.getDefinitionId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="add-schedule"
-			url="<%= addScheduleURL %>"
-		/>
+		<liferay-ui:icon message="add-schedule" url="<%= addScheduleURL %>" />
 	</c:if>
 
 	<c:if test="<%= DefinitionPermissionChecker.contains(permissionChecker, definition, ActionKeys.DELETE) %>">
@@ -89,8 +80,6 @@ Definition definition = (Definition)row.getObject();
 			<portlet:param name="definitionId" value="<%= String.valueOf(definition.getDefinitionId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

@@ -50,12 +50,27 @@ List<CustomFacetTermDisplayContext> customFacetTermDisplayContexts = customFacet
 
 <c:choose>
 	<c:when test="<%= customFacetDisplayContext.isRenderNothing() %>">
-		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(customFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= customFacetDisplayContext.getParameterValue() %>" />
+		<aui:input
+			autocomplete="off"
+			name="<%= HtmlUtil.escapeAttribute(customFacetDisplayContext.getParameterName()) %>"
+			type="hidden"
+			value="<%= customFacetDisplayContext.getParameterValue() %>"
+		/>
 	</c:when>
 	<c:otherwise>
 		<aui:form method="post" name="fm">
-			<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(customFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= customFacetDisplayContext.getParameterValue() %>" />
-			<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= customFacetDisplayContext.getParameterName() %>" />
+			<aui:input
+				autocomplete="off"
+				name="<%= HtmlUtil.escapeAttribute(customFacetDisplayContext.getParameterName()) %>"
+				type="hidden"
+				value="<%= customFacetDisplayContext.getParameterValue() %>"
+			/>
+			<aui:input
+				cssClass="facet-parameter-name"
+				name="facet-parameter-name"
+				type="hidden"
+				value="<%= customFacetDisplayContext.getParameterName() %>"
+			/>
 
 			<liferay-ddm:template-renderer
 				className="<%= CustomFacetTermDisplayContext.class.getName() %>"
@@ -114,7 +129,11 @@ List<CustomFacetTermDisplayContext> customFacetTermDisplayContexts = customFacet
 						</aui:fieldset>
 
 						<c:if test="<%= !customFacetDisplayContext.isNothingSelected() %>">
-							<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
+							<aui:button
+								cssClass="btn-link btn-unstyled facet-clear-btn"
+								onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+								value="clear"
+							/>
 						</c:if>
 					</liferay-ui:panel>
 				</liferay-ui:panel-container>

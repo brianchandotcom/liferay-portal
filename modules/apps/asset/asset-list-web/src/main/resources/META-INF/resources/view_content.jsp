@@ -17,10 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <div class="container-fluid-1280 pt-3">
-	<liferay-ui:search-container
-		id="assetEntries"
-		searchContainer="<%= assetListDisplayContext.getAssetListContentSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="assetEntries" searchContainer="<%= assetListDisplayContext.getAssetListContentSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.asset.kernel.model.AssetEntry"
 			keyProperty="entryId"
@@ -33,20 +30,12 @@
 			AssetRendererFactory assetRendererFactory = assetRenderer.getAssetRendererFactory();
 			%>
 
-			<liferay-ui:search-container-column-text
-				name="title"
-				value="<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>"
-			/>
+			<liferay-ui:search-container-column-text name="title" value="<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>" />
 
-			<liferay-ui:search-container-column-text
-				name="type"
-				value="<%= assetRendererFactory.getTypeName(locale) %>"
-			/>
+			<liferay-ui:search-container-column-text name="type" value="<%= assetRendererFactory.getTypeName(locale) %>" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>
 

@@ -24,10 +24,7 @@ List<Group> inheritedSiteGroups = userDisplayContext.getInheritedSiteGroups();
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites");
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="sites"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="sites" />
 
 <liferay-ui:membership-policy-error />
 
@@ -52,9 +49,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 	</c:if>
 </h3>
 
-<liferay-util:buffer
-	var="removeGroupIcon"
->
+<liferay-util:buffer var="removeGroupIcon">
 	<liferay-ui:icon
 		icon="times-circle"
 		markupView="lexicon"
@@ -74,9 +69,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= siteGroups.size() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= siteGroups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= siteGroups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Group"
@@ -85,13 +78,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		modelVar="group"
 		rowIdProperty="friendlyURL"
 	>
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="name"
-		>
-			<liferay-staging:descriptive-name
-				group="<%= group %>"
-			/>
+		<liferay-ui:search-container-column-text cssClass="table-cell-content" name="name">
+			<liferay-staging:descriptive-name group="<%= group %>" />
 		</liferay-ui:search-container-column-text>
 
 		<%
@@ -119,9 +107,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">
@@ -281,9 +267,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		iteratorURL="<%= currentURLObj %>"
 		total="<%= inheritedSiteGroups.size() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= inheritedSiteGroups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-		/>
+		<liferay-ui:search-container-results results="<%= inheritedSiteGroups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Group"
@@ -315,8 +299,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </c:if>

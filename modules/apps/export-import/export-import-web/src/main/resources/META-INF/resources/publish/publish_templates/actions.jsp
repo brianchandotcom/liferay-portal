@@ -45,8 +45,5 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 	markupView="lexicon"
 	showWhenSingleIcon="<%= true %>"
 >
-	<liferay-ui:icon
-		message='<%= localPublishing ? "publish-to-live" : "publish-to-remote-live" %>'
-		url="<%= publishByExportImportConfigurationURL %>"
-	/>
+	<liferay-ui:icon message='<%= localPublishing ? "publish-to-live" : "publish-to-remote-live" %>' url="<%= publishByExportImportConfigurationURL %>" />
 </liferay-ui:icon-menu>

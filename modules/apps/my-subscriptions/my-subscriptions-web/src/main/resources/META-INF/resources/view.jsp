@@ -35,9 +35,18 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 />
 
 <div class="container-fluid-1280">
-	<aui:form action="<%= unsubscribeURL %>" method="get" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "unsubscribe();" %>'>
+	<aui:form
+		action="<%= unsubscribeURL %>"
+		method="get"
+		name="fm"
+		onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "unsubscribe();" %>'
+	>
 		<liferay-portlet:renderURLParams varImpl="portletURL" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= currentURL %>"
+		/>
 		<aui:input name="subscriptionIds" type="hidden" />
 
 		<liferay-ui:error exception="<%= NoSuchSubscriptionException.class %>" message="the-subscription-could-not-be-found" />
@@ -55,9 +64,7 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 				rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 				total="<%= subscriptionsCount %>"
 			>
-				<liferay-ui:search-container-results
-					results="<%= SubscriptionLocalServiceUtil.getUserSubscriptions(user.getUserId(), searchContainer.getStart(), searchContainer.getEnd(), new SubscriptionClassNameIdComparator(true)) %>"
-				/>
+				<liferay-ui:search-container-results results="<%= SubscriptionLocalServiceUtil.getUserSubscriptions(user.getUserId(), searchContainer.getStart(), searchContainer.getEnd(), new SubscriptionClassNameIdComparator(true)) %>" />
 
 				<liferay-ui:search-container-row
 					className="com.liferay.subscription.model.Subscription"
@@ -104,10 +111,7 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-					resultRowSplitter="<%= new MySubscriptionsResultRowSplitter(locale) %>"
-				/>
+				<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new MySubscriptionsResultRowSplitter(locale) %>" />
 			</liferay-ui:search-container>
 		</aui:fieldset>
 	</aui:form>

@@ -37,45 +37,27 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isEditFolderActionVisible() %>">
-			<liferay-ui:icon
-				message="edit"
-				url="<%= folderActionDisplayContext.getEditFolderURL() %>"
-			/>
+			<liferay-ui:icon message="edit" url="<%= folderActionDisplayContext.getEditFolderURL() %>" />
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isMoveFolderActionVisible() %>">
-			<liferay-ui:icon
-				message="move"
-				url="<%= folderActionDisplayContext.getMoveFolderURL() %>"
-			/>
+			<liferay-ui:icon message="move" url="<%= folderActionDisplayContext.getMoveFolderURL() %>" />
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isDeleteExpiredTemporaryFileEntriesActionVisible() %>">
-			<liferay-ui:icon
-				message="delete-expired-temporary-files"
-				url="<%= folderActionDisplayContext.getDeleteExpiredTemporaryFileEntriesURL() %>"
-			/>
+			<liferay-ui:icon message="delete-expired-temporary-files" url="<%= folderActionDisplayContext.getDeleteExpiredTemporaryFileEntriesURL() %>" />
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isAddFolderActionVisible() %>">
-			<liferay-ui:icon
-				message="add-folder"
-				url="<%= folderActionDisplayContext.getAddFolderURL() %>"
-			/>
+			<liferay-ui:icon message="add-folder" url="<%= folderActionDisplayContext.getAddFolderURL() %>" />
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isAddRepositoryActionVisible() %>">
-			<liferay-ui:icon
-				message="add-repository"
-				url="<%= folderActionDisplayContext.getAddRepositoryURL() %>"
-			/>
+			<liferay-ui:icon message="add-repository" url="<%= folderActionDisplayContext.getAddRepositoryURL() %>" />
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isAddMediaActionVisible() %>">
-			<liferay-ui:icon
-				message="add-file-entry"
-				url="<%= folderActionDisplayContext.getAddMediaURL() %>"
-			/>
+			<liferay-ui:icon message="add-file-entry" url="<%= folderActionDisplayContext.getAddMediaURL() %>" />
 
 			<c:if test="<%= folderActionDisplayContext.isMultipleUploadSupported() %>">
 				<liferay-ui:icon
@@ -95,10 +77,7 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isAddFileShortcutActionVisible() %>">
-			<liferay-ui:icon
-				message="add-shortcut"
-				url="<%= folderActionDisplayContext.getAddFileShortcutURL() %>"
-			/>
+			<liferay-ui:icon message="add-shortcut" url="<%= folderActionDisplayContext.getAddFileShortcutURL() %>" />
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isAccessFromDesktopActionVisible() %>">
@@ -123,10 +102,7 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isDeleteFolderActionVisible() %>">
-			<liferay-ui:icon-delete
-				trash="<%= folderActionDisplayContext.isTrashEnabled() %>"
-				url="<%= folderActionDisplayContext.getDeleteFolderURL() %>"
-			/>
+			<liferay-ui:icon-delete trash="<%= folderActionDisplayContext.isTrashEnabled() %>" url="<%= folderActionDisplayContext.getDeleteFolderURL() %>" />
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isPublishFolderActionVisible() %>">

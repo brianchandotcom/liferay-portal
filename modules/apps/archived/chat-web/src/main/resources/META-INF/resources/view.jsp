@@ -80,7 +80,12 @@
 									<%= LanguageUtil.format(request, "online-friends-x", "(" + buddiesCount + ")", false) %>
 								</div>
 
-								<aui:input cssClass="search-buddies" label="" name="searchBuddies" placeholder="search" />
+								<aui:input
+									cssClass="search-buddies"
+									label=""
+									name="searchBuddies"
+									placeholder="search"
+								/>
 
 								<div class="chat-panel-content">
 									<ul class="lfr-component online-users">
@@ -180,5 +185,10 @@
 		</div>
 	</div>
 
-	<aui:input name="currentChatServerTime" type="hidden" useNamespace="<%= false %>" value="<%= System.currentTimeMillis() %>" />
+	<aui:input
+		name="currentChatServerTime"
+		type="hidden"
+		useNamespace="<%= false %>"
+		value="<%= System.currentTimeMillis() %>"
+	/>
 </c:if>

@@ -50,20 +50,44 @@ portletDisplay.setShowBackIcon(true);
 <liferay-ui:error exception="<%= CTCollectionNameException.class %>" message="the-change-list-name-is-too-long" />
 
 <div class="custom-sheet sheet sheet-lg">
-	<aui:form action='<%= actionURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="addChangeListFm">
-		<aui:input name="ctCollectionId" type="hidden" value="<%= ctCollectionId %>" />
+	<aui:form
+		action='<%= actionURL + "&etag=0&strip=0" %>'
+		cssClass="lfr-export-dialog"
+		method="post"
+		name="addChangeListFm"
+	>
+		<aui:input
+			name="ctCollectionId"
+			type="hidden"
+			value="<%= ctCollectionId %>"
+		/>
 
-		<aui:input label="name" name="name" placeholder="change-list-name-placeholder" value="<%= name %>">
+		<aui:input
+			label="name"
+			name="name"
+			placeholder="change-list-name-placeholder"
+			value="<%= name %>"
+		>
 			<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTCollection.class.getName(), "name") %></aui:validator>
 			<aui:validator name="required" />
 		</aui:input>
 
-		<aui:input label="description" name="description" placeholder="change-list-description-placeholder" type="textarea" value="<%= description %>">
+		<aui:input
+			label="description"
+			name="description"
+			placeholder="change-list-description-placeholder"
+			type="textarea"
+			value="<%= description %>"
+		>
 			<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTCollection.class.getName(), "description") %></aui:validator>
 		</aui:input>
 
 		<aui:button-row>
-			<aui:button id="saveButton" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />
+			<aui:button
+				id="saveButton"
+				type="submit"
+				value='<%= LanguageUtil.get(request, "save") %>'
+			/>
 
 			<aui:button href="<%= backURL %>" type="cancel" />
 		</aui:button-row>

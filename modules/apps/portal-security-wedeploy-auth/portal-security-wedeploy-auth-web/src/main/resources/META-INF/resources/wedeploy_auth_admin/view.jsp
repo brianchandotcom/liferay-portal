@@ -32,15 +32,10 @@ List<WeDeployAuthApp> weDeployAuthApps = WeDeployAuthAppLocalServiceUtil.getWeDe
 weDeployAuthAppsSearchContainer.setResults(weDeployAuthApps);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new WeDeployAuthAppsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, weDeployAuthAppsSearchContainer) %>"
-/>
+<clay:management-toolbar displayContext="<%= new WeDeployAuthAppsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, weDeployAuthAppsSearchContainer) %>" />
 
 <div class="container-fluid container-fluid-max-xl container-view">
-	<liferay-ui:search-container
-		id="weDeployAuthApps"
-		searchContainer="<%= weDeployAuthAppsSearchContainer %>"
-	>
+	<liferay-ui:search-container id="weDeployAuthApps" searchContainer="<%= weDeployAuthAppsSearchContainer %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp"
 			keyProperty="weDeployAuthAppId"
@@ -81,14 +76,9 @@ weDeployAuthAppsSearchContainer.setResults(weDeployAuthApps);
 				property="modifiedDate"
 			/>
 
-			<liferay-ui:search-container-column-jsp
-				path="/wedeploy_auth_admin/wedeploy_auth_app_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp path="/wedeploy_auth_admin/wedeploy_auth_app_action.jsp" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="list"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

@@ -29,7 +29,11 @@
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<aui:input label="select-file" name="file" type="file">
+				<aui:input
+					label="select-file"
+					name="file"
+					type="file"
+				>
 					<aui:validator name="required" />
 
 					<aui:validator name="acceptFiles">
@@ -37,7 +41,12 @@
 					</aui:validator>
 				</aui:input>
 
-				<aui:input checked="<%= true %>" label="overwrite-existing-entries" name="overwrite" type="checkbox" />
+				<aui:input
+					checked="<%= true %>"
+					label="overwrite-existing-entries"
+					name="overwrite"
+					type="checkbox"
+				/>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 

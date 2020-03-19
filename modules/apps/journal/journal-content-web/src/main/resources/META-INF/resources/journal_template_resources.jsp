@@ -18,8 +18,6 @@
 
 <div class="row">
 	<div class="col-md-4">
-		<clay:vertical-card
-			verticalCard="<%= new JournalDDMTemplateVerticalCard(journalContentDisplayContext.getDDMTemplate(), request) %>"
-		/>
+		<clay:vertical-card verticalCard="<%= new JournalDDMTemplateVerticalCard(journalContentDisplayContext.getDDMTemplate(), request) %>" />
 	</div>
 </div>

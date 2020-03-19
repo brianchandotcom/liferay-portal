@@ -20,19 +20,18 @@
 AssetTagsManagementToolbarDisplayContext assetTagsManagementToolbarDisplayContext = new AssetTagsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetTagsDisplayContext);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= assetTagsManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= assetTagsManagementToolbarDisplayContext %>" />
 
 <portlet:actionURL name="deleteTag" var="deleteTagURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteTagURL %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
-	<liferay-ui:search-container
-		id="assetTags"
-		searchContainer="<%= assetTagsDisplayContext.getTagsSearchContainer() %>"
-	>
+<aui:form
+	action="<%= deleteTagURL %>"
+	cssClass="container-fluid container-fluid-max-xl"
+	name="fm"
+>
+	<liferay-ui:search-container id="assetTags" searchContainer="<%= assetTagsDisplayContext.getTagsSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.asset.kernel.model.AssetTag"
 			keyProperty="tagId"
@@ -45,14 +44,9 @@ AssetTagsManagementToolbarDisplayContext assetTagsManagementToolbarDisplayContex
 
 			<c:choose>
 				<c:when test='<%= Objects.equals(assetTagsDisplayContext.getDisplayStyle(), "descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="tag"
-						toggleRowChecker="<%= true %>"
-					/>
+					<liferay-ui:search-container-column-icon icon="tag" toggleRowChecker="<%= true %>" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h2 class="h5">
 							<%= tag.getName() %>
 						</h2>
@@ -62,9 +56,7 @@ AssetTagsManagementToolbarDisplayContext assetTagsManagementToolbarDisplayContex
 						</span>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/tag_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/tag_action.jsp" />
 				</c:when>
 				<c:when test='<%= Objects.equals(assetTagsDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
@@ -79,21 +71,13 @@ AssetTagsManagementToolbarDisplayContext assetTagsManagementToolbarDisplayContex
 						value="<%= String.valueOf(fullTagsCount) %>"
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/tag_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/tag_action.jsp" />
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= assetTagsDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= assetTagsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
-<liferay-frontend:component
-	componentId="<%= assetTagsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/ManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= assetTagsManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/ManagementToolbarDefaultEventHandler.es" />

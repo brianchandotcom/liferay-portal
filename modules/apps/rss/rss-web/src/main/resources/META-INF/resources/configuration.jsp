@@ -24,8 +24,16 @@
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= ValidatorException.class %>">
@@ -65,26 +73,57 @@
 					/>
 				</div>
 
-				<aui:input name="preferences--showFeedTitle--" type="toggle-switch" value="<%= rssPortletInstanceConfiguration.showFeedTitle() %>" />
+				<aui:input
+					name="preferences--showFeedTitle--"
+					type="toggle-switch"
+					value="<%= rssPortletInstanceConfiguration.showFeedTitle() %>"
+				/>
 
-				<aui:input name="preferences--showFeedPublishedDate--" type="toggle-switch" value="<%= rssPortletInstanceConfiguration.showFeedPublishedDate() %>" />
+				<aui:input
+					name="preferences--showFeedPublishedDate--"
+					type="toggle-switch"
+					value="<%= rssPortletInstanceConfiguration.showFeedPublishedDate() %>"
+				/>
 
-				<aui:input name="preferences--showFeedDescription--" type="toggle-switch" value="<%= rssPortletInstanceConfiguration.showFeedDescription() %>" />
+				<aui:input
+					name="preferences--showFeedDescription--"
+					type="toggle-switch"
+					value="<%= rssPortletInstanceConfiguration.showFeedDescription() %>"
+				/>
 
 				<%
 				String taglibShowFeedImageOnClick = "if (this.checked) {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "feedImageAlignment.disabled = '';} else {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "feedImageAlignment.disabled = 'disabled';}";
 				%>
 
-				<aui:input name="preferences--showFeedImage--" onClick="<%= taglibShowFeedImageOnClick %>" type="toggle-switch" value="<%= rssPortletInstanceConfiguration.showFeedImage() %>" />
+				<aui:input
+					name="preferences--showFeedImage--"
+					onClick="<%= taglibShowFeedImageOnClick %>"
+					type="toggle-switch"
+					value="<%= rssPortletInstanceConfiguration.showFeedImage() %>"
+				/>
 
-				<aui:input name="preferences--showFeedItemAuthor--" type="toggle-switch" value="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() %>" />
+				<aui:input
+					name="preferences--showFeedItemAuthor--"
+					type="toggle-switch"
+					value="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() %>"
+				/>
 
-				<aui:input label="num-of-entries-per-feed" name="preferences--entriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.entriesPerFeed() %>">
+				<aui:input
+					label="num-of-entries-per-feed"
+					name="preferences--entriesPerFeed--"
+					type="number"
+					value="<%= rssPortletInstanceConfiguration.entriesPerFeed() %>"
+				>
 					<aui:validator name="digits" />
 					<aui:validator name="min">1</aui:validator>
 				</aui:input>
 
-				<aui:input label="num-of-expanded-entries-per-feed" name="preferences--expandedEntriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.expandedEntriesPerFeed() %>">
+				<aui:input
+					label="num-of-expanded-entries-per-feed"
+					name="preferences--expandedEntriesPerFeed--"
+					type="number"
+					value="<%= rssPortletInstanceConfiguration.expandedEntriesPerFeed() %>"
+				>
 					<aui:validator name="digits" />
 					<aui:validator name="min">1</aui:validator>
 				</aui:input>
@@ -122,9 +161,19 @@
 
 						<div class="field-row lfr-form-row lfr-form-row-inline">
 							<div class="row-fields">
-								<aui:input cssClass="lfr-input-text-container" label="title" name='<%= "title" + i %>' value="<%= title %>" />
+								<aui:input
+									cssClass="lfr-input-text-container"
+									label="title"
+									name='<%= "title" + i %>'
+									value="<%= title %>"
+								/>
 
-								<aui:input cssClass="lfr-input-text-container" label="url" name='<%= "url" + i %>' value="<%= urls[i] %>" />
+								<aui:input
+									cssClass="lfr-input-text-container"
+									label="url"
+									name='<%= "url" + i %>'
+									value="<%= urls[i] %>"
+								/>
 							</div>
 						</div>
 

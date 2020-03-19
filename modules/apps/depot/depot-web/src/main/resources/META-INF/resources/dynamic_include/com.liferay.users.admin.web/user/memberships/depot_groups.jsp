@@ -22,12 +22,13 @@ DepotAdminMembershipsDisplayContext depotAdminMembershipsDisplayContext = (Depot
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "asset-libraries");
 %>
 
-<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/depot/update_memberships" />
-
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="asset-libraries"
+<aui:input
+	name="<%= ActionRequest.ACTION_NAME %>"
+	type="hidden"
+	value="/depot/update_memberships"
 />
+
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="asset-libraries" />
 
 <liferay-ui:membership-policy-error />
 
@@ -52,9 +53,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "asset-
 	</c:if>
 </h3>
 
-<liferay-util:buffer
-	var="removeDepotGroupIcon"
->
+<liferay-util:buffer var="removeDepotGroupIcon">
 	<liferay-ui:icon
 		icon="times-circle"
 		markupView="lexicon"
@@ -75,9 +74,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "asset-
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= depotAdminMembershipsDisplayContext.getDepotGroupsCount() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= depotAdminMembershipsDisplayContext.getDepotGroups(searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= depotAdminMembershipsDisplayContext.getDepotGroups(searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Group"
@@ -105,9 +102,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "asset-
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
 <c:if test="<%= depotAdminMembershipsDisplayContext.isSelectable() %>">

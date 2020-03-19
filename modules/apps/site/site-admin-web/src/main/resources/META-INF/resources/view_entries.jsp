@@ -16,9 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:search-container
-	searchContainer="<%= siteAdminDisplayContext.getGroupSearch() %>"
->
+<liferay-ui:search-container searchContainer="<%= siteAdminDisplayContext.getGroupSearch() %>">
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Group"
 		escapedModel="<%= true %>"
@@ -48,22 +46,20 @@
 			<c:when test='<%= Objects.equals(siteAdminDisplayContext.getDisplayStyle(), "descriptive") %>'>
 				<c:choose>
 					<c:when test="<%= Validator.isNotNull(siteImageURL) %>">
-						<liferay-ui:search-container-column-image
-							src="<%= siteImageURL %>"
-						/>
+						<liferay-ui:search-container-column-image src="<%= siteImageURL %>" />
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:search-container-column-icon
-							icon="sites"
-						/>
+						<liferay-ui:search-container-column-icon icon="sites" />
 					</c:otherwise>
 				</c:choose>
 
-				<liferay-ui:search-container-column-text
-					colspan="<%= 2 %>"
-				>
+				<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 					<h5>
-						<aui:a href="<%= !curGroup.isCompany() ? viewSubsitesURL : StringPool.BLANK %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
+						<aui:a
+							href="<%= !curGroup.isCompany() ? viewSubsitesURL : StringPool.BLANK %>"
+							label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>"
+							localizeLabel="<%= false %>"
+						/>
 					</h5>
 
 					<ul class="list-inline">
@@ -91,10 +87,7 @@
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text>
-					<clay:dropdown-actions
-						defaultEventHandler="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-						dropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems(curGroup) %>"
-					/>
+					<clay:dropdown-actions defaultEventHandler="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems(curGroup) %>" />
 				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:when test='<%= Objects.equals(siteAdminDisplayContext.getDisplayStyle(), "icon") %>'>
@@ -104,9 +97,7 @@
 				%>
 
 				<liferay-ui:search-container-column-text>
-					<clay:vertical-card
-						verticalCard="<%= new SiteVerticalCard(curGroup, liferayPortletRequest, liferayPortletResponse, searchContainer.getRowChecker(), siteAdminDisplayContext) %>"
-					/>
+					<clay:vertical-card verticalCard="<%= new SiteVerticalCard(curGroup, liferayPortletRequest, liferayPortletResponse, searchContainer.getRowChecker(), siteAdminDisplayContext) %>" />
 				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:otherwise>
@@ -115,7 +106,11 @@
 					name="name"
 					orderable="<%= true %>"
 				>
-					<aui:a href="<%= !curGroup.isCompany() ? viewSubsitesURL : StringPool.BLANK %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
+					<aui:a
+						href="<%= !curGroup.isCompany() ? viewSubsitesURL : StringPool.BLANK %>"
+						label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>"
+						localizeLabel="<%= false %>"
+					/>
 
 					<c:if test="<%= curGroup.isOrganization() %>">
 
@@ -150,10 +145,7 @@
 
 				</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand-smaller table-cell-ws-nowrap"
-					name="child-sites"
-				>
+				<liferay-ui:search-container-column-text cssClass="table-cell-expand-smaller table-cell-ws-nowrap" name="child-sites">
 					<c:choose>
 						<c:when test="<%= !curGroup.isCompany() %>">
 							<liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" />
@@ -170,10 +162,7 @@
 					value="<%= LanguageUtil.get(request, curGroup.getTypeLabel()) %>"
 				/>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand-smallest table-cell-minw-150"
-					name="members"
-				>
+				<liferay-ui:search-container-column-text cssClass="table-cell-expand-smallest table-cell-minw-150" name="members">
 					<span class="lfr-portal-tooltip" title="<liferay-ui:message key="inherited-memberships-are-not-included-in-members-count" />">
 
 						<%
@@ -213,10 +202,7 @@
 				</liferay-ui:search-container-column-text>
 
 				<c:if test="<%= PropsValues.LIVE_USERS_ENABLED %>">
-					<liferay-ui:search-container-column-text
-						name="online-now"
-						value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), curGroup.getGroupId())) %>"
-					/>
+					<liferay-ui:search-container-column-text name="online-now" value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), curGroup.getGroupId())) %>" />
 				</c:if>
 
 				<liferay-ui:search-container-column-text
@@ -236,13 +222,7 @@
 		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		displayStyle="<%= siteAdminDisplayContext.getDisplayStyle() %>"
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator displayStyle="<%= siteAdminDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 </liferay-ui:search-container>
 
-<liferay-frontend:component
-	componentId="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/SiteDropdownDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>" module="js/SiteDropdownDefaultEventHandler.es" />

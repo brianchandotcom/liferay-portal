@@ -48,12 +48,35 @@ else {
 editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 %>
 
-<aui:form action="<%= journalDisplayContext.useDataEngineEditor() ? StringPool.BLANK : editDDMStructureURL.toString() %>" cssClass="edit-article-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'>
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-	<aui:input name="ddmStructureId" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.getDDMStructureId() %>" />
+<aui:form
+	action="<%= journalDisplayContext.useDataEngineEditor() ? StringPool.BLANK : editDDMStructureURL.toString() %>"
+	cssClass="edit-article-form"
+	enctype="multipart/form-data"
+	method="post"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="groupId"
+		type="hidden"
+		value="<%= groupId %>"
+	/>
+	<aui:input
+		name="ddmStructureId"
+		type="hidden"
+		value="<%= journalEditDDMStructuresDisplayContext.getDDMStructureId() %>"
+	/>
 	<aui:input name="definition" type="hidden" />
-	<aui:input name="indexable" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.isStructureFieldIndexableEnable() %>" />
+	<aui:input
+		name="indexable"
+		type="hidden"
+		value="<%= journalEditDDMStructuresDisplayContext.isStructureFieldIndexableEnable() %>"
+	/>
 
 	<aui:model-context bean="<%= ddmStructure %>" model="<%= DDMStructure.class %>" />
 
@@ -61,13 +84,28 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 		<div class="container-fluid container-fluid-max-xl">
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
-					<aui:input cssClass="form-control-inline" defaultLanguageId="<%= (ddmForm == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()) %>" label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled-x", "structure") %>' wrapperCssClass="article-content-title mb-0" />
+					<aui:input
+						cssClass="form-control-inline"
+						defaultLanguageId="<%= (ddmForm == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()) %>"
+						label=""
+						name="name"
+						placeholder='<%= LanguageUtil.format(request, "untitled-x", "structure") %>'
+						wrapperCssClass="article-content-title mb-0"
+					/>
 				</li>
 				<li class="tbar-item">
 					<div class="journal-article-button-row tbar-section text-right">
-						<aui:button cssClass="btn-secondary btn-sm mr-3" href="<%= redirect %>" type="cancel" />
+						<aui:button
+							cssClass="btn-secondary btn-sm mr-3"
+							href="<%= redirect %>"
+							type="cancel"
+						/>
 
-						<aui:button cssClass="btn-sm mr-3" type="submit" value="<%= journalEditDDMStructuresDisplayContext.getSaveButtonLabel() %>" />
+						<aui:button
+							cssClass="btn-sm mr-3"
+							type="submit"
+							value="<%= journalEditDDMStructuresDisplayContext.getSaveButtonLabel() %>"
+						/>
 
 						<clay:button
 							icon="cog"
@@ -111,7 +149,11 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 				DDMFormLayoutValidationException.MustNotDuplicateFieldName mndfn = (DDMFormLayoutValidationException.MustNotDuplicateFieldName)errorException;
 				%>
 
-				<liferay-ui:message arguments="<%= HtmlUtil.escape(StringUtil.merge(mndfn.getDuplicatedFieldNames(), StringPool.COMMA_AND_SPACE)) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= HtmlUtil.escape(StringUtil.merge(mndfn.getDuplicatedFieldNames(), StringPool.COMMA_AND_SPACE)) %>"
+					key="the-definition-field-name-x-was-defined-more-than-once"
+					translateArguments="<%= false %>"
+				/>
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= DDMFormValidationException.class %>" message="please-enter-a-valid-form-definition" />
@@ -122,7 +164,11 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 				DDMFormValidationException.MustNotDuplicateFieldName mndfn = (DDMFormValidationException.MustNotDuplicateFieldName)errorException;
 				%>
 
-				<liferay-ui:message arguments="<%= HtmlUtil.escape(mndfn.getFieldName()) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= HtmlUtil.escape(mndfn.getFieldName()) %>"
+					key="the-definition-field-name-x-was-defined-more-than-once"
+					translateArguments="<%= false %>"
+				/>
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= DDMFormValidationException.MustSetFieldsForForm.class %>" message="please-add-at-least-one-field" />
@@ -133,7 +179,11 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 				DDMFormValidationException.MustSetOptionsForField msoff = (DDMFormValidationException.MustSetOptionsForField)errorException;
 				%>
 
-				<liferay-ui:message arguments="<%= HtmlUtil.escape(msoff.getFieldName()) %>" key="at-least-one-option-should-be-set-for-field-x" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= HtmlUtil.escape(msoff.getFieldName()) %>"
+					key="at-least-one-option-should-be-set-for-field-x"
+					translateArguments="<%= false %>"
+				/>
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidCharactersForFieldName.class %>">
@@ -142,7 +192,11 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 				DDMFormValidationException.MustSetValidCharactersForFieldName msvcffn = (DDMFormValidationException.MustSetValidCharactersForFieldName)errorException;
 				%>
 
-				<liferay-ui:message arguments="<%= HtmlUtil.escape(msvcffn.getFieldName()) %>" key="invalid-characters-were-defined-for-field-name-x" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= HtmlUtil.escape(msvcffn.getFieldName()) %>"
+					key="invalid-characters-were-defined-for-field-name-x"
+					translateArguments="<%= false %>"
+				/>
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= LocaleException.class %>">

@@ -26,10 +26,7 @@ String organizationIdsString = ParamUtil.getString(request, "organizationsSearch
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organizations");
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="organizations"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="organizations" />
 
 <liferay-ui:membership-policy-error />
 
@@ -55,9 +52,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 	</c:if>
 </h3>
 
-<liferay-util:buffer
-	var="removeOrganizationIcon"
->
+<liferay-util:buffer var="removeOrganizationIcon">
 	<liferay-ui:icon
 		icon="times-circle"
 		markupView="lexicon"
@@ -65,7 +60,11 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 	/>
 </liferay-util:buffer>
 
-<aui:input name="addOrganizationIds" type="hidden" value="<%= organizationIdsString %>" />
+<aui:input
+	name="addOrganizationIds"
+	type="hidden"
+	value="<%= organizationIdsString %>"
+/>
 <aui:input name="deleteOrganizationIds" type="hidden" />
 
 <liferay-ui:search-container
@@ -77,9 +76,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= organizations.size() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= organizations.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= organizations.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Organization"
@@ -93,10 +90,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 			property="name"
 		/>
 
-		<liferay-ui:search-container-column-text
-			name="type"
-			value="<%= LanguageUtil.get(request, organization.getType()) %>"
-		/>
+		<liferay-ui:search-container-column-text name="type" value="<%= LanguageUtil.get(request, organization.getType()) %>" />
 
 		<%
 		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
@@ -121,9 +115,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">

@@ -45,10 +45,7 @@ entriesNavigationItem.setLabel(LanguageUtil.get(request, "user-groups"));
 navigationItems.add(entriesNavigationItem);
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= navigationItems %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= navigationItems %>" />
 
 <%
 ViewUserGroupsManagementToolbarDisplayContext viewUserGroupsManagementToolbarDisplayContext = new ViewUserGroupsManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle);
@@ -75,9 +72,18 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 	viewTypeItems="<%= viewUserGroupsManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="get" name="fm">
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid-1280"
+	method="get"
+	name="fm"
+>
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
-	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= portletURL.toString() %>"
+	/>
 	<aui:input name="deleteUserGroupIds" type="hidden" />
 
 	<div id="breadcrumb">
@@ -178,7 +184,11 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 		});
 	}
 
-	<liferay-portlet:resourceURL id="/users_admin/get_users_count" portletName="<%= UsersAdminPortletKeys.USERS_ADMIN %>" var="getUsersCountResourceURL" />
+	<liferay-portlet:resourceURL
+		id="/users_admin/get_users_count"
+		portletName="<%= UsersAdminPortletKeys.USERS_ADMIN %>"
+		var="getUsersCountResourceURL"
+	/>
 
 	function <portlet:namespace />getUsersCount(className, ids, status, callback) {
 		var url = new URL(

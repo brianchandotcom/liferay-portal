@@ -25,16 +25,12 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 %>
 
 <c:if test="<%= itemSelectorViewDescriptor.isShowManagementToolbar() %>">
-	<clay:management-toolbar
-		displayContext="<%= new ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext(itemSelectorViewDescriptor, request, liferayPortletRequest, liferayPortletResponse, searchContainer) %>"
-	/>
+	<clay:management-toolbar displayContext="<%= new ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext(itemSelectorViewDescriptor, request, liferayPortletRequest, liferayPortletResponse, searchContainer) %>" />
 </c:if>
 
 <div class="container-fluid container-fluid-max-xl item-selector lfr-item-viewer" id="<portlet:namespace />entriesContainer">
 	<c:if test="<%= itemSelectorViewDescriptor.isShowBreadcrumb() %>">
-		<liferay-site-navigation:breadcrumb
-			breadcrumbEntries="<%= itemSelectorViewDescriptorRendererDisplayContext.getBreadcrumbEntries(currentURLObj) %>"
-		/>
+		<liferay-site-navigation:breadcrumb breadcrumbEntries="<%= itemSelectorViewDescriptorRendererDisplayContext.getBreadcrumbEntries(currentURLObj) %>" />
 	</c:if>
 
 	<liferay-ui:search-container
@@ -68,14 +64,10 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 					<liferay-ui:search-container-column-text>
 						<c:choose>
 							<c:when test="<%= itemDescriptor.isCompact() %>">
-								<clay:horizontal-card
-									horizontalCard="<%= new ItemDescriptorHorizontalCard(itemDescriptor, renderRequest) %>"
-								/>
+								<clay:horizontal-card horizontalCard="<%= new ItemDescriptorHorizontalCard(itemDescriptor, renderRequest) %>" />
 							</c:when>
 							<c:otherwise>
-								<clay:vertical-card
-									verticalCard="<%= new ItemDescriptorVerticalCard(itemDescriptor, renderRequest) %>"
-								/>
+								<clay:vertical-card verticalCard="<%= new ItemDescriptorVerticalCard(itemDescriptor, renderRequest) %>" />
 							</c:otherwise>
 						</c:choose>
 					</liferay-ui:search-container-column-text>
@@ -87,15 +79,10 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 					%>
 
 					<c:if test="<%= itemDescriptor.getUserId() != UserConstants.USER_ID_DEFAULT %>">
-						<liferay-ui:search-container-column-user
-							showDetails="<%= false %>"
-							userId="<%= itemDescriptor.getUserId() %>"
-						/>
+						<liferay-ui:search-container-column-user showDetails="<%= false %>" userId="<%= itemDescriptor.getUserId() %>" />
 					</c:if>
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<c:if test="<%= Objects.nonNull(itemDescriptor.getModifiedDate()) %>">
 
 							<%

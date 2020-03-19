@@ -36,10 +36,7 @@ if (portletTitleBasedNavigation) {
 %>
 
 <c:if test="<%= !portletTitleBasedNavigation %>">
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		title="<%= headerTitle %>"
-	/>
+	<liferay-ui:header backURL="<%= backURL %>" title="<%= headerTitle %>" />
 </c:if>
 
 <liferay-frontend:diff

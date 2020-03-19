@@ -16,7 +16,11 @@
 
 <%@ include file="/process_summary_link/init.jsp" %>
 
-<liferay-portlet:renderURL portletName="<%= ExportImportPortletKeys.EXPORT_IMPORT %>" var="processSummaryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+<liferay-portlet:renderURL
+	portletName="<%= ExportImportPortletKeys.EXPORT_IMPORT %>"
+	var="processSummaryURL"
+	windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+>
 	<portlet:param name="mvcRenderCommandName" value="showProcessSummary" />
 	<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 </liferay-portlet:renderURL>

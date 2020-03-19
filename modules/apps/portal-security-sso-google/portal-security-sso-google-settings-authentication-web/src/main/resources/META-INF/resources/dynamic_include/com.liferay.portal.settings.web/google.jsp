@@ -28,9 +28,26 @@ String googleClientSecret = googleAuthorizationConfiguration.clientSecret();
 <liferay-ui:error key="googleClientSecretInvalid" message="the-google-client-secret-is-invalid" />
 
 <aui:fieldset>
-	<aui:input label="enabled" name='<%= PortalSettingsGoogleConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= googleAuthEnabled %>" />
+	<aui:input
+		label="enabled"
+		name='<%= PortalSettingsGoogleConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>'
+		type="checkbox"
+		value="<%= googleAuthEnabled %>"
+	/>
 
-	<aui:input label="google-client-id" name='<%= PortalSettingsGoogleConstants.FORM_PARAMETER_NAMESPACE + "clientId" %>' type="text" value="<%= googleClientId %>" wrapperCssClass="lfr-input-text-container" />
+	<aui:input
+		label="google-client-id"
+		name='<%= PortalSettingsGoogleConstants.FORM_PARAMETER_NAMESPACE + "clientId" %>'
+		type="text"
+		value="<%= googleClientId %>"
+		wrapperCssClass="lfr-input-text-container"
+	/>
 
-	<aui:input label="google-client-secret" name='<%= PortalSettingsGoogleConstants.FORM_PARAMETER_NAMESPACE + "clientSecret" %>' type="text" value="<%= googleClientSecret %>" wrapperCssClass="lfr-input-text-container" />
+	<aui:input
+		label="google-client-secret"
+		name='<%= PortalSettingsGoogleConstants.FORM_PARAMETER_NAMESPACE + "clientSecret" %>'
+		type="text"
+		value="<%= googleClientSecret %>"
+		wrapperCssClass="lfr-input-text-container"
+	/>
 </aui:fieldset>

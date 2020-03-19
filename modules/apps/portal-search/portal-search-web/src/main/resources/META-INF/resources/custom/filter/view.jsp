@@ -49,7 +49,11 @@ contextObjects.put("customFilterDisplayContext", customFilterDisplayContext);
 %>
 
 <c:if test="<%= !customFilterDisplayContext.isRenderNothing() %>">
-	<aui:form action="<%= customFilterDisplayContext.getSearchURL() %>" method="get" name="fm">
+	<aui:form
+		action="<%= customFilterDisplayContext.getSearchURL() %>"
+		method="get"
+		name="fm"
+	>
 		<liferay-ddm:template-renderer
 			className="<%= CustomFilterDisplayContext.class.getName() %>"
 			contextObjects="<%= contextObjects %>"
@@ -71,7 +75,16 @@ contextObjects.put("customFilterDisplayContext", customFilterDisplayContext);
 					persistState="<%= true %>"
 					title="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getHeading()) %>"
 				>
-					<aui:input cssClass="custom-filter-value-input" data-qa-id="customFilterValueInput" disabled="<%= customFilterDisplayContext.isImmutable() %>" id="<%= renderResponse.getNamespace() + StringUtil.randomId() %>" label="" name="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getParameterName()) %>" useNamespace="<%= false %>" value="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getFilterValue()) %>" />
+					<aui:input
+						cssClass="custom-filter-value-input"
+						data-qa-id="customFilterValueInput"
+						disabled="<%= customFilterDisplayContext.isImmutable() %>"
+						id="<%= renderResponse.getNamespace() + StringUtil.randomId() %>"
+						label=""
+						name="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getParameterName()) %>"
+						useNamespace="<%= false %>"
+						value="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getFilterValue()) %>"
+					/>
 
 					<clay:button
 						ariaLabel='<%= LanguageUtil.get(request, "apply") %>'

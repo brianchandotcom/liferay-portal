@@ -42,9 +42,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 	iteratorURL="<%= portletURL %>"
 	total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId) %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.repository.model.Folder"
@@ -58,9 +56,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-ui:search-container-column-text
-			name="folder"
-		>
+		<liferay-ui:search-container-column-text name="folder">
 			<a href="<%= rowURL %>">
 
 				<%
@@ -69,10 +65,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 				AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
 				%>
 
-				<liferay-ui:icon
-					icon="<%= assetRenderer.getIconCssClass() %>"
-					markupView="lexicon"
-				/>
+				<liferay-ui:icon icon="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
 
 				<strong><%= curFolder.getName() %></strong>
 

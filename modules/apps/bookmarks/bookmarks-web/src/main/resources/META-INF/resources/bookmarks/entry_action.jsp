@@ -60,10 +60,7 @@ else {
 		editURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 		%>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL.toString() %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL.toString() %>" />
 
 		<portlet:renderURL var="moveURL">
 			<portlet:param name="mvcRenderCommandName" value="/bookmarks/move_entry" />
@@ -71,10 +68,7 @@ else {
 			<portlet:param name="rowIdsBookmarksEntry" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="move"
-			url="<%= moveURL %>"
-		/>
+		<liferay-ui:icon message="move" url="<%= moveURL %>" />
 	</c:if>
 
 	<c:if test="<%= BookmarksEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) %>">
@@ -103,10 +97,7 @@ else {
 					<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon
-					message="unsubscribe"
-					url="<%= unsubscribeURL %>"
-				/>
+				<liferay-ui:icon message="unsubscribe" url="<%= unsubscribeURL %>" />
 			</c:when>
 			<c:otherwise>
 				<portlet:actionURL name="/bookmarks/edit_entry" var="subscribeURL">
@@ -115,10 +106,7 @@ else {
 					<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon
-					message="subscribe"
-					url="<%= subscribeURL %>"
-				/>
+				<liferay-ui:icon message="subscribe" url="<%= subscribeURL %>" />
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -142,10 +130,7 @@ else {
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>" url="<%= deleteURL %>" />
 	</c:if>
 
 	<c:if test="<%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) %>">

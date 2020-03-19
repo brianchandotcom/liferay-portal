@@ -43,9 +43,17 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 	<portlet:param name="redirect" value="<%= currentURL.toString() %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteBackgroundTasksURL %>" method="get" name="fm">
+<aui:form
+	action="<%= deleteBackgroundTasksURL %>"
+	method="get"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL.toString() %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL.toString() %>"
+	/>
 	<aui:input name="deleteBackgroundTaskIds" type="hidden" />
 
 	<liferay-ui:search-container
@@ -99,14 +107,10 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
 					<liferay-ui:search-container-column-text>
-						<liferay-ui:user-portrait
-							userId="<%= backgroundTask.getUserId() %>"
-						/>
+						<liferay-ui:user-portrait userId="<%= backgroundTask.getUserId() %>" />
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 						<%
 						String backgroundTaskUserName = LanguageUtil.get(request, "deleted-user");
@@ -197,10 +201,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 
 						<div class="row">
 							<div class="col">
-								<liferay-staging:process-status
-									backgroundTaskStatus="<%= backgroundTask.getStatus() %>"
-									backgroundTaskStatusLabel="<%= backgroundTask.getStatusLabel() %>"
-								/>
+								<liferay-staging:process-status backgroundTaskStatus="<%= backgroundTask.getStatus() %>" backgroundTaskStatusLabel="<%= backgroundTask.getStatusLabel() %>" />
 							</div>
 						</div>
 
@@ -220,9 +221,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
-					<liferay-ui:search-container-column-text
-						name="user"
-					>
+					<liferay-ui:search-container-column-text name="user">
 						<liferay-ui:user-display
 							displayStyle="3"
 							showUserDetails="<%= false %>"
@@ -231,23 +230,14 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 						/>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand table-cell-minw-200 table-title"
-						name="title"
-					>
+					<liferay-ui:search-container-column-text cssClass="table-cell-expand table-cell-minw-200 table-title" name="title">
 						<span id="<%= liferayPortletResponse.getNamespace() + "backgroundTaskName" + String.valueOf(backgroundTask.getBackgroundTaskId()) %>">
 							<liferay-ui:message key="<%= HtmlUtil.escape(backgroundTaskName) %>" />
 						</span>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						cssClass="background-task-status-column"
-						name="status"
-					>
-						<liferay-staging:process-status
-							backgroundTaskStatus="<%= backgroundTask.getStatus() %>"
-							backgroundTaskStatusLabel="<%= backgroundTask.getStatusLabel() %>"
-						/>
+					<liferay-ui:search-container-column-text cssClass="background-task-status-column" name="status">
+						<liferay-staging:process-status backgroundTaskStatus="<%= backgroundTask.getStatus() %>" backgroundTaskStatusLabel="<%= backgroundTask.getStatusLabel() %>" />
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-date
@@ -264,10 +254,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 						value="<%= backgroundTask.getCompletionDate() %>"
 					/>
 
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand table-cell-minw-200"
-						name="download"
-					>
+					<liferay-ui:search-container-column-text cssClass="table-cell-expand table-cell-minw-200" name="download">
 
 						<%
 						List<FileEntry> attachmentsFileEntries = backgroundTask.getAttachmentsFileEntries();

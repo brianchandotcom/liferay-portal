@@ -58,17 +58,11 @@ AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.
 
 	<div class="asset-metadata">
 		<div class="categories">
-			<liferay-asset:asset-categories-summary
-				className="<%= assetEntry.getClassName() %>"
-				classPK="<%= assetEntry.getClassPK() %>"
-			/>
+			<liferay-asset:asset-categories-summary className="<%= assetEntry.getClassName() %>" classPK="<%= assetEntry.getClassPK() %>" />
 		</div>
 
 		<div class="tags">
-			<liferay-asset:asset-tags-summary
-				className="<%= assetEntry.getClassName() %>"
-				classPK="<%= assetEntry.getClassPK() %>"
-			/>
+			<liferay-asset:asset-tags-summary className="<%= assetEntry.getClassName() %>" classPK="<%= assetEntry.getClassPK() %>" />
 		</div>
 	</div>
 
@@ -87,6 +81,10 @@ AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.
 	%>
 
 	<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.ADD_TO_PAGE) %>">
-		<aui:button cssClass="add-button-preview" data="<%= data %>" value="add" />
+		<aui:button
+			cssClass="add-button-preview"
+			data="<%= data %>"
+			value="add"
+		/>
 	</c:if>
 </div>

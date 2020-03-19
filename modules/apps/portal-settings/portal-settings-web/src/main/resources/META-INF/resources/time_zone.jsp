@@ -17,7 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <aui:fieldset>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
 
 	<%
 	User defaultUser = company.getDefaultUser();
@@ -25,5 +29,10 @@
 	String timeZoneId = ParamUtil.getString(request, "timeZoneId", defaultUser.getTimeZoneId());
 	%>
 
-	<aui:input label="time-zone" name="timeZoneId" type="timeZone" value="<%= timeZoneId %>" />
+	<aui:input
+		label="time-zone"
+		name="timeZoneId"
+		type="timeZone"
+		value="<%= timeZoneId %>"
+	/>
 </aui:fieldset>

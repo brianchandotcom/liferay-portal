@@ -27,7 +27,11 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
 
 <c:if test="<%= mergeFailCount > PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">
 	<div class="alert alert-warning">
-		<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>'
+			key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors"
+			translateArguments="<%= false %>"
+		/>
 
 		<liferay-ui:message arguments="site-template" key="click-reset-and-propagate-to-reset-the-failure-count-and-propagate-changes-from-the-x" />
 
@@ -35,7 +39,11 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
 		String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_layout_set_prototypes_merge_alert") + StringPool.UNDERLINE;
 		%>
 
-		<aui:button id='<%= randomNamespace + "resetButton" %>' useNamespace="<%= false %>" value="reset-and-propagate" />
+		<aui:button
+			id='<%= randomNamespace + "resetButton" %>'
+			useNamespace="<%= false %>"
+			value="reset-and-propagate"
+		/>
 	</div>
 
 	<script>

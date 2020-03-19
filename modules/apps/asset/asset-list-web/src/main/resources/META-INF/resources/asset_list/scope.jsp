@@ -22,11 +22,13 @@ List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
 PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 %>
 
-<aui:input name="TypeSettingsProperties--groupIds--" type="hidden" value="<%= StringUtil.merge(editAssetListDisplayContext.getSelectedGroupIds()) %>" />
+<aui:input
+	name="TypeSettingsProperties--groupIds--"
+	type="hidden"
+	value="<%= StringUtil.merge(editAssetListDisplayContext.getSelectedGroupIds()) %>"
+/>
 
-<liferay-util:buffer
-	var="removeLinkIcon"
->
+<liferay-util:buffer var="removeLinkIcon">
 	<liferay-ui:icon
 		icon="times-circle"
 		markupView="lexicon"
@@ -41,9 +43,7 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 	iteratorURL="<%= portletURL %>"
 	total="<%= selectedGroups.size() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= selectedGroups %>"
-	/>
+	<liferay-ui:search-container-results results="<%= selectedGroups %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Group"
@@ -56,20 +56,14 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 			value="<%= group.getScopeDescriptiveName(themeDisplay) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			name="type"
-			value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
-		/>
+		<liferay-ui:search-container-column-text name="type" value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>" />
 
 		<liferay-ui:search-container-column-text>
 			<a class="modify-link" data-rowId="<%= group.getGroupId() %>" href="javascript:;"><%= removeLinkIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-		paginate="<%= false %>"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
 <liferay-ui:icon-menu

@@ -30,11 +30,23 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 request.setAttribute("view.jsp-portletURLString", portletURLString);
 %>
 
-<aui:form action="<%= portletURLString %>" method="get" name="fm">
+<aui:form
+	action="<%= portletURLString %>"
+	method="get"
+	name="fm"
+>
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
+	<aui:input
+		name="tabs1"
+		type="hidden"
+		value="<%= tabs1 %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= portletURLString %>"
+	/>
 
 	<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>" />
 

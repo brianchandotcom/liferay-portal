@@ -27,9 +27,7 @@ long classPK = selLayout.getPlid();
 
 <%@ include file="/layout/mobile_device_rules_header.jspf" %>
 
-<liferay-util:buffer
-	var="rootNodeNameLink"
->
+<liferay-util:buffer var="rootNodeNameLink">
 
 	<%
 	PortletURL editLayoutSetURL = liferayPortletResponse.createRenderURL();
@@ -49,11 +47,20 @@ long classPK = selLayout.getPlid();
 int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK);
 %>
 
-<aui:input label='<%= LanguageUtil.format(resourceBundle, "use-the-same-mobile-device-rules-of-the-x", rootNodeNameLink, false) %>' name="inheritRuleGroupInstances" type="toggle-switch" value="<%= mdrRuleGroupInstancesCount == 0 %>" />
+<aui:input
+	label='<%= LanguageUtil.format(resourceBundle, "use-the-same-mobile-device-rules-of-the-x", rootNodeNameLink, false) %>'
+	name="inheritRuleGroupInstances"
+	type="toggle-switch"
+	value="<%= mdrRuleGroupInstancesCount == 0 %>"
+/>
 
 <div class="<%= (mdrRuleGroupInstancesCount == 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />inheritRuleGroupInstancesContainer">
 	<p class="text-muted">
-		<liferay-ui:message arguments="<%= rootNodeNameLink %>" key="mobile-device-rules-are-inhertited-from-x" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= rootNodeNameLink %>"
+			key="mobile-device-rules-are-inhertited-from-x"
+			translateArguments="<%= false %>"
+		/>
 	</p>
 </div>
 

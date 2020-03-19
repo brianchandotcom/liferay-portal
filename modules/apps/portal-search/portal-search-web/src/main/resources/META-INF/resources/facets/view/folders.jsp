@@ -33,7 +33,12 @@ FolderSearchFacetDisplayContext folderSearchFacetDisplayContext = folderSearchFa
 <c:choose>
 	<c:when test="<%= folderSearchFacetDisplayContext.isRenderNothing() %>">
 		<c:if test="<%= folderSearchFacetDisplayContext.getParameterValue() != null %>">
-			<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(folderSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= folderSearchFacetDisplayContext.getParameterValue() %>" />
+			<aui:input
+				autocomplete="off"
+				name="<%= HtmlUtil.escapeAttribute(folderSearchFacetDisplayContext.getParameterName()) %>"
+				type="hidden"
+				value="<%= folderSearchFacetDisplayContext.getParameterValue() %>"
+			/>
 		</c:if>
 	</c:when>
 	<c:otherwise>
@@ -46,7 +51,12 @@ FolderSearchFacetDisplayContext folderSearchFacetDisplayContext = folderSearchFa
 
 			<div class="panel-body">
 				<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
-					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(folderSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= folderSearchFacetDisplayContext.getParameterValue() %>" />
+					<aui:input
+						autocomplete="off"
+						name="<%= HtmlUtil.escapeAttribute(folderSearchFacetDisplayContext.getParameterName()) %>"
+						type="hidden"
+						value="<%= folderSearchFacetDisplayContext.getParameterValue() %>"
+					/>
 
 					<ul class="folders list-unstyled">
 						<li class="default facet-value">

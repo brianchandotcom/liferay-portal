@@ -53,26 +53,18 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 		iteratorURL="<%= searchURL %>"
 		total="<%= configurationEntryIterator.getTotal() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= configurationEntryIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
+		<liferay-ui:search-container-results results="<%= configurationEntryIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.configuration.admin.web.internal.display.ConfigurationEntry"
 			keyProperty="key"
 			modelVar="configurationEntry"
 		>
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="name"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-content" name="name">
 				<aui:a href="<%= configurationEntry.getEditURL(renderRequest, renderResponse) %>"><strong><%= configurationEntry.getName() %></strong></aui:a>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="category"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-content" name="category">
 
 				<%
 				ConfigurationCategory configurationCategory = configurationEntryRetriever.getConfigurationCategory(configurationEntry.getCategory());
@@ -98,10 +90,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 				<liferay-ui:message key="<%= categorySection %>" /> &gt; <liferay-ui:message key="<%= category %>" />
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="scope"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-content" name="scope">
 				<c:choose>
 					<c:when test="<%= ExtendedObjectClassDefinition.Scope.COMPANY.equals(configurationEntry.getScope()) %>">
 						<liferay-ui:message key="default-settings-for-all-instances" />
@@ -121,9 +110,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 				</c:choose>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				name=""
-			>
+			<liferay-ui:search-container-column-text name="">
 				<c:if test="<%= configurationEntry instanceof ConfigurationModelConfigurationEntry %>">
 					<liferay-ui:icon-menu
 						direction="right"
@@ -180,8 +167,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

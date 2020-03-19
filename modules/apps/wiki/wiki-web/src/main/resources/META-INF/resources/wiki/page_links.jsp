@@ -66,7 +66,11 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 									</dt>
 									<dd>
 										<small>
-											<aui:workflow-status markupView="lexicon" showLabel="<%= false %>" status="<%= incomingLinkPage.getStatus() %>" />
+											<aui:workflow-status
+												markupView="lexicon"
+												showLabel="<%= false %>"
+												status="<%= incomingLinkPage.getStatus() %>"
+											/>
 										</small>
 									</dd>
 
@@ -126,7 +130,11 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 											</dt>
 											<dd>
 												<small>
-													<aui:workflow-status markupView="lexicon" showLabel="<%= false %>" status="<%= outgoingLinkPage.getStatus() %>" />
+													<aui:workflow-status
+														markupView="lexicon"
+														showLabel="<%= false %>"
+														status="<%= outgoingLinkPage.getStatus() %>"
+													/>
 												</small>
 											</dd>
 										</c:otherwise>

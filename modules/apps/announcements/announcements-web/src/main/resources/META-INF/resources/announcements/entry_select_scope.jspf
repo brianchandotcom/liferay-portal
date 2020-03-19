@@ -18,14 +18,23 @@
 boolean hasDistributionScope = false;
 %>
 
-<aui:select changesContext="<%= submitOnChange %>" name="distributionScope" onChange='<%= submitOnChange ? renderResponse.getNamespace() + "selectDistributionScope(this.value);" : "" %>' showEmptyOption="<%= true %>">
+<aui:select
+	changesContext="<%= submitOnChange %>"
+	name="distributionScope"
+	onChange='<%= submitOnChange ? renderResponse.getNamespace() + "selectDistributionScope(this.value);" : "" %>'
+	showEmptyOption="<%= true %>"
+>
 	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS) %>">
 
 		<%
 		hasDistributionScope = true;
 		%>
 
-		<aui:option label="general" selected="<%= (classNameId == 0) && (classPK == 0) %>" value="0,0" />
+		<aui:option
+			label="general"
+			selected="<%= (classNameId == 0) && (classPK == 0) %>"
+			value="0,0"
+		/>
 	</c:if>
 
 	<%
@@ -41,7 +50,12 @@ boolean hasDistributionScope = false;
 			for (Group group : groups) {
 			%>
 
-				<aui:option label="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" selected="<%= classPK == group.getGroupId() %>" value="<%= PortalUtil.getClassNameId(Group.class) + StringPool.COMMA + group.getGroupId() %>" />
+				<aui:option
+					label="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+					localizeLabel="<%= false %>"
+					selected="<%= classPK == group.getGroupId() %>"
+					value="<%= PortalUtil.getClassNameId(Group.class) + StringPool.COMMA + group.getGroupId() %>"
+				/>
 
 			<%
 			}
@@ -63,7 +77,12 @@ boolean hasDistributionScope = false;
 			for (Organization organization : organizations) {
 			%>
 
-				<aui:option label="<%= HtmlUtil.escape(organization.getName()) %>" localizeLabel="<%= false %>" selected="<%= classPK == organization.getOrganizationId() %>" value="<%= PortalUtil.getClassNameId(Organization.class) + StringPool.COMMA + organization.getOrganizationId() %>" />
+				<aui:option
+					label="<%= HtmlUtil.escape(organization.getName()) %>"
+					localizeLabel="<%= false %>"
+					selected="<%= classPK == organization.getOrganizationId() %>"
+					value="<%= PortalUtil.getClassNameId(Organization.class) + StringPool.COMMA + organization.getOrganizationId() %>"
+				/>
 
 			<%
 			}
@@ -85,7 +104,11 @@ boolean hasDistributionScope = false;
 			for (Role role : roles) {
 			%>
 
-				<aui:option label="<%= HtmlUtil.escape(role.getTitle(locale)) %>" selected="<%= classPK == role.getRoleId() %>" value="<%= PortalUtil.getClassNameId(Role.class) + StringPool.COMMA + role.getRoleId() %>" />
+				<aui:option
+					label="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+					selected="<%= classPK == role.getRoleId() %>"
+					value="<%= PortalUtil.getClassNameId(Role.class) + StringPool.COMMA + role.getRoleId() %>"
+				/>
 
 			<%
 			}
@@ -107,7 +130,11 @@ boolean hasDistributionScope = false;
 			for (UserGroup userGroup : userGroups) {
 			%>
 
-				<aui:option label="<%= HtmlUtil.escape(userGroup.getName()) %>" selected="<%= classPK == userGroup.getUserGroupId() %>" value="<%= PortalUtil.getClassNameId(UserGroup.class) + StringPool.COMMA + userGroup.getUserGroupId() %>" />
+				<aui:option
+					label="<%= HtmlUtil.escape(userGroup.getName()) %>"
+					selected="<%= classPK == userGroup.getUserGroupId() %>"
+					value="<%= PortalUtil.getClassNameId(UserGroup.class) + StringPool.COMMA + userGroup.getUserGroupId() %>"
+				/>
 
 			<%
 			}

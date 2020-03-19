@@ -35,10 +35,7 @@ SearchContainer searchContainer = viewRolesManagementToolbarDisplayContext.getSe
 PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL();
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= roleDisplayContext.getViewRoleNavigationItems(liferayPortletResponse, portletURL) %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= roleDisplayContext.getViewRoleNavigationItems(liferayPortletResponse, portletURL) %>" />
 
 <clay:management-toolbar
 	actionDropdownItems="<%= viewRolesManagementToolbarDisplayContext.getActionDropdownItems() %>"
@@ -58,7 +55,12 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 	viewTypeItems="<%= viewRolesManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl container-form-view" method="get" name="fm">
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid container-fluid-max-xl container-form-view"
+	method="get"
+	name="fm"
+>
 	<liferay-ui:error exception="<%= RequiredRoleException.class %>" message="you-cannot-delete-a-system-role" />
 
 	<aui:input name="deleteRoleIds" type="hidden" />
@@ -68,7 +70,11 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 		searchContainer="<%= searchContainer %>"
 		var="roleSearchContainer"
 	>
-		<aui:input name="rolesRedirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:input
+			name="rolesRedirect"
+			type="hidden"
+			value="<%= portletURL.toString() %>"
+		/>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Role"
@@ -92,10 +98,7 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 			<%@ include file="/search_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

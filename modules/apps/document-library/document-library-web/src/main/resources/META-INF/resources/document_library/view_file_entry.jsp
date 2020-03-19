@@ -76,9 +76,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<liferay-util:buffer
-	var="documentTitle"
->
+<liferay-util:buffer var="documentTitle">
 	<%= fileVersion.getTitle() %>
 
 	<c:if test="<%= versionSpecific %>">
@@ -110,10 +108,22 @@ if (portletTitleBasedNavigation) {
 
 	<portlet:actionURL name="/document_library/edit_file_entry" var="editFileEntry" />
 
-	<aui:form action="<%= editFileEntry %>" method="post" name="fm">
+	<aui:form
+		action="<%= editFileEntry %>"
+		method="post"
+		name="fm"
+	>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="fileEntryId" type="hidden" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= currentURL %>"
+		/>
+		<aui:input
+			name="fileEntryId"
+			type="hidden"
+			value="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
+		/>
 		<aui:input name="newFolderId" type="hidden" />
 		<aui:input name="rowIdsDLFileShortcut" type="hidden" />
 		<aui:input name="rowIdsFileEntry" type="hidden" />
@@ -159,9 +169,7 @@ if (portletTitleBasedNavigation) {
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
 			<div class="file-entry-actions">
-				<liferay-frontend:management-bar-sidenav-toggler-button
-					label="info"
-				/>
+				<liferay-frontend:management-bar-sidenav-toggler-button label="info" />
 
 				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 
@@ -169,9 +177,7 @@ if (portletTitleBasedNavigation) {
 						for (ToolbarItem toolbarItem : dlViewFileVersionDisplayContext.getToolbarItems()) {
 					%>
 
-					<liferay-ui:toolbar-item
-						toolbarItem="<%= toolbarItem %>"
-					/>
+					<liferay-ui:toolbar-item toolbarItem="<%= toolbarItem %>" />
 
 					<%
 						}
@@ -195,14 +201,22 @@ if (portletTitleBasedNavigation) {
 								String lockExpirationTime = StringUtil.toLowerCase(LanguageUtil.getTimeDescription(request, DLFileEntryConstants.LOCK_EXPIRATION_TIME));
 								%>
 
-								<liferay-ui:message arguments="<%= lockExpirationTime %>" key="you-now-have-a-lock-on-this-document" translateArguments="<%= false %>" />
+								<liferay-ui:message
+									arguments="<%= lockExpirationTime %>"
+									key="you-now-have-a-lock-on-this-document"
+									translateArguments="<%= false %>"
+								/>
 							</c:otherwise>
 						</c:choose>
 					</div>
 				</c:when>
 				<c:otherwise>
 					<div class="alert alert-danger">
-						<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())} %>" key="you-cannot-modify-this-document-because-it-was-locked-by-x-on-x" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())} %>"
+							key="you-cannot-modify-this-document-because-it-was-locked-by-x-on-x"
+							translateArguments="<%= false %>"
+						/>
 					</div>
 				</c:otherwise>
 			</c:choose>

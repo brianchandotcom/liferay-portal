@@ -20,8 +20,5 @@
 		<portlet:param name="deleteBackgroundTaskIds" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon
-		message="<%= deleteLabel %>"
-		url="<%= deleteBackgroundTaskURL %>"
-	/>
+	<liferay-ui:icon message="<%= deleteLabel %>" url="<%= deleteBackgroundTaskURL %>" />
 </c:if>

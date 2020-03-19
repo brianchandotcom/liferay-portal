@@ -130,9 +130,7 @@ renderResponse.setTitle(categoryDisplayName);
 					iteratorURL="<%= iteratorURL %>"
 					total="<%= configurationModelIterator.getTotal() %>"
 				>
-					<liferay-ui:search-container-results
-						results="<%= configurationModelIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
-					/>
+					<liferay-ui:search-container-results results="<%= configurationModelIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 					<liferay-ui:search-container-row
 						className="com.liferay.configuration.admin.web.internal.model.ConfigurationModel"
@@ -164,9 +162,7 @@ renderResponse.setTitle(categoryDisplayName);
 						}
 						%>
 
-						<liferay-ui:search-container-column-text
-							name="<%= columnLabel %>"
-						>
+						<liferay-ui:search-container-column-text name="<%= columnLabel %>">
 							<aui:a href="<%= editFactoryInstanceURL %>"><strong><%= HtmlUtil.escape(curConfigurationModel.getLabel()) %></strong></aui:a>
 						</liferay-ui:search-container-column-text>
 
@@ -216,10 +212,7 @@ renderResponse.setTitle(categoryDisplayName);
 						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>
 
-					<liferay-ui:search-iterator
-						markupView="lexicon"
-						searchResultCssClass="show-quick-actions-on-hover table table-autofit"
-					/>
+					<liferay-ui:search-iterator markupView="lexicon" searchResultCssClass="show-quick-actions-on-hover table table-autofit" />
 				</liferay-ui:search-container>
 			</div>
 		</div>

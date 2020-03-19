@@ -33,15 +33,10 @@ SiteNavigationMenuItemItemSelectorViewDisplayContext siteNavigationMenuItemItemS
 		%>
 
 		<div class="select-site-navigation-menu-item">
-			<react:component
-				data="<%= data %>"
-				module="js/SelectSiteNavigationMenuItem.es"
-			/>
+			<react:component data="<%= data %>" module="js/SelectSiteNavigationMenuItem.es" />
 		</div>
 	</c:when>
 	<c:otherwise>
-		<liferay-frontend:empty-result-message
-			elementType='<%= LanguageUtil.get(resourceBundle, "navigation-menu-items") %>'
-		/>
+		<liferay-frontend:empty-result-message elementType='<%= LanguageUtil.get(resourceBundle, "navigation-menu-items") %>' />
 	</c:otherwise>
 </c:choose>

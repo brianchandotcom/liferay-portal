@@ -34,7 +34,11 @@ page import="com.liferay.portal.search.tuning.rankings.web.internal.exception.Du
 
 <liferay-theme:defineObjects />
 
-<liferay-ui:error embed="<%= false %>" exception="<%= DuplicateQueryStringException.class %>" message="active-search-queries-and-aliases-must-be-unique-across-all-rankings" />
+<liferay-ui:error
+	embed="<%= false %>"
+	exception="<%= DuplicateQueryStringException.class %>"
+	message="active-search-queries-and-aliases-must-be-unique-across-all-rankings"
+/>
 
 <%
 RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDisplayContext)request.getAttribute(ResultRankingsPortletKeys.RESULT_RANKINGS_DISPLAY_CONTEXT);
@@ -53,13 +57,18 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 	showSearch="<%= false %>"
 />
 
-<aui:form cssClass="container-fluid-1280" method="post" name="resultsRankingEntriesFm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+<aui:form
+	cssClass="container-fluid-1280"
+	method="post"
+	name="resultsRankingEntriesFm"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
 
-	<liferay-ui:search-container
-		id="resultsRankingEntries"
-		searchContainer="<%= rankingPortletDisplayContext.getSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="resultsRankingEntries" searchContainer="<%= rankingPortletDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingEntryDisplayContext"
 			keyProperty="uid"
@@ -80,10 +89,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 				<portlet:param name="keywords" value="<%= rankingEntryDisplayContext.getKeywords() %>" />
 			</portlet:renderURL>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
-				name="search-query"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-expand" name="search-query">
 				<div class="list-group-title">
 					<a href="<%= rowURL %>">
 						<%= HtmlUtil.escape(rankingEntryDisplayContext.getKeywords()) %>
@@ -91,10 +97,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 				</div>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
-				name="aliases"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-expand" name="aliases">
 				<div class="list-group-subtext">
 					<%= HtmlUtil.escape(rankingEntryDisplayContext.getAliases()) %>
 				</div>
@@ -112,10 +115,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 				value="<%= rankingEntryDisplayContext.getHiddenResultsCount() %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-smallest table-cell-minw-150"
-				name="status"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-expand-smallest table-cell-minw-150" name="status">
 				<div class="label <%= rankingEntryDisplayContext.getInactive() ? "label-secondary" : "label-success" %>">
 					<span class="label-item label-item-expand">
 						<liferay-ui:message key='<%= rankingEntryDisplayContext.getInactive() ? "inactive" : "active" %>' />
@@ -123,15 +123,10 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 				</div>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/view_results_rankings_entry_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp cssClass="entry-action-column" path="/view_results_rankings_entry_action.jsp" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

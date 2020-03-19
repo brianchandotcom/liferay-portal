@@ -22,10 +22,7 @@ String referer = request.getHeader(HttpHeaders.REFERER);
 String redirect = GetterUtil.getString(request.getAttribute(WebKeys.REDIRECT), referer);
 %>
 
-<liferay-ui:header
-	backURL='<%= Validator.isNotNull(redirect) ? redirect : "javascript:history.go(-1);" %>'
-	title="error"
-/>
+<liferay-ui:header backURL='<%= Validator.isNotNull(redirect) ? redirect : "javascript:history.go(-1);" %>' title="error" />
 
 <liferay-ui:error exception="<%= NoSuchGroupException.class %>" message="the-site-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchLayoutException.class %>" message="the-page-could-not-be-found" />

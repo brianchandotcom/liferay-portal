@@ -103,15 +103,16 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/wiki/page_info_panel" var="sidebarPanelURL">
+	<liferay-portlet:resourceURL
+		copyCurrentRenderParameters="<%= false %>"
+		id="/wiki/page_info_panel"
+		var="sidebarPanelURL"
+	>
 		<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 		<portlet:param name="showSidebarHeader" value="<%= Boolean.TRUE.toString() %>" />
 	</liferay-portlet:resourceURL>
 
-	<liferay-frontend:sidebar-panel
-		resourceURL="<%= sidebarPanelURL %>"
-		searchContainerId="wikiPages"
-	>
+	<liferay-frontend:sidebar-panel resourceURL="<%= sidebarPanelURL %>" searchContainerId="wikiPages">
 
 		<%
 		request.setAttribute(WikiWebKeys.SHOW_SIDEBAR_HEADER, true);
@@ -146,24 +147,32 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 			PortletURL undoTrashURL = wikiURLHelper.getUndoTrashURL();
 			%>
 
-			<liferay-trash:undo
-				portletURL="<%= undoTrashURL.toString() %>"
-			/>
+			<liferay-trash:undo portletURL="<%= undoTrashURL.toString() %>" />
 		</c:if>
 
-		<aui:form action="<%= wikiURLHelper.getSearchURL() %>" method="get" name="fm">
-			<aui:input name="nodeId" type="hidden" value="<%= String.valueOf(node.getNodeId()) %>" />
+		<aui:form
+			action="<%= wikiURLHelper.getSearchURL() %>"
+			method="get"
+			name="fm"
+		>
+			<aui:input
+				name="nodeId"
+				type="hidden"
+				value="<%= String.valueOf(node.getNodeId()) %>"
+			/>
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value="<%= currentURL %>"
+			/>
 
 			<liferay-ui:search-container
 				id="wikiPages"
 				searchContainer="<%= wikiPagesSearchContainer %>"
 				total="<%= wikiPagesSearchContainer.getTotal() %>"
 			>
-				<liferay-ui:search-container-results
-					results="<%= wikiPagesSearchContainer.getResults() %>"
-				/>
+				<liferay-ui:search-container-results results="<%= wikiPagesSearchContainer.getResults() %>" />
 
 				<liferay-ui:search-container-row
 					className="com.liferay.wiki.model.WikiPage"
@@ -196,14 +205,9 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 
 					<c:choose>
 						<c:when test='<%= displayStyle.equals("descriptive") %>'>
-							<liferay-ui:search-container-column-icon
-								icon="wiki-page"
-								toggleRowChecker="<%= true %>"
-							/>
+							<liferay-ui:search-container-column-icon icon="wiki-page" toggleRowChecker="<%= true %>" />
 
-							<liferay-ui:search-container-column-text
-								colspan="<%= 2 %>"
-							>
+							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 								<h2 class="h5">
 									<aui:a href="<%= rowURL.toString() %>">
 										<%= curPage.getTitle() %>
@@ -227,13 +231,16 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 									</c:choose>
 								</span>
 								<span class="text-default">
-									<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curPage.getStatus() %>" />
+									<aui:workflow-status
+										markupView="lexicon"
+										showIcon="<%= false %>"
+										showLabel="<%= false %>"
+										status="<%= curPage.getStatus() %>"
+									/>
 								</span>
 							</liferay-ui:search-container-column-text>
 
-							<liferay-ui:search-container-column-jsp
-								path="/wiki/page_action.jsp"
-							/>
+							<liferay-ui:search-container-column-jsp path="/wiki/page_action.jsp" />
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:search-container-column-text
@@ -275,17 +282,12 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 								value="<%= curPage.getModifiedDate() %>"
 							/>
 
-							<liferay-ui:search-container-column-jsp
-								path="/wiki/page_action.jsp"
-							/>
+							<liferay-ui:search-container-column-jsp path="/wiki/page_action.jsp" />
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					displayStyle="<%= displayStyle %>"
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>

@@ -25,12 +25,36 @@ renderResponse.setTitle(dlEditFileShortcutDisplayContext.getTitle());
 %>
 
 <div class="container-fluid-1280">
-	<aui:form action="<%= dlEditFileShortcutDisplayContext.getEditFileShortcutURL() %>" method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="fileShortcutId" type="hidden" value="<%= dlEditFileShortcutDisplayContext.getFileShortcutId() %>" />
-		<aui:input name="repositoryId" type="hidden" value="<%= dlEditFileShortcutDisplayContext.getRepositoryId() %>" />
-		<aui:input name="folderId" type="hidden" value="<%= dlEditFileShortcutDisplayContext.getFolderId() %>" />
-		<aui:input name="toFileEntryId" type="hidden" value="<%= dlEditFileShortcutDisplayContext.getToFileEntryId() %>" />
+	<aui:form
+		action="<%= dlEditFileShortcutDisplayContext.getEditFileShortcutURL() %>"
+		method="post"
+		name="fm"
+	>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="fileShortcutId"
+			type="hidden"
+			value="<%= dlEditFileShortcutDisplayContext.getFileShortcutId() %>"
+		/>
+		<aui:input
+			name="repositoryId"
+			type="hidden"
+			value="<%= dlEditFileShortcutDisplayContext.getRepositoryId() %>"
+		/>
+		<aui:input
+			name="folderId"
+			type="hidden"
+			value="<%= dlEditFileShortcutDisplayContext.getFolderId() %>"
+		/>
+		<aui:input
+			name="toFileEntryId"
+			type="hidden"
+			value="<%= dlEditFileShortcutDisplayContext.getToFileEntryId() %>"
+		/>
 
 		<liferay-ui:error exception="<%= FileShortcutPermissionException.class %>" message="you-do-not-have-permission-to-create-a-shortcut-to-the-selected-document" />
 		<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="the-document-could-not-be-found" />
@@ -42,17 +66,24 @@ renderResponse.setTitle(dlEditFileShortcutDisplayContext.getTitle());
 				</div>
 
 				<div class="form-group">
-					<aui:input label="document" name="toFileEntryTitle" type="resource" value="<%= dlEditFileShortcutDisplayContext.getToFileEntryTitle() %>" />
+					<aui:input
+						label="document"
+						name="toFileEntryTitle"
+						type="resource"
+						value="<%= dlEditFileShortcutDisplayContext.getToFileEntryTitle() %>"
+					/>
 
 					<aui:button name="selectToFileEntryButton" value="select" />
 				</div>
 			</aui:fieldset>
 
 			<c:if test="<%= dlEditFileShortcutDisplayContext.isPermissionConfigurable() %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= DLFileShortcutConstants.getClassName() %>"
-					/>
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="permissions"
+				>
+					<liferay-ui:input-permissions modelName="<%= DLFileShortcutConstants.getClassName() %>" />
 				</aui:fieldset>
 			</c:if>
 		</aui:fieldset-group>

@@ -27,8 +27,5 @@ FieldMappingsDisplayContext fieldMappingsDisplayContext = (FieldMappingsDisplayC
 %>
 
 <div>
-	<react:component
-		data="<%= fieldMappingsDisplayContext.getData() %>"
-		module="js/FieldMappings.es"
-	/>
+	<react:component data="<%= fieldMappingsDisplayContext.getData() %>" module="js/FieldMappings.es" />
 </div>

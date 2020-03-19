@@ -27,14 +27,19 @@
 			method="post"
 			name="fm"
 		>
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="portletId" type="hidden" value="<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>" />
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value="<%= currentURL %>"
+			/>
+			<aui:input
+				name="portletId"
+				type="hidden"
+				value="<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>"
+			/>
 
 			<liferay-frontend:edit-form-body>
-				<liferay-frontend:form-navigator
-					id="<%= PortletConfigurationCSSConstants.FORM_NAVIGATOR_ID %>"
-					showButtons="<%= false %>"
-				/>
+				<liferay-frontend:form-navigator id="<%= PortletConfigurationCSSConstants.FORM_NAVIGATOR_ID %>" showButtons="<%= false %>" />
 			</liferay-frontend:edit-form-body>
 
 			<liferay-frontend:edit-form-footer>

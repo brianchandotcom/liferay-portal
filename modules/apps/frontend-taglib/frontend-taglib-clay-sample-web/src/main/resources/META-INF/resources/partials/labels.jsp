@@ -51,10 +51,7 @@
 
 <div class="mb-3 row">
 	<div class="col-12">
-		<clay:label
-			closeable="<%= true %>"
-			label="Normal Label"
-		/>
+		<clay:label closeable="<%= true %>" label="Normal Label" />
 
 		<clay:label
 			closeable="<%= true %>"
@@ -69,9 +66,6 @@
 
 <div class="row">
 	<div class="col-12">
-		<clay:label
-			href="#"
-			label="Label Text"
-		/>
+		<clay:label href="#" label="Label Text" />
 	</div>
 </div>

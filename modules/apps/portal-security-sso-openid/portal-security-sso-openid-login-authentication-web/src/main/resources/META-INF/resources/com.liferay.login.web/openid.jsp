@@ -24,8 +24,16 @@ String openId = ParamUtil.getString(request, "openId");
 	<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="/login/openid" />
 </portlet:actionURL>
 
-<aui:form action="<%= openIdURL %>" method="post" name="fm">
-	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
+<aui:form
+	action="<%= openIdURL %>"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="saveLastPath"
+		type="hidden"
+		value="<%= false %>"
+	/>
 
 	<liferay-ui:error exception="<%= DuplicateOpenIdException.class %>" message="a-user-with-that-openid-already-exists" />
 	<liferay-ui:error exception="<%= OpenIdServiceException.AssociationException.class %>" message="an-error-occurred-while-establishing-an-association-with-the-openid-provider" />
@@ -37,7 +45,15 @@ String openId = ParamUtil.getString(request, "openId");
 	<liferay-ui:error exception="<%= UserEmailAddressException.MustNotUseCompanyMx.class %>" message="the-email-address-associated-with-your-openid-cannot-be-used-to-register-a-new-user-because-its-email-domain-is-reserved" />
 
 	<aui:fieldset>
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="openid-login" label="openid" name="openId" title="openid" type="text" value="<%= openId %>" />
+		<aui:input
+			autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+			cssClass="openid-login"
+			label="openid"
+			name="openId"
+			title="openid"
+			type="text"
+			value="<%= openId %>"
+		/>
 
 		<aui:button-row>
 			<aui:button type="submit" value="sign-in" />

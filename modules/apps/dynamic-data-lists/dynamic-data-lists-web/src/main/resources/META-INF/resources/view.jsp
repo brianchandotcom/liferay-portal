@@ -27,8 +27,16 @@ String displayStyle = ddlDisplayContext.getDisplayStyle();
 <liferay-util:include page="/management_bar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
-	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:form
+		action="<%= portletURL.toString() %>"
+		method="post"
+		name="fm"
+	>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= portletURL.toString() %>"
+		/>
 		<aui:input name="recordSetIds" type="hidden" />
 
 		<liferay-ui:search-container
@@ -63,9 +71,7 @@ String displayStyle = ddlDisplayContext.getDisplayStyle();
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
 						<liferay-ui:search-container-column-text>
-							<liferay-ui:user-portrait
-								userId="<%= recordSet.getUserId() %>"
-							/>
+							<liferay-ui:user-portrait userId="<%= recordSet.getUserId() %>" />
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-jsp
@@ -74,24 +80,17 @@ String displayStyle = ddlDisplayContext.getDisplayStyle();
 							path="/view_record_set_descriptive.jsp"
 						/>
 
-						<liferay-ui:search-container-column-jsp
-							path="/record_set_action.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp path="/record_set_action.jsp" />
 					</c:when>
 					<c:otherwise>
 						<%@ include file="/search_columns.jspf" %>
 
-						<liferay-ui:search-container-column-jsp
-							path="/record_set_action.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp path="/record_set_action.jsp" />
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				displayStyle="<%= displayStyle %>"
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

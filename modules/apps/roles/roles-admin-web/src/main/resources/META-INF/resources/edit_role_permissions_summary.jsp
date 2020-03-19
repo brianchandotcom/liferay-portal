@@ -247,10 +247,7 @@
 
 		<c:if test="<%= searchContainer.getTotal() > 0 %>">
 			<div class="autofit-col sheet-footer taglib-search-iterator-page-iterator-bottom">
-				<liferay-ui:search-paginator
-					markupView="lexicon"
-					searchContainer="<%= searchContainer %>"
-				/>
+				<liferay-ui:search-paginator markupView="lexicon" searchContainer="<%= searchContainer %>" />
 			</div>
 		</c:if>
 	</div>

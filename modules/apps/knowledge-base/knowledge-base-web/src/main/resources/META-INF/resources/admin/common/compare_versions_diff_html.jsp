@@ -27,7 +27,4 @@ if (diffVersion > 0) {
 }
 %>
 
-<liferay-ui:diff-html
-	diffHtmlResults="<%= diffHtmlResults %>"
-	infoMessage="<%= infoMessage %>"
-/>
+<liferay-ui:diff-html diffHtmlResults="<%= diffHtmlResults %>" infoMessage="<%= infoMessage %>" />

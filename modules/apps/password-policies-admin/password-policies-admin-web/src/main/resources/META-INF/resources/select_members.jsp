@@ -44,9 +44,7 @@ EditPasswordPolicyAssignmentsManagementToolbarDisplayContext editPasswordPolicyA
 SearchContainer searchContainer = editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getSearchContainer();
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= passwordPolicyDisplayContext.getSelectMembersNavigationItems() %>"
-/>
+<clay:navigation-bar navigationItems="<%= passwordPolicyDisplayContext.getSelectMembersNavigationItems() %>" />
 
 <clay:management-toolbar
 	clearResultsURL="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
@@ -77,10 +75,7 @@ SearchContainer searchContainer = editPasswordPolicyAssignmentsManagementToolbar
 			</c:when>
 		</c:choose>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

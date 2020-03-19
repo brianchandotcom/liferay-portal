@@ -20,15 +20,10 @@
 SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGroupsDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new SelectUserGroupsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectUserGroupsDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new SelectUserGroupsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectUserGroupsDisplayContext) %>" />
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-user-groups" name="fm">
-	<liferay-ui:search-container
-		id="userGroups"
-		searchContainer="<%= selectUserGroupsDisplayContext.getUserGroupSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="userGroups" searchContainer="<%= selectUserGroupsDisplayContext.getUserGroupSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.UserGroup"
 			escapedModel="<%= true %>"
@@ -45,10 +40,7 @@ SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGr
 			<%@ include file="/user_group_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= selectUserGroupsDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= selectUserGroupsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

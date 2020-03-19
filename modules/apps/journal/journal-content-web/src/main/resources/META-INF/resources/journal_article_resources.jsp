@@ -16,6 +16,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:vertical-card
-	verticalCard="<%= new JournalArticleVerticalCard(journalContentDisplayContext.getArticle(), journalContentDisplayContext.getAssetRenderer(), renderRequest) %>"
-/>
+<clay:vertical-card verticalCard="<%= new JournalArticleVerticalCard(journalContentDisplayContext.getArticle(), journalContentDisplayContext.getAssetRenderer(), renderRequest) %>" />

@@ -32,7 +32,12 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 	/>
 </div>
 
-<aui:select cssClass="abstract-length hidden-field" helpMessage="abstract-length-key-help" name="preferences--abstractLength--" value="<%= assetPublisherDisplayContext.getAbstractLength() %>">
+<aui:select
+	cssClass="abstract-length hidden-field"
+	helpMessage="abstract-length-key-help"
+	name="preferences--abstractLength--"
+	value="<%= assetPublisherDisplayContext.getAbstractLength() %>"
+>
 	<aui:option label="100" />
 	<aui:option label="200" />
 	<aui:option label="300" />
@@ -40,18 +45,47 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 	<aui:option label="500" />
 </aui:select>
 
-<aui:input cssClass="hidden-field show-asset-title" name="preferences--showAssetTitle--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowAssetTitle() %>" />
+<aui:input
+	cssClass="hidden-field show-asset-title"
+	name="preferences--showAssetTitle--"
+	type="toggle-switch"
+	value="<%= assetPublisherDisplayContext.isShowAssetTitle() %>"
+/>
 
-<aui:input cssClass="hidden-field show-context-link" name="preferences--showContextLink--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowContextLink() %>" />
+<aui:input
+	cssClass="hidden-field show-context-link"
+	name="preferences--showContextLink--"
+	type="toggle-switch"
+	value="<%= assetPublisherDisplayContext.isShowContextLink() %>"
+/>
 
-<aui:input cssClass="hidden-field show-extra-info" name="preferences--showExtraInfo--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowExtraInfo() %>" />
+<aui:input
+	cssClass="hidden-field show-extra-info"
+	name="preferences--showExtraInfo--"
+	type="toggle-switch"
+	value="<%= assetPublisherDisplayContext.isShowExtraInfo() %>"
+/>
 
 <aui:select cssClass="asset-link-behavior" name="preferences--assetLinkBehavior--">
-	<aui:option label="show-full-content" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorShowFullContent() %>" value="showFullContent" />
-	<aui:option label="view-in-context" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet() %>" value="viewInPortlet" />
+	<aui:option
+		label="show-full-content"
+		selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorShowFullContent() %>"
+		value="showFullContent"
+	/>
+	<aui:option
+		label="view-in-context"
+		selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet() %>"
+		value="viewInPortlet"
+	/>
 </aui:select>
 
-<aui:input helpMessage="number-of-items-to-display-help" label="number-of-items-to-display" name="preferences--delta--" type="text" value="<%= assetPublisherDisplayContext.getDelta() %>">
+<aui:input
+	helpMessage="number-of-items-to-display-help"
+	label="number-of-items-to-display"
+	name="preferences--delta--"
+	type="text"
+	value="<%= assetPublisherDisplayContext.getDelta() %>"
+>
 	<aui:validator name="digits" />
 </aui:input>
 
@@ -70,7 +104,12 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 </aui:select>
 
 <c:if test="<%= !assetPublisherDisplayContext.isSearchWithIndex() && assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
-	<aui:input label="exclude-assets-with-0-views" name="preferences--excludeZeroViewCount--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isExcludeZeroViewCount() %>" />
+	<aui:input
+		label="exclude-assets-with-0-views"
+		name="preferences--excludeZeroViewCount--"
+		type="toggle-switch"
+		value="<%= assetPublisherDisplayContext.isExcludeZeroViewCount() %>"
+	/>
 </c:if>
 
 <aui:script require="metal-dom/src/dom as dom">

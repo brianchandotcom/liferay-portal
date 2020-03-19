@@ -25,7 +25,13 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 </liferay-util:html-top>
 
 <div class="form-group" id="<portlet:namespace />idOptions">
-	<aui:input id="openGraphEnabled" label="enable-open-graph" name="openGraphEnabled" type="checkbox" value="<%= openGraphSettingsDisplayContext.isOpenGraphEnabled() %>" />
+	<aui:input
+		id="openGraphEnabled"
+		label="enable-open-graph"
+		name="openGraphEnabled"
+		type="checkbox"
+		value="<%= openGraphSettingsDisplayContext.isOpenGraphEnabled() %>"
+	/>
 </div>
 
 <p class="text-muted">
@@ -44,7 +50,16 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 	<div class="form-group">
 		<label class="control-label"><liferay-ui:message key="image" /></label>
 
-		<aui:input disabled="<%= !openGraphSettingsDisplayContext.isOpenGraphEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphImageTitle" placeholder="image" readonly="<%= true %>" type="text" value="<%= openGraphSettingsDisplayContext.getOpenGraphImageTitle() %>" wrapperCssClass="mb-3" />
+		<aui:input
+			disabled="<%= !openGraphSettingsDisplayContext.isOpenGraphEnabled() %>"
+			label="<%= StringPool.BLANK %>"
+			name="openGraphImageTitle"
+			placeholder="image"
+			readonly="<%= true %>"
+			type="text"
+			value="<%= openGraphSettingsDisplayContext.getOpenGraphImageTitle() %>"
+			wrapperCssClass="mb-3"
+		/>
 
 		<aui:button-row cssClass="mt-0">
 			<aui:button name="openGraphImageButton" value="select" />
@@ -57,10 +72,21 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 
 		<aui:model-context bean="<%= layoutSEOSite %>" model="<%= LayoutSEOSite.class %>" />
 
-		<aui:input disabled="<%= !openGraphSettingsDisplayContext.isOpenGraphEnabled() || Validator.isNull(openGraphSettingsDisplayContext.getOpenGraphImageURL()) %>" helpMessage="open-graph-image-alt-description-help" label="open-graph-image-alt-description" name="openGraphImageAlt" placeholder="open-graph-alt-description" />
+		<aui:input
+			disabled="<%= !openGraphSettingsDisplayContext.isOpenGraphEnabled() || Validator.isNull(openGraphSettingsDisplayContext.getOpenGraphImageURL()) %>"
+			helpMessage="open-graph-image-alt-description-help"
+			label="open-graph-image-alt-description"
+			name="openGraphImageAlt"
+			placeholder="open-graph-alt-description"
+		/>
 	</div>
 
-	<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" value="<%= openGraphSettingsDisplayContext.getOpenGraphImageFileEntryId() %>" />
+	<aui:input
+		id="openGraphImageFileEntryId"
+		name="openGraphImageFileEntryId"
+		type="hidden"
+		value="<%= openGraphSettingsDisplayContext.getOpenGraphImageFileEntryId() %>"
+	/>
 
 	<div class="form-group">
 		<label><liferay-ui:message key="preview" /> <liferay-ui:icon-help message="preview-help" /></label>

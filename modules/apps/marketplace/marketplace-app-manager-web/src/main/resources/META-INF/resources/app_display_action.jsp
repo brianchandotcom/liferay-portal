@@ -37,10 +37,7 @@ String bundleIds = _getBundleIds(appDisplay);
 	%>
 
 	<c:if test="<%= Validator.isNotNull(storeURL) %>">
-		<liferay-ui:icon
-			message="go-to-marketplace"
-			url="<%= storeURL %>"
-		/>
+		<liferay-ui:icon message="go-to-marketplace" url="<%= storeURL %>" />
 	</c:if>
 
 	<c:choose>
@@ -55,10 +52,7 @@ String bundleIds = _getBundleIds(appDisplay);
 				String taglibDeactivateBundlesURL = "javascript:if (confirm(\'" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-this") + "\')) {submitForm(document.hrefFm, \'" + HtmlUtil.unescape(deactivateBundlesURL.toString()) + "\');};";
 				%>
 
-				<liferay-ui:icon
-					message="deactivate"
-					url="<%= taglibDeactivateBundlesURL %>"
-				/>
+				<liferay-ui:icon message="deactivate" url="<%= taglibDeactivateBundlesURL %>" />
 			</c:if>
 		</c:when>
 		<c:otherwise>
@@ -67,10 +61,7 @@ String bundleIds = _getBundleIds(appDisplay);
 				<portlet:param name="bundleIds" value="<%= bundleIds %>" />
 			</portlet:actionURL>
 
-			<liferay-ui:icon
-				message="activate"
-				url="<%= activateBundlesURL %>"
-			/>
+			<liferay-ui:icon message="activate" url="<%= activateBundlesURL %>" />
 		</c:otherwise>
 	</c:choose>
 
@@ -80,10 +71,7 @@ String bundleIds = _getBundleIds(appDisplay);
 			<portlet:param name="bundleIds" value="<%= bundleIds %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			message="uninstall"
-			url="<%= uninstallBundlesURL %>"
-		/>
+		<liferay-ui:icon-delete message="uninstall" url="<%= uninstallBundlesURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>
 

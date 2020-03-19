@@ -73,9 +73,18 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 
-<aui:form action="<%= editEntryURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
+<aui:form
+	action="<%= editEntryURL %>"
+	method="post"
+	name="fm1"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="entryId" type="hidden" value="<%= String.valueOf(entryId) %>" />
+	<aui:input
+		name="entryId"
+		type="hidden"
+		value="<%= String.valueOf(entryId) %>"
+	/>
 
 	<div class="widget-mode-detail" data-analytics-asset-id="<%= String.valueOf(entryId) %>" data-analytics-asset-title="<%= HtmlUtil.escapeAttribute(entryTitle) %>" data-analytics-asset-type="blog">
 		<liferay-util:include page="/blogs/view_entry_content_detail.jsp" servletContext="<%= application %>" />
@@ -128,7 +137,12 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 
 				<c:if test="<%= discussion != null %>">
 					<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED && entry.isAllowTrackbacks() && Validator.isNotNull(entry.getUrlTitle()) %>">
-						<aui:input inlineLabel="left" name="trackbackURL" type="resource" value='<%= PortalUtil.getLayoutFullURL(themeDisplay.getLayout(), themeDisplay, false) + Portal.FRIENDLY_URL_SEPARATOR + "blogs/trackback/" + entry.getUrlTitle() %>' />
+						<aui:input
+							inlineLabel="left"
+							name="trackbackURL"
+							type="resource"
+							value='<%= PortalUtil.getLayoutFullURL(themeDisplay.getLayout(), themeDisplay, false) + Portal.FRIENDLY_URL_SEPARATOR + "blogs/trackback/" + entry.getUrlTitle() %>'
+						/>
 					</c:if>
 
 					<liferay-comment:discussion

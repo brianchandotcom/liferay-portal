@@ -42,10 +42,7 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 			<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "getAvailableFields" %>' />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, template, ActionKeys.PERMISSIONS) %>">
@@ -74,10 +71,7 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(template.getResourceClassNameId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="copy"
-			url="<%= copyURL %>"
-		/>
+		<liferay-ui:icon message="copy" url="<%= copyURL %>" />
 	</c:if>
 
 	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, template, ActionKeys.DELETE) %>">
@@ -89,8 +83,6 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

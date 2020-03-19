@@ -22,9 +22,7 @@
 		iteratorURL="<%= portletURL %>"
 		total="<%= PowwowServerLocalServiceUtil.getPowwowServersCount() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= PowwowServerLocalServiceUtil.getPowwowServers(searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-		/>
+		<liferay-ui:search-container-results results="<%= PowwowServerLocalServiceUtil.getPowwowServers(searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>" />
 
 		<aui:button-row>
 			<portlet:renderURL var="addURL">
@@ -74,15 +72,9 @@
 				property="active"
 			/>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action"
-				path="/admin/server_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp cssClass="entry-action" path="/admin/server_action.jsp" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="list"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

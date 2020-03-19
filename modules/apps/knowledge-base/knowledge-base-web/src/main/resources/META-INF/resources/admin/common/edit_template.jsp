@@ -33,11 +33,28 @@ renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-te
 <liferay-portlet:actionURL name="updateKBTemplate" var="updateKBTemplateURL" />
 
 <div class="container-fluid-1280">
-	<aui:form action="<%= updateKBTemplateURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateKBTemplate();" %>'>
-		<aui:input name="mvcPath" type="hidden" value='<%= templatePath + "edit_template.jsp" %>' />
+	<aui:form
+		action="<%= updateKBTemplateURL %>"
+		method="post"
+		name="fm"
+		onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateKBTemplate();" %>'
+	>
+		<aui:input
+			name="mvcPath"
+			type="hidden"
+			value='<%= templatePath + "edit_template.jsp" %>'
+		/>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="kbTemplateId" type="hidden" value="<%= String.valueOf(kbTemplateId) %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="kbTemplateId"
+			type="hidden"
+			value="<%= String.valueOf(kbTemplateId) %>"
+		/>
 
 		<liferay-ui:error exception="<%= KBTemplateContentException.class %>" message="please-enter-valid-content" />
 		<liferay-ui:error exception="<%= KBTemplateTitleException.class %>" message="please-enter-a-valid-title" />
@@ -69,10 +86,12 @@ renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-te
 			</aui:fieldset>
 
 			<c:if test="<%= kbTemplate == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= KBTemplate.class.getName() %>"
-					/>
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="permissions"
+				>
+					<liferay-ui:input-permissions modelName="<%= KBTemplate.class.getName() %>" />
 				</aui:fieldset>
 			</c:if>
 		</aui:fieldset-group>

@@ -19,9 +19,7 @@
 <liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
 
 <div class="main-content-body">
-	<liferay-ui:header
-		title="draft-pages"
-	/>
+	<liferay-ui:header title="draft-pages" />
 
 	<liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="navigation" value="draft-pages" />

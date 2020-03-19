@@ -22,7 +22,11 @@ if (Validator.isNotNull(scriptContent)) {
 }
 %>
 
-<aui:input name="scriptContent" type="hidden" value="<%= script %>" />
+<aui:input
+	name="scriptContent"
+	type="hidden"
+	value="<%= script %>"
+/>
 
 <liferay-ui:panel-container
 	extended="<%= true %>"
@@ -127,7 +131,12 @@ if (Validator.isNotNull(scriptContent)) {
 			</div>
 		</div>
 
-		<aui:input inlineLabel="left" label="script-file" name="script" type="file" />
+		<aui:input
+			inlineLabel="left"
+			label="script-file"
+			name="script"
+			type="file"
+		/>
 	</liferay-ui:panel>
 </liferay-ui:panel-container>
 

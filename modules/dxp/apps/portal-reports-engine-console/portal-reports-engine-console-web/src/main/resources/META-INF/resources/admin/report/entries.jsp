@@ -20,12 +20,14 @@
 	<portlet:param name="mvcPath" value="/admin/view.jsp" />
 </liferay-portlet:renderURL>
 
-<aui:form action="<%= searchURL %>" method="get" name="fm">
+<aui:form
+	action="<%= searchURL %>"
+	method="get"
+	name="fm"
+>
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
 
-	<liferay-ui:search-container
-		searchContainer="<%= reportsEngineDisplayContext.getSearchContainer() %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= reportsEngineDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.reports.engine.console.model.Entry"
 			keyProperty="entryId"
@@ -62,16 +64,10 @@
 				value="<%= entry.getCreateDate() %>"
 			/>
 
-			<liferay-ui:search-container-column-jsp
-				align="right"
-				path="/admin/report/requested_report_actions.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp align="right" path="/admin/report/requested_report_actions.jsp" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= reportsEngineDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= reportsEngineDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

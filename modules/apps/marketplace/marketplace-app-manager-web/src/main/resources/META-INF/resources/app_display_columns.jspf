@@ -20,9 +20,7 @@
 	</liferay-util:include>
 </liferay-ui:search-container-column-text>
 
-<liferay-ui:search-container-column-text
-	colspan="<%= 2 %>"
->
+<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 	<h2 class="list-group-title">
 		<a href="<%= HtmlUtil.escapeHREF(appDisplay.getDisplayURL(renderResponse)) %>">
 			<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(appDisplay.getDisplayTitle()) %>
@@ -62,6 +60,4 @@
 	</div>
 </liferay-ui:search-container-column-text>
 
-<liferay-ui:search-container-column-jsp
-	path="/app_display_action.jsp"
-/>
+<liferay-ui:search-container-column-jsp path="/app_display_action.jsp" />

@@ -56,10 +56,7 @@ if (selLayout != null) {
 }
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="customization-settings"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="customization-settings" />
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
@@ -70,7 +67,13 @@ if (selLayout != null) {
 		</div>
 	</c:when>
 	<c:otherwise>
-		<aui:input checked="<%= selLayout.isCustomizable() %>" helpMessage="customizable-help" label="customizable" name='<%= "TypeSettingsProperties--" + LayoutConstants.CUSTOMIZABLE_LAYOUT + "--" %>' type="toggle-switch" />
+		<aui:input
+			checked="<%= selLayout.isCustomizable() %>"
+			helpMessage="customizable-help"
+			label="customizable"
+			name='<%= "TypeSettingsProperties--" + LayoutConstants.CUSTOMIZABLE_LAYOUT + "--" %>'
+			type="toggle-switch"
+		/>
 
 		<div class="customization-settings" id="<portlet:namespace />customizationSettingsOptions">
 

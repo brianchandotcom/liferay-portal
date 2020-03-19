@@ -118,9 +118,7 @@ SearchEngineDisplayContext
 											<div class="connection-info-item-header-block">
 												<div class="connection-health-indicator <%= StringUtil.lowerCase(connectionInformation.getHealth()) %>">
 													<div class="indicator-item">
-														<clay:icon
-															symbol="simple-circle"
-														/>
+														<clay:icon symbol="simple-circle" />
 													</div>
 
 													<div class="connection-health-indicator-text indicator-item">
@@ -145,9 +143,7 @@ SearchEngineDisplayContext
 											headerNames="name,version"
 											total="<%= nodeInformationList.size() %>"
 										>
-											<liferay-ui:search-container-results
-												results="<%= nodeInformationList %>"
-											/>
+											<liferay-ui:search-container-results results="<%= nodeInformationList %>" />
 
 											<liferay-ui:search-container-row
 												className="com.liferay.portal.search.engine.NodeInformation"
@@ -155,19 +151,12 @@ SearchEngineDisplayContext
 												keyProperty="name"
 												modelVar="nodeInformation"
 											>
-												<liferay-ui:search-container-column-text
-													property="name"
-												/>
+												<liferay-ui:search-container-column-text property="name" />
 
-												<liferay-ui:search-container-column-text
-													property="version"
-												/>
+												<liferay-ui:search-container-column-text property="version" />
 											</liferay-ui:search-container-row>
 
-											<liferay-ui:search-iterator
-												markupView="lexicon"
-												paginate="<%= false %>"
-											/>
+											<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 										</liferay-ui:search-container>
 									</liferay-frontend:fieldset>
 

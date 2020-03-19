@@ -39,10 +39,26 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 	method="post"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
-	<aui:input name="segmentsEntryId" type="hidden" value="<%= assetListDisplayContext.getSegmentsEntryId() %>" />
-	<aui:input name="type" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryType() %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
+	<aui:input
+		name="assetListEntryId"
+		type="hidden"
+		value="<%= assetListDisplayContext.getAssetListEntryId() %>"
+	/>
+	<aui:input
+		name="segmentsEntryId"
+		type="hidden"
+		value="<%= assetListDisplayContext.getSegmentsEntryId() %>"
+	/>
+	<aui:input
+		name="type"
+		type="hidden"
+		value="<%= assetListDisplayContext.getAssetListEntryType() %>"
+	/>
 
 	<aui:model-context bean="<%= assetListEntry %>" model="<%= AssetListEntry.class %>" />
 

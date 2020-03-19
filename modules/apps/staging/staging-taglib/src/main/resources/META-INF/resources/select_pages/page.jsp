@@ -16,9 +16,17 @@
 
 <%@ include file="/select_pages/init.jsp" %>
 
-<aui:input name="layoutIds" type="hidden" value="<%= ExportImportHelperUtil.getSelectedLayoutsJSON(selectPagesGroupId, selectPagesPrivateLayout, selectedLayoutIds) %>" />
+<aui:input
+	name="layoutIds"
+	type="hidden"
+	value="<%= ExportImportHelperUtil.getSelectedLayoutsJSON(selectPagesGroupId, selectPagesPrivateLayout, selectedLayoutIds) %>"
+/>
 
-<aui:fieldset cssClass="options-group" id="pages-fieldset" markupView="lexicon">
+<aui:fieldset
+	cssClass="options-group"
+	id="pages-fieldset"
+	markupView="lexicon"
+>
 	<div class="sheet-section">
 		<h3 class="sheet-subtitle"><liferay-ui:message key="pages" /></h3>
 
@@ -54,7 +62,11 @@
 							}
 							%>
 
-							<aui:select disabled="<%= disableInputs %>" label="site-pages-variation" name="layoutSetBranchId">
+							<aui:select
+								disabled="<%= disableInputs %>"
+								label="site-pages-variation"
+								name="layoutSetBranchId"
+							>
 
 								<%
 								for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
@@ -67,7 +79,12 @@
 									}
 								%>
 
-									<aui:option label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" localizeLabel="<%= translateLayoutSetBranchName %>" selected="<%= selected %>" value="<%= layoutSetBranch.getLayoutSetBranchId() %>" />
+									<aui:option
+										label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>"
+										localizeLabel="<%= translateLayoutSetBranchName %>"
+										selected="<%= selected %>"
+										value="<%= layoutSetBranch.getLayoutSetBranchId() %>"
+									/>
 
 								<%
 								}
@@ -88,9 +105,7 @@
 
 					<c:choose>
 						<c:when test="<%= disableInputs %>">
-							<liferay-util:buffer
-								var="badgeHTML"
-							>
+							<liferay-util:buffer var="badgeHTML">
 								<span class="badge badge-info">
 
 									<%

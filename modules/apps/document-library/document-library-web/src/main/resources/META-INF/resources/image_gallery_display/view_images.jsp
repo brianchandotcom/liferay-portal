@@ -22,14 +22,8 @@ SearchContainer igSearchContainer = (SearchContainer)request.getAttribute("view.
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(igRequestHelper);
 %>
 
-<liferay-ui:search-container
-	emptyResultsMessage="there-are-no-media-files-in-this-folder"
-	searchContainer="<%= igSearchContainer %>"
->
-	<liferay-ui:search-container-row
-		className="Object"
-		modelVar="result"
-	>
+<liferay-ui:search-container emptyResultsMessage="there-are-no-media-files-in-this-folder" searchContainer="<%= igSearchContainer %>">
+	<liferay-ui:search-container-row className="Object" modelVar="result">
 		<%@ include file="/document_library/cast_result.jspf" %>
 
 		<c:choose>
@@ -145,9 +139,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						url="<%= viewFolderURL %>"
 					>
 						<liferay-frontend:horizontal-card-col>
-							<liferay-frontend:horizontal-card-icon
-								icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
-							/>
+							<liferay-frontend:horizontal-card-icon icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>' />
 						</liferay-frontend:horizontal-card-col>
 					</liferay-frontend:horizontal-card>
 				</liferay-ui:search-container-column-text>

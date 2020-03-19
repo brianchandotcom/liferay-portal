@@ -38,10 +38,7 @@ MBMessage message = MBMessageLocalServiceUtil.getFileEntryMessage(fileEntry.getF
 			<portlet:param name="fileName" value="<%= HtmlUtil.unescape(fileEntry.getTitle()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="restore"
-			url="<%= restoreEntryURL %>"
-		/>
+		<liferay-ui:icon message="restore" url="<%= restoreEntryURL %>" />
 
 		<portlet:actionURL name="/message_boards/edit_message_attachments" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
@@ -50,8 +47,6 @@ MBMessage message = MBMessageLocalServiceUtil.getFileEntryMessage(fileEntry.getF
 			<portlet:param name="fileName" value="<%= HtmlUtil.unescape(fileEntry.getTitle()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

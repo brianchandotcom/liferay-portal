@@ -23,7 +23,13 @@ contextUseForAllTitle.put("disableOnChecked", false);
 contextUseForAllTitle.put("inputSelector", ".custom-title input");
 %>
 
-<aui:input checked="<%= portletConfigurationCSSPortletDisplayContext.isUseCustomTitle() %>" data="<%= contextUseForAllTitle %>" label="use-custom-title" name="useCustomTitle" type="toggle-switch" />
+<aui:input
+	checked="<%= portletConfigurationCSSPortletDisplayContext.isUseCustomTitle() %>"
+	data="<%= contextUseForAllTitle %>"
+	label="use-custom-title"
+	name="useCustomTitle"
+	type="toggle-switch"
+/>
 
 <aui:field-wrapper cssClass="custom-title lfr-input-text-container">
 	<liferay-ui:input-localized
@@ -40,7 +46,11 @@ contextUseForAllTitle.put("inputSelector", ".custom-title input");
 	for (PortletDecorator portletDecorator : theme.getPortletDecorators()) {
 	%>
 
-		<aui:option label="<%= portletDecorator.getName() %>" selected="<%= Objects.equals(portletDecorator.getPortletDecoratorId(), portletConfigurationCSSPortletDisplayContext.getPortletDecoratorId()) %>" value="<%= portletDecorator.getPortletDecoratorId() %>" />
+		<aui:option
+			label="<%= portletDecorator.getName() %>"
+			selected="<%= Objects.equals(portletDecorator.getPortletDecoratorId(), portletConfigurationCSSPortletDisplayContext.getPortletDecoratorId()) %>"
+			value="<%= portletDecorator.getPortletDecoratorId() %>"
+		/>
 
 	<%
 	}

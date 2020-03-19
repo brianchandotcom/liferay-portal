@@ -28,7 +28,4 @@ Map<String, Object> context = HashMapBuilder.<String, Object>put(
 ).build();
 %>
 
-<react:component
-	data="<%= context %>"
-	module="js/SelectCategory.es"
-/>
+<react:component data="<%= context %>" module="js/SelectCategory.es" />

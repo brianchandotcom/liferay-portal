@@ -44,9 +44,21 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+<aui:form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<div class="portlet-configuration-body-content">
 		<div class="container-fluid-1280">
@@ -87,9 +99,18 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 							/>
 						</aui:field-wrapper>
 
-						<aui:input name="preferences--requireCaptcha--" type="checkbox" value="<%= requireCaptcha %>" />
+						<aui:input
+							name="preferences--requireCaptcha--"
+							type="checkbox"
+							value="<%= requireCaptcha %>"
+						/>
 
-						<aui:input label="redirect-url-on-success" name="preferences--successURL--" value="<%= HtmlUtil.toInputSafe(successURL) %>" wrapperCssClass="lfr-input-text-container" />
+						<aui:input
+							label="redirect-url-on-success"
+							name="preferences--successURL--"
+							value="<%= HtmlUtil.toInputSafe(successURL) %>"
+							wrapperCssClass="lfr-input-text-container"
+						/>
 					</aui:fieldset>
 				</liferay-ui:panel>
 
@@ -107,25 +128,59 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 						<liferay-ui:error key="handlingRequired" message="please-select-an-action-for-the-handling-of-form-data" />
 						<liferay-ui:error key="subjectRequired" message="please-enter-a-subject" />
 
-						<aui:input label="send-as-email" name="preferences--sendAsEmail--" type="checkbox" value="<%= sendAsEmail %>" />
+						<aui:input
+							label="send-as-email"
+							name="preferences--sendAsEmail--"
+							type="checkbox"
+							value="<%= sendAsEmail %>"
+						/>
 
 						<aui:fieldset>
-							<aui:input label="name-from" name="preferences--emailFromName--" value="<%= emailFromName %>" wrapperCssClass="lfr-input-text-container" />
+							<aui:input
+								label="name-from"
+								name="preferences--emailFromName--"
+								value="<%= emailFromName %>"
+								wrapperCssClass="lfr-input-text-container"
+							/>
 
-							<aui:input label="address-from" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" wrapperCssClass="lfr-input-text-container" />
+							<aui:input
+								label="address-from"
+								name="preferences--emailFromAddress--"
+								value="<%= emailFromAddress %>"
+								wrapperCssClass="lfr-input-text-container"
+							/>
 						</aui:fieldset>
 
-						<aui:input helpMessage="add-email-addresses-separated-by-commas" label="addresses-to" name="preferences--emailAddress--" value="<%= emailAddress %>" wrapperCssClass="lfr-input-text-container" />
+						<aui:input
+							helpMessage="add-email-addresses-separated-by-commas"
+							label="addresses-to"
+							name="preferences--emailAddress--"
+							value="<%= emailAddress %>"
+							wrapperCssClass="lfr-input-text-container"
+						/>
 
-						<aui:input name="preferences--subject--" value="<%= subject %>" wrapperCssClass="lfr-input-text-container" />
+						<aui:input
+							name="preferences--subject--"
+							value="<%= subject %>"
+							wrapperCssClass="lfr-input-text-container"
+						/>
 					</aui:fieldset>
 
 					<aui:fieldset cssClass="handle-data" label="database">
-						<aui:input helpMessage="export-functionality-will-only-be-available-for-data-saved-to-the-database" name="preferences--saveToDatabase--" type="checkbox" value="<%= saveToDatabase %>" />
+						<aui:input
+							helpMessage="export-functionality-will-only-be-available-for-data-saved-to-the-database"
+							name="preferences--saveToDatabase--"
+							type="checkbox"
+							value="<%= saveToDatabase %>"
+						/>
 					</aui:fieldset>
 
 					<aui:fieldset cssClass="handle-data" label="file">
-						<aui:input name="preferences--saveToFile--" type="checkbox" value="<%= saveToFile %>" />
+						<aui:input
+							name="preferences--saveToFile--"
+							type="checkbox"
+							value="<%= saveToFile %>"
+						/>
 
 						<liferay-ui:message arguments="<%= HtmlUtil.escape(WebFormUtil.getFileName(themeDisplay, portletResource, webFormServiceConfiguration.dataRootDir())) %>" key="form-data-will-be-saved-to-x" />
 					</aui:fieldset>
@@ -171,7 +226,11 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 							<br /><br />
 						</c:if>
 
-						<aui:input name="updateFields" type="hidden" value="<%= !fieldsEditingDisabled %>" />
+						<aui:input
+							name="updateFields"
+							type="hidden"
+							value="<%= !fieldsEditingDisabled %>"
+						/>
 
 						<%
 						String formFieldsIndexesParam = ParamUtil.getString(renderRequest, "formFieldsIndexes");
@@ -306,7 +365,11 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 			sortable: true,
 			sortableHandle: '.lfr-form-row',
 
-			<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="editFieldURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+			<liferay-portlet:renderURL
+				portletConfiguration="<%= true %>"
+				var="editFieldURL"
+				windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"
+			>
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 			</liferay-portlet:renderURL>
 

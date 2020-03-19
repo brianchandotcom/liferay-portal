@@ -38,10 +38,7 @@ String oAuth2ApplicationId = String.valueOf(oAuth2Application.getOAuth2Applicati
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL.toString() %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL.toString() %>" />
 	</c:if>
 
 	<c:if test="<%= oAuth2AdminPortletDisplayContext.hasPermissionsPermission(oAuth2Application) %>">

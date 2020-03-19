@@ -71,17 +71,33 @@ else {
 					<div class="btn-group button-holder">
 						<aui:button cssClass="btn btn-secondary edit-logo modify-link" value="change" />
 
-						<aui:button cssClass="btn btn-secondary delete-logo modify-link" disabled="<%= defaultLogo && (fileEntryId == 0) %>" value="delete" />
+						<aui:button
+							cssClass="btn btn-secondary delete-logo modify-link"
+							disabled="<%= defaultLogo && (fileEntryId == 0) %>"
+							value="delete"
+						/>
 					</div>
 
-					<aui:input name="deleteLogo" type="hidden" value="<%= deleteLogo %>" />
+					<aui:input
+						name="deleteLogo"
+						type="hidden"
+						value="<%= deleteLogo %>"
+					/>
 
-					<aui:input name="fileEntryId" type="hidden" value="<%= fileEntryId %>" />
+					<aui:input
+						name="fileEntryId"
+						type="hidden"
+						value="<%= fileEntryId %>"
+					/>
 				</div>
 			</div>
 		</div>
 
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.IMAGE_UPLOADER %>" var="uploadImageURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<liferay-portlet:renderURL
+			portletName="<%= PortletKeys.IMAGE_UPLOADER %>"
+			var="uploadImageURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		>
 			<liferay-portlet:param name="mvcRenderCommandName" value="/image_uploader/view" />
 			<liferay-portlet:param name="randomNamespace" value="<%= randomNamespace %>" />
 			<liferay-portlet:param name="aspectRatio" value="<%= String.valueOf(aspectRatio) %>" />

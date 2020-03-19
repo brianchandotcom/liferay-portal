@@ -26,7 +26,11 @@ request.setAttribute("contact_information.jsp-classPK", organizationId);
 request.setAttribute("contact_information.jsp-mvcActionPath", "/users_admin/update_organization_contact_information");
 %>
 
-<aui:input name="classPK" type="hidden" value="<%= String.valueOf(organizationId) %>" />
+<aui:input
+	name="classPK"
+	type="hidden"
+	value="<%= String.valueOf(organizationId) %>"
+/>
 
 <div class="sheet-section">
 	<liferay-util:include page="/common/addresses.jsp" servletContext="<%= application %>">

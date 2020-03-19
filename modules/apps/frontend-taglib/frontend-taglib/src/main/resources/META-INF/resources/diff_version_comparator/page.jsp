@@ -21,8 +21,5 @@ Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-fr
 %>
 
 <div>
-	<react:component
-		data="<%= data %>"
-		module="diff_version_comparator/index"
-	/>
+	<react:component data="<%= data %>" module="diff_version_comparator/index" />
 </div>

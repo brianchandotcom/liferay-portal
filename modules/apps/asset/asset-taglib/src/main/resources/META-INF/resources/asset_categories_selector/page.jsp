@@ -48,9 +48,7 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 
 							<c:if test="<%= required %>">
 								<span class="reference-mark">
-									<clay:icon
-										symbol="asterisk"
-									/>
+									<clay:icon symbol="asterisk" />
 
 									<span class="hide-accessible">
 										<liferay-ui:message key="required" />
@@ -77,10 +75,7 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 											String selectedItemValue = GetterUtil.getString(selectedItem.get("value"));
 										%>
 
-											<clay:label
-												closeable="<%= true %>"
-												label="<%= selectedItemLabel %>"
-											/>
+											<clay:label closeable="<%= true %>" label="<%= selectedItemLabel %>" />
 
 											<input name="<%= inputName %>" type="hidden" value="<%= selectedItemValue %>" />
 
@@ -110,8 +105,5 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 
 	</div>
 
-	<react:component
-		data="<%= data %>"
-		module="asset_categories_selector/AssetCategoriesSelectorTag.es"
-	/>
+	<react:component data="<%= data %>" module="asset_categories_selector/AssetCategoriesSelectorTag.es" />
 </div>

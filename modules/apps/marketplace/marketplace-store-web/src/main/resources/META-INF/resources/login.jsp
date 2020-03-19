@@ -35,5 +35,9 @@
 		<portlet:param name="callbackURL" value="<%= callbackURL %>" />
 	</liferay-portlet:actionURL>
 
-	<aui:button data="<%= data %>" onClick="<%= authorizeURL %>" value="sign-in" />
+	<aui:button
+		data="<%= data %>"
+		onClick="<%= authorizeURL %>"
+		value="sign-in"
+	/>
 </div>

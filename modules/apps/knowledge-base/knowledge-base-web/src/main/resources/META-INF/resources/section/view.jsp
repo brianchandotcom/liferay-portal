@@ -29,13 +29,8 @@ String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDi
 			<portlet:param name="mvcPath" value="/section/view.jsp" />
 		</liferay-portlet:renderURL>
 
-		<liferay-ui:search-container
-			searchContainer="<%= new KBObjectsSearch(renderRequest, iteratorURL) %>"
-			total="<%= KBArticleServiceUtil.getSectionsKBArticlesCount(scopeGroupId, kbArticlesSections, WorkflowConstants.STATUS_APPROVED) %>"
-		>
-			<liferay-ui:search-container-results
-				results="<%= KBArticleServiceUtil.getSectionsKBArticles(scopeGroupId, kbArticlesSections, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-			/>
+		<liferay-ui:search-container searchContainer="<%= new KBObjectsSearch(renderRequest, iteratorURL) %>" total="<%= KBArticleServiceUtil.getSectionsKBArticlesCount(scopeGroupId, kbArticlesSections, WorkflowConstants.STATUS_APPROVED) %>">
+			<liferay-ui:search-container-results results="<%= KBArticleServiceUtil.getSectionsKBArticles(scopeGroupId, kbArticlesSections, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>" />
 
 			<c:if test="<%= kbSectionPortletInstanceConfiguration.showKBArticlesSectionsTitle() %>">
 
@@ -102,9 +97,7 @@ String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDi
 
 			<c:if test="<%= kbSectionPortletInstanceConfiguration.showKBArticlesPagination() && (total > searchContainer.getDelta()) %>">
 				<div class="taglib-search-iterator-page-iterator-bottom">
-					<liferay-ui:search-paginator
-						searchContainer="<%= searchContainer %>"
-					/>
+					<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
 				</div>
 			</c:if>
 		</liferay-ui:search-container>

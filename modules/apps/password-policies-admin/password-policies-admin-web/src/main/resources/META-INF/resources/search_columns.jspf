@@ -16,13 +16,9 @@
 
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
-		<liferay-ui:search-container-column-icon
-			icon="password-policies"
-		/>
+		<liferay-ui:search-container-column-icon icon="password-policies" />
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<h5>
 				<aui:a href="<%= rowHREF %>"><%= passwordPolicy.getName() %></aui:a>
 			</h5>
@@ -32,10 +28,7 @@
 			</h6>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/password_policy_action.jsp"
-		/>
+		<liferay-ui:search-container-column-jsp cssClass="entry-action-column" path="/password_policy_action.jsp" />
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
@@ -54,9 +47,6 @@
 			property="description"
 		/>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/password_policy_action.jsp"
-		/>
+		<liferay-ui:search-container-column-jsp cssClass="entry-action-column" path="/password_policy_action.jsp" />
 	</c:otherwise>
 </c:choose>

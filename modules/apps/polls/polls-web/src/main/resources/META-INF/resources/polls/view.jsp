@@ -112,9 +112,7 @@
 					</c:otherwise>
 				</c:choose>
 
-				<liferay-ui:search-container-column-jsp
-					path="/polls/question_action.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp path="/polls/question_action.jsp" />
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator

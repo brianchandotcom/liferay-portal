@@ -250,19 +250,17 @@ for (int i = 0; i < pages.size(); i++) {
 
 <c:if test='<%= navigation.equals("history") && (pages.size() > 1) %>'>
 	<aui:button-row>
-		<aui:button name="compare" primary="<%= true %>" value="compare-versions" />
+		<aui:button
+			name="compare"
+			primary="<%= true %>"
+			value="compare-versions"
+		/>
 	</aui:button-row>
 </c:if>
 
-<liferay-asset:categorization-filter
-	assetType="pages"
-	portletURL="<%= portletURL %>"
-/>
+<liferay-asset:categorization-filter assetType="pages" portletURL="<%= portletURL %>" />
 
-<liferay-ui:search-iterator
-	paginate='<%= navigation.equals("history") ? false : true %>'
-	searchContainer="<%= searchContainer %>"
-/>
+<liferay-ui:search-iterator paginate='<%= navigation.equals("history") ? false : true %>' searchContainer="<%= searchContainer %>" />
 
 <c:if test='<%= navigation.equals("history") %>'>
 	<aui:script require="metal-dom/src/dom as dom">

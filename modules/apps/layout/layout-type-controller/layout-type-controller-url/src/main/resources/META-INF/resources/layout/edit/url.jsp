@@ -26,7 +26,14 @@ if (selLayout != null) {
 }
 %>
 
-<aui:input cssClass="lfr-input-text-container" id="url" label="url" name="TypeSettingsProperties--url--" type="text" value="<%= url %>">
+<aui:input
+	cssClass="lfr-input-text-container"
+	id="url"
+	label="url"
+	name="TypeSettingsProperties--url--"
+	type="text"
+	value="<%= url %>"
+>
 	<aui:validator errorMessage="please-enter-a-valid-url" name="required" />
 </aui:input>
 

@@ -40,9 +40,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 			<div class="col-md-4">
 				<div class="overview-container statistics-panel">
 					<div class="sticker sticker-categories sticker-user-icon">
-						<clay:icon
-							symbol="categories"
-						/>
+						<clay:icon symbol="categories" />
 					</div>
 
 					<small class="text-uppercase"><liferay-ui:message key="categories" /></small>
@@ -54,9 +52,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 			<div class="col-md-4">
 				<div class="overview-container statistics-panel">
 					<div class="sticker sticker-posts sticker-user-icon">
-						<clay:icon
-							symbol="message-boards"
-						/>
+						<clay:icon symbol="message-boards" />
 					</div>
 
 					<small class="text-uppercase"><liferay-ui:message key="posts" /></small>
@@ -68,9 +64,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 			<div class="col-md-4">
 				<div class="overview-container statistics-panel">
 					<div class="sticker sticker-participants sticker-user-icon">
-						<clay:icon
-							symbol="users"
-						/>
+						<clay:icon symbol="users" />
 					</div>
 
 					<small class="text-uppercase"><liferay-ui:message key="participants" /></small>
@@ -89,9 +83,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 			iteratorURL="<%= portletURL %>"
 			total="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId) %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupId(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
+			<liferay-ui:search-container-results results="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupId(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.message.boards.model.MBStatsUser"
@@ -101,10 +93,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 				<%@ include file="/message_boards/top_posters_user_display.jspf" %>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				displayStyle="descriptive"
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</div>
 </div>

@@ -42,7 +42,14 @@ Map<String, Object> data = new HashMap<String, Object>();
 <div class="taglib-move-boxes <%= cssClass %> <%= leftReorder ? "left-reorder" : StringPool.BLANK %> <%= rightReorder ? "right-reorder" : StringPool.BLANK %>" id="<%= randomNamespace + "input-move-boxes" %>">
 	<aui:row cssClass="selector-container">
 		<aui:col cssClass="left-selector-column" width="<%= 30 %>">
-			<aui:select cssClass="choice-selector left-selector" label="<%= leftTitle %>" multiple="<%= true %>" name="<%= leftBoxName %>" onChange="<%= Validator.isNotNull(leftOnChange) ? leftOnChange : StringPool.BLANK %>" size="10">
+			<aui:select
+				cssClass="choice-selector left-selector"
+				label="<%= leftTitle %>"
+				multiple="<%= true %>"
+				name="<%= leftBoxName %>"
+				onChange="<%= Validator.isNotNull(leftOnChange) ? leftOnChange : StringPool.BLANK %>"
+				size="10"
+			>
 
 				<%
 				data.put("selected", true);
@@ -51,7 +58,11 @@ Map<String, Object> data = new HashMap<String, Object>();
 					KeyValuePair kvp = (KeyValuePair)leftList.get(i);
 				%>
 
-					<aui:option data="<%= data %>" label="<%= kvp.getValue() %>" value="<%= kvp.getKey() %>" />
+					<aui:option
+						data="<%= data %>"
+						label="<%= kvp.getValue() %>"
+						value="<%= kvp.getKey() %>"
+					/>
 
 				<%
 				}
@@ -63,7 +74,14 @@ Map<String, Object> data = new HashMap<String, Object>();
 		<aui:col cssClass="move-arrow-buttons" span="<%= 1 %>"></aui:col>
 
 		<aui:col cssClass="right-selector-column" width="<%= 30 %>">
-			<aui:select cssClass="choice-selector right-selector" label="<%= rightTitle %>" multiple="<%= true %>" name="<%= rightBoxName %>" onChange="<%= Validator.isNotNull(rightOnChange) ? rightOnChange : StringPool.BLANK %>" size="10">
+			<aui:select
+				cssClass="choice-selector right-selector"
+				label="<%= rightTitle %>"
+				multiple="<%= true %>"
+				name="<%= rightBoxName %>"
+				onChange="<%= Validator.isNotNull(rightOnChange) ? rightOnChange : StringPool.BLANK %>"
+				size="10"
+			>
 
 				<%
 				data.put("selected", false);
@@ -72,7 +90,11 @@ Map<String, Object> data = new HashMap<String, Object>();
 					KeyValuePair kvp = (KeyValuePair)rightList.get(i);
 				%>
 
-					<aui:option data="<%= data %>" label="<%= kvp.getValue() %>" value="<%= kvp.getKey() %>" />
+					<aui:option
+						data="<%= data %>"
+						label="<%= kvp.getValue() %>"
+						value="<%= kvp.getKey() %>"
+					/>
 
 				<%
 				}

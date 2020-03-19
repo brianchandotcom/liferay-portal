@@ -64,7 +64,12 @@ data.put("qa-id", "info");
 					%>
 
 					<span class="button-info">
-						<aui:button name="submit" onClick="<%= taglibURL %>" type="submit" value='<%= LanguageUtil.get(resourceBundle, "reset-changes") %>' />
+						<aui:button
+							name="submit"
+							onClick="<%= taglibURL %>"
+							type="submit"
+							value='<%= LanguageUtil.get(resourceBundle, "reset-changes") %>'
+						/>
 					</span>
 				</div>
 			</c:if>

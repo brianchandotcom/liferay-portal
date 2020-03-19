@@ -34,9 +34,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 <div id="<portlet:namespace />formsSearchContainer">
 	<liferay-portlet:renderURL varImpl="portletURL" />
 
-	<liferay-ui:search-container
-		searchContainer='<%= new SearchContainer<Object>(renderRequest, portletURL, null, "no-tasks-were-found") %>'
-	>
+	<liferay-ui:search-container searchContainer='<%= new SearchContainer<Object>(renderRequest, portletURL, null, "no-tasks-were-found") %>'>
 		<liferay-ui:search-container-results>
 
 			<%
@@ -55,15 +53,9 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 			cssClass="entry-display-style"
 			modelVar="taskFormsPair"
 		>
-			<liferay-ui:search-container-row-parameter
-				name="backURL"
-				value="<%= backURL %>"
-			/>
+			<liferay-ui:search-container-row-parameter name="backURL" value="<%= backURL %>" />
 
-			<liferay-ui:search-container-column-text
-				name="task"
-				value="<%= HtmlUtil.escape(taskFormsPair.getWorkflowTaskName()) %>"
-			/>
+			<liferay-ui:search-container-column-text name="task" value="<%= HtmlUtil.escape(taskFormsPair.getWorkflowTaskName()) %>" />
 
 			<%
 			long ddmTemplateId = taskFormsPair.getDDMTemplateId();
@@ -81,20 +73,19 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 			}
 			%>
 
-			<liferay-util:buffer
-				var="taskInputBuffer"
-			>
+			<liferay-util:buffer var="taskInputBuffer">
 				<c:if test="<%= taskFormsPair.equals(initialStateKaleoTaskFormPair) %>">
-					<aui:input name="ddmTemplateId" type="hidden" value="<%= Validator.isNull(formName) ? StringPool.BLANK : String.valueOf(ddmTemplateId) %>">
+					<aui:input
+						name="ddmTemplateId"
+						type="hidden"
+						value="<%= Validator.isNull(formName) ? StringPool.BLANK : String.valueOf(ddmTemplateId) %>"
+					>
 						<aui:validator name="required" />
 					</aui:input>
 				</c:if>
 			</liferay-util:buffer>
 
-			<liferay-ui:search-container-column-text
-				name="form"
-				value="<%= HtmlUtil.escape(formName) + taskInputBuffer %>"
-			/>
+			<liferay-ui:search-container-column-text name="form" value="<%= HtmlUtil.escape(formName) + taskInputBuffer %>" />
 
 			<liferay-ui:search-container-column-jsp
 				align="right"
@@ -103,9 +94,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>
 

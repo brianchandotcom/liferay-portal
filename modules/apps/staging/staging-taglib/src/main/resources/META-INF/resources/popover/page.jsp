@@ -19,9 +19,7 @@
 <c:if test="<%= Validator.isNotNull(text) %>">
 	<span class="staging-taglib-popover" id="<%= domId %>">
 		<span class="staging-taglib-popover-icon-holder">
-			<clay:icon
-				symbol="question-circle-full"
-			/>
+			<clay:icon symbol="question-circle-full" />
 		</span>
 
 		<div class="bs-popover-right popover">

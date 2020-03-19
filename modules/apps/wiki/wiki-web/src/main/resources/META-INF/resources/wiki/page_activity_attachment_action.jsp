@@ -51,10 +51,7 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 			<portlet:param name="fileName" value="<%= fileEntry.getTitle() %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="restore-attachment"
-			url="<%= restoreEntryURL %>"
-		/>
+		<liferay-ui:icon message="restore-attachment" url="<%= restoreEntryURL %>" />
 	</c:if>
 
 	<c:if test="<%= !fileEntry.isInTrash() && ((socialActivity.getType() == SocialActivityConstants.TYPE_ADD_ATTACHMENT) || (socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH)) && WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">

@@ -30,9 +30,7 @@ else if (collapsible) {
 
 <fieldset aria-labelledby="<%= id %>Title" class="<%= collapsible ? "panel panel-default" : StringPool.BLANK %> <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> role="group">
 	<c:if test="<%= Validator.isNotNull(label) %>">
-		<liferay-util:buffer
-			var="header"
-		>
+		<liferay-util:buffer var="header">
 			<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
 
 			<c:if test="<%= Validator.isNotNull(helpMessage) %>">
@@ -40,9 +38,17 @@ else if (collapsible) {
 			</c:if>
 
 			<c:if test="<%= collapsible %>">
-				<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+				<aui:icon
+					cssClass="collapse-icon-closed"
+					image="angle-right"
+					markupView="lexicon"
+				/>
 
-				<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+				<aui:icon
+					cssClass="collapse-icon-open"
+					image="angle-down"
+					markupView="lexicon"
+				/>
 			</c:if>
 		</liferay-util:buffer>
 

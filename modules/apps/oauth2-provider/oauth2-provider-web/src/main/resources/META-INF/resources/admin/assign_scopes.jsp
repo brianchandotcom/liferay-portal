@@ -76,13 +76,21 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 					</div>
 
 					<aui:button-row>
-						<aui:button id="save" type="submit" value="save" />
+						<aui:button
+							id="save"
+							type="submit"
+							value="save"
+						/>
 
 						<aui:button href="<%= PortalUtil.escapeRedirect(redirect) %>" type="cancel" />
 					</aui:button-row>
 				</div>
 
-				<aui:input id="impliedScopeAliases" name="scopeAliases" type="hidden" />
+				<aui:input
+					id="impliedScopeAliases"
+					name="scopeAliases"
+					type="hidden"
+				/>
 			</aui:form>
 		</div>
 	</div>

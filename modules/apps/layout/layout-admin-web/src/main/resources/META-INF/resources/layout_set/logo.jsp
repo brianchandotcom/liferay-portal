@@ -23,13 +23,14 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 boolean showButtons = GroupPermissionUtil.contains(permissionChecker, layoutsAdminDisplayContext.getSelGroup(), ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet);
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="logo"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="logo" />
 
 <liferay-ui:error exception="<%= FileSizeException.class %>">
-	<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(DLValidatorUtil.getMaxAllowableSize(), locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= LanguageUtil.formatStorageSize(DLValidatorUtil.getMaxAllowableSize(), locale) %>"
+		key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x"
+		translateArguments="<%= false %>"
+	/>
 </liferay-ui:error>
 
 <p class="text-muted">
@@ -76,4 +77,11 @@ boolean showSiteNameDefault = GetterUtil.getBoolean(selLayoutSet.getTheme().getS
 boolean showSiteName = GetterUtil.getBoolean(selLayoutSet.getSettingsProperty("showSiteName"), showSiteNameDefault);
 %>
 
-<aui:input disabled="<%= !showSiteNameSupported %>" helpMessage='<%= showSiteNameSupported ? StringPool.BLANK : "the-theme-selected-for-the-site-does-not-support-displaying-the-title" %>' label="show-site-name" name="TypeSettingsProperties--showSiteName--" type="toggle-switch" value="<%= showSiteName %>" />
+<aui:input
+	disabled="<%= !showSiteNameSupported %>"
+	helpMessage='<%= showSiteNameSupported ? StringPool.BLANK : "the-theme-selected-for-the-site-does-not-support-displaying-the-title" %>'
+	label="show-site-name"
+	name="TypeSettingsProperties--showSiteName--"
+	type="toggle-switch"
+	value="<%= showSiteName %>"
+/>

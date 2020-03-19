@@ -56,15 +56,17 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 	</c:if>
 
 	<c:if test="<%= MDRRuleGroupInstancePermission.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.DELETE) %>">
-		<liferay-ui:icon-delete
-			url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteRuleGroupInstance(" + mdrRuleGroupInstance.getRuleGroupInstanceId() + ");" %>'
-		/>
+		<liferay-ui:icon-delete url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteRuleGroupInstance(" + mdrRuleGroupInstance.getRuleGroupInstanceId() + ");" %>' />
 	</c:if>
 </liferay-ui:icon-menu>
 
 <c:if test="<%= MDRRuleGroupInstancePermission.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.UPDATE) %>">
 	<aui:script use="aui-base">
-		<liferay-portlet:renderURL portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>" varImpl="viewRuleGroupInstanceActionsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<liferay-portlet:renderURL
+			portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>"
+			varImpl="viewRuleGroupInstanceActionsURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		>
 			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/view_actions" />
 			<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
 			<portlet:param name="redirect" value='<%= HttpUtil.setParameter(currentURL, liferayPortletResponse.getNamespace() + "historyKey", "mobileDeviceRules") %>' />

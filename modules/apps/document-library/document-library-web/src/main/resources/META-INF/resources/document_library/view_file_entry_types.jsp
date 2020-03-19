@@ -35,9 +35,7 @@ DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLVi
 <div class="container-fluid container-fluid-max-xl main-content-body">
 	<liferay-ui:error exception="<%= RequiredFileEntryTypeException.class %>" message="cannot-delete-a-document-type-that-is-presently-used-by-one-or-more-documents" />
 
-	<liferay-ui:search-container
-		searchContainer="<%= dlViewFileEntryTypesDisplayContext.getSearchContainer() %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= dlViewFileEntryTypesDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.document.library.kernel.model.DLFileEntryType"
 			escapedModel="<%= true %>"
@@ -76,14 +74,9 @@ DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLVi
 				value="<%= fileEntryType.getModifiedDate() %>"
 			/>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action"
-				path="/document_library/file_entry_type_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp cssClass="entry-action" path="/document_library/file_entry_type_action.jsp" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

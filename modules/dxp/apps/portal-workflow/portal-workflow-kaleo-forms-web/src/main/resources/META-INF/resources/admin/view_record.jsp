@@ -42,7 +42,15 @@ renderResponse.setTitle(LanguageUtil.format(request, "view-x", kaleoProcess.getN
 		<aui:model-context bean="<%= ddlRecordVersion %>" model="<%= DDLRecordVersion.class %>" />
 
 		<div class="panel text-center">
-			<aui:workflow-status markupView="lexicon" model="<%= DDLRecord.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= ddlRecordVersion.getStatus() %>" version="<%= ddlRecordVersion.getVersion() %>" />
+			<aui:workflow-status
+				markupView="lexicon"
+				model="<%= DDLRecord.class %>"
+				showHelpMessage="<%= false %>"
+				showIcon="<%= false %>"
+				showLabel="<%= false %>"
+				status="<%= ddlRecordVersion.getStatus() %>"
+				version="<%= ddlRecordVersion.getVersion() %>"
+			/>
 		</div>
 	</c:if>
 
@@ -69,7 +77,12 @@ renderResponse.setTitle(LanguageUtil.format(request, "view-x", kaleoProcess.getN
 		</div>
 
 		<aui:button-row>
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
+			<aui:button
+				cssClass="btn-lg"
+				href="<%= redirect %>"
+				name="cancelButton"
+				type="cancel"
+			/>
 		</aui:button-row>
 	</aui:fieldset>
 </div>

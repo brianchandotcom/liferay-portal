@@ -21,7 +21,16 @@ String adminAnalyticsTypes = PrefsPropsUtil.getString(company.getCompanyId(), Pr
 %>
 
 <aui:fieldset>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
 
-	<aui:input label="enter-one-analytics-system-name-per-line" name='<%= "settings--" + PropsKeys.ADMIN_ANALYTICS_TYPES + "--" %>' type="textarea" value="<%= adminAnalyticsTypes %>" />
+	<aui:input
+		label="enter-one-analytics-system-name-per-line"
+		name='<%= "settings--" + PropsKeys.ADMIN_ANALYTICS_TYPES + "--" %>'
+		type="textarea"
+		value="<%= adminAnalyticsTypes %>"
+	/>
 </aui:fieldset>

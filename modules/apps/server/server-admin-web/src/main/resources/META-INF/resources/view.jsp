@@ -36,9 +36,21 @@ portletURL.setParameter("tabs2", tabs2);
 	<portlet:param name="keywords" value="<%= keywords %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
+<aui:form
+	action="<%= portletURL.toString() %>"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="tabs1"
+		type="hidden"
+		value="<%= tabs1 %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirectURL %>"
+	/>
 
 	<liferay-util:include page="/server.jsp" servletContext="<%= application %>" />
 </aui:form>

@@ -40,9 +40,7 @@
 			<div class="entry-body">
 				<c:choose>
 					<c:when test='<%= displayStyle.endsWith("image") %>'>
-						<liferay-ui:user-portrait
-							userId="<%= entry.getUserId() %>"
-						/>
+						<liferay-ui:user-portrait userId="<%= entry.getUserId() %>" />
 
 						<div class="entry-info text-muted ">
 							<small>
@@ -125,10 +123,7 @@
 				<div class="entry-social">
 					<div class="comments">
 						<a href="<%= viewEntryURL %>">
-							<liferay-ui:icon
-								icon="comments"
-								markupView="lexicon"
-							/>
+							<liferay-ui:icon icon="comments" markupView="lexicon" />
 
 							<span><%= String.valueOf(commentsCount) %></span>
 						</a>
@@ -138,28 +133,16 @@
 		</c:if>
 
 		<c:if test='<%= !displayStyle.endsWith("-without-title") %>'>
-			<liferay-asset:asset-categories-available
-				className="<%= BlogsEntry.class.getName() %>"
-				classPK="<%= entry.getEntryId() %>"
-			>
+			<liferay-asset:asset-categories-available className="<%= BlogsEntry.class.getName() %>" classPK="<%= entry.getEntryId() %>">
 				<span class="entry-categories">
-					<liferay-asset:asset-categories-summary
-						className="<%= BlogsEntry.class.getName() %>"
-						classPK="<%= entry.getEntryId() %>"
-					/>
+					<liferay-asset:asset-categories-summary className="<%= BlogsEntry.class.getName() %>" classPK="<%= entry.getEntryId() %>" />
 				</span>
 			</liferay-asset:asset-categories-available>
 
 			<c:if test="<%= showTags %>">
-				<liferay-asset:asset-tags-available
-					className="<%= BlogsEntry.class.getName() %>"
-					classPK="<%= entry.getEntryId() %>"
-				>
+				<liferay-asset:asset-tags-available className="<%= BlogsEntry.class.getName() %>" classPK="<%= entry.getEntryId() %>">
 					<span class="entry-tags">
-						<liferay-asset:asset-tags-summary
-							className="<%= BlogsEntry.class.getName() %>"
-							classPK="<%= entry.getEntryId() %>"
-						/>
+						<liferay-asset:asset-tags-summary className="<%= BlogsEntry.class.getName() %>" classPK="<%= entry.getEntryId() %>" />
 					</span>
 				</liferay-asset:asset-tags-available>
 			</c:if>

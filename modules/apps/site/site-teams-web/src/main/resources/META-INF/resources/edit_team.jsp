@@ -44,8 +44,16 @@ renderResponse.setTitle((team == null) ? LanguageUtil.get(request, "new-team") :
 	method="post"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="teamId" type="hidden" value="<%= teamId %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="teamId"
+		type="hidden"
+		value="<%= teamId %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= DuplicateTeamException.class %>" message="please-enter-a-unique-name" />
@@ -56,10 +64,18 @@ renderResponse.setTitle((team == null) ? LanguageUtil.get(request, "new-team") :
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
 				<c:if test="<%= team != null %>">
-					<aui:input name="teamId" type="resource" value="<%= String.valueOf(team.getTeamId()) %>" />
+					<aui:input
+						name="teamId"
+						type="resource"
+						value="<%= String.valueOf(team.getTeamId()) %>"
+					/>
 				</c:if>
 
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" placeholder="name" />
+				<aui:input
+					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+					name="name"
+					placeholder="name"
+				/>
 
 				<aui:input name="description" placeholder="description" />
 			</liferay-frontend:fieldset>

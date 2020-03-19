@@ -132,7 +132,11 @@ renderResponse.setTitle(definition.getName(locale));
 		%>
 
 		<c:if test="<%= reportParameters.length > 0 %>">
-			<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="report-parameters">
+			<aui:fieldset
+				collapsible="<%= true %>"
+				cssClass="options-group"
+				label="report-parameters"
+			>
 				<table class="table table-autofit table-list">
 					<thead>
 						<tr>
@@ -170,7 +174,11 @@ renderResponse.setTitle(definition.getName(locale));
 			</aui:fieldset>
 		</c:if>
 
-		<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="attachments">
+		<aui:fieldset
+			collapsible="<%= true %>"
+			cssClass="options-group"
+			label="attachments"
+		>
 
 			<%
 			List<String> headerNames = new ArrayList<String>();
@@ -195,28 +203,15 @@ renderResponse.setTitle(definition.getName(locale));
 				searchContainer="<%= new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null) %>"
 				total="<%= attachmentsFiles.size() %>"
 			>
-				<liferay-ui:search-container-results
-					results="<%= ListUtil.subList(attachmentsFiles, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				/>
+				<liferay-ui:search-container-results results="<%= ListUtil.subList(attachmentsFiles, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
-				<liferay-ui:search-container-row
-					className="java.lang.String"
-					modelVar="fileName"
-				>
-					<liferay-ui:search-container-column-text
-						name="file"
-						value="<%= HtmlUtil.escape(StringUtil.extractLast(fileName, StringPool.SLASH)) %>"
-					/>
+				<liferay-ui:search-container-row className="java.lang.String" modelVar="fileName">
+					<liferay-ui:search-container-column-text name="file" value="<%= HtmlUtil.escape(StringUtil.extractLast(fileName, StringPool.SLASH)) %>" />
 
-					<liferay-ui:search-container-column-jsp
-						align="right"
-						path="/admin/report/report_file_actions.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp align="right" path="/admin/report/report_file_actions.jsp" />
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator markupView="lexicon" />
 			</liferay-ui:search-container>
 		</aui:fieldset>
 	</aui:fieldset-group>

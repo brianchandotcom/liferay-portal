@@ -50,18 +50,46 @@ renderResponse.setTitle(title);
 <portlet:actionURL name="/plugins_admin/edit_plugin" var="editPluginURL" />
 
 <div class="container-fluid-1280">
-	<aui:form action="<%= editPluginURL %>" method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="pluginId" type="hidden" value="<%= pluginId %>" />
-		<aui:input name="pluginType" type="hidden" value="<%= pluginType %>" />
+	<aui:form
+		action="<%= editPluginURL %>"
+		method="post"
+		name="fm"
+	>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="pluginId"
+			type="hidden"
+			value="<%= pluginId %>"
+		/>
+		<aui:input
+			name="pluginType"
+			type="hidden"
+			value="<%= pluginType %>"
+		/>
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input name="moduleId" type="resource" value="<%= moduleId %>" />
+				<aui:input
+					name="moduleId"
+					type="resource"
+					value="<%= moduleId %>"
+				/>
 
-				<aui:input name="pluginId" type="resource" value="<%= pluginId %>" />
+				<aui:input
+					name="pluginId"
+					type="resource"
+					value="<%= pluginId %>"
+				/>
 
-				<aui:input name="active" type="checkbox" value="<%= active %>" />
+				<aui:input
+					name="active"
+					type="checkbox"
+					value="<%= active %>"
+				/>
 
 				<c:choose>
 					<c:when test="<%= pluginType.equals(Plugin.TYPE_PORTLET) %>">
@@ -95,7 +123,11 @@ renderResponse.setTitle(title);
 
 							<c:if test="<%= rolesCount > maxNumberOfRolesChecked %>">
 								<div class="alert alert-warning">
-									<liferay-ui:message arguments="<%= maxNumberOfRolesChecked %>" key="the-portal-has-more-roles-than-the-maximum-that-can-be-checked-x" translateArguments="<%= false %>" />
+									<liferay-ui:message
+										arguments="<%= maxNumberOfRolesChecked %>"
+										key="the-portal-has-more-roles-than-the-maximum-that-can-be-checked-x"
+										translateArguments="<%= false %>"
+									/>
 								</div>
 							</c:if>
 
@@ -104,18 +136,14 @@ renderResponse.setTitle(title);
 									<b><liferay-ui:message key="action.ADD_TO_PAGE" /></b>: <liferay-ui:message key="the-users-with-the-following-roles-can-add-this-portlet-to-the-pages-they-manage" />
 
 									<liferay-ui:search-container>
-										<liferay-ui:search-container-results
-											results="<%= addToPageRoles %>"
-										/>
+										<liferay-ui:search-container-results results="<%= addToPageRoles %>" />
 
 										<liferay-ui:search-container-row
 											className="com.liferay.portal.kernel.model.Role"
 											keyProperty="name"
 											modelVar="role"
 										>
-											<liferay-ui:search-container-column-text
-												name="role"
-											>
+											<liferay-ui:search-container-column-text name="role">
 												<liferay-ui:icon
 													icon="<%= RolesAdminUtil.getIconCssClass(role) %>"
 													label="<%= true %>"
@@ -124,9 +152,7 @@ renderResponse.setTitle(title);
 												/>
 											</liferay-ui:search-container-column-text>
 
-											<liferay-ui:search-container-column-text
-												align="right"
-											>
+											<liferay-ui:search-container-column-text align="right">
 
 												<%
 												PortletURL editURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.MANAGE);
@@ -148,9 +174,7 @@ renderResponse.setTitle(title);
 											</liferay-ui:search-container-column-text>
 										</liferay-ui:search-container-row>
 
-										<liferay-ui:search-iterator
-											type="more"
-										/>
+										<liferay-ui:search-iterator type="more" />
 									</liferay-ui:search-container>
 								</div>
 							</c:if>
@@ -160,18 +184,14 @@ renderResponse.setTitle(title);
 									<strong><liferay-ui:message key="action.ACCESS_IN_CONTROL_PANEL" /></strong>: <liferay-ui:message key="the-users-with-the-following-roles-can-access-this-portlet-in-the-control-panel" />
 
 									<liferay-ui:search-container>
-										<liferay-ui:search-container-results
-											results="<%= accessInControlPanelRoles %>"
-										/>
+										<liferay-ui:search-container-results results="<%= accessInControlPanelRoles %>" />
 
 										<liferay-ui:search-container-row
 											className="com.liferay.portal.kernel.model.Role"
 											keyProperty="name"
 											modelVar="role"
 										>
-											<liferay-ui:search-container-column-text
-												name="role"
-											>
+											<liferay-ui:search-container-column-text name="role">
 												<liferay-ui:icon
 													icon="<%= RolesAdminUtil.getIconCssClass(role) %>"
 													label="<%= true %>"
@@ -180,9 +200,7 @@ renderResponse.setTitle(title);
 												/>
 											</liferay-ui:search-container-column-text>
 
-											<liferay-ui:search-container-column-text
-												align="right"
-											>
+											<liferay-ui:search-container-column-text align="right">
 
 												<%
 												PortletURL editURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.MANAGE);
@@ -203,9 +221,7 @@ renderResponse.setTitle(title);
 											</liferay-ui:search-container-column-text>
 										</liferay-ui:search-container-row>
 
-										<liferay-ui:search-iterator
-											type="more"
-										/>
+										<liferay-ui:search-iterator type="more" />
 									</liferay-ui:search-container>
 								</div>
 							</c:if>
@@ -216,7 +232,13 @@ renderResponse.setTitle(title);
 						</aui:field-wrapper>
 					</c:when>
 					<c:otherwise>
-						<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-role-name-per-line-a-user-must-belong-to-one-of-these-roles-in-order-to-add-this-plugin-to-a-page" name="roles" type="textarea" value='<%= StringUtil.merge(rolesArray, "\n") %>' />
+						<aui:input
+							cssClass="lfr-textarea-container"
+							helpMessage="enter-one-role-name-per-line-a-user-must-belong-to-one-of-these-roles-in-order-to-add-this-plugin-to-a-page"
+							name="roles"
+							type="textarea"
+							value='<%= StringUtil.merge(rolesArray, "\n") %>'
+						/>
 					</c:otherwise>
 				</c:choose>
 			</aui:fieldset>

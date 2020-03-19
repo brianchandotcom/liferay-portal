@@ -16,13 +16,9 @@
 
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
-		<liferay-ui:search-container-column-icon
-			icon="users"
-		/>
+		<liferay-ui:search-container-column-icon icon="users" />
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<h5>
 				<aui:a href="<%= (rowURL != null) ? rowURL.toString() : null %>"><%= userGroup.getName() %></aui:a>
 			</h5>
@@ -59,15 +55,10 @@
 			property="description"
 		/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-ws-nowrap"
-			name="users"
-		>
+		<liferay-ui:search-container-column-text cssClass="table-cell-ws-nowrap" name="users">
 			<%= LanguageUtil.format(request, usersCount > 1 ? "x-users" : "x-user", usersCount, false) %>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			path="/user_group_action.jsp"
-		/>
+		<liferay-ui:search-container-column-jsp path="/user_group_action.jsp" />
 	</c:otherwise>
 </c:choose>

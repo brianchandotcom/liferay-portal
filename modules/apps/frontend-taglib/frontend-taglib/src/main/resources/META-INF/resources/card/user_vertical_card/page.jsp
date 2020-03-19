@@ -19,9 +19,7 @@
 <%@ include file="/card/vertical_card/start.jspf" %>
 
 <div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
-	<liferay-ui:user-portrait
-		user="<%= user2 %>"
-	/>
+	<liferay-ui:user-portrait user="<%= user2 %>" />
 </div>
 
 <%@ include file="/card/vertical_card/end.jspf" %>

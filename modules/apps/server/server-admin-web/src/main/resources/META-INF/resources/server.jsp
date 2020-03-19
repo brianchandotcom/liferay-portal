@@ -26,10 +26,7 @@
 		ServerDisplayContext serverDisplayContext = new ServerDisplayContext(request, renderResponse);
 		%>
 
-		<clay:navigation-bar
-			inverted="<%= true %>"
-			navigationItems="<%= serverDisplayContext.getServerNavigationItems() %>"
-		/>
+		<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= serverDisplayContext.getServerNavigationItems() %>" />
 
 		<div class="<%= (tabs1.equals("log-levels") || tabs1.equals("properties")) ? StringPool.BLANK : "container-fluid-1280" %>">
 			<c:choose>

@@ -20,9 +20,7 @@
 SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new SelectThemeManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectThemeDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new SelectThemeManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectThemeDisplayContext) %>" />
 
 <c:if test="<%= permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) && PropsValues.AUTO_DEPLOY_ENABLED %>">
 
@@ -31,15 +29,17 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 	%>
 
 	<div class="button-holder">
-		<aui:button cssClass="manage-layout-set-branches-link" href="<%= marketplaceURL.toString() %>" id="installMore" value="install-more" />
+		<aui:button
+			cssClass="manage-layout-set-branches-link"
+			href="<%= marketplaceURL.toString() %>"
+			id="installMore"
+			value="install-more"
+		/>
 	</div>
 </c:if>
 
 <aui:form cssClass="container-fluid-1280" name="selectThemeFm">
-	<liferay-ui:search-container
-		id="themes"
-		searchContainer="<%= selectThemeDisplayContext.getThemesSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="themes" searchContainer="<%= selectThemeDisplayContext.getThemesSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Theme"
 			escapedModel="<%= true %>"
@@ -57,15 +57,15 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 
 			<c:choose>
 				<c:when test='<%= Objects.equals(selectThemeDisplayContext.getDisplayStyle(), "descriptive") %>'>
-					<liferay-ui:search-container-column-image
-						src='<%= theme.getStaticResourcePath() + theme.getImagesPath() + "/thumbnail.png" %>'
-					/>
+					<liferay-ui:search-container-column-image src='<%= theme.getStaticResourcePath() + theme.getImagesPath() + "/thumbnail.png" %>' />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h5>
-							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<aui:a
+								cssClass="selector-button"
+								data="<%= data %>"
+								href="javascript:;"
+							>
 								<%= theme.getName() %>
 							</aui:a>
 						</h5>
@@ -84,17 +84,16 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:vertical-card
-							verticalCard="<%= new SelectThemeVerticalCard(theme, renderRequest) %>"
-						/>
+						<clay:vertical-card verticalCard="<%= new SelectThemeVerticalCard(theme, renderRequest) %>" />
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(selectThemeDisplayContext.getDisplayStyle(), "list") %>'>
-					<liferay-ui:search-container-column-text
-						name="name"
-						truncate="<%= true %>"
-					>
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+					<liferay-ui:search-container-column-text name="name" truncate="<%= true %>">
+						<aui:a
+							cssClass="selector-button"
+							data="<%= data %>"
+							href="javascript:;"
+						>
 							<%= theme.getName() %>
 						</aui:a>
 					</liferay-ui:search-container-column-text>
@@ -107,18 +106,12 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 					}
 					%>
 
-					<liferay-ui:search-container-column-text
-						name="author"
-						value="<%= author %>"
-					/>
+					<liferay-ui:search-container-column-text name="author" value="<%= author %>" />
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= selectThemeDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= selectThemeDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

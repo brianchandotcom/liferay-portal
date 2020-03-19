@@ -20,9 +20,7 @@
 String samlSubjectScreenName = (String)request.getAttribute(SamlWebKeys.SAML_SUBJECT_NAME_ID);
 %>
 
-<liferay-util:buffer
-	var="msg"
->
+<liferay-util:buffer var="msg">
 	<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(samlSubjectScreenName) + "</strong>" %>' key="your-user-x-could-not-be-logged-in" />
 
 	<c:choose>

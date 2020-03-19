@@ -30,18 +30,10 @@ List themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId());
 %>
 
 <div class="container-fluid container-max-xl container-view">
-	<liferay-ui:search-container
-		iteratorURL="<%= portletURL %>"
-		total="<%= themes.size() %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= ListUtil.subList(themes, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
+	<liferay-ui:search-container iteratorURL="<%= portletURL %>" total="<%= themes.size() %>">
+		<liferay-ui:search-container-results results="<%= ListUtil.subList(themes, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.model.Theme"
-			modelVar="curTheme"
-		>
+		<liferay-ui:search-container-row className="com.liferay.portal.kernel.model.Theme" modelVar="curTheme">
 
 			<%
 			PluginPackage pluginPackage = curTheme.getPluginPackage();
@@ -61,10 +53,7 @@ List themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId());
 			rowURL.setParameter("title", curTheme.getName());
 			%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand table-cell-minw-200 table-title"
-				name="themes"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-expand table-cell-minw-200 table-title" name="themes">
 				<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
 					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="plugin-thumbnail" src="<%= curTheme.getStaticResourcePath() + HtmlUtil.escapeAttribute(curTheme.getImagesPath()) %>/thumbnail.png" />
 
@@ -96,9 +85,7 @@ List themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId());
 				value="<%= HtmlUtil.escape(StringUtil.merge(pluginSetting.getRolesArray(), StringPool.COMMA_AND_SPACE)) %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				name=""
-			>
+			<liferay-ui:search-container-column-text name="">
 				<liferay-ui:icon-menu
 					direction="down"
 					markupView="lexicon"
@@ -113,8 +100,6 @@ List themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId());
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

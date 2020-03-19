@@ -45,9 +45,17 @@
 									<span class="panel-notifications-count sticker sticker-rounded sticker-sm sticker-top-right sticker-warning"><%= notificationsCount %></span>
 								</c:if>
 
-								<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+								<aui:icon
+									cssClass="collapse-icon-closed"
+									image="angle-right"
+									markupView="lexicon"
+								/>
 
-								<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+								<aui:icon
+									cssClass="collapse-icon-open"
+									image="angle-down"
+									markupView="lexicon"
+								/>
 							</a>
 						</c:if>
 					</div>
@@ -55,9 +63,7 @@
 
 				<div aria-expanded="<%= Objects.equals(childPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) %>" aria-labelledby="<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>Heading" class="collapse panel-collapse <%= Objects.equals(childPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) ? "show" : StringPool.BLANK %>" data-parent="#<portlet:namespace />Accordion" id="<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>Collapse" role="tabpanel">
 					<div class="panel-body">
-						<liferay-application-list:panel-content
-							panelCategory="<%= childPanelCategory %>"
-						/>
+						<liferay-application-list:panel-content panelCategory="<%= childPanelCategory %>" />
 					</div>
 				</div>
 			</div>

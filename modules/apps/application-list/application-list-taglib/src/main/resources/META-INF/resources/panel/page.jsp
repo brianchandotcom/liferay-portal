@@ -28,10 +28,7 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-appli
 		for (PanelCategory childPanelCategory : childPanelCategories) {
 		%>
 
-			<liferay-application-list:panel-category-content
-				panelCategory="<%= childPanelCategory %>"
-				showOpen="<%= childPanelCategories.size() == 1 %>"
-			/>
+			<liferay-application-list:panel-category-content panelCategory="<%= childPanelCategory %>" showOpen="<%= childPanelCategories.size() == 1 %>" />
 
 		<%
 		}
@@ -47,9 +44,7 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-appli
 
 		<div class="list-group">
 			<div class="list-group-heading panel-app-root panel-header <%= Objects.equals(themeDisplay.getPpid(), panelApp.getPortletId()) ? "active" : StringPool.BLANK %>">
-				<liferay-application-list:panel-app
-					panelApp="<%= panelApp %>"
-				/>
+				<liferay-application-list:panel-app panelApp="<%= panelApp %>" />
 			</div>
 		</div>
 

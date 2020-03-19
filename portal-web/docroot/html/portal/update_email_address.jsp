@@ -45,11 +45,31 @@ String emailAddress2 = ParamUtil.getString(request, "emailAddress2");
 	</div>
 
 	<div class="sheet-text">
-		<aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_email_address" %>' method="post" name="fm">
-			<aui:input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
-			<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-			<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />
+		<aui:form
+			action='<%= themeDisplay.getPathMain() + "/portal/update_email_address" %>'
+			method="post"
+			name="fm"
+		>
+			<aui:input
+				name="p_auth"
+				type="hidden"
+				value="<%= AuthTokenUtil.getToken(request) %>"
+			/>
+			<aui:input
+				name="doAsUserId"
+				type="hidden"
+				value="<%= themeDisplay.getDoAsUserId() %>"
+			/>
+			<aui:input
+				name="<%= Constants.CMD %>"
+				type="hidden"
+				value="<%= Constants.UPDATE %>"
+			/>
+			<aui:input
+				name="<%= WebKeys.REFERER %>"
+				type="hidden"
+				value="<%= referer %>"
+			/>
 
 			<c:if test="<%= !SessionErrors.isEmpty(request) %>">
 				<div class="alert alert-danger">
@@ -77,9 +97,22 @@ String emailAddress2 = ParamUtil.getString(request, "emailAddress2");
 			</c:if>
 
 			<aui:fieldset label="email-address">
-				<aui:input autoFocus="<%= true %>" class="lfr-input-text-container" label="email-address" name="emailAddress1" type="text" value="<%= emailAddress1 %>" />
+				<aui:input
+					autoFocus="<%= true %>"
+					class="lfr-input-text-container"
+					label="email-address"
+					name="emailAddress1"
+					type="text"
+					value="<%= emailAddress1 %>"
+				/>
 
-				<aui:input class="lfr-input-text-container" label="enter-again" name="emailAddress2" type="text" value="<%= emailAddress2 %>" />
+				<aui:input
+					class="lfr-input-text-container"
+					label="enter-again"
+					name="emailAddress2"
+					type="text"
+					value="<%= emailAddress2 %>"
+				/>
 			</aui:fieldset>
 
 			<aui:button-row>

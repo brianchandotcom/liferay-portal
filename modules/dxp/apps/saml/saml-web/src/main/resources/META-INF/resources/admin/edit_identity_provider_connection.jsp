@@ -25,10 +25,7 @@ long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_
 %>
 
 <div class="container-fluid-1280">
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title='<%= (samlSpIdpConnection != null) ? samlSpIdpConnection.getName() : "new-identity-provider" %>'
-	/>
+	<liferay-ui:header backURL="<%= redirect %>" title='<%= (samlSpIdpConnection != null) ? samlSpIdpConnection.getName() : "new-identity-provider" %>' />
 </div>
 
 <portlet:actionURL name="/admin/updateIdentityProviderConnection" var="updateIdentityProviderConnectionURL">
@@ -36,8 +33,16 @@ long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_
 	<portlet:param name="samlSpIdpConnectionId" value='<%= (samlSpIdpConnection != null) ? String.valueOf(samlSpIdpConnection.getSamlSpIdpConnectionId()) : "" %>' />
 </portlet:actionURL>
 
-<aui:form action="<%= updateIdentityProviderConnectionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+<aui:form
+	action="<%= updateIdentityProviderConnectionURL %>"
+	cssClass="container-fluid-1280"
+	enctype="multipart/form-data"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
 
 	<liferay-ui:error exception="<%= DuplicateSamlSpIdpConnectionSamlIdpEntityIdException.class %>" message="please-enter-a-unique-identity-provider-entity-id" />
 	<liferay-ui:error exception="<%= SamlSpIdpConnectionMetadataUrlException.class %>" message="please-enter-a-valid-metadata-endpoint-url" />
@@ -51,11 +56,21 @@ long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_
 	<aui:fieldset label="general">
 		<aui:input name="name" required="<%= true %>" />
 
-		<aui:input helpMessage="identity-provider-connection-entity-id-help" label="saml-entity-id" name="samlIdpEntityId" required="<%= true %>" />
+		<aui:input
+			helpMessage="identity-provider-connection-entity-id-help"
+			label="saml-entity-id"
+			name="samlIdpEntityId"
+			required="<%= true %>"
+		/>
 
 		<aui:input name="enabled" />
 
-		<aui:input helpMessage="saml-sp-clock-skew-description" label="saml-sp-clock-skew" name="clockSkew" value="<%= String.valueOf(clockSkew) %>" />
+		<aui:input
+			helpMessage="saml-sp-clock-skew-description"
+			label="saml-sp-clock-skew"
+			name="clockSkew"
+			value="<%= String.valueOf(clockSkew) %>"
+		/>
 
 		<aui:input helpMessage="force-authn-help" name="forceAuthn" />
 
@@ -91,7 +106,11 @@ long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_
 	</aui:fieldset>
 
 	<aui:fieldset label="attributes">
-		<aui:input helpMessage="attribute-mapping-help" label="attribute-mapping" name="userAttributeMappings" />
+		<aui:input
+			helpMessage="attribute-mapping-help"
+			label="attribute-mapping"
+			name="userAttributeMappings"
+		/>
 	</aui:fieldset>
 
 	<liferay-util:dynamic-include key="com.liferay.saml.web#/admin/edit_identity_provider_connection.jsp#post" />

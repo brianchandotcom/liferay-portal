@@ -129,10 +129,7 @@ else {
 
 		<c:choose>
 			<c:when test="<%= statsUserRendered %>">
-				<liferay-ui:search-iterator
-					paginate="<%= false %>"
-					searchContainer="<%= searchContainer %>"
-				/>
+				<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:message key="there-are-no-recent-bloggers" />

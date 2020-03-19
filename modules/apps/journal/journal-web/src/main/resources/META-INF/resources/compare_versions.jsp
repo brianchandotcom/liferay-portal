@@ -49,10 +49,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "compare-versions"));
 
 <div class="container-fluid-1280">
 	<c:if test="<%= portletDisplay.isStatePopUp() %>">
-		<liferay-ui:header
-			backURL="<%= redirect %>"
-			title=""
-		/>
+		<liferay-ui:header backURL="<%= redirect %>" title="" />
 	</c:if>
 
 	<liferay-frontend:diff-version-comparator

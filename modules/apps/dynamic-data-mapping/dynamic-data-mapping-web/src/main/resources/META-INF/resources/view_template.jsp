@@ -70,8 +70,16 @@ if (layout != null) {
 	</c:choose>
 </c:if>
 
-<aui:form action="<%= viewTemplateURL.toString() %>" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= ddmDisplayContext.getTemplateSearchActionURL() %>" />
+<aui:form
+	action="<%= viewTemplateURL.toString() %>"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= ddmDisplayContext.getTemplateSearchActionURL() %>"
+	/>
 	<aui:input name="deleteTemplateIds" type="hidden" />
 
 	<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />entriesContainer">
@@ -104,10 +112,7 @@ if (layout != null) {
 				}
 				%>
 
-				<liferay-ui:search-container-row-parameter
-					name="rowHREF"
-					value="<%= rowHREF %>"
-				/>
+				<liferay-ui:search-container-row-parameter name="rowHREF" value="<%= rowHREF %>" />
 
 				<%
 				Set<String> excludedColumnNames = ddmDisplay.getViewTemplatesExcludedColumnNames();
@@ -209,14 +214,10 @@ if (layout != null) {
 					/>
 				</c:if>
 
-				<liferay-ui:search-container-column-jsp
-					path="/template_action.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp path="/template_action.jsp" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</div>
 </aui:form>

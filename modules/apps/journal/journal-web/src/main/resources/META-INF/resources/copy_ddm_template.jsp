@@ -38,9 +38,17 @@ renderResponse.setTitle(LanguageUtil.format(request, "copy-x", ddmTemplate.getNa
 	method="post"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
 
-	<aui:input name="ddmTemplateId" type="hidden" value="<%= ddmTemplateId %>" />
+	<aui:input
+		name="ddmTemplateId"
+		type="hidden"
+		value="<%= ddmTemplateId %>"
+	/>
 
 	<aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 

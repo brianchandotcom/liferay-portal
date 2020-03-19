@@ -29,10 +29,7 @@ if (groupIds.length == 1) {
 }
 %>
 
-<liferay-ui:header
-	localizeTitle="<%= false %>"
-	title="<%= (group == null) ? StringPool.BLANK : group.getDescriptiveName() %>"
-/>
+<liferay-ui:header localizeTitle="<%= false %>" title="<%= (group == null) ? StringPool.BLANK : group.getDescriptiveName() %>" />
 
 <table class="table table-bordered table-hover table-striped">
 	<thead class="table-columns">
@@ -117,7 +114,11 @@ if (groupIds.length == 1) {
 					String setPermissions = renderResponse.getNamespace() + "setPermissions('" + setPermissionsURL + "');";
 					%>
 
-					<aui:button disabled="<%= currentPermissions == permissions %>" onClick="<%= setPermissions %>" value="choose" />
+					<aui:button
+						disabled="<%= currentPermissions == permissions %>"
+						onClick="<%= setPermissions %>"
+						value="choose"
+					/>
 				</td>
 			</tr>
 

@@ -26,9 +26,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 %>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
-	<liferay-ui:search-container
-		searchContainer="<%= selectSiteInitializerDisplayContext.getSearchContainer() %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= selectSiteInitializerDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.site.admin.web.internal.util.SiteInitializerItem"
 			keyProperty="key"
@@ -40,16 +38,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:vertical-card
-					verticalCard="<%= new SelectSiteInitializerVerticalCard(siteInitializerItem, renderRequest, renderResponse) %>"
-				/>
+				<clay:vertical-card verticalCard="<%= new SelectSiteInitializerVerticalCard(siteInitializerItem, renderRequest, renderResponse) %>" />
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="icon"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" />
 	</liferay-ui:search-container>
 
 	<portlet:actionURL name="addGroup" var="addSiteURL">

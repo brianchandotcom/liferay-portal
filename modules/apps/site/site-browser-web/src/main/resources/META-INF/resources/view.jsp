@@ -16,18 +16,17 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:navigation-bar
-	navigationItems="<%= siteBrowserDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar navigationItems="<%= siteBrowserDisplayContext.getNavigationItems() %>" />
 
-<clay:management-toolbar
-	displayContext="<%= new SiteBrowserManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteBrowserDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new SiteBrowserManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteBrowserDisplayContext) %>" />
 
-<aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
-	<liferay-ui:search-container
-		searchContainer="<%= siteBrowserDisplayContext.getGroupSearch() %>"
-	>
+<aui:form
+	action="<%= siteBrowserDisplayContext.getPortletURL() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="selectGroupFm"
+>
+	<liferay-ui:search-container searchContainer="<%= siteBrowserDisplayContext.getGroupSearch() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Group"
 			escapedModel="<%= true %>"
@@ -49,17 +48,17 @@
 
 			<c:choose>
 				<c:when test='<%= Objects.equals(siteBrowserDisplayContext.getDisplayStyle(), "descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="sites"
-					/>
+					<liferay-ui:search-container-column-icon icon="sites" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h5>
 							<c:choose>
 								<c:when test="<%= siteBrowserDisplayContext.isShowLink(group) %>">
-									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<aui:a
+										cssClass="selector-button"
+										data="<%= data %>"
+										href="javascript:;"
+									>
 										<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 									</aui:a>
 								</c:when>
@@ -81,19 +80,18 @@
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:vertical-card
-							verticalCard="<%= new SiteVerticalCard(group, renderRequest, siteBrowserDisplayContext) %>"
-						/>
+						<clay:vertical-card verticalCard="<%= new SiteVerticalCard(group, renderRequest, siteBrowserDisplayContext) %>" />
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(siteBrowserDisplayContext.getDisplayStyle(), "list") %>'>
-					<liferay-ui:search-container-column-text
-						name="name"
-						truncate="<%= true %>"
-					>
+					<liferay-ui:search-container-column-text name="name" truncate="<%= true %>">
 						<c:choose>
 							<c:when test="<%= siteBrowserDisplayContext.isShowLink(group) %>">
-								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<aui:a
+									cssClass="selector-button"
+									data="<%= data %>"
+									href="javascript:;"
+								>
 									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 								</aui:a>
 							</c:when>
@@ -103,18 +101,12 @@
 						</c:choose>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						name="type"
-						value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
-					/>
+					<liferay-ui:search-container-column-text name="type" value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>" />
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= siteBrowserDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= siteBrowserDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

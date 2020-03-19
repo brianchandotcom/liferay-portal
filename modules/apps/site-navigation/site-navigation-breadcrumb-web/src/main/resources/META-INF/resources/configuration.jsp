@@ -25,8 +25,16 @@
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<aui:row>
@@ -43,28 +51,53 @@
 						</div>
 					</liferay-frontend:fieldset>
 
-					<liferay-frontend:fieldset
-						id='<%= renderResponse.getNamespace() + "checkBoxes" %>'
-					>
+					<liferay-frontend:fieldset id='<%= renderResponse.getNamespace() + "checkBoxes" %>'>
 						<aui:col width="<%= 50 %>">
-							<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showCurrentGroup" %>' label="show-current-site" name="preferences--showCurrentGroup--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowCurrentGroup() %>" />
-							<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showGuestGroup" %>' label="show-guest-site" name="preferences--showGuestGroup--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowGuestGroup() %>" />
+							<aui:input
+								data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showCurrentGroup" %>'
+								label="show-current-site"
+								name="preferences--showCurrentGroup--"
+								type="toggle-switch"
+								value="<%= siteNavigationBreadcrumbDisplayContext.isShowCurrentGroup() %>"
+							/>
+							<aui:input
+								data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showGuestGroup" %>'
+								label="show-guest-site"
+								name="preferences--showGuestGroup--"
+								type="toggle-switch"
+								value="<%= siteNavigationBreadcrumbDisplayContext.isShowGuestGroup() %>"
+							/>
 						</aui:col>
 
 						<aui:col width="<%= 50 %>">
-							<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showLayout" %>' label="show-page" name="preferences--showLayout--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowLayout() %>" />
-							<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showParentGroups" %>' label="show-parent-sites" name="preferences--showParentGroups--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowParentGroups() %>" />
-							<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showPortletBreadcrumb" %>' label="show-application-breadcrumb" name="preferences--showPortletBreadcrumb--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowPortletBreadcrumb() %>" />
+							<aui:input
+								data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showLayout" %>'
+								label="show-page"
+								name="preferences--showLayout--"
+								type="toggle-switch"
+								value="<%= siteNavigationBreadcrumbDisplayContext.isShowLayout() %>"
+							/>
+							<aui:input
+								data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showParentGroups" %>'
+								label="show-parent-sites"
+								name="preferences--showParentGroups--"
+								type="toggle-switch"
+								value="<%= siteNavigationBreadcrumbDisplayContext.isShowParentGroups() %>"
+							/>
+							<aui:input
+								data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showPortletBreadcrumb" %>'
+								label="show-application-breadcrumb"
+								name="preferences--showPortletBreadcrumb--"
+								type="toggle-switch"
+								value="<%= siteNavigationBreadcrumbDisplayContext.isShowPortletBreadcrumb() %>"
+							/>
 						</aui:col>
 					</liferay-frontend:fieldset>
 				</liferay-frontend:fieldset-group>
 			</aui:col>
 
 			<aui:col width="<%= 50 %>">
-				<liferay-portlet:preview
-					portletName="<%= siteNavigationBreadcrumbDisplayContext.getPortletResource() %>"
-					showBorders="<%= true %>"
-				/>
+				<liferay-portlet:preview portletName="<%= siteNavigationBreadcrumbDisplayContext.getPortletResource() %>" showBorders="<%= true %>" />
 			</aui:col>
 		</aui:row>
 	</liferay-frontend:edit-form-body>

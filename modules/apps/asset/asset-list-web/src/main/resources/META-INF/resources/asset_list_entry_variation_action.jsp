@@ -43,8 +43,6 @@
 			<portlet:param name="segmentsEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getSegmentsEntryId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteAssetListEntryVariationURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteAssetListEntryVariationURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

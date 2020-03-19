@@ -62,10 +62,7 @@ long organizationGroupId = organization.getGroupId();
 			<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editOrganizationURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editOrganizationURL %>" />
 	</c:if>
 
 	<c:if test="<%= organizationGroup.isSite() && (GroupPermissionUtil.contains(permissionChecker, organizationGroup, ActionKeys.MANAGE_STAGING) || hasUpdatePermission) %>">
@@ -76,10 +73,7 @@ long organizationGroupId = organization.getGroupId();
 		editSettingsURL.setParameter("viewOrganizationsRedirect", currentURL);
 		%>
 
-		<liferay-ui:icon
-			message="manage-site"
-			url="<%= editSettingsURL.toString() %>"
-		/>
+		<liferay-ui:icon message="manage-site" url="<%= editSettingsURL.toString() %>" />
 	</c:if>
 
 	<c:if test="<%= permissionChecker.isGroupOwner(organizationGroupId) || OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.ASSIGN_USER_ROLES) %>">
@@ -119,10 +113,7 @@ long organizationGroupId = organization.getGroupId();
 			<portlet:param name="organizationsSearchContainerPrimaryKeys" value="<%= String.valueOf(organizationId) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="add-user"
-			url="<%= addUserURL %>"
-		/>
+		<liferay-ui:icon message="add-user" url="<%= addUserURL %>" />
 	</c:if>
 
 	<c:if test="<%= organization.isParentable() %>">
@@ -141,10 +132,7 @@ long organizationGroupId = organization.getGroupId();
 					<portlet:param name="type" value="<%= childrenType %>" />
 				</portlet:renderURL>
 
-				<liferay-ui:icon
-					message='<%= LanguageUtil.format(request, "add-x", childrenType) %>'
-					url="<%= addSuborganizationURL %>"
-				/>
+				<liferay-ui:icon message='<%= LanguageUtil.format(request, "add-x", childrenType) %>' url="<%= addSuborganizationURL %>" />
 			</c:if>
 
 		<%
@@ -176,9 +164,6 @@ long organizationGroupId = organization.getGroupId();
 			<portlet:param name="removeOrganizationIds" value="<%= String.valueOf(organizationId) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="remove"
-			url="<%= removeOrganizationURL %>"
-		/>
+		<liferay-ui:icon message="remove" url="<%= removeOrganizationURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

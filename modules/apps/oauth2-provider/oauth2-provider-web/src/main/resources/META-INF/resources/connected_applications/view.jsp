@@ -37,7 +37,11 @@ int userOAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getUserOAuth2
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= currentURLObj %>" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= currentURL %>"
+		/>
 		<aui:input name="oAuth2AuthorizationIds" type="hidden" />
 
 		<liferay-ui:search-container
@@ -47,9 +51,7 @@ int userOAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getUserOAuth2
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			total="<%= userOAuth2AuthorizationsCount %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= OAuth2AuthorizationServiceUtil.getUserOAuth2Authorizations(searchContainer.getStart(), searchContainer.getEnd(), oAuth2ConnectedApplicationsManagementToolbarDisplayContext.getOrderByComparator()) %>"
-			/>
+			<liferay-ui:search-container-results results="<%= OAuth2AuthorizationServiceUtil.getUserOAuth2Authorizations(searchContainer.getStart(), searchContainer.getEnd(), oAuth2ConnectedApplicationsManagementToolbarDisplayContext.getOrderByComparator()) %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.oauth2.provider.model.OAuth2Authorization"
@@ -62,10 +64,7 @@ int userOAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getUserOAuth2
 				OAuth2Application oAuth2Application = OAuth2ApplicationLocalServiceUtil.getOAuth2Application(oAuth2Authorization.getOAuth2ApplicationId());
 				%>
 
-				<liferay-ui:search-container-column-image
-					src="<%= oAuth2ConnectedApplicationsPortletDisplayContext.getThumbnailURL(oAuth2Application) %>"
-					toggleRowChecker="<%= true %>"
-				/>
+				<liferay-ui:search-container-column-image src="<%= oAuth2ConnectedApplicationsPortletDisplayContext.getThumbnailURL(oAuth2Application) %>" toggleRowChecker="<%= true %>" />
 
 				<portlet:renderURL var="viewURL">
 					<portlet:param name="mvcRenderCommandName" value="/connected_applications/view" />
@@ -74,29 +73,25 @@ int userOAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getUserOAuth2
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 
-				<liferay-ui:search-container-column-text
-					colspan="<%= 2 %>"
-				>
+				<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 					<h4>
 						<aui:a href="<%= viewURL.toString() %>"><%= HtmlUtil.escape(oAuth2Application.getName()) %></aui:a>
 					</h4>
 
 					<h5 class="text-default">
 						<span><liferay-ui:message key="authorization" /></span>:
-						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - oAuth2Authorization.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - oAuth2Authorization.getCreateDate().getTime(), true) %>"
+							key="x-ago"
+							translateArguments="<%= false %>"
+						/>
 					</h5>
 				</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-jsp
-					align="right"
-					path="/connected_applications/authorization_actions.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp align="right" path="/connected_applications/authorization_actions.jsp" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				displayStyle="descriptive"
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

@@ -30,7 +30,4 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.get(request, "usages") + ": " + workflowTaskDisplayContext.getAssetTitle(workflowTask));
 %>
 
-<liferay-layout:layout-classed-model-usages-admin
-	className="<%= className %>"
-	classPK="<%= classPK %>"
-/>
+<liferay-layout:layout-classed-model-usages-admin className="<%= className %>" classPK="<%= classPK %>" />

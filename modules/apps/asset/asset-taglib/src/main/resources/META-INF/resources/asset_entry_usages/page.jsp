@@ -111,14 +111,9 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 					</c:choose>
 				</h3>
 
-				<clay:management-toolbar
-					displayContext="<%= new AssetEntryUsagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetEntryUsagesDisplayContext.getSearchContainer()) %>"
-				/>
+				<clay:management-toolbar displayContext="<%= new AssetEntryUsagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetEntryUsagesDisplayContext.getSearchContainer()) %>" />
 
-				<liferay-ui:search-container
-					id="assetEntryUsages"
-					searchContainer="<%= assetEntryUsagesDisplayContext.getSearchContainer() %>"
-				>
+				<liferay-ui:search-container id="assetEntryUsages" searchContainer="<%= assetEntryUsagesDisplayContext.getSearchContainer() %>">
 					<liferay-ui:search-container-row
 						className="com.liferay.asset.model.AssetEntryUsage"
 						keyProperty="assetEntryUsageId"
@@ -150,18 +145,14 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 							value="<%= assetEntryUsage.getModifiedDate() %>"
 						/>
 
-						<liferay-ui:search-container-column-text
-							cssClass="table-cell-expand-smallest table-column-text-center"
-						>
+						<liferay-ui:search-container-column-text cssClass="table-cell-expand-smallest table-column-text-center">
 
 							<%
 							List<DropdownItem> dropdownItems = assetEntryUsagesDisplayContext.getAssetEntryUsageActionDropdownItems(assetEntryUsage);
 							%>
 
 							<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
-								<clay:dropdown-actions
-									dropdownItems="<%= dropdownItems %>"
-								/>
+								<clay:dropdown-actions dropdownItems="<%= dropdownItems %>" />
 							</c:if>
 						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>

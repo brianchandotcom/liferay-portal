@@ -40,10 +40,7 @@ MDRRuleGroup ruleGroup = (MDRRuleGroup)row.getObject();
 			<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<c:if test="<%= MDRRuleGroupPermission.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.PERMISSIONS) %>">
@@ -72,10 +69,7 @@ MDRRuleGroup ruleGroup = (MDRRuleGroup)row.getObject();
 			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="copy"
-			url="<%= copyURL.toString() %>"
-		/>
+		<liferay-ui:icon message="copy" url="<%= copyURL.toString() %>" />
 	</c:if>
 
 	<c:if test="<%= MDRRuleGroupPermission.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.DELETE) %>">
@@ -86,8 +80,6 @@ MDRRuleGroup ruleGroup = (MDRRuleGroup)row.getObject();
 			<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

@@ -16,14 +16,9 @@
 
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
-		<liferay-ui:search-container-column-user
-			showDetails="<%= false %>"
-			userId="<%= entry.getUserId() %>"
-		/>
+		<liferay-ui:search-container-column-user showDetails="<%= false %>" userId="<%= entry.getUserId() %>" />
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 			<%
 			Date modifiedDate = entry.getModifiedDate();
@@ -49,7 +44,12 @@
 			</p>
 
 			<span class="text-default">
-				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
+				<aui:workflow-status
+					markupView="lexicon"
+					showIcon="<%= false %>"
+					showLabel="<%= false %>"
+					status="<%= entry.getStatus() %>"
+				/>
 			</span>
 		</liferay-ui:search-container-column-text>
 
@@ -59,10 +59,7 @@
 			BlogsEntryActionDropdownItemsProvider blogsEntryActionDropdownItemsProvider = new BlogsEntryActionDropdownItemsProvider(entry, renderRequest, renderResponse, permissionChecker, resourceBundle, trashHelper);
 			%>
 
-			<clay:dropdown-actions
-				defaultEventHandler="<%= BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-				dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
-			/>
+			<clay:dropdown-actions defaultEventHandler="<%= BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems() %>" />
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
@@ -72,9 +69,7 @@
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<clay:vertical-card
-				verticalCard="<%= new BlogsEntryVerticalCard(entry, renderRequest, renderResponse, searchContainer.getRowChecker(), trashHelper, rowURL.toString(), permissionChecker, resourceBundle) %>"
-			/>
+			<clay:vertical-card verticalCard="<%= new BlogsEntryVerticalCard(entry, renderRequest, renderResponse, searchContainer.getRowChecker(), trashHelper, rowURL.toString(), permissionChecker, resourceBundle) %>" />
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:otherwise>
@@ -118,9 +113,7 @@
 			value="<%= String.valueOf(assetEntry.getViewCount()) %>"
 		/>
 
-		<liferay-ui:search-container-column-status
-			name="status"
-		/>
+		<liferay-ui:search-container-column-status name="status" />
 
 		<liferay-ui:search-container-column-text>
 
@@ -128,10 +121,7 @@
 			BlogsEntryActionDropdownItemsProvider blogsEntryActionDropdownItemsProvider = new BlogsEntryActionDropdownItemsProvider(entry, renderRequest, renderResponse, permissionChecker, resourceBundle, trashHelper);
 			%>
 
-			<clay:dropdown-actions
-				defaultEventHandler="<%= BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-				dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
-			/>
+			<clay:dropdown-actions defaultEventHandler="<%= BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems() %>" />
 		</liferay-ui:search-container-column-text>
 	</c:otherwise>
 </c:choose>

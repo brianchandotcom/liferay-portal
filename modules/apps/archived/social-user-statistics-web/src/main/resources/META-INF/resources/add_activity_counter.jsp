@@ -43,7 +43,13 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 %>
 
 <div class="field-row query-row">
-	<aui:select inlineField="<%= true %>" label="" name='<%= portletResourceNamespace + "displayActivityCounterName" + index %>' title="display-activity-counter-name" useNamespace="<%= false %>">
+	<aui:select
+		inlineField="<%= true %>"
+		label=""
+		name='<%= portletResourceNamespace + "displayActivityCounterName" + index %>'
+		title="display-activity-counter-name"
+		useNamespace="<%= false %>"
+	>
 
 		<%
 		for (String activityCounterName : activityCounterNames) {
@@ -52,7 +58,11 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 			}
 		%>
 
-			<aui:option label='<%= "user.statistics." + activityCounterName %>' selected="<%= activityCounterName.equals(displayActivityCounterName) %>" value="<%= activityCounterName %>" />
+			<aui:option
+				label='<%= "user.statistics." + activityCounterName %>'
+				selected="<%= activityCounterName.equals(displayActivityCounterName) %>"
+				value="<%= activityCounterName %>"
+			/>
 
 		<%
 		}

@@ -31,7 +31,11 @@ AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAtt
 		</c:when>
 		<c:otherwise>
 			<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover vertical-card-container">
-				<aui:icon cssClass="icon-vertical-card-image" image="<%= assetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
+				<aui:icon
+					cssClass="icon-vertical-card-image"
+					image="<%= assetRendererFactory.getIconCssClass() %>"
+					markupView="lexicon"
+				/>
 			</div>
 		</c:otherwise>
 	</c:choose>

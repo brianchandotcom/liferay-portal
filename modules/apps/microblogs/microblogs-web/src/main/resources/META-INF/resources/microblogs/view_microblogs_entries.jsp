@@ -58,9 +58,7 @@ if (microblogsEntries != null) {
 
 		<div class="microblogs-entry" id="<portlet:namespace />microblogsEntry<%= microblogsEntry.getMicroblogsEntryId() %>">
 			<span class="thumbnail">
-				<liferay-ui:user-portrait
-					userId="<%= microblogsEntry.getUserId() %>"
-				/>
+				<liferay-ui:user-portrait userId="<%= microblogsEntry.getUserId() %>" />
 			</span>
 
 			<div class="entry-bubble">
@@ -147,7 +145,11 @@ if (microblogsEntries != null) {
 
 						<c:if test="<%= MicroblogsEntryPermission.contains(permissionChecker, microblogsEntry.getMicroblogsEntryId(), ActionKeys.DELETE) %>">
 							<span class="action delete">
-								<portlet:actionURL name="deleteMicroblogsEntry" var="deleteURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
+								<portlet:actionURL
+									name="deleteMicroblogsEntry"
+									var="deleteURL"
+									windowState="<%= LiferayWindowState.NORMAL.toString() %>"
+								>
 									<portlet:param name="microblogsEntryId" value="<%= String.valueOf(microblogsEntry.getMicroblogsEntryId()) %>" />
 								</portlet:actionURL>
 

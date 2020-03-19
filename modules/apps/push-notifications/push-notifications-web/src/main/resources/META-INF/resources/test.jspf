@@ -29,7 +29,12 @@
 <aui:form name="fm">
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input label="message" name="message" rows="6" type="textarea" />
+			<aui:input
+				label="message"
+				name="message"
+				rows="6"
+				type="textarea"
+			/>
 		</aui:fieldset>
 	</aui:fieldset-group>
 

@@ -29,14 +29,19 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="preferences--resourcePrimKey--" type="hidden" value="<%= kbArticlePortletInstanceConfiguration.resourcePrimKey() %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="preferences--resourcePrimKey--"
+		type="hidden"
+		value="<%= kbArticlePortletInstanceConfiguration.resourcePrimKey() %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:tabs
-			names="<%= tabsNames %>"
-			refresh="<%= false %>"
-		>
+		<liferay-ui:tabs names="<%= tabsNames %>" refresh="<%= false %>">
 			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>
 					<liferay-frontend:fieldset>
@@ -52,7 +57,12 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 							}
 							%>
 
-							<aui:input label="article" name="configurationKBObject" type="resource" value="<%= title %>" />
+							<aui:input
+								label="article"
+								name="configurationKBObject"
+								type="resource"
+								value="<%= title %>"
+							/>
 
 							<aui:button name="selectKBArticleButton" value="select" />
 						</div>
@@ -63,32 +73,74 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>
 					<liferay-frontend:fieldset>
-						<aui:input label="enable-description" name="preferences--enableKBArticleDescription--" type="checkbox" value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleDescription() %>" />
+						<aui:input
+							label="enable-description"
+							name="preferences--enableKBArticleDescription--"
+							type="checkbox"
+							value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleDescription() %>"
+						/>
 
-						<aui:input label="enable-ratings" name="preferences--enableKBArticleRatings--" type="checkbox" value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleRatings() %>" />
+						<aui:input
+							label="enable-ratings"
+							name="preferences--enableKBArticleRatings--"
+							type="checkbox"
+							value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleRatings() %>"
+						/>
 
-						<aui:input label="show-asset-entries" name="preferences--showKBArticleAssetEntries--" type="checkbox" value="<%= kbArticlePortletInstanceConfiguration.showKBArticleAssetEntries() %>" />
+						<aui:input
+							label="show-asset-entries"
+							name="preferences--showKBArticleAssetEntries--"
+							type="checkbox"
+							value="<%= kbArticlePortletInstanceConfiguration.showKBArticleAssetEntries() %>"
+						/>
 
-						<aui:input label="show-attachments" name="preferences--showKBArticleAttachments--" type="checkbox" value="<%= kbArticlePortletInstanceConfiguration.showKBArticleAttachments() %>" />
+						<aui:input
+							label="show-attachments"
+							name="preferences--showKBArticleAttachments--"
+							type="checkbox"
+							value="<%= kbArticlePortletInstanceConfiguration.showKBArticleAttachments() %>"
+						/>
 
-						<aui:input label="enable-related-assets" name="preferences--enableKBArticleAssetLinks--" type="checkbox" value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleAssetLinks() %>" />
+						<aui:input
+							label="enable-related-assets"
+							name="preferences--enableKBArticleAssetLinks--"
+							type="checkbox"
+							value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleAssetLinks() %>"
+						/>
 
-						<aui:input label="enable-view-count-increment" name="preferences--enableKBArticleViewCountIncrement--" type="checkbox" value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleViewCountIncrement() %>" />
+						<aui:input
+							label="enable-view-count-increment"
+							name="preferences--enableKBArticleViewCountIncrement--"
+							type="checkbox"
+							value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleViewCountIncrement() %>"
+						/>
 
-						<aui:input label="enable-subscriptions" name="preferences--enableKBArticleSubscriptions--" type="checkbox" value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleSubscriptions() %>" />
+						<aui:input
+							label="enable-subscriptions"
+							name="preferences--enableKBArticleSubscriptions--"
+							type="checkbox"
+							value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleSubscriptions() %>"
+						/>
 
-						<aui:input label="enable-history" name="preferences--enableKBArticleHistory--" type="checkbox" value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleHistory() %>" />
+						<aui:input
+							label="enable-history"
+							name="preferences--enableKBArticleHistory--"
+							type="checkbox"
+							value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleHistory() %>"
+						/>
 
-						<aui:input label="enable-print" name="preferences--enableKBArticlePrint--" type="checkbox" value="<%= kbArticlePortletInstanceConfiguration.enableKBArticlePrint() %>" />
+						<aui:input
+							label="enable-print"
+							name="preferences--enableKBArticlePrint--"
+							type="checkbox"
+							value="<%= kbArticlePortletInstanceConfiguration.enableKBArticlePrint() %>"
+						/>
 
 						<h4 class="section-header">
 							<liferay-ui:message key="social-bookmarks" />
 						</h4>
 
-						<liferay-social-bookmarks:bookmarks-settings
-							displayStyle="<%= kbArticlePortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
-							types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(kbArticlePortletInstanceConfiguration.socialBookmarksTypes()) %>"
-						/>
+						<liferay-social-bookmarks:bookmarks-settings displayStyle="<%= kbArticlePortletInstanceConfiguration.socialBookmarksDisplayStyle() %>" types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(kbArticlePortletInstanceConfiguration.socialBookmarksTypes()) %>" />
 					</liferay-frontend:fieldset>
 				</liferay-frontend:fieldset-group>
 			</liferay-ui:section>
@@ -122,7 +174,11 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 						id: '<portlet:namespace />selectKBObject',
 						title: '<liferay-ui:message key="select-article" />',
 
-						<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<liferay-portlet:renderURL
+							portletName="<%= portletResource %>"
+							var="selectKBObjectURL"
+							windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+						>
 							<portlet:param name="mvcPath" value="/article/select_parent.jsp" />
 							<portlet:param name="eventName" value='<%= liferayPortletResponse.getNamespace() + "selectKBObject" %>' />
 							<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(KBArticleConstants.getClassName())) %>" />

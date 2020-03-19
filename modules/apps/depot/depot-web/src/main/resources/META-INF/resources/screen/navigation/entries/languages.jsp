@@ -37,7 +37,11 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 			<liferay-ui:message key="you-cannot-remove-a-language-that-is-the-current-default-language" />
 		</c:when>
 		<c:when test="<%= le.getType() == LocaleException.TYPE_DISPLAY_SETTINGS %>">
-			<liferay-ui:message arguments='<%= "<em>" + StringUtil.merge(LocaleUtil.toDisplayNames(le.getSourceAvailableLocales(), locale), StringPool.COMMA_AND_SPACE) + "</em>" %>' key="please-select-the-available-languages-of-the-asset-library-among-the-available-languages-of-the-portal-x" translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments='<%= "<em>" + StringUtil.merge(LocaleUtil.toDisplayNames(le.getSourceAvailableLocales(), locale), StringPool.COMMA_AND_SPACE) + "</em>" %>'
+				key="please-select-the-available-languages-of-the-asset-library-among-the-available-languages-of-the-portal-x"
+				translateArguments="<%= false %>"
+			/>
 		</c:when>
 	</c:choose>
 </liferay-ui:error>
@@ -72,8 +76,5 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 	).build();
 	%>
 
-	<react:component
-		data="<%= data %>"
-		module="js/Languages.es"
-	/>
+	<react:component data="<%= data %>" module="js/Languages.es" />
 </div>

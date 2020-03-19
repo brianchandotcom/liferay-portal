@@ -24,15 +24,11 @@
 
 <div class="mb-3 row text-center">
 	<div class="col-md-1">
-		<clay:sticker
-			label="JPG"
-		/>
+		<clay:sticker label="JPG" />
 	</div>
 
 	<div class="col-md-1">
-		<clay:sticker
-			icon="picture"
-		/>
+		<clay:sticker icon="picture" />
 	</div>
 </div>
 
@@ -40,17 +36,11 @@
 
 <div class="mb-3 row text-center">
 	<div class="col-md-1">
-		<clay:sticker
-			label="JPG"
-			shape="circle"
-		/>
+		<clay:sticker label="JPG" shape="circle" />
 	</div>
 
 	<div class="col-md-1">
-		<clay:sticker
-			icon="picture"
-			shape="circle"
-		/>
+		<clay:sticker icon="picture" shape="circle" />
 	</div>
 </div>
 

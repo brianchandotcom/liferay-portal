@@ -37,9 +37,21 @@ if (organizationId > 0) {
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
-	<aui:input name="preferences--organizationId--" type="hidden" value="<%= organizationId %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
+	<aui:input
+		name="preferences--organizationId--"
+		type="hidden"
+		value="<%= organizationId %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
@@ -50,7 +62,12 @@ if (organizationId > 0) {
 				</aui:select>
 
 				<div class="form-group <%= selectionMethod.equals("users") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />usersSelectionOptions">
-					<aui:input label="organization" name="organizationName" type="resource" value="<%= organizationName %>" />
+					<aui:input
+						label="organization"
+						name="organizationName"
+						type="resource"
+						value="<%= organizationName %>"
+					/>
 
 					<aui:button name="selectOrganizationButton" value="select" />
 
@@ -58,7 +75,11 @@ if (organizationId > 0) {
 					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('organizationId', 'organizationName', this, '" + renderResponse.getNamespace() + "');";
 					%>
 
-					<aui:button name="removeOrganizationButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+					<aui:button
+						name="removeOrganizationButton"
+						onClick="<%= taglibRemoveFolder %>"
+						value="remove"
+					/>
 				</div>
 
 				<aui:script>
@@ -177,7 +198,11 @@ if (organizationId > 0) {
 					<aui:option label="title" />
 				</aui:select>
 
-				<aui:select label="maximum-items-to-display" name="preferences--max--" value="<%= max %>">
+				<aui:select
+					label="maximum-items-to-display"
+					name="preferences--max--"
+					value="<%= max %>"
+				>
 					<aui:option label="1" />
 					<aui:option label="2" />
 					<aui:option label="3" />
@@ -206,7 +231,11 @@ if (organizationId > 0) {
 					/>
 				</c:if>
 
-				<aui:input name="preferences--showTags--" type="checkbox" value="<%= showTags %>" />
+				<aui:input
+					name="preferences--showTags--"
+					type="checkbox"
+					value="<%= showTags %>"
+				/>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

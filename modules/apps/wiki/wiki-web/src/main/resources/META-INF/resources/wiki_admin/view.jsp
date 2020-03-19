@@ -93,12 +93,13 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 />
 
 <div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/wiki/node_info_panel" var="sidebarPanelURL" />
+	<liferay-portlet:resourceURL
+		copyCurrentRenderParameters="<%= false %>"
+		id="/wiki/node_info_panel"
+		var="sidebarPanelURL"
+	/>
 
-	<liferay-frontend:sidebar-panel
-		resourceURL="<%= sidebarPanelURL %>"
-		searchContainerId="wikiNodes"
-	>
+	<liferay-frontend:sidebar-panel resourceURL="<%= sidebarPanelURL %>" searchContainerId="wikiNodes">
 
 		<%
 		request.removeAttribute(WikiWebKeys.WIKI_NODE);
@@ -120,15 +121,21 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 			showParentGroups="<%= false %>"
 		/>
 
-		<liferay-trash:undo
-			portletURL="<%= restoreTrashEntriesURL %>"
-		/>
+		<liferay-trash:undo portletURL="<%= restoreTrashEntriesURL %>" />
 
 		<liferay-ui:error exception="<%= RequiredNodeException.class %>" message="the-last-main-node-is-required-and-cannot-be-deleted" />
 
-		<aui:form action="<%= wikiURLHelper.getSearchURL() %>" method="get" name="fm">
+		<aui:form
+			action="<%= wikiURLHelper.getSearchURL() %>"
+			method="get"
+			name="fm"
+		>
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value="<%= currentURL %>"
+			/>
 
 			<liferay-ui:search-container
 				id="wikiNodes"
@@ -158,14 +165,9 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 
 					<c:choose>
 						<c:when test='<%= displayStyle.equals("descriptive") %>'>
-							<liferay-ui:search-container-column-icon
-								icon="wiki"
-								toggleRowChecker="<%= true %>"
-							/>
+							<liferay-ui:search-container-column-icon icon="wiki" toggleRowChecker="<%= true %>" />
 
-							<liferay-ui:search-container-column-text
-								colspan="<%= 2 %>"
-							>
+							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 								<p class="h5">
 									<aui:a href="<%= rowURL.toString() %>">
 										<%= HtmlUtil.escape(node.getName()) %>
@@ -187,9 +189,7 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 								</span>
 							</liferay-ui:search-container-column-text>
 
-							<liferay-ui:search-container-column-jsp
-								path="/wiki/node_action.jsp"
-							/>
+							<liferay-ui:search-container-column-jsp path="/wiki/node_action.jsp" />
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:search-container-column-text
@@ -211,17 +211,12 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 								value='<%= (node.getLastPostDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(node.getLastPostDate()) %>'
 							/>
 
-							<liferay-ui:search-container-column-jsp
-								path="/wiki/node_action.jsp"
-							/>
+							<liferay-ui:search-container-column-jsp path="/wiki/node_action.jsp" />
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					displayStyle="<%= displayStyle %>"
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>

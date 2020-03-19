@@ -21,7 +21,4 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-appli
 boolean showOpen = GetterUtil.getBoolean(request.getAttribute("liferay-application-list:panel-category-content:showOpen"));
 %>
 
-<liferay-application-list:panel-category
-	panelCategory="<%= panelCategory %>"
-	showOpen="<%= showOpen %>"
-/>
+<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showOpen="<%= showOpen %>" />

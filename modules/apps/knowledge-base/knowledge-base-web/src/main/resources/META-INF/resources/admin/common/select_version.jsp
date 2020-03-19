@@ -34,23 +34,20 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 %>
 
 <div class="container-fluid-1280">
-	<aui:form action="<%= portletURL.toString() %>" method="post" name="selectVersionFm">
+	<aui:form
+		action="<%= portletURL.toString() %>"
+		method="post"
+		name="selectVersionFm"
+	>
 		<liferay-ui:search-container
 			id="articleVersionSearchContainer"
 			iteratorURL="<%= portletURL %>"
 			total="<%= KBArticleServiceUtil.getKBArticleVersionsCount(scopeGroupId, kbArticle.getResourcePrimKey(), selStatus) %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= KBArticleServiceUtil.getKBArticleVersions(scopeGroupId, kbArticle.getResourcePrimKey(), selStatus, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-			/>
+			<liferay-ui:search-container-results results="<%= KBArticleServiceUtil.getKBArticleVersions(scopeGroupId, kbArticle.getResourcePrimKey(), selStatus, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>" />
 
-			<liferay-ui:search-container-row
-				className="com.liferay.knowledge.base.model.KBArticle"
-				modelVar="curKBArticle"
-			>
-				<liferay-ui:search-container-column-text
-					name="version"
-				>
+			<liferay-ui:search-container-row className="com.liferay.knowledge.base.model.KBArticle" modelVar="curKBArticle">
+				<liferay-ui:search-container-column-text name="version">
 					<c:choose>
 						<c:when test="<%= sourceVersion != curKBArticle.getVersion() %>">
 
@@ -71,7 +68,11 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 							data.put("targetversion", curTargetVersion);
 							%>
 
-							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<aui:a
+								cssClass="selector-button"
+								data="<%= data %>"
+								href="javascript:;"
+							>
 								<%= String.valueOf(curKBArticle.getVersion()) %>
 							</aui:a>
 						</c:when>
@@ -81,15 +82,10 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 					</c:choose>
 				</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-date
-					name="date"
-					value="<%= curKBArticle.getModifiedDate() %>"
-				/>
+				<liferay-ui:search-container-column-date name="date" value="<%= curKBArticle.getModifiedDate() %>" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

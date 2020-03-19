@@ -33,18 +33,18 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 	}
 </style>
 
-<clay:management-toolbar
-	displayContext="<%= accountUsersAdminManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= accountUsersAdminManagementToolbarDisplayContext %>" />
 
 <aui:container cssClass="container-fluid container-fluid-max-xl">
 	<aui:form method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= currentURL %>"
+		/>
 		<aui:input name="accountUserIds" type="hidden" />
 
-		<liferay-ui:search-container
-			searchContainer="<%= accountUsersDisplaySearchContainer %>"
-		>
+		<liferay-ui:search-container searchContainer="<%= accountUsersDisplaySearchContainer %>">
 			<liferay-ui:search-container-row
 				className="com.liferay.account.admin.web.internal.display.AccountUserDisplay"
 				keyProperty="userId"
@@ -83,29 +83,16 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 					value="<%= accountUserDisplay.getAccountNames(request) %>"
 				/>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
-					name="status"
-				>
-					<clay:label
-						label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountUserDisplay.getStatusLabel()), locale) %>"
-						style="<%= accountUserDisplay.getStatusLabelStyle() %>"
-					/>
+				<liferay-ui:search-container-column-text cssClass="table-cell-expand" name="status">
+					<clay:label label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountUserDisplay.getStatusLabel()), locale) %>" style="<%= accountUserDisplay.getStatusLabelStyle() %>" />
 				</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-jsp
-					path="/account_users_admin/account_user_action.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp path="/account_users_admin/account_user_action.jsp" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </aui:container>
 
-<liferay-frontend:component
-	componentId="<%= accountUsersAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="account_users_admin/js/ManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= accountUsersAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="account_users_admin/js/ManagementToolbarDefaultEventHandler.es" />

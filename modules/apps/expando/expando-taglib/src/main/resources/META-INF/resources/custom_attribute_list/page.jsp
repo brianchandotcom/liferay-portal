@@ -54,7 +54,11 @@ List<String> attributeNames = ListUtil.remove(Collections.list(expandoBridge.get
 		<span class="field">
 			<span class="field-content">
 				<label>
-					<liferay-ui:message arguments="<%= modelResourceName %>" key="no-custom-fields-are-defined-for-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= modelResourceName %>"
+						key="no-custom-fields-are-defined-for-x"
+						translateArguments="<%= false %>"
+					/>
 				</label>
 			</span>
 		</span>

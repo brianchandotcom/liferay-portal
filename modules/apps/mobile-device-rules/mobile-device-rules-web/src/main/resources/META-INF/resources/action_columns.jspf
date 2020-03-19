@@ -14,10 +14,7 @@
  */
 --%>
 
-<liferay-ui:search-container-column-text
-	name="scope"
-	value="<%= LanguageUtil.get(resourceBundle, group.getScopeLabel(themeDisplay)) %>"
-/>
+<liferay-ui:search-container-column-text name="scope" value="<%= LanguageUtil.get(resourceBundle, group.getScopeLabel(themeDisplay)) %>" />
 
 <liferay-ui:search-container-column-text
 	cssClass="table-cell-content"
@@ -37,11 +34,6 @@
 	value="<%= action.getType() %>"
 />
 
-<liferay-ui:search-container-column-date
-	name="modified-date"
-	value="<%= action.getModifiedDate() %>"
-/>
+<liferay-ui:search-container-column-date name="modified-date" value="<%= action.getModifiedDate() %>" />
 
-<liferay-ui:search-container-column-jsp
-	path="/action_actions.jsp"
-/>
+<liferay-ui:search-container-column-jsp path="/action_actions.jsp" />

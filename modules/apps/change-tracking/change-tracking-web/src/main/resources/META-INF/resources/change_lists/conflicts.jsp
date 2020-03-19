@@ -229,7 +229,12 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 			%>
 
 			<tr><td>
-				<aui:button disabled="<%= unresolved %>" href="<%= changeListsDisplayContext.getPublishURL(ctCollection.getCtCollectionId(), ctCollection.getName()) %>" primary="true" value="publish" />
+				<aui:button
+					disabled="<%= unresolved %>"
+					href="<%= changeListsDisplayContext.getPublishURL(ctCollection.getCtCollectionId(), ctCollection.getName()) %>"
+					primary="true"
+					value="publish"
+				/>
 
 				<aui:button href="<%= backURL %>" type="cancel" />
 			</td></tr>

@@ -24,18 +24,11 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 
 <liferay-ui:error exception="<%= RequiredFragmentEntryException.class %>" message="the-fragment-entry-cannot-be-deleted-because-it-is-required-by-one-or-more-page-templates" />
 
-<clay:management-toolbar
-	displayContext="<%= fragmentManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= fragmentManagementToolbarDisplayContext %>" />
 
 <aui:form name="fm">
-	<liferay-ui:search-container
-		searchContainer="<%= fragmentDisplayContext.getFragmentEntriesSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="Object"
-			modelVar="object"
-		>
+	<liferay-ui:search-container searchContainer="<%= fragmentDisplayContext.getFragmentEntriesSearchContainer() %>">
+		<liferay-ui:search-container-row className="Object" modelVar="object">
 
 			<%
 			row.setCssClass("card-page-item-asset " + row.getCssClass());
@@ -52,14 +45,10 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 			<liferay-ui:search-container-column-text>
 				<c:choose>
 					<c:when test="<%= object instanceof FragmentComposition %>">
-						<clay:vertical-card
-							verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard((FragmentComposition)object, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentDisplayContext.getFragmentType()) %>"
-						/>
+						<clay:vertical-card verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard((FragmentComposition)object, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentDisplayContext.getFragmentType()) %>" />
 					</c:when>
 					<c:otherwise>
-						<clay:vertical-card
-							verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard((FragmentEntry)object, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentDisplayContext.getFragmentType()) %>"
-						/>
+						<clay:vertical-card verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard((FragmentEntry)object, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentDisplayContext.getFragmentType()) %>" />
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-column-text>
@@ -87,15 +76,9 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 	<aui:input name="fragmentCollectionId" type="hidden" />
 </aui:form>
 
-<liferay-frontend:component
-	componentId="<%= FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/FragmentEntryDropdownDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>" module="js/FragmentEntryDropdownDefaultEventHandler.es" />
 
-<liferay-frontend:component
-	componentId="<%= FragmentWebKeys.FRAGMENT_COMPOSITION_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/FragmentCompositionDropdownDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= FragmentWebKeys.FRAGMENT_COMPOSITION_DROPDOWN_DEFAULT_EVENT_HANDLER %>" module="js/FragmentCompositionDropdownDefaultEventHandler.es" />
 
 <liferay-frontend:component
 	componentId="<%= fragmentManagementToolbarDisplayContext.getDefaultEventHandler() %>"

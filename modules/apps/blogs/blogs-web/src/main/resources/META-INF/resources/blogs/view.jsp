@@ -35,11 +35,13 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<liferay-trash:undo
-	portletURL="<%= restoreTrashEntriesURL %>"
-/>
+<liferay-trash:undo portletURL="<%= restoreTrashEntriesURL %>" />
 
-<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+<aui:input
+	name="redirect"
+	type="hidden"
+	value="<%= currentURL %>"
+/>
 
 <%
 BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortletInstanceConfigurationUtil.getBlogsPortletInstanceConfiguration(themeDisplay);

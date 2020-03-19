@@ -20,17 +20,29 @@
 KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = kaleoDesignerDisplayContext.getKaleoDefinitionVersionSearch();
 %>
 
-<liferay-ui:success key='<%= KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed" %>' message='<%= (String)MultiSessionMessages.get(renderRequest, KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed") %>' translateMessage="<%= false %>" />
+<liferay-ui:success
+	key='<%= KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed" %>'
+	message='<%= (String)MultiSessionMessages.get(renderRequest, KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed") %>'
+	translateMessage="<%= false %>"
+/>
 
 <liferay-util:include page="/designer/management_bar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid-1280 main-content-body">
 	<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
-		<liferay-ui:message arguments="<%= kaleoDesignerDisplayContext.getMessageArguments((RequiredWorkflowDefinitionException)errorException) %>" key="<%= kaleoDesignerDisplayContext.getMessageKey((RequiredWorkflowDefinitionException)errorException) %>" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= kaleoDesignerDisplayContext.getMessageArguments((RequiredWorkflowDefinitionException)errorException) %>"
+			key="<%= kaleoDesignerDisplayContext.getMessageKey((RequiredWorkflowDefinitionException)errorException) %>"
+			translateArguments="<%= false %>"
+		/>
 	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= IncompleteWorkflowInstancesException.class %>">
-		<liferay-ui:message arguments="<%= kaleoDesignerDisplayContext.getMessageArguments((IncompleteWorkflowInstancesException)errorException) %>" key="<%= kaleoDesignerDisplayContext.getMessageKey((IncompleteWorkflowInstancesException)errorException) %>" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= kaleoDesignerDisplayContext.getMessageArguments((IncompleteWorkflowInstancesException)errorException) %>"
+			key="<%= kaleoDesignerDisplayContext.getMessageKey((IncompleteWorkflowInstancesException)errorException) %>"
+			translateArguments="<%= false %>"
+		/>
 	</liferay-ui:error>
 
 	<liferay-ui:search-container
@@ -76,10 +88,7 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = kaleoDesignerDisplay
 				value="<%= kaleoDesignerDisplayContext.getModifiedDate(kaleoDefinitionVersion) %>"
 			/>
 
-			<liferay-ui:search-container-column-jsp
-				align="right"
-				path="/designer/kaleo_definition_version_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp align="right" path="/designer/kaleo_definition_version_action.jsp" />
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

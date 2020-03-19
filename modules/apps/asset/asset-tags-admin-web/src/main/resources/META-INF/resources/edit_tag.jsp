@@ -40,7 +40,11 @@ renderResponse.setTitle(assetTagsDisplayContext.getAssetTitle());
 	method="post"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= AssetTagException.class %>">
@@ -67,9 +71,18 @@ renderResponse.setTitle(assetTagsDisplayContext.getAssetTitle());
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<aui:input name="tagId" type="hidden" value="<%= assetTagsDisplayContext.getTagId() %>" />
+				<aui:input
+					name="tagId"
+					type="hidden"
+					value="<%= assetTagsDisplayContext.getTagId() %>"
+				/>
 
-				<aui:input autoFocus="<%= true %>" cssClass="tag-name" name="name" placeholder="name" />
+				<aui:input
+					autoFocus="<%= true %>"
+					cssClass="tag-name"
+					name="name"
+					placeholder="name"
+				/>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

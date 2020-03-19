@@ -50,9 +50,6 @@ else {
 			<portlet:param name="workflowInstanceId" value="<%= String.valueOf(workflowInstance.getWorkflowInstanceId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="withdraw-submission"
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon message="withdraw-submission" url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

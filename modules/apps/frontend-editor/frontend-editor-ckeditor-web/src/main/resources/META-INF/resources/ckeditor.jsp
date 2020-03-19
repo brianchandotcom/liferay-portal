@@ -99,9 +99,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 }
 %>
 
-<liferay-util:buffer
-	var="editor"
->
+<liferay-util:buffer var="editor">
 	<textarea id="<%= textareaName %>" name="<%= textareaName %>" style="display: none;"></textarea>
 </liferay-util:buffer>
 

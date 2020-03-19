@@ -25,10 +25,7 @@ long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAM
 %>
 
 <div class="container-fluid-1280">
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title='<%= (samlIdpSpConnection != null) ? samlIdpSpConnection.getName() : "new-service-provider" %>'
-	/>
+	<liferay-ui:header backURL="<%= redirect %>" title='<%= (samlIdpSpConnection != null) ? samlIdpSpConnection.getName() : "new-service-provider" %>' />
 </div>
 
 <portlet:actionURL name="/admin/updateServiceProviderConnection" var="updateServiceProviderConnectionURL">
@@ -36,8 +33,16 @@ long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAM
 	<portlet:param name="samlIdpSpConnectionId" value='<%= (samlIdpSpConnection != null) ? String.valueOf(samlIdpSpConnection.getSamlIdpSpConnectionId()) : "" %>' />
 </portlet:actionURL>
 
-<aui:form action="<%= updateServiceProviderConnectionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+<aui:form
+	action="<%= updateServiceProviderConnectionURL %>"
+	cssClass="container-fluid-1280"
+	enctype="multipart/form-data"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
 
 	<liferay-ui:error exception="<%= DuplicateSamlIdpSpConnectionSamlSpEntityIdException.class %>" message="please-enter-a-unique-service-provider-entity-id" />
 	<liferay-ui:error exception="<%= SamlIdpSpConnectionMetadataUrlException.class %>" message="please-enter-a-valid-metadata-endpoint-url" />
@@ -52,11 +57,21 @@ long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAM
 	<aui:fieldset label="general">
 		<aui:input name="name" required="<%= true %>" />
 
-		<aui:input helpMessage="service-provider-connection-entity-id-help" label="saml-entity-id" name="samlSpEntityId" required="<%= true %>" />
+		<aui:input
+			helpMessage="service-provider-connection-entity-id-help"
+			label="saml-entity-id"
+			name="samlSpEntityId"
+			required="<%= true %>"
+		/>
 
 		<aui:input name="enabled" />
 
-		<aui:input helpMessage="assertion-lifetime-help" name="assertionLifetime" required="<%= true %>" value="<%= String.valueOf(assertionLifetime) %>" />
+		<aui:input
+			helpMessage="assertion-lifetime-help"
+			name="assertionLifetime"
+			required="<%= true %>"
+			value="<%= String.valueOf(assertionLifetime) %>"
+		/>
 	</aui:fieldset>
 
 	<aui:fieldset label="encryption">
@@ -90,7 +105,12 @@ long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAM
 			<aui:option label="x509-subject-name" value="<%= nameIdTypeValues.getX509Subject() %>" />
 		</aui:select>
 
-		<aui:input helpMessage="name-identifier-attribute-name-help" label="name-identifier-attribute-name" name="nameIdAttribute" required="<%= true %>" />
+		<aui:input
+			helpMessage="name-identifier-attribute-name-help"
+			label="name-identifier-attribute-name"
+			name="nameIdAttribute"
+			required="<%= true %>"
+		/>
 	</aui:fieldset>
 
 	<aui:fieldset label="attributes">
@@ -98,7 +118,11 @@ long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAM
 
 		<aui:input helpMessage="attributes-namespace-enabled-help" name="attributesNamespaceEnabled" />
 
-		<aui:input helpMessage="attributes-help" label="attributes" name="attributeNames" />
+		<aui:input
+			helpMessage="attributes-help"
+			label="attributes"
+			name="attributeNames"
+		/>
 	</aui:fieldset>
 
 	<liferay-util:dynamic-include key="com.liferay.saml.web#/admin/edit_service_provider_connection.jsp#post" />

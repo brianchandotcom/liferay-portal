@@ -67,7 +67,11 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 			data.put("foldername", folderName);
 			%>
 
-			<aui:button cssClass="selector-button" data="<%= data %>" value="select-this-folder" />
+			<aui:button
+				cssClass="selector-button"
+				data="<%= data %>"
+				value="select-this-folder"
+			/>
 		</aui:button-row>
 
 		<%
@@ -79,13 +83,8 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 		portletURL.setParameter("showMountFolder", String.valueOf(dlVisualizationHelper.isMountFolderVisible()));
 		%>
 
-		<liferay-ui:search-container
-			iteratorURL="<%= portletURL %>"
-			total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId, dlVisualizationHelper.isMountFolderVisible()) %>"
-		>
-			<liferay-ui:search-container-results
-				results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, dlVisualizationHelper.isMountFolderVisible(), searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
+		<liferay-ui:search-container iteratorURL="<%= portletURL %>" total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId, dlVisualizationHelper.isMountFolderVisible()) %>">
+			<liferay-ui:search-container-results results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, dlVisualizationHelper.isMountFolderVisible(), searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.repository.model.Folder"
@@ -120,10 +119,7 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 				}
 				%>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand table-cell-minw-200 table-title"
-					name="folder"
-				>
+				<liferay-ui:search-container-column-text cssClass="table-cell-expand table-cell-minw-200 table-title" name="folder">
 					<liferay-ui:icon
 						icon="<%= assetRenderer.getIconCssClass() %>"
 						label="<%= true %>"
@@ -160,14 +156,16 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 						data.put("foldername", curFolder.getName());
 						%>
 
-						<aui:button cssClass="selector-button" data="<%= data %>" value="select" />
+						<aui:button
+							cssClass="selector-button"
+							data="<%= data %>"
+							value="select"
+						/>
 					</c:if>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

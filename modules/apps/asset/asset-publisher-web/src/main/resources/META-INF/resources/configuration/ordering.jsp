@@ -23,7 +23,12 @@
 		String orderByColumn1 = assetPublisherDisplayContext.getOrderByColumn1();
 		%>
 
-		<aui:select label="order-by" name="preferences--orderByColumn1--" value="<%= orderByColumn1 %>" wrapperCssClass="field-inline w80">
+		<aui:select
+			label="order-by"
+			name="preferences--orderByColumn1--"
+			value="<%= orderByColumn1 %>"
+			wrapperCssClass="field-inline w80"
+		>
 			<c:if test="<%= assetPublisherDisplayContext.isOrderingByTitleEnabled() %>">
 				<aui:option label="title" />
 			</c:if>
@@ -63,7 +68,12 @@
 				url="javascript:;"
 			/>
 
-			<aui:input cssClass="order-by-type-field" name="preferences--orderByType1--" type="hidden" value="<%= orderByType1 %>" />
+			<aui:input
+				cssClass="order-by-type-field"
+				name="preferences--orderByType1--"
+				type="hidden"
+				value="<%= orderByType1 %>"
+			/>
 		</aui:field-wrapper>
 	</aui:col>
 
@@ -73,17 +83,49 @@
 		String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
 		%>
 
-		<aui:select label="and-then-by" name="preferences--orderByColumn2--" wrapperCssClass="field-inline w80">
+		<aui:select
+			label="and-then-by"
+			name="preferences--orderByColumn2--"
+			wrapperCssClass="field-inline w80"
+		>
 			<aui:option label="title" selected='<%= orderByColumn2.equals("title") %>' />
-			<aui:option label="create-date" selected='<%= orderByColumn2.equals("createDate") %>' value="createDate" />
-			<aui:option label="modified-date" selected='<%= orderByColumn2.equals("modifiedDate") %>' value="modifiedDate" />
-			<aui:option label="publish-date" selected='<%= orderByColumn2.equals("publishDate") %>' value="publishDate" />
-			<aui:option label="expiration-date" selected='<%= orderByColumn2.equals("expirationDate") %>' value="expirationDate" />
-			<aui:option label="priority" selected='<%= orderByColumn2.equals("priority") %>' value="priority" />
+			<aui:option
+				label="create-date"
+				selected='<%= orderByColumn2.equals("createDate") %>'
+				value="createDate"
+			/>
+			<aui:option
+				label="modified-date"
+				selected='<%= orderByColumn2.equals("modifiedDate") %>'
+				value="modifiedDate"
+			/>
+			<aui:option
+				label="publish-date"
+				selected='<%= orderByColumn2.equals("publishDate") %>'
+				value="publishDate"
+			/>
+			<aui:option
+				label="expiration-date"
+				selected='<%= orderByColumn2.equals("expirationDate") %>'
+				value="expirationDate"
+			/>
+			<aui:option
+				label="priority"
+				selected='<%= orderByColumn2.equals("priority") %>'
+				value="priority"
+			/>
 
 			<c:if test="<%= !assetPublisherDisplayContext.isSearchWithIndex() %>">
-				<aui:option label="view-count" selected='<%= orderByColumn2.equals("viewCount") %>' value="viewCount" />
-				<aui:option label="ratings" selected='<%= orderByColumn2.equals("ratings") %>' value="ratings" />
+				<aui:option
+					label="view-count"
+					selected='<%= orderByColumn2.equals("viewCount") %>'
+					value="viewCount"
+				/>
+				<aui:option
+					label="ratings"
+					selected='<%= orderByColumn2.equals("ratings") %>'
+					value="ratings"
+				/>
 			</c:if>
 		</aui:select>
 
@@ -110,7 +152,12 @@
 				url="javascript:;"
 			/>
 
-			<aui:input cssClass="order-by-type-field" name="preferences--orderByType2--" type="hidden" value="<%= orderByType2 %>" />
+			<aui:input
+				cssClass="order-by-type-field"
+				name="preferences--orderByType2--"
+				type="hidden"
+				value="<%= orderByType2 %>"
+			/>
 		</aui:field-wrapper>
 	</aui:col>
 </aui:row>

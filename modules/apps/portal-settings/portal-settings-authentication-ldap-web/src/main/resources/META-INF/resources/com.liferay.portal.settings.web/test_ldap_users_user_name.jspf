@@ -14,12 +14,6 @@
  */
 --%>
 
-<liferay-ui:search-container-column-text
-	name="first-name"
-	value="<%= HtmlUtil.escape(firstName) %>"
-/>
+<liferay-ui:search-container-column-text name="first-name" value="<%= HtmlUtil.escape(firstName) %>" />
 
-<liferay-ui:search-container-column-text
-	name="last-name"
-	value="<%= HtmlUtil.escape(lastName) %>"
-/>
+<liferay-ui:search-container-column-text name="last-name" value="<%= HtmlUtil.escape(lastName) %>" />

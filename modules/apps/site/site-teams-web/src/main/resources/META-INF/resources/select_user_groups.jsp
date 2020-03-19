@@ -20,15 +20,10 @@
 SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGroupsDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new SelectUserGroupsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectUserGroupsDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new SelectUserGroupsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectUserGroupsDisplayContext) %>" />
 
 <aui:form cssClass="container-fluid-1280" name="selectUserGroupFm">
-	<liferay-ui:search-container
-		id="userGroups"
-		searchContainer="<%= selectUserGroupsDisplayContext.getUserGroupSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="userGroups" searchContainer="<%= selectUserGroupsDisplayContext.getUserGroupSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.UserGroup"
 			cssClass="selectable"
@@ -47,14 +42,9 @@ SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGr
 
 			<c:choose>
 				<c:when test='<%= Objects.equals(selectUserGroupsDisplayContext.getDisplayStyle(), "descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="users"
-						toggleRowChecker="<%= true %>"
-					/>
+					<liferay-ui:search-container-column-icon icon="users" toggleRowChecker="<%= true %>" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h5><%= userGroup.getName() %></h5>
 
 						<h6 class="text-default">
@@ -81,18 +71,12 @@ SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGr
 						property="description"
 					/>
 
-					<liferay-ui:search-container-column-text
-						name="users"
-						value="<%= String.valueOf(usersCount) %>"
-					/>
+					<liferay-ui:search-container-column-text name="users" value="<%= String.valueOf(usersCount) %>" />
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= selectUserGroupsDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= selectUserGroupsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

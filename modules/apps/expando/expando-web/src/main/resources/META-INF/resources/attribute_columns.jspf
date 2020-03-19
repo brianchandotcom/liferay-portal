@@ -14,10 +14,7 @@
  */
 --%>
 
-<liferay-ui:search-container-column-text
-	cssClass="table-cell-expand table-cell-minw-200 table-title"
-	name="name"
->
+<liferay-ui:search-container-column-text cssClass="table-cell-expand table-cell-minw-200 table-title" name="name">
 
 	<%
 	String localizedName = name;
@@ -88,7 +85,4 @@
 	</c:choose>
 </liferay-ui:search-container-column-text>
 
-<liferay-ui:search-container-column-jsp
-	cssClass="list-group-item-field"
-	path="/expando_action.jsp"
-/>
+<liferay-ui:search-container-column-jsp cssClass="list-group-item-field" path="/expando_action.jsp" />

@@ -28,10 +28,7 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 	<script src="<%= HttpUtil.getProtocol(request) %>://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.1.6/ZeroClipboard.js" type="text/javascript"></script>
 </liferay-util:html-bottom>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	title="meeting-info"
-/>
+<liferay-ui:header backURL="<%= backURL %>" title="meeting-info" />
 
 <div class="meeting-container">
 	<div id="<portlet:namespace />errorMessage"></div>
@@ -122,9 +119,7 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 			<liferay-ui:message key="participants" />
 		</dt>
 		<dd>
-			<liferay-ui:search-container
-				total="<%= PowwowParticipantLocalServiceUtil.getPowwowParticipantsCount(powwowMeetingId) %>"
-			>
+			<liferay-ui:search-container total="<%= PowwowParticipantLocalServiceUtil.getPowwowParticipantsCount(powwowMeetingId) %>">
 				<liferay-ui:search-container-results>
 
 					<%
@@ -148,15 +143,9 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 					}
 					%>
 
-					<liferay-ui:search-container-column-text
-						name="name"
-						value="<%= displayName %>"
-					/>
+					<liferay-ui:search-container-column-text name="name" value="<%= displayName %>" />
 
-					<liferay-ui:search-container-column-text
-						name="email-address"
-						property="emailAddress"
-					/>
+					<liferay-ui:search-container-column-text name="email-address" property="emailAddress" />
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator />

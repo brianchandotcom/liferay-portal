@@ -25,7 +25,11 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 String sectionName = "password-changed-notification";
 %>
 
-<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+<aui:input
+	name="<%= Constants.CMD %>"
+	type="hidden"
+	value="<%= Constants.UPDATE %>"
+/>
 
 <liferay-ui:error key="emailPasswordChangedSubject" message="please-enter-a-valid-subject" />
 <liferay-ui:error key="emailPasswordChangedBody" message="please-enter-a-valid-body" />
@@ -50,8 +54,19 @@ String adminEmailPasswordSentBody = LocalizationUtil.getLocalizationXmlFromPrefe
 %>
 
 <c:if test="<%= Validator.isNotNull(adminEmailPasswordSentSubject) || Validator.isNotNull(adminEmailPasswordSentBody) %>">
-	<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="legacy-template-no-longer-used" markupView="lexicon">
-		<aui:input checked="<%= false %>" label="discard" name="discardLegacyKey" type="checkbox" value="adminEmailPasswordSentSubject,adminEmailPasswordSentBody" />
+	<aui:fieldset
+		collapsed="<%= true %>"
+		collapsible="<%= true %>"
+		label="legacy-template-no-longer-used"
+		markupView="lexicon"
+	>
+		<aui:input
+			checked="<%= false %>"
+			label="discard"
+			name="discardLegacyKey"
+			type="checkbox"
+			value="adminEmailPasswordSentSubject,adminEmailPasswordSentBody"
+		/>
 
 		<div class="alert alert-info">
 			<liferay-ui:message key="sending-of-passwords-by-email-is-no-longer-supported-the-template-below-is-not-used-and-can-be-discarded" />

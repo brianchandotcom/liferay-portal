@@ -40,28 +40,83 @@ SuggestionsPortletPreferences suggestionsPortletPreferences = new SuggestionsPor
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<aui:input helpMessage="collated-spell-check-result-enabled-help" id="spellCheckSuggestionEnabled" label="display-did-you-mean-if-the-number-of-search-results-does-not-meet-the-threshold" name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_SPELL_CHECK_SUGGESTION_ENABLED) %>" type="checkbox" value="<%= suggestionsPortletPreferences.isSpellCheckSuggestionEnabled() %>" />
+			<aui:input
+				helpMessage="collated-spell-check-result-enabled-help"
+				id="spellCheckSuggestionEnabled"
+				label="display-did-you-mean-if-the-number-of-search-results-does-not-meet-the-threshold"
+				name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_SPELL_CHECK_SUGGESTION_ENABLED) %>"
+				type="checkbox"
+				value="<%= suggestionsPortletPreferences.isSpellCheckSuggestionEnabled() %>"
+			/>
 
-			<aui:input helpMessage="collated-spell-check-result-display-threshold-help" label="threshold-for-displaying-did-you-mean" name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_SPELL_CHECK_SUGGESTION_DISPLAY_THRESHOLD) %>" size="10" type="text" value="<%= suggestionsPortletPreferences.getSpellCheckSuggestionDisplayThreshold() %>" />
+			<aui:input
+				helpMessage="collated-spell-check-result-display-threshold-help"
+				label="threshold-for-displaying-did-you-mean"
+				name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_SPELL_CHECK_SUGGESTION_DISPLAY_THRESHOLD) %>"
+				size="10"
+				type="text"
+				value="<%= suggestionsPortletPreferences.getSpellCheckSuggestionDisplayThreshold() %>"
+			/>
 
 			<hr />
 
-			<aui:input helpMessage="query-suggestion-enabled-help" id="relatedSuggestionsEnabled" label="display-related-queries" name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_RELATED_QUERIES_SUGGESTIONS_ENABLED) %>" type="checkbox" value="<%= suggestionsPortletPreferences.isRelatedQueriesSuggestionsEnabled() %>" />
+			<aui:input
+				helpMessage="query-suggestion-enabled-help"
+				id="relatedSuggestionsEnabled"
+				label="display-related-queries"
+				name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_RELATED_QUERIES_SUGGESTIONS_ENABLED) %>"
+				type="checkbox"
+				value="<%= suggestionsPortletPreferences.isRelatedQueriesSuggestionsEnabled() %>"
+			/>
 
-			<aui:input helpMessage="query-suggestion-display-threshold-help" label="threshold-for-displaying-related-queries" name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_RELATED_QUERIES_SUGGESTIONS_DISPLAY_THRESHOLD) %>" size="10" type="text" value="<%= suggestionsPortletPreferences.getRelatedQueriesSuggestionsDisplayThreshold() %>" />
+			<aui:input
+				helpMessage="query-suggestion-display-threshold-help"
+				label="threshold-for-displaying-related-queries"
+				name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_RELATED_QUERIES_SUGGESTIONS_DISPLAY_THRESHOLD) %>"
+				size="10"
+				type="text"
+				value="<%= suggestionsPortletPreferences.getRelatedQueriesSuggestionsDisplayThreshold() %>"
+			/>
 
-			<aui:input label="maximum-number-of-related-queries" name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_RELATED_QUERIES_SUGGESTIONS_MAX) %>" size="10" type="text" value="<%= suggestionsPortletPreferences.getRelatedQueriesSuggestionsMax() %>" />
+			<aui:input
+				label="maximum-number-of-related-queries"
+				name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_RELATED_QUERIES_SUGGESTIONS_MAX) %>"
+				size="10"
+				type="text"
+				value="<%= suggestionsPortletPreferences.getRelatedQueriesSuggestionsMax() %>"
+			/>
 
 			<hr />
 
-			<aui:input helpMessage="query-indexing-enabled-help" label="add-new-related-queries-based-on-successful-queries" name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_QUERY_INDEXING_ENABLED) %>" type="checkbox" value="<%= suggestionsPortletPreferences.isQueryIndexingEnabled() %>" />
+			<aui:input
+				helpMessage="query-indexing-enabled-help"
+				label="add-new-related-queries-based-on-successful-queries"
+				name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_QUERY_INDEXING_ENABLED) %>"
+				type="checkbox"
+				value="<%= suggestionsPortletPreferences.isQueryIndexingEnabled() %>"
+			/>
 
-			<aui:input helpMessage="query-indexing-threshold-help" label="query-indexing-threshold" name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_QUERY_INDEXING_THRESHOLD) %>" size="10" type="text" value="<%= suggestionsPortletPreferences.getQueryIndexingThreshold() %>" />
+			<aui:input
+				helpMessage="query-indexing-threshold-help"
+				label="query-indexing-threshold"
+				name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_QUERY_INDEXING_THRESHOLD) %>"
+				size="10"
+				type="text"
+				value="<%= suggestionsPortletPreferences.getQueryIndexingThreshold() %>"
+			/>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

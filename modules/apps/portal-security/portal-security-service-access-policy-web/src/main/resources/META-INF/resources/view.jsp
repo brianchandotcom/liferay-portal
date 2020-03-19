@@ -67,9 +67,7 @@ sortingURL.setParameter("orderByType", orderByAsc ? "desc" : "asc");
 		iteratorURL="<%= portletURL %>"
 		total="<%= sapEntriesCount %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= SAPEntryServiceUtil.getCompanySAPEntries(company.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd(), orderByComparator) %>"
-		/>
+		<liferay-ui:search-container-results results="<%= SAPEntryServiceUtil.getCompanySAPEntries(company.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd(), orderByComparator) %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.security.service.access.policy.model.SAPEntry"
@@ -97,23 +95,13 @@ sortingURL.setParameter("orderByType", orderByAsc ? "desc" : "asc");
 				value="<%= sapEntry.getTitle(locale) %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				name="enabled"
-				value='<%= LanguageUtil.get(request, sapEntry.isEnabled() ? "yes" : "no") %>'
-			/>
+			<liferay-ui:search-container-column-text name="enabled" value='<%= LanguageUtil.get(request, sapEntry.isEnabled() ? "yes" : "no") %>' />
 
-			<liferay-ui:search-container-column-text
-				name="default"
-				value='<%= LanguageUtil.get(request, sapEntry.isDefaultSAPEntry() ? "yes" : "no") %>'
-			/>
+			<liferay-ui:search-container-column-text name="default" value='<%= LanguageUtil.get(request, sapEntry.isDefaultSAPEntry() ? "yes" : "no") %>' />
 
-			<liferay-ui:search-container-column-jsp
-				path="/entry_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp path="/entry_action.jsp" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

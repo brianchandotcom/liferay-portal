@@ -33,7 +33,11 @@ String defaultLandingPagePath = PrefsPropsUtil.getString(company.getCompanyId(),
 String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.DEFAULT_LOGOUT_PAGE_PATH, PropsValues.DEFAULT_LOGOUT_PAGE_PATH);
 %>
 
-<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+<aui:input
+	name="<%= Constants.CMD %>"
+	type="hidden"
+	value="<%= Constants.UPDATE %>"
+/>
 
 <h4><liferay-ui:message key="main-configuration" /></h4>
 
@@ -47,19 +51,46 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 
 		<liferay-ui:error exception="<%= CompanyMxException.class %>" message="please-enter-a-valid-mail-domain" />
 
-		<aui:input bean="<%= company %>" disabled="<%= !PropsValues.MAIL_MX_UPDATE %>" label="mail-domain" model="<%= Company.class %>" name="mx" />
+		<aui:input
+			bean="<%= company %>"
+			disabled="<%= !PropsValues.MAIL_MX_UPDATE %>"
+			label="mail-domain"
+			model="<%= Company.class %>"
+			name="mx"
+		/>
 
 		<liferay-ui:error exception="<%= CompanyVirtualHostException.class %>" message="please-enter-a-valid-virtual-host" />
 
-		<aui:input bean="<%= virtualHost %>" fieldParam="virtualHostname" label="virtual-host" model="<%= VirtualHost.class %>" name="hostname" />
+		<aui:input
+			bean="<%= virtualHost %>"
+			fieldParam="virtualHostname"
+			label="virtual-host"
+			model="<%= VirtualHost.class %>"
+			name="hostname"
+		/>
 	</aui:col>
 
 	<aui:col width="<%= 50 %>">
-		<aui:input label="cdn-host-http" name='<%= "settings--" + PropsKeys.CDN_HOST_HTTP + "--" %>' type="text" value="<%= cdnHostHttp %>" />
+		<aui:input
+			label="cdn-host-http"
+			name='<%= "settings--" + PropsKeys.CDN_HOST_HTTP + "--" %>'
+			type="text"
+			value="<%= cdnHostHttp %>"
+		/>
 
-		<aui:input label="cdn-host-https" name='<%= "settings--" + PropsKeys.CDN_HOST_HTTPS + "--" %>' type="text" value="<%= cdnHostHttps %>" />
+		<aui:input
+			label="cdn-host-https"
+			name='<%= "settings--" + PropsKeys.CDN_HOST_HTTPS + "--" %>'
+			type="text"
+			value="<%= cdnHostHttps %>"
+		/>
 
-		<aui:input label="enable-cdn-dynamic-resources" name='<%= "settings--" + PropsKeys.CDN_DYNAMIC_RESOURCES_ENABLED + "--" %>' type="checkbox" value="<%= cdnDynamicResourcesEnabled %>" />
+		<aui:input
+			label="enable-cdn-dynamic-resources"
+			name='<%= "settings--" + PropsKeys.CDN_DYNAMIC_RESOURCES_ENABLED + "--" %>'
+			type="checkbox"
+			value="<%= cdnDynamicResourcesEnabled %>"
+		/>
 	</aui:col>
 </aui:row>
 
@@ -67,13 +98,31 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 
 <aui:row>
 	<aui:col width="<%= 50 %>">
-		<aui:input bean="<%= company %>" helpMessage="home-url-help" label="home-url" model="<%= Company.class %>" name="homeURL" />
+		<aui:input
+			bean="<%= company %>"
+			helpMessage="home-url-help"
+			label="home-url"
+			model="<%= Company.class %>"
+			name="homeURL"
+		/>
 
-		<aui:input helpMessage="default-landing-page-help" label="default-landing-page" name='<%= "settings--" + PropsKeys.DEFAULT_LANDING_PAGE_PATH + "--" %>' type="text" value="<%= defaultLandingPagePath %>" />
+		<aui:input
+			helpMessage="default-landing-page-help"
+			label="default-landing-page"
+			name='<%= "settings--" + PropsKeys.DEFAULT_LANDING_PAGE_PATH + "--" %>'
+			type="text"
+			value="<%= defaultLandingPagePath %>"
+		/>
 	</aui:col>
 
 	<aui:col width="<%= 50 %>">
-		<aui:input helpMessage="default-logout-page-help" label="default-logout-page" name='<%= "settings--" + PropsKeys.DEFAULT_LOGOUT_PAGE_PATH + "--" %>' type="text" value="<%= defaultLogoutPagePath %>" />
+		<aui:input
+			helpMessage="default-logout-page-help"
+			label="default-logout-page"
+			name='<%= "settings--" + PropsKeys.DEFAULT_LOGOUT_PAGE_PATH + "--" %>'
+			type="text"
+			value="<%= defaultLogoutPagePath %>"
+		/>
 	</aui:col>
 </aui:row>
 

@@ -47,9 +47,18 @@ portletURL.setParameter("mvcRenderCommandName", "/portal_instances/view");
 	<portlet:param name="cur" value="<%= String.valueOf(cur) %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirectURL %>"
+	/>
 	<aui:input name="className" type="hidden" />
 
 	<%@ include file="/instances.jspf" %>

@@ -25,7 +25,11 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 String sectionName = "email-verification-notification";
 %>
 
-<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+<aui:input
+	name="<%= Constants.CMD %>"
+	type="hidden"
+	value="<%= Constants.UPDATE %>"
+/>
 
 <liferay-ui:error key="emailVerificationSubject" message="please-enter-a-valid-subject" />
 <liferay-ui:error key="emailVerificationBody" message="please-enter-a-valid-body" />

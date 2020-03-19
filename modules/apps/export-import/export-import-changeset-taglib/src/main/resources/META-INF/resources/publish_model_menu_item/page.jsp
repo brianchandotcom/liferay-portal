@@ -29,8 +29,5 @@
 	portletURL.setParameter("portletId", portletDisplay.getId());
 	%>
 
-	<liferay-ui:icon
-		message="publish-to-live"
-		url="<%= portletURL.toString() %>"
-	/>
+	<liferay-ui:icon message="publish-to-live" url="<%= portletURL.toString() %>" />
 </c:if>

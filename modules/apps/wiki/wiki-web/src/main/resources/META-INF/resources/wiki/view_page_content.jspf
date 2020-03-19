@@ -23,7 +23,11 @@ try {
 		<c:choose>
 			<c:when test="<%= !followRedirect && (redirectPage != null) %>">
 				<div class="alert alert-info">
-					<liferay-ui:message arguments="<%= redirectPage.getTitle() %>" key="this-page-is-currently-redirected-to-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= redirectPage.getTitle() %>"
+						key="this-page-is-currently-redirected-to-x"
+						translateArguments="<%= false %>"
+					/>
 				</div>
 
 				<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">

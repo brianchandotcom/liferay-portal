@@ -36,10 +36,7 @@ KaleoProcess kaleoProcess = (KaleoProcess)row.getObject();
 			<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcess.getKaleoProcessId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="view[action]"
-			url="<%= viewURL %>"
-		/>
+		<liferay-ui:icon message="view[action]" url="<%= viewURL %>" />
 	</c:if>
 
 	<c:if test="<%= KaleoProcessPermission.contains(permissionChecker, kaleoProcess, ActionKeys.VIEW) %>">
@@ -57,10 +54,7 @@ KaleoProcess kaleoProcess = (KaleoProcess)row.getObject();
 		sb.append("');");
 		%>
 
-		<liferay-ui:icon
-			message="export"
-			url="<%= sb.toString() %>"
-		/>
+		<liferay-ui:icon message="export" url="<%= sb.toString() %>" />
 	</c:if>
 
 	<c:if test="<%= KaleoProcessPermission.contains(permissionChecker, kaleoProcess, ActionKeys.UPDATE) %>">
@@ -101,8 +95,6 @@ KaleoProcess kaleoProcess = (KaleoProcess)row.getObject();
 			<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcess.getKaleoProcessId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

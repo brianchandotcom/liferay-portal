@@ -68,10 +68,7 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_ro
 					<portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntry.getSegmentsEntryId()) %>" />
 				</portlet:renderURL>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand-smallest table-cell-minw-150"
-					name="members"
-				>
+				<liferay-ui:search-container-column-text cssClass="table-cell-expand-smallest table-cell-minw-150" name="members">
 					<liferay-ui:icon
 						label="<%= true %>"
 						message="<%= String.valueOf(SegmentsEntryDisplayContext.getSegmentsEntryUsersCount(segmentsEntry.getSegmentsEntryId())) %>"
@@ -106,9 +103,7 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_ro
 		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
 <aui:script>

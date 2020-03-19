@@ -39,6 +39,4 @@
 	value="<%= ruleGroup.getModifiedDate() %>"
 />
 
-<liferay-ui:search-container-column-jsp
-	path="/rule_group_actions.jsp"
-/>
+<liferay-ui:search-container-column-jsp path="/rule_group_actions.jsp" />

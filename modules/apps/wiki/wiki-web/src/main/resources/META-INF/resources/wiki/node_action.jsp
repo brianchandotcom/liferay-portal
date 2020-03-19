@@ -43,10 +43,7 @@ else {
 			<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.PERMISSIONS) %>">
@@ -73,10 +70,7 @@ else {
 			<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="import-pages"
-			url="<%= importURL %>"
-		/>
+		<liferay-ui:icon message="import-pages" url="<%= importURL %>" />
 	</c:if>
 
 	<c:if test="<%= wikiGroupServiceOverriddenConfiguration.enableRss() %>">
@@ -100,10 +94,7 @@ else {
 			<portlet:param name="viewTrashAttachments" value="<%= Boolean.TRUE.toString() %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="view-removed-attachments"
-			url="<%= viewDeletedAttachmentsURL %>"
-		/>
+		<liferay-ui:icon message="view-removed-attachments" url="<%= viewDeletedAttachmentsURL %>" />
 	</c:if>
 
 	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.DELETE) && (WikiNodeServiceUtil.getNodesCount(scopeGroupId) > 1) %>">
@@ -113,9 +104,6 @@ else {
 			<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>" url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

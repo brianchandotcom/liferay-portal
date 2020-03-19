@@ -20,21 +20,20 @@
 AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContext = new AssetListManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetListDisplayContext);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= assetListManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= assetListManagementToolbarDisplayContext %>" />
 
 <portlet:actionURL name="/asset_list/delete_asset_list_entry" var="deleteAssetListEntryURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteAssetListEntryURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form
+	action="<%= deleteAssetListEntryURL %>"
+	cssClass="container-fluid-1280"
+	name="fm"
+>
 	<c:choose>
 		<c:when test="<%= assetListDisplayContext.getAssetListEntriesCount() > 0 %>">
-			<liferay-ui:search-container
-				id="assetListEntries"
-				searchContainer="<%= assetListDisplayContext.getAssetListEntriesSearchContainer() %>"
-			>
+			<liferay-ui:search-container id="assetListEntries" searchContainer="<%= assetListDisplayContext.getAssetListEntriesSearchContainer() %>">
 				<liferay-ui:search-container-row
 					className="com.liferay.asset.list.model.AssetListEntry"
 					keyProperty="assetListEntryId"
@@ -61,13 +60,9 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 					row.setData(rowData);
 					%>
 
-					<liferay-ui:search-container-column-icon
-						icon="list"
-					/>
+					<liferay-ui:search-container-column-icon icon="list" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h5>
 							<aui:a href="<%= editURL %>">
 								<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
@@ -82,7 +77,11 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 						Date statusDate = assetListEntry.getCreateDate();
 						%>
 
-						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>"
+							key="x-ago"
+							translateArguments="<%= false %>"
+						/>
 					</liferay-ui:search-container-column-text>
 
 					<%
@@ -90,17 +89,11 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:dropdown-actions
-							defaultEventHandler="assetEntryListDropdownDefaultEventHandler"
-							dropdownItems="<%= assetEntryListActionDropdownItems.getActionDropdownItems() %>"
-						/>
+						<clay:dropdown-actions defaultEventHandler="assetEntryListDropdownDefaultEventHandler" dropdownItems="<%= assetEntryListActionDropdownItems.getActionDropdownItems() %>" />
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					displayStyle="descriptive"
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</c:when>
 		<c:otherwise>
@@ -116,18 +109,9 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 </aui:form>
 
 <c:if test="<%= assetListDisplayContext.getAssetListEntriesCount() == 0 %>">
-	<liferay-frontend:component
-		componentId="emptyResultMessageComponentDefaultEventHandler"
-		module="js/EmptyResultMessageDefaultEventHandler.es"
-	/>
+	<liferay-frontend:component componentId="emptyResultMessageComponentDefaultEventHandler" module="js/EmptyResultMessageDefaultEventHandler.es" />
 </c:if>
 
-<liferay-frontend:component
-	componentId="assetEntryListDropdownDefaultEventHandler"
-	module="js/AssetEntryListDropdownDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="assetEntryListDropdownDefaultEventHandler" module="js/AssetEntryListDropdownDefaultEventHandler.es" />
 
-<liferay-frontend:component
-	componentId="<%= assetListManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/ManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= assetListManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/ManagementToolbarDefaultEventHandler.es" />

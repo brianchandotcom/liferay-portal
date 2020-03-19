@@ -25,7 +25,11 @@
 
 		<aui:select label="group-by" name="preferences--assetVocabularyId--">
 			<aui:option value="" />
-			<aui:option label="asset-types" selected="<%= assetVocabularyId == -1 %>" value="-1" />
+			<aui:option
+				label="asset-types"
+				selected="<%= assetVocabularyId == -1 %>"
+				value="-1"
+			/>
 
 			<%
 			Group companyGroup = company.getGroup();
@@ -42,7 +46,11 @@
 						for (AssetVocabulary assetVocabulary : assetVocabularies) {
 						%>
 
-							<aui:option label="<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>" selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>" value="<%= assetVocabulary.getVocabularyId() %>" />
+							<aui:option
+								label="<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>"
+								selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>"
+								value="<%= assetVocabulary.getVocabularyId() %>"
+							/>
 
 						<%
 						}
@@ -67,7 +75,11 @@
 					for (AssetVocabulary assetVocabulary : assetVocabularies) {
 					%>
 
-						<aui:option label="<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>" selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>" value="<%= assetVocabulary.getVocabularyId() %>" />
+						<aui:option
+							label="<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>"
+							selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>"
+							value="<%= assetVocabulary.getVocabularyId() %>"
+						/>
 
 					<%
 					}

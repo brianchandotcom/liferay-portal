@@ -75,10 +75,7 @@ if (row == null) {
 		editURL.setParameter("mergeWithParentFolderDisabled", String.valueOf(row == null));
 		%>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL.toString() %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL.toString() %>" />
 
 		<portlet:renderURL var="moveURL">
 			<portlet:param name="mvcRenderCommandName" value="/bookmarks/move_entry" />
@@ -86,10 +83,7 @@ if (row == null) {
 			<portlet:param name="rowIdsBookmarksFolder" value="<%= String.valueOf(folder.getFolderId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="move"
-			url="<%= moveURL %>"
-		/>
+		<liferay-ui:icon message="move" url="<%= moveURL %>" />
 	</c:if>
 
 	<c:if test="<%= showPermissionsURL %>">
@@ -128,10 +122,7 @@ if (row == null) {
 			<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>" url="<%= deleteURL %>" />
 	</c:if>
 
 	<%

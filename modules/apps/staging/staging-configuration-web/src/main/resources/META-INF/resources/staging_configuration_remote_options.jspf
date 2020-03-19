@@ -36,19 +36,42 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 
 		<%@ include file="/error_remote_options_exception.jspf" %>
 
-		<liferay-staging:alert
-			type="INFO"
-		>
+		<liferay-staging:alert type="INFO">
 			<liferay-ui:message key="remote-publish-help" />
 		</liferay-staging:alert>
 
-		<aui:input label="remote-host-ip" name="remoteAddress" size="20" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>' />
+		<aui:input
+			label="remote-host-ip"
+			name="remoteAddress"
+			size="20"
+			type="text"
+			value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>'
+		/>
 
-		<aui:input cssClass="remote-port" label="remote-port" name="remotePort" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remotePort") %>' />
+		<aui:input
+			cssClass="remote-port"
+			label="remote-port"
+			name="remotePort"
+			size="10"
+			type="text"
+			value='<%= liveGroupTypeSettings.getProperty("remotePort") %>'
+		/>
 
-		<aui:input label="remote-path-context" name="remotePathContext" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>' />
+		<aui:input
+			label="remote-path-context"
+			name="remotePathContext"
+			size="10"
+			type="text"
+			value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>'
+		/>
 
-		<aui:input label='<%= LanguageUtil.get(request, "remote-site-id") %>' name="remoteGroupId" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
+		<aui:input
+			label='<%= LanguageUtil.get(request, "remote-site-id") %>'
+			name="remoteGroupId"
+			size="10"
+			type="text"
+			value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>'
+		/>
 
 		<div class="form-group">
 
@@ -74,7 +97,14 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 		</div>
 
 		<div class="<%= overrideRemoteSiteURL ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />remoteSiteURLContainer">
-			<aui:input helpMessage="remote-site-url-help-message" label="remote-site-url" name="remoteSiteURL" size="20" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteSiteURL") %>' />
+			<aui:input
+				helpMessage="remote-site-url-help-message"
+				label="remote-site-url"
+				name="remoteSiteURL"
+				size="20"
+				type="text"
+				value='<%= liveGroupTypeSettings.getProperty("remoteSiteURL") %>'
+			/>
 		</div>
 	</div>
 </div>

@@ -34,14 +34,42 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/layout/edit_open_graph" var="editOpenGraphURL" />
+<portlet:actionURL
+	copyCurrentRenderParameters="<%= true %>"
+	name="/layout/edit_open_graph"
+	var="editOpenGraphURL"
+/>
 
-<aui:form action="<%= editOpenGraphURL %>" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
-	<aui:input name="groupId" type="hidden" value="<%= layoutsSEODisplayContext.getGroupId() %>" />
-	<aui:input name="privateLayout" type="hidden" value="<%= layoutsSEODisplayContext.isPrivateLayout() %>" />
-	<aui:input name="layoutId" type="hidden" value="<%= layoutsSEODisplayContext.getLayoutId() %>" />
+<aui:form
+	action="<%= editOpenGraphURL %>"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
+	<aui:input
+		name="portletResource"
+		type="hidden"
+		value='<%= ParamUtil.getString(request, "portletResource") %>'
+	/>
+	<aui:input
+		name="groupId"
+		type="hidden"
+		value="<%= layoutsSEODisplayContext.getGroupId() %>"
+	/>
+	<aui:input
+		name="privateLayout"
+		type="hidden"
+		value="<%= layoutsSEODisplayContext.isPrivateLayout() %>"
+	/>
+	<aui:input
+		name="layoutId"
+		type="hidden"
+		value="<%= layoutsSEODisplayContext.getLayoutId() %>"
+	/>
 
 	<div class="sheet sheet-lg">
 		<div class="sheet-header">
@@ -49,10 +77,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 		</div>
 
 		<div class="sheet-section">
-			<liferay-ui:error-marker
-				key="<%= WebKeys.ERROR_SECTION %>"
-				value="open-graph"
-			/>
+			<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="open-graph" />
 
 			<p class="text-muted">
 				<liferay-ui:message key="open-graph-description" />
@@ -63,7 +88,16 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 			<div class="form-group">
 				<label class="control-label"><liferay-ui:message key="image" /> <liferay-ui:icon-help message="open-graph-image-help" /></label>
 
-				<aui:input label="<%= StringPool.BLANK %>" name="openGraphImageTitle" placeholder="image" readonly="<%= true %>" title="image" type="text" value="<%= layoutsSEODisplayContext.getOpenGraphImageTitle() %>" wrapperCssClass="mb-3" />
+				<aui:input
+					label="<%= StringPool.BLANK %>"
+					name="openGraphImageTitle"
+					placeholder="image"
+					readonly="<%= true %>"
+					title="image"
+					type="text"
+					value="<%= layoutsSEODisplayContext.getOpenGraphImageTitle() %>"
+					wrapperCssClass="mb-3"
+				/>
 
 				<aui:button-row cssClass="mt-0">
 					<aui:button name="openGraphImageButton" value="select" />
@@ -78,17 +112,51 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 			<div id="<portlet:namespace />openGraphSettings">
 				<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
 
-				<aui:input disabled="<%= (selLayoutSEOEntry != null) ? Validator.isNull(layoutsSEODisplayContext.getOpenGraphImageTitle()) : true %>" helpMessage="open-graph-image-alt-description-help" label="open-graph-image-alt-description" name="openGraphImageAlt" placeholder="open-graph-alt-description" />
+				<aui:input
+					disabled="<%= (selLayoutSEOEntry != null) ? Validator.isNull(layoutsSEODisplayContext.getOpenGraphImageTitle()) : true %>"
+					helpMessage="open-graph-image-alt-description-help"
+					label="open-graph-image-alt-description"
+					name="openGraphImageAlt"
+					placeholder="open-graph-alt-description"
+				/>
 
-				<aui:input checked="<%= (selLayoutSEOEntry != null) ? selLayoutSEOEntry.isOpenGraphTitleEnabled() : false %>" helpMessage="use-custom-open-graph-title-help" label="use-custom-open-graph-title" name="openGraphTitleEnabled" type="checkbox" wrapperCssClass="mb-1" />
+				<aui:input
+					checked="<%= (selLayoutSEOEntry != null) ? selLayoutSEOEntry.isOpenGraphTitleEnabled() : false %>"
+					helpMessage="use-custom-open-graph-title-help"
+					label="use-custom-open-graph-title"
+					name="openGraphTitleEnabled"
+					type="checkbox"
+					wrapperCssClass="mb-1"
+				/>
 
-				<aui:input disabled="<%= (selLayoutSEOEntry != null) ? !selLayoutSEOEntry.isOpenGraphTitleEnabled() : true %>" label="<%= StringPool.BLANK %>" name="openGraphTitle" placeholder="title" />
+				<aui:input
+					disabled="<%= (selLayoutSEOEntry != null) ? !selLayoutSEOEntry.isOpenGraphTitleEnabled() : true %>"
+					label="<%= StringPool.BLANK %>"
+					name="openGraphTitle"
+					placeholder="title"
+				/>
 
-				<aui:input checked="<%= (selLayoutSEOEntry != null) ? selLayoutSEOEntry.isOpenGraphDescriptionEnabled() : false %>" helpMessage="use-custom-open-graph-description-help" label="use-custom-open-graph-description" name="openGraphDescriptionEnabled" type="checkbox" wrapperCssClass="mb-1" />
+				<aui:input
+					checked="<%= (selLayoutSEOEntry != null) ? selLayoutSEOEntry.isOpenGraphDescriptionEnabled() : false %>"
+					helpMessage="use-custom-open-graph-description-help"
+					label="use-custom-open-graph-description"
+					name="openGraphDescriptionEnabled"
+					type="checkbox"
+					wrapperCssClass="mb-1"
+				/>
 
-				<aui:input disabled="<%= (selLayoutSEOEntry != null) ? !selLayoutSEOEntry.isOpenGraphDescriptionEnabled() : true %>" label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="description" />
+				<aui:input
+					disabled="<%= (selLayoutSEOEntry != null) ? !selLayoutSEOEntry.isOpenGraphDescriptionEnabled() : true %>"
+					label="<%= StringPool.BLANK %>"
+					name="openGraphDescription"
+					placeholder="description"
+				/>
 
-				<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
+				<aui:input
+					id="openGraphImageFileEntryId"
+					name="openGraphImageFileEntryId"
+					type="hidden"
+				/>
 			</div>
 
 			<div class="form-group">

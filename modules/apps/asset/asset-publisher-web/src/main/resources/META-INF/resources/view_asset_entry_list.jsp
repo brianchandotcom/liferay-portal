@@ -65,7 +65,11 @@ for (AssetEntryResult assetEntryResult : assetPublisherDisplayContext.getAssetEn
 				displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>"
 				entries="<%= assetEntries %>"
 			>
-				<liferay-ui:message arguments="<%= assetPublisherDisplayContext.getDisplayStyle() %>" escape="<%= true %>" key="x-is-not-a-display-type" />
+				<liferay-ui:message
+					arguments="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
+					escape="<%= true %>"
+					key="x-is-not-a-display-type"
+				/>
 			</liferay-ddm:template-renderer>
 		</c:when>
 		<c:otherwise>

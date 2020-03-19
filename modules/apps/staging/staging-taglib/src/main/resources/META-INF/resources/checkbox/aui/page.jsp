@@ -16,10 +16,17 @@
 
 <%@ include file="/checkbox/init.jsp" %>
 
-<liferay-util:buffer
-	var="extendedLabel"
->
+<liferay-util:buffer var="extendedLabel">
 	<%@ include file="/checkbox/extended_label.jspf" %>
 </liferay-util:buffer>
 
-<aui:input checked="<%= checked %>" data-qa-id="<%= name %>" disabled="<%= disabled %>" id="<%= id %>" ignoreRequestValue="<%= true %>" label="<%= extendedLabel %>" name="<%= name %>" type="checkbox" />
+<aui:input
+	checked="<%= checked %>"
+	data-qa-id="<%= name %>"
+	disabled="<%= disabled %>"
+	id="<%= id %>"
+	ignoreRequestValue="<%= true %>"
+	label="<%= extendedLabel %>"
+	name="<%= name %>"
+	type="checkbox"
+/>

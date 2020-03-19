@@ -14,10 +14,7 @@
  */
 --%>
 
-<liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
-	name="thread"
->
+<liferay-ui:search-container-column-text href="<%= rowURL %>" name="thread">
 
 	<%
 	String[] threadPriority = MBUtil.getThreadPriority(mbGroupServiceSettings, themeDisplay.getLanguageId(), thread.getPriority());

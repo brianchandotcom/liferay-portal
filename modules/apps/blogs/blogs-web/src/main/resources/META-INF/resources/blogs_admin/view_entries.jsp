@@ -40,28 +40,32 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<liferay-trash:undo
-	portletURL="<%= restoreTrashEntriesURL %>"
-/>
+<liferay-trash:undo portletURL="<%= restoreTrashEntriesURL %>" />
 
 <div class="container-fluid container-fluid-max-xl main-content-body">
-	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
+	<aui:form
+		action="<%= portletURL.toString() %>"
+		method="get"
+		name="fm"
+	>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= portletURL.toString() %>"
+		/>
 		<aui:input name="deleteEntryIds" type="hidden" />
-		<aui:input name="selectAll" type="hidden" value="<%= false %>" />
+		<aui:input
+			name="selectAll"
+			type="hidden"
+			value="<%= false %>"
+		/>
 
 		<c:if test="<%= (assetCategoryId != 0) || Validator.isNotNull(assetTagName) %>">
-			<liferay-asset:categorization-filter
-				assetType="entries"
-				portletURL="<%= portletURL %>"
-			/>
+			<liferay-asset:categorization-filter assetType="entries" portletURL="<%= portletURL %>" />
 		</c:if>
 
-		<liferay-ui:search-container
-			id="blogEntries"
-			searchContainer="<%= entriesSearchContainer %>"
-		>
+		<liferay-ui:search-container id="blogEntries" searchContainer="<%= entriesSearchContainer %>">
 			<liferay-ui:search-container-row
 				className="com.liferay.blogs.model.BlogsEntry"
 				escapedModel="<%= true %>"
@@ -85,10 +89,7 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 				<%@ include file="/blogs_admin/entry_search_columns.jspf" %>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				displayStyle="<%= displayStyle %>"
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

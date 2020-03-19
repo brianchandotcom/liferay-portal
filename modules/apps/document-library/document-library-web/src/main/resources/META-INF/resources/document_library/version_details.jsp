@@ -26,8 +26,5 @@
 	).put("checkedOut", GetterUtil.getBoolean(request.getAttribute("edit_file_entry.jsp-checkedOut"))).build();
 	%>
 
-	<react:component
-		data="<%= data %>"
-		module="document_library/js/checkin/Checkin.es"
-	/>
+	<react:component data="<%= data %>" module="document_library/js/checkin/Checkin.es" />
 </div>

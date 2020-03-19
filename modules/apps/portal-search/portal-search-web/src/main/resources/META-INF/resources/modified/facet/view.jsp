@@ -58,8 +58,18 @@ contextObjects.put("namespace", renderResponse.getNamespace());
 
 <c:if test="<%= !modifiedFacetDisplayContext.isRenderNothing() %>">
 	<aui:form method="get" name="fm">
-		<aui:input autocomplete="off" name="inputFacetName" type="hidden" value="modified" />
-		<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= HtmlUtil.escapeAttribute(modifiedFacetDisplayContext.getParameterName()) %>" />
+		<aui:input
+			autocomplete="off"
+			name="inputFacetName"
+			type="hidden"
+			value="modified"
+		/>
+		<aui:input
+			cssClass="facet-parameter-name"
+			name="facet-parameter-name"
+			type="hidden"
+			value="<%= HtmlUtil.escapeAttribute(modifiedFacetDisplayContext.getParameterName()) %>"
+		/>
 
 		<liferay-ddm:template-renderer
 			className="<%= ModifiedFacetTermDisplayContext.class.getName() %>"
@@ -151,12 +161,21 @@ contextObjects.put("namespace", renderResponse.getNamespace());
 								</aui:field-wrapper>
 							</div>
 
-							<aui:button cssClass="modified-facet-custom-range-filter-button" disabled="<%= modifiedFacetCalendarDisplayContext.isRangeBackwards() %>" name="searchCustomRangeButton" value="search" />
+							<aui:button
+								cssClass="modified-facet-custom-range-filter-button"
+								disabled="<%= modifiedFacetCalendarDisplayContext.isRangeBackwards() %>"
+								name="searchCustomRangeButton"
+								value="search"
+							/>
 						</div>
 					</ul>
 
 					<c:if test="<%= !modifiedFacetDisplayContext.isNothingSelected() %>">
-						<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
+						<aui:button
+							cssClass="btn-link btn-unstyled facet-clear-btn"
+							onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+							value="clear"
+						/>
 					</c:if>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>

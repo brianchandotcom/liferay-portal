@@ -27,9 +27,7 @@ boolean certificateAuthNeeded = x509CertificateStatus.getStatus() == GeneralTabD
 X509Certificate x509Certificate = x509CertificateStatus.getX509Certificate();
 %>
 
-<liferay-util:buffer
-	var="certificateInfo"
->
+<liferay-util:buffer var="certificateInfo">
 	<c:if test="<%= x509Certificate != null %>">
 
 		<%
@@ -108,7 +106,11 @@ String introKey = StringPool.BLANK;
 	</c:when>
 </c:choose>
 
-<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="replaceCertificateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+<portlet:renderURL
+	copyCurrentRenderParameters="<%= false %>"
+	var="replaceCertificateURL"
+	windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+>
 	<portlet:param name="mvcRenderCommandName" value="/admin/updateCertificate" />
 	<portlet:param name="<%= Constants.CMD %>" value="replace" />
 	<portlet:param name="certificateUsage" value="<%= certificateUsage.name() %>" />
@@ -134,7 +136,11 @@ String introKey = StringPool.BLANK;
 				<aui:button href="<%= downloadCertificateURL %>" value="download-certificate" />
 
 				<c:if test="<%= certificateUsage == LocalEntityManager.CertificateUsage.ENCRYPTION %>">
-					<aui:button onClick='<%= "return confirm('" + deleteCertificatePrompt + "')" %>' type="submit" value="delete-certificate" />
+					<aui:button
+						onClick='<%= "return confirm('" + deleteCertificatePrompt + "')" %>'
+						type="submit"
+						value="delete-certificate"
+					/>
 				</c:if>
 			</aui:button-row>
 		</aui:form>
@@ -145,7 +151,11 @@ String introKey = StringPool.BLANK;
 		</div>
 	</c:when>
 	<c:when test="<%= certificateAuthNeeded %>">
-		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="authCertificateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:renderURL
+			copyCurrentRenderParameters="<%= false %>"
+			var="authCertificateURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		>
 			<portlet:param name="mvcRenderCommandName" value="/admin/updateCertificate" />
 			<portlet:param name="<%= Constants.CMD %>" value="auth" />
 			<portlet:param name="certificateUsage" value="<%= certificateUsage.name() %>" />
@@ -162,7 +172,11 @@ String introKey = StringPool.BLANK;
 				<aui:button onClick='<%= renderResponse.getNamespace() + "showCertificateDialog('" + replaceCertificateURL + "');" %>' value="replace-certificate" />
 
 				<c:if test="<%= certificateUsage == LocalEntityManager.CertificateUsage.ENCRYPTION %>">
-					<aui:button onClick='<%= "return confirm('" + deleteCertificatePrompt + "')" %>' type="submit" value="delete-certificate" />
+					<aui:button
+						onClick='<%= "return confirm('" + deleteCertificatePrompt + "')" %>'
+						type="submit"
+						value="delete-certificate"
+					/>
 				</c:if>
 			</aui:button-row>
 		</aui:form>

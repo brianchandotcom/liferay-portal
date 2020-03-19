@@ -58,7 +58,13 @@ else {
 String publishMessage = LanguageUtil.get(request, publishDialogTitle);
 %>
 
-<liferay-portlet:renderURL plid="<%= plid %>" portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= PortletKeys.EXPORT_IMPORT %>" varImpl="publishRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+<liferay-portlet:renderURL
+	plid="<%= plid %>"
+	portletMode="<%= PortletMode.VIEW.toString() %>"
+	portletName="<%= PortletKeys.EXPORT_IMPORT %>"
+	varImpl="publishRenderURL"
+	windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+>
 	<liferay-portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 	<liferay-portlet:param name="<%= Constants.CMD %>" value="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 	<liferay-portlet:param name="tabs1" value='<%= privateLayout ? "private-pages" : "public-pages" %>' />

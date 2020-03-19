@@ -67,7 +67,13 @@
 						SyndEntry syndEntry = rssFeedEntry.getSyndEntry();
 					%>
 
-						<aui:fieldset collapsed="<%= !themeDisplay.isStateMaximized() && (j >= rssPortletInstanceConfiguration.expandedEntriesPerFeed()) %>" collapsible="<%= true %>" cssClass="feed-entry" id='<%= renderResponse.getNamespace() + "feed_" + i + "_panelId_" + j %>' label="<%= HtmlUtil.escape(syndEntry.getTitle()) %>">
+						<aui:fieldset
+							collapsed="<%= !themeDisplay.isStateMaximized() && (j >= rssPortletInstanceConfiguration.expandedEntriesPerFeed()) %>"
+							collapsible="<%= true %>"
+							cssClass="feed-entry"
+							id='<%= renderResponse.getNamespace() + "feed_" + i + "_panelId_" + j %>'
+							label="<%= HtmlUtil.escape(syndEntry.getTitle()) %>"
+						>
 							<div class="feed-entry-content">
 								<c:if test="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() && Validator.isNotNull(syndEntry.getAuthor()) %>">
 									<strong class="feed-entry-author small">
@@ -112,7 +118,11 @@
 	</c:when>
 	<c:when test="<%= portletDisplay.isShowConfigurationIcon() %>">
 		<div class="alert alert-danger">
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(rssFeed.getURL()) %>" key="cannot-be-found" translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments="<%= HtmlUtil.escape(rssFeed.getURL()) %>"
+				key="cannot-be-found"
+				translateArguments="<%= false %>"
+			/>
 		</div>
 	</c:when>
 </c:choose>

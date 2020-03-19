@@ -20,7 +20,11 @@
 User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 %>
 
-<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (selUser == null) ? Constants.ADD : Constants.UPDATE %>" />
+<aui:input
+	name="<%= Constants.CMD %>"
+	type="hidden"
+	value="<%= (selUser == null) ? Constants.ADD : Constants.UPDATE %>"
+/>
 
 <div class="form-group">
 	<h3 class="sheet-subtitle"><liferay-ui:message key="user-display-data" /></h3>

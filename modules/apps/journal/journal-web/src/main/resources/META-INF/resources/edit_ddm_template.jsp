@@ -35,12 +35,39 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 	<portlet:param name="mvcPath" value="/edit_ddm_template.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= (ddmTemplate == null) ? addDDMTemplateURL : updateDDMTemplateURL %>" cssClass="edit-article-form" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
-	<aui:input name="redirect" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getRedirect() %>" />
-	<aui:input name="ddmTemplateId" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getDDMTemplateId() %>" />
-	<aui:input name="groupId" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getGroupId() %>" />
-	<aui:input name="classPK" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getClassPK() %>" />
-	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
+<aui:form
+	action="<%= (ddmTemplate == null) ? addDDMTemplateURL : updateDDMTemplateURL %>"
+	cssClass="edit-article-form"
+	enctype="multipart/form-data"
+	method="post"
+	name="fm"
+	onSubmit="event.preventDefault();"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= journalEditDDMTemplateDisplayContext.getRedirect() %>"
+	/>
+	<aui:input
+		name="ddmTemplateId"
+		type="hidden"
+		value="<%= journalEditDDMTemplateDisplayContext.getDDMTemplateId() %>"
+	/>
+	<aui:input
+		name="groupId"
+		type="hidden"
+		value="<%= journalEditDDMTemplateDisplayContext.getGroupId() %>"
+	/>
+	<aui:input
+		name="classPK"
+		type="hidden"
+		value="<%= journalEditDDMTemplateDisplayContext.getClassPK() %>"
+	/>
+	<aui:input
+		name="saveAndContinue"
+		type="hidden"
+		value="<%= false %>"
+	/>
 
 	<aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
@@ -48,23 +75,44 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 		<div class="container-fluid container-fluid-max-xl">
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
-					<aui:input cssClass="form-control-inline" defaultLanguageId="<%= (ddmTemplate == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): ddmTemplate.getDefaultLanguageId() %>" label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled-x", "template") %>' wrapperCssClass="article-content-title mb-0" />
+					<aui:input
+						cssClass="form-control-inline"
+						defaultLanguageId="<%= (ddmTemplate == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): ddmTemplate.getDefaultLanguageId() %>"
+						label=""
+						name="name"
+						placeholder='<%= LanguageUtil.format(request, "untitled-x", "template") %>'
+						wrapperCssClass="article-content-title mb-0"
+					/>
 				</li>
 				<li class="tbar-item">
 					<div class="journal-article-button-row tbar-section text-right">
-						<aui:button cssClass="btn-secondary btn-sm mr-3" href="<%= journalEditDDMTemplateDisplayContext.getRedirect() %>" type="cancel" />
+						<aui:button
+							cssClass="btn-secondary btn-sm mr-3"
+							href="<%= journalEditDDMTemplateDisplayContext.getRedirect() %>"
+							type="cancel"
+						/>
 
 						<%
 						String taglibOnClickSaveAndContinue = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveAndContinue');";
 						%>
 
-						<aui:button cssClass="btn-secondary btn-sm mr-3" onClick="<%= taglibOnClickSaveAndContinue %>" type="submit" value="save-and-continue" />
+						<aui:button
+							cssClass="btn-secondary btn-sm mr-3"
+							onClick="<%= taglibOnClickSaveAndContinue %>"
+							type="submit"
+							value="save-and-continue"
+						/>
 
 						<%
 						String taglibOnClickSaveTemplate = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTemplate');";
 						%>
 
-						<aui:button cssClass="btn-sm mr-3" onClick="<%= taglibOnClickSaveTemplate %>" type="submit" value="save" />
+						<aui:button
+							cssClass="btn-sm mr-3"
+							onClick="<%= taglibOnClickSaveTemplate %>"
+							type="submit"
+							value="save"
+						/>
 
 						<clay:button
 							icon="cog"

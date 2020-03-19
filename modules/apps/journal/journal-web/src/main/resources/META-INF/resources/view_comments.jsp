@@ -16,10 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:search-container
-	emptyResultsMessage="no-comment-was-found"
-	searchContainer="<%= journalDisplayContext.getSearchContainer() %>"
->
+<liferay-ui:search-container emptyResultsMessage="no-comment-was-found" searchContainer="<%= journalDisplayContext.getSearchContainer() %>">
 	<liferay-ui:search-container-row
 		className="com.liferay.message.boards.model.MBMessage"
 		cssClass="entry-display-style selectable"
@@ -36,14 +33,9 @@
 
 		<c:choose>
 			<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "descriptive") %>'>
-				<liferay-ui:search-container-column-image
-					src="<%= (userDisplay != null) ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
-					toggleRowChecker="<%= false %>"
-				/>
+				<liferay-ui:search-container-column-image src="<%= (userDisplay != null) ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>" toggleRowChecker="<%= false %>" />
 
-				<liferay-ui:search-container-column-text
-					colspan="<%= 2 %>"
-				>
+				<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 					<h6 class="text-default">
 						<%= HtmlUtil.extractText(content) %>
 					</h6>
@@ -51,7 +43,11 @@
 					<h6 class="text-default">
 						<strong><liferay-ui:message key="last-updated" />:</strong>
 
-						<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - mbMessage.getModifiedDate().getTime(), true), HtmlUtil.escape(mbMessage.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - mbMessage.getModifiedDate().getTime(), true), HtmlUtil.escape(mbMessage.getUserName())} %>"
+							key="x-ago-by-x"
+							translateArguments="<%= false %>"
+						/>
 					</h6>
 				</liferay-ui:search-container-column-text>
 			</c:when>
@@ -62,9 +58,7 @@
 				%>
 
 				<liferay-ui:search-container-column-text>
-					<clay:vertical-card
-						verticalCard="<%= new JournalArticleCommentsVerticalCard(mbMessage, renderRequest) %>"
-					/>
+					<clay:vertical-card verticalCard="<%= new JournalArticleCommentsVerticalCard(mbMessage, renderRequest) %>" />
 				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:otherwise>
@@ -80,16 +74,10 @@
 					value="<%= HtmlUtil.extractText(content) %>"
 				/>
 
-				<liferay-ui:search-container-column-date
-					name="modified-date"
-					property="modifiedDate"
-				/>
+				<liferay-ui:search-container-column-date name="modified-date" property="modifiedDate" />
 			</c:otherwise>
 		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		displayStyle="<%= journalDisplayContext.getDisplayStyle() %>"
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator displayStyle="<%= journalDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 </liferay-ui:search-container>

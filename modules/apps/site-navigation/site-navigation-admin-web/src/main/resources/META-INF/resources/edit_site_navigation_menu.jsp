@@ -39,7 +39,11 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 				<c:if test="<%= !scopeGroup.isCompany() %>">
 					<li class="nav-item">
 						<button class="btn btn-unstyled nav-link nav-link-monospaced" id="<portlet:namespace />showSiteNavigationMenuSettings" type="button">
-							<aui:icon cssClass="icon-monospaced" image="cog" markupView="lexicon" />
+							<aui:icon
+								cssClass="icon-monospaced"
+								image="cog"
+								markupView="lexicon"
+							/>
 						</button>
 					</li>
 				</c:if>
@@ -47,9 +51,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 				<li class="nav-item">
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle nav-btn nav-btn-monospaced" type="button">
-							<clay:icon
-								symbol="plus"
-							/>
+							<clay:icon symbol="plus" />
 						</button>
 
 						<%
@@ -58,10 +60,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 						data.put("dropdownItems", siteNavigationAdminDisplayContext.getAddSiteNavigationMenuItemDropdownItems());
 						%>
 
-						<react:component
-							data="<%= data %>"
-							module="js/add_menu/index"
-						/>
+						<react:component data="<%= data %>" module="js/add_menu/index" />
 					</div>
 				</li>
 			</ul>
@@ -71,13 +70,25 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 <div class="container-fluid-1280 contextual-sidebar-content site-navigation-content">
 	<div class="lfr-search-container-wrapper site-navigation-menu-container">
-		<liferay-ui:error embed="<%= false %>" key="<%= InvalidSiteNavigationMenuItemOrderException.class.getName() %>" message="the-order-of-site-navigation-menu-items-is-invalid" />
+		<liferay-ui:error
+			embed="<%= false %>"
+			key="<%= InvalidSiteNavigationMenuItemOrderException.class.getName() %>"
+			message="the-order-of-site-navigation-menu-items-is-invalid"
+		/>
 
 		<liferay-ui:error embed="<%= false %>" exception="<%= SiteNavigationMenuItemNameException.class %>">
-			<liferay-ui:message arguments='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' key="please-enter-a-name-with-fewer-than-x-characters" translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>'
+				key="please-enter-a-name-with-fewer-than-x-characters"
+				translateArguments="<%= false %>"
+			/>
 		</liferay-ui:error>
 
-		<liferay-ui:error embed="<%= false %>" exception="<%= NoSuchLayoutException.class %>" message="the-page-could-not-be-found" />
+		<liferay-ui:error
+			embed="<%= false %>"
+			exception="<%= NoSuchLayoutException.class %>"
+			message="the-page-could-not-be-found"
+		/>
 
 		<%
 		List<SiteNavigationMenuItem> siteNavigationMenuItems = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(siteNavigationAdminDisplayContext.getSiteNavigationMenuId(), 0);

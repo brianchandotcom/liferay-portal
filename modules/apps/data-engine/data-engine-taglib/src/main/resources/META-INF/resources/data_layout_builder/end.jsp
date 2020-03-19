@@ -38,8 +38,5 @@ data.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 %>
 
 <div id="<%= componentId + "container" %>">
-	<react:component
-		data="<%= data %>"
-		module="data_layout_builder/js/App.es"
-	/>
+	<react:component data="<%= data %>" module="data_layout_builder/js/App.es" />
 </div>

@@ -20,14 +20,10 @@
 SelectTeamDisplayContext selectTeamDisplayContext = new SelectTeamDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new SelectTeamManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectTeamDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new SelectTeamManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectTeamDisplayContext) %>" />
 
 <aui:form cssClass="container-fluid-1280" name="selectTeamFm">
-	<liferay-ui:search-container
-		searchContainer="<%= selectTeamDisplayContext.getTeamSearchContainer() %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= selectTeamDisplayContext.getTeamSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.TeamModel"
 			keyProperty="teamId"
@@ -53,18 +49,17 @@ SelectTeamDisplayContext selectTeamDisplayContext = new SelectTeamDisplayContext
 
 			<c:choose>
 				<c:when test='<%= Objects.equals(selectTeamDisplayContext.getDisplayStyle(), "descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="users"
-						toggleRowChecker="<%= true %>"
-					/>
+					<liferay-ui:search-container-column-icon icon="users" toggleRowChecker="<%= true %>" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h5>
 							<c:choose>
 								<c:when test="<%= !disabled %>">
-									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<aui:a
+										cssClass="selector-button"
+										data="<%= data %>"
+										href="javascript:;"
+									>
 										<%= HtmlUtil.escape(curTeam.getName()) %>
 									</aui:a>
 								</c:when>
@@ -80,13 +75,14 @@ SelectTeamDisplayContext selectTeamDisplayContext = new SelectTeamDisplayContext
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(selectTeamDisplayContext.getDisplayStyle(), "list") %>'>
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						name="name"
-					>
+					<liferay-ui:search-container-column-text cssClass="table-cell-content" name="name">
 						<c:choose>
 							<c:when test="<%= !disabled %>">
-								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<aui:a
+									cssClass="selector-button"
+									data="<%= data %>"
+									href="javascript:;"
+								>
 									<%= HtmlUtil.escape(curTeam.getName()) %>
 								</aui:a>
 							</c:when>
@@ -105,10 +101,7 @@ SelectTeamDisplayContext selectTeamDisplayContext = new SelectTeamDisplayContext
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= selectTeamDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= selectTeamDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

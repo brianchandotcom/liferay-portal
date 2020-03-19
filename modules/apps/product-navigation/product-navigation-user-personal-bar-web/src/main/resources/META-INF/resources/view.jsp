@@ -19,10 +19,7 @@
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 		<span class="user-avatar-link">
-			<liferay-product-navigation:personal-menu
-				size="lg"
-				user="<%= user %>"
-			/>
+			<liferay-product-navigation:personal-menu size="lg" user="<%= user %>" />
 
 			<%
 			int notificationsCount = GetterUtil.getInteger(request.getAttribute(ProductNavigationUserPersonalBarWebKeys.NOTIFICATIONS_COUNT));
@@ -53,7 +50,14 @@
 		%>
 
 		<span class="sign-in text-default" role="presentation">
-			<aui:icon cssClass="sign-in text-default" data="<%= anchorData %>" image="user" label="sign-in" markupView="lexicon" url="<%= themeDisplay.getURLSignIn() %>" />
+			<aui:icon
+				cssClass="sign-in text-default"
+				data="<%= anchorData %>"
+				image="user"
+				label="sign-in"
+				markupView="lexicon"
+				url="<%= themeDisplay.getURLSignIn() %>"
+			/>
 		</span>
 	</c:otherwise>
 </c:choose>

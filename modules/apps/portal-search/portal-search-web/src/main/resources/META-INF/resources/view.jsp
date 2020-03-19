@@ -27,24 +27,42 @@ portletURL.setWindowState(WindowState.MAXIMIZED);
 pageContext.setAttribute("portletURL", portletURL);
 %>
 
-<aui:form action="<%= portletURL %>" method="get" name="fm" onSubmit='<%= renderResponse.getNamespace() + "search(); event.preventDefault();" %>'>
+<aui:form
+	action="<%= portletURL %>"
+	method="get"
+	name="fm"
+	onSubmit='<%= renderResponse.getNamespace() + "search(); event.preventDefault();" %>'
+>
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 
 	<aui:fieldset>
-		<aui:input cssClass="search-input search-portlet-keywords-input" inlineField="<%= true %>" label="" name="keywords" placeholder="search" size="30" title="search" type="text" value="<%= HtmlUtil.escapeAttribute(searchDisplayContext.getKeywords()) %>" />
+		<aui:input
+			cssClass="search-input search-portlet-keywords-input"
+			inlineField="<%= true %>"
+			label=""
+			name="keywords"
+			placeholder="search"
+			size="30"
+			title="search"
+			type="text"
+			value="<%= HtmlUtil.escapeAttribute(searchDisplayContext.getKeywords()) %>"
+		/>
 
 		<%
 		String taglibOnClick = "Liferay.Util.focusFormField('#" + renderResponse.getNamespace() + "keywords');";
 		%>
 
-		<liferay-ui:quick-access-entry
-			label="skip-to-search"
-			onClick="<%= taglibOnClick %>"
-		/>
+		<liferay-ui:quick-access-entry label="skip-to-search" onClick="<%= taglibOnClick %>" />
 
 		<c:choose>
 			<c:when test="<%= searchDisplayContext.isSearchScopePreferenceLetTheUserChoose() %>">
-				<aui:select cssClass="search-select" inlineField="<%= true %>" label="" name="scope" title="scope">
+				<aui:select
+					cssClass="search-select"
+					inlineField="<%= true %>"
+					label=""
+					name="scope"
+					title="scope"
+				>
 					<aui:option label="this-site" value="this-site" />
 
 					<c:if test="<%= searchDisplayContext.isSearchScopePreferenceEverythingAvailable() %>">
@@ -53,7 +71,11 @@ pageContext.setAttribute("portletURL", portletURL);
 				</aui:select>
 			</c:when>
 			<c:otherwise>
-				<aui:input name="scope" type="hidden" value="<%= searchDisplayContext.getSearchScopeParameterString() %>" />
+				<aui:input
+					name="scope"
+					type="hidden"
+					value="<%= searchDisplayContext.getSearchScopeParameterString() %>"
+				/>
 			</c:otherwise>
 		</c:choose>
 

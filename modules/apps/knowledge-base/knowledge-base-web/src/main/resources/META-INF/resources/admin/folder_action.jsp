@@ -65,10 +65,7 @@ else {
 				<portlet:param name="kbFolderId" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />
 			</liferay-portlet:renderURL>
 
-			<liferay-ui:icon
-				message="edit"
-				url="<%= editURL %>"
-			/>
+			<liferay-ui:icon message="edit" url="<%= editURL %>" />
 		</c:if>
 
 		<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.MOVE_KB_FOLDER) %>">
@@ -81,10 +78,7 @@ else {
 				<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbFolder.getParentKBFolderId()) %>" />
 			</liferay-portlet:renderURL>
 
-			<liferay-ui:icon
-				message="move"
-				url="<%= moveKBFolderURL %>"
-			/>
+			<liferay-ui:icon message="move" url="<%= moveKBFolderURL %>" />
 		</c:if>
 
 		<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.DELETE) %>">
@@ -94,9 +88,7 @@ else {
 				<portlet:param name="kbFolderId" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />
 			</liferay-portlet:actionURL>
 
-			<liferay-ui:icon-delete
-				url="<%= deleteURL %>"
-			/>
+			<liferay-ui:icon-delete url="<%= deleteURL %>" />
 		</c:if>
 	</c:if>
 

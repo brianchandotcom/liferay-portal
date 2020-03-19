@@ -38,13 +38,22 @@ renderResponse.setTitle((category == null) ? LanguageUtil.get(request, "add-new-
 	<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
 </portlet:actionURL>
 
-<liferay-frontend:edit-form
-	action="<%= editCategoryURL %>"
-	name="fm"
->
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
-	<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
+<liferay-frontend:edit-form action="<%= editCategoryURL %>" name="fm">
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="categoryId"
+		type="hidden"
+		value="<%= categoryId %>"
+	/>
+	<aui:input
+		name="parentCategoryId"
+		type="hidden"
+		value="<%= parentCategoryId %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= AssetCategoryNameException.class %>" message="please-enter-a-valid-name" />
@@ -58,7 +67,14 @@ renderResponse.setTitle((category == null) ? LanguageUtil.get(request, "add-new-
 				collapsible="<%= true %>"
 				label="details"
 			>
-				<aui:input label="name" localized="<%= true %>" name="title" placeholder="name" type="text" value="<%= (category == null) ? StringPool.BLANK : assetCategoriesDisplayContext.getCategoryLocalizationXML(category) %>">
+				<aui:input
+					label="name"
+					localized="<%= true %>"
+					name="title"
+					placeholder="name"
+					type="text"
+					value="<%= (category == null) ? StringPool.BLANK : assetCategoriesDisplayContext.getCategoryLocalizationXML(category) %>"
+				>
 					<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AssetCategory.class.getName(), "name") %></aui:validator>
 					<aui:validator name="required" />
 				</aui:input>
@@ -82,9 +98,7 @@ renderResponse.setTitle((category == null) ? LanguageUtil.get(request, "add-new-
 					collapsible="<%= true %>"
 					label="permissions"
 				>
-					<liferay-ui:input-permissions
-						modelName="<%= AssetCategory.class.getName() %>"
-					/>
+					<liferay-ui:input-permissions modelName="<%= AssetCategory.class.getName() %>" />
 				</liferay-frontend:fieldset>
 			</c:if>
 		</liferay-frontend:fieldset-group>

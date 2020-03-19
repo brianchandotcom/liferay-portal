@@ -42,7 +42,11 @@ if (hasUpdatePermission) {
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.VIEW) %>">
-		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="viewRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+		<portlet:renderURL
+			copyCurrentRenderParameters="<%= false %>"
+			var="viewRecordURL"
+			windowState="<%= WindowState.MAXIMIZED.toString() %>"
+		>
 			<portlet:param name="mvcPath" value="/view_record.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
@@ -51,34 +55,34 @@ if (hasUpdatePermission) {
 			<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="view[action]"
-			url="<%= viewRecordURL %>"
-		/>
+		<liferay-ui:icon message="view[action]" url="<%= viewRecordURL %>" />
 	</c:if>
 
 	<c:if test="<%= hasUpdatePermission %>">
-		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+		<portlet:renderURL
+			copyCurrentRenderParameters="<%= false %>"
+			var="editRecordURL"
+			windowState="<%= WindowState.MAXIMIZED.toString() %>"
+		>
 			<portlet:param name="mvcPath" value="/edit_record.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
 			<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editRecordURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editRecordURL %>" />
 	</c:if>
 
 	<c:if test="<%= hasDeletePermission %>">
-		<portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="deleteRecord" var="deleteRecordURL">
+		<portlet:actionURL
+			copyCurrentRenderParameters="<%= false %>"
+			name="deleteRecord"
+			var="deleteRecordURL"
+		>
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="recordIds" value="<%= String.valueOf(record.getRecordId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteRecordURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteRecordURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

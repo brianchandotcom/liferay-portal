@@ -31,7 +31,11 @@ String backURL = (String)row.getParameter("backURL");
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<liferay-portlet:renderURL
+		portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>"
+		var="editURL"
+		windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+	>
 		<portlet:param name="mvcPath" value="/designer/edit_kaleo_definition_version.jsp" />
 		<portlet:param name="tabs1" value="published" />
 		<portlet:param name="closeRedirect" value="<%= backURL %>" />
@@ -60,8 +64,5 @@ String backURL = (String)row.getParameter("backURL");
 		<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon
-		message="unpublish"
-		url="<%= deactivateWorkflowDefinition %>"
-	/>
+	<liferay-ui:icon message="unpublish" url="<%= deactivateWorkflowDefinition %>" />
 </liferay-ui:icon-menu>

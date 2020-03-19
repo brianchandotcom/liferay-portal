@@ -26,7 +26,11 @@
 	PrincipalException.MustBeEnabled pe = (PrincipalException.MustBeEnabled)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= pe.resourceName %>" key="x-is-not-enabled" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= pe.resourceName %>"
+		key="x-is-not-enabled"
+		translateArguments="<%= false %>"
+	/>
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= PrincipalException.MustBeInvokedUsingPost.class %>" message="an-unexpected-error-occurred-while-connecting-to-the-specified-url" />

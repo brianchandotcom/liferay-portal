@@ -30,19 +30,14 @@
 				iteratorURL="<%= portletURL %>"
 				total="<%= GadgetLocalServiceUtil.getGadgetsCount(company.getCompanyId()) %>"
 			>
-				<liferay-ui:search-container-results
-					results="<%= GadgetLocalServiceUtil.getGadgets(company.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd()) %>"
-				/>
+				<liferay-ui:search-container-results results="<%= GadgetLocalServiceUtil.getGadgets(company.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 				<liferay-ui:search-container-row
 					className="com.liferay.opensocial.model.Gadget"
 					keyProperty="gadgetId"
 					modelVar="gadget"
 				>
-					<liferay-ui:search-container-column-text
-						name="gadget"
-						property="name"
-					/>
+					<liferay-ui:search-container-column-text name="gadget" property="name" />
 
 					<%
 					String gadgetURL = gadget.getUrl();

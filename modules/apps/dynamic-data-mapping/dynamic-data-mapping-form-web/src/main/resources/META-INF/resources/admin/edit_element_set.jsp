@@ -41,10 +41,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 </portlet:actionURL>
 
 <div class="portlet-forms" id="<portlet:namespace />formContainer">
-	<clay:navigation-bar
-		inverted="<%= true %>"
-		navigationItems="<%= ddmFormAdminDisplayContext.getElementSetBuilderNavigationItems() %>"
-	/>
+	<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= ddmFormAdminDisplayContext.getElementSetBuilderNavigationItems() %>" />
 
 	<nav class="management-bar management-bar-light navbar navbar-expand-md toolbar-group-field">
 		<div class="container toolbar">
@@ -70,13 +67,42 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 		/>
 	</div>
 
-	<aui:form action="<%= saveStructureURL %>" cssClass="ddm-form-builder-form" method="post" name="editForm">
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-		<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
-		<aui:input name="structureKey" type="hidden" value="<%= structureKey %>" />
-		<aui:input name="serializedFormBuilderContext" type="hidden" value="<%= serializedFormBuilderContext %>" />
-		<aui:input name="serializedSettingsContext" type="hidden" value="" />
+	<aui:form
+		action="<%= saveStructureURL %>"
+		cssClass="ddm-form-builder-form"
+		method="post"
+		name="editForm"
+	>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="groupId"
+			type="hidden"
+			value="<%= groupId %>"
+		/>
+		<aui:input
+			name="structureId"
+			type="hidden"
+			value="<%= structureId %>"
+		/>
+		<aui:input
+			name="structureKey"
+			type="hidden"
+			value="<%= structureKey %>"
+		/>
+		<aui:input
+			name="serializedFormBuilderContext"
+			type="hidden"
+			value="<%= serializedFormBuilderContext %>"
+		/>
+		<aui:input
+			name="serializedSettingsContext"
+			type="hidden"
+			value=""
+		/>
 
 		<%@ include file="/admin/exceptions.jspf" %>
 

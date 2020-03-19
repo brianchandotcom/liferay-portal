@@ -23,7 +23,11 @@ Set<String> contextNames = JSONWebServiceActionsManagerUtil.getContextNames();
 %>
 
 <c:if test="<%= contextNames.size() > 1 %>">
-	<aui:select cssClass="lfr-api-context" label="context-name" name="contextName">
+	<aui:select
+		cssClass="lfr-api-context"
+		label="context-name"
+		name="contextName"
+	>
 
 		<%
 		for (String curContextName : contextNames) {
@@ -34,7 +38,12 @@ Set<String> contextNames = JSONWebServiceActionsManagerUtil.getContextNames();
 			}
 		%>
 
-			<aui:option label="<%= curContextNameView %>" localizeLabel="<%= false %>" selected="<%= contextName.equals(curContextName) %>" value="<%= curContextName %>" />
+			<aui:option
+				label="<%= curContextNameView %>"
+				localizeLabel="<%= false %>"
+				selected="<%= contextName.equals(curContextName) %>"
+				value="<%= curContextName %>"
+			/>
 
 		<%
 		}
@@ -43,7 +52,13 @@ Set<String> contextNames = JSONWebServiceActionsManagerUtil.getContextNames();
 	</aui:select>
 </c:if>
 
-<aui:input autoFocus="<%= true %>" cssClass="lfr-api-service-search" label="" name="serviceSearch" placeholder="search" />
+<aui:input
+	autoFocus="<%= true %>"
+	cssClass="lfr-api-service-search"
+	label=""
+	name="serviceSearch"
+	placeholder="search"
+/>
 
 <div class="services" id="services">
 

@@ -20,15 +20,10 @@
 SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = new SelectOrganizationsDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new SelectOrganizationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectOrganizationsDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new SelectOrganizationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectOrganizationsDisplayContext) %>" />
 
 <aui:form cssClass="container-fluid-1280" name="fm">
-	<liferay-ui:search-container
-		id="organizations"
-		searchContainer="<%= selectOrganizationsDisplayContext.getOrganizationSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="organizations" searchContainer="<%= selectOrganizationsDisplayContext.getOrganizationSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Organization"
 			escapedModel="<%= true %>"
@@ -45,10 +40,7 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = new Select
 			<%@ include file="/organization_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= selectOrganizationsDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= selectOrganizationsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

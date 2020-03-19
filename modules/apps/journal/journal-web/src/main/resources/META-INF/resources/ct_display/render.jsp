@@ -52,6 +52,4 @@ DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(siteGroupId,
 
 <b><liferay-ui:message key="content" /></b>:
 
-<liferay-journal:journal-article-display
-	articleDisplay="<%= journalArticleDisplay %>"
-/>
+<liferay-journal:journal-article-display articleDisplay="<%= journalArticleDisplay %>" />

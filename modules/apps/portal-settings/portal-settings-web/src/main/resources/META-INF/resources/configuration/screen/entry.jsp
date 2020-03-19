@@ -74,11 +74,25 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 		</c:if>
 	</h2>
 
-	<aui:form action="<%= editCompanyURL %>" data-senna-off="true" method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:form
+		action="<%= editCompanyURL %>"
+		data-senna-off="true"
+		method="post"
+		name="fm"
+	>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= currentURL %>"
+		/>
 
 		<c:if test="<%= Validator.isNotNull(portalSettingsConfigurationScreenContributor.getSaveMVCActionCommandName()) %>">
-			<aui:input id="<%= PortalUtil.generateRandomKey(request, portalSettingsConfigurationScreenContributor.getKey()) %>" name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="<%= portalSettingsConfigurationScreenContributor.getSaveMVCActionCommandName() %>" />
+			<aui:input
+				id="<%= PortalUtil.generateRandomKey(request, portalSettingsConfigurationScreenContributor.getKey()) %>"
+				name="<%= ActionRequest.ACTION_NAME %>"
+				type="hidden"
+				value="<%= portalSettingsConfigurationScreenContributor.getSaveMVCActionCommandName() %>"
+			/>
 		</c:if>
 
 		<liferay-util:include page="<%= portalSettingsConfigurationScreenContributor.getJspPath() %>" servletContext="<%= portalSettingsConfigurationScreenContributor.getServletContext() %>" />
@@ -90,7 +104,11 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 				</div>
 
 				<div class="btn-group-item">
-					<aui:button href="<%= redirect %>" name="cancel" type="cancel" />
+					<aui:button
+						href="<%= redirect %>"
+						name="cancel"
+						type="cancel"
+					/>
 				</div>
 			</div>
 		</div>

@@ -79,16 +79,31 @@ if (portletTitleBasedNavigation) {
 		<portlet:param name="mvcRenderCommandName" value="/bookmarks/move_entry" />
 	</portlet:actionURL>
 
-	<aui:form action="<%= moveEntryURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry(false);" %>'>
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.MOVE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="newFolderId" type="hidden" value="<%= newFolderId %>" />
+	<aui:form
+		action="<%= moveEntryURL %>"
+		enctype="multipart/form-data"
+		method="post"
+		name="fm"
+		onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry(false);" %>'
+	>
+		<aui:input
+			name="<%= Constants.CMD %>"
+			type="hidden"
+			value="<%= Constants.MOVE %>"
+		/>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="newFolderId"
+			type="hidden"
+			value="<%= newFolderId %>"
+		/>
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				backURL="<%= redirect %>"
-				title="move-entries"
-			/>
+			<liferay-ui:header backURL="<%= redirect %>" title="move-entries" />
 		</c:if>
 
 		<aui:fieldset-group markupView="lexicon">
@@ -109,10 +124,7 @@ if (portletTitleBasedNavigation) {
 							%>
 
 								<li class="move-folder">
-									<liferay-ui:icon
-										icon="<%= assetRenderer.getIconCssClass() %>"
-										markupView="lexicon"
-									/>
+									<liferay-ui:icon icon="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
 
 									<span class="folder-title">
 										<%= HtmlUtil.escape(folder.getName()) %>
@@ -143,10 +155,7 @@ if (portletTitleBasedNavigation) {
 							%>
 
 								<li class="icon-warning-sign move-error move-folder">
-									<liferay-ui:icon
-										icon="<%= assetRenderer.getIconCssClass() %>"
-										markupView="lexicon"
-									/>
+									<liferay-ui:icon icon="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
 
 									<span class="folder-title">
 										<%= HtmlUtil.escape(folder.getName()) %>
@@ -164,7 +173,11 @@ if (portletTitleBasedNavigation) {
 					</div>
 				</c:if>
 
-				<aui:input name="rowIdsBookmarksFolder" type="hidden" value="<%= ListUtil.toString(validMoveFolders, BookmarksFolder.FOLDER_ID_ACCESSOR) %>" />
+				<aui:input
+					name="rowIdsBookmarksFolder"
+					type="hidden"
+					value="<%= ListUtil.toString(validMoveFolders, BookmarksFolder.FOLDER_ID_ACCESSOR) %>"
+				/>
 
 				<c:if test="<%= !validMoveEntries.isEmpty() %>">
 					<div class="move-list-info">
@@ -182,10 +195,7 @@ if (portletTitleBasedNavigation) {
 							%>
 
 								<li class="move-file">
-									<liferay-ui:icon
-										icon="<%= assetRenderer.getIconCssClass() %>"
-										markupView="lexicon"
-									/>
+									<liferay-ui:icon icon="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
 
 									<span class="file-title" title="<%= HtmlUtil.escapeAttribute(validMoveEntry.getName()) %>">
 										<%= HtmlUtil.escape(validMoveEntry.getName()) %>
@@ -216,10 +226,7 @@ if (portletTitleBasedNavigation) {
 							%>
 
 								<li class="icon-warning-sign move-error move-file">
-									<liferay-ui:icon
-										icon="<%= assetRenderer.getIconCssClass() %>"
-										markupView="lexicon"
-									/>
+									<liferay-ui:icon icon="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
 
 									<span class="file-title" title="<%= HtmlUtil.escapeAttribute(invalidMoveEntry.getName()) %>">
 										<%= HtmlUtil.escape(invalidMoveEntry.getName()) %>
@@ -237,7 +244,11 @@ if (portletTitleBasedNavigation) {
 					</div>
 				</c:if>
 
-				<aui:input name="rowIdsBookmarksEntry" type="hidden" value="<%= ListUtil.toString(validMoveEntries, BookmarksEntry.ENTRY_ID_ACCESSOR) %>" />
+				<aui:input
+					name="rowIdsBookmarksEntry"
+					type="hidden"
+					value="<%= ListUtil.toString(validMoveEntries, BookmarksEntry.ENTRY_ID_ACCESSOR) %>"
+				/>
 
 				<%
 				String folderName = StringPool.BLANK;
@@ -255,7 +266,12 @@ if (portletTitleBasedNavigation) {
 				%>
 
 				<div class="form-group">
-					<aui:input label="new-folder" name="folderName" type="resource" value="<%= folderName %>" />
+					<aui:input
+						label="new-folder"
+						name="folderName"
+						type="resource"
+						value="<%= folderName %>"
+					/>
 
 					<aui:button name="selectFolderButton" value="select" />
 				</div>

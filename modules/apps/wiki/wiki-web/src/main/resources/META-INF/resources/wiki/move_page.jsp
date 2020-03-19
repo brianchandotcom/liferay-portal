@@ -36,10 +36,7 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 
 <portlet:actionURL name="/wiki/move_page" var="movePageURL" />
 
-<liferay-ui:tabs
-	names="rename,change-parent"
-	refresh="<%= false %>"
->
+<liferay-ui:tabs names="rename,change-parent" refresh="<%= false %>">
 
 	<%
 	boolean pending = false;

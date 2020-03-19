@@ -41,18 +41,11 @@ if (Validator.isNotNull(title)) {
 
 <portlet:actionURL name="/journal/restore_trash_entries" var="restoreTrashEntriesURL" />
 
-<liferay-trash:undo
-	portletURL="<%= restoreTrashEntriesURL %>"
-/>
+<liferay-trash:undo portletURL="<%= restoreTrashEntriesURL %>" />
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems='<%= journalDisplayContext.getNavigationBarItems("web-content") %>'
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems='<%= journalDisplayContext.getNavigationBarItems("web-content") %>' />
 
-<clay:management-toolbar
-	displayContext="<%= journalManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= journalManagementToolbarDisplayContext %>" />
 
 <liferay-frontend:component
 	componentId="<%= journalManagementToolbarDisplayContext.getDefaultEventHandler() %>"
@@ -62,29 +55,40 @@ if (Validator.isNotNull(title)) {
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<c:if test="<%= journalDisplayContext.isShowInfoButton() %>">
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/journal/info_panel" var="sidebarPanelURL">
+		<liferay-portlet:resourceURL
+			copyCurrentRenderParameters="<%= false %>"
+			id="/journal/info_panel"
+			var="sidebarPanelURL"
+		>
 			<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
 		</liferay-portlet:resourceURL>
 
-		<liferay-frontend:sidebar-panel
-			resourceURL="<%= sidebarPanelURL %>"
-			searchContainerId="articles"
-		>
+		<liferay-frontend:sidebar-panel resourceURL="<%= sidebarPanelURL %>" searchContainerId="articles">
 			<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
 		</liferay-frontend:sidebar-panel>
 	</c:if>
 
 	<div class="sidenav-content">
 		<c:if test="<%= !journalDisplayContext.isNavigationMine() && !journalDisplayContext.isNavigationRecent() %>">
-			<liferay-site-navigation:breadcrumb
-				breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(journalDisplayContext.getFolder(), request, journalDisplayContext.getPortletURL()) %>"
-			/>
+			<liferay-site-navigation:breadcrumb breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(journalDisplayContext.getFolder(), request, journalDisplayContext.getPortletURL()) %>" />
 		</c:if>
 
-		<aui:form action="<%= journalDisplayContext.getPortletURL() %>" method="get" name="fm">
+		<aui:form
+			action="<%= journalDisplayContext.getPortletURL() %>"
+			method="get"
+			name="fm"
+		>
 			<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value="<%= currentURL %>"
+			/>
+			<aui:input
+				name="groupId"
+				type="hidden"
+				value="<%= scopeGroupId %>"
+			/>
 			<aui:input name="newFolderId" type="hidden" />
 
 			<c:choose>

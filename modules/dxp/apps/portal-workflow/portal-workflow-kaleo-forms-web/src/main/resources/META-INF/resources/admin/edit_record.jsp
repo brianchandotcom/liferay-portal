@@ -58,14 +58,47 @@ renderResponse.setTitle((ddlRecord != null) ? LanguageUtil.format(request, "edit
 
 <div class="container-fluid-1280 sidenav-container sidenav-right">
 	<div class="lfr-form-content">
-		<aui:form action="<%= updateDDLRecordURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" onSubmit='<%= "event.preventDefault(); submitForm(event.target);" %>'>
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
-			<aui:input name="ddlRecordId" type="hidden" value="<%= String.valueOf(ddlRecordId) %>" />
-			<aui:input name="ddlRecordSetId" type="hidden" value="<%= String.valueOf(kaleoProcess.getDDLRecordSetId()) %>" />
-			<aui:input name="ddmTemplateId" type="hidden" value="<%= String.valueOf(ddmTemplateId) %>" />
-			<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
-			<aui:input name="workflowTaskId" type="hidden" value="<%= String.valueOf(workflowTaskId) %>" />
+		<aui:form
+			action="<%= updateDDLRecordURL %>"
+			cssClass="lfr-dynamic-form"
+			enctype="multipart/form-data"
+			onSubmit='<%= "event.preventDefault(); submitForm(event.target);" %>'
+		>
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value="<%= currentURL %>"
+			/>
+			<aui:input
+				name="groupId"
+				type="hidden"
+				value="<%= String.valueOf(groupId) %>"
+			/>
+			<aui:input
+				name="ddlRecordId"
+				type="hidden"
+				value="<%= String.valueOf(ddlRecordId) %>"
+			/>
+			<aui:input
+				name="ddlRecordSetId"
+				type="hidden"
+				value="<%= String.valueOf(kaleoProcess.getDDLRecordSetId()) %>"
+			/>
+			<aui:input
+				name="ddmTemplateId"
+				type="hidden"
+				value="<%= String.valueOf(ddmTemplateId) %>"
+			/>
+			<aui:input
+				name="workflowAction"
+				type="hidden"
+				value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>"
+			/>
+			<aui:input
+				name="workflowTaskId"
+				type="hidden"
+				value="<%= String.valueOf(workflowTaskId) %>"
+			/>
 
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
@@ -98,9 +131,19 @@ renderResponse.setTitle((ddlRecord != null) ? LanguageUtil.format(request, "edit
 			</aui:fieldset-group>
 
 			<aui:button-row>
-				<aui:button cssClass="btn-lg" name="saveButton" type="submit" value="save" />
+				<aui:button
+					cssClass="btn-lg"
+					name="saveButton"
+					type="submit"
+					value="save"
+				/>
 
-				<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
+				<aui:button
+					cssClass="btn-lg"
+					href="<%= redirect %>"
+					name="cancelButton"
+					type="cancel"
+				/>
 			</aui:button-row>
 		</aui:form>
 	</div>

@@ -22,10 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 SamlSpIdpConnection samlSpIdpConnection = (SamlSpIdpConnection)row.getObject();
 %>
 
-<liferay-ui:icon-menu
-	icon="<%= StringPool.BLANK %>"
-	message="<%= StringPool.BLANK %>"
->
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="/admin/edit_identity_provider_connection" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -43,7 +40,5 @@ SamlSpIdpConnection samlSpIdpConnection = (SamlSpIdpConnection)row.getObject();
 		<portlet:param name="samlSpIdpConnectionId" value="<%= String.valueOf(samlSpIdpConnection.getSamlSpIdpConnectionId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		url="<%= deleteURL %>"
-	/>
+	<liferay-ui:icon-delete url="<%= deleteURL %>" />
 </liferay-ui:icon-menu>

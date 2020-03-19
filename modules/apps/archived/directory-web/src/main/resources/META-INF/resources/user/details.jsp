@@ -35,9 +35,7 @@ for (int i = 1; i < organizations.size(); i++) {
 <h2><%= selUser.getFullName() %></h2>
 
 <div class="details">
-	<liferay-ui:user-portrait
-		user="<%= selUser %>"
-	/>
+	<liferay-ui:user-portrait user="<%= selUser %>" />
 
 	<dl class="property-list">
 		<c:if test="<%= Validator.isNotNull(selUser.getDisplayEmailAddress()) %>">

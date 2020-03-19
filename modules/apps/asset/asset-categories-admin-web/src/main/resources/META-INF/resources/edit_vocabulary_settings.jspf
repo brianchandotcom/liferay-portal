@@ -63,14 +63,23 @@ if (vocabulary != null) {
 
 		<div class="lfr-form-row lfr-form-row-inline">
 			<div class="row-fields">
-				<aui:select cssClass="vocabulary-asset-type-select" inlineField="<%= true %>" label="choose-asset-type" name='<%= "classNameId" + index %>'>
+				<aui:select
+					cssClass="vocabulary-asset-type-select"
+					inlineField="<%= true %>"
+					label="choose-asset-type"
+					name='<%= "classNameId" + index %>'
+				>
 					<aui:option label="all-asset-types" value="<%= AssetCategoryConstants.ALL_CLASS_NAME_ID %>" />
 
 					<%
 					for (AssetRendererFactory<?> assetRendererFactory : availableAssetRendererFactories) {
 					%>
 
-						<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) %>" selected="<%= classNameId == assetRendererFactory.getClassNameId() %>" value="<%= assetRendererFactory.getClassNameId() %>" />
+						<aui:option
+							label="<%= ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) %>"
+							selected="<%= classNameId == assetRendererFactory.getClassNameId() %>"
+							value="<%= assetRendererFactory.getClassNameId() %>"
+						/>
 
 					<%
 					}
@@ -89,18 +98,35 @@ if (vocabulary != null) {
 					}
 				%>
 
-					<aui:select inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-classNameId" + index %>' wrapperCssClass='<%= ((classNameId != assetRendererFactory.getClassNameId()) ? "hide " : "") + "subtype-select" %>'>
+					<aui:select
+						inlineField="<%= true %>"
+						label=""
+						name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-classNameId" + index %>'
+						wrapperCssClass='<%= ((classNameId != assetRendererFactory.getClassNameId()) ? "hide " : "") + "subtype-select" %>'
+					>
 						<c:if test="<%= !exist %>">
-							<aui:option label="none" selected="<%= true %>" value="<%= classTypePK %>" />
+							<aui:option
+								label="none"
+								selected="<%= true %>"
+								value="<%= classTypePK %>"
+							/>
 						</c:if>
 
-						<aui:option label="all-asset-subtypes" selected="<%= false %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_PK %>" />
+						<aui:option
+							label="all-asset-subtypes"
+							selected="<%= false %>"
+							value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_PK %>"
+						/>
 
 						<%
 						for (ClassType classType : classTypes) {
 						%>
 
-							<aui:option label="<%= classType.getName() %>" selected="<%= (classNameId == assetRendererFactory.getClassNameId()) && (classTypePK == classType.getClassTypeId()) %>" value="<%= classType.getClassTypeId() %>" />
+							<aui:option
+								label="<%= classType.getName() %>"
+								selected="<%= (classNameId == assetRendererFactory.getClassNameId()) && (classTypePK == classType.getClassTypeId()) %>"
+								value="<%= classType.getClassTypeId() %>"
+							/>
 
 						<%
 						}
@@ -120,7 +146,12 @@ if (vocabulary != null) {
 					</div>
 				</c:if>
 
-				<aui:input label="required" name='<%= "required" + index %>' type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isRequired(classNameId, classTypePK) : false %>" />
+				<aui:input
+					label="required"
+					name='<%= "required" + index %>'
+					type="toggle-switch"
+					value="<%= (vocabulary != null) ? vocabulary.isRequired(classNameId, classTypePK) : false %>"
+				/>
 			</div>
 		</div>
 
@@ -128,7 +159,11 @@ if (vocabulary != null) {
 	}
 	%>
 
-	<aui:input name="indexes" type="hidden" value="<%= indexes.toString() %>" />
+	<aui:input
+		name="indexes"
+		type="hidden"
+		value="<%= indexes.toString() %>"
+	/>
 </liferay-frontend:fieldset>
 
 <aui:script use="liferay-auto-fields">

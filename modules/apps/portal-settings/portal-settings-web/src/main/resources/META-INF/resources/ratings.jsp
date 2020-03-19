@@ -25,7 +25,11 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 <p><liferay-ui:message key="select-the-default-ratings-type-for-the-following-applications" /></p>
 
 <aui:fieldset id='<%= renderResponse.getNamespace() + "ratingsSettingsContainer" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
 
 	<%
 	Map<String, Map<String, RatingsType>> companyRatingsTypeMaps = companyPortletRatingsDefinitionDisplayContext.getCompanyRatingsTypeMaps();
@@ -55,7 +59,11 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 				for (RatingsType curRatingsType : RatingsType.values()) {
 				%>
 
-					<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= Objects.equals(ratingsType, curRatingsType) %>" value="<%= curRatingsType.getValue() %>" />
+					<aui:option
+						label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>"
+						selected="<%= Objects.equals(ratingsType, curRatingsType) %>"
+						value="<%= curRatingsType.getValue() %>"
+					/>
 
 				<%
 				}

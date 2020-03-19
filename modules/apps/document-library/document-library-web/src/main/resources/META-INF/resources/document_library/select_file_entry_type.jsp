@@ -42,13 +42,14 @@ portletURL.setParameter("eventName", eventName);
 	%>'
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectFileEntryTypeFm">
-	<liferay-ui:search-container
-		iteratorURL="<%= portletURL %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= DLFileEntryTypeServiceUtil.getFileEntryTypes(groupIds) %>"
-		/>
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="selectFileEntryTypeFm"
+>
+	<liferay-ui:search-container iteratorURL="<%= portletURL %>">
+		<liferay-ui:search-container-results results="<%= DLFileEntryTypeServiceUtil.getFileEntryTypes(groupIds) %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.document.library.kernel.model.DLFileEntryType"
@@ -68,13 +69,9 @@ portletURL.setParameter("eventName", eventName);
 			row.setData(rowData);
 			%>
 
-			<liferay-ui:search-container-column-icon
-				icon="edit-layout"
-			/>
+			<liferay-ui:search-container-column-icon icon="edit-layout" />
 
-			<liferay-ui:search-container-column-text
-				colspan="<%= 2 %>"
-			>
+			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 				<h5><%= HtmlUtil.escape(fileEntryType.getName(locale)) %></h5>
 
 				<h6 class="text-default">
@@ -83,10 +80,7 @@ portletURL.setParameter("eventName", eventName);
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="descriptive"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

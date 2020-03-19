@@ -36,10 +36,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 			<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<%
@@ -94,10 +91,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		managePagesURL.setParameter("redirect", currentURL);
 		%>
 
-		<liferay-ui:icon
-			message="manage-pages"
-			url="<%= managePagesURL.toString() %>"
-		/>
+		<liferay-ui:icon message="manage-pages" url="<%= managePagesURL.toString() %>" />
 	</c:if>
 
 	<%
@@ -127,10 +121,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 			<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="assign-members"
-			url="<%= assignURL %>"
-		/>
+		<liferay-ui:icon message="assign-members" url="<%= assignURL %>" />
 	</c:if>
 
 	<c:if test="<%= UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.DELETE) %>">

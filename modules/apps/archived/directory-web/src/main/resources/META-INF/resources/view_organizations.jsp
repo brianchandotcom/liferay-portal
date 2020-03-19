@@ -41,10 +41,7 @@ boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
+		<liferay-frontend:management-bar-navigation navigationKeys='<%= new String[] {"all"} %>' portletURL="<%= portletURL %>" />
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= orderByCol %>"
@@ -62,11 +59,13 @@ boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
-	<liferay-ui:search-container
-		searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
-		var="organizationSearchContainer"
-	>
-		<aui:input disabled="<%= true %>" name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<liferay-ui:search-container searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>" var="organizationSearchContainer">
+		<aui:input
+			disabled="<%= true %>"
+			name="organizationsRedirect"
+			type="hidden"
+			value="<%= portletURL.toString() %>"
+		/>
 
 		<%
 		OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearchContainer.getSearchTerms();
@@ -123,8 +122,6 @@ boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 			<%@ include file="/organization/search_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

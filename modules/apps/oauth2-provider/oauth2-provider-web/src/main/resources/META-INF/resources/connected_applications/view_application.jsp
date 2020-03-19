@@ -33,17 +33,30 @@ renderResponse.setTitle(oAuth2Application.getName());
 <div class="container-fluid-1280 view-application">
 	<portlet:actionURL name="/connected_applications/revoke_oauth2_authorizations" var="revokeOAuth2AuthorizationURL" />
 
-	<aui:form action="<%= revokeOAuth2AuthorizationURL %>" method="post" name="fm">
-		<aui:input name="backURL" type="hidden" value="<%= redirect %>" />
-		<aui:input name="mvcRenderCommandName" type="hidden" value="/connected_applications/view" />
-		<aui:input name="oAuth2AuthorizationIds" type="hidden" value='<%= ParamUtil.getString(request, "oAuth2AuthorizationId") %>' />
+	<aui:form
+		action="<%= revokeOAuth2AuthorizationURL %>"
+		method="post"
+		name="fm"
+	>
+		<aui:input
+			name="backURL"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="mvcRenderCommandName"
+			type="hidden"
+			value="/connected_applications/view"
+		/>
+		<aui:input
+			name="oAuth2AuthorizationIds"
+			type="hidden"
+			value='<%= ParamUtil.getString(request, "oAuth2AuthorizationId") %>'
+		/>
 
 		<aui:fieldset-group markupView="lexicon">
 			<div class="panel-body">
-				<liferay-ui:icon
-					cssClass="app-icon"
-					src="<%= oAuth2ConnectedApplicationsPortletDisplayContext.getThumbnailURL() %>"
-				/>
+				<liferay-ui:icon cssClass="app-icon" src="<%= oAuth2ConnectedApplicationsPortletDisplayContext.getThumbnailURL() %>" />
 
 				<h1 class="name">
 					<%= HtmlUtil.escape(oAuth2Application.getName()) %>
@@ -58,7 +71,11 @@ renderResponse.setTitle(oAuth2Application.getName());
 						<span><liferay-ui:message key="application-information" /></span>:
 
 						<c:if test="<%= !Validator.isBlank(oAuth2Application.getHomePageURL()) %>">
-							<aui:a href="<%= HtmlUtil.escapeJSLink(oAuth2Application.getHomePageURL()) %>" label="website" target="_blank" />
+							<aui:a
+								href="<%= HtmlUtil.escapeJSLink(oAuth2Application.getHomePageURL()) %>"
+								label="website"
+								target="_blank"
+							/>
 						</c:if>
 
 						<c:if test="<%= !Validator.isBlank(oAuth2Application.getPrivacyPolicyURL()) %>">
@@ -66,7 +83,11 @@ renderResponse.setTitle(oAuth2Application.getName());
 								<%= StringUtil.toLowerCase(LanguageUtil.get(request, "and")) %>
 							</c:if>
 
-							<aui:a href="<%= HtmlUtil.escapeJSLink(oAuth2Application.getPrivacyPolicyURL()) %>" label="privacy-policy" target="_blank" />
+							<aui:a
+								href="<%= HtmlUtil.escapeJSLink(oAuth2Application.getPrivacyPolicyURL()) %>"
+								label="privacy-policy"
+								target="_blank"
+							/>
 						</c:if>
 					</p>
 				</c:if>
@@ -84,9 +105,7 @@ renderResponse.setTitle(oAuth2Application.getName());
 
 						<li class="list-group-item list-group-item-flex">
 							<div class="autofit-col">
-								<clay:icon
-									symbol="check"
-								/>
+								<clay:icon symbol="check" />
 							</div>
 
 							<div class="autofit-col autofit-col-expand">
@@ -108,12 +127,20 @@ renderResponse.setTitle(oAuth2Application.getName());
 
 				<p class="last-access text-truncate">
 					<span><liferay-ui:message key="last-access" /></span>:
-					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - oAuth2Authorization.getAccessTokenCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - oAuth2Authorization.getAccessTokenCreateDate().getTime(), true) %>"
+						key="x-ago"
+						translateArguments="<%= false %>"
+					/>
 				</p>
 
 				<p class="authorization text-truncate">
 					<span><liferay-ui:message key="authorization" /></span>:
-					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - oAuth2Authorization.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - oAuth2Authorization.getCreateDate().getTime(), true) %>"
+						key="x-ago"
+						translateArguments="<%= false %>"
+					/>
 				</p>
 
 				<p class="authorization text-truncate">
@@ -131,11 +158,19 @@ renderResponse.setTitle(oAuth2Application.getName());
 
 				<p class="authorization text-truncate">
 					<span><liferay-ui:message key="expiration" /></span>:
-					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(locale, Math.abs(System.currentTimeMillis() - expirationDate.getTime()), true) %>" key='<%= expirationDate.before(new Date()) ? "x-ago" : "within-x" %>' translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= LanguageUtil.getTimeDescription(locale, Math.abs(System.currentTimeMillis() - expirationDate.getTime()), true) %>"
+						key='<%= expirationDate.before(new Date()) ? "x-ago" : "within-x" %>'
+						translateArguments="<%= false %>"
+					/>
 				</p>
 
 				<p class="buttons">
-					<aui:button cssClass="remove-access" id="removeAccess" value="remove-access" />
+					<aui:button
+						cssClass="remove-access"
+						id="removeAccess"
+						value="remove-access"
+					/>
 					<aui:button href="<%= PortalUtil.escapeRedirect(redirect) %>" value="cancel" />
 				</p>
 			</div>

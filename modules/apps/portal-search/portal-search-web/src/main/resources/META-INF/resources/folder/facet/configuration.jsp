@@ -49,15 +49,20 @@ FolderFacetPortletPreferences folderFacetPortletPreferences = new FolderFacetPor
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="display-settings"
-			>
+			<liferay-frontend:fieldset collapsible="<%= true %>" label="display-settings">
 				<div class="display-template">
 					<liferay-ddm:template-selector
 						className="<%= FolderSearchFacetTermDisplayContext.class.getName() %>"
@@ -69,17 +74,31 @@ FolderFacetPortletPreferences folderFacetPortletPreferences = new FolderFacetPor
 				</div>
 			</liferay-frontend:fieldset>
 
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="advanced-configuration"
-			>
-				<aui:input label="folder-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(FolderFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>" value="<%= folderFacetPortletPreferences.getParameterName() %>" />
+			<liferay-frontend:fieldset collapsible="<%= true %>" label="advanced-configuration">
+				<aui:input
+					label="folder-parameter-name"
+					name="<%= PortletPreferencesJspUtil.getInputName(FolderFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>"
+					value="<%= folderFacetPortletPreferences.getParameterName() %>"
+				/>
 
-				<aui:input label="max-terms" name="<%= PortletPreferencesJspUtil.getInputName(FolderFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>" value="<%= folderFacetPortletPreferences.getMaxTerms() %>" />
+				<aui:input
+					label="max-terms"
+					name="<%= PortletPreferencesJspUtil.getInputName(FolderFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>"
+					value="<%= folderFacetPortletPreferences.getMaxTerms() %>"
+				/>
 
-				<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(FolderFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= folderFacetPortletPreferences.getFrequencyThreshold() %>" />
+				<aui:input
+					label="frequency-threshold"
+					name="<%= PortletPreferencesJspUtil.getInputName(FolderFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>"
+					value="<%= folderFacetPortletPreferences.getFrequencyThreshold() %>"
+				/>
 
-				<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(FolderFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= folderFacetPortletPreferences.isFrequenciesVisible() %>" />
+				<aui:input
+					label="display-frequencies"
+					name="<%= PortletPreferencesJspUtil.getInputName(FolderFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>"
+					type="checkbox"
+					value="<%= folderFacetPortletPreferences.isFrequenciesVisible() %>"
+				/>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

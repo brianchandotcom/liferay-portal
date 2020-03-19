@@ -68,36 +68,112 @@ String jobTitle = BeanParamUtil.getString(selUser, request, "jobTitle");
 		<portlet:param name="mvcRenderCommandName" value="/login/create_account" />
 	</portlet:actionURL>
 
-	<aui:form action="<%= createAccountURL %>" method="post" name="fm">
-		<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
+	<aui:form
+		action="<%= createAccountURL %>"
+		method="post"
+		name="fm"
+	>
+		<aui:input
+			name="saveLastPath"
+			type="hidden"
+			value="<%= false %>"
+		/>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 
 		<c:if test="<%= Validator.isNotNull(redirect) %>">
-			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value="<%= redirect %>"
+			/>
 		</c:if>
 
-		<aui:input name="screenName" type="hidden" value="<%= screenName %>" />
-		<aui:input name="emailAddress" type="hidden" value="<%= emailAddress %>" />
-		<aui:input name="openId" type="hidden" value="<%= openId %>" />
-		<aui:input name="firstName" type="hidden" value="<%= firstName %>" />
-		<aui:input name="middleName" type="hidden" value="<%= middleName %>" />
-		<aui:input name="lastName" type="hidden" value="<%= lastName %>" />
-		<aui:input name="prefixId" type="hidden" value="<%= String.valueOf(prefixId) %>" />
-		<aui:input name="suffixId" type="hidden" value="<%= String.valueOf(suffixId) %>" />
-		<aui:input name="male" type="hidden" value="<%= String.valueOf(male) %>" />
-		<aui:input name="birthdayDay" type="hidden" value="<%= String.valueOf(birthdayCalendar.get(Calendar.DAY_OF_MONTH)) %>" />
-		<aui:input name="birthdayMonth" type="hidden" value="<%= String.valueOf(birthdayCalendar.get(Calendar.MONTH)) %>" />
-		<aui:input name="birthdayYear" type="hidden" value="<%= String.valueOf(birthdayCalendar.get(Calendar.YEAR)) %>" />
-		<aui:input name="jobTitle" type="hidden" value="<%= jobTitle %>" />
+		<aui:input
+			name="screenName"
+			type="hidden"
+			value="<%= screenName %>"
+		/>
+		<aui:input
+			name="emailAddress"
+			type="hidden"
+			value="<%= emailAddress %>"
+		/>
+		<aui:input
+			name="openId"
+			type="hidden"
+			value="<%= openId %>"
+		/>
+		<aui:input
+			name="firstName"
+			type="hidden"
+			value="<%= firstName %>"
+		/>
+		<aui:input
+			name="middleName"
+			type="hidden"
+			value="<%= middleName %>"
+		/>
+		<aui:input
+			name="lastName"
+			type="hidden"
+			value="<%= lastName %>"
+		/>
+		<aui:input
+			name="prefixId"
+			type="hidden"
+			value="<%= String.valueOf(prefixId) %>"
+		/>
+		<aui:input
+			name="suffixId"
+			type="hidden"
+			value="<%= String.valueOf(suffixId) %>"
+		/>
+		<aui:input
+			name="male"
+			type="hidden"
+			value="<%= String.valueOf(male) %>"
+		/>
+		<aui:input
+			name="birthdayDay"
+			type="hidden"
+			value="<%= String.valueOf(birthdayCalendar.get(Calendar.DAY_OF_MONTH)) %>"
+		/>
+		<aui:input
+			name="birthdayMonth"
+			type="hidden"
+			value="<%= String.valueOf(birthdayCalendar.get(Calendar.MONTH)) %>"
+		/>
+		<aui:input
+			name="birthdayYear"
+			type="hidden"
+			value="<%= String.valueOf(birthdayCalendar.get(Calendar.YEAR)) %>"
+		/>
+		<aui:input
+			name="jobTitle"
+			type="hidden"
+			value="<%= jobTitle %>"
+		/>
 	</aui:form>
 
 	<div class="alert alert-warning">
-		<liferay-ui:message arguments="<%= HtmlUtil.escape(emailAddress) %>" key="an-account-with-x-as-the-email-address-already-exists-in-the-portal.-do-you-want-to-associate-this-activity-with-that-account" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= HtmlUtil.escape(emailAddress) %>"
+			key="an-account-with-x-as-the-email-address-already-exists-in-the-portal.-do-you-want-to-associate-this-activity-with-that-account"
+			translateArguments="<%= false %>"
+		/>
 	</div>
 
-	<aui:button name="updateUser" onClick='<%= renderResponse.getNamespace() + "updateUser();" %>' value="associate-account" />
+	<aui:button
+		name="updateUser"
+		onClick='<%= renderResponse.getNamespace() + "updateUser();" %>'
+		value="associate-account"
+	/>
 
-	<aui:button name="resetUser" onClick='<%= renderResponse.getNamespace() + "resetUser();" %>' value="create-new-account" />
+	<aui:button
+		name="resetUser"
+		onClick='<%= renderResponse.getNamespace() + "resetUser();" %>'
+		value="create-new-account"
+	/>
 </div>
 
 <aui:script>

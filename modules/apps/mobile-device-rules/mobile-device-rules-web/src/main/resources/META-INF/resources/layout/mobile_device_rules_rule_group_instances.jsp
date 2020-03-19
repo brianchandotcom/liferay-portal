@@ -33,9 +33,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 	iteratorURL="<%= portletURL %>"
 	total="<%= ruleGroupInstancesCount %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstances(className, classPK, searchContainer.getStart(), searchContainer.getEnd(), RuleGroupInstancePriorityComparator.INSTANCE_ASCENDING) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstances(className, classPK, searchContainer.getStart(), searchContainer.getEnd(), RuleGroupInstancePriorityComparator.INSTANCE_ASCENDING) %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.mobile.device.rules.model.MDRRuleGroupInstance"
@@ -43,7 +41,11 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 		keyProperty="ruleGroupInstanceId"
 		modelVar="mdrRuleGroupInstance"
 	>
-		<liferay-portlet:renderURL portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>" varImpl="rowURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.POP_UP.toString() : windowState.toString() %>">
+		<liferay-portlet:renderURL
+			portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>"
+			varImpl="rowURL"
+			windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.POP_UP.toString() : windowState.toString() %>"
+		>
 			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/view_actions" />
 			<portlet:param name="redirect" value='<%= currentURL + "#tab=mobileDeviceRules" %>' />
 			<portlet:param name="showBackURL" value="<%= themeDisplay.isStateExclusive() ? Boolean.FALSE.toString() : Boolean.TRUE.toString() %>" />
@@ -53,10 +55,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 		<%@ include file="/layout/mobile_device_rules_rule_group_instance_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-		type="more"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" type="more" />
 </liferay-ui:search-container>
 
 <%@ include file="/layout/mobile_device_rules_toolbar.jspf" %>

@@ -45,10 +45,7 @@ long emailAddressId = emailAddress.getEmailAddressId();
 	editURL.setParameter("primaryKey", String.valueOf(emailAddressId));
 	%>
 
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editURL.toString() %>"
-	/>
+	<liferay-ui:icon message="edit" url="<%= editURL.toString() %>" />
 
 	<%
 	PortletURL portletURL = renderResponse.createActionURL();
@@ -65,10 +62,7 @@ long emailAddressId = emailAddress.getEmailAddressId();
 	makePrimaryURL.setParameter(Constants.CMD, "makePrimary");
 	%>
 
-	<liferay-ui:icon
-		message="make-primary"
-		url="<%= makePrimaryURL.toString() %>"
-	/>
+	<liferay-ui:icon message="make-primary" url="<%= makePrimaryURL.toString() %>" />
 
 	<%
 	PortletURL removeEmailAddressURL = PortletURLUtil.clone(portletURL, renderResponse);
@@ -76,8 +70,5 @@ long emailAddressId = emailAddress.getEmailAddressId();
 	removeEmailAddressURL.setParameter(Constants.CMD, Constants.DELETE);
 	%>
 
-	<liferay-ui:icon
-		message="remove"
-		url="<%= removeEmailAddressURL.toString() %>"
-	/>
+	<liferay-ui:icon message="remove" url="<%= removeEmailAddressURL.toString() %>" />
 </liferay-ui:icon-menu>

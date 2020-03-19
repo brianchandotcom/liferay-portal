@@ -41,15 +41,21 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteSegmentsEntryURL %>" cssClass="container-fluid-1280" method="post" name="fmSegmentsEntries">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+<aui:form
+	action="<%= deleteSegmentsEntryURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fmSegmentsEntries"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
 
 	<liferay-ui:error exception="<%= RequiredSegmentsEntryException.MustNotDeleteSegmentsEntryReferencedBySegmentsExperiences.class %>" message="the-segment-cannot-be-deleted-because-it-is-required-by-one-or-more-experiences" />
 
-	<liferay-ui:search-container
-		id="segmentsEntries"
-		searchContainer="<%= segmentsDisplayContext.getSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="segmentsEntries" searchContainer="<%= segmentsDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.segments.model.SegmentsEntry"
 			keyProperty="segmentsEntryId"
@@ -73,31 +79,19 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 			/>
 
 			<c:if test="<%= segmentsDisplayContext.isAsahEnabled(themeDisplay.getCompanyId()) %>">
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand-smallest table-cell-minw-150"
-					name="source"
-				>
+				<liferay-ui:search-container-column-text cssClass="table-cell-expand-smallest table-cell-minw-150" name="source">
 					<c:choose>
 						<c:when test="<%= Objects.equals(segmentsEntry.getSource(), SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND) %>">
-							<liferay-ui:icon
-								message="source.analytics-cloud"
-								src='<%= PortalUtil.getPathContext(request) + "/assets/ac-icon.svg" %>'
-							/>
+							<liferay-ui:icon message="source.analytics-cloud" src='<%= PortalUtil.getPathContext(request) + "/assets/ac-icon.svg" %>' />
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:icon
-								message="source.dxp"
-								src='<%= PortalUtil.getPathContext(request) + "/assets/dxp-icon.svg" %>'
-							/>
+							<liferay-ui:icon message="source.dxp" src='<%= PortalUtil.getPathContext(request) + "/assets/dxp-icon.svg" %>' />
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:search-container-column-text>
 			</c:if>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-smallest table-cell-minw-150"
-				name="scope"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-expand-smallest table-cell-minw-150" name="scope">
 				<c:choose>
 					<c:when test="<%= segmentsEntry.getGroupId() == themeDisplay.getCompanyGroupId() %>">
 						<liferay-ui:message key="global" />
@@ -117,15 +111,10 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 				value="<%= segmentsEntry.getModifiedDate() %>"
 			/>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/segments_entry_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp cssClass="entry-action-column" path="/segments_entry_action.jsp" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

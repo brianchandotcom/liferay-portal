@@ -48,12 +48,38 @@ else {
 	<portlet:param name="portletResource" value="<%= portletResource %>" />
 </liferay-portlet:renderURL>
 
-<aui:form action="<%= publishPortletURL %>" cssClass="lfr-export-dialog" method="post" name="fm1" onSubmit="<%= javascriptOnSubmitFunction %>">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.PUBLISH_TO_LIVE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
-	<aui:input name="plid" type="hidden" value="<%= plid %>" />
-	<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
-	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
+<aui:form
+	action="<%= publishPortletURL %>"
+	cssClass="lfr-export-dialog"
+	method="post"
+	name="fm1"
+	onSubmit="<%= javascriptOnSubmitFunction %>"
+>
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.PUBLISH_TO_LIVE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirectURL %>"
+	/>
+	<aui:input
+		name="plid"
+		type="hidden"
+		value="<%= plid %>"
+	/>
+	<aui:input
+		name="groupId"
+		type="hidden"
+		value="<%= themeDisplay.getScopeGroupId() %>"
+	/>
+	<aui:input
+		name="portletResource"
+		type="hidden"
+		value="<%= portletResource %>"
+	/>
 
 	<div class="export-dialog-tree portlet-export-import-publish-processes">
 		<div class="container-fluid-1280">
@@ -77,18 +103,31 @@ else {
 				%>
 
 				<c:if test="<%= ArrayUtil.isNotEmpty(configurationControls) %>">
-					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="application">
+					<aui:fieldset
+						collapsible="<%= true %>"
+						cssClass="options-group"
+						label="application"
+					>
 						<ul class="lfr-tree list-unstyled select-options">
 							<li class="options">
 								<ul class="portlet-list">
 									<li class="tree-item">
-										<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>" type="hidden" value="<%= true %>" />
+										<aui:input
+											name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>"
+											type="hidden"
+											value="<%= true %>"
+										/>
 
 										<%
 										String rootControlId = PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId();
 										%>
 
-										<aui:input label="configuration" name="<%= rootControlId %>" type="checkbox" value="<%= true %>" />
+										<aui:input
+											label="configuration"
+											name="<%= rootControlId %>"
+											type="checkbox"
+											value="<%= true %>"
+										/>
 
 										<div class="hide" id="<portlet:namespace />configuration_<%= selPortlet.getRootPortletId() %>">
 											<ul class="lfr-tree list-unstyled">
@@ -121,7 +160,13 @@ else {
 												data.put("portletid", selPortlet.getRootPortletId());
 												%>
 
-												<aui:a cssClass="configuration-link modify-link" data="<%= data %>" href="javascript:;" label="change" method="get" />
+												<aui:a
+													cssClass="configuration-link modify-link"
+													data="<%= data %>"
+													href="javascript:;"
+													label="change"
+													method="get"
+												/>
 											</li>
 										</ul>
 
@@ -159,36 +204,72 @@ else {
 					long modelDeletionCount = manifestSummary.getModelDeletionCount(portletDataHandler.getDeletionSystemEventStagedModelTypes());
 					%>
 
-					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="content">
+					<aui:fieldset
+						collapsible="<%= true %>"
+						cssClass="options-group"
+						label="content"
+					>
 						<ul class="lfr-tree list-unstyled select-options">
 							<li class="tree-item">
 								<div id="<portlet:namespace />range">
 									<div class="flex-container">
 										<div class="flex-item-center range-options">
-											<aui:input checked="<%= !newPublication %>" data-name='<%= LanguageUtil.get(request, "all") %>' id="rangeAll" label="all" name="range" type="radio" value="all" />
+											<aui:input
+												checked="<%= !newPublication %>"
+												data-name='<%= LanguageUtil.get(request, "all") %>'
+												id="rangeAll"
+												label="all"
+												name="range"
+												type="radio"
+												value="all"
+											/>
 										</div>
 
 										<c:if test="<%= newPublication %>">
 											<div class="flex-item-center range-options">
-												<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(request, "from-last-publish-date") %>' id="rangeLastPublish" label="from-last-publish-date" name="range" type="radio" value="fromLastPublishDate" />
+												<aui:input
+													checked="<%= true %>"
+													data-name='<%= LanguageUtil.get(request, "from-last-publish-date") %>'
+													id="rangeLastPublish"
+													label="from-last-publish-date"
+													name="range"
+													type="radio"
+													value="fromLastPublishDate"
+												/>
 											</div>
 										</c:if>
 
 										<div class="flex-item-center range-options">
-											<aui:input data-name='<%= LanguageUtil.get(request, "date-range") %>' helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="dateRange" />
-										</div>
-
-										<div class="flex-item-center range-options">
-											<aui:input id="rangeLast" label='<%= LanguageUtil.get(request, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="last" />
-										</div>
-
-										<div class="flex-item-center range-options">
-											<liferay-ui:icon
-												icon="reload"
-												markupView="lexicon"
+											<aui:input
+												data-name='<%= LanguageUtil.get(request, "date-range") %>'
+												helpMessage="export-date-range-help"
+												id="rangeDateRange"
+												label="date-range"
+												name="range"
+												type="radio"
+												value="dateRange"
 											/>
+										</div>
 
-											<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" method="get">
+										<div class="flex-item-center range-options">
+											<aui:input
+												id="rangeLast"
+												label='<%= LanguageUtil.get(request, "last") + StringPool.TRIPLE_PERIOD %>'
+												name="range"
+												type="radio"
+												value="last"
+											/>
+										</div>
+
+										<div class="flex-item-center range-options">
+											<liferay-ui:icon icon="reload" markupView="lexicon" />
+
+											<aui:a
+												cssClass="modify-link"
+												href="javascript:;"
+												id="rangeLink"
+												method="get"
+											>
 												<liferay-ui:message key="refresh-counts" />
 											</aui:a>
 										</div>
@@ -277,7 +358,11 @@ else {
 
 									<ul class="hide list-unstyled" id="<portlet:namespace />rangeLastInputs">
 										<li>
-											<aui:select cssClass="relative-range" label="" name="last">
+											<aui:select
+												cssClass="relative-range"
+												label=""
+												name="last"
+											>
 												<aui:option label='<%= LanguageUtil.format(request, "x-hours", "12", false) %>' value="12" />
 												<aui:option label='<%= LanguageUtil.format(request, "x-hours", "24", false) %>' value="24" />
 												<aui:option label='<%= LanguageUtil.format(request, "x-hours", "48", false) %>' value="48" />
@@ -292,13 +377,19 @@ else {
 								<li class="options">
 									<ul class="portlet-list">
 										<li class="tree-item">
-											<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= false %>" />
+											<aui:input
+												name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>"
+												type="hidden"
+												value="<%= false %>"
+											/>
 
-											<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= true %>" />
+											<aui:input
+												name="<%= PortletDataHandlerKeys.PORTLET_DATA %>"
+												type="hidden"
+												value="<%= true %>"
+											/>
 
-											<liferay-util:buffer
-												var="badgeHTML"
-											>
+											<liferay-util:buffer var="badgeHTML">
 												<span class="badge badge-info"><%= (exportModelCount > 0) ? exportModelCount : StringPool.BLANK %></span>
 												<span class="badge badge-warning" id="<portlet:namespace />deletions"><%= (modelDeletionCount > 0) ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>
 											</liferay-util:buffer>
@@ -307,7 +398,12 @@ else {
 											String rootControlId = PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId();
 											%>
 
-											<aui:input label='<%= LanguageUtil.get(request, "content") + badgeHTML %>' name="<%= rootControlId %>" type="checkbox" value="<%= true %>" />
+											<aui:input
+												label='<%= LanguageUtil.get(request, "content") + badgeHTML %>'
+												name="<%= rootControlId %>"
+												type="checkbox"
+												value="<%= true %>"
+											/>
 
 											<%
 											PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();
@@ -377,7 +473,14 @@ else {
 														data.put("portletid", selPortlet.getRootPortletId());
 														%>
 
-														<aui:a cssClass="content-link modify-link" data="<%= data %>" href="javascript:;" id='<%= "contentLink_" + selPortlet.getRootPortletId() %>' label="change" method="get" />
+														<aui:a
+															cssClass="content-link modify-link"
+															data="<%= data %>"
+															href="javascript:;"
+															id='<%= "contentLink_" + selPortlet.getRootPortletId() %>'
+															label="change"
+															method="get"
+														/>
 													</li>
 												</ul>
 
@@ -399,9 +502,7 @@ else {
 						</ul>
 					</aui:fieldset>
 
-					<liferay-staging:deletions
-						cmd="<%= Constants.PUBLISH %>"
-					/>
+					<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" />
 
 					<liferay-staging:permissions
 						action="<%= Constants.PUBLISH %>"

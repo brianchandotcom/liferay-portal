@@ -75,10 +75,24 @@ int index = 0;
 
 	<div class="panel-body">
 		<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
-			<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
-			<aui:input autocomplete="off" name='<%= HtmlUtil.escapeAttribute(facet.getFieldId()) + "selection" %>' type="hidden" value="<%= fieldParamSelection %>" />
+			<aui:input
+				autocomplete="off"
+				name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>"
+				type="hidden"
+				value="<%= fieldParam %>"
+			/>
+			<aui:input
+				autocomplete="off"
+				name='<%= HtmlUtil.escapeAttribute(facet.getFieldId()) + "selection" %>'
+				type="hidden"
+				value="<%= fieldParamSelection %>"
+			/>
 
-			<aui:field-wrapper cssClass='<%= randomNamespace + "calendar calendar_" %>' label="" name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>">
+			<aui:field-wrapper
+				cssClass='<%= randomNamespace + "calendar calendar_" %>'
+				label=""
+				name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>"
+			>
 				<ul class="list-unstyled modified">
 					<li class="default facet-value">
 
@@ -119,7 +133,11 @@ int index = 0;
 							data.put("value", HtmlUtil.escape(range));
 							%>
 
-							<aui:a cssClass="<%= rangeCssClass %>" data="<%= data %>" href="javascript:;">
+							<aui:a
+								cssClass="<%= rangeCssClass %>"
+								data="<%= data %>"
+								href="javascript:;"
+							>
 								<liferay-ui:message key="<%= label %>" />
 
 								<%
@@ -218,7 +236,12 @@ int index = 0;
 						String taglibSearchCustomRange = "window['" + renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) + "searchCustomRange'](" + (index + 1) + ");";
 						%>
 
-						<aui:button disabled="<%= toCalendar.getTimeInMillis() < fromCalendar.getTimeInMillis() %>" name="searchCustomRangeButton" onClick="<%= taglibSearchCustomRange %>" value="search" />
+						<aui:button
+							disabled="<%= toCalendar.getTimeInMillis() < fromCalendar.getTimeInMillis() %>"
+							name="searchCustomRangeButton"
+							onClick="<%= taglibSearchCustomRange %>"
+							value="search"
+						/>
 					</div>
 				</ul>
 			</aui:field-wrapper>

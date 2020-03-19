@@ -37,7 +37,11 @@
 	%>
 
 	<c:if test="<%= le.getType() == LocaleException.TYPE_EXPORT_IMPORT %>">
-		<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-available-languages-in-the-lar-file-x-do-not-match-the-site's-available-languages-x" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>"
+			key="the-available-languages-in-the-lar-file-x-do-not-match-the-site's-available-languages-x"
+			translateArguments="<%= false %>"
+		/>
 	</c:if>
 </liferay-ui:error>
 
@@ -69,5 +73,9 @@
 	StructureDuplicateStructureKeyException sdske = (StructureDuplicateStructureKeyException)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= sdske.getStructureKey() %>" key="dynamic-data-mapping-structure-with-structure-key-x-already-exists" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= sdske.getStructureKey() %>"
+		key="dynamic-data-mapping-structure-with-structure-key-x-already-exists"
+		translateArguments="<%= false %>"
+	/>
 </liferay-ui:error>

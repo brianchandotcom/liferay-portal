@@ -36,9 +36,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "publish-templates"));
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<liferay-trash:undo
-	portletURL="<%= restoreTrashEntriesURL %>"
-/>
+<liferay-trash:undo portletURL="<%= restoreTrashEntriesURL %>" />
 
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="mvcRenderCommandName" value="viewPublishConfigurations" />
@@ -52,10 +50,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "publish-templates"));
 StagingProcessesWebPublishTemplatesToolbarDisplayContext stagingProcessesWebPublishTemplatesToolbarDisplayContext = new StagingProcessesWebPublishTemplatesToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, pageContext, portletURL);
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= publishTemplatesDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= publishTemplatesDisplayContext.getNavigationItems() %>" />
 
 <clay:management-toolbar
 	displayContext="<%= stagingProcessesWebPublishTemplatesToolbarDisplayContext %>"
@@ -67,18 +62,13 @@ StagingProcessesWebPublishTemplatesToolbarDisplayContext stagingProcessesWebPubl
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<aui:form action="<%= portletURL %>">
-		<liferay-ui:search-container
-			searchContainer="<%= stagingProcessesWebPublishTemplatesToolbarDisplayContext.getSearchContainer() %>"
-		>
+		<liferay-ui:search-container searchContainer="<%= stagingProcessesWebPublishTemplatesToolbarDisplayContext.getSearchContainer() %>">
 			<liferay-ui:search-container-row
 				className="com.liferay.exportimport.kernel.model.ExportImportConfiguration"
 				keyProperty="exportImportConfigurationId"
 				modelVar="exportImportConfiguration"
 			>
-				<liferay-ui:search-container-column-text
-					cssClass="background-task-user-column"
-					name="user"
-				>
+				<liferay-ui:search-container-column-text cssClass="background-task-user-column" name="user">
 					<liferay-ui:user-display
 						displayStyle="3"
 						showUserDetails="<%= false %>"
@@ -103,15 +93,9 @@ StagingProcessesWebPublishTemplatesToolbarDisplayContext stagingProcessesWebPubl
 					value="<%= HtmlUtil.escape(exportImportConfiguration.getName()) %>"
 				/>
 
-				<liferay-ui:search-container-column-text
-					name="description"
-					value="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>"
-				/>
+				<liferay-ui:search-container-column-text name="description" value="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>" />
 
-				<liferay-ui:search-container-column-date
-					name="create-date"
-					value="<%= exportImportConfiguration.getCreateDate() %>"
-				/>
+				<liferay-ui:search-container-column-date name="create-date" value="<%= exportImportConfiguration.getCreateDate() %>" />
 
 				<%
 				request.setAttribute("view.jsp-layoutSetBranchId", layoutSetBranchId);
@@ -125,9 +109,7 @@ StagingProcessesWebPublishTemplatesToolbarDisplayContext stagingProcessesWebPubl
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

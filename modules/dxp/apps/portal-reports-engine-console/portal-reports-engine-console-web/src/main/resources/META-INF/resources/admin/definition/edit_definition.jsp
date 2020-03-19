@@ -58,14 +58,28 @@ else {
 	<portlet:param name="mvcPath" value="/admin/definition/edit_definition.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= actionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
+<aui:form
+	action="<%= actionURL %>"
+	cssClass="container-fluid-1280"
+	enctype="multipart/form-data"
+	method="post"
+	name="fm"
+>
 	<liferay-ui:error exception="<%= DefinitionFileException.InvalidDefinitionFile.class %>" message="please-enter-a-valid-file" />
 	<liferay-ui:error exception="<%= DefinitionNameException.class %>" message="please-enter-a-valid-name" />
 
 	<aui:model-context bean="<%= definition %>" model="<%= Definition.class %>" />
 
-	<aui:input name="redirect" type="hidden" value="<%= definitionsURL %>" />
-	<aui:input name="viewDefinitionsURL" type="hidden" value="<%= viewDefinitionsURL %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= definitionsURL %>"
+	/>
+	<aui:input
+		name="viewDefinitionsURL"
+		type="hidden"
+		value="<%= viewDefinitionsURL %>"
+	/>
 	<aui:input name="definitionId" type="hidden" />
 
 	<c:if test="<%= definition != null %>">
@@ -85,7 +99,11 @@ else {
 			<aui:input name="description" />
 
 			<aui:select label="data-source-name" name="sourceId">
-				<aui:option label="<%= ReportDataSourceType.PORTAL.getValue() %>" selected="<%= sourceId == 0 %>" value="<%= 0 %>" />
+				<aui:option
+					label="<%= ReportDataSourceType.PORTAL.getValue() %>"
+					selected="<%= sourceId == 0 %>"
+					value="<%= 0 %>"
+				/>
 
 				<%
 				List<Source> sources = SourceServiceUtil.getSources(themeDisplay.getSiteGroupId(), null, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
@@ -93,7 +111,11 @@ else {
 				for (Source source : sources) {
 				%>
 
-					<aui:option label="<%= HtmlUtil.escape(source.getName(locale)) %>" selected="<%= sourceId == source.getSourceId() %>" value="<%= source.getSourceId() %>" />
+					<aui:option
+						label="<%= HtmlUtil.escape(source.getName(locale)) %>"
+						selected="<%= sourceId == source.getSourceId() %>"
+						value="<%= source.getSourceId() %>"
+					/>
 
 				<%
 				}
@@ -102,26 +124,52 @@ else {
 			</aui:select>
 
 			<aui:field-wrapper>
-				<aui:input cssClass="template-report" name="templateReport" style='<%= Validator.isNull(reportName) ? "display: block;" : "display: none;" %>' type="file" />
+				<aui:input
+					cssClass="template-report"
+					name="templateReport"
+					style='<%= Validator.isNull(reportName) ? "display: block;" : "display: none;" %>'
+					type="file"
+				/>
 
 				<span class="existing-report" style="<%= Validator.isNull(reportName) ? "display: none;" : "display: block;" %>">
 					<%= HtmlUtil.escape(reportName) %>
 
 					<img class="remove-existing-report" src="<%= themeDisplay.getPathThemeImages() %>/arrows/02_x.png" />
 
-					<aui:input name="reportName" type="hidden" value="<%= reportName %>" />
+					<aui:input
+						name="reportName"
+						type="hidden"
+						value="<%= reportName %>"
+					/>
 				</span>
 
-				<aui:button cssClass="cancel-update-template-report" style="display: none;" value="cancel" />
+				<aui:button
+					cssClass="cancel-update-template-report"
+					style="display: none;"
+					value="cancel"
+				/>
 			</aui:field-wrapper>
 		</aui:fieldset>
 
-		<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="report-parameters">
-			<aui:input cssClass="report-parameters" name="reportParameters" type="hidden" />
+		<aui:fieldset
+			collapsible="<%= true %>"
+			cssClass="options-group"
+			label="report-parameters"
+		>
+			<aui:input
+				cssClass="report-parameters"
+				name="reportParameters"
+				type="hidden"
+			/>
 
 			<aui:row>
 				<aui:col width="<%= 35 %>">
-					<aui:input cssClass="parameters-key" name="key" size="20" type="text" />
+					<aui:input
+						cssClass="parameters-key"
+						name="key"
+						size="20"
+						type="text"
+					/>
 				</aui:col>
 
 				<aui:col width="<%= 35 %>">
@@ -131,7 +179,12 @@ else {
 					%>
 
 					<aui:field-wrapper>
-						<aui:input cssClass="parameters-value parameters-value-field-set" name="value" size="20" type="text" />
+						<aui:input
+							cssClass="parameters-value parameters-value-field-set"
+							name="value"
+							size="20"
+							type="text"
+						/>
 
 						<liferay-ui:input-date
 							cssClass="parameters-input-date"
@@ -148,7 +201,11 @@ else {
 				</aui:col>
 
 				<aui:col width="<%= 15 %>">
-					<aui:select cssClass="parameters-input-type" label="type" name="type">
+					<aui:select
+						cssClass="parameters-input-type"
+						label="type"
+						name="type"
+					>
 						<aui:option label="text" value="text" />
 						<aui:option label="date" value="date" />
 					</aui:select>
@@ -169,10 +226,12 @@ else {
 		</aui:fieldset>
 
 		<c:if test="<%= definition == null %>">
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-				<liferay-ui:input-permissions
-					modelName="<%= Definition.class.getName() %>"
-				/>
+			<aui:fieldset
+				collapsed="<%= true %>"
+				collapsible="<%= true %>"
+				label="permissions"
+			>
+				<liferay-ui:input-permissions modelName="<%= Definition.class.getName() %>" />
 			</aui:fieldset>
 		</c:if>
 	</aui:fieldset-group>
@@ -183,19 +242,39 @@ else {
 			<portlet:param name="tabs1" value="definitions" />
 		</portlet:renderURL>
 
-		<aui:button cssClass="btn-lg" type="submit" value='<%= (definition != null) ? "update" : "save" %>' />
+		<aui:button
+			cssClass="btn-lg"
+			type="submit"
+			value='<%= (definition != null) ? "update" : "save" %>'
+		/>
 
 		<c:if test="<%= definition != null %>">
 			<c:if test="<%= DefinitionPermissionChecker.contains(permissionChecker, definition, ReportsActionKeys.ADD_REPORT) %>">
-				<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "addReport();" %>' value="add-report" />
+				<aui:button
+					cssClass="btn-lg"
+					onClick='<%= renderResponse.getNamespace() + "addReport();" %>'
+					value="add-report"
+				/>
 
-				<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "addScheduler();" %>' value="add-schedule" />
+				<aui:button
+					cssClass="btn-lg"
+					onClick='<%= renderResponse.getNamespace() + "addScheduler();" %>'
+					value="add-schedule"
+				/>
 			</c:if>
 
-			<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "deleteDefinition();" %>' value="delete" />
+			<aui:button
+				cssClass="btn-lg"
+				onClick='<%= renderResponse.getNamespace() + "deleteDefinition();" %>'
+				value="delete"
+			/>
 		</c:if>
 
-		<aui:button cssClass="btn-lg" href="<%= viewURL %>" type="cancel" />
+		<aui:button
+			cssClass="btn-lg"
+			href="<%= viewURL %>"
+			type="cancel"
+		/>
 	</aui:button-row>
 </aui:form>
 

@@ -26,9 +26,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("liferay-ratings:
 String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:type"));
 %>
 
-<liferay-util:html-top
-	outputKey="com.liferay.ratings.taglib.servlet.taglib#/page.jsp"
->
+<liferay-util:html-top outputKey="com.liferay.ratings.taglib.servlet.taglib#/page.jsp">
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
@@ -41,10 +39,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 				icon="heart"
 			/>
 
-			<react:component
-				data="<%= data %>"
-				module="js/components/RatingsLike.es"
-			/>
+			<react:component data="<%= data %>" module="js/components/RatingsLike.es" />
 		<div>
 	</c:when>
 	<c:when test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
@@ -61,10 +56,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 				icon="thumbs-down"
 			/>
 
-			<react:component
-				data="<%= data %>"
-				module="js/components/RatingsThumbs.es"
-			/>
+			<react:component data="<%= data %>" module="js/components/RatingsThumbs.es" />
 		<div>
 	</c:when>
 	<c:otherwise>

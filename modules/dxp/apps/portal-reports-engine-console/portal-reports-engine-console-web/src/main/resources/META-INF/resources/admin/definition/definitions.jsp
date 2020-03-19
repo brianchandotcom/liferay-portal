@@ -22,12 +22,14 @@ PortletURL portletURL = reportsEngineDisplayContext.getPortletURL();
 portletURL.setParameter("mvcPath", "/admin/view.jsp");
 %>
 
-<aui:form action="<%= portletURL %>" method="get" name="fm">
+<aui:form
+	action="<%= portletURL %>"
+	method="get"
+	name="fm"
+>
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 
-	<liferay-ui:search-container
-		searchContainer="<%= reportsEngineDisplayContext.getSearchContainer() %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= reportsEngineDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.reports.engine.console.model.Definition"
 			keyProperty="definitionId"
@@ -61,16 +63,10 @@ portletURL.setParameter("mvcPath", "/admin/view.jsp");
 				value="<%= definition.getCreateDate() %>"
 			/>
 
-			<liferay-ui:search-container-column-jsp
-				align="right"
-				path="/admin/definition/definition_actions.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp align="right" path="/admin/definition/definition_actions.jsp" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= reportsEngineDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= reportsEngineDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

@@ -54,18 +54,32 @@ int oAuthServiceCount = 0;
 %>
 
 <c:if test="<%= gadgetId > 0 %>">
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="<%= gadget.getName() %>"
-	/>
+	<liferay-ui:header backURL="<%= redirect %>" title="<%= gadget.getName() %>" />
 </c:if>
 
 <portlet:actionURL name="updateOAuthConsumers" var="updateOAuthConsumersURL" />
 
-<aui:form action="<%= updateOAuthConsumersURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveOAuthConsumers();" %>'>
-	<aui:input name="mvcPath" type="hidden" value="/admin/edit_oauth_consumers.jsp" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="gadgetKey" type="hidden" value="<%= gadgetKey %>" />
+<aui:form
+	action="<%= updateOAuthConsumersURL %>"
+	method="post"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveOAuthConsumers();" %>'
+>
+	<aui:input
+		name="mvcPath"
+		type="hidden"
+		value="/admin/edit_oauth_consumers.jsp"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="gadgetKey"
+		type="hidden"
+		value="<%= gadgetKey %>"
+	/>
 
 	<%
 	for (Map.Entry<String, OAuthService> entry : oAuthServices.entrySet()) {
@@ -84,9 +98,21 @@ int oAuthServiceCount = 0;
 
 		<h3><%= serviceName %></h3>
 
-		<aui:input name="gadgetId" type="hidden" value="<%= gadgetId %>" />
-		<aui:input name="oAuthConsumerId" type="hidden" value="<%= oAuthConsumerId %>" />
-		<aui:input name="serviceName" type="hidden" value="<%= serviceName %>" />
+		<aui:input
+			name="gadgetId"
+			type="hidden"
+			value="<%= gadgetId %>"
+		/>
+		<aui:input
+			name="oAuthConsumerId"
+			type="hidden"
+			value="<%= oAuthConsumerId %>"
+		/>
+		<aui:input
+			name="serviceName"
+			type="hidden"
+			value="<%= serviceName %>"
+		/>
 
 		<aui:model-context bean="<%= oAuthConsumer %>" model="<%= OAuthConsumer.class %>" />
 

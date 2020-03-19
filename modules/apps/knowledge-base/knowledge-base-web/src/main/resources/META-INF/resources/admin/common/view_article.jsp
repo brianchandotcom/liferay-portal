@@ -48,13 +48,17 @@ if (portletTitleBasedNavigation) {
 
 <c:if test="<%= portletTitleBasedNavigation %>">
 	<liferay-frontend:info-bar>
-		<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" version="<%= String.valueOf(kbArticle.getVersion()) %>" />
+		<aui:workflow-status
+			markupView="lexicon"
+			showHelpMessage="<%= false %>"
+			showIcon="<%= false %>"
+			showLabel="<%= false %>"
+			status="<%= kbArticle.getStatus() %>"
+			version="<%= String.valueOf(kbArticle.getVersion()) %>"
+		/>
 
 		<liferay-frontend:info-bar-buttons>
-			<liferay-frontend:info-bar-sidenav-toggler-button
-				icon="info-circle-open"
-				label="info"
-			/>
+			<liferay-frontend:info-bar-sidenav-toggler-button icon="info-circle-open" label="info" />
 		</liferay-frontend:info-bar-buttons>
 	</liferay-frontend:info-bar>
 </c:if>
@@ -73,9 +77,7 @@ if (portletTitleBasedNavigation) {
 
 	<div class="sidenav-content">
 		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				title="<%= kbArticle.getTitle() %>"
-			/>
+			<liferay-ui:header title="<%= kbArticle.getTitle() %>" />
 		</c:if>
 
 		<div class="kb-tools">
@@ -96,9 +98,7 @@ if (portletTitleBasedNavigation) {
 
 				<liferay-util:include page="/admin/common/article_social_bookmarks.jsp" servletContext="<%= application %>" />
 
-				<liferay-expando:custom-attributes-available
-					className="<%= KBArticle.class.getName() %>"
-				>
+				<liferay-expando:custom-attributes-available className="<%= KBArticle.class.getName() %>">
 					<liferay-expando:custom-attribute-list
 						className="<%= KBArticle.class.getName() %>"
 						classPK="<%= kbArticle.getKbArticleId() %>"

@@ -47,10 +47,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-a-publication"));
 <div class="container-fluid-1280 lfr-search-container-wrapper main-content-body">
 	<c:choose>
 		<c:when test='<%= Objects.equals(changeListsDisplayContext.getDisplayStyle(), "list") %>'>
-			<liferay-ui:search-container
-				id="changeLists"
-				searchContainer="<%= ctCollectionSearchContainer %>"
-			>
+			<liferay-ui:search-container id="changeLists" searchContainer="<%= ctCollectionSearchContainer %>">
 				<liferay-ui:search-container-row
 					className="com.liferay.change.tracking.model.CTCollection"
 					keyProperty="ctCollectionId"
@@ -66,17 +63,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-a-publication"));
 
 					<c:choose>
 						<c:when test="<%= curCTCollection.isProduction() && activeChangeList %>">
-							<liferay-ui:search-container-column-text
-								name="name"
-							>
+							<liferay-ui:search-container-column-text name="name">
 								<span class="work-on-production"><liferay-ui:message key="work-on-production" /></span>
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:search-container-column-text
-								href="<%= !activeChangeList ? checkoutURL : portletURL.toString() %>"
-								name="name"
-							>
+							<liferay-ui:search-container-column-text href="<%= !activeChangeList ? checkoutURL : portletURL.toString() %>" name="name">
 								<c:choose>
 									<c:when test="<%= curCTCollection.isProduction() %>">
 										<span class="work-on-production"><liferay-ui:message key="work-on-production" /></span>
@@ -89,23 +81,16 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-a-publication"));
 						</c:otherwise>
 					</c:choose>
 
-					<liferay-ui:search-container-column-date
-						name="modified-date"
-						value="<%= !curCTCollection.isProduction() ? curCTCollection.getModifiedDate() : null %>"
-					>
+					<liferay-ui:search-container-column-date name="modified-date" value="<%= !curCTCollection.isProduction() ? curCTCollection.getModifiedDate() : null %>">
 					</liferay-ui:search-container-column-date>
 
-					<liferay-ui:search-container-column-text
-						name="created-by"
-					>
+					<liferay-ui:search-container-column-text name="created-by">
 						<c:if test="<%= !curCTCollection.isProduction() %>">
 							<%= HtmlUtil.escape(curCTCollection.getUserName()) %>
 						</c:if>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						name="description"
-					>
+					<liferay-ui:search-container-column-text name="description">
 						<c:choose>
 							<c:when test="<%= curCTCollection.isProduction() %>">
 								<span class="work-on-production-description"><liferay-ui:message key="your-changes-will-be-added-to-the-live-site-immediately" /></span>
@@ -116,9 +101,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-a-publication"));
 						</c:choose>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						name="status"
-					>
+					<liferay-ui:search-container-column-text name="status">
 						<c:if test="<%= changeListsDisplayContext.isChangeListActive(curCTCollection.getCtCollectionId()) %>">
 							<span class="label label-info">
 								<span class="label-item label-item-expand"><liferay-ui:message key="active" /></span>
@@ -142,10 +125,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-a-publication"));
 									/>
 								</c:when>
 								<c:otherwise>
-									<liferay-ui:icon
-										message="activate"
-										url="<%= checkoutURL %>"
-									/>
+									<liferay-ui:icon message="activate" url="<%= checkoutURL %>" />
 								</c:otherwise>
 							</c:choose>
 
@@ -156,17 +136,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-a-publication"));
 									<portlet:param name="ctCollectionId" value="<%= String.valueOf(curCTCollection.getCtCollectionId()) %>" />
 								</liferay-portlet:renderURL>
 
-								<liferay-ui:icon
-									message="edit"
-									url="<%= editCollectionURL %>"
-								/>
+								<liferay-ui:icon message="edit" url="<%= editCollectionURL %>" />
 
 								<c:choose>
 									<c:when test="<%= changeListsDisplayContext.hasCTEntries(curCTCollection.getCtCollectionId()) %>">
-										<liferay-ui:icon
-											message="prepare-to-publish"
-											url="<%= changeListsDisplayContext.getConflictsURL(curCTCollection.getCtCollectionId()) %>"
-										/>
+										<liferay-ui:icon message="prepare-to-publish" url="<%= changeListsDisplayContext.getConflictsURL(curCTCollection.getCtCollectionId()) %>" />
 									</c:when>
 									<c:otherwise>
 										<liferay-ui:icon
@@ -177,25 +151,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-a-publication"));
 									</c:otherwise>
 								</c:choose>
 
-								<liferay-ui:icon
-									message="delete"
-									url="<%= changeListsDisplayContext.getDeleteURL(curCTCollection.getCtCollectionId(), ctCollectionName) %>"
-								/>
+								<liferay-ui:icon message="delete" url="<%= changeListsDisplayContext.getDeleteURL(curCTCollection.getCtCollectionId(), ctCollectionName) %>" />
 							</c:if>
 						</liferay-ui:icon-menu>
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator markupView="lexicon" />
 			</liferay-ui:search-container>
 		</c:when>
 		<c:when test='<%= Objects.equals(changeListsDisplayContext.getDisplayStyle(), "icon") %>'>
-			<liferay-ui:search-container
-				id="changeLists"
-				searchContainer="<%= ctCollectionSearchContainer %>"
-			>
+			<liferay-ui:search-container id="changeLists" searchContainer="<%= ctCollectionSearchContainer %>">
 				<div class="row">
 
 					<%
@@ -249,10 +215,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-a-publication"));
 													/>
 												</c:when>
 												<c:otherwise>
-													<liferay-ui:icon
-														message="activate"
-														url="<%= checkoutProductionURL %>"
-													/>
+													<liferay-ui:icon message="activate" url="<%= checkoutProductionURL %>" />
 												</c:otherwise>
 											</c:choose>
 										</liferay-ui:icon-menu>
@@ -351,10 +314,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-a-publication"));
 														/>
 													</c:when>
 													<c:otherwise>
-														<liferay-ui:icon
-															message="activate"
-															url="<%= checkoutURL %>"
-														/>
+														<liferay-ui:icon message="activate" url="<%= checkoutURL %>" />
 													</c:otherwise>
 												</c:choose>
 
@@ -364,17 +324,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-a-publication"));
 													<portlet:param name="ctCollectionId" value="<%= String.valueOf(curCTCollection.getCtCollectionId()) %>" />
 												</liferay-portlet:renderURL>
 
-												<liferay-ui:icon
-													message="edit"
-													url="<%= editCollectionURL %>"
-												/>
+												<liferay-ui:icon message="edit" url="<%= editCollectionURL %>" />
 
 												<c:choose>
 													<c:when test="<%= changeListsDisplayContext.hasCTEntries(curCTCollection.getCtCollectionId()) %>">
-														<liferay-ui:icon
-															message="prepare-to-publish"
-															url="<%= changeListsDisplayContext.getConflictsURL(curCTCollection.getCtCollectionId()) %>"
-														/>
+														<liferay-ui:icon message="prepare-to-publish" url="<%= changeListsDisplayContext.getConflictsURL(curCTCollection.getCtCollectionId()) %>" />
 													</c:when>
 													<c:otherwise>
 														<liferay-ui:icon
@@ -385,10 +339,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-a-publication"));
 													</c:otherwise>
 												</c:choose>
 
-												<liferay-ui:icon
-													message="delete"
-													url="<%= changeListsDisplayContext.getDeleteURL(curCTCollection.getCtCollectionId(), curCTCollection.getName()) %>"
-												/>
+												<liferay-ui:icon message="delete" url="<%= changeListsDisplayContext.getDeleteURL(curCTCollection.getCtCollectionId(), curCTCollection.getName()) %>" />
 											</liferay-ui:icon-menu>
 										</div>
 									</div>
@@ -398,9 +349,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-a-publication"));
 					</liferay-ui:search-container-row>
 				</div>
 
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator markupView="lexicon" />
 			</liferay-ui:search-container>
 		</c:when>
 	</c:choose>

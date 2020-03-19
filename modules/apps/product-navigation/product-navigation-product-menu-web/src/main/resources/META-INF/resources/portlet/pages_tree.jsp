@@ -37,9 +37,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		/>
 	</div>
 
-	<liferay-util:buffer
-		var="linkTemplate"
-	>
+	<liferay-util:buffer var="linkTemplate">
 		<span class="autofit-row">
 			<span className="autofit-col">
 				<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" title="{title}">

@@ -30,7 +30,11 @@ JSONArray fieldsJSONArray = _getFormTemplateFieldsJSONArray(structure, script);
 String fieldsJSONArrayString = fieldsJSONArray.toString();
 %>
 
-<aui:input name="language" type="hidden" value="json" />
+<aui:input
+	name="language"
+	type="hidden"
+	value="json"
+/>
 <aui:input name="scriptContent" type="hidden" />
 
 <aui:script>

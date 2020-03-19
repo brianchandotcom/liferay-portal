@@ -39,7 +39,11 @@
 			for (Locale curLocale : locales) {
 			%>
 
-				<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= defaultLanguageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
+				<aui:option
+					label="<%= curLocale.getDisplayName(locale) %>"
+					selected="<%= defaultLanguageId.equals(LocaleUtil.toLanguageId(curLocale)) %>"
+					value="<%= LocaleUtil.toLanguageId(curLocale) %>"
+				/>
 
 			<%
 			}

@@ -59,9 +59,7 @@ Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 		<%= fileEntriesCount %> <liferay-ui:message key='<%= (fileEntriesCount == 1) ? "document" : "documents" %>' />
 	</div>
 
-	<liferay-expando:custom-attributes-available
-		className="<%= DLFolderConstants.getClassName() %>"
-	>
+	<liferay-expando:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
 		<liferay-expando:custom-attribute-list
 			className="<%= DLFolderConstants.getClassName() %>"
 			classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"

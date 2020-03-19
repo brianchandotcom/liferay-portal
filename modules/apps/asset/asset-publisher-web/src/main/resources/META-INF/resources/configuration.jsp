@@ -34,12 +34,24 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 	name="fm"
 	onSubmit="event.preventDefault();"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL.toString() %>"
+	/>
 	<aui:input name="groupId" type="hidden" />
 	<aui:input name="typeSelection" type="hidden" />
 	<aui:input name="assetEntryIds" type="hidden" />
-	<aui:input name="assetEntryOrder" type="hidden" value="-1" />
+	<aui:input
+		name="assetEntryOrder"
+		type="hidden"
+		value="-1"
+	/>
 	<aui:input name="assetEntryType" type="hidden" />
 
 	<%
@@ -51,10 +63,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 	<liferay-ui:success key='<%= portletResource + "requestProcessed" %>' message="the-content-set-was-created-successfully" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:form-navigator
-			id="<%= AssetPublisherConstants.FORM_NAVIGATOR_ID_CONFIGURATION %>"
-			showButtons="<%= false %>"
-		/>
+		<liferay-frontend:form-navigator id="<%= AssetPublisherConstants.FORM_NAVIGATOR_ID_CONFIGURATION %>" showButtons="<%= false %>" />
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

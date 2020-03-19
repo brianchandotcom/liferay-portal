@@ -19,7 +19,11 @@
 <liferay-portlet:renderURL varImpl="searchURL" />
 
 <div class="container-fluid container-fluid-max-xl container-view">
-	<aui:form action="<%= searchURL %>" method="get" name="fm">
+	<aui:form
+		action="<%= searchURL %>"
+		method="get"
+		name="fm"
+	>
 		<liferay-portlet:renderURLParams varImpl="searchURL" />
 
 		<liferay-portlet:renderURL varImpl="iteratorURL">
@@ -53,10 +57,7 @@
 			headerNames="user-id,user-name,resource-id,resource-name,resource-action,client-ip,create-date"
 			iteratorURL="<%= iteratorURL %>"
 		>
-			<liferay-ui:search-form
-				page="/event_search.jsp"
-				servletContext="<%= application %>"
-			/>
+			<liferay-ui:search-form page="/event_search.jsp" servletContext="<%= application %>" />
 
 			<%
 			int endDateDayHour = (endDateAmPm != Calendar.PM) ? endDateHour : endDateHour + 12;
@@ -103,9 +104,7 @@
 
 			<div class="separator"><!-- --></div>
 
-			<liferay-ui:search-iterator
-				searchContainer="<%= searchContainer %>"
-			/>
+			<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

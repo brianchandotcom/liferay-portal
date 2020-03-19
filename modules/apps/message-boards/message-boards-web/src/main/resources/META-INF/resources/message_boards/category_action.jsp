@@ -65,10 +65,7 @@ else {
 			<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 
 		<portlet:renderURL var="moveURL">
 			<portlet:param name="mvcRenderCommandName" value="/message_boards/move_category" />
@@ -76,10 +73,7 @@ else {
 			<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="move"
-			url="<%= moveURL %>"
-		/>
+		<liferay-ui:icon message="move" url="<%= moveURL %>" />
 	</c:if>
 
 	<c:if test="<%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS) && enableRSS %>">
@@ -117,10 +111,7 @@ else {
 					<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon
-					message="unsubscribe"
-					url="<%= unsubscribeURL %>"
-				/>
+				<liferay-ui:icon message="unsubscribe" url="<%= unsubscribeURL %>" />
 			</c:when>
 			<c:otherwise>
 				<portlet:actionURL name="/message_boards/edit_category" var="subscribeURL">
@@ -129,10 +120,7 @@ else {
 					<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon
-					message="subscribe"
-					url="<%= subscribeURL %>"
-				/>
+				<liferay-ui:icon message="subscribe" url="<%= subscribeURL %>" />
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -161,9 +149,6 @@ else {
 			<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>" url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

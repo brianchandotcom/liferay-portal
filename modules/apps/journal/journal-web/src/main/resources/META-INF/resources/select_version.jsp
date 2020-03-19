@@ -31,22 +31,17 @@ portletURL.setParameter("articleId", articleId);
 portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 %>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectVersionFm">
-	<liferay-ui:search-container
-		iteratorURL="<%= portletURL %>"
-		total="<%= JournalArticleLocalServiceUtil.getArticlesCount(groupId, articleId) %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= JournalArticleLocalServiceUtil.getArticles(groupId, articleId, searchContainer.getStart(), searchContainer.getEnd(), new ArticleVersionComparator()) %>"
-		/>
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="selectVersionFm"
+>
+	<liferay-ui:search-container iteratorURL="<%= portletURL %>" total="<%= JournalArticleLocalServiceUtil.getArticlesCount(groupId, articleId) %>">
+		<liferay-ui:search-container-results results="<%= JournalArticleLocalServiceUtil.getArticles(groupId, articleId, searchContainer.getStart(), searchContainer.getEnd(), new ArticleVersionComparator()) %>" />
 
-		<liferay-ui:search-container-row
-			className="com.liferay.journal.model.JournalArticle"
-			modelVar="curArticle"
-		>
-			<liferay-ui:search-container-column-text
-				name="version"
-			>
+		<liferay-ui:search-container-row className="com.liferay.journal.model.JournalArticle" modelVar="curArticle">
+			<liferay-ui:search-container-column-text name="version">
 
 				<%
 				double curSourceVersion = sourceVersion;
@@ -65,21 +60,19 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 				data.put("targetversion", curTargetVersion);
 				%>
 
-				<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+				<aui:a
+					cssClass="selector-button"
+					data="<%= data %>"
+					href="javascript:;"
+				>
 					<%= String.valueOf(curArticle.getVersion()) %>
 				</aui:a>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-date
-				name="date"
-				value="<%= curArticle.getModifiedDate() %>"
-			/>
+			<liferay-ui:search-container-column-date name="date" value="<%= curArticle.getModifiedDate() %>" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="list"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

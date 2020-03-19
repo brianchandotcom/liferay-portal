@@ -40,13 +40,37 @@ MailManager mailManager = MailManager.getInstance(request);
 				<aui:nav-item cssClass="select-none" label="none" />
 			</aui:nav-item>
 
-			<aui:nav-item cssClass="delete-messages" iconClass="icon-remove" label="delete" />
+			<aui:nav-item
+				cssClass="delete-messages"
+				iconClass="icon-remove"
+				label="delete"
+			/>
 
 			<aui:nav-item dropdown="<%= true %>" label="flag">
-				<aui:nav-item cssClass="flag-messages" data-flagToggle="true" data-flagType="4" label="flag-as-important" />
-				<aui:nav-item cssClass="flag-messages" data-flagToggle="false" data-flagType="4" label="remove-flag" />
-				<aui:nav-item cssClass="flag-messages" data-flagToggle="true" data-flagType="6" label="mark-as-read" />
-				<aui:nav-item cssClass="flag-messages" data-flagToggle="false" data-flagType="6" label="mark-as-unread" />
+				<aui:nav-item
+					cssClass="flag-messages"
+					data-flagToggle="true"
+					data-flagType="4"
+					label="flag-as-important"
+				/>
+				<aui:nav-item
+					cssClass="flag-messages"
+					data-flagToggle="false"
+					data-flagType="4"
+					label="remove-flag"
+				/>
+				<aui:nav-item
+					cssClass="flag-messages"
+					data-flagToggle="true"
+					data-flagType="6"
+					label="mark-as-read"
+				/>
+				<aui:nav-item
+					cssClass="flag-messages"
+					data-flagToggle="false"
+					data-flagType="6"
+					label="mark-as-unread"
+				/>
 			</aui:nav-item>
 
 			<aui:nav-item dropdown="<%= true %>" label="move">
@@ -99,7 +123,16 @@ MailManager mailManager = MailManager.getInstance(request);
 								}
 								%>
 
-								<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= MailConstants.ORDER_BY_ADDRESS %>" data-orderByType="<%= addressOrderByType %>" data-pageNumber="1" href="javascript:;" label="address" />
+								<aui:a
+									cssClass="messages-link"
+									data-folderId="<%= folderId %>"
+									data-keywords="<%= keywords %>"
+									data-orderByField="<%= MailConstants.ORDER_BY_ADDRESS %>"
+									data-orderByType="<%= addressOrderByType %>"
+									data-pageNumber="1"
+									href="javascript:;"
+									label="address"
+								/>
 							</th>
 							<th class="subject">
 
@@ -111,7 +144,16 @@ MailManager mailManager = MailManager.getInstance(request);
 								}
 								%>
 
-								<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= MailConstants.ORDER_BY_SUBJECT %>" data-orderByType="<%= subjectOrderByType %>" data-pageNumber="1" href="javascript:;" label="subject" />
+								<aui:a
+									cssClass="messages-link"
+									data-folderId="<%= folderId %>"
+									data-keywords="<%= keywords %>"
+									data-orderByField="<%= MailConstants.ORDER_BY_SUBJECT %>"
+									data-orderByType="<%= subjectOrderByType %>"
+									data-pageNumber="1"
+									href="javascript:;"
+									label="subject"
+								/>
 							</th>
 							<th class="attachments"></th>
 							<th class="date">
@@ -124,7 +166,16 @@ MailManager mailManager = MailManager.getInstance(request);
 								}
 								%>
 
-								<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= MailConstants.ORDER_BY_SENT_DATE %>" data-orderByType="<%= dateOrderByType %>" data-pageNumber="1" href="javascript:;" label="date" />
+								<aui:a
+									cssClass="messages-link"
+									data-folderId="<%= folderId %>"
+									data-keywords="<%= keywords %>"
+									data-orderByField="<%= MailConstants.ORDER_BY_SENT_DATE %>"
+									data-orderByType="<%= dateOrderByType %>"
+									data-pageNumber="1"
+									href="javascript:;"
+									label="date"
+								/>
 							</th>
 						</tr>
 					</thead>
@@ -189,7 +240,14 @@ MailManager mailManager = MailManager.getInstance(request);
 
 							<tr class="<%= rowCssClass %>">
 								<td class="check">
-									<aui:input id='<%= "message" + message.getMessageId() %>' label="" messageId="<%= message.getMessageId() %>" name="message" type="checkbox" value="<%= message.getMessageId() %>" />
+									<aui:input
+										id='<%= "message" + message.getMessageId() %>'
+										label=""
+										messageId="<%= message.getMessageId() %>"
+										name="message"
+										type="checkbox"
+										value="<%= message.getMessageId() %>"
+									/>
 								</td>
 								<td class="address">
 									<div class="<%= messageCssClass %>" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-messageId="<%= message.getMessageId() %>" data-messageNumber="<%= messageNumber %>" data-orderByField="<%= orderByField %>" data-orderByType="<%= orderByType %>">
@@ -204,10 +262,7 @@ MailManager mailManager = MailManager.getInstance(request);
 								<td class="attachments">
 									<div class="<%= messageCssClass %>" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-messageId="<%= message.getMessageId() %>" data-messageNumber="<%= messageNumber %>" data-orderByField="<%= orderByField %>" data-orderByType="<%= orderByType %>">
 										<c:if test="<%= message.hasAttachments() %>">
-											<liferay-ui:icon
-												iconCssClass="icon-paper-clip"
-												message="attachments"
-											/>
+											<liferay-ui:icon iconCssClass="icon-paper-clip" message="attachments" />
 										</c:if>
 									</div>
 								</td>
@@ -235,7 +290,11 @@ MailManager mailManager = MailManager.getInstance(request);
 					<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= orderByField %>" data-orderByType="<%= orderByType %>" data-pageNumber="<%= pageNumber - 1 %>" href="javascript:;"><liferay-ui:message key="newer" /></aui:a>
 				</li>
 				<li class="message-count">
-					<liferay-ui:message arguments='<%= new Object[] {messagesDisplay.getStartMessageNumber() + " - " + messagesDisplay.getEndMessageNumber(), messagesDisplay.getMessageCount()} %>' key="x-of-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments='<%= new Object[] {messagesDisplay.getStartMessageNumber() + " - " + messagesDisplay.getEndMessageNumber(), messagesDisplay.getMessageCount()} %>'
+						key="x-of-x"
+						translateArguments="<%= false %>"
+					/>
 				</li>
 				<li class="<%= ((messagesDisplay.getPageNumber() < messagesDisplay.getPageCount()) ? StringPool.BLANK : "disabled ") + "next" %>">
 					<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= orderByField %>" data-orderByType="<%= orderByType %>" data-pageNumber="<%= pageNumber + 1 %>" href="javascript:;"><liferay-ui:message key="older" /> &rarr;</aui:a>

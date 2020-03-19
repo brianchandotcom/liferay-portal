@@ -75,27 +75,62 @@ portletURL.setWindowState(WindowState.NORMAL);
 		<aui:row>
 			<aui:col cssClass="contacts-center-home" width="<%= 100 %>">
 				<h3 class="header-title">
-					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(scopeGroup.getDescriptiveName(locale)), String.valueOf(contactsCount)} %>" key='<%= userPublicPage ? "x-has-no-connections" : "x-has-no-contacts" %>' translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= new Object[] {HtmlUtil.escape(scopeGroup.getDescriptiveName(locale)), String.valueOf(contactsCount)} %>"
+						key='<%= userPublicPage ? "x-has-no-connections" : "x-has-no-contacts" %>'
+						translateArguments="<%= false %>"
+					/>
 				</h3>
 			</aui:col>
 		</aui:row>
 	</c:when>
 	<c:otherwise>
-		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="" />
-			<aui:input name="redirect" type="hidden" value="" />
-			<aui:input name="userIds" type="hidden" value="" />
-			<aui:input name="type" type="hidden" value="" />
+		<aui:form
+			action="<%= portletURL.toString() %>"
+			method="post"
+			name="fm"
+		>
+			<aui:input
+				name="<%= Constants.CMD %>"
+				type="hidden"
+				value=""
+			/>
+			<aui:input
+				name="redirect"
+				type="hidden"
+				value=""
+			/>
+			<aui:input
+				name="userIds"
+				type="hidden"
+				value=""
+			/>
+			<aui:input
+				name="type"
+				type="hidden"
+				value=""
+			/>
 
 			<aui:row>
 				<aui:col cssClass="toolbar" width="<%= 100 %>">
 					<div class="filter-container">
 						<aui:row>
 							<aui:col cssClass="contact-group-filter form-inline">
-								<aui:input cssClass="mr-2" label="" name="checkAll" type="checkbox" />
+								<aui:input
+									cssClass="mr-2"
+									label=""
+									name="checkAll"
+									type="checkbox"
+								/>
 
 								<c:if test="<%= !userPublicPage %>">
-									<aui:select cssClass="contact-group-filter-select" inlineField="<%= true %>" label="" name="filterBy" value="<%= filterBy %>">
+									<aui:select
+										cssClass="contact-group-filter-select"
+										inlineField="<%= true %>"
+										label=""
+										name="filterBy"
+										value="<%= filterBy %>"
+									>
 										<aui:option label="all" value="<%= ContactsConstants.FILTER_BY_DEFAULT %>" />
 
 										<c:if test="<%= showOnlySiteMembers %>">
@@ -135,28 +170,38 @@ portletURL.setWindowState(WindowState.NORMAL);
 					</div>
 
 					<c:if test="<%= !showOnlySiteMembers && !userPublicPage %>">
-						<aui:button cssClass="add-contact" id="addContact" value="add-contact" />
+						<aui:button
+							cssClass="add-contact"
+							id="addContact"
+							value="add-contact"
+						/>
 					</c:if>
 				</aui:col>
 			</aui:row>
 		</aui:form>
 
 		<aui:row cssClass="contacts-result-container lfr-app-column-view">
-			<aui:col cssClass="contacts-list" first="<%= true %>" width="<%= 30 %>">
+			<aui:col
+				cssClass="contacts-list"
+				first="<%= true %>"
+				width="<%= 30 %>"
+			>
 				<div class="toggle-user">
-					<liferay-ui:icon
-						icon="angle-left"
-						markupView="lexicon"
-					/>
+					<liferay-ui:icon icon="angle-left" markupView="lexicon" />
 				</div>
 
 				<div class="contacts-search lfr-search-column search-bar">
-					<aui:input cssClass="search-input" id="name" label="" name="name" size="30" type="text" value="<%= HtmlUtil.escape(name) %>" />
-
-					<liferay-ui:icon
-						icon="search"
-						markupView="lexicon"
+					<aui:input
+						cssClass="search-input"
+						id="name"
+						label=""
+						name="name"
+						size="30"
+						type="text"
+						value="<%= HtmlUtil.escape(name) %>"
 					/>
+
+					<liferay-ui:icon icon="search" markupView="lexicon" />
 				</div>
 
 				<aui:row>
@@ -325,14 +370,10 @@ portletURL.setWindowState(WindowState.NORMAL);
 								<aui:col cssClass="contacts-center-home" width="<%= 100 %>">
 									<c:choose>
 										<c:when test="<%= !showOnlySiteMembers %>">
-											<liferay-ui:header
-												title="contacts-center"
-											/>
+											<liferay-ui:header title="contacts-center" />
 										</c:when>
 										<c:otherwise>
-											<liferay-ui:header
-												title="members"
-											/>
+											<liferay-ui:header title="members" />
 										</c:otherwise>
 									</c:choose>
 

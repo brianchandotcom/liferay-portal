@@ -24,10 +24,7 @@ String itemSelectedEventName = roleItemSelectorViewDisplayContext.getItemSelecte
 PortletURL portletURL = roleItemSelectorViewDisplayContext.getPortletURL();
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="roles"
->
+<liferay-frontend:management-bar includeCheckBox="<%= true %>" searchContainerId="roles">
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
@@ -37,10 +34,7 @@ PortletURL portletURL = roleItemSelectorViewDisplayContext.getPortletURL();
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
+		<liferay-frontend:management-bar-navigation navigationKeys='<%= new String[] {"all"} %>' portletURL="<%= portletURL %>" />
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= roleItemSelectorViewDisplayContext.getOrderByCol() %>"
@@ -56,10 +50,7 @@ PortletURL portletURL = roleItemSelectorViewDisplayContext.getPortletURL();
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280" id="<portlet:namespace />roleSelectorWrapper">
-	<liferay-ui:search-container
-		id="roles"
-		searchContainer="<%= roleItemSelectorViewDisplayContext.getSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="roles" searchContainer="<%= roleItemSelectorViewDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Role"
 			cssClass="role-row"
@@ -76,15 +67,9 @@ PortletURL portletURL = roleItemSelectorViewDisplayContext.getPortletURL();
 			row.setData(data);
 			%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				property="name"
-			/>
+			<liferay-ui:search-container-column-text cssClass="table-cell-content" property="name" />
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				property="description"
-			/>
+			<liferay-ui:search-container-column-text cssClass="table-cell-content" property="description" />
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

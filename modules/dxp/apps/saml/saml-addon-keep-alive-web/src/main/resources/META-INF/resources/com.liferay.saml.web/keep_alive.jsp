@@ -26,7 +26,15 @@ String keepAliveURL = GetterUtil.getString(request.getAttribute(SamlWebKeys.SAML
 %>
 
 <aui:fieldset label="keep-alive">
-	<aui:input name="<%= expandoAttributeName %>" type="hidden" value="<%= expandoAttribute %>" />
+	<aui:input
+		name="<%= expandoAttributeName %>"
+		type="hidden"
+		value="<%= expandoAttribute %>"
+	/>
 
-	<aui:input label="keep-alive-url" name="<%= expandoAttributeValue %>" value="<%= keepAliveURL %>" />
+	<aui:input
+		label="keep-alive-url"
+		name="<%= expandoAttributeValue %>"
+		value="<%= keepAliveURL %>"
+	/>
 </aui:fieldset>

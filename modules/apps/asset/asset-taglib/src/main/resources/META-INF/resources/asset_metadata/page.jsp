@@ -43,9 +43,7 @@ String[] metadataFields = (String[])request.getAttribute("liferay-asset:asset-me
 				<liferay-util:include page="/asset_metadata/metadata_entry.jsp" servletContext="<%= application %>" />
 			</c:if>
 
-			<liferay-util:buffer
-				var="metadataPanelContent"
-			>
+			<liferay-util:buffer var="metadataPanelContent">
 
 				<%
 				for (String metadataField : metadataFields) {

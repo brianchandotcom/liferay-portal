@@ -25,19 +25,12 @@ if (Validator.isNotNull(redirect)) {
 }
 %>
 
-<liferay-site-navigation:breadcrumb
-	breadcrumbEntries="<%= layoutsAdminDisplayContext.getPortletBreadcrumbEntries() %>"
-/>
+<liferay-site-navigation:breadcrumb breadcrumbEntries="<%= layoutsAdminDisplayContext.getPortletBreadcrumbEntries() %>" />
 
 <c:choose>
 	<c:when test="<%= layoutsAdminDisplayContext.isFirstColumn() %>">
-		<liferay-ui:search-container
-			searchContainer="<%= layoutsAdminDisplayContext.getFirstColumnLayoutsSearchContainer() %>"
-		>
-			<liferay-ui:search-container-row
-				className="java.lang.String"
-				modelVar="name"
-			>
+		<liferay-ui:search-container searchContainer="<%= layoutsAdminDisplayContext.getFirstColumnLayoutsSearchContainer() %>">
+			<liferay-ui:search-container-row className="java.lang.String" modelVar="name">
 
 				<%
 				boolean privateLayout = false;
@@ -83,22 +76,14 @@ if (Validator.isNotNull(redirect)) {
 				row.setObject(privateLayout);
 				%>
 
-				<liferay-ui:search-container-column-jsp
-					path="/layout_first_column_action.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp path="/layout_first_column_action.jsp" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				displayStyle="list"
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:search-container
-			id="pages"
-			searchContainer="<%= layoutsAdminDisplayContext.getLayoutsSearchContainer() %>"
-		>
+		<liferay-ui:search-container id="pages" searchContainer="<%= layoutsAdminDisplayContext.getLayoutsSearchContainer() %>">
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.model.Layout"
 				keyProperty="plid"
@@ -118,13 +103,8 @@ if (Validator.isNotNull(redirect)) {
 					value="<%= layout.getName(locale) %>"
 				/>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand table-cell-minw-200"
-					name="relative-path"
-				>
-					<liferay-site-navigation:breadcrumb
-						breadcrumbEntries="<%= layoutsAdminDisplayContext.getRelativeBreadcrumbEntries(layout) %>"
-					/>
+				<liferay-ui:search-container-column-text cssClass="table-cell-expand table-cell-minw-200" name="relative-path">
+					<liferay-site-navigation:breadcrumb breadcrumbEntries="<%= layoutsAdminDisplayContext.getRelativeBreadcrumbEntries(layout) %>" />
 				</liferay-ui:search-container-column-text>
 
 				<%
@@ -145,15 +125,10 @@ if (Validator.isNotNull(redirect)) {
 					property="createDate"
 				/>
 
-				<liferay-ui:search-container-column-jsp
-					path="/layout_action.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp path="/layout_action.jsp" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				displayStyle="list"
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</c:otherwise>
 </c:choose>

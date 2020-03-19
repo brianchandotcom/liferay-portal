@@ -51,11 +51,15 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<liferay-util:buffer
-	var="kbArticleStatus"
->
+<liferay-util:buffer var="kbArticleStatus">
 	<c:if test="<%= kbArticle != null %>">
-		<aui:workflow-status id="<%= String.valueOf(resourcePrimKey) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" version="<%= String.valueOf(kbArticle.getVersion()) %>" />
+		<aui:workflow-status
+			id="<%= String.valueOf(resourcePrimKey) %>"
+			showIcon="<%= false %>"
+			showLabel="<%= false %>"
+			status="<%= kbArticle.getStatus() %>"
+			version="<%= String.valueOf(kbArticle.getVersion()) %>"
+		/>
 	</c:if>
 </liferay-util:buffer>
 
@@ -76,14 +80,46 @@ if (portletTitleBasedNavigation) {
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<liferay-portlet:actionURL name="updateKBArticle" var="updateKBArticleURL" />
 
-	<aui:form action="<%= updateKBArticleURL %>" method="post" name="fm">
-		<aui:input name="mvcPath" type="hidden" value='<%= templatePath + "edit_article.jsp" %>' />
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (kbArticle == null) ? Constants.ADD : Constants.UPDATE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="resourcePrimKey" type="hidden" value="<%= String.valueOf(resourcePrimKey) %>" />
-		<aui:input name="parentResourceClassNameId" type="hidden" value="<%= parentResourceClassNameId %>" />
-		<aui:input name="parentResourcePrimKey" type="hidden" value="<%= parentResourcePrimKey %>" />
-		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
+	<aui:form
+		action="<%= updateKBArticleURL %>"
+		method="post"
+		name="fm"
+	>
+		<aui:input
+			name="mvcPath"
+			type="hidden"
+			value='<%= templatePath + "edit_article.jsp" %>'
+		/>
+		<aui:input
+			name="<%= Constants.CMD %>"
+			type="hidden"
+			value="<%= (kbArticle == null) ? Constants.ADD : Constants.UPDATE %>"
+		/>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="resourcePrimKey"
+			type="hidden"
+			value="<%= String.valueOf(resourcePrimKey) %>"
+		/>
+		<aui:input
+			name="parentResourceClassNameId"
+			type="hidden"
+			value="<%= parentResourceClassNameId %>"
+		/>
+		<aui:input
+			name="parentResourcePrimKey"
+			type="hidden"
+			value="<%= parentResourcePrimKey %>"
+		/>
+		<aui:input
+			name="workflowAction"
+			type="hidden"
+			value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>"
+		/>
 
 		<div class="lfr-form-content">
 			<c:if test="<%= (kbArticle != null) && !portletTitleBasedNavigation %>">
@@ -97,7 +133,11 @@ if (portletTitleBasedNavigation) {
 			<liferay-ui:error exception="<%= KBArticleUrlTitleException.MustNotBeDuplicate.class %>" message="please-enter-a-unique-friendly-url" />
 
 			<liferay-ui:error exception="<%= FileSizeException.class %>">
-				<liferay-ui:message arguments="<%= DLValidatorUtil.getMaxAllowableSize() / 1024 %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= DLValidatorUtil.getMaxAllowableSize() / 1024 %>"
+					key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x"
+					translateArguments="<%= false %>"
+				/>
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= KBArticleUrlTitleException.MustNotContainInvalidCharacters.class %>" message="please-enter-a-friendly-url-that-starts-with-a-slash-and-contains-alphanumeric-characters-dashes-and-underscores" />
@@ -120,7 +160,11 @@ if (portletTitleBasedNavigation) {
 			<liferay-ui:error exception="<%= NoSuchFileException.class %>" message="the-document-could-not-be-found" />
 
 			<liferay-ui:error exception="<%= UploadRequestSizeException.class %>">
-				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(UploadServletRequestConfigurationHelperUtil.getMaxSize(), locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= LanguageUtil.formatStorageSize(UploadServletRequestConfigurationHelperUtil.getMaxSize(), locale) %>"
+					key="request-is-larger-than-x-and-could-not-be-processed"
+					translateArguments="<%= false %>"
+				/>
 			</liferay-ui:error>
 
 			<liferay-asset:asset-categories-error />
@@ -178,16 +222,22 @@ if (portletTitleBasedNavigation) {
 					</div>
 				</aui:fieldset>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="attachments"
+				>
 					<div id="<portlet:namespace />attachments">
 						<liferay-util:include page="/admin/common/attachments.jsp" servletContext="<%= application %>" />
 					</div>
 				</aui:fieldset>
 
-				<liferay-expando:custom-attributes-available
-					className="<%= KBArticle.class.getName() %>"
-				>
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+				<liferay-expando:custom-attributes-available className="<%= KBArticle.class.getName() %>">
+					<aui:fieldset
+						collapsed="<%= true %>"
+						collapsible="<%= true %>"
+						label="custom-fields"
+					>
 						<liferay-expando:custom-attribute-list
 							className="<%= KBArticle.class.getName() %>"
 							classPK="<%= (kbArticle != null) ? kbArticle.getKbArticleId() : 0 %>"
@@ -197,27 +247,42 @@ if (portletTitleBasedNavigation) {
 					</aui:fieldset>
 				</liferay-expando:custom-attributes-available>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-					<liferay-asset:asset-categories-selector
-						className="<%= KBArticle.class.getName() %>"
-						classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>"
-					/>
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="categorization"
+				>
+					<liferay-asset:asset-categories-selector className="<%= KBArticle.class.getName() %>" classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>" />
 
-					<liferay-asset:asset-tags-selector
-						className="<%= KBArticle.class.getName() %>"
-						classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>"
-					/>
+					<liferay-asset:asset-tags-selector className="<%= KBArticle.class.getName() %>" classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>" />
 				</aui:fieldset>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
-					<liferay-asset:input-asset-links
-						className="<%= KBArticle.class.getName() %>"
-						classPK="<%= (kbArticle == null) ? KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY : kbArticle.getClassPK() %>"
-					/>
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="related-assets"
+				>
+					<liferay-asset:input-asset-links className="<%= KBArticle.class.getName() %>" classPK="<%= (kbArticle == null) ? KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY : kbArticle.getClassPK() %>" />
 				</aui:fieldset>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
-					<aui:input cssClass="input-medium" data-custom-url="<%= false %>" disabled="<%= kbArticle != null %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder="sample-article-url-title" prefix="<%= _getFriendlyURLPrefix(parentResourceClassNameId, parentResourcePrimKey) %>" type="text" value="<%= urlTitle %>" />
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="configuration"
+				>
+					<aui:input
+						cssClass="input-medium"
+						data-custom-url="<%= false %>"
+						disabled="<%= kbArticle != null %>"
+						helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>'
+						ignoreRequestValue="<%= true %>"
+						label="friendly-url"
+						name="urlTitle"
+						placeholder="sample-article-url-title"
+						prefix="<%= _getFriendlyURLPrefix(parentResourceClassNameId, parentResourcePrimKey) %>"
+						type="text"
+						value="<%= urlTitle %>"
+					/>
 
 					<c:if test="<%= enableKBArticleDescription %>">
 						<aui:input name="description" />
@@ -230,7 +295,11 @@ if (portletTitleBasedNavigation) {
 					<c:if test="<%= ArrayUtil.isNotEmpty(kbSectionPortletInstanceConfiguration.adminKBArticleSections()) && (parentResourceClassNameId == kbFolderClassNameId) %>">
 						<aui:model-context bean="<%= null %>" model="<%= KBArticle.class %>" />
 
-						<aui:select ignoreRequestValue="<%= true %>" multiple="<%= true %>" name="sections">
+						<aui:select
+							ignoreRequestValue="<%= true %>"
+							multiple="<%= true %>"
+							name="sections"
+						>
 
 							<%
 							Map<String, String> sectionsMap = new TreeMap<String, String>();
@@ -242,7 +311,11 @@ if (portletTitleBasedNavigation) {
 							for (Map.Entry<String, String> entry : sectionsMap.entrySet()) {
 							%>
 
-								<aui:option label="<%= HtmlUtil.escape(entry.getKey()) %>" selected="<%= ArrayUtil.contains(sections, entry.getValue()) %>" value="<%= HtmlUtil.escape(entry.getValue()) %>" />
+								<aui:option
+									label="<%= HtmlUtil.escape(entry.getKey()) %>"
+									selected="<%= ArrayUtil.contains(sections, entry.getValue()) %>"
+									value="<%= HtmlUtil.escape(entry.getValue()) %>"
+								/>
 
 							<%
 							}
@@ -255,10 +328,13 @@ if (portletTitleBasedNavigation) {
 				</aui:fieldset>
 
 				<c:if test="<%= kbArticle == null %>">
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass='<%= (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "hide" : StringPool.BLANK %>' label="permissions">
-						<liferay-ui:input-permissions
-							modelName="<%= KBArticle.class.getName() %>"
-						/>
+					<aui:fieldset
+						collapsed="<%= true %>"
+						collapsible="<%= true %>"
+						cssClass='<%= (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "hide" : StringPool.BLANK %>'
+						label="permissions"
+					>
+						<liferay-ui:input-permissions modelName="<%= KBArticle.class.getName() %>" />
 					</aui:fieldset>
 				</c:if>
 			</aui:fieldset-group>
@@ -286,9 +362,18 @@ if (portletTitleBasedNavigation) {
 			}
 			%>
 
-			<aui:button disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+			<aui:button
+				disabled="<%= pending %>"
+				name="publishButton"
+				type="submit"
+				value="<%= publishButtonLabel %>"
+			/>
 
-			<aui:button primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+			<aui:button
+				primary="<%= false %>"
+				type="submit"
+				value="<%= saveButtonLabel %>"
+			/>
 
 			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>

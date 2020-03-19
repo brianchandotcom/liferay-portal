@@ -22,26 +22,35 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext editSiteTeamAssignmentsUsersManagementToolbarDisplayContext = new EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, editSiteTeamAssignmentsUsersDisplayContext);
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getNavigationItems() %>" />
 
-<clay:management-toolbar
-	displayContext="<%= editSiteTeamAssignmentsUsersManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= editSiteTeamAssignmentsUsersManagementToolbarDisplayContext %>" />
 
 <portlet:actionURL name="deleteTeamUsers" var="deleteTeamUsersURL" />
 
-<aui:form action="<%= deleteTeamUsersURL %>" cssClass="container-fluid-1280 portlet-site-teams-users" method="post" name="fm">
-	<aui:input name="tabs1" type="hidden" value="<%= editSiteTeamAssignmentsUsersDisplayContext.getTabs1() %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(editSiteTeamAssignmentsUsersDisplayContext.getTeamId()) %>" />
+<aui:form
+	action="<%= deleteTeamUsersURL %>"
+	cssClass="container-fluid-1280 portlet-site-teams-users"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="tabs1"
+		type="hidden"
+		value="<%= editSiteTeamAssignmentsUsersDisplayContext.getTabs1() %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
+	<aui:input
+		name="teamId"
+		type="hidden"
+		value="<%= String.valueOf(editSiteTeamAssignmentsUsersDisplayContext.getTeamId()) %>"
+	/>
 
-	<liferay-ui:search-container
-		id="users"
-		searchContainer="<%= editSiteTeamAssignmentsUsersDisplayContext.getUserSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="users" searchContainer="<%= editSiteTeamAssignmentsUsersDisplayContext.getUserSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
 			cssClass="selectable"
@@ -58,22 +67,15 @@ EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext editSiteTeamAssignme
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:user-card
-							userCard="<%= new UserUserCard(user2, editSiteTeamAssignmentsUsersDisplayContext.getTeamId(), renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
-							userColorClass='<%= "user-icon " + LexiconUtil.getUserColorCssClass(user2) %>'
-						/>
+						<clay:user-card userCard="<%= new UserUserCard(user2, editSiteTeamAssignmentsUsersDisplayContext.getTeamId(), renderRequest, renderResponse, searchContainer.getRowChecker()) %>" userColorClass='<%= "user-icon " + LexiconUtil.getUserColorCssClass(user2) %>' />
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(editSiteTeamAssignmentsUsersDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-text>
-						<liferay-ui:user-portrait
-							userId="<%= user2.getUserId() %>"
-						/>
+						<liferay-ui:user-portrait userId="<%= user2.getUserId() %>" />
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h5><%= user2.getFullName() %></h5>
 
 						<h6 class="text-default">
@@ -87,10 +89,7 @@ EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext editSiteTeamAssignme
 						UserActionDropdownItemsProvider userActionDropdownItemsProvider = new UserActionDropdownItemsProvider(user2, editSiteTeamAssignmentsUsersDisplayContext.getTeamId(), renderRequest, renderResponse);
 						%>
 
-						<clay:dropdown-actions
-							defaultEventHandler="<%= SiteTeamsWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-							dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
-						/>
+						<clay:dropdown-actions defaultEventHandler="<%= SiteTeamsWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>" />
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
@@ -112,36 +111,40 @@ EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext editSiteTeamAssignme
 						UserActionDropdownItemsProvider userActionDropdownItemsProvider = new UserActionDropdownItemsProvider(user2, editSiteTeamAssignmentsUsersDisplayContext.getTeamId(), renderRequest, renderResponse);
 						%>
 
-						<clay:dropdown-actions
-							defaultEventHandler="<%= SiteTeamsWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-							dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
-						/>
+						<clay:dropdown-actions defaultEventHandler="<%= SiteTeamsWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>" />
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= editSiteTeamAssignmentsUsersDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= editSiteTeamAssignmentsUsersDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
 <portlet:actionURL name="addTeamUsers" var="addTeamUsersURL" />
 
-<aui:form action="<%= addTeamUsersURL %>" cssClass="hide" name="addTeamUsersFm">
-	<aui:input name="tabs1" type="hidden" value="<%= editSiteTeamAssignmentsUsersDisplayContext.getTabs1() %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(editSiteTeamAssignmentsUsersDisplayContext.getTeamId()) %>" />
+<aui:form
+	action="<%= addTeamUsersURL %>"
+	cssClass="hide"
+	name="addTeamUsersFm"
+>
+	<aui:input
+		name="tabs1"
+		type="hidden"
+		value="<%= editSiteTeamAssignmentsUsersDisplayContext.getTabs1() %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
+	<aui:input
+		name="teamId"
+		type="hidden"
+		value="<%= String.valueOf(editSiteTeamAssignmentsUsersDisplayContext.getTeamId()) %>"
+	/>
 </aui:form>
 
-<liferay-frontend:component
-	componentId="<%= editSiteTeamAssignmentsUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/EditTeamAssignmentsUsersManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= editSiteTeamAssignmentsUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/EditTeamAssignmentsUsersManagementToolbarDefaultEventHandler.es" />
 
-<liferay-frontend:component
-	componentId="<%= SiteTeamsWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/UserDropdownDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= SiteTeamsWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>" module="js/UserDropdownDefaultEventHandler.es" />

@@ -22,9 +22,7 @@ FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayCont
 FragmentCollectionResourcesManagementToolbarDisplayContext fragmentCollectionResourcesManagementToolbarDisplayContext = new FragmentCollectionResourcesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentCollectionResourcesDisplayContext);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= fragmentCollectionResourcesManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= fragmentCollectionResourcesManagementToolbarDisplayContext %>" />
 
 <portlet:actionURL name="/fragment/delete_fragment_collection_resources" var="deleteFragmentCollectionResourcesURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -35,14 +33,16 @@ FragmentCollectionResourcesManagementToolbarDisplayContext fragmentCollectionRes
 </portlet:actionURL>
 
 <aui:form action="<%= addFragmentCollectionResourceURL %>" name="fragmentCollectionResourceFm">
-	<aui:input name="fragmentCollectionId" type="hidden" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
+	<aui:input
+		name="fragmentCollectionId"
+		type="hidden"
+		value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>"
+	/>
 	<aui:input name="fileEntryId" type="hidden" />
 </aui:form>
 
 <aui:form name="fm">
-	<liferay-ui:search-container
-		searchContainer="<%= fragmentCollectionResourcesDisplayContext.getSearchContainer() %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= fragmentCollectionResourcesDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.repository.model.FileEntry"
 			keyProperty="fileEntryId"
@@ -54,27 +54,16 @@ FragmentCollectionResourcesManagementToolbarDisplayContext fragmentCollectionRes
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:vertical-card
-					verticalCard="<%= new FragmentCollectionResourceVerticalCard(fileEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
-				/>
+				<clay:vertical-card verticalCard="<%= new FragmentCollectionResourceVerticalCard(fileEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>" />
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="icon"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
 <c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
-	<liferay-frontend:component
-		componentId="<%= FragmentWebKeys.FRAGMENT_COLLECTION_RESOURCE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-		module="js/FragmentCollectionResourceDropdownDefaultEventHandler.es"
-	/>
+	<liferay-frontend:component componentId="<%= FragmentWebKeys.FRAGMENT_COLLECTION_RESOURCE_DROPDOWN_DEFAULT_EVENT_HANDLER %>" module="js/FragmentCollectionResourceDropdownDefaultEventHandler.es" />
 </c:if>
 
-<liferay-frontend:component
-	componentId="<%= fragmentCollectionResourcesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/FragmentCollectionResourcesManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= fragmentCollectionResourcesManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/FragmentCollectionResourcesManagementToolbarDefaultEventHandler.es" />

@@ -20,19 +20,18 @@
 SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagementToolbarDisplayContext = new SiteNavigationAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteNavigationAdminDisplayContext);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= siteNavigationAdminManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= siteNavigationAdminManagementToolbarDisplayContext %>" />
 
 <portlet:actionURL name="/navigation_menu/delete_site_navigation_menu" var="deleteSitaNavigationMenuURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteSitaNavigationMenuURL %>" cssClass="container-fluid-1280" name="fm">
-	<liferay-ui:search-container
-		id="siteNavigationMenus"
-		searchContainer="<%= siteNavigationAdminDisplayContext.getSearchContainer() %>"
-	>
+<aui:form
+	action="<%= deleteSitaNavigationMenuURL %>"
+	cssClass="container-fluid-1280"
+	name="fm"
+>
+	<liferay-ui:search-container id="siteNavigationMenus" searchContainer="<%= siteNavigationAdminDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.site.navigation.model.SiteNavigationMenu"
 			keyProperty="siteNavigationMenuId"
@@ -55,14 +54,9 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 
 			<c:choose>
 				<c:when test='<%= Objects.equals(siteNavigationAdminDisplayContext.getDisplayStyle(), "descriptive") %>'>
-					<liferay-ui:search-container-column-user
-						showDetails="<%= false %>"
-						userId="<%= siteNavigationMenu.getUserId() %>"
-					/>
+					<liferay-ui:search-container-column-user showDetails="<%= false %>" userId="<%= siteNavigationMenu.getUserId() %>" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 						<%
 						Date createDate = siteNavigationMenu.getCreateDate();
@@ -92,9 +86,7 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 						</span>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/site_navigation_menu_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/site_navigation_menu_action.jsp" />
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
@@ -134,17 +126,12 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 						property="createDate"
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/site_navigation_menu_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/site_navigation_menu_action.jsp" />
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= siteNavigationAdminDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= siteNavigationAdminDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
@@ -184,7 +171,4 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>
 
-<liferay-frontend:component
-	componentId="<%= siteNavigationAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/ManagementToolbarDefaultEventHandler"
-/>
+<liferay-frontend:component componentId="<%= siteNavigationAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/ManagementToolbarDefaultEventHandler" />

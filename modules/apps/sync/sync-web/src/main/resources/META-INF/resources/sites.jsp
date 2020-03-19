@@ -29,10 +29,7 @@ portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("delta", String.valueOf(delta));
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="sites"
->
+<liferay-frontend:management-bar includeCheckBox="<%= true %>" searchContainerId="sites">
 	<c:if test="<%= Validator.isNull(keywords) %>">
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons
@@ -43,10 +40,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 		</liferay-frontend:management-bar-buttons>
 
 		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
+			<liferay-frontend:management-bar-navigation navigationKeys='<%= new String[] {"all"} %>' portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>" />
 
 			<%
 			PortletURL searchURL = renderResponse.createRenderURL();
@@ -56,10 +50,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 
 			<li>
 				<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search
-						markupView="lexicon"
-						placeholder='<%= LanguageUtil.get(request, "search") %>'
-					/>
+					<liferay-ui:input-search markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "search") %>' />
 				</aui:form>
 			</li>
 		</liferay-frontend:management-bar-filters>
@@ -88,7 +79,11 @@ portletURL.setParameter("delta", String.valueOf(delta));
 
 <div class="container-fluid-1280">
 	<aui:form method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= currentURL %>"
+		/>
 		<aui:input name="enabled" type="hidden" />
 		<aui:input name="groupIds" type="hidden" />
 		<aui:input name="permissions" type="hidden" />
@@ -133,9 +128,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 			rowChecker="<%= new RowChecker(renderResponse) %>"
 			total="<%= groups.size() %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= ListUtil.subList(groups, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
+			<liferay-ui:search-container-results results="<%= ListUtil.subList(groups, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.model.Group"
@@ -149,10 +142,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 					property="descriptiveName"
 				/>
 
-				<liferay-ui:search-container-column-text
-					name="description"
-					property="description"
-				/>
+				<liferay-ui:search-container-column-text name="description" property="description" />
 
 				<%
 				boolean syncSiteEnabled = GetterUtil.getBoolean(group.getTypeSettingsProperty("syncEnabled"), true);
@@ -180,10 +170,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 				}
 				%>
 
-				<liferay-ui:search-container-column-text
-					name="default-file-permissions"
-					value="<%= permissionsDescription %>"
-				/>
+				<liferay-ui:search-container-column-text name="default-file-permissions" value="<%= permissionsDescription %>" />
 
 				<liferay-ui:search-container-column-text
 					name="enabled"
@@ -198,9 +185,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

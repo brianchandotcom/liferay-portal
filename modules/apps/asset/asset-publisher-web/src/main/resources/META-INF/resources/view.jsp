@@ -62,18 +62,13 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() && assetPublisherDisplayContext.isEnableRSS() %>">
 			<liferay-portlet:resourceURL id="getRSS" varImpl="rssURL" />
 
-			<liferay-rss:rss
-				resourceURL="<%= rssURL %>"
-			/>
+			<liferay-rss:rss resourceURL="<%= rssURL %>" />
 		</c:if>
 	</div>
 </c:if>
 
 <c:if test="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>">
-	<liferay-asset:categorization-filter
-		assetType="content"
-		portletURL="<%= assetPublisherDisplayContext.getPortletURL() %>"
-	/>
+	<liferay-asset:categorization-filter assetType="content" portletURL="<%= assetPublisherDisplayContext.getPortletURL() %>" />
 </c:if>
 
 <c:choose>
@@ -83,7 +78,11 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 				<liferay-util:include page="/view_asset_entry_list.jsp" servletContext="<%= application %>" />
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:message arguments="<%= assetPublisherDisplayContext.getDisplayStyle() %>" escape="<%= true %>" key="x-is-not-a-display-type" />
+				<liferay-ui:message
+					arguments="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
+					escape="<%= true %>"
+					key="x-is-not-a-display-type"
+				/>
 			</c:otherwise>
 		</c:choose>
 	</c:when>
@@ -135,10 +134,7 @@ SearchContainer searchContainer = assetPublisherDisplayContext.getSearchContaine
 %>
 
 <c:if test="<%= !assetPublisherDisplayContext.isPaginationTypeNone() && (searchContainer.getTotal() > searchContainer.getDelta()) %>">
-	<liferay-ui:search-paginator
-		searchContainer="<%= searchContainer %>"
-		type="<%= assetPublisherDisplayContext.getPaginationType() %>"
-	/>
+	<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="<%= assetPublisherDisplayContext.getPaginationType() %>" />
 </c:if>
 
 <aui:script sandbox="<%= true %>">

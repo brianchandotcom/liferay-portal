@@ -22,7 +22,11 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 Organization organization = organizationScreenNavigationDisplayContext.getOrganization();
 %>
 
-<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (organization == null) ? Constants.ADD : Constants.UPDATE %>" />
+<aui:input
+	name="<%= Constants.CMD %>"
+	type="hidden"
+	value="<%= (organization == null) ? Constants.ADD : Constants.UPDATE %>"
+/>
 
 <div class="form-group">
 	<h3 class="sheet-subtitle"><liferay-ui:message key="organization-information" /></h3>

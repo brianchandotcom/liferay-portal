@@ -56,40 +56,27 @@ portletDisplay.setShowBackIcon(true);
 />
 
 <div class="closed container-fluid-1280">
-	<liferay-site-navigation:breadcrumb
-		breadcrumbEntries="<%= changeListsHistoryDetailsDisplayContext.getBreadcrumbEntries(title) %>"
-	/>
+	<liferay-site-navigation:breadcrumb breadcrumbEntries="<%= changeListsHistoryDetailsDisplayContext.getBreadcrumbEntries(title) %>" />
 
-	<liferay-ui:search-container
-		id="changeListsHistory"
-		searchContainer="<%= ctEntrySearchContainer %>"
-	>
+	<liferay-ui:search-container id="changeListsHistory" searchContainer="<%= ctEntrySearchContainer %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.change.tracking.model.CTEntry"
 			keyProperty="ctEntryId"
 			modelVar="curCTEntry"
 		>
-			<liferay-ui:search-container-column-text
-				name="change-type"
-			>
+			<liferay-ui:search-container-column-text name="change-type">
 				<liferay-ui:message key="<%= changeListsHistoryDetailsDisplayContext.getChangeType(curCTEntry.getChangeType()) %>" />
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				name="content-type"
-			>
+			<liferay-ui:search-container-column-text name="content-type">
 				<liferay-ui:message key="<%= ResourceActionsUtil.getModelResource(request, PortalUtil.getClassName(curCTEntry.getModelClassNameId())) %>" />
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				name="user"
-			>
+			<liferay-ui:search-container-column-text name="user">
 				<%= HtmlUtil.escape(curCTEntry.getUserName()) %>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

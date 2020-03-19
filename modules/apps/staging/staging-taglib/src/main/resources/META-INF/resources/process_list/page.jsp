@@ -20,9 +20,18 @@
 	<portlet:param name="redirect" value="<%= currentURL.toString() %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteBackgroundTasksURL %>" cssClass="<%= processListListViewCss %>" method="get" name="fm">
+<aui:form
+	action="<%= deleteBackgroundTasksURL %>"
+	cssClass="<%= processListListViewCss %>"
+	method="get"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL.toString() %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL.toString() %>"
+	/>
 	<aui:input name="deleteBackgroundTaskIds" type="hidden" />
 
 	<liferay-staging:process-error
@@ -86,20 +95,12 @@
 		>
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
-					<liferay-ui:search-container-column-text
-						valign="top"
-					>
-						<liferay-ui:user-portrait
-							userId="<%= backgroundTask.getUserId() %>"
-						/>
+					<liferay-ui:search-container-column-text valign="top">
+						<liferay-ui:user-portrait userId="<%= backgroundTask.getUserId() %>" />
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
-						<liferay-staging:process-info
-							backgroundTask="<%= backgroundTask %>"
-						/>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+						<liferay-staging:process-info backgroundTask="<%= backgroundTask %>" />
 
 						<liferay-staging:process-message-task-details
 							backgroundTaskId="<%= backgroundTask.getBackgroundTaskId() %>"
@@ -109,28 +110,14 @@
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand table-cell-minw-200 table-title"
-						name="title"
-					>
-						<liferay-ui:user-portrait
-							userId="<%= backgroundTask.getUserId() %>"
-						/>
+					<liferay-ui:search-container-column-text cssClass="table-cell-expand table-cell-minw-200 table-title" name="title">
+						<liferay-ui:user-portrait userId="<%= backgroundTask.getUserId() %>" />
 
-						<liferay-staging:process-title
-							backgroundTask="<%= backgroundTask %>"
-							listView="<%= true %>"
-						/>
+						<liferay-staging:process-title backgroundTask="<%= backgroundTask %>" listView="<%= true %>" />
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						cssClass="background-task-status-column"
-						name="status"
-					>
-						<liferay-staging:process-status
-							backgroundTaskStatus="<%= backgroundTask.getStatus() %>"
-							backgroundTaskStatusLabel="<%= backgroundTask.getStatusLabel() %>"
-						/>
+					<liferay-ui:search-container-column-text cssClass="background-task-status-column" name="status">
+						<liferay-staging:process-status backgroundTaskStatus="<%= backgroundTask.getStatus() %>" backgroundTaskStatusLabel="<%= backgroundTask.getStatusLabel() %>" />
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-date
@@ -147,13 +134,8 @@
 						value="<%= backgroundTask.getCompletionDate() %>"
 					/>
 
-					<liferay-ui:search-container-column-text
-						cssClass="background-task-status-column table-cell-expand table-cell-minw-200"
-					>
-						<liferay-staging:process-in-progress
-							backgroundTask="<%= backgroundTask %>"
-							listView="<%= true %>"
-						/>
+					<liferay-ui:search-container-column-text cssClass="background-task-status-column table-cell-expand table-cell-minw-200">
+						<liferay-staging:process-in-progress backgroundTask="<%= backgroundTask %>" listView="<%= true %>" />
 					</liferay-ui:search-container-column-text>
 				</c:when>
 			</c:choose>
@@ -177,9 +159,7 @@
 	</liferay-ui:search-container>
 </aui:form>
 
-<liferay-staging:incomplete-process-message
-	localPublishing="<%= localPublishing %>"
-/>
+<liferay-staging:incomplete-process-message localPublishing="<%= localPublishing %>" />
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {

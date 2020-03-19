@@ -16,18 +16,10 @@
 
 <liferay-ui:error exception="<%= RequiredCompanyException.class %>" message="the-default-company-is-required" />
 
-<liferay-ui:search-container
-	iteratorURL="<%= portletURL %>"
-	total="<%= CompanyLocalServiceUtil.getCompaniesCount(false) %>"
->
-	<liferay-ui:search-container-results
-		results="<%= CompanyLocalServiceUtil.getCompanies(false, searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
+<liferay-ui:search-container iteratorURL="<%= portletURL %>" total="<%= CompanyLocalServiceUtil.getCompaniesCount(false) %>">
+	<liferay-ui:search-container-results results="<%= CompanyLocalServiceUtil.getCompanies(false, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.model.Company"
-		modelVar="curCompany"
-	>
+	<liferay-ui:search-container-row className="com.liferay.portal.kernel.model.Company" modelVar="curCompany">
 
 		<%
 		PortletURL rowURL = renderResponse.createRenderURL();
@@ -89,13 +81,8 @@
 			value='<%= LanguageUtil.get(request, curCompany.isActive() ? "yes" : "no") %>'
 		/>
 
-		<liferay-ui:search-container-column-jsp
-			path="/instance_actions.jsp"
-		/>
+		<liferay-ui:search-container-column-jsp path="/instance_actions.jsp" />
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-		searchContainer="<%= searchContainer %>"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= searchContainer %>" />
 </liferay-ui:search-container>

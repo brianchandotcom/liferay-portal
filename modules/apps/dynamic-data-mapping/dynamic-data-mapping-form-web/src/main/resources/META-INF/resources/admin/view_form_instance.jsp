@@ -24,14 +24,19 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 %>
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
-	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
-		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:form
+		action="<%= portletURL.toString() %>"
+		method="post"
+		name="searchContainerForm"
+	>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= portletURL.toString() %>"
+		/>
 		<aui:input name="deleteFormInstanceIds" type="hidden" />
 
-		<liferay-ui:search-container
-			id="<%= ddmFormAdminDisplayContext.getSearchContainerId() %>"
-			searchContainer="<%= ddmFormAdminDisplayContext.getSearch() %>"
-		>
+		<liferay-ui:search-container id="<%= ddmFormAdminDisplayContext.getSearchContainerId() %>" searchContainer="<%= ddmFormAdminDisplayContext.getSearch() %>">
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMFormInstance"
 				cssClass="entry-display-style"
@@ -53,10 +58,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<liferay-ui:search-container-column-icon
-							cssClass="asset-icon"
-							icon="forms"
-						/>
+						<liferay-ui:search-container-column-icon cssClass="asset-icon" icon="forms" />
 
 						<liferay-ui:search-container-column-jsp
 							colspan="<%= 2 %>"
@@ -64,9 +66,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 							path="/admin/view_form_instance_descriptive.jsp"
 						/>
 
-						<liferay-ui:search-container-column-jsp
-							path="/admin/form_instance_action.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp path="/admin/form_instance_action.jsp" />
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:search-container-column-text
@@ -88,17 +88,12 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 							value="<%= formInstance.getModifiedDate() %>"
 						/>
 
-						<liferay-ui:search-container-column-jsp
-							path="/admin/form_instance_action.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp path="/admin/form_instance_action.jsp" />
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				displayStyle="<%= displayStyle %>"
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

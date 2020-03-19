@@ -24,26 +24,26 @@ UsersManagementToolbarDisplayContext usersManagementToolbarDisplayContext = new 
 Role role = usersDisplayContext.getRole();
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>" />
 
-<clay:management-toolbar
-	displayContext="<%= usersManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= usersManagementToolbarDisplayContext %>" />
 
-<liferay-ui:error embed="<%= false %>" exception="<%= RequiredUserException.class %>" message="one-or-more-users-were-not-removed-since-they-belong-to-a-user-group" />
+<liferay-ui:error
+	embed="<%= false %>"
+	exception="<%= RequiredUserException.class %>"
+	message="one-or-more-users-were-not-removed-since-they-belong-to-a-user-group"
+/>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/user/info_panel" var="sidebarPanelURL">
+	<liferay-portlet:resourceURL
+		copyCurrentRenderParameters="<%= false %>"
+		id="/user/info_panel"
+		var="sidebarPanelURL"
+	>
 		<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 	</liferay-portlet:resourceURL>
 
-	<liferay-frontend:sidebar-panel
-		resourceURL="<%= sidebarPanelURL %>"
-		searchContainerId="users"
-	>
+	<liferay-frontend:sidebar-panel resourceURL="<%= sidebarPanelURL %>" searchContainerId="users">
 		<liferay-util:include page="/user_info_panel.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:sidebar-panel>
 
@@ -52,18 +52,32 @@ Role role = usersDisplayContext.getRole();
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:actionURL>
 
-		<aui:form action="<%= deleteGroupUsersURL %>" cssClass="portlet-site-memberships-users" method="post" name="fm">
-			<aui:input name="tabs1" type="hidden" value="users" />
-			<aui:input name="navigation" type="hidden" value="<%= usersDisplayContext.getNavigation() %>" />
+		<aui:form
+			action="<%= deleteGroupUsersURL %>"
+			cssClass="portlet-site-memberships-users"
+			method="post"
+			name="fm"
+		>
+			<aui:input
+				name="tabs1"
+				type="hidden"
+				value="users"
+			/>
+			<aui:input
+				name="navigation"
+				type="hidden"
+				value="<%= usersDisplayContext.getNavigation() %>"
+			/>
 			<aui:input name="addUserIds" type="hidden" />
-			<aui:input name="roleId" type="hidden" value="<%= (role != null) ? role.getRoleId() : 0 %>" />
+			<aui:input
+				name="roleId"
+				type="hidden"
+				value="<%= (role != null) ? role.getRoleId() : 0 %>"
+			/>
 
 			<liferay-ui:membership-policy-error />
 
-			<liferay-ui:search-container
-				id="users"
-				searchContainer="<%= usersDisplayContext.getUserSearchContainer() %>"
-			>
+			<liferay-ui:search-container id="users" searchContainer="<%= usersDisplayContext.getUserSearchContainer() %>">
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.model.User"
 					escapedModel="<%= true %>"
@@ -87,10 +101,7 @@ Role role = usersDisplayContext.getRole();
 					<%@ include file="/user_columns.jspf" %>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					displayStyle="<%= usersDisplayContext.getDisplayStyle() %>"
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator displayStyle="<%= usersDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>
@@ -100,20 +111,31 @@ Role role = usersDisplayContext.getRole();
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= addGroupUsersURL %>" cssClass="hide" method="post" name="addGroupUsersFm">
-	<aui:input name="tabs1" type="hidden" value="users" />
+<aui:form
+	action="<%= addGroupUsersURL %>"
+	cssClass="hide"
+	method="post"
+	name="addGroupUsersFm"
+>
+	<aui:input
+		name="tabs1"
+		type="hidden"
+		value="users"
+	/>
 </aui:form>
 
-<aui:form cssClass="hide" method="post" name="editUserGroupRoleFm">
-	<aui:input name="tabs1" type="hidden" value="users" />
+<aui:form
+	cssClass="hide"
+	method="post"
+	name="editUserGroupRoleFm"
+>
+	<aui:input
+		name="tabs1"
+		type="hidden"
+		value="users"
+	/>
 </aui:form>
 
-<liferay-frontend:component
-	componentId="<%= usersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/UsersManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= usersManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/UsersManagementToolbarDefaultEventHandler.es" />
 
-<liferay-frontend:component
-	componentId="<%= SiteMembershipWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/UserDropdownDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= SiteMembershipWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>" module="js/UserDropdownDefaultEventHandler.es" />

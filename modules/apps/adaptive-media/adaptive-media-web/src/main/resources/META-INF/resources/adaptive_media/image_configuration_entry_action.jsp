@@ -62,10 +62,7 @@ String entryUuid = String.valueOf(amImageConfigurationEntry.getUUID());
 		<portlet:param name="entryUuid" value="<%= entryUuid %>" />
 	</liferay-portlet:renderURL>
 
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editImageConfigurationEntryURL %>"
-	/>
+	<liferay-ui:icon message="edit" url="<%= editImageConfigurationEntryURL %>" />
 
 	<c:choose>
 		<c:when test="<%= amImageConfigurationEntry.isEnabled() %>">
@@ -95,10 +92,7 @@ String entryUuid = String.valueOf(amImageConfigurationEntry.getUUID());
 				<portlet:param name="amImageConfigurationEntryUuid" value="<%= entryUuid %>" />
 			</portlet:actionURL>
 
-			<liferay-ui:icon
-				message="enable"
-				url="<%= enableImageConfigurationEntryURL %>"
-			/>
+			<liferay-ui:icon message="enable" url="<%= enableImageConfigurationEntryURL %>" />
 		</c:otherwise>
 	</c:choose>
 
@@ -137,10 +131,7 @@ String entryUuid = String.valueOf(amImageConfigurationEntry.getUUID());
 			/>
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:icon-delete
-				trash="<%= false %>"
-				url="<%= deleteImageConfigurationEntryURL %>"
-			/>
+			<liferay-ui:icon-delete trash="<%= false %>" url="<%= deleteImageConfigurationEntryURL %>" />
 		</c:otherwise>
 	</c:choose>
 </liferay-ui:icon-menu>

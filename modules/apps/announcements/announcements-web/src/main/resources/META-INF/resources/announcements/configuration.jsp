@@ -53,8 +53,16 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 	name="fm"
 	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfigurations();" %>'
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
@@ -63,7 +71,11 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 				id="displaySettingsPanel"
 				label="display-settings"
 			>
-				<aui:select label="maximum-items-to-display" name="preferences--pageDelta--" value="<%= announcementsPortletInstanceConfiguration.pageDelta() %>">
+				<aui:select
+					label="maximum-items-to-display"
+					name="preferences--pageDelta--"
+					value="<%= announcementsPortletInstanceConfiguration.pageDelta() %>"
+				>
 
 					<%
 					for (int pageDeltaValue : PropsValues.ANNOUNCEMENTS_ENTRY_PAGE_DELTA_VALUES) {
@@ -83,7 +95,14 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 				id="announcementsDisplayedPanel"
 				label="announcements-displayed"
 			>
-				<aui:input cssClass="customize-announcements-displayed" id="customizeAnnouncementsDisplayed" name="preferences--customizeAnnouncementsDisplayed--" title="customize-announcements-displayed" type="checkbox" value="<%= announcementsDisplayContext.isCustomizeAnnouncementsDisplayed() %>" />
+				<aui:input
+					cssClass="customize-announcements-displayed"
+					id="customizeAnnouncementsDisplayed"
+					name="preferences--customizeAnnouncementsDisplayed--"
+					title="customize-announcements-displayed"
+					type="checkbox"
+					value="<%= announcementsDisplayContext.isCustomizeAnnouncementsDisplayed() %>"
+				/>
 
 				<div class="<%= announcementsDisplayContext.isCustomizeAnnouncementsDisplayed() ? "" : "hide" %>" id="<portlet:namespace />announcementsDisplayed">
 					<div class="alert alert-info">

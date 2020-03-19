@@ -37,8 +37,5 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_ro
 		<%@ include file="/site_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		displayStyle="<%= displayStyle %>"
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 </liferay-ui:search-container>

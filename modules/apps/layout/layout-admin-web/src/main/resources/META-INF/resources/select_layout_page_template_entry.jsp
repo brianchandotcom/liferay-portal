@@ -121,13 +121,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 
 				<c:choose>
 					<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isContentPages() %>">
-						<liferay-ui:search-container
-							iteratorURL="<%= currentURLObj %>"
-							total="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateEntriesCount() %>"
-						>
-							<liferay-ui:search-container-results
-								results="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
-							/>
+						<liferay-ui:search-container iteratorURL="<%= currentURLObj %>" total="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateEntriesCount() %>">
+							<liferay-ui:search-container-results results="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateEntries(searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 							<liferay-ui:search-container-row
 								className="com.liferay.layout.page.template.model.LayoutPageTemplateEntry"
@@ -140,16 +135,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 								%>
 
 								<liferay-ui:search-container-column-text>
-									<clay:vertical-card
-										verticalCard="<%= new SelectLayoutPageTemplateEntryVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse) %>"
-									/>
+									<clay:vertical-card verticalCard="<%= new SelectLayoutPageTemplateEntryVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse) %>" />
 								</liferay-ui:search-container-column-text>
 							</liferay-ui:search-container-row>
 
-							<liferay-ui:search-iterator
-								displayStyle="icon"
-								markupView="lexicon"
-							/>
+							<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" />
 						</liferay-ui:search-container>
 					</c:when>
 					<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isBasicTemplates() %>">

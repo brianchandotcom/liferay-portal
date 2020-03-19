@@ -25,15 +25,49 @@ boolean adminSyncDefaultAssociations = PrefsPropsUtil.getBoolean(company.getComp
 %>
 
 <aui:fieldset>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
 
-	<aui:input helpMessage="check-to-apply-the-changes-to-existing-users" label="apply-to-existing-users" name='<%= "settings--" + PropsKeys.ADMIN_SYNC_DEFAULT_ASSOCIATIONS + "--" %>' type="checkbox" value="<%= adminSyncDefaultAssociations %>" />
+	<aui:input
+		helpMessage="check-to-apply-the-changes-to-existing-users"
+		label="apply-to-existing-users"
+		name='<%= "settings--" + PropsKeys.ADMIN_SYNC_DEFAULT_ASSOCIATIONS + "--" %>'
+		type="checkbox"
+		value="<%= adminSyncDefaultAssociations %>"
+	/>
 
-	<aui:input helpMessage="enter-the-default-site-names-per-line-that-are-associated-with-newly-created-users" label="sites" name='<%= "settings--" + PropsKeys.ADMIN_DEFAULT_GROUP_NAMES + "--" %>' type="textarea" value="<%= adminDefaultGroupNames %>" />
+	<aui:input
+		helpMessage="enter-the-default-site-names-per-line-that-are-associated-with-newly-created-users"
+		label="sites"
+		name='<%= "settings--" + PropsKeys.ADMIN_DEFAULT_GROUP_NAMES + "--" %>'
+		type="textarea"
+		value="<%= adminDefaultGroupNames %>"
+	/>
 
-	<aui:input helpMessage="enter-the-default-organization-site-names-per-line-that-are-associated-with-newly-created-users" label="organization-sites" name='<%= "settings--" + PropsKeys.ADMIN_DEFAULT_ORGANIZATION_GROUP_NAMES + "--" %>' type="textarea" value="<%= adminDefaultOrganizationGroupNames %>" />
+	<aui:input
+		helpMessage="enter-the-default-organization-site-names-per-line-that-are-associated-with-newly-created-users"
+		label="organization-sites"
+		name='<%= "settings--" + PropsKeys.ADMIN_DEFAULT_ORGANIZATION_GROUP_NAMES + "--" %>'
+		type="textarea"
+		value="<%= adminDefaultOrganizationGroupNames %>"
+	/>
 
-	<aui:input helpMessage="enter-the-default-regular-role-names-per-line-that-are-associated-with-newly-created-users" label="regular-roles" name='<%= "settings--" + PropsKeys.ADMIN_DEFAULT_ROLE_NAMES + "--" %>' type="textarea" value="<%= adminDefaultRoleNames %>" />
+	<aui:input
+		helpMessage="enter-the-default-regular-role-names-per-line-that-are-associated-with-newly-created-users"
+		label="regular-roles"
+		name='<%= "settings--" + PropsKeys.ADMIN_DEFAULT_ROLE_NAMES + "--" %>'
+		type="textarea"
+		value="<%= adminDefaultRoleNames %>"
+	/>
 
-	<aui:input helpMessage="enter-the-default-user-group-names-per-line-that-are-associated-with-newly-created-users" label="user-groups" name='<%= "settings--" + PropsKeys.ADMIN_DEFAULT_USER_GROUP_NAMES + "--" %>' type="textarea" value="<%= adminDefaultUserGroupNames %>" />
+	<aui:input
+		helpMessage="enter-the-default-user-group-names-per-line-that-are-associated-with-newly-created-users"
+		label="user-groups"
+		name='<%= "settings--" + PropsKeys.ADMIN_DEFAULT_USER_GROUP_NAMES + "--" %>'
+		type="textarea"
+		value="<%= adminDefaultUserGroupNames %>"
+	/>
 </aui:fieldset>

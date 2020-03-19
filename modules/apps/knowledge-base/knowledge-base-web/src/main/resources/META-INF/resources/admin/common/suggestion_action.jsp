@@ -42,10 +42,7 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 				<portlet:param name="kbCommentStatus" value="<%= String.valueOf(previousStatus) %>" />
 			</liferay-portlet:actionURL>
 
-			<liferay-ui:icon
-				message="<%= KBUtil.getStatusTransitionLabel(previousStatus) %>"
-				url="<%= previousStatusURL.toString() %>"
-			/>
+			<liferay-ui:icon message="<%= KBUtil.getStatusTransitionLabel(previousStatus) %>" url="<%= previousStatusURL.toString() %>" />
 		</c:if>
 
 		<c:if test="<%= nextStatus != KBCommentConstants.STATUS_NONE %>">
@@ -55,10 +52,7 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 				<portlet:param name="kbCommentStatus" value="<%= String.valueOf(nextStatus) %>" />
 			</liferay-portlet:actionURL>
 
-			<liferay-ui:icon
-				message="<%= KBUtil.getStatusTransitionLabel(nextStatus) %>"
-				url="<%= nextStatusURL.toString() %>"
-			/>
+			<liferay-ui:icon message="<%= KBUtil.getStatusTransitionLabel(nextStatus) %>" url="<%= nextStatusURL.toString() %>" />
 		</c:if>
 
 		<c:if test="<%= KBCommentPermission.contains(permissionChecker, kbComment, KBActionKeys.DELETE) %>">
@@ -67,9 +61,7 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 				<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
 			</liferay-portlet:actionURL>
 
-			<liferay-ui:icon-delete
-				url="<%= deleteURL.toString() %>"
-			/>
+			<liferay-ui:icon-delete url="<%= deleteURL.toString() %>" />
 		</c:if>
 	</liferay-ui:icon-menu>
 </c:if>

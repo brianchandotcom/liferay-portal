@@ -31,20 +31,14 @@
 			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editFragmentCollectionURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editFragmentCollectionURL %>" />
 	</c:if>
 
 	<portlet:resourceURL id="/fragment/export_fragment_collections" var="exportFragmentCollectionsURL">
 		<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
 	</portlet:resourceURL>
 
-	<liferay-ui:icon
-		message="export"
-		url="<%= exportFragmentCollectionsURL %>"
-	/>
+	<liferay-ui:icon message="export" url="<%= exportFragmentCollectionsURL %>" />
 
 	<c:if test="<%= fragmentDisplayContext.hasUpdatePermission() %>">
 		<liferay-ui:icon
@@ -64,9 +58,7 @@
 			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteFragmentCollectionURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteFragmentCollectionURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>
 

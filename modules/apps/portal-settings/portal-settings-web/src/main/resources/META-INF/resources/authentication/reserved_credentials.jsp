@@ -22,9 +22,25 @@ String adminReservedEmailAddresses = PrefsPropsUtil.getString(company.getCompany
 %>
 
 <aui:fieldset>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
 
-	<aui:input helpMessage="enter-one-screen-name-per-line-to-reserve-the-screen-name" label="screen-names" name='<%= "settings--" + PropsKeys.ADMIN_RESERVED_SCREEN_NAMES + "--" %>' type="textarea" value="<%= adminReservedScreenNames %>" />
+	<aui:input
+		helpMessage="enter-one-screen-name-per-line-to-reserve-the-screen-name"
+		label="screen-names"
+		name='<%= "settings--" + PropsKeys.ADMIN_RESERVED_SCREEN_NAMES + "--" %>'
+		type="textarea"
+		value="<%= adminReservedScreenNames %>"
+	/>
 
-	<aui:input helpMessage="enter-one-user-email-address-per-line-to-reserve-the-user-email-address" label="email-addresses" name='<%= "settings--" + PropsKeys.ADMIN_RESERVED_EMAIL_ADDRESSES + "--" %>' type="textarea" value="<%= adminReservedEmailAddresses %>" />
+	<aui:input
+		helpMessage="enter-one-user-email-address-per-line-to-reserve-the-user-email-address"
+		label="email-addresses"
+		name='<%= "settings--" + PropsKeys.ADMIN_RESERVED_EMAIL_ADDRESSES + "--" %>'
+		type="textarea"
+		value="<%= adminReservedEmailAddresses %>"
+	/>
 </aui:fieldset>

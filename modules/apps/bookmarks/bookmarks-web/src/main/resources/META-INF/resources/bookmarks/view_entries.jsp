@@ -63,14 +63,9 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	searchContainer="<%= bookmarksSearchContainer %>"
 	totalVar="bookmarksSearchContainerTotal"
 >
-	<liferay-ui:search-container-results
-		resultsVar="bookmarksSearchContainerResults"
-	/>
+	<liferay-ui:search-container-results resultsVar="bookmarksSearchContainerResults" />
 
-	<liferay-ui:search-container-row
-		className="Object"
-		modelVar="result"
-	>
+	<liferay-ui:search-container-row className="Object" modelVar="result">
 		<%@ include file="/bookmarks/cast_result.jspf" %>
 
 		<c:choose>
@@ -98,19 +93,11 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<liferay-ui:search-container-column-icon
-							icon="folder"
-							toggleRowChecker="<%= true %>"
-						/>
+						<liferay-ui:search-container-column-icon icon="folder" toggleRowChecker="<%= true %>" />
 
-						<liferay-ui:search-container-column-jsp
-							colspan="<%= 2 %>"
-							path="/bookmarks/view_folder_descriptive.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp colspan="<%= 2 %>" path="/bookmarks/view_folder_descriptive.jsp" />
 
-						<liferay-ui:search-container-column-jsp
-							path="/bookmarks/folder_action.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp path="/bookmarks/folder_action.jsp" />
 					</c:when>
 					<c:otherwise>
 						<%@ include file="/bookmarks/folder_columns.jspf" %>
@@ -133,19 +120,11 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<liferay-ui:search-container-column-icon
-							icon="link"
-							toggleRowChecker="<%= true %>"
-						/>
+						<liferay-ui:search-container-column-icon icon="link" toggleRowChecker="<%= true %>" />
 
-						<liferay-ui:search-container-column-jsp
-							colspan="<%= 2 %>"
-							path="/bookmarks/view_entry_descriptive.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp colspan="<%= 2 %>" path="/bookmarks/view_entry_descriptive.jsp" />
 
-						<liferay-ui:search-container-column-jsp
-							path="/bookmarks/entry_action.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp path="/bookmarks/entry_action.jsp" />
 					</c:when>
 					<c:otherwise>
 						<%@ include file="/bookmarks/entry_columns.jspf" %>

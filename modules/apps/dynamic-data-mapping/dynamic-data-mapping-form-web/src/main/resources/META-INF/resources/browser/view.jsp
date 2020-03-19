@@ -16,10 +16,7 @@
 
 <%@ include file="/browser/init.jsp" %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= ddmFormBrowserDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= ddmFormBrowserDisplayContext.getNavigationItems() %>" />
 
 <clay:management-toolbar
 	clearResultsURL="<%= ddmFormBrowserDisplayContext.getClearResultsURL() %>"
@@ -35,11 +32,12 @@
 />
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
-	<aui:form action="<%= String.valueOf(ddmFormBrowserDisplayContext.getPortletURL()) %>" method="post" name="selectDDMFormFm">
-		<liferay-ui:search-container
-			id="<%= ddmFormBrowserDisplayContext.getSearchContainerId() %>"
-			searchContainer="<%= ddmFormBrowserDisplayContext.getFormInstanceSearch() %>"
-		>
+	<aui:form
+		action="<%= String.valueOf(ddmFormBrowserDisplayContext.getPortletURL()) %>"
+		method="post"
+		name="selectDDMFormFm"
+	>
+		<liferay-ui:search-container id="<%= ddmFormBrowserDisplayContext.getSearchContainerId() %>" searchContainer="<%= ddmFormBrowserDisplayContext.getFormInstanceSearch() %>">
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMFormInstance"
 				cssClass="entry-display-style"
@@ -59,7 +57,11 @@
 					name="name"
 					truncate="<%= true %>"
 				>
-					<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+					<aui:a
+						cssClass="selector-button"
+						data="<%= data %>"
+						href="javascript:;"
+					>
 						<%= HtmlUtil.escape(formInstance.getName(locale)) %>
 					</aui:a>
 				</liferay-ui:search-container-column-text>
@@ -78,10 +80,7 @@
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				displayStyle="<%= ddmFormBrowserDisplayContext.getDisplayStyle() %>"
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator displayStyle="<%= ddmFormBrowserDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

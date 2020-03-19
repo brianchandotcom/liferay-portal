@@ -25,5 +25,9 @@ JournalArticle article = journalDisplayContext.getArticle();
 <pre class="m-4"><%= HtmlUtil.escape(article.getContent()) %></pre>
 
 <aui:button-row>
-	<aui:button href="<%= redirect %>" type="cancel" value="close" />
+	<aui:button
+		href="<%= redirect %>"
+		type="cancel"
+		value="close"
+	/>
 </aui:button-row>

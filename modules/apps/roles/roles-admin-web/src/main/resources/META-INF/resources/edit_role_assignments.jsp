@@ -50,9 +50,7 @@ renderResponse.setTitle(role.getTitle(locale));
 
 <liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>" />
 
-<clay:navigation-bar
-	navigationItems="<%= roleDisplayContext.getRoleAssignmentsNavigationItems(portletURL) %>"
-/>
+<clay:navigation-bar navigationItems="<%= roleDisplayContext.getRoleAssignmentsNavigationItems(portletURL) %>" />
 
 <clay:management-toolbar
 	actionDropdownItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getActionDropdownItems() %>"
@@ -71,11 +69,32 @@ renderResponse.setTitle(role.getTitle(locale));
 	viewTypeItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl container-form-view" method="post" name="fm">
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="tabs3" type="hidden" value="current" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid container-fluid-max-xl container-form-view"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="tabs2"
+		type="hidden"
+		value="<%= tabs2 %>"
+	/>
+	<aui:input
+		name="tabs3"
+		type="hidden"
+		value="current"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
+	<aui:input
+		name="roleId"
+		type="hidden"
+		value="<%= role.getRoleId() %>"
+	/>
 	<aui:input name="addUserIds" type="hidden" />
 	<aui:input name="removeUserIds" type="hidden" />
 	<aui:input name="addGroupIds" type="hidden" />

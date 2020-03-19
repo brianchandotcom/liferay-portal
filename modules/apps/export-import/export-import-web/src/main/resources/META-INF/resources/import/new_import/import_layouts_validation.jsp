@@ -21,7 +21,11 @@ long groupId = ParamUtil.getLong(request, "groupId");
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 %>
 
-<aui:form cssClass="lfr-export-dialog" method="post" name="fm1">
+<aui:form
+	cssClass="lfr-export-dialog"
+	method="post"
+	name="fm1"
+>
 	<div class="lfr-dynamic-uploader">
 		<div class="container-fluid-1280">
 			<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
@@ -33,7 +37,12 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 	%>
 
 	<aui:button-row>
-		<aui:button cssClass='<%= (fileEntry == null) ? " hide" : StringPool.BLANK %>' name="continueButton" type="submit" value="continue" />
+		<aui:button
+			cssClass='<%= (fileEntry == null) ? " hide" : StringPool.BLANK %>'
+			name="continueButton"
+			type="submit"
+			value="continue"
+		/>
 	</aui:button-row>
 
 	<%
@@ -128,7 +137,11 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 				id: '<portlet:namespace />fm1',
 			},
 
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="importLayouts" var="importPagesURL">
+			<liferay-portlet:resourceURL
+				copyCurrentRenderParameters="<%= false %>"
+				id="importLayouts"
+				var="importPagesURL"
+			>
 				<portlet:param name="p_p_isolated" value="<%= Boolean.TRUE.toString() %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

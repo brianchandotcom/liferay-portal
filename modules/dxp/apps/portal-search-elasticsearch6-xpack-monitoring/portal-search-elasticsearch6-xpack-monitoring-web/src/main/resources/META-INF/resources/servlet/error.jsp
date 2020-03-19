@@ -31,7 +31,11 @@ Exception e = errorDisplayContext.getException();
 %>
 
 <div>
-	<liferay-ui:message arguments="xpack-monitoring-configuration-name" key="is-temporarily-unavailable" translateArguments="<%= true %>" />
+	<liferay-ui:message
+		arguments="xpack-monitoring-configuration-name"
+		key="is-temporarily-unavailable"
+		translateArguments="<%= true %>"
+	/>
 </div>
 
 <div>

@@ -38,23 +38,82 @@ String noSuchUserRedirectURL = casConfiguration.noSuchUserRedirectURL();
 	<liferay-ui:error key="casLogoutURLInvalid" message="the-cas-logout-url-is-invalid" />
 	<liferay-ui:error key="casNoSuchUserURLInvalid" message="the-cas-no-such-user-url-is-invalid" />
 
-	<aui:input label="enabled" name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= enabled %>" />
+	<aui:input
+		label="enabled"
+		name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>'
+		type="checkbox"
+		value="<%= enabled %>"
+	/>
 
-	<aui:input helpMessage="import-cas-users-from-ldap-help" label="import-cas-users-from-ldap" name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "importFromLDAP" %>' type="checkbox" value="<%= importFromLDAP %>" />
+	<aui:input
+		helpMessage="import-cas-users-from-ldap-help"
+		label="import-cas-users-from-ldap"
+		name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "importFromLDAP" %>'
+		type="checkbox"
+		value="<%= importFromLDAP %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="cas-login-url-help" label="login-url" name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "loginURL" %>' type="text" value="<%= loginURL %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		helpMessage="cas-login-url-help"
+		label="login-url"
+		name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "loginURL" %>'
+		type="text"
+		value="<%= loginURL %>"
+	/>
 
-	<aui:input helpMessage="cas-logout-on-session-expiration-help" label="cas-logout-on-session-expiration" name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "logoutOnSessionExpiration" %>' type="checkbox" value="<%= logoutOnSessionExpiration %>" />
+	<aui:input
+		helpMessage="cas-logout-on-session-expiration-help"
+		label="cas-logout-on-session-expiration"
+		name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "logoutOnSessionExpiration" %>'
+		type="checkbox"
+		value="<%= logoutOnSessionExpiration %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="cas-logout-url-help" label="logout-url" name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "logoutURL" %>' type="text" value="<%= logoutURL %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		helpMessage="cas-logout-url-help"
+		label="logout-url"
+		name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "logoutURL" %>'
+		type="text"
+		value="<%= logoutURL %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="cas-server-name-help" label="server-name" name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "serverName" %>' type="text" value="<%= serverName %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		helpMessage="cas-server-name-help"
+		label="server-name"
+		name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "serverName" %>'
+		type="text"
+		value="<%= serverName %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="cas-server-url-help" label="server-url" name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "serverURL" %>' type="text" value="<%= serverURL %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		helpMessage="cas-server-url-help"
+		label="server-url"
+		name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "serverURL" %>'
+		type="text"
+		value="<%= serverURL %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="cas-service-url-help" label="service-url" name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "serviceURL" %>' type="text" value="<%= serviceURL %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		helpMessage="cas-service-url-help"
+		label="service-url"
+		name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "serviceURL" %>'
+		type="text"
+		value="<%= serviceURL %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" helpMessage="cas-no-such-user-redirect-url-help" label="no-such-user-redirect-url" name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "noSuchUserRedirectURL" %>' type="text" value="<%= noSuchUserRedirectURL %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		helpMessage="cas-no-such-user-redirect-url-help"
+		label="no-such-user-redirect-url"
+		name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "noSuchUserRedirectURL" %>'
+		type="text"
+		value="<%= noSuchUserRedirectURL %>"
+	/>
 </aui:fieldset>
 
 <aui:script>

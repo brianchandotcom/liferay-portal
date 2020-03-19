@@ -21,8 +21,5 @@ Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-fr
 %>
 
 <div>
-	<react:component
-		data="<%= data %>"
-		module="translation_manager/index"
-	/>
+	<react:component data="<%= data %>" module="translation_manager/index" />
 </div>

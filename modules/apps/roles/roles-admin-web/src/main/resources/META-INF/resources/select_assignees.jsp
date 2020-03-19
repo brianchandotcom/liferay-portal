@@ -45,9 +45,7 @@ SearchContainer searchContainer = editRoleAssignmentsManagementToolbarDisplayCon
 PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPortletURL();
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= roleDisplayContext.getSelectAssigneesNavigationItems(portletURL) %>"
-/>
+<clay:navigation-bar navigationItems="<%= roleDisplayContext.getSelectAssigneesNavigationItems(portletURL) %>" />
 
 <clay:management-toolbar
 	clearResultsURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
@@ -65,11 +63,32 @@ PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPo
 	viewTypeItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="fm">
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="tabs3" type="hidden" value="available" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid container-fluid-max-xl container-form-lg"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="tabs2"
+		type="hidden"
+		value="<%= tabs2 %>"
+	/>
+	<aui:input
+		name="tabs3"
+		type="hidden"
+		value="available"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
+	<aui:input
+		name="roleId"
+		type="hidden"
+		value="<%= role.getRoleId() %>"
+	/>
 
 	<%
 	request.setAttribute("edit_role_assignments.jsp-displayStyle", displayStyle);
@@ -125,7 +144,4 @@ PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPo
 	});
 </aui:script>
 
-<liferay-frontend:component
-	componentId="<%= editRoleAssignmentsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/EditRoleAssignmentsManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= editRoleAssignmentsManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/EditRoleAssignmentsManagementToolbarDefaultEventHandler.es" />

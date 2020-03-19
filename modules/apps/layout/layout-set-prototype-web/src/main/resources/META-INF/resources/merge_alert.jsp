@@ -30,11 +30,19 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
 	%>
 
 	<div class="alert alert-warning">
-		<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>'
+			key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors"
+			translateArguments="<%= false %>"
+		/>
 
 		<liferay-ui:message arguments="site-template" key="click-reset-to-reset-the-failure-count-and-reenable-propagation" />
 
-		<aui:button id='<%= randomNamespace + "resetButton" %>' useNamespace="<%= false %>" value="reset" />
+		<aui:button
+			id='<%= randomNamespace + "resetButton" %>'
+			useNamespace="<%= false %>"
+			value="reset"
+		/>
 	</div>
 
 	<script>

@@ -34,12 +34,17 @@ renderResponse.setTitle((layoutPageTemplateCollection != null) ? layoutPageTempl
 	<portlet:param name="tabs1" value="page-templates" />
 </portlet:actionURL>
 
-<liferay-frontend:edit-form
-	action="<%= editLayoutPageTemplateCollectionURL %>"
-	name="fm"
->
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="layoutPageTemplateCollectionId" type="hidden" value="<%= layoutPageTemplateCollectionId %>" />
+<liferay-frontend:edit-form action="<%= editLayoutPageTemplateCollectionURL %>" name="fm">
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="layoutPageTemplateCollectionId"
+		type="hidden"
+		value="<%= layoutPageTemplateCollectionId %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= DuplicateLayoutPageTemplateCollectionException.class %>" message="please-enter-a-unique-name" />
@@ -49,7 +54,12 @@ renderResponse.setTitle((layoutPageTemplateCollection != null) ? layoutPageTempl
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
+				<aui:input
+					autoFocus="<%= true %>"
+					label="name"
+					name="name"
+					placeholder="name"
+				/>
 
 				<aui:input name="description" placeholder="description" />
 			</liferay-frontend:fieldset>

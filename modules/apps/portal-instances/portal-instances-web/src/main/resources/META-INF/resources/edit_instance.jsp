@@ -39,10 +39,24 @@ renderResponse.setTitle((selCompany == null) ? LanguageUtil.get(request, "new-in
 
 <portlet:actionURL name="/portal_instances/edit_instance" var="editInstanceURL" />
 
-<aui:form action="<%= editInstanceURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCompany();" %>'>
+<aui:form
+	action="<%= editInstanceURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCompany();" %>'
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="companyId" type="hidden" value="<%= companyId %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="companyId"
+		type="hidden"
+		value="<%= companyId %>"
+	/>
 
 	<liferay-ui:error exception="<%= CompanyMxException.class %>" message="please-enter-a-valid-mail-domain" />
 	<liferay-ui:error exception="<%= CompanyVirtualHostException.class %>" message="please-enter-a-valid-virtual-host" />
@@ -54,9 +68,17 @@ renderResponse.setTitle((selCompany == null) ? LanguageUtil.get(request, "new-in
 		<aui:fieldset>
 			<c:choose>
 				<c:when test="<%= selCompany != null %>">
-					<aui:input name="id" type="resource" value="<%= String.valueOf(companyId) %>" />
+					<aui:input
+						name="id"
+						type="resource"
+						value="<%= String.valueOf(companyId) %>"
+					/>
 
-					<aui:input name="web-id" type="resource" value="<%= selCompany.getWebId() %>" />
+					<aui:input
+						name="web-id"
+						type="resource"
+						value="<%= selCompany.getWebId() %>"
+					/>
 				</c:when>
 				<c:otherwise>
 					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="webId">
@@ -65,13 +87,24 @@ renderResponse.setTitle((selCompany == null) ? LanguageUtil.get(request, "new-in
 				</c:otherwise>
 			</c:choose>
 
-			<aui:input bean="<%= virtualHost %>" fieldParam="virtualHostname" label="virtual-host" model="<%= VirtualHost.class %>" name="hostname" />
+			<aui:input
+				bean="<%= virtualHost %>"
+				fieldParam="virtualHostname"
+				label="virtual-host"
+				model="<%= VirtualHost.class %>"
+				name="hostname"
+			/>
 
 			<aui:input label="mail-domain" name="mx" />
 
 			<aui:input name="maxUsers" />
 
-			<aui:input disabled="<%= (selCompany != null) && (selCompany.getCompanyId() == PortalInstancesLocalServiceUtil.getDefaultCompanyId()) %>" name="active" type="toggle-switch" value="<%= (selCompany != null) ? selCompany.isActive() : true %>" />
+			<aui:input
+				disabled="<%= (selCompany != null) && (selCompany.getCompanyId() == PortalInstancesLocalServiceUtil.getDefaultCompanyId()) %>"
+				name="active"
+				type="toggle-switch"
+				value="<%= (selCompany != null) ? selCompany.isActive() : true %>"
+			/>
 		</aui:fieldset>
 	</aui:fieldset-group>
 

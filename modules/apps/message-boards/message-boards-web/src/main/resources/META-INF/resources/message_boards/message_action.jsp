@@ -43,10 +43,7 @@ MBThread thread = message.getThread();
 			<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, message.getGroupId(), message.getCategoryId(), ActionKeys.MOVE_THREAD) && !thread.isLocked() %>">
@@ -57,10 +54,7 @@ MBThread thread = message.getThread();
 			<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="move"
-			url="<%= moveThreadURL %>"
-		/>
+		<liferay-ui:icon message="move" url="<%= moveThreadURL %>" />
 	</c:if>
 
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, message.getGroupId(), message.getCategoryId(), ActionKeys.LOCK_THREAD) %>">
@@ -72,10 +66,7 @@ MBThread thread = message.getThread();
 					<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon
-					message="unlock"
-					url="<%= unlockThreadURL %>"
-				/>
+				<liferay-ui:icon message="unlock" url="<%= unlockThreadURL %>" />
 			</c:when>
 			<c:otherwise>
 				<portlet:actionURL name="/message_boards/edit_message" var="lockThreadURL">
@@ -85,10 +76,7 @@ MBThread thread = message.getThread();
 					<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon
-					message="lock"
-					url="<%= lockThreadURL %>"
-				/>
+				<liferay-ui:icon message="lock" url="<%= lockThreadURL %>" />
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -111,10 +99,7 @@ MBThread thread = message.getThread();
 					<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon
-					message="unsubscribe"
-					url="<%= unsubscribeURL %>"
-				/>
+				<liferay-ui:icon message="unsubscribe" url="<%= unsubscribeURL %>" />
 			</c:when>
 			<c:otherwise>
 				<portlet:actionURL name="/message_boards/edit_message" var="subscribeURL">
@@ -123,10 +108,7 @@ MBThread thread = message.getThread();
 					<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon
-					message="subscribe"
-					url="<%= subscribeURL %>"
-				/>
+				<liferay-ui:icon message="subscribe" url="<%= subscribeURL %>" />
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -155,9 +137,6 @@ MBThread thread = message.getThread();
 			<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			trash="<%= trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId()) %>"
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete trash="<%= trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId()) %>" url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

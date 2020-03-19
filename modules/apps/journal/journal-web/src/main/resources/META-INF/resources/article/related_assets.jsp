@@ -36,10 +36,7 @@ if (article != null) {
 }
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="related-assets"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="related-assets" />
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 

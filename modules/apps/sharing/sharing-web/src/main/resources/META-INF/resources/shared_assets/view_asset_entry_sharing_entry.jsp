@@ -68,20 +68,14 @@ else {
 				</div>
 			</li>
 			<li class="tbar-item">
-				<liferay-ui:menu
-					menu="<%= sharedAssetsViewDisplayContext.getSharingEntryMenu(sharingEntry) %>"
-				/>
+				<liferay-ui:menu menu="<%= sharedAssetsViewDisplayContext.getSharingEntryMenu(sharingEntry) %>" />
 			</li>
 		</ul>
 	</div>
 </div>
 
-<liferay-util:buffer
-	var="assetContent"
->
-	<liferay-asset:asset-display
-		renderer="<%= assetRenderer %>"
-	/>
+<liferay-util:buffer var="assetContent">
+	<liferay-asset:asset-display renderer="<%= assetRenderer %>" />
 
 	<c:if test="<%= assetRenderer.isCommentable() %>">
 		<liferay-comment:discussion

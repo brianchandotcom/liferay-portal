@@ -20,17 +20,12 @@
 UserRolesDisplayContext userRolesDisplayContext = new UserRolesDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new UserRolesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, userRolesDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new UserRolesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, userRolesDisplayContext) %>" />
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-roles" name="fm">
 	<liferay-ui:membership-policy-error />
 
-	<liferay-ui:search-container
-		id="userGroupRoleRole"
-		searchContainer="<%= userRolesDisplayContext.getRoleSearchSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="userGroupRoleRole" searchContainer="<%= userRolesDisplayContext.getRoleSearchSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Role"
 			keyProperty="roleId"
@@ -44,10 +39,7 @@ UserRolesDisplayContext userRolesDisplayContext = new UserRolesDisplayContext(re
 			<%@ include file="/role_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= userRolesDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= userRolesDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

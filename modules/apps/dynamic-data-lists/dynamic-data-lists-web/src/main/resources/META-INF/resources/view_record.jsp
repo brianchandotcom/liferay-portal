@@ -54,7 +54,15 @@ else {
 		<aui:model-context bean="<%= recordVersion %>" model="<%= DDLRecordVersion.class %>" />
 
 		<div class="panel text-center">
-			<aui:workflow-status markupView="lexicon" model="<%= DDLRecord.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= recordVersion.getStatus() %>" version="<%= recordVersion.getVersion() %>" />
+			<aui:workflow-status
+				markupView="lexicon"
+				model="<%= DDLRecord.class %>"
+				showHelpMessage="<%= false %>"
+				showIcon="<%= false %>"
+				showLabel="<%= false %>"
+				status="<%= recordVersion.getStatus() %>"
+				version="<%= recordVersion.getVersion() %>"
+			/>
 		</div>
 	</c:if>
 
@@ -94,10 +102,19 @@ else {
 					<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
 				</portlet:renderURL>
 
-				<aui:button href="<%= editRecordURL %>" name="edit" primary="<%= true %>" value="edit" />
+				<aui:button
+					href="<%= editRecordURL %>"
+					name="edit"
+					primary="<%= true %>"
+					value="edit"
+				/>
 			</c:if>
 
-			<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
+			<aui:button
+				href="<%= redirect %>"
+				name="cancelButton"
+				type="cancel"
+			/>
 		</aui:button-row>
 	</aui:fieldset>
 </div>

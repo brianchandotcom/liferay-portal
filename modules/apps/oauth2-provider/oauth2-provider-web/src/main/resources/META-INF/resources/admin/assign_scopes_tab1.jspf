@@ -30,14 +30,10 @@
 				<span class="panel-title"><%= HtmlUtil.escape(applicationNameDescriptionEntry.getValue()) %></span>
 
 				<span class="collapse-icon-closed">
-					<clay:icon
-						symbol="angle-right"
-					/>
+					<clay:icon symbol="angle-right" />
 				</span>
 				<span class="collapse-icon-open">
-					<clay:icon
-						symbol="angle-down"
-					/>
+					<clay:icon symbol="angle-down" />
 				</span>
 			</a>
 
@@ -70,7 +66,16 @@
 								<div class="autofit-col">
 									<c:choose>
 										<c:when test="<%= assignedScopeAliases.isEmpty() && scopeAliases.isEmpty() %>">
-											<aui:input data="<%= data %>" disabled="<%= true %>" id="<%= id %>" label="" name="<%= id %>" onClick="return false;" title="<%= HtmlUtil.escapeAttribute(scopeAliases.toString()) %>" type="checkbox" />
+											<aui:input
+												data="<%= data %>"
+												disabled="<%= true %>"
+												id="<%= id %>"
+												label=""
+												name="<%= id %>"
+												onClick="return false;"
+												title="<%= HtmlUtil.escapeAttribute(scopeAliases.toString()) %>"
+												type="checkbox"
+											/>
 										</c:when>
 										<c:otherwise>
 
@@ -85,7 +90,17 @@
 											}
 											%>
 
-											<aui:input checked="<%= !assignedScopeAliases.isEmpty() %>" data="<%= data %>" id="<%= id %>" label="" name="scopeAliases" onChange='<%= renderResponse.getNamespace() + "recalculateDependants(this)" %>' title="<%= scopeAliasesString %>" type="checkbox" value="<%= scopeAliasesString %>" />
+											<aui:input
+												checked="<%= !assignedScopeAliases.isEmpty() %>"
+												data="<%= data %>"
+												id="<%= id %>"
+												label=""
+												name="scopeAliases"
+												onChange='<%= renderResponse.getNamespace() + "recalculateDependants(this)" %>'
+												title="<%= scopeAliasesString %>"
+												type="checkbox"
+												value="<%= scopeAliasesString %>"
+											/>
 										</c:otherwise>
 									</c:choose>
 								</div>

@@ -36,10 +36,7 @@ MDRAction action = (MDRAction)row.getObject();
 			<portlet:param name="actionId" value="<%= String.valueOf(action.getActionId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editActionURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editActionURL %>" />
 
 		<portlet:actionURL name="/mobile_device_rules/edit_action" var="deleteURL">
 			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
@@ -48,8 +45,6 @@ MDRAction action = (MDRAction)row.getObject();
 			<portlet:param name="actionId" value="<%= String.valueOf(action.getActionId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL.toString() %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL.toString() %>" />
 	</c:if>
 </liferay-ui:icon-menu>

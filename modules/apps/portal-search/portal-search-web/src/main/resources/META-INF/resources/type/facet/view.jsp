@@ -54,12 +54,27 @@ List<AssetEntriesSearchFacetTermDisplayContext> assetEntriesSearchFacetTermDispl
 
 <c:choose>
 	<c:when test="<%= assetEntriesSearchFacetDisplayContext.isRenderNothing() %>">
-		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(assetEntriesSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= assetEntriesSearchFacetDisplayContext.getParameterValue() %>" />
+		<aui:input
+			autocomplete="off"
+			name="<%= HtmlUtil.escapeAttribute(assetEntriesSearchFacetDisplayContext.getParameterName()) %>"
+			type="hidden"
+			value="<%= assetEntriesSearchFacetDisplayContext.getParameterValue() %>"
+		/>
 	</c:when>
 	<c:otherwise>
 		<aui:form method="post" name="fm">
-			<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(assetEntriesSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= assetEntriesSearchFacetDisplayContext.getParameterValue() %>" />
-			<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= assetEntriesSearchFacetDisplayContext.getParameterName() %>" />
+			<aui:input
+				autocomplete="off"
+				name="<%= HtmlUtil.escapeAttribute(assetEntriesSearchFacetDisplayContext.getParameterName()) %>"
+				type="hidden"
+				value="<%= assetEntriesSearchFacetDisplayContext.getParameterValue() %>"
+			/>
+			<aui:input
+				cssClass="facet-parameter-name"
+				name="facet-parameter-name"
+				type="hidden"
+				value="<%= assetEntriesSearchFacetDisplayContext.getParameterName() %>"
+			/>
 
 			<liferay-ddm:template-renderer
 				className="<%= AssetEntriesSearchFacetTermDisplayContext.class.getName() %>"
@@ -127,7 +142,11 @@ List<AssetEntriesSearchFacetTermDisplayContext> assetEntriesSearchFacetTermDispl
 						</aui:fieldset>
 
 						<c:if test="<%= !assetEntriesSearchFacetDisplayContext.isNothingSelected() %>">
-							<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
+							<aui:button
+								cssClass="btn-link btn-unstyled facet-clear-btn"
+								onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+								value="clear"
+							/>
 						</c:if>
 					</liferay-ui:panel>
 				</liferay-ui:panel-container>

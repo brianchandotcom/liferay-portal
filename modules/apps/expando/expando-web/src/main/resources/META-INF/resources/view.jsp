@@ -35,19 +35,14 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 		iteratorURL="<%= portletURL %>"
 		total="<%= customAttributesDisplays.size() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= customAttributesDisplays %>"
-		/>
+		<liferay-ui:search-container-results results="<%= customAttributesDisplays %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.expando.kernel.model.CustomAttributesDisplay"
 			modelVar="customAttributesDisplay"
 			stringKey="<%= true %>"
 		>
-			<liferay-ui:search-container-row-parameter
-				name="customAttributesDisplay"
-				value="<%= customAttributesDisplay %>"
-			/>
+			<liferay-ui:search-container-row-parameter name="customAttributesDisplay" value="<%= customAttributesDisplay %>" />
 
 			<portlet:renderURL var="rowURL">
 				<portlet:param name="mvcPath" value="/view_attributes.jsp" />
@@ -62,9 +57,7 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 			>
 				<span class="text-truncate-inline">
 					<span class="inline-item inline-item-before">
-						<clay:icon
-							symbol="<%= customAttributesDisplay.getIconCssClass() %>"
-						/>
+						<clay:icon symbol="<%= customAttributesDisplay.getIconCssClass() %>" />
 					</span>
 					<span class="inline-item inline-item-after text-truncate">
 						<liferay-ui:message key="<%= ResourceActionsUtil.getModelResource(locale, customAttributesDisplay.getClassName()) %>" />
@@ -73,9 +66,6 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-			paginate="<%= false %>"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 	</liferay-ui:search-container>
 </div>

@@ -102,10 +102,7 @@
 
 <div class="row text-center">
 	<div class="col-md-2">
-		<clay:button
-			icon="share"
-			label="Share"
-		/>
+		<clay:button icon="share" label="Share" />
 
 		<div>Icon and Text Button</div>
 	</div>
@@ -121,10 +118,7 @@
 	</div>
 
 	<div class="col-md-4">
-		<clay:button
-			block="<%= true %>"
-			label="Button"
-		/>
+		<clay:button block="<%= true %>" label="Button" />
 
 		<div>Block Level Button</div>
 	</div>

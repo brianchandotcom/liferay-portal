@@ -22,7 +22,12 @@
 	for (Locale curLocale : LanguageUtil.getAvailableLocales()) {
 	%>
 
-		<aui:option label="<%= curLocale.getDisplayName(curLocale) %>" lang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" selected="<%= userLocale.getLanguage().equals(curLocale.getLanguage()) && userLocale.getCountry().equals(curLocale.getCountry()) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
+		<aui:option
+			label="<%= curLocale.getDisplayName(curLocale) %>"
+			lang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>"
+			selected="<%= userLocale.getLanguage().equals(curLocale.getLanguage()) && userLocale.getCountry().equals(curLocale.getCountry()) %>"
+			value="<%= LocaleUtil.toLanguageId(curLocale) %>"
+		/>
 
 	<%
 	}
@@ -61,14 +66,24 @@ FullNameDefinition fullNameDefinition = FullNameDefinitionFactory.getInstance(us
 
 		<c:choose>
 			<c:when test="<%= fullNameField.isFreeText() %>">
-				<aui:input bean="<%= bean %>" disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" model="<%= User.class %>" name="<%= fieldName %>">
+				<aui:input
+					bean="<%= bean %>"
+					disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>"
+					model="<%= User.class %>"
+					name="<%= fieldName %>"
+				>
 					<c:if test="<%= fullNameField.isRequired() %>">
 						<aui:validator name="required" />
 					</c:if>
 				</aui:input>
 			</c:when>
 			<c:otherwise>
-				<aui:select disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" label="<%= fieldName %>" name='<%= fieldName.concat("Value") %>' showEmptyOption="<%= true %>">
+				<aui:select
+					disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>"
+					label="<%= fieldName %>"
+					name='<%= fieldName.concat("Value") %>'
+					showEmptyOption="<%= true %>"
+				>
 
 					<%
 					String listTypeName = StringPool.BLANK;
@@ -88,7 +103,11 @@ FullNameDefinition fullNameDefinition = FullNameDefinitionFactory.getInstance(us
 					for (String value : fullNameField.getValues()) {
 					%>
 
-						<aui:option label="<%= value %>" selected="<%= StringUtil.equalsIgnoreCase(listTypeName, value) %>" value="<%= value %>" />
+						<aui:option
+							label="<%= value %>"
+							selected="<%= StringUtil.equalsIgnoreCase(listTypeName, value) %>"
+							value="<%= value %>"
+						/>
 
 					<%
 					}

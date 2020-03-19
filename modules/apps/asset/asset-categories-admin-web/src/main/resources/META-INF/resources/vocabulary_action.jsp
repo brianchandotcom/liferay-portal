@@ -35,10 +35,7 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editVocabularyURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editVocabularyURL %>" />
 	</c:if>
 
 	<c:if test="<%= assetCategoriesDisplayContext.isShowCategoriesAddButton() %>">
@@ -47,10 +44,7 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="add-category"
-			url="<%= addCategoryURL %>"
-		/>
+		<liferay-ui:icon message="add-category" url="<%= addCategoryURL %>" />
 	</c:if>
 
 	<c:if test="<%= assetCategoriesDisplayContext.hasPermission(vocabulary, ActionKeys.PERMISSIONS) %>">
@@ -76,8 +70,6 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteVocabularyURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteVocabularyURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

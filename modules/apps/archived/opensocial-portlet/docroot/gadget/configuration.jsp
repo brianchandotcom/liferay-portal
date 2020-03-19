@@ -26,7 +26,11 @@ JSONObject jsonObject = ExpandoValueServiceUtil.getJSONData(themeDisplay.getComp
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<aui:form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:fieldset>
 
 		<%
@@ -45,8 +49,16 @@ JSONObject jsonObject = ExpandoValueServiceUtil.getJSONData(themeDisplay.getComp
 			<c:choose>
 				<c:when test="<%= dataType == UserPref.DataType.BOOL %>">
 					<aui:select label="<%= displayName %>" name="<%= name %>">
-						<aui:option label='<%= LanguageUtil.get(request, "yes") %>' selected="<%= GetterUtil.getBoolean(value) %>" value="true" />
-						<aui:option label='<%= LanguageUtil.get(request, "no") %>' selected="<%= !GetterUtil.getBoolean(value) %>" value="false" />
+						<aui:option
+							label='<%= LanguageUtil.get(request, "yes") %>'
+							selected="<%= GetterUtil.getBoolean(value) %>"
+							value="true"
+						/>
+						<aui:option
+							label='<%= LanguageUtil.get(request, "no") %>'
+							selected="<%= !GetterUtil.getBoolean(value) %>"
+							value="false"
+						/>
 					</aui:select>
 				</c:when>
 				<c:when test="<%= dataType == UserPref.DataType.ENUM %>">
@@ -58,7 +70,11 @@ JSONObject jsonObject = ExpandoValueServiceUtil.getJSONData(themeDisplay.getComp
 							String enumValue = enumValuePair.getValue();
 						%>
 
-							<aui:option label="<%= enumDisplayValue %>" selected="<%= value.equals(enumValue) %>" value="<%= enumValue %>" />
+							<aui:option
+								label="<%= enumDisplayValue %>"
+								selected="<%= value.equals(enumValue) %>"
+								value="<%= enumValue %>"
+							/>
 
 						<%
 						}
@@ -69,7 +85,13 @@ JSONObject jsonObject = ExpandoValueServiceUtil.getJSONData(themeDisplay.getComp
 				<c:when test="<%= dataType == UserPref.DataType.HIDDEN %>">
 				</c:when>
 				<c:otherwise>
-					<aui:input label="<%= displayName %>" name="<%= name %>" type="text" value="<%= value %>" wrapperCssClass="lfr-input-text-container" />
+					<aui:input
+						label="<%= displayName %>"
+						name="<%= name %>"
+						type="text"
+						value="<%= value %>"
+						wrapperCssClass="lfr-input-text-container"
+					/>
 				</c:otherwise>
 			</c:choose>
 

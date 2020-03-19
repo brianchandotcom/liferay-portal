@@ -36,8 +36,16 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" varImpl="configurationRenderURL" />
 
-<aui:form action="<%= configurationRenderURL %>" method="post" name="fm1">
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
+<aui:form
+	action="<%= configurationRenderURL %>"
+	method="post"
+	name="fm1"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL.toString() %>"
+	/>
 
 	<div class="portlet-configuration-body-content">
 		<div class="container-fluid-1280">
@@ -59,15 +67,10 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 							total="<%= DDMFormInstanceServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, keywords) %>"
 						>
 							<div class="form-search input-append">
-								<liferay-ui:input-search
-									autoFocus="<%= true %>"
-									placeholder='<%= LanguageUtil.get(request, "keywords") %>'
-								/>
+								<liferay-ui:input-search autoFocus="<%= true %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
 							</div>
 
-							<liferay-ui:search-container-results
-								results="<%= DDMFormInstanceServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-							/>
+							<liferay-ui:search-container-results results="<%= DDMFormInstanceServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>" />
 
 							<liferay-ui:search-container-row
 								className="com.liferay.dynamic.data.mapping.model.DDMFormInstance"
@@ -119,9 +122,7 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 
 							<div class="separator"></div>
 
-							<liferay-ui:search-iterator
-								searchResultCssClass="show-quick-actions-on-hover table table-autofit"
-							/>
+							<liferay-ui:search-iterator searchResultCssClass="show-quick-actions-on-hover table table-autofit" />
 						</liferay-ui:search-container>
 					</div>
 				</div>
@@ -130,11 +131,31 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 	</div>
 </aui:form>
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur" + cur %>' />
-	<aui:input name="preferences--formInstanceId--" type="hidden" value="<%= formInstanceId %>" />
-	<aui:input name="preferences--groupId--" type="hidden" value="<%= scopeGroupId %>" />
+<aui:form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value='<%= configurationRenderURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur" + cur %>'
+	/>
+	<aui:input
+		name="preferences--formInstanceId--"
+		type="hidden"
+		value="<%= formInstanceId %>"
+	/>
+	<aui:input
+		name="preferences--groupId--"
+		type="hidden"
+		value="<%= scopeGroupId %>"
+	/>
 
 	<aui:button-row>
 		<aui:button type="submit" />

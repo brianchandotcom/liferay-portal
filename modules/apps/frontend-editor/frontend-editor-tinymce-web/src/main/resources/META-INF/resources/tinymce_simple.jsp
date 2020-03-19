@@ -49,16 +49,12 @@ if (Validator.isNotNull(onInitMethod)) {
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":skipEditorLoading"));
 %>
 
-<liferay-util:buffer
-	var="editor"
->
+<liferay-util:buffer var="editor">
 	<textarea id="<%= HtmlUtil.escapeAttribute(name) %>" name="<%= HtmlUtil.escapeAttribute(name) %>" style="height: 100%; visibility: hidden; width: 100%;"><%= (contents != null) ? HtmlUtil.escape(contents) : StringPool.BLANK %></textarea>
 </liferay-util:buffer>
 
 <c:if test="<%= !skipEditorLoading %>">
-	<liferay-editor:resources
-		editorName="<%= editorName %>"
-	/>
+	<liferay-editor:resources editorName="<%= editorName %>" />
 </c:if>
 
 <div class="<%= cssClass %>" id="<%= HtmlUtil.escapeAttribute(name) %>Container">

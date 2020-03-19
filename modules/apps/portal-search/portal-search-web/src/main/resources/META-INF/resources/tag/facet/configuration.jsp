@@ -49,15 +49,20 @@ TagFacetPortletPreferences tagFacetPortletPreferences = new TagFacetPortletPrefe
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="display-settings"
-			>
+			<liferay-frontend:fieldset collapsible="<%= true %>" label="display-settings">
 				<div class="display-template">
 					<liferay-ddm:template-selector
 						className="<%= AssetTagsSearchFacetTermDisplayContext.class.getName() %>"
@@ -69,17 +74,31 @@ TagFacetPortletPreferences tagFacetPortletPreferences = new TagFacetPortletPrefe
 				</div>
 			</liferay-frontend:fieldset>
 
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="advanced-configuration"
-			>
-				<aui:input label="tag-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(TagFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>" value="<%= tagFacetPortletPreferences.getParameterName() %>" />
+			<liferay-frontend:fieldset collapsible="<%= true %>" label="advanced-configuration">
+				<aui:input
+					label="tag-parameter-name"
+					name="<%= PortletPreferencesJspUtil.getInputName(TagFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>"
+					value="<%= tagFacetPortletPreferences.getParameterName() %>"
+				/>
 
-				<aui:input label="max-terms" name="<%= PortletPreferencesJspUtil.getInputName(TagFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>" value="<%= tagFacetPortletPreferences.getMaxTerms() %>" />
+				<aui:input
+					label="max-terms"
+					name="<%= PortletPreferencesJspUtil.getInputName(TagFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>"
+					value="<%= tagFacetPortletPreferences.getMaxTerms() %>"
+				/>
 
-				<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(TagFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= tagFacetPortletPreferences.getFrequencyThreshold() %>" />
+				<aui:input
+					label="frequency-threshold"
+					name="<%= PortletPreferencesJspUtil.getInputName(TagFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>"
+					value="<%= tagFacetPortletPreferences.getFrequencyThreshold() %>"
+				/>
 
-				<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(TagFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= tagFacetPortletPreferences.isFrequenciesVisible() %>" />
+				<aui:input
+					label="display-frequencies"
+					name="<%= PortletPreferencesJspUtil.getInputName(TagFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>"
+					type="checkbox"
+					value="<%= tagFacetPortletPreferences.isFrequenciesVisible() %>"
+				/>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

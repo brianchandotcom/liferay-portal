@@ -36,8 +36,5 @@ User curUser = (User)row.getObject();
 		<portlet:param name="classPK" value="<%= String.valueOf(curUser.getUserId()) %>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="view-calendars"
-		url="<%= calendarsURL %>"
-	/>
+	<liferay-ui:icon message="view-calendars" url="<%= calendarsURL %>" />
 </liferay-ui:icon-menu>

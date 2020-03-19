@@ -111,14 +111,9 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 					</c:choose>
 				</h3>
 
-				<clay:management-toolbar
-					displayContext="<%= new LayoutClassedModelUsagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutClassedModelUsagesDisplayContext.getSearchContainer()) %>"
-				/>
+				<clay:management-toolbar displayContext="<%= new LayoutClassedModelUsagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutClassedModelUsagesDisplayContext.getSearchContainer()) %>" />
 
-				<liferay-ui:search-container
-					id="layoutClassedModelUsages"
-					searchContainer="<%= layoutClassedModelUsagesDisplayContext.getSearchContainer() %>"
-				>
+				<liferay-ui:search-container id="layoutClassedModelUsages" searchContainer="<%= layoutClassedModelUsagesDisplayContext.getSearchContainer() %>">
 					<liferay-ui:search-container-row
 						className="com.liferay.layout.model.LayoutClassedModelUsage"
 						keyProperty="layoutClassedModelUsageId"
@@ -150,18 +145,14 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 							value="<%= layoutClassedModelUsage.getModifiedDate() %>"
 						/>
 
-						<liferay-ui:search-container-column-text
-							cssClass="table-cell-expand-smallest table-column-text-center"
-						>
+						<liferay-ui:search-container-column-text cssClass="table-cell-expand-smallest table-column-text-center">
 
 							<%
 							List<DropdownItem> dropdownItems = layoutClassedModelUsagesDisplayContext.getLayoutClassedModelUsageActionDropdownItems(layoutClassedModelUsage);
 							%>
 
 							<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
-								<clay:dropdown-actions
-									dropdownItems="<%= dropdownItems %>"
-								/>
+								<clay:dropdown-actions dropdownItems="<%= dropdownItems %>" />
 							</c:if>
 						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>

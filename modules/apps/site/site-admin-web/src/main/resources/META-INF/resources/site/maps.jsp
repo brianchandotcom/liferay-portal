@@ -20,12 +20,6 @@
 String mapProviderKey = (String)request.getAttribute(MapProviderWebKeys.MAP_PROVIDER_KEY);
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="maps"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="maps" />
 
-<liferay-map:map-provider-selector
-	mapProviderKey="<%= mapProviderKey %>"
-	name='<%= "TypeSettingsProperties--" + MapProviderWebKeys.MAP_PROVIDER_KEY + "--" %>'
-/>
+<liferay-map:map-provider-selector mapProviderKey="<%= mapProviderKey %>" name='<%= "TypeSettingsProperties--" + MapProviderWebKeys.MAP_PROVIDER_KEY + "--" %>' />

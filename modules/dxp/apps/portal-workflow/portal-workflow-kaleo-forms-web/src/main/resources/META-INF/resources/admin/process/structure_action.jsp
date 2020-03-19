@@ -31,7 +31,11 @@ String backURL = (String)row.getParameter("backURL");
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT) %>" var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<liferay-portlet:renderURL
+		portletName="<%= PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT) %>"
+		var="editURL"
+		windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+	>
 		<portlet:param name="mvcPath" value="/edit_structure.jsp" />
 		<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_STRUCTURE %>" />
 		<portlet:param name="closeRedirect" value="<%= backURL %>" />

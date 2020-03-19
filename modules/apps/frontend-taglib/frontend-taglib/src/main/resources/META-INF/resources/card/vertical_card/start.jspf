@@ -18,9 +18,7 @@
 	<div class="card <%= Validator.isNotNull(cardCssClass) ? cardCssClass : StringPool.BLANK %>">
 		<div class="aspect-ratio card-item-first <%= imageCSSClass %>">
 			<c:if test="<%= (rowChecker != null) && (resultRow != null) %>">
-				<liferay-util:buffer
-					var="checkboxInput"
-				>
+				<liferay-util:buffer var="checkboxInput">
 					<%= rowChecker.getRowCheckBox(request, resultRow) %>
 				</liferay-util:buffer>
 

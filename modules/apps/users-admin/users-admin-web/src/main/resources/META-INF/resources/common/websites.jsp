@@ -62,9 +62,7 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= websites.size() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= websites.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= websites.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Website"
@@ -90,9 +88,7 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 			value="<%= LanguageUtil.get(request, websiteTypeKey) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-expand-smaller"
-		>
+		<liferay-ui:search-container-column-text cssClass="table-cell-expand-smaller">
 			<c:if test="<%= website.isPrimary() %>">
 				<span class="label label-primary">
 					<span class="label-item label-item-expand"><%= StringUtil.toUpperCase(LanguageUtil.get(request, "primary"), locale) %></span>
@@ -100,13 +96,8 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 			</c:if>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/common/website_action.jsp"
-		/>
+		<liferay-ui:search-container-column-jsp cssClass="entry-action-column" path="/common/website_action.jsp" />
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>

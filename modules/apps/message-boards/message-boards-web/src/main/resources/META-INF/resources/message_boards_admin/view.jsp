@@ -34,9 +34,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<liferay-trash:undo
-	portletURL="<%= restoreTrashEntriesURL %>"
-/>
+<liferay-trash:undo portletURL="<%= restoreTrashEntriesURL %>" />
 
 <%@ include file="/message_boards_admin/nav.jspf" %>
 

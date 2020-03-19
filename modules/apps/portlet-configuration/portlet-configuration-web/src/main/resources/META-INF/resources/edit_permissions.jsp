@@ -38,12 +38,19 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 			selectable="<%= false %>"
 		/>
 
-		<aui:form action="<%= portletConfigurationPermissionsDisplayContext.getUpdateRolePermissionsURL() %>" cssClass="container-fluid-1280" method="post" name="fm">
-			<aui:input name="resourceId" type="hidden" value="<%= resource.getResourceId() %>" />
+		<aui:form
+			action="<%= portletConfigurationPermissionsDisplayContext.getUpdateRolePermissionsURL() %>"
+			cssClass="container-fluid-1280"
+			method="post"
+			name="fm"
+		>
+			<aui:input
+				name="resourceId"
+				type="hidden"
+				value="<%= resource.getResourceId() %>"
+			/>
 
-			<liferay-ui:search-container
-				searchContainer="<%= roleSearchContainer %>"
-			>
+			<liferay-ui:search-container searchContainer="<%= roleSearchContainer %>">
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.model.Role"
 					cssClass="table-title"
@@ -56,9 +63,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 					String name = role.getName();
 					%>
 
-					<liferay-ui:search-container-column-text
-						name="role"
-					>
+					<liferay-ui:search-container-column-text name="role">
 
 						<%
 						String icon = "user";
@@ -144,10 +149,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 						String actionSeparator = Validator.isNotNull(preselectedMsg) ? ActionUtil.PRESELECTED : ActionUtil.ACTION;
 					%>
 
-						<liferay-ui:search-container-column-text
-							cssClass="table-column-text-center"
-							name="<%= ResourceActionsUtil.getAction(request, action) %>"
-						>
+						<liferay-ui:search-container-column-text cssClass="table-column-text-center" name="<%= ResourceActionsUtil.getAction(request, action) %>">
 							<c:if test="<%= disabled && checked %>">
 								<input name="<%= renderResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" type="hidden" value="<%= true %>" />
 							</c:if>
@@ -161,10 +163,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					fixedHeader="<%= true %>"
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator fixedHeader="<%= true %>" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>

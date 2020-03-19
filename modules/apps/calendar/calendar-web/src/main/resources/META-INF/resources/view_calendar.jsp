@@ -84,7 +84,11 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 <aui:container cssClass="calendar-portlet-column-parent">
 	<aui:row>
 		<c:if test="<%= !displaySchedulerOnly %>">
-			<aui:col cssClass='<%= "calendar-portlet-column-options " + (columnOptionsVisible ? StringPool.BLANK : "hide") %>' id="columnOptions" span="<%= 3 %>">
+			<aui:col
+				cssClass='<%= "calendar-portlet-column-options " + (columnOptionsVisible ? StringPool.BLANK : "hide") %>'
+				id="columnOptions"
+				span="<%= 3 %>"
+			>
 				<div class="calendar-portlet-mini-calendar" id="<portlet:namespace />miniCalendarContainer"></div>
 
 				<div id="<portlet:namespace />calendarListContainer">
@@ -137,13 +141,14 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			</aui:col>
 		</c:if>
 
-		<aui:col cssClass="calendar-portlet-column-grid" id="columnGrid" span="<%= (columnOptionsVisible && !displaySchedulerOnly) ? 9 : 12 %>">
+		<aui:col
+			cssClass="calendar-portlet-column-grid"
+			id="columnGrid"
+			span="<%= (columnOptionsVisible && !displaySchedulerOnly) ? 9 : 12 %>"
+		>
 			<c:if test="<%= !displaySchedulerOnly %>">
 				<div class="calendar-portlet-column-toggler" id="<portlet:namespace />columnToggler">
-					<clay:icon
-						id='<%= renderResponse.getNamespace() + "columnTogglerIcon" %>'
-						symbol='<%= columnOptionsVisible ? "caret-left" : "caret-right" %>'
-					/>
+					<clay:icon id='<%= renderResponse.getNamespace() + "columnTogglerIcon" %>' symbol='<%= columnOptionsVisible ? "caret-left" : "caret-right" %>' />
 				</div>
 			</c:if>
 

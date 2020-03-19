@@ -29,18 +29,18 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf
 renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay.getName());
 %>
 
-<clay:management-toolbar
-	displayContext="<%= viewAccountOrganizationsManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= viewAccountOrganizationsManagementToolbarDisplayContext %>" />
 
 <aui:container cssClass="container-fluid container-fluid-max-xl">
 	<aui:form method="post" name="fm">
-		<aui:input name="accountEntryId" type="hidden" value="<%= accountEntryDisplay.getAccountEntryId() %>" />
+		<aui:input
+			name="accountEntryId"
+			type="hidden"
+			value="<%= accountEntryDisplay.getAccountEntryId() %>"
+		/>
 		<aui:input name="accountOrganizationIds" type="hidden" />
 
-		<liferay-ui:search-container
-			searchContainer="<%= accountOrganizationSearchContainer %>"
-		>
+		<liferay-ui:search-container searchContainer="<%= accountOrganizationSearchContainer %>">
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.model.Organization"
 				keyProperty="organizationId"
@@ -75,14 +75,9 @@ renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </aui:container>
 
-<liferay-frontend:component
-	componentId="<%= viewAccountOrganizationsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="account_entries_admin/js/AccountOrganizationsManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= viewAccountOrganizationsManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="account_entries_admin/js/AccountOrganizationsManagementToolbarDefaultEventHandler.es" />

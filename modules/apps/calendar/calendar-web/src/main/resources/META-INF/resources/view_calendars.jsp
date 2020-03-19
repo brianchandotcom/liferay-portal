@@ -43,7 +43,11 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 			<liferay-portlet:param name="calendarResourceId" value="<%= String.valueOf(calendarResource.getCalendarResourceId()) %>" />
 		</liferay-portlet:renderURL>
 
-		<aui:button href="<%= editCalendarURL %>" primary="<%= true %>" value="add-calendar" />
+		<aui:button
+			href="<%= editCalendarURL %>"
+			primary="<%= true %>"
+			value="add-calendar"
+		/>
 	</aui:button-row>
 </c:if>
 
@@ -53,35 +57,22 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 		iteratorURL="<%= renderResponse.createRenderURL() %>"
 		total="<%= CalendarServiceUtil.searchCount(themeDisplay.getCompanyId(), new long[] {calendarResource.getGroupId()}, new long[] {calendarResource.getCalendarResourceId()}, null, false) %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= CalendarServiceUtil.search(themeDisplay.getCompanyId(), new long[] {calendarResource.getGroupId()}, new long[] {calendarResource.getCalendarResourceId()}, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new CalendarNameComparator(true)) %>"
-		/>
+		<liferay-ui:search-container-results results="<%= CalendarServiceUtil.search(themeDisplay.getCompanyId(), new long[] {calendarResource.getGroupId()}, new long[] {calendarResource.getCalendarResourceId()}, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new CalendarNameComparator(true)) %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.calendar.model.Calendar"
 			keyProperty="calendarId"
 			modelVar="calendar"
 		>
-			<liferay-ui:search-container-column-text
-				name="name"
-				value="<%= HtmlUtil.escape(calendar.getName(locale)) %>"
-			/>
+			<liferay-ui:search-container-column-text name="name" value="<%= HtmlUtil.escape(calendar.getName(locale)) %>" />
 
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= HtmlUtil.escape(StringUtil.shorten(calendar.getDescription(locale))) %>"
-			/>
+			<liferay-ui:search-container-column-text name="description" value="<%= HtmlUtil.escape(StringUtil.shorten(calendar.getDescription(locale))) %>" />
 
-			<liferay-ui:search-container-column-text
-				align="center"
-				name="color"
-			>
+			<liferay-ui:search-container-column-text align="center" name="color">
 				<span class="calendar-portlet-color-box" style="background-color: <%= ColorUtil.toHexString(calendar.getColor()) %>;">&nbsp;</span>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				name="default"
-			>
+			<liferay-ui:search-container-column-text name="default">
 				<c:choose>
 					<c:when test="<%= calendar.isDefaultCalendar() %>">
 						<liferay-ui:message key="yes" />
@@ -99,9 +90,7 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>
 
@@ -112,8 +101,16 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 		<liferay-ui:message key="your-request-completed-successfully" />
 	</div>
 
-	<aui:form enctype="multipart/form-data" method="post" name="importFm">
-		<aui:input id="file" name="file" type="file" />
+	<aui:form
+		enctype="multipart/form-data"
+		method="post"
+		name="importFm"
+	>
+		<aui:input
+			id="file"
+			name="file"
+			type="file"
+		/>
 
 		<div class="portlet-msg-help">
 			<liferay-ui:message key="choose-the-file-that-contains-your-events.this-calendar-can-import-event-information-in-ical-format" />

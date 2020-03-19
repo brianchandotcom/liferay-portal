@@ -20,10 +20,7 @@
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="categorization"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="categorization" />
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
@@ -31,12 +28,6 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 <liferay-asset:asset-tags-error />
 
-<liferay-asset:asset-categories-selector
-	className="<%= Layout.class.getName() %>"
-	classPK="<%= (selLayout != null) ? selLayout.getPrimaryKey() : 0 %>"
-/>
+<liferay-asset:asset-categories-selector className="<%= Layout.class.getName() %>" classPK="<%= (selLayout != null) ? selLayout.getPrimaryKey() : 0 %>" />
 
-<liferay-asset:asset-tags-selector
-	className="<%= Layout.class.getName() %>"
-	classPK="<%= (selLayout != null) ? selLayout.getPrimaryKey() : 0 %>"
-/>
+<liferay-asset:asset-tags-selector className="<%= Layout.class.getName() %>" classPK="<%= (selLayout != null) ? selLayout.getPrimaryKey() : 0 %>" />

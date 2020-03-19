@@ -27,25 +27,65 @@ DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_audit_event_search"
 >
-	<aui:input label="user-id" name="userId" value="<%= (userId != 0) ? String.valueOf(userId) : StringPool.BLANK %>" />
+	<aui:input
+		label="user-id"
+		name="userId"
+		value="<%= (userId != 0) ? String.valueOf(userId) : StringPool.BLANK %>"
+	/>
 
-	<aui:input label="user-name" name="userName" value="<%= userName %>" />
+	<aui:input
+		label="user-name"
+		name="userName"
+		value="<%= userName %>"
+	/>
 
-	<aui:input label="resource-id" name="classPK" value="<%= classPK %>" />
+	<aui:input
+		label="resource-id"
+		name="classPK"
+		value="<%= classPK %>"
+	/>
 
-	<aui:input label="class-name" name="className" value="<%= className %>" />
+	<aui:input
+		label="class-name"
+		name="className"
+		value="<%= className %>"
+	/>
 
-	<aui:input label="resource-action" name="eventType" value="<%= eventType %>" />
+	<aui:input
+		label="resource-action"
+		name="eventType"
+		value="<%= eventType %>"
+	/>
 
-	<aui:input label="session-id" name="sessionID" value="<%= sessionID %>" />
+	<aui:input
+		label="session-id"
+		name="sessionID"
+		value="<%= sessionID %>"
+	/>
 
-	<aui:input label="client-ip" name="clientIP" value="<%= clientIP %>" />
+	<aui:input
+		label="client-ip"
+		name="clientIP"
+		value="<%= clientIP %>"
+	/>
 
-	<aui:input label="client-host" name="clientHost" value="<%= clientHost %>" />
+	<aui:input
+		label="client-host"
+		name="clientHost"
+		value="<%= clientHost %>"
+	/>
 
-	<aui:input label="server-name" name="serverName" value="<%= serverName %>" />
+	<aui:input
+		label="server-name"
+		name="serverName"
+		value="<%= serverName %>"
+	/>
 
-	<aui:input label="server-port" name="serverPort" value="<%= (serverPort != 0) ? String.valueOf(serverPort) : StringPool.BLANK %>" />
+	<aui:input
+		label="server-port"
+		name="serverPort"
+		value="<%= (serverPort != 0) ? String.valueOf(serverPort) : StringPool.BLANK %>"
+	/>
 
 	<aui:field-wrapper label="start-date">
 		<liferay-ui:input-date

@@ -16,10 +16,23 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:form cssClass="form-inline" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "lookUp();" %>'>
-	<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="word" />
+<aui:form
+	cssClass="form-inline"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "lookUp();" %>'
+>
+	<aui:input
+		autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+		inlineField="<%= true %>"
+		label=""
+		name="word"
+	/>
 
-	<aui:select inlineField="<%= true %>" label="" name="type">
+	<aui:select
+		inlineField="<%= true %>"
+		label=""
+		name="type"
+	>
 		<aui:option label="dictionary" value="http://dictionary.reference.com/browse/" />
 		<aui:option label="thesaurus" value="http://thesaurus.reference.com/browse/" />
 	</aui:select>

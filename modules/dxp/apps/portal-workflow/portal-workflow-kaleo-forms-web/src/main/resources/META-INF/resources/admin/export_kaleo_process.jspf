@@ -20,7 +20,11 @@
 		<aui:option value="xml">XML</aui:option>
 	</aui:select>
 
-	<aui:input label="export-only-approved-submissions" name="exportOnlyApproved" type="checkbox" />
+	<aui:input
+		label="export-only-approved-submissions"
+		name="exportOnlyApproved"
+		type="checkbox"
+	/>
 </div>
 
 <aui:script>

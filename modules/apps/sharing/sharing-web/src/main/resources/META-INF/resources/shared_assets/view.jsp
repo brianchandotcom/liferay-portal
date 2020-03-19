@@ -20,10 +20,7 @@
 SharedAssetsViewDisplayContext sharedAssetsViewDisplayContext = (SharedAssetsViewDisplayContext)renderRequest.getAttribute(SharedAssetsViewDisplayContext.class.getName());
 %>
 
-<clay:navigation-bar
-	inverted="<%= layout.isTypeControlPanel() %>"
-	navigationItems="<%= sharedAssetsViewDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= layout.isTypeControlPanel() %>" navigationItems="<%= sharedAssetsViewDisplayContext.getNavigationItems() %>" />
 
 <clay:management-toolbar
 	defaultEventHandler='<%= renderResponse.getNamespace() + "SharedAssets" %>'
@@ -45,10 +42,7 @@ sharedAssetsViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 %>
 
 <div class="container-fluid-1280 main-content-body">
-	<liferay-ui:search-container
-		id="sharingEntries"
-		searchContainer="<%= sharingEntriesSearchContainer %>"
-	>
+	<liferay-ui:search-container id="sharingEntries" searchContainer="<%= sharingEntriesSearchContainer %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.sharing.model.SharingEntry"
 			escapedModel="<%= true %>"
@@ -95,15 +89,10 @@ sharedAssetsViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 				value="<%= sharingEntry.getModifiedDate() %>"
 			/>
 
-			<liferay-ui:search-container-column-jsp
-				path="/shared_assets/sharing_entry_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp path="/shared_assets/sharing_entry_action.jsp" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="list"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>
 

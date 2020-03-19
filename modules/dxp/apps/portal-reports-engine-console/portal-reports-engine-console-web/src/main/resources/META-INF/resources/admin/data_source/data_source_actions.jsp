@@ -35,10 +35,7 @@ Source source = (Source)row.getObject();
 			<portlet:param name="sourceId" value="<%= String.valueOf(source.getSourceId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="test-database-connection"
-			url="<%= testConnectionURL %>"
-		/>
+		<liferay-ui:icon message="test-database-connection" url="<%= testConnectionURL %>" />
 	</c:if>
 
 	<c:if test="<%= SourcePermissionChecker.contains(permissionChecker, source, ActionKeys.UPDATE) %>">
@@ -47,10 +44,7 @@ Source source = (Source)row.getObject();
 			<portlet:param name="sourceId" value="<%= String.valueOf(source.getSourceId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<c:if test="<%= SourcePermissionChecker.contains(permissionChecker, source, ActionKeys.PERMISSIONS) %>">
@@ -77,8 +71,6 @@ Source source = (Source)row.getObject();
 			<portlet:param name="sourceId" value="<%= String.valueOf(source.getSourceId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

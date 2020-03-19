@@ -30,7 +30,13 @@ String type = displayTerms.getType();
 	id="toggle_id_organization_search"
 >
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
+		<aui:input
+			inlineField="<%= true %>"
+			name="<%= OrganizationDisplayTerms.NAME %>"
+			size="20"
+			type="text"
+			value="<%= displayTerms.getName() %>"
+		/>
 
 		<aui:select inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.TYPE %>">
 			<aui:option value=""></aui:option>
@@ -47,19 +53,46 @@ String type = displayTerms.getType();
 
 		</aui:select>
 
-		<aui:input inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.STREET %>" size="20" type="text" value="<%= displayTerms.getStreet() %>" />
+		<aui:input
+			inlineField="<%= true %>"
+			name="<%= OrganizationDisplayTerms.STREET %>"
+			size="20"
+			type="text"
+			value="<%= displayTerms.getStreet() %>"
+		/>
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:select inlineField="<%= true %>" label="country" name="<%= OrganizationDisplayTerms.COUNTRY_ID %>" />
+		<aui:select
+			inlineField="<%= true %>"
+			label="country"
+			name="<%= OrganizationDisplayTerms.COUNTRY_ID %>"
+		/>
 
-		<aui:input inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.CITY %>" size="20" type="text" value="<%= displayTerms.getCity() %>" />
+		<aui:input
+			inlineField="<%= true %>"
+			name="<%= OrganizationDisplayTerms.CITY %>"
+			size="20"
+			type="text"
+			value="<%= displayTerms.getCity() %>"
+		/>
 
-		<aui:select inlineField="<%= true %>" label="region" name="<%= OrganizationDisplayTerms.REGION_ID %>" />
+		<aui:select
+			inlineField="<%= true %>"
+			label="region"
+			name="<%= OrganizationDisplayTerms.REGION_ID %>"
+		/>
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" label="postal-code" name="<%= OrganizationDisplayTerms.ZIP %>" size="20" type="text" value="<%= displayTerms.getZip() %>" />
+		<aui:input
+			inlineField="<%= true %>"
+			label="postal-code"
+			name="<%= OrganizationDisplayTerms.ZIP %>"
+			size="20"
+			type="text"
+			value="<%= displayTerms.getZip() %>"
+		/>
 	</aui:fieldset>
 </liferay-ui:search-toggle>
 
@@ -76,7 +109,11 @@ if (displayTerms.getParentOrganizationId() > 0) {
 %>
 
 <c:if test="<%= parentOrganization != null %>">
-	<aui:input name="<%= OrganizationDisplayTerms.PARENT_ORGANIZATION_ID %>" type="hidden" value="<%= parentOrganization.getOrganizationId() %>" />
+	<aui:input
+		name="<%= OrganizationDisplayTerms.PARENT_ORGANIZATION_ID %>"
+		type="hidden"
+		value="<%= parentOrganization.getOrganizationId() %>"
+	/>
 
 	<br />
 

@@ -46,10 +46,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 			<portlet:param name="formInstanceId" value="<%= String.valueOf(formInstance.getFormInstanceId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="view-entries"
-			url="<%= viewEntriesURL %>"
-		/>
+		<liferay-ui:icon message="view-entries" url="<%= viewEntriesURL %>" />
 	</c:if>
 
 	<c:if test="<%= formInstancePermissionCheckerHelper.isShowEditIcon(formInstance) %>">
@@ -59,10 +56,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 			<portlet:param name="formInstanceId" value="<%= String.valueOf(formInstance.getFormInstanceId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editURL %>" />
 	</c:if>
 
 	<c:if test="<%= formInstancePermissionCheckerHelper.isShowCopyButton() %>">
@@ -71,14 +65,15 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 			<portlet:param name="formInstanceId" value="<%= String.valueOf(formInstance.getFormInstanceId()) %>" />
 		</liferay-portlet:actionURL>
 
-		<liferay-ui:icon
-			message="duplicate"
-			url="<%= copyFormInstanceURL %>"
-		/>
+		<liferay-ui:icon message="duplicate" url="<%= copyFormInstanceURL %>" />
 	</c:if>
 
 	<c:if test="<%= formInstancePermissionCheckerHelper.isShowExportIcon(formInstance) %>">
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportFormInstance" var="exportFormInstanceURL">
+		<liferay-portlet:resourceURL
+			copyCurrentRenderParameters="<%= false %>"
+			id="exportFormInstance"
+			var="exportFormInstanceURL"
+		>
 			<portlet:param name="formInstanceId" value="<%= String.valueOf(formInstance.getFormInstanceId()) %>" />
 		</liferay-portlet:resourceURL>
 
@@ -92,10 +87,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 		sb.append("');");
 		%>
 
-		<liferay-ui:icon
-			message="export"
-			url="<%= sb.toString() %>"
-		/>
+		<liferay-ui:icon message="export" url="<%= sb.toString() %>" />
 	</c:if>
 
 	<c:if test="<%= formInstancePermissionCheckerHelper.isShowPermissionsIcon(formInstance) %>">
@@ -120,8 +112,6 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 			<portlet:param name="formInstanceId" value="<%= String.valueOf(formInstance.getFormInstanceId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

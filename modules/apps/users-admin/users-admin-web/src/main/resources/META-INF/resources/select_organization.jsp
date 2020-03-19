@@ -50,11 +50,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 	sortingURL="<%= selectOrganizationManagementToolbarDisplayContext.getSortingURL() %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectOrganizationFm">
-	<liferay-ui:search-container
-		searchContainer="<%= searchContainer %>"
-		var="organizationSearchContainer"
-	>
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="selectOrganizationFm"
+>
+	<liferay-ui:search-container searchContainer="<%= searchContainer %>" var="organizationSearchContainer">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Organization"
 			escapedModel="<%= true %>"
@@ -80,20 +82,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 				value="<%= LanguageUtil.get(request, organization.getType()) %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				name="city"
-				property="address.city"
-			/>
+			<liferay-ui:search-container-column-text name="city" property="address.city" />
 
-			<liferay-ui:search-container-column-text
-				name="region"
-				property="address.region.name"
-			/>
+			<liferay-ui:search-container-column-text name="region" property="address.region.name" />
 
-			<liferay-ui:search-container-column-text
-				name="country"
-				value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
-			/>
+			<liferay-ui:search-container-column-text name="country" value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>" />
 
 			<liferay-ui:search-container-column-text>
 				<c:if test="<%= Validator.isNull(p_u_i_d) || OrganizationMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, organization.getOrganizationId()) %>">
@@ -123,14 +116,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 					}
 					%>
 
-					<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= disabled %>" value="choose" />
+					<aui:button
+						cssClass="selector-button"
+						data="<%= data %>"
+						disabled="<%= disabled %>"
+						value="choose"
+					/>
 				</c:if>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

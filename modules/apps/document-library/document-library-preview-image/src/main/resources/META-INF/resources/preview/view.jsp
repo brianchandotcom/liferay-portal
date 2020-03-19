@@ -32,9 +32,7 @@ if (status != WorkflowConstants.STATUS_ANY) {
 String previewURL = DLURLHelperUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString);
 %>
 
-<liferay-util:html-top
-	outputKey="document_library_preview_image_css"
->
+<liferay-util:html-top outputKey="document_library_preview_image_css">
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
@@ -55,10 +53,7 @@ String previewURL = DLURLHelperUtil.getPreviewURL(fileVersion.getFileEntry(), fi
 		%>
 
 		<div id="<%= renderResponse.getNamespace() + randomNamespace + "previewImage" %>">
-			<react:component
-				data="<%= data %>"
-				module="preview/js/ImagePreviewer.es"
-			/>
+			<react:component data="<%= data %>" module="preview/js/ImagePreviewer.es" />
 		</div>
 	</c:otherwise>
 </c:choose>

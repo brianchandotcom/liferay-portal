@@ -22,8 +22,18 @@ boolean ajax = GetterUtil.getBoolean(request.getParameter("ajax"));
 long actionGroupId = GetterUtil.getLong(typeSettingsProperties.getProperty("groupId"));
 %>
 
-<aui:select label="site" name="groupId" onChange='<%= liferayPortletResponse.getNamespace() + "changeDisplay();" %>' required="<%= true %>">
-	<aui:option disabled="<%= true %>" label="select-a-site" selected="<%= actionGroupId == 0 %>" value="" />
+<aui:select
+	label="site"
+	name="groupId"
+	onChange='<%= liferayPortletResponse.getNamespace() + "changeDisplay();" %>'
+	required="<%= true %>"
+>
+	<aui:option
+		disabled="<%= true %>"
+		label="select-a-site"
+		selected="<%= actionGroupId == 0 %>"
+		value=""
+	/>
 
 	<%
 	int count = 0;
@@ -33,7 +43,11 @@ long actionGroupId = GetterUtil.getLong(typeSettingsProperties.getProperty("grou
 			count++;
 	%>
 
-			<aui:option label="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" selected="<%= group.getGroupId() == actionGroupId %>" value="<%= group.getGroupId() %>" />
+			<aui:option
+				label="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+				selected="<%= group.getGroupId() == actionGroupId %>"
+				value="<%= group.getGroupId() %>"
+			/>
 
 	<%
 		}
@@ -41,7 +55,11 @@ long actionGroupId = GetterUtil.getLong(typeSettingsProperties.getProperty("grou
 	%>
 
 	<c:if test="<%= count == 0 %>">
-		<aui:option disabled="<%= true %>" label="no-available-sites" value="0" />
+		<aui:option
+			disabled="<%= true %>"
+			label="no-available-sites"
+			value="0"
+		/>
 	</c:if>
 </aui:select>
 

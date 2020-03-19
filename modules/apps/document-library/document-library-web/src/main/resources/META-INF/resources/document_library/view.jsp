@@ -62,9 +62,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 		</portlet:actionURL>
 
-		<liferay-trash:undo
-			portletURL="<%= restoreTrashEntriesURL %>"
-		/>
+		<liferay-trash:undo portletURL="<%= restoreTrashEntriesURL %>" />
 
 		<liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
@@ -81,10 +79,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 		%>
 
 		<div>
-			<react:component
-				data="<%= context %>"
-				module="document_library/js/bulk/BulkStatus.es"
-			/>
+			<react:component data="<%= context %>" module="document_library/js/bulk/BulkStatus.es" />
 		</div>
 
 		<div id="<portlet:namespace />documentLibraryContainer">
@@ -94,15 +89,16 @@ String navigation = ParamUtil.getString(request, "navigation");
 			%>
 
 			<div class="closed <%= portletTitleBasedNavigation ? "container-fluid-1280" : StringPool.BLANK %> sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/document_library/info_panel" var="sidebarPanelURL">
+				<liferay-portlet:resourceURL
+					copyCurrentRenderParameters="<%= false %>"
+					id="/document_library/info_panel"
+					var="sidebarPanelURL"
+				>
 					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 				</liferay-portlet:resourceURL>
 
-				<liferay-frontend:sidebar-panel
-					resourceURL="<%= sidebarPanelURL %>"
-					searchContainerId="entries"
-				>
+				<liferay-frontend:sidebar-panel resourceURL="<%= sidebarPanelURL %>" searchContainerId="entries">
 					<liferay-util:include page="/document_library/info_panel.jsp" servletContext="<%= application %>" />
 				</liferay-frontend:sidebar-panel>
 
@@ -121,15 +117,35 @@ String navigation = ParamUtil.getString(request, "navigation");
 						<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
 					</liferay-portlet:renderURL>
 
-					<aui:form action="<%= editFileEntryURL.toString() %>" method="get" name="fm2">
+					<aui:form
+						action="<%= editFileEntryURL.toString() %>"
+						method="get"
+						name="fm2"
+					>
 						<aui:input name="<%= Constants.CMD %>" type="hidden" />
-						<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-						<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
+						<aui:input
+							name="redirect"
+							type="hidden"
+							value="<%= currentURL %>"
+						/>
+						<aui:input
+							name="repositoryId"
+							type="hidden"
+							value="<%= repositoryId %>"
+						/>
 						<aui:input name="newFolderId" type="hidden" />
-						<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
+						<aui:input
+							name="folderId"
+							type="hidden"
+							value="<%= folderId %>"
+						/>
 						<aui:input name="changeLog" type="hidden" />
 						<aui:input name="versionIncrease" type="hidden" />
-						<aui:input name="selectAll" type="hidden" value="<%= false %>" />
+						<aui:input
+							name="selectAll"
+							type="hidden"
+							value="<%= false %>"
+						/>
 
 						<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#errors" />
 
@@ -329,10 +345,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 		%>
 
 		<div>
-			<react:component
-				data="<%= editTagsData %>"
-				module="document_library/js/categorization/tags/EditTags.es"
-			/>
+			<react:component data="<%= editTagsData %>" module="document_library/js/categorization/tags/EditTags.es" />
 		</div>
 
 		<%
@@ -351,10 +364,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 		%>
 
 		<div>
-			<react:component
-				data="<%= editCategoriesData %>"
-				module="document_library/js/categorization/categories/EditCategories.es"
-			/>
+			<react:component data="<%= editCategoriesData %>" module="document_library/js/categorization/categories/EditCategories.es" />
 		</div>
 
 		<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#post" />

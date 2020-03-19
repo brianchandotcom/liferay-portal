@@ -31,10 +31,7 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 %>
 
 <c:if test="<%= ddlViewRecordsDisplayContext.isAdminPortlet() %>">
-	<clay:navigation-bar
-		inverted="<%= true %>"
-		navigationItems="<%= ddlViewRecordsDisplayContext.getNavigationItems() %>"
-	/>
+	<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= ddlViewRecordsDisplayContext.getNavigationItems() %>" />
 </c:if>
 
 <clay:management-toolbar
@@ -55,7 +52,11 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 />
 
 <div class="container-fluid-1280 view-records-container" id="<portlet:namespace />formContainer">
-	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+	<aui:form
+		action="<%= portletURL.toString() %>"
+		method="post"
+		name="fm"
+	>
 		<aui:input name="recordIds" type="hidden" />
 
 		<liferay-ui:search-container
@@ -145,15 +146,10 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 					/>
 				</c:if>
 
-				<liferay-ui:search-container-column-jsp
-					path="/record_action.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp path="/record_action.jsp" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				displayStyle="<%= ddlViewRecordsDisplayContext.getDisplayStyle() %>"
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator displayStyle="<%= ddlViewRecordsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

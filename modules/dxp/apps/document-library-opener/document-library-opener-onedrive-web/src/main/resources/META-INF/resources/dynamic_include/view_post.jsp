@@ -16,10 +16,7 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<liferay-frontend:component
-	componentId='<%= renderResponse.getNamespace() + "DocumentLibraryOpener" %>'
-	module="js/DocumentLibraryOpener.es"
-/>
+<liferay-frontend:component componentId='<%= renderResponse.getNamespace() + "DocumentLibraryOpener" %>' module="js/DocumentLibraryOpener.es" />
 
 <aui:script>
 	window.<portlet:namespace />openCreateOfficeDocument = function(

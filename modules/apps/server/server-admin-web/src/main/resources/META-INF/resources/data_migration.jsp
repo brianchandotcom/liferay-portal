@@ -107,7 +107,12 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 											}
 										%>
 
-											<aui:input cssClass="lfr-input-text-container" label="<%= currentParameterName %>" name="<%= clazz.getName() + StringPool.PERIOD + currentParameterName %>" type='<%= (currentParameterType != null) ? currentParameterType : "" %>' />
+											<aui:input
+												cssClass="lfr-input-text-container"
+												label="<%= currentParameterName %>"
+												name="<%= clazz.getName() + StringPool.PERIOD + currentParameterName %>"
+												type='<%= (currentParameterType != null) ? currentParameterType : "" %>'
+											/>
 
 									<%
 										}
@@ -117,7 +122,11 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 								</aui:fieldset>
 
 								<aui:button-row>
-									<aui:button cssClass="save-server-button" data-cmd='<%= "convertProcess." + clazz.getName() %>' value="execute" />
+									<aui:button
+										cssClass="save-server-button"
+										data-cmd='<%= "convertProcess." + clazz.getName() %>'
+										value="execute"
+									/>
 								</aui:button-row>
 							</c:otherwise>
 						</c:choose>

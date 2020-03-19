@@ -56,10 +56,7 @@ if (Validator.isNull(title)) {
 					</span>
 
 					<c:if test="<%= dropdown %>">
-						<liferay-ui:icon
-							icon="caret-bottom"
-							markupView="lexicon"
-						/>
+						<liferay-ui:icon icon="caret-bottom" markupView="lexicon" />
 					</c:if>
 			<c:if test="<%= Validator.isNotNull(href) %>">
 				<c:if test="<%= !useDialog && AUIUtil.isOpensNewWindow(target) %>">

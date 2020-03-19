@@ -33,9 +33,21 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 </portlet:renderURL>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
-	<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "exportApplicationData();" %>'>
-		<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-		<aui:input name="redirect" type="hidden" value="<%= viewUADExportProcesses.toString() %>" />
+	<aui:form
+		method="post"
+		name="fm"
+		onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "exportApplicationData();" %>'
+	>
+		<aui:input
+			name="p_u_i_d"
+			type="hidden"
+			value="<%= String.valueOf(selectedUser.getUserId()) %>"
+		/>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= viewUADExportProcesses.toString() %>"
+		/>
 		<aui:input name="applicationKeys" type="hidden" />
 
 		<div class="sheet sheet-lg">
@@ -73,9 +85,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 					rowChecker="<%= new UADApplicationExportDisplayChecker(renderResponse) %>"
 					total="<%= uadApplicationExportDisplayList.size() %>"
 				>
-					<liferay-ui:search-container-results
-						results="<%= ListUtil.subList(uadApplicationExportDisplayList, searchContainer.getStart(), searchContainer.getEnd()) %>"
-					/>
+					<liferay-ui:search-container-results results="<%= ListUtil.subList(uadApplicationExportDisplayList, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 					<liferay-ui:search-container-row
 						className="com.liferay.user.associated.data.web.internal.display.UADApplicationExportDisplay"
@@ -107,23 +117,21 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 						Date lastExportDate = uadApplicationExportDisplay.getLastExportDate();
 						%>
 
-						<liferay-ui:search-container-column-text
-							cssClass="table-cell-expand"
-							name="last-available-export"
-						>
+						<liferay-ui:search-container-column-text cssClass="table-cell-expand" name="last-available-export">
 							<%= (lastExportDate != null) ? dateFormat.format(lastExportDate) : StringPool.DASH %>
 						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>
 
-					<liferay-ui:search-iterator
-						markupView="lexicon"
-						searchResultCssClass="show-quick-actions-on-hover table table-autofit"
-					/>
+					<liferay-ui:search-iterator markupView="lexicon" searchResultCssClass="show-quick-actions-on-hover table table-autofit" />
 				</liferay-ui:search-container>
 			</div>
 
 			<div class="sheet-footer">
-				<aui:button primary="<%= true %>" type="submit" value="export" />
+				<aui:button
+					primary="<%= true %>"
+					type="submit"
+					value="export"
+				/>
 
 				<aui:button href="<%= backURL %>" type="cancel" />
 			</div>

@@ -31,6 +31,10 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 			<portlet:param name="targetExtension" value="<%= extension %>" />
 		</portlet:resourceURL>
 
-		<aui:a cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm" href="<%= exportArticleURL.toString() %>" label='<%= LanguageUtil.format(resourceBundle, "x-download-x-as-x", new Object[] {"hide-accessible", HtmlUtil.escape(articleDisplay.getTitle()), StringUtil.toUpperCase(HtmlUtil.escape(extension))}) %>' />
+		<aui:a
+			cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm"
+			href="<%= exportArticleURL.toString() %>"
+			label='<%= LanguageUtil.format(resourceBundle, "x-download-x-as-x", new Object[] {"hide-accessible", HtmlUtil.escape(articleDisplay.getTitle()), StringUtil.toUpperCase(HtmlUtil.escape(extension))}) %>'
+		/>
 	</div>
 </c:if>

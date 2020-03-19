@@ -36,7 +36,11 @@ String workflowDefinition = KaleoFormsUtil.getWorkflowDefinition(kaleoProcess, p
 	KaleoTaskFormPairs kaleoTaskFormPairs = KaleoFormsUtil.getKaleoTaskFormPairs(company.getCompanyId(), kaleoProcessId, ddmStructureId, workflowDefinition, portletSession);
 	%>
 
-	<aui:input name="kaleoTaskFormPairsData" type="hidden" value="<%= kaleoTaskFormPairs.toString() %>" />
+	<aui:input
+		name="kaleoTaskFormPairsData"
+		type="hidden"
+		value="<%= kaleoTaskFormPairs.toString() %>"
+	/>
 </aui:field-wrapper>
 
 <portlet:renderURL var="backURL">

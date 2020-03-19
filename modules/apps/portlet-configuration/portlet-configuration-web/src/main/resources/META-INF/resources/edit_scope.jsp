@@ -65,10 +65,7 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 </liferay-util:include>
 
 <div class="portlet-configuration-edit-scope">
-	<liferay-frontend:edit-form
-		action="<%= setScopeURL %>"
-		cssClass="form"
-	>
+	<liferay-frontend:edit-form action="<%= setScopeURL %>" cssClass="form">
 		<liferay-frontend:edit-form-body>
 			<liferay-frontend:fieldset-group>
 				<liferay-frontend:fieldset>
@@ -93,7 +90,11 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 							String value = availableGroupScopeType + "," + availableGroupScopeLayoutUuid;
 						%>
 
-							<aui:option label="<%= HtmlUtil.escape(availableGroup.getDescriptiveName(locale)) %>" selected="<%= (group != null) && (group.getGroupId() == availableGroup.getGroupId()) %>" value="<%= value %>" />
+							<aui:option
+								label="<%= HtmlUtil.escape(availableGroup.getDescriptiveName(locale)) %>"
+								selected="<%= (group != null) && (group.getGroupId() == availableGroup.getGroupId()) %>"
+								value="<%= value %>"
+							/>
 
 						<%
 						}

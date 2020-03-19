@@ -99,9 +99,7 @@ else {
 					<portlet:param name="spiDefinitionId" value="<%= String.valueOf(spiDefinition.getSpiDefinitionId()) %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon-delete
-					url="<%= deleteURL %>"
-				/>
+				<liferay-ui:icon-delete url="<%= deleteURL %>" />
 			</c:when>
 			<c:otherwise>
 

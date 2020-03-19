@@ -51,7 +51,12 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 					String message = workflowTaskDisplayContext.getTransitionMessage(transitionName);
 				%>
 
-					<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="completeWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="editURL">
+					<liferay-portlet:actionURL
+						copyCurrentRenderParameters="<%= false %>"
+						name="completeWorkflowTask"
+						portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>"
+						var="editURL"
+					>
 						<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 						<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 						<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
@@ -78,7 +83,11 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 
 			</c:when>
 			<c:otherwise>
-				<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="assignToMeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<liferay-portlet:renderURL
+					copyCurrentRenderParameters="<%= false %>"
+					var="assignToMeURL"
+					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+				>
 					<portlet:param name="mvcPath" value="/workflow_task_assign.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
@@ -93,7 +102,11 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 			</c:otherwise>
 		</c:choose>
 
-		<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="assignURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<liferay-portlet:renderURL
+			copyCurrentRenderParameters="<%= false %>"
+			var="assignURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		>
 			<portlet:param name="mvcPath" value="/workflow_task_assign.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
@@ -105,7 +118,11 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 			url="javascript:;"
 		/>
 
-		<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="updateDueDateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<liferay-portlet:renderURL
+			copyCurrentRenderParameters="<%= false %>"
+			var="updateDueDateURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		>
 			<portlet:param name="mvcPath" value="/workflow_task_due_date.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
@@ -121,7 +138,14 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 
 <aui:form name='<%= randomId + "form" %>'>
 	<div class="hide" id="<%= randomId %>updateComments">
-		<aui:input cols="55" cssClass="task-content-comment" name="comment" placeholder="comment" rows="1" type="textarea" />
+		<aui:input
+			cols="55"
+			cssClass="task-content-comment"
+			name="comment"
+			placeholder="comment"
+			rows="1"
+			type="textarea"
+		/>
 	</div>
 </aui:form>
 

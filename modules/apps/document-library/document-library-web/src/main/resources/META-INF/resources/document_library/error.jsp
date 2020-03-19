@@ -24,7 +24,11 @@
 	com.liferay.portal.kernel.lock.Lock lock = (com.liferay.portal.kernel.lock.Lock)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())} %>" key="you-cannot-modify-this-document-because-it-was-locked-by-x-on-x" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments="<%= new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())} %>"
+		key="you-cannot-modify-this-document-because-it-was-locked-by-x-on-x"
+		translateArguments="<%= false %>"
+	/>
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= InvalidFileVersionException.class %>" message="file-version-is-invalid" />

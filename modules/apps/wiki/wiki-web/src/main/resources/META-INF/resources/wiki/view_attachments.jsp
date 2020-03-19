@@ -34,14 +34,9 @@ final WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 			%>
 
 				<div class="col-md-4">
-					<liferay-frontend:horizontal-card
-						text="<%= fileEntry.getTitle() %>"
-						url="<%= rowURL %>"
-					>
+					<liferay-frontend:horizontal-card text="<%= fileEntry.getTitle() %>" url="<%= rowURL %>">
 						<liferay-frontend:horizontal-card-col>
-							<liferay-document-library:mime-type-sticker
-								fileVersion="<%= fileEntry.getFileVersion() %>"
-							/>
+							<liferay-document-library:mime-type-sticker fileVersion="<%= fileEntry.getFileVersion() %>" />
 						</liferay-frontend:horizontal-card-col>
 					</liferay-frontend:horizontal-card>
 				</div>

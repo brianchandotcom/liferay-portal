@@ -93,15 +93,35 @@ else {
 				<%@ include file="/meetings/meeting_body.jspf" %>
 
 				<aui:form name="fm" onSubmit="event.preventDefault();">
-					<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-					<aui:input name="powwowMeetingId" type="hidden" value="<%= powwowMeetingId %>" />
-					<aui:input name="powwowParticipantId" type="hidden" value="<%= powwowParticipantId %>" />
-					<aui:input name="hash" type="hidden" value="<%= hash %>" />
+					<aui:input
+						name="redirect"
+						type="hidden"
+						value="<%= portletURL.toString() %>"
+					/>
+					<aui:input
+						name="powwowMeetingId"
+						type="hidden"
+						value="<%= powwowMeetingId %>"
+					/>
+					<aui:input
+						name="powwowParticipantId"
+						type="hidden"
+						value="<%= powwowParticipantId %>"
+					/>
+					<aui:input
+						name="hash"
+						type="hidden"
+						value="<%= hash %>"
+					/>
 
 					<aui:model-context bean="<%= powwowParticipant %>" model="<%= PowwowParticipant.class %>" />
 
 					<c:if test="<%= PowwowServiceProviderUtil.isSupportsPresettingParticipantName(powwowMeeting.getProviderType()) %>">
-						<aui:input autoFocus="<%= true %>" label="enter-your-full-name" name="name" />
+						<aui:input
+							autoFocus="<%= true %>"
+							label="enter-your-full-name"
+							name="name"
+						/>
 					</c:if>
 
 					<aui:button-row>

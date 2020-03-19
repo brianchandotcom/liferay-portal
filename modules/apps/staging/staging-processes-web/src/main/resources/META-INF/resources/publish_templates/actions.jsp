@@ -44,10 +44,7 @@ if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TY
 		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="publish"
-		url="<%= newPublishProcessURL %>"
-	/>
+	<liferay-ui:icon message="publish" url="<%= newPublishProcessURL %>" />
 
 	<portlet:renderURL var="deleteRedirectURL">
 		<portlet:param name="mvcRenderCommandName" value="viewPublishConfigurations" />
@@ -64,8 +61,5 @@ if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TY
 		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		trash="<%= trashHelper.isTrashEnabled(groupId) %>"
-		url="<%= deletePublishConfigurationURL %>"
-	/>
+	<liferay-ui:icon-delete trash="<%= trashHelper.isTrashEnabled(groupId) %>" url="<%= deletePublishConfigurationURL %>" />
 </liferay-ui:icon-menu>

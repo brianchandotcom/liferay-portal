@@ -25,13 +25,25 @@
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<aui:select label="maximum-activities-to-load-at-once" name="preferences--max--" value="<%= socialActivitiesDisplayContext.getMax() %>">
+				<aui:select
+					label="maximum-activities-to-load-at-once"
+					name="preferences--max--"
+					value="<%= socialActivitiesDisplayContext.getMax() %>"
+				>
 					<aui:option label="1" />
 					<aui:option label="2" />
 					<aui:option label="3" />

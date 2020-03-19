@@ -19,10 +19,7 @@
 <div class="container text-secondary">
 	<div class="row">
 		<div class="col-sm">
-			<liferay-staging:process-title
-				backgroundTask="<%= backgroundTask %>"
-				listView="<%= false %>"
-			/>
+			<liferay-staging:process-title backgroundTask="<%= backgroundTask %>" listView="<%= false %>" />
 		</div>
 	</div>
 
@@ -47,19 +44,13 @@
 
 	<div class="row">
 		<div class="col">
-			<liferay-staging:process-in-progress
-				backgroundTask="<%= backgroundTask %>"
-				listView="<%= false %>"
-			/>
+			<liferay-staging:process-in-progress backgroundTask="<%= backgroundTask %>" listView="<%= false %>" />
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col">
-			<liferay-staging:process-status
-				backgroundTaskStatus="<%= backgroundTask.getStatus() %>"
-				backgroundTaskStatusLabel="<%= backgroundTask.getStatusLabel() %>"
-			/>
+			<liferay-staging:process-status backgroundTaskStatus="<%= backgroundTask.getStatus() %>" backgroundTaskStatusLabel="<%= backgroundTask.getStatusLabel() %>" />
 		</div>
 	</div>
 </div>

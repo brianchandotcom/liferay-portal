@@ -121,23 +121,15 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 				AssetListEntryUsagesManagementToolbarDisplayContext assetListEntryUsagesManagementToolbarDisplayContext = new AssetListEntryUsagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetListEntryUsagesDisplayContext.getSearchContainer());
 				%>
 
-				<clay:management-toolbar
-					displayContext="<%= assetListEntryUsagesManagementToolbarDisplayContext %>"
-				/>
+				<clay:management-toolbar displayContext="<%= assetListEntryUsagesManagementToolbarDisplayContext %>" />
 
-				<liferay-ui:search-container
-					id="assetListEntryUsages"
-					searchContainer="<%= assetListEntryUsagesDisplayContext.getSearchContainer() %>"
-				>
+				<liferay-ui:search-container id="assetListEntryUsages" searchContainer="<%= assetListEntryUsagesDisplayContext.getSearchContainer() %>">
 					<liferay-ui:search-container-row
 						className="com.liferay.asset.list.model.AssetListEntryUsage"
 						keyProperty="assetListEntryUsageId"
 						modelVar="assetListEntryUsage"
 					>
-						<liferay-ui:search-container-column-text
-							name="name"
-							value="<%= HtmlUtil.escape(assetListEntryUsagesDisplayContext.getAssetListEntryUsageName(assetListEntryUsage)) %>"
-						/>
+						<liferay-ui:search-container-column-text name="name" value="<%= HtmlUtil.escape(assetListEntryUsagesDisplayContext.getAssetListEntryUsageName(assetListEntryUsage)) %>" />
 
 						<liferay-ui:search-container-column-text
 							name="type"
@@ -145,10 +137,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 							value="<%= assetListEntryUsagesDisplayContext.getAssetListEntryUsageTypeLabel(assetListEntryUsage) %>"
 						/>
 
-						<liferay-ui:search-container-column-date
-							name="modified-date"
-							value="<%= assetListEntryUsage.getModifiedDate() %>"
-						/>
+						<liferay-ui:search-container-column-date name="modified-date" value="<%= assetListEntryUsage.getModifiedDate() %>" />
 					</liferay-ui:search-container-row>
 
 					<liferay-ui:search-iterator

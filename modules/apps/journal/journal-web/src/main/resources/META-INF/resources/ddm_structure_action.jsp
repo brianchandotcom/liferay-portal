@@ -36,10 +36,7 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 			<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= ediDDMStructuretURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= ediDDMStructuretURL %>" />
 	</c:if>
 
 	<portlet:renderURL var="editDDMStructureDefaultValuesURL">
@@ -52,10 +49,7 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 	</portlet:renderURL>
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE) %>">
-		<liferay-ui:icon
-			message="edit-default-values"
-			url="<%= editDDMStructureDefaultValuesURL %>"
-		/>
+		<liferay-ui:icon message="edit-default-values" url="<%= editDDMStructureDefaultValuesURL %>" />
 	</c:if>
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.VIEW) %>">
@@ -65,10 +59,7 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 			<portlet:param name="classPK" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="manage-templates"
-			url="<%= manageViewURL %>"
-		/>
+		<liferay-ui:icon message="manage-templates" url="<%= manageViewURL %>" />
 	</c:if>
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.PERMISSIONS) %>">
@@ -99,10 +90,7 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 			<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="copy"
-			url="<%= copyDDMStructureURL %>"
-		/>
+		<liferay-ui:icon message="copy" url="<%= copyDDMStructureURL %>" />
 	</c:if>
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.DELETE) %>">
@@ -112,8 +100,6 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 			<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

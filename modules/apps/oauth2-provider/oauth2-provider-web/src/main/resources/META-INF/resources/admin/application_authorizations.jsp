@@ -50,7 +50,11 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= revokeOAuth2AuthorizationsURL %>" name="fm">
-		<aui:input name="oAuth2ApplicationId" type="hidden" value="<%= oAuth2ApplicationId %>" />
+		<aui:input
+			name="oAuth2ApplicationId"
+			type="hidden"
+			value="<%= oAuth2ApplicationId %>"
+		/>
 		<aui:input name="oAuth2AuthorizationIds" type="hidden" />
 
 		<liferay-ui:search-container
@@ -60,9 +64,7 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			total="<%= oAuth2AuthorizationsCount %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= OAuth2AuthorizationServiceUtil.getApplicationOAuth2Authorizations(oAuth2ApplicationId, searchContainer.getStart(), searchContainer.getEnd(), oAuth2AuthorizationsManagementToolbarDisplayContext.getOrderByComparator()) %>"
-			/>
+			<liferay-ui:search-container-results results="<%= OAuth2AuthorizationServiceUtil.getApplicationOAuth2Authorizations(oAuth2ApplicationId, searchContainer.getStart(), searchContainer.getEnd(), oAuth2AuthorizationsManagementToolbarDisplayContext.getOrderByComparator()) %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.oauth2.provider.model.OAuth2Authorization"
@@ -70,23 +72,13 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 				keyProperty="OAuth2AuthorizationId"
 				modelVar="oAuth2Authorization"
 			>
-				<liferay-ui:search-container-column-text
-					property="userId"
-				/>
+				<liferay-ui:search-container-column-text property="userId" />
 
-				<liferay-ui:search-container-column-text
-					property="userName"
-				/>
+				<liferay-ui:search-container-column-text property="userName" />
 
-				<liferay-ui:search-container-column-date
-					name="authorization"
-					property="createDate"
-				/>
+				<liferay-ui:search-container-column-date name="authorization" property="createDate" />
 
-				<liferay-ui:search-container-column-date
-					name="last-access"
-					property="accessTokenCreateDate"
-				/>
+				<liferay-ui:search-container-column-date name="last-access" property="accessTokenCreateDate" />
 
 				<%
 				Date expirationDate = oAuth2Authorization.getRefreshTokenExpirationDate();
@@ -96,26 +88,14 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 				}
 				%>
 
-				<liferay-ui:search-container-column-date
-					name="expiration"
-					value="<%= expirationDate %>"
-				/>
+				<liferay-ui:search-container-column-date name="expiration" value="<%= expirationDate %>" />
 
-				<liferay-ui:search-container-column-text
-					name="remoteIPInfo"
-					value='<%= oAuth2Authorization.getRemoteIPInfo() + ", " + oAuth2Authorization.getRemoteHostInfo() %>'
-				/>
+				<liferay-ui:search-container-column-text name="remoteIPInfo" value='<%= oAuth2Authorization.getRemoteIPInfo() + ", " + oAuth2Authorization.getRemoteHostInfo() %>' />
 
-				<liferay-ui:search-container-column-jsp
-					align="right"
-					path="/admin/application_authorization_actions.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp align="right" path="/admin/application_authorization_actions.jsp" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-				searchContainer="<%= searchContainer %>"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= searchContainer %>" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

@@ -53,20 +53,39 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 
 <portlet:actionURL name="/results_ranking/edit" var="addResultsRankingEntryURL" />
 
-<liferay-frontend:edit-form
-	action="<%= addResultsRankingEntryURL %>"
->
+<liferay-frontend:edit-form action="<%= addResultsRankingEntryURL %>">
 	<liferay-frontend:edit-form-body>
 		<div class="sheet-text">
 			<liferay-ui:message key="customize-how-users-see-results-for-a-given-search-query" />
 		</div>
 
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-		<aui:input name="resultActionCmd" type="hidden" value="<%= resultActionCmd %>" />
-		<aui:input name="resultActionUid" type="hidden" value="<%= resultActionUid %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="<%= Constants.CMD %>"
+			type="hidden"
+			value="<%= Constants.ADD %>"
+		/>
+		<aui:input
+			name="resultActionCmd"
+			type="hidden"
+			value="<%= resultActionCmd %>"
+		/>
+		<aui:input
+			name="resultActionUid"
+			type="hidden"
+			value="<%= resultActionUid %>"
+		/>
 
-		<aui:input label="search-query" name="keywords" required="<%= true %>" showRequiredLabel="<%= true %>" />
+		<aui:input
+			label="search-query"
+			name="keywords"
+			required="<%= true %>"
+			showRequiredLabel="<%= true %>"
+		/>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

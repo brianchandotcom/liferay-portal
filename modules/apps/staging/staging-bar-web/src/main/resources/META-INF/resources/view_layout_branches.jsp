@@ -58,17 +58,17 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 		</liferay-portlet:renderURL>
 
 		<aui:button-row>
-			<aui:button href="<%= addLayoutBranchURL %>" name="addRootLayoutBranch" value="add-page-variation" />
+			<aui:button
+				href="<%= addLayoutBranchURL %>"
+				name="addRootLayoutBranch"
+				value="add-page-variation"
+			/>
 		</aui:button-row>
 	</c:if>
 
 	<div class="branch-results">
-		<liferay-ui:search-container
-			total="<%= layoutRevisions.size() %>"
-		>
-			<liferay-ui:search-container-results
-				results="<%= layoutRevisions %>"
-			/>
+		<liferay-ui:search-container total="<%= layoutRevisions.size() %>">
+			<liferay-ui:search-container-results results="<%= layoutRevisions %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.model.LayoutRevision"
@@ -81,9 +81,7 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 				LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
 				%>
 
-				<liferay-ui:search-container-column-text
-					name="name"
-				>
+				<liferay-ui:search-container-column-text name="name">
 					<c:if test="<%= layoutRevision.getLayoutBranchId() == currentLayoutRevision.getLayoutBranchId() %>">
 						<strong>
 					</c:if>
@@ -99,10 +97,7 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 					</c:if>
 				</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-text
-					name="description"
-					value="<%= HtmlUtil.escape(layoutBranch.getDescription()) %>"
-				/>
+				<liferay-ui:search-container-column-text name="description" value="<%= HtmlUtil.escape(layoutBranch.getDescription()) %>" />
 
 				<liferay-ui:search-container-column-jsp
 					align="right"

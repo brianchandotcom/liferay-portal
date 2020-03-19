@@ -43,9 +43,7 @@
 
 </liferay-ui:icon-menu>
 
-<liferay-util:buffer
-	var="removeLinkIcon"
->
+<liferay-util:buffer var="removeLinkIcon">
 	<liferay-ui:icon
 		icon="times-circle"
 		markupView="lexicon"
@@ -59,9 +57,7 @@
 	headerNames="title,null"
 	total="<%= inputAssetLinksDisplayContext.getAssetLinksCount() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= inputAssetLinksDisplayContext.getAssetLinks() %>"
-	/>
+	<liferay-ui:search-container-results results="<%= inputAssetLinksDisplayContext.getAssetLinks() %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.asset.kernel.model.AssetLink"
@@ -73,9 +69,7 @@
 		AssetEntry assetLinkEntry = inputAssetLinksDisplayContext.getAssetLinkEntry(assetLink);
 		%>
 
-		<liferay-ui:search-container-column-text
-			name="title"
-		>
+		<liferay-ui:search-container-column-text name="title">
 			<h4 class="list-group-title">
 				<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>
 			</h4>
@@ -89,9 +83,7 @@
 			</p>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			cssClass="text-right"
-		>
+		<liferay-ui:search-container-column-text cssClass="text-right">
 			<a class="modify-link" data-rowId="<%= assetLinkEntry.getEntryId() %>" href="javascript:;"><%= removeLinkIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>

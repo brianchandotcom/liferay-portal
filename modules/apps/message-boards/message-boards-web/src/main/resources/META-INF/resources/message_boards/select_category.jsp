@@ -58,9 +58,7 @@ else {
 			iteratorURL="<%= portletURL %>"
 			total="<%= MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, excludedCategoryId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= MBCategoryServiceUtil.getCategories(scopeGroupId, excludedCategoryId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
+			<liferay-ui:search-container-results results="<%= MBCategoryServiceUtil.getCategories(scopeGroupId, excludedCategoryId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.message.boards.model.MBCategory"
@@ -117,7 +115,11 @@ else {
 					data.put("name", curCategory.getName());
 					%>
 
-					<aui:button cssClass="selector-button" data="<%= data %>" value="select" />
+					<aui:button
+						cssClass="selector-button"
+						data="<%= data %>"
+						value="select"
+					/>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
@@ -130,12 +132,14 @@ else {
 				data.put("name", categoryName);
 				%>
 
-				<aui:button cssClass="selector-button" data="<%= data %>" value="select-this-category" />
+				<aui:button
+					cssClass="selector-button"
+					data="<%= data %>"
+					value="select-this-category"
+				/>
 			</aui:button-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

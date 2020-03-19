@@ -86,20 +86,46 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 				%>
 
 				<div class="portlet-forms">
-					<aui:form action="<%= addFormInstanceRecordActionURL %>" data-DDMFormInstanceId="<%= formInstanceId %>" data-senna-off="true" method="post" name="fm">
+					<aui:form
+						action="<%= addFormInstanceRecordActionURL %>"
+						data-DDMFormInstanceId="<%= formInstanceId %>"
+						data-senna-off="true"
+						method="post"
+						name="fm"
+					>
 
 						<%
 						String redirectURL = ddmFormDisplayContext.getRedirectURL();
 						%>
 
 						<c:if test="<%= Validator.isNull(redirectURL) %>">
-							<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+							<aui:input
+								name="redirect"
+								type="hidden"
+								value="<%= redirect %>"
+							/>
 						</c:if>
 
-						<aui:input name="groupId" type="hidden" value="<%= formInstance.getGroupId() %>" />
-						<aui:input name="formInstanceId" type="hidden" value="<%= formInstance.getFormInstanceId() %>" />
-						<aui:input name="languageId" type="hidden" value="<%= languageId %>" />
-						<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
+						<aui:input
+							name="groupId"
+							type="hidden"
+							value="<%= formInstance.getGroupId() %>"
+						/>
+						<aui:input
+							name="formInstanceId"
+							type="hidden"
+							value="<%= formInstance.getFormInstanceId() %>"
+						/>
+						<aui:input
+							name="languageId"
+							type="hidden"
+							value="<%= languageId %>"
+						/>
+						<aui:input
+							name="workflowAction"
+							type="hidden"
+							value="<%= WorkflowConstants.ACTION_PUBLISH %>"
+						/>
 
 						<liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
 						<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
@@ -112,7 +138,11 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							DDMFormValuesValidationException.MustSetValidValue msvv = (DDMFormValuesValidationException.MustSetValidValue)errorException;
 							%>
 
-							<liferay-ui:message arguments="<%= HtmlUtil.escape(msvv.getFieldName()) %>" key="validation-failed-for-field-x" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments="<%= HtmlUtil.escape(msvv.getFieldName()) %>"
+								key="validation-failed-for-field-x"
+								translateArguments="<%= false %>"
+							/>
 						</liferay-ui:error>
 
 						<liferay-ui:error exception="<%= DDMFormValuesValidationException.RequiredValue.class %>">
@@ -121,7 +151,11 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							DDMFormValuesValidationException.RequiredValue rv = (DDMFormValuesValidationException.RequiredValue)errorException;
 							%>
 
-							<liferay-ui:message arguments="<%= HtmlUtil.escape(rv.getFieldName()) %>" key="no-value-is-defined-for-field-x" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments="<%= HtmlUtil.escape(rv.getFieldName()) %>"
+								key="no-value-is-defined-for-field-x"
+								translateArguments="<%= false %>"
+							/>
 						</liferay-ui:error>
 
 						<liferay-ui:error exception="<%= NoSuchFormInstanceException.class %>" message="the-selected-form-no-longer-exists" />
@@ -172,7 +206,11 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 						<div class="container-fluid-1280 ddm-form-builder-app ddm-form-builder-app-not-ready" id="<%= ddmFormDisplayContext.getContainerId() %>container">
 							<%= ddmFormDisplayContext.getDDMFormHTML() %>
 
-							<aui:input name="empty" type="hidden" value="" />
+							<aui:input
+								name="empty"
+								type="hidden"
+								value=""
+							/>
 						</div>
 					</aui:form>
 				</div>
@@ -206,7 +244,11 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 						<c:when test="<%= ddmFormDisplayContext.isAutosaveEnabled() %>">
 							var <portlet:namespace />form;
 
-							<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="addFormInstanceRecord" var="autoSaveFormInstanceRecordURL">
+							<liferay-portlet:resourceURL
+								copyCurrentRenderParameters="<%= false %>"
+								id="addFormInstanceRecord"
+								var="autoSaveFormInstanceRecordURL"
+							>
 								<portlet:param name="autoSave" value="<%= Boolean.TRUE.toString() %>" />
 								<portlet:param name="languageId" value="<%= languageId %>" />
 								<portlet:param name="preview" value="<%= String.valueOf(ddmFormDisplayContext.isPreview()) %>" />

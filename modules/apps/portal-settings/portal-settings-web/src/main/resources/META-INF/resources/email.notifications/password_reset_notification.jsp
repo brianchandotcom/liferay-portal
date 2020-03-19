@@ -25,7 +25,11 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 String sectionName = "password-reset-notification";
 %>
 
-<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+<aui:input
+	name="<%= Constants.CMD %>"
+	type="hidden"
+	value="<%= Constants.UPDATE %>"
+/>
 
 <liferay-ui:error key="emailPasswordResetSubject" message="please-enter-a-valid-subject" />
 <liferay-ui:error key="emailPasswordResetBody" message="please-enter-a-valid-body" />

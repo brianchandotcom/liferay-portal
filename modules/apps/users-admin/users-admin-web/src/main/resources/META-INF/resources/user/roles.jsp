@@ -42,16 +42,11 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 
 <liferay-util:dynamic-include key="com.liferay.users.admin.web#/user/roles.jsp#pre" />
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="roles"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="roles" />
 
 <liferay-ui:membership-policy-error />
 
-<liferay-util:buffer
-	var="removeRoleIcon"
->
+<liferay-util:buffer var="removeRoleIcon">
 	<liferay-ui:icon
 		icon="times-circle"
 		markupView="lexicon"
@@ -99,19 +94,14 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 		iteratorURL="<%= currentURLObj %>"
 		total="<%= roles.size() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= roles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-		/>
+		<liferay-ui:search-container-results results="<%= roles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Role"
 			keyProperty="roleId"
 			modelVar="role"
 		>
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="title"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-content" name="title">
 				<liferay-ui:icon
 					iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
 					label="<%= true %>"
@@ -126,9 +116,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			</c:if>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 
 	<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
@@ -206,9 +194,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			iteratorURL="<%= currentURLObj %>"
 			total="<%= roleGroups.size() %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= roleGroups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-			/>
+			<liferay-ui:search-container-results results="<%= roleGroups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.model.Group"
@@ -221,10 +207,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 				List<Role> groupRoles = RoleLocalServiceUtil.getGroupRoles(group.getGroupId());
 				%>
 
-				<liferay-ui:search-container-column-text
-					name="title"
-					value="<%= HtmlUtil.escape(ListUtil.toString(groupRoles, Role.NAME_ACCESSOR)) %>"
-				>
+				<liferay-ui:search-container-column-text name="title" value="<%= HtmlUtil.escape(ListUtil.toString(groupRoles, Role.NAME_ACCESSOR)) %>">
 					<liferay-ui:icon
 						iconCssClass="<%= RolesAdminUtil.getIconCssClass(groupRoles.get(0)) %>"
 						label="<%= true %>"
@@ -232,15 +215,10 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 					/>
 				</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-text
-					name="group"
-					value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-				/>
+				<liferay-ui:search-container-column-text name="group" value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</c:if>
 </div>
@@ -283,19 +261,14 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			iteratorURL="<%= currentURLObj %>"
 			total="<%= organizationRoles.size() %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= organizationRoles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-			/>
+			<liferay-ui:search-container-results results="<%= organizationRoles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.model.UserGroupRole"
 				keyProperty="roleId"
 				modelVar="userGroupRole"
 			>
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					name="title"
-				>
+				<liferay-ui:search-container-column-text cssClass="table-cell-content" name="title">
 					<liferay-ui:icon
 						iconCssClass="<%= RolesAdminUtil.getIconCssClass(userGroupRole.getRole()) %>"
 						label="<%= true %>"
@@ -331,9 +304,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 				</c:if>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
@@ -513,19 +484,14 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			iteratorURL="<%= currentURLObj %>"
 			total="<%= siteRoles.size() %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= siteRoles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-			/>
+			<liferay-ui:search-container-results results="<%= siteRoles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.model.UserGroupRole"
 				keyProperty="roleId"
 				modelVar="userGroupRole"
 			>
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					name="title"
-				>
+				<liferay-ui:search-container-column-text cssClass="table-cell-content" name="title">
 					<liferay-ui:icon
 						iconCssClass="<%= RolesAdminUtil.getIconCssClass(userGroupRole.getRole()) %>"
 						label="<%= true %>"
@@ -533,13 +499,8 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 					/>
 				</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					name="site"
-				>
-					<liferay-staging:descriptive-name
-						group="<%= userGroupRole.getGroup() %>"
-					/>
+				<liferay-ui:search-container-column-text cssClass="table-cell-content" name="site">
+					<liferay-staging:descriptive-name group="<%= userGroupRole.getGroup() %>" />
 				</liferay-ui:search-container-column-text>
 
 				<%
@@ -564,9 +525,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 				</c:if>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
@@ -707,19 +666,14 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			iteratorURL="<%= currentURLObj %>"
 			total="<%= inheritedSiteRoles.size() %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= inheritedSiteRoles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-			/>
+			<liferay-ui:search-container-results results="<%= inheritedSiteRoles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.model.UserGroupGroupRole"
 				keyProperty="roleId"
 				modelVar="userGroupGroupRole"
 			>
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					name="title"
-				>
+				<liferay-ui:search-container-column-text cssClass="table-cell-content" name="title">
 					<liferay-ui:icon
 						iconCssClass="<%= RolesAdminUtil.getIconCssClass(userGroupGroupRole.getRole()) %>"
 						label="<%= true %>"
@@ -727,13 +681,8 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 					/>
 				</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					name="site"
-				>
-					<liferay-staging:descriptive-name
-						group="<%= userGroupGroupRole.getGroup() %>"
-					/>
+				<liferay-ui:search-container-column-text cssClass="table-cell-content" name="site">
+					<liferay-staging:descriptive-name group="<%= userGroupGroupRole.getGroup() %>" />
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
@@ -743,9 +692,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</c:if>
 

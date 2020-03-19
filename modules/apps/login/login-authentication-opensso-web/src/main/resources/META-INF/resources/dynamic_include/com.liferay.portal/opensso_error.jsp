@@ -20,9 +20,7 @@
 String openSSOSubjectScreenName = (String)request.getAttribute(OpenSSOWebKeys.OPEN_SSO_SUBJECT_SCREEN_NAME);
 %>
 
-<liferay-util:buffer
-	var="msg"
->
+<liferay-util:buffer var="msg">
 	<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(openSSOSubjectScreenName) + "</strong>" %>' key="your-user-x-could-not-be-logged-in" />
 
 	<c:choose>

@@ -28,9 +28,7 @@ if (accountEntryDisplay != null) {
 
 <liferay-ui:error exception="<%= AccountEntryDomainsException.class %>" message="please-enter-a-valid-mail-domain" />
 
-<liferay-util:buffer
-	var="removeDomainIcon"
->
+<liferay-util:buffer var="removeDomainIcon">
 	<liferay-ui:icon
 		icon="times-circle"
 		markupView="lexicon"
@@ -58,7 +56,11 @@ if (accountEntryDisplay != null) {
 		</span>
 	</h3>
 
-	<aui:input name="domains" type="hidden" value="<%= StringUtil.merge(domains) %>" />
+	<aui:input
+		name="domains"
+		type="hidden"
+		value="<%= StringUtil.merge(domains) %>"
+	/>
 
 	<liferay-ui:search-container
 		compactEmptyResultsMessage="<%= true %>"
@@ -68,14 +70,9 @@ if (accountEntryDisplay != null) {
 		iteratorURL="<%= currentURLObj %>"
 		total="<%= domains.size() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= domains.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-		/>
+		<liferay-ui:search-container-results results="<%= domains.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>" />
 
-		<liferay-ui:search-container-row
-			className="java.lang.String"
-			modelVar="domain"
-		>
+		<liferay-ui:search-container-row className="java.lang.String" modelVar="domain">
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="name"
@@ -87,9 +84,7 @@ if (accountEntryDisplay != null) {
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>
 

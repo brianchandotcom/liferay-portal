@@ -18,8 +18,17 @@
 
 <portlet:actionURL name="installRemoteApp" var="installRemoteAppURL" />
 
-<aui:form action="<%= installRemoteAppURL %>" cssClass="container-fluid container-fluid-max-xl container-view" method="post" name="fm">
-	<aui:input name="mvcPath" type="hidden" value="/install_remote_app.jsp" />
+<aui:form
+	action="<%= installRemoteAppURL %>"
+	cssClass="container-fluid container-fluid-max-xl container-view"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="mvcPath"
+		type="hidden"
+		value="/install_remote_app.jsp"
+	/>
 
 	<div class="sheet sheet-lg">
 		<c:if test="<%= CompanyLocalServiceUtil.getCompaniesCount(false) > 1 %>">
@@ -32,7 +41,11 @@
 
 		<liferay-ui:success key="pluginDownloaded" message="the-plugin-was-downloaded-successfully-and-is-now-being-installed" />
 
-		<aui:input cssClass="file-input" name="url" type="text" />
+		<aui:input
+			cssClass="file-input"
+			name="url"
+			type="text"
+		/>
 
 		<div class="sheet-footer">
 			<aui:button type="submit" value="install" />

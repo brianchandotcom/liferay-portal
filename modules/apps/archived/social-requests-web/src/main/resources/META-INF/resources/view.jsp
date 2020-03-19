@@ -39,10 +39,7 @@ List<SocialRequest> requests = (List<SocialRequest>)request.getAttribute(SocialR
 
 			<aui:row>
 				<aui:col width="<%= 50 %>">
-					<liferay-ui:user-display
-						displayStyle="2"
-						userId="<%= socialRequest.getUserId() %>"
-					/>
+					<liferay-ui:user-display displayStyle="2" userId="<%= socialRequest.getUserId() %>" />
 				</aui:col>
 
 				<aui:col width="<%= 50 %>">

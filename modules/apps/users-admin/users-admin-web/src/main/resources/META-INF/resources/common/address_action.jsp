@@ -41,10 +41,7 @@ long addressId = ParamUtil.getLong(request, "addressId");
 	editURL.setParameter("primaryKey", String.valueOf(addressId));
 	%>
 
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editURL.toString() %>"
-	/>
+	<liferay-ui:icon message="edit" url="<%= editURL.toString() %>" />
 
 	<%
 	PortletURL portletURL = renderResponse.createActionURL();
@@ -61,10 +58,7 @@ long addressId = ParamUtil.getLong(request, "addressId");
 	makePrimaryURL.setParameter(Constants.CMD, "makePrimary");
 	%>
 
-	<liferay-ui:icon
-		message="make-primary"
-		url="<%= makePrimaryURL.toString() %>"
-	/>
+	<liferay-ui:icon message="make-primary" url="<%= makePrimaryURL.toString() %>" />
 
 	<%
 	PortletURL removeAddressURL = PortletURLUtil.clone(portletURL, renderResponse);
@@ -72,8 +66,5 @@ long addressId = ParamUtil.getLong(request, "addressId");
 	removeAddressURL.setParameter(Constants.CMD, Constants.DELETE);
 	%>
 
-	<liferay-ui:icon
-		message="remove"
-		url="<%= removeAddressURL.toString() %>"
-	/>
+	<liferay-ui:icon message="remove" url="<%= removeAddressURL.toString() %>" />
 </liferay-ui:icon-menu>

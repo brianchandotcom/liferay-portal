@@ -33,8 +33,16 @@ boolean nodeInGroup = false;
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
@@ -61,7 +69,11 @@ boolean nodeInGroup = false;
 								}
 							%>
 
-								<aui:option label="<%= node.getName() %>" selected="<%= nodeId == node.getNodeId() %>" value="<%= node.getNodeId() %>" />
+								<aui:option
+									label="<%= node.getName() %>"
+									selected="<%= nodeId == node.getNodeId() %>"
+									value="<%= node.getNodeId() %>"
+								/>
 
 							<%
 							}
@@ -100,7 +112,11 @@ boolean nodeInGroup = false;
 						</div>
 					</c:when>
 					<c:otherwise>
-						<aui:input name="preferences--title--" type="hidden" value="<%= wikiGroupServiceConfiguration.frontPageName() %>" />
+						<aui:input
+							name="preferences--title--"
+							type="hidden"
+							value="<%= wikiGroupServiceConfiguration.frontPageName() %>"
+						/>
 					</c:otherwise>
 				</c:choose>
 

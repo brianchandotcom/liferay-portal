@@ -32,9 +32,21 @@ if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+<aui:form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<div class="portlet-configuration-body-content">
 		<div class="container-fluid-1280">
@@ -52,7 +64,11 @@ if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
 									question = question.toEscapedModel();
 								%>
 
-									<aui:option label="<%= question.getTitle(locale) %>" selected="<%= questionId == question.getQuestionId() %>" value="<%= question.getQuestionId() %>" />
+									<aui:option
+										label="<%= question.getTitle(locale) %>"
+										selected="<%= questionId == question.getQuestionId() %>"
+										value="<%= question.getQuestionId() %>"
+									/>
 
 								<%
 								}

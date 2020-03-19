@@ -44,10 +44,7 @@
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			label="<%= true %>"
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete label="<%= true %>" url="<%= deleteURL %>" />
 	</c:if>
 
 	<c:if test="<%= themeDisplay.isSignedIn() %>">

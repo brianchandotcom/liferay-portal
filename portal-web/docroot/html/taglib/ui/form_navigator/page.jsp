@@ -47,9 +47,7 @@
 			%>
 
 			<div class="<%= wrapperCssClass %>" id="<portlet:namespace />tabs">
-				<liferay-util:buffer
-					var="formNavigatorBottom"
-				>
+				<liferay-util:buffer var="formNavigatorBottom">
 					<c:if test="<%= showButtons %>">
 						<aui:button-row>
 							<aui:button primary="<%= true %>" type="submit" />
@@ -61,9 +59,7 @@
 					<%= Validator.isNotNull(htmlBottom) ? htmlBottom : StringPool.BLANK %>
 				</liferay-util:buffer>
 
-				<liferay-util:buffer
-					var="formSectionsBuffer"
-				>
+				<liferay-util:buffer var="formSectionsBuffer">
 
 					<%
 					String contentCssClass = "form-navigator-content";

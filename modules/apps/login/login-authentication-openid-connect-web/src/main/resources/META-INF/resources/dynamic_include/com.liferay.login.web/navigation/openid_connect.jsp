@@ -26,7 +26,4 @@ String redirect = ParamUtil.getString(renderRequest, "redirect");
 	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:renderURL>
 
-<liferay-ui:icon
-	message="openid-connect"
-	url="<%= openIdConnectURL %>"
-/>
+<liferay-ui:icon message="openid-connect" url="<%= openIdConnectURL %>" />

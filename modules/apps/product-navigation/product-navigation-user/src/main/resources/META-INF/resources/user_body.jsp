@@ -48,10 +48,14 @@ UserPanelCategory userPanelCategory = (UserPanelCategory)request.getAttribute(Ap
 		}
 		%>
 
-		<aui:icon cssClass="list-group-heading" image="flag-full" label="<%= changeLanguageMessage %>" markupView="lexicon" url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsUserLanguageId", doAsUserLanguageId) %>' />
+		<aui:icon
+			cssClass="list-group-heading"
+			image="flag-full"
+			label="<%= changeLanguageMessage %>"
+			markupView="lexicon"
+			url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsUserLanguageId", doAsUserLanguageId) %>'
+		/>
 	</c:if>
 </c:if>
 
-<liferay-application-list:panel-category-body
-	panelCategory="<%= userPanelCategory %>"
-/>
+<liferay-application-list:panel-category-body panelCategory="<%= userPanelCategory %>" />

@@ -38,16 +38,10 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 						<li>
 							<c:choose>
 								<c:when test="<%= trashEntry.getRootEntry() == null %>">
-									<clay:dropdown-actions
-										defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
-										dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
-									/>
+									<clay:dropdown-actions defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>" />
 								</c:when>
 								<c:otherwise>
-									<clay:dropdown-actions
-										defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
-										dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(trashRenderer.getClassName(), trashRenderer.getClassPK()) %>"
-									/>
+									<clay:dropdown-actions defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(trashRenderer.getClassName(), trashRenderer.getClassPK()) %>" />
 								</c:otherwise>
 							</c:choose>
 						</li>
@@ -60,9 +54,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 					</p>
 				</div>
 
-				<clay:navigation-bar
-					navigationItems="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
-				/>
+				<clay:navigation-bar navigationItems="<%= trashDisplayContext.getInfoPanelNavigationItems() %>" />
 
 				<div class="sidebar-body">
 					<h5><liferay-ui:message key="removed-date" /></h5>
@@ -83,9 +75,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 					<h4><liferay-ui:message arguments="<%= trashEntries.size() %>" key="x-items-are-selected" /></h4>
 				</div>
 
-				<clay:navigation-bar
-					navigationItems="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
-				/>
+				<clay:navigation-bar navigationItems="<%= trashDisplayContext.getInfoPanelNavigationItems() %>" />
 
 				<div class="sidebar-body">
 					<h5><liferay-ui:message key="num-of-items" /></h5>
@@ -102,9 +92,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 			<h4><liferay-ui:message key="home" /></h4>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<clay:navigation-bar navigationItems="<%= trashDisplayContext.getInfoPanelNavigationItems() %>" />
 
 		<div class="sidebar-body">
 			<h5><liferay-ui:message key="num-of-items" /></h5>

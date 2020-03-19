@@ -34,9 +34,7 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 %>
 
-<liferay-editor:resources
-	editorName="<%= MBUtil.getEditorName(messageFormat) %>"
-/>
+<liferay-editor:resources editorName="<%= MBUtil.getEditorName(messageFormat) %>" />
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<c:if test="<%= !portletTitleBasedNavigation %>">
@@ -72,7 +70,11 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 		);
 
 		if (addQuickReplyContainer) {
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/message_boards/get_edit_message_quick" var="editMessageQuickURL">
+			<liferay-portlet:resourceURL
+				copyCurrentRenderParameters="<%= false %>"
+				id="/message_boards/get_edit_message_quick"
+				var="editMessageQuickURL"
+			>
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</liferay-portlet:resourceURL>
 

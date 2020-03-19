@@ -31,10 +31,7 @@ catch (Exception e) {
 }
 %>
 
-<liferay-ui:icon-menu
-	icon="<%= StringPool.BLANK %>"
-	message="<%= StringPool.BLANK %>"
->
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= GadgetPermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), gadget.getGadgetId(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="updateGadgetURL">
 			<portlet:param name="mvcPath" value="/admin/edit_gadget.jsp" />
@@ -98,8 +95,6 @@ catch (Exception e) {
 			<portlet:param name="gadgetId" value="<%= String.valueOf(gadget.getGadgetId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

@@ -29,7 +29,11 @@
 		}
 		%>
 
-		<liferay-ui:message arguments="<%= signedInAs %>" key="you-are-signed-in-as-x" translateArguments="<%= false %>" />
+		<liferay-ui:message
+			arguments="<%= signedInAs %>"
+			key="you-are-signed-in-as-x"
+			translateArguments="<%= false %>"
+		/>
 	</c:when>
 	<c:otherwise>
 
@@ -57,14 +61,38 @@
 		%>
 
 		<div class="login-container">
-			<portlet:actionURL name="/login/login" secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="loginURL">
+			<portlet:actionURL
+				name="/login/login"
+				secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>"
+				var="loginURL"
+			>
 				<portlet:param name="mvcRenderCommandName" value="/login/login" />
 			</portlet:actionURL>
 
-			<aui:form action="<%= loginURL %>" autocomplete='<%= PropsValues.COMPANY_SECURITY_LOGIN_FORM_AUTOCOMPLETE ? "on" : "off" %>' cssClass="sign-in-form" method="post" name="<%= formName %>" onSubmit="event.preventDefault();" validateOnBlur="<%= false %>">
-				<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
-				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-				<aui:input name="doActionAfterLogin" type="hidden" value="<%= portletName.equals(PortletKeys.FAST_LOGIN) ? true : false %>" />
+			<aui:form
+				action="<%= loginURL %>"
+				autocomplete='<%= PropsValues.COMPANY_SECURITY_LOGIN_FORM_AUTOCOMPLETE ? "on" : "off" %>'
+				cssClass="sign-in-form"
+				method="post"
+				name="<%= formName %>"
+				onSubmit="event.preventDefault();"
+				validateOnBlur="<%= false %>"
+			>
+				<aui:input
+					name="saveLastPath"
+					type="hidden"
+					value="<%= false %>"
+				/>
+				<aui:input
+					name="redirect"
+					type="hidden"
+					value="<%= redirect %>"
+				/>
+				<aui:input
+					name="doActionAfterLogin"
+					type="hidden"
+					value="<%= portletName.equals(PortletKeys.FAST_LOGIN) ? true : false %>"
+				/>
 
 				<div class="inline-alert-container lfr-alert-container"></div>
 
@@ -86,7 +114,11 @@
 							<liferay-ui:message key="thank-you-for-creating-an-account" />
 
 							<c:if test="<%= company.isStrangersVerify() %>">
-								<liferay-ui:message arguments="<%= HtmlUtil.escape(userEmailAddress) %>" key="your-email-verification-code-was-sent-to-x" translateArguments="<%= false %>" />
+								<liferay-ui:message
+									arguments="<%= HtmlUtil.escape(userEmailAddress) %>"
+									key="your-email-verification-code-was-sent-to-x"
+									translateArguments="<%= false %>"
+								/>
 							</c:if>
 
 							<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED) %>">
@@ -95,7 +127,11 @@
 										<liferay-ui:message key="use-your-password-to-login" />
 									</c:when>
 									<c:otherwise>
-										<liferay-ui:message arguments="<%= HtmlUtil.escape(userEmailAddress) %>" key="you-can-set-your-password-following-instructions-sent-to-x" translateArguments="<%= false %>" />
+										<liferay-ui:message
+											arguments="<%= HtmlUtil.escape(userEmailAddress) %>"
+											key="you-can-set-your-password-following-instructions-sent-to-x"
+											translateArguments="<%= false %>"
+										/>
 									</c:otherwise>
 								</c:choose>
 							</c:if>
@@ -108,7 +144,11 @@
 						%>
 
 						<div class="alert alert-success">
-							<liferay-ui:message arguments="<%= HtmlUtil.escape(userEmailAddress) %>" key="thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments="<%= HtmlUtil.escape(userEmailAddress) %>"
+								key="thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved"
+								translateArguments="<%= false %>"
+							/>
 						</div>
 					</c:when>
 				</c:choose>
@@ -137,7 +177,11 @@
 							Format dateFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.SHORT, FastDateFormatConstants.LONG, locale, TimeZone.getTimeZone(ule.user.getTimeZoneId()));
 							%>
 
-							<liferay-ui:message arguments="<%= dateFormat.format(ule.user.getUnlockDate()) %>" key="this-account-is-locked-until-x" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments="<%= dateFormat.format(ule.user.getUnlockDate()) %>"
+								key="this-account-is-locked-until-x"
+								translateArguments="<%= false %>"
+							/>
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:error>
@@ -163,7 +207,15 @@
 					}
 					%>
 
-					<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.EXCLUSIVE) || windowState.equals(WindowState.MAXIMIZED) %>" cssClass="clearable" label="<%= loginLabel %>" name="login" showRequiredLabel="<%= false %>" type="text" value="<%= login %>">
+					<aui:input
+						autoFocus="<%= windowState.equals(LiferayWindowState.EXCLUSIVE) || windowState.equals(WindowState.MAXIMIZED) %>"
+						cssClass="clearable"
+						label="<%= loginLabel %>"
+						name="login"
+						showRequiredLabel="<%= false %>"
+						type="text"
+						value="<%= login %>"
+					>
 						<aui:validator name="required" />
 
 						<c:if test="<%= authType.equals(CompanyConstants.AUTH_TYPE_EA) %>">
@@ -171,14 +223,23 @@
 						</c:if>
 					</aui:input>
 
-					<aui:input name="password" showRequiredLabel="<%= false %>" type="password" value="<%= password %>">
+					<aui:input
+						name="password"
+						showRequiredLabel="<%= false %>"
+						type="password"
+						value="<%= password %>"
+					>
 						<aui:validator name="required" />
 					</aui:input>
 
 					<span id="<portlet:namespace />passwordCapsLockSpan" style="display: none;"><liferay-ui:message key="caps-lock-is-on" /></span>
 
 					<c:if test="<%= company.isAutoLogin() && !PropsValues.SESSION_DISABLED %>">
-						<aui:input checked="<%= rememberMe %>" name="rememberMe" type="checkbox" />
+						<aui:input
+							checked="<%= rememberMe %>"
+							name="rememberMe"
+							type="checkbox"
+						/>
 					</c:if>
 				</aui:fieldset>
 

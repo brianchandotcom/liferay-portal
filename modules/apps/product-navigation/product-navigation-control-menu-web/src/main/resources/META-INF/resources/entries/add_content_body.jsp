@@ -16,9 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:body-bottom
-	outputKey="addContentMenu"
->
+<liferay-util:body-bottom outputKey="addContentMenu">
 
 	<%
 	String portletNamespace = PortalUtil.getPortletNamespace(ProductNavigationControlMenuPortletKeys.PRODUCT_NAVIGATION_CONTROL_MENU);
@@ -32,7 +30,11 @@
 				<span><liferay-ui:message key="add" /></span>
 
 				<a aria-label="<%= LanguageUtil.get(request, "close") %>" class="sidenav-close" href="javascript:;">
-					<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+					<aui:icon
+						cssClass="icon-monospaced"
+						image="times"
+						markupView="lexicon"
+					/>
 				</a>
 			</div>
 

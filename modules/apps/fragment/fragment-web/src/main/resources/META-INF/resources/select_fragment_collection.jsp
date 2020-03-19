@@ -22,14 +22,10 @@ SelectFragmentCollectionDisplayContext selectFragmentCollectionDisplayContext = 
 SelectFragmentCollectionManagementToolbarDisplayContext selectFragmentCollectionManagementToolbarDisplayContext = new SelectFragmentCollectionManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectFragmentCollectionDisplayContext.getFragmentCollectionsSearchContainer());
 %>
 
-<clay:management-toolbar
-	displayContext="<%= selectFragmentCollectionManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= selectFragmentCollectionManagementToolbarDisplayContext %>" />
 
 <aui:form cssClass="container-fluid-1280" name="selectFragmentCollectionFm">
-	<liferay-ui:search-container
-		searchContainer="<%= selectFragmentCollectionDisplayContext.getFragmentCollectionsSearchContainer() %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= selectFragmentCollectionDisplayContext.getFragmentCollectionsSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.fragment.model.FragmentCollection"
 			keyProperty="fragmentCollectionId"
@@ -41,9 +37,7 @@ SelectFragmentCollectionManagementToolbarDisplayContext selectFragmentCollection
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:horizontal-card
-					horizontalCard="<%= new FragmentCollectionHorizontalCard(fragmentCollection) %>"
-				/>
+				<clay:horizontal-card horizontalCard="<%= new FragmentCollectionHorizontalCard(fragmentCollection) %>" />
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

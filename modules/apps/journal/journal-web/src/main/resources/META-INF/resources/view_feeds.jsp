@@ -27,24 +27,21 @@ portletDisplay.setURLBack(journalFeedsDisplayContext.getRedirect());
 renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems='<%= journalDisplayContext.getNavigationBarItems("feeds") %>'
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems='<%= journalDisplayContext.getNavigationBarItems("feeds") %>' />
 
-<clay:management-toolbar
-	displayContext="<%= journalFeedsManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= journalFeedsManagementToolbarDisplayContext %>" />
 
 <portlet:actionURL name="/journal/delete_feeds" var="deleteFeedsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteFeedsURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<liferay-ui:search-container
-		id="feeds"
-		searchContainer="<%= journalFeedsDisplayContext.getFeedsSearchContainer() %>"
-	>
+<aui:form
+	action="<%= deleteFeedsURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
+	<liferay-ui:search-container id="feeds" searchContainer="<%= journalFeedsDisplayContext.getFeedsSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.journal.model.JournalFeed"
 			escapedModel="<%= true %>"
@@ -75,14 +72,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 
 			<c:choose>
 				<c:when test='<%= Objects.equals(journalFeedsDisplayContext.getDisplayStyle(), "descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="rss"
-						toggleRowChecker="<%= true %>"
-					/>
+					<liferay-ui:search-container-column-icon icon="rss" toggleRowChecker="<%= true %>" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h5>
 							<aui:a href="<%= editURL %>">
 								<%= feed.getName() %>
@@ -98,15 +90,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 						</h6>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/feed_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/feed_action.jsp" />
 				</c:when>
 				<c:when test='<%= Objects.equals(journalFeedsDisplayContext.getDisplayStyle(), "list") %>'>
-					<liferay-ui:search-container-column-text
-						name="id"
-						property="feedId"
-					/>
+					<liferay-ui:search-container-column-text name="id" property="feedId" />
 
 					<liferay-ui:search-container-column-text
 						href="<%= editURL %>"
@@ -121,21 +108,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 						truncate="<%= true %>"
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/feed_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/feed_action.jsp" />
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= journalFeedsDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= journalFeedsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
-<liferay-frontend:component
-	componentId="<%= journalFeedsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/FeedsManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= journalFeedsManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/FeedsManagementToolbarDefaultEventHandler.es" />

@@ -73,18 +73,13 @@ clearResultsURL.setParameter("keywords", StringPool.BLANK);
 		/>
 
 		<aui:form action="<%= portletURL %>">
-			<liferay-ui:search-container
-				searchContainer="<%= exportImportConfigurationSearchContainer %>"
-			>
+			<liferay-ui:search-container searchContainer="<%= exportImportConfigurationSearchContainer %>">
 				<liferay-ui:search-container-row
 					className="com.liferay.exportimport.kernel.model.ExportImportConfiguration"
 					keyProperty="exportImportConfigurationId"
 					modelVar="exportImportConfiguration"
 				>
-					<liferay-ui:search-container-column-text
-						cssClass="background-task-user-column"
-						name="user"
-					>
+					<liferay-ui:search-container-column-text cssClass="background-task-user-column" name="user">
 						<liferay-ui:user-display
 							displayStyle="3"
 							showUserDetails="<%= false %>"
@@ -108,15 +103,9 @@ clearResultsURL.setParameter("keywords", StringPool.BLANK);
 						value="<%= HtmlUtil.escape(exportImportConfiguration.getName()) %>"
 					/>
 
-					<liferay-ui:search-container-column-text
-						name="description"
-						value="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>"
-					/>
+					<liferay-ui:search-container-column-text name="description" value="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>" />
 
-					<liferay-ui:search-container-column-date
-						name="create-date"
-						value="<%= exportImportConfiguration.getCreateDate() %>"
-					/>
+					<liferay-ui:search-container-column-date name="create-date" value="<%= exportImportConfiguration.getCreateDate() %>" />
 
 					<liferay-ui:search-container-column-jsp
 						align="right"
@@ -125,9 +114,7 @@ clearResultsURL.setParameter("keywords", StringPool.BLANK);
 					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator markupView="lexicon" />
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>

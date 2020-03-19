@@ -44,11 +44,26 @@ PortletURL portletURL = currentURLObj;
 	%>'
 />
 
-<aui:input id="groupId" name="TypeSettingsProperties--groupId--" type="hidden" value="<%= scopeGroupId %>" />
+<aui:input
+	id="groupId"
+	name="TypeSettingsProperties--groupId--"
+	type="hidden"
+	value="<%= scopeGroupId %>"
+/>
 
-<aui:input id="layoutUuid" name="TypeSettingsProperties--layoutUuid--" type="hidden" value="" />
+<aui:input
+	id="layoutUuid"
+	name="TypeSettingsProperties--layoutUuid--"
+	type="hidden"
+	value=""
+/>
 
-<aui:input id="privateLayout" name="TypeSettingsProperties--privateLayout--" type="hidden" value="<%= privateLayout %>" />
+<aui:input
+	id="privateLayout"
+	name="TypeSettingsProperties--privateLayout--"
+	type="hidden"
+	value="<%= privateLayout %>"
+/>
 
 <liferay-layout:select-layout
 	componentId='<%= liferayPortletResponse.getNamespace() + "selectLayout" %>'

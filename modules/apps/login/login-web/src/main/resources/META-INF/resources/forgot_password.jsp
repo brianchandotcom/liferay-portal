@@ -37,8 +37,16 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 </portlet:actionURL>
 
 <div class="login-container">
-	<aui:form action="<%= forgotPasswordURL %>" method="post" name="fm">
-		<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
+	<aui:form
+		action="<%= forgotPasswordURL %>"
+		method="post"
+		name="fm"
+	>
+		<aui:input
+			name="saveLastPath"
+			type="hidden"
+			value="<%= false %>"
+		/>
 
 		<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
 		<liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
@@ -67,7 +75,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 					Format dateFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.SHORT, FastDateFormatConstants.LONG, locale, TimeZone.getTimeZone(ule.user.getTimeZoneId()));
 					%>
 
-					<liferay-ui:message arguments="<%= dateFormat.format(ule.user.getUnlockDate()) %>" key="this-account-is-locked-until-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= dateFormat.format(ule.user.getUnlockDate()) %>"
+						key="this-account-is-locked-until-x"
+						translateArguments="<%= false %>"
+					/>
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:error>
@@ -98,26 +110,42 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 					String loginValue = ParamUtil.getString(request, loginParameter);
 					%>
 
-					<aui:input name="step" type="hidden" value="1" />
+					<aui:input
+						name="step"
+						type="hidden"
+						value="1"
+					/>
 
 					<c:if test="<%= !PropsValues.USERS_REMINDER_QUERIES_ENABLED %>">
 						<portlet:renderURL var="redirectURL">
 							<portlet:param name="mvcRenderCommandName" value="/login/login" />
 						</portlet:renderURL>
 
-						<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
+						<aui:input
+							name="redirect"
+							type="hidden"
+							value="<%= redirectURL %>"
+						/>
 					</c:if>
 
-					<aui:input label="<%= loginLabel %>" name="<%= loginParameter %>" size="30" type="text" value="<%= loginValue %>">
+					<aui:input
+						label="<%= loginLabel %>"
+						name="<%= loginParameter %>"
+						size="30"
+						type="text"
+						value="<%= loginValue %>"
+					>
 						<aui:validator name="required" />
 					</aui:input>
 
 					<c:if test="<%= captchaConfiguration.sendPasswordCaptchaEnabled() %>">
-						<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/login/captcha" var="captchaURL" />
-
-						<liferay-captcha:captcha
-							url="<%= captchaURL %>"
+						<liferay-portlet:resourceURL
+							copyCurrentRenderParameters="<%= false %>"
+							id="/login/captcha"
+							var="captchaURL"
 						/>
+
+						<liferay-captcha:captcha url="<%= captchaURL %>" />
 					</c:if>
 
 					<aui:button-row>
@@ -125,13 +153,21 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 					</aui:button-row>
 				</c:when>
 				<c:when test="<%= (user2 != null) && Validator.isNotNull(user2.getEmailAddress()) %>">
-					<aui:input name="step" type="hidden" value="2" />
+					<aui:input
+						name="step"
+						type="hidden"
+						value="2"
+					/>
 
 					<portlet:renderURL var="redirectURL">
 						<portlet:param name="mvcRenderCommandName" value="/login/login" />
 					</portlet:renderURL>
 
-					<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
+					<aui:input
+						name="redirect"
+						type="hidden"
+						value="<%= redirectURL %>"
+					/>
 
 					<c:if test="<%= Validator.isNotNull(user2.getReminderQueryQuestion()) && Validator.isNotNull(user2.getReminderQueryAnswer()) %>">
 
@@ -150,10 +186,19 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 						%>
 
 						<div class="alert alert-info">
-							<liferay-ui:message arguments="<%= HtmlUtil.escape(login) %>" key="an-email-will-be-sent-to-x-if-you-can-correctly-answer-the-following-question" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments="<%= HtmlUtil.escape(login) %>"
+								key="an-email-will-be-sent-to-x-if-you-can-correctly-answer-the-following-question"
+								translateArguments="<%= false %>"
+							/>
 						</div>
 
-						<aui:input autoFocus="<%= true %>" label="<%= HtmlUtil.escape(LanguageUtil.get(request, user2.getReminderQueryQuestion())) %>" name="answer" type="text" />
+						<aui:input
+							autoFocus="<%= true %>"
+							label="<%= HtmlUtil.escape(LanguageUtil.get(request, user2.getReminderQueryQuestion())) %>"
+							name="answer"
+							type="text"
+						/>
 					</c:if>
 
 					<c:choose>
@@ -164,11 +209,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 						</c:when>
 						<c:otherwise>
 							<c:if test="<%= reminderAttempts >= 3 %>">
-								<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/login/captcha" var="captchaURL" />
-
-								<liferay-captcha:captcha
-									url="<%= captchaURL %>"
+								<liferay-portlet:resourceURL
+									copyCurrentRenderParameters="<%= false %>"
+									id="/login/captcha"
+									var="captchaURL"
 								/>
+
+								<liferay-captcha:captcha url="<%= captchaURL %>" />
 							</c:if>
 
 							<aui:button-row>

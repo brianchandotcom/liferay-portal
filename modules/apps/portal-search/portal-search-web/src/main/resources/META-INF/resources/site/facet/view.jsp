@@ -54,12 +54,27 @@ List<ScopeSearchFacetTermDisplayContext> scopeSearchFacetTermDisplayContexts = s
 
 <c:choose>
 	<c:when test="<%= scopeSearchFacetDisplayContext.isRenderNothing() %>">
-		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getParameterValue() %>" />
+		<aui:input
+			autocomplete="off"
+			name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getParameterName()) %>"
+			type="hidden"
+			value="<%= scopeSearchFacetDisplayContext.getParameterValue() %>"
+		/>
 	</c:when>
 	<c:otherwise>
 		<aui:form method="post" name="fm">
-			<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getParameterValue() %>" />
-			<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= scopeSearchFacetDisplayContext.getParameterName() %>" />
+			<aui:input
+				autocomplete="off"
+				name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getParameterName()) %>"
+				type="hidden"
+				value="<%= scopeSearchFacetDisplayContext.getParameterValue() %>"
+			/>
+			<aui:input
+				cssClass="facet-parameter-name"
+				name="facet-parameter-name"
+				type="hidden"
+				value="<%= scopeSearchFacetDisplayContext.getParameterName() %>"
+			/>
 
 			<liferay-ddm:template-renderer
 				className="<%= ScopeSearchFacetTermDisplayContext.class.getName() %>"
@@ -127,7 +142,11 @@ List<ScopeSearchFacetTermDisplayContext> scopeSearchFacetTermDisplayContexts = s
 						</aui:fieldset>
 
 						<c:if test="<%= !scopeSearchFacetDisplayContext.isNothingSelected() %>">
-							<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
+							<aui:button
+								cssClass="btn-link btn-unstyled facet-clear-btn"
+								onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+								value="clear"
+							/>
 						</c:if>
 					</liferay-ui:panel>
 				</liferay-ui:panel-container>

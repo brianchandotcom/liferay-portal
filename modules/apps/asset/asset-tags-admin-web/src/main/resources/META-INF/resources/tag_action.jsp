@@ -58,7 +58,5 @@ AssetTag tag = (AssetTag)row.getObject();
 		<portlet:param name="tagId" value="<%= String.valueOf(tag.getTagId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		url="<%= deleteURL %>"
-	/>
+	<liferay-ui:icon-delete url="<%= deleteURL %>" />
 </liferay-ui:icon-menu>

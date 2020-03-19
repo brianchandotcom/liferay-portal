@@ -51,13 +51,8 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 %>
 
 <div class="page-activities">
-	<liferay-ui:search-container
-		iteratorURL="<%= iteratorURL %>"
-		total="<%= SocialActivityLocalServiceUtil.getActivitiesCount(0, WikiPage.class.getName(), wikiPage.getResourcePrimKey()) %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= SocialActivityLocalServiceUtil.getActivities(0, WikiPage.class.getName(), wikiPage.getResourcePrimKey(), searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
+	<liferay-ui:search-container iteratorURL="<%= iteratorURL %>" total="<%= SocialActivityLocalServiceUtil.getActivitiesCount(0, WikiPage.class.getName(), wikiPage.getResourcePrimKey()) %>">
+		<liferay-ui:search-container-results results="<%= SocialActivityLocalServiceUtil.getActivities(0, WikiPage.class.getName(), wikiPage.getResourcePrimKey(), searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.social.kernel.model.SocialActivity"
@@ -83,15 +78,10 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 			}
 			%>
 
-			<liferay-ui:search-container-column-text
-				name="activity"
-			>
+			<liferay-ui:search-container-column-text name="activity">
 				<c:choose>
 					<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_ADD_COMMENT %>">
-						<liferay-ui:icon
-							label="<%= true %>"
-							message="<%= wikiSocialActivityHelper.getSocialActivityDescription(wikiPage, socialActivity, extraDataJSONObject, resourceBundle) %>"
-						/>
+						<liferay-ui:icon label="<%= true %>" message="<%= wikiSocialActivityHelper.getSocialActivityDescription(wikiPage, socialActivity, extraDataJSONObject, resourceBundle) %>" />
 					</c:when>
 					<c:when test="<%= wikiSocialActivityHelper.isSocialActivitySupported(socialActivity) %>">
 						<liferay-ui:icon
@@ -114,10 +104,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 				</c:if>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-date
-				name="date"
-				value="<%= new Date(socialActivity.getCreateDate()) %>"
-			/>
+			<liferay-ui:search-container-column-date name="date" value="<%= new Date(socialActivity.getCreateDate()) %>" />
 
 			<%
 			String jspPath = null;
@@ -136,10 +123,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 					/>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:search-container-column-text
-						name=""
-						value=""
-					/>
+					<liferay-ui:search-container-column-text name="" value="" />
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>

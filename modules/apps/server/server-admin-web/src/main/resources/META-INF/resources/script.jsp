@@ -49,7 +49,11 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 			for (String supportedLanguage : ScriptingUtil.getSupportedLanguages()) {
 			%>
 
-				<aui:option label="<%= TextFormatter.format(supportedLanguage, TextFormatter.J) %>" selected="<%= supportedLanguage.equals(language) %>" value="<%= supportedLanguage %>" />
+				<aui:option
+					label="<%= TextFormatter.format(supportedLanguage, TextFormatter.J) %>"
+					selected="<%= supportedLanguage.equals(language) %>"
+					value="<%= supportedLanguage %>"
+				/>
 
 			<%
 			}
@@ -57,7 +61,13 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 
 		</aui:select>
 
-		<aui:input cssClass="lfr-textarea-container" name="script" resizable="<%= true %>" type="textarea" value="<%= script %>" />
+		<aui:input
+			cssClass="lfr-textarea-container"
+			name="script"
+			resizable="<%= true %>"
+			type="textarea"
+			value="<%= script %>"
+		/>
 	</aui:fieldset>
 </aui:fieldset-group>
 
@@ -68,7 +78,11 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 </c:if>
 
 <aui:button-row>
-	<aui:button cssClass="save-server-button" data-cmd="runScript" value="execute" />
+	<aui:button
+		cssClass="save-server-button"
+		data-cmd="runScript"
+		value="execute"
+	/>
 </aui:button-row>
 
 <aui:script>

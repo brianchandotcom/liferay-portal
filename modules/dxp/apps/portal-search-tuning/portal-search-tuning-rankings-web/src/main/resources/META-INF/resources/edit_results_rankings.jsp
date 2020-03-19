@@ -43,21 +43,42 @@ renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 
 <portlet:actionURL name="/results_ranking/edit" var="addResultsRankingEntryURL" />
 
-<aui:form action="<%= addResultsRankingEntryURL %>" name="<%= editRankingDisplayContext.getFormName() %>" onSubmit="event.preventDefault();">
-	<aui:input name="redirect" type="hidden" value="<%= editRankingDisplayContext.getRedirect() %>" />
-	<aui:input name="companyId" type="hidden" value="<%= editRankingDisplayContext.getCompanyId() %>" />
-	<aui:input name="keywords" type="hidden" value="<%= editRankingDisplayContext.getKeywords() %>" />
-	<aui:input name="resultsRankingUid" type="hidden" value="<%= editRankingDisplayContext.getResultsRankingUid() %>" />
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+<aui:form
+	action="<%= addResultsRankingEntryURL %>"
+	name="<%= editRankingDisplayContext.getFormName() %>"
+	onSubmit="event.preventDefault();"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= editRankingDisplayContext.getRedirect() %>"
+	/>
+	<aui:input
+		name="companyId"
+		type="hidden"
+		value="<%= editRankingDisplayContext.getCompanyId() %>"
+	/>
+	<aui:input
+		name="keywords"
+		type="hidden"
+		value="<%= editRankingDisplayContext.getKeywords() %>"
+	/>
+	<aui:input
+		name="resultsRankingUid"
+		type="hidden"
+		value="<%= editRankingDisplayContext.getResultsRankingUid() %>"
+	/>
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
 
 	<div>
 		<div class="loading-animation-container">
 			<span aria-hidden="true" class="loading-animation"></span>
 		</div>
 
-		<react:component
-			data="<%= editRankingDisplayContext.getData() %>"
-			module="js/ResultRankingsApp.es"
-		/>
+		<react:component data="<%= editRankingDisplayContext.getData() %>" module="js/ResultRankingsApp.es" />
 	</div>
 </aui:form>

@@ -70,10 +70,7 @@ RulesEngine rulesEngine = (RulesEngine)request.getAttribute(RulesEngine.class.ge
 
 							<br /><br />
 
-							<liferay-asset:asset-display
-								assetRenderer="<%= assetRenderer %>"
-								template="<%= AssetRenderer.TEMPLATE_FULL_CONTENT %>"
-							/>
+							<liferay-asset:asset-display assetRenderer="<%= assetRenderer %>" template="<%= AssetRenderer.TEMPLATE_FULL_CONTENT %>" />
 
 							<div class="separator"><!-- --></div>
 

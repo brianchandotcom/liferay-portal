@@ -40,10 +40,12 @@
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteLayoutSetPrototypesURL %>" cssClass="container-fluid-1280" name="fm">
-	<liferay-ui:search-container
-		searchContainer="<%= layoutSetPrototypeDisplayContext.getSearchContainer() %>"
-	>
+<aui:form
+	action="<%= deleteLayoutSetPrototypesURL %>"
+	cssClass="container-fluid-1280"
+	name="fm"
+>
+	<liferay-ui:search-container searchContainer="<%= layoutSetPrototypeDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.LayoutSetPrototype"
 			cssClass="selectable"
@@ -64,14 +66,9 @@
 
 			<c:choose>
 				<c:when test="<%= layoutSetPrototypeDisplayContext.isDescriptiveView() %>">
-					<liferay-ui:search-container-column-icon
-						icon="site-template"
-						toggleRowChecker="<%= true %>"
-					/>
+					<liferay-ui:search-container-column-icon icon="site-template" toggleRowChecker="<%= true %>" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 						<%
 						Date createDate = layoutSetPrototype.getModifiedDate();
@@ -99,9 +96,7 @@
 						</h6>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/layout_set_prototype_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/layout_set_prototype_action.jsp" />
 				</c:when>
 				<c:when test="<%= layoutSetPrototypeDisplayContext.isIconView() %>">
 
@@ -149,10 +144,7 @@
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test="<%= layoutSetPrototypeDisplayContext.isListView() %>">
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-small table-cell-minw-200 table-title"
-						name="name"
-					>
+					<liferay-ui:search-container-column-text cssClass="table-cell-expand-small table-cell-minw-200 table-title" name="name">
 						<aui:a href="<%= rowURL %>" target="_blank"><%= layoutSetPrototype.getName(locale) %></aui:a>
 
 						<%
@@ -160,7 +152,11 @@
 						%>
 
 						<c:if test="<%= mergeFailCount > PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">
-							<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>'
+								key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors"
+								translateArguments="<%= false %>"
+							/>
 						</c:if>
 					</liferay-ui:search-container-column-text>
 
@@ -182,18 +178,12 @@
 						value='<%= LanguageUtil.get(request, layoutSetPrototype.isActive()? "yes" : "no") %>'
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						href="<%= rowURL %>"
-						path="/layout_set_prototype_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp href="<%= rowURL %>" path="/layout_set_prototype_action.jsp" />
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= layoutSetPrototypeDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= layoutSetPrototypeDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

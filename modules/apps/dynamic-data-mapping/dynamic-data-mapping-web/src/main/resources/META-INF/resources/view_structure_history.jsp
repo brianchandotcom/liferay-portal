@@ -59,14 +59,14 @@ backURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
 	</c:otherwise>
 </c:choose>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<liferay-ui:search-container
-		searchContainer="<%= new StructureSearch(renderRequest, portletURL) %>"
-		total="<%= DDMStructureVersionServiceUtil.getStructureVersionsCount(structureId) %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= DDMStructureVersionServiceUtil.getStructureVersions(structureId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-		/>
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
+	<liferay-ui:search-container searchContainer="<%= new StructureSearch(renderRequest, portletURL) %>" total="<%= DDMStructureVersionServiceUtil.getStructureVersionsCount(structureId) %>">
+		<liferay-ui:search-container-results results="<%= DDMStructureVersionServiceUtil.getStructureVersions(structureId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMStructureVersion"
@@ -111,8 +111,6 @@ backURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>

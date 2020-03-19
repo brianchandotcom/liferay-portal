@@ -56,9 +56,7 @@ if (editorOptions != null) {
 %>
 
 <c:if test="<%= !skipEditorLoading %>">
-	<liferay-editor:resources
-		editorName="<%= editorName %>"
-	/>
+	<liferay-editor:resources editorName="<%= editorName %>" />
 </c:if>
 
 <script data-senna-track="temporary" type="text/javascript">
@@ -70,17 +68,17 @@ if (editorOptions != null) {
 	CKEDITOR.env.isCompatible = true;
 </script>
 
-<liferay-util:buffer
-	var="alloyEditor"
->
+<liferay-util:buffer var="alloyEditor">
 	<div class="alloy-editor alloy-editor-placeholder <%= HtmlUtil.escapeAttribute(cssClass) %>" contenteditable="false" data-placeholder="<%= LanguageUtil.get(request, placeholder) %>" data-required="<%= required %>" id="<%= HtmlUtil.escapeAttribute(name) %>" name="<%= HtmlUtil.escapeAttribute(name) %>"></div>
 
-	<aui:icon cssClass="alloy-editor-icon" image="text-editor" markupView="lexicon" />
+	<aui:icon
+		cssClass="alloy-editor-icon"
+		image="text-editor"
+		markupView="lexicon"
+	/>
 </liferay-util:buffer>
 
-<liferay-util:buffer
-	var="editor"
->
+<liferay-util:buffer var="editor">
 	<c:choose>
 		<c:when test="<%= showSource %>">
 			<div class="alloy-editor-wrapper" id="<%= HtmlUtil.escapeAttribute(name) %>Wrapper">

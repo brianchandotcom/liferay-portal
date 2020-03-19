@@ -22,7 +22,13 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 JournalArticle article = journalContentDisplayContext.getArticle();
 %>
 
-<aui:input id='<%= refererPortletName + "ddmTemplateKey" %>' name='<%= refererPortletName + "preferences--ddmTemplateKey--" %>' type="hidden" useNamespace="<%= false %>" value="<%= journalContentDisplayContext.isDefaultTemplate() ? StringPool.BLANK : journalContentDisplayContext.getDDMTemplateKey() %>" />
+<aui:input
+	id='<%= refererPortletName + "ddmTemplateKey" %>'
+	name='<%= refererPortletName + "preferences--ddmTemplateKey--" %>'
+	type="hidden"
+	useNamespace="<%= false %>"
+	value="<%= journalContentDisplayContext.isDefaultTemplate() ? StringPool.BLANK : journalContentDisplayContext.getDDMTemplateKey() %>"
+/>
 
 <div class="sheet-section">
 	<div class="sheet-subtitle">
@@ -38,10 +44,18 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 	</div>
 
 	<div>
-		<aui:button cssClass="web-content-selector" name="webContentSelector" value='<%= Validator.isNull(article) ? "select" : "change" %>' />
+		<aui:button
+			cssClass="web-content-selector"
+			name="webContentSelector"
+			value='<%= Validator.isNull(article) ? "select" : "change" %>'
+		/>
 
 		<c:if test="<%= article != null %>">
-			<aui:button cssClass="selector-button" name="removeWebContent" value="remove" />
+			<aui:button
+				cssClass="selector-button"
+				name="removeWebContent"
+				value="remove"
+			/>
 		</c:if>
 	</div>
 </div>
@@ -82,6 +96,11 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 			<liferay-ui:message key="enable" />
 		</div>
 
-		<aui:input label="view-count-increment" name="preferences--enableViewCountIncrement--" type="toggle-switch" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
+		<aui:input
+			label="view-count-increment"
+			name="preferences--enableViewCountIncrement--"
+			type="toggle-switch"
+			value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>"
+		/>
 	</div>
 </c:if>

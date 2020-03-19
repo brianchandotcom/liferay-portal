@@ -131,7 +131,11 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 
 				<div class="float-right">
-					<aui:button cssClass="save-server-button" data-cmd="gc" value="execute" />
+					<aui:button
+						cssClass="save-server-button"
+						data-cmd="gc"
+						value="execute"
+					/>
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
@@ -140,7 +144,11 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 
 				<div class="float-right">
-					<aui:button cssClass="save-server-button" data-cmd="threadDump" value="execute" />
+					<aui:button
+						cssClass="save-server-button"
+						data-cmd="threadDump"
+						value="execute"
+					/>
 				</div>
 			</li>
 		</ul>
@@ -162,7 +170,11 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 
 				<div class="float-right">
-					<aui:button cssClass="save-server-button" data-cmd="cacheSingle" value="execute" />
+					<aui:button
+						cssClass="save-server-button"
+						data-cmd="cacheSingle"
+						value="execute"
+					/>
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
@@ -171,7 +183,11 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 
 				<div class="float-right">
-					<aui:button cssClass="save-server-button" data-cmd="cacheMulti" value="execute" />
+					<aui:button
+						cssClass="save-server-button"
+						data-cmd="cacheMulti"
+						value="execute"
+					/>
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
@@ -180,7 +196,11 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 
 				<div class="float-right">
-					<aui:button cssClass="save-server-button" data-cmd="cacheDb" value="execute" />
+					<aui:button
+						cssClass="save-server-button"
+						data-cmd="cacheDb"
+						value="execute"
+					/>
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
@@ -189,7 +209,11 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 
 				<div class="float-right">
-					<aui:button cssClass="save-server-button" data-cmd="cacheServlet" value="execute" />
+					<aui:button
+						cssClass="save-server-button"
+						data-cmd="cacheServlet"
+						value="execute"
+					/>
 				</div>
 			</li>
 		</ul>
@@ -211,7 +235,11 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 
 				<div class="float-right">
-					<aui:button cssClass="save-server-button" data-cmd="verifyPluginTables" value="execute" />
+					<aui:button
+						cssClass="save-server-button"
+						data-cmd="verifyPluginTables"
+						value="execute"
+					/>
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
@@ -220,7 +248,11 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 
 				<div class="float-right">
-					<aui:button cssClass="save-server-button" data-cmd="verifyMembershipPolicies" value="execute" />
+					<aui:button
+						cssClass="save-server-button"
+						data-cmd="verifyMembershipPolicies"
+						value="execute"
+					/>
 				</div>
 			</li>
 		</ul>
@@ -242,7 +274,11 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 
 				<div class="float-right">
-					<aui:button cssClass="save-server-button" data-cmd="dlPreviews" value="execute" />
+					<aui:button
+						cssClass="save-server-button"
+						data-cmd="dlPreviews"
+						value="execute"
+					/>
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
@@ -251,7 +287,11 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 
 				<div class="float-right">
-					<aui:button cssClass="save-server-button" data-cmd="cleanUpAddToPagePermissions" value="execute" />
+					<aui:button
+						cssClass="save-server-button"
+						data-cmd="cleanUpAddToPagePermissions"
+						value="execute"
+					/>
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
@@ -260,7 +300,11 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 
 				<div class="float-right">
-					<aui:button cssClass="save-server-button" data-cmd="cleanUpLayoutRevisionPortletPreferences" value="execute" />
+					<aui:button
+						cssClass="save-server-button"
+						data-cmd="cleanUpLayoutRevisionPortletPreferences"
+						value="execute"
+					/>
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
@@ -269,7 +313,11 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 
 				<div class="float-right">
-					<aui:button cssClass="save-server-button" data-cmd="cleanUpOrphanedPortletPreferences" value="execute" />
+					<aui:button
+						cssClass="save-server-button"
+						data-cmd="cleanUpOrphanedPortletPreferences"
+						value="execute"
+					/>
 				</div>
 			</li>
 		</ul>

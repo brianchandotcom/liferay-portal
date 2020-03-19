@@ -26,9 +26,7 @@
 	PasswordPolicyRel passwordPolicyRel = PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(User.class.getName(), user2.getUserId());
 	%>
 
-	<liferay-util:buffer
-		var="name"
-	>
+	<liferay-util:buffer var="name">
 		<%= user2.getFullName() %>
 
 		<c:if test="<%= (passwordPolicyRel != null) && (passwordPolicyRel.getPasswordPolicyId() != passwordPolicy.getPasswordPolicyId()) %>">
@@ -69,14 +67,10 @@
 		</c:when>
 		<c:when test='<%= displayStyle.equals("descriptive") %>'>
 			<liferay-ui:search-container-column-text>
-				<liferay-ui:user-portrait
-					userId="<%= user2.getUserId() %>"
-				/>
+				<liferay-ui:user-portrait userId="<%= user2.getUserId() %>" />
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				colspan="<%= 2 %>"
-			>
+			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 				<h5><%= name %></h5>
 
 				<h6 class="text-default">

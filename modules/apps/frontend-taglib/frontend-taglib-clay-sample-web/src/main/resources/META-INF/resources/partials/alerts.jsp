@@ -34,10 +34,7 @@
 	title="Success"
 />
 
-<clay:alert
-	message="This is an info message."
-	title="Info"
-/>
+<clay:alert message="This is an info message." title="Info" />
 
 <clay:alert
 	message="This is a warning message."
@@ -63,10 +60,7 @@
 	title="Success"
 />
 
-<clay:stripe
-	message="This is an info message."
-	title="Info"
-/>
+<clay:stripe message="This is an info message." title="Info" />
 
 <clay:stripe
 	message="This is a warning message."

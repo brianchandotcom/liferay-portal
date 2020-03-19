@@ -38,9 +38,7 @@ List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDispl
 	iteratorURL="<%= configurationRenderURL %>"
 	total="<%= selectedGroups.size() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= selectedGroups %>"
-	/>
+	<liferay-ui:search-container-results results="<%= selectedGroups %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Group"
@@ -53,10 +51,7 @@ List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDispl
 			value="<%= group.getScopeDescriptiveName(themeDisplay) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			name="type"
-			value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
-		/>
+		<liferay-ui:search-container-column-text name="type" value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>" />
 
 		<liferay-ui:search-container-column-text>
 			<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="deleteURL">
@@ -73,10 +68,7 @@ List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDispl
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-		paginate="<%= false %>"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
 <liferay-ui:icon-menu

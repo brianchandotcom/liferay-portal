@@ -36,7 +36,11 @@ String redirect = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 				for (Long groupId : scopeAssetPublisherAddItemHolders.keySet()) {
 				%>
 
-					<aui:option label="<%= HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)) %>" selected="<%= groupId == scopeGroupId %>" value="<%= groupId %>" />
+					<aui:option
+						label="<%= HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)) %>"
+						selected="<%= groupId == scopeGroupId %>"
+						value="<%= groupId %>"
+					/>
 
 				<%
 				}
@@ -51,7 +55,11 @@ String redirect = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 			%>
 
 				<div class="asset-entry-type <%= (groupId == scopeGroupId) ? StringPool.BLANK : "hide" %>" id="<%= liferayPortletResponse.getNamespace() + groupId %>">
-					<aui:select cssClass="asset-entry-type-select" label="asset-entry-type" name="selectAssetEntryType">
+					<aui:select
+						cssClass="asset-entry-type-select"
+						label="asset-entry-type"
+						name="selectAssetEntryType"
+					>
 
 						<%
 						for (AssetPublisherAddItemHolder assetPublisherAddItemHolder : assetPublisherAddItemHolders) {
@@ -101,7 +109,11 @@ String redirect = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button onClick='<%= renderResponse.getNamespace() + "addAssetEntry();" %>' primary="<%= true %>" value="add" />
+		<aui:button
+			onClick='<%= renderResponse.getNamespace() + "addAssetEntry();" %>'
+			primary="<%= true %>"
+			value="add"
+		/>
 
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>

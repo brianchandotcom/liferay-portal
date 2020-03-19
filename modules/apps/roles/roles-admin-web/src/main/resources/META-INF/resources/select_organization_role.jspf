@@ -75,7 +75,12 @@ else {
 	viewTypeItems="<%= selectRoleManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="selectOrganizationRoleFm">
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid container-fluid-max-xl container-form-lg"
+	method="post"
+	name="selectOrganizationRoleFm"
+>
 	<c:choose>
 		<c:when test="<%= step == 1 %>">
 			<aui:input name="organizationId" type="hidden" />
@@ -88,13 +93,8 @@ else {
 			portletURL.setParameter("step", "1");
 			%>
 
-			<liferay-ui:search-container
-				searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
-				total="<%= organizations.size() %>"
-			>
-				<liferay-ui:search-container-results
-					results="<%= ListUtil.subList(organizations, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				/>
+			<liferay-ui:search-container searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>" total="<%= organizations.size() %>">
+				<liferay-ui:search-container-results results="<%= ListUtil.subList(organizations, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.model.Organization"
@@ -108,10 +108,7 @@ else {
 						property="name"
 					/>
 
-					<liferay-ui:search-container-column-text
-						name="parent-organization"
-						value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
-					/>
+					<liferay-ui:search-container-column-text name="parent-organization" value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>" />
 
 					<liferay-ui:search-container-column-text
 						name="roleType"
@@ -119,20 +116,11 @@ else {
 						value="<%= LanguageUtil.get(request, organization.getType()) %>"
 					/>
 
-					<liferay-ui:search-container-column-text
-						name="city"
-						property="address.city"
-					/>
+					<liferay-ui:search-container-column-text name="city" property="address.city" />
 
-					<liferay-ui:search-container-column-text
-						name="region"
-						property="address.region.name"
-					/>
+					<liferay-ui:search-container-column-text name="region" property="address.region.name" />
 
-					<liferay-ui:search-container-column-text
-						name="country"
-						property="address.country.name"
-					/>
+					<liferay-ui:search-container-column-text name="country" property="address.country.name" />
 
 					<liferay-ui:search-container-column-text>
 
@@ -146,13 +134,15 @@ else {
 						data.put("organizationid", organization.getOrganizationId());
 						%>
 
-						<aui:button cssClass="organization-selector-button" data="<%= data %>" value="choose" />
+						<aui:button
+							cssClass="organization-selector-button"
+							data="<%= data %>"
+							value="choose"
+						/>
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator markupView="lexicon" />
 			</liferay-ui:search-container>
 
 			<aui:script require="metal-dom/src/dom as dom">
@@ -175,8 +165,16 @@ else {
 			</aui:script>
 		</c:when>
 		<c:when test="<%= step == 2 %>">
-			<aui:input name="step" type="hidden" value="2" />
-			<aui:input name="organizationId" type="hidden" value="<%= String.valueOf(organizationId) %>" />
+			<aui:input
+				name="step"
+				type="hidden"
+				value="2"
+			/>
+			<aui:input
+				name="organizationId"
+				type="hidden"
+				value="<%= String.valueOf(organizationId) %>"
+			/>
 
 			<%
 			portletURL.setParameter("step", "1");
@@ -193,19 +191,13 @@ else {
 			portletURL.setParameter("organizationId", String.valueOf(organizationId));
 			%>
 
-			<liferay-ui:search-container
-				headerNames="name"
-				searchContainer="<%= roleSearchContainer %>"
-			>
+			<liferay-ui:search-container headerNames="name" searchContainer="<%= roleSearchContainer %>">
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.model.Role"
 					keyProperty="roleId"
 					modelVar="role"
 				>
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand table-cell-minw-200"
-						name="title"
-					>
+					<liferay-ui:search-container-column-text cssClass="table-cell-expand table-cell-minw-200" name="title">
 						<liferay-ui:icon
 							icon="<%= RolesAdminUtil.getIconCssClass(role) %>"
 							label="<%= true %>"
@@ -240,14 +232,17 @@ else {
 							}
 							%>
 
-							<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= disabled %>" value="choose" />
+							<aui:button
+								cssClass="selector-button"
+								data="<%= data %>"
+								disabled="<%= disabled %>"
+								value="choose"
+							/>
 						</c:if>
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator markupView="lexicon" />
 			</liferay-ui:search-container>
 		</c:when>
 	</c:choose>

@@ -28,9 +28,17 @@
 			</c:if>
 		</c:if>
 
-		<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+		<aui:icon
+			cssClass="collapse-icon-closed"
+			image="angle-right"
+			markupView="lexicon"
+		/>
 
-		<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+		<aui:icon
+			cssClass="collapse-icon-open"
+			image="angle-down"
+			markupView="lexicon"
+		/>
 	</a>
 
 	<div class="collapse <%= active ? "show" : StringPool.BLANK %>" id="<%= id %>">

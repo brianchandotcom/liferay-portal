@@ -64,10 +64,12 @@ if (journalContentDisplayContext.isShowArticle()) {
 					</c:choose>
 
 					<c:if test="<%= journalContentDisplayContext.isShowSelectArticleLink() %>">
-						<liferay-util:buffer
-							var="selectJournalArticleLink"
-						>
-							<aui:a href="javascript:;" label="select-another" onClick="<%= portletDisplay.getURLConfigurationJS() %>" />
+						<liferay-util:buffer var="selectJournalArticleLink">
+							<aui:a
+								href="javascript:;"
+								label="select-another"
+								onClick="<%= portletDisplay.getURLConfigurationJS() %>"
+							/>
 						</liferay-util:buffer>
 
 						<div>
@@ -83,9 +85,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 										<portlet:param name="redirect" value="<%= currentURL %>" />
 									</portlet:actionURL>
 
-									<liferay-util:buffer
-										var="restoreJournalArticleLink"
-									>
+									<liferay-util:buffer var="restoreJournalArticleLink">
 										<aui:a href="<%= restoreJournalArticleURL %>" label="undo" />
 									</liferay-util:buffer>
 
@@ -153,9 +153,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 						%>
 
 						<div class="<%= journalContentDisplayContext.isPreview() ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
-							<liferay-journal:journal-article-display
-								articleDisplay="<%= articleDisplay %>"
-							/>
+							<liferay-journal:journal-article-display articleDisplay="<%= articleDisplay %>" />
 
 							<c:if test="<%= articleDisplay.isPaginate() %>">
 
@@ -190,9 +188,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 
 	<c:if test="<%= relatedAssetsContentMetadataAssetAddonEntry != null %>">
 		<div class="asset-links content-metadata-asset-addon-entries mb-4">
-			<liferay-asset:asset-addon-entry-display
-				assetAddonEntries="<%= Collections.singletonList(relatedAssetsContentMetadataAssetAddonEntry) %>"
-			/>
+			<liferay-asset:asset-addon-entry-display assetAddonEntries="<%= Collections.singletonList(relatedAssetsContentMetadataAssetAddonEntry) %>" />
 		</div>
 	</c:if>
 
@@ -209,16 +205,12 @@ if (journalContentDisplayContext.isShowArticle()) {
 
 			<c:if test="<%= ratingsContentMetadataAssetAddonEntry != null %>">
 				<div class="autofit-col">
-					<liferay-asset:asset-addon-entry-display
-						assetAddonEntries="<%= Collections.singletonList(ratingsContentMetadataAssetAddonEntry) %>"
-					/>
+					<liferay-asset:asset-addon-entry-display assetAddonEntries="<%= Collections.singletonList(ratingsContentMetadataAssetAddonEntry) %>" />
 				</div>
 			</c:if>
 
 			<c:if test="<%= ListUtil.isNotEmpty(selectedUserToolAssetAddonEntries) %>">
-				<liferay-asset:asset-addon-entry-display
-					assetAddonEntries="<%= selectedUserToolAssetAddonEntries %>"
-				/>
+				<liferay-asset:asset-addon-entry-display assetAddonEntries="<%= selectedUserToolAssetAddonEntries %>" />
 			</c:if>
 		</div>
 	</c:if>
@@ -231,9 +223,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 		<div class="separator"><!-- --></div>
 
 		<div class="asset-links content-metadata-asset-addon-entries mb-4">
-			<liferay-asset:asset-addon-entry-display
-				assetAddonEntries="<%= commentsContentMetadataAssetAddonEntries %>"
-			/>
+			<liferay-asset:asset-addon-entry-display assetAddonEntries="<%= commentsContentMetadataAssetAddonEntries %>" />
 		</div>
 	</c:if>
 </c:if>

@@ -28,8 +28,20 @@ WorkflowDefinitionLinkDisplayTerms displayTerms = new WorkflowDefinitionLinkDisp
 	markupView="lexicon"
 >
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" name="<%= WorkflowDefinitionLinkDisplayTerms.RESOURCE %>" size="20" type="text" value="<%= displayTerms.getResource() %>" />
+		<aui:input
+			inlineField="<%= true %>"
+			name="<%= WorkflowDefinitionLinkDisplayTerms.RESOURCE %>"
+			size="20"
+			type="text"
+			value="<%= displayTerms.getResource() %>"
+		/>
 
-		<aui:input inlineField="<%= true %>" name="<%= WorkflowDefinitionLinkDisplayTerms.WORKFLOW %>" size="20" type="text" value="<%= displayTerms.getWorkflow() %>" />
+		<aui:input
+			inlineField="<%= true %>"
+			name="<%= WorkflowDefinitionLinkDisplayTerms.WORKFLOW %>"
+			size="20"
+			type="text"
+			value="<%= displayTerms.getWorkflow() %>"
+		/>
 	</aui:fieldset>
 </liferay-ui:search-toggle>

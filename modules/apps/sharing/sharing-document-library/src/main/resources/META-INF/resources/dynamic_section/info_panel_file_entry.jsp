@@ -20,7 +20,4 @@
 FileEntry fileEntry = (FileEntry)request.getAttribute("info_panel.jsp-fileEntry");
 %>
 
-<liferay-sharing:collaborators
-	className="<%= DLFileEntryConstants.getClassName() %>"
-	classPK="<%= fileEntry.getFileEntryId() %>"
-/>
+<liferay-sharing:collaborators className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= fileEntry.getFileEntryId() %>" />

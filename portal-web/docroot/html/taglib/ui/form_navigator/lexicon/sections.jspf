@@ -64,7 +64,12 @@
 
 				<!-- Begin fragment <%= sectionId %> -->
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="<%= _getSectionId(curFormNavigatorEntry.getKey()) %>" label="<%= curFormNavigatorEntry.getLabel(locale) %>">
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					id="<%= _getSectionId(curFormNavigatorEntry.getKey()) %>"
+					label="<%= curFormNavigatorEntry.getLabel(locale) %>"
+				>
 
 					<%
 					PortalIncludeUtil.include(

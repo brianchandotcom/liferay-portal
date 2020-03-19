@@ -29,8 +29,16 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
@@ -55,7 +63,11 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 						if (layoutDescriptionLayout != null) {
 					%>
 
-							<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Objects.equals(layoutDescriptionLayout.getUuid(), siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
+							<aui:option
+								label="<%= layoutDescription.getDisplayName() %>"
+								selected="<%= Objects.equals(layoutDescriptionLayout.getUuid(), siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) %>"
+								value="<%= layoutDescriptionLayout.getUuid() %>"
+							/>
 
 					<%
 						}
@@ -80,14 +92,30 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 				</aui:select>
 
 				<div class="<%= Validator.isNotNull(siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />includeRootInTreeContainer">
-					<aui:input name="preferences--includeRootInTree--" type="toggle-switch" value="<%= siteNavigationSiteMapDisplayContext.isIncludeRootInTree() %>" />
+					<aui:input
+						name="preferences--includeRootInTree--"
+						type="toggle-switch"
+						value="<%= siteNavigationSiteMapDisplayContext.isIncludeRootInTree() %>"
+					/>
 				</div>
 
-				<aui:input name="preferences--showCurrentPage--" type="toggle-switch" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.showCurrentPage() %>" />
+				<aui:input
+					name="preferences--showCurrentPage--"
+					type="toggle-switch"
+					value="<%= siteNavigationSiteMapPortletInstanceConfiguration.showCurrentPage() %>"
+				/>
 
-				<aui:input name="preferences--useHtmlTitle--" type="toggle-switch" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.useHtmlTitle() %>" />
+				<aui:input
+					name="preferences--useHtmlTitle--"
+					type="toggle-switch"
+					value="<%= siteNavigationSiteMapPortletInstanceConfiguration.useHtmlTitle() %>"
+				/>
 
-				<aui:input name="preferences--showHiddenPages--" type="toggle-switch" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.showHiddenPages() %>" />
+				<aui:input
+					name="preferences--showHiddenPages--"
+					type="toggle-switch"
+					value="<%= siteNavigationSiteMapPortletInstanceConfiguration.showHiddenPages() %>"
+				/>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

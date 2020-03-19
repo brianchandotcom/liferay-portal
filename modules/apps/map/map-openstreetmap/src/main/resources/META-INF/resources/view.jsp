@@ -29,9 +29,7 @@ String points = (String)request.getAttribute("liferay-map:map:points");
 name = namespace + name;
 %>
 
-<liferay-util:html-top
-	outputKey="js_maps_openstreet_skip_loading"
->
+<liferay-util:html-top outputKey="js_maps_openstreet_skip_loading">
 	<link href="https://npmcdn.com/leaflet@1.2.0/dist/leaflet.css" rel="stylesheet" />
 
 	<script src="https://npmcdn.com/leaflet@1.2.0/dist/leaflet.js" type="text/javascript"></script>

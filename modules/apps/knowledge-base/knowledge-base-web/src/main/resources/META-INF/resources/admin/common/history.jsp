@@ -70,9 +70,7 @@ if (portletTitleBasedNavigation) {
 		rowChecker="<%= rowChecker %>"
 		total="<%= KBArticleServiceUtil.getKBArticleVersionsCount(scopeGroupId, kbArticle.getResourcePrimKey(), selStatus) %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= KBArticleServiceUtil.getKBArticleVersions(scopeGroupId, kbArticle.getResourcePrimKey(), selStatus, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-		/>
+		<liferay-ui:search-container-results results="<%= KBArticleServiceUtil.getKBArticleVersions(scopeGroupId, kbArticle.getResourcePrimKey(), selStatus, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.knowledge.base.model.KBArticle"
@@ -146,9 +144,7 @@ if (portletTitleBasedNavigation) {
 			/>
 
 			<c:if test="<%= KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) %>">
-				<liferay-ui:search-container-column-text
-					align="right"
-				>
+				<liferay-ui:search-container-column-text align="right">
 					<liferay-portlet:actionURL name="updateKBArticle" varImpl="revertURL">
 						<portlet:param name="mvcPath" value='<%= templatePath + "history.jsp" %>' />
 						<portlet:param name="redirect" value="<%= redirect %>" />
@@ -174,12 +170,14 @@ if (portletTitleBasedNavigation) {
 		</liferay-ui:search-container-row>
 
 		<aui:button-row>
-			<aui:button name="compare" type="submit" value="compare-versions" />
+			<aui:button
+				name="compare"
+				type="submit"
+				value="compare-versions"
+			/>
 		</aui:button-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:fieldset>
 

@@ -34,12 +34,37 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 	<portlet:param name="mvcPath" value="/copy_structure.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= copyStructureURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>" />
-	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
-	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
-	<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(scopeClassNameId) %>" />
-	<aui:input name="status" type="hidden" value="<%= structureVersion.getStatus() %>" />
+<aui:form
+	action="<%= copyStructureURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>"
+	/>
+	<aui:input
+		name="classNameId"
+		type="hidden"
+		value="<%= String.valueOf(classNameId) %>"
+	/>
+	<aui:input
+		name="classPK"
+		type="hidden"
+		value="<%= String.valueOf(classPK) %>"
+	/>
+	<aui:input
+		name="resourceClassNameId"
+		type="hidden"
+		value="<%= String.valueOf(scopeClassNameId) %>"
+	/>
+	<aui:input
+		name="status"
+		type="hidden"
+		value="<%= structureVersion.getStatus() %>"
+	/>
 
 	<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
 
@@ -65,11 +90,21 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 			<aui:input name="description" />
 
 			<c:if test="<%= Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
-				<aui:input checked="<%= copyFormTemplates %>" label='<%= Validator.isNull(templateTypeValue) ? "copy-form-templates" : "copy-templates" %>' name="copyFormTemplates" type="checkbox" />
+				<aui:input
+					checked="<%= copyFormTemplates %>"
+					label='<%= Validator.isNull(templateTypeValue) ? "copy-form-templates" : "copy-templates" %>'
+					name="copyFormTemplates"
+					type="checkbox"
+				/>
 			</c:if>
 
 			<c:if test="<%= Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">
-				<aui:input checked="<%= copyDisplayTemplates %>" label='<%= Validator.isNull(templateTypeValue) ? "copy-display-templates" : "copy-templates" %>' name="copyDisplayTemplates" type="checkbox" />
+				<aui:input
+					checked="<%= copyDisplayTemplates %>"
+					label='<%= Validator.isNull(templateTypeValue) ? "copy-display-templates" : "copy-templates" %>'
+					name="copyDisplayTemplates"
+					type="checkbox"
+				/>
 			</c:if>
 		</aui:fieldset>
 	</aui:fieldset-group>

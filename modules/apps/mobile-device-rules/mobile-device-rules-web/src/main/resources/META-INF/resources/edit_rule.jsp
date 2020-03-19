@@ -52,11 +52,33 @@ renderResponse.setTitle(title);
 	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule" />
 </portlet:actionURL>
 
-<aui:form action="<%= editRuleURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (rule == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="ruleGroupId" type="hidden" value="<%= ruleGroupId %>" />
-	<aui:input name="ruleId" type="hidden" value="<%= ruleId %>" />
+<aui:form
+	action="<%= editRuleURL %>"
+	cssClass="container-fluid-1280"
+	enctype="multipart/form-data"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= (rule == null) ? Constants.ADD : Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="ruleGroupId"
+		type="hidden"
+		value="<%= ruleGroupId %>"
+	/>
+	<aui:input
+		name="ruleId"
+		type="hidden"
+		value="<%= ruleId %>"
+	/>
 
 	<liferay-ui:error exception="<%= NoSuchRuleException.class %>" message="rule-does-not-exist" />
 	<liferay-ui:error exception="<%= NoSuchRuleGroupException.class %>" message="device-family-does-not-exist" />
@@ -83,10 +105,18 @@ renderResponse.setTitle(title);
 					String ruleHandlerType = ruleHandlerTypes.iterator().next();
 					%>
 
-					<aui:input name="type" type="hidden" value="<%= ruleHandlerType %>" />
+					<aui:input
+						name="type"
+						type="hidden"
+						value="<%= ruleHandlerType %>"
+					/>
 				</c:when>
 				<c:otherwise>
-					<aui:select changesContext="<%= true %>" name="type" showEmptyOption="<%= true %>">
+					<aui:select
+						changesContext="<%= true %>"
+						name="type"
+						showEmptyOption="<%= true %>"
+					>
 
 						<%
 						for (String ruleHandlerType : ruleHandlerTypes) {

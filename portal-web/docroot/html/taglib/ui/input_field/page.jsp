@@ -260,7 +260,13 @@ if (hints != null) {
 				%>
 
 				<div class="clearfix">
-					<aui:input id="<%= formName + fieldParam %>" label="<%= dateTogglerCheckboxLabel %>" name="<%= dateTogglerCheckboxName %>" type="checkbox" value="<%= disabled %>" />
+					<aui:input
+						id="<%= formName + fieldParam %>"
+						label="<%= dateTogglerCheckboxLabel %>"
+						name="<%= dateTogglerCheckboxName %>"
+						type="checkbox"
+						value="<%= disabled %>"
+					/>
 				</div>
 
 				<aui:script use="event-base">

@@ -22,14 +22,14 @@ SiteNavigationMenuItemSelectorViewDisplayContext siteNavigationMenuItemSelectorV
 String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDisplayStyle();
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteNavigationMenuItemSelectorViewDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteNavigationMenuItemSelectorViewDisplayContext) %>" />
 
-<aui:form action="<%= siteNavigationMenuItemSelectorViewDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" name="selectSiteNavigationMenuFm">
-	<liferay-ui:search-container
-		searchContainer="<%= siteNavigationMenuItemSelectorViewDisplayContext.getSearchContainer() %>"
-	>
+<aui:form
+	action="<%= siteNavigationMenuItemSelectorViewDisplayContext.getPortletURL() %>"
+	cssClass="container-fluid-1280"
+	name="selectSiteNavigationMenuFm"
+>
+	<liferay-ui:search-container searchContainer="<%= siteNavigationMenuItemSelectorViewDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.site.navigation.model.SiteNavigationMenu"
 			keyProperty="siteNavigationMenuId"
@@ -54,16 +54,15 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
-					<liferay-ui:search-container-column-user
-						showDetails="<%= false %>"
-						userId="<%= siteNavigationMenu.getUserId() %>"
-					/>
+					<liferay-ui:search-container-column-user showDetails="<%= false %>" userId="<%= siteNavigationMenu.getUserId() %>" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h4>
-							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<aui:a
+								cssClass="selector-button"
+								data="<%= data %>"
+								href="javascript:;"
+							>
 								<%= HtmlUtil.escape(name) %>
 							</aui:a>
 						</h4>
@@ -80,32 +79,24 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						name="title"
-					>
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+					<liferay-ui:search-container-column-text cssClass="table-cell-content" name="title">
+						<aui:a
+							cssClass="selector-button"
+							data="<%= data %>"
+							href="javascript:;"
+						>
 							<%= HtmlUtil.escape(name) %>
 						</aui:a>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						name="author"
-						property="userName"
-					/>
+					<liferay-ui:search-container-column-text name="author" property="userName" />
 
-					<liferay-ui:search-container-column-date
-						name="create-date"
-						property="createDate"
-					/>
+					<liferay-ui:search-container-column-date name="create-date" property="createDate" />
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

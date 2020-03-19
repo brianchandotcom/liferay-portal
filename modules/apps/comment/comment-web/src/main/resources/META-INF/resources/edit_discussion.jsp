@@ -50,22 +50,49 @@ if (comment instanceof WorkflowableComment) {
 }
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	title='<%= (comment == null) ? "new-message" : "edit-message" %>'
-/>
+<liferay-ui:header backURL="<%= backURL %>" title='<%= (comment == null) ? "new-message" : "edit-message" %>' />
 
 <div class="container-fluid-1280">
-	<aui:form action='<%= themeDisplay.getPathMain() + "/portal/comment/discussion/edit" %>' enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveComment();" %>'>
+	<aui:form
+		action='<%= themeDisplay.getPathMain() + "/portal/comment/discussion/edit" %>'
+		enctype="multipart/form-data"
+		method="post"
+		name="fm"
+		onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveComment();" %>'
+	>
 		<input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
 		<input name="namespace" type="hidden" value="<%= renderResponse.getNamespace() %>" />
 
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="commentId" type="hidden" value="<%= commentId %>" />
-		<aui:input name="parentCommentId" type="hidden" value="<%= parentCommentId %>" />
-		<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(pending ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
-		<aui:input name="ajax" type="hidden" value="<%= false %>" />
+		<aui:input
+			name="<%= Constants.CMD %>"
+			type="hidden"
+			value="<%= Constants.UPDATE %>"
+		/>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="commentId"
+			type="hidden"
+			value="<%= commentId %>"
+		/>
+		<aui:input
+			name="parentCommentId"
+			type="hidden"
+			value="<%= parentCommentId %>"
+		/>
+		<aui:input
+			name="workflowAction"
+			type="hidden"
+			value="<%= String.valueOf(pending ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>"
+		/>
+		<aui:input
+			name="ajax"
+			type="hidden"
+			value="<%= false %>"
+		/>
 
 		<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
 		<liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
@@ -88,7 +115,11 @@ if (comment instanceof WorkflowableComment) {
 				showSource="<%= false %>"
 			/>
 
-			<aui:input name="body" type="hidden" value="<%= comment.getBody() %>" />
+			<aui:input
+				name="body"
+				type="hidden"
+				value="<%= comment.getBody() %>"
+			/>
 		</aui:fieldset>
 
 		<c:if test="<%= parentComment != null %>">
@@ -114,7 +145,11 @@ if (comment instanceof WorkflowableComment) {
 
 			<c:if test="<%= (workflowableComment != null) && approved && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(workflowableComment.getCompanyId(), workflowableComment.getGroupId(), CommentConstants.getDiscussionClassName()) %>">
 				<div class="alert alert-info">
-					<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, comment.getModelClassName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= ResourceActionsUtil.getModelResource(locale, comment.getModelClassName()) %>"
+						key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again"
+						translateArguments="<%= false %>"
+					/>
 				</div>
 			</c:if>
 

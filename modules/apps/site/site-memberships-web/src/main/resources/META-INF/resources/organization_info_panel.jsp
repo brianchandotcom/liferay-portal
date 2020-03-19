@@ -26,9 +26,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 			<h4><liferay-ui:message key="organizations" /></h4>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<clay:navigation-bar navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>" />
 
 		<div class="sidebar-body">
 			<h5><liferay-ui:message key="num-of-organizations" /></h5>
@@ -68,18 +66,24 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 
 			<c:if test="<%= group.getOrganizationId() == organization.getOrganizationId() %>">
 				<p class="h6 text-muted">
-					<liferay-ui:message arguments="<%= new String[] {organization.getName(), LanguageUtil.get(request, organization.getType())} %>" key="this-site-belongs-to-x-which-is-an-organization-of-type-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= new String[] {organization.getName(), LanguageUtil.get(request, organization.getType())} %>"
+						key="this-site-belongs-to-x-which-is-an-organization-of-type-x"
+						translateArguments="<%= false %>"
+					/>
 				</p>
 
 				<p class="h6 text-muted">
-					<liferay-ui:message arguments="<%= new String[] {organization.getName(), StringUtil.toLowerCase(GroupUtil.getGroupTypeLabel(group, locale)), GroupUtil.getGroupTypeLabel(group, locale)} %>" key="all-users-of-x-are-automatically-members-of-the-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= new String[] {organization.getName(), StringUtil.toLowerCase(GroupUtil.getGroupTypeLabel(group, locale)), GroupUtil.getGroupTypeLabel(group, locale)} %>"
+						key="all-users-of-x-are-automatically-members-of-the-x"
+						translateArguments="<%= false %>"
+					/>
 				</p>
 			</c:if>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<clay:navigation-bar navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>" />
 
 		<div class="sidebar-body">
 			<h5><liferay-ui:message key="num-of-users" /></h5>
@@ -130,9 +134,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 			<h4><liferay-ui:message arguments="<%= organizations.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<clay:navigation-bar navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>" />
 
 		<div class="sidebar-body">
 			<h5><liferay-ui:message arguments="<%= organizations.size() %>" key="x-items-are-selected" /></h5>

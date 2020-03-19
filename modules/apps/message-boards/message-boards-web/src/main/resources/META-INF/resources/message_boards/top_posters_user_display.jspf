@@ -20,18 +20,14 @@ User topUser = UserLocalServiceUtil.fetchUserById(statsUser.getUserId());
 
 <c:if test="<%= topUser != null %>">
 	<liferay-ui:search-container-column-text>
-		<liferay-ui:user-portrait
-			userId="<%= statsUser.getUserId() %>"
-		/>
+		<liferay-ui:user-portrait userId="<%= statsUser.getUserId() %>" />
 	</liferay-ui:search-container-column-text>
 
 	<%
 	String[] ranks = MBStatsUserLocalServiceUtil.getUserRank(themeDisplay.getSiteGroupId(), themeDisplay.getLanguageId(), statsUser.getUserId());
 	%>
 
-	<liferay-ui:search-container-column-text
-		colspan="<%= 2 %>"
-	>
+	<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 		<p class="list-group-title">
 			<%= HtmlUtil.escape(topUser.getFullName()) %>
 		</p>

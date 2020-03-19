@@ -42,18 +42,10 @@ portletURL.setParameter("eventName", eventName);
 </div>
 
 <div class="container-fluid-1280" id="<portlet:namespace />selectDDMStructureFieldForm">
-	<liferay-ui:search-container
-		iteratorURL="<%= portletURL %>"
-		total="<%= classType.getClassTypeFieldsCount() %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= classType.getClassTypeFields(searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
+	<liferay-ui:search-container iteratorURL="<%= portletURL %>" total="<%= classType.getClassTypeFieldsCount() %>">
+		<liferay-ui:search-container-results results="<%= classType.getClassTypeFields(searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
-		<liferay-ui:search-container-row
-			className="com.liferay.asset.kernel.model.ClassTypeField"
-			modelVar="field"
-		>
+		<liferay-ui:search-container-row className="com.liferay.asset.kernel.model.ClassTypeField" modelVar="field">
 			<liferay-ui:search-container-column-text>
 				<input data-button-id="<%= renderResponse.getNamespace() + "applyButton" + field.getName() %>" data-form-id="<%= renderResponse.getNamespace() + field.getName() + "fieldForm" %>" name="<portlet:namespace />selectStructureFieldSubtype" type="radio" <%= Objects.equals(field.getName(), ddmStructureFieldName) ? "checked" : StringPool.BLANK %> />
 			</liferay-ui:search-container-column-text>
@@ -62,17 +54,25 @@ portletURL.setParameter("eventName", eventName);
 			String fieldsNamespace = StringUtil.randomId();
 			%>
 
-			<liferay-ui:search-container-column-text
-				name="field"
-			>
+			<liferay-ui:search-container-column-text name="field">
 				<portlet:resourceURL id="getFieldValue" var="structureFieldURL">
 					<portlet:param name="structureId" value="<%= String.valueOf(field.getClassTypeId()) %>" />
 					<portlet:param name="name" value="<%= field.getName() %>" />
 					<portlet:param name="fieldsNamespace" value="<%= fieldsNamespace %>" />
 				</portlet:resourceURL>
 
-				<aui:form action="<%= structureFieldURL %>" disabled="<%= !Objects.equals(field.getName(), ddmStructureFieldName) %>" name='<%= field.getName() + "fieldForm" %>' onSubmit="event.preventDefault()">
-					<aui:input disabled="<%= true %>" name="buttonId" type="hidden" value='<%= renderResponse.getNamespace() + "applyButton" + field.getName() %>' />
+				<aui:form
+					action="<%= structureFieldURL %>"
+					disabled="<%= !Objects.equals(field.getName(), ddmStructureFieldName) %>"
+					name='<%= field.getName() + "fieldForm" %>'
+					onSubmit="event.preventDefault()"
+				>
+					<aui:input
+						disabled="<%= true %>"
+						name="buttonId"
+						type="hidden"
+						value='<%= renderResponse.getNamespace() + "applyButton" + field.getName() %>'
+					/>
 
 					<%
 					Field ddmField = new com.liferay.dynamic.data.mapping.storage.Field();
@@ -109,13 +109,17 @@ portletURL.setParameter("eventName", eventName);
 				).build();
 				%>
 
-				<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= Objects.equals(field.getName(), ddmStructureFieldName) ? false : true %>" id='<%= "applyButton" + field.getName() %>' value="apply" />
+				<aui:button
+					cssClass="selector-button"
+					data="<%= data %>"
+					disabled="<%= Objects.equals(field.getName(), ddmStructureFieldName) ? false : true %>"
+					id='<%= "applyButton" + field.getName() %>'
+					value="apply"
+				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>
 

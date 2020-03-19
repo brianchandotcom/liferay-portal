@@ -49,11 +49,32 @@ String dueDateWrapperCssClass = dueDateControlGroupCssClass + StringPool.SPACE +
 	<c:otherwise>
 		<portlet:actionURL name="updateTasksEntry" var="updateTasksEntryURL" />
 
-		<aui:form action="<%= updateTasksEntryURL %>" cssClass="container-fluid-1280" method="post" name="fm1">
-			<aui:input name="mvcPath" type="hidden" value="/tasks/edit_task.jsp" />
-			<aui:input name="tasksEntryId" type="hidden" value="<%= tasksEntryId %>" />
-			<aui:input name="userId" type="hidden" value="<%= user.getUserId() %>" />
-			<aui:input name="resolverUserId" type="hidden" value="<%= user.getUserId() %>" />
+		<aui:form
+			action="<%= updateTasksEntryURL %>"
+			cssClass="container-fluid-1280"
+			method="post"
+			name="fm1"
+		>
+			<aui:input
+				name="mvcPath"
+				type="hidden"
+				value="/tasks/edit_task.jsp"
+			/>
+			<aui:input
+				name="tasksEntryId"
+				type="hidden"
+				value="<%= tasksEntryId %>"
+			/>
+			<aui:input
+				name="userId"
+				type="hidden"
+				value="<%= user.getUserId() %>"
+			/>
+			<aui:input
+				name="resolverUserId"
+				type="hidden"
+				value="<%= user.getUserId() %>"
+			/>
 
 			<liferay-asset:asset-tags-error />
 
@@ -61,21 +82,37 @@ String dueDateWrapperCssClass = dueDateControlGroupCssClass + StringPool.SPACE +
 
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
-					<aui:input cssClass="input-task-description" label="description" name="title">
+					<aui:input
+						cssClass="input-task-description"
+						label="description"
+						name="title"
+					>
 						<aui:validator name="required" />
 					</aui:input>
 
 					<aui:select label="assignee" name="assigneeUserId">
 						<c:choose>
 							<c:when test="<%= group.isUser() %>">
-								<aui:option label="<%= HtmlUtil.escape(user.getFullName()) %>" selected="<%= assigneeUserId == 0 %>" value="<%= user.getUserId() %>" />
+								<aui:option
+									label="<%= HtmlUtil.escape(user.getFullName()) %>"
+									selected="<%= assigneeUserId == 0 %>"
+									value="<%= user.getUserId() %>"
+								/>
 
 								<optgroup label="<liferay-ui:message key="contacts" />">
 							</c:when>
 							<c:otherwise>
-								<aui:option label="unassigned" selected="<%= assigneeUserId == 0 %>" value="0" />
+								<aui:option
+									label="unassigned"
+									selected="<%= assigneeUserId == 0 %>"
+									value="0"
+								/>
 
-								<aui:option label="<%= HtmlUtil.escape(user.getFullName()) %>" selected="<%= assigneeUserId == user.getUserId() %>" value="<%= user.getUserId() %>" />
+								<aui:option
+									label="<%= HtmlUtil.escape(user.getFullName()) %>"
+									selected="<%= assigneeUserId == user.getUserId() %>"
+									value="<%= user.getUserId() %>"
+								/>
 
 								<c:if test="<%= (tasksEntry != null) && (assigneeUserId > 0) && (assigneeUserId != user.getUserId()) %>">
 									<aui:option label="<%= PortalUtil.getUserName(assigneeUserId, tasksEntry.getAssigneeFullName()) %>" selected="<%= true %>" />
@@ -108,7 +145,11 @@ String dueDateWrapperCssClass = dueDateControlGroupCssClass + StringPool.SPACE +
 							}
 						%>
 
-							<aui:option label="<%= HtmlUtil.escape(curUser.getFullName()) %>" selected="<%= assigneeUserId == curUserId %>" value="<%= curUserId %>" />
+							<aui:option
+								label="<%= HtmlUtil.escape(curUser.getFullName()) %>"
+								selected="<%= assigneeUserId == curUserId %>"
+								value="<%= curUserId %>"
+							/>
 
 						<%
 						}
@@ -126,12 +167,27 @@ String dueDateWrapperCssClass = dueDateControlGroupCssClass + StringPool.SPACE +
 					<aui:field-wrapper>
 						<label class="control-label"><liferay-ui:message key="due-date" /></label>
 
-						<aui:a cssClass="field-content" href="javascript:;" id="toggleDueDate" label="<%= dueDateToggleText %>" onClick='<%= renderResponse.getNamespace() + "displayInputDate();" %>' />
+						<aui:a
+							cssClass="field-content"
+							href="javascript:;"
+							id="toggleDueDate"
+							label="<%= dueDateToggleText %>"
+							onClick='<%= renderResponse.getNamespace() + "displayInputDate();" %>'
+						/>
 					</aui:field-wrapper>
 
-					<aui:input id="addDueDate" name="addDueDate" type="hidden" value="<%= addDueDate %>" />
+					<aui:input
+						id="addDueDate"
+						name="addDueDate"
+						type="hidden"
+						value="<%= addDueDate %>"
+					/>
 
-					<aui:input label="" name="dueDate" wrapperCssClass="<%= dueDateWrapperCssClass %>" />
+					<aui:input
+						label=""
+						name="dueDate"
+						wrapperCssClass="<%= dueDateWrapperCssClass %>"
+					/>
 
 					<c:if test="<%= tasksEntry != null %>">
 						<aui:select name="status">
@@ -140,7 +196,11 @@ String dueDateWrapperCssClass = dueDateControlGroupCssClass + StringPool.SPACE +
 							for (int curStatus : TasksEntryConstants.STATUSES) {
 							%>
 
-								<aui:option label="<%= TasksEntryConstants.getStatusLabel(curStatus) %>" selected="<%= tasksEntry.getStatus() == curStatus %>" value="<%= curStatus %>" />
+								<aui:option
+									label="<%= TasksEntryConstants.getStatusLabel(curStatus) %>"
+									selected="<%= tasksEntry.getStatus() == curStatus %>"
+									value="<%= curStatus %>"
+								/>
 
 							<%
 							}

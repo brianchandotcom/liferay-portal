@@ -30,9 +30,7 @@ portletDisplay.setURLBack(orphanPortletsDisplayContext.getBackURL());
 renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 %>
 
-<clay:management-toolbar
-	displayContext="<%= orphanPortletsManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= orphanPortletsManagementToolbarDisplayContext %>" />
 
 <portlet:actionURL name="/layout/delete_orphan_portlets" var="deleteOrphanPortletsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -40,7 +38,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 	<portlet:param name="selPlid" value="<%= String.valueOf(orphanPortletsDisplayContext.getSelPlid()) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteOrphanPortletsURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form
+	action="<%= deleteOrphanPortletsURL %>"
+	cssClass="container-fluid-1280"
+	name="fm"
+>
 	<div class="alert alert-warning" role="alert">
 		<span class="alert-indicator">
 			<aui:icon image="warning-full" markupView="lexicon" />
@@ -62,9 +64,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 		</button>
 	</div>
 
-	<liferay-ui:search-container
-		searchContainer="<%= orphanPortletsDisplayContext.getOrphanPortletsSearchContainer() %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= orphanPortletsDisplayContext.getOrphanPortletsSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Portlet"
 			escapedModel="<%= true %>"
@@ -73,14 +73,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 		>
 			<c:choose>
 				<c:when test='<%= Objects.equals(orphanPortletsDisplayContext.getDisplayStyle(), "descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="archive"
-						toggleRowChecker="<%= true %>"
-					/>
+					<liferay-ui:search-container-column-icon icon="archive" toggleRowChecker="<%= true %>" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h5>
 							<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
 						</h5>
@@ -94,9 +89,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 						</h6>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/orphan_portlets_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/orphan_portlets_action.jsp" />
 				</c:when>
 				<c:when test='<%= Objects.equals(orphanPortletsDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
@@ -111,14 +104,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 						truncate="<%= true %>"
 					/>
 
-					<liferay-ui:search-container-column-text
-						name="status"
-						value="<%= orphanPortletsDisplayContext.getStatus(portlet) %>"
-					/>
+					<liferay-ui:search-container-column-text name="status" value="<%= orphanPortletsDisplayContext.getStatus(portlet) %>" />
 
-					<liferay-ui:search-container-column-jsp
-						path="/orphan_portlets_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/orphan_portlets_action.jsp" />
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>
@@ -131,7 +119,4 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 	</liferay-ui:search-container>
 </aui:form>
 
-<liferay-frontend:component
-	componentId="<%= orphanPortletsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/OrphanPortletsManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= orphanPortletsManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/OrphanPortletsManagementToolbarDefaultEventHandler.es" />

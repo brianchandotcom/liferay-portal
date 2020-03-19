@@ -25,8 +25,16 @@
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<div class="alert alert-info">
@@ -35,12 +43,25 @@
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<aui:input name="preferences--enableHighlighting--" type="checkbox" value="<%= journalContentSearchPortletInstanceConfiguration.enableHighlighting() %>" />
+				<aui:input
+					name="preferences--enableHighlighting--"
+					type="checkbox"
+					value="<%= journalContentSearchPortletInstanceConfiguration.enableHighlighting() %>"
+				/>
 
-				<aui:input label="only-show-results-for-web-content-listed-in-a-web-content-display-widget" name="preferences--showListed--" type="checkbox" value="<%= journalContentSearchPortletInstanceConfiguration.showListed() %>" />
+				<aui:input
+					label="only-show-results-for-web-content-listed-in-a-web-content-display-widget"
+					name="preferences--showListed--"
+					type="checkbox"
+					value="<%= journalContentSearchPortletInstanceConfiguration.showListed() %>"
+				/>
 
 				<div class="<%= !journalContentSearchPortletInstanceConfiguration.showListed() ? StringPool.BLANK : " hide" %>" id="<portlet:namespace />webContentDisplay">
-					<aui:input cssClass="lfr-input-text-container" name="preferences--targetPortletId--" value="<%= journalContentSearchPortletInstanceConfiguration.targetPortletId() %>" />
+					<aui:input
+						cssClass="lfr-input-text-container"
+						name="preferences--targetPortletId--"
+						value="<%= journalContentSearchPortletInstanceConfiguration.targetPortletId() %>"
+					/>
 				</div>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>

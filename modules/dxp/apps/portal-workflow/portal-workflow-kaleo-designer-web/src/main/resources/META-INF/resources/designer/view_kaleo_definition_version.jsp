@@ -64,14 +64,22 @@ renderResponse.setTitle(kaleoDefinitionVersion.getTitle(locale));
 					<%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), userName} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), userName} %>"
+						key="revision-from-x-by-x"
+						translateArguments="<%= false %>"
+					/>
 				</c:otherwise>
 			</c:choose>
 		</span>
 	</div>
 </liferay-frontend:info-bar>
 
-<aui:input name="content" type="hidden" value="<%= content %>" />
+<aui:input
+	name="content"
+	type="hidden"
+	value="<%= content %>"
+/>
 
 <div class="card-horizontal main-content-card">
 	<div class="card-row-padded">
@@ -101,7 +109,12 @@ renderResponse.setTitle(kaleoDefinitionVersion.getTitle(locale));
 						<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
 					</liferay-portlet:renderURL>
 
-					<aui:button cssClass="btn-lg" href="<%= editURL %>" primary="<%= true %>" value="edit" />
+					<aui:button
+						cssClass="btn-lg"
+						href="<%= editURL %>"
+						primary="<%= true %>"
+						value="edit"
+					/>
 				</aui:button-row>
 			</c:when>
 		</c:choose>

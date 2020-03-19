@@ -67,9 +67,22 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 	<portlet:param name="roleType" value="<%= String.valueOf(currentRoleTypeContributor.getType()) %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= editRoleURL %>" cssClass="container-fluid container-fluid-max-xl container-form-view" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= editRoleRenderURL %>" />
-	<aui:input name="roleId" type="hidden" value="<%= roleId %>" />
+<aui:form
+	action="<%= editRoleURL %>"
+	cssClass="container-fluid container-fluid-max-xl container-form-view"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= editRoleRenderURL %>"
+	/>
+	<aui:input
+		name="roleId"
+		type="hidden"
+		value="<%= roleId %>"
+	/>
 
 	<liferay-ui:error exception="<%= DuplicateRoleException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= RequiredRoleException.class %>" message="old-role-name-is-a-required-system-role" />
@@ -97,15 +110,28 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 					</aui:select>
 				</c:when>
 				<c:otherwise>
-					<aui:input label="type" name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, currentRoleTypeContributor.getName()) %>" />
+					<aui:input
+						label="type"
+						name="typeLabel"
+						type="resource"
+						value="<%= LanguageUtil.get(request, currentRoleTypeContributor.getName()) %>"
+					/>
 
 					<c:if test="<%= role == null %>">
-						<aui:input name="roleType" type="hidden" value="<%= String.valueOf(currentRoleTypeContributor.getType()) %>" />
+						<aui:input
+							name="roleType"
+							type="hidden"
+							value="<%= String.valueOf(currentRoleTypeContributor.getType()) %>"
+						/>
 					</c:if>
 				</c:otherwise>
 			</c:choose>
 
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" helpMessage="title-field-help" name="title" />
+			<aui:input
+				autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+				helpMessage="title-field-help"
+				name="title"
+			/>
 			<aui:input name="description" />
 
 			<c:if test="<%= role != null %>">
@@ -148,16 +174,38 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 
 			<c:choose>
 				<c:when test="<%= (role != null) && role.isSystem() %>">
-					<aui:input disabled="<%= true %>" helpMessage="key-field-help" label="key" name="viewNameField" type="text" value="<%= roleName %>" />
-					<aui:input name="name" type="hidden" value="<%= roleName %>" />
+					<aui:input
+						disabled="<%= true %>"
+						helpMessage="key-field-help"
+						label="key"
+						name="viewNameField"
+						type="text"
+						value="<%= roleName %>"
+					/>
+					<aui:input
+						name="name"
+						type="hidden"
+						value="<%= roleName %>"
+					/>
 				</c:when>
 				<c:otherwise>
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" helpMessage="key-field-help" label="key" name="name" />
+					<aui:input
+						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+						helpMessage="key-field-help"
+						label="key"
+						name="name"
+					/>
 				</c:otherwise>
 			</c:choose>
 
 			<c:if test="<%= (role != null) && roleName.equals(RoleConstants.SITE_ADMINISTRATOR) %>">
-				<aui:input helpMessage="allow-subsite-management-help" label="allow-subsite-management" name="manageSubgroups" type="toggle-switch" value="<%= ResourcePermissionLocalServiceUtil.hasResourcePermission(company.getCompanyId(), Group.class.getName(), ResourceConstants.SCOPE_GROUP_TEMPLATE, String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID), roleId, ActionKeys.MANAGE_SUBGROUPS) %>" />
+				<aui:input
+					helpMessage="allow-subsite-management-help"
+					label="allow-subsite-management"
+					name="manageSubgroups"
+					type="toggle-switch"
+					value="<%= ResourcePermissionLocalServiceUtil.hasResourcePermission(company.getCompanyId(), Group.class.getName(), ResourceConstants.SCOPE_GROUP_TEMPLATE, String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID), roleId, ActionKeys.MANAGE_SUBGROUPS) %>"
+				/>
 			</c:if>
 
 			<%

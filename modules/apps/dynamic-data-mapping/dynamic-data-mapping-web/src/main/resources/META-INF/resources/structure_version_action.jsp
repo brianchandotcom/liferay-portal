@@ -31,17 +31,18 @@ DDMStructureVersion structureVersion = (DDMStructureVersion)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<liferay-portlet:renderURL portletName="<%= DDMPortletKeys.DYNAMIC_DATA_MAPPING %>" var="viewStructureVersionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+	<liferay-portlet:renderURL
+		portletName="<%= DDMPortletKeys.DYNAMIC_DATA_MAPPING %>"
+		var="viewStructureVersionURL"
+		windowState="<%= WindowState.MAXIMIZED.toString() %>"
+	>
 		<portlet:param name="mvcPath" value="/view_structure.jsp" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="structureVersionId" value="<%= String.valueOf(structureVersion.getStructureVersionId()) %>" />
 		<portlet:param name="formBuilderReadOnly" value="<%= String.valueOf(Boolean.TRUE) %>" />
 	</liferay-portlet:renderURL>
 
-	<liferay-ui:icon
-		message="view[action]"
-		url="<%= viewStructureVersionURL %>"
-	/>
+	<liferay-ui:icon message="view[action]" url="<%= viewStructureVersionURL %>" />
 
 	<c:if test="<%= structureVersion.isApproved() %>">
 		<portlet:actionURL name="revertStructure" var="revertURL">
@@ -51,9 +52,6 @@ DDMStructureVersion structureVersion = (DDMStructureVersion)row.getObject();
 			<portlet:param name="version" value="<%= structureVersion.getVersion() %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="revert"
-			url="<%= revertURL %>"
-		/>
+		<liferay-ui:icon message="revert" url="<%= revertURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

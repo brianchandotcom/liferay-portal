@@ -45,10 +45,7 @@ if (portletTitleBasedNavigation) {
 
 	<liferay-util:include page="/wiki/page_tabs_history.jsp" servletContext="<%= application %>" />
 
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		title="compare-versions"
-	/>
+	<liferay-ui:header backURL="<%= backURL %>" title="compare-versions" />
 </c:if>
 
 <liferay-portlet:renderURL varImpl="portletURL">

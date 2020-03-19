@@ -24,10 +24,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 
 <portlet:renderURL var="viewURL" />
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "apps") %>'
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "apps") %>' />
 
 <clay:management-toolbar
 	clearResultsURL="<%= viewAppsManagerManagementToolbarDisplayContext.getClearResultsURL() %>"
@@ -56,10 +53,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 		searchContainer="<%= viewAppsManagerManagementToolbarDisplayContext.getSearchContainer() %>"
 		var="appDisplaySearch"
 	>
-		<liferay-ui:search-container-row
-			className="com.liferay.marketplace.app.manager.web.internal.util.AppDisplay"
-			modelVar="appDisplay"
-		>
+		<liferay-ui:search-container-row className="com.liferay.marketplace.app.manager.web.internal.util.AppDisplay" modelVar="appDisplay">
 			<%@ include file="/app_display_columns.jspf" %>
 		</liferay-ui:search-container-row>
 

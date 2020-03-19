@@ -37,16 +37,46 @@ UserDisplayTerms displayTerms = (UserDisplayTerms)searchContainer.getDisplayTerm
 	markupView="lexicon"
 >
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" name="<%= UserDisplayTerms.FIRST_NAME %>" size="20" type="text" value="<%= displayTerms.getFirstName() %>" />
+		<aui:input
+			inlineField="<%= true %>"
+			name="<%= UserDisplayTerms.FIRST_NAME %>"
+			size="20"
+			type="text"
+			value="<%= displayTerms.getFirstName() %>"
+		/>
 
-		<aui:input inlineField="<%= true %>" name="<%= UserDisplayTerms.MIDDLE_NAME %>" size="20" type="text" value="<%= displayTerms.getMiddleName() %>" />
+		<aui:input
+			inlineField="<%= true %>"
+			name="<%= UserDisplayTerms.MIDDLE_NAME %>"
+			size="20"
+			type="text"
+			value="<%= displayTerms.getMiddleName() %>"
+		/>
 
-		<aui:input inlineField="<%= true %>" name="<%= UserDisplayTerms.LAST_NAME %>" size="20" type="text" value="<%= displayTerms.getLastName() %>" />
+		<aui:input
+			inlineField="<%= true %>"
+			name="<%= UserDisplayTerms.LAST_NAME %>"
+			size="20"
+			type="text"
+			value="<%= displayTerms.getLastName() %>"
+		/>
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" name="<%= UserDisplayTerms.SCREEN_NAME %>" size="20" type="text" value="<%= displayTerms.getScreenName() %>" />
+		<aui:input
+			inlineField="<%= true %>"
+			name="<%= UserDisplayTerms.SCREEN_NAME %>"
+			size="20"
+			type="text"
+			value="<%= displayTerms.getScreenName() %>"
+		/>
 
-		<aui:input inlineField="<%= true %>" name="<%= UserDisplayTerms.EMAIL_ADDRESS %>" size="20" type="text" value="<%= displayTerms.getEmailAddress() %>" />
+		<aui:input
+			inlineField="<%= true %>"
+			name="<%= UserDisplayTerms.EMAIL_ADDRESS %>"
+			size="20"
+			type="text"
+			value="<%= displayTerms.getEmailAddress() %>"
+		/>
 	</aui:fieldset>
 </liferay-ui:search-toggle>

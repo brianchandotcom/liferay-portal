@@ -37,7 +37,11 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 	<c:if test="<%= editable %>">
 		<div class="lfr-spreadsheet-add-rows-buttons">
-			<aui:select inlineField="<%= true %>" label="more-rows-at-bottom" name="numberOfRecords">
+			<aui:select
+				inlineField="<%= true %>"
+				label="more-rows-at-bottom"
+				name="numberOfRecords"
+			>
 				<aui:option label="1" />
 				<aui:option label="5" />
 				<aui:option label="10" />
@@ -45,7 +49,11 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 				<aui:option label="50" />
 			</aui:select>
 
-			<aui:button inlineField="<%= true %>" name="addRecords" value="add" />
+			<aui:button
+				inlineField="<%= true %>"
+				name="addRecords"
+				value="add"
+			/>
 		</div>
 	</c:if>
 </div>

@@ -119,27 +119,20 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 				FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementToolbarDisplayContext = new FragmentEntryUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentEntryLinkDisplayContext.getSearchContainer());
 				%>
 
-				<clay:management-toolbar
-					displayContext="<%= fragmentEntryUsageManagementToolbarDisplayContext %>"
-				/>
+				<clay:management-toolbar displayContext="<%= fragmentEntryUsageManagementToolbarDisplayContext %>" />
 
 				<portlet:actionURL name="/fragment/propagate_fragment_entry_changes" var="propagateFragmentEntryChangesURL">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:actionURL>
 
 				<aui:form action="<%= propagateFragmentEntryChangesURL %>" name="fm">
-					<liferay-ui:search-container
-						searchContainer="<%= fragmentEntryLinkDisplayContext.getSearchContainer() %>"
-					>
+					<liferay-ui:search-container searchContainer="<%= fragmentEntryLinkDisplayContext.getSearchContainer() %>">
 						<liferay-ui:search-container-row
 							className="com.liferay.fragment.model.FragmentEntryLink"
 							keyProperty="fragmentEntryLinkId"
 							modelVar="fragmentEntryLink"
 						>
-							<liferay-ui:search-container-column-text
-								name="name"
-								value="<%= HtmlUtil.escape(fragmentEntryLinkDisplayContext.getFragmentEntryLinkName(fragmentEntryLink)) %>"
-							/>
+							<liferay-ui:search-container-column-text name="name" value="<%= HtmlUtil.escape(fragmentEntryLinkDisplayContext.getFragmentEntryLinkName(fragmentEntryLink)) %>" />
 
 							<liferay-ui:search-container-column-text
 								name="type"
@@ -147,18 +140,13 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 								value="<%= fragmentEntryLinkDisplayContext.getFragmentEntryLinkTypeLabel(fragmentEntryLink) %>"
 							/>
 
-							<liferay-ui:search-container-column-text
-								name="using"
-							>
+							<liferay-ui:search-container-column-text name="using">
 								<span class="label <%= fragmentEntryLink.isLatestVersion() ? "label-success" : "label-info" %>">
 									<liferay-ui:message key='<%= fragmentEntryLink.isLatestVersion() ? "latest-version" : "a-previous-version" %>' />
 								</span>
 							</liferay-ui:search-container-column-text>
 
-							<liferay-ui:search-container-column-date
-								name="last-propagation"
-								value="<%= fragmentEntryLink.getModifiedDate() %>"
-							/>
+							<liferay-ui:search-container-column-date name="last-propagation" value="<%= fragmentEntryLink.getModifiedDate() %>" />
 						</liferay-ui:search-container-row>
 
 						<liferay-ui:search-iterator
@@ -173,7 +161,4 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 	</div>
 </div>
 
-<liferay-frontend:component
-	componentId="<%= fragmentEntryUsageManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/FragmentEntryUsageManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= fragmentEntryUsageManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/FragmentEntryUsageManagementToolbarDefaultEventHandler.es" />

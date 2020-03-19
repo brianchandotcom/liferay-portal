@@ -14,20 +14,14 @@
  */
 --%>
 
-<liferay-ui:search-container
-	id="workflowInstances"
-	searchContainer="<%= workflowInstanceViewDisplayContext.getSearchContainer() %>"
->
+<liferay-ui:search-container id="workflowInstances" searchContainer="<%= workflowInstanceViewDisplayContext.getSearchContainer() %>">
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.workflow.WorkflowInstance"
 		cssClass="entry-display-style"
 		modelVar="workflowInstance"
 		stringKey="<%= true %>"
 	>
-		<liferay-ui:search-container-row-parameter
-			name="workflowInstance"
-			value="<%= workflowInstance %>"
-		/>
+		<liferay-ui:search-container-row-parameter name="workflowInstance" value="<%= workflowInstance %>" />
 
 		<portlet:renderURL var="rowURL">
 			<portlet:param name="mvcPath" value="/instance/edit_workflow_instance.jsp" />
@@ -37,14 +31,9 @@
 
 		<c:choose>
 			<c:when test='<%= displayStyle.equals("descriptive") %>'>
-				<liferay-ui:search-container-column-icon
-					cssClass="asset-icon"
-					icon="<%= workflowInstanceViewDisplayContext.getAssetIconCssClass(workflowInstance) %>"
-				/>
+				<liferay-ui:search-container-column-icon cssClass="asset-icon" icon="<%= workflowInstanceViewDisplayContext.getAssetIconCssClass(workflowInstance) %>" />
 
-				<liferay-ui:search-container-column-text
-					colspan="<%= 2 %>"
-				>
+				<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 					<h5 class="text-default">
 
 						<%
@@ -86,15 +75,10 @@
 
 				<c:choose>
 					<c:when test="<%= !workflowInstance.isComplete() %>">
-						<liferay-ui:search-container-column-jsp
-							align="right"
-							path="/instance/workflow_instance_action.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp align="right" path="/instance/workflow_instance_action.jsp" />
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:search-container-column-text
-							value="<%= StringPool.BLANK %>"
-						/>
+						<liferay-ui:search-container-column-text value="<%= StringPool.BLANK %>" />
 					</c:otherwise>
 				</c:choose>
 			</c:when>
@@ -143,14 +127,10 @@
 
 				<c:choose>
 					<c:when test="<%= !workflowInstance.isComplete() %>">
-						<liferay-ui:search-container-column-jsp
-							path="/instance/workflow_instance_action.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp path="/instance/workflow_instance_action.jsp" />
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:search-container-column-text
-							value="<%= StringPool.BLANK %>"
-						/>
+						<liferay-ui:search-container-column-text value="<%= StringPool.BLANK %>" />
 					</c:otherwise>
 				</c:choose>
 			</c:otherwise>

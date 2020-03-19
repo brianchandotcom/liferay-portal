@@ -71,9 +71,7 @@ WikiPageDisplay pageDisplay = WikiPageLocalServiceUtil.getPageDisplay(
 
 <liferay-util:include page="/wiki/view_attachments.jsp" servletContext="<%= application %>" />
 
-<liferay-expando:custom-attributes-available
-	className="<%= WikiPage.class.getName() %>"
->
+<liferay-expando:custom-attributes-available className="<%= WikiPage.class.getName() %>">
 	<liferay-expando:custom-attribute-list
 		className="<%= WikiPage.class.getName() %>"
 		classPK="<%= wikiPage.getPrimaryKey() %>"

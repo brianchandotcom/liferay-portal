@@ -17,14 +17,10 @@
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
 		<liferay-ui:search-container-column-text>
-			<liferay-ui:user-portrait
-				userId="<%= user2.getUserId() %>"
-			/>
+			<liferay-ui:user-portrait userId="<%= user2.getUserId() %>" />
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<h5>
 				<aui:a href="<%= String.valueOf(rowURL) %>"><%= user2.getFullName() %></aui:a>
 			</h5>
@@ -34,10 +30,7 @@
 			</h6>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/user_action.jsp"
-		/>
+		<liferay-ui:search-container-column-jsp cssClass="entry-action-column" path="/user_action.jsp" />
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 
@@ -108,9 +101,6 @@
 			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userUserGroups, UserGroup.NAME_ACCESSOR, userUserGroupsCount)) %>"
 		/>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/user_action.jsp"
-		/>
+		<liferay-ui:search-container-column-jsp cssClass="entry-action-column" path="/user_action.jsp" />
 	</c:otherwise>
 </c:choose>

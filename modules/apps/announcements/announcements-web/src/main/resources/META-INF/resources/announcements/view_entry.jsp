@@ -44,7 +44,11 @@ if (portletTitleBasedNavigation) {
 <c:if test="<%= portletTitleBasedNavigation %>">
 	<liferay-frontend:info-bar>
 		<span class="text-secondary">
-			<liferay-ui:message arguments="<%= new String[] {entry.getUserName(), LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getModifiedDate().getTime(), true)} %>" key="x-modified-x-ago" translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments="<%= new String[] {entry.getUserName(), LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getModifiedDate().getTime(), true)} %>"
+				key="x-modified-x-ago"
+				translateArguments="<%= false %>"
+			/>
 		</span>
 	</liferay-frontend:info-bar>
 </c:if>
@@ -55,9 +59,7 @@ if (portletTitleBasedNavigation) {
 			<div class="card-row">
 				<div class="card-col-field">
 					<div class="list-group-card-icon">
-						<liferay-ui:user-portrait
-							userId="<%= entry.getUserId() %>"
-						/>
+						<liferay-ui:user-portrait userId="<%= entry.getUserId() %>" />
 					</div>
 				</div>
 

@@ -22,8 +22,5 @@
 		<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon
-		message="relaunch"
-		url="<%= relaunchURL %>"
-	/>
+	<liferay-ui:icon message="relaunch" url="<%= relaunchURL %>" />
 </c:if>

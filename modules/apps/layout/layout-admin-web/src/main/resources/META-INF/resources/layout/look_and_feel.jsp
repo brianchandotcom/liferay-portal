@@ -30,14 +30,15 @@ String rootNodeName = layoutsAdminDisplayContext.getRootNodeName();
 PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="look-and-feel"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="look-and-feel" />
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<aui:input name="devices" type="hidden" value="regular" />
+<aui:input
+	name="devices"
+	type="hidden"
+	value="regular"
+/>
 
 <aui:input name="masterLayoutPlid" type="hidden" />
 
@@ -92,9 +93,7 @@ if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry
 	</div>
 </c:if>
 
-<liferay-util:buffer
-	var="rootNodeNameLink"
->
+<liferay-util:buffer var="rootNodeNameLink">
 	<c:choose>
 		<c:when test="<%= themeDisplay.isStateExclusive() %>">
 			<%= HtmlUtil.escape(rootNodeName) %>
@@ -119,9 +118,23 @@ else {
 <div class="sheet-section <%= (selLayout.getMasterLayoutPlid() <= 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />themeContainer">
 	<h3 class="sheet-subtitle"><liferay-ui:message key="theme" /></h3>
 
-	<aui:input checked="<%= selLayout.isInheritLookAndFeel() %>" id="regularInheritLookAndFeel" label="<%= taglibLabel %>" name="regularInheritLookAndFeel" type="radio" value="<%= true %>" />
+	<aui:input
+		checked="<%= selLayout.isInheritLookAndFeel() %>"
+		id="regularInheritLookAndFeel"
+		label="<%= taglibLabel %>"
+		name="regularInheritLookAndFeel"
+		type="radio"
+		value="<%= true %>"
+	/>
 
-	<aui:input checked="<%= !selLayout.isInheritLookAndFeel() %>" id="regularUniqueLookAndFeel" label="define-a-specific-look-and-feel-for-this-page" name="regularInheritLookAndFeel" type="radio" value="<%= false %>" />
+	<aui:input
+		checked="<%= !selLayout.isInheritLookAndFeel() %>"
+		id="regularUniqueLookAndFeel"
+		label="define-a-specific-look-and-feel-for-this-page"
+		name="regularInheritLookAndFeel"
+		type="radio"
+		value="<%= false %>"
+	/>
 
 	<c:if test="<%= !group.isLayoutPrototype() %>">
 		<div class="lfr-inherit-theme-options" id="<portlet:namespace />inheritThemeOptions">

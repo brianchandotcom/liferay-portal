@@ -30,10 +30,7 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 </liferay-portlet:actionURL>
 
 <aui:form action="<%= deleteKBCommentsURL %>" name="fm">
-	<liferay-ui:search-container
-		id="kbComments"
-		searchContainer="<%= kbCommentsSearchContainer %>"
-	>
+	<liferay-ui:search-container id="kbComments" searchContainer="<%= kbCommentsSearchContainer %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.knowledge.base.model.KBComment"
 			keyProperty="kbCommentId"
@@ -51,14 +48,9 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 
 			</c:if>
 
-			<liferay-ui:search-container-column-user
-				showDetails="<%= false %>"
-				userId="<%= kbComment.getUserId() %>"
-			/>
+			<liferay-ui:search-container-column-user showDetails="<%= false %>" userId="<%= kbComment.getUserId() %>" />
 
-			<liferay-ui:search-container-column-text
-				colspan="<%= 2 %>"
-			>
+			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 				<%
 				Date modifiedDate = kbComment.getModifiedDate();
@@ -103,9 +95,7 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 				</span>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-jsp
-				path="/admin/common/suggestion_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp path="/admin/common/suggestion_action.jsp" />
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

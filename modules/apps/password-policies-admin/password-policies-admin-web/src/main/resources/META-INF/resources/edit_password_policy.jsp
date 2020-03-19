@@ -41,9 +41,22 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 
 <portlet:actionURL name="editPasswordPolicy" var="editPasswordPolicyURL" />
 
-<aui:form action="<%= editPasswordPolicyURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= (passwordPolicyId > 0) ? currentURL : String.valueOf(renderResponse.createRenderURL()) %>" />
-	<aui:input name="passwordPolicyId" type="hidden" value="<%= passwordPolicyId %>" />
+<aui:form
+	action="<%= editPasswordPolicyURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= (passwordPolicyId > 0) ? currentURL : String.valueOf(renderResponse.createRenderURL()) %>"
+	/>
+	<aui:input
+		name="passwordPolicyId"
+		type="hidden"
+		value="<%= passwordPolicyId %>"
+	/>
 
 	<liferay-ui:error exception="<%= DuplicatePasswordPolicyException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= PasswordPolicyNameException.class %>" message="please-enter-a-valid-name" />
@@ -52,7 +65,12 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input autoFocus="<%= !defaultPolicy && windowState.equals(WindowState.MAXIMIZED) %>" disabled="<%= defaultPolicy %>" name="name" required="<%= true %>" />
+			<aui:input
+				autoFocus="<%= !defaultPolicy && windowState.equals(WindowState.MAXIMIZED) %>"
+				disabled="<%= defaultPolicy %>"
+				name="name"
+				required="<%= true %>"
+			/>
 
 			<aui:input autoFocus="<%= defaultPolicy && windowState.equals(WindowState.MAXIMIZED) %>" name="description" />
 		</aui:fieldset>
@@ -71,12 +89,26 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 				title="password-changes"
 			>
 				<aui:fieldset>
-					<aui:input helpMessage="changeable-help" name="changeable" type="toggle-switch" value="<%= passwordPolicy.isChangeable() %>" />
+					<aui:input
+						helpMessage="changeable-help"
+						name="changeable"
+						type="toggle-switch"
+						value="<%= passwordPolicy.isChangeable() %>"
+					/>
 
 					<div class="password-policy-options" id="<portlet:namespace />changeableSettings">
-						<aui:input helpMessage="change-required-help" name="changeRequired" type="toggle-switch" value="<%= passwordPolicy.isChangeRequired() %>" />
+						<aui:input
+							helpMessage="change-required-help"
+							name="changeRequired"
+							type="toggle-switch"
+							value="<%= passwordPolicy.isChangeRequired() %>"
+						/>
 
-						<aui:select helpMessage="minimum-age-help" label="minimum-age" name="minAge">
+						<aui:select
+							helpMessage="minimum-age-help"
+							label="minimum-age"
+							name="minAge"
+						>
 							<aui:option label="none" value="0" />
 
 							<%
@@ -118,28 +150,67 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 				title="password-syntax-checking"
 			>
 				<aui:fieldset>
-					<aui:input helpMessage="enable-syntax-checking-help" label="enable-syntax-checking" name="checkSyntax" type="toggle-switch" value="<%= passwordPolicy.isCheckSyntax() %>" />
+					<aui:input
+						helpMessage="enable-syntax-checking-help"
+						label="enable-syntax-checking"
+						name="checkSyntax"
+						type="toggle-switch"
+						value="<%= passwordPolicy.isCheckSyntax() %>"
+					/>
 
 					<div class="password-policy-options" id="<portlet:namespace />syntaxSettings">
-						<aui:input helpMessage="allow-dictionary-words-help" name="allowDictionaryWords" type="toggle-switch" value="<%= passwordPolicy.isAllowDictionaryWords() %>" />
+						<aui:input
+							helpMessage="allow-dictionary-words-help"
+							name="allowDictionaryWords"
+							type="toggle-switch"
+							value="<%= passwordPolicy.isAllowDictionaryWords() %>"
+						/>
 
-						<aui:input helpMessage="minimum-alpha-numeric-help" label="minimum-alpha-numeric" name="minAlphanumeric" />
+						<aui:input
+							helpMessage="minimum-alpha-numeric-help"
+							label="minimum-alpha-numeric"
+							name="minAlphanumeric"
+						/>
 
-						<aui:input helpMessage="minimum-length-help" label="minimum-length" name="minLength" />
+						<aui:input
+							helpMessage="minimum-length-help"
+							label="minimum-length"
+							name="minLength"
+						/>
 
-						<aui:input helpMessage="minimum-lower-case-help" label="minimum-lower-case" name="minLowerCase" />
+						<aui:input
+							helpMessage="minimum-lower-case-help"
+							label="minimum-lower-case"
+							name="minLowerCase"
+						/>
 
-						<aui:input helpMessage="minimum-numbers-help" label="minimum-numbers" name="minNumbers" />
+						<aui:input
+							helpMessage="minimum-numbers-help"
+							label="minimum-numbers"
+							name="minNumbers"
+						/>
 
-						<aui:input helpMessage="minimum-symbols-help" label="minimum-symbols" name="minSymbols" />
+						<aui:input
+							helpMessage="minimum-symbols-help"
+							label="minimum-symbols"
+							name="minSymbols"
+						/>
 
-						<aui:input helpMessage="minimum-upper-case-help" label="minimum-upper-case" name="minUpperCase" />
+						<aui:input
+							helpMessage="minimum-upper-case-help"
+							label="minimum-upper-case"
+							name="minUpperCase"
+						/>
 
 						<%
 						String taglibHelpMessage = LanguageUtil.format(request, "regular-expression-help", new Object[] {"<a href=\"http://docs.oracle.com/javase/tutorial/essential/regex\" target=\"_blank\">", "</a>"}, false);
 						%>
 
-						<aui:input helpMessage="<%= taglibHelpMessage %>" label="regular-expression" name="regex" />
+						<aui:input
+							helpMessage="<%= taglibHelpMessage %>"
+							label="regular-expression"
+							name="regex"
+						/>
 					</div>
 				</aui:fieldset>
 			</liferay-ui:panel>
@@ -153,7 +224,13 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 				title="password-history"
 			>
 				<aui:fieldset>
-					<aui:input helpMessage="enable-history-help" label="enable-history" name="history" type="toggle-switch" value="<%= passwordPolicy.isHistory() %>" />
+					<aui:input
+						helpMessage="enable-history-help"
+						label="enable-history"
+						name="history"
+						type="toggle-switch"
+						value="<%= passwordPolicy.isHistory() %>"
+					/>
 
 					<div class="password-policy-options" id="<portlet:namespace />historySettings">
 						<aui:select helpMessage="history-count-help" name="historyCount">
@@ -182,10 +259,20 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 				title="password-expiration"
 			>
 				<aui:fieldset>
-					<aui:input helpMessage="enable-expiration-help" label="enable-expiration" name="expireable" type="toggle-switch" value="<%= passwordPolicy.isExpireable() %>" />
+					<aui:input
+						helpMessage="enable-expiration-help"
+						label="enable-expiration"
+						name="expireable"
+						type="toggle-switch"
+						value="<%= passwordPolicy.isExpireable() %>"
+					/>
 
 					<div class="password-policy-options" id="<portlet:namespace />expirationSettings">
-						<aui:select helpMessage="maximum-age-help" label="maximum-age" name="maxAge">
+						<aui:select
+							helpMessage="maximum-age-help"
+							label="maximum-age"
+							name="maxAge"
+						>
 
 							<%
 							for (long duration : _sort(passwordPoliciesConfiguration.maximumAgeDurations())) {
@@ -228,10 +315,20 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 				title="lockout"
 			>
 				<aui:fieldset>
-					<aui:input helpMessage="enable-lockout-help" label="enable-lockout" name="lockout" type="toggle-switch" value="<%= passwordPolicy.isLockout() %>" />
+					<aui:input
+						helpMessage="enable-lockout-help"
+						label="enable-lockout"
+						name="lockout"
+						type="toggle-switch"
+						value="<%= passwordPolicy.isLockout() %>"
+					/>
 
 					<div class="password-policy-options" id="<portlet:namespace />lockoutSettings">
-						<aui:input helpMessage="maximum-failure-help" label="maximum-failure" name="maxFailure" />
+						<aui:input
+							helpMessage="maximum-failure-help"
+							label="maximum-failure"
+							name="maxFailure"
+						/>
 
 						<aui:select helpMessage="reset-failure-count-help" name="resetFailureCount">
 

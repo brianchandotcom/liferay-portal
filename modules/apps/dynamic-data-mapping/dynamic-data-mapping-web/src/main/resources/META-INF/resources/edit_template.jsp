@@ -89,20 +89,79 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 </portlet:actionURL>
 
 <div class="container-fluid-1280">
-	<aui:form action="<%= (template == null) ? addTemplateURL : updateTemplateURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault();" %>'>
-		<aui:input name="redirect" type="hidden" value="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource) %>" />
-		<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
-		<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
-		<aui:input name="portletResourceNamespace" type="hidden" value="<%= portletResourceNamespace %>" />
-		<aui:input name="templateId" type="hidden" value="<%= templateId %>" />
-		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-		<aui:input name="classNameId" type="hidden" value="<%= classNameId %>" />
-		<aui:input name="classPK" type="hidden" value="<%= classPK %>" />
-		<aui:input name="resourceClassNameId" type="hidden" value="<%= resourceClassNameId %>" />
-		<aui:input name="type" type="hidden" value="<%= type %>" />
-		<aui:input name="status" type="hidden" value="<%= String.valueOf(WorkflowConstants.STATUS_APPROVED) %>" />
-		<aui:input name="structureAvailableFields" type="hidden" value="<%= structureAvailableFields %>" />
-		<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
+	<aui:form
+		action="<%= (template == null) ? addTemplateURL : updateTemplateURL %>"
+		cssClass="container-fluid-1280"
+		enctype="multipart/form-data"
+		method="post"
+		name="fm"
+		onSubmit='<%= "event.preventDefault();" %>'
+	>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource) %>"
+		/>
+		<aui:input
+			name="closeRedirect"
+			type="hidden"
+			value="<%= closeRedirect %>"
+		/>
+		<aui:input
+			name="portletResource"
+			type="hidden"
+			value="<%= portletResource %>"
+		/>
+		<aui:input
+			name="portletResourceNamespace"
+			type="hidden"
+			value="<%= portletResourceNamespace %>"
+		/>
+		<aui:input
+			name="templateId"
+			type="hidden"
+			value="<%= templateId %>"
+		/>
+		<aui:input
+			name="groupId"
+			type="hidden"
+			value="<%= groupId %>"
+		/>
+		<aui:input
+			name="classNameId"
+			type="hidden"
+			value="<%= classNameId %>"
+		/>
+		<aui:input
+			name="classPK"
+			type="hidden"
+			value="<%= classPK %>"
+		/>
+		<aui:input
+			name="resourceClassNameId"
+			type="hidden"
+			value="<%= resourceClassNameId %>"
+		/>
+		<aui:input
+			name="type"
+			type="hidden"
+			value="<%= type %>"
+		/>
+		<aui:input
+			name="status"
+			type="hidden"
+			value="<%= String.valueOf(WorkflowConstants.STATUS_APPROVED) %>"
+		/>
+		<aui:input
+			name="structureAvailableFields"
+			type="hidden"
+			value="<%= structureAvailableFields %>"
+		/>
+		<aui:input
+			name="saveAndContinue"
+			type="hidden"
+			value="<%= false %>"
+		/>
 
 		<div class="lfr-form-content">
 			<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
@@ -124,7 +183,11 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 				long imageMaxSize = ddmDisplayContext.smallImageMaxSize();
 				%>
 
-				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= LanguageUtil.formatStorageSize(imageMaxSize, locale) %>"
+					key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x"
+					translateArguments="<%= false %>"
+				/>
 			</liferay-ui:error>
 
 			<c:if test="<%= showHeader %>">
@@ -165,7 +228,11 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 			<aui:model-context bean="<%= template %>" model="<%= DDMTemplate.class %>" />
 
 			<c:if test="<%= (templateVersion != null) && ddmDisplay.isVersioningEnabled() %>">
-				<aui:workflow-status model="<%= DDMTemplate.class %>" status="<%= templateVersion.getStatus() %>" version="<%= templateVersion.getVersion() %>" />
+				<aui:workflow-status
+					model="<%= DDMTemplate.class %>"
+					status="<%= templateVersion.getStatus() %>"
+					version="<%= templateVersion.getVersion() %>"
+				/>
 
 				<div class="template-history-toolbar" id="<portlet:namespace />templateHistoryToolbar"></div>
 
@@ -225,7 +292,12 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 						>
 							<c:if test="<%= ddmDisplay.isShowStructureSelector() %>">
 								<div class="form-group">
-									<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (structure != null) ? structure.getName(locale) : StringPool.BLANK %>" />
+									<aui:input
+										helpMessage="structure-help"
+										name="structure"
+										type="resource"
+										value="<%= (structure != null) ? structure.getName(locale) : StringPool.BLANK %>"
+									/>
 
 									<c:if test="<%= ddmNavigationHelper.isNavigationStartsOnViewTemplates(liferayPortletRequest) && ((template == null) || (template.getClassPK() == 0)) %>">
 										<liferay-ui:icon
@@ -241,7 +313,12 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 							</c:if>
 
 							<c:if test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">
-								<aui:select changesContext="<%= true %>" helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
+								<aui:select
+									changesContext="<%= true %>"
+									helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>'
+									label="language"
+									name="language"
+								>
 
 									<%
 									for (String curLangType : ddmDisplay.getTemplateLanguageTypes()) {
@@ -255,7 +332,11 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 										sb.append(StringPool.CLOSE_PARENTHESIS);
 									%>
 
-										<aui:option label="<%= sb.toString() %>" selected="<%= language.equals(curLangType) %>" value="<%= curLangType %>" />
+										<aui:option
+											label="<%= sb.toString() %>"
+											selected="<%= language.equals(curLangType) %>"
+											value="<%= curLangType %>"
+										/>
 
 									<%
 									}
@@ -271,29 +352,50 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 							<aui:input name="description" />
 
 							<c:if test="<%= template != null %>">
-								<aui:input helpMessage="template-key-help" name="templateKey" type="resource" value="<%= template.getTemplateKey() %>" />
+								<aui:input
+									helpMessage="template-key-help"
+									name="templateKey"
+									type="resource"
+									value="<%= template.getTemplateKey() %>"
+								/>
 
 								<portlet:resourceURL id="getTemplate" var="getTemplateURL">
 									<portlet:param name="templateId" value="<%= String.valueOf(templateId) %>" />
 								</portlet:resourceURL>
 
-								<aui:input name="url" type="resource" value="<%= getTemplateURL.toString() %>" />
+								<aui:input
+									name="url"
+									type="resource"
+									value="<%= getTemplateURL.toString() %>"
+								/>
 
 								<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
-									<aui:input name="webDavURL" type="resource" value="<%= template.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
+									<aui:input
+										name="webDavURL"
+										type="resource"
+										value="<%= template.getWebDavURL(themeDisplay, refererWebDAVToken) %>"
+									/>
 								</c:if>
 							</c:if>
 
 							<c:choose>
 								<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
-									<aui:select helpMessage="only-allow-deleting-required-fields-in-edit-mode" label="mode" name="mode">
+									<aui:select
+										helpMessage="only-allow-deleting-required-fields-in-edit-mode"
+										label="mode"
+										name="mode"
+									>
 										<aui:option label="create" />
 										<aui:option label="edit" />
 									</aui:select>
 								</c:when>
 								<c:otherwise>
 									<c:if test="<%= showCacheableInput %>">
-										<aui:input helpMessage="journal-template-cacheable-help" name="cacheable" value="<%= cacheable %>" />
+										<aui:input
+											helpMessage="journal-template-cacheable-help"
+											name="cacheable"
+											value="<%= cacheable %>"
+										/>
 									</c:if>
 
 									<div id="<portlet:namespace />smallImageContainer">
@@ -311,15 +413,39 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 
 												<aui:col width="<%= (smallImage && (template != null)) ? 50 : 100 %>">
 													<aui:fieldset>
-														<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image-url" name="type" type="radio" />
+														<aui:input
+															cssClass="lfr-ddm-small-image-type"
+															inlineField="<%= true %>"
+															label="small-image-url"
+															name="type"
+															type="radio"
+														/>
 
-														<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
+														<aui:input
+															cssClass="lfr-ddm-small-image-value"
+															inlineField="<%= true %>"
+															label=""
+															name="smallImageURL"
+															title="small-image-url"
+														/>
 													</aui:fieldset>
 
 													<aui:fieldset>
-														<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image" name="type" type="radio" />
+														<aui:input
+															cssClass="lfr-ddm-small-image-type"
+															inlineField="<%= true %>"
+															label="small-image"
+															name="type"
+															type="radio"
+														/>
 
-														<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageFile" type="file" />
+														<aui:input
+															cssClass="lfr-ddm-small-image-value"
+															inlineField="<%= true %>"
+															label=""
+															name="smallImageFile"
+															type="file"
+														/>
 													</aui:fieldset>
 												</aui:col>
 											</aui:row>
@@ -476,7 +602,11 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 		String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTemplate');";
 		%>
 
-		<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
+		<aui:button
+			onClick="<%= taglibOnClick %>"
+			primary="<%= true %>"
+			value='<%= LanguageUtil.get(request, "save") %>'
+		/>
 
 		<aui:button onClick='<%= renderResponse.getNamespace() + "saveAndContinueTemplate();" %>' value='<%= LanguageUtil.get(resourceBundle, "save-and-continue") %>' />
 

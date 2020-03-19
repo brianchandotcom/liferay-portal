@@ -28,8 +28,16 @@ String notificationRecipients = PrefsParamUtil.getString(portletPreferences, req
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+<aui:form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
 
 	<h2>
 		<liferay-ui:message key="recovery-options" />
@@ -44,15 +52,51 @@ String notificationRecipients = PrefsParamUtil.getString(portletPreferences, req
 		title="notification-options"
 	>
 		<aui:fieldset>
-			<aui:input cssClass="lfr-input-text-container" helpMessage="notification-email-from-address-help" label="notification-email-from-address" name="preferences--notificationEmailFromAddress--" style="min-width: 100px;" value="<%= notificationEmailFromAddress %>" />
+			<aui:input
+				cssClass="lfr-input-text-container"
+				helpMessage="notification-email-from-address-help"
+				label="notification-email-from-address"
+				name="preferences--notificationEmailFromAddress--"
+				style="min-width: 100px;"
+				value="<%= notificationEmailFromAddress %>"
+			/>
 
-			<aui:input cssClass="lfr-input-text-container" helpMessage="notification-email-from-name-help" label="notification-email-from-name" name="preferences--notificationEmailFromName--" style="min-width: 100px;" value="<%= notificationEmailFromName %>" />
+			<aui:input
+				cssClass="lfr-input-text-container"
+				helpMessage="notification-email-from-name-help"
+				label="notification-email-from-name"
+				name="preferences--notificationEmailFromName--"
+				style="min-width: 100px;"
+				value="<%= notificationEmailFromName %>"
+			/>
 
-			<aui:input cssClass="lfr-input-text-container" helpMessage="notification-recipients-help" label="notification-recipients" name="preferences--notificationRecipients--" style="min-width: 400px;" value="<%= notificationRecipients %>" />
+			<aui:input
+				cssClass="lfr-input-text-container"
+				helpMessage="notification-recipients-help"
+				label="notification-recipients"
+				name="preferences--notificationRecipients--"
+				style="min-width: 400px;"
+				value="<%= notificationRecipients %>"
+			/>
 
-			<aui:input cssClass="lfr-input-text-container" helpMessage="notification-email-subject-help" label="notification-email-subject" name="preferences--notificationEmailSubject--" style="min-width: 400px;" value="<%= notificationEmailSubject %>" />
+			<aui:input
+				cssClass="lfr-input-text-container"
+				helpMessage="notification-email-subject-help"
+				label="notification-email-subject"
+				name="preferences--notificationEmailSubject--"
+				style="min-width: 400px;"
+				value="<%= notificationEmailSubject %>"
+			/>
 
-			<aui:input cssClass="lfr-textarea-container" helpMessage="notification-email-body-help" label="notification-email-body" name="preferences--notificationEmailBody--" style="min-height: 100px; min-width: 400px;" type="textarea" value="<%= notificationEmailBody %>" />
+			<aui:input
+				cssClass="lfr-textarea-container"
+				helpMessage="notification-email-body-help"
+				label="notification-email-body"
+				name="preferences--notificationEmailBody--"
+				style="min-height: 100px; min-width: 400px;"
+				type="textarea"
+				value="<%= notificationEmailBody %>"
+			/>
 		</aui:fieldset>
 	</liferay-ui:panel>
 
@@ -63,7 +107,13 @@ String notificationRecipients = PrefsParamUtil.getString(portletPreferences, req
 		title="restart-options"
 	>
 		<aui:fieldset>
-			<aui:input cssClass="lfr-input-text-container" helpMessage="maximum-restart-attempts-help" label="maximum-restart-attempts" name="preferences--maxRestartAttempts--" value="<%= maxRestartAttempts %>">
+			<aui:input
+				cssClass="lfr-input-text-container"
+				helpMessage="maximum-restart-attempts-help"
+				label="maximum-restart-attempts"
+				name="preferences--maxRestartAttempts--"
+				value="<%= maxRestartAttempts %>"
+			>
 				<aui:validator name="min">"0"</aui:validator>
 			</aui:input>
 		</aui:fieldset>

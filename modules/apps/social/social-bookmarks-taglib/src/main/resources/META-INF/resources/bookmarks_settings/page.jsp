@@ -55,7 +55,11 @@ for (String curType : SocialBookmarksRegistryUtil.getSocialBookmarksTypes()) {
 rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 %>
 
-<aui:input name="preferences--socialBookmarksTypes--" type="hidden" value="<%= StringUtil.merge(types) %>" />
+<aui:input
+	name="preferences--socialBookmarksTypes--"
+	type="hidden"
+	value="<%= StringUtil.merge(types) %>"
+/>
 
 <liferay-ui:input-move-boxes
 	leftBoxName="currentTypes"
@@ -77,7 +81,13 @@ rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 	for (String curDisplayStyle : displayStyles) {
 	%>
 
-		<aui:input checked="<%= displayStyle.equals(curDisplayStyle) %>" label="<%= curDisplayStyle %>" name="preferences--socialBookmarksDisplayStyle--" type="radio" value="<%= curDisplayStyle %>" />
+		<aui:input
+			checked="<%= displayStyle.equals(curDisplayStyle) %>"
+			label="<%= curDisplayStyle %>"
+			name="preferences--socialBookmarksDisplayStyle--"
+			type="radio"
+			value="<%= curDisplayStyle %>"
+		/>
 
 	<%
 	}

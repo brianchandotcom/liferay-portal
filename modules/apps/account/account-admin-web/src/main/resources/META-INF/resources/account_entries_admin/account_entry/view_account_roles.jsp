@@ -29,17 +29,13 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf
 renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay.getName());
 %>
 
-<clay:management-toolbar
-	displayContext="<%= viewAccountRolesManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= viewAccountRolesManagementToolbarDisplayContext %>" />
 
 <aui:container cssClass="container-fluid container-fluid-max-xl">
 	<aui:form method="post" name="fm">
 		<aui:input name="accountRoleIds" type="hidden" />
 
-		<liferay-ui:search-container
-			searchContainer="<%= accountRoleDisplaySearchContainer %>"
-		>
+		<liferay-ui:search-container searchContainer="<%= accountRoleDisplaySearchContainer %>">
 			<liferay-ui:search-container-row
 				className="com.liferay.account.admin.web.internal.display.AccountRoleDisplay"
 				keyProperty="accountRoleId"
@@ -72,19 +68,12 @@ renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay
 					value="<%= accountRole.getDescription(locale) %>"
 				/>
 
-				<liferay-ui:search-container-column-jsp
-					path="/account_entries_admin/account_role_action.jsp"
-				/>
+				<liferay-ui:search-container-column-jsp path="/account_entries_admin/account_role_action.jsp" />
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </aui:container>
 
-<liferay-frontend:component
-	componentId="<%= viewAccountRolesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="account_entries_admin/js/AccountRolesManagementToolbarDefaultEventHandler.es"
-/>
+<liferay-frontend:component componentId="<%= viewAccountRolesManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="account_entries_admin/js/AccountRolesManagementToolbarDefaultEventHandler.es" />

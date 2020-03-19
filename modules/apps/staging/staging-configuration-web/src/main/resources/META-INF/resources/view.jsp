@@ -57,12 +57,37 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 				<portlet:param name="mvcRenderCommandName" value="staging" />
 			</portlet:renderURL>
 
-			<aui:form action="<%= editStagingConfigurationURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
-				<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
-				<aui:input name="groupId" type="hidden" value="<%= liveGroupId %>" />
-				<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
-				<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
-				<aui:input name="forceDisable" type="hidden" value="<%= false %>" />
+			<aui:form
+				action="<%= editStagingConfigurationURL %>"
+				method="post"
+				name="fm"
+				onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'
+			>
+				<aui:input
+					name="redirect"
+					type="hidden"
+					value="<%= redirectURL %>"
+				/>
+				<aui:input
+					name="groupId"
+					type="hidden"
+					value="<%= liveGroupId %>"
+				/>
+				<aui:input
+					name="liveGroupId"
+					type="hidden"
+					value="<%= liveGroupId %>"
+				/>
+				<aui:input
+					name="stagingGroupId"
+					type="hidden"
+					value="<%= stagingGroupId %>"
+				/>
+				<aui:input
+					name="forceDisable"
+					type="hidden"
+					value="<%= false %>"
+				/>
 
 				<c:if test="<%= !privateLayoutSet.isLayoutSetPrototypeLinkActive() && !publicLayoutSet.isLayoutSetPrototypeLinkActive() %>">
 					<div class="sheet-header">
@@ -145,9 +170,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 		</div>
 	</c:when>
 	<c:otherwise>
-		<liferay-staging:alert
-			type="INFO"
-		>
+		<liferay-staging:alert type="INFO">
 			<liferay-ui:message key="you-do-not-have-permission-to-manage-settings-related-to-staging" />
 		</liferay-staging:alert>
 	</c:otherwise>

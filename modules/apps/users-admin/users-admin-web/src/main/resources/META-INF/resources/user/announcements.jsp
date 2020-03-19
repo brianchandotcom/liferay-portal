@@ -43,9 +43,7 @@ else {
 </div>
 
 <liferay-ui:search-container>
-	<liferay-ui:search-container-results
-		results="<%= deliveries %>"
-	/>
+	<liferay-ui:search-container-results results="<%= deliveries %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.announcements.kernel.model.AnnouncementsDelivery"
@@ -53,19 +51,19 @@ else {
 		keyProperty="deliveryId"
 		modelVar="delivery"
 	>
-		<liferay-ui:search-container-column-text
-			name="type"
-			value="<%= LanguageUtil.get(request, delivery.getType()) %>"
-		/>
+		<liferay-ui:search-container-column-text name="type" value="<%= LanguageUtil.get(request, delivery.getType()) %>" />
 
-		<liferay-ui:search-container-column-text
-			name="email"
-		>
-			<aui:input disabled="<%= false %>" label="" name="announcementsTypeEmail" title='<%= LanguageUtil.format(request, "receive-x-announcements-via-email", delivery.getType()) %>' type="checkbox" value="<%= delivery.isEmail() %>" />
+		<liferay-ui:search-container-column-text name="email">
+			<aui:input
+				disabled="<%= false %>"
+				label=""
+				name="announcementsTypeEmail"
+				title='<%= LanguageUtil.format(request, "receive-x-announcements-via-email", delivery.getType()) %>'
+				type="checkbox"
+				value="<%= delivery.isEmail() %>"
+			/>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>

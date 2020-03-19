@@ -68,14 +68,8 @@ else {
 
 		</liferay-ui:search-container-results>
 
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse"
-			modelVar="schedulerResponse"
-		>
-			<liferay-ui:search-container-column-text
-				cssClass="background-task-user-column"
-				name="user"
-			>
+		<liferay-ui:search-container-row className="com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse" modelVar="schedulerResponse">
+			<liferay-ui:search-container-column-text cssClass="background-task-user-column" name="user">
 
 				<%
 				Message message = schedulerResponse.getMessage();
@@ -91,9 +85,7 @@ else {
 				/>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				name="title"
-			>
+			<liferay-ui:search-container-column-text name="title">
 
 				<%
 				String description = schedulerResponse.getDescription();
@@ -125,17 +117,13 @@ else {
 					/>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:search-container-column-text
-						name="end-date"
-					>
+					<liferay-ui:search-container-column-text name="end-date">
 						<liferay-ui:message key='<%= LanguageUtil.get(request, "no-end-date") %>' />
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>
 			</c:choose>
 
-			<liferay-ui:search-container-column-text
-				align="right"
-			>
+			<liferay-ui:search-container-column-text align="right">
 				<liferay-ui:icon-menu
 					direction="left-side"
 					icon="<%= StringPool.BLANK %>"
@@ -155,16 +143,11 @@ else {
 						<portlet:param name="redirect" value="<%= deleteScheduledPublicationRedirectURL %>" />
 					</portlet:actionURL>
 
-					<liferay-ui:icon
-						message="delete"
-						url="<%= deleteScheduledPublicationURL %>"
-					/>
+					<liferay-ui:icon message="delete" url="<%= deleteScheduledPublicationURL %>" />
 				</liferay-ui:icon-menu>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

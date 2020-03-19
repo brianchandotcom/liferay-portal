@@ -28,11 +28,27 @@ long categoryId = MBUtil.getCategoryId(request, category);
 	<portlet:param name="mvcRenderCommandName" value="/message_boards/search" />
 </liferay-portlet:renderURL>
 
-<aui:form action="<%= searchURL %>" method="get" name="searchFm">
+<aui:form
+	action="<%= searchURL %>"
+	method="get"
+	name="searchFm"
+>
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= categoryId %>" />
-	<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
+	<aui:input
+		name="breadcrumbsCategoryId"
+		type="hidden"
+		value="<%= categoryId %>"
+	/>
+	<aui:input
+		name="searchCategoryId"
+		type="hidden"
+		value="<%= categoryId %>"
+	/>
 
 	<liferay-ui:input-search
 		id='<%= portletResponse.getNamespace() + "keywords1" %>'

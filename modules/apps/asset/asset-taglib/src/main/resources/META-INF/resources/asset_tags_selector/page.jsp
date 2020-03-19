@@ -49,10 +49,7 @@ List<Map<String, String>> selectedItems = (List<Map<String, String>>)data.get("s
 						for (Map<String, String> selectedItem : selectedItems) {
 						%>
 
-							<clay:label
-								closeable="<%= true %>"
-								label='<%= selectedItem.get("label") %>'
-							/>
+							<clay:label closeable="<%= true %>" label='<%= selectedItem.get("label") %>' />
 
 						<%
 						}
@@ -69,8 +66,5 @@ List<Map<String, String>> selectedItems = (List<Map<String, String>>)data.get("s
 		</button>
 	</div>
 
-	<react:component
-		data="<%= data %>"
-		module="asset_tags_selector/AssetTagsSelectorTag.es"
-	/>
+	<react:component data="<%= data %>" module="asset_tags_selector/AssetTagsSelectorTag.es" />
 </div>

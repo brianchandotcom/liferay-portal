@@ -28,9 +28,7 @@ portletURL.setParameter("tabs1", "identity-provider-connections");
 	iteratorURL="<%= portletURL %>"
 	total="<%= GetterUtil.getInteger(renderRequest.getAttribute(SamlWebKeys.SAML_SP_IDP_CONNECTIONS_COUNT)) %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= (List<SamlSpIdpConnection>)renderRequest.getAttribute(SamlWebKeys.SAML_SP_IDP_CONNECTIONS) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= (List<SamlSpIdpConnection>)renderRequest.getAttribute(SamlWebKeys.SAML_SP_IDP_CONNECTIONS) %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.saml.persistence.model.SamlSpIdpConnection"
@@ -76,7 +74,11 @@ portletURL.setParameter("tabs1", "identity-provider-connections");
 	</portlet:renderURL>
 
 	<aui:button-row>
-		<aui:button href="<%= addIdentityProviderURL %>" label="add-identity-provider" value="add-identity-provider" />
+		<aui:button
+			href="<%= addIdentityProviderURL %>"
+			label="add-identity-provider"
+			value="add-identity-provider"
+		/>
 	</aui:button-row>
 
 	<liferay-ui:search-iterator />

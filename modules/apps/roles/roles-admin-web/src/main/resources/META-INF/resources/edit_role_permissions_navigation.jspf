@@ -67,7 +67,11 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 			</liferay-portlet:renderURL>
 
 			<li class="nav-item permission-navigation-item-summary <%= Validator.isNull(portletResource)? "selected" : "" %>">
-				<aui:a cssClass="nav-link permission-navigation-link" data="<%= data %>" href="<%= viewPermissionsURL.toString() %>">
+				<aui:a
+					cssClass="nav-link permission-navigation-link"
+					data="<%= data %>"
+					href="<%= viewPermissionsURL.toString() %>"
+				>
 					<liferay-ui:message key="summary" />
 				</aui:a>
 			</li>
@@ -114,7 +118,11 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 								%>
 
 									<li class="nav-item permission-navigation-item-container <%= portletResource.equals(panelAppPortlet.getPortletId())? "selected" : "" %>">
-										<aui:a cssClass="nav-link permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
+										<aui:a
+											cssClass="nav-link permission-navigation-link"
+											data="<%= data %>"
+											href="<%= editPermissionsURL.toString() %>"
+										>
 											<%= PortalUtil.getPortletLongTitle(panelAppPortlet, application, locale) %>
 										</aui:a>
 									</li>
@@ -142,7 +150,11 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 					%>
 
 					<div class="<%= portletResource.equals(usersAdminPortlet.getPortletId())? "selected" : "" %>">
-						<aui:a cssClass="nav-link permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
+						<aui:a
+							cssClass="nav-link permission-navigation-link"
+							data="<%= data %>"
+							href="<%= editPermissionsURL.toString() %>"
+						>
 							<%= PortalUtil.getPortletLongTitle(usersAdminPortlet, application, locale) %>
 						</aui:a>
 					</div>
@@ -173,7 +185,11 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 							<ul class="nav nav-stacked permission-navigation-section">
 								<div class="permission-navigation-item-content">
 									<li class="nav-item permission-navigation-item-container">
-										<aui:a cssClass="nav-link permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
+										<aui:a
+											cssClass="nav-link permission-navigation-link"
+											data="<%= data %>"
+											href="<%= editPermissionsURL.toString() %>"
+										>
 											<liferay-ui:message key="general-permissions" />
 										</aui:a>
 									</li>
@@ -218,7 +234,11 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 											%>
 
 												<li class="nav-item permission-navigation-item-container <%= portletResource.equals(panelAppPortlet.getPortletId())? "selected" : "" %>">
-													<aui:a cssClass="nav-link permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
+													<aui:a
+														cssClass="nav-link permission-navigation-link"
+														data="<%= data %>"
+														href="<%= editPermissionsURL.toString() %>"
+													>
 														<%= PortalUtil.getPortletLongTitle(panelAppPortlet, application, locale) %>
 													</aui:a>
 												</li>
@@ -285,7 +305,11 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 									%>
 
 										<li class="nav-item permission-navigation-item-container <%= portletResource.equals(panelAppPortlet.getPortletId())? "selected" : "" %>">
-											<aui:a cssClass="nav-link permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
+											<aui:a
+												cssClass="nav-link permission-navigation-link"
+												data="<%= data %>"
+												href="<%= editPermissionsURL.toString() %>"
+											>
 												<%= PortalUtil.getPortletLongTitle(panelAppPortlet, application, locale) %>
 											</aui:a>
 										</li>
@@ -346,7 +370,11 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 							%>
 
 								<li class="nav-item permission-navigation-item-container <%= portletResource.equals(curPortlet.getPortletId())? "selected" : "" %>">
-									<aui:a cssClass="nav-link permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
+									<aui:a
+										cssClass="nav-link permission-navigation-link"
+										data="<%= data %>"
+										href="<%= editPermissionsURL.toString() %>"
+									>
 										<%= PortalUtil.getPortletLongTitle(curPortlet, application, locale) %>
 									</aui:a>
 								</li>
@@ -390,7 +418,11 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 							%>
 
 							<li class="nav-item permission-navigation-item-container <%= portletResource.equals(personalPortlet.getPortletId())? "selected" : "" %>">
-								<aui:a cssClass="nav-link permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
+								<aui:a
+									cssClass="nav-link permission-navigation-link"
+									data="<%= data %>"
+									href="<%= editPermissionsURL.toString() %>"
+								>
 									<%= PortalUtil.getPortletLongTitle(personalPortlet, application, locale) %>
 								</aui:a>
 							</li>

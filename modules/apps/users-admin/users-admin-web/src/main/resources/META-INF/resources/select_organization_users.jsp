@@ -57,11 +57,13 @@ SearchContainer userSearchContainer = selectOrganizationUsersManagementToolbarDi
 	viewTypeItems="<%= selectOrganizationUsersManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<liferay-ui:search-container
-		id="users"
-		searchContainer="<%= userSearchContainer %>"
-	>
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
+	<liferay-ui:search-container id="users" searchContainer="<%= userSearchContainer %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
 			escapedModel="<%= true %>"
@@ -72,14 +74,10 @@ SearchContainer userSearchContainer = selectOrganizationUsersManagementToolbarDi
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
 					<liferay-ui:search-container-column-text>
-						<liferay-ui:user-portrait
-							user="<%= user2 %>"
-						/>
+						<liferay-ui:user-portrait user="<%= user2 %>" />
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h5><%= user2.getFullName() %></h5>
 
 						<h6 class="text-default">
@@ -121,10 +119,7 @@ SearchContainer userSearchContainer = selectOrganizationUsersManagementToolbarDi
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

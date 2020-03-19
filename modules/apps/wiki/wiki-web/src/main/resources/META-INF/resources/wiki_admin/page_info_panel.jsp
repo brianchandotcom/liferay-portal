@@ -174,9 +174,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 						/>
 					</c:if>
 
-					<liferay-expando:custom-attributes-available
-						className="<%= WikiPage.class.getName() %>"
-					>
+					<liferay-expando:custom-attributes-available className="<%= WikiPage.class.getName() %>">
 						<liferay-expando:custom-attribute-list
 							className="<%= WikiPage.class.getName() %>"
 							classPK="<%= wikiPage.getResourcePrimKey() %>"
@@ -191,9 +189,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 
 					<c:if test="<%= (wikiPageAssetEntry != null) && wikiPortletInstanceSettingsHelper.isEnableRelatedAssets() %>">
 						<div class="entry-links">
-							<liferay-asset:asset-links
-								assetEntryId="<%= wikiPageAssetEntry.getEntryId() %>"
-							/>
+							<liferay-asset:asset-links assetEntryId="<%= wikiPageAssetEntry.getEntryId() %>" />
 						</div>
 					</c:if>
 				</c:when>

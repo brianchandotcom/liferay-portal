@@ -32,7 +32,11 @@ List<InfoListProvider> infoListProviders = assetPublisherDisplayContext.getAsset
 				Class<?> clazz = infoListProvider.getClass();
 			%>
 
-				<aui:option label="<%= infoListProvider.getLabel(themeDisplay.getLocale()) %>" selected="<%= infoListProviderClassName.equals(clazz.getName()) %>" value="<%= clazz.getName() %>" />
+				<aui:option
+					label="<%= infoListProvider.getLabel(themeDisplay.getLocale()) %>"
+					selected="<%= infoListProviderClassName.equals(clazz.getName()) %>"
+					value="<%= clazz.getName() %>"
+				/>
 
 			<%
 			}

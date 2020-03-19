@@ -29,10 +29,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 <aui:input name="addUserGroupIds" type="hidden" />
 <aui:input name="removeUserGroupIds" type="hidden" />
 
-<liferay-ui:search-container
-	rowChecker="<%= new UserGroupGroupRoleUserGroupChecker(renderResponse, group, role) %>"
-	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
->
+<liferay-ui:search-container rowChecker="<%= new UserGroupGroupRoleUserGroupChecker(renderResponse, group, role) %>" searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>">
 
 	<%
 	UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
@@ -48,10 +45,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 	}
 	%>
 
-	<liferay-ui:user-group-search-container-results
-		searchTerms="<%= searchTerms %>"
-		userGroupParams="<%= userGroupParams %>"
-	/>
+	<liferay-ui:user-group-search-container-results searchTerms="<%= searchTerms %>" userGroupParams="<%= userGroupParams %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.UserGroup"
@@ -72,7 +66,5 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>

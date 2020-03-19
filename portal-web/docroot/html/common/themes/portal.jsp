@@ -36,18 +36,14 @@ else {
 	if (tilesPopUp || themeDisplay.isStatePopUp() || themeDisplay.isWidget()) {
 %>
 
-		<liferay-theme:include
-			page="portal_pop_up.jsp"
-		/>
+		<liferay-theme:include page="portal_pop_up.jsp" />
 
 	<%
 	}
 	else {
 	%>
 
-		<liferay-theme:include
-			page="portal_normal.jsp"
-		/>
+		<liferay-theme:include page="portal_normal.jsp" />
 
 <%
 	}

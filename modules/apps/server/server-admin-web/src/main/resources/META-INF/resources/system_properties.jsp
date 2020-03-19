@@ -78,14 +78,9 @@ propertiesSearchContainer.setTotal(filteredPropertiesList.size());
 		iteratorURL="<%= serverURL %>"
 		total="<%= filteredPropertiesList.size() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= ListUtil.subList(filteredPropertiesList, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
+		<liferay-ui:search-container-results results="<%= ListUtil.subList(filteredPropertiesList, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
-		<liferay-ui:search-container-row
-			className="java.util.Map.Entry"
-			modelVar="entry"
-		>
+		<liferay-ui:search-container-row className="java.util.Map.Entry" modelVar="entry">
 
 			<%
 			String property = String.valueOf(entry.getKey());
@@ -98,10 +93,7 @@ propertiesSearchContainer.setTotal(filteredPropertiesList.size());
 				value="<%= HtmlUtil.escape(StringUtil.shorten(property, 80)) %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
-				name="value"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-expand" name="value">
 				<c:if test="<%= Validator.isNotNull(value) %>">
 					<c:choose>
 						<c:when test="<%= value.length() > 80 %>">
@@ -117,8 +109,6 @@ propertiesSearchContainer.setTotal(filteredPropertiesList.size());
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

@@ -44,8 +44,16 @@ TermsOfUseContentProvider termsOfUseContentProvider = TermsOfUseContentProviderU
 	</div>
 
 	<aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_terms_of_use" %>' name="fm">
-		<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
-		<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />
+		<aui:input
+			name="doAsUserId"
+			type="hidden"
+			value="<%= themeDisplay.getDoAsUserId() %>"
+		/>
+		<aui:input
+			name="<%= WebKeys.REFERER %>"
+			type="hidden"
+			value="<%= referer %>"
+		/>
 
 		<div class="sheet-text">
 			<c:choose>
@@ -71,7 +79,11 @@ TermsOfUseContentProvider termsOfUseContentProvider = TermsOfUseContentProviderU
 					String taglibOnClick = "alert('" + UnicodeLanguageUtil.get(request, "you-must-agree-with-the-terms-of-use-to-continue") + "');";
 					%>
 
-					<aui:button onClick="<%= taglibOnClick %>" type="cancel" value="i-disagree" />
+					<aui:button
+						onClick="<%= taglibOnClick %>"
+						type="cancel"
+						value="i-disagree"
+					/>
 				</aui:button-row>
 			</c:if>
 		</div>

@@ -25,9 +25,21 @@ renderResponse.setTitle(LanguageUtil.get(request, "anonymous-account"));
 </portlet:actionURL>
 
 <div class="login-container">
-	<aui:form action="<%= createAnonymousAccountURL %>" method="post" name="fm">
-		<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+	<aui:form
+		action="<%= createAnonymousAccountURL %>"
+		method="post"
+		name="fm"
+	>
+		<aui:input
+			name="saveLastPath"
+			type="hidden"
+			value="<%= false %>"
+		/>
+		<aui:input
+			name="<%= Constants.CMD %>"
+			type="hidden"
+			value="<%= Constants.ADD %>"
+		/>
 
 		<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
 		<liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
@@ -71,7 +83,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "anonymous-account"));
 					</aui:input>
 				</c:if>
 
-				<aui:input autoFocus="<%= true %>" model="<%= User.class %>" name="emailAddress">
+				<aui:input
+					autoFocus="<%= true %>"
+					model="<%= User.class %>"
+					name="emailAddress"
+				>
 					<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED, PropsValues.USERS_EMAIL_ADDRESS_REQUIRED) %>">
 						<aui:validator name="required" />
 					</c:if>
@@ -80,11 +96,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "anonymous-account"));
 
 			<aui:col width="<%= 50 %>">
 				<c:if test="<%= captchaConfiguration.createAccountCaptchaEnabled() %>">
-					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/login/captcha" var="captchaURL" />
-
-					<liferay-captcha:captcha
-						url="<%= captchaURL %>"
+					<liferay-portlet:resourceURL
+						copyCurrentRenderParameters="<%= false %>"
+						id="/login/captcha"
+						var="captchaURL"
 					/>
+
+					<liferay-captcha:captcha url="<%= captchaURL %>" />
 				</c:if>
 			</aui:col>
 		</aui:fieldset>

@@ -54,10 +54,7 @@ RankingEntryDisplayContext rankingEntryDisplayContext = (RankingEntryDisplayCont
 		<portlet:param name="keywords" value="<%= rankingEntryDisplayContext.getKeywords() %>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editURL %>"
-	/>
+	<liferay-ui:icon message="edit" url="<%= editURL %>" />
 
 	<portlet:actionURL name="/results_ranking/edit" var="deactivateURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= rankingEntryDisplayContext.getInactive() ? ResultRankingsConstants.ACTIVATE : ResultRankingsConstants.DEACTIVATE %>" />
@@ -65,10 +62,7 @@ RankingEntryDisplayContext rankingEntryDisplayContext = (RankingEntryDisplayCont
 		<portlet:param name="resultsRankingUid" value="<%= rankingEntryDisplayContext.getUid() %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon
-		message="<%= rankingEntryDisplayContext.getInactive() ? ResultRankingsConstants.ACTIVATE : ResultRankingsConstants.DEACTIVATE %>"
-		url="<%= deactivateURL %>"
-	/>
+	<liferay-ui:icon message="<%= rankingEntryDisplayContext.getInactive() ? ResultRankingsConstants.ACTIVATE : ResultRankingsConstants.DEACTIVATE %>" url="<%= deactivateURL %>" />
 
 	<portlet:actionURL name="/results_ranking/edit" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
@@ -76,7 +70,5 @@ RankingEntryDisplayContext rankingEntryDisplayContext = (RankingEntryDisplayCont
 		<portlet:param name="resultsRankingUid" value="<%= rankingEntryDisplayContext.getUid() %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		url="<%= deleteURL %>"
-	/>
+	<liferay-ui:icon-delete url="<%= deleteURL %>" />
 </liferay-ui:icon-menu>

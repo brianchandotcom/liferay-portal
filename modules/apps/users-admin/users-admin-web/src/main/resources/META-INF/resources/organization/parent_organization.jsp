@@ -84,9 +84,7 @@ if (parentOrganization != null) {
 	</span>
 </h3>
 
-<liferay-util:buffer
-	var="removeOrganizationIcon"
->
+<liferay-util:buffer var="removeOrganizationIcon">
 	<liferay-ui:icon
 		icon="times-circle"
 		markupView="lexicon"
@@ -130,9 +128,7 @@ if (parentOrganization != null) {
 	id="parentOrganizationSearchContainer"
 	total="<%= parentOrganizations.size() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= parentOrganizations %>"
-	/>
+	<liferay-ui:search-container-results results="<%= parentOrganizations %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Organization"
@@ -165,10 +161,7 @@ if (parentOrganization != null) {
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-		paginate="<%= false %>"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
 <portlet:renderURL var="selectOrganizationRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

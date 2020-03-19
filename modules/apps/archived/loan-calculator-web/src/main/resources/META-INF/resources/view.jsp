@@ -53,12 +53,21 @@ double interestPaid = totalPaid - loanAmount;
 	<portlet:param name="struts_action" value="/loan_calculator/view" />
 </portlet:renderURL>
 
-<aui:form action="<%= viewLoanURL %>" id="fm" method="post" name="fm">
+<aui:form
+	action="<%= viewLoanURL %>"
+	id="fm"
+	method="post"
+	name="fm"
+>
 	<aui:row>
 		<aui:col width="<%= 50 %>">
 			<aui:fieldset>
 				<aui:field-wrapper>
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="loanAmount" value="<%= integerFormat.format(loanAmount) %>" />
+					<aui:input
+						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+						name="loanAmount"
+						value="<%= integerFormat.format(loanAmount) %>"
+					/>
 
 					<aui:input name="interestRate" value="<%= doubleFormat.format(interestRate) %>" />
 
@@ -74,11 +83,23 @@ double interestPaid = totalPaid - loanAmount;
 		<aui:col width="<%= 50 %>">
 			<aui:fieldset>
 				<aui:field-wrapper>
-					<aui:input disabled="<%= true %>" name="monthlyPayment" value="<%= integerFormat.format(amountPerPayment) %>" />
+					<aui:input
+						disabled="<%= true %>"
+						name="monthlyPayment"
+						value="<%= integerFormat.format(amountPerPayment) %>"
+					/>
 
-					<aui:input disabled="<%= true %>" name="interestPaid" value="<%= integerFormat.format(interestPaid) %>" />
+					<aui:input
+						disabled="<%= true %>"
+						name="interestPaid"
+						value="<%= integerFormat.format(interestPaid) %>"
+					/>
 
-					<aui:input disabled="<%= true %>" name="totalPaid" value="<%= integerFormat.format(totalPaid) %>" />
+					<aui:input
+						disabled="<%= true %>"
+						name="totalPaid"
+						value="<%= integerFormat.format(totalPaid) %>"
+					/>
 				</aui:field-wrapper>
 			</aui:fieldset>
 		</aui:col>

@@ -31,19 +31,28 @@ Map<String, String> emailDefinitionTerms = EmailConfigurationUtil.getEmailDefini
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+<aui:form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<%
 	String tabs1Names = "email-from,delivery-email,notifications-email";
 	%>
 
 	<div class="portlet-configuration-body-content">
-		<liferay-ui:tabs
-			names="<%= tabs1Names %>"
-			refresh="<%= false %>"
-		>
+		<liferay-ui:tabs names="<%= tabs1Names %>" refresh="<%= false %>">
 			<liferay-ui:error key="emailDeliveryBody" message="please-enter-a-valid-body" />
 			<liferay-ui:error key="emailDeliverySubject" message="please-enter-a-valid-subject" />
 			<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
@@ -55,9 +64,21 @@ Map<String, String> emailDefinitionTerms = EmailConfigurationUtil.getEmailDefini
 				<div class="container-fluid-1280">
 					<aui:fieldset-group markupView="lexicon">
 						<aui:fieldset>
-							<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" type="text" value="<%= emailFromName %>" />
+							<aui:input
+								cssClass="lfr-input-text-container"
+								label="name"
+								name="preferences--emailFromName--"
+								type="text"
+								value="<%= emailFromName %>"
+							/>
 
-							<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" type="text" value="<%= emailFromAddress %>" />
+							<aui:input
+								cssClass="lfr-input-text-container"
+								label="address"
+								name="preferences--emailFromAddress--"
+								type="text"
+								value="<%= emailFromAddress %>"
+							/>
 						</aui:fieldset>
 					</aui:fieldset-group>
 				</div>

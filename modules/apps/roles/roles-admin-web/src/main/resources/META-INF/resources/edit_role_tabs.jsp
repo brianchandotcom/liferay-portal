@@ -16,7 +16,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= roleDisplayContext.getEditRoleNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= roleDisplayContext.getEditRoleNavigationItems() %>" />

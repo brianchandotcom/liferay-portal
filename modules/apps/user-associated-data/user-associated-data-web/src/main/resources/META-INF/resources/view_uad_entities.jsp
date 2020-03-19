@@ -36,32 +36,66 @@ if (parentContainerId > 0) {
 long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new ViewUADEntitiesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, viewUADEntitiesDisplay) %>"
-/>
+<clay:management-toolbar displayContext="<%= new ViewUADEntitiesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, viewUADEntitiesDisplay) %>" />
 
 <aui:form method="post" name="viewUADEntitiesFm">
-	<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="groupIds" type="hidden" value='<%= (groupIds != null) ? StringUtil.merge(groupIds) : "" %>' />
-	<aui:input name="parentContainerClass" type="hidden" value="<%= parentContainerClass %>" />
-	<aui:input name="parentContainerId" type="hidden" value="<%= String.valueOf(parentContainerId) %>" />
-	<aui:input name="scope" type="hidden" value="<%= viewUADEntitiesDisplay.getScope() %>" />
+	<aui:input
+		name="p_u_i_d"
+		type="hidden"
+		value="<%= String.valueOf(selectedUser.getUserId()) %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
+	<aui:input
+		name="groupIds"
+		type="hidden"
+		value='<%= (groupIds != null) ? StringUtil.merge(groupIds) : "" %>'
+	/>
+	<aui:input
+		name="parentContainerClass"
+		type="hidden"
+		value="<%= parentContainerClass %>"
+	/>
+	<aui:input
+		name="parentContainerId"
+		type="hidden"
+		value="<%= String.valueOf(parentContainerId) %>"
+	/>
+	<aui:input
+		name="scope"
+		type="hidden"
+		value="<%= viewUADEntitiesDisplay.getScope() %>"
+	/>
 
 	<c:choose>
 		<c:when test="<%= Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS) %>">
 			<aui:input name="applicationKeys" type="hidden" />
 		</c:when>
 		<c:otherwise>
-			<aui:input name="applicationKey" type="hidden" value="<%= viewUADEntitiesDisplay.getApplicationKey() %>" />
-			<aui:input name="uadRegistryKey" type="hidden" value="<%= viewUADEntitiesDisplay.getUADRegistryKey() %>" />
+			<aui:input
+				name="applicationKey"
+				type="hidden"
+				value="<%= viewUADEntitiesDisplay.getApplicationKey() %>"
+			/>
+			<aui:input
+				name="uadRegistryKey"
+				type="hidden"
+				value="<%= viewUADEntitiesDisplay.getUADRegistryKey() %>"
+			/>
 
 			<%
 			for (Class<?> typeClass : viewUADEntitiesDisplay.getTypeClasses()) {
 			%>
 
 				<aui:input name='<%= "primaryKeys__" + typeClass.getSimpleName() %>' type="hidden" />
-				<aui:input name='<%= "uadRegistryKey__" + typeClass.getSimpleName() %>' type="hidden" value="<%= typeClass.getName() %>" />
+				<aui:input
+					name='<%= "uadRegistryKey__" + typeClass.getSimpleName() %>'
+					type="hidden"
+					value="<%= typeClass.getName() %>"
+				/>
 
 			<%
 			}
@@ -90,23 +124,22 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 		</liferay-ui:error>
 
 		<c:if test="<%= !Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS) %>">
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/info_panel" var="entityTypeSidebarURL">
+			<liferay-portlet:resourceURL
+				copyCurrentRenderParameters="<%= true %>"
+				id="/info_panel"
+				var="entityTypeSidebarURL"
+			>
 				<liferay-portlet:param name="hierarchyView" value="<%= String.valueOf(viewUADEntitiesDisplay.isHierarchy()) %>" />
 				<liferay-portlet:param name="topLevelView" value="<%= String.valueOf(topLevelView) %>" />
 			</liferay-portlet:resourceURL>
 
-			<liferay-frontend:sidebar-panel
-				resourceURL="<%= entityTypeSidebarURL %>"
-				searchContainerId="<%= viewUADEntitiesDisplay.getSearchContainerID(request, renderResponse.getNamespace()) %>"
-			>
+			<liferay-frontend:sidebar-panel resourceURL="<%= entityTypeSidebarURL %>" searchContainerId="<%= viewUADEntitiesDisplay.getSearchContainerID(request, renderResponse.getNamespace()) %>">
 				<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
 		</c:if>
 
 		<div class="sidenav-content">
-			<liferay-ui:search-container
-				searchContainer="<%= viewUADEntitiesDisplay.getSearchContainer() %>"
-			>
+			<liferay-ui:search-container searchContainer="<%= viewUADEntitiesDisplay.getSearchContainer() %>">
 				<liferay-ui:search-container-row
 					className="com.liferay.user.associated.data.web.internal.display.UADEntity"
 					escapedModel="<%= true %>"
@@ -139,10 +172,7 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 						}
 					%>
 
-						<liferay-ui:search-container-column-text
-							cssClass="<%= cssClass %>"
-							name="<%= columnEntryKey %>"
-						>
+						<liferay-ui:search-container-column-text cssClass="<%= cssClass %>" name="<%= columnEntryKey %>">
 							<aui:a href="<%= uadEntityHref %>"><%= StringUtil.shorten(columnEntry.getValue(), 200) %></aui:a>
 
 							<c:if test='<%= columnEntryKey.equals("name") || columnEntryKey.equals("title") %>'>
@@ -168,16 +198,10 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 					}
 					%>
 
-					<liferay-ui:search-container-column-jsp
-						cssClass="entry-action-column"
-						path="/uad_entity_action.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp cssClass="entry-action-column" path="/uad_entity_action.jsp" />
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-					resultRowSplitter="<%= viewUADEntitiesDisplay.getResultRowSplitter() %>"
-				/>
+				<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= viewUADEntitiesDisplay.getResultRowSplitter() %>" />
 			</liferay-ui:search-container>
 		</div>
 	</div>

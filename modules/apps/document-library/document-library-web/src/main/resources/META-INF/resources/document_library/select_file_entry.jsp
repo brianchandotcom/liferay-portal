@@ -53,10 +53,7 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 			showParentGroups="<%= false %>"
 		/>
 
-		<liferay-ui:search-container
-			emptyResultsMessage="there-are-no-documents-or-media-files-in-this-folder"
-			searchContainer="<%= dlSearchContainer %>"
-		>
+		<liferay-ui:search-container emptyResultsMessage="there-are-no-documents-or-media-files-in-this-folder" searchContainer="<%= dlSearchContainer %>">
 			<liferay-ui:search-container-row
 				className="Object"
 				cssClass="app-view-entry-taglib entry-display-style"
@@ -83,9 +80,7 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 						}
 						%>
 
-						<liferay-ui:search-container-column-text
-							name="name"
-						>
+						<liferay-ui:search-container-column-text name="name">
 							<aui:a href="<%= rowURL.toString() %>">
 								<%= curFolder.getName() %>
 							</aui:a>
@@ -98,9 +93,7 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 						%>
 
 						<c:if test="<%= fileVersion.isApproved() %>">
-							<liferay-ui:search-container-column-text
-								name="name"
-							>
+							<liferay-ui:search-container-column-text name="name">
 
 								<%
 								Map<String, Object> data = new HashMap<String, Object>();
@@ -109,7 +102,11 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 								data.put("entryname", HtmlUtil.unescape(fileEntry.getTitle()));
 								%>
 
-								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<aui:a
+									cssClass="selector-button"
+									data="<%= data %>"
+									href="javascript:;"
+								>
 									<%= fileEntry.getTitle() %>
 								</aui:a>
 

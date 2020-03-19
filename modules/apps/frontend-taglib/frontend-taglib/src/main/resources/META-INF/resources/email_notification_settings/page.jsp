@@ -32,7 +32,12 @@ boolean showSubject = GetterUtil.getBoolean(request.getAttribute("liferay-fronte
 
 <aui:fieldset markupView="lexicon">
 	<c:if test="<%= showEmailEnabled %>">
-		<aui:input label="enabled" name='<%= fieldPrefix + fieldPrefixSeparator + emailParam + "Enabled" + fieldPrefixSeparator %>' type="checkbox" value="<%= emailEnabled %>" />
+		<aui:input
+			label="enabled"
+			name='<%= fieldPrefix + fieldPrefixSeparator + emailParam + "Enabled" + fieldPrefixSeparator %>'
+			type="checkbox"
+			value="<%= emailEnabled %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= showSubject %>">
@@ -48,7 +53,12 @@ boolean showSubject = GetterUtil.getBoolean(request.getAttribute("liferay-fronte
 				</aui:field-wrapper>
 			</c:when>
 			<c:otherwise>
-				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= fieldPrefix + fieldPrefixSeparator + emailParam + "Subject" + fieldPrefixSeparator %>' value="<%= emailSubject %>" />
+				<aui:input
+					cssClass="lfr-input-text-container"
+					label="subject"
+					name='<%= fieldPrefix + fieldPrefixSeparator + emailParam + "Subject" + fieldPrefixSeparator %>'
+					value="<%= emailSubject %>"
+				/>
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -80,7 +90,12 @@ boolean showSubject = GetterUtil.getBoolean(request.getAttribute("liferay-fronte
 </aui:fieldset>
 
 <c:if test="<%= (emailDefinitionTerms != null) && !emailDefinitionTerms.isEmpty() %>">
-	<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="definition-of-terms" markupView="lexicon">
+	<aui:fieldset
+		collapsed="<%= true %>"
+		collapsible="<%= true %>"
+		label="definition-of-terms"
+		markupView="lexicon"
+	>
 		<dl>
 
 			<%

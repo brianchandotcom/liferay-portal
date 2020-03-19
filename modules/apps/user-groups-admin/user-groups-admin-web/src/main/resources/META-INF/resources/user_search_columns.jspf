@@ -17,14 +17,10 @@
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
 		<liferay-ui:search-container-column-text>
-			<liferay-ui:user-portrait
-				userId="<%= user2.getUserId() %>"
-			/>
+			<liferay-ui:user-portrait userId="<%= user2.getUserId() %>" />
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<h5><%= user2.getFullName() %></h5>
 
 			<h6 class="text-default">
@@ -33,9 +29,7 @@
 		</liferay-ui:search-container-column-text>
 
 		<c:if test="<%= showActions %>">
-			<liferay-ui:search-container-column-jsp
-				path="/user_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp path="/user_action.jsp" />
 		</c:if>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
@@ -71,9 +65,7 @@
 		/>
 
 		<c:if test="<%= showActions %>">
-			<liferay-ui:search-container-column-jsp
-				path="/user_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp path="/user_action.jsp" />
 		</c:if>
 	</c:otherwise>
 </c:choose>

@@ -78,17 +78,39 @@ boolean showRestoreButton = viewUsersManagementToolbarDisplayContext.isShowResto
 	viewTypeItems="<%= viewUsersManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "search();" %>'>
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "search();" %>'
+>
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
-	<aui:input name="usersListView" type="hidden" value="<%= usersListView %>" />
-	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:input
+		name="toolbarItem"
+		type="hidden"
+		value="<%= toolbarItem %>"
+	/>
+	<aui:input
+		name="usersListView"
+		type="hidden"
+		value="<%= usersListView %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= portletURL.toString() %>"
+	/>
 
 	<liferay-ui:error exception="<%= RequiredUserException.class %>" message="you-cannot-delete-or-deactivate-yourself" />
 
 	<c:if test="<%= Validator.isNotNull(viewUsersRedirect) %>">
-		<aui:input name="viewUsersRedirect" type="hidden" value="<%= viewUsersRedirect %>" />
+		<aui:input
+			name="viewUsersRedirect"
+			type="hidden"
+			value="<%= viewUsersRedirect %>"
+		/>
 	</c:if>
 
 	<liferay-ui:search-container
@@ -98,7 +120,11 @@ boolean showRestoreButton = viewUsersManagementToolbarDisplayContext.isShowResto
 		var="userSearchContainer"
 	>
 		<aui:input name="deleteUserIds" type="hidden" />
-		<aui:input name="status" type="hidden" value="<%= status %>" />
+		<aui:input
+			name="status"
+			type="hidden"
+			value="<%= status %>"
+		/>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
@@ -135,9 +161,6 @@ boolean showRestoreButton = viewUsersManagementToolbarDisplayContext.isShowResto
 		}
 		%>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>

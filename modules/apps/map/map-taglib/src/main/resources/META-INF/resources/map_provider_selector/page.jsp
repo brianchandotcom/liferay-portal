@@ -29,7 +29,15 @@
 		for (MapProvider mapProvider : mapProviders) {
 		%>
 
-			<aui:input checked="<%= Objects.equals(mapProviderKey, mapProvider.getKey()) %>" helpMessage="<%= mapProvider.getHelpMessage() %>" id='<%= mapProvider.getKey() + "Enabled" %>' label="<%= mapProvider.getLabel(locale) %>" name="<%= name %>" type="radio" value="<%= mapProvider.getKey() %>" />
+			<aui:input
+				checked="<%= Objects.equals(mapProviderKey, mapProvider.getKey()) %>"
+				helpMessage="<%= mapProvider.getHelpMessage() %>"
+				id='<%= mapProvider.getKey() + "Enabled" %>'
+				label="<%= mapProvider.getLabel(locale) %>"
+				name="<%= name %>"
+				type="radio"
+				value="<%= mapProvider.getKey() %>"
+			/>
 
 			<div id="<portlet:namespace /><%= mapProvider.getKey() %>Options">
 

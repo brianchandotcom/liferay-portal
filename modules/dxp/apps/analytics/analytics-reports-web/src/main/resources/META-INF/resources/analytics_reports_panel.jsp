@@ -27,19 +27,13 @@ AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReport
 				<span aria-hidden="true" class="loading-animation"></span>
 			</div>
 
-			<react:component
-				data="<%= analyticsReportsDisplayContext.getData() %>"
-				module="js/AnalyticsReportsApp"
-			/>
+			<react:component data="<%= analyticsReportsDisplayContext.getData() %>" module="js/AnalyticsReportsApp" />
 		</div>
 	</c:when>
 	<c:otherwise>
 		<div id="<portlet:namespace />-analytics-reports-root">
 			<div class="p-3 pt-5 text-center">
-				<liferay-ui:icon
-					alt="connect-to-liferay-analytics-cloud"
-					src='<%= PortalUtil.getPathContext(request) + "/assets/ac-icon.svg" %>'
-				/>
+				<liferay-ui:icon alt="connect-to-liferay-analytics-cloud" src='<%= PortalUtil.getPathContext(request) + "/assets/ac-icon.svg" %>' />
 
 				<c:choose>
 					<c:when test="<%= AnalyticsReportsUtil.isAnalyticsConnected(themeDisplay.getCompanyId()) %>">

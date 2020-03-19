@@ -35,17 +35,11 @@ AccountUserDisplay accountUserDisplay = (AccountUserDisplay)row.getObject();
 			<portlet:param name="mvcPath" value="/account_users_admin/edit_account_user.jsp" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editUserURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editUserURL %>" />
 	</c:if>
 
 	<c:if test="<%= !PropsValues.PORTAL_JAAS_ENABLE && PropsValues.PORTAL_IMPERSONATION_ENABLE && (accountUserDisplay.getUserId() != user.getUserId()) && !themeDisplay.isImpersonated() && UserPermissionUtil.contains(permissionChecker, accountUserDisplay.getUserId(), ActionKeys.IMPERSONATE) %>">
-		<liferay-security:doAsURL
-			doAsUserId="<%= accountUserDisplay.getUserId() %>"
-			var="impersonateUserURL"
-		/>
+		<liferay-security:doAsURL doAsUserId="<%= accountUserDisplay.getUserId() %>" var="impersonateUserURL" />
 
 		<liferay-ui:icon
 			message="impersonate-user"
@@ -63,10 +57,7 @@ AccountUserDisplay accountUserDisplay = (AccountUserDisplay)row.getObject();
 				<portlet:param name="accountUserIds" value="<%= String.valueOf(accountUserDisplay.getUserId()) %>" />
 			</portlet:actionURL>
 
-			<liferay-ui:icon
-				message="activate"
-				url="<%= restoreUserURL %>"
-			/>
+			<liferay-ui:icon message="activate" url="<%= restoreUserURL %>" />
 		</c:if>
 
 		<portlet:actionURL name="/account_admin/edit_account_users" var="deleteUserURL">
@@ -86,10 +77,7 @@ AccountUserDisplay accountUserDisplay = (AccountUserDisplay)row.getObject();
 					/>
 				</c:when>
 				<c:when test="<%= (accountUserDisplay.getStatus() == WorkflowConstants.STATUS_INACTIVE) && PropsValues.USERS_DELETE %>">
-					<liferay-ui:icon-delete
-						confirmation="are-you-sure-you-want-to-delete-this-user"
-						url="<%= deleteUserURL %>"
-					/>
+					<liferay-ui:icon-delete confirmation="are-you-sure-you-want-to-delete-this-user" url="<%= deleteUserURL %>" />
 				</c:when>
 			</c:choose>
 		</c:if>

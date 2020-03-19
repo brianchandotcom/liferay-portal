@@ -37,10 +37,7 @@ String fileName = (String)row.getObject();
 		<portlet:param name="fileName" value="<%= fileName %>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="deliver-report"
-		url="<%= deliverReportURL %>"
-	/>
+	<liferay-ui:icon message="deliver-report" url="<%= deliverReportURL %>" />
 
 	<portlet:resourceURL id="download" var="downloadURL">
 		<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
@@ -60,8 +57,6 @@ String fileName = (String)row.getObject();
 			<portlet:param name="fileName" value="<%= fileName %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteReportURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteReportURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

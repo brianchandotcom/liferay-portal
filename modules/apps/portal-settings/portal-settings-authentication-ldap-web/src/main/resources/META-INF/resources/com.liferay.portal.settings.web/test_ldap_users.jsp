@@ -134,14 +134,9 @@ portletURL.setWindowState(LiferayWindowState.POP_UP);
 	iteratorURL="<%= portletURL %>"
 	total="<%= searchResults.size() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= ListUtil.subList(searchResults, searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= ListUtil.subList(searchResults, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
-	<liferay-ui:search-container-row
-		className="javax.naming.directory.SearchResult"
-		modelVar="searchResult"
-	>
+	<liferay-ui:search-container-row className="javax.naming.directory.SearchResult" modelVar="searchResult">
 
 		<%
 		Attributes attributes = searchResult.getAttributes();
@@ -161,32 +156,17 @@ portletURL.setWindowState(LiferayWindowState.POP_UP);
 		}
 		%>
 
-		<liferay-ui:search-container-column-text
-			name="screenName"
-			value="<%= HtmlUtil.escape(screenName) %>"
-		/>
+		<liferay-ui:search-container-column-text name="screenName" value="<%= HtmlUtil.escape(screenName) %>" />
 
-		<liferay-ui:search-container-column-text
-			name="emailAddress"
-			value="<%= HtmlUtil.escape(emailAddress) %>"
-		/>
+		<liferay-ui:search-container-column-text name="emailAddress" value="<%= HtmlUtil.escape(emailAddress) %>" />
 
 		<%@ include file="/com.liferay.portal.settings.web/test_ldap_users_user_name.jspf" %>
 
-		<liferay-ui:search-container-column-text
-			name="password"
-			value="<%= Validator.isNotNull(password) ? StringPool.EIGHT_STARS : StringPool.BLANK %>"
-		/>
+		<liferay-ui:search-container-column-text name="password" value="<%= Validator.isNotNull(password) ? StringPool.EIGHT_STARS : StringPool.BLANK %>" />
 
-		<liferay-ui:search-container-column-text
-			name="job-title"
-			value="<%= HtmlUtil.escape(jobTitle) %>"
-		/>
+		<liferay-ui:search-container-column-text name="job-title" value="<%= HtmlUtil.escape(jobTitle) %>" />
 
-		<liferay-ui:search-container-column-text
-			name="group"
-			value='<%= (attribute == null) ? "0" : String.valueOf(attribute.size()) %>'
-		/>
+		<liferay-ui:search-container-column-text name="group" value='<%= (attribute == null) ? "0" : String.valueOf(attribute.size()) %>' />
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />

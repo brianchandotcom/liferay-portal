@@ -119,7 +119,14 @@ if (portletTitleBasedNavigation) {
 
 <c:if test="<%= portletTitleBasedNavigation && (wikiPage != null) && !wikiPage.isNew() %>">
 	<liferay-frontend:info-bar>
-		<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
+		<aui:workflow-status
+			markupView="lexicon"
+			showHelpMessage="<%= false %>"
+			showIcon="<%= false %>"
+			showLabel="<%= false %>"
+			status="<%= wikiPage.getStatus() %>"
+			version="<%= String.valueOf(wikiPage.getVersion()) %>"
+		/>
 	</liferay-frontend:info-bar>
 </c:if>
 
@@ -132,22 +139,62 @@ if (portletTitleBasedNavigation) {
 </portlet:renderURL>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %> id='<%= renderResponse.getNamespace() + "wikiEditPageContainer" %>'>
-	<aui:form action="<%= editPageActionURL %>" method="post" name="fm">
+	<aui:form
+		action="<%= editPageActionURL %>"
+		method="post"
+		name="fm"
+	>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="editTitle" type="hidden" value="<%= editTitle %>" />
-		<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
-		<aui:input name="title" type="hidden" value="<%= title %>" />
-		<aui:input name="parentTitle" type="hidden" value="<%= parentTitle %>" />
-		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="editTitle"
+			type="hidden"
+			value="<%= editTitle %>"
+		/>
+		<aui:input
+			name="nodeId"
+			type="hidden"
+			value="<%= nodeId %>"
+		/>
+		<aui:input
+			name="title"
+			type="hidden"
+			value="<%= title %>"
+		/>
+		<aui:input
+			name="parentTitle"
+			type="hidden"
+			value="<%= parentTitle %>"
+		/>
+		<aui:input
+			name="workflowAction"
+			type="hidden"
+			value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>"
+		/>
 
 		<c:if test="<%= wikiPage != null %>">
-			<aui:input name="version" type="hidden" value="<%= wikiPage.getVersion() %>" />
+			<aui:input
+				name="version"
+				type="hidden"
+				value="<%= wikiPage.getVersion() %>"
+			/>
 		</c:if>
 
 		<c:if test="<%= templatePage != null %>">
-			<aui:input name="templateNodeId" type="hidden" value="<%= String.valueOf(templateNodeId) %>" />
-			<aui:input name="templateTitle" type="hidden" value="<%= templateTitle %>" />
+			<aui:input
+				name="templateNodeId"
+				type="hidden"
+				value="<%= String.valueOf(templateNodeId) %>"
+			/>
+			<aui:input
+				name="templateTitle"
+				type="hidden"
+				value="<%= templateTitle %>"
+			/>
 		</c:if>
 
 		<liferay-ui:error exception="<%= DuplicatePageException.class %>" message="there-is-already-a-page-with-the-specified-title" />
@@ -178,7 +225,11 @@ if (portletTitleBasedNavigation) {
 						Format dateFormatDate = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 						%>
 
-						<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(wikiPage.getUserName()), dateFormatDate.format(wikiPage.getModifiedDate())} %>" key="this-page-cannot-be-edited-because-user-x-is-modifying-it-and-the-results-have-not-been-published-yet" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= new Object[] {HtmlUtil.escape(wikiPage.getUserName()), dateFormatDate.format(wikiPage.getModifiedDate())} %>"
+							key="this-page-cannot-be-edited-because-user-x-is-modifying-it-and-the-results-have-not-been-published-yet"
+							translateArguments="<%= false %>"
+						/>
 					</div>
 				</c:if>
 			</c:when>
@@ -187,7 +238,13 @@ if (portletTitleBasedNavigation) {
 					<aui:fieldset>
 						<c:if test="<%= !portletTitleBasedNavigation && (wikiPage != null) && !wikiPage.isNew() %>">
 							<div class="text-center">
-								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
+								<aui:workflow-status
+									markupView="lexicon"
+									showIcon="<%= false %>"
+									showLabel="<%= false %>"
+									status="<%= wikiPage.getStatus() %>"
+									version="<%= String.valueOf(wikiPage.getVersion()) %>"
+								/>
 							</div>
 						</c:if>
 
@@ -230,7 +287,11 @@ if (portletTitleBasedNavigation) {
 									<liferay-ui:message key="the-format-of-this-page-is-not-supported-the-page-content-will-be-shown-unformatted" />
 								</div>
 
-								<aui:input name="content" type="textarea" value="<%= wikiPage.getContent() %>" />
+								<aui:input
+									name="content"
+									type="textarea"
+									value="<%= wikiPage.getContent() %>"
+								/>
 
 							<%
 							}
@@ -240,7 +301,11 @@ if (portletTitleBasedNavigation) {
 					</aui:fieldset>
 
 					<c:if test="<%= ((wikiPage != null) && (wikiPage.getPageId() > 0)) || ((templatePage != null) && WikiNodePermission.contains(permissionChecker, node, ActionKeys.ADD_ATTACHMENT)) %>">
-						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
+						<aui:fieldset
+							collapsed="<%= true %>"
+							collapsible="<%= true %>"
+							label="attachments"
+						>
 							<c:if test="<%= !wikiPage.isNew() && WikiNodePermission.contains(permissionChecker, node, ActionKeys.ADD_ATTACHMENT) %>">
 								<liferay-util:include page="/wiki/edit_page_attachment.jsp" servletContext="<%= application %>" />
 							</c:if>
@@ -272,19 +337,21 @@ if (portletTitleBasedNavigation) {
 					}
 					%>
 
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-						<liferay-asset:asset-categories-selector
-							className="<%= WikiPage.class.getName() %>"
-							classPK="<%= classPK %>"
-						/>
+					<aui:fieldset
+						collapsed="<%= true %>"
+						collapsible="<%= true %>"
+						label="categorization"
+					>
+						<liferay-asset:asset-categories-selector className="<%= WikiPage.class.getName() %>" classPK="<%= classPK %>" />
 
-						<liferay-asset:asset-tags-selector
-							className="<%= WikiPage.class.getName() %>"
-							classPK="<%= classPK %>"
-						/>
+						<liferay-asset:asset-tags-selector className="<%= WikiPage.class.getName() %>" classPK="<%= classPK %>" />
 					</aui:fieldset>
 
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+					<aui:fieldset
+						collapsed="<%= true %>"
+						collapsible="<%= true %>"
+						label="related-assets"
+					>
 						<liferay-asset:input-asset-links
 							assetEntryId="<%= assetEntryId %>"
 							className="<%= WikiPage.class.getName() %>"
@@ -292,7 +359,11 @@ if (portletTitleBasedNavigation) {
 						/>
 					</aui:fieldset>
 
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+					<aui:fieldset
+						collapsed="<%= true %>"
+						collapsible="<%= true %>"
+						label="configuration"
+					>
 						<aui:input name="summary" />
 
 						<c:if test="<%= (wikiPage == null) || wikiPage.isNew() || wikiPage.isApproved() %>">
@@ -307,7 +378,11 @@ if (portletTitleBasedNavigation) {
 									for (String format : formats) {
 									%>
 
-										<aui:option label="<%= WikiUtil.getFormatLabel(wikiEngineRenderer, format, locale) %>" selected="<%= selectedFormat.equals(format) %>" value="<%= format %>" />
+										<aui:option
+											label="<%= WikiUtil.getFormatLabel(wikiEngineRenderer, format, locale) %>"
+											selected="<%= selectedFormat.equals(format) %>"
+											value="<%= format %>"
+										/>
 
 									<%
 									}
@@ -315,7 +390,11 @@ if (portletTitleBasedNavigation) {
 									if (!formats.contains(selectedFormat)) {
 									%>
 
-										<aui:option label="<%= selectedFormat %>" selected="<%= true %>" value="<%= selectedFormat %>" />
+										<aui:option
+											label="<%= selectedFormat %>"
+											selected="<%= true %>"
+											value="<%= selectedFormat %>"
+										/>
 
 									<%
 									}
@@ -324,7 +403,11 @@ if (portletTitleBasedNavigation) {
 								</aui:select>
 							</c:when>
 							<c:otherwise>
-								<aui:input name="format" type="hidden" value="<%= selectedFormat %>" />
+								<aui:input
+									name="format"
+									type="hidden"
+									value="<%= selectedFormat %>"
+								/>
 							</c:otherwise>
 						</c:choose>
 
@@ -334,10 +417,12 @@ if (portletTitleBasedNavigation) {
 					</aui:fieldset>
 
 					<c:if test="<%= wikiPage != null %>">
-						<liferay-expando:custom-attributes-available
-							className="<%= WikiPage.class.getName() %>"
-						>
-							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+						<liferay-expando:custom-attributes-available className="<%= WikiPage.class.getName() %>">
+							<aui:fieldset
+								collapsed="<%= true %>"
+								collapsible="<%= true %>"
+								label="custom-fields"
+							>
 								<liferay-expando:custom-attribute-list
 									className="<%= WikiPage.class.getName() %>"
 									classPK="<%= (templatePage != null) ? templatePage.getPrimaryKey() : wikiPage.getPrimaryKey() %>"
@@ -349,10 +434,12 @@ if (portletTitleBasedNavigation) {
 					</c:if>
 
 					<c:if test="<%= (wikiPage == null) || wikiPage.isNew() %>">
-						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-							<liferay-ui:input-permissions
-								modelName="<%= WikiPage.class.getName() %>"
-							/>
+						<aui:fieldset
+							collapsed="<%= true %>"
+							collapsible="<%= true %>"
+							label="permissions"
+						>
+							<liferay-ui:input-permissions modelName="<%= WikiPage.class.getName() %>" />
 						</aui:fieldset>
 					</c:if>
 				</aui:fieldset-group>
@@ -386,9 +473,19 @@ if (portletTitleBasedNavigation) {
 				%>
 
 				<aui:button-row>
-					<aui:button disabled="<%= pending %>" name="publishButton" primary="<%= true %>" value="<%= publishButtonLabel %>" />
+					<aui:button
+						disabled="<%= pending %>"
+						name="publishButton"
+						primary="<%= true %>"
+						value="<%= publishButtonLabel %>"
+					/>
 
-					<aui:button name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+					<aui:button
+						name="saveButton"
+						primary="<%= false %>"
+						type="submit"
+						value="<%= saveButtonLabel %>"
+					/>
 
 					<aui:button href="<%= redirect %>" type="cancel" />
 				</aui:button-row>

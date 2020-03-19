@@ -15,8 +15,5 @@
 --%>
 
 <div class="float-right">
-	<liferay-ui:language
-		languageId="<%= themeDisplay.getLanguageId() %>"
-		languageIds="<%= LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId())) %>"
-	/>
+	<liferay-ui:language languageId="<%= themeDisplay.getLanguageId() %>" languageIds="<%= LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId())) %>" />
 </div>

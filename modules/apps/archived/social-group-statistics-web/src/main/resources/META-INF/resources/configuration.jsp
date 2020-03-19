@@ -40,8 +40,16 @@ String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNa
 	method="post"
 	name="fm"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
@@ -51,9 +59,7 @@ String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNa
 				label="counters"
 			>
 				<div id="<portlet:namespace />displayActivityCounterNames">
-					<liferay-frontend:fieldset
-						label=""
-					>
+					<liferay-frontend:fieldset label="">
 
 						<%
 						for (int i = 0; i < displayActivityCounterNameIndexCount; i++) {
@@ -78,7 +84,11 @@ String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNa
 					</liferay-frontend:fieldset>
 				</div>
 
-				<aui:input name="displayActivityCounterNameIndexes" type="hidden" value="<%= StringUtil.merge(displayActivityCounterNameIndexes) %>" />
+				<aui:input
+					name="displayActivityCounterNameIndexes"
+					type="hidden"
+					value="<%= StringUtil.merge(displayActivityCounterNameIndexes) %>"
+				/>
 
 				<aui:script use="liferay-auto-fields">
 					new Liferay.AutoFields({

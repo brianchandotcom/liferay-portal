@@ -40,15 +40,17 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 	</h1>
 
 	<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
-		<clay:label
-			label='<%= LanguageUtil.get(request, "version") + StringPool.SPACE + fileVersion.getVersion() %>'
-			style="info"
-		/>
+		<clay:label label='<%= LanguageUtil.get(request, "version") + StringPool.SPACE + fileVersion.getVersion() %>' style="info" />
 	</c:if>
 
 	<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
-	<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
+	<aui:workflow-status
+		model="<%= DLFileEntry.class %>"
+		showIcon="<%= false %>"
+		showLabel="<%= false %>"
+		status="<%= fileVersion.getStatus() %>"
+	/>
 </div>
 
 <div class="sidebar-body">
@@ -78,9 +80,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 				</div>
 			</c:if>
 
-			<liferay-dynamic-section:dynamic-section
-				name="com.liferay.document.library.web#/document_library/info_panel_file_entry.jsp#fileEntryOwner"
-			>
+			<liferay-dynamic-section:dynamic-section name="com.liferay.document.library.web#/document_library/info_panel_file_entry.jsp#fileEntryOwner">
 				<div class="autofit-row sidebar-panel widget-metadata">
 					<div class="autofit-col inline-item-before">
 
@@ -88,9 +88,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 						User owner = UserLocalServiceUtil.fetchUser(fileEntry.getUserId());
 						%>
 
-						<liferay-ui:user-portrait
-							user="<%= owner %>"
-						/>
+						<liferay-ui:user-portrait user="<%= owner %>" />
 					</div>
 
 					<div class="autofit-col autofit-col-expand">
@@ -208,10 +206,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 						<c:if test="<%= dlViewFileVersionDisplayContext.isSharingLinkVisible() %>">
 							<div class="btn-group-item">
-								<liferay-sharing:button
-									className="<%= DLFileEntryConstants.getClassName() %>"
-									classPK="<%= fileEntry.getFileEntryId() %>"
-								/>
+								<liferay-sharing:button className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= fileEntry.getFileEntryId() %>" />
 							</div>
 						</c:if>
 					</div>
@@ -340,13 +335,21 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 					<liferay-ui:message key="modified" />
 				</dt>
 				<dd class="sidebar-dd">
-					<liferay-ui:message arguments="<%= new Object[] {dateFormatDateTime.format(fileVersion.getModifiedDate()), HtmlUtil.escape(fileVersion.getStatusByUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= new Object[] {dateFormatDateTime.format(fileVersion.getModifiedDate()), HtmlUtil.escape(fileVersion.getStatusByUserName())} %>"
+						key="x-by-x"
+						translateArguments="<%= false %>"
+					/>
 				</dd>
 				<dt class="sidebar-dt">
 					<liferay-ui:message key="created" />
 				</dt>
 				<dd class="sidebar-dd">
-					<liferay-ui:message arguments="<%= new Object[] {dateFormatDateTime.format(fileVersion.getCreateDate()), HtmlUtil.escape(fileVersion.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= new Object[] {dateFormatDateTime.format(fileVersion.getCreateDate()), HtmlUtil.escape(fileVersion.getUserName())} %>"
+						key="x-by-x"
+						translateArguments="<%= false %>"
+					/>
 				</dd>
 
 				<%
@@ -355,18 +358,12 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 				<liferay-util:include page="/document_library/info_panel_location.jsp" servletContext="<%= application %>" />
 
-				<liferay-asset:asset-tags-available
-					className="<%= DLFileEntryConstants.getClassName() %>"
-					classPK="<%= assetClassPK %>"
-				>
+				<liferay-asset:asset-tags-available className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= assetClassPK %>">
 					<dt class="sidebar-dt">
 						<liferay-ui:message key="tags" />
 					</dt>
 					<dd class="sidebar-dd">
-						<liferay-asset:asset-tags-summary
-							className="<%= DLFileEntryConstants.getClassName() %>"
-							classPK="<%= assetClassPK %>"
-						/>
+						<liferay-asset:asset-tags-summary className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= assetClassPK %>" />
 					</dd>
 				</liferay-asset:asset-tags-available>
 
@@ -392,10 +389,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 					</dd>
 				</c:if>
 
-				<liferay-asset:asset-categories-available
-					className="<%= DLFileEntryConstants.getClassName() %>"
-					classPK="<%= assetClassPK %>"
-				>
+				<liferay-asset:asset-categories-available className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= assetClassPK %>">
 					<dt class="sidebar-dt">
 						<liferay-ui:message key="categories" />
 					</dt>
@@ -414,9 +408,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 			%>
 
 			<c:if test="<%= (layoutAssetEntry != null) && dlPortletInstanceSettings.isEnableRelatedAssets() && fileEntry.isSupportsSocial() %>">
-				<liferay-asset:asset-links
-					assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
-				/>
+				<liferay-asset:asset-links assetEntryId="<%= layoutAssetEntry.getEntryId() %>" />
 			</c:if>
 
 			<liferay-ui:panel-container
@@ -563,6 +555,4 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 	</liferay-ui:tabs>
 </div>
 
-<liferay-frontend:component
-	module="document_library/js/InfoPanel.es"
-/>
+<liferay-frontend:component module="document_library/js/InfoPanel.es" />

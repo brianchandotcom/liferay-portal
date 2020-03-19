@@ -45,10 +45,7 @@ long userId = user2.getUserId();
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editUserURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editUserURL %>" />
 	</c:if>
 
 	<c:if test="<%= UserPermissionUtil.contains(permissionChecker, userId, ActionKeys.PERMISSIONS) %>">
@@ -74,17 +71,11 @@ long userId = user2.getUserId();
 		PortletURL managePagesURL = PortletProviderUtil.getPortletURL(request, user2.getGroup(), Layout.class.getName(), PortletProvider.Action.EDIT);
 		%>
 
-		<liferay-ui:icon
-			message="manage-pages"
-			url="<%= managePagesURL.toString() %>"
-		/>
+		<liferay-ui:icon message="manage-pages" url="<%= managePagesURL.toString() %>" />
 	</c:if>
 
 	<c:if test="<%= !PropsValues.PORTAL_JAAS_ENABLE && PropsValues.PORTAL_IMPERSONATION_ENABLE && (userId != user.getUserId()) && !themeDisplay.isImpersonated() && UserPermissionUtil.contains(permissionChecker, userId, ActionKeys.IMPERSONATE) %>">
-		<liferay-security:doAsURL
-			doAsUserId="<%= userId %>"
-			var="impersonateUserURL"
-		/>
+		<liferay-security:doAsURL doAsUserId="<%= userId %>" var="impersonateUserURL" />
 
 		<liferay-ui:icon
 			message="impersonate-user"
@@ -101,10 +92,7 @@ long userId = user2.getUserId();
 				<portlet:param name="deleteUserIds" value="<%= String.valueOf(userId) %>" />
 			</portlet:actionURL>
 
-			<liferay-ui:icon
-				message="activate"
-				url="<%= restoreUserURL %>"
-			/>
+			<liferay-ui:icon message="activate" url="<%= restoreUserURL %>" />
 		</c:if>
 
 		<portlet:actionURL name="/users_admin/edit_user" var="deleteUserURL">
@@ -116,14 +104,10 @@ long userId = user2.getUserId();
 		<c:if test="<%= userId != user.getUserId() %>">
 			<c:choose>
 				<c:when test="<%= user2.isActive() %>">
-					<liferay-ui:icon-deactivate
-						url="<%= deleteUserURL %>"
-					/>
+					<liferay-ui:icon-deactivate url="<%= deleteUserURL %>" />
 				</c:when>
 				<c:when test="<%= !user2.isActive() && PropsValues.USERS_DELETE %>">
-					<liferay-ui:icon-delete
-						url="<%= deleteUserURL %>"
-					/>
+					<liferay-ui:icon-delete url="<%= deleteUserURL %>" />
 				</c:when>
 			</c:choose>
 		</c:if>
@@ -140,10 +124,7 @@ long userId = user2.getUserId();
 			<portlet:param name="organizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="remove"
-			url="<%= removeUserURL %>"
-		/>
+		<liferay-ui:icon message="remove" url="<%= removeUserURL %>" />
 	</c:if>
 
 	<%
@@ -168,10 +149,7 @@ long userId = user2.getUserId();
 					/>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:icon
-						message="<%= userActionContributor.getMessage(liferayPortletRequest) %>"
-						url="<%= userActionContributor.getURL(liferayPortletRequest, liferayPortletResponse, user, user2) %>"
-					/>
+					<liferay-ui:icon message="<%= userActionContributor.getMessage(liferayPortletRequest) %>" url="<%= userActionContributor.getURL(liferayPortletRequest, liferayPortletResponse, user, user2) %>" />
 				</c:otherwise>
 			</c:choose>
 

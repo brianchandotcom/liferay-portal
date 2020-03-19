@@ -91,9 +91,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<liferay-trash:undo
-	portletURL="<%= restoreTrashEntriesURL %>"
-/>
+<liferay-trash:undo portletURL="<%= restoreTrashEntriesURL %>" />
 
 <%@ include file="/message_boards/nav.jspf" %>
 
@@ -123,9 +121,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 				iteratorURL="<%= portletURL %>"
 				total="<%= MBCategoryServiceUtil.getSubscribedCategoriesCount(scopeGroupId, user.getUserId()) %>"
 			>
-				<liferay-ui:search-container-results
-					results="<%= MBCategoryServiceUtil.getSubscribedCategories(scopeGroupId, user.getUserId(), searchContainer.getStart(), searchContainer.getEnd()) %>"
-				/>
+				<liferay-ui:search-container-results results="<%= MBCategoryServiceUtil.getSubscribedCategories(scopeGroupId, user.getUserId(), searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 				<liferay-ui:search-container-row
 					className="com.liferay.message.boards.model.MBCategory"
@@ -141,10 +137,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					<%@ include file="/message_boards/subscribed_category_columns.jspf" %>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-					type="more"
-				/>
+				<liferay-ui:search-iterator markupView="lexicon" type="more" />
 			</liferay-ui:search-container>
 
 			<%@ include file="/message_boards/view_threads.jspf" %>
@@ -157,10 +150,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 		</div>
 	</c:when>
 	<c:when test="<%= useAssetEntryQuery && !mbListDisplayContext.isShowMyPosts() %>">
-		<liferay-asset:categorization-filter
-			assetType="threads"
-			portletURL="<%= portletURL %>"
-		/>
+		<liferay-asset:categorization-filter assetType="threads" portletURL="<%= portletURL %>" />
 
 		<%@ include file="/message_boards/view_threads.jspf" %>
 	</c:when>
@@ -169,10 +159,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 			<c:when test='<%= mvcRenderCommandName.equals("/message_boards/search") || mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") %>'>
 				<div class="main-content-body">
 					<c:if test="<%= mbListDisplayContext.isShowSearch() %>">
-						<liferay-ui:header
-							backURL="<%= redirect %>"
-							title="search"
-						/>
+						<liferay-ui:header backURL="<%= redirect %>" title="search" />
 					</c:if>
 
 					<%
@@ -419,9 +406,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					</c:if>
 
 					<c:if test="<%= (categoryEntriesSearchContainer.getTotal() <= 0) && (threadEntriesSearchContainer.getTotal() <= 0) %>">
-						<liferay-ui:empty-result-message
-							message="there-are-no-threads-or-categories"
-						/>
+						<liferay-ui:empty-result-message message="there-are-no-threads-or-categories" />
 					</c:if>
 
 					<%

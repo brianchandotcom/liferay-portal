@@ -30,32 +30,23 @@ if (notificationUnread) {
 
 <c:choose>
 	<c:when test="<%= !anonymous %>">
-		<liferay-ui:search-container-column-user
-			showDetails="<%= false %>"
-			userId="<%= userNotificationEventUserId %>"
-		/>
+		<liferay-ui:search-container-column-user showDetails="<%= false %>" userId="<%= userNotificationEventUserId %>" />
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text>
-			<liferay-ui:user-portrait
-				userId="<%= 0 %>"
-			/>
+			<liferay-ui:user-portrait userId="<%= 0 %>" />
 		</liferay-ui:search-container-column-text>
 	</c:otherwise>
 </c:choose>
 
 <c:choose>
 	<c:when test="<%= userNotificationFeedEntry == null %>">
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<liferay-ui:message key="notification-no-longer-applies" />
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test="<%= !userNotificationFeedEntry.isApplicable() %>">
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<liferay-ui:message key="<%= userNotificationFeedEntry.getBody() %>" />
 		</liferay-ui:search-container-column-text>
 	</c:when>
@@ -73,9 +64,7 @@ if (notificationUnread) {
 			</c:choose>
 		</portlet:actionURL>
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<c:if test="<%= notificationUnread %>">
 				<h4>
 			</c:if>
@@ -93,8 +82,6 @@ if (notificationUnread) {
 			</h5>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			path="/notifications/notification_action.jsp"
-		/>
+		<liferay-ui:search-container-column-jsp path="/notifications/notification_action.jsp" />
 	</c:otherwise>
 </c:choose>

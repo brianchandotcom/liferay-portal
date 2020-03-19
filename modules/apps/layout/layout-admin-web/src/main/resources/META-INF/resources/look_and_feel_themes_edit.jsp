@@ -38,11 +38,21 @@ else {
 			<liferay-util:include page="/look_and_feel_theme_details.jsp" servletContext="<%= application %>" />
 		</div>
 
-		<aui:input label="insert-custom-css-that-is-loaded-after-the-theme" name="regularCss" placeholder="css" type="textarea" value="<%= (selLayout != null) ? selLayout.getCssText() : selLayoutSet.getCss() %>" />
+		<aui:input
+			label="insert-custom-css-that-is-loaded-after-the-theme"
+			name="regularCss"
+			placeholder="css"
+			type="textarea"
+			value="<%= (selLayout != null) ? selLayout.getCssText() : selLayoutSet.getCss() %>"
+		/>
 	</div>
 </div>
 
-<aui:button cssClass="btn btn-secondary" id="changeTheme" value="change-current-theme" />
+<aui:button
+	cssClass="btn btn-secondary"
+	id="changeTheme"
+	value="change-current-theme"
+/>
 
 <aui:script use="aui-parse-content">
 	var Util = Liferay.Util;

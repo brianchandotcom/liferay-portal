@@ -27,14 +27,19 @@ FieldSetPermissionCheckerHelper fieldSetPermissionCheckerHelper = ddmFormAdminDi
 %>
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
-	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
-		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:form
+		action="<%= portletURL.toString() %>"
+		method="post"
+		name="searchContainerForm"
+	>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= portletURL.toString() %>"
+		/>
 		<aui:input name="deleteStructureIds" type="hidden" />
 
-		<liferay-ui:search-container
-			id="structure"
-			searchContainer="<%= ddmFormAdminDisplayContext.getSearch() %>"
-		>
+		<liferay-ui:search-container id="structure" searchContainer="<%= ddmFormAdminDisplayContext.getSearch() %>">
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMStructure"
 				cssClass="entry-display-style"
@@ -56,10 +61,7 @@ FieldSetPermissionCheckerHelper fieldSetPermissionCheckerHelper = ddmFormAdminDi
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<liferay-ui:search-container-column-icon
-							cssClass="asset-icon"
-							icon="cards"
-						/>
+						<liferay-ui:search-container-column-icon cssClass="asset-icon" icon="cards" />
 
 						<liferay-ui:search-container-column-jsp
 							colspan="<%= 2 %>"
@@ -67,9 +69,7 @@ FieldSetPermissionCheckerHelper fieldSetPermissionCheckerHelper = ddmFormAdminDi
 							path="/admin/view_element_set_descriptive.jsp"
 						/>
 
-						<liferay-ui:search-container-column-jsp
-							path="/admin/element_set_action.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp path="/admin/element_set_action.jsp" />
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:search-container-column-text
@@ -91,17 +91,12 @@ FieldSetPermissionCheckerHelper fieldSetPermissionCheckerHelper = ddmFormAdminDi
 							value="<%= structure.getModifiedDate() %>"
 						/>
 
-						<liferay-ui:search-container-column-jsp
-							path="/admin/element_set_action.jsp"
-						/>
+						<liferay-ui:search-container-column-jsp path="/admin/element_set_action.jsp" />
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				displayStyle="<%= displayStyle %>"
-				markupView="lexicon"
-			/>
+			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

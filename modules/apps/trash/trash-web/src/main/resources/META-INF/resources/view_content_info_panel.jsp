@@ -33,19 +33,14 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 				TrashContainerActionDropdownItemsProvider trashContainerActionDropdownItemsProvider = new TrashContainerActionDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse, trashDisplayContext);
 				%>
 
-				<clay:dropdown-actions
-					defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
-					dropdownItems="<%= trashContainerActionDropdownItemsProvider.getActionDropdownItems() %>"
-				/>
+				<clay:dropdown-actions defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= trashContainerActionDropdownItemsProvider.getActionDropdownItems() %>" />
 			</li>
 		</ul>
 
 		<h4><%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %></h4>
 	</div>
 
-	<clay:navigation-bar
-		navigationItems="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
-	/>
+	<clay:navigation-bar navigationItems="<%= trashDisplayContext.getInfoPanelNavigationItems() %>" />
 
 	<div class="sidebar-body">
 		<h5><liferay-ui:message key="num-of-items" /></h5>

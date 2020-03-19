@@ -21,8 +21,5 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 %>
 
 <div class="content-metadata-asset-addon-entry content-metadata-asset-addon-entry-links">
-	<liferay-asset:asset-links
-		className="<%= JournalArticle.class.getName() %>"
-		classPK="<%= articleDisplay.getResourcePrimKey() %>"
-	/>
+	<liferay-asset:asset-links className="<%= JournalArticle.class.getName() %>" classPK="<%= articleDisplay.getResourcePrimKey() %>" />
 </div>

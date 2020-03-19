@@ -32,9 +32,7 @@ if (accountRole != null) {
 
 <portlet:actionURL name="/account_admin/edit_account_role" var="editAccountRoleURL" />
 
-<liferay-frontend:edit-form
-	action="<%= editAccountRoleURL %>"
->
+<liferay-frontend:edit-form action="<%= editAccountRoleURL %>">
 	<portlet:renderURL var="redirect">
 		<portlet:param name="mvcPath" value="/account_entries_admin/edit_account_role.jsp" />
 		<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryId) %>" />
@@ -42,10 +40,26 @@ if (accountRole != null) {
 	</portlet:renderURL>
 
 	<liferay-frontend:edit-form-body>
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (role == null) ? Constants.ADD : Constants.UPDATE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="accountEntryId" type="hidden" value="<%= String.valueOf(accountEntryId) %>" />
-		<aui:input name="accountRoleId" type="hidden" value="<%= accountRoleId %>" />
+		<aui:input
+			name="<%= Constants.CMD %>"
+			type="hidden"
+			value="<%= (role == null) ? Constants.ADD : Constants.UPDATE %>"
+		/>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="accountEntryId"
+			type="hidden"
+			value="<%= String.valueOf(accountEntryId) %>"
+		/>
+		<aui:input
+			name="accountRoleId"
+			type="hidden"
+			value="<%= accountRoleId %>"
+		/>
 
 		<aui:model-context bean="<%= role %>" model="<%= Role.class %>" />
 
@@ -70,11 +84,22 @@ if (accountRole != null) {
 
 		<c:choose>
 			<c:when test="<%= (role != null) && AccountRoleConstants.isRequiredRole(role) %>">
-				<aui:input disabled="<%= true %>" helpMessage="key-field-help" label="key" name="viewNameField" type="text" value="<%= role.getName() %>" />
+				<aui:input
+					disabled="<%= true %>"
+					helpMessage="key-field-help"
+					label="key"
+					name="viewNameField"
+					type="text"
+					value="<%= role.getName() %>"
+				/>
 				<aui:input name="name" type="hidden" />
 			</c:when>
 			<c:otherwise>
-				<aui:input helpMessage="key-field-help" label="key" name="name" />
+				<aui:input
+					helpMessage="key-field-help"
+					label="key"
+					name="name"
+				/>
 			</c:otherwise>
 		</c:choose>
 	</liferay-frontend:edit-form-body>

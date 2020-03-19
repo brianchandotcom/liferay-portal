@@ -74,9 +74,7 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(ruleGroup.getName(locale));
 %>
 
-<liferay-frontend:management-bar
-	disabled="<%= rulesCount <= 0 %>"
->
+<liferay-frontend:management-bar disabled="<%= rulesCount <= 0 %>">
 
 	<%
 	PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, renderResponse);
@@ -95,13 +93,8 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 			<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroupId) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-frontend:add-menu
-			inline="<%= true %>"
-		>
-			<liferay-frontend:add-menu-item
-				title='<%= LanguageUtil.get(resourceBundle, "add-classification-rule") %>'
-				url="<%= addURL.toString() %>"
-			/>
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-classification-rule") %>' url="<%= addURL.toString() %>" />
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -112,10 +105,7 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 	%>
 
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= iteratorURL %>"
-		/>
+		<liferay-frontend:management-bar-navigation navigationKeys='<%= new String[] {"all"} %>' portletURL="<%= iteratorURL %>" />
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= orderByCol %>"
@@ -127,9 +117,7 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
-	<liferay-ui:search-container
-		searchContainer="<%= rulesSearchContainer %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= rulesSearchContainer %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.mobile.device.rules.model.MDRRule"
 			escapedModel="<%= true %>"
@@ -145,15 +133,15 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="mobile-portrait"
-					/>
+					<liferay-ui:search-container-column-icon icon="mobile-portrait" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<span class="text-default">
-							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - rule.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - rule.getCreateDate().getTime(), true) %>"
+								key="x-ago"
+								translateArguments="<%= false %>"
+							/>
 						</span>
 
 						<h2 class="h5">
@@ -168,9 +156,7 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 						</span>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/rule_actions.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/rule_actions.jsp" />
 				</c:when>
 				<c:when test='<%= displayStyle.equals("icon") %>'>
 
@@ -189,7 +175,11 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 							url="<%= rowURL.toString() %>"
 						>
 							<liferay-frontend:vertical-card-header>
-								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - rule.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+								<liferay-ui:message
+									arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - rule.getCreateDate().getTime(), true) %>"
+									key="x-ago"
+									translateArguments="<%= false %>"
+								/>
 							</liferay-frontend:vertical-card-header>
 						</liferay-frontend:icon-vertical-card>
 					</liferay-ui:search-container-column-text>

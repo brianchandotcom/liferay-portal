@@ -25,8 +25,17 @@ String prompt = (String)SessionMessages.get(renderRequest, "prompt");
 <portlet:actionURL name="executeCommand" var="executeCommandURL" />
 
 <div class="container-fluid-1280">
-	<aui:form action="<%= executeCommandURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "executeCommand();" %>'>
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:form
+		action="<%= executeCommandURL %>"
+		method="post"
+		name="fm"
+		onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "executeCommand();" %>'
+	>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= currentURL %>"
+		/>
 
 		<liferay-ui:error key="gogo">
 
@@ -39,12 +48,21 @@ String prompt = (String)SessionMessages.get(renderRequest, "prompt");
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="command" prefix="<%= prompt %>" value="<%= command %>" />
+				<aui:input
+					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>"
+					name="command"
+					prefix="<%= prompt %>"
+					value="<%= command %>"
+				/>
 			</aui:fieldset>
 		</aui:fieldset-group>
 
 		<aui:button-row>
-			<aui:button primary="<%= true %>" type="submit" value="execute" />
+			<aui:button
+				primary="<%= true %>"
+				type="submit"
+				value="execute"
+			/>
 		</aui:button-row>
 
 		<c:if test="<%= Validator.isNotNull(commandOutput) %>">

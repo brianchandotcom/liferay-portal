@@ -16,14 +16,9 @@
 
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
-		<liferay-ui:search-container-column-icon
-			icon="sites"
-			toggleRowChecker="<%= true %>"
-		/>
+		<liferay-ui:search-container-column-icon icon="sites" toggleRowChecker="<%= true %>" />
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<h5><%= HtmlUtil.escape(group.getDescriptiveName(locale)) %></h5>
 
 			<h6 class="text-default">
@@ -56,9 +51,6 @@
 			value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			name="type"
-			value="<%= LanguageUtil.get(request, group.getTypeLabel()) %>"
-		/>
+		<liferay-ui:search-container-column-text name="type" value="<%= LanguageUtil.get(request, group.getTypeLabel()) %>" />
 	</c:otherwise>
 </c:choose>

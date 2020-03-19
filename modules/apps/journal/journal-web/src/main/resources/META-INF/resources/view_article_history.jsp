@@ -39,31 +39,33 @@ JournalArticle article = journalDisplayContext.getArticle();
 		renderResponse.setTitle(article.getTitle(locale));
 		%>
 
-		<clay:navigation-bar
-			inverted="<%= true %>"
-			navigationItems="<%= journalHistoryDisplayContext.getNavigationItems() %>"
-		/>
+		<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= journalHistoryDisplayContext.getNavigationItems() %>" />
 
-		<clay:management-toolbar
-			displayContext="<%= journalHistoryManagementToolbarDisplayContext %>"
-		/>
+		<clay:management-toolbar displayContext="<%= journalHistoryManagementToolbarDisplayContext %>" />
 
 		<%
 		PortletURL portletURL = journalHistoryDisplayContext.getPortletURL();
 		%>
 
-		<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-			<aui:input name="referringPortletResource" type="hidden" value="<%= journalHistoryDisplayContext.getReferringPortletResource() %>" />
-			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(article.getGroupId()) %>" />
+		<aui:form
+			action="<%= portletURL.toString() %>"
+			cssClass="container-fluid-1280"
+			method="post"
+			name="fm"
+		>
+			<aui:input
+				name="referringPortletResource"
+				type="hidden"
+				value="<%= journalHistoryDisplayContext.getReferringPortletResource() %>"
+			/>
+			<aui:input
+				name="groupId"
+				type="hidden"
+				value="<%= String.valueOf(article.getGroupId()) %>"
+			/>
 
-			<liferay-ui:search-container
-				id="articleVersions"
-				searchContainer="<%= journalHistoryDisplayContext.getArticleSearchContainer() %>"
-			>
-				<liferay-ui:search-container-row
-					className="com.liferay.journal.model.JournalArticle"
-					modelVar="articleVersion"
-				>
+			<liferay-ui:search-container id="articleVersions" searchContainer="<%= journalHistoryDisplayContext.getArticleSearchContainer() %>">
+				<liferay-ui:search-container-row className="com.liferay.journal.model.JournalArticle" modelVar="articleVersion">
 
 					<%
 					Map<String, Object> rowData = new HashMap<>();
@@ -78,14 +80,10 @@ JournalArticle article = journalDisplayContext.getArticle();
 					<c:choose>
 						<c:when test='<%= Objects.equals(journalHistoryDisplayContext.getDisplayStyle(), "descriptive") %>'>
 							<liferay-ui:search-container-column-text>
-								<liferay-ui:user-portrait
-									userId="<%= articleVersion.getUserId() %>"
-								/>
+								<liferay-ui:user-portrait userId="<%= articleVersion.getUserId() %>" />
 							</liferay-ui:search-container-column-text>
 
-							<liferay-ui:search-container-column-text
-								colspan="<%= 2 %>"
-							>
+							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 								<%
 								Date createDate = articleVersion.getModifiedDate();
@@ -102,15 +100,19 @@ JournalArticle article = journalDisplayContext.getArticle();
 								</h5>
 
 								<h6 class="text-default">
-									<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= articleVersion.getStatus() %>" version="<%= String.valueOf(articleVersion.getVersion()) %>" />
+									<aui:workflow-status
+										markupView="lexicon"
+										showHelpMessage="<%= false %>"
+										showIcon="<%= false %>"
+										showLabel="<%= false %>"
+										status="<%= articleVersion.getStatus() %>"
+										version="<%= String.valueOf(articleVersion.getVersion()) %>"
+									/>
 								</h6>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text>
-								<clay:dropdown-actions
-									defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-									dropdownItems="<%= journalDisplayContext.getArticleHistoryActionDropdownItems(articleVersion) %>"
-								/>
+								<clay:dropdown-actions defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= journalDisplayContext.getArticleHistoryActionDropdownItems(articleVersion) %>" />
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:when test='<%= Objects.equals(journalHistoryDisplayContext.getDisplayStyle(), "icon") %>'>
@@ -120,16 +122,11 @@ JournalArticle article = journalDisplayContext.getArticle();
 							%>
 
 							<liferay-ui:search-container-column-text>
-								<clay:vertical-card
-									verticalCard="<%= new JournalArticleHistoryVerticalCard(articleVersion, renderRequest, renderResponse, searchContainer.getRowChecker(), assetDisplayPageFriendlyURLProvider, trashHelper) %>"
-								/>
+								<clay:vertical-card verticalCard="<%= new JournalArticleHistoryVerticalCard(articleVersion, renderRequest, renderResponse, searchContainer.getRowChecker(), assetDisplayPageFriendlyURLProvider, trashHelper) %>" />
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:when test='<%= Objects.equals(journalHistoryDisplayContext.getDisplayStyle(), "list") %>'>
-							<liferay-ui:search-container-column-text
-								name="id"
-								value="<%= HtmlUtil.escape(articleVersion.getArticleId()) %>"
-							/>
+							<liferay-ui:search-container-column-text name="id" value="<%= HtmlUtil.escape(articleVersion.getArticleId()) %>" />
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand table-cell-minw-200 table-title"
@@ -143,9 +140,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 								orderable="<%= true %>"
 							/>
 
-							<liferay-ui:search-container-column-status
-								name="status"
-							/>
+							<liferay-ui:search-container-column-status name="status" />
 
 							<liferay-ui:search-container-column-date
 								cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
@@ -170,30 +165,18 @@ JournalArticle article = journalDisplayContext.getArticle();
 							/>
 
 							<liferay-ui:search-container-column-text>
-								<clay:dropdown-actions
-									defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-									dropdownItems="<%= journalDisplayContext.getArticleHistoryActionDropdownItems(articleVersion) %>"
-								/>
+								<clay:dropdown-actions defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= journalDisplayContext.getArticleHistoryActionDropdownItems(articleVersion) %>" />
 							</liferay-ui:search-container-column-text>
 						</c:when>
 					</c:choose>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					displayStyle="<%= journalHistoryDisplayContext.getDisplayStyle() %>"
-					markupView="lexicon"
-				/>
+				<liferay-ui:search-iterator displayStyle="<%= journalHistoryDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</aui:form>
 
-		<liferay-frontend:component
-			componentId="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-			module="js/ElementsDefaultEventHandler.es"
-		/>
+		<liferay-frontend:component componentId="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>" module="js/ElementsDefaultEventHandler.es" />
 
-		<liferay-frontend:component
-			componentId="<%= journalHistoryManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-			module="js/ArticleHistoryManagementToolbarDefaultEventHandler.es"
-		/>
+		<liferay-frontend:component componentId="<%= journalHistoryManagementToolbarDisplayContext.getDefaultEventHandler() %>" module="js/ArticleHistoryManagementToolbarDefaultEventHandler.es" />
 	</c:otherwise>
 </c:choose>

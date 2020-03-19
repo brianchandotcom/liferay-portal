@@ -69,16 +69,17 @@ String keywords = ParamUtil.getString(request, "keywords");
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 						</portlet:renderURL>
 
-						<aui:button href="<%= addNewChannelURL %>" primary="<%= true %>" value="new-property" />
+						<aui:button
+							href="<%= addNewChannelURL %>"
+							primary="<%= true %>"
+							value="new-property"
+						/>
 					</aui:button-row>
 				</div>
 			</div>
 		</c:when>
 		<c:otherwise>
-			<clay:management-toolbar
-				displayContext="<%= new ChannelManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, channelDisplayContext, channelSearch) %>"
-				elementClasses="custom-management-toolbar"
-			/>
+			<clay:management-toolbar displayContext="<%= new ChannelManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, channelDisplayContext, channelSearch) %>" elementClasses="custom-management-toolbar" />
 
 			<liferay-ui:search-container
 				id="selectChannels"
@@ -106,10 +107,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-					searchResultCssClass="show-quick-actions-on-hover table table-autofit"
-				/>
+				<liferay-ui:search-iterator markupView="lexicon" searchResultCssClass="show-quick-actions-on-hover table table-autofit" />
 			</liferay-ui:search-container>
 		</c:otherwise>
 	</c:choose>

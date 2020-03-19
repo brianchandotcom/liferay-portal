@@ -50,7 +50,11 @@ for (AssetRendererFactory<?> assetRendererFactory : assetEntriesSearchFacet.getA
 }
 %>
 
-<aui:input label="frequency-threshold" name='<%= assetEntriesSearchFacet.getClassName() + "frequencyThreshold" %>' value="<%= frequencyThreshold %>" />
+<aui:input
+	label="frequency-threshold"
+	name='<%= assetEntriesSearchFacet.getClassName() + "frequencyThreshold" %>'
+	value="<%= frequencyThreshold %>"
+/>
 
 <aui:input name='<%= assetEntriesSearchFacet.getClassName() + "assetTypes" %>' type="hidden" />
 

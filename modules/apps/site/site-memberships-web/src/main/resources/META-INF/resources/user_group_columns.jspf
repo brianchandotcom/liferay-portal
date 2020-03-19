@@ -28,14 +28,9 @@ String userGroupGroupRolesString = ListUtil.toString(userGroupGroupRoles, UsersA
 
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
-		<liferay-ui:search-container-column-icon
-			icon="users"
-			toggleRowChecker="<%= true %>"
-		/>
+		<liferay-ui:search-container-column-icon icon="users" toggleRowChecker="<%= true %>" />
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<h5><%= userGroup.getName() %></h5>
 
 			<h6 class="text-default">
@@ -52,9 +47,7 @@ String userGroupGroupRolesString = ListUtil.toString(userGroupGroupRoles, UsersA
 				<%= HtmlUtil.escape(userGroupGroupRolesString) %>
 			</h6>
 
-			<liferay-ui:search-container-column-jsp
-				path="/user_group_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp path="/user_group_action.jsp" />
 		</c:if>
 	</c:when>
 	<c:otherwise>
@@ -79,9 +72,7 @@ String userGroupGroupRolesString = ListUtil.toString(userGroupGroupRoles, UsersA
 				value="<%= HtmlUtil.escape(userGroupGroupRolesString) %>"
 			/>
 
-			<liferay-ui:search-container-column-jsp
-				path="/user_group_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp path="/user_group_action.jsp" />
 		</c:if>
 	</c:otherwise>
 </c:choose>

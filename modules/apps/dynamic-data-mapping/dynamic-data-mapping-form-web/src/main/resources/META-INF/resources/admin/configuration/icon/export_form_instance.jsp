@@ -20,7 +20,11 @@
 long formInstanceId = ParamUtil.getLong(request, renderResponse.getNamespace() + "formInstanceId");
 %>
 
-<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportFormInstance" var="exportFormInstanceURL">
+<liferay-portlet:resourceURL
+	copyCurrentRenderParameters="<%= false %>"
+	id="exportFormInstance"
+	var="exportFormInstanceURL"
+>
 	<portlet:param name="formInstanceId" value="<%= String.valueOf(formInstanceId) %>" />
 </liferay-portlet:resourceURL>
 
@@ -34,7 +38,4 @@ sb.append(exportFormInstanceURL);
 sb.append("');");
 %>
 
-<liferay-ui:icon
-	message="export"
-	url="<%= sb.toString() %>"
-/>
+<liferay-ui:icon message="export" url="<%= sb.toString() %>" />

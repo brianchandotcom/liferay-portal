@@ -24,14 +24,10 @@ accountEntryDisplaySearchContainer.setRowChecker(null);
 SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementToolbarDisplayContext = new SelectAccountEntryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryDisplaySearchContainer);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= selectAccountEntryManagementToolbarDisplayContext %>"
-/>
+<clay:management-toolbar displayContext="<%= selectAccountEntryManagementToolbarDisplayContext %>" />
 
 <aui:container cssClass="container-fluid container-fluid-max-xl" id="selectAccountEntry">
-	<liferay-ui:search-container
-		searchContainer="<%= accountEntryDisplaySearchContainer %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= accountEntryDisplaySearchContainer %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.account.admin.web.internal.display.AccountEntryDisplay"
 			keyProperty="accountEntryId"
@@ -57,13 +53,15 @@ SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementTo
 				).build();
 				%>
 
-				<aui:button cssClass="choose-account selector-button" data="<%= data %>" value="choose" />
+				<aui:button
+					cssClass="choose-account selector-button"
+					data="<%= data %>"
+					value="choose"
+				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:container>
 

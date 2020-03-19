@@ -31,12 +31,17 @@ renderResponse.setTitle((fragmentCollection != null) ? fragmentCollection.getNam
 	<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />
 </portlet:actionURL>
 
-<liferay-frontend:edit-form
-	action="<%= editFragmentCollectionURL %>"
-	name="fm"
->
-	<aui:input name="redirect" type="hidden" value="<%= fragmentDisplayContext.getRedirect() %>" />
-	<aui:input name="fragmentCollectionId" type="hidden" value="<%= fragmentCollectionId %>" />
+<liferay-frontend:edit-form action="<%= editFragmentCollectionURL %>" name="fm">
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= fragmentDisplayContext.getRedirect() %>"
+	/>
+	<aui:input
+		name="fragmentCollectionId"
+		type="hidden"
+		value="<%= fragmentCollectionId %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= DuplicateFragmentCollectionException.class %>" message="please-enter-a-unique-name" />
@@ -46,7 +51,12 @@ renderResponse.setTitle((fragmentCollection != null) ? fragmentCollection.getNam
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
+				<aui:input
+					autoFocus="<%= true %>"
+					label="name"
+					name="name"
+					placeholder="name"
+				/>
 
 				<aui:input name="description" placeholder="description" />
 			</liferay-frontend:fieldset>

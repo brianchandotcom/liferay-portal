@@ -82,12 +82,37 @@ if (useDefaultRestartOptions) {
 
 <portlet:actionURL name='<%= (spiDefinition != null) ? "editSPIDefinition" : "addSPIDefinition" %>' var="editSPIDefinitionURL" />
 
-<aui:form action="<%= editSPIDefinitionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); "+ renderResponse.getNamespace() + "saveSPIDefinition();" %>'>
-	<aui:input name="mvcPath" type="hidden" value="/edit_spi_definition.jsp" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="spiDefinitionId" type="hidden" value="<%= spiDefinitionId %>" />
-	<aui:input name="servletContextNames" type="hidden" value="" />
-	<aui:input name="portletIds" type="hidden" value="" />
+<aui:form
+	action="<%= editSPIDefinitionURL %>"
+	method="post"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); "+ renderResponse.getNamespace() + "saveSPIDefinition();" %>'
+>
+	<aui:input
+		name="mvcPath"
+		type="hidden"
+		value="/edit_spi_definition.jsp"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="spiDefinitionId"
+		type="hidden"
+		value="<%= spiDefinitionId %>"
+	/>
+	<aui:input
+		name="servletContextNames"
+		type="hidden"
+		value=""
+	/>
+	<aui:input
+		name="portletIds"
+		type="hidden"
+		value=""
+	/>
 
 	<liferay-ui:error exception="<%= DuplicateSPIDefinitionConnectorException.class %>" message="please-enter-a-unique-spi-connector-address-and-port-combination" />
 	<liferay-ui:error exception="<%= DuplicateSPIDefinitionException.class %>" message="please-enter-a-unique-spi-name" />
@@ -110,7 +135,11 @@ if (useDefaultRestartOptions) {
 			title="general"
 		>
 			<aui:fieldset>
-				<aui:input autoFocus="<%= (spiDefinition == null) && windowState.equals(WindowState.MAXIMIZED) %>" disabled="<%= spiDefinition != null %>" name="name" />
+				<aui:input
+					autoFocus="<%= (spiDefinition == null) && windowState.equals(WindowState.MAXIMIZED) %>"
+					disabled="<%= spiDefinition != null %>"
+					name="name"
+				/>
 
 				<aui:input autoFocus="<%= (spiDefinition != null) && windowState.equals(WindowState.MAXIMIZED) %>" name="description" />
 			</aui:fieldset>
@@ -138,9 +167,27 @@ if (useDefaultRestartOptions) {
 				title="spi-runtime"
 			>
 				<aui:fieldset>
-					<aui:input helpMessage="maximum-worker-threads-help" label="maximum-worker-threads" max="<%= SPIConfigurationTemplate.getMaxThreads() %>" min="<%= SPIConfigurationTemplate.getMinThreads() %>" name="TypeSettingsProperties--max-threads--" required="<%= true %>" type="number" value="<%= maxThreads %>" />
+					<aui:input
+						helpMessage="maximum-worker-threads-help"
+						label="maximum-worker-threads"
+						max="<%= SPIConfigurationTemplate.getMaxThreads() %>"
+						min="<%= SPIConfigurationTemplate.getMinThreads() %>"
+						name="TypeSettingsProperties--max-threads--"
+						required="<%= true %>"
+						type="number"
+						value="<%= maxThreads %>"
+					/>
 
-					<aui:input helpMessage="connector-port-help" label="connector-port" max="<%= SPIConfigurationTemplate.getConnectorPortMax() %>" min="<%= SPIConfigurationTemplate.getConnectorPortMin() %>" name="connectorPort" required="<%= true %>" type="number" value="<%= connectorPort %>" />
+					<aui:input
+						helpMessage="connector-port-help"
+						label="connector-port"
+						max="<%= SPIConfigurationTemplate.getConnectorPortMax() %>"
+						min="<%= SPIConfigurationTemplate.getConnectorPortMin() %>"
+						name="connectorPort"
+						required="<%= true %>"
+						type="number"
+						value="<%= connectorPort %>"
+					/>
 				</aui:fieldset>
 			</liferay-ui:panel>
 
@@ -194,7 +241,11 @@ if (useDefaultRestartOptions) {
 				title="java-runtime"
 			>
 				<aui:fieldset>
-					<aui:input helpMessage="jvm-arguments-help" label="jvm-arguments" name="jvmArguments" />
+					<aui:input
+						helpMessage="jvm-arguments-help"
+						label="jvm-arguments"
+						name="jvmArguments"
+					/>
 				</aui:fieldset>
 			</liferay-ui:panel>
 
@@ -206,7 +257,14 @@ if (useDefaultRestartOptions) {
 				title="recovery-options"
 			>
 				<aui:fieldset>
-					<aui:input checked="<%= useDefaultNotificationOptions %>" helpMessage="use-default-notification-options" id="useDefaultNotificationOptions" label="use-default-notification-options" name="useDefaultNotificationOptions" type="checkbox" />
+					<aui:input
+						checked="<%= useDefaultNotificationOptions %>"
+						helpMessage="use-default-notification-options"
+						id="useDefaultNotificationOptions"
+						label="use-default-notification-options"
+						name="useDefaultNotificationOptions"
+						type="checkbox"
+					/>
 
 					<%
 					Map<String, Object> data = new HashMap<String, Object>();
@@ -214,9 +272,25 @@ if (useDefaultRestartOptions) {
 					data.put("defaultValue", defaultNotificationRecipients);
 					%>
 
-					<aui:input data="<%= data %>" disabled="<%= useDefaultNotificationOptions %>" helpMessage="notification-recipients-help" id="notificationRecipients" label="notification-recipients" name="TypeSettingsProperties--notification-recipients--" type="text" value="<%= notificationRecipients %>" />
+					<aui:input
+						data="<%= data %>"
+						disabled="<%= useDefaultNotificationOptions %>"
+						helpMessage="notification-recipients-help"
+						id="notificationRecipients"
+						label="notification-recipients"
+						name="TypeSettingsProperties--notification-recipients--"
+						type="text"
+						value="<%= notificationRecipients %>"
+					/>
 
-					<aui:input checked="<%= useDefaultRestartOptions %>" helpMessage="use-default-restart-options" id="useDefaultRestartOptions" label="use-default-restart-options" name="useDefaultRestartOptions" type="checkbox" />
+					<aui:input
+						checked="<%= useDefaultRestartOptions %>"
+						helpMessage="use-default-restart-options"
+						id="useDefaultRestartOptions"
+						label="use-default-restart-options"
+						name="useDefaultRestartOptions"
+						type="checkbox"
+					/>
 
 					<%
 					data = new HashMap<String, Object>();
@@ -224,7 +298,16 @@ if (useDefaultRestartOptions) {
 					data.put("defaultValue", defaultMaxRestartAttempts);
 					%>
 
-					<aui:input data="<%= data %>" disabled="<%= useDefaultRestartOptions %>" helpMessage="maximum-restart-attempts-help" id="maxRestartAttempts" label="maximum-restart-attempts" name="TypeSettingsProperties--max-restart-attempts--" type="text" value="<%= maxRestartAttempts %>">
+					<aui:input
+						data="<%= data %>"
+						disabled="<%= useDefaultRestartOptions %>"
+						helpMessage="maximum-restart-attempts-help"
+						id="maxRestartAttempts"
+						label="maximum-restart-attempts"
+						name="TypeSettingsProperties--max-restart-attempts--"
+						type="text"
+						value="<%= maxRestartAttempts %>"
+					>
 						<aui:validator name="min">"0"</aui:validator>
 					</aui:input>
 				</aui:fieldset>
@@ -248,15 +331,45 @@ if (useDefaultRestartOptions) {
 				title="advanced-spi-runtime"
 			>
 				<aui:fieldset>
-					<aui:input helpMessage="java-executable-help" label="java-executable" name="TypeSettingsProperties--java-executable--" type="text" value="<%= javaExecutable %>" />
+					<aui:input
+						helpMessage="java-executable-help"
+						label="java-executable"
+						name="TypeSettingsProperties--java-executable--"
+						type="text"
+						value="<%= javaExecutable %>"
+					/>
 
-					<aui:input helpMessage="spi-ping-interval-help" label="spi-ping-interval" name="TypeSettingsProperties--ping-interval--" type="text" value="<%= pingInterval %>" />
+					<aui:input
+						helpMessage="spi-ping-interval-help"
+						label="spi-ping-interval"
+						name="TypeSettingsProperties--ping-interval--"
+						type="text"
+						value="<%= pingInterval %>"
+					/>
 
-					<aui:input helpMessage="spi-portal-properties-help" label="spi-portal-properties" name="TypeSettingsProperties--portal-properties--" type="textarea" value="<%= portalProperties %>" />
+					<aui:input
+						helpMessage="spi-portal-properties-help"
+						label="spi-portal-properties"
+						name="TypeSettingsProperties--portal-properties--"
+						type="textarea"
+						value="<%= portalProperties %>"
+					/>
 
-					<aui:input helpMessage="spi-register-timeout-help" label="spi-register-timeout" name="TypeSettingsProperties--register-timeout--" type="text" value="<%= registerTimeout %>" />
+					<aui:input
+						helpMessage="spi-register-timeout-help"
+						label="spi-register-timeout"
+						name="TypeSettingsProperties--register-timeout--"
+						type="text"
+						value="<%= registerTimeout %>"
+					/>
 
-					<aui:input helpMessage="spi-shutdown-timeout-help" label="spi-shutdown-timeout" name="TypeSettingsProperties--shutdown-timeout--" type="text" value="<%= shutdownTimeout %>" />
+					<aui:input
+						helpMessage="spi-shutdown-timeout-help"
+						label="spi-shutdown-timeout"
+						name="TypeSettingsProperties--shutdown-timeout--"
+						type="text"
+						value="<%= shutdownTimeout %>"
+					/>
 				</aui:fieldset>
 			</liferay-ui:panel>
 

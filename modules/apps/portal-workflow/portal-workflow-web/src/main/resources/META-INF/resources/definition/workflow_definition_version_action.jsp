@@ -57,10 +57,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 			url="javascript:;"
 		/>
 
-		<liferay-ui:icon
-			message="restore"
-			url="<%= revertWorkflowDefinitionURL %>"
-		/>
+		<liferay-ui:icon message="restore" url="<%= revertWorkflowDefinitionURL %>" />
 	</liferay-ui:icon-menu>
 </c:if>
 

@@ -42,18 +42,25 @@ Group group = siteMembershipsDisplayContext.getGroup();
 						<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 					</portlet:renderURL>
 
-					<aui:a cssClass="badge badge-primary badge-sm" href="<%= viewMembershipRequestsURL %>" label="<%= String.valueOf(pendingRequests) %>" title='<%= LanguageUtil.format(request, "there-are-x-membership-requests-pending", String.valueOf(pendingRequests), false) %>' />
+					<aui:a
+						cssClass="badge badge-primary badge-sm"
+						href="<%= viewMembershipRequestsURL %>"
+						label="<%= String.valueOf(pendingRequests) %>"
+						title='<%= LanguageUtil.format(request, "there-are-x-membership-requests-pending", String.valueOf(pendingRequests), false) %>'
+					/>
 				</c:if>
 			</h4>
 
 			<h6 class="text-muted">
-				<liferay-ui:message arguments="<%= GroupUtil.getGroupTypeLabel(group, locale) %>" key='<%= "membership-type-" + GroupConstants.getTypeLabel(group.getType()) + "-help" %>' translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= GroupUtil.getGroupTypeLabel(group, locale) %>"
+					key='<%= "membership-type-" + GroupConstants.getTypeLabel(group.getType()) + "-help" %>'
+					translateArguments="<%= false %>"
+				/>
 			</h6>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<clay:navigation-bar navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>" />
 
 		<div class="sidebar-body">
 			<h5><liferay-ui:message key="num-of-users" /></h5>
@@ -86,9 +93,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 			</h6>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<clay:navigation-bar navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>" />
 
 		<div class="sidebar-body">
 
@@ -104,10 +109,18 @@ Group group = siteMembershipsDisplayContext.getGroup();
 				<p>
 					<c:choose>
 						<c:when test="<%= names.size() == 1 %>">
-							<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), HtmlUtil.escape(names.get(0))} %>" key="this-user-is-a-member-of-x-because-he-belongs-to-x" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments="<%= new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), HtmlUtil.escape(names.get(0))} %>"
+								key="this-user-is-a-member-of-x-because-he-belongs-to-x"
+								translateArguments="<%= false %>"
+							/>
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:message arguments='<%= new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), HtmlUtil.escape(StringUtil.merge(names.subList(0, names.size() - 1).toArray(new String[names.size() - 1]), ", ")), HtmlUtil.escape(names.get(names.size() - 1))} %>' key="this-user-is-a-member-of-x-because-he-belongs-to-x-and-x" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments='<%= new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), HtmlUtil.escape(StringUtil.merge(names.subList(0, names.size() - 1).toArray(new String[names.size() - 1]), ", ")), HtmlUtil.escape(names.get(names.size() - 1))} %>'
+								key="this-user-is-a-member-of-x-because-he-belongs-to-x-and-x"
+								translateArguments="<%= false %>"
+							/>
 						</c:otherwise>
 					</c:choose>
 				</p>
@@ -151,9 +164,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 			<h4><liferay-ui:message arguments="<%= users.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<clay:navigation-bar navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>" />
 
 		<div class="sidebar-body">
 			<h5><liferay-ui:message arguments="<%= users.size() %>" key="x-items-are-selected" /></h5>

@@ -20,14 +20,10 @@
 JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDisplayContext = (JournalArticleItemSelectorViewDisplayContext)request.getAttribute(JournalWebConstants.JOURNAL_ARTICLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new JournalArticleItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalArticleItemSelectorViewDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new JournalArticleItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalArticleItemSelectorViewDisplayContext) %>" />
 
 <div class="container-fluid container-fluid-max-xl item-selector lfr-item-viewer" id="<portlet:namespace />articlesContainer">
-	<liferay-site-navigation:breadcrumb
-		breadcrumbEntries="<%= journalArticleItemSelectorViewDisplayContext.getPortletBreadcrumbEntries() %>"
-	/>
+	<liferay-site-navigation:breadcrumb breadcrumbEntries="<%= journalArticleItemSelectorViewDisplayContext.getPortletBreadcrumbEntries() %>" />
 
 	<liferay-ui:search-container
 		emptyResultsMessage="no-web-content-was-found"
@@ -91,14 +87,10 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							%>
 
 							<liferay-ui:search-container-column-text>
-								<liferay-ui:user-portrait
-									userId="<%= curArticle.getUserId() %>"
-								/>
+								<liferay-ui:user-portrait userId="<%= curArticle.getUserId() %>" />
 							</liferay-ui:search-container-column-text>
 
-							<liferay-ui:search-container-column-text
-								colspan="<%= 2 %>"
-							>
+							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 								<%
 								Date createDate = curArticle.getModifiedDate();
@@ -122,9 +114,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							%>
 
 							<liferay-ui:search-container-column-text>
-								<clay:vertical-card
-									verticalCard="<%= new JournalArticleItemSelectorVerticalCard(curArticle, renderRequest) %>"
-								/>
+								<clay:vertical-card verticalCard="<%= new JournalArticleItemSelectorVerticalCard(curArticle, renderRequest) %>" />
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:otherwise>
@@ -134,10 +124,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							%>
 
 							<c:if test="<%= journalArticleItemSelectorViewDisplayContext.showArticleId() %>">
-								<liferay-ui:search-container-column-text
-									name="id"
-									value="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
-								/>
+								<liferay-ui:search-container-column-text name="id" value="<%= HtmlUtil.escape(curArticle.getArticleId()) %>" />
 							</c:if>
 
 							<liferay-ui:search-container-column-text
@@ -192,14 +179,9 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 
 					<c:choose>
 						<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "descriptive") %>'>
-							<liferay-ui:search-container-column-icon
-								icon="folder"
-								toggleRowChecker="<%= true %>"
-							/>
+							<liferay-ui:search-container-column-icon icon="folder" toggleRowChecker="<%= true %>" />
 
-							<liferay-ui:search-container-column-text
-								colspan="<%= 2 %>"
-							>
+							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 								<%
 								Date createDate = curFolder.getCreateDate();
@@ -224,12 +206,8 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							row.setCssClass("entry-card lfr-asset-folder " + row.getCssClass());
 							%>
 
-							<liferay-ui:search-container-column-text
-								colspan="<%= 2 %>"
-							>
-								<clay:horizontal-card
-									horizontalCard="<%= new JournalFolderItemSelectorHorizontalCard(curFolder, journalArticleItemSelectorViewDisplayContext) %>"
-								/>
+							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+								<clay:horizontal-card horizontalCard="<%= new JournalFolderItemSelectorHorizontalCard(curFolder, journalArticleItemSelectorViewDisplayContext) %>" />
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:otherwise>

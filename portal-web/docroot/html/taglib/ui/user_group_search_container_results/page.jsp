@@ -22,10 +22,7 @@ LinkedHashMap<String, Object> userGroupParams = (LinkedHashMap<String, Object>)r
 SearchContainer userGroupSearchContainer = (SearchContainer)request.getAttribute("liferay-ui:user-group-search-container-results:searchContainer");
 %>
 
-<liferay-ui:search-container
-	id="<%= userGroupSearchContainer.getId(request, namespace) %>"
-	searchContainer="<%= userGroupSearchContainer %>"
->
+<liferay-ui:search-container id="<%= userGroupSearchContainer.getId(request, namespace) %>" searchContainer="<%= userGroupSearchContainer %>">
 	<liferay-ui:search-container-results>
 
 		<%

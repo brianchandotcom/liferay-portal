@@ -21,14 +21,15 @@ String eventName = GetterUtil.getString(request.getAttribute("liferay-site:site-
 long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay-site:site-browser:selectedGroupIds"));
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new SiteBrowserManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteBrowserDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new SiteBrowserManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteBrowserDisplayContext) %>" />
 
-<aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
-	<liferay-ui:search-container
-		searchContainer="<%= siteBrowserDisplayContext.getSearchContainer() %>"
-	>
+<aui:form
+	action="<%= siteBrowserDisplayContext.getPortletURL() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="selectGroupFm"
+>
+	<liferay-ui:search-container searchContainer="<%= siteBrowserDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Group"
 			escapedModel="<%= true %>"
@@ -51,13 +52,9 @@ long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay
 
 			<c:choose>
 				<c:when test='<%= Objects.equals(siteBrowserDisplayContext.getDisplayStyle(), "descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="sites"
-					/>
+					<liferay-ui:search-container-column-icon icon="sites" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<h5>
 							<c:choose>
 								<c:when test="<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) %>">
@@ -66,7 +63,11 @@ long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay
 									</span>
 								</c:when>
 								<c:otherwise>
-									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<aui:a
+										cssClass="selector-button"
+										data="<%= data %>"
+										href="javascript:;"
+									>
 										<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 									</aui:a>
 								</c:otherwise>
@@ -85,16 +86,11 @@ long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:vertical-card
-							verticalCard="<%= new SiteVerticalCard(group, renderRequest, selectedGroupIds) %>"
-						/>
+						<clay:vertical-card verticalCard="<%= new SiteVerticalCard(group, renderRequest, selectedGroupIds) %>" />
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(siteBrowserDisplayContext.getDisplayStyle(), "list") %>'>
-					<liferay-ui:search-container-column-text
-						name="name"
-						truncate="<%= true %>"
-					>
+					<liferay-ui:search-container-column-text name="name" truncate="<%= true %>">
 						<c:choose>
 							<c:when test="<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) %>">
 								<span class="text-muted">
@@ -102,25 +98,23 @@ long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay
 								</span>
 							</c:when>
 							<c:otherwise>
-								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<aui:a
+									cssClass="selector-button"
+									data="<%= data %>"
+									href="javascript:;"
+								>
 									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 								</aui:a>
 							</c:otherwise>
 						</c:choose>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						name="type"
-						value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
-					/>
+					<liferay-ui:search-container-column-text name="type" value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>" />
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= siteBrowserDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="<%= siteBrowserDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

@@ -41,9 +41,7 @@ List<MenuItem> menuItems = menu.getMenuItems();
 	for (MenuItem menuItem : menuItems) {
 	%>
 
-		<liferay-ui:menu-item
-			menuItem="<%= menuItem %>"
-		/>
+		<liferay-ui:menu-item menuItem="<%= menuItem %>" />
 
 		<c:if test="<%= menuItem.hasSeparator() %>">
 			<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>

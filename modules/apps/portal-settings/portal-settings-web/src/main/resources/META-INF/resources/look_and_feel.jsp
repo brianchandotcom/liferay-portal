@@ -16,12 +16,21 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+<aui:input
+	name="<%= Constants.CMD %>"
+	type="hidden"
+	value="<%= Constants.UPDATE %>"
+/>
 
 <h3 class="sheet-subtitle"><liferay-ui:message key="logo" /></h3>
 
 <aui:fieldset>
-	<aui:input label="allow-site-administrators-to-use-their-own-logo" name='<%= "settings--" + PropsKeys.COMPANY_SECURITY_SITE_LOGO + "--" %>' type="checkbox" value="<%= company.isSiteLogo() %>" />
+	<aui:input
+		label="allow-site-administrators-to-use-their-own-logo"
+		name='<%= "settings--" + PropsKeys.COMPANY_SECURITY_SITE_LOGO + "--" %>'
+		type="checkbox"
+		value="<%= company.isSiteLogo() %>"
+	/>
 
 	<liferay-ui:logo-selector
 		currentLogoURL='<%= themeDisplay.getPathImage() + "/company_logo?img_id=" + company.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(company.getLogoId()) %>'
@@ -50,14 +59,22 @@
 			}
 		%>
 
-			<aui:option label="<%= curTheme.getName() %>" selected="<%= Objects.equals(defaultRegularThemeId, curTheme.getThemeId()) %>" value="<%= curTheme.getThemeId() %>" />
+			<aui:option
+				label="<%= curTheme.getName() %>"
+				selected="<%= Objects.equals(defaultRegularThemeId, curTheme.getThemeId()) %>"
+				value="<%= curTheme.getThemeId() %>"
+			/>
 
 		<%
 		}
 		%>
 
 		<c:if test="<%= !deployed %>">
-			<aui:option label='<%= defaultRegularThemeId + "(" + LanguageUtil.get(request, "undeployed") + ")" %>' selected="<%= true %>" value="<%= defaultRegularThemeId %>" />
+			<aui:option
+				label='<%= defaultRegularThemeId + "(" + LanguageUtil.get(request, "undeployed") + ")" %>'
+				selected="<%= true %>"
+				value="<%= defaultRegularThemeId %>"
+			/>
 		</c:if>
 	</aui:select>
 
@@ -76,14 +93,22 @@
 			}
 		%>
 
-			<aui:option label="<%= curTheme.getName() %>" selected="<%= Objects.equals(defaultControlPanelThemeId, curTheme.getThemeId()) %>" value="<%= curTheme.getThemeId() %>" />
+			<aui:option
+				label="<%= curTheme.getName() %>"
+				selected="<%= Objects.equals(defaultControlPanelThemeId, curTheme.getThemeId()) %>"
+				value="<%= curTheme.getThemeId() %>"
+			/>
 
 		<%
 		}
 		%>
 
 		<c:if test="<%= !deployed %>">
-			<aui:option label='<%= defaultControlPanelThemeId + "(" + LanguageUtil.get(request, "undeployed") + ")" %>' selected="<%= true %>" value="<%= defaultControlPanelThemeId %>" />
+			<aui:option
+				label='<%= defaultControlPanelThemeId + "(" + LanguageUtil.get(request, "undeployed") + ")" %>'
+				selected="<%= true %>"
+				value="<%= defaultControlPanelThemeId %>"
+			/>
 		</c:if>
 	</aui:select>
 </aui:fieldset>

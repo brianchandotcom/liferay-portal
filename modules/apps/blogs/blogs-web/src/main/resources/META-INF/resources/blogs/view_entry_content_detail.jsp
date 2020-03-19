@@ -43,10 +43,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 		</portlet:renderURL>
 
 		<div class="container widget-mode-detail-header">
-			<liferay-asset:asset-categories-available
-				className="<%= BlogsEntry.class.getName() %>"
-				classPK="<%= entry.getEntryId() %>"
-			>
+			<liferay-asset:asset-categories-available className="<%= BlogsEntry.class.getName() %>" classPK="<%= entry.getEntryId() %>">
 				<div class="row">
 					<div class="categories col-md-8 mx-auto widget-metadata">
 						<liferay-asset:asset-categories-summary
@@ -90,9 +87,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 									<a href="<%= editEntryURL.toString() %>">
 										<span class="hide-accessible"><liferay-ui:message key="edit-entry" /></span>
 
-										<clay:icon
-											symbol="pencil"
-										/>
+										<clay:icon symbol="pencil" />
 									</a>
 								</c:if>
 							</div>
@@ -112,10 +107,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 							}
 							%>
 
-							<liferay-ui:user-portrait
-								cssClass="sticker-lg"
-								user="<%= entryUser %>"
-							/>
+							<liferay-ui:user-portrait cssClass="sticker-lg" user="<%= entryUser %>" />
 						</div>
 
 						<div class="autofit-col autofit-col-expand">
@@ -183,9 +175,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 				</div>
 			</div>
 
-			<liferay-expando:custom-attributes-available
-				className="<%= BlogsEntry.class.getName() %>"
-			>
+			<liferay-expando:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
 				<div class="row">
 					<div class="col-md-8 mx-auto widget-mode-detail">
 						<liferay-expando:custom-attribute-list
@@ -198,10 +188,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 				</div>
 			</liferay-expando:custom-attributes-available>
 
-			<liferay-asset:asset-tags-available
-				className="<%= BlogsEntry.class.getName() %>"
-				classPK="<%= entry.getEntryId() %>"
-			>
+			<liferay-asset:asset-tags-available className="<%= BlogsEntry.class.getName() %>" classPK="<%= entry.getEntryId() %>">
 				<div class="row">
 					<div class="col-md-8 mx-auto widget-mode-detail">
 						<div class="entry-tags">

@@ -32,10 +32,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search-
 
 <portlet:renderURL var="viewURL" />
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "search") %>'
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "search") %>' />
 
 <%
 AppManagerSearchResultsManagementToolbarDisplayContext
@@ -69,10 +66,7 @@ SearchContainer searchContainer = appManagerSearchResultsManagementToolbarDispla
 		searchContainer="<%= searchContainer %>"
 		var="appDisplaySearch"
 	>
-		<liferay-ui:search-container-row
-			className="Object"
-			modelVar="result"
-		>
+		<liferay-ui:search-container-row className="Object" modelVar="result">
 			<c:choose>
 				<c:when test="<%= result instanceof AppDisplay %>">
 

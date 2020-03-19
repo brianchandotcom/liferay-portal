@@ -40,11 +40,28 @@ NumberFormat decimalFormat = NumberFormat.getNumberInstance(locale);
 
 <portlet:renderURL var="convertURL" windowState="<%= WindowState.MAXIMIZED.toString() %>" />
 
-<aui:form action="<%= convertURL %>" cssClass="form-inline" method="post" name="fm">
+<aui:form
+	action="<%= convertURL %>"
+	cssClass="form-inline"
+	method="post"
+	name="fm"
+>
 	<aui:field-wrapper>
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="number" size="3" type="text" value="<%= number %>" />
+		<aui:input
+			autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+			inlineField="<%= true %>"
+			label=""
+			name="number"
+			size="3"
+			type="text"
+			value="<%= number %>"
+		/>
 
-		<aui:select inlineField="<%= true %>" label="" name="from">
+		<aui:select
+			inlineField="<%= true %>"
+			label=""
+			name="from"
+		>
 
 			<%
 			for (Map.Entry<String, String> entry : allSymbols.entrySet()) {
@@ -52,7 +69,11 @@ NumberFormat decimalFormat = NumberFormat.getNumberInstance(locale);
 				String currencyValue = entry.getKey();
 			%>
 
-				<aui:option label="<%= currencyValue %>" selected="<%= symbol.equals(from) %>" value="<%= symbol %>" />
+				<aui:option
+					label="<%= currencyValue %>"
+					selected="<%= symbol.equals(from) %>"
+					value="<%= symbol %>"
+				/>
 
 			<%
 			}
@@ -62,7 +83,11 @@ NumberFormat decimalFormat = NumberFormat.getNumberInstance(locale);
 
 		<liferay-ui:message key="to" />
 
-		<aui:select inlineField="<%= true %>" label="" name="to">
+		<aui:select
+			inlineField="<%= true %>"
+			label=""
+			name="to"
+		>
 
 			<%
 			for (Map.Entry<String, String> entry : allSymbols.entrySet()) {
@@ -70,7 +95,11 @@ NumberFormat decimalFormat = NumberFormat.getNumberInstance(locale);
 				String currencyValue = entry.getKey();
 			%>
 
-				<aui:option label="<%= currencyValue %>" selected="<%= symbol.equals(to) %>" value="<%= symbol %>" />
+				<aui:option
+					label="<%= currencyValue %>"
+					selected="<%= symbol.equals(to) %>"
+					value="<%= symbol %>"
+				/>
 
 			<%
 			}

@@ -56,13 +56,40 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 
 <div class="container-fluid-1280 entry-body">
-	<aui:form action="<%= editEntryURL %>" cssClass="edit-entry" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
+	<aui:form
+		action="<%= editEntryURL %>"
+		cssClass="edit-entry"
+		enctype="multipart/form-data"
+		method="post"
+		name="fm"
+		onSubmit="event.preventDefault();"
+	>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
-		<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
-		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
-		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="portletResource"
+			type="hidden"
+			value="<%= portletResource %>"
+		/>
+		<aui:input
+			name="referringPortletResource"
+			type="hidden"
+			value="<%= referringPortletResource %>"
+		/>
+		<aui:input
+			name="entryId"
+			type="hidden"
+			value="<%= entryId %>"
+		/>
+		<aui:input
+			name="workflowAction"
+			type="hidden"
+			value="<%= WorkflowConstants.ACTION_PUBLISH %>"
+		/>
 
 		<div class="lfr-form-content">
 			<liferay-ui:error exception="<%= DuplicateFriendlyURLEntryException.class %>" message="the-url-title-is-already-in-use-please-enter-a-unique-url-title" />
@@ -73,19 +100,35 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 			<liferay-ui:error exception="<%= EntryUrlTitleException.class %>" message="please-enter-a-valid-url-title" />
 
 			<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
-				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= LanguageUtil.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>"
+					key="please-enter-valid-content-with-valid-content-size-no-larger-than-x"
+					translateArguments="<%= false %>"
+				/>
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= FileSizeException.class %>">
-				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(DLValidatorUtil.getMaxAllowableSize(), locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= LanguageUtil.formatStorageSize(DLValidatorUtil.getMaxAllowableSize(), locale) %>"
+					key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x"
+					translateArguments="<%= false %>"
+				/>
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= ImageResolutionException.class %>">
-				<liferay-ui:message arguments="<%= new String[] {String.valueOf(PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT), String.valueOf(PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH)} %>" key="image-dimensions-exceed-max-dimensions-x-high-x-wide" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= new String[] {String.valueOf(PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT), String.valueOf(PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH)} %>"
+					key="image-dimensions-exceed-max-dimensions-x-high-x-wide"
+					translateArguments="<%= false %>"
+				/>
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= UploadRequestSizeException.class %>">
-				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(UploadServletRequestConfigurationHelperUtil.getMaxSize(), locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= LanguageUtil.formatStorageSize(UploadServletRequestConfigurationHelperUtil.getMaxSize(), locale) %>"
+					key="request-is-larger-than-x-and-could-not-be-processed"
+					translateArguments="<%= false %>"
+				/>
 			</liferay-ui:error>
 
 			<liferay-asset:asset-categories-error />
@@ -184,26 +227,29 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 					</div>
 				</aui:fieldset>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-					<liferay-asset:asset-categories-selector
-						className="<%= BlogsEntry.class.getName() %>"
-						classPK="<%= entryId %>"
-					/>
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="categorization"
+				>
+					<liferay-asset:asset-categories-selector className="<%= BlogsEntry.class.getName() %>" classPK="<%= entryId %>" />
 
-					<liferay-asset:asset-tags-selector
-						className="<%= BlogsEntry.class.getName() %>"
-						classPK="<%= entryId %>"
-					/>
+					<liferay-asset:asset-tags-selector className="<%= BlogsEntry.class.getName() %>" classPK="<%= entryId %>" />
 				</aui:fieldset>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
-					<liferay-asset:input-asset-links
-						className="<%= BlogsEntry.class.getName() %>"
-						classPK="<%= entryId %>"
-					/>
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="related-assets"
+				>
+					<liferay-asset:input-asset-links className="<%= BlogsEntry.class.getName() %>" classPK="<%= entryId %>" />
 				</aui:fieldset>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="configuration"
+				>
 
 					<%
 					Portlet portlet = PortletLocalServiceUtil.getPortletById(BlogsPortletKeys.BLOGS);
@@ -229,15 +275,43 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 						<label><liferay-ui:message key="url" /></label>
 
 						<div class="form-group" id="<portlet:namespace />urlOptions">
-							<aui:input checked="<%= automaticURL %>" helpMessage="the-url-will-be-based-on-the-entry-title" label="automatic" name="automaticURL" type="radio" value="<%= true %>" />
+							<aui:input
+								checked="<%= automaticURL %>"
+								helpMessage="the-url-will-be-based-on-the-entry-title"
+								label="automatic"
+								name="automaticURL"
+								type="radio"
+								value="<%= true %>"
+							/>
 
-							<aui:input checked="<%= !automaticURL %>" label="custom" name="automaticURL" type="radio" value="<%= false %>" />
+							<aui:input
+								checked="<%= !automaticURL %>"
+								label="custom"
+								name="automaticURL"
+								type="radio"
+								value="<%= false %>"
+							/>
 						</div>
 
-						<aui:field-wrapper cssClass="form-group" disabled="<%= automaticURL %>" helpMessage='<%= LanguageUtil.format(resourceBundle, "for-example-x", "<em>one-day-in-the-life-of-marion-cotillard</em>") %>' label="blog-entry-url" name="urlTitle">
+						<aui:field-wrapper
+							cssClass="form-group"
+							disabled="<%= automaticURL %>"
+							helpMessage='<%= LanguageUtil.format(resourceBundle, "for-example-x", "<em>one-day-in-the-life-of-marion-cotillard</em>") %>'
+							label="blog-entry-url"
+							name="urlTitle"
+						>
 							<div class="form-text"><%= friendlyURLPrefix %></div>
 
-							<aui:input cssClass="input-medium" disabled="<%= automaticURL %>" ignoreRequestValue="<%= true %>" label="" name="urlTitle" prefix="/" type="text" value="<%= urlTitle %>" />
+							<aui:input
+								cssClass="input-medium"
+								disabled="<%= automaticURL %>"
+								ignoreRequestValue="<%= true %>"
+								label=""
+								name="urlTitle"
+								prefix="/"
+								type="text"
+								value="<%= urlTitle %>"
+							/>
 						</aui:field-wrapper>
 					</div>
 
@@ -253,13 +327,32 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 						</liferay-ui:error>
 
 						<div class="form-group" id="<portlet:namespace />entryAbstractOptions">
-							<aui:input checked="<%= !customAbstract %>" label='<%= LanguageUtil.format(request, "use-the-first-x-characters-of-the-entry-content", PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH, false) %>' name="customAbstract" type="radio" value="<%= false %>" />
+							<aui:input
+								checked="<%= !customAbstract %>"
+								label='<%= LanguageUtil.format(request, "use-the-first-x-characters-of-the-entry-content", PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH, false) %>'
+								name="customAbstract"
+								type="radio"
+								value="<%= false %>"
+							/>
 
-							<aui:input checked="<%= customAbstract %>" label="custom-abstract" name="customAbstract" type="radio" value="<%= true %>" />
+							<aui:input
+								checked="<%= customAbstract %>"
+								label="custom-abstract"
+								name="customAbstract"
+								type="radio"
+								value="<%= true %>"
+							/>
 						</div>
 
 						<div class="entry-description form-group">
-							<aui:input disabled="<%= !customAbstract %>" label="description" name="description" onChange='<%= renderResponse.getNamespace() + "setCustomDescription(this.value);" %>' type="text" value="<%= description %>">
+							<aui:input
+								disabled="<%= !customAbstract %>"
+								label="description"
+								name="description"
+								onChange='<%= renderResponse.getNamespace() + "setCustomDescription(this.value);" %>'
+								type="text"
+								value="<%= description %>"
+							>
 								<aui:validator name="required" />
 							</aui:input>
 						</div>
@@ -296,14 +389,25 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 						boolean sendEmailEntryUpdated = ParamUtil.getBoolean(request, "sendEmailEntryUpdated");
 						%>
 
-						<aui:input helpMessage="comments-regarding-the-blog-entry-update" label="send-email-entry-updated" name="sendEmailEntryUpdated" type="toggle-switch" value="<%= sendEmailEntryUpdated %>" />
+						<aui:input
+							helpMessage="comments-regarding-the-blog-entry-update"
+							label="send-email-entry-updated"
+							name="sendEmailEntryUpdated"
+							type="toggle-switch"
+							value="<%= sendEmailEntryUpdated %>"
+						/>
 
 						<%
 						String emailEntryUpdatedComment = ParamUtil.getString(request, "emailEntryUpdatedComment");
 						%>
 
 						<div id="<portlet:namespace />emailEntryUpdatedCommentWrapper">
-							<aui:input label="" name="emailEntryUpdatedComment" type="textarea" value="<%= emailEntryUpdatedComment %>" />
+							<aui:input
+								label=""
+								name="emailEntryUpdatedComment"
+								type="textarea"
+								value="<%= emailEntryUpdatedComment %>"
+							/>
 						</div>
 					</c:if>
 
@@ -312,7 +416,13 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 					</c:if>
 
 					<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED %>">
-						<aui:input helpMessage="to-allow-trackbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" label="allow-trackbacks" name="allowTrackbacks" type="toggle-switch" value="<%= allowTrackbacks %>" />
+						<aui:input
+							helpMessage="to-allow-trackbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled"
+							label="allow-trackbacks"
+							name="allowTrackbacks"
+							type="toggle-switch"
+							value="<%= allowTrackbacks %>"
+						/>
 
 						<aui:input label="trackbacks-to-send" name="trackbacks" />
 
@@ -324,7 +434,13 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 							for (String trackback : StringUtil.split(entry.getTrackbacks())) {
 							%>
 
-								<aui:input label="" name='<%= "trackback" + i++ %>' title="" type="resource" value="<%= trackback %>" />
+								<aui:input
+									label=""
+									name='<%= "trackback" + i++ %>'
+									title=""
+									type="resource"
+									value="<%= trackback %>"
+								/>
 
 							<%
 							}
@@ -339,7 +455,11 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 				%>
 
 				<c:if test="<%= !scopeGroup.isCompany() %>">
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="display-page-template">
+					<aui:fieldset
+						collapsed="<%= true %>"
+						collapsible="<%= true %>"
+						label="display-page-template"
+					>
 						<liferay-asset:select-asset-display-page
 							classNameId="<%= PortalUtil.getClassNameId(BlogsEntry.class) %>"
 							classPK="<%= (entry != null) ? entry.getEntryId() : 0 %>"
@@ -350,10 +470,12 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 					</aui:fieldset>
 				</c:if>
 
-				<liferay-expando:custom-attributes-available
-					className="<%= BlogsEntry.class.getName() %>"
-				>
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+				<liferay-expando:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
+					<aui:fieldset
+						collapsed="<%= true %>"
+						collapsible="<%= true %>"
+						label="custom-fields"
+					>
 						<liferay-expando:custom-attribute-list
 							className="<%= BlogsEntry.class.getName() %>"
 							classPK="<%= entryId %>"
@@ -364,10 +486,12 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 				</liferay-expando:custom-attributes-available>
 
 				<c:if test="<%= (entry == null) || (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) %>">
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-						<liferay-ui:input-permissions
-							modelName="<%= BlogsEntry.class.getName() %>"
-						/>
+					<aui:fieldset
+						collapsed="<%= true %>"
+						collapsible="<%= true %>"
+						label="permissions"
+					>
+						<liferay-ui:input-permissions modelName="<%= BlogsEntry.class.getName() %>" />
 					</aui:fieldset>
 				</c:if>
 			</aui:fieldset-group>
@@ -405,20 +529,42 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 
 			<c:if test="<%= (entry != null) && entry.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class.getName()) %>">
 				<div class="alert alert-info">
-					<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, BlogsEntry.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= ResourceActionsUtil.getModelResource(locale, BlogsEntry.class.getName()) %>"
+						key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again"
+						translateArguments="<%= false %>"
+					/>
 				</div>
 			</c:if>
 
-			<aui:button disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+			<aui:button
+				disabled="<%= pending %>"
+				name="publishButton"
+				type="submit"
+				value="<%= publishButtonLabel %>"
+			/>
 
-			<aui:button name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+			<aui:button
+				name="saveButton"
+				primary="<%= false %>"
+				type="submit"
+				value="<%= saveButtonLabel %>"
+			/>
 
-			<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
+			<aui:button
+				href="<%= redirect %>"
+				name="cancelButton"
+				type="cancel"
+			/>
 		</aui:button-row>
 	</aui:form>
 </div>
 
-<portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+<portlet:actionURL
+	name="/blogs/edit_entry"
+	var="editEntryURL"
+	windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"
+>
 	<portlet:param name="ajax" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 

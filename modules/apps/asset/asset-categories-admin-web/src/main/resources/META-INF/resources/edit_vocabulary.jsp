@@ -43,12 +43,17 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 	<portlet:param name="mvcPath" value="/edit_vocabulary.jsp" />
 </portlet:actionURL>
 
-<liferay-frontend:edit-form
-	action="<%= editVocabularyURL %>"
-	name="fm"
->
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="vocabularyId" type="hidden" value="<%= vocabularyId %>" />
+<liferay-frontend:edit-form action="<%= editVocabularyURL %>" name="fm">
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="vocabularyId"
+		type="hidden"
+		value="<%= vocabularyId %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= DuplicateVocabularyException.class %>" message="please-enter-a-unique-name" />
@@ -62,11 +67,22 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 				collapsible="<%= true %>"
 				label="details"
 			>
-				<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
+				<aui:input
+					autoFocus="<%= true %>"
+					label="name"
+					name="title"
+					placeholder="name"
+				/>
 
 				<aui:input name="description" placeholder="description" />
 
-				<aui:input helpMessage="multi-valued-help" label="allow-multiple-categories" name="multiValued" type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
+				<aui:input
+					helpMessage="multi-valued-help"
+					label="allow-multiple-categories"
+					name="multiValued"
+					type="toggle-switch"
+					value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>"
+				/>
 			</liferay-frontend:fieldset>
 
 			<%@ include file="/edit_vocabulary_settings.jspf" %>
@@ -77,9 +93,7 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 					collapsible="<%= true %>"
 					label="permissions"
 				>
-					<liferay-ui:input-permissions
-						modelName="<%= AssetVocabulary.class.getName() %>"
-					/>
+					<liferay-ui:input-permissions modelName="<%= AssetVocabulary.class.getName() %>" />
 				</liferay-frontend:fieldset>
 			</c:if>
 		</liferay-frontend:fieldset-group>

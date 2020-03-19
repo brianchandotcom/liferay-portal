@@ -20,29 +20,14 @@
 KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)request.getAttribute(KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 %>
 
-<liferay-ui:search-container
-	cssClass="lfr-sidebar-list-group-workflow sidebar-list-group"
-	id="kaleoDefinitionVersions"
->
-	<liferay-ui:search-container-results
-		results="<%= kaleoDesignerDisplayContext.getKaleoDefinitionVersions(kaleoDefinitionVersion) %>"
-	/>
+<liferay-ui:search-container cssClass="lfr-sidebar-list-group-workflow sidebar-list-group" id="kaleoDefinitionVersions">
+	<liferay-ui:search-container-results results="<%= kaleoDesignerDisplayContext.getKaleoDefinitionVersions(kaleoDefinitionVersion) %>" />
 
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion"
-	>
-		<liferay-ui:search-container-column-jsp
-			cssClass="autofit-col-expand"
-			path="/designer/kaleo_definition_version_history_info.jsp"
-		/>
+	<liferay-ui:search-container-row className="com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion">
+		<liferay-ui:search-container-column-jsp cssClass="autofit-col-expand" path="/designer/kaleo_definition_version_history_info.jsp" />
 
-		<liferay-ui:search-container-column-jsp
-			path="/designer/kaleo_definition_version_history_action.jsp"
-		/>
+		<liferay-ui:search-container-column-jsp path="/designer/kaleo_definition_version_history_action.jsp" />
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		displayStyle="descriptive"
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 </liferay-ui:search-container>

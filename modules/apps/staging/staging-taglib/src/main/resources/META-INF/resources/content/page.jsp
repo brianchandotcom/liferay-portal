@@ -23,8 +23,18 @@
 
 			<ul class="list-unstyled">
 				<li class="tree-item">
-					<aui:input disabled="<%= disableInputs %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA, true) %>" />
-					<aui:input disabled="<%= disableInputs %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT, true) %>" />
+					<aui:input
+						disabled="<%= disableInputs %>"
+						name="<%= PortletDataHandlerKeys.PORTLET_DATA %>"
+						type="hidden"
+						value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA, true) %>"
+					/>
+					<aui:input
+						disabled="<%= disableInputs %>"
+						name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>"
+						type="hidden"
+						value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT, true) %>"
+					/>
 
 					<ul id="<portlet:namespace />selectContents">
 						<li>
@@ -86,11 +96,14 @@
 												</div>
 
 												<div class="flex-item-center range-options <%= disableInputs ? "hide" : StringPool.BLANK %>">
-													<clay:icon
-														symbol="reload"
-													/>
+													<clay:icon symbol="reload" />
 
-													<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" method="get">
+													<aui:a
+														cssClass="modify-link"
+														href="javascript:;"
+														id="rangeLink"
+														method="get"
+													>
 														<liferay-ui:message key="refresh-counts" />
 													</aui:a>
 												</div>
@@ -129,10 +142,7 @@
 														yearValue="<%= startCalendar.get(Calendar.YEAR) %>"
 													/>
 
-													<liferay-ui:icon
-														icon="calendar"
-														markupView="lexicon"
-													/>
+													<liferay-ui:icon icon="calendar" markupView="lexicon" />
 
 													<liferay-ui:input-time
 														amPmParam="startDateAmPm"
@@ -162,10 +172,7 @@
 														yearValue="<%= endCalendar.get(Calendar.YEAR) %>"
 													/>
 
-													<liferay-ui:icon
-														icon="calendar"
-														markupView="lexicon"
-													/>
+													<liferay-ui:icon icon="calendar" markupView="lexicon" />
 
 													<liferay-ui:input-time
 														amPmParam="endDateAmPm"
@@ -185,16 +192,37 @@
 
 											<ul class="hide list-unstyled" id="<portlet:namespace />rangeLastInputs">
 												<li>
-													<aui:select cssClass="relative-range" disabled="<%= disableInputs %>" label="" name="last">
+													<aui:select
+														cssClass="relative-range"
+														disabled="<%= disableInputs %>"
+														label=""
+														name="last"
+													>
 
 														<%
 														String last = MapUtil.getString(parameterMap, "last");
 														%>
 
-														<aui:option label='<%= LanguageUtil.format(request, "x-hours", "12", false) %>' selected='<%= last.equals("12") %>' value="12" />
-														<aui:option label='<%= LanguageUtil.format(request, "x-hours", "24", false) %>' selected='<%= last.equals("24") %>' value="24" />
-														<aui:option label='<%= LanguageUtil.format(request, "x-hours", "48", false) %>' selected='<%= last.equals("48") %>' value="48" />
-														<aui:option label='<%= LanguageUtil.format(request, "x-days", "7", false) %>' selected='<%= last.equals("168") %>' value="168" />
+														<aui:option
+															label='<%= LanguageUtil.format(request, "x-hours", "12", false) %>'
+															selected='<%= last.equals("12") %>'
+															value="12"
+														/>
+														<aui:option
+															label='<%= LanguageUtil.format(request, "x-hours", "24", false) %>'
+															selected='<%= last.equals("24") %>'
+															value="24"
+														/>
+														<aui:option
+															label='<%= LanguageUtil.format(request, "x-hours", "48", false) %>'
+															selected='<%= last.equals("48") %>'
+															value="48"
+														/>
+														<aui:option
+															label='<%= LanguageUtil.format(request, "x-days", "7", false) %>'
+															selected='<%= last.equals("168") %>'
+															value="168"
+														/>
 													</aui:select>
 												</li>
 											</ul>

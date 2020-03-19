@@ -180,10 +180,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 			</dl>
 
 			<div class="lfr-asset-categories sidebar-block">
-				<liferay-asset:asset-categories-summary
-					className="<%= BookmarksEntry.class.getName() %>"
-					classPK="<%= entry.getEntryId() %>"
-				/>
+				<liferay-asset:asset-categories-summary className="<%= BookmarksEntry.class.getName() %>" classPK="<%= entry.getEntryId() %>" />
 			</div>
 
 			<div class="lfr-asset-tags sidebar-block">
@@ -200,9 +197,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 				inTrash="<%= entry.isInTrash() %>"
 			/>
 
-			<liferay-expando:custom-attributes-available
-				className="<%= BookmarksEntry.class.getName() %>"
-			>
+			<liferay-expando:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
 				<liferay-expando:custom-attribute-list
 					className="<%= BookmarksEntry.class.getName() %>"
 					classPK="<%= entry.getEntryId() %>"
@@ -218,9 +213,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 				%>
 
 				<div class="entry-links">
-					<liferay-asset:asset-links
-						assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
-					/>
+					<liferay-asset:asset-links assetEntryId="<%= layoutAssetEntry.getEntryId() %>" />
 				</div>
 			</c:if>
 		</div>

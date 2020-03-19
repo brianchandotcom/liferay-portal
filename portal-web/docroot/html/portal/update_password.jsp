@@ -77,17 +77,49 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 					Format dateFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.SHORT, FastDateFormatConstants.LONG, locale, TimeZone.getTimeZone(ule.user.getTimeZoneId()));
 					%>
 
-					<liferay-ui:message arguments="<%= dateFormat.format(ule.user.getUnlockDate()) %>" key="this-account-is-locked-until-x" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= dateFormat.format(ule.user.getUnlockDate()) %>"
+						key="this-account-is-locked-until-x"
+						translateArguments="<%= false %>"
+					/>
 				</div>
 			</c:when>
 			<c:otherwise>
-				<aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_password" %>' method="post" name="fm">
-					<aui:input name="p_l_id" type="hidden" value="<%= layout.getPlid() %>" />
-					<aui:input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
-					<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
-					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-					<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />
-					<aui:input name="ticketKey" type="hidden" value="<%= ticketKey %>" />
+				<aui:form
+					action='<%= themeDisplay.getPathMain() + "/portal/update_password" %>'
+					method="post"
+					name="fm"
+				>
+					<aui:input
+						name="p_l_id"
+						type="hidden"
+						value="<%= layout.getPlid() %>"
+					/>
+					<aui:input
+						name="p_auth"
+						type="hidden"
+						value="<%= AuthTokenUtil.getToken(request) %>"
+					/>
+					<aui:input
+						name="doAsUserId"
+						type="hidden"
+						value="<%= themeDisplay.getDoAsUserId() %>"
+					/>
+					<aui:input
+						name="<%= Constants.CMD %>"
+						type="hidden"
+						value="<%= Constants.UPDATE %>"
+					/>
+					<aui:input
+						name="<%= WebKeys.REFERER %>"
+						type="hidden"
+						value="<%= referer %>"
+					/>
+					<aui:input
+						name="ticketKey"
+						type="hidden"
+						value="<%= ticketKey %>"
+					/>
 
 					<c:if test="<%= !SessionErrors.isEmpty(request) %>">
 						<div class="alert alert-danger">
@@ -98,7 +130,11 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 									UserPasswordException.MustBeLonger upe = (UserPasswordException.MustBeLonger)SessionErrors.get(request, UserPasswordException.MustBeLonger.class.getName());
 									%>
 
-									<liferay-ui:message arguments="<%= String.valueOf(upe.minLength) %>" key="that-password-is-too-short" translateArguments="<%= false %>" />
+									<liferay-ui:message
+										arguments="<%= String.valueOf(upe.minLength) %>"
+										key="that-password-is-too-short"
+										translateArguments="<%= false %>"
+									/>
 								</c:when>
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustComplyWithModelListeners.class.getName()) %>">
 									<liferay-ui:message key="that-password-is-invalid-please-enter-a-different-password" />
@@ -109,7 +145,11 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 									UserPasswordException.MustComplyWithRegex upe = (UserPasswordException.MustComplyWithRegex)SessionErrors.get(request, UserPasswordException.MustComplyWithRegex.class.getName());
 									%>
 
-									<liferay-ui:message arguments="<%= upe.regex %>" key="that-password-does-not-comply-with-the-regular-expression" translateArguments="<%= false %>" />
+									<liferay-ui:message
+										arguments="<%= upe.regex %>"
+										key="that-password-does-not-comply-with-the-regular-expression"
+										translateArguments="<%= false %>"
+									/>
 								</c:when>
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustHaveMoreAlphanumeric.class.getName()) %>">
 
@@ -117,7 +157,11 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 									UserPasswordException.MustHaveMoreAlphanumeric upe = (UserPasswordException.MustHaveMoreAlphanumeric)SessionErrors.get(request, UserPasswordException.MustHaveMoreAlphanumeric.class.getName());
 									%>
 
-									<liferay-ui:message arguments="<%= String.valueOf(upe.minAlphanumeric) %>" key="that-password-must-contain-at-least-x-alphanumeric-characters" translateArguments="<%= false %>" />
+									<liferay-ui:message
+										arguments="<%= String.valueOf(upe.minAlphanumeric) %>"
+										key="that-password-must-contain-at-least-x-alphanumeric-characters"
+										translateArguments="<%= false %>"
+									/>
 								</c:when>
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustHaveMoreLowercase.class.getName()) %>">
 
@@ -125,7 +169,11 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 									UserPasswordException.MustHaveMoreLowercase upe = (UserPasswordException.MustHaveMoreLowercase)SessionErrors.get(request, UserPasswordException.MustHaveMoreLowercase.class.getName());
 									%>
 
-									<liferay-ui:message arguments="<%= String.valueOf(upe.minLowercase) %>" key="that-password-must-contain-at-least-x-lowercase-characters" translateArguments="<%= false %>" />
+									<liferay-ui:message
+										arguments="<%= String.valueOf(upe.minLowercase) %>"
+										key="that-password-must-contain-at-least-x-lowercase-characters"
+										translateArguments="<%= false %>"
+									/>
 								</c:when>
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustHaveMoreNumbers.class.getName()) %>">
 
@@ -133,7 +181,11 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 									UserPasswordException.MustHaveMoreNumbers upe = (UserPasswordException.MustHaveMoreNumbers)SessionErrors.get(request, UserPasswordException.MustHaveMoreNumbers.class.getName());
 									%>
 
-									<liferay-ui:message arguments="<%= String.valueOf(upe.minNumbers) %>" key="that-password-must-contain-at-least-x-numbers" translateArguments="<%= false %>" />
+									<liferay-ui:message
+										arguments="<%= String.valueOf(upe.minNumbers) %>"
+										key="that-password-must-contain-at-least-x-numbers"
+										translateArguments="<%= false %>"
+									/>
 								</c:when>
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustHaveMoreSymbols.class.getName()) %>">
 
@@ -141,7 +193,11 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 									UserPasswordException.MustHaveMoreSymbols upe = (UserPasswordException.MustHaveMoreSymbols)SessionErrors.get(request, UserPasswordException.MustHaveMoreSymbols.class.getName());
 									%>
 
-									<liferay-ui:message arguments="<%= String.valueOf(upe.minSymbols) %>" key="that-password-must-contain-at-least-x-symbols" translateArguments="<%= false %>" />
+									<liferay-ui:message
+										arguments="<%= String.valueOf(upe.minSymbols) %>"
+										key="that-password-must-contain-at-least-x-symbols"
+										translateArguments="<%= false %>"
+									/>
 								</c:when>
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustHaveMoreUppercase.class.getName()) %>">
 
@@ -149,7 +205,11 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 									UserPasswordException.MustHaveMoreUppercase upe = (UserPasswordException.MustHaveMoreUppercase)SessionErrors.get(request, UserPasswordException.MustHaveMoreUppercase.class.getName());
 									%>
 
-									<liferay-ui:message arguments="<%= String.valueOf(upe.minUppercase) %>" key="that-password-must-contain-at-least-x-uppercase-characters" translateArguments="<%= false %>" />
+									<liferay-ui:message
+										arguments="<%= String.valueOf(upe.minUppercase) %>"
+										key="that-password-must-contain-at-least-x-uppercase-characters"
+										translateArguments="<%= false %>"
+									/>
 								</c:when>
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustMatch.class.getName()) %>">
 									<liferay-ui:message key="the-passwords-you-entered-do-not-match" />
@@ -177,11 +237,24 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 					</c:if>
 
 					<aui:fieldset>
-						<aui:input autoFocus="<%= true %>" class="lfr-input-text-container" label="password" name="password1" showRequiredLabel="<%= false %>" type="password">
+						<aui:input
+							autoFocus="<%= true %>"
+							class="lfr-input-text-container"
+							label="password"
+							name="password1"
+							showRequiredLabel="<%= false %>"
+							type="password"
+						>
 							<aui:validator name="required" />
 						</aui:input>
 
-						<aui:input class="lfr-input-text-container" label="enter-again" name="password2" showRequiredLabel="<%= false %>" type="password">
+						<aui:input
+							class="lfr-input-text-container"
+							label="enter-again"
+							name="password2"
+							showRequiredLabel="<%= false %>"
+							type="password"
+						>
 							<aui:validator name="equalTo">
 								'#<portlet:namespace />password1'
 							</aui:validator>

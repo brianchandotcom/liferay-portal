@@ -43,10 +43,7 @@ ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoade
 		%>
 
 		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= renderResponse.createRenderURL() %>"
-			/>
+			<liferay-frontend:management-bar-navigation navigationKeys='<%= new String[] {"all"} %>' portletURL="<%= renderResponse.createRenderURL() %>" />
 
 			<liferay-frontend:management-bar-sort
 				orderByCol="<%= orderByCol %>"
@@ -64,9 +61,7 @@ ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoade
 		iteratorURL="<%= portletURL %>"
 		total="<%= pushNotificationsDevicesCount %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevices(searchContainer.getStart(), searchContainer.getEnd(), orderByComparator) %>"
-		/>
+		<liferay-ui:search-container-results results="<%= PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevices(searchContainer.getStart(), searchContainer.getEnd(), orderByComparator) %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.push.notifications.model.PushNotificationsDevice"
@@ -79,14 +74,9 @@ ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoade
 			User deviceUser = UserLocalServiceUtil.getUser(pushNotificationsDevice.getUserId());
 			%>
 
-			<liferay-ui:search-container-column-text
-				name="full-name"
-				value="<%= deviceUser.getFullName() %>"
-			/>
+			<liferay-ui:search-container-column-text name="full-name" value="<%= deviceUser.getFullName() %>" />
 
-			<liferay-ui:search-container-column-text
-				property="token"
-			/>
+			<liferay-ui:search-container-column-text property="token" />
 
 			<%
 			ResourceBundleLoader platformResourceBundleLoader = resourceBundleLoaderProvider.getResourceBundleLoader(pushNotificationsDevice.getPlatform());
@@ -94,19 +84,11 @@ ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoade
 			ResourceBundle platformResourceBundle = platformResourceBundleLoader.loadResourceBundle(PortalUtil.getLocale(request));
 			%>
 
-			<liferay-ui:search-container-column-text
-				name="platform"
-				value="<%= LanguageUtil.get(platformResourceBundle, pushNotificationsDevice.getPlatform()) %>"
-			/>
+			<liferay-ui:search-container-column-text name="platform" value="<%= LanguageUtil.get(platformResourceBundle, pushNotificationsDevice.getPlatform()) %>" />
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="list-group-item-field"
-				path="/push_notifications_device_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp cssClass="list-group-item-field" path="/push_notifications_device_action.jsp" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

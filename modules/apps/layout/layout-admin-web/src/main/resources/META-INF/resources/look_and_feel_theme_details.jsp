@@ -47,8 +47,16 @@ else {
 PluginPackage selPluginPackage = selTheme.getPluginPackage();
 %>
 
-<aui:input name="regularThemeId" type="hidden" value="<%= selTheme.getThemeId() %>" />
-<aui:input name="regularColorSchemeId" type="hidden" value="<%= selColorScheme.getColorSchemeId() %>" />
+<aui:input
+	name="regularThemeId"
+	type="hidden"
+	value="<%= selTheme.getThemeId() %>"
+/>
+<aui:input
+	name="regularColorSchemeId"
+	type="hidden"
+	value="<%= selColorScheme.getColorSchemeId() %>"
+/>
 
 <aui:row>
 	<div class="col-6 col-sm-4">
@@ -168,10 +176,20 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 
 		<c:choose>
 			<c:when test='<%= type.equals("checkbox") %>'>
-				<aui:input label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>" type="toggle-switch" value="<%= value %>" />
+				<aui:input
+					label="<%= HtmlUtil.escape(name) %>"
+					name="<%= propertyName %>"
+					type="toggle-switch"
+					value="<%= value %>"
+				/>
 			</c:when>
 			<c:when test='<%= type.equals("text") || type.equals("textarea") %>'>
-				<aui:input label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>" type="<%= type %>" value="<%= value %>" />
+				<aui:input
+					label="<%= HtmlUtil.escape(name) %>"
+					name="<%= propertyName %>"
+					type="<%= type %>"
+					value="<%= value %>"
+				/>
 			</c:when>
 			<c:when test='<%= type.equals("select") %>'>
 				<aui:select label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>">

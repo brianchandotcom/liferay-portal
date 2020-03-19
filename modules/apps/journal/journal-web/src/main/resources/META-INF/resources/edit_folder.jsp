@@ -61,9 +61,7 @@ renderResponse.setTitle(title);
 	<portlet:param name="mvcPath" value="/edit_folder.jsp" />
 </portlet:actionURL>
 
-<liferay-util:buffer
-	var="removeDDMStructureIcon"
->
+<liferay-util:buffer var="removeDDMStructureIcon">
 	<liferay-ui:icon
 		icon="times-circle"
 		markupView="lexicon"
@@ -76,9 +74,21 @@ renderResponse.setTitle(title);
 	method="post"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
-	<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="folderId"
+		type="hidden"
+		value="<%= folderId %>"
+	/>
+	<aui:input
+		name="parentFolderId"
+		type="hidden"
+		value="<%= parentFolderId %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-folder-name" />
@@ -109,9 +119,7 @@ renderResponse.setTitle(title);
 					<aui:input name="description" />
 				</liferay-frontend:fieldset>
 
-				<liferay-expando:custom-attributes-available
-					className="<%= JournalFolder.class.getName() %>"
-				>
+				<liferay-expando:custom-attributes-available className="<%= JournalFolder.class.getName() %>">
 					<liferay-frontend:fieldset
 						collapsed="<%= true %>"
 						collapsible="<%= true %>"
@@ -145,7 +153,11 @@ renderResponse.setTitle(title);
 					%>
 
 					<div class="form-group">
-						<aui:input name="parentFolderName" type="resource" value="<%= parentFolderName %>" />
+						<aui:input
+							name="parentFolderName"
+							type="resource"
+							value="<%= parentFolderName %>"
+						/>
 
 						<aui:button name="selectFolderButton" value="select" />
 
@@ -196,7 +208,12 @@ renderResponse.setTitle(title);
 						String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentFolderId', 'parentFolderName', this, '" + renderResponse.getNamespace() + "');";
 						%>
 
-						<aui:button disabled="<%= parentFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+						<aui:button
+							disabled="<%= parentFolderId <= 0 %>"
+							name="removeFolderButton"
+							onClick="<%= taglibRemoveFolder %>"
+							value="remove"
+						/>
 					</div>
 				</liferay-frontend:fieldset>
 			</c:if>
@@ -235,18 +252,27 @@ renderResponse.setTitle(title);
 						}
 						%>
 
-						<aui:input checked="<%= folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_INHERIT %>" id="restrictionTypeInherit" label='<%= workflowEnabled ? LanguageUtil.format(request, "use-structure-restrictions-and-workflow-of-the-parent-folder-x", HtmlUtil.escape(parentFolderName)) : LanguageUtil.format(request, "use-structure-restrictions-of-the-parent-folder-x", HtmlUtil.escape(parentFolderName)) %>' name="restrictionType" type="radio" value="<%= JournalFolderConstants.RESTRICTION_TYPE_INHERIT %>" />
+						<aui:input
+							checked="<%= folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_INHERIT %>"
+							id="restrictionTypeInherit"
+							label='<%= workflowEnabled ? LanguageUtil.format(request, "use-structure-restrictions-and-workflow-of-the-parent-folder-x", HtmlUtil.escape(parentFolderName)) : LanguageUtil.format(request, "use-structure-restrictions-of-the-parent-folder-x", HtmlUtil.escape(parentFolderName)) %>'
+							name="restrictionType"
+							type="radio"
+							value="<%= JournalFolderConstants.RESTRICTION_TYPE_INHERIT %>"
+						/>
 
-						<aui:input checked="<%= folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW %>" id="restrictionTypeDefined" label='<%= workflowEnabled ? LanguageUtil.format(request, "define-specific-structure-restrictions-and-workflow-for-this-folder-x", HtmlUtil.escape(folder.getName())) : LanguageUtil.format(request, "define-specific-structure-restrictions-for-this-folder-x", HtmlUtil.escape(folder.getName())) %>' name="restrictionType" type="radio" value="<%= JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW %>" />
+						<aui:input
+							checked="<%= folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW %>"
+							id="restrictionTypeDefined"
+							label='<%= workflowEnabled ? LanguageUtil.format(request, "define-specific-structure-restrictions-and-workflow-for-this-folder-x", HtmlUtil.escape(folder.getName())) : LanguageUtil.format(request, "define-specific-structure-restrictions-for-this-folder-x", HtmlUtil.escape(folder.getName())) %>'
+							name="restrictionType"
+							type="radio"
+							value="<%= JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW %>"
+						/>
 
 						<div class="<%= (folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />restrictionTypeDefinedDiv">
-							<liferay-ui:search-container
-								headerNames="<%= headerNames %>"
-								total="<%= ddmStructures.size() %>"
-							>
-								<liferay-ui:search-container-results
-									results="<%= ddmStructures %>"
-								/>
+							<liferay-ui:search-container headerNames="<%= headerNames %>" total="<%= ddmStructures.size() %>">
+								<liferay-ui:search-container-results results="<%= ddmStructures %>" />
 
 								<liferay-ui:search-container-row
 									className="com.liferay.dynamic.data.mapping.model.DDMStructure"
@@ -260,11 +286,12 @@ renderResponse.setTitle(title);
 									/>
 
 									<c:if test="<%= workflowEnabled %>">
-										<liferay-ui:search-container-column-text
-											cssClass="table-cell-expand table-cell-minw-200"
-											name="workflow"
-										>
-											<aui:select label="" name='<%= "workflowDefinition" + ddmStructure.getStructureId() %>' wrapperCssClass="mb-0">
+										<liferay-ui:search-container-column-text cssClass="table-cell-expand table-cell-minw-200" name="workflow">
+											<aui:select
+												label=""
+												name='<%= "workflowDefinition" + ddmStructure.getStructureId() %>'
+												wrapperCssClass="mb-0"
+											>
 												<aui:option label="no-workflow" value="" />
 
 												<%
@@ -278,7 +305,11 @@ renderResponse.setTitle(title);
 													}
 												%>
 
-													<aui:option label="<%= HtmlUtil.escape(workflowDefinition.getTitle(languageId)) %>" selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+													<aui:option
+														label="<%= HtmlUtil.escape(workflowDefinition.getTitle(languageId)) %>"
+														selected="<%= selected %>"
+														value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>"
+													/>
 
 												<%
 												}
@@ -293,10 +324,7 @@ renderResponse.setTitle(title);
 									</liferay-ui:search-container-column-text>
 								</liferay-ui:search-container-row>
 
-								<liferay-ui:search-iterator
-									markupView="lexicon"
-									paginate="<%= false %>"
-								/>
+								<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 							</liferay-ui:search-container>
 
 							<aui:button id="selectDDMStructure" value="choose-structure" />
@@ -306,10 +334,21 @@ renderResponse.setTitle(title);
 					<c:if test="<%= workflowEnabled %>">
 						<c:choose>
 							<c:when test="<%= !rootFolder %>">
-								<aui:input checked="<%= folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" id="restrictionTypeWorkflow" label='<%= LanguageUtil.format(request, "default-workflow-for-this-folder-x", HtmlUtil.escape(folder.getName())) %>' name="restrictionType" type="radio" value="<%= JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />
+								<aui:input
+									checked="<%= folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW %>"
+									id="restrictionTypeWorkflow"
+									label='<%= LanguageUtil.format(request, "default-workflow-for-this-folder-x", HtmlUtil.escape(folder.getName())) %>'
+									name="restrictionType"
+									type="radio"
+									value="<%= JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW %>"
+								/>
 							</c:when>
 							<c:otherwise>
-								<aui:input name="restrictionType" type="hidden" value="<%= JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />
+								<aui:input
+									name="restrictionType"
+									type="hidden"
+									value="<%= JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW %>"
+								/>
 							</c:otherwise>
 						</c:choose>
 
@@ -328,7 +367,11 @@ renderResponse.setTitle(title);
 									}
 								%>
 
-									<aui:option label="<%= HtmlUtil.escape(workflowDefinition.getTitle(languageId)) %>" selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+									<aui:option
+										label="<%= HtmlUtil.escape(workflowDefinition.getTitle(languageId)) %>"
+										selected="<%= selected %>"
+										value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>"
+									/>
 
 								<%
 								}
@@ -346,9 +389,7 @@ renderResponse.setTitle(title);
 					collapsible="<%= true %>"
 					label="permissions"
 				>
-					<liferay-ui:input-permissions
-						modelName="<%= JournalFolder.class.getName() %>"
-					/>
+					<liferay-ui:input-permissions modelName="<%= JournalFolder.class.getName() %>" />
 				</liferay-frontend:fieldset>
 			</c:if>
 		</liferay-frontend:fieldset-group>
@@ -361,11 +402,13 @@ renderResponse.setTitle(title);
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<liferay-util:buffer
-	var="workflowDefinitionsBuffer"
->
+<liferay-util:buffer var="workflowDefinitionsBuffer">
 	<c:if test="<%= workflowEnabled %>">
-		<aui:select label="" name="LIFERAY_WORKFLOW_DEFINITION_DDM_STRUCTURE" title="workflow-definition">
+		<aui:select
+			label=""
+			name="LIFERAY_WORKFLOW_DEFINITION_DDM_STRUCTURE"
+			title="workflow-definition"
+		>
 			<aui:option label="no-workflow" value="" />
 
 			<%

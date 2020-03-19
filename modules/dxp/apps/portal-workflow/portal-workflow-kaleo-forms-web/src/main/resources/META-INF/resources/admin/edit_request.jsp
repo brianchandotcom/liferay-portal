@@ -36,14 +36,48 @@ renderResponse.setTitle(LanguageUtil.format(request, "new-x", kaleoProcess.getNa
 <div class="container-fluid-1280 sidenav-container sidenav-right">
 	<portlet:actionURL name="startWorkflowInstance" var="startWorkflowInstanceURL" />
 
-	<aui:form action="<%= startWorkflowInstanceURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm1">
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-		<aui:input name="kaleoProcessId" type="hidden" value="<%= String.valueOf(kaleoProcessId) %>" />
-		<aui:input name="ddlRecordSetId" type="hidden" value="<%= String.valueOf(kaleoProcess.getDDLRecordSetId()) %>" />
-		<aui:input name="ddmTemplateId" type="hidden" value="<%= String.valueOf(kaleoProcess.getDDMTemplateId()) %>" />
-		<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
-		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
+	<aui:form
+		action="<%= startWorkflowInstanceURL %>"
+		cssClass="lfr-dynamic-form"
+		enctype="multipart/form-data"
+		method="post"
+		name="fm1"
+	>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="groupId"
+			type="hidden"
+			value="<%= groupId %>"
+		/>
+		<aui:input
+			name="kaleoProcessId"
+			type="hidden"
+			value="<%= String.valueOf(kaleoProcessId) %>"
+		/>
+		<aui:input
+			name="ddlRecordSetId"
+			type="hidden"
+			value="<%= String.valueOf(kaleoProcess.getDDLRecordSetId()) %>"
+		/>
+		<aui:input
+			name="ddmTemplateId"
+			type="hidden"
+			value="<%= String.valueOf(kaleoProcess.getDDMTemplateId()) %>"
+		/>
+		<aui:input
+			name="defaultLanguageId"
+			type="hidden"
+			value="<%= themeDisplay.getLanguageId() %>"
+		/>
+		<aui:input
+			name="workflowAction"
+			type="hidden"
+			value="<%= WorkflowConstants.ACTION_PUBLISH %>"
+		/>
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
@@ -61,9 +95,19 @@ renderResponse.setTitle(LanguageUtil.format(request, "new-x", kaleoProcess.getNa
 		</aui:fieldset-group>
 
 		<aui:button-row>
-			<aui:button cssClass="btn-lg" name="saveButton" type="submit" value="save" />
+			<aui:button
+				cssClass="btn-lg"
+				name="saveButton"
+				type="submit"
+				value="save"
+			/>
 
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
+			<aui:button
+				cssClass="btn-lg"
+				href="<%= redirect %>"
+				name="cancelButton"
+				type="cancel"
+			/>
 		</aui:button-row>
 	</aui:form>
 </div>

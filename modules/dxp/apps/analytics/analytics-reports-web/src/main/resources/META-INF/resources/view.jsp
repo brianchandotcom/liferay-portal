@@ -26,7 +26,12 @@ String analyticsReportsPanelState = SessionClicks.get(request, "com.liferay.anal
 
 		<span><liferay-ui:message key="content-performance" /></span>
 
-		<aui:icon cssClass="icon-monospaced sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
+		<aui:icon
+			cssClass="icon-monospaced sidenav-close"
+			image="times"
+			markupView="lexicon"
+			url="javascript:;"
+		/>
 	</div>
 
 	<div class="sidebar-body">

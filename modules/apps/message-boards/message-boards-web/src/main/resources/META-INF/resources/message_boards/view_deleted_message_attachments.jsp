@@ -52,9 +52,7 @@ String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(local
 		iteratorURL="<%= iteratorURL %>"
 		total="<%= message.getDeletedAttachmentsFileEntriesCount() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= message.getDeletedAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
+		<liferay-ui:search-container-results results="<%= message.getDeletedAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.repository.model.FileEntry"
@@ -67,10 +65,7 @@ String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(local
 			String rowHREF = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_IN_TRASH);
 			%>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
-				name="file-name"
-			>
+			<liferay-ui:search-container-column-text href="<%= rowHREF %>" name="file-name">
 
 				<%
 				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
@@ -99,8 +94,6 @@ String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(local
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

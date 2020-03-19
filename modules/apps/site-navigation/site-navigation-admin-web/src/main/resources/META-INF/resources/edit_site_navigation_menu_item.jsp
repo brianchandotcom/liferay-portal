@@ -29,10 +29,26 @@ SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTy
 <portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item" var="editSiteNavigationMenuItemURL" />
 
 <aui:form action="<%= editSiteNavigationMenuItemURL %>">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenuItem.getSiteNavigationMenuId() %>" />
-	<aui:input name="siteNavigationMenuItemId" type="hidden" value="<%= siteNavigationMenuItem.getSiteNavigationMenuItemId() %>" />
-	<aui:input name="parentSiteNavigationMenuItemId" type="hidden" value="<%= siteNavigationMenuItem.getParentSiteNavigationMenuItemId() %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="siteNavigationMenuId"
+		type="hidden"
+		value="<%= siteNavigationMenuItem.getSiteNavigationMenuId() %>"
+	/>
+	<aui:input
+		name="siteNavigationMenuItemId"
+		type="hidden"
+		value="<%= siteNavigationMenuItem.getSiteNavigationMenuItemId() %>"
+	/>
+	<aui:input
+		name="parentSiteNavigationMenuItemId"
+		type="hidden"
+		value="<%= siteNavigationMenuItem.getParentSiteNavigationMenuItemId() %>"
+	/>
 
 	<%
 	siteNavigationMenuItemType.renderEditPage(request, PipingServletResponse.createPipingServletResponse(pageContext), siteNavigationMenuItem);

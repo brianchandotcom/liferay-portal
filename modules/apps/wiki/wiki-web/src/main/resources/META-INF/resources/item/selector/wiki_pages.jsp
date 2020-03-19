@@ -86,9 +86,7 @@ String searchURL = HttpUtil.removeParameter(searchBaseURL.toString(), liferayPor
 		searchContainer="<%= wikiPagesSearchContainer %>"
 		total="<%= wikiPagesSearchContainer.getTotal() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= wikiPagesSearchContainer.getResults() %>"
-		/>
+		<liferay-ui:search-container-results results="<%= wikiPagesSearchContainer.getResults() %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.wiki.model.WikiPage"
@@ -96,13 +94,9 @@ String searchURL = HttpUtil.removeParameter(searchBaseURL.toString(), liferayPor
 			keyProperty="pageId"
 			modelVar="curPage"
 		>
-			<liferay-ui:search-container-column-icon
-				icon="wiki-page"
-			/>
+			<liferay-ui:search-container-column-icon icon="wiki-page" />
 
-			<liferay-ui:search-container-column-text
-				colspan="<%= 2 %>"
-			>
+			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 				<%
 				Date modifiedDate = curPage.getModifiedDate();
@@ -132,7 +126,12 @@ String searchURL = HttpUtil.removeParameter(searchBaseURL.toString(), liferayPor
 				</h4>
 
 				<h5 class="text-default">
-					<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curPage.getStatus() %>" />
+					<aui:workflow-status
+						markupView="lexicon"
+						showIcon="<%= false %>"
+						showLabel="<%= false %>"
+						status="<%= curPage.getStatus() %>"
+					/>
 				</h5>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

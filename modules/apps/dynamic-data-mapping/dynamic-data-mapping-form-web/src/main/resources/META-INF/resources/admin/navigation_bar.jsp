@@ -16,7 +16,4 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= ddmFormAdminDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= ddmFormAdminDisplayContext.getNavigationItems() %>" />

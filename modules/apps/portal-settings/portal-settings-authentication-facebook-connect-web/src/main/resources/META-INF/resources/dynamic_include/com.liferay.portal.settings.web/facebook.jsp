@@ -41,19 +41,65 @@ String oauthRedirectURL = facebookConnectConfiguration.oauthRedirectURL();
 <liferay-ui:error key="facebookConnectOauthTokenURLInvalid" message="the-facebook-connect-oauth-token-url-is-invalid" />
 
 <aui:fieldset>
-	<aui:input label="enabled" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= authEnabled %>" />
+	<aui:input
+		label="enabled"
+		name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>'
+		type="checkbox"
+		value="<%= authEnabled %>"
+	/>
 
-	<aui:input label="require-verified-account" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "verifiedAccountRequired" %>' type="checkbox" value="<%= verifiedAccountRequired %>" />
+	<aui:input
+		label="require-verified-account"
+		name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "verifiedAccountRequired" %>'
+		type="checkbox"
+		value="<%= verifiedAccountRequired %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" label="application-id" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "appId" %>' type="text" value="<%= appId %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		label="application-id"
+		name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "appId" %>'
+		type="text"
+		value="<%= appId %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" label="application-secret" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "appSecret" %>' type="password" value="<%= appSecret %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		label="application-secret"
+		name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "appSecret" %>'
+		type="password"
+		value="<%= appSecret %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" label="graph-url" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "graphURL" %>' type="text" value="<%= graphURL %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		label="graph-url"
+		name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "graphURL" %>'
+		type="text"
+		value="<%= graphURL %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" label="oauth-authentication-url" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "oauthAuthURL" %>' type="text" value="<%= oauthAuthURL %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		label="oauth-authentication-url"
+		name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "oauthAuthURL" %>'
+		type="text"
+		value="<%= oauthAuthURL %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" label="oauth-token-url" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "oauthTokenURL" %>' type="text" value="<%= oauthTokenURL %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		label="oauth-token-url"
+		name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "oauthTokenURL" %>'
+		type="text"
+		value="<%= oauthTokenURL %>"
+	/>
 
-	<aui:input cssClass="lfr-input-text-container" label="oauth-redirect-url" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "oauthRedirectURL" %>' type="text" value="<%= oauthRedirectURL %>" />
+	<aui:input
+		cssClass="lfr-input-text-container"
+		label="oauth-redirect-url"
+		name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "oauthRedirectURL" %>'
+		type="text"
+		value="<%= oauthRedirectURL %>"
+	/>
 </aui:fieldset>

@@ -52,9 +52,7 @@ if (fixedHeader) {
 		</c:if>
 
 		<c:if test="<%= ListUtil.isNotNull(headerNames) %>">
-			<liferay-util:buffer
-				var="theadContent"
-			>
+			<liferay-util:buffer var="theadContent">
 
 				<%
 				List entries = Collections.emptyList();

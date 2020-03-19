@@ -39,10 +39,7 @@ if (Validator.isNotNull(keywords)) {
 		<a aria-expanded="true" class="dropdown-toggle" data-toggle="liferay-dropdown" href="javascript:;">
 			<span class="item-title"><%= delta %></span>
 
-			<liferay-ui:icon
-				icon="caret-double"
-				markupView="lexicon"
-			/>
+			<liferay-ui:icon icon="caret-double" markupView="lexicon" />
 		</a>
 
 		<ul class="dropdown-menu">
@@ -59,7 +56,12 @@ if (Validator.isNotNull(keywords)) {
 			%>
 
 				<li class="num-item <%= (delta == curDelta) ? "active" : StringPool.BLANK %>">
-					<aui:a cssClass="dropdown-item num-item" data="<%= data %>" href="javascript:;" label="<%= String.valueOf(curDelta) %>" />
+					<aui:a
+						cssClass="dropdown-item num-item"
+						data="<%= data %>"
+						href="javascript:;"
+						label="<%= String.valueOf(curDelta) %>"
+					/>
 				</li>
 
 			<%
@@ -106,10 +108,7 @@ if (Validator.isNotNull(keywords)) {
 	redirectURL = HttpUtil.addParameter(redirectURL, "portletResource", portletDisplay.getId());
 	%>
 
-	<liferay-asset:asset-add-button
-		redirect="<%= redirectURL %>"
-		useDialog="<%= false %>"
-	/>
+	<liferay-asset:asset-add-button redirect="<%= redirectURL %>" useDialog="<%= false %>" />
 </div>
 
 <div class="lfr-content-category panel-page-category">
@@ -191,9 +190,7 @@ if (Validator.isNotNull(keywords)) {
 					<c:choose>
 						<c:when test='<%= displayStyle.equals("icon") %>'>
 							<li class="col-md-6 col-sm-6 col-xs-6 drag-content-item lfr-content-item" <%= AUIUtil.buildData(itemData) %>>
-								<clay:vertical-card
-									verticalCard="<%= new AssetRendererVerticalCard(assetRenderer, liferayPortletRequest) %>"
-								/>
+								<clay:vertical-card verticalCard="<%= new AssetRendererVerticalCard(assetRenderer, liferayPortletRequest) %>" />
 							</li>
 						</c:when>
 						<c:otherwise>
@@ -212,10 +209,7 @@ if (Validator.isNotNull(keywords)) {
 										</c:when>
 										<c:otherwise>
 											<span class="sticker sticker-secondary">
-												<liferay-ui:icon
-													icon="<%= assetRenderer.getIconCssClass() %>"
-													markupView="lexicon"
-												/>
+												<liferay-ui:icon icon="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
 											</span>
 										</c:otherwise>
 									</c:choose>

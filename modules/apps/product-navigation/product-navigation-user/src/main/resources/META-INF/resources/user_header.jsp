@@ -27,9 +27,7 @@ ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayCont
 %>
 
 <a aria-controls="<portlet:namespace /><%= AUIUtil.normalizeId(userPanelCategory.getKey()) %>Collapse" aria-expanded="<%= Objects.equals(userPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) %>" class="collapse-icon collapse-icon-middle <%= Objects.equals(userPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) ? StringPool.BLANK : "collapsed" %> panel-toggler" data-parent="#<portlet:namespace />Accordion" data-qa-id="productMenuUserPanelCategory" data-toggle="liferay-collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(userPanelCategory.getKey()) %>Collapse" role="button">
-	<liferay-ui:user-portrait
-		user="<%= user %>"
-	/>
+	<liferay-ui:user-portrait user="<%= user %>" />
 
 	<span class="text-truncate user-name">
 		<%= HtmlUtil.escape(user.getFirstName()) %>
@@ -54,7 +52,15 @@ ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayCont
 		</span>
 	</c:if>
 
-	<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+	<aui:icon
+		cssClass="collapse-icon-closed"
+		image="angle-right"
+		markupView="lexicon"
+	/>
 
-	<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+	<aui:icon
+		cssClass="collapse-icon-open"
+		image="angle-down"
+		markupView="lexicon"
+	/>
 </a>

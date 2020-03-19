@@ -117,7 +117,16 @@
 
 												<td class="lfr-<%= userNotificationDeliveryType.getName() %>-column">
 													<div class="checkbox-container">
-														<aui:input cssClass="notification-delivery" data-userNotificationDeliveryId="<%= String.valueOf(userNotificationDelivery.getUserNotificationDeliveryId()) %>" disabled="<%= !userNotificationDeliveryType.isModifiable() %>" inlineLabel="<%= Boolean.TRUE.toString() %>" label="" name="<%= String.valueOf(userNotificationDelivery.getUserNotificationDeliveryId()) %>" type="toggle-switch" value="<%= userNotificationDelivery.isDeliver() %>" />
+														<aui:input
+															cssClass="notification-delivery"
+															data-userNotificationDeliveryId="<%= String.valueOf(userNotificationDelivery.getUserNotificationDeliveryId()) %>"
+															disabled="<%= !userNotificationDeliveryType.isModifiable() %>"
+															inlineLabel="<%= Boolean.TRUE.toString() %>"
+															label=""
+															name="<%= String.valueOf(userNotificationDelivery.getUserNotificationDeliveryId()) %>"
+															type="toggle-switch"
+															value="<%= userNotificationDelivery.isDeliver() %>"
+														/>
 													</div>
 												</td>
 
@@ -143,7 +152,11 @@
 				</liferay-frontend:fieldset-group>
 			</liferay-frontend:edit-form-body>
 
-			<aui:input name="userNotificationDeliveryIds" type="hidden" value="<%= StringUtil.merge(userNotificationDeliveryIds) %>" />
+			<aui:input
+				name="userNotificationDeliveryIds"
+				type="hidden"
+				value="<%= StringUtil.merge(userNotificationDeliveryIds) %>"
+			/>
 
 			<liferay-frontend:edit-form-footer>
 				<aui:button type="submit" value="save" />

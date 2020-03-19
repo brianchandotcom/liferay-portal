@@ -45,16 +45,41 @@ childPages = ListUtil.sort(childPages);
 childPages.remove(wikiPage);
 %>
 
-<aui:form action="<%= movePageURL %>" method="post" name="changeParentFm" onSubmit='<%= renderResponse.getNamespace() + "changeParent();" %>'>
+<aui:form
+	action="<%= movePageURL %>"
+	method="post"
+	name="changeParentFm"
+	onSubmit='<%= renderResponse.getNamespace() + "changeParent();" %>'
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
-	<aui:input name="title" type="hidden" value="<%= title %>" />
-	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
+	<aui:input
+		name="nodeId"
+		type="hidden"
+		value="<%= node.getNodeId() %>"
+	/>
+	<aui:input
+		name="title"
+		type="hidden"
+		value="<%= title %>"
+	/>
+	<aui:input
+		name="workflowAction"
+		type="hidden"
+		value="<%= WorkflowConstants.ACTION_PUBLISH %>"
+	/>
 
 	<aui:fieldset>
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
 
-		<aui:input name="currentParent" type="resource" value="<%= parentText %>" />
+		<aui:input
+			name="currentParent"
+			type="resource"
+			value="<%= parentText %>"
+		/>
 
 		<%
 		boolean newParentAvailable = true;
@@ -63,7 +88,11 @@ childPages.remove(wikiPage);
 			newParentAvailable = false;
 		%>
 
-			<aui:select disabled="<%= true %>" label="new-parent" name="newParentTitle">
+			<aui:select
+				disabled="<%= true %>"
+				label="new-parent"
+				name="newParentTitle"
+			>
 				<aui:option label="not-available" value="" />
 			</aui:select>
 
@@ -73,7 +102,11 @@ childPages.remove(wikiPage);
 		%>
 
 			<aui:select label="new-parent" name="newParentTitle">
-				<aui:option label="none" selected="<%= Validator.isNull(wikiPage.getParentTitle()) %>" value="" />
+				<aui:option
+					label="none"
+					selected="<%= Validator.isNull(wikiPage.getParentTitle()) %>"
+					value=""
+				/>
 
 				<%
 				for (WikiPage childPage : childPages) {
@@ -105,10 +138,19 @@ childPages.remove(wikiPage);
 		<aui:button-row>
 			<c:choose>
 				<c:when test="<%= hasWorkflowDefinitionLink %>">
-					<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' value="submit-for-publication" />
+					<aui:button
+						disabled="<%= pending %>"
+						name="publishButton"
+						onClick='<%= renderResponse.getNamespace() + "publishPage();" %>'
+						value="submit-for-publication"
+					/>
 				</c:when>
 				<c:otherwise>
-					<aui:button disabled="<%= !newParentAvailable %>" type="submit" value="change-parent" />
+					<aui:button
+						disabled="<%= !newParentAvailable %>"
+						type="submit"
+						value="change-parent"
+					/>
 				</c:otherwise>
 			</c:choose>
 

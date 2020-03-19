@@ -47,14 +47,30 @@ catch (Exception e) {
 
 <liferay-portlet:renderURL var="generatePasswordUrl" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>" />
 
-<aui:form action="<%= generatePasswordUrl %>" method="post" name="fm">
+<aui:form
+	action="<%= generatePasswordUrl %>"
+	method="post"
+	name="fm"
+>
 	<aui:fieldset>
 		<aui:field-wrapper label="password-settings">
-			<aui:input name="numbers" type="checkbox" value="<%= numbers %>" />
+			<aui:input
+				name="numbers"
+				type="checkbox"
+				value="<%= numbers %>"
+			/>
 
-			<aui:input name="lowerCaseLetters" type="checkbox" value="<%= lowerCaseLetters %>" />
+			<aui:input
+				name="lowerCaseLetters"
+				type="checkbox"
+				value="<%= lowerCaseLetters %>"
+			/>
 
-			<aui:input name="upperCaseLetters" type="checkbox" value="<%= upperCaseLetters %>" />
+			<aui:input
+				name="upperCaseLetters"
+				type="checkbox"
+				value="<%= upperCaseLetters %>"
+			/>
 
 			<aui:select name="length">
 
@@ -62,7 +78,11 @@ catch (Exception e) {
 				for (int i = 4; i <= 16; i++) {
 				%>
 
-					<aui:option label="<%= i %>" selected="<%= i == length %>" value="<%= i %>" />
+					<aui:option
+						label="<%= i %>"
+						selected="<%= i == length %>"
+						value="<%= i %>"
+					/>
 
 				<%
 				}
@@ -70,7 +90,11 @@ catch (Exception e) {
 
 			</aui:select>
 
-			<aui:input name="newPassword" type="resource" value="<%= newPassword %>" />
+			<aui:input
+				name="newPassword"
+				type="resource"
+				value="<%= newPassword %>"
+			/>
 		</aui:field-wrapper>
 	</aui:fieldset>
 

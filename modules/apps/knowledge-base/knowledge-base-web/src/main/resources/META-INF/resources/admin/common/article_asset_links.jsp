@@ -21,8 +21,5 @@ KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_K
 %>
 
 <c:if test="<%= enableKBArticleAssetLinks %>">
-	<liferay-asset:asset-links
-		className="<%= KBArticle.class.getName() %>"
-		classPK="<%= kbArticle.getClassPK() %>"
-	/>
+	<liferay-asset:asset-links className="<%= KBArticle.class.getName() %>" classPK="<%= kbArticle.getClassPK() %>" />
 </c:if>

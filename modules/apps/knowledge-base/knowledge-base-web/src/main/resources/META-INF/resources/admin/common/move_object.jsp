@@ -70,30 +70,89 @@ if (portletTitleBasedNavigation) {
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<liferay-portlet:actionURL name="moveKBObject" var="moveKBObjectURL" />
 
-	<aui:form action="<%= moveKBObjectURL %>" method="post" name="fm">
-		<aui:input name="mvcPath" type="hidden" value='<%= templatePath + "move_object.jsp" %>' />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(resourceClassNameId) %>" />
-		<aui:input name="resourcePrimKey" type="hidden" value="<%= String.valueOf(resourcePrimKey) %>" />
-		<aui:input name="parentResourceClassNameId" type="hidden" value="<%= String.valueOf(parentResourceClassNameId) %>" />
-		<aui:input name="parentResourcePrimKey" type="hidden" value="<%= String.valueOf(parentResourcePrimKey) %>" />
-		<aui:input name="status" type="hidden" value="<%= String.valueOf(status) %>" />
+	<aui:form
+		action="<%= moveKBObjectURL %>"
+		method="post"
+		name="fm"
+	>
+		<aui:input
+			name="mvcPath"
+			type="hidden"
+			value='<%= templatePath + "move_object.jsp" %>'
+		/>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="resourceClassNameId"
+			type="hidden"
+			value="<%= String.valueOf(resourceClassNameId) %>"
+		/>
+		<aui:input
+			name="resourcePrimKey"
+			type="hidden"
+			value="<%= String.valueOf(resourcePrimKey) %>"
+		/>
+		<aui:input
+			name="parentResourceClassNameId"
+			type="hidden"
+			value="<%= String.valueOf(parentResourceClassNameId) %>"
+		/>
+		<aui:input
+			name="parentResourcePrimKey"
+			type="hidden"
+			value="<%= String.valueOf(parentResourcePrimKey) %>"
+		/>
+		<aui:input
+			name="status"
+			type="hidden"
+			value="<%= String.valueOf(status) %>"
+		/>
 
-		<liferay-ui:error exception="<%= KBArticlePriorityException.class %>" message='<%= LanguageUtil.format(request, "please-enter-a-priority-that-is-greater-than-x", "0", false) %>' translateMessage="<%= false %>" />
+		<liferay-ui:error
+			exception="<%= KBArticlePriorityException.class %>"
+			message='<%= LanguageUtil.format(request, "please-enter-a-priority-that-is-greater-than-x", "0", false) %>'
+			translateMessage="<%= false %>"
+		/>
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 				<aui:field-wrapper label="current-parent">
-					<aui:input label="" name="currentParentTitle" readonly="<%= true %>" value="<%= parentTitle %>" />
+					<aui:input
+						label=""
+						name="currentParentTitle"
+						readonly="<%= true %>"
+						value="<%= parentTitle %>"
+					/>
 
-					<aui:input cssClass="input-mini" label="priority" name="currentPriority" readonly="<%= true %>" value="<%= BigDecimal.valueOf(priority).toPlainString() %>" />
+					<aui:input
+						cssClass="input-mini"
+						label="priority"
+						name="currentPriority"
+						readonly="<%= true %>"
+						value="<%= BigDecimal.valueOf(priority).toPlainString() %>"
+					/>
 				</aui:field-wrapper>
 
 				<aui:field-wrapper label="new-parent">
 					<div id="<portlet:namespace />newParent">
-						<aui:input label="" name="parentTitle" readonly="<%= true %>" value="<%= parentTitle %>" />
+						<aui:input
+							label=""
+							name="parentTitle"
+							readonly="<%= true %>"
+							value="<%= parentTitle %>"
+						/>
 
-						<aui:input cssClass="input-mini" id="parentPriority" label="priority" name="priority" type="text" value="<%= BigDecimal.valueOf(priority).toPlainString() %>" />
+						<aui:input
+							cssClass="input-mini"
+							id="parentPriority"
+							label="priority"
+							name="priority"
+							type="text"
+							value="<%= BigDecimal.valueOf(priority).toPlainString() %>"
+						/>
 					</div>
 
 					<aui:button name="selectKBObjectButton" value="select" />

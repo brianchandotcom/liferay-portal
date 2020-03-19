@@ -32,18 +32,10 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 %>
 
 <div class="container-fluid container-fluid-max-xl container-view">
-	<liferay-ui:search-container
-		iteratorURL="<%= portletURL %>"
-		total="<%= portlets.size() %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= ListUtil.subList(portlets, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
+	<liferay-ui:search-container iteratorURL="<%= portletURL %>" total="<%= portlets.size() %>">
+		<liferay-ui:search-container-results results="<%= ListUtil.subList(portlets, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.model.Portlet"
-			modelVar="portlet"
-		>
+		<liferay-ui:search-container-row className="com.liferay.portal.kernel.model.Portlet" modelVar="portlet">
 
 			<%
 			PluginPackage pluginPackage = portlet.getPluginPackage();
@@ -91,9 +83,7 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 				value='<%= LanguageUtil.get(request, (portlet.isActive() ? "yes" : "no")) %>'
 			/>
 
-			<liferay-ui:search-container-column-text
-				name=""
-			>
+			<liferay-ui:search-container-column-text name="">
 				<liferay-ui:icon-menu
 					direction="down"
 					markupView="lexicon"
@@ -108,8 +98,6 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

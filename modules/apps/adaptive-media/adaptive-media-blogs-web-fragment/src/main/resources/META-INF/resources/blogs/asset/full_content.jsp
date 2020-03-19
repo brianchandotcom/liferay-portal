@@ -16,9 +16,7 @@
 
 <%@ include file="/blogs/asset/init.jsp" %>
 
-<liferay-util:buffer
-	var="html"
->
+<liferay-util:buffer var="html">
 	<liferay-util:include page="/blogs/asset/full_content.portal.jsp" servletContext="<%= application %>" />
 </liferay-util:buffer>
 

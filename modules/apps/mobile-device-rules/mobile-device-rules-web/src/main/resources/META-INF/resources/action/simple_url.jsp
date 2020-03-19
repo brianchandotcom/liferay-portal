@@ -22,7 +22,12 @@ boolean ajax = GetterUtil.getBoolean(request.getParameter("ajax"));
 String url = GetterUtil.getString(typeSettingsProperties.get("url"));
 %>
 
-<aui:input cssClass="lfr-input-text-container" name="url" type="text" value="<%= url %>">
+<aui:input
+	cssClass="lfr-input-text-container"
+	name="url"
+	type="text"
+	value="<%= url %>"
+>
 	<aui:validator name="required" />
 </aui:input>
 

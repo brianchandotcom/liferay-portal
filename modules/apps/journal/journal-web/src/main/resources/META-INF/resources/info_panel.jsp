@@ -54,10 +54,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 					<liferay-util:include page="/subscribe.jsp" servletContext="<%= application %>" />
 				</li>
 				<li>
-					<clay:dropdown-actions
-						defaultEventHandler="<%= JournalWebConstants.JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-						dropdownItems="<%= journalDisplayContext.getFolderInfoPanelDropdownItems(folder) %>"
-					/>
+					<clay:dropdown-actions defaultEventHandler="<%= JournalWebConstants.JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= journalDisplayContext.getFolderInfoPanelDropdownItems(folder) %>" />
 				</li>
 			</ul>
 
@@ -68,9 +65,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			</p>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<clay:navigation-bar navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>" />
 
 		<div class="sidebar-body">
 			<p class="h5"><liferay-ui:message key="num-of-items" /></p>
@@ -110,10 +105,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 					<liferay-util:include page="/subscribe.jsp" servletContext="<%= application %>" />
 				</li>
 				<li>
-					<clay:dropdown-actions
-						defaultEventHandler="<%= JournalWebConstants.JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-						dropdownItems="<%= journalDisplayContext.getArticleInfoPanelDropdownItems(article) %>"
-					/>
+					<clay:dropdown-actions defaultEventHandler="<%= JournalWebConstants.JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER %>" dropdownItems="<%= journalDisplayContext.getArticleInfoPanelDropdownItems(article) %>" />
 				</li>
 			</ul>
 
@@ -128,9 +120,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			</p>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<clay:navigation-bar navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>" />
 
 		<div class="sidebar-body">
 			<p class="h5"><liferay-ui:message key="id" /></p>
@@ -148,7 +138,12 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			<p class="h5"><liferay-ui:message key="status" /></p>
 
 			<p>
-				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
+				<aui:workflow-status
+					markupView="lexicon"
+					showIcon="<%= false %>"
+					showLabel="<%= false %>"
+					status="<%= article.getStatus() %>"
+				/>
 			</p>
 
 			<p class="h5"><liferay-ui:message key="title" /></p>
@@ -246,9 +241,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			<p class="h4 pt-2"><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></p>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<clay:navigation-bar navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>" />
 
 		<div class="sidebar-body">
 			<p class="h5"><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></p>

@@ -26,8 +26,16 @@
 	name="fm"
 	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= configurationRenderURL %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
@@ -43,8 +51,16 @@
 				</div>
 
 				<aui:select label="vocabularies" name="preferences--allAssetVocabularies--">
-					<aui:option label="all" selected="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>" value="<%= true %>" />
-					<aui:option label="filter[action]" selected="<%= !assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>" value="<%= false %>" />
+					<aui:option
+						label="all"
+						selected="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>"
+						value="<%= true %>"
+					/>
+					<aui:option
+						label="filter[action]"
+						selected="<%= !assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>"
+						value="<%= false %>"
+					/>
 				</aui:select>
 
 				<aui:input name="preferences--assetVocabularyIds--" type="hidden" />

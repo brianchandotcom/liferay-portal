@@ -35,8 +35,5 @@ String appBuilderRootElementId = renderResponse.getNamespace() + "-app-builder-r
 	data.put("pathFriendlyURLPublic", PortalUtil.getPathFriendlyURLPublic());
 	%>
 
-	<react:component
-		data="<%= data %>"
-		module="js/index.es"
-	/>
+	<react:component data="<%= data %>" module="js/index.es" />
 </div>

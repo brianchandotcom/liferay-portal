@@ -26,25 +26,49 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 boolean hasAssignableUsers = workflowTaskDisplayContext.hasAssignableUsers(workflowTask);
 %>
 
-<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="assignWorkflowTask" var="assignURL" />
+<liferay-portlet:resourceURL
+	copyCurrentRenderParameters="<%= false %>"
+	id="assignWorkflowTask"
+	var="assignURL"
+/>
 
 <div class="task-action">
-	<aui:form action="<%= assignURL %>" method="post" name="assignFm">
+	<aui:form
+		action="<%= assignURL %>"
+		method="post"
+		name="assignFm"
+	>
 		<div class="modal-body task-action-content">
-			<aui:input name="workflowTaskId" type="hidden" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
+			<aui:input
+				name="workflowTaskId"
+				type="hidden"
+				value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>"
+			/>
 
 			<c:choose>
 				<c:when test="<%= assigneeUserId > 0 %>">
-					<aui:input name="assigneeUserId" type="hidden" value="<%= String.valueOf(assigneeUserId) %>" />
+					<aui:input
+						name="assigneeUserId"
+						type="hidden"
+						value="<%= String.valueOf(assigneeUserId) %>"
+					/>
 				</c:when>
 				<c:otherwise>
-					<aui:select disabled="<%= !hasAssignableUsers %>" label="assign-to" name="assigneeUserId">
+					<aui:select
+						disabled="<%= !hasAssignableUsers %>"
+						label="assign-to"
+						name="assigneeUserId"
+					>
 
 						<%
 						for (User assignableUser : workflowTaskDisplayContext.getAssignableUsers(workflowTask)) {
 						%>
 
-							<aui:option label="<%= HtmlUtil.escape(assignableUser.getFullName()) %>" selected="<%= workflowTask.getAssigneeUserId() == assignableUser.getUserId() %>" value="<%= String.valueOf(assignableUser.getUserId()) %>" />
+							<aui:option
+								label="<%= HtmlUtil.escape(assignableUser.getFullName()) %>"
+								selected="<%= workflowTask.getAssigneeUserId() == assignableUser.getUserId() %>"
+								value="<%= String.valueOf(assignableUser.getUserId()) %>"
+							/>
 
 						<%
 						}
@@ -54,7 +78,15 @@ boolean hasAssignableUsers = workflowTaskDisplayContext.hasAssignableUsers(workf
 				</c:otherwise>
 			</c:choose>
 
-			<aui:input cols="55" cssClass="task-action-comment" disabled="<%= !hasAssignableUsers && (assigneeUserId <= 0) %>" name="comment" placeholder="comment" rows="1" type="textarea" />
+			<aui:input
+				cols="55"
+				cssClass="task-action-comment"
+				disabled="<%= !hasAssignableUsers && (assigneeUserId <= 0) %>"
+				name="comment"
+				placeholder="comment"
+				rows="1"
+				type="textarea"
+			/>
 		</div>
 
 		<div class="modal-footer">
@@ -65,7 +97,12 @@ boolean hasAssignableUsers = workflowTaskDisplayContext.hasAssignableUsers(workf
 					</div>
 
 					<div class="btn-group-item">
-						<aui:button disabled="<%= !hasAssignableUsers && (assigneeUserId <= 0) %>" name="done" primary="<%= true %>" value="done" />
+						<aui:button
+							disabled="<%= !hasAssignableUsers && (assigneeUserId <= 0) %>"
+							name="done"
+							primary="<%= true %>"
+							value="done"
+						/>
 					</div>
 				</div>
 			</div>

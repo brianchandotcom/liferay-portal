@@ -31,7 +31,11 @@ zipsString = StringUtil.merge(zips, StringPool.NEW_LINE);
 	cssClass="container-fluid-1280"
 	method="post"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= ValidatorException.class %>">
@@ -59,13 +63,32 @@ zipsString = StringUtil.merge(zips, StringPool.NEW_LINE);
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<aui:input label="openweathermap-api-key" name="preferences--apiKey--" type="text" value="<%= apiKey %>" />
+				<aui:input
+					label="openweathermap-api-key"
+					name="preferences--apiKey--"
+					type="text"
+					value="<%= apiKey %>"
+				/>
 
-				<aui:input label="enter-one-city-or-zip-code-per-line" name="preferences--zips--" type="textarea" value="<%= zipsString %>" wrapperCssClass="lfr-textarea-container" />
+				<aui:input
+					label="enter-one-city-or-zip-code-per-line"
+					name="preferences--zips--"
+					type="textarea"
+					value="<%= zipsString %>"
+					wrapperCssClass="lfr-textarea-container"
+				/>
 
 				<aui:select label="temperature-format" name="preferences--fahrenheit--">
-					<aui:option label="fahrenheit" selected="<%= fahrenheit %>" value="1" />
-					<aui:option label="celsius" selected="<%= !fahrenheit %>" value="0" />
+					<aui:option
+						label="fahrenheit"
+						selected="<%= fahrenheit %>"
+						value="1"
+					/>
+					<aui:option
+						label="celsius"
+						selected="<%= !fahrenheit %>"
+						value="0"
+					/>
 				</aui:select>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>

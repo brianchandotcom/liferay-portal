@@ -26,10 +26,7 @@
 	value="<%= rule.getDescription(locale) %>"
 />
 
-<liferay-ui:search-container-column-date
-	name="create-date"
-	property="createDate"
-/>
+<liferay-ui:search-container-column-date name="create-date" property="createDate" />
 
 <liferay-ui:search-container-column-text
 	name="type"
@@ -37,6 +34,4 @@
 	value="<%= rule.getType() %>"
 />
 
-<liferay-ui:search-container-column-jsp
-	path="/rule_actions.jsp"
-/>
+<liferay-ui:search-container-column-jsp path="/rule_actions.jsp" />

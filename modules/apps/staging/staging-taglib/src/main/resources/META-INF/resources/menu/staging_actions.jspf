@@ -59,7 +59,11 @@
 		%>
 
 		<c:if test="<%= (liveGroup != null) && GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.PUBLISH_STAGING) %>">
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="publishRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<liferay-portlet:renderURL
+				portletName="<%= PortletKeys.EXPORT_IMPORT %>"
+				var="publishRedirectURL"
+				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+			>
 				<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 				<portlet:param name="tabs2" value="current-and-previous" />
@@ -72,7 +76,11 @@
 			UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 			%>
 
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" varImpl="simplePublishLayoutsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<liferay-portlet:renderURL
+				portletName="<%= PortletKeys.EXPORT_IMPORT %>"
+				varImpl="simplePublishLayoutsURL"
+				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+			>
 				<portlet:param name="mvcRenderCommandName" value="publishLayoutsSimple" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 				<portlet:param name="redirect" value="<%= publishRedirectURL %>" />
@@ -140,15 +148,16 @@
 			}
 			%>
 
-			<liferay-util:buffer
-				var="publishOnControlPanelLink"
-			>
-				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
+			<liferay-util:buffer var="publishOnControlPanelLink">
+				<aui:a
+					cssClass='<%= linkCssClass + " publish-link" %>'
+					href="<%= publishRenderURL.toString() %>"
+					id='<%= layoutSetBranchId + "publishLink" %>'
+					label="<%= publishMessage %>"
+				/>
 			</liferay-util:buffer>
 
-			<liferay-util:buffer
-				var="publishOnLayoutLink"
-			>
+			<liferay-util:buffer var="publishOnLayoutLink">
 				<div class="btn-group dropdown">
 					<button class="btn btn-primary btn-sm" href="<%= simplePublishLayoutsURL.toString() %>" id="<%= layoutSetBranchId + "publishToLiveLink" %>" type="button">
 						<liferay-ui:message key="publish-to-live" />
@@ -285,10 +294,13 @@
 				<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
 			</portlet:renderURL>
 
-			<liferay-util:buffer
-				var="manageSitePagesVariationsLink"
-			>
-				<aui:a cssClass="manage-layout-set-branches" href="<%= layoutSetBranchesURL %>" id="manageLayoutSetBranches" label="manage-site-pages-variations" />
+			<liferay-util:buffer var="manageSitePagesVariationsLink">
+				<aui:a
+					cssClass="manage-layout-set-branches"
+					href="<%= layoutSetBranchesURL %>"
+					id="manageLayoutSetBranches"
+					label="manage-site-pages-variations"
+				/>
 			</liferay-util:buffer>
 
 			<c:choose>

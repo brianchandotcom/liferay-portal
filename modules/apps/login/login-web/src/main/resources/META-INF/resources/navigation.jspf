@@ -14,9 +14,7 @@
  */
 --%>
 
-<liferay-util:buffer
-	var="navigation"
->
+<liferay-util:buffer var="navigation">
 	<liferay-ui:icon-list>
 		<liferay-util:dynamic-include key="com.liferay.login.web#/navigation.jsp#pre" />
 
@@ -26,7 +24,11 @@
 		for (String section : PropsValues.LOGIN_FORM_NAVIGATION_PRE) {
 		%>
 
-			<liferay-util:include page='<%= "/navigation/" + section + ".jsp" %>' portletId="<%= portletDisplay.getRootPortletId() %>" servletContext="<%= application %>" />
+			<liferay-util:include
+				page='<%= "/navigation/" + section + ".jsp" %>'
+				portletId="<%= portletDisplay.getRootPortletId() %>"
+				servletContext="<%= application %>"
+			/>
 
 		<%
 		}
@@ -36,7 +38,11 @@
 		for (String section : PropsValues.LOGIN_FORM_NAVIGATION_POST) {
 		%>
 
-			<liferay-util:include page='<%= "/navigation/" + section + ".jsp" %>' portletId="<%= portletDisplay.getRootPortletId() %>" servletContext="<%= application %>" />
+			<liferay-util:include
+				page='<%= "/navigation/" + section + ".jsp" %>'
+				portletId="<%= portletDisplay.getRootPortletId() %>"
+				servletContext="<%= application %>"
+			/>
 
 		<%
 		}

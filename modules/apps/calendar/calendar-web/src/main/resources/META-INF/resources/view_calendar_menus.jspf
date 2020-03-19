@@ -528,7 +528,11 @@ String backURL = PortalUtil.getCurrentURL(request);
 	<c:if test="<%= themeDisplay.isSignedIn() %>">
 		var addOtherCalendarInput = A.one('#<portlet:namespace />addOtherCalendar');
 
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="calendarResources" var="calendarResourcesURL" />
+		<liferay-portlet:resourceURL
+			copyCurrentRenderParameters="<%= false %>"
+			id="calendarResources"
+			var="calendarResourcesURL"
+		/>
 
 		calendarContainer.createCalendarsAutoComplete(
 			'<%= calendarResourcesURL %>',

@@ -36,10 +36,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(category.getVocabularyId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editCategoryURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editCategoryURL %>" />
 	</c:if>
 
 	<c:if test="<%= assetCategoriesDisplayContext.hasPermission(category, ActionKeys.ADD_CATEGORY) %>">
@@ -49,10 +46,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 			<portlet:param name="parentCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="add-subcategory"
-			url="<%= addSubcategoryCategoryURL %>"
-		/>
+		<liferay-ui:icon message="add-subcategory" url="<%= addSubcategoryCategoryURL %>" />
 	</c:if>
 
 	<c:if test="<%= assetCategoriesDisplayContext.hasPermission(category, ActionKeys.UPDATE) %>">
@@ -86,9 +80,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 			<portlet:param name="categoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteCategoryURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteCategoryURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>
 

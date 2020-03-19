@@ -45,10 +45,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "custom-
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-attributes"), null);
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems='<%= expandoDisplayContext.getNavigationItems("fields") %>'
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems='<%= expandoDisplayContext.getNavigationItems("fields") %>' />
 
 <clay:management-toolbar
 	actionDropdownItems="<%= expandoDisplayContext.getActionDropdownItems() %>"
@@ -60,8 +57,17 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 	showSearch="<%= false %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+<aui:form
+	action="<%= portletURL.toString() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= portletURL.toString() %>"
+	/>
 	<aui:input name="columnIds" type="hidden" />
 
 	<div class="container-fluid container-fluid-max-xl">
@@ -80,9 +86,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 		rowChecker="<%= new CustomFieldChecker(renderRequest, renderResponse) %>"
 		total="<%= attributeNames.size() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= attributeNames %>"
-		/>
+		<liferay-ui:search-container-results results="<%= attributeNames %>" />
 
 		<liferay-ui:search-container-row
 			className="java.lang.String"
@@ -105,23 +109,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 				<portlet:param name="modelResource" value="<%= modelResource %>" />
 			</portlet:renderURL>
 
-			<liferay-ui:search-container-row-parameter
-				name="expandoColumn"
-				value="<%= expandoColumn %>"
-			/>
+			<liferay-ui:search-container-row-parameter name="expandoColumn" value="<%= expandoColumn %>" />
 
-			<liferay-ui:search-container-row-parameter
-				name="modelResource"
-				value="<%= modelResource %>"
-			/>
+			<liferay-ui:search-container-row-parameter name="modelResource" value="<%= modelResource %>" />
 
 			<%@ include file="/attribute_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-			paginate="<%= false %>"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 	</liferay-ui:search-container>
 </aui:form>
 

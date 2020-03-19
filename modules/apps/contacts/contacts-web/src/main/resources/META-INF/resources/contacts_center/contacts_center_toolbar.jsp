@@ -64,10 +64,7 @@ if (user2 != null) {
 		<aui:button-row cssClass="btn-group edit-toolbar" id='<%= renderResponse.getNamespace() + "userToolbar" %>' />
 
 		<div class="btn view-more-button">
-			<liferay-ui:icon
-				icon="ellipsis-h"
-				markupView="lexicon"
-			/>
+			<liferay-ui:icon icon="ellipsis-h" markupView="lexicon" />
 
 			<liferay-ui:message key="more" />
 		</div>

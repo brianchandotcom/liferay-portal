@@ -60,7 +60,12 @@ List<SortTermDisplayContext> sortTermDisplayContexts = sortDisplayContext.getSor
 	</c:when>
 	<c:otherwise>
 		<aui:form method="post" name="fm">
-			<aui:input cssClass="sort-parameter-name" name="sort-parameter-name" type="hidden" value="<%= sortDisplayContext.getParameterName() %>" />
+			<aui:input
+				cssClass="sort-parameter-name"
+				name="sort-parameter-name"
+				type="hidden"
+				value="<%= sortDisplayContext.getParameterName() %>"
+			/>
 
 			<liferay-ddm:template-renderer
 				className="<%= SortDisplayContext.class.getName() %>"
@@ -70,13 +75,21 @@ List<SortTermDisplayContext> sortTermDisplayContexts = sortDisplayContext.getSor
 				entries="<%= sortTermDisplayContexts %>"
 			>
 				<aui:fieldset>
-					<aui:select class="sort-term" label="sort-by" name="sortSelection">
+					<aui:select
+						class="sort-term"
+						label="sort-by"
+						name="sortSelection"
+					>
 
 						<%
 						for (SortTermDisplayContext sortTermDisplayContext : sortDisplayContext.getSortTermDisplayContexts()) {
 						%>
 
-							<aui:option label="<%= sortTermDisplayContext.getLabel() %>" selected="<%= sortTermDisplayContext.isSelected() %>" value="<%= sortTermDisplayContext.getField() %>" />
+							<aui:option
+								label="<%= sortTermDisplayContext.getLabel() %>"
+								selected="<%= sortTermDisplayContext.isSelected() %>"
+								value="<%= sortTermDisplayContext.getField() %>"
+							/>
 
 						<%
 						}

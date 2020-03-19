@@ -23,9 +23,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 %>
 
 <c:if test="<%= showHeader %>">
-	<liferay-ui:header
-		title="<%= assetRenderer.getTitle(locale) %>"
-	/>
+	<liferay-ui:header title="<%= assetRenderer.getTitle(locale) %>" />
 </c:if>
 
 <%

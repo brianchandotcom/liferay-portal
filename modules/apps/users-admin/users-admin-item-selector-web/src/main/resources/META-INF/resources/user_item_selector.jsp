@@ -24,10 +24,7 @@ String itemSelectedEventName = userItemSelectorViewDisplayContext.getItemSelecte
 PortletURL portletURL = userItemSelectorViewDisplayContext.getPortletURL();
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="users"
->
+<liferay-frontend:management-bar includeCheckBox="<%= true %>" searchContainerId="users">
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
@@ -37,10 +34,7 @@ PortletURL portletURL = userItemSelectorViewDisplayContext.getPortletURL();
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
+		<liferay-frontend:management-bar-navigation navigationKeys='<%= new String[] {"all"} %>' portletURL="<%= portletURL %>" />
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= userItemSelectorViewDisplayContext.getOrderByCol() %>"
@@ -56,10 +50,7 @@ PortletURL portletURL = userItemSelectorViewDisplayContext.getPortletURL();
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280" id="<portlet:namespace />userSelectorWrapper">
-	<liferay-ui:search-container
-		id="users"
-		searchContainer="<%= userItemSelectorViewDisplayContext.getSearchContainer() %>"
-	>
+	<liferay-ui:search-container id="users" searchContainer="<%= userItemSelectorViewDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
 			cssClass="user-row"

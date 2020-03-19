@@ -46,13 +46,29 @@ boolean advancedSearch = displayTerms.isAdvancedSearch();
 	<div class="taglib-search-toggle-advanced <%= advancedSearch ? "toggler-content-expanded" : "toggler-content-collapsed" %>" id="<%= id %>advanced">
 		<input id="<%= id + DisplayTerms.ADVANCED_SEARCH %>" name="<portlet:namespace /><%= DisplayTerms.ADVANCED_SEARCH %>" type="hidden" value="<%= advancedSearch %>" />
 
-		<aui:button cssClass="close" name="closeAdvancedSearch" value="&times;" />
+		<aui:button
+			cssClass="close"
+			name="closeAdvancedSearch"
+			value="&times;"
+		/>
 
 		<div class="taglib-search-toggle-advanced-content" id="<%= id %>advancedContent">
 			<div class="form-group form-group-inline">
-				<aui:select label="match" name="<%= DisplayTerms.AND_OPERATOR %>" wrapperCssClass="match-fields">
-					<aui:option label="all" selected="<%= displayTerms.isAndOperator() %>" value="<%= true %>" />
-					<aui:option label="any" selected="<%= !displayTerms.isAndOperator() %>" value="<%= false %>" />
+				<aui:select
+					label="match"
+					name="<%= DisplayTerms.AND_OPERATOR %>"
+					wrapperCssClass="match-fields"
+				>
+					<aui:option
+						label="all"
+						selected="<%= displayTerms.isAndOperator() %>"
+						value="<%= true %>"
+					/>
+					<aui:option
+						label="any"
+						selected="<%= !displayTerms.isAndOperator() %>"
+						value="<%= false %>"
+					/>
 				</aui:select>
 
 				<span class="match-fields-legend">

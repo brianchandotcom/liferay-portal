@@ -54,7 +54,15 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 			<img alt="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" class="img-thumbnail theme-screenshot" onclick="document.getElementById('<portlet:namespace />SelTheme').checked = true;" src="<%= selTheme.getStaticResourcePath() %><%= HtmlUtil.escapeAttribute(selTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" />
 
 			<div class="theme-details">
-				<aui:input checked="<%= true %>" cssClass="selected-theme theme-title" id="SelTheme" label="<%= selTheme.getName() %>" name="themeId" type="radio" value="<%= selTheme.getThemeId() %>" />
+				<aui:input
+					checked="<%= true %>"
+					cssClass="selected-theme theme-title"
+					id="SelTheme"
+					label="<%= selTheme.getName() %>"
+					name="themeId"
+					type="radio"
+					value="<%= selTheme.getThemeId() %>"
+				/>
 
 				<dl class="theme-fields">
 
@@ -118,7 +126,15 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 									<div class="<%= cssClass %> theme-entry">
 										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="modify-link theme-thumbnail" onclick="document.getElementById('<portlet:namespace />ColorSchemeId<%= i %>').checked = true;" src="<%= selTheme.getStaticResourcePath() %><%= HtmlUtil.escapeAttribute(curColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curColorScheme.getName()) %>" />
 
-										<aui:input checked="<%= selColorScheme.getColorSchemeId().equals(curColorScheme.getColorSchemeId()) %>" cssClass="theme-title" id='<%= "ColorSchemeId" + i %>' label="<%= curColorScheme.getName() %>" name="colorSchemeId" type="radio" value="<%= curColorScheme.getColorSchemeId() %>" />
+										<aui:input
+											checked="<%= selColorScheme.getColorSchemeId().equals(curColorScheme.getColorSchemeId()) %>"
+											cssClass="theme-title"
+											id='<%= "ColorSchemeId" + i %>'
+											label="<%= curColorScheme.getName() %>"
+											name="colorSchemeId"
+											type="radio"
+											value="<%= curColorScheme.getColorSchemeId() %>"
+										/>
 									</div>
 
 								<%
@@ -141,7 +157,11 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 				List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), groupId, user.getUserId());
 				%>
 
-				<liferay-ui:message arguments="<%= themes.size() - 1 %>" key="available-themes-x" translateArguments="<%= false %>" />
+				<liferay-ui:message
+					arguments="<%= themes.size() - 1 %>"
+					key="available-themes-x"
+					translateArguments="<%= false %>"
+				/>
 			</span>
 		</h3>
 
@@ -159,7 +179,14 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 							<div class="theme-entry">
 								<img alt="" class="modify-link theme-thumbnail" onclick="document.getElementById('<portlet:namespace />ThemeId<%= i %>').checked = true;" src="<%= curTheme.getStaticResourcePath() %><%= HtmlUtil.escapeAttribute(curTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curTheme.getName()) %>" />
 
-								<aui:input cssClass="theme-title" id='<%= "ThemeId" + i %>' label="<%= curTheme.getName() %>" name="themeId" type="radio" value="<%= curTheme.getThemeId() %>" />
+								<aui:input
+									cssClass="theme-title"
+									id='<%= "ThemeId" + i %>'
+									label="<%= curTheme.getName() %>"
+									name="themeId"
+									type="radio"
+									value="<%= curTheme.getThemeId() %>"
+								/>
 							</div>
 						</li>
 

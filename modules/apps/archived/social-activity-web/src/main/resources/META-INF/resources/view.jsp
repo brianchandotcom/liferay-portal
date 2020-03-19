@@ -28,10 +28,27 @@
 
 			<portlet:actionURL name="/social_activity/edit_activity_settings" var="editURL" />
 
-			<aui:form action="<%= editURL %>" cssClass="update-socialactivity-form" method="post" name="fm">
-				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-				<aui:input id="settingsJSON" name="settingsJSON" type="hidden" />
+			<aui:form
+				action="<%= editURL %>"
+				cssClass="update-socialactivity-form"
+				method="post"
+				name="fm"
+			>
+				<aui:input
+					name="<%= Constants.CMD %>"
+					type="hidden"
+					value="<%= Constants.UPDATE %>"
+				/>
+				<aui:input
+					name="redirect"
+					type="hidden"
+					value="<%= currentURL %>"
+				/>
+				<aui:input
+					id="settingsJSON"
+					name="settingsJSON"
+					type="hidden"
+				/>
 
 				<h4>
 					<liferay-ui:message key="enable-social-activity-for" />:
@@ -51,7 +68,15 @@
 
 							<h4 class="social-activity-item" data-modelName="<%= className %>" title="<%= localizedClassName %>">
 								<div class="social-activity-item-content">
-									<aui:input disabled="<%= !SocialActivityPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.CONFIGURATION) %>" inlineField="<%= true %>" label="" name='<%= className + ".enabled" %>' title="enabled" type="checkbox" value="<%= enabled %>" />
+									<aui:input
+										disabled="<%= !SocialActivityPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.CONFIGURATION) %>"
+										inlineField="<%= true %>"
+										label=""
+										name='<%= className + ".enabled" %>'
+										title="enabled"
+										type="checkbox"
+										value="<%= enabled %>"
+									/>
 
 									<a class="settings-label" href="javascript:;"><%= localizedClassName %></a>
 								</div>

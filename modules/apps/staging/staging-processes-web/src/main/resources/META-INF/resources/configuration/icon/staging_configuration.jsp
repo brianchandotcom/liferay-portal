@@ -26,7 +26,12 @@ PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, liveGroup,
 	url="javascript:;"
 />
 
-<liferay-portlet:renderURL portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= StagingConfigurationPortletKeys.STAGING_CONFIGURATION %>" var="stagingConfigurationPortletURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+<liferay-portlet:renderURL
+	portletMode="<%= PortletMode.VIEW.toString() %>"
+	portletName="<%= StagingConfigurationPortletKeys.STAGING_CONFIGURATION %>"
+	var="stagingConfigurationPortletURL"
+	windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+>
 	<portlet:param name="mvcRenderCommandName" value="staging" />
 </liferay-portlet:renderURL>
 

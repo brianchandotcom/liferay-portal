@@ -52,9 +52,22 @@ if (portletTitleBasedNavigation) {
 		<portlet:param name="mvcRenderCommandName" value="/message_boards/split_thread" />
 	</portlet:actionURL>
 
-	<aui:form action="<%= splitThreadURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "splitThread();" %>'>
-		<aui:input name="messageId" type="hidden" value="<%= messageId %>" />
-		<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
+	<aui:form
+		action="<%= splitThreadURL %>"
+		method="post"
+		name="fm"
+		onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "splitThread();" %>'
+	>
+		<aui:input
+			name="messageId"
+			type="hidden"
+			value="<%= messageId %>"
+		/>
+		<aui:input
+			name="mbCategoryId"
+			type="hidden"
+			value="<%= categoryId %>"
+		/>
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
 			<h3><%= headerTitle %></h3>
@@ -95,17 +108,34 @@ if (portletTitleBasedNavigation) {
 
 			<aui:fieldset>
 				<div id="<portlet:namespace />splitThreadSubject">
-					<aui:input fieldParam="splitThreadSubject" label="subject-of-the-new-thread" model="<%= MBMessage.class %>" name="subject" value="<%= message.getSubject() %>" />
+					<aui:input
+						fieldParam="splitThreadSubject"
+						label="subject-of-the-new-thread"
+						model="<%= MBMessage.class %>"
+						name="subject"
+						value="<%= message.getSubject() %>"
+					/>
 				</div>
 
-				<aui:input disabled="<%= thread.isLocked() %>" helpMessage='<%= thread.isLocked() ? LanguageUtil.get(request, "unlock-thread-to-add-an-explanation-post") : StringPool.BLANK %>' label="add-explanation-post-to-the-source-thread" name="addExplanationPost" onClick='<%= renderResponse.getNamespace() + "toggleExplanationPost();" %>' type="checkbox" />
+				<aui:input
+					disabled="<%= thread.isLocked() %>"
+					helpMessage='<%= thread.isLocked() ? LanguageUtil.get(request, "unlock-thread-to-add-an-explanation-post") : StringPool.BLANK %>'
+					label="add-explanation-post-to-the-source-thread"
+					name="addExplanationPost"
+					onClick='<%= renderResponse.getNamespace() + "toggleExplanationPost();" %>'
+					type="checkbox"
+				/>
 
 				<div id="<portlet:namespace />explanationPost" style="display: none;">
 					<div class="alert alert-info">
 						<liferay-ui:message key="the-following-post-will-be-added-in-place-of-the-moved-message" />
 					</div>
 
-					<aui:input model="<%= MBMessage.class %>" name="subject" value='<%= LanguageUtil.get(request, "thread-split") %>' />
+					<aui:input
+						model="<%= MBMessage.class %>"
+						name="subject"
+						value='<%= LanguageUtil.get(request, "thread-split") %>'
+					/>
 
 					<aui:field-wrapper label="body">
 						<c:choose>

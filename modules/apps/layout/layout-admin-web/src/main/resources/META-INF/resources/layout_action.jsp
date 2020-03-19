@@ -29,34 +29,22 @@ Layout curLayout = (Layout)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<liferay-ui:icon
-		message="view"
-		url="<%= layoutsAdminDisplayContext.getViewLayoutURL(curLayout) %>"
-	/>
+	<liferay-ui:icon message="view" url="<%= layoutsAdminDisplayContext.getViewLayoutURL(curLayout) %>" />
 
 	<%
 	String editLayoutURL = layoutsAdminDisplayContext.getEditLayoutURL(curLayout);
 	%>
 
 	<c:if test="<%= Validator.isNotNull(editLayoutURL) %>">
-		<liferay-ui:icon
-			message='<%= layoutsAdminDisplayContext.isConversionDraft(layout) ? "edit-conversion-draft" : "edit" %>'
-			url="<%= editLayoutURL %>"
-		/>
+		<liferay-ui:icon message='<%= layoutsAdminDisplayContext.isConversionDraft(layout) ? "edit-conversion-draft" : "edit" %>' url="<%= editLayoutURL %>" />
 	</c:if>
 
 	<c:if test="<%= layoutsAdminDisplayContext.isShowConfigureAction(curLayout) %>">
-		<liferay-ui:icon
-			message="configure"
-			url="<%= layoutsAdminDisplayContext.getConfigureLayoutURL(curLayout) %>"
-		/>
+		<liferay-ui:icon message="configure" url="<%= layoutsAdminDisplayContext.getConfigureLayoutURL(curLayout) %>" />
 	</c:if>
 
 	<c:if test="<%= layoutsAdminDisplayContext.isShowAddChildPageAction(curLayout) %>">
-		<liferay-ui:icon
-			message="add-child-page"
-			url="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(layoutsAdminDisplayContext.getFirstLayoutPageTemplateCollectionId(), curLayout.getPlid(), curLayout.isPrivateLayout()) %>"
-		/>
+		<liferay-ui:icon message="add-child-page" url="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(layoutsAdminDisplayContext.getFirstLayoutPageTemplateCollectionId(), curLayout.getPlid(), curLayout.isPrivateLayout()) %>" />
 	</c:if>
 
 	<c:if test="<%= layoutsAdminDisplayContext.isShowCopyLayoutAction(curLayout) %>">
@@ -77,23 +65,15 @@ Layout curLayout = (Layout)row.getObject();
 	</c:if>
 
 	<c:if test="<%= layoutsAdminDisplayContext.isShowOrphanPortletsAction(curLayout) %>">
-		<liferay-ui:icon
-			message="orphan-widgets"
-			url="<%= layoutsAdminDisplayContext.getOrphanPortletsURL(curLayout) %>"
-		/>
+		<liferay-ui:icon message="orphan-widgets" url="<%= layoutsAdminDisplayContext.getOrphanPortletsURL(curLayout) %>" />
 	</c:if>
 
 	<c:if test="<%= layoutsAdminDisplayContext.isShowConvertLayoutAction(curLayout) %>">
-		<liferay-ui:icon
-			message="convert-to-content-page..."
-			url="<%= layoutsAdminDisplayContext.getConvertLayoutURL(curLayout) %>"
-		/>
+		<liferay-ui:icon message="convert-to-content-page..." url="<%= layoutsAdminDisplayContext.getConvertLayoutURL(curLayout) %>" />
 	</c:if>
 
 	<c:if test="<%= layoutsAdminDisplayContext.isShowDeleteAction(curLayout) %>">
-		<liferay-ui:icon-delete
-			url="<%= layoutsAdminDisplayContext.getDeleteLayoutURL(curLayout) %>"
-		/>
+		<liferay-ui:icon-delete url="<%= layoutsAdminDisplayContext.getDeleteLayoutURL(curLayout) %>" />
 	</c:if>
 </liferay-ui:icon-menu>
 

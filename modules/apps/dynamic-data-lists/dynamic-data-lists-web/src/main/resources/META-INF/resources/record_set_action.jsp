@@ -44,10 +44,7 @@ boolean hasViewPermission = ddlDisplayContext.isAdminPortlet() && DDLRecordSetPe
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="view[action]"
-			url="<%= viewRecordSetURL %>"
-		/>
+		<liferay-ui:icon message="view[action]" url="<%= viewRecordSetURL %>" />
 
 		<portlet:renderURL var="viewRecordSetURL">
 			<portlet:param name="mvcPath" value="/view_record_set.jsp" />
@@ -56,10 +53,7 @@ boolean hasViewPermission = ddlDisplayContext.isAdminPortlet() && DDLRecordSetPe
 			<portlet:param name="spreadsheet" value="<%= Boolean.TRUE.toString() %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="spreadsheet-view"
-			url="<%= viewRecordSetURL %>"
-		/>
+		<liferay-ui:icon message="spreadsheet-view" url="<%= viewRecordSetURL %>" />
 	</c:if>
 
 	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.UPDATE) %>">
@@ -69,14 +63,15 @@ boolean hasViewPermission = ddlDisplayContext.isAdminPortlet() && DDLRecordSetPe
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editRecordSetURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editRecordSetURL %>" />
 	</c:if>
 
 	<c:if test="<%= hasViewPermission %>">
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportRecordSet" var="exportRecordSetURL">
+		<liferay-portlet:resourceURL
+			copyCurrentRenderParameters="<%= false %>"
+			id="exportRecordSet"
+			var="exportRecordSetURL"
+		>
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</liferay-portlet:resourceURL>
 
@@ -90,10 +85,7 @@ boolean hasViewPermission = ddlDisplayContext.isAdminPortlet() && DDLRecordSetPe
 		sb.append("');");
 		%>
 
-		<liferay-ui:icon
-			message="export"
-			url="<%= sb.toString() %>"
-		/>
+		<liferay-ui:icon message="export" url="<%= sb.toString() %>" />
 	</c:if>
 
 	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.PERMISSIONS) %>">
@@ -114,13 +106,15 @@ boolean hasViewPermission = ddlDisplayContext.isAdminPortlet() && DDLRecordSetPe
 	</c:if>
 
 	<c:if test="<%= ((selRecordSet == null) || (selRecordSet.getRecordSetId() != recordSet.getRecordSetId())) && DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.DELETE) %>">
-		<liferay-portlet:actionURL name="deleteRecordSet" portletName="<%= DDLPortletKeys.DYNAMIC_DATA_LISTS %>" var="deleteRecordSetURL">
+		<liferay-portlet:actionURL
+			name="deleteRecordSet"
+			portletName="<%= DDLPortletKeys.DYNAMIC_DATA_LISTS %>"
+			var="deleteRecordSetURL"
+		>
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</liferay-portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteRecordSetURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteRecordSetURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

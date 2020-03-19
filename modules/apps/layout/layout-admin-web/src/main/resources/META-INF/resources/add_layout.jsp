@@ -30,7 +30,11 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 		onSubmit="event.preventDefault();"
 	>
 		<liferay-frontend:edit-form-body>
-			<aui:input label="name" name="name" required="<%= true %>" />
+			<aui:input
+				label="name"
+				name="name"
+				required="<%= true %>"
+			/>
 
 			<c:choose>
 				<c:when test="<%= autoSiteNavigationMenus.size() > 1 %>">
@@ -46,7 +50,13 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 							%>
 
 								<div class="col-6">
-									<aui:input id='<%= "menu_" + autoSiteNavigationMenu.getSiteNavigationMenuId() %>' label="<%= HtmlUtil.escape(autoSiteNavigationMenu.getName()) %>" name="TypeSettingsProperties--siteNavigationMenuId--" type="checkbox" value="<%= autoSiteNavigationMenu.getSiteNavigationMenuId() %>" />
+									<aui:input
+										id='<%= "menu_" + autoSiteNavigationMenu.getSiteNavigationMenuId() %>'
+										label="<%= HtmlUtil.escape(autoSiteNavigationMenu.getName()) %>"
+										name="TypeSettingsProperties--siteNavigationMenuId--"
+										type="checkbox"
+										value="<%= autoSiteNavigationMenu.getSiteNavigationMenuId() %>"
+									/>
 								</div>
 
 							<%
@@ -64,7 +74,13 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 
 					<div class="auto-site-navigation-menus container mt-3">
 						<div class="row">
-							<aui:input id='<%= "menu_" + autoSiteNavigationMenu.getSiteNavigationMenuId() %>' label='<%= LanguageUtil.format(request, "add-this-page-to-x", HtmlUtil.escape(autoSiteNavigationMenu.getName())) %>' name="TypeSettingsProperties--siteNavigationMenuId--" type="checkbox" value="<%= autoSiteNavigationMenu.getSiteNavigationMenuId() %>" />
+							<aui:input
+								id='<%= "menu_" + autoSiteNavigationMenu.getSiteNavigationMenuId() %>'
+								label='<%= LanguageUtil.format(request, "add-this-page-to-x", HtmlUtil.escape(autoSiteNavigationMenu.getName())) %>'
+								name="TypeSettingsProperties--siteNavigationMenuId--"
+								type="checkbox"
+								value="<%= autoSiteNavigationMenu.getSiteNavigationMenuId() %>"
+							/>
 						</div>
 					</div>
 				</c:when>
@@ -93,15 +109,9 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 		</liferay-frontend:edit-form-body>
 
 		<liferay-frontend:edit-form-footer>
-			<clay:button
-				label='<%= LanguageUtil.get(resourceBundle, "add") %>'
-				type="submit"
-			/>
+			<clay:button label='<%= LanguageUtil.get(resourceBundle, "add") %>' type="submit" />
 
-			<clay:button
-				elementClasses="btn-cancel btn-secondary"
-				label='<%= LanguageUtil.get(resourceBundle, "cancel") %>'
-			/>
+			<clay:button elementClasses="btn-cancel btn-secondary" label='<%= LanguageUtil.get(resourceBundle, "cancel") %>' />
 		</liferay-frontend:edit-form-footer>
 	</liferay-frontend:edit-form>
 </div>

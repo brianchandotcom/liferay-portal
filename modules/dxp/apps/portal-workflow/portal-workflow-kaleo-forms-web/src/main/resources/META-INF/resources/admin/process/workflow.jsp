@@ -70,12 +70,24 @@ if (tabs1.equals("published")) {
 
 	<span class="badge badge-info" id="<portlet:namespace />workflowDefinitionDisplay"><%= HtmlUtil.escape(workflowDefinitionDisplay) %></span>
 
-	<aui:input name="workflowDefinition" type="hidden" value="<%= workflowDefinition %>">
+	<aui:input
+		name="workflowDefinition"
+		type="hidden"
+		value="<%= workflowDefinition %>"
+	>
 		<aui:validator name="required" />
 	</aui:input>
 
-	<aui:input name="workflowDefinitionName" type="hidden" value="<%= workflowDefinitionName %>" />
-	<aui:input name="workflowDefinitionVersion" type="hidden" value="<%= workflowDefinitionVersion %>" />
+	<aui:input
+		name="workflowDefinitionName"
+		type="hidden"
+		value="<%= workflowDefinitionName %>"
+	/>
+	<aui:input
+		name="workflowDefinitionVersion"
+		type="hidden"
+		value="<%= workflowDefinitionVersion %>"
+	/>
 </aui:field-wrapper>
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
@@ -86,16 +98,21 @@ if (tabs1.equals("published")) {
 	<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
 </liferay-portlet:renderURL>
 
-<liferay-ui:search-container
-	emptyResultsMessage='<%= tabs1.equals("published") ? "there-are-no-published-definitions" : "there-are-no-unpublished-definitions" %>'
-	iteratorURL="<%= iteratorURL %>"
->
-	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="addURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+<liferay-ui:search-container emptyResultsMessage='<%= tabs1.equals("published") ? "there-are-no-published-definitions" : "there-are-no-unpublished-definitions" %>' iteratorURL="<%= iteratorURL %>">
+	<liferay-portlet:renderURL
+		portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>"
+		var="addURL"
+		windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+	>
 		<portlet:param name="mvcPath" value="/designer/edit_kaleo_definition_version.jsp" />
 		<portlet:param name="closeRedirect" value="<%= backURL %>" />
 	</liferay-portlet:renderURL>
 
-	<aui:button onClick='<%= "javascript:" + renderResponse.getNamespace() + "editWorkflow('" + addURL + "');" %>' primary="<%= true %>" value="add-workflow" />
+	<aui:button
+		onClick='<%= "javascript:" + renderResponse.getNamespace() + "editWorkflow('" + addURL + "');" %>'
+		primary="<%= true %>"
+		value="add-workflow"
+	/>
 
 	<div class="separator"><!-- --></div>
 
@@ -117,7 +134,11 @@ if (tabs1.equals("published")) {
 				<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
 			</liferay-portlet:renderURL>
 
-			<aui:nav-item href="<%= viewPublishedURL %>" label="published" selected='<%= tabs1.equals("published") %>' />
+			<aui:nav-item
+				href="<%= viewPublishedURL %>"
+				label="published"
+				selected='<%= tabs1.equals("published") %>'
+			/>
 
 			<liferay-portlet:renderURL var="viewUnpublishedURL">
 				<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
@@ -127,7 +148,11 @@ if (tabs1.equals("published")) {
 				<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
 			</liferay-portlet:renderURL>
 
-			<aui:nav-item href="<%= viewUnpublishedURL %>" label="unpublished" selected='<%= tabs1.equals("unpublished") %>' />
+			<aui:nav-item
+				href="<%= viewUnpublishedURL %>"
+				label="unpublished"
+				selected='<%= tabs1.equals("unpublished") %>'
+			/>
 		</aui:nav>
 	</aui:nav-bar>
 
@@ -138,35 +163,18 @@ if (tabs1.equals("published")) {
 			searchContainer.setTotal(WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitionsCount(company.getCompanyId()));
 			%>
 
-			<liferay-ui:search-container-results
-				results="<%= WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd(), null) %>"
-			/>
+			<liferay-ui:search-container-results results="<%= WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd(), null) %>" />
 
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.workflow.WorkflowDefinition"
-				modelVar="workflowDefinitionVar"
-			>
-				<liferay-ui:search-container-row-parameter
-					name="backURL"
-					value="<%= backURL %>"
-				/>
+			<liferay-ui:search-container-row className="com.liferay.portal.kernel.workflow.WorkflowDefinition" modelVar="workflowDefinitionVar">
+				<liferay-ui:search-container-row-parameter name="backURL" value="<%= backURL %>" />
 
 				<c:if test="<%= kaleoProcess != null %>">
-					<liferay-ui:search-container-row-parameter
-						name="kaleoProcessId"
-						value="<%= String.valueOf(kaleoProcess.getKaleoProcessId()) %>"
-					/>
+					<liferay-ui:search-container-row-parameter name="kaleoProcessId" value="<%= String.valueOf(kaleoProcess.getKaleoProcessId()) %>" />
 				</c:if>
 
-				<liferay-ui:search-container-column-text
-					name="title"
-					value="<%= HtmlUtil.escape(workflowDefinitionVar.getTitle(themeDisplay.getLanguageId())) %>"
-				/>
+				<liferay-ui:search-container-column-text name="title" value="<%= HtmlUtil.escape(workflowDefinitionVar.getTitle(themeDisplay.getLanguageId())) %>" />
 
-				<liferay-ui:search-container-column-text
-					name="version"
-					value="<%= String.valueOf(workflowDefinitionVar.getVersion()) %>"
-				/>
+				<liferay-ui:search-container-column-text name="version" value="<%= String.valueOf(workflowDefinitionVar.getVersion()) %>" />
 
 				<liferay-ui:search-container-column-jsp
 					align="right"
@@ -176,41 +184,24 @@ if (tabs1.equals("published")) {
 			</liferay-ui:search-container-row>
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:search-container-results
-				results="<%= kaleoFormsAdminDisplayContext.getSearchContainerResults(searchContainer, status) %>"
-			/>
+			<liferay-ui:search-container-results results="<%= kaleoFormsAdminDisplayContext.getSearchContainerResults(searchContainer, status) %>" />
 
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion"
 				keyProperty="kaleoDefinitionVersionId"
 				modelVar="kaleoDefinitionVersion"
 			>
-				<liferay-ui:search-container-row-parameter
-					name="backURL"
-					value="<%= backURL %>"
-				/>
+				<liferay-ui:search-container-row-parameter name="backURL" value="<%= backURL %>" />
 
 				<c:if test="<%= kaleoProcess != null %>">
-					<liferay-ui:search-container-row-parameter
-						name="kaleoProcessId"
-						value="<%= String.valueOf(kaleoProcess.getKaleoProcessId()) %>"
-					/>
+					<liferay-ui:search-container-row-parameter name="kaleoProcessId" value="<%= String.valueOf(kaleoProcess.getKaleoProcessId()) %>" />
 				</c:if>
 
-				<liferay-ui:search-container-row-parameter
-					name="name"
-					value="<%= kaleoDefinitionVersion.getName() %>"
-				/>
+				<liferay-ui:search-container-row-parameter name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 
-				<liferay-ui:search-container-column-text
-					name="title"
-					value="<%= HtmlUtil.escape(kaleoDefinitionVersion.getTitle(themeDisplay.getLanguageId())) %>"
-				/>
+				<liferay-ui:search-container-column-text name="title" value="<%= HtmlUtil.escape(kaleoDefinitionVersion.getTitle(themeDisplay.getLanguageId())) %>" />
 
-				<liferay-ui:search-container-row-parameter
-					name="version"
-					value="<%= kaleoDefinitionVersion.getVersion() %>"
-				/>
+				<liferay-ui:search-container-row-parameter name="version" value="<%= kaleoDefinitionVersion.getVersion() %>" />
 
 				<liferay-ui:search-container-column-jsp
 					align="right"
@@ -221,9 +212,7 @@ if (tabs1.equals("published")) {
 		</c:otherwise>
 	</c:choose>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
 <aui:script>

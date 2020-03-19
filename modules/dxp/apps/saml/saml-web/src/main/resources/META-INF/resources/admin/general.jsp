@@ -40,7 +40,12 @@ String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProvide
 	<liferay-ui:error key="roleInUse" message="saml-must-be-disabled-before-changing-the-saml-role" />
 
 	<aui:fieldset>
-		<aui:input label="enabled" name='<%= "settings--" + PortletPropsKeys.SAML_ENABLED + "--" %>' type="checkbox" value="<%= samlProviderConfigurationHelper.isEnabled() %>" />
+		<aui:input
+			label="enabled"
+			name='<%= "settings--" + PortletPropsKeys.SAML_ENABLED + "--" %>'
+			type="checkbox"
+			value="<%= samlProviderConfigurationHelper.isEnabled() %>"
+		/>
 
 		<c:if test="<%= !generalTabDefaultViewDisplayContext.isRoleIdPAvailable() && StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), SamlProviderConfigurationKeys.SAML_ROLE_IDP) %>">
 			<div class="portlet-msg-info">
@@ -54,12 +59,31 @@ String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProvide
 			</div>
 		</c:if>
 
-		<aui:select label="saml-role" name='<%= "settings--" + PortletPropsKeys.SAML_ROLE + "--" %>' required="<%= true %>" showEmptyOption="<%= true %>">
-			<aui:option label="identity-provider" selected="<%= samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_IDP) %>" value="<%= SamlProviderConfigurationKeys.SAML_ROLE_IDP %>" />
-			<aui:option label="service-provider" selected="<%= samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_SP) %>" value="<%= SamlProviderConfigurationKeys.SAML_ROLE_SP %>" />
+		<aui:select
+			label="saml-role"
+			name='<%= "settings--" + PortletPropsKeys.SAML_ROLE + "--" %>'
+			required="<%= true %>"
+			showEmptyOption="<%= true %>"
+		>
+			<aui:option
+				label="identity-provider"
+				selected="<%= samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_IDP) %>"
+				value="<%= SamlProviderConfigurationKeys.SAML_ROLE_IDP %>"
+			/>
+			<aui:option
+				label="service-provider"
+				selected="<%= samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_SP) %>"
+				value="<%= SamlProviderConfigurationKeys.SAML_ROLE_SP %>"
+			/>
 		</aui:select>
 
-		<aui:input helpMessage="entity-id-help" label="saml-entity-id" name='<%= "settings--" + PortletPropsKeys.SAML_ENTITY_ID + "--" %>' required="<%= true %>" value="<%= entityId %>" />
+		<aui:input
+			helpMessage="entity-id-help"
+			label="saml-entity-id"
+			name='<%= "settings--" + PortletPropsKeys.SAML_ENTITY_ID + "--" %>'
+			required="<%= true %>"
+			value="<%= entityId %>"
+		/>
 	</aui:fieldset>
 
 	<aui:button-row>

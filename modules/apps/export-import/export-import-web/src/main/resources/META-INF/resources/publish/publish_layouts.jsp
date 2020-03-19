@@ -124,22 +124,88 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		</c:if>
 	</c:if>
 
-	<aui:form action='<%= portletURL.toString() + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="publishPagesFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" %>'>
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
-		<aui:input name="originalCmd" type="hidden" value="<%= cmd %>" />
-		<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-		<aui:input name="redirect" type="hidden" value="<%= redirectURL.toString() %>" />
-		<aui:input name="exportImportConfigurationId" type="hidden" value="<%= exportImportConfigurationId %>" />
-		<aui:input name="groupId" type="hidden" value="<%= stagingGroupId %>" />
-		<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />
-		<aui:input name="layoutSetBranchName" type="hidden" value="<%= layoutSetBranchName %>" />
-		<aui:input name="lastImportUserName" type="hidden" value="<%= user.getFullName() %>" />
-		<aui:input name="lastImportUserUuid" type="hidden" value="<%= String.valueOf(user.getUserUuid()) %>" />
-		<aui:input name="treeId" type="hidden" value="<%= treeId %>" />
-		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="hidden" value="<%= true %>" />
-		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="hidden" value="<%= true %>" />
-		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>" />
-		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="hidden" value="<%= true %>" />
+	<aui:form
+		action='<%= portletURL.toString() + "&etag=0&strip=0" %>'
+		cssClass="lfr-export-dialog"
+		method="post"
+		name="publishPagesFm"
+		onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" %>'
+	>
+		<aui:input
+			name="<%= Constants.CMD %>"
+			type="hidden"
+			value="<%= cmd %>"
+		/>
+		<aui:input
+			name="originalCmd"
+			type="hidden"
+			value="<%= cmd %>"
+		/>
+		<aui:input
+			name="tabs1"
+			type="hidden"
+			value="<%= tabs1 %>"
+		/>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirectURL.toString() %>"
+		/>
+		<aui:input
+			name="exportImportConfigurationId"
+			type="hidden"
+			value="<%= exportImportConfigurationId %>"
+		/>
+		<aui:input
+			name="groupId"
+			type="hidden"
+			value="<%= stagingGroupId %>"
+		/>
+		<aui:input
+			name="privateLayout"
+			type="hidden"
+			value="<%= privateLayout %>"
+		/>
+		<aui:input
+			name="layoutSetBranchName"
+			type="hidden"
+			value="<%= layoutSetBranchName %>"
+		/>
+		<aui:input
+			name="lastImportUserName"
+			type="hidden"
+			value="<%= user.getFullName() %>"
+		/>
+		<aui:input
+			name="lastImportUserUuid"
+			type="hidden"
+			value="<%= String.valueOf(user.getUserUuid()) %>"
+		/>
+		<aui:input
+			name="treeId"
+			type="hidden"
+			value="<%= treeId %>"
+		/>
+		<aui:input
+			name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>"
+			type="hidden"
+			value="<%= true %>"
+		/>
+		<aui:input
+			name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>"
+			type="hidden"
+			value="<%= true %>"
+		/>
+		<aui:input
+			name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>"
+			type="hidden"
+			value="<%= true %>"
+		/>
+		<aui:input
+			name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>"
+			type="hidden"
+			value="<%= true %>"
+		/>
 
 		<liferay-ui:error exception="<%= DuplicateLockException.class %>" message="another-publishing-process-is-in-progress,-please-try-again-later" />
 
@@ -230,10 +296,18 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 						<aui:fieldset>
 							<c:choose>
 								<c:when test="<%= exportImportConfiguration == null %>">
-									<aui:input maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>' name="name" placeholder="process-name-placeholder" />
+									<aui:input
+										maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>'
+										name="name"
+										placeholder="process-name-placeholder"
+									/>
 								</c:when>
 								<c:otherwise>
-									<aui:input maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>' name="name" value="<%= exportImportConfiguration.getName() %>" />
+									<aui:input
+										maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>'
+										name="name"
+										value="<%= exportImportConfiguration.getName() %>"
+									/>
 								</c:otherwise>
 							</c:choose>
 						</aui:fieldset>
@@ -280,7 +354,12 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 						/>
 
 						<c:if test="<%= !localPublishing %>">
-							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">
+							<aui:fieldset
+								collapsed="<%= true %>"
+								collapsible="<%= true %>"
+								cssClass="options-group"
+								label="remote-live-connection-settings"
+							>
 								<liferay-staging:remote-options
 									disableInputs="<%= configuredPublish %>"
 									exportImportConfigurationId="<%= exportImportConfigurationId %>"
@@ -293,12 +372,25 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			</div>
 
 			<aui:button-row>
-				<aui:button id="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
+				<aui:button
+					id="addButton"
+					onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>'
+					value="add-event"
+				/>
 
-				<aui:button id="publishButton" type="submit" value="<%= LanguageUtil.get(request, publishMessageKey) %>" />
+				<aui:button
+					id="publishButton"
+					type="submit"
+					value="<%= LanguageUtil.get(request, publishMessageKey) %>"
+				/>
 
 				<c:if test="<%= configuredPublish %>">
-					<aui:button cssClass="btn btn-link" href="<%= redirectURL.toString() %>" id="cancelButton" value="cancel" />
+					<aui:button
+						cssClass="btn btn-link"
+						href="<%= redirectURL.toString() %>"
+						id="cancelButton"
+						value="cancel"
+					/>
 				</c:if>
 			</aui:button-row>
 		</div>

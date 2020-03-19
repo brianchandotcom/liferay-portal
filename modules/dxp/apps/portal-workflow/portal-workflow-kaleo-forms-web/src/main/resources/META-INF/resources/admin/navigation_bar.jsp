@@ -16,7 +16,4 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= kaleoFormsAdminDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= kaleoFormsAdminDisplayContext.getNavigationItems() %>" />

@@ -36,22 +36,21 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 	%>'
 />
 
-<aui:form action="<%= selectRestrictedFileEntryTypesDisplayContext.getFormActionURL() %>" cssClass="container-fluid-1280" method="post" name="selectFileEntryTypeFm">
-	<liferay-ui:search-container
-		searchContainer="<%= selectRestrictedFileEntryTypesDisplayContext.getSearchContainer() %>"
-	>
+<aui:form
+	action="<%= selectRestrictedFileEntryTypesDisplayContext.getFormActionURL() %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="selectFileEntryTypeFm"
+>
+	<liferay-ui:search-container searchContainer="<%= selectRestrictedFileEntryTypesDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.document.library.kernel.model.DLFileEntryType"
 			keyProperty="fileEntryTypeId"
 			modelVar="fileEntryType"
 		>
-			<liferay-ui:search-container-column-icon
-				icon="edit-layout"
-			/>
+			<liferay-ui:search-container-column-icon icon="edit-layout" />
 
-			<liferay-ui:search-container-column-text
-				colspan="<%= 2 %>"
-			>
+			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 				<h5><%= HtmlUtil.escape(fileEntryType.getName(locale)) %></h5>
 
 				<h6 class="text-default">
@@ -68,14 +67,15 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 				data.put("entityname", fileEntryType.getName(locale));
 				%>
 
-				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+				<aui:button
+					cssClass="selector-button"
+					data="<%= data %>"
+					value="choose"
+				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="descriptive"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

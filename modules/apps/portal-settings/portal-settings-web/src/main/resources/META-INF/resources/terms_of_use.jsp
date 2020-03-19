@@ -23,8 +23,17 @@ TermsOfUseContentProvider termsOfUseContentProvider = (TermsOfUseContentProvider
 %>
 
 <aui:fieldset>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input label="require-terms-of-use" name='<%= "settings--" + PropsKeys.TERMS_OF_USE_REQUIRED + "--" %>' type="checkbox" value="<%= termsOfUseRequired %>" />
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.UPDATE %>"
+	/>
+	<aui:input
+		label="require-terms-of-use"
+		name='<%= "settings--" + PropsKeys.TERMS_OF_USE_REQUIRED + "--" %>'
+		type="checkbox"
+		value="<%= termsOfUseRequired %>"
+	/>
 
 	<c:if test="<%= termsOfUseContentProvider != null %>">
 

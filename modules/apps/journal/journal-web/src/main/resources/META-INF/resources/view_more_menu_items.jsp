@@ -38,18 +38,12 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 	/>
 </c:if>
 
-<clay:navigation-bar
-	navigationItems="<%= journalViewMoreMenuItemsDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar navigationItems="<%= journalViewMoreMenuItemsDisplayContext.getNavigationItems() %>" />
 
-<clay:management-toolbar
-	displayContext="<%= new JournalViewMoreMenuItemsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalViewMoreMenuItemsDisplayContext) %>"
-/>
+<clay:management-toolbar displayContext="<%= new JournalViewMoreMenuItemsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalViewMoreMenuItemsDisplayContext) %>" />
 
 <aui:form cssClass="container-fluid-1280" name="addMenuItemFm">
-	<liferay-ui:search-container
-		searchContainer="<%= journalViewMoreMenuItemsDisplayContext.getDDMStructuresSearchContainer() %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= journalViewMoreMenuItemsDisplayContext.getDDMStructuresSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMStructure"
 			cssClass="selectable"
@@ -63,23 +57,19 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 			data.put("ddmStructureKey", ddmStructure.getStructureKey());
 			%>
 
-			<liferay-ui:search-container-column-text
-				name="menu-item-name"
-			>
-				<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+			<liferay-ui:search-container-column-text name="menu-item-name">
+				<aui:a
+					cssClass="selector-button"
+					data="<%= data %>"
+					href="javascript:;"
+				>
 					<%= ddmStructure.getUnambiguousName(journalViewMoreMenuItemsDisplayContext.getDDMStructures(), themeDisplay.getScopeGroupId(), locale) %>
 				</aui:a>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				name="user"
-				property="userName"
-			/>
+			<liferay-ui:search-container-column-text name="user" property="userName" />
 
-			<liferay-ui:search-container-column-date
-				name="modified-date"
-				property="modifiedDate"
-			/>
+			<liferay-ui:search-container-column-date name="modified-date" property="modifiedDate" />
 
 			<liferay-ui:search-container-column-jsp
 				align="center"
@@ -88,10 +78,7 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			displayStyle="list"
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

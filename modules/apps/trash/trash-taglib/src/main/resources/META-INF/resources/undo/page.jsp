@@ -25,13 +25,13 @@ List<String> titles = (List<String>)request.getAttribute("liferay-trash:undo:tit
 int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-trash:undo:trashedEntriesCount"));
 %>
 
-<liferay-util:buffer
-	var="alertMessage"
->
-	<aui:form action="<%= portletURL %>" cssClass="alert-trash-form" name="undoForm">
-		<liferay-util:buffer
-			var="trashLink"
-		>
+<liferay-util:buffer var="alertMessage">
+	<aui:form
+		action="<%= portletURL %>"
+		cssClass="alert-trash-form"
+		name="undoForm"
+	>
+		<liferay-util:buffer var="trashLink">
 
 			<%
 			PortletURL trashURL = PortletProviderUtil.getPortletURL(request, TrashEntry.class.getName(), PortletProvider.Action.VIEW);
@@ -39,7 +39,11 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 
 			<c:choose>
 				<c:when test="<%= themeDisplay.isShowSiteAdministrationIcon() && (trashURL != null) %>">
-					<aui:a cssClass="alert-link" href="<%= trashURL.toString() %>" label="the-recycle-bin" />
+					<aui:a
+						cssClass="alert-link"
+						href="<%= trashURL.toString() %>"
+						label="the-recycle-bin"
+					/>
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:message key="the-recycle-bin" />
@@ -51,10 +55,18 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 			<c:when test="<%= trashedEntriesCount > 1 %>">
 				<c:choose>
 					<c:when test="<%= Objects.equals(cmd, Constants.REMOVE) %>">
-						<liferay-ui:message arguments="<%= new Object[] {trashedEntriesCount} %>" key="x-items-were-removed" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= new Object[] {trashedEntriesCount} %>"
+							key="x-items-were-removed"
+							translateArguments="<%= false %>"
+						/>
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:message arguments="<%= new Object[] {trashedEntriesCount, trashLink.trim()} %>" key="x-items-were-moved-to-x" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= new Object[] {trashedEntriesCount, trashLink.trim()} %>"
+							key="x-items-were-moved-to-x"
+							translateArguments="<%= false %>"
+						/>
 					</c:otherwise>
 				</c:choose>
 			</c:when>
@@ -68,9 +80,7 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 				}
 				%>
 
-				<liferay-util:buffer
-					var="trashEntityLink"
-				>
+				<liferay-util:buffer var="trashEntityLink">
 					<c:if test="<%= Validator.isNotNull(title) %>">
 						<strong><em class="delete-entry-title"><%= HtmlUtil.escape(title) %></em></strong>
 					</c:if>
@@ -78,19 +88,39 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 
 				<c:choose>
 					<c:when test="<%= Objects.equals(cmd, Constants.REMOVE) %>">
-						<liferay-ui:message arguments="<%= trashEntityLink %>" key="the-element-x-was-removed" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= trashEntityLink %>"
+							key="the-element-x-was-removed"
+							translateArguments="<%= false %>"
+						/>
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:message arguments="<%= new Object[] {trashEntityLink, trashLink.trim()} %>" key="the-element-x-was-moved-to-x" translateArguments="<%= false %>" />
+						<liferay-ui:message
+							arguments="<%= new Object[] {trashEntityLink, trashLink.trim()} %>"
+							key="the-element-x-was-moved-to-x"
+							translateArguments="<%= false %>"
+						/>
 					</c:otherwise>
 				</c:choose>
 			</c:otherwise>
 		</c:choose>
 
-		<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
-		<aui:input name="restoreTrashEntryIds" type="hidden" value="<%= StringUtil.merge(restoreTrashEntryIds) %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirectURL %>"
+		/>
+		<aui:input
+			name="restoreTrashEntryIds"
+			type="hidden"
+			value="<%= StringUtil.merge(restoreTrashEntryIds) %>"
+		/>
 
-		<aui:button cssClass="alert-link btn-link btn-sm btn-unstyled trash-undo-button" type="submit" value="undo" />
+		<aui:button
+			cssClass="alert-link btn-link btn-sm btn-unstyled trash-undo-button"
+			type="submit"
+			value="undo"
+		/>
 	</aui:form>
 </liferay-util:buffer>
 

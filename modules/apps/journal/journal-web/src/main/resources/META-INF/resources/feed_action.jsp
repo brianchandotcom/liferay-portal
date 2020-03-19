@@ -37,10 +37,7 @@ JournalFeed feed = (JournalFeed)row.getObject();
 			<portlet:param name="feedId" value="<%= feed.getFeedId() %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editFeedURL %>"
-		/>
+		<liferay-ui:icon message="edit" url="<%= editFeedURL %>" />
 	</c:if>
 
 	<c:if test="<%= JournalFeedPermission.contains(permissionChecker, feed, ActionKeys.PERMISSIONS) %>">
@@ -67,8 +64,6 @@ JournalFeed feed = (JournalFeed)row.getObject();
 			<portlet:param name="deleteFeedId" value="<%= feed.getFeedId() %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteFeedURL %>"
-		/>
+		<liferay-ui:icon-delete url="<%= deleteFeedURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

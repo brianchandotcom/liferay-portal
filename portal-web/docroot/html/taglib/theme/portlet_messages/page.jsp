@@ -69,9 +69,7 @@ else if (group.isStagingGroup()) {
 	String successMessage = (String)MultiSessionMessages.get(renderRequest, "requestProcessed");
 	%>
 
-	<liferay-util:buffer
-		var="successHtml"
-	>
+	<liferay-util:buffer var="successHtml">
 		<c:choose>
 			<c:when test='<%= Validator.isNotNull(successMessage) && !successMessage.equals("request_processed") %>'>
 				<%= HtmlUtil.escape(successMessage) %>
@@ -87,7 +85,11 @@ else if (group.isStagingGroup()) {
 			String taglibMessage = "class=\"lfr-hide-dialog\" href=\"javascript:;\"";
 			%>
 
-			<liferay-ui:message arguments="<%= taglibMessage %>" key="the-page-will-be-refreshed-when-you-close-this-dialog.alternatively-you-can-hide-this-dialog-x" translateArguments="<%= false %>" />
+			<liferay-ui:message
+				arguments="<%= taglibMessage %>"
+				key="the-page-will-be-refreshed-when-you-close-this-dialog.alternatively-you-can-hide-this-dialog-x"
+				translateArguments="<%= false %>"
+			/>
 		</c:if>
 	</liferay-util:buffer>
 

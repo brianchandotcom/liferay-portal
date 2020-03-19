@@ -31,7 +31,12 @@ UserSearchFacetDisplayContext userSearchFacetDisplayContext = userSearchFacetDis
 
 <c:choose>
 	<c:when test="<%= userSearchFacetDisplayContext.isRenderNothing() %>">
-		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(userSearchFacetDisplayContext.getParamName()) %>" type="hidden" value="<%= userSearchFacetDisplayContext.getParamValue() %>" />
+		<aui:input
+			autocomplete="off"
+			name="<%= HtmlUtil.escapeAttribute(userSearchFacetDisplayContext.getParamName()) %>"
+			type="hidden"
+			value="<%= userSearchFacetDisplayContext.getParamValue() %>"
+		/>
 	</c:when>
 	<c:otherwise>
 		<div class="panel panel-default">
@@ -43,7 +48,12 @@ UserSearchFacetDisplayContext userSearchFacetDisplayContext = userSearchFacetDis
 
 			<div class="panel-body">
 				<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(userSearchFacetDisplayContext.getParamName()) %>" id="<%= randomNamespace %>facet">
-					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(userSearchFacetDisplayContext.getParamName()) %>" type="hidden" value="<%= userSearchFacetDisplayContext.getParamValue() %>" />
+					<aui:input
+						autocomplete="off"
+						name="<%= HtmlUtil.escapeAttribute(userSearchFacetDisplayContext.getParamName()) %>"
+						type="hidden"
+						value="<%= userSearchFacetDisplayContext.getParamValue() %>"
+					/>
 
 					<ul class="list-unstyled users">
 						<li class="default facet-value">

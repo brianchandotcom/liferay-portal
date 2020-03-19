@@ -42,10 +42,28 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 
 <liferay-portlet:actionURL name="updateCalendarResource" var="updateCalendarResourceURL" />
 
-<aui:form action="<%= updateCalendarResourceURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateCalendarResource();" %>'>
-	<aui:input name="mvcPath" type="hidden" value="/edit_calendar_resource.jsp" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="calendarResourceId" type="hidden" value="<%= String.valueOf(calendarResourceId) %>" />
+<aui:form
+	action="<%= updateCalendarResourceURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateCalendarResource();" %>'
+>
+	<aui:input
+		name="mvcPath"
+		type="hidden"
+		value="/edit_calendar_resource.jsp"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="calendarResourceId"
+		type="hidden"
+		value="<%= String.valueOf(calendarResourceId) %>"
+	/>
 
 	<liferay-ui:error exception="<%= CalendarResourceCodeException.class %>" message="please-enter-a-valid-code" />
 	<liferay-ui:error exception="<%= CalendarResourceNameException.class %>" message="please-enter-a-valid-name" />
@@ -81,14 +99,22 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 						</c:if>
 					</c:when>
 					<c:otherwise>
-						<aui:input name="code" type="resource" value="<%= code %>" />
+						<aui:input
+							name="code"
+							type="resource"
+							value="<%= code %>"
+						/>
 					</c:otherwise>
 				</c:choose>
 
 				<aui:input name="description" />
 
 				<c:if test="<%= calendars != null %>">
-					<aui:select label="default-calendar" name="defaultCalendarId" value="<%= calendarResource.getDefaultCalendarId() %>">
+					<aui:select
+						label="default-calendar"
+						name="defaultCalendarId"
+						value="<%= calendarResource.getDefaultCalendarId() %>"
+					>
 
 						<%
 						for (Calendar calendar : calendars) {
@@ -103,7 +129,12 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 					</aui:select>
 				</c:if>
 
-				<aui:input inlineLabel="left" name="active" type="checkbox" value="<%= (calendarResource == null) ? true : calendarResource.isActive() %>" />
+				<aui:input
+					inlineLabel="left"
+					name="active"
+					type="checkbox"
+					value="<%= (calendarResource == null) ? true : calendarResource.isActive() %>"
+				/>
 			</liferay-ui:panel>
 
 			<liferay-ui:panel
@@ -115,15 +146,9 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 				persistState="<%= true %>"
 				title="categorization"
 			>
-				<liferay-asset:asset-categories-selector
-					className="<%= CalendarResource.class.getName() %>"
-					classPK="<%= calendarResourceId %>"
-				/>
+				<liferay-asset:asset-categories-selector className="<%= CalendarResource.class.getName() %>" classPK="<%= calendarResourceId %>" />
 
-				<liferay-asset:asset-tags-selector
-					className="<%= CalendarResource.class.getName() %>"
-					classPK="<%= calendarResourceId %>"
-				/>
+				<liferay-asset:asset-tags-selector className="<%= CalendarResource.class.getName() %>" classPK="<%= calendarResourceId %>" />
 			</liferay-ui:panel>
 
 			<c:if test="<%= calendarResource == null %>">
@@ -136,9 +161,7 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 					persistState="<%= true %>"
 					title="permissions"
 				>
-					<liferay-ui:input-permissions
-						modelName="<%= CalendarResource.class.getName() %>"
-					/>
+					<liferay-ui:input-permissions modelName="<%= CalendarResource.class.getName() %>" />
 				</liferay-ui:panel>
 			</c:if>
 		</liferay-ui:panel-container>

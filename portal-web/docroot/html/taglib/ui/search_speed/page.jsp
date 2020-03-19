@@ -29,6 +29,14 @@ NumberFormat integerFormat = NumberFormat.getInstance(locale);
 integerFormat.setMaximumFractionDigits(0);
 %>
 
-<liferay-ui:message arguments='<%= new Object[] {"<strong>" + ((searchContainer.getResultEnd() > 0) ? searchContainer.getStart() + 1 : 0)+ "</strong> - <strong>" + searchContainer.getResultEnd() + "</strong>", "<strong>" + integerFormat.format(searchContainer.getTotal()) + "</strong>"} %>' key="results-of" translateArguments="<%= false %>" />
+<liferay-ui:message
+	arguments='<%= new Object[] {"<strong>" + ((searchContainer.getResultEnd() > 0) ? searchContainer.getStart() + 1 : 0)+ "</strong> - <strong>" + searchContainer.getResultEnd() + "</strong>", "<strong>" + integerFormat.format(searchContainer.getTotal()) + "</strong>"} %>'
+	key="results-of"
+	translateArguments="<%= false %>"
+/>
 
-<liferay-ui:message arguments='<%= new Object[] {"<strong>" + doubleFormat.format(hits.getSearchTime()) + "</strong>"} %>' key="search-took-x-seconds" translateArguments="<%= false %>" />
+<liferay-ui:message
+	arguments='<%= new Object[] {"<strong>" + doubleFormat.format(hits.getSearchTime()) + "</strong>"} %>'
+	key="search-took-x-seconds"
+	translateArguments="<%= false %>"
+/>

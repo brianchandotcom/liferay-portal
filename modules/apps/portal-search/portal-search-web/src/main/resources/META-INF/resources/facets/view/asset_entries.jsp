@@ -54,7 +54,12 @@ AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = as
 
 	<div class="panel-body">
 		<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
-			<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
+			<aui:input
+				autocomplete="off"
+				name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>"
+				type="hidden"
+				value="<%= fieldParam %>"
+			/>
 
 			<ul class="asset-type list-unstyled">
 				<li class="default facet-value">

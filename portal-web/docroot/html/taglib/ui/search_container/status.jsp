@@ -25,14 +25,10 @@ User statusByUser = UserLocalServiceUtil.fetchUser(statusByUserId);
 %>
 
 <c:if test="<%= statusByUser != null %>">
-	<liferay-util:buffer
-		var="buffer"
-	>
+	<liferay-util:buffer var="buffer">
 		<div class="user-status-tooltip">
 			<span class="user-status-avatar">
-				<liferay-ui:user-portrait
-					user="<%= statusByUser %>"
-				/>
+				<liferay-ui:user-portrait user="<%= statusByUser %>" />
 			</span>
 			<span class="user-status-info">
 				<div class="user-status-name">
@@ -40,7 +36,11 @@ User statusByUser = UserLocalServiceUtil.fetchUser(statusByUserId);
 				</div>
 
 				<div class="user-status-date">
-					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+					<liferay-ui:message
+						arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>"
+						key="x-ago"
+						translateArguments="<%= false %>"
+					/>
 				</div>
 			</span>
 		</div>
@@ -49,7 +49,11 @@ User statusByUser = UserLocalServiceUtil.fetchUser(statusByUserId);
 	<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(HtmlUtil.extractText(buffer)) %>">
 </c:if>
 
-<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
+<aui:workflow-status
+	showIcon="<%= false %>"
+	showLabel="<%= false %>"
+	status="<%= status %>"
+/>
 
 <c:if test="<%= statusByUser != null %>">
 	</span>

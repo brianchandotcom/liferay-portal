@@ -25,21 +25,53 @@ Account mailAccount = AccountLocalServiceUtil.getAccount(accountId);
 <div class="mail-status"></div>
 
 <aui:form name="dialogFm" onSubmit="event.preventDefault();">
-	<aui:fieldset column="<%= true %>" cssClass="span6" label="general">
-		<aui:input name="accountId" type="hidden" value="<%= mailAccount.getAccountId() %>" />
-		<aui:input name="signature" type="hidden" value="<%= mailAccount.getSignature() %>" />
-		<aui:input name="useSignature" type="hidden" value="<%= mailAccount.getUseSignature() %>" />
-		<aui:input name="folderPrefix" type="hidden" value="<%= mailAccount.getFolderPrefix() %>" />
-		<aui:input name="defaultSender" type="hidden" value="<%= mailAccount.getDefaultSender() %>" />
+	<aui:fieldset
+		column="<%= true %>"
+		cssClass="span6"
+		label="general"
+	>
+		<aui:input
+			name="accountId"
+			type="hidden"
+			value="<%= mailAccount.getAccountId() %>"
+		/>
+		<aui:input
+			name="signature"
+			type="hidden"
+			value="<%= mailAccount.getSignature() %>"
+		/>
+		<aui:input
+			name="useSignature"
+			type="hidden"
+			value="<%= mailAccount.getUseSignature() %>"
+		/>
+		<aui:input
+			name="folderPrefix"
+			type="hidden"
+			value="<%= mailAccount.getFolderPrefix() %>"
+		/>
+		<aui:input
+			name="defaultSender"
+			type="hidden"
+			value="<%= mailAccount.getDefaultSender() %>"
+		/>
 
 		<aui:input name="personalName" value="<%= mailAccount.getPersonalName() %>" />
 
 		<aui:input name="password" type="password" />
 
-		<aui:input name="savePassword" type="checkbox" value="<%= mailAccount.isSavePassword() %>" />
+		<aui:input
+			name="savePassword"
+			type="checkbox"
+			value="<%= mailAccount.isSavePassword() %>"
+		/>
 	</aui:fieldset>
 
-	<aui:fieldset column="<%= true %>" cssClass="span6" label="folders">
+	<aui:fieldset
+		column="<%= true %>"
+		cssClass="span6"
+		label="folders"
+	>
 		<aui:select label="inbox" name="inboxFolderId">
 
 			<%
@@ -78,11 +110,19 @@ Account mailAccount = AccountLocalServiceUtil.getAccount(accountId);
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button name="updateAccount" type="submit" value="update-account" />
+		<aui:button
+			name="updateAccount"
+			type="submit"
+			value="update-account"
+		/>
 	</aui:button-row>
 
 	<aui:button-row>
-		<aui:button cssClass="delete-account" name="deleteAccount" value="delete-account" />
+		<aui:button
+			cssClass="delete-account"
+			name="deleteAccount"
+			value="delete-account"
+		/>
 
 		<aui:button cssClass="synchronize-account" name="synchronizeAccount" value="synchronize-account" /> <liferay-ui:icon-help message="synchronizing-accounts-with-a-large-number-of-messages-may-take-minutes-to-complete" />
 	</aui:button-row>

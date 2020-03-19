@@ -25,9 +25,21 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 <portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_settings" var="editSiteNavigationMenuSettingsURL" />
 
 <aui:form action="<%= editSiteNavigationMenuSettingsURL %>">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenu.getSiteNavigationMenuId() %>" />
-	<aui:input name="type" type="hidden" value="<%= siteNavigationMenu.getType() %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="siteNavigationMenuId"
+		type="hidden"
+		value="<%= siteNavigationMenu.getSiteNavigationMenuId() %>"
+	/>
+	<aui:input
+		name="type"
+		type="hidden"
+		value="<%= siteNavigationMenu.getType() %>"
+	/>
 
 	<%
 	String typeKey = siteNavigationMenu.getTypeKey();
@@ -44,10 +56,19 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 	</c:if>
 
 	<aui:fieldset>
-		<aui:input checked="<%= siteNavigationMenu.isAuto() %>" label="when-creating-a-new-page,-the-page-will-be-automatically-added-to-this-menu-unless-the-user-deselects-it" name="auto" type="checkbox" />
+		<aui:input
+			checked="<%= siteNavigationMenu.isAuto() %>"
+			label="when-creating-a-new-page,-the-page-will-be-automatically-added-to-this-menu-unless-the-user-deselects-it"
+			name="auto"
+			type="checkbox"
+		/>
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-block" type="submit" value="save" />
+		<aui:button
+			cssClass="btn-block"
+			type="submit"
+			value="save"
+		/>
 	</aui:button-row>
 </aui:form>

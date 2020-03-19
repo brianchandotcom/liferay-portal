@@ -40,13 +40,34 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 %>
 
 <liferay-ui:error exception="<%= SiteNavigationMenuItemNameException.class %>">
-	<liferay-ui:message arguments='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' key="please-enter-a-name-with-fewer-than-x-characters" translateArguments="<%= false %>" />
+	<liferay-ui:message
+		arguments='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>'
+		key="please-enter-a-name-with-fewer-than-x-characters"
+		translateArguments="<%= false %>"
+	/>
 </liferay-ui:error>
 
-<aui:form action="<%= addURL.toString() %>" cssClass="container-fluid-1280" name="fm" onSubmit="event.preventDefault();">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenuId %>" />
-	<aui:input name="type" type="hidden" value="<%= type %>" />
+<aui:form
+	action="<%= addURL.toString() %>"
+	cssClass="container-fluid-1280"
+	name="fm"
+	onSubmit="event.preventDefault();"
+>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="siteNavigationMenuId"
+		type="hidden"
+		value="<%= siteNavigationMenuId %>"
+	/>
+	<aui:input
+		name="type"
+		type="hidden"
+		value="<%= type %>"
+	/>
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
@@ -59,7 +80,11 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button name="addButton" type="submit" value="add" />
+		<aui:button
+			name="addButton"
+			type="submit"
+			value="add"
+		/>
 
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>

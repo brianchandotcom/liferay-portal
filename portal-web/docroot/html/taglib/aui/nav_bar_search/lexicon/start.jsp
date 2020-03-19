@@ -18,8 +18,5 @@
 
 <div class="navbar-header navbar-header-right" data-toggle="collapsible-search" id="<%= id %>NavbarSearchCollapse">
 	<c:if test="<%= Validator.isNotNull(file) %>">
-		<liferay-ui:search-form
-			page="<%= file %>"
-			searchContainer="<%= searchContainer %>"
-		/>
+		<liferay-ui:search-form page="<%= file %>" searchContainer="<%= searchContainer %>" />
 	</c:if>

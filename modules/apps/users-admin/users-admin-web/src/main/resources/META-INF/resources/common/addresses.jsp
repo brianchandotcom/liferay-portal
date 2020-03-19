@@ -55,9 +55,7 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 
 <c:if test="<%= addresses.isEmpty() %>">
 	<div class="contact-information-empty-results-message-wrapper">
-		<liferay-ui:empty-result-message
-			message="<%= emptyResultsMessage %>"
-		/>
+		<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" />
 	</div>
 </c:if>
 
@@ -94,9 +92,7 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 						</h4>
 
 						<div class="address-display-wrapper">
-							<liferay-text-localizer:address-display
-								address="<%= address %>"
-							/>
+							<liferay-text-localizer:address-display address="<%= address %>" />
 						</div>
 
 						<c:if test="<%= address.isPrimary() %>">

@@ -23,10 +23,7 @@ List<UserGroup> userGroups = userDisplayContext.getUserGroups();
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGroups");
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="user-groups"
-/>
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="user-groups" />
 
 <liferay-ui:membership-policy-error />
 
@@ -51,9 +48,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 	</c:if>
 </h3>
 
-<liferay-util:buffer
-	var="removeUserGroupIcon"
->
+<liferay-util:buffer var="removeUserGroupIcon">
 	<liferay-ui:icon
 		icon="times-circle"
 		markupView="lexicon"
@@ -73,9 +68,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= userGroups.size() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= userGroups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= userGroups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.UserGroup"
@@ -96,9 +89,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">

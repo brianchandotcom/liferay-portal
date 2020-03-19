@@ -34,19 +34,14 @@ SelectSegmentsEntryDisplayContext selectSegmentsEntryDisplayContext = (SelectSeg
 />
 
 <aui:form cssClass="container-fluid-1280" name="selectSegmentsEntryFm">
-	<liferay-ui:search-container
-		searchContainer="<%= selectSegmentsEntryDisplayContext.getSearchContainer() %>"
-	>
+	<liferay-ui:search-container searchContainer="<%= selectSegmentsEntryDisplayContext.getSearchContainer() %>">
 		<liferay-ui:search-container-row
 			className="com.liferay.segments.model.SegmentsEntry"
 			keyProperty="segmentsEntryId"
 			modelVar="segmentsEntry"
 			rowVar="row"
 		>
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand table-title"
-				name="name"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-expand table-title" name="name">
 				<c:choose>
 					<c:when test="<%= !ArrayUtil.contains(selectSegmentsEntryDisplayContext.getSelectedSegmentsEntryIds(), segmentsEntry.getSegmentsEntryId()) %>">
 
@@ -57,7 +52,11 @@ SelectSegmentsEntryDisplayContext selectSegmentsEntryDisplayContext = (SelectSeg
 						data.put("entityname", segmentsEntry.getName(locale));
 						%>
 
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+						<aui:a
+							cssClass="selector-button"
+							data="<%= data %>"
+							href="javascript:;"
+						>
 							<%= HtmlUtil.escape(segmentsEntry.getName(locale)) %>
 						</aui:a>
 					</c:when>
@@ -80,9 +79,7 @@ SelectSegmentsEntryDisplayContext selectSegmentsEntryDisplayContext = (SelectSeg
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

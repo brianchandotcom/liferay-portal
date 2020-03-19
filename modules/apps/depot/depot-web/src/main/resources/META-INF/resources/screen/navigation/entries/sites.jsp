@@ -52,19 +52,14 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 		iteratorURL="<%= currentURLObj %>"
 		total="<%= depotEntryGroupRels.size() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= depotEntryGroupRels.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-		/>
+		<liferay-ui:search-container-results results="<%= depotEntryGroupRels.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.depot.model.DepotEntryGroupRel"
 			keyProperty="depotEntryGroupRelId"
 			modelVar="depotEntryGroupRel"
 		>
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="name"
-			>
+			<liferay-ui:search-container-column-text cssClass="table-cell-content" name="name">
 				<%= HtmlUtil.escape(depotAdminSitesDisplayContext.getSiteName(depotEntryGroupRel)) %>
 			</liferay-ui:search-container-column-text>
 
@@ -87,15 +82,10 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 
-	<liferay-frontend:component
-		componentId="<%= DepotAdminWebKeys.CONNECTED_SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-		module="js/ConnectedSiteDropdownDefaultEventHandler.es"
-	/>
+	<liferay-frontend:component componentId="<%= DepotAdminWebKeys.CONNECTED_SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>" module="js/ConnectedSiteDropdownDefaultEventHandler.es" />
 
 	<aui:script require="metal-dom/src/all/dom as dom">
 		var addConnectedSiteButton = document.querySelector(

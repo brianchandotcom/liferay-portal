@@ -45,10 +45,7 @@ String duplicateTitle = workflowDefinitionDisplayContext.getDuplicateTitle(workf
 		<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="view"
-		url="<%= viewURL %>"
-	/>
+	<liferay-ui:icon message="view" url="<%= viewURL %>" />
 
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcPath" value="/definition/edit_workflow_definition.jsp" />
@@ -57,10 +54,7 @@ String duplicateTitle = workflowDefinitionDisplayContext.getDuplicateTitle(workf
 		<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editURL %>"
-	/>
+	<liferay-ui:icon message="edit" url="<%= editURL %>" />
 
 	<c:choose>
 		<c:when test="<%= workflowDefinition.isActive() %>">
@@ -70,10 +64,7 @@ String duplicateTitle = workflowDefinitionDisplayContext.getDuplicateTitle(workf
 				<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
 			</liferay-portlet:actionURL>
 
-			<liferay-ui:icon
-				message="unpublish"
-				url="<%= deactivateWorkflowDefinitionURL %>"
-			/>
+			<liferay-ui:icon message="unpublish" url="<%= deactivateWorkflowDefinitionURL %>" />
 
 			<c:if test="<%= workflowDefinitionDisplayContext.canPublishWorkflowDefinition() %>">
 				<liferay-ui:icon
@@ -101,20 +92,41 @@ String duplicateTitle = workflowDefinitionDisplayContext.getDuplicateTitle(workf
 
 <div class="hide" id="<%= randomNamespace %>titleInputLocalized">
 	<aui:form name='<%= randomNamespace + "form" %>'>
-		<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="name" type="hidden" value="<%= PortalUUIDUtil.generate() %>" />
-		<aui:input name="content" type="hidden" value="<%= workflowDefinition.getContent() %>" />
-		<aui:input name="defaultDuplicationTitle" type="hidden" value="<%= duplicateTitle %>" />
-		<aui:input name="duplicatedDefinitionTitle" type="hidden" value="<%= workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>" />
+		<aui:input
+			name="randomNamespace"
+			type="hidden"
+			value="<%= randomNamespace %>"
+		/>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= currentURL %>"
+		/>
+		<aui:input
+			name="name"
+			type="hidden"
+			value="<%= PortalUUIDUtil.generate() %>"
+		/>
+		<aui:input
+			name="content"
+			type="hidden"
+			value="<%= workflowDefinition.getContent() %>"
+		/>
+		<aui:input
+			name="defaultDuplicationTitle"
+			type="hidden"
+			value="<%= duplicateTitle %>"
+		/>
+		<aui:input
+			name="duplicatedDefinitionTitle"
+			type="hidden"
+			value="<%= workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>"
+		/>
 
 		<aui:fieldset>
 			<aui:col>
 				<aui:field-wrapper label="title">
-					<liferay-ui:input-localized
-						name='<%= randomNamespace + "title" %>'
-						xml="<%= duplicateTitle %>"
-					/>
+					<liferay-ui:input-localized name='<%= randomNamespace + "title" %>' xml="<%= duplicateTitle %>" />
 				</aui:field-wrapper>
 			</aui:col>
 

@@ -37,13 +37,23 @@ String widgetURL = ParamUtil.getString(request, "widgetURL");
 			<aui:a href='<%= HttpUtil.addParameter("http://eco.netvibes.com/apps/submit/info", "url", netvibesURL) %>' target="_blank"><liferay-ui:message key="add-this-application-to-netvibes" /></aui:a>
 		</p>
 
-		<aui:input label="" name="netvibesURL" type="resource" value="<%= netvibesURL %>" />
+		<aui:input
+			label=""
+			name="netvibesURL"
+			type="resource"
+			value="<%= netvibesURL %>"
+		/>
 	</c:when>
 	<c:when test="<%= Validator.isNotNull(openSocialURL) %>">
 		<p>
 			<liferay-ui:message key="share-this-application-on-an-open-social-platform" />
 		</p>
 
-		<aui:input label="" name="openSocialURL" type="resource" value="<%= openSocialURL %>" />
+		<aui:input
+			label=""
+			name="openSocialURL"
+			type="resource"
+			value="<%= openSocialURL %>"
+		/>
 	</c:when>
 </c:choose>

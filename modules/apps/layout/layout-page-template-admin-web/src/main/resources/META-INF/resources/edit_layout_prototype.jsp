@@ -54,19 +54,35 @@ renderResponse.setTitle(layoutPrototype.isNew() ? LanguageUtil.get(request, "new
 	method="post"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="layoutPrototypeId" type="hidden" value="<%= layoutPrototypeId %>" />
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="layoutPrototypeId"
+		type="hidden"
+		value="<%= layoutPrototypeId %>"
+	/>
 
 	<aui:model-context bean="<%= layoutPrototype %>" model="<%= LayoutPrototype.class %>" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" placeholder="name" />
+				<aui:input
+					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+					name="name"
+					placeholder="name"
+				/>
 
 				<aui:input name="description" placeholder="description" />
 
-				<aui:input name="active" type="toggle-switch" value="<%= layoutPrototype.isActive() %>" />
+				<aui:input
+					name="active"
+					type="toggle-switch"
+					value="<%= layoutPrototype.isActive() %>"
+				/>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

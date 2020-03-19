@@ -72,9 +72,7 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 			<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
 				<div class="autofit-col">
 					<span class="inline-item">
-						<liferay-ui:user-portrait
-							userId="<%= assetEntry.getUserId() %>"
-						/>
+						<liferay-ui:user-portrait userId="<%= assetEntry.getUserId() %>" />
 					</span>
 				</div>
 			</c:if>

@@ -14,9 +14,7 @@
  */
 --%>
 
-<liferay-ui:search-container
-	searchContainer="<%= threadEntriesSearchContainer %>"
->
+<liferay-ui:search-container searchContainer="<%= threadEntriesSearchContainer %>">
 	<liferay-ui:search-container-row
 		className="Object"
 		escapedModel="<%= true %>"
@@ -48,14 +46,10 @@
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:search-container-column-text>
-			<liferay-ui:user-portrait
-				userId="<%= thread.getLastPostByUserId() %>"
-			/>
+			<liferay-ui:user-portrait userId="<%= thread.getLastPostByUserId() %>" />
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<h2 class="h5">
 				<aui:a href="<%= rowURL.toString() %>">
 					<c:if test="<%= message != null %>">
@@ -79,7 +73,12 @@
 				</c:if>
 
 				<c:if test="<%= thread.isQuestion() %>">
-					<aui:icon cssClass="icon-monospaced" image="question-circle" markupView="lexicon" message="question" />
+					<aui:icon
+						cssClass="icon-monospaced"
+						image="question-circle"
+						markupView="lexicon"
+						message="question"
+					/>
 				</c:if>
 			</h2>
 
@@ -130,7 +129,14 @@
 
 			<c:if test="<%= (message != null) && !message.isApproved() %>">
 				<span class="h6">
-					<aui:workflow-status bean="<%= message %>" markupView="lexicon" model="<%= MBMessage.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
+					<aui:workflow-status
+						bean="<%= message %>"
+						markupView="lexicon"
+						model="<%= MBMessage.class %>"
+						showIcon="<%= false %>"
+						showLabel="<%= false %>"
+						status="<%= message.getStatus() %>"
+					/>
 				</span>
 			</c:if>
 
@@ -174,9 +180,7 @@
 		%>
 
 		<c:if test="<%= message != null %>">
-			<liferay-ui:search-container-column-jsp
-				path="/message_boards/message_action.jsp"
-			/>
+			<liferay-ui:search-container-column-jsp path="/message_boards/message_action.jsp" />
 		</c:if>
 	</liferay-ui:search-container-row>
 

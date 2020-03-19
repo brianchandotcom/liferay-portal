@@ -20,20 +20,19 @@
 	<portlet:param name="mvcPath" value="/admin/view.jsp" />
 </liferay-portlet:renderURL>
 
-<aui:form action="<%= searchURL %>" method="get" name="fm">
+<aui:form
+	action="<%= searchURL %>"
+	method="get"
+	name="fm"
+>
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
 
 	<liferay-util:include page="/admin/toolbar.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="toolbar-item" value="view-all" />
 	</liferay-util:include>
 
-	<liferay-ui:search-container
-		searchContainer="<%= new OAuthApplicationSearch(renderRequest, currentURLObj) %>"
-	>
-		<liferay-ui:search-form
-			page="/admin/search_application.jsp"
-			servletContext="<%= application %>"
-		/>
+	<liferay-ui:search-container searchContainer="<%= new OAuthApplicationSearch(renderRequest, currentURLObj) %>">
+		<liferay-ui:search-form page="/admin/search_application.jsp" servletContext="<%= application %>" />
 
 		<%
 		OAuthApplicationDisplayTerms displayTerms = (OAuthApplicationDisplayTerms)searchContainer.getDisplayTerms();
@@ -48,10 +47,7 @@
 		searchContainer.setResults(OAuthApplicationLocalServiceUtil.search(themeDisplay.getCompanyId(), displayTerms.getName(), params, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
 		%>
 
-		<liferay-ui:search-container-row
-			className="com.liferay.oauth.model.OAuthApplication"
-			modelVar="oAuthApplication"
-		>
+		<liferay-ui:search-container-row className="com.liferay.oauth.model.OAuthApplication" modelVar="oAuthApplication">
 			<liferay-portlet:renderURL var="rowHREF">
 				<portlet:param name="mvcPath" value='<%= permissionChecker.isCompanyAdmin() ? "/admin/view_application.jsp" : "/admin/edit_application.jsp" %>' />
 				<portlet:param name="redirect" value="<%= currentURL %>" />

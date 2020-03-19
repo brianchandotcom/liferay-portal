@@ -32,7 +32,11 @@ if (selLayout != null) {
 	for (Portlet portlet : portlets) {
 	%>
 
-		<aui:option label="<%= PortalUtil.getPortletLongTitle(portlet, application, locale) %>" selected="<%= Objects.equals(selectedPortletId, portlet.getPortletId()) %>" value="<%= portlet.getPortletId() %>" />
+		<aui:option
+			label="<%= PortalUtil.getPortletLongTitle(portlet, application, locale) %>"
+			selected="<%= Objects.equals(selectedPortletId, portlet.getPortletId()) %>"
+			value="<%= portlet.getPortletId() %>"
+		/>
 
 	<%
 	}

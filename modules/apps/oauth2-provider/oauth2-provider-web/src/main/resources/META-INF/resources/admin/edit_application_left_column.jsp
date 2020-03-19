@@ -23,15 +23,29 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 <aui:model-context bean="<%= oAuth2Application %>" model="<%= OAuth2Application.class %>" />
 
 <aui:fieldset>
-	<aui:input helpMessage="application-name-help" label="application-name" name="name" required="<%= true %>" />
+	<aui:input
+		helpMessage="application-name-help"
+		label="application-name"
+		name="name"
+		required="<%= true %>"
+	/>
 
 	<aui:input helpMessage="home-page-url-help" name="homePageURL" />
 
 	<c:if test="<%= oAuth2Application != null %>">
-		<aui:input helpMessage="application-description-help" label="application-description" name="description" />
+		<aui:input
+			helpMessage="application-description-help"
+			label="application-description"
+			name="description"
+		/>
 	</c:if>
 
-	<aui:input helpMessage="redirect-uris-help" label="redirect-uris" name="redirectURIs" required="<%= true %>" />
+	<aui:input
+		helpMessage="redirect-uris-help"
+		label="redirect-uris"
+		name="redirectURIs"
+		required="<%= true %>"
+	/>
 
 	<c:if test="<%= oAuth2Application != null %>">
 		<aui:input helpMessage="privacy-policy-url-help" name="privacyPolicyURL" />
@@ -108,10 +122,24 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 						<div class="allowedGrantType <%= cssClassesStr %>">
 							<c:choose>
 								<c:when test="<%= grantType.equals(GrantType.CLIENT_CREDENTIALS) %>">
-									<aui:input checked="<%= checked %>" data="<%= data %>" helpMessage="the-client-will-impersonate-the-selected-client-credential-user-but-will-be-restricted-to-the-selected-scopes" label="<%= grantType.name() %>" name="<%= clientCredentialsCheckboxName %>" onchange='<%= renderResponse.getNamespace() + "updateClientCredentialsSection();" %>' type="checkbox" />
+									<aui:input
+										checked="<%= checked %>"
+										data="<%= data %>"
+										helpMessage="the-client-will-impersonate-the-selected-client-credential-user-but-will-be-restricted-to-the-selected-scopes"
+										label="<%= grantType.name() %>"
+										name="<%= clientCredentialsCheckboxName %>"
+										onchange='<%= renderResponse.getNamespace() + "updateClientCredentialsSection();" %>'
+										type="checkbox"
+									/>
 								</c:when>
 								<c:otherwise>
-									<aui:input checked="<%= checked %>" data="<%= data %>" label="<%= grantType.name() %>" name="<%= name %>" type="checkbox" />
+									<aui:input
+										checked="<%= checked %>"
+										data="<%= data %>"
+										label="<%= grantType.name() %>"
+										name="<%= name %>"
+										type="checkbox"
+									/>
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -148,14 +176,34 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 				<aui:field-wrapper>
 					<c:choose>
 						<c:when test="<%= oAuth2Application != null %>">
-							<aui:input name="clientCredentialUserId" type="hidden" value="<%= oAuth2Application.getClientCredentialUserId() %>" />
+							<aui:input
+								name="clientCredentialUserId"
+								type="hidden"
+								value="<%= oAuth2Application.getClientCredentialUserId() %>"
+							/>
 
-							<aui:input disabled="<%= true %>" label="" name="clientCredentialUserName" type="text" value="<%= HtmlUtil.escapeAttribute(oAuth2Application.getClientCredentialUserName()) %>" />
+							<aui:input
+								disabled="<%= true %>"
+								label=""
+								name="clientCredentialUserName"
+								type="text"
+								value="<%= HtmlUtil.escapeAttribute(oAuth2Application.getClientCredentialUserName()) %>"
+							/>
 						</c:when>
 						<c:otherwise>
-							<aui:input name="clientCredentialUserId" type="hidden" value="<%= user.getUserId() %>" />
+							<aui:input
+								name="clientCredentialUserId"
+								type="hidden"
+								value="<%= user.getUserId() %>"
+							/>
 
-							<aui:input disabled="<%= true %>" label="" name="clientCredentialUserName" type="text" value="<%= HtmlUtil.escapeAttribute(user.getScreenName()) %>" />
+							<aui:input
+								disabled="<%= true %>"
+								label=""
+								name="clientCredentialUserName"
+								type="text"
+								value="<%= HtmlUtil.escapeAttribute(user.getScreenName()) %>"
+							/>
 						</c:otherwise>
 					</c:choose>
 
@@ -251,7 +299,12 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 			%>
 
 				<div class="supportedFeature">
-					<aui:input checked="<%= checked %>" label="<%= HtmlUtil.escape(oAuth2Feature) %>" name="<%= name %>" type="checkbox" />
+					<aui:input
+						checked="<%= checked %>"
+						label="<%= HtmlUtil.escape(oAuth2Feature) %>"
+						name="<%= name %>"
+						type="checkbox"
+					/>
 				</div>
 
 			<%

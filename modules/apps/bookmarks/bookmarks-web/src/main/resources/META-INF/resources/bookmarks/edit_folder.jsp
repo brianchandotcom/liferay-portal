@@ -60,12 +60,33 @@ renderResponse.setTitle(headerTitle);
 		<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_folder" />
 	</portlet:actionURL>
 
-	<aui:form action="<%= editFolderURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFolder();" %>'>
+	<aui:form
+		action="<%= editFolderURL %>"
+		method="post"
+		name="fm"
+		onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFolder();" %>'
+	>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
-		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
-		<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= redirect %>"
+		/>
+		<aui:input
+			name="portletResource"
+			type="hidden"
+			value='<%= ParamUtil.getString(request, "portletResource") %>'
+		/>
+		<aui:input
+			name="folderId"
+			type="hidden"
+			value="<%= folderId %>"
+		/>
+		<aui:input
+			name="parentFolderId"
+			type="hidden"
+			value="<%= parentFolderId %>"
+		/>
 
 		<liferay-ui:error exception="<%= FolderNameException.class %>">
 			<p>
@@ -87,7 +108,11 @@ renderResponse.setTitle(headerTitle);
 			</aui:fieldset>
 
 			<c:if test="<%= folder != null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="parent-folder">
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="parent-folder"
+				>
 
 					<%
 					String parentFolderName = LanguageUtil.get(request, "home");
@@ -102,7 +127,12 @@ renderResponse.setTitle(headerTitle);
 					%>
 
 					<div class="form-group">
-						<aui:input label="parent-folder" name="parentFolderName" type="resource" value="<%= parentFolderName %>" />
+						<aui:input
+							label="parent-folder"
+							name="parentFolderName"
+							type="resource"
+							value="<%= parentFolderName %>"
+						/>
 
 						<aui:button name="selectFolderButton" value="select" />
 
@@ -148,17 +178,29 @@ renderResponse.setTitle(headerTitle);
 						String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentFolderId', 'parentFolderName', this, '" + renderResponse.getNamespace() + "');";
 						%>
 
-						<aui:button disabled="<%= parentFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+						<aui:button
+							disabled="<%= parentFolderId <= 0 %>"
+							name="removeFolderButton"
+							onClick="<%= taglibRemoveFolder %>"
+							value="remove"
+						/>
 					</div>
 
-					<aui:input disabled="<%= mergeWithParentFolderDisabled %>" label="merge-with-parent-folder" name="mergeWithParentFolder" type="toggle-switch" />
+					<aui:input
+						disabled="<%= mergeWithParentFolderDisabled %>"
+						label="merge-with-parent-folder"
+						name="mergeWithParentFolder"
+						type="toggle-switch"
+					/>
 				</aui:fieldset>
 			</c:if>
 
-			<liferay-expando:custom-attributes-available
-				className="<%= BookmarksFolder.class.getName() %>"
-			>
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+			<liferay-expando:custom-attributes-available className="<%= BookmarksFolder.class.getName() %>">
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="custom-fields"
+				>
 					<liferay-expando:custom-attribute-list
 						className="<%= BookmarksFolder.class.getName() %>"
 						classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
@@ -169,11 +211,13 @@ renderResponse.setTitle(headerTitle);
 			</liferay-expando:custom-attributes-available>
 
 			<c:if test="<%= folder == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+				<aui:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="permissions"
+				>
 					<aui:field-wrapper label="permissions">
-						<liferay-ui:input-permissions
-							modelName="<%= BookmarksFolder.class.getName() %>"
-						/>
+						<liferay-ui:input-permissions modelName="<%= BookmarksFolder.class.getName() %>" />
 					</aui:field-wrapper>
 				</aui:fieldset>
 			</c:if>

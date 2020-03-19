@@ -88,10 +88,7 @@
 								yearValue="<%= startYear %>"
 							/>
 
-							<liferay-ui:icon
-								icon="calendar"
-								markupView="lexicon"
-							/>
+							<liferay-ui:icon icon="calendar" markupView="lexicon" />
 
 							<liferay-ui:input-time
 								amPmParam="schedulerStartDateAmPm"
@@ -115,7 +112,13 @@
 						<liferay-ui:message key="time-zone" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:input cssClass="calendar-portlet-time-zone-field" label="" name="timeZoneId" type="timeZone" value="<%= timeZoneID %>" />
+						<aui:input
+							cssClass="calendar-portlet-time-zone-field"
+							label=""
+							name="timeZoneId"
+							type="timeZone"
+							value="<%= timeZoneID %>"
+						/>
 					</td>
 				</tr>
 			</tbody>
@@ -126,8 +129,24 @@
 						<liferay-ui:message key="end-date" />:
 					</th>
 					<td class="bottom-gap staging-scheduler-content">
-						<aui:input checked="<%= true %>" id="schedulerNoEndDate" inlineField="<%= true %>" label="no-end-date" name="endDateType" type="radio" value="0" />
-						<aui:input first="<%= true %>" id="schedulerEndBy" inlineField="<%= true %>" label="end-by" name="endDateType" type="radio" value="1" />
+						<aui:input
+							checked="<%= true %>"
+							id="schedulerNoEndDate"
+							inlineField="<%= true %>"
+							label="no-end-date"
+							name="endDateType"
+							type="radio"
+							value="0"
+						/>
+						<aui:input
+							first="<%= true %>"
+							id="schedulerEndBy"
+							inlineField="<%= true %>"
+							label="end-by"
+							name="endDateType"
+							type="radio"
+							value="1"
+						/>
 
 						<div class="flex-container hide" id="<portlet:namespace />schedulerEndDateType">
 							<liferay-ui:input-date
@@ -143,10 +162,7 @@
 								yearValue="<%= endYear %>"
 							/>
 
-							<liferay-ui:icon
-								icon="calendar"
-								markupView="lexicon"
-							/>
+							<liferay-ui:icon icon="calendar" markupView="lexicon" />
 
 							<liferay-ui:input-time
 								amPmParam="schedulerEndDateAmPm"
@@ -171,11 +187,36 @@
 					</th>
 					<td class="staging-scheduler-content">
 						<aui:select label="" name="recurrenceType">
-							<aui:option checked="<%= recurrenceType == Recurrence.NO_RECURRENCE %>" id="recurrenceTypeNever" label="never" value="<%= Recurrence.NO_RECURRENCE %>" />
-							<aui:option checked="<%= recurrenceType == Recurrence.DAILY %>" id="recurrenceTypeDaily" label="daily" value="<%= Recurrence.DAILY %>" />
-							<aui:option checked="<%= recurrenceType == Recurrence.WEEKLY %>" id="recurrenceTypeWeekly" label="weekly" value="<%= Recurrence.WEEKLY %>" />
-							<aui:option checked="<%= recurrenceType == Recurrence.MONTHLY %>" id="recurrenceTypeMonthly" label="monthly" value="<%= Recurrence.MONTHLY %>" />
-							<aui:option checked="<%= recurrenceType == Recurrence.YEARLY %>" id="recurrenceTypeYearly" label="yearly" value="<%= Recurrence.YEARLY %>" />
+							<aui:option
+								checked="<%= recurrenceType == Recurrence.NO_RECURRENCE %>"
+								id="recurrenceTypeNever"
+								label="never"
+								value="<%= Recurrence.NO_RECURRENCE %>"
+							/>
+							<aui:option
+								checked="<%= recurrenceType == Recurrence.DAILY %>"
+								id="recurrenceTypeDaily"
+								label="daily"
+								value="<%= Recurrence.DAILY %>"
+							/>
+							<aui:option
+								checked="<%= recurrenceType == Recurrence.WEEKLY %>"
+								id="recurrenceTypeWeekly"
+								label="weekly"
+								value="<%= Recurrence.WEEKLY %>"
+							/>
+							<aui:option
+								checked="<%= recurrenceType == Recurrence.MONTHLY %>"
+								id="recurrenceTypeMonthly"
+								label="monthly"
+								value="<%= Recurrence.MONTHLY %>"
+							/>
+							<aui:option
+								checked="<%= recurrenceType == Recurrence.YEARLY %>"
+								id="recurrenceTypeYearly"
+								label="yearly"
+								value="<%= Recurrence.YEARLY %>"
+							/>
 						</aui:select>
 					</td>
 				</tr>
@@ -187,14 +228,29 @@
 						<liferay-ui:message key="recur-every" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:input checked="<%= dailyType == 0 %>" cssClass="input-container" label="days" name="dailyType" type="radio" value="0" />
+						<aui:input
+							checked="<%= dailyType == 0 %>"
+							cssClass="input-container"
+							label="days"
+							name="dailyType"
+							type="radio"
+							value="0"
+						/>
 					</td>
 				</tr>
 				<tr>
 					<th class="staging-scheduler-title">
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:input cssClass="number-input" label="" maxlength="3" name="dailyInterval" suffix="day-s" type="number" value="<%= dailyInterval %>">
+						<aui:input
+							cssClass="number-input"
+							label=""
+							maxlength="3"
+							name="dailyInterval"
+							suffix="day-s"
+							type="number"
+							value="<%= dailyInterval %>"
+						>
 							<aui:validator name="digit" />
 						</aui:input>
 					</td>
@@ -203,7 +259,13 @@
 					<th class="staging-scheduler-title">
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:input checked="<%= dailyType == 1 %>" label="every-weekday" name="dailyType" type="radio" value="1" />
+						<aui:input
+							checked="<%= dailyType == 1 %>"
+							label="every-weekday"
+							name="dailyType"
+							type="radio"
+							value="1"
+						/>
 					</td>
 				</tr>
 			</tbody>
@@ -214,7 +276,16 @@
 						<liferay-ui:message key="repeat-every" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:input cssClass="number-input" inlineField="<%= false %>" inlineLabel="right" label="" maxlength="2" name="weeklyInterval" type="number" value="<%= weeklyInterval %>">
+						<aui:input
+							cssClass="number-input"
+							inlineField="<%= false %>"
+							inlineLabel="right"
+							label=""
+							maxlength="2"
+							name="weeklyInterval"
+							type="number"
+							value="<%= weeklyInterval %>"
+						>
 							<aui:validator name="digit" />
 						</aui:input>
 					</td>
@@ -242,7 +313,13 @@
 							%>
 
 								<div class="col-md-3">
-									<aui:input inlineLabel="right" label="<%= days[weekday.getCalendarWeekday() - 1] %>" name='<%= "weeklyDayPos" + weekday.getCalendarWeekday() %>' type="checkbox" value="<%= _getWeeklyDayPos(request, weekday.getCalendarWeekday(), recurrence) %>" />
+									<aui:input
+										inlineLabel="right"
+										label="<%= days[weekday.getCalendarWeekday() - 1] %>"
+										name='<%= "weeklyDayPos" + weekday.getCalendarWeekday() %>'
+										type="checkbox"
+										value="<%= _getWeeklyDayPos(request, weekday.getCalendarWeekday(), recurrence) %>"
+									/>
 								</div>
 
 							<%
@@ -260,8 +337,26 @@
 						<liferay-ui:message key="repeat-type" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:input checked="<%= monthlyType == 0 %>" cssClass="input-container" id="monthlyTypeDayOfMonth" inlineField="<%= true %>" label="day-of-month" name="monthlyType" type="radio" value="0" />
-						<aui:input checked="<%= monthlyType == 1 %>" cssClass="input-container" id="monthlyTypeDayOfWeek" inlineField="<%= true %>" label="day-of-week" name="monthlyType" type="radio" value="1" />
+						<aui:input
+							checked="<%= monthlyType == 0 %>"
+							cssClass="input-container"
+							id="monthlyTypeDayOfMonth"
+							inlineField="<%= true %>"
+							label="day-of-month"
+							name="monthlyType"
+							type="radio"
+							value="0"
+						/>
+						<aui:input
+							checked="<%= monthlyType == 1 %>"
+							cssClass="input-container"
+							id="monthlyTypeDayOfWeek"
+							inlineField="<%= true %>"
+							label="day-of-week"
+							name="monthlyType"
+							type="radio"
+							value="1"
+						/>
 					</td>
 				</tr>
 				<tr class="hide" id="<portlet:namespace />schedulerMonthlyDayOfMonthTypeDay">
@@ -269,7 +364,14 @@
 						<liferay-ui:message key="day" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:input cssClass="number-input" label="" maxlength="2" name="monthlyDay0" type="number" value="<%= monthlyDay0 %>">
+						<aui:input
+							cssClass="number-input"
+							label=""
+							maxlength="2"
+							name="monthlyDay0"
+							type="number"
+							value="<%= monthlyDay0 %>"
+						>
 							<aui:validator name="digit" />
 						</aui:input>
 					</td>
@@ -279,7 +381,15 @@
 						<liferay-ui:message key="recur-every" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:input cssClass="number-input" label="" maxlength="2" name="monthlyInterval0" suffix="month" type="number" value="<%= monthlyInterval0 %>">
+						<aui:input
+							cssClass="number-input"
+							label=""
+							maxlength="2"
+							name="monthlyInterval0"
+							suffix="month"
+							type="number"
+							value="<%= monthlyInterval0 %>"
+						>
 							<aui:validator name="digit" />
 						</aui:input>
 					</td>
@@ -289,7 +399,15 @@
 						<liferay-ui:message key="day" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:select cssClass="input-container" inlineField="<%= true %>" inlineLabel="left" label="" name="monthlyPos" title="month-position" value="<%= monthlyPos %>">
+						<aui:select
+							cssClass="input-container"
+							inlineField="<%= true %>"
+							inlineLabel="left"
+							label=""
+							name="monthlyPos"
+							title="month-position"
+							value="<%= monthlyPos %>"
+						>
 							<aui:option label="first" value="1" />
 							<aui:option label="second" value="2" />
 							<aui:option label="third" value="3" />
@@ -297,7 +415,14 @@
 							<aui:option label="last" value="-1" />
 						</aui:select>
 
-						<aui:select cssClass="input-container" inlineField="<%= true %>" label="" name="monthlyDay1" title="first-day-of-week" value="<%= monthlyDay1 %>">
+						<aui:select
+							cssClass="input-container"
+							inlineField="<%= true %>"
+							label=""
+							name="monthlyDay1"
+							title="first-day-of-week"
+							value="<%= monthlyDay1 %>"
+						>
 							<aui:option label="<%= days[0] %>" value="<%= Calendar.SUNDAY %>" />
 							<aui:option label="<%= days[1] %>" value="<%= Calendar.MONDAY %>" />
 							<aui:option label="<%= days[2] %>" value="<%= Calendar.TUESDAY %>" />
@@ -313,7 +438,17 @@
 						<liferay-ui:message key="recur-every" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:input cssClass="number-input" inlineField="<%= false %>" inlineLabel="left" label="" maxlength="2" name="monthlyInterval1" suffix="month" type="number" value="<%= monthlyInterval1 %>">
+						<aui:input
+							cssClass="number-input"
+							inlineField="<%= false %>"
+							inlineLabel="left"
+							label=""
+							maxlength="2"
+							name="monthlyInterval1"
+							suffix="month"
+							type="number"
+							value="<%= monthlyInterval1 %>"
+						>
 							<aui:validator name="digit" />
 						</aui:input>
 					</td>
@@ -326,8 +461,26 @@
 						<liferay-ui:message key="repeat-type" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:input checked="<%= yearlyType == 0 %>" cssClass="input-container" id="yearlyTypeDayOfMonth" inlineField="<%= true %>" label="day-of-month" name="yearlyType" type="radio" value="0" />
-						<aui:input checked="<%= yearlyType == 1 %>" cssClass="input-container" id="yearlyTypeDayOfWeek" inlineField="<%= true %>" label="day-of-week" name="yearlyType" type="radio" value="1" />
+						<aui:input
+							checked="<%= yearlyType == 0 %>"
+							cssClass="input-container"
+							id="yearlyTypeDayOfMonth"
+							inlineField="<%= true %>"
+							label="day-of-month"
+							name="yearlyType"
+							type="radio"
+							value="0"
+						/>
+						<aui:input
+							checked="<%= yearlyType == 1 %>"
+							cssClass="input-container"
+							id="yearlyTypeDayOfWeek"
+							inlineField="<%= true %>"
+							label="day-of-week"
+							name="yearlyType"
+							type="radio"
+							value="1"
+						/>
 					</td>
 				</tr>
 				<tr class="hide" id="<portlet:namespace />schedulerYearlyDayOfMonthTypeDay">
@@ -335,7 +488,16 @@
 						<liferay-ui:message key="day" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:input cssClass="number-input" inlineField="<%= false %>" inlineLabel="right" label="" maxlength="2" name="yearlyDay0" type="number" value="<%= yearlyDay0 %>">
+						<aui:input
+							cssClass="number-input"
+							inlineField="<%= false %>"
+							inlineLabel="right"
+							label=""
+							maxlength="2"
+							name="yearlyDay0"
+							type="number"
+							value="<%= yearlyDay0 %>"
+						>
 							<aui:validator name="digit" />
 						</aui:input>
 					</td>
@@ -345,13 +507,24 @@
 						<liferay-ui:message key="month" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:select cssClass="input-container" inlineField="<%= false %>" inlineLabel="left" label="" name="yearlyMonth0" title="first-month-of-year">
+						<aui:select
+							cssClass="input-container"
+							inlineField="<%= false %>"
+							inlineLabel="left"
+							label=""
+							name="yearlyMonth0"
+							title="first-month-of-year"
+						>
 
 							<%
 							for (int i = 0; i < 12; i++) {
 							%>
 
-								<aui:option label="<%= months[i] %>" selected="<%= monthIds[i] == yearlyMonth0 %>" value="<%= monthIds[i] %>" />
+								<aui:option
+									label="<%= months[i] %>"
+									selected="<%= monthIds[i] == yearlyMonth0 %>"
+									value="<%= monthIds[i] %>"
+								/>
 
 							<%
 							}
@@ -365,7 +538,16 @@
 						<liferay-ui:message key="year-s" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:input cssClass="number-input" inlineField="<%= false %>" inlineLabel="right" label="" maxlength="2" name="yearlyInterval0" type="number" value="<%= yearlyInterval0 %>">
+						<aui:input
+							cssClass="number-input"
+							inlineField="<%= false %>"
+							inlineLabel="right"
+							label=""
+							maxlength="2"
+							name="yearlyInterval0"
+							type="number"
+							value="<%= yearlyInterval0 %>"
+						>
 							<aui:validator name="digit" />
 						</aui:input>
 					</td>
@@ -375,22 +557,81 @@
 						<liferay-ui:message key="day" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:select cssClass="input-container" inlineField="<%= true %>" label="" name="yearlyPos" title="year-position">
-							<aui:option label="first" selected="<%= yearlyPos == 1 %>" value="1" />
-							<aui:option label="second" selected="<%= yearlyPos == 2 %>" value="2" />
-							<aui:option label="third" selected="<%= yearlyPos == 3 %>" value="3" />
-							<aui:option label="fourth" selected="<%= yearlyPos == 4 %>" value="4" />
-							<aui:option label="last" selected="<%= yearlyPos == -1 %>" value="-1" />
+						<aui:select
+							cssClass="input-container"
+							inlineField="<%= true %>"
+							label=""
+							name="yearlyPos"
+							title="year-position"
+						>
+							<aui:option
+								label="first"
+								selected="<%= yearlyPos == 1 %>"
+								value="1"
+							/>
+							<aui:option
+								label="second"
+								selected="<%= yearlyPos == 2 %>"
+								value="2"
+							/>
+							<aui:option
+								label="third"
+								selected="<%= yearlyPos == 3 %>"
+								value="3"
+							/>
+							<aui:option
+								label="fourth"
+								selected="<%= yearlyPos == 4 %>"
+								value="4"
+							/>
+							<aui:option
+								label="last"
+								selected="<%= yearlyPos == -1 %>"
+								value="-1"
+							/>
 						</aui:select>
 
-						<aui:select cssClass="input-container" inlineField="<%= true %>" label="" name="yearlyDay1">
-							<aui:option label="<%= days[0] %>" selected="<%= yearlyDay1 == Calendar.SUNDAY %>" value="<%= Calendar.SUNDAY %>" />
-							<aui:option label="<%= days[1] %>" selected="<%= yearlyDay1 == Calendar.MONDAY %>" value="<%= Calendar.MONDAY %>" />
-							<aui:option label="<%= days[2] %>" selected="<%= yearlyDay1 == Calendar.TUESDAY %>" value="<%= Calendar.TUESDAY %>" />
-							<aui:option label="<%= days[3] %>" selected="<%= yearlyDay1 == Calendar.WEDNESDAY %>" value="<%= Calendar.WEDNESDAY %>" />
-							<aui:option label="<%= days[4] %>" selected="<%= yearlyDay1 == Calendar.THURSDAY %>" value="<%= Calendar.THURSDAY %>" />
-							<aui:option label="<%= days[5] %>" selected="<%= yearlyDay1 == Calendar.FRIDAY %>" value="<%= Calendar.FRIDAY %>" />
-							<aui:option label="<%= days[6] %>" selected="<%= yearlyDay1 == Calendar.SATURDAY %>" value="<%= Calendar.SATURDAY %>" />
+						<aui:select
+							cssClass="input-container"
+							inlineField="<%= true %>"
+							label=""
+							name="yearlyDay1"
+						>
+							<aui:option
+								label="<%= days[0] %>"
+								selected="<%= yearlyDay1 == Calendar.SUNDAY %>"
+								value="<%= Calendar.SUNDAY %>"
+							/>
+							<aui:option
+								label="<%= days[1] %>"
+								selected="<%= yearlyDay1 == Calendar.MONDAY %>"
+								value="<%= Calendar.MONDAY %>"
+							/>
+							<aui:option
+								label="<%= days[2] %>"
+								selected="<%= yearlyDay1 == Calendar.TUESDAY %>"
+								value="<%= Calendar.TUESDAY %>"
+							/>
+							<aui:option
+								label="<%= days[3] %>"
+								selected="<%= yearlyDay1 == Calendar.WEDNESDAY %>"
+								value="<%= Calendar.WEDNESDAY %>"
+							/>
+							<aui:option
+								label="<%= days[4] %>"
+								selected="<%= yearlyDay1 == Calendar.THURSDAY %>"
+								value="<%= Calendar.THURSDAY %>"
+							/>
+							<aui:option
+								label="<%= days[5] %>"
+								selected="<%= yearlyDay1 == Calendar.FRIDAY %>"
+								value="<%= Calendar.FRIDAY %>"
+							/>
+							<aui:option
+								label="<%= days[6] %>"
+								selected="<%= yearlyDay1 == Calendar.SATURDAY %>"
+								value="<%= Calendar.SATURDAY %>"
+							/>
 						</aui:select>
 					</td>
 				</tr>
@@ -399,13 +640,22 @@
 						<liferay-ui:message key="month" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:select cssClass="input-container" inlineField="<%= false %>" label="" name="yearlyMonth1">
+						<aui:select
+							cssClass="input-container"
+							inlineField="<%= false %>"
+							label=""
+							name="yearlyMonth1"
+						>
 
 							<%
 							for (int i = 0; i < 12; i++) {
 							%>
 
-								<aui:option label="<%= months[i] %>" selected="<%= monthIds[i] == yearlyMonth1 %>" value="<%= monthIds[i] %>" />
+								<aui:option
+									label="<%= months[i] %>"
+									selected="<%= monthIds[i] == yearlyMonth1 %>"
+									value="<%= monthIds[i] %>"
+								/>
 
 							<%
 							}
@@ -419,7 +669,14 @@
 						<liferay-ui:message key="year-s" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<aui:input cssClass="number-input" label="" maxlength="2" name="yearlyInterval1" type="number" value="<%= yearlyInterval1 %>">
+						<aui:input
+							cssClass="number-input"
+							label=""
+							maxlength="2"
+							name="yearlyInterval1"
+							type="number"
+							value="<%= yearlyInterval1 %>"
+						>
 							<aui:validator name="digit" />
 						</aui:input>
 					</td>

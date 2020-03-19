@@ -22,18 +22,10 @@
 
 <h3>NAVIGATION BARS USING DISPLAY CONTEXT</h3>
 
-<clay:navigation-bar
-	navigationItems="<%= navigationBarsDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar navigationItems="<%= navigationBarsDisplayContext.getNavigationItems() %>" />
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= navigationBarsDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= navigationBarsDisplayContext.getNavigationItems() %>" />
 
 <h3>NAVIGATION BAR USING CONTRIBUTOR</h3>
 
-<clay:navigation-bar
-	contributorKey="SampleNavigationBar"
-	navigationItems="<%= navigationBarsDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar contributorKey="SampleNavigationBar" navigationItems="<%= navigationBarsDisplayContext.getNavigationItems() %>" />

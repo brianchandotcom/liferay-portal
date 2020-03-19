@@ -94,9 +94,7 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 	</portlet:actionURL>
 
-	<liferay-trash:undo
-		portletURL="<%= restoreTrashEntriesURL %>"
-	/>
+	<liferay-trash:undo portletURL="<%= restoreTrashEntriesURL %>" />
 
 	<%
 	int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(liveGroupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, false);
@@ -113,19 +111,72 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 		<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
 	</portlet:actionURL>
 
-	<aui:form action='<%= exportPagesURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EXPORT %>" />
-		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-		<aui:input name="exportImportConfigurationId" type="hidden" value="<%= String.valueOf(exportImportConfigurationId) %>" />
-		<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
-		<aui:input name="liveGroupId" type="hidden" value="<%= String.valueOf(liveGroupId) %>" />
-		<aui:input name="privateLayout" type="hidden" value="<%= String.valueOf(privateLayout) %>" />
-		<aui:input name="rootNodeName" type="hidden" value="<%= rootNodeName %>" />
-		<aui:input name="treeId" type="hidden" value="<%= treeId %>" />
-		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="hidden" value="<%= true %>" />
-		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="hidden" value="<%= true %>" />
-		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>" />
-		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="hidden" value="<%= true %>" />
+	<aui:form
+		action='<%= exportPagesURL + "&etag=0&strip=0" %>'
+		cssClass="lfr-export-dialog"
+		method="post"
+		name="fm1"
+	>
+		<aui:input
+			name="<%= Constants.CMD %>"
+			type="hidden"
+			value="<%= Constants.EXPORT %>"
+		/>
+		<aui:input
+			name="redirect"
+			type="hidden"
+			value="<%= portletURL.toString() %>"
+		/>
+		<aui:input
+			name="exportImportConfigurationId"
+			type="hidden"
+			value="<%= String.valueOf(exportImportConfigurationId) %>"
+		/>
+		<aui:input
+			name="groupId"
+			type="hidden"
+			value="<%= String.valueOf(groupId) %>"
+		/>
+		<aui:input
+			name="liveGroupId"
+			type="hidden"
+			value="<%= String.valueOf(liveGroupId) %>"
+		/>
+		<aui:input
+			name="privateLayout"
+			type="hidden"
+			value="<%= String.valueOf(privateLayout) %>"
+		/>
+		<aui:input
+			name="rootNodeName"
+			type="hidden"
+			value="<%= rootNodeName %>"
+		/>
+		<aui:input
+			name="treeId"
+			type="hidden"
+			value="<%= treeId %>"
+		/>
+		<aui:input
+			name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>"
+			type="hidden"
+			value="<%= true %>"
+		/>
+		<aui:input
+			name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>"
+			type="hidden"
+			value="<%= true %>"
+		/>
+		<aui:input
+			name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>"
+			type="hidden"
+			value="<%= true %>"
+		/>
+		<aui:input
+			name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>"
+			type="hidden"
+			value="<%= true %>"
+		/>
 
 		<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
@@ -134,18 +185,25 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 				<aui:fieldset>
 					<c:choose>
 						<c:when test="<%= exportImportConfiguration == null %>">
-							<aui:input label="title" maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>' name="name" placeholder="process-name-placeholder" />
+							<aui:input
+								label="title"
+								maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>'
+								name="name"
+								placeholder="process-name-placeholder"
+							/>
 						</c:when>
 						<c:otherwise>
-							<aui:input label="title" maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>' name="name" value="<%= exportImportConfiguration.getName() %>" />
+							<aui:input
+								label="title"
+								maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>'
+								name="name"
+								value="<%= exportImportConfiguration.getName() %>"
+							/>
 						</c:otherwise>
 					</c:choose>
 				</aui:fieldset>
 
-				<liferay-staging:deletions
-					cmd="<%= Constants.EXPORT %>"
-					exportImportConfigurationId="<%= exportImportConfigurationId %>"
-				/>
+				<liferay-staging:deletions cmd="<%= Constants.EXPORT %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" />
 
 				<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
 					<liferay-staging:select-pages

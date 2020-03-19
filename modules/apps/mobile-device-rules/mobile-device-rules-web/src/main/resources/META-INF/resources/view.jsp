@@ -75,13 +75,8 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			</liferay-portlet:renderURL>
 
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(resourceBundle, "add-device-family") %>'
-					url="<%= addRuleGroupURL %>"
-				/>
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-device-family") %>' url="<%= addRuleGroupURL %>" />
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
@@ -93,10 +88,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 	%>
 
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= iteratorURL %>"
-		/>
+		<liferay-frontend:management-bar-navigation navigationKeys='<%= new String[] {"all"} %>' portletURL="<%= iteratorURL %>" />
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= ruleGroupSearch.getOrderByCol() %>"
@@ -108,9 +100,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 		<c:if test="<%= (mdrRuleGroupsCount > 0) || searchTerms.isSearch() %>">
 			<li>
 				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
+					<liferay-ui:input-search markupView="lexicon" />
 				</aui:form>
 			</li>
 		</c:if>
@@ -130,9 +120,22 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
 </portlet:actionURL>
 
-<aui:form action="<%= editRuleGroupURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+<aui:form
+	action="<%= editRuleGroupURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="<%= Constants.CMD %>"
+		type="hidden"
+		value="<%= Constants.DELETE %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= currentURL %>"
+	/>
 	<aui:input name="ruleGroupIds" type="hidden" />
 
 	<liferay-ui:search-container
@@ -168,16 +171,15 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="mobile-portrait"
-						toggleRowChecker="<%= true %>"
-					/>
+					<liferay-ui:search-container-column-icon icon="mobile-portrait" toggleRowChecker="<%= true %>" />
 
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 						<span class="text-default">
-							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - ruleGroup.getModifiedDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+							<liferay-ui:message
+								arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - ruleGroup.getModifiedDate().getTime(), true) %>"
+								key="x-ago"
+								translateArguments="<%= false %>"
+							/>
 						</span>
 
 						<h2 class="h5">
@@ -192,9 +194,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 						</span>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/rule_group_actions.jsp"
-					/>
+					<liferay-ui:search-container-column-jsp path="/rule_group_actions.jsp" />
 				</c:when>
 				<c:when test='<%= displayStyle.equals("icon") %>'>
 
@@ -214,7 +214,11 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 							url="<%= rowHREF %>"
 						>
 							<liferay-frontend:vertical-card-header>
-								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - ruleGroup.getModifiedDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+								<liferay-ui:message
+									arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - ruleGroup.getModifiedDate().getTime(), true) %>"
+									key="x-ago"
+									translateArguments="<%= false %>"
+								/>
 							</liferay-frontend:vertical-card-header>
 						</liferay-frontend:icon-vertical-card>
 					</liferay-ui:search-container-column-text>

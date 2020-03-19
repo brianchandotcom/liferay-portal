@@ -114,16 +114,10 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 							/>
 						</h3>
 
-						<liferay-asset:asset-display
-							assetRenderer="<%= assetRenderer %>"
-							template="<%= AssetRenderer.TEMPLATE_ABSTRACT %>"
-						/>
+						<liferay-asset:asset-display assetRenderer="<%= assetRenderer %>" template="<%= AssetRenderer.TEMPLATE_ABSTRACT %>" />
 					</liferay-ui:panel>
 
-					<liferay-ui:panel
-						markupView="lexicon"
-						title="comments"
-					>
+					<liferay-ui:panel markupView="lexicon" title="comments">
 						<liferay-comment:discussion
 							className="<%= assetRenderer.getClassName() %>"
 							classPK="<%= assetRenderer.getClassPK() %>"
@@ -141,55 +135,33 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 						markupView="lexicon"
 						title="tasks"
 					>
-						<liferay-ui:search-container
-							emptyResultsMessage="there-are-no-tasks"
-							iteratorURL="<%= renderResponse.createRenderURL() %>"
-						>
-							<liferay-ui:search-container-results
-								results="<%= workflowInstanceEditDisplayContext.getWorkflowTasks() %>"
-							/>
+						<liferay-ui:search-container emptyResultsMessage="there-are-no-tasks" iteratorURL="<%= renderResponse.createRenderURL() %>">
+							<liferay-ui:search-container-results results="<%= workflowInstanceEditDisplayContext.getWorkflowTasks() %>" />
 
 							<liferay-ui:search-container-row
 								className="com.liferay.portal.kernel.workflow.WorkflowTask"
 								modelVar="workflowTask"
 								stringKey="<%= true %>"
 							>
-								<liferay-ui:search-container-row-parameter
-									name="workflowTask"
-									value="<%= workflowTask %>"
-								/>
+								<liferay-ui:search-container-row-parameter name="workflowTask" value="<%= workflowTask %>" />
 
-								<liferay-ui:search-container-column-text
-									name="task"
-								>
+								<liferay-ui:search-container-column-text name="task">
 									<span class="task-name" id="<%= workflowTask.getWorkflowTaskId() %>">
 										<liferay-ui:message key="<%= workflowInstanceEditDisplayContext.getTaskName(workflowTask) %>" />
 									</span>
 								</liferay-ui:search-container-column-text>
 
-								<liferay-ui:search-container-column-text
-									name="due-date"
-									value="<%= workflowInstanceEditDisplayContext.getTaskDueDate(workflowTask) %>"
-								/>
+								<liferay-ui:search-container-column-text name="due-date" value="<%= workflowInstanceEditDisplayContext.getTaskDueDate(workflowTask) %>" />
 
-								<liferay-ui:search-container-column-text
-									name="completed"
-									value="<%= workflowInstanceEditDisplayContext.getTaskCompleted(workflowTask) %>"
-								/>
+								<liferay-ui:search-container-column-text name="completed" value="<%= workflowInstanceEditDisplayContext.getTaskCompleted(workflowTask) %>" />
 							</liferay-ui:search-container-row>
 
-							<liferay-ui:search-iterator
-								displayStyle="list"
-								markupView="lexicon"
-							/>
+							<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 						</liferay-ui:search-container>
 					</liferay-ui:panel>
 				</c:if>
 
-				<liferay-ui:panel
-					markupView="lexicon"
-					title="activities"
-				>
+				<liferay-ui:panel markupView="lexicon" title="activities">
 					<%@ include file="/instance/workflow_logs.jspf" %>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>

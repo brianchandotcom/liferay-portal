@@ -93,26 +93,16 @@ CreationMenu creationMenu = new CreationMenu() {
 />
 
 <div class="container-fluid-1280">
-	<liferay-ui:search-container
-		searchContainer="<%= loggerSearchContainer %>"
-	>
-		<liferay-ui:search-container-row
-			className="java.util.Map.Entry"
-			modelVar="entry"
-		>
+	<liferay-ui:search-container searchContainer="<%= loggerSearchContainer %>">
+		<liferay-ui:search-container-row className="java.util.Map.Entry" modelVar="entry">
 
 			<%
 			String name = (String)entry.getKey();
 			%>
 
-			<liferay-ui:search-container-column-text
-				name="category"
-				value="<%= HtmlUtil.escape(name) %>"
-			/>
+			<liferay-ui:search-container-column-text name="category" value="<%= HtmlUtil.escape(name) %>" />
 
-			<liferay-ui:search-container-column-text
-				name="level"
-			>
+			<liferay-ui:search-container-column-text name="level">
 
 				<%
 				Logger logger = (Logger)entry.getValue();
@@ -136,12 +126,14 @@ CreationMenu creationMenu = new CreationMenu() {
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 
 	<aui:button-row>
-		<aui:button cssClass="save-server-button" data-cmd="updateLogLevels" value="save" />
+		<aui:button
+			cssClass="save-server-button"
+			data-cmd="updateLogLevels"
+			value="save"
+		/>
 	</aui:button-row>
 </div>

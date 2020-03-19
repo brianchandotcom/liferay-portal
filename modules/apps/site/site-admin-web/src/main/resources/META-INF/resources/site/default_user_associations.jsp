@@ -53,9 +53,7 @@ for (long defaultTeamId : defaultTeamIds) {
 }
 %>
 
-<liferay-util:buffer
-	var="removeRoleIcon"
->
+<liferay-util:buffer var="removeRoleIcon">
 	<liferay-ui:icon
 		icon="times-circle"
 		markupView="lexicon"
@@ -76,9 +74,7 @@ for (long defaultTeamId : defaultTeamIds) {
 	id="siteRolesSearchContainer"
 	total="<%= defaultSiteRoles.size() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= defaultSiteRoles %>"
-	/>
+	<liferay-ui:search-container-results results="<%= defaultSiteRoles %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Role"
@@ -96,14 +92,15 @@ for (long defaultTeamId : defaultTeamIds) {
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-		paginate="<%= false %>"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
 <div class="button-holder">
-	<aui:button cssClass="modify-link" id="selectSiteRoleLink" value="select" />
+	<aui:button
+		cssClass="modify-link"
+		id="selectSiteRoleLink"
+		value="select"
+	/>
 </div>
 
 <h4 class="text-default"><liferay-ui:message key="teams" /> <liferay-ui:icon-help message="default-teams-assignment-help" /></h4>
@@ -115,9 +112,7 @@ for (long defaultTeamId : defaultTeamIds) {
 	id="teamsSearchContainer"
 	total="<%= defaultTeams.size() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= defaultTeams %>"
-	/>
+	<liferay-ui:search-container-results results="<%= defaultTeams %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Team"
@@ -135,14 +130,15 @@ for (long defaultTeamId : defaultTeamIds) {
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-		paginate="<%= false %>"
-	/>
+	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
 <div class="button-holder">
-	<aui:button cssClass="modify-link" id="selectTeamLink" value="select" />
+	<aui:button
+		cssClass="modify-link"
+		id="selectTeamLink"
+		value="select"
+	/>
 </div>
 
 <aui:script use="escape,liferay-search-container">

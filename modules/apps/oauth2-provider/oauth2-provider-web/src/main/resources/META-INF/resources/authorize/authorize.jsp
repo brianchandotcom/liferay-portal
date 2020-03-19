@@ -31,14 +31,17 @@ if (Validator.isNotNull(replyTo) && !replyTo.startsWith(PortalUtil.getPortalURL(
 %>
 
 <div class="closed consent container-fluid-1280">
-	<aui:form action="<%= replyTo %>" data-senna-off="true" method="post" name="fm">
+	<aui:form
+		action="<%= replyTo %>"
+		data-senna-off="true"
+		method="post"
+		name="fm"
+	>
 		<aui:fieldset-group markupView="lexicon">
 			<div class="panel-body">
 				<div class="app-icon aspect-ratio-bg-cover" style="background-image: url('<%= HtmlUtil.escapeAttribute(oAuth2AuthorizePortletDisplayContext.getThumbnailURL()) %>');"></div>
 
-				<liferay-ui:user-portrait
-					user="<%= user %>"
-				/>
+				<liferay-ui:user-portrait user="<%= user %>" />
 
 				<c:choose>
 					<c:when test="<%= oAuth2Application == null %>">
@@ -85,9 +88,7 @@ if (Validator.isNotNull(replyTo) && !replyTo.startsWith(PortalUtil.getPortalURL(
 
 								<li class="list-group-item list-group-item-flex">
 									<div class="autofit-col">
-										<clay:icon
-											symbol="check"
-										/>
+										<clay:icon symbol="check" />
 									</div>
 
 									<div class="autofit-col autofit-col-expand">
@@ -120,17 +121,31 @@ if (Validator.isNotNull(replyTo) && !replyTo.startsWith(PortalUtil.getPortalURL(
 								}
 							%>
 
-								<aui:input name="<%= HtmlUtil.escapeAttribute(paramName) %>" type="hidden" useNamespace="<%= false %>" value="<%= oAuth2Parameters.get(paramName) %>" />
+								<aui:input
+									name="<%= HtmlUtil.escapeAttribute(paramName) %>"
+									type="hidden"
+									useNamespace="<%= false %>"
+									value="<%= oAuth2Parameters.get(paramName) %>"
+								/>
 
 							<%
 							}
 							%>
 
-							<aui:input name="oauthDecision" type="hidden" useNamespace="<%= false %>" value="deny" />
+							<aui:input
+								name="oauthDecision"
+								type="hidden"
+								useNamespace="<%= false %>"
+								value="deny"
+							/>
 
 							<aui:button id="allow" value="authorize" />
 
-							<aui:button id="cancel" type="submit" value="cancel" />
+							<aui:button
+								id="cancel"
+								type="submit"
+								value="cancel"
+							/>
 
 							<script>
 								var allowButton = document.getElementById('<portlet:namespace />allow');

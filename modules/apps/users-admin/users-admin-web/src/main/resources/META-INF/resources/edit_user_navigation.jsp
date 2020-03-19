@@ -68,11 +68,33 @@ redirect = HttpUtil.addParameter(redirect, renderResponse.getNamespace() + "scre
 
 <portlet:actionURL name="<%= actionCommandName %>" var="actionCommandURL" />
 
-<aui:form action="<%= actionCommandURL %>" cssClass="portlet-users-admin-edit-user" data-senna-off="true" method="post" name="fm">
-	<aui:input name="p_u_i_d" type="hidden" value="<%= selUserId %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="screenNavigationCategoryKey" type="hidden" value="<%= screenNavigationCategoryKey %>" />
-	<aui:input name="screenNavigationEntryKey" type="hidden" value="<%= screenNavigationEntryKey %>" />
+<aui:form
+	action="<%= actionCommandURL %>"
+	cssClass="portlet-users-admin-edit-user"
+	data-senna-off="true"
+	method="post"
+	name="fm"
+>
+	<aui:input
+		name="p_u_i_d"
+		type="hidden"
+		value="<%= selUserId %>"
+	/>
+	<aui:input
+		name="redirect"
+		type="hidden"
+		value="<%= redirect %>"
+	/>
+	<aui:input
+		name="screenNavigationCategoryKey"
+		type="hidden"
+		value="<%= screenNavigationCategoryKey %>"
+	/>
+	<aui:input
+		name="screenNavigationEntryKey"
+		type="hidden"
+		value="<%= screenNavigationEntryKey %>"
+	/>
 
 	<div class="sheet sheet-lg">
 		<c:if test="<%= (boolean)request.getAttribute(UsersAdminWebKeys.SHOW_TITLE) %>">

@@ -31,14 +31,9 @@ List<SPIDefinition> spiDefinitions = SPIDefinitionServiceUtil.getSPIDefinitions(
 	iteratorURL="<%= portletURL %>"
 	total="<%= spiDefinitions.size() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= ListUtil.subList(spiDefinitions, searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
+	<liferay-ui:search-container-results results="<%= ListUtil.subList(spiDefinitions, searchContainer.getStart(), searchContainer.getEnd()) %>" />
 
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.resiliency.spi.model.SPIDefinition"
-		modelVar="spiDefinition"
-	>
+	<liferay-ui:search-container-row className="com.liferay.portal.resiliency.spi.model.SPIDefinition" modelVar="spiDefinition">
 		<liferay-portlet:renderURL varImpl="rowURL">
 			<portlet:param name="mvcPath" value="/edit_spi_definition.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -46,10 +41,7 @@ List<SPIDefinition> spiDefinitions = SPIDefinitionServiceUtil.getSPIDefinitions(
 			<portlet:param name="spiDefinitionId" value="<%= String.valueOf(spiDefinition.getSpiDefinitionId()) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-ui:search-container-column-text
-			cssClass="spi-status-column"
-			name="status"
-		>
+		<liferay-ui:search-container-column-text cssClass="spi-status-column" name="status">
 			<strong class="label <%= SPIAdminConstants.getStatusCssClass(spiDefinition.getStatus()) %>" data-id="<%= String.valueOf(spiDefinition.getSpiDefinitionId()) %>">
 				<liferay-ui:message key="<%= spiDefinition.getStatusLabel() %>" />
 			</strong>

@@ -37,10 +37,7 @@ else {
 String searchContainerId = "publishLayoutProcesses";
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= stagingProcessesWebDisplayContext.getNavigationItems() %>"
-/>
+<clay:navigation-bar inverted="<%= true %>" navigationItems="<%= stagingProcessesWebDisplayContext.getNavigationItems() %>" />
 
 <c:choose>
 	<c:when test='<%= tabs1.equals("processes") %>'>
@@ -59,7 +56,11 @@ String searchContainerId = "publishLayoutProcesses";
 </c:choose>
 
 <aui:script use="liferay-staging-processes-export-import">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="publishLayouts" var="publishProcessesURL">
+	<liferay-portlet:resourceURL
+		copyCurrentRenderParameters="<%= false %>"
+		id="publishLayouts"
+		var="publishProcessesURL"
+	>
 		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 		<portlet:param name="tabs1" value="<%= tabs1 %>" />

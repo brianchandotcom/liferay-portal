@@ -117,14 +117,14 @@ public class BatchEngineTaskMethodRegistryImpl
 
 			Class<?> itemClass = _getItemClass(batchEngineTaskItemDelegate);
 
-			String batchEngineTaskItemDelegateName =
-				_getBatchEngineTaskItemDelegateName(serviceReference);
-
 			Map<String, BatchEngineTaskItemDelegateExecutorCreator>
 				batchEngineTaskItemDelegateExecutorCreatorMap =
 					_batchEngineTaskItemDelegateExecutorCreators.
 						computeIfAbsent(
 							itemClass, key -> new ConcurrentHashMap<>());
+
+			String batchEngineTaskItemDelegateName =
+				_getBatchEngineTaskItemDelegateName(serviceReference);
 
 			if (batchEngineTaskItemDelegateExecutorCreatorMap.containsKey(
 					batchEngineTaskItemDelegateName)) {

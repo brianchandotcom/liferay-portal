@@ -16,6 +16,9 @@ package com.liferay.layout.taglib.internal.servlet;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
+import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.util.LayoutClassedModelUsageRecorder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -51,10 +54,28 @@ public class ServletContextUtil {
 		return _fragmentRendererTracker;
 	}
 
+	public static final InfoDisplayContributorTracker
+		getInfoDisplayContributorTracker() {
+
+		return _infoDisplayContributorTracker;
+	}
+
 	public static final Map<String, LayoutClassedModelUsageRecorder>
 		getLayoutClassedModelUsageRecorders() {
 
 		return _layoutClassedModelUsageRecorders;
+	}
+
+	public static final LayoutListRetrieverTracker
+		getLayoutListRetrieverTracker() {
+
+		return _layoutListRetrieverTracker;
+	}
+
+	public static final ListObjectReferenceFactoryTracker
+		getListObjectReferenceFactoryTracker() {
+
+		return _listObjectReferenceFactoryTracker;
 	}
 
 	public static final ServletContext getServletContext() {
@@ -111,6 +132,27 @@ public class ServletContextUtil {
 		_fragmentRendererTracker = fragmentRendererTracker;
 	}
 
+	@Reference(unbind = "-")
+	protected void setInfoDisplayContributorTracker(
+		InfoDisplayContributorTracker infoDisplayContributorTracker) {
+
+		_infoDisplayContributorTracker = infoDisplayContributorTracker;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutListRetrieverTracker(
+		LayoutListRetrieverTracker layoutListRetrieverTracker) {
+
+		_layoutListRetrieverTracker = layoutListRetrieverTracker;
+	}
+
+	@Reference(unbind = "-")
+	protected void setListObjectReferenceFactoryTracker(
+		ListObjectReferenceFactoryTracker listObjectReferenceFactoryTracker) {
+
+		_listObjectReferenceFactoryTracker = listObjectReferenceFactoryTracker;
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.taglib)",
 		unbind = "-"
@@ -122,8 +164,12 @@ public class ServletContextUtil {
 	private static FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
 	private static FragmentRendererTracker _fragmentRendererTracker;
+	private static InfoDisplayContributorTracker _infoDisplayContributorTracker;
 	private static final Map<String, LayoutClassedModelUsageRecorder>
 		_layoutClassedModelUsageRecorders = new ConcurrentHashMap<>();
+	private static LayoutListRetrieverTracker _layoutListRetrieverTracker;
+	private static ListObjectReferenceFactoryTracker
+		_listObjectReferenceFactoryTracker;
 	private static ServletContext _servletContext;
 
 }

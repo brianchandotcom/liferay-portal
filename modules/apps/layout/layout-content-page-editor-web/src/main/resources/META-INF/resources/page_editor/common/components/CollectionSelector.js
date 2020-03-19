@@ -32,6 +32,7 @@ export default function CollectionSelector({
 			label={label}
 			onItemSelect={onCollectionSelect}
 			selectedItemTitle={collectionTitle}
+			showMappedItems={false}
 		/>
 	);
 }

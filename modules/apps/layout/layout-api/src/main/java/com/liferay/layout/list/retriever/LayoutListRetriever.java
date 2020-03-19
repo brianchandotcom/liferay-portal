@@ -27,4 +27,7 @@ public interface LayoutListRetriever
 	public List getList(
 		S s, LayoutListRetrieverContext layoutListRetrieverContext);
 
+	public int getListCount(
+		S s, LayoutListRetrieverContext layoutListRetrieverContext);
+
 }

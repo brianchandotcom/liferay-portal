@@ -14,11 +14,14 @@
 
 package com.liferay.layout.taglib.internal.display.context;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
+import com.liferay.layout.list.retriever.LayoutListRetriever;
+import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
+import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
+import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -39,6 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,14 +55,18 @@ public class RenderFragmentLayoutDisplayContext {
 
 	public RenderFragmentLayoutDisplayContext(
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
+		HttpServletResponse httpServletResponse,
+		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		InfoDisplayObjectProvider infoDisplayObjectProvider,
+		LayoutListRetrieverTracker layoutListRetrieverTracker,
+		ListObjectReferenceFactoryTracker listObjectReferenceFactoryTracker) {
 
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
-
-		_infoDisplayContributorTracker =
-			(InfoDisplayContributorTracker)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
+		_infoDisplayContributorTracker = infoDisplayContributorTracker;
+		_infoDisplayObjectProvider = infoDisplayObjectProvider;
+		_layoutListRetrieverTracker = layoutListRetrieverTracker;
+		_listObjectReferenceFactoryTracker = listObjectReferenceFactoryTracker;
 	}
 
 	public String getBackgroundImage(JSONObject rowConfigJSONObject)
@@ -70,31 +78,25 @@ public class RenderFragmentLayoutDisplayContext {
 
 		String mappedField = rowConfigJSONObject.getString("mappedField");
 
-		if (Validator.isNotNull(mappedField)) {
-			InfoDisplayObjectProvider infoDisplayObjectProvider =
-				(InfoDisplayObjectProvider)_httpServletRequest.getAttribute(
-					AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+		if (Validator.isNotNull(mappedField) &&
+			(_infoDisplayContributorTracker != null) &&
+			(_infoDisplayObjectProvider != null)) {
 
-			if ((_infoDisplayContributorTracker != null) &&
-				(infoDisplayObjectProvider != null)) {
+			InfoDisplayContributor infoDisplayContributor =
+				_infoDisplayContributorTracker.getInfoDisplayContributor(
+					PortalUtil.getClassName(
+						_infoDisplayObjectProvider.getClassNameId()));
 
-				InfoDisplayContributor infoDisplayContributor =
-					_infoDisplayContributorTracker.getInfoDisplayContributor(
-						PortalUtil.getClassName(
-							infoDisplayObjectProvider.getClassNameId()));
+			if (infoDisplayContributor != null) {
+				Object object = infoDisplayContributor.getInfoDisplayFieldValue(
+					_infoDisplayObjectProvider.getDisplayObject(), mappedField,
+					LocaleUtil.getDefault());
 
-				if (infoDisplayContributor != null) {
-					Object object =
-						infoDisplayContributor.getInfoDisplayFieldValue(
-							infoDisplayObjectProvider.getDisplayObject(),
-							mappedField, LocaleUtil.getDefault());
+				if (object instanceof JSONObject) {
+					JSONObject fieldValueJSONObject = (JSONObject)object;
 
-					if (object instanceof JSONObject) {
-						JSONObject fieldValueJSONObject = (JSONObject)object;
-
-						return fieldValueJSONObject.getString(
-							"url", StringPool.BLANK);
-					}
+					return fieldValueJSONObject.getString(
+						"url", StringPool.BLANK);
 				}
 			}
 		}
@@ -140,6 +142,40 @@ public class RenderFragmentLayoutDisplayContext {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public List getCollection(
+		JSONObject jsonObject, long[] segmentsExperienceIds) {
+
+		if (jsonObject.length() <= 0) {
+			return Collections.emptyList();
+		}
+
+		String type = jsonObject.getString("type");
+
+		LayoutListRetriever layoutListRetriever =
+			_layoutListRetrieverTracker.getLayoutListRetriever(type);
+
+		if (layoutListRetriever == null) {
+			return Collections.emptyList();
+		}
+
+		ListObjectReferenceFactory listObjectReferenceFactory =
+			_listObjectReferenceFactoryTracker.getListObjectReference(type);
+
+		if (listObjectReferenceFactory == null) {
+			return Collections.emptyList();
+		}
+
+		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
+			new DefaultLayoutListRetrieverContext();
+
+		defaultLayoutListRetrieverContext.setSegmentsExperienceIdsOptional(
+			segmentsExperienceIds);
+
+		return layoutListRetriever.getList(
+			listObjectReferenceFactory.getListObjectReference(jsonObject),
+			defaultLayoutListRetrieverContext);
 	}
 
 	public String getPortletPaths() {
@@ -189,5 +225,9 @@ public class RenderFragmentLayoutDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private final InfoDisplayObjectProvider _infoDisplayObjectProvider;
+	private final LayoutListRetrieverTracker _layoutListRetrieverTracker;
+	private final ListObjectReferenceFactoryTracker
+		_listObjectReferenceFactoryTracker;
 
 }

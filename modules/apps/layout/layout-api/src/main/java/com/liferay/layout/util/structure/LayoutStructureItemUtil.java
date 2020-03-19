@@ -26,6 +26,18 @@ public class LayoutStructureItemUtil {
 	public static LayoutStructureItem create(
 		String itemType, String parentItemId) {
 
+		if (Objects.equals(
+				itemType, LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
+
+			return new CollectionLayoutStructureItem(parentItemId);
+		}
+
+		if (Objects.equals(
+				itemType, LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM)) {
+
+			return new CollectionItemLayoutStructureItem(parentItemId);
+		}
+
 		if (Objects.equals(itemType, LayoutDataItemTypeConstants.TYPE_COLUMN)) {
 			return new ColumnLayoutStructureItem(parentItemId);
 		}

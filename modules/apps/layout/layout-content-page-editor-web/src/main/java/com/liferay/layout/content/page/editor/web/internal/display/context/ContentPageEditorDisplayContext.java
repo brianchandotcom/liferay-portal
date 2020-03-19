@@ -267,6 +267,9 @@ public class ContentPageEditorDisplayContext {
 				"getAvailableTemplatesURL",
 				getResourceURL("/content_layout/get_available_templates")
 			).put(
+				"getCollectionFieldURL",
+				getResourceURL("/content_layout/get_collection_field")
+			).put(
 				"getExperienceUsedPortletsURL",
 				getResourceURL("/content_layout/get_experience_used_portlets")
 			).put(
@@ -284,6 +287,9 @@ public class ContentPageEditorDisplayContext {
 				"layoutConversionWarningMessages",
 				MultiSessionMessages.get(
 					_portletRequest, "layoutConversionWarningMessages")
+			).put(
+				"mappingFieldsURL",
+				getResourceURL("/content_layout/get_mapping_fields")
 			).put(
 				"masterUsed", _isMasterUsed()
 			).put(

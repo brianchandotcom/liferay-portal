@@ -27,6 +27,7 @@ import {useActiveItemId} from '../Controls';
 import {
 	useEditableProcessorClickPosition,
 	useEditableProcessorUniqueId,
+	useIsProcessorEnabled,
 	useSetEditableProcessorUniqueId,
 } from './EditableProcessorContext';
 import getAllEditables from './getAllEditables';
@@ -42,6 +43,7 @@ export default function FragmentContentProcessor({
 	const editableProcessorClickPosition = useEditableProcessorClickPosition();
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
+	const isProcessorEnabled = useIsProcessorEnabled();
 	const languageId = useSelector(
 		state => state.languageId || config.defaultLanguageId
 	);
@@ -53,15 +55,16 @@ export default function FragmentContentProcessor({
 	const editableElement = useMemo(
 		() =>
 			element
-				? getAllEditables(element).find(
-						editableElement =>
+				? getAllEditables(element).find(editableElement =>
+						isProcessorEnabled(
 							getEditableUniqueId(
 								fragmentEntryLinkId,
 								getEditableElementId(editableElement)
-							) === editableProcessorUniqueId
+							)
+						)
 				  )
 				: null,
-		[editableProcessorUniqueId, element, fragmentEntryLinkId]
+		[element, fragmentEntryLinkId, isProcessorEnabled]
 	);
 
 	const editableValues = useSelector(

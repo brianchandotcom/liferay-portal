@@ -12,27 +12,28 @@
  * details.
  */
 
-package com.liferay.layout.util.constants;
+import {config} from '../config/index';
+import serviceFetch from './serviceFetch';
 
-/**
- * @author Eudaldo Alonso
- */
-public class LayoutDataItemTypeConstants {
+export default {
+	/**
+	 * Get an asset's value
+	 * @param {object} options
+	 * @param {string} options.layoutObjectReference
+	 * @param {function} options.onNetworkStatus
+	 */
+	getCollectionField({layoutObjectReference, onNetworkStatus, store}) {
+		const {segmentsExperienceId} = store;
 
-	public static final String TYPE_COLLECTION = "collection";
-
-	public static final String TYPE_COLLECTION_ITEM = "collection-item";
-
-	public static final String TYPE_COLUMN = "column";
-
-	public static final String TYPE_CONTAINER = "container";
-
-	public static final String TYPE_DROP_ZONE = "drop-zone";
-
-	public static final String TYPE_FRAGMENT = "fragment";
-
-	public static final String TYPE_ROOT = "root";
-
-	public static final String TYPE_ROW = "row";
-
-}
+		return serviceFetch(
+			config.getCollectionFieldURL,
+			{
+				body: {
+					layoutObjectReference,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+};

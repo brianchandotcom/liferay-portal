@@ -5,6 +5,7 @@
 		"@clayui/loading-indicator": "^3.0.1",
 		"frontend-js-web": "*",
 		"metal-state": "2.16.8",
+		"prop-types": "^15.7.2",
 		"react": "16.13.0"
 	},
 	"name": "redirect-web",

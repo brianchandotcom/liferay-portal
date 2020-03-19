@@ -72,6 +72,8 @@ else {
 		<%
 			Map<String, Object> data = HashMapBuilder.<String, Object>put(
 				"initialUrl", (redirectEntry != null) ? redirectEntry.getDestinationURL() : null
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
 			).build();
 		%>
 

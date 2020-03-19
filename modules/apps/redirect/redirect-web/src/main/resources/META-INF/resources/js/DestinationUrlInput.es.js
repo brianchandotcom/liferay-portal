@@ -16,6 +16,7 @@ import ClayIcon from '@clayui/icon';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {fetch} from 'frontend-js-web';
+import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 const VALIDATION_TYPE = {
@@ -52,7 +53,7 @@ const Notification = ({type}) => {
 	}
 };
 
-const DestinationUrlInput = ({initialUrl}) => {
+const DestinationUrlInput = ({initialUrl, namespace}) => {
 	const [destinationUrl, setDestinationUrl] = useState(initialUrl);
 	const [validationType, setValidationType] = useState('');
 
@@ -82,7 +83,7 @@ const DestinationUrlInput = ({initialUrl}) => {
 
 	return (
 		<ClayForm.Group className={validationType}>
-			<label htmlFor="destinationUrlInput">
+			<label htmlFor={`${namespace}destinationURL`}>
 				{Liferay.Language.get('destination-url')}
 
 				<span className="inline-item-after reference-mark">
@@ -95,8 +96,9 @@ const DestinationUrlInput = ({initialUrl}) => {
 			</label>
 
 			<ClayInput
-				id="destinationUrlInput"
+				id={`${namespace}destinationURL`}
 				onBlur={onInputBlur}
+				name={`${namespace}destinationURL`}
 				required
 				value={destinationUrl}
 				type="text"
@@ -111,6 +113,11 @@ const DestinationUrlInput = ({initialUrl}) => {
 			)}
 		</ClayForm.Group>
 	);
+};
+
+DestinationUrlInput.propTypes = {
+	initialUrl: PropTypes.string.isRequired,
+	namespace: PropTypes.string.isRequired,
 };
 
 export default DestinationUrlInput;

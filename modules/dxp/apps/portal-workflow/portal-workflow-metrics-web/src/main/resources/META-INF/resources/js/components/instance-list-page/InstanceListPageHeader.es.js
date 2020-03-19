@@ -46,6 +46,17 @@ const Header = ({
 	const previousCount = usePrevious(totalCount);
 	const {setVisibleModal} = useContext(ModalContext);
 
+	const handleClick = useCallback(
+		(bulkModal, singleModal) => {
+			const bulkOperation =
+				selectedItems.length > 1 ||
+				selectedItems[0].taskNames.length > 1;
+
+			setVisibleModal(bulkOperation ? bulkModal : singleModal);
+		},
+		[selectedItems, setVisibleModal]
+	);
+
 	const compareId = itemId => ({id}) => id === itemId;
 
 	const kebabItems = [
@@ -57,17 +68,14 @@ const Header = ({
 			},
 		},
 		{
+			icon: 'date',
+			label: Liferay.Language.get('update-tasks-due-dates'),
+			onClick: () => handleClick('bulkUpdateDueDate', 'updateDueDate'),
+		},
+		{
 			icon: 'change',
 			label: Liferay.Language.get('reassign-task'),
-			onClick: () => {
-				const bulkOperation =
-					selectedItems.length > 1 ||
-					selectedItems[0].taskNames.length > 1;
-
-				setVisibleModal(
-					bulkOperation ? 'bulkReassign' : 'singleReassign'
-				);
-			},
+			onClick: () => handleClick('bulkReassign', 'singleReassign'),
 		},
 	];
 
@@ -90,7 +98,7 @@ const Header = ({
 			const assignedToUser = !!assigneeUsers.find(({id}) => id == userId);
 			const completed = status === processStatusConstants.completed;
 			const selected = clear && selectedItems.find(compareId(id));
-			const unassigned = assigneeUsers.length === 0;
+			const unassigned = !!assigneeUsers.find(({id}) => id === -1);
 
 			return (unassigned || assignedToUser) && !completed && !selected;
 		},
@@ -111,7 +119,11 @@ const Header = ({
 			remainingItems.length > 0 &&
 			previousCount === totalCount
 		) {
-			setSelectedItems(items.filter(isRemainingItem()));
+			setSelectedItems([
+				...selectedItems,
+				...items.filter(isRemainingItem()),
+			]);
+			setSelectAll(items.length === remainingItems.length);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [items]);

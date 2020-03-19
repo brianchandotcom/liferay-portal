@@ -22,8 +22,9 @@ import InstanceDetailsModal from './modal/instance-details/InstanceDetailsModal.
 import BulkReassignModal from './modal/reassign/bulk/BulkReassignModal.es';
 import SingleReassignModal from './modal/reassign/single/SingleReassignModal.es';
 import BulkTransitionModal from './modal/transition/bulk/BulkTransitionModal.es';
-import {SingleTransitionModal} from './modal/transition/single/SingleTransitionModal.es';
-import {SingleUpdateDueDateModal} from './modal/update-due-date/SingleUpdateDueDateModal.es';
+import SingleTransitionModal from './modal/transition/single/SingleTransitionModal.es';
+import BulkUpdateDueDateModal from './modal/update-due-date/BulkUpdateDueDateModal.es';
+import SingleUpdateDueDateModal from './modal/update-due-date/SingleUpdateDueDateModal.es';
 
 const Body = ({
 	data: {items, totalCount},
@@ -92,27 +93,32 @@ const Body = ({
 				</PromisesResolver.Rejected>
 			</div>
 
-			<Body.BulkReassignModal />
-
-			<Body.BulkTransitionModal />
-
-			<Body.InstanceDetailsModal />
-
-			<Body.SingleReassignModal />
-
-			<Body.SingleTransitionModal />
-
-			<Body.SingleUpdateDueDateModal />
+			<Body.ModalWrapper />
 		</PromisesResolver>
 	);
 };
 
+const ModalWrapper = () => {
+	return (
+		<>
+			<BulkReassignModal />
+
+			<BulkTransitionModal />
+
+			<BulkUpdateDueDateModal />
+
+			<InstanceDetailsModal />
+
+			<SingleReassignModal />
+
+			<SingleTransitionModal />
+
+			<SingleUpdateDueDateModal />
+		</>
+	);
+};
+
 Body.Table = Table;
-Body.BulkReassignModal = BulkReassignModal;
-Body.BulkTransitionModal = BulkTransitionModal;
-Body.InstanceDetailsModal = InstanceDetailsModal;
-Body.SingleReassignModal = SingleReassignModal;
-Body.SingleTransitionModal = SingleTransitionModal;
-Body.SingleUpdateDueDateModal = SingleUpdateDueDateModal;
+Body.ModalWrapper = ModalWrapper;
 
 export {Body};

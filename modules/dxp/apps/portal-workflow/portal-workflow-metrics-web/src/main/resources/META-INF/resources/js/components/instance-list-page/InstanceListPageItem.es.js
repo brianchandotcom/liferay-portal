@@ -12,7 +12,7 @@
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import QuickActionKebab from '../../shared/components/quick-action-kebab/QuickActionKebab.es';
 import moment from '../../shared/util/moment.es';
@@ -74,15 +74,12 @@ const Item = ({totalCount, ...instance}) => {
 	}, [selectedItems]);
 
 	const assignedToUser = !!assigneeUsers.find(({id}) => id == userId);
+	const assigneeUserNames = assigneeUsers.map(user => user.name).join(', ');
 	const completed = status === processStatusConstants.completed;
-	const unassigned = assigneeUsers.length === 0;
+	const unassigned = !!assigneeUsers.find(({id}) => id === -1);
 
 	const disableCheckbox = (!assignedToUser && !unassigned) || completed;
 	const slaStatusIcon = getSLAStatusIcon(slaStatus);
-
-	const assigneeUserNames = unassigned
-		? Liferay.Language.get('unassigned')
-		: assigneeUsers.map(user => user.name).join(', ');
 
 	const formattedAssignees = !completed
 		? assigneeUserNames
@@ -185,42 +182,29 @@ const QuickActionMenu = ({disabled, instance}) => {
 	const {setSelectedItem, setSelectedItems} = useContext(InstanceListContext);
 	const {transitions = [], taskNames = []} = instance;
 
-	const handleClickReassignTask = useCallback(
-		() => {
-			if (taskNames.length > 1) {
-				setSelectedItems([instance]);
-				setVisibleModal('bulkReassign');
-			}
-			else {
-				setSelectedItem(instance);
-				setVisibleModal('singleReassign');
-			}
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[instance]
-	);
-
-	const handleClickUpdateDueDate = useCallback(
-		() => {
+	const handleClick = (bulkModal, singleModal) => {
+		if (taskNames.length > 1) {
+			setSelectedItems([instance]);
+			setVisibleModal(bulkModal);
+		}
+		else {
 			setSelectedItem(instance);
-			setVisibleModal('updateDueDate');
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[instance]
-	);
+			setVisibleModal(singleModal);
+		}
+	};
 
 	const transitionLabel = capitalize(Liferay.Language.get('transition'));
 	const updateDueDateItem = {
 		icon: 'date',
 		label: Liferay.Language.get('update-due-date'),
-		onClick: handleClickUpdateDueDate,
+		onClick: () => handleClick('bulkUpdateDueDate', 'updateDueDate'),
 	};
 
 	const kebabItems = [
 		{
 			icon: 'change',
 			label: Liferay.Language.get('reassign-task'),
-			onClick: handleClickReassignTask,
+			onClick: () => handleClick('bulkReassign', 'singleReassign'),
 		},
 		updateDueDateItem,
 	];

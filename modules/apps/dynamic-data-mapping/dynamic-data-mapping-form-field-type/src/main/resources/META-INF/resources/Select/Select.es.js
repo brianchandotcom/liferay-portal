@@ -238,13 +238,9 @@ const Select = ({
 					onCloseButtonClicked({event, value: newValue});
 				}}
 				onTriggerClicked={event => {
-					event.preventDefault();
-
 					if (readOnly) {
 						return;
 					}
-
-					triggerElementRef.current = event.target;
 
 					setExpand(!expand);
 					onExpand({event, expand: !expand});
@@ -252,6 +248,7 @@ const Select = ({
 				options={options}
 				predefinedValue={predefinedValue}
 				readOnly={readOnly}
+				ref={triggerElementRef}
 				value={currentValue}
 				{...otherProps}
 			/>

@@ -34,7 +34,6 @@ import java.nio.file.Paths;
 import java.util.Dictionary;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
@@ -176,7 +175,7 @@ public class FileinstallDeployTest {
 		Bundle bundle = null;
 
 		try {
-			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, baseVersion, null);
+			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, baseVersion);
 
 			installCountDownLatch.await();
 
@@ -196,7 +195,7 @@ public class FileinstallDeployTest {
 			Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
 			Assert.assertEquals(baseVersion, bundle.getVersion());
 
-			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, updateVersion, null);
+			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, updateVersion);
 
 			updateCountDownLatch.await();
 
@@ -216,9 +215,7 @@ public class FileinstallDeployTest {
 		}
 	}
 
-	private void _createJAR(
-			Path path, String symbolicName, Version version,
-			String fragmentHost)
+	private void _createJAR(Path path, String symbolicName, Version version)
 		throws IOException {
 
 		try (OutputStream outputStream = Files.newOutputStream(path);
@@ -232,10 +229,6 @@ public class FileinstallDeployTest {
 			attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
 			attributes.putValue(Constants.BUNDLE_SYMBOLICNAME, symbolicName);
 			attributes.putValue(Constants.BUNDLE_VERSION, version.toString());
-
-			if (fragmentHost != null) {
-				attributes.putValue(Constants.FRAGMENT_HOST, fragmentHost);
-			}
 
 			attributes.putValue("Manifest-Version", "2");
 

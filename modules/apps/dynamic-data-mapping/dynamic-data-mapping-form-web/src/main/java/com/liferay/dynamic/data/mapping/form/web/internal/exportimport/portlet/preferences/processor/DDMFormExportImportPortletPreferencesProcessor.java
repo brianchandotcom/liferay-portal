@@ -96,7 +96,7 @@ public class DDMFormExportImportPortletPreferencesProcessor
 		long groupId = GetterUtil.getLong(
 			portletPreferences.getValue("groupId", null));
 
-		if (groupId <= 0) {
+		if (groupId == 0) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"No group ID found in preferences of portlet " + portletId);
@@ -108,8 +108,8 @@ public class DDMFormExportImportPortletPreferencesProcessor
 		Group group = _groupLocalService.fetchGroup(groupId);
 
 		if (group == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("No group found with group ID " + groupId);
+			if (_log.isWarnEnabled()) {
+				_log.warn("No group found with group ID " + groupId);
 			}
 
 			return portletPreferences;

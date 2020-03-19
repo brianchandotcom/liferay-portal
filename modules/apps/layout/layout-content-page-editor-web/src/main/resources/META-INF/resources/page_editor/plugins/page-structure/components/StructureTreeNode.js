@@ -71,6 +71,7 @@ export default function StructureTreeNode({node}) {
 						origin: ITEM_ACTIVATION_ORIGINS.structureTree,
 					});
 				}}
+				onDoubleClick={event => event.stopPropagation()}
 			/>
 
 			<NameLabel

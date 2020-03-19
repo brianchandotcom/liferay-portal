@@ -28,10 +28,17 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
+import java.lang.reflect.Method;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.beanutils.BeanUtils;
 
 import org.junit.After;
 import org.junit.Ignore;
@@ -52,10 +59,47 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 		_deleteAccountUsers(_accountUsers);
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetAccountUsersPageWithSortString() throws Exception {
+		testGetAccountUsersPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, accountUser1, accountUser2) -> {
+				Class<?> clazz = accountUser1.getClass();
+
+				Method method = clazz.getMethod(
+					"get" +
+						StringUtil.upperCaseFirstLetter(entityField.getName()));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						accountUser1, entityField.getName(),
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						accountUser2, entityField.getName(),
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (StringUtil.matchesIgnoreCase(
+							entityField.getName(), "email")) {
+
+					BeanUtils.setProperty(
+						accountUser1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString() + "@liferay.com");
+					BeanUtils.setProperty(
+						accountUser2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString() + "@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						accountUser1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
+					BeanUtils.setProperty(
+						accountUser2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
+				}
+			});
 	}
 
 	@Ignore
@@ -66,7 +110,7 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"emailAddress", "screenName"};
+		return new String[] {"firstName", "lastName", "screenName"};
 	}
 
 	@Override

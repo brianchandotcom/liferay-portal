@@ -31,7 +31,7 @@ public class TableReferenceInfo<T extends Table<T>> {
 
 	public TableReferenceInfo(
 		TableReferenceDefinition<T> tableReferenceDefinition,
-		Column<T, ?> primaryKeyColumn,
+		Column<T, Long> primaryKeyColumn,
 		Map<Table<?>, List<Function<FromStep, JoinStep>>> parentJoinMap,
 		Map<Table<?>, List<Function<FromStep, JoinStep>>> childJoinMap) {
 
@@ -51,7 +51,7 @@ public class TableReferenceInfo<T extends Table<T>> {
 		return _parentJoinMap;
 	}
 
-	public Column<T, ?> getPrimaryKeyColumn() {
+	public Column<T, Long> getPrimaryKeyColumn() {
 		return _primaryKeyColumn;
 	}
 
@@ -63,7 +63,7 @@ public class TableReferenceInfo<T extends Table<T>> {
 		_childJoinMap;
 	private final Map<Table<?>, List<Function<FromStep, JoinStep>>>
 		_parentJoinMap;
-	private final Column<T, ?> _primaryKeyColumn;
+	private final Column<T, Long> _primaryKeyColumn;
 	private final TableReferenceDefinition<T> _tableReferenceDefinition;
 
 }

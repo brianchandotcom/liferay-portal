@@ -82,13 +82,18 @@ public class TableReferenceDefinitionManager {
 		@Override
 		public void modifiedService(
 			ServiceReference<TableReferenceDefinition> serviceReference,
-			TableReferenceInfo<?> tableReferenceDefinition) {
+			TableReferenceInfo<?> tableReferenceInfo) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<TableReferenceDefinition> serviceReference,
-			TableReferenceInfo<?> tableReferenceDefinition) {
+			TableReferenceInfo<?> tableReferenceInfo) {
+
+			TableReferenceDefinition<?> tableReferenceDefinition =
+				tableReferenceInfo.getTableReferenceDefinition();
+
+			_tableReferenceInfos.remove(tableReferenceDefinition.getTable());
 
 			_bundleContext.ungetService(serviceReference);
 		}
@@ -99,6 +104,7 @@ public class TableReferenceDefinitionManager {
 			_bundleContext = bundleContext;
 		}
 
+		@SuppressWarnings("unchecked")
 		private <T extends Table<T>> TableReferenceInfo<?>
 			_createTableReferenceContext(
 				TableReferenceDefinition<T> tableReferenceDefinition) {
@@ -125,10 +131,19 @@ public class TableReferenceDefinitionManager {
 				return null;
 			}
 
+			if (!Long.class.isAssignableFrom(primaryKeyColumn.getJavaType())) {
+				_log.error(
+					"Primary key column must be of long type for " +
+						tableReferenceDefinition);
+
+				return null;
+			}
+
 			TableReferenceDefinitionHelperImpl<T>
 				tableReferenceDefinitionHelperImpl =
 					new TableReferenceDefinitionHelperImpl<>(
-						tableReferenceDefinition, primaryKeyColumn);
+						tableReferenceDefinition,
+						(Column<T, Long>)primaryKeyColumn);
 
 			tableReferenceDefinition.defineTableReferences(
 				tableReferenceDefinitionHelperImpl);
@@ -137,8 +152,7 @@ public class TableReferenceDefinitionManager {
 				tableReferenceDefinitionHelperImpl.getTableReferenceInfo();
 
 			if (tableReferenceInfo != null) {
-				_tableReferenceInfos.put(
-					tableReferenceDefinition.getTable(), tableReferenceInfo);
+				_tableReferenceInfos.put(table, tableReferenceInfo);
 			}
 
 			return tableReferenceInfo;

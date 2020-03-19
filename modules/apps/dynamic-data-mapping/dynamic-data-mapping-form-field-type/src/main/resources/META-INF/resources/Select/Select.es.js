@@ -155,11 +155,6 @@ function handleDropdownItemClick({currentValue, multiple, option}) {
 				value: currentValue,
 				valueToBeRemoved: itemValue,
 			});
-
-			// Forces the active element to be blurred.
-			if (document.activeElement) {
-				document.activeElement.blur();
-			}
 		}
 		else {
 			newValue = appendValue({

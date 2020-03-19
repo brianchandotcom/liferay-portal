@@ -273,8 +273,7 @@ public class FileinstallDeployTest {
 	}
 
 	private static final String _CONFIGURATION_PID =
-		"com.liferay.portal.fileinstall.deploy.test." +
-			"FileinstallDeployTestConfiguration";
+		FileinstallDeployTest.class.getName() + "Configuration";
 
 	private static final String _TEST_JAR_NAME;
 

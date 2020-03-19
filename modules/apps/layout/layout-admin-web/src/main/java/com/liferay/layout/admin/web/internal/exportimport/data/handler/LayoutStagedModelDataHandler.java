@@ -665,6 +665,12 @@ public class LayoutStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Layout.class);
 
+		layoutPlids.put(layout.getPlid(), importedLayout.getPlid());
+
+		layouts.put(oldLayoutId, importedLayout);
+
+		portletDataContext.setPlid(importedLayout.getPlid());
+
 		String draftLayoutUuid = layoutElement.attributeValue(
 			"draft-layout-uuid");
 
@@ -673,8 +679,15 @@ public class LayoutStagedModelDataHandler
 				portletDataContext.getReferenceDataElement(
 					layout, Layout.class, layout.getGroupId(), draftLayoutUuid);
 
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, draftLayoutElement);
+			long originalPlid = portletDataContext.getPlid();
+
+			try {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, draftLayoutElement);
+			}
+			finally {
+				portletDataContext.setPlid(originalPlid);
+			}
 
 			Layout draftLayout = layouts.get(
 				GetterUtil.getLong(
@@ -708,12 +721,6 @@ public class LayoutStagedModelDataHandler
 
 			importedLayout.setMasterLayoutPlid(masterLayout.getPlid());
 		}
-
-		layoutPlids.put(layout.getPlid(), importedLayout.getPlid());
-
-		layouts.put(oldLayoutId, importedLayout);
-
-		portletDataContext.setPlid(importedLayout.getPlid());
 
 		long parentPlid = layout.getParentPlid();
 		long parentLayoutId = layout.getParentLayoutId();

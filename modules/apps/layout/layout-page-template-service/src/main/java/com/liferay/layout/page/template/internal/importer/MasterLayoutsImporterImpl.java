@@ -22,6 +22,7 @@ import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.headless.delivery.dto.v1_0.Settings;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
@@ -58,6 +59,8 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
@@ -68,6 +71,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -384,6 +388,12 @@ public class MasterLayoutsImporterImpl implements MasterLayoutsImporter {
 					position++;
 				}
 			}
+
+			Settings settings = pageDefinition.getSettings();
+
+			if (settings != null) {
+				_updateLayoutSettings(layout, settings);
+			}
 		}
 
 		_updateLayoutPageTemplateStructure(layout, layoutStructure);
@@ -466,6 +476,36 @@ public class MasterLayoutsImporterImpl implements MasterLayoutsImporter {
 			_portal.getClassNameId(Layout.class.getName()), layout.getPlid());
 
 		_layoutCopyHelper.copyLayout(layout, draftLayout);
+	}
+
+	private void _updateLayoutSettings(Layout layout, Settings settings) {
+		if (Validator.isNotNull(settings.getCss())) {
+			layout.setCss(settings.getCss());
+		}
+
+		if (Validator.isNotNull(settings.getColorSchemeName())) {
+			layout.setColorSchemeId(settings.getColorSchemeName());
+		}
+
+		if (Validator.isNotNull(settings.getThemeName())) {
+			layout.setThemeId(settings.getThemeName());
+		}
+
+		UnicodeProperties unicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		Map<String, String> themeSettings =
+			(Map<String, String>)settings.getThemeSettings();
+
+		if (themeSettings != null) {
+			for (Map.Entry<String, String> entry : themeSettings.entrySet()) {
+				unicodeProperties.put(entry.getKey(), entry.getValue());
+			}
+
+			layout.setTypeSettingsProperties(unicodeProperties);
+		}
+
+		_layoutLocalService.updateLayout(layout);
 	}
 
 	private static final String _FILE_NAME_THUMBNAIL = "thumbnail.jpg";

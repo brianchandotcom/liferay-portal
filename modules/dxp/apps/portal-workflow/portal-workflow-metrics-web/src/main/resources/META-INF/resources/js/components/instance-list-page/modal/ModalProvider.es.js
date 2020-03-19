@@ -20,6 +20,10 @@ const ModalProvider = ({children, processId}) => {
 		selectedAssignee: null,
 		useSameAssignee: false,
 	});
+	const [bulkTransition, setBulkTransition] = useState({
+		transition: {errors: {}, onGoing: false},
+		transitionTasks: [],
+	});
 	const [selectTasks, setSelectTasks] = useState({
 		selectAll: false,
 		tasks: [],
@@ -33,11 +37,6 @@ const ModalProvider = ({children, processId}) => {
 		dueDate: undefined,
 	});
 	const [visibleModal, setVisibleModal] = useState('');
-
-	const [bulkTransition, setBulkTransition] = useState({
-		transition: {errors: [], onGoing: false},
-		transitionTasks: [],
-	});
 
 	const modalState = {
 		bulkReassign,

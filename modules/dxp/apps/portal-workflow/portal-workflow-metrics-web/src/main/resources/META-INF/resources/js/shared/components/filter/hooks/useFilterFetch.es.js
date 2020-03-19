@@ -27,6 +27,7 @@ const useFilterFetch = ({
 	requestMethod: method = 'get',
 	requestParams: params = {},
 	requestUrl: url,
+	staticData,
 	staticItems,
 	withoutRouteParams,
 }) => {
@@ -52,12 +53,17 @@ const useFilterFetch = ({
 		() => {
 			dispatchFilterError(filterKey, true);
 
-			client
-				.request({data, method, params, url})
-				.then(fetchCallback)
-				.catch(() => {
-					dispatchFilterError(filterKey);
-				});
+			if (staticData) {
+				fetchCallback({data: {items: staticData}});
+			}
+			else {
+				client
+					.request({data, method, params, url})
+					.then(fetchCallback)
+					.catch(() => {
+						dispatchFilterError(filterKey);
+					});
+			}
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]

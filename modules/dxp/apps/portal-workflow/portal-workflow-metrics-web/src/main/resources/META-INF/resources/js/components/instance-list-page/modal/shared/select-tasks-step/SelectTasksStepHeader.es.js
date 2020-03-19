@@ -15,22 +15,33 @@ import React, {useCallback, useContext, useEffect, useMemo} from 'react';
 
 import ResultsBar from '../../../../../shared/components/results-bar/ResultsBar.es';
 import ToolbarWithSelection from '../../../../../shared/components/toolbar-with-selection/ToolbarWithSelection.es';
+import {useFilter} from '../../../../../shared/hooks/useFilter.es';
 import AssigneeFilter from '../../../../filter/AssigneeFilter.es';
 import ProcessStepFilter from '../../../../filter/ProcessStepFilter.es';
+import {InstanceListContext} from '../../../InstanceListPageProvider.es';
 import {ModalContext} from '../../ModalProvider.es';
 
-const Header = ({
-	filterKeys,
-	instanceIds,
-	items = [],
-	prefixKey,
-	selectedFilters,
-	totalCount,
-}) => {
+const Header = ({items = [], totalCount}) => {
+	const filterKeys = ['processStep', 'assignee'];
+	const prefixKey = 'bulk';
+	const prefixKeys = [prefixKey];
 	const previousCount = usePrevious(totalCount);
-	const {processId, selectTasks, setSelectTasks} = useContext(ModalContext);
+	const {
+		processId,
+		selectTasks: {selectAll, tasks},
+		setSelectTasks,
+	} = useContext(ModalContext);
+	const {selectedItems} = useContext(InstanceListContext);
 
-	const {selectAll, tasks} = selectTasks;
+	const {prefixedKeys, selectedFilters} = useFilter({
+		filterKeys,
+		prefixKeys,
+		withoutRouteParams: true,
+	});
+
+	const instanceIds = useMemo(() => selectedItems.map(({id}) => id), [
+		selectedItems,
+	]);
 
 	const selectedOnPage = useMemo(
 		() => tasks.filter(item => items.find(({id}) => id === item.id)),
@@ -57,17 +68,16 @@ const Header = ({
 			remainingItems.length > 0 &&
 			previousCount === totalCount
 		) {
-			setSelectTasks({...selectTasks, tasks: items});
+			setSelectTasks({selectAll, tasks: items});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [items]);
 
 	useEffect(() => {
-		setSelectTasks({
+		setSelectTasks(selectTasks => ({
 			...selectTasks,
-			selectAll:
-				totalCount > 0 && totalCount === selectTasks.tasks.length,
-		});
+			selectAll: totalCount > 0 && totalCount === tasks.length,
+		}));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [totalCount]);
 
@@ -87,7 +97,7 @@ const Header = ({
 			});
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[items, selectAll, tasks]
+		[items, tasks]
 	);
 
 	return (
@@ -143,7 +153,7 @@ const Header = ({
 					/>
 
 					<ResultsBar.Clear
-						filterKeys={filterKeys}
+						filterKeys={prefixedKeys}
 						filters={selectedFilters}
 						withoutRouteParams
 					/>

@@ -48,13 +48,15 @@ const SelectTransitionStep = ({setErrorToast}) => {
 	}, [fetchData, retry]);
 
 	return (
-		<PromisesResolver promises={promises}>
-			<SelectTransitionStep.Body
-				data={data}
-				setRetry={setRetry}
-				tasks={tasks}
-			/>
-		</PromisesResolver>
+		<div className="fixed-height modal-metrics-content">
+			<PromisesResolver promises={promises}>
+				<SelectTransitionStep.Body
+					data={data}
+					setRetry={setRetry}
+					tasks={tasks}
+				/>
+			</PromisesResolver>
+		</div>
 	);
 };
 

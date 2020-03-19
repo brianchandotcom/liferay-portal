@@ -81,19 +81,22 @@ const Body = ({data, setRetry, tasks}) => {
 			</PromisesResolver.Pending>
 
 			<PromisesResolver.Resolved>
-				{versionedCards.map((versionedCard, index) =>
-					versionedCard.map(([taskLabel, tasks]) => (
-						<ClayPanel key={index}>
+				{versionedCards.map((versionedCard, versionIndex) =>
+					versionedCard.map(([taskLabel, tasks], cardIndex) => (
+						<ClayPanel key={`${versionIndex}_${cardIndex}`}>
 							<ClayPanel.Header>
 								<h4 className="mt-2">
 									{capitalize(taskLabel)}
 								</h4>
 							</ClayPanel.Header>
+
 							<Body.Card
-								cardIndex={index}
+								cardIndex={`${versionIndex}_${cardIndex}`}
 								nextTransitions={
-									nextTransitions[index]
-										? nextTransitions[index][taskLabel]
+									nextTransitions[versionIndex]
+										? nextTransitions[versionIndex][
+												taskLabel
+										  ]
 										: []
 								}
 								tasks={tasks}

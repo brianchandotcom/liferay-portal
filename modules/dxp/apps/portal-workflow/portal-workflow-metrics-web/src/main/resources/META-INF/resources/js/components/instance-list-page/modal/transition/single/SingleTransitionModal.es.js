@@ -160,4 +160,4 @@ const SingleTransitionModal = () => {
 	);
 };
 
-export {SingleTransitionModal};
+export default SingleTransitionModal;

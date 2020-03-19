@@ -15,7 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
-import React, {forwardRef} from 'react';
+import React, {forwardRef, useMemo} from 'react';
 
 const LabelOptionListItem = ({onCloseButtonClicked, option}) => (
 	<li>
@@ -64,6 +64,16 @@ const VisibleSelectInput = forwardRef(
 			? Liferay.Language.get('choose-options')
 			: Liferay.Language.get('choose-an-option');
 
+		const isValueEmpty = value.length === 0;
+
+		const selectedLabel = useMemo(
+			() =>
+				isValueEmpty
+					? triggerPlaceholder
+					: options.find(option => option.value === value[0]).label,
+			[isValueEmpty, options, triggerPlaceholder, value]
+		);
+
 		return (
 			<div
 				className={classNames(
@@ -84,35 +94,24 @@ const VisibleSelectInput = forwardRef(
 					disabled={readOnly}
 					id={id}
 				>
-					{value.length === 0 ? (
+					{isValueEmpty || (value.length === 1 && !multiple) ? (
 						<OptionSelected
-							isPlaceholder={true}
-							label={triggerPlaceholder}
+							isPlaceholder={isValueEmpty}
+							label={selectedLabel}
 						/>
 					) : (
-						value.map(currentValue => {
-							return options.map(option => {
-								if (currentValue === option.value) {
-									if (multiple) {
-										return (
-											<LabelOptionListItem
-												key={`${currentValue}-${option.label}`}
-												onCloseButtonClicked={
-													onCloseButtonClicked
-												}
-												option={option}
-											/>
-										);
-									}
+						value.map(item => {
+							const option = options.find(
+								option => option.value === item
+							);
 
-									return (
-										<OptionSelected
-											key={`option-selected-${option.label}`}
-											label={option.label}
-										/>
-									);
-								}
-							});
+							return (
+								<LabelOptionListItem
+									key={`${option.value}-${option.label}`}
+									onCloseButtonClicked={onCloseButtonClicked}
+									option={option}
+								/>
+							);
 						})
 					)}
 

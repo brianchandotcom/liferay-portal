@@ -178,7 +178,7 @@ public class FileinstallDeployTest {
 		try {
 			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, baseVersion, null);
 
-			installCountDownLatch.await(30, TimeUnit.SECONDS);
+			installCountDownLatch.await();
 
 			for (Bundle currentBundle : _bundleContext.getBundles()) {
 				if (Objects.equals(

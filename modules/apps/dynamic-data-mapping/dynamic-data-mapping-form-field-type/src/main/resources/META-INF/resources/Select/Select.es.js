@@ -224,9 +224,27 @@ const Select = ({
 	const [currentValue, setCurrentValue] = useState(value);
 	const [expand, setExpand] = useState(false);
 
+	const handleSelect = ({currentValue, event, multiple, option}) => {
+		const newValue = handleDropdownItemClick({
+			currentValue,
+			multiple,
+			option,
+		});
+
+		setCurrentValue(newValue);
+
+		event.preventDefault();
+		event.stopPropagation();
+
+		onDropdownItemClicked({event, value: newValue});
+
+		setExpand(false);
+	};
+
 	return (
 		<div>
 			<Trigger
+				multiple={multiple}
 				onCloseButtonClicked={({event, value}) => {
 					const newValue = removeValue({
 						value: currentValue,
@@ -267,22 +285,36 @@ const Select = ({
 							data-testid={`dropdownItem-${index}`}
 							key={`dropdown-option-${index}`}
 							label={option.label}
-							onClick={event => {
-								const newValue = handleDropdownItemClick({
+							onClick={event =>
+								!multiple &&
+								handleSelect({
 									currentValue,
+									event,
 									multiple,
 									option,
-								});
-
-								setCurrentValue(newValue);
-
-								event.preventDefault();
-
-								onDropdownItemClicked({event, value: newValue});
-							}}
+								})
+							}
 							value={options.value}
 						>
-							{option.label}
+							{multiple ? (
+								<ClayCheckbox
+									aria-label={option.label}
+									checked={currentValue.includes(
+										option.value
+									)}
+									label={option.label}
+									onChange={event =>
+										handleSelect({
+											currentValue,
+											event,
+											multiple,
+											option,
+										})
+									}
+								/>
+							) : (
+								option.label
+							)}
 						</ClayDropDown.Item>
 					))}
 				</ClayDropDown.ItemList>

@@ -14,7 +14,9 @@
 
 package com.liferay.change.tracking.internal.reference.helper;
 
+import com.liferay.change.tracking.internal.reference.TableJoinHolder;
 import com.liferay.change.tracking.internal.reference.TableReferenceInfo;
+import com.liferay.change.tracking.internal.reference.TableUtil;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.helper.TableReferenceDefinitionHelper;
 import com.liferay.petra.sql.dsl.Column;
@@ -142,20 +144,41 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 					" for joinStep \"", joinStep, "\""));
 		}
 
-		List<Function<FromStep, JoinStep>> joinList = null;
+		Column<?, Long> fromTablePrimaryKey = TableUtil.getPrimaryKeyColumn(
+			joinStepASTNodeListener._fromTable);
+
+		if (fromTablePrimaryKey == null) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"No long type primary key column found for table \"",
+					joinStepASTNodeListener._fromTable, "\" for joinStep \"",
+					joinStep, "\""));
+		}
+
+		Column<T, Long> joinTablePrimaryKey =
+			joinStepASTNodeListener._aliasPrimaryKeyColumn;
+
+		if (joinTablePrimaryKey == null) {
+			joinTablePrimaryKey = _primaryKeyColumn;
+		}
+
+		TableJoinHolder tableJoinHolder = new TableJoinHolder(
+			fromTablePrimaryKey, joinTablePrimaryKey, joinFunction);
+
+		List<TableJoinHolder> tableJoinHolders = null;
 
 		if (joinStepASTNodeListener._parentJoinFunction) {
-			joinList = _parentJoinMap.computeIfAbsent(
+			tableJoinHolders = _parentJoinMap.computeIfAbsent(
 				joinStepASTNodeListener._fromTable,
 				fromTable -> new ArrayList<>());
 		}
 		else {
-			joinList = _childJoinMap.computeIfAbsent(
+			tableJoinHolders = _childJoinMap.computeIfAbsent(
 				joinStepASTNodeListener._fromTable,
 				fromTable -> new ArrayList<>());
 		}
 
-		joinList.add(joinFunction);
+		tableJoinHolders.add(tableJoinHolder);
 	}
 
 	public TableReferenceInfo<T> getTableReferenceInfo() {
@@ -204,11 +227,11 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 		}
 	};
 
-	private final Map<Table<?>, List<Function<FromStep, JoinStep>>>
-		_childJoinMap = new HashMap<>();
+	private final Map<Table<?>, List<TableJoinHolder>> _childJoinMap =
+		new HashMap<>();
 	private final Set<Column<?, ?>> _definedColumns = new HashSet<>();
-	private final Map<Table<?>, List<Function<FromStep, JoinStep>>>
-		_parentJoinMap = new HashMap<>();
+	private final Map<Table<?>, List<TableJoinHolder>> _parentJoinMap =
+		new HashMap<>();
 	private final Column<T, Long> _primaryKeyColumn;
 	private final TableReferenceDefinition<T> _tableReferenceDefinition;
 
@@ -305,6 +328,17 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 					_invalidJoin = join;
 				}
 
+				if (table.equals(_primaryKeyColumn.getTable())) {
+					T primaryKeyTable = _primaryKeyColumn.getTable();
+
+					if (!Objects.equals(
+							table.getName(), primaryKeyTable.getName())) {
+
+						_aliasPrimaryKeyColumn = TableUtil.getPrimaryKeyColumn(
+							(T)table);
+					}
+				}
+
 				_tables.add(table);
 			}
 		}
@@ -312,6 +346,7 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 		private JoinStepASTNodeListener() {
 		}
 
+		private Column<T, Long> _aliasPrimaryKeyColumn;
 		private Set<Table<?>> _columnTables = Collections.newSetFromMap(
 			new IdentityHashMap<>());
 		private Table<?> _fromTable;

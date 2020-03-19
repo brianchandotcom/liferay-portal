@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.internal.reference.helper;
 
+import com.liferay.change.tracking.internal.reference.TableJoinHolder;
 import com.liferay.change.tracking.internal.reference.TableReferenceInfo;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.helper.TableReferenceDefinitionHelper;
@@ -92,21 +93,27 @@ public class TableReferenceDefinitionHelperImplTest {
 			MainExampleTable.INSTANCE.mainExampleId,
 			tableReferenceInfo.getPrimaryKeyColumn());
 
-		Map<Table<?>, List<Function<FromStep, JoinStep>>> childJoinMap =
-			tableReferenceInfo.getChildJoinMap();
+		Map<Table<?>, List<TableJoinHolder>> childJoinHoldersMap =
+			tableReferenceInfo.getChildJoinHoldersMap();
 
-		Assert.assertEquals(childJoinMap.toString(), 1, childJoinMap.size());
+		Assert.assertEquals(
+			childJoinHoldersMap.toString(), 1, childJoinHoldersMap.size());
 
-		List<Function<FromStep, JoinStep>> functions = childJoinMap.get(
+		List<TableJoinHolder> childJoinHolders = childJoinHoldersMap.get(
 			ReferenceExampleTable.INSTANCE);
 
-		Assert.assertEquals(functions.toString(), 1, functions.size());
-		Assert.assertSame(childJoinFunction, functions.get(0));
+		Assert.assertEquals(
+			childJoinHolders.toString(), 1, childJoinHolders.size());
 
-		Map<Table<?>, List<Function<FromStep, JoinStep>>> parentJoinMap =
-			tableReferenceInfo.getParentJoinMap();
+		TableJoinHolder childJoinHolder = childJoinHolders.get(0);
 
-		Assert.assertTrue(parentJoinMap.toString(), parentJoinMap.isEmpty());
+		Assert.assertSame(childJoinFunction, childJoinHolder.getJoinFunction());
+
+		Map<Table<?>, List<TableJoinHolder>> parentJoinHoldersMap =
+			tableReferenceInfo.getParentJoinHoldersMap();
+
+		Assert.assertTrue(
+			parentJoinHoldersMap.toString(), parentJoinHoldersMap.isEmpty());
 	}
 
 	@Test
@@ -120,19 +127,17 @@ public class TableReferenceDefinitionHelperImplTest {
 					ReferenceExampleTable.INSTANCE.mainExampleId)
 			);
 
-		Function<FromStep, JoinStep> selfJoinFunction = fromStep -> {
-			ReferenceExampleTable aliasReferenceExampleTable =
-				ReferenceExampleTable.INSTANCE.as("aliasReferenceExampleTable");
+		ReferenceExampleTable aliasReferenceExampleTable =
+			ReferenceExampleTable.INSTANCE.as("aliasReferenceExampleTable");
 
-			return fromStep.from(
-				aliasReferenceExampleTable
+		Function<FromStep, JoinStep> selfJoinFunction =
+			fromStep -> fromStep.from(
+				ReferenceExampleTable.INSTANCE
 			).innerJoinON(
-				ReferenceExampleTable.INSTANCE,
-				ReferenceExampleTable.INSTANCE.referenceExampleId.eq(
-					aliasReferenceExampleTable.INSTANCE.
-						parentReferenceExampleId)
+				aliasReferenceExampleTable,
+				aliasReferenceExampleTable.referenceExampleId.eq(
+					ReferenceExampleTable.INSTANCE.parentReferenceExampleId)
 			);
-		};
 
 		Consumer<TableReferenceDefinitionHelper<ReferenceExampleTable>>
 			consumer = tableReferenceDefinitionHelper -> {
@@ -157,28 +162,56 @@ public class TableReferenceDefinitionHelperImplTest {
 			ReferenceExampleTable.INSTANCE.referenceExampleId,
 			tableReferenceInfo.getPrimaryKeyColumn());
 
-		Map<Table<?>, List<Function<FromStep, JoinStep>>> childJoinMap =
-			tableReferenceInfo.getChildJoinMap();
+		Map<Table<?>, List<TableJoinHolder>> childJoinHoldersMap =
+			tableReferenceInfo.getChildJoinHoldersMap();
 
-		Assert.assertTrue(childJoinMap.toString(), childJoinMap.isEmpty());
+		Assert.assertTrue(
+			childJoinHoldersMap.toString(), childJoinHoldersMap.isEmpty());
 
-		Map<Table<?>, List<Function<FromStep, JoinStep>>> parentJoinMap =
-			tableReferenceInfo.getParentJoinMap();
+		Map<Table<?>, List<TableJoinHolder>> parentJoinHoldersMap =
+			tableReferenceInfo.getParentJoinHoldersMap();
 
-		Assert.assertEquals(parentJoinMap.toString(), 2, parentJoinMap.size());
+		Assert.assertEquals(
+			parentJoinHoldersMap.toString(), 2, parentJoinHoldersMap.size());
 
-		List<Function<FromStep, JoinStep>> functions = parentJoinMap.get(
+		List<TableJoinHolder> parentTableJoinHolders = parentJoinHoldersMap.get(
 			MainExampleTable.INSTANCE);
 
-		Assert.assertEquals(functions.toString(), 1, functions.size());
+		Assert.assertEquals(
+			parentTableJoinHolders.toString(), 1,
+			parentTableJoinHolders.size());
 
-		Assert.assertSame(parentJoinFunction, functions.get(0));
+		TableJoinHolder parentJoinHolder = parentTableJoinHolders.get(0);
 
-		functions = parentJoinMap.get(ReferenceExampleTable.INSTANCE);
+		Assert.assertSame(
+			parentJoinFunction, parentJoinHolder.getJoinFunction());
 
-		Assert.assertEquals(functions.toString(), 1, functions.size());
+		parentTableJoinHolders = parentJoinHoldersMap.get(
+			ReferenceExampleTable.INSTANCE);
 
-		Assert.assertSame(selfJoinFunction, functions.get(0));
+		Assert.assertEquals(
+			parentTableJoinHolders.toString(), 1,
+			parentTableJoinHolders.size());
+
+		parentJoinHolder = parentTableJoinHolders.get(0);
+
+		Assert.assertSame(selfJoinFunction, parentJoinHolder.getJoinFunction());
+
+		Column<?, Long> fromTablePrimaryKeyColumn =
+			parentJoinHolder.getFromTablePrimaryKeyColumn();
+
+		Assert.assertSame(
+			ReferenceExampleTable.INSTANCE,
+			fromTablePrimaryKeyColumn.getTable());
+
+		Column<?, Long> joinTablePrimaryKeyColumn =
+			parentJoinHolder.getJoinTablePrimaryKeyColumn();
+
+		Assert.assertSame(
+			aliasReferenceExampleTable, joinTablePrimaryKeyColumn.getTable());
+
+		Assert.assertNotSame(
+			ReferenceExampleTable.INSTANCE, aliasReferenceExampleTable);
 	}
 
 	@Test
@@ -357,6 +390,27 @@ public class TableReferenceDefinitionHelperImplTest {
 
 				try {
 					tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+						fromStep -> fromStep.from(
+							InvalidTable.INSTANCE
+						).innerJoinON(
+							MainExampleTable.INSTANCE,
+							MainExampleTable.INSTANCE.mainExampleId.eq(
+								InvalidTable.INSTANCE.mainExampleId)
+						));
+				}
+				catch (IllegalArgumentException illegalArgumentException) {
+					Assert.assertEquals(
+						StringBundler.concat(
+							"No long type primary key column found for table ",
+							"\"InvalidTable\" for joinStep \"... from ",
+							"InvalidTable inner join MainExample on ",
+							"MainExample.mainExampleId = ",
+							"InvalidTable.mainExampleId\""),
+						illegalArgumentException.getMessage());
+				}
+
+				try {
+					tableReferenceDefinitionHelper.defineReferenceInnerJoin(
 						fromStep -> {
 							fromStep.as("test");
 
@@ -418,15 +472,17 @@ public class TableReferenceDefinitionHelperImplTest {
 			MainExampleTable.INSTANCE.mainExampleId,
 			tableReferenceInfo.getPrimaryKeyColumn());
 
-		Map<Table<?>, List<Function<FromStep, JoinStep>>> childJoinMap =
-			tableReferenceInfo.getChildJoinMap();
+		Map<Table<?>, List<TableJoinHolder>> childJoinHolders =
+			tableReferenceInfo.getChildJoinHoldersMap();
 
-		Assert.assertTrue(childJoinMap.toString(), childJoinMap.isEmpty());
+		Assert.assertTrue(
+			childJoinHolders.toString(), childJoinHolders.isEmpty());
 
-		Map<Table<?>, List<Function<FromStep, JoinStep>>> parentJoinMap =
-			tableReferenceInfo.getParentJoinMap();
+		Map<Table<?>, List<TableJoinHolder>> parentJoinHolders =
+			tableReferenceInfo.getParentJoinHoldersMap();
 
-		Assert.assertTrue(parentJoinMap.toString(), parentJoinMap.isEmpty());
+		Assert.assertTrue(
+			parentJoinHolders.toString(), parentJoinHolders.isEmpty());
 	}
 
 	@Test
@@ -493,6 +549,19 @@ public class TableReferenceDefinitionHelperImplTest {
 			tableReferenceDefinitionHelperImpl);
 
 		return tableReferenceDefinitionHelperImpl;
+	}
+
+	private static class InvalidTable extends BaseTable<InvalidTable> {
+
+		public static final InvalidTable INSTANCE = new InvalidTable();
+
+		public final Column<InvalidTable, Long> mainExampleId = createColumn(
+			"mainExampleId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+
+		private InvalidTable() {
+			super("InvalidTable", InvalidTable::new);
+		}
+
 	}
 
 	private static class MainExampleTable extends BaseTable<MainExampleTable> {

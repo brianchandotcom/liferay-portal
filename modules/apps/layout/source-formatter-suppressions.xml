@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 
 <suppressions>
-	<checkstyle>
-		<suppress checks="MapBuilderCheck" files="layout-taglib/src/main/java/com/liferay/layout/taglib/servlet/taglib/react/SelectLayoutTag\.java" />
-	</checkstyle>
 	<source-check>
 		<suppress checks="JavaHelperUtilCheck" files="layout-admin-web/src/main/java/com/liferay/layout/admin/web/internal/portlet/action/ActionUtil\.java" />
 	</source-check>

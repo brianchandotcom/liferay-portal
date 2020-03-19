@@ -49,14 +49,12 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 
 			String sqlClause = matcher.group(3);
 
-			String s = StringUtil.replace(
-				sqlClause, new String[] {" AND ", " OR "},
-				new String[] {" AND \\\n", " OR \\\n"});
+			sqlClause = sqlClause.replaceAll(" AND (?=\\()", " AND \\\\\n");
+			sqlClause = sqlClause.replaceAll(" OR (?=\\()", " OR \\\\\n");
+			sqlClause = sqlClause.replaceAll("\\((?=\\()", "(\\\\\n");
+			sqlClause = sqlClause.replaceAll("\\)(?=\\))", ")\\\\\n");
 
-			s = s.replaceAll("\\((?=\\()", "(\\\\\n");
-			s = s.replaceAll("\\)(?=\\))", ")\\\\\n");
-
-			String[] sqlClauses = s.split("\n");
+			String[] sqlClauses = sqlClause.split("\n");
 
 			String replacement = StringBundler.concat(
 				indent, matcher.group(2), "\\\n",

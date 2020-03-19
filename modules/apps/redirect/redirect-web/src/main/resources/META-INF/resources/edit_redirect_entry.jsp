@@ -71,11 +71,11 @@ else {
 		</aui:field-wrapper>
 
 		<%
-			Map<String, Object> data = HashMapBuilder.<String, Object>put(
-				"initialUrl", (redirectEntry != null) ? redirectEntry.getDestinationURL() : null
-			).put(
-				"namespace", liferayPortletResponse.getNamespace()
-			).build();
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"destinationUrl", (redirectEntry != null) ? redirectEntry.getDestinationURL() : null
+		).put(
+			"namespace", liferayPortletResponse.getNamespace()
+		).build();
 		%>
 
 		<div class="destination-url">
@@ -115,7 +115,8 @@ else {
 
 		if (destinationURL.value) {
 			submitForm(form);
-		} else {
+		}
+		else {
 			destinationURL.focus();
 			destinationURL.blur();
 		}

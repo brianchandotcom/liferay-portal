@@ -12,8 +12,8 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -30,20 +30,26 @@ const Notification = ({type}) => {
 	if (type === VALIDATION_TYPE.checking) {
 		return (
 			<>
-				<ClayLoadingIndicator className="d-inline-block m-0 mr-2" small />
+				<ClayLoadingIndicator
+					className="d-inline-block m-0 mr-2"
+					small
+				/>
 				{Liferay.Language.get('cheking-url')}
 			</>
 		);
-	} else if (type === VALIDATION_TYPE.error) {
+	}
+	else if (type === VALIDATION_TYPE.error) {
 		return Liferay.Language.get('this-field-is-required');
-	} else if (type === VALIDATION_TYPE.info) {
+	}
+	else if (type === VALIDATION_TYPE.info) {
 		return (
 			<>
 				<ClayForm.FeedbackIndicator symbol="check-circle-full" />
 				{Liferay.Language.get('working-url')}
 			</>
 		);
-	} else if (type === VALIDATION_TYPE.warning) {
+	}
+	else if (type === VALIDATION_TYPE.warning) {
 		return (
 			<>
 				<ClayForm.FeedbackIndicator symbol="warning-full" />
@@ -53,8 +59,7 @@ const Notification = ({type}) => {
 	}
 };
 
-const DestinationUrlInput = ({initialUrl, namespace}) => {
-	const [destinationUrl, setDestinationUrl] = useState(initialUrl);
+const DestinationUrlInput = ({destinationUrl, namespace}) => {
 	const [validationType, setValidationType] = useState('');
 
 	const onInputBlur = event => {
@@ -62,18 +67,20 @@ const DestinationUrlInput = ({initialUrl, namespace}) => {
 
 		if (!url) {
 			setValidationType(VALIDATION_TYPE.error);
-		} else {
+		}
+		else {
 			setValidationType(VALIDATION_TYPE.checking);
 
 			fetch(url)
 				.then(response => {
 					if (!response.ok) {
 						setValidationType(VALIDATION_TYPE.warning);
-					} else {
+					}
+					else {
 						setValidationType(VALIDATION_TYPE.info);
 					}
 				})
-				.catch(xhr =>  {
+				.catch(() => {
 					setValidationType(VALIDATION_TYPE.warning);
 				});
 		}
@@ -95,10 +102,10 @@ const DestinationUrlInput = ({initialUrl, namespace}) => {
 
 			<ClayInput
 				id={`${namespace}destinationURL`}
-				onBlur={onInputBlur}
 				name={`${namespace}destinationURL`}
-				value={destinationUrl}
+				onBlur={onInputBlur}
 				type="text"
+				value={destinationUrl}
 			/>
 
 			{validationType && (
@@ -113,7 +120,7 @@ const DestinationUrlInput = ({initialUrl, namespace}) => {
 };
 
 DestinationUrlInput.propTypes = {
-	initialUrl: PropTypes.string.isRequired,
+	destinationUrl: PropTypes.string.isRequired,
 	namespace: PropTypes.string.isRequired,
 };
 

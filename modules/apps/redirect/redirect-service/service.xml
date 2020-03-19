@@ -26,7 +26,7 @@
 		<column name="destinationURL" type="String" />
 		<column name="expirationDate" type="Date" />
 		<column name="lastOccurrenceDate" type="Date" />
-		<column name="permanent" type="boolean" />
+		<column db-name="permanent_" name="permanent" type="boolean" />
 		<column name="sourceURL" type="String" />
 
 		<!-- Finder methods -->

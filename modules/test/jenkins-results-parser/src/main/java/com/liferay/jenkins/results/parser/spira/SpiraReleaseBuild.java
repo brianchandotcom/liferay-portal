@@ -43,7 +43,7 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 			new SearchQuery.SearchParameter("ReleaseId", spiraRelease.getID()),
 			new SearchQuery.SearchParameter("Name", releaseBuildName));
 
-		if (spiraReleaseBuilds.size() > 0) {
+		if (!spiraReleaseBuilds.isEmpty()) {
 			return spiraReleaseBuilds.get(0);
 		}
 

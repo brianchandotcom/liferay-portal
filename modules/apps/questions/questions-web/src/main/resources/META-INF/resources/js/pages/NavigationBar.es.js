@@ -14,7 +14,7 @@
 
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
@@ -32,10 +32,10 @@ export default withRouter(
 		const context = useContext(AppContext);
 
 		useEffect(() => {
-			if(sectionTitle) {
-				context.setSection(sectionTitle)
+			if (sectionTitle) {
+				context.setSection(sectionTitle);
 			}
-		}, [sectionTitle]);
+		}, [context, sectionTitle]);
 
 		return (
 			<section className="border-bottom questions-section questions-section-nav">
@@ -72,12 +72,12 @@ export default withRouter(
 											className="nav-link"
 											displayType="unstyled"
 										>
-											{Liferay.Language.get('my-activity')}
+											{Liferay.Language.get(
+												'my-activity'
+											)}
 										</ClayLink>
 									</ClayNavigationBar.Item>
-
 								</ClayNavigationBar>
-
 							</div>
 						)}
 					</div>

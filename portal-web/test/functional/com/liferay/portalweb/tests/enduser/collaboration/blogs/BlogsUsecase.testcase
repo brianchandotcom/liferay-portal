@@ -150,7 +150,7 @@ definition {
 
 		BlogsConfiguration.selectConfigurationIFrame();
 
-		BlogsConfiguration.selectMaximumItemstoDisplay(maximumItemsToDisplay = "75");
+		BlogsConfiguration.selectMaximumItemstoDisplay(maximumItemsToDisplay = "60");
 
 		BlogsConfiguration.uncheckComments();
 

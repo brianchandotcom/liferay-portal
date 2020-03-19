@@ -228,7 +228,7 @@ definition {
 		DMPortlet.configureDisplaySettingsPG(
 			enableDisplaySettingsRelatedAssets = "false",
 			enableDisplaySettingsShowSearch = "false",
-			entriesToDisplayCount = "75");
+			entriesToDisplayCount = "60");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page 2",

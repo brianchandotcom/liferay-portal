@@ -173,7 +173,7 @@ function handleDropdownItemClick({currentValue, multiple, option}) {
 		}
 	}
 	else {
-		newValue = toArray(itemValue);
+		newValue = [itemValue];
 	}
 
 	return newValue;

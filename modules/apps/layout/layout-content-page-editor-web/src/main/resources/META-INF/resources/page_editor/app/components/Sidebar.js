@@ -96,26 +96,28 @@ export default function Sidebar() {
 			document.querySelector('.product-menu-toggle')
 		);
 
-		const onHandleSidebar = open => {
-			dispatch(
-				Actions.switchSidebarPanel({
-					sidebarOpen: open,
-				})
+		if (sideNavigation) {
+			const onHandleSidebar = open => {
+				dispatch(
+					Actions.switchSidebarPanel({
+						sidebarOpen: open,
+					})
+				);
+			};
+
+			if (!sideNavigation.visible()) {
+				onHandleSidebar(true);
+			}
+
+			const sideNavigationListener = sideNavigation.on(
+				'openStart.lexicon.sidenav',
+				() => onHandleSidebar(false)
 			);
-		};
 
-		if (!sideNavigation.visible()) {
-			onHandleSidebar(true);
+			return () => {
+				sideNavigationListener.removeListener();
+			};
 		}
-
-		const sideNavigationListener = sideNavigation.on(
-			'openStart.lexicon.sidenav',
-			() => onHandleSidebar(false)
-		);
-
-		return () => {
-			sideNavigationListener.removeListener();
-		};
 	}, []);
 
 	const SidebarPanel = useLazy(

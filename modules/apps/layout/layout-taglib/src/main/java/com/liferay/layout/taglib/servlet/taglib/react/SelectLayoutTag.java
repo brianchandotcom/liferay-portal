@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -203,17 +203,21 @@ public class SelectLayoutTag extends IncludeTag {
 	}
 
 	private Map<String, Object> _getData() throws Exception {
-		Map<String, Object> map = new HashMap<>();
-
-		map.put("followURLOnTitleClick", _followURLOnTitleClick);
-		map.put("itemSelectorSaveEvent", _itemSelectorSaveEvent);
-		map.put("multiSelection", _multiSelection);
-		map.put("namespace", _namespace);
-		map.put("nodes", _getLayoutsJSONArray());
-		map.put("pathThemeImages", _pathThemeImages);
-		map.put("viewType", _viewType);
-
-		return map;
+		return HashMapBuilder.<String, Object>put(
+			"followURLOnTitleClick", _followURLOnTitleClick
+		).put(
+			"itemSelectorSaveEvent", _itemSelectorSaveEvent
+		).put(
+			"multiSelection", _multiSelection
+		).put(
+			"namespace", _namespace
+		).put(
+			"nodes", _getLayoutsJSONArray()
+		).put(
+			"pathThemeImages", _pathThemeImages
+		).put(
+			"viewType", _viewType
+		).build();
 	}
 
 	private String _getLayoutBreadcrumb(Layout layout) throws Exception {

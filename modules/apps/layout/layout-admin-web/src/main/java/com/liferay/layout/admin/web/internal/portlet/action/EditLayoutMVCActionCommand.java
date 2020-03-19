@@ -222,7 +222,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			uploadPortletRequest,
 			_portal.getHttpServletResponse(actionResponse));
 
-		_actionUtil.updateLookAndFeel(
+		ActionUtil.updateLookAndFeel(
 			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
 			stagingGroupId, privateLayout, layout.getLayoutId(),
 			layout.getTypeSettingsProperties());
@@ -244,9 +244,6 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
-
-	@Reference
-	private ActionUtil _actionUtil;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

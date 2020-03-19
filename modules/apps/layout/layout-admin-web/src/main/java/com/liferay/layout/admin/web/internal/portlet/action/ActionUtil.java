@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.ThemeSetting;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutService;
-import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutServiceUtil;
+import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
@@ -38,16 +38,12 @@ import java.util.Set;
 
 import javax.portlet.ActionRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = ActionUtil.class)
 public class ActionUtil {
 
-	public void deleteThemeSettingsProperties(
+	public static void deleteThemeSettingsProperties(
 		UnicodeProperties typeSettingsUnicodeProperties, String device) {
 
 		String keyPrefix = ThemeSettingImpl.namespaceProperty(device);
@@ -65,18 +61,18 @@ public class ActionUtil {
 		}
 	}
 
-	public String getColorSchemeId(
+	public static String getColorSchemeId(
 			long companyId, String themeId, String colorSchemeId)
 		throws Exception {
 
-		Theme theme = _themeLocalService.getTheme(companyId, themeId);
+		Theme theme = ThemeLocalServiceUtil.getTheme(companyId, themeId);
 
 		if (!theme.hasColorSchemes()) {
 			colorSchemeId = StringPool.BLANK;
 		}
 
 		if (Validator.isNull(colorSchemeId)) {
-			ColorScheme colorScheme = _themeLocalService.getColorScheme(
+			ColorScheme colorScheme = ThemeLocalServiceUtil.getColorScheme(
 				companyId, themeId, colorSchemeId);
 
 			colorSchemeId = colorScheme.getColorSchemeId();
@@ -85,7 +81,7 @@ public class ActionUtil {
 		return colorSchemeId;
 	}
 
-	public void updateLookAndFeel(
+	public static void updateLookAndFeel(
 			ActionRequest actionRequest, long companyId, long liveGroupId,
 			long stagingGroupId, boolean privateLayout, long layoutId,
 			UnicodeProperties typeSettingsUnicodeProperties)
@@ -128,23 +124,23 @@ public class ActionUtil {
 				groupId = stagingGroupId;
 			}
 
-			_layoutService.updateLayout(
+			LayoutServiceUtil.updateLayout(
 				groupId, privateLayout, layoutId,
 				typeSettingsUnicodeProperties.toString());
 
-			_layoutService.updateLookAndFeel(
+			LayoutServiceUtil.updateLookAndFeel(
 				groupId, privateLayout, layoutId, deviceThemeId,
 				deviceColorSchemeId, deviceCss);
 		}
 	}
 
-	public UnicodeProperties updateThemeSettingsProperties(
+	public static UnicodeProperties updateThemeSettingsProperties(
 			ActionRequest actionRequest, long companyId,
 			UnicodeProperties typeSettingsUnicodeProperties, String device,
 			String deviceThemeId, boolean layout)
 		throws Exception {
 
-		Theme theme = _themeLocalService.getTheme(companyId, deviceThemeId);
+		Theme theme = ThemeLocalServiceUtil.getTheme(companyId, deviceThemeId);
 
 		deleteThemeSettingsProperties(typeSettingsUnicodeProperties, device);
 
@@ -162,7 +158,7 @@ public class ActionUtil {
 		return typeSettingsUnicodeProperties;
 	}
 
-	protected void setThemeSettingProperties(
+	protected static void setThemeSettingProperties(
 			ActionRequest actionRequest,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			Map<String, ThemeSetting> themeSettings, String device,
@@ -177,7 +173,7 @@ public class ActionUtil {
 				actionRequest, "privateLayout");
 			long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
 
-			layout = _layoutLocalService.getLayout(
+			layout = LayoutLocalServiceUtil.getLayout(
 				groupId, privateLayout, layoutId);
 		}
 
@@ -203,14 +199,5 @@ public class ActionUtil {
 			}
 		}
 	}
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutService _layoutService;
-
-	@Reference
-	private ThemeLocalService _themeLocalService;
 
 }

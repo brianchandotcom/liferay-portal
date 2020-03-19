@@ -137,7 +137,7 @@ public class AddSimpleLayoutMVCActionCommand
 				groupId, privateLayout, layout.getLayoutId(),
 				layout.getTypeSettings());
 
-			_actionUtil.updateLookAndFeel(
+			ActionUtil.updateLookAndFeel(
 				actionRequest, themeDisplay.getCompanyId(), liveGroupId,
 				stagingGroupId, privateLayout, layout.getLayoutId(),
 				layout.getTypeSettingsProperties());
@@ -181,9 +181,6 @@ public class AddSimpleLayoutMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddSimpleLayoutMVCActionCommand.class);
-
-	@Reference
-	private ActionUtil _actionUtil;
 
 	@Reference
 	private LayoutExceptionRequestHandler _layoutExceptionRequestHandler;

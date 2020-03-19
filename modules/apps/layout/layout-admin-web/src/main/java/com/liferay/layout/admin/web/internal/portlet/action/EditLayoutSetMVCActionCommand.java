@@ -129,10 +129,10 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, device + "Css");
 
 			if (Validator.isNotNull(deviceThemeId)) {
-				deviceColorSchemeId = _actionUtil.getColorSchemeId(
+				deviceColorSchemeId = ActionUtil.getColorSchemeId(
 					companyId, deviceThemeId, deviceColorSchemeId);
 
-				_actionUtil.updateThemeSettingsProperties(
+				ActionUtil.updateThemeSettingsProperties(
 					actionRequest, companyId, typeSettingsUnicodeProperties,
 					device, deviceThemeId, false);
 			}
@@ -187,9 +187,6 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 		_layoutSetService.updateSettings(
 			groupId, privateLayout, settingsUnicodeProperties.toString());
 	}
-
-	@Reference
-	private ActionUtil _actionUtil;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

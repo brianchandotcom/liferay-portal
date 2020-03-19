@@ -257,24 +257,23 @@ public class SelectLayoutTag extends IncludeTag {
 
 		String layoutUuid = ParamUtil.getString(request, "layoutUuid");
 
-		JSONArray jsonArray = _getLayoutsJSONArray(
-			themeDisplay.getScopeGroupId(), _privateLayout, 0, layoutUuid);
-
-		JSONObject jsonObject = JSONUtil.put(
-			"children", jsonArray
-		).put(
-			"disabled", true
-		).put(
-			"expanded", true
-		).put(
-			"icon", "home"
-		).put(
-			"id", "0"
-		).put(
-			"name", themeDisplay.getScopeGroupName()
-		);
-
-		return JSONUtil.put(jsonObject);
+		return JSONUtil.put(
+			JSONUtil.put(
+				"children",
+				_getLayoutsJSONArray(
+					themeDisplay.getScopeGroupId(), _privateLayout, 0,
+					layoutUuid)
+			).put(
+				"disabled", true
+			).put(
+				"expanded", true
+			).put(
+				"icon", "home"
+			).put(
+				"id", "0"
+			).put(
+				"name", themeDisplay.getScopeGroupName()
+			));
 	}
 
 	private JSONArray _getLayoutsJSONArray(

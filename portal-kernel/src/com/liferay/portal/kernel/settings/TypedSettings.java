@@ -15,8 +15,15 @@
 package com.liferay.portal.kernel.settings;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 
@@ -81,17 +88,19 @@ public class TypedSettings {
 	}
 
 	public LocalizedValuesMap getLocalizedValuesMap(String key) {
-		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap(
-			getValue(key, null));
+		String value = getValue(key, null);
 
-		for (Locale locale : _availableLocales) {
-			String localizedPreference = LocalizationUtil.getLocalizedName(
-				key, LocaleUtil.toLanguageId(locale));
-
-			localizedValuesMap.put(locale, getValue(localizedPreference, null));
+		if (JSONUtil.isValid(value)) {
+			try {
+				return _fromJSONObjectToLocalizedValuesMap(
+					JSONFactoryUtil.createJSONObject(value));
+			}
+			catch (JSONException jsonException) {
+				_log.error(jsonException, jsonException);
+			}
 		}
 
-		return localizedValuesMap;
+		return _fromPropertiesToLocalizedValuesMap(key, value);
 	}
 
 	public long getLongValue(String key) {
@@ -156,6 +165,42 @@ public class TypedSettings {
 
 		modifiableSettings.setValues(key, values);
 	}
+
+	private LocalizedValuesMap _fromJSONObjectToLocalizedValuesMap(
+		JSONObject jsonObject) {
+
+		String defaultValue = jsonObject.getString(
+			LocaleUtil.toLanguageId(LocaleThreadLocal.getDefaultLocale()));
+
+		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap(
+			defaultValue);
+
+		for (Locale locale : _availableLocales) {
+			localizedValuesMap.put(
+				locale,
+				jsonObject.getString(LocaleUtil.toLanguageId(locale), null));
+		}
+
+		return localizedValuesMap;
+	}
+
+	private LocalizedValuesMap _fromPropertiesToLocalizedValuesMap(
+		String key, String defaultValue) {
+
+		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap(
+			defaultValue);
+
+		for (Locale locale : _availableLocales) {
+			String localizedPreference = LocalizationUtil.getLocalizedName(
+				key, LocaleUtil.toLanguageId(locale));
+
+			localizedValuesMap.put(locale, getValue(localizedPreference, null));
+		}
+
+		return localizedValuesMap;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(TypedSettings.class);
 
 	private final Collection<Locale> _availableLocales;
 	private final Settings _settings;

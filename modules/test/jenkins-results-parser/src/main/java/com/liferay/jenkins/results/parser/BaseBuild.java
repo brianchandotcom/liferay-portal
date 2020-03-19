@@ -476,7 +476,8 @@ public abstract class BaseBuild implements Build {
 			return downstreamBuilds;
 		}
 
-		List<Build> filteredDownstreamBuilds = new ArrayList<>();
+		List<Build> filteredDownstreamBuilds = Collections.synchronizedList(
+			new ArrayList<Build>());
 
 		for (Build downstreamBuild : downstreamBuilds) {
 			if (((status == null) ||

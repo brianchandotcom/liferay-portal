@@ -24,8 +24,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -79,7 +79,7 @@ public class FileinstallDeployTest {
 	}
 
 	@Test
-	public void testConfiguration() throws Throwable {
+	public void testConfiguration() throws Exception {
 		Path path = Paths.get(
 			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
 			_CONFIGURATION_PID.concat(".config"));
@@ -222,35 +222,29 @@ public class FileinstallDeployTest {
 			String fragmentHost)
 		throws IOException {
 
-		try (FileOutputStream fileOutputStream = new FileOutputStream(
-				path.toFile())) {
+		try (OutputStream outputStream = Files.newOutputStream(path);
+			JarOutputStream jarOutputStream = new JarOutputStream(
+				outputStream)) {
 
-			try (JarOutputStream jarOutputStream = new JarOutputStream(
-					fileOutputStream)) {
+			Manifest manifest = new Manifest();
 
-				Manifest manifest = new Manifest();
+			Attributes attributes = manifest.getMainAttributes();
 
-				Attributes attributes = manifest.getMainAttributes();
+			attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
+			attributes.putValue(Constants.BUNDLE_SYMBOLICNAME, symbolicName);
+			attributes.putValue(Constants.BUNDLE_VERSION, version.toString());
 
-				attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
-				attributes.putValue(
-					Constants.BUNDLE_SYMBOLICNAME, symbolicName);
-				attributes.putValue(
-					Constants.BUNDLE_VERSION, version.toString());
-
-				if (fragmentHost != null) {
-					attributes.putValue(Constants.FRAGMENT_HOST, fragmentHost);
-				}
-
-				attributes.putValue("Manifest-Version", "2");
-
-				jarOutputStream.putNextEntry(
-					new ZipEntry(JarFile.MANIFEST_NAME));
-
-				manifest.write(jarOutputStream);
-
-				jarOutputStream.closeEntry();
+			if (fragmentHost != null) {
+				attributes.putValue(Constants.FRAGMENT_HOST, fragmentHost);
 			}
+
+			attributes.putValue("Manifest-Version", "2");
+
+			jarOutputStream.putNextEntry(new ZipEntry(JarFile.MANIFEST_NAME));
+
+			manifest.write(jarOutputStream);
+
+			jarOutputStream.closeEntry();
 		}
 	}
 

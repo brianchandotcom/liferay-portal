@@ -44,12 +44,6 @@ class FormBuilderBase extends Component {
 		}
 	}
 
-	getFormRendererEvents() {
-		return {
-			fieldClicked: this._handleFieldClicked.bind(this),
-		};
-	}
-
 	preparePagesForRender(pages) {
 		const visitor = new PagesVisitor(pages);
 
@@ -98,7 +92,6 @@ class FormBuilderBase extends Component {
 							activePage={activePage}
 							editable={true}
 							editingLanguageId={editingLanguageId}
-							events={this.getFormRendererEvents()}
 							pages={this.preparePagesForRender(pages)}
 							paginationMode={paginationMode}
 							portletNamespace={portletNamespace}
@@ -109,12 +102,6 @@ class FormBuilderBase extends Component {
 				</div>
 			</div>
 		);
-	}
-
-	_handleFieldClicked(event) {
-		const {dispatch} = this.context;
-
-		dispatch('fieldClicked', event);
 	}
 }
 

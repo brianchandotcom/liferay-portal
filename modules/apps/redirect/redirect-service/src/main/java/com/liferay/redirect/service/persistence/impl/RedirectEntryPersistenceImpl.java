@@ -2622,6 +2622,7 @@ public class RedirectEntryPersistenceImpl
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("permanent", "permanent_");
 
 		setDBColumnNames(dbColumnNames);
 	}
@@ -3590,7 +3591,7 @@ public class RedirectEntryPersistenceImpl
 		RedirectEntryPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid"});
+		new String[] {"uuid", "permanent"});
 
 	static {
 		try {

@@ -11,6 +11,6 @@ create table RedirectEntry (
 	destinationURL STRING null,
 	expirationDate DATE null,
 	lastOccurrenceDate DATE null,
-	permanent BOOLEAN,
+	permanent_ BOOLEAN,
 	sourceURL STRING null
 );

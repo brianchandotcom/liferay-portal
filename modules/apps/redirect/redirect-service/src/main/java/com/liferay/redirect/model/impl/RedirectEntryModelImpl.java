@@ -80,7 +80,7 @@ public class RedirectEntryModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"destinationURL", Types.VARCHAR},
 		{"expirationDate", Types.TIMESTAMP},
-		{"lastOccurrenceDate", Types.TIMESTAMP}, {"permanent", Types.BOOLEAN},
+		{"lastOccurrenceDate", Types.TIMESTAMP}, {"permanent_", Types.BOOLEAN},
 		{"sourceURL", Types.VARCHAR}
 	};
 
@@ -100,12 +100,12 @@ public class RedirectEntryModelImpl
 		TABLE_COLUMNS_MAP.put("destinationURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastOccurrenceDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("permanent", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("permanent_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("sourceURL", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RedirectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,redirectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,destinationURL STRING null,expirationDate DATE null,lastOccurrenceDate DATE null,permanent BOOLEAN,sourceURL STRING null)";
+		"create table RedirectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,redirectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,destinationURL STRING null,expirationDate DATE null,lastOccurrenceDate DATE null,permanent_ BOOLEAN,sourceURL STRING null)";
 
 	public static final String TABLE_SQL_DROP = "drop table RedirectEntry";
 

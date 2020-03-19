@@ -70,6 +70,12 @@ definition {
 		else if ("${widgetName}" == "Navigation Menu") {
 			var portletId = "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet";
 		}
+		else if ("${widgetName}" == "Nested Applications") {
+			var portletId = "com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet";
+		}
+		else if ("${widgetName}" == "Profile") {
+			var portletId = "com_liferay_contacts_web_portlet_ProfilePortlet";
+		}
 		else if ("${widgetName}" == "Related Assets") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_RelatedAssetsPortlet";
 		}

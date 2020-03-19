@@ -120,10 +120,24 @@ public class TableReferenceDefinitionHelperImplTest {
 					ReferenceExampleTable.INSTANCE.mainExampleId)
 			);
 
+		Function<FromStep, JoinStep> selfJoinFunction = fromStep -> {
+			ReferenceExampleTable aliasReferenceExampleTable =
+				ReferenceExampleTable.INSTANCE.as("aliasReferenceExampleTable");
+
+			return fromStep.from(
+				aliasReferenceExampleTable
+			).innerJoinON(
+				ReferenceExampleTable.INSTANCE,
+				ReferenceExampleTable.INSTANCE.referenceExampleId.eq(
+					aliasReferenceExampleTable.INSTANCE.
+						parentReferenceExampleId)
+			);
+		};
+
 		Consumer<TableReferenceDefinitionHelper<ReferenceExampleTable>>
 			consumer = tableReferenceDefinitionHelper -> {
-				tableReferenceDefinitionHelper.defineNonreferenceColumn(
-					ReferenceExampleTable.INSTANCE.name);
+				tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+					selfJoinFunction);
 
 				tableReferenceDefinitionHelper.defineReferenceInnerJoin(
 					parentJoinFunction);
@@ -151,7 +165,7 @@ public class TableReferenceDefinitionHelperImplTest {
 		Map<Table<?>, List<Function<FromStep, JoinStep>>> parentJoinMap =
 			tableReferenceInfo.getParentJoinMap();
 
-		Assert.assertEquals(parentJoinMap.toString(), 1, parentJoinMap.size());
+		Assert.assertEquals(parentJoinMap.toString(), 2, parentJoinMap.size());
 
 		List<Function<FromStep, JoinStep>> functions = parentJoinMap.get(
 			MainExampleTable.INSTANCE);
@@ -159,6 +173,12 @@ public class TableReferenceDefinitionHelperImplTest {
 		Assert.assertEquals(functions.toString(), 1, functions.size());
 
 		Assert.assertSame(parentJoinFunction, functions.get(0));
+
+		functions = parentJoinMap.get(ReferenceExampleTable.INSTANCE);
+
+		Assert.assertEquals(functions.toString(), 1, functions.size());
+
+		Assert.assertSame(selfJoinFunction, functions.get(0));
 	}
 
 	@Test
@@ -238,14 +258,34 @@ public class TableReferenceDefinitionHelperImplTest {
 				try {
 					tableReferenceDefinitionHelper.defineReferenceInnerJoin(
 						fromStep -> fromStep.from(
-							ReferenceExampleTable.INSTANCE
+							MainExampleTable.INSTANCE
+						).innerJoinON(
+							MainExampleTable.INSTANCE,
+							MainExampleTable.INSTANCE.mainExampleId.eq(
+								MainExampleTable.INSTANCE.mainExampleId)
+						));
+
+					Assert.fail();
+				}
+				catch (IllegalArgumentException illegalArgumentException) {
+					Assert.assertEquals(
+						StringBundler.concat(
+							"Invalid join for JoinStep \"... from MainExample ",
+							"inner join MainExample on ",
+							"MainExample.mainExampleId = ",
+							"MainExample.mainExampleId\", ensure table alias ",
+							"is used for self joins"),
+						illegalArgumentException.getMessage());
+				}
+
+				try {
+					tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+						fromStep -> fromStep.from(
+							MainExampleTable.INSTANCE
 						).leftJoinOn(
 							ReferenceExampleTable.INSTANCE,
 							ReferenceExampleTable.INSTANCE.mainExampleId.eq(
 								MainExampleTable.INSTANCE.mainExampleId)
-						).leftJoinOn(
-							MainExampleTable.INSTANCE,
-							MainExampleTable.INSTANCE.mainExampleId.isNull()
 						));
 
 					Assert.fail();
@@ -254,10 +294,9 @@ public class TableReferenceDefinitionHelperImplTest {
 					Assert.assertEquals(
 						StringBundler.concat(
 							"Invalid join type \"left\" for JoinStep \"... ",
-							"from ReferenceExample left join ReferenceExample ",
-							"on ReferenceExample.mainExampleId = ",
-							"MainExample.mainExampleId left join MainExample ",
-							"on MainExample.mainExampleId is NULL\""),
+							"from MainExample left join ReferenceExample on ",
+							"ReferenceExample.mainExampleId = ",
+							"MainExample.mainExampleId\""),
 						illegalArgumentException.getMessage());
 				}
 
@@ -296,7 +335,7 @@ public class TableReferenceDefinitionHelperImplTest {
 						fromStep -> fromStep.from(
 							MainExampleTable.INSTANCE
 						).innerJoinON(
-							MainExampleTable.INSTANCE,
+							MainExampleTable.INSTANCE.as("aliasMainExample"),
 							ReferenceExampleTable.INSTANCE.mainExampleId.eq(
 								MainExampleTable.INSTANCE.mainExampleId)
 						));
@@ -309,7 +348,8 @@ public class TableReferenceDefinitionHelperImplTest {
 							"Predicate column tables [MainExample, ",
 							"ReferenceExample] do not match join tables ",
 							"[MainExample] for joinStep \"... from ",
-							"MainExample inner join MainExample on ",
+							"MainExample inner join MainExample ",
+							"aliasMainExample on ",
 							"ReferenceExample.mainExampleId = ",
 							"MainExample.mainExampleId\""),
 						illegalArgumentException.getMessage());
@@ -489,8 +529,10 @@ public class TableReferenceDefinitionHelperImplTest {
 		public final Column<ReferenceExampleTable, Long> mvccVersion =
 			createColumn(
 				"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-		public final Column<ReferenceExampleTable, String> name = createColumn(
-			"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+		public final Column<ReferenceExampleTable, Long>
+			parentReferenceExampleId = createColumn(
+				"parentReferenceExampleId", Long.class, Types.VARCHAR,
+				Column.FLAG_DEFAULT);
 		public final Column<ReferenceExampleTable, Long> referenceExampleId =
 			createColumn(
 				"referenceExampleId", Long.class, Types.BIGINT,

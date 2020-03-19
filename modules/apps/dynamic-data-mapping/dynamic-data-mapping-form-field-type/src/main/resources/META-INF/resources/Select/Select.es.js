@@ -243,7 +243,7 @@ const Select = ({
 	};
 
 	return (
-		<div>
+		<>
 			<Trigger
 				multiple={multiple}
 				onCloseButtonClicked={({event, value}) => {
@@ -320,7 +320,7 @@ const Select = ({
 					))}
 				</ClayDropDown.ItemList>
 			</ClayDropDown.Menu>
-		</div>
+		</>
 	);
 };
 

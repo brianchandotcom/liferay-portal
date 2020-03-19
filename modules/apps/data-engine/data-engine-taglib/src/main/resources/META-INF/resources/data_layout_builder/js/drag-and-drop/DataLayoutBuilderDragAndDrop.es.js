@@ -20,11 +20,15 @@ import DataLayoutBuilderColumnDropZone from './DataLayoutBuilderColumnDropZone.e
 import DragLayer from './DragLayer.es';
 
 const getColumns = () => [
-	...document.querySelectorAll('.col-empty .ddm-target'),
+	...document.querySelectorAll(
+		'.col-empty .ddm-target:not([data-drop-disabled="true"])'
+	),
 ];
 
 const getFields = () => [
-	...document.querySelectorAll('.ddm-field-container.ddm-target'),
+	...document.querySelectorAll(
+		'.ddm-field-container.ddm-target:not([data-drop-disabled="true"])'
+	),
 ];
 
 const getColumnKey = node => {

@@ -148,6 +148,10 @@ class Sidebar extends Component {
 		this.disposeDragAndDrop();
 	}
 
+	getDropTargetsSelector() {
+		return '.ddm-target:not([data-drop-disabled="true"])';
+	}
+
 	getSettingsFormContext() {
 		const {defaultLanguageId, editingLanguageId, focusedField} = this.props;
 		const {settingsContext} = focusedField;
@@ -216,7 +220,7 @@ class Sidebar extends Component {
 
 	refreshDragAndDrop() {
 		this._dragAndDrop.setState({
-			targets: '.ddm-target',
+			targets: this.getDropTargetsSelector(),
 		});
 	}
 
@@ -354,7 +358,7 @@ class Sidebar extends Component {
 			container: document.body,
 			dragPlaceholder: Drag.Placeholder.CLONE,
 			sources: '.ddm-drag-item',
-			targets: '.ddm-target',
+			targets: this.getDropTargetsSelector(),
 			useShim: false,
 		});
 

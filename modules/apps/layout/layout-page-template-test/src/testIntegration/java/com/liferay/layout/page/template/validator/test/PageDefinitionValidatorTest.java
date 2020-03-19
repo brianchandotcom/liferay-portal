@@ -171,6 +171,26 @@ public class PageDefinitionValidatorTest {
 	}
 
 	@Test
+	public void testValidatePageDefinitionValidDropZoneAllowedFragmentsComplete()
+		throws Exception {
+
+		PageDefinitionValidator.validatePageDefinition(
+			_read(
+				"page_definition_valid_drop_zone_allowed_fragments_complete." +
+					"json"));
+	}
+
+	@Test
+	public void testValidatePageDefinitionValidDropZoneUnallowedFragmentsComplete()
+		throws Exception {
+
+		PageDefinitionValidator.validatePageDefinition(
+			_read(
+				"page_definition_valid_drop_zone_unallowed_fragments_" +
+					"complete.json"));
+	}
+
+	@Test
 	public void testValidatePageDefinitionValidFragmentComplete()
 		throws Exception {
 

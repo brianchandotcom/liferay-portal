@@ -23,7 +23,6 @@ import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSe
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
-import {useActiveItemId} from '../Controls';
 import {
 	useEditableProcessorClickPosition,
 	useEditableProcessorUniqueId,
@@ -37,7 +36,6 @@ export default function FragmentContentProcessor({
 	element,
 	fragmentEntryLinkId,
 }) {
-	const activeItemId = useActiveItemId();
 	const dispatch = useDispatch();
 	const editableProcessorClickPosition = useEditableProcessorClickPosition();
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
@@ -69,10 +67,6 @@ export default function FragmentContentProcessor({
 			state.fragmentEntryLinks[fragmentEntryLinkId] &&
 			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues
 	);
-
-	useEffect(() => {
-		setEditableProcessorUniqueId(null);
-	}, [activeItemId, setEditableProcessorUniqueId]);
 
 	useEffect(() => {
 		if (!editableElement || !editableValues) {

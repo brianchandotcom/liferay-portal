@@ -12,9 +12,12 @@
  * details.
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {COLLECTION_LIST_FORMATS} from '../../config/constants/collectionListFormats';
+import CollectionService from '../../services/CollectionService';
+import InfoItemService from '../../services/InfoItemService';
+import {useDispatch, useSelector} from '../../store/index';
 import {ControlsIdConverterContextProvider} from '../ControlsIdConverterContext';
 
 const COLLECTION_ID_DIVIDER = '$';
@@ -55,8 +58,10 @@ const NotMappedMessage = () => (
 
 const Grid = ({
 	child,
+	collection,
+	collectionFields,
 	collectionId,
-	collectionLength = 3,
+	collectionLength,
 	numberOfColumns,
 	numberOfItems,
 }) => {
@@ -79,8 +84,9 @@ const Grid = ({
 							<ControlsIdConverterContextProvider
 								key={index}
 								value={{
-									collectionFields: [],
-									collectionItem: {},
+									collectionFields,
+									collectionItem:
+										collection[i * numberOfColumns + j],
 									fromControlsId,
 									toControlsId: getToControlsId(
 										collectionId,
@@ -106,15 +112,22 @@ const Grid = ({
 	return createRows();
 };
 
-const Stack = ({child, collectionId, collectionLength = 3, numberOfItems}) => {
+const Stack = ({
+	child,
+	collection,
+	collectionFields,
+	collectionId,
+	collectionLength,
+	numberOfItems,
+}) => {
 	const maxNumberOfItems = Math.min(collectionLength, numberOfItems);
 
 	return Array.from({length: maxNumberOfItems}).map((_element, idx) => (
 		<ControlsIdConverterContextProvider
 			key={idx}
 			value={{
-				collectionFields: [],
-				collectionItem: {},
+				collectionFields,
+				collectionItem: collection[idx],
 				fromControlsId,
 				toControlsId: getToControlsId(collectionId, idx),
 			}}
@@ -135,12 +148,53 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 			? Grid
 			: Stack;
 
+	const dispatch = useDispatch();
+
+	const store = useSelector(state => state);
+
+	const [collection, setCollection] = useState('');
+
+	useEffect(() => {
+		if (item.config.collection) {
+			CollectionService.getCollectionField({
+				layoutObjectReference: JSON.stringify(item.config.collection),
+				onNetworkStatus: dispatch,
+				size: collectionConfig.numberOfItems,
+				store,
+			}).then(response => {
+				setCollection(response);
+			});
+		}
+	}, [
+		collectionConfig.numberOfItems,
+		dispatch,
+		item.config.collection,
+		store,
+	]);
+
+	const [collectionFields, setCollectionFields] = useState('');
+
+	useEffect(() => {
+		if (item.config.collection) {
+			InfoItemService.getAvailableStructureMappingFields({
+				classNameId: item.config.collection.itemType,
+				classTypeId: item.config.collection.itemSubtype,
+				onNetworkStatus: dispatch,
+			}).then(({infoDisplayFields}) => {
+				setCollectionFields(infoDisplayFields);
+			});
+		}
+	}, [dispatch, item.config.collection]);
+
 	return (
 		<div className="page-editor__collection" ref={ref}>
 			{collectionIsMapped(collectionConfig) ? (
 				<ContentComponent
 					child={child}
+					collection={collection.items}
+					collectionFields={collectionFields}
 					collectionId={item.itemId}
+					collectionLength={collection.length}
 					numberOfColumns={collectionConfig.numberOfColumns}
 					numberOfItems={collectionConfig.numberOfItems}
 				/>

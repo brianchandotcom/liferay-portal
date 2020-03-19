@@ -28,7 +28,10 @@ public class AccountUserEntityModel implements EntityModel {
 
 	public AccountUserEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new StringEntityField("emailAddress", locale -> "emailAddress"),
+			new StringEntityField(
+				"firstName", locale -> Field.getSortableFieldName("firstName")),
+			new StringEntityField(
+				"lastName", locale -> Field.getSortableFieldName("lastName")),
 			new StringEntityField(
 				"screenName",
 				locale -> Field.getSortableFieldName("screenName")));

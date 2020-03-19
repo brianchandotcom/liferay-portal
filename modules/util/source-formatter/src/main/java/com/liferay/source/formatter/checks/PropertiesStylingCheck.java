@@ -72,7 +72,7 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 			int lineNumber = getLineNumber(content, matcher.start());
 
 			if (Validator.isNull(matcher.group(4))) {
-				return content;
+				continue;
 			}
 
 			String nextSQLClause = _getSQLClause(

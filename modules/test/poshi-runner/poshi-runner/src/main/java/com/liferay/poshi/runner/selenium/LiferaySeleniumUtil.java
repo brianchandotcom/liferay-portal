@@ -55,6 +55,8 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import org.openqa.selenium.By;
+
 import org.sikuli.api.ImageTarget;
 import org.sikuli.api.robot.Keyboard;
 import org.sikuli.api.robot.desktop.DesktopKeyboard;
@@ -336,6 +338,45 @@ public class LiferaySeleniumUtil {
 
 	public static void fail(String message) {
 		TestCase.fail(message);
+	}
+
+	public static By getBy(String locator) {
+		if (locator.startsWith("//")) {
+			return By.xpath(locator);
+		}
+		else if (locator.startsWith("class=")) {
+			locator = locator.substring(6);
+
+			return By.className(locator);
+		}
+		else if (locator.startsWith("css=")) {
+			locator = locator.substring(4);
+
+			return By.cssSelector(locator);
+		}
+		else if (locator.startsWith("link=")) {
+			locator = locator.substring(5);
+
+			return By.linkText(locator);
+		}
+		else if (locator.startsWith("name=")) {
+			locator = locator.substring(5);
+
+			return By.name(locator);
+		}
+		else if (locator.startsWith("tag=")) {
+			locator = locator.substring(4);
+
+			return By.tagName(locator);
+		}
+		else if (locator.startsWith("xpath=") || locator.startsWith("xPath=")) {
+			locator = locator.substring(6);
+
+			return By.xpath(locator);
+		}
+		else {
+			return By.id(locator);
+		}
 	}
 
 	public static String getEmailBody(String index) throws Exception {

@@ -32,7 +32,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -54,45 +53,6 @@ import org.openqa.selenium.safari.SafariDriver;
  * @author Michael Hashimoto
  */
 public class WebDriverUtil extends PropsValues {
-
-	public static By getBy(String locator) {
-		if (locator.startsWith("//")) {
-			return By.xpath(locator);
-		}
-		else if (locator.startsWith("class=")) {
-			locator = locator.substring(6);
-
-			return By.className(locator);
-		}
-		else if (locator.startsWith("css=")) {
-			locator = locator.substring(4);
-
-			return By.cssSelector(locator);
-		}
-		else if (locator.startsWith("link=")) {
-			locator = locator.substring(5);
-
-			return By.linkText(locator);
-		}
-		else if (locator.startsWith("name=")) {
-			locator = locator.substring(5);
-
-			return By.name(locator);
-		}
-		else if (locator.startsWith("tag=")) {
-			locator = locator.substring(4);
-
-			return By.tagName(locator);
-		}
-		else if (locator.startsWith("xpath=") || locator.startsWith("xPath=")) {
-			locator = locator.substring(6);
-
-			return By.xpath(locator);
-		}
-		else {
-			return By.id(locator);
-		}
-	}
 
 	public static WebDriver getWebDriver() {
 		return _webDriverUtil._getWebDriver();

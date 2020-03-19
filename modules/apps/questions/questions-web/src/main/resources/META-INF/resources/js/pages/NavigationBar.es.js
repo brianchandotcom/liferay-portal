@@ -14,8 +14,8 @@
 
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import React, {useContext} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import React, {useContext, useEffect, useState} from 'react';
+import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
 
@@ -30,9 +30,12 @@ export default withRouter(
 		const isActive = value => location.pathname.includes(value);
 
 		const context = useContext(AppContext);
-		if (sectionTitle) {
-			context.setSection(sectionTitle);
-		}  
+
+		useEffect(() => {
+			if(sectionTitle) {
+				context.setSection(sectionTitle)
+			}
+		}, [sectionTitle]);
 
 		return (
 			<section className="border-bottom questions-section questions-section-nav">
@@ -43,17 +46,11 @@ export default withRouter(
 								<ClayNavigationBar triggerLabel="Questions">
 									<ClayNavigationBar.Item
 										active={!isActive('activity')}
-										onClick={() => {
-											if (!sectionTitle) {
-												return history.push(
-													`/questions/${context.section}`
-												)
-											}
-
-											return history.push(
-												`/questions/${sectionTitle}`
-											);
-										}}
+										onClick={() =>
+											history.push(
+												`/questions/${context.section}`
+											)
+										}
 									>
 										<ClayLink
 											className="nav-link"
@@ -63,14 +60,13 @@ export default withRouter(
 										</ClayLink>
 									</ClayNavigationBar.Item>
 
-									<ClayNavigationBar.Item 
+									<ClayNavigationBar.Item
 										active={isActive('activity')}
-										onClick={() => {
-											if (!sectionTitle) {}
-											return history.push(
+										onClick={() =>
+											history.push(
 												`/activity/${context.userId}`
-											);
-										}}
+											)
+										}
 									>
 										<ClayLink
 											className="nav-link"
@@ -85,7 +81,6 @@ export default withRouter(
 							</div>
 						)}
 					</div>
-					
 				</div>
 			</section>
 		);

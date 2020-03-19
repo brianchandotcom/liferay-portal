@@ -54,6 +54,7 @@ page import="com.liferay.layout.page.template.exception.DuplicateLayoutPageTempl
 page import="com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException" %><%@
 page import="com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException" %><%@
 page import="com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry" %><%@
+page import="com.liferay.layout.page.template.importer.MasterLayoutsImporterResultEntry" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateCollection" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateEntry" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil" %><%@

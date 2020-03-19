@@ -9,7 +9,3 @@ dependencies {
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }
-
-test {
-	systemProperty "liferay.home", System.getProperty("liferay.home")
-}

@@ -45,11 +45,12 @@
 		}
 	}
 
-	&__col &__col__resizer.btn.btn-primary {
+	&__col &__col__resizer {
 		border-radius: 50%;
 		cursor: col-resize;
 		height: 16px;
 		left: 100%;
+		outline: none;
 		padding: 0;
 		position: absolute;
 		top: 50%;

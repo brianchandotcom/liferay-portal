@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
@@ -39,7 +41,32 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 		content = content.replaceAll(
 			"(\\A|\n)( *[\\w.-]+)(( +=)|(= +))(.*)(\\Z|\n)", "$1$2=$6$7");
 
-		Matcher matcher = _sqlPattern.matcher(content);
+		Matcher matcher = _sqlPattern1.matcher(content);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+			String indent = matcher.group(1);
+
+			String sqlClause = matcher.group(3);
+
+			String s = StringUtil.replace(
+				sqlClause, new String[] {" AND ", " OR "},
+				new String[] {" AND \\\n", " OR \\\n"});
+
+			s = s.replaceAll("\\((?=\\()", "(\\\\\n");
+			s = s.replaceAll("\\)(?=\\))", ")\\\\\n");
+
+			String[] sqlClauses = s.split("\n");
+
+			String replacement = StringBundler.concat(
+				indent, matcher.group(2), "\\\n",
+				_formatSQLClause(indent + StringPool.FOUR_SPACES, sqlClauses));
+
+			return StringUtil.replaceFirst(
+				content, match, replacement, matcher.start());
+		}
+
+		matcher = _sqlPattern2.matcher(content);
 
 		while (matcher.find()) {
 			int lineNumber = getLineNumber(content, matcher.start());
@@ -71,8 +98,32 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private String _formatSQLClause(String indent, String[] sqlClauses) {
+		StringBundler sb = new StringBundler(sqlClauses.length * 3);
+
+		for (String sqlClause : sqlClauses) {
+			if (sqlClause.startsWith(")")) {
+				indent = indent.substring(4);
+			}
+
+			sb.append(indent);
+			sb.append(sqlClause);
+			sb.append("\n");
+
+			if (sqlClause.equals("(\\")) {
+				indent = indent + StringPool.FOUR_SPACES;
+			}
+		}
+
+		if (sb.length() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
+	}
+
 	private String _getSQLClause(String line) {
-		Matcher matcher = _sqlPattern.matcher(line);
+		Matcher matcher = _sqlPattern2.matcher(line);
 
 		if (matcher.find()) {
 			return matcher.group(1);
@@ -81,7 +132,9 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 		return null;
 	}
 
-	private static final Pattern _sqlPattern = Pattern.compile(
+	private static final Pattern _sqlPattern1 = Pattern.compile(
+		"(?<=\n)( +)(test.batch.run.property.query.+]=)([^\\\\].+)");
+	private static final Pattern _sqlPattern2 = Pattern.compile(
 		"\\s(\\(.* ([!=]=|~) .+\\))( (AND|OR) )?(\\\\)?");
 
 }

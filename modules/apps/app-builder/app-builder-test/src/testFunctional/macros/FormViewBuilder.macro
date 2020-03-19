@@ -303,20 +303,20 @@ definition {
 		AppBuilderAdmin.switchTab(tabName = "Form Views");
 	}
 
-	macro validateFieldInObject {
-		var key_fieldLabel = "${fieldLabel}";
-
-		AssertTextEquals(
-			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL",
-			value1 = "${fieldLabel}");
-	}
-
 	macro validateDeleteObjectMessage {
 		AssertElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_OBJECT_MESSAGE");
 	}
 
 	macro validateDeleteUsedObjectMessage {
 		AssertElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_USED_OBJECT_MESSAGE");
+	}
+
+	macro validateFieldInObject {
+		var key_fieldLabel = "${fieldLabel}";
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL",
+			value1 = "${fieldLabel}");
 	}
 
 	macro validateFieldLabel {
@@ -341,23 +341,6 @@ definition {
 			value1 = "${fieldLabel}");
 	}
 
-	macro validateSearchResult {
-		var key_fieldName = "${fieldLabel}";
-
-		AssertTextEquals(
-			locator1 = "FormViewBuilder#OBJECT_FIELD_SEARCH_RESULT",
-			value1 = "${fieldLabel}");
-	}
-
-	macro validateSelectFromListField {
-
-		var key_rowNumber = "${rowNumber}";
-
-		AssertTextEquals(
-			locator1 = "FormViewBuilder#OPTIONS_OPTION_VALUE_FIELD",
-			value1 = "${optionValue}");
-	}
-	
 	macro validateNoFieldLabel {
 		AssertElementNotPresent(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
@@ -376,6 +359,23 @@ definition {
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL",
 			value1 = "${fieldName}");
+	}
+
+	macro validateSearchResult {
+		var key_fieldName = "${fieldLabel}";
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#OBJECT_FIELD_SEARCH_RESULT",
+			value1 = "${fieldLabel}");
+	}
+
+	macro validateSelectFromListField {
+
+		var key_rowNumber = "${rowNumber}";
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "${optionValue}");
 	}
 
 	macro validateUsedFormView {

@@ -176,8 +176,7 @@ public class FileinstallDeployTest {
 		Bundle bundle = null;
 
 		try {
-			_createJAR(
-				path, _TEST_JAR_SYMBOLIC_NAME, new Version(1, 0, 0), null);
+			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, baseVersion, null);
 
 			installCountDownLatch.await(30, TimeUnit.SECONDS);
 

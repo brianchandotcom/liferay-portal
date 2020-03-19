@@ -11,8 +11,8 @@
 
 <!--FIELDS_SIDEBAR-->
 <tr>
-	<td>ADD_FIELD_TYPE</td>
-	<td>//div[contains(@class,'tab-content')]//div[contains(@class,'field-type')]//span[text()='${key_fieldType}']</td>
+	<td>SIDEBAR_FIELD_LABEL</td>
+	<td>//div[contains(@class,'tab-content')]//div[contains(@class,'field-type')]//span[text()='${key_fieldLabel}']</td>
 	<td></td>
 </tr>
 
@@ -204,10 +204,9 @@
 
 
 <!--OBJECT_SIDEBAR-->
-
 <tr>
-	<td>OBJECT_FIELD_NAME</td>
-	<td>//div[contains(@class,'sidebar-body')]//span[contains(text(),'${key_fieldName}')]</td>
+	<td>OBJECT_FIELD_LABEL</td>
+	<td>//div[contains(@class,'custom-object-field')]//span[contains(text(),'${key_fieldLabel}')]</td>
 	<td></td>
 </tr>
 
@@ -229,11 +228,6 @@
 	<td></td>
 </tr>
 
-<tr>
-	<td>VALIDATE_OBJECT_SIDEBAR_FIELD_NAME</td>
-	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${fieldName}')]</td>
-	<td></td>
-</tr>
 
 <!--DELETE_OBJECT-->
 <tr>

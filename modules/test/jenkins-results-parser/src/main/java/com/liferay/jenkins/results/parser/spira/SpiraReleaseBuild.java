@@ -37,6 +37,16 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 		SpiraProject spiraProject, SpiraRelease spiraRelease,
 		String releaseBuildName) {
 
+		List<SpiraReleaseBuild> spiraReleaseBuilds = getSpiraReleaseBuilds(
+			spiraProject, spiraRelease,
+			new SearchQuery.SearchParameter("ProjectId", spiraProject.getID()),
+			new SearchQuery.SearchParameter("ReleaseId", spiraRelease.getID()),
+			new SearchQuery.SearchParameter("Name", releaseBuildName));
+
+		if (spiraReleaseBuilds.size() > 0) {
+			return spiraReleaseBuilds.get(0);
+		}
+
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
 		urlPathReplacements.put(

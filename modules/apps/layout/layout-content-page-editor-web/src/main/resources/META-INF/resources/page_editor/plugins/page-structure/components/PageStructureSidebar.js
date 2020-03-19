@@ -14,7 +14,7 @@
 
 import ClayAlert from '@clayui/alert';
 import {Treeview} from 'frontend-js-components-web';
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import {useActiveItemId} from '../../../app/components/Controls';
 import hasDropZoneChild from '../../../app/components/layout-data-items/hasDropZoneChild';
@@ -38,11 +38,15 @@ export default function PageStructureSidebar() {
 
 	const data = masterLayoutData || layoutData;
 
-	const nodes = visit(data.items[data.rootItems.main], data.items, {
-		activeItemId,
-		isMasterPage,
-		state,
-	}).children;
+	const nodes = useMemo(
+		() =>
+			visit(data.items[data.rootItems.main], data.items, {
+				activeItemId,
+				isMasterPage,
+				state,
+			}).children,
+		[data, activeItemId, isMasterPage, state]
+	);
 
 	return (
 		<>

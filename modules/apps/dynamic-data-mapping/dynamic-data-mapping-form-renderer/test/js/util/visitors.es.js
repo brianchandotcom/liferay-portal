@@ -75,4 +75,75 @@ describe('PagesVisitor', () => {
 			}))
 		).toMatchSnapshot();
 	});
+
+	it('is able to visit fields and stop when required', () => {
+		const visitedFieldNames = [];
+
+		const visitor = new PagesVisitor([
+			{
+				rows: [
+					{
+						columns: [
+							{
+								fields: [
+									{
+										fieldName: 'fieldA',
+									},
+									{
+										fieldName: 'fieldB',
+										nestedFields: [{fieldName: 'fieldC'}],
+									},
+								],
+							},
+							{
+								fields: [
+									{
+										fieldName: 'fieldD',
+									},
+								],
+							},
+						],
+					},
+					{
+						columns: [
+							{
+								fields: [
+									{
+										fieldName: 'fieldE',
+									},
+								],
+							},
+						],
+					},
+				],
+			},
+			{
+				rows: [
+					{
+						columns: [
+							{
+								fields: [
+									{
+										fieldName: 'fieldF',
+									},
+								],
+							},
+						],
+					},
+				],
+			},
+		]);
+
+		visitor.visitFields(({fieldName}) => {
+			visitedFieldNames.push(fieldName);
+
+			if (fieldName.indexOf('C') > -1) {
+				return true; // stop
+			}
+
+			return false; // continue;
+		});
+
+		expect(visitedFieldNames).toEqual(['fieldA', 'fieldB', 'fieldC']);
+	});
 });

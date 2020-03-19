@@ -284,9 +284,7 @@ export const visitNestedFields = ({nestedFields}, fn) => {
 export const findFieldByName = (pages, fieldName) => {
 	const visitor = new PagesVisitor(pages);
 
-	return visitor.findField(
-		field => field.fieldName === fieldName
-	);
+	return visitor.findField(field => field.fieldName === fieldName);
 };
 
 export const getColumn = (pages, pageIndex, rowIndex, columnIndex) => {

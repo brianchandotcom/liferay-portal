@@ -112,20 +112,6 @@ public class EditFragmentEntryDisplayContext {
 	public SoyContext getFragmentEditorDisplayContext() throws Exception {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
-		SoyContext allowedStatusSoyContext =
-			SoyContextFactoryUtil.createSoyContext();
-
-		allowedStatusSoyContext.put(
-			"approved", String.valueOf(WorkflowConstants.STATUS_APPROVED)
-		).put(
-			"draft", String.valueOf(WorkflowConstants.STATUS_DRAFT)
-		);
-
-		FragmentServiceConfiguration fragmentServiceConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				FragmentServiceConfiguration.class,
-				_themeDisplay.getCompanyId());
-
 		TemplateManager templateManager =
 			TemplateManagerUtil.getTemplateManager(
 				TemplateConstants.LANG_TYPE_FTL);
@@ -152,31 +138,19 @@ public class EditFragmentEntryDisplayContext {
 
 		freeMarkerVariables.add("configuration");
 
-		List<Map<String, Object>> htmlEditorCustomEntities = new ArrayList<>();
-
-		Map<String, Object> htmlEditorFreeMarkerTaglibs =
-			HashMapBuilder.<String, Object>put(
-				"content", freeMarkerTaglibs
-			).put(
-				"end", "]"
-			).put(
-				"start", "[@"
-			).build();
-
-		Map<String, Object> htmlEditorFreeMarkerVariables =
-			HashMapBuilder.<String, Object>put(
-				"content", freeMarkerVariables
-			).put(
-				"end", "}"
-			).put(
-				"start", "${"
-			).build();
-
-		htmlEditorCustomEntities.add(htmlEditorFreeMarkerTaglibs);
-		htmlEditorCustomEntities.add(htmlEditorFreeMarkerVariables);
-
 		soyContext.put(
-			"allowedStatus", allowedStatusSoyContext
+			"allowedStatus",
+			() -> {
+				SoyContext allowedStatusSoyContext =
+					SoyContextFactoryUtil.createSoyContext();
+
+				return allowedStatusSoyContext.put(
+					"approved",
+					String.valueOf(WorkflowConstants.STATUS_APPROVED)
+				).put(
+					"draft", String.valueOf(WorkflowConstants.STATUS_DRAFT)
+				);
+			}
 		).put(
 			"autocompleteTags",
 			_fragmentEntryProcessorRegistry.getAvailableTagsJSONArray()
@@ -191,7 +165,31 @@ public class EditFragmentEntryDisplayContext {
 		).put(
 			"freeMarkerVariables", freeMarkerVariables
 		).put(
-			"htmlEditorCustomEntities", htmlEditorCustomEntities
+			"htmlEditorCustomEntities",
+			() -> {
+				List<Map<String, Object>> htmlEditorCustomEntities =
+					new ArrayList<>();
+
+				htmlEditorCustomEntities.add(
+					HashMapBuilder.<String, Object>put(
+						"content", freeMarkerTaglibs
+					).put(
+						"end", "]"
+					).put(
+						"start", "[@"
+					).build());
+
+				htmlEditorCustomEntities.add(
+					HashMapBuilder.<String, Object>put(
+						"content", freeMarkerVariables
+					).put(
+						"end", "}"
+					).put(
+						"start", "${"
+					).build());
+
+				return htmlEditorCustomEntities;
+			}
 		).put(
 			"initialConfiguration", _getConfigurationContent()
 		).put(
@@ -206,7 +204,14 @@ public class EditFragmentEntryDisplayContext {
 			"portletNamespace", _renderResponse.getNamespace()
 		).put(
 			"propagationEnabled",
-			fragmentServiceConfiguration.propagateChanges()
+			() -> {
+				FragmentServiceConfiguration fragmentServiceConfiguration =
+					ConfigurationProviderUtil.getCompanyConfiguration(
+						FragmentServiceConfiguration.class,
+						_themeDisplay.getCompanyId());
+
+				return fragmentServiceConfiguration.propagateChanges();
+			}
 		).put(
 			"readOnly", _isReadOnlyFragmentEntry()
 		).put(
@@ -231,36 +236,46 @@ public class EditFragmentEntryDisplayContext {
 		).put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+		).put(
+			"status",
+			() -> {
+				FragmentEntry fragmentEntry = getFragmentEntry();
+
+				return String.valueOf(fragmentEntry.getStatus());
+			}
+		).put(
+			"urls",
+			() -> {
+				SoyContext urlsSoycontext =
+					SoyContextFactoryUtil.createSoyContext();
+
+				return urlsSoycontext.put(
+					"current", _themeDisplay.getURLCurrent()
+				).put(
+					"edit",
+					() -> {
+						PortletURL editActionURL =
+							_renderResponse.createActionURL();
+
+						editActionURL.setParameter(
+							ActionRequest.ACTION_NAME,
+							"/fragment/edit_fragment_entry");
+
+						return editActionURL.toString();
+					}
+				).put(
+					"preview",
+					_getFragmentEntryRenderURL(
+						"/fragment/preview_fragment_entry")
+				).put(
+					"redirect", getRedirect()
+				).put(
+					"render",
+					_getFragmentEntryRenderURL(
+						"/fragment/render_fragment_entry")
+				);
+			}
 		);
-
-		FragmentEntry fragmentEntry = getFragmentEntry();
-
-		soyContext.put("status", String.valueOf(fragmentEntry.getStatus()));
-
-		SoyContext urlsSoycontext = SoyContextFactoryUtil.createSoyContext();
-
-		urlsSoycontext.put("current", _themeDisplay.getURLCurrent());
-
-		PortletURL editActionURL = _renderResponse.createActionURL();
-
-		editActionURL.setParameter(
-			ActionRequest.ACTION_NAME, "/fragment/edit_fragment_entry");
-
-		urlsSoycontext.put(
-			"edit", editActionURL.toString()
-		).put(
-			"preview",
-			_getFragmentEntryRenderURL(
-				fragmentEntry, "/fragment/preview_fragment_entry")
-		).put(
-			"redirect", getRedirect()
-		).put(
-			"render",
-			_getFragmentEntryRenderURL(
-				fragmentEntry, "/fragment/render_fragment_entry")
-		);
-
-		soyContext.put("urls", urlsSoycontext);
 
 		return soyContext;
 	}
@@ -411,8 +426,7 @@ public class EditFragmentEntryDisplayContext {
 		return _cssContent;
 	}
 
-	private String _getFragmentEntryRenderURL(
-			FragmentEntry fragmentEntry, String mvcRenderCommandName)
+	private String _getFragmentEntryRenderURL(String mvcRenderCommandName)
 		throws Exception {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
@@ -420,12 +434,16 @@ public class EditFragmentEntryDisplayContext {
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
+
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
 		portletURL.setParameter(
 			"fragmentEntryId",
 			String.valueOf(fragmentEntry.getFragmentEntryId()));
 		portletURL.setParameter(
 			"fragmentEntryKey",
 			String.valueOf(fragmentEntry.getFragmentEntryKey()));
+
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();

@@ -14,11 +14,13 @@
 
 package com.liferay.layout.type.controller.content.internal.servlet.taglib.ui;
 
+import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -74,6 +76,10 @@ public class LayoutEditorToolbarControlMenuJSPDynamicInclude
 
 		Layout layout = themeDisplay.getLayout();
 
+		if (layout.isSystem() && layout.isTypeContent()) {
+			layout = _layoutLocalService.getLayout(layout.getClassPK());
+		}
+
 		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
 			return false;
 		}
@@ -86,11 +92,14 @@ public class LayoutEditorToolbarControlMenuJSPDynamicInclude
 		}
 
 		if (!LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+				themeDisplay.getPermissionChecker(), layout,
 				ActionKeys.UPDATE) &&
 			!LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-				ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+				themeDisplay.getPermissionChecker(), layout,
+				ActionKeys.UPDATE_LAYOUT_CONTENT) &&
+			!_modelResourcePermission.contains(
+				themeDisplay.getPermissionChecker(), layout.getPlid(),
+				ActionKeys.UPDATE)) {
 
 			return false;
 		}
@@ -125,5 +134,11 @@ public class LayoutEditorToolbarControlMenuJSPDynamicInclude
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutEditorToolbarControlMenuJSPDynamicInclude.class);
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutContentModelResourcePermission _modelResourcePermission;
 
 }

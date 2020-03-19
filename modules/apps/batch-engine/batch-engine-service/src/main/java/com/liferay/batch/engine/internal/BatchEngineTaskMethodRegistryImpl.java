@@ -144,9 +144,7 @@ public class BatchEngineTaskMethodRegistryImpl
 						company, expressionConvert, filterParserProvider,
 						parameters, serviceObjects, sortParserProvider, user));
 
-			if (!_itemClasses.containsKey(itemClass.getName())) {
-				_itemClasses.put(itemClass.getName(), itemClass);
-			}
+			_itemClasses.put(itemClass.getName(), itemClass);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(

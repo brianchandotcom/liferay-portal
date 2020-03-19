@@ -1,0 +1,48 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentSettings": {
+						"allowedFragments": [
+							{
+								"key": "BASIC_COMPONENT-button"
+							},
+							{
+								"key": "BASIC_COMPONENT-card"
+							},
+							{
+								"key": "FEATURED_CONTENT-banner-center"
+							},
+							{
+								"key": "com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer"
+							},
+							{
+								"key": "content-display"
+							}
+						],
+						"unallowedFragments": [
+							{
+								"key": "BASIC_COMPONENT-button"
+							},
+							{
+								"key": "BASIC_COMPONENT-card"
+							},
+							{
+								"key": "FEATURED_CONTENT-banner-center"
+							},
+							{
+								"key": "com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer"
+							},
+							{
+								"key": "content-display"
+							}
+						]
+					}
+				},
+				"type": "DropZone"
+			}
+		],
+		"type": "Root"
+	}
+}

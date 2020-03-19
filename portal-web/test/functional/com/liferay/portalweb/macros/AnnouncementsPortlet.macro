@@ -9,7 +9,7 @@ definition {
 
 		Select(
 			locator1 = "Select#PAGE_DELTA",
-			value1 = "5");
+			value1 = "${maxDisplayItems}");
 
 		PortletEntry.save();
 

@@ -1,49 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Options shows the options 1`] = `
-<div class="form-group" data-field-name="options">
-  <fieldset>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="options">
     <div class="ddm-field-options-container">
-      <div class="ddm-options-target" data-index="0"></div>
-      <div class="ddm-field-options" data-index="0"><span class="ddm-options-drag "><svg aria-hidden="true" class="lexicon-icon lexicon-icon-drag">
+      <div class="ddm-options-target"></div>
+      <div class="ddm-field-options" draggable="true"><span class="ddm-options-drag"><svg class="lexicon-icon lexicon-icon-drag" role="presentation">
             <use xlink:href="icons.svg#drag"></use>
           </svg></span>
         <div class="ddm-option-entry">
-          <div class="react-component-adapter">
-            <div class="form-group" data-field-name="option0">
-              <div class="form-group" data-field-name="keyValueLabeloption0"><input aria-label="text" name="keyValueLabeloption0" placeholder="enter-an-option" type="text" class="form-control ddm-field-text" value="Option 1"></div>
-              <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value="Option1"></div>
-            </div>
-          </div><button class="close close-modal" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+          <div class="form-group" data-field-name="option0">
+            <div class="form-group" data-field-name="keyValueLabeloption0"><input aria-label="text" name="keyValueLabeloption0" placeholder="enter-an-option" type="text" class="form-control ddm-field-text" value="Option 1"></div>
+            <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value="Option1"></div>
+          </div><button class="close close-modal" type="button"><svg class="lexicon-icon lexicon-icon-times" role="presentation">
               <use xlink:href="icons.svg#times"></use>
             </svg></button>
         </div>
       </div>
-      <div class="ddm-options-target" data-index="1"></div>
-      <div class="ddm-field-options" data-index="1"><span class="ddm-options-drag "><svg aria-hidden="true" class="lexicon-icon lexicon-icon-drag">
+      <div class="ddm-options-target"></div>
+      <div class="ddm-field-options" draggable="true"><span class="ddm-options-drag"><svg class="lexicon-icon lexicon-icon-drag" role="presentation">
             <use xlink:href="icons.svg#drag"></use>
           </svg></span>
         <div class="ddm-option-entry">
-          <div class="react-component-adapter">
-            <div class="form-group" data-field-name="option1">
-              <div class="form-group" data-field-name="keyValueLabeloption1"><input aria-label="text" name="keyValueLabeloption1" placeholder="enter-an-option" type="text" class="form-control ddm-field-text" value="Option 2"></div>
-              <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value="Option2"></div>
-            </div>
-          </div><button class="close close-modal" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+          <div class="form-group" data-field-name="option1">
+            <div class="form-group" data-field-name="keyValueLabeloption1"><input aria-label="text" name="keyValueLabeloption1" placeholder="enter-an-option" type="text" class="form-control ddm-field-text" value="Option 2"></div>
+            <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value="Option2"></div>
+          </div><button class="close close-modal" type="button"><svg class="lexicon-icon lexicon-icon-times" role="presentation">
               <use xlink:href="icons.svg#times"></use>
             </svg></button>
         </div>
       </div>
-      <div class="ddm-options-target" data-index="2"></div>
-      <div class="ddm-field-options" data-index="2"><span class="ddm-options-drag "><svg aria-hidden="true" class="lexicon-icon lexicon-icon-drag">
+      <div class="ddm-options-target"></div>
+      <div class="ddm-field-options" draggable="true"><span class="ddm-options-drag"><svg class="lexicon-icon lexicon-icon-drag" role="presentation">
             <use xlink:href="icons.svg#drag"></use>
           </svg></span>
         <div class="ddm-option-entry">
-          <div class="react-component-adapter">
-            <div class="form-group" data-field-name="option2">
-              <div class="form-group" data-field-name="keyValueLabeloption2"><input aria-label="text" name="keyValueLabeloption2" placeholder="enter-an-option" type="text" class="form-control ddm-field-text" value=""></div>
-              <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
-            </div>
+          <div class="form-group" data-field-name="option2">
+            <div class="form-group" data-field-name="keyValueLabeloption2"><input aria-label="text" name="keyValueLabeloption2" placeholder="enter-an-option" type="text" class="form-control ddm-field-text" value=""></div>
+            <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
           </div>
         </div>
       </div>

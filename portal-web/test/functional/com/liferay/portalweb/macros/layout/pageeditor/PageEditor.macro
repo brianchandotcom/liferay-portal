@@ -1214,6 +1214,41 @@ definition {
 			locator1 = "Fragment#FRAGMENT_HEADER");
 	}
 
+	macro viewRowStyle {
+		if (isSet(columnCount)) {
+			var i = "0";
+
+			while ("${i}" != "${columnCount}") {
+				var columnNumber = ${i} + 1;
+
+				AssertElementPresent(
+					key_columnNumber = "${columnNumber}",
+					key_position = "${position}",
+					locator1 = "PageEditor#ROW_COLUMN");
+			}
+
+			var columnNumber = ${columnCount} + 1;
+
+			AssertElementNotPresent(
+				key_columnNumber = "${columnNumber}",
+				key_position = "${position}",
+				locator1 = "PageEditor#ROW_COLUMN");
+		}
+
+		if (isSet(spaceBetweenColumns)) {
+			if ("spaceBetweenColumns" == "true") {
+				AssertElementNotPresent(
+					key_position = "${position}",
+					locator1 = "PageEditor#ROW_CONFIGURATION_COLUMNS_NO_GUTTER");
+			}
+			else if ("spaceBetweenColumns" == "false") {
+				AssertElementPresent(
+					key_position = "${position}",
+					locator1 = "PageEditor#ROW_CONFIGURATION_COLUMNS_NO_GUTTER");
+			}
+		}
+	}
+
 	macro viewSectionStyle {
 		if (isSet(backgroundColor)) {
 			AssertElementPresent(

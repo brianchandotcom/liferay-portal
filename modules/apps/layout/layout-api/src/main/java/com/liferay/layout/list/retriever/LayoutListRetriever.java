@@ -18,9 +18,12 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Eudaldo Alonso
  */
+@ProviderType
 public interface LayoutListRetriever
 	<T extends ItemSelectorReturnType, S extends ListObjectReference> {
 

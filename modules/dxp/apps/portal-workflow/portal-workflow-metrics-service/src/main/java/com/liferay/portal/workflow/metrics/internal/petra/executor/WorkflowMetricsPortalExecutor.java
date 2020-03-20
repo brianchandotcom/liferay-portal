@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -47,15 +48,25 @@ public class WorkflowMetricsPortalExecutor {
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				_noticeableExecutorService.submit(
-					() -> {
-						try {
-							unsafeRunnable.run();
-						}
-						catch (Throwable t) {
-							_log.error(t, t);
-						}
-					});
+				if (PortalRunMode.isTestMode()) {
+					try {
+						unsafeRunnable.run();
+					}
+					catch (Throwable t) {
+						_log.error(t, t);
+					}
+				}
+				else {
+					_noticeableExecutorService.submit(
+						() -> {
+							try {
+								unsafeRunnable.run();
+							}
+							catch (Throwable t) {
+								_log.error(t, t);
+							}
+						});
+				}
 
 				return null;
 			});

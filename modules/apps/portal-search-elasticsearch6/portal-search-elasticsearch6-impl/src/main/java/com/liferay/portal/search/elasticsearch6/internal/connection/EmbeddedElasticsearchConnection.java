@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.connection;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -33,8 +34,12 @@ import io.netty.buffer.ByteBufUtil;
 
 import java.io.IOException;
 
+import java.lang.reflect.Field;
+
 import java.net.InetAddress;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ScheduledExecutorService;
@@ -267,6 +272,7 @@ public class EmbeddedElasticsearchConnection
 		}
 
 		settingsBuilder.put("monitor.jvm.gc.enabled", StringPool.FALSE);
+		settingsBuilder.put("processors", "1");
 	}
 
 	@Override
@@ -347,7 +353,75 @@ public class EmbeddedElasticsearchConnection
 		try {
 			installPlugins(settings);
 
-			return EmbeddedElasticsearchNode.newInstance(settings);
+			Node node = EmbeddedElasticsearchNode.newInstance(settings);
+
+			if (PortalRunMode.isTestMode()) {
+				Injector injector = node.injector();
+
+				ThreadPool threadPool = injector.getInstance(ThreadPool.class);
+
+				try {
+					Field executorsField = ReflectionUtil.getDeclaredField(
+						ThreadPool.class, "executors");
+
+					Map<String, Object> executors =
+						(Map<String, Object>)executorsField.get(threadPool);
+
+					Map<String, Object> newExecutors = new HashMap<>(executors);
+
+					newExecutors.put(
+						ThreadPool.Names.FETCH_SHARD_STARTED,
+						executors.get(ThreadPool.Names.SAME));
+
+					newExecutors.put(
+						ThreadPool.Names.FLUSH,
+						executors.get(ThreadPool.Names.SAME));
+
+					newExecutors.put(
+						ThreadPool.Names.GENERIC,
+						executors.get(ThreadPool.Names.SAME));
+
+					newExecutors.put(
+						ThreadPool.Names.INDEX,
+						executors.get(ThreadPool.Names.SAME));
+
+					newExecutors.put(
+						ThreadPool.Names.MANAGEMENT,
+						executors.get(ThreadPool.Names.SAME));
+
+					newExecutors.put(
+						ThreadPool.Names.REFRESH,
+						executors.get(ThreadPool.Names.SAME));
+
+					newExecutors.put(
+						ThreadPool.Names.WRITE,
+						executors.get(ThreadPool.Names.SAME));
+
+					Object executorHolder = newExecutors.get(
+						ThreadPool.Names.SEARCH);
+
+					Field executorField = ReflectionUtil.getDeclaredField(
+						executorHolder.getClass(), "executor");
+
+					ThreadPoolExecutor threadPoolExecutor =
+						(ThreadPoolExecutor)executorField.get(executorHolder);
+
+					threadPoolExecutor.shutdown();
+
+					threadPoolExecutor.setRejectedExecutionHandler(
+						(runnable, executor) -> runnable.run());
+
+					executorsField.set(
+						threadPool, Collections.unmodifiableMap(newExecutors));
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to sync ES threadpools", exception);
+					}
+				}
+			}
+
+			return node;
 		}
 		finally {
 			thread.setContextClassLoader(contextClassLoader);

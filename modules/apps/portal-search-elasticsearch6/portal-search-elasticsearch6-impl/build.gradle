@@ -85,6 +85,7 @@ dependencies {
 	compileOnly project(":apps:portal-search:portal-search-spi")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-io")
+	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
 
 	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.icu", version: elasticsearchVersion
@@ -111,7 +112,6 @@ dependencies {
 	testCompile project(":core:petra:petra-memory")
 	testCompile project(":core:petra:petra-nio")
 	testCompile project(":core:petra:petra-process")
-	testCompile project(":core:petra:petra-reflect")
 	testCompile project(":core:petra:petra-sql-dsl-api")
 	testCompile project(":core:registry-api")
 }

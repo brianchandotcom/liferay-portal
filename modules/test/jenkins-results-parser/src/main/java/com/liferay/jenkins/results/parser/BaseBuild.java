@@ -1390,11 +1390,11 @@ public abstract class BaseBuild implements Build {
 		JenkinsSlave jenkinsSlave = getJenkinsSlave();
 
 		String message = JenkinsResultsParserUtil.combine(
-			slaveOfflineRule.getName(), " failure detected at ", getBuildURL(),
-			". ", jenkinsSlave.getName(), " will be taken offline.\n\n",
-			slaveOfflineRule.toString(), "\n\n\nOffline Slave URL: https://",
-			_jenkinsMaster.getName(), ".liferay.com/computer/",
-			jenkinsSlave.getName(), "\n");
+			"PINNED\n", slaveOfflineRule.getName(), " failure detected at ",
+			getBuildURL(), ". ", jenkinsSlave.getName(),
+			" will be taken offline.\n\n", slaveOfflineRule.toString(),
+			"\n\n\nOffline Slave URL: https://", _jenkinsMaster.getName(),
+			".liferay.com/computer/", jenkinsSlave.getName(), "\n");
 
 		System.out.println(message);
 

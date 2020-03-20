@@ -16,7 +16,6 @@ package com.liferay.talend.tliferaybatchoutput;
 
 import com.liferay.talend.BasePropertiesTestCase;
 import com.liferay.talend.common.schema.constants.BatchSchemaConstants;
-import com.liferay.talend.properties.batch.LiferayBatchOutputProperties;
 
 import java.util.Objects;
 
@@ -45,7 +44,7 @@ public class TLiferayBatchOutputPropertiesTest extends BasePropertiesTestCase {
 
 		Assert.assertEquals(
 			"Component properties implementation class",
-			LiferayBatchOutputProperties.class, propertyClass);
+			TLiferayBatchOutputProperties.class, propertyClass);
 
 		ComponentProperties componentProperties =
 			getDefaultInitializedComponentPropertiesInstance(propertyClass);

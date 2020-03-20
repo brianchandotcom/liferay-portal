@@ -307,6 +307,8 @@ name = HtmlUtil.escapeJS(name);
 		Liferay.namespace('EDITORS').alloyEditor.addInstance();
 	};
 
+	var ignoreClass = ['ddm-options-target'];
+
 	var preventImageDragoverHandler = windowNode.on('dragover', function(event) {
 		var validDropTarget = event.target.getDOMNode().isContentEditable;
 
@@ -316,7 +318,11 @@ name = HtmlUtil.escapeJS(name);
 	});
 
 	var preventImageDropHandler = windowNode.on('drop', function(event) {
-		var validDropTarget = event.target.getDOMNode().isContentEditable;
+		var node = event.target.getDOMNode();
+		var ignoreNode = node.className.split(' ').filter(function(value) {
+			return ignoreClass.includes(value);
+		});
+		var validDropTarget = ignoreNode.length > 0 ? true : node.isContentEditable;
 
 		if (!validDropTarget) {
 			event.preventDefault();

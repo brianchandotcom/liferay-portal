@@ -1,8 +1,8 @@
 1.0.2:description
 
-- [LPS-89415]: Renamed `model` FreeMarker Java template to `dto` and changed the
+- [LPS-89415] Renamed `model` FreeMarker Java template to `dto` and changed the
 `buildRest` task to `buildREST`.
 
 1.0.1:description
 
-- [LPS-89415]: Added `model` FreeMarker Java template.
+- [LPS-89415] Added `model` FreeMarker Java template.

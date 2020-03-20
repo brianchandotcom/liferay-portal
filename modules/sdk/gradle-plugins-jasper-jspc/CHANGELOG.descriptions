@@ -1,22 +1,22 @@
 2.0.3:description
 
-- [LPS-76202]: Defer evaluation of the project's build directory so it can be
+- [LPS-76202] Defer evaluation of the project's build directory so it can be
 changed after applying the plugin.
 
 2.0.2:description
 
-- [LPS-74368]: Remove all dependency exclusions from the `jspCTool`
+- [LPS-74368] Remove all dependency exclusions from the `jspCTool`
 configuration's `com.liferay.jasper.jspc` default dependency.
 
 2.0.1:description
 
-- [LPS-71048]: Exclude `javax.servlet` transitive dependencies from the
+- [LPS-71048] Exclude `javax.servlet` transitive dependencies from the
 `jspCTool` configuration's `com.liferay.jasper.jspc` default dependency.
 
 2.0.0:description
 
-- [LPS-67573]: Make most methods private in order to reduce API surface.
-- [LPS-70677]: Exclude `com.liferay.portal` transitive dependencies from the
+- [LPS-67573] Make most methods private in order to reduce API surface.
+- [LPS-70677] Exclude `com.liferay.portal` transitive dependencies from the
 `jspCTool` configuration's `com.liferay.jasper.jspc` default dependency.
-- [LPS-70677]: Support `compileOnly` dependencies by using
+- [LPS-70677] Support `compileOnly` dependencies by using
 `sourceSets.main.compileClasspath` as a dependency in the `jspC` configuration.

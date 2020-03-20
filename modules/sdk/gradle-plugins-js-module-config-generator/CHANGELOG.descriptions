@@ -1,37 +1,37 @@
 2.1.17:description
 
-- [LPS-74343]: Explicitly set the `ConfigJSModulesTask`'s `sourceDir` property
+- [LPS-74343] Explicitly set the `ConfigJSModulesTask`'s `sourceDir` property
 as required.
 
 2.1.9:description
 
-- [LPS-68405]: Change the default value of the `ConfigJSModulesTask`'s
+- [LPS-68405] Change the default value of the `ConfigJSModulesTask`'s
 `customDefine` property to `Liferay.Loader`.
-- [LPS-68405]: Leverage the new `--namespace` argument to replace the
+- [LPS-68405] Leverage the new `--namespace` argument to replace the
 `define(...)` calls.
-- [LPS-68405]: Update the default version of `liferay-module-config-generator`
+- [LPS-68405] Update the default version of `liferay-module-config-generator`
 to 1.2.1.
 
 2.1.1:description
 
-- [LPS-68298]: Replace `define(...)` calls only at the beginning of a line, or
+- [LPS-68298] Replace `define(...)` calls only at the beginning of a line, or
 with if preceded by spaces or tabs.
 
 2.1.0:description
 
-- [LPS-68298]: Add property `customDefine` to all tasks that extend
+- [LPS-68298] Add property `customDefine` to all tasks that extend
 `ConfigJSModulesTask` in order to use custom `define(...)` calls in the JS
 files.
 
 2.0.3:description
 
-- [LPS-68618]: All `ConfigJSModulesTask` instances now depend on `npmInstall`.
+- [LPS-68618] All `ConfigJSModulesTask` instances now depend on `npmInstall`.
 
 2.0.1:description
 
-- [LPS-68485]: The up-to-date check for `ConfigJSModulesTask` tasks is incorrect
+- [LPS-68485] The up-to-date check for `ConfigJSModulesTask` tasks is incorrect
 (files are modified in-place) and it has been disabled.
 
 2.0.0:description
 
-- [LPS-67573]: Make most methods private in order to reduce API surface.
+- [LPS-67573] Make most methods private in order to reduce API surface.

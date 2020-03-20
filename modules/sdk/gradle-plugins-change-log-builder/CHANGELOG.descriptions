@@ -1,14 +1,14 @@
 1.1.1:description
 
-- [LPS-82960]: Avoid error when the only valid commit is the initial commit.
+- [LPS-82960] Avoid error when the only valid commit is the initial commit.
 
 1.1.0:description
 
-- [LPS-67573]: Make most methods private in order to reduce API surface.
-- [LPS-82857]: Avoid error when running the `buildChangeLog` task on Git
+- [LPS-67573] Make most methods private in order to reduce API surface.
+- [LPS-82857] Avoid error when running the `buildChangeLog` task on Git
 branches that do not contain commits older than two years.
 
 1.0.4:description
 
-- [LPS-80950]: Avoid out-of-memory errors when running on large Git
+- [LPS-80950] Avoid out-of-memory errors when running on large Git
 repositories.

@@ -1,18 +1,18 @@
 2.2.0:description
 
-- [LPS-76475]: Replace the `BuildCSSTask`'s `docrootDir`, `portalCommonDir`,
+- [LPS-76475] Replace the `BuildCSSTask`'s `docrootDir`, `portalCommonDir`,
 `portalCommonFile`, and `portalCommonPath` properties with `baseDir`,
 `importDir`, `importFile`, and `importPath`. The previous properties are still
 available, but they are deprecated.
-- [LPS-76475]: Fix invocation of the [Liferay CSS Builder] if the
+- [LPS-76475] Fix invocation of the [Liferay CSS Builder] if the
 `BuildCSSTask`'s `dirNames` property contains more than one value.
 
 2.1.0:description
 
-- [LPS-74126]: Add the `appendCssImportTimestamps` property to `BuildCSSTask`.
+- [LPS-74126] Add the `appendCssImportTimestamps` property to `BuildCSSTask`.
 
 2.0.0:description
 
-- [LPS-67573]: Make most methods private in order to reduce API surface.
-- [LPS-69223]: Update default value of the `precision` property for
+- [LPS-67573] Make most methods private in order to reduce API surface.
+- [LPS-69223] Update default value of the `precision` property for
 `BuildCSSTask` from `5` to `9`.

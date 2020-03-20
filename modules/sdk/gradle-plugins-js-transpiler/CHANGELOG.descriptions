@@ -1,65 +1,65 @@
 2.4.3:description
 
-- [LPS-77250]: Update the default value of the `soyDependencies` for
+- [LPS-77250] Update the default value of the `soyDependencies` for
 `TranspileJSTask` instances from
 `"${npmInstall.workingDir}/node_modules/lexicon*/src/**/*.soy"` to
 `"${npmInstall.workingDir}/node_modules/clay*/src/**/*.soy"`.
 
 2.4.0:description
 
-- [LPS-75829]: Add the new `com.liferay.js.transpiler.base` plugin to apply the
+- [LPS-75829] Add the new `com.liferay.js.transpiler.base` plugin to apply the
 `jsCompile` configuration expansion logic.
 
 2.3.17:description
 
-- [LPS-74343]: Explicitly set the `TranspileJSTask`'s `sourceDir` property as
+- [LPS-74343] Explicitly set the `TranspileJSTask`'s `sourceDir` property as
 required.
 
 2.3.14:description
 
-- [LPS-72851]: Fix `InvalidUserDataException` in parallel builds when the
+- [LPS-72851] Fix `InvalidUserDataException` in parallel builds when the
 `jsCompile` or `soyCompile` configurations include project dependencies.
 
 2.3.13:description
 
-- [LPS-72723]: Avoid the `npmInstall` task from deleting the `node_modules`
+- [LPS-72723] Avoid the `npmInstall` task from deleting the `node_modules`
 subdirectories created from the dependencies in the `jsCompile` configuration.
 
 2.3.0:description
 
-- [LPS-69248]: Add the `jsCompile` configuration to provide additional
+- [LPS-69248] Add the `jsCompile` configuration to provide additional
 JavaScript dependencies for the `transpileJS` task.
 
 2.2.1:description
 
-- [LPS-69026]: Set the `--logLevel` argument of `metal-cli` based on the Gradle
+- [LPS-69026] Set the `--logLevel` argument of `metal-cli` based on the Gradle
 log level.
 
 2.2.0:description
 
-- [LPS-68979]: Add property `skipWhenEmpty` to all tasks that extend
+- [LPS-68979] Add property `skipWhenEmpty` to all tasks that extend
 `TranspileJSTask`. If `true`, the task is disabled if it has no source files
 at the end of the project evaluation.
-- [LPS-68979]: Exclude empty directories while `TranspileJSTask` instances copy
+- [LPS-68979] Exclude empty directories while `TranspileJSTask` instances copy
 source files to `workingDir`.
 
 2.1.1:description
 
-- [LPS-68917]: Fixed search pattern for the additional Soy dependencies in the
+- [LPS-68917] Fixed search pattern for the additional Soy dependencies in the
 `soyCompile` configuration.
 
 2.1.0:description
 
-- [LPS-68917]: Add configuration `soyCompile` to provide additional Soy
+- [LPS-68917] Add configuration `soyCompile` to provide additional Soy
 dependencies for the `transpileJS` task.
-- [LPS-68917]: Add default Lexicon Soy dependency to all `TranspileJSTask`
+- [LPS-68917] Add default Lexicon Soy dependency to all `TranspileJSTask`
 instances.
 
 2.0.0:description
 
-- [LPS-67573]: Make most methods private in order to reduce API surface.
+- [LPS-67573] Make most methods private in order to reduce API surface.
 
 1.0.35:description
 
-- [LPS-67023]: Remove the `downloadLfrAmdLoader` task.
-- [LPS-67023]: Remove the `jsTranspiler` extension object.
+- [LPS-67023] Remove the `downloadLfrAmdLoader` task.
+- [LPS-67023] Remove the `jsTranspiler` extension object.

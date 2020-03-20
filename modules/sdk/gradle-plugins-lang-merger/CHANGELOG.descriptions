@@ -1,4 +1,4 @@
 1.1.0:description
 
-- [LPS-81895]: Add the ability to filter and transform keys with
+- [LPS-81895] Add the ability to filter and transform keys with
 `MergePropertiesTask`.

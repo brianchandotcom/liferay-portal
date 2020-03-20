@@ -1,3 +1,3 @@
 2.0.0:description
 
-- [LPS-67573]: Make most methods private in order to reduce API surface.
+- [LPS-67573] Make most methods private in order to reduce API surface.

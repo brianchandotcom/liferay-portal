@@ -1,12 +1,12 @@
 1.0.3:description
 
-- [LPS-75327]: Automatically convert `.sh` files to Unix-style line endings when
+- [LPS-75327] Automatically convert `.sh` files to Unix-style line endings when
 building the app's Docker image.
 
 1.0.2:description
 
-- [LPS-74811]: Include the WAR file of WAR projects in the Docker image.
+- [LPS-74811] Include the WAR file of WAR projects in the Docker image.
 
 1.0.1:description
 
-- [LPS-74785]: Avoid failing the build in the case of a Git error.
+- [LPS-74785] Avoid failing the build in the case of a Git error.

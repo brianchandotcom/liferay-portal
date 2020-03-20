@@ -1,28 +1,28 @@
 3.0.6:description
 
-- [LPS-89388]: The `BuildLangTask` did not remove keys from the
+- [LPS-89388] The `BuildLangTask` did not remove keys from the
 `Language_xx.properties` files when the `Language.properties` file was empty.
 
 2.2.2:description
 
-- [LPS-82343]: Removed the `BuildLangTask`'s `plugin` and
+- [LPS-82343] Removed the `BuildLangTask`'s `plugin` and
 `portalLanguagePropertiesFile` properties.
 
 2.2.0:description
 
-- [LPS-78493]: Add the property `titleCapitalization` in `BuildLangTask` to
+- [LPS-78493] Add the property `titleCapitalization` in `BuildLangTask` to
 enable or disable the automatic capitalization of titles based on
 http://titlecapitalization.com.
 
 2.1.0:description
 
-- [LPS-74250]: Add the property `excludedLanguageIds` in `BuildLangTask` to
+- [LPS-74250] Add the property `excludedLanguageIds` in `BuildLangTask` to
 configure which language IDs to exclude in the automatic translation.
 
 2.0.0:description
 
-- [LPS-71375]: Add the property `translateSubscriptionKey` in `BuildLangTask` to
+- [LPS-71375] Add the property `translateSubscriptionKey` in `BuildLangTask` to
 support the Translator Text Translation API on Microsoft Cognitive Services.
-- [LPS-67573]: Make most methods private in order to reduce API surface.
-- [LPS-71375]: The properties `translateClientId` and `translateClientSecret` of
+- [LPS-67573] Make most methods private in order to reduce API surface.
+- [LPS-71375] The properties `translateClientId` and `translateClientSecret` of
 `BuildLangTask` are no longer available.

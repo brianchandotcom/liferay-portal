@@ -1,8 +1,8 @@
 1.0.14:description
 
-- [LPS-51081]: Fix error when running the `patch` task on Windows.
+- [LPS-51081] Fix error when running the `patch` task on Windows.
 
 1.0.13:description
 
-- [LPS-82178]: Fix error when adding the original library to the `compileOnly`
+- [LPS-82178] Fix error when adding the original library to the `compileOnly`
 configuration.

@@ -1,10 +1,10 @@
 1.2.0:description
 
-- [LPS-68666]: Add the ability to define which subprojects to include in the API
+- [LPS-68666] Add the ability to define which subprojects to include in the API
 documentation of the app by using the `appJavadocBuilder.subprojects` property.
 
 1.1.0:description
 
-- [LPS-68506]: Add the ability to exclude subprojects from the API documentation
+- [LPS-68506] Add the ability to exclude subprojects from the API documentation
 by using the `appJavadocBuilder.onlyIf` property.
-- [LPS-67573]: Make most methods private in order to reduce API surface.
+- [LPS-67573] Make most methods private in order to reduce API surface.

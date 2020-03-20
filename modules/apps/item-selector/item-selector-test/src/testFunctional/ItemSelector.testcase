@@ -99,8 +99,7 @@ definition {
 
 		AssertElementPresent(
 			key_imageName = "Document_1.svg",
-			key_position = "1",
-			locator1 = "PageEditor#SECTION_CONFIGURATION_BACKGROUND_IMAGE");
+			locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
 	}
 
 	@description = "This test covers LPS-105188. It ensures that a user can change selected page for Navigation Menu item based on page after creation."
@@ -161,8 +160,7 @@ definition {
 
 		AssertElementPresent(
 			key_imageName = "Document_1.jpeg",
-			key_position = "1",
-			locator1 = "PageEditor#SECTION_CONFIGURATION_BACKGROUND_IMAGE");
+			locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
 	}
 
 	@description = "This makes sure that the files in item selector can display by pagination."

@@ -124,8 +124,7 @@ definition {
 
 		AssertElementPresent(
 			key_imageName = "Document_1.jpeg",
-			key_position = "1",
-			locator1 = "PageEditor#SECTION_CONFIGURATION_BACKGROUND_IMAGE");
+			locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
 	}
 
 	@description = "This test covers LPS-105401. It ensures that a depot image can be used on a connected staging site."

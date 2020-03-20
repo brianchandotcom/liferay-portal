@@ -37,12 +37,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"configuration.field.name=vocabularyName",
+		"configuration.field.name=assetVocabulary",
 		"configuration.pid=com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration"
 	},
 	service = ConfigurationFieldOptionsProvider.class
 )
-public class VocabularyNameConfigurationFieldOptionsProvider
+public class AssetVocabularyNameConfigurationFieldOptionsProvider
 	implements ConfigurationFieldOptionsProvider {
 
 	@Override
@@ -93,7 +93,7 @@ public class VocabularyNameConfigurationFieldOptionsProvider
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		VocabularyNameConfigurationFieldOptionsProvider.class);
+		AssetVocabularyNameConfigurationFieldOptionsProvider.class);
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

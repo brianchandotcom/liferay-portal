@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class ContextNameConfigurationFieldOptionsProviderTest {
+public class EntityFieldConfigurationFieldOptionsProviderTest {
 
 	@ClassRule
 	@Rule
@@ -73,7 +73,7 @@ public class ContextNameConfigurationFieldOptionsProviderTest {
 	}
 
 	@Inject(
-		filter = "(&(configuration.pid=com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration)(configuration.field.name=contextName))"
+		filter = "(&(configuration.pid=com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration)(configuration.field.name=entityField))"
 	)
 	private ConfigurationFieldOptionsProvider
 		_configurationFieldOptionsProvider;

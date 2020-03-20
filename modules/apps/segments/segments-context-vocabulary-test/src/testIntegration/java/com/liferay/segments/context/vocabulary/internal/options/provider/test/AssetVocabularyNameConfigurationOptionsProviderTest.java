@@ -42,7 +42,7 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class VocabularyNameConfigurationOptionsProviderTest {
+public class AssetVocabularyNameConfigurationOptionsProviderTest {
 
 	@ClassRule
 	@Rule
@@ -83,7 +83,7 @@ public class VocabularyNameConfigurationOptionsProviderTest {
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject(
-		filter = "(&(configuration.pid=com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration)(configuration.field.name=vocabularyName))"
+		filter = "(&(configuration.pid=com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration)(configuration.field.name=assetVocabulary))"
 	)
 	private ConfigurationFieldOptionsProvider
 		_configurationFieldOptionsProvider;

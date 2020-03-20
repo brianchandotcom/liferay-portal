@@ -45,12 +45,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"configuration.field.name=contextName",
+		"configuration.field.name=entityField",
 		"configuration.pid=com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration"
 	},
 	service = ConfigurationFieldOptionsProvider.class
 )
-public class ContextNameConfigurationFieldOptionsProvider
+public class EntityFieldConfigurationFieldOptionsProvider
 	implements ConfigurationFieldOptionsProvider {
 
 	@Override

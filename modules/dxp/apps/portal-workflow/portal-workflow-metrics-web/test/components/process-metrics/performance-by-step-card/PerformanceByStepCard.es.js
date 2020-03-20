@@ -32,19 +32,25 @@ const items = [
 		breachedInstanceCount: 3,
 		breachedInstancePercentage: 30,
 		durationAvg: 10800000,
-		name: 'Review',
+		node: {
+			name: 'Review',
+		},
 	},
 	{
 		breachedInstanceCount: 7,
 		breachedInstancePercentage: 22.5806,
 		durationAvg: 475200000,
-		name: 'Update',
+		node: {
+			name: 'Update',
+		},
 	},
 	{
 		breachedInstanceCount: 0,
 		breachedInstancePercentage: 0,
 		durationAvg: 0,
-		name: 'Translate',
+		node: {
+			name: 'Translate',
+		},
 	},
 ];
 const data = {items, totalCount: items.length};

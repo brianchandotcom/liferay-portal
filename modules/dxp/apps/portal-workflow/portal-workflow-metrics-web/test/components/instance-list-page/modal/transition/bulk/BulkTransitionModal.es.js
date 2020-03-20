@@ -153,7 +153,7 @@ const ContainerMockPrimary = ({children}) => {
 		{
 			assetTitle: 'Blog1',
 			assetType: 'Blogs Entry',
-			assigneeUsers: [{id: 2, name: 'Test Test'}],
+			assignees: [{id: 2, name: 'Test Test'}],
 			id: 1,
 			status: 'In Progress',
 			taskNames: ['Review'],
@@ -161,7 +161,7 @@ const ContainerMockPrimary = ({children}) => {
 		{
 			assetTitle: 'Blog2',
 			assetType: 'Blogs Entry',
-			assigneeUsers: [{id: 2, name: 'Test Test'}],
+			assignees: [{id: 2, name: 'Test Test'}],
 			id: 2,
 			status: 'In Progress',
 			taskNames: ['Review'],
@@ -237,7 +237,7 @@ const ContainerMockSecondary = ({children}) => {
 		{
 			assetTitle: 'Blog1',
 			assetType: 'Blogs Entry',
-			assigneeUsers: [{id: 2, name: 'Test Test'}],
+			assignees: [{id: 2, name: 'Test Test'}],
 			id: 1,
 			status: 'In Progress',
 			taskNames: ['Review'],
@@ -245,7 +245,7 @@ const ContainerMockSecondary = ({children}) => {
 		{
 			assetTitle: 'Blog2',
 			assetType: 'Blogs Entry',
-			assigneeUsers: [{id: 2, name: 'Test Test'}],
+			assignees: [{id: 2, name: 'Test Test'}],
 			id: 2,
 			status: 'In Progress',
 			taskNames: ['Review'],

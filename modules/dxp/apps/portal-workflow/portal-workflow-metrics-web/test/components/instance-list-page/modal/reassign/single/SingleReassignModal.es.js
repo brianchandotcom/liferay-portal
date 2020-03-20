@@ -24,7 +24,7 @@ const ContainerMock = ({children}) => {
 	const selectedInstance = {
 		assetTitle: 'Blog1',
 		assetType: 'Blogs Entry',
-		assigneeUsers: [{id: 2, name: 'Test Test'}],
+		assignees: [{id: 2, name: 'Test Test'}],
 		id: 1,
 		status: 'In Progress',
 		taskNames: ['Review'],

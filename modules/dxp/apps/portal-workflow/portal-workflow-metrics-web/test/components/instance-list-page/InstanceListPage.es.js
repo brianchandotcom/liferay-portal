@@ -29,7 +29,7 @@ const items = [
 	{
 		assetTitle: 'New Post 2',
 		assetType: 'Blog',
-		creatorUser: {
+		creator: {
 			name: 'User 1',
 		},
 		dateCreated: new Date('2019-01-03'),

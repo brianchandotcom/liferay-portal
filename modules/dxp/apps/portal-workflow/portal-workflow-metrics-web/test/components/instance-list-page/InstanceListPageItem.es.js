@@ -20,8 +20,8 @@ import {MockRouter} from '../../mock/MockRouter.es';
 const instance = {
 	assetTitle: 'New Post',
 	assetType: 'Blog',
-	assigneeUsers: [{id: 20124, name: 'Test Test'}],
-	creatorUser: {
+	assignees: [{id: 20124, name: 'Test Test'}],
+	creator: {
 		name: 'User 1',
 	},
 	dateCreated: new Date('2019-01-01'),
@@ -37,7 +37,7 @@ const ContainerMock = ({children}) => {
 	const [selectedItem, setSelectedItem] = useState({
 		assetTitle: 'Blog1',
 		assetType: 'Blogs Entry',
-		assigneeUsers: [{id: 2, name: 'Test Test'}],
+		assignees: [{id: 2, name: 'Test Test'}],
 		id: 1,
 		status: 'In Progress',
 		taskNames: ['Review', 'Update'],
@@ -46,7 +46,7 @@ const ContainerMock = ({children}) => {
 		{
 			assetTitle: 'Blog1',
 			assetType: 'Blogs Entry',
-			assigneeUsers: [{id: 2, name: 'Test Test'}],
+			assignees: [{id: 2, name: 'Test Test'}],
 			id: 1,
 			status: 'In Progress',
 			taskNames: ['Review'],
@@ -90,11 +90,11 @@ describe('The instance list item should', () => {
 			wrapper: ContainerMock,
 		});
 
-		const creatorUserCell = getByTestId('creatorUserCell');
+		const creatorCell = getByTestId('creatorCell');
 		const dateCreatedCell = getByTestId('dateCreatedCell');
 		const taskNamesCell = getByTestId('taskNamesCell');
 
-		expect(creatorUserCell.innerHTML).toBe('User 1');
+		expect(creatorCell.innerHTML).toBe('User 1');
 		expect(dateCreatedCell.innerHTML).toBe('Jan 01, 2019, 12:00 AM');
 		expect(taskNamesCell.innerHTML).toBe('Review, Update');
 	});

@@ -22,7 +22,7 @@
 		<antcall target="build-common-java.compile" />
 
 		<copy
-			file="build/temp/ReleaseInfo.java.original"
+			file="build/release_info/ReleaseInfo.java.original"
 			overwrite="true"
 			tofile="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
 			verbose="true"
@@ -77,7 +77,7 @@
 		<copy
 			file="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
 			overwrite="true"
-			tofile="build/temp/ReleaseInfo.java.original"
+			tofile="build/release_info/ReleaseInfo.java.original"
 		/>
 
 		<copy

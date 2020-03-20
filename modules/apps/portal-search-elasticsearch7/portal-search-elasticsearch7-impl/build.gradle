@@ -98,6 +98,7 @@ dependencies {
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence-api")
+	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-string")
 
 	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.icu", version: elasticsearchVersion

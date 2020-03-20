@@ -14,11 +14,11 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.elasticsearch6.internal.io.StringOutputStream;
 import com.liferay.portal.search.engine.adapter.index.AnalysisIndexResponseToken;
 import com.liferay.portal.search.engine.adapter.index.AnalyzeIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.AnalyzeIndexResponse;
@@ -132,10 +132,11 @@ public class AnalyzeIndexRequestExecutorImpl
 			return;
 		}
 
-		StringOutputStream stringOutputStream = new StringOutputStream();
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
 
 		OutputStreamStreamOutput outputStreamStreamOutput =
-			new OutputStreamStreamOutput(stringOutputStream);
+			new OutputStreamStreamOutput(unsyncByteArrayOutputStream);
 
 		try {
 			detailAnalyzeResponse.writeTo(outputStreamStreamOutput);
@@ -158,7 +159,8 @@ public class AnalyzeIndexRequestExecutorImpl
 			}
 		}
 
-		analyzeIndexResponse.setAnalysisDetails(stringOutputStream.toString());
+		analyzeIndexResponse.setAnalysisDetails(
+			unsyncByteArrayOutputStream.toString());
 	}
 
 	@Reference(unbind = "-")

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.util;
 
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.search.elasticsearch7.configuration.RESTClientLoggerLevel;
-import com.liferay.portal.search.elasticsearch7.internal.io.StringOutputStream;
 
 import java.io.IOException;
 
@@ -42,17 +42,18 @@ public class LogUtil {
 			return;
 		}
 
-		StringOutputStream stringOutputStream = new StringOutputStream();
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
 
 		try {
 			actionResponse.writeTo(
-				new OutputStreamStreamOutput(stringOutputStream));
+				new OutputStreamStreamOutput(unsyncByteArrayOutputStream));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 
-		log.info(stringOutputStream);
+		log.info(unsyncByteArrayOutputStream.toString());
 	}
 
 	public static void logActionResponse(Log log, BulkResponse bulkResponse) {

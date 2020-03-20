@@ -50,7 +50,7 @@ public class TLiferayBatchOutputDefinition extends LiferayDefinition {
 
 	@Override
 	public Class<? extends ComponentProperties> getPropertyClass() {
-		return LiferayBatchOutputProperties.class;
+		return TLiferayBatchOutputProperties.class;
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class TLiferayBatchOutputDefinition extends LiferayDefinition {
 
 	@Override
 	public Set<ConnectorTopology> getSupportedConnectorTopologies() {
-		return EnumSet.of(ConnectorTopology.OUTGOING);
+		return EnumSet.of(ConnectorTopology.OUTGOING, ConnectorTopology.NONE);
 	}
 
 	@Override

@@ -105,6 +105,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		TermsAggregation assigneeIdTermsAggregation = _aggregations.terms(
 			"assigneeId", "assigneeId");
 
+		assigneeIdTermsAggregation.setMissing(-1L);
 		assigneeIdTermsAggregation.setSize(10000);
 
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
@@ -545,6 +546,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		TermsAggregation assigneeIdTermsAggregation = _aggregations.terms(
 			"assigneeId", "assigneeId");
 
+		assigneeIdTermsAggregation.setMissing(-1L);
 		assigneeIdTermsAggregation.setSize(10000);
 
 		FilterAggregation indexFilterAggregation = _aggregations.filter(
@@ -935,7 +937,16 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					});
 				setName(
 					() -> {
-						if (user == null) {
+						if (userId == -1L) {
+							return _language.get(
+								ResourceBundleUtil.
+									getModuleAndPortalResourceBundle(
+										contextAcceptLanguage.
+											getPreferredLocale(),
+										InstanceResourceImpl.class),
+								"unassigned");
+						}
+						else if (user == null) {
 							return String.valueOf(userId);
 						}
 

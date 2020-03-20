@@ -49,8 +49,6 @@ public class BasicAuthorizationProperties extends PropertiesImpl {
 
 	@Override
 	public void setupLayout() {
-		super.setupLayout();
-
 		Form referenceForm = new Form(this, UIKeys.FORM_BASIC_AUTHORIZATION);
 
 		referenceForm.addRow(userId);
@@ -64,8 +62,6 @@ public class BasicAuthorizationProperties extends PropertiesImpl {
 
 	@Override
 	public void setupProperties() {
-		super.setupProperties();
-
 		password.setValue(UIKeys.LIFERAY_DEFAULT_PASSWORD);
 		userId.setValue(UIKeys.LIFERAY_DEFAULT_USER_ID);
 

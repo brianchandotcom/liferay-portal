@@ -205,8 +205,6 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 
 	@Override
 	public void setupLayout() {
-		super.setupLayout();
-
 		Form wizardForm = _createForm(this, UIKeys.FORM_WIZARD);
 
 		_addAuthorizationProps(wizardForm);
@@ -239,8 +237,6 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 
 	@Override
 	public void setupProperties() {
-		super.setupProperties();
-
 		hostURL.setValue(_LIFERAY_URL);
 
 		followRedirects.setValue(true);

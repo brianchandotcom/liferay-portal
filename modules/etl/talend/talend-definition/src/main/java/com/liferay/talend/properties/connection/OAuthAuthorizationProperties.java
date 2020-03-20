@@ -39,8 +39,6 @@ public class OAuthAuthorizationProperties extends PropertiesImpl {
 
 	@Override
 	public void setupLayout() {
-		super.setupLayout();
-
 		Form referenceForm = new Form(this, UIKeys.FORM_OAUTH_AUTHORIZATION);
 
 		referenceForm.addRow(oauthClientId);
@@ -53,8 +51,6 @@ public class OAuthAuthorizationProperties extends PropertiesImpl {
 
 	@Override
 	public void setupProperties() {
-		super.setupProperties();
-
 		oauthClientId.setValue("");
 		oauthClientSecret.setValue("");
 

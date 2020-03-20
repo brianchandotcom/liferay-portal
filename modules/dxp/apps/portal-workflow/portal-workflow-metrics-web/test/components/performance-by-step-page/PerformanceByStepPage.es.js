@@ -26,8 +26,7 @@ describe('The PerformanceByStepPage component having data should', () => {
 			breachedInstanceCount: 4,
 			durationAvg: 10800000,
 			instanceCount: 4,
-			key: 'review',
-			name: 'Review',
+			node: {key: 'review', label: 'Review', name: 'Review'},
 			onTimeInstanceCount: 4,
 			overdueInstanceCount: 4,
 		},
@@ -35,8 +34,7 @@ describe('The PerformanceByStepPage component having data should', () => {
 			breachedInstanceCount: 2,
 			durationAvg: 475200000,
 			instanceCount: 2,
-			key: 'update',
-			name: 'Update',
+			node: {key: 'update', label: 'Update', name: 'Update'},
 			onTimeInstanceCount: 2,
 			overdueInstanceCount: 2,
 		},
@@ -67,8 +65,8 @@ describe('The PerformanceByStepPage component having data should', () => {
 	const clientMock = {
 		get: jest
 			.fn()
-			.mockResolvedValueOnce({data: timeRangeData})
-			.mockResolvedValue({data}),
+			.mockResolvedValue({data})
+			.mockResolvedValueOnce({data}),
 	};
 
 	const wrapper = ({children}) => (

@@ -26,7 +26,7 @@ const ContainerMock = ({children}) => {
 	const [selectedItem, setSelectedItem] = useState({
 		assetTitle: 'Blog1',
 		assetType: 'Blogs Entry',
-		assigneeUsers: [{id: 2, name: 'Test Test'}],
+		assignees: [{id: 2, name: 'Test Test'}],
 		id: 1,
 		status: 'In Progress',
 		taskNames: ['Review'],
@@ -73,8 +73,8 @@ describe('The SingleReassignModalTable component should', () => {
 	const mockItem = {
 		assetTitle: 'Blog2',
 		assetType: 'Blogs Entry',
-		assigneeUsers: [{id: 20124, name: 'Test Test'}],
-		creatorUser: {id: 20124, name: 'Test Test'},
+		assignees: [{id: 20124, name: 'Test Test'}],
+		creator: {id: 20124, name: 'Test Test'},
 		dateCreated: '2019-12-10T17:44:44Z',
 		id: 40330,
 		slaStatus: 'Overdue',

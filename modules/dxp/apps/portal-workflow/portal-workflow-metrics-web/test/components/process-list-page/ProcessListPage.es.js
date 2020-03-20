@@ -21,15 +21,21 @@ describe('The process list page component having data should', () => {
 	const items = [
 		{
 			instancesCount: 0,
-			title: 'Single Approver 1',
+			process: {
+				title: 'Single Approver 1',
+			},
 		},
 		{
 			instancesCount: 0,
-			title: 'Single Approver 2',
+			process: {
+				title: 'Single Approver 2',
+			},
 		},
 		{
 			instancesCount: 0,
-			title: 'Single Approver 3',
+			process: {
+				title: 'Single Approver 3',
+			},
 		},
 	];
 	const data = {items, totalCount: items.length};

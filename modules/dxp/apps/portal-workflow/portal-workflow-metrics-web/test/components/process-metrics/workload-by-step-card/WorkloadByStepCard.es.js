@@ -31,7 +31,9 @@ describe('The WorkloadByStepCard component should', () => {
 		items: [
 			{
 				instanceCount: 1,
-				name: 'Task Name',
+				node: {
+					label: 'Node Name',
+				},
 				onTimeInstanceCount: 1,
 				overdueInstanceCount: 0,
 			},
@@ -59,7 +61,7 @@ describe('The WorkloadByStepCard component should', () => {
 		const workloadByStepTable = getByTestId('workloadByStepTable');
 		const tableItems = workloadByStepTable.children[1].children[0].children;
 
-		expect(tableItems[0]).toHaveTextContent('Task Name');
+		expect(tableItems[0]).toHaveTextContent('Node Name');
 		expect(tableItems[1]).toHaveTextContent(0);
 		expect(tableItems[2]).toHaveTextContent(1);
 		expect(tableItems[3]).toHaveTextContent(1);

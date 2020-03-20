@@ -17,14 +17,13 @@ import {MockRouter} from '../../mock/MockRouter.es';
 
 const items = [
 	{
-		name: 'User 1',
+		assignee: {id: 1, name: 'User 1'},
 		onTimeTaskCount: 10,
 		overdueTaskCount: 5,
 		taskCount: 15,
 	},
 	{
-		image: 'path/to/image.jpg',
-		name: 'User 2',
+		assignee: {id: 2, image: 'path/to/image.jpg', name: 'User 2'},
 		onTimeTaskCount: 3,
 		overdueTaskCount: 7,
 		taskCount: 10,

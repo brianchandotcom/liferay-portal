@@ -182,6 +182,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_HEADER_INSET_STYLE</td>
+	<td>//div[contains(@class,'page-editor')]//div[contains(@class,'topper__bar--inset') and contains(.,'${key_fragmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_HEADER_POSITION</td>
 	<td>//div[contains(@class,'fragment-entry-link')]/section[${key_position}]//li[contains(.,'${key_fragmentName}')]</td>
 	<td></td>

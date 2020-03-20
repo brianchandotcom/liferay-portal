@@ -44,16 +44,16 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 			(CollectionLayoutStructureItem)obj;
 
 		if (!Objects.equals(
-				_listFormat, collectionLayoutStructureItem._listFormat) ||
-			!Objects.equals(
 				_collectionJSONObject.toJSONString(),
 				collectionLayoutStructureItem._collectionJSONObject.
 					toJSONString()) ||
 			!Objects.equals(
-				_numberOfItems, collectionLayoutStructureItem._numberOfItems) ||
+				_listFormat, collectionLayoutStructureItem._listFormat) ||
 			!Objects.equals(
 				_numberOfColumns,
-				collectionLayoutStructureItem._numberOfColumns)) {
+				collectionLayoutStructureItem._numberOfColumns) ||
+			!Objects.equals(
+				_numberOfItems, collectionLayoutStructureItem._numberOfItems)) {
 
 			return false;
 		}
@@ -118,21 +118,21 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
-		if (itemConfigJSONObject.has("numberOfColumns")) {
-			setNumberOfColumns(itemConfigJSONObject.getInt("numberOfColumns"));
-		}
-
-		if (itemConfigJSONObject.has("numberOfItems")) {
-			setNumberOfItems(itemConfigJSONObject.getInt("numberOfItems"));
+		if (itemConfigJSONObject.has("collection")) {
+			setCollectionJSONObject(
+				itemConfigJSONObject.getJSONObject("collection"));
 		}
 
 		if (itemConfigJSONObject.has("listFormat")) {
 			setListFormat(itemConfigJSONObject.getString("listFormat"));
 		}
 
-		if (itemConfigJSONObject.has("collection")) {
-			setCollectionJSONObject(
-				itemConfigJSONObject.getJSONObject("collection"));
+		if (itemConfigJSONObject.has("numberOfColumns")) {
+			setNumberOfColumns(itemConfigJSONObject.getInt("numberOfColumns"));
+		}
+
+		if (itemConfigJSONObject.has("numberOfItems")) {
+			setNumberOfItems(itemConfigJSONObject.getInt("numberOfItems"));
 		}
 	}
 

@@ -133,6 +133,20 @@ definition {
 			AssertTextEquals(
 				locator1 = "Calendar#OTHER_CALENDARS_CALENDAR",
 				value1 = "${calendarName}");
+
+			Navigator.gotoPage(pageName = "Calendar Page");
+
+			if (IsElementNotPresent(locator1 = "Calendar#OTHER_CALENDARS_CALENDAR")) {
+				Calendar.searchOtherCalendars(searchValue = "${calendarName}");
+
+				AssertClick(
+					locator1 = "Calendar#OTHER_CALENDARS_SEARCH_LIST_RESULT",
+					value1 = "${calendarName}");
+
+				AssertTextEquals(
+					locator1 = "Calendar#OTHER_CALENDARS_CALENDAR",
+					value1 = "${calendarName}");
+			}
 		}
 	}
 

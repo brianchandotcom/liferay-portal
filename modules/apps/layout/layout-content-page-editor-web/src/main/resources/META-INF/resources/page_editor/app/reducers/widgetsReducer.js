@@ -12,24 +12,33 @@
  * details.
  */
 
-import {ADD_FRAGMENT_ENTRY_LINK, DELETE_WIDGETS} from '../actions/types';
+import {ADD_FRAGMENT_ENTRY_LINKS, DELETE_WIDGETS} from '../actions/types';
 
 export default function widgetsReducer(widgets, action) {
 	switch (action.type) {
-		case ADD_FRAGMENT_ENTRY_LINK: {
-			if (
-				action.fragmentEntryLink.editableValues.portletId &&
-				!action.fragmentEntryLink.editableValues.instanceable
-			) {
-				const widgetPath = getWidgetPath(
-					widgets,
-					action.fragmentEntryLink.editableValues.portletId
-				);
+		case ADD_FRAGMENT_ENTRY_LINKS: {
+			const fragmentEntryLinks = action.fragmentEntryLinks || [];
 
-				return setWidgetUsage(widgets, widgetPath, {used: true});
-			}
+			let nextWidgets = widgets;
 
-			return widgets;
+			fragmentEntryLinks.forEach(fragmentEntryLink => {
+				if (
+					fragmentEntryLink.editableValues &&
+					fragmentEntryLink.editableValues.portletId &&
+					!fragmentEntryLink.editableValues.instanceable
+				) {
+					const widgetPath = getWidgetPath(
+						widgets,
+						fragmentEntryLink.editableValues.portletId
+					);
+
+					nextWidgets = setWidgetUsage(nextWidgets, widgetPath, {
+						used: true,
+					});
+				}
+			});
+
+			return nextWidgets;
 		}
 
 		case DELETE_WIDGETS: {
@@ -37,6 +46,7 @@ export default function widgetsReducer(widgets, action) {
 
 			action.fragmentEntryLinks.forEach(fragmentEntryLink => {
 				if (
+					fragmentEntryLink.editableValues &&
 					fragmentEntryLink.editableValues.portletId &&
 					!fragmentEntryLink.editableValues.instanceable
 				) {

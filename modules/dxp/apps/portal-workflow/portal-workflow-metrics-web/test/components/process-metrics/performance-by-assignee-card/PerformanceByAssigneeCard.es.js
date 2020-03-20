@@ -62,12 +62,12 @@ const data = {items, totalCount: items.length};
 const processStepsData = {
 	items: [
 		{
-			key: 'review',
-			name: 'Review',
+			label: 'Review',
+			name: 'review',
 		},
 		{
-			key: 'update',
-			name: 'Update',
+			label: 'Update',
+			name: 'update',
 		},
 	],
 	totalCount: 2,

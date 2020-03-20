@@ -118,7 +118,7 @@ buildChangelogs {
 							!commitMessage.matches("Revert \".* SF\"") &&
 							!commitMessage.startsWith("Semver")) {
 
-							commits = commits + "\n" + _format("- [" + gitLogAttributes["TICKET-NUMBER"] + "]: " + commitMessage + " (" + sha.substring(0, 10) + ")")
+							commits = commits + "\n" + _format("- [" + gitLogAttributes["TICKET-NUMBER"] + "]\\: " + commitMessage + " (" + sha.substring(0, 10) + ")")
 
 							ticketNumbers.add(gitLogAttributes["TICKET-NUMBER"])
 						}
@@ -165,7 +165,7 @@ buildChangelogs {
 						String dependencyName = matcher.group(1)
 						String dependencyVersion = matcher.group(2)
 
-						dependencies = dependencies + "\n" + _format("- [" + gitLogAttributes["TICKET-NUMBER"] + "]: Update the " + dependencyName + " dependency to version " + dependencyVersion + ".")
+						dependencies = dependencies + "\n" + _format("- [" + gitLogAttributes["TICKET-NUMBER"] + "]\\: Update the " + dependencyName + " dependency to version " + dependencyVersion + ".")
 
 						ticketNumbers.add(gitLogAttributes["TICKET-NUMBER"])
 					}

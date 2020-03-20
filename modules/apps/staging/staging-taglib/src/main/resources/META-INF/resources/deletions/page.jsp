@@ -32,8 +32,12 @@
 				/>
 			</c:if>
 
+			<%
+			ExportImportServiceConfiguration exportImportServiceConfiguration = ConfigurationProviderUtil.getSystemConfiguration(ExportImportServiceConfiguration.class);
+			%>
+
 			<liferay-staging:checkbox
-				checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETIONS, false) %>"
+				checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETIONS, exportImportServiceConfiguration.replicateIndividualDeletionsByDefault()) %>"
 				description="<%= individualDeletionsDescription %>"
 				disabled="<%= disableInputs %>"
 				label="<%= individualDeletionsTitle %>"

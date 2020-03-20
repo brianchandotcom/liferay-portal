@@ -20,12 +20,15 @@ import com.liferay.account.rest.client.dto.v1_0.AccountUser;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
@@ -34,6 +37,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +45,7 @@ import java.util.Map;
 import org.apache.commons.beanutils.BeanUtils;
 
 import org.junit.After;
-import org.junit.Ignore;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -102,10 +106,62 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 			});
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGraphQLGetAccountUsersPage() throws Exception {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
+
+		long accountEntryId = _getAccountEntryId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"accountUsers",
+				HashMapBuilder.<String, Object>put(
+					"accountId", accountEntryId
+				).put(
+					"page", 1
+				).put(
+					"pageSize", 2
+				).build(),
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject accountUsersJSONObject = dataJSONObject.getJSONObject(
+			"accountUsers");
+
+		Assert.assertEquals(0, accountUsersJSONObject.get("totalCount"));
+
+		AccountUser accountUser1 = testGraphQLAccountUser_addAccountUser(
+			accountEntryId);
+		AccountUser accountUser2 = testGraphQLAccountUser_addAccountUser(
+			accountEntryId);
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		accountUsersJSONObject = dataJSONObject.getJSONObject("accountUsers");
+
+		Assert.assertEquals(2, accountUsersJSONObject.get("totalCount"));
+
+		assertEqualsJSONArray(
+			Arrays.asList(accountUser1, accountUser2),
+			accountUsersJSONObject.getJSONArray("items"));
 	}
 
 	@Override
@@ -152,11 +208,11 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 		return _getAccountEntryId();
 	}
 
-	@Override
-	protected AccountUser testGraphQLAccountUser_addAccountUser()
+	protected AccountUser testGraphQLAccountUser_addAccountUser(
+			long accountEntryId)
 		throws Exception {
 
-		return _addAccountUser(_getAccountEntryId(), randomAccountUser());
+		return _addAccountUser(accountEntryId, randomAccountUser());
 	}
 
 	@Override

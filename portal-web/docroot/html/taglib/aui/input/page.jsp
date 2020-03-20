@@ -357,23 +357,67 @@ boolean choiceField = checkboxField || radioField;
 
 				<c:if test="<%= autoSize %>">
 					<aui:script>
+						var DEFAULT_APPEND_CONTENT = '&nbsp;&nbsp;';
 						var inputElement = document.getElementById('<%= namespace + id %>');
 
-						var initialInputHeight = inputElement.getBoundingClientRect().height;
+						function AutoSize(inputElement) {
+							this.computedStyle = getComputedStyle(inputElement);
+							this.minHeight = parseInt(this.computedStyle.height.replace('px', ''), 10);
 
-						inputElement.addEventListener('input', function(event) {
-							requestAnimationFrame(() => {
+							this.template = this.createTemplate(this.computedStyle);
+							document.body.appendChild(this.template);
+
+							inputElement.addEventListener('input', this.handleInput.bind(this));
+						}
+
+						AutoSize.prototype.createTemplate = function(computedStyle) {
+							var template = document.createElement('pre');
+
+							template.style.clip = 'rect(0, 0, 0, 0) !important';
+							template.style.left = '0';
+							template.style.overflowWrap = 'break-word';
+							template.style.position = 'absolute';
+							template.style.top = '0';
+							template.style.transform = 'scale(0)';
+							template.style.whiteSpace = 'pre-wrap';
+							template.style.wordBreak = 'break-word';
+
+							template.style.fontFamily = computedStyle.fontFamily;
+							template.style.fontSize = computedStyle.fontSize;
+							template.style.fontStyle = computedStyle.fontStyle;
+							template.style.fontWeight = computedStyle.fontWeight;
+							template.style.lineHeight = computedStyle.lineHeight;
+							template.style.letterSpacing = computedStyle.letterSpacing;
+							template.style.textTransform = computedStyle.textTransform;
+
+							template.style.width = computedStyle.width;
+
+							template.textContent = DEFAULT_APPEND_CONTENT;
+
+							return template;
+						};
+
+						AutoSize.prototype.handleInput = function(event) {
+							var self = this;
+							requestAnimationFrame(function() {
 								var target = event.target;
 								var value = target.value;
 
-								if (value) {
-									target.style.cssText = 'height: ' + target.scrollHeight + 'px';
+								if (self.template.style.width !== self.computedStyle.width) {
+									self.template.style.width = self.computedStyle.width;
 								}
-								else {
-									target.style.cssText = initialInputHeight;
-								}
+
+								self.template.innerHTML = value + DEFAULT_APPEND_CONTENT;
+
+								var height = self.template.scrollHeight < self.minHeight ?
+									self.minHeight : self.template.scrollHeight;
+
+								target.style.height = height + 'px';
 							});
-						});
+						};
+
+						var autoSize = new AutoSize(inputElement);
+
 					</aui:script>
 				</c:if>
 

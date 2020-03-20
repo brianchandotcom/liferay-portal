@@ -20,13 +20,17 @@ describe('The workload by assignee card should', () => {
 
 	const items = [
 		{
-			name: 'User 1',
+			assignee: {
+				name: 'User 1',
+			},
 			onTimeTaskCount: 10,
 			overdueTaskCount: 5,
 			taskCount: 15,
 		},
 		{
-			name: 'User 2',
+			assignee: {
+				name: 'User 2',
+			},
 			onTimeTaskCount: 3,
 			overdueTaskCount: 7,
 			taskCount: 10,

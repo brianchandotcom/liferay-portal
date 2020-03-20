@@ -19,48 +19,27 @@ import '@testing-library/jest-dom/extend-expect';
 
 const items = [
 	{
+		assignee: {image: 'path/to/image', name: 'User Test First'},
 		durationTaskAvg: 10800000,
-		image: 'path/to/image',
-		name: 'User Test First',
 		taskCount: 10,
 	},
 	{
+		assignee: {image: 'path/to/image', name: 'User Test Second'},
 		durationTaskAvg: 475200000,
-		image: 'path/to/image',
-		name: 'User Test Second',
+
 		taskCount: 31,
 	},
 	{
+		assignee: {name: 'User Test Third'},
 		durationTaskAvg: 0,
-		name: 'User Test Third',
 		taskCount: 1,
 	},
 ];
 
 const data = {items, totalCount: items.length};
 
-const timeRangeData = {
-	items: [
-		{
-			dateEnd: '2019-12-09T00:00:00Z',
-			dateStart: '2019-12-03T00:00:00Z',
-			defaultTimeRange: false,
-			id: 7,
-			name: 'Last 7 Days',
-		},
-		{
-			dateEnd: '2019-12-09T00:00:00Z',
-			dateStart: '2019-11-10T00:00:00Z',
-			defaultTimeRange: true,
-			id: 30,
-			name: 'Last 30 Days',
-		},
-	],
-	totalCount: 2,
-};
-
 const clientMock = {
-	get: jest.fn().mockResolvedValue({data: timeRangeData}),
+	get: jest.fn().mockResolvedValue({data}),
 	post: jest.fn().mockResolvedValue({data}),
 	request: jest.fn().mockResolvedValue({data}),
 };

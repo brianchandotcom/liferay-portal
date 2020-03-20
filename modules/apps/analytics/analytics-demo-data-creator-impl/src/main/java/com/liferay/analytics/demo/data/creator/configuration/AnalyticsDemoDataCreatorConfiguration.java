@@ -23,9 +23,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.ac.csv.data.generator.configuration.AcCsvDataGeneratorConfiguration"
+	id = "com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCreatorConfiguration"
 )
-public interface AcCsvDataGeneratorConfiguration {
+public interface AnalyticsDemoDataCreatorConfiguration {
 
 	@Meta.AD
 	public String customActivationMessage();

@@ -14,7 +14,7 @@
 
 package com.liferay.analytics.demo.data.creator.csv;
 
-import com.liferay.ac.csv.data.generator.util.GeneratedDataUtil;
+import com.liferay.analytics.demo.data.creator.util.GeneratedDataUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.PortalException;

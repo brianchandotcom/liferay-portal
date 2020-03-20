@@ -14,9 +14,9 @@
 
 package com.liferay.analytics.demo.data.creator;
 
-import com.liferay.ac.csv.data.generator.configuration.AcCsvDataGeneratorConfiguration;
-import com.liferay.ac.csv.data.generator.csv.UserCsv;
-import com.liferay.ac.csv.data.generator.util.GeneratedDataUtil;
+import com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCreatorConfiguration;
+import com.liferay.analytics.demo.data.creator.csv.UserCsv;
+import com.liferay.analytics.demo.data.creator.util.GeneratedDataUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -37,21 +37,22 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cheryl Tang
  */
 @Component(
-	configurationPid = "com.liferay.ac.csv.data.generator.configuration.AcCsvDataGeneratorConfiguration",
+	configurationPid = "com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCreatorConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	service = {}
 )
-public class AcCsvDataGenerator {
+public class AnalyticsCSVDemoDataCreator {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_loadConfig(properties);
 
-		_userCsv.addCsvUsers(_acCsvDataGeneratorConfiguration.pathToUserCsv());
+		_userCsv.addCsvUsers(
+			_analyticsDemoDataCreatorConfiguration.pathToUserCsv());
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				_acCsvDataGeneratorConfiguration.customActivationMessage());
+				_analyticsDemoDataCreatorConfiguration.customActivationMessage());
 		}
 	}
 
@@ -71,12 +72,13 @@ public class AcCsvDataGenerator {
 	}
 
 	private void _loadConfig(Map<String, Object> properties) {
-		_acCsvDataGeneratorConfiguration = ConfigurableUtil.createConfigurable(
-			AcCsvDataGeneratorConfiguration.class, properties);
+		_analyticsDemoDataCreatorConfiguration =
+			ConfigurableUtil.createConfigurable(
+				AnalyticsDemoDataCreatorConfiguration.class, properties);
 
 		try {
 			Company company = _companyLocalService.getCompanyByVirtualHost(
-				_acCsvDataGeneratorConfiguration.virtualHostName());
+				_analyticsDemoDataCreatorConfiguration.virtualHostName());
 
 			long companyId = company.getPrimaryKey();
 
@@ -90,7 +92,8 @@ public class AcCsvDataGenerator {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AcCsvDataGenerator.class);
 
-	private AcCsvDataGeneratorConfiguration _acCsvDataGeneratorConfiguration;
+	private AnalyticsDemoDataCreatorConfiguration
+		_analyticsDemoDataCreatorConfiguration;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

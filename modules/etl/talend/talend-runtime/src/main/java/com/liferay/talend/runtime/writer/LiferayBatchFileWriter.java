@@ -93,7 +93,7 @@ public class LiferayBatchFileWriter
 				BatchSchemaConstants.asBatchSchemaIndexedRecord(
 					_liferayBatchFileProperties.getBatchFilePath(),
 					_liferayBatchFileProperties.getEntityClassName(),
-					_liferayBatchFileProperties.getEntityVersion())));
+					"unavailable")));
 	}
 
 	@Override

@@ -24,6 +24,7 @@ dependencies {
 	compileOnly project(":apps:bulk:bulk-selection-api")
 	compileOnly project(":apps:comment:comment-taglib")
 	compileOnly project(":apps:data-engine:data-engine-api")
+	compileOnly project(":apps:data-engine:data-engine-rest-api")
 	compileOnly project(":apps:data-engine:data-engine-taglib")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:document-library:document-library-repository-authorization-api")

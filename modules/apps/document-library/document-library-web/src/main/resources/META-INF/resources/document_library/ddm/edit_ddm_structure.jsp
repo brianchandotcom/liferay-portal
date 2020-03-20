@@ -54,7 +54,8 @@ renderResponse.setTitle(title);
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-		<aui:input name="definition" type="hidden" />
+		<aui:input name="dataDefinition" type="hidden" />
+		<aui:input name="dataLayout" type="hidden" />
 		<aui:input name="status" type="hidden" />
 
 		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
@@ -265,43 +266,26 @@ renderResponse.setTitle(title);
 	function <portlet:namespace />saveDDMStructure() {
 		<c:choose>
 			<c:when test="<%= FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor() %>">
-				Liferay.componentReady(
-					'<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
-				).then(function(dataLayoutBuilder) {
-					var name =
-						document.<portlet:namespace />fm[
-							'<portlet:namespace />name_' + themeDisplay.getLanguageId()
-						].value;
-					var description =
-						document.<portlet:namespace />fm['<portlet:namespace />description']
-							.value;
+				Liferay.componentReady('<portlet:namespace />dataLayoutBuilder').then(
+					function(dataLayoutBuilder) {
+						var formData = dataLayoutBuilder.getFormData();
 
-					dataLayoutBuilder
-						.save({
-							dataDefinition: {
-								description: {
-									value: description,
-								},
-								name: {
-									value: name,
-								},
+						var dataDefinition = formData.definition;
+
+						dataDefinition.name = name;
+
+						var dataLayout = formData.layout;
+
+						dataLayout.name = name;
+
+						Liferay.Util.postForm(document.<portlet:namespace />fm, {
+							data: {
+								dataDefinition: JSON.stringify(dataDefinition),
+								dataLayout: JSON.stringify(dataLayout),
 							},
-							dataLayout: {
-								description: {
-									value: description,
-								},
-								name: {
-									value: name,
-								},
-							},
-						})
-						.then(function(dataLayout) {
-							document.<portlet:namespace />fm[
-								'<portlet:namespace />ddmStructureId'
-							].value = dataLayout.id;
-							submitForm(document.<portlet:namespace />fm);
 						});
-				});
+					}
+				);
 			</c:when>
 			<c:otherwise>
 				Liferay.Util.postForm(document.<portlet:namespace />fm, {

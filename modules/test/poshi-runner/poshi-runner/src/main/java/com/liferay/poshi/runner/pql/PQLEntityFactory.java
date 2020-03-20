@@ -69,14 +69,14 @@ public class PQLEntityFactory {
 			if (_codeBoundariesMap.containsValue(c)) {
 				throw new RuntimeException(
 					"Invalid PQL: Unexpected closing boundary '" +
-						pql.charAt(i) + "'");
+						pql.charAt(i) + "'\n" + pql);
 			}
 		}
 
 		if (!stack.isEmpty()) {
 			throw new RuntimeException(
 				"Invalid PQL: Unmatched opening boundary '" +
-					pql.charAt(stack.peek()) + "'");
+					pql.charAt(stack.peek()) + "'\n" + pql);
 		}
 	}
 

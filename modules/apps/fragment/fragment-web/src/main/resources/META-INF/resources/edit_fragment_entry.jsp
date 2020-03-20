@@ -18,16 +18,11 @@
 
 <%
 EditFragmentEntryDisplayContext editFragmentEntryDisplayContext = new EditFragmentEntryDisplayContext(request, renderResponse);
-
-Map<String, Object> fragmentEditorData = new HashMap<>();
-
-fragmentEditorData.put("context", Collections.singletonMap("namespace", renderResponse.getNamespace()));
-fragmentEditorData.put("props", editFragmentEntryDisplayContext.getFragmentEditorDisplayContext());
 %>
 
 <div>
 	<react:component
-		data="<%= fragmentEditorData %>"
+		data="<%= editFragmentEntryDisplayContext.getFragmentEditorData() %>"
 		module="js/fragment-editor/FragmentEditor"
 	/>
 </div>

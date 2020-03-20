@@ -107,6 +107,16 @@ public class EditFragmentEntryDisplayContext {
 		return _fragmentCollectionId;
 	}
 
+	public Map<String, Object> getFragmentEditorData() throws Exception {
+		return HashMapBuilder.<String, Object>put(
+			"context",
+			Collections.singletonMap(
+				"namespace", _renderResponse.getNamespace())
+		).put(
+			"props", getFragmentEditorDisplayContext()
+		).build();
+	}
+
 	public Map<String, Object> getFragmentEditorDisplayContext()
 		throws Exception {
 

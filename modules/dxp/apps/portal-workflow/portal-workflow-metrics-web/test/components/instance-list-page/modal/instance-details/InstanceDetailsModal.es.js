@@ -42,7 +42,7 @@ describe('The InstanceDetailsModal component should', () => {
 	const data = {
 		assetTitle: 'Blog 01',
 		assetType: 'Blogs Entry',
-		creatorUser: {
+		creator: {
 			id: 1,
 			name: 'Test Test',
 		},
@@ -147,7 +147,7 @@ describe('The InstanceDetailsModal component should', () => {
 	const data = {
 		assetTitle: 'Blog 01',
 		assetType: 'Blogs Entry',
-		creatorUser: {
+		creator: {
 			id: 1,
 			name: 'Test Test',
 		},

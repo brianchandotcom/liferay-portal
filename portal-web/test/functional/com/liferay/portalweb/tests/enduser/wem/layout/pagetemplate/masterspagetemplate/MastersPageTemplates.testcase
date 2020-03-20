@@ -35,14 +35,26 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-102566. There's a custom masters page created in site, when add a new page, there's an option to select the created masters, and the common elements added in masters page are added in page"
+	@description = "This is a test for LPS-102566 and LPS-109594. There's a custom masters page created in site, when add a new page, there's an option to select the created masters, and the common elements added in masters page are added in page. The header of drop zone is next to border of the management toolbar by default on master page template."
 	@priority = "5"
 	test AddPageBasedOnCustomMastersAndInheritElementsFromCustomMasters {
-		task ("Add a custom masters with Button fragment") {
+		task ("Assert header of Drop Zone is inside body by default") {
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",
 				masterLayoutName = "Custom Masters Page Template");
 
+			Pause(locator1 = "3000");
+
+			Click.clickNoWaitForVisible(
+				key_fragmentName = "Drop Zone",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertElementPresent(
+				key_fragmentName = "Drop Zone",
+				locator1 = "Fragment#FRAGMENT_HEADER_INSET_STYLE");
+		}
+
+		task ("Add a custom masters with Button fragment") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				dropTarget = "Header",

@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.contributor.RoleContributor;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
 
 /**
  * @author Brian Wing Shun Chan
@@ -49,7 +52,8 @@ public class PermissionCheckerUtil {
 				permissionChecker = (PermissionChecker)clazz.newInstance();
 			}
 
-			permissionChecker.init(user);
+			permissionChecker.init(
+				user, _roleContributors.toArray(new RoleContributor[0]));
 
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
@@ -60,5 +64,8 @@ public class PermissionCheckerUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PermissionCheckerUtil.class);
+
+	private static final ServiceTrackerList<RoleContributor> _roleContributors =
+		ServiceTrackerCollections.openList(RoleContributor.class);
 
 }

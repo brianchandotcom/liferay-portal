@@ -1138,6 +1138,81 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static List<File> getIncludedFiles(
+		File basedir, String[] excludes, String[] includes) {
+
+		if (excludes == null) {
+			excludes = new String[0];
+		}
+
+		if (includes == null) {
+			return new ArrayList<>();
+		}
+
+		final List<PathMatcher> excludesPathMatchers = toPathMatchers(
+			null, excludes);
+
+		final List<PathMatcher> includesPathMatchers = toPathMatchers(
+			null, includes);
+
+		final List<File> includedFiles = new ArrayList<>();
+
+		if (includesPathMatchers.isEmpty()) {
+			return includedFiles;
+		}
+
+		try {
+			Files.walkFileTree(
+				basedir.toPath(),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult preVisitDirectory(
+							Path filePath, BasicFileAttributes attrs)
+						throws IOException {
+
+						if (JenkinsResultsParserUtil.isFileExcluded(
+								excludesPathMatchers, filePath.toFile())) {
+
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
+						if (JenkinsResultsParserUtil.isFileIncluded(
+								excludesPathMatchers, includesPathMatchers,
+								filePath.toFile())) {
+
+							includedFiles.add(filePath.toFile());
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFile(
+							Path filePath, BasicFileAttributes attrs)
+						throws IOException {
+
+						if (JenkinsResultsParserUtil.isFileIncluded(
+								excludesPathMatchers, includesPathMatchers,
+								filePath.toFile())) {
+
+							includedFiles.add(filePath.toFile());
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to search for test file names in " + basedir.getPath(),
+				ioException);
+		}
+
+		return includedFiles;
+	}
+
+	public static List<File> getIncludedFiles(
 		List<PathMatcher> excludesPathMatchers,
 		List<PathMatcher> includesPathMatchers, List<File> files) {
 

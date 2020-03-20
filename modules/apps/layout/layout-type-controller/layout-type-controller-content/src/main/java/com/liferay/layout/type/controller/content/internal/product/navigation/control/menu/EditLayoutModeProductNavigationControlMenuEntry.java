@@ -35,7 +35,9 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
@@ -106,6 +108,11 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 					ServiceContext serviceContext =
 						ServiceContextFactory.getInstance(httpServletRequest);
 
+					UnicodeProperties properties =
+						layout.getTypeSettingsProperties();
+
+					properties.put("published", "true");
+
 					draftLayout = _layoutLocalService.addLayout(
 						layout.getUserId(), layout.getGroupId(),
 						layout.isPrivateLayout(), layout.getParentLayoutId(),
@@ -113,11 +120,16 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 						layout.getNameMap(), layout.getTitleMap(),
 						layout.getDescriptionMap(), layout.getKeywordsMap(),
 						layout.getRobotsMap(), layout.getType(),
-						layout.getTypeSettings(), true, true,
+						properties.toString(), true, true,
 						layout.getMasterLayoutPlid(), Collections.emptyMap(),
 						serviceContext);
 
-					_layoutCopyHelper.copyLayout(layout, draftLayout);
+					draftLayout = _layoutCopyHelper.copyLayout(
+						layout, draftLayout);
+
+					_layoutLocalService.updateStatus(
+						draftLayout.getUserId(), draftLayout.getPlid(),
+						WorkflowConstants.STATUS_APPROVED, serviceContext);
 				}
 
 				redirect = _portal.getLayoutFullURL(draftLayout, themeDisplay);

@@ -1807,18 +1807,25 @@ public class LayoutsAdminDisplayContext {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				httpServletRequest);
 
+			UnicodeProperties properties = layout.getTypeSettingsProperties();
+
+			properties.put("published", "true");
+
 			draftLayout = LayoutLocalServiceUtil.addLayout(
 				layout.getUserId(), layout.getGroupId(),
 				layout.isPrivateLayout(), layout.getParentLayoutId(),
 				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
 				layout.getNameMap(), layout.getTitleMap(),
 				layout.getDescriptionMap(), layout.getKeywordsMap(),
-				layout.getRobotsMap(), layout.getType(),
-				layout.getTypeSettings(), true, true,
-				layout.getMasterLayoutPlid(), Collections.emptyMap(),
-				serviceContext);
+				layout.getRobotsMap(), layout.getType(), properties.toString(),
+				true, true, layout.getMasterLayoutPlid(),
+				Collections.emptyMap(), serviceContext);
 
-			_layoutCopyHelper.copyLayout(layout, draftLayout);
+			draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);
+
+			LayoutLocalServiceUtil.updateStatus(
+				draftLayout.getUserId(), draftLayout.getPlid(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 		}
 
 		String layoutFullURL = PortalUtil.getLayoutFullURL(

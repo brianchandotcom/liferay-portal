@@ -43,6 +43,16 @@
 		/>
 	</target>
 
+	<target if="${build.portal.artifacts.enabled}" name="init-compile">
+		<condition property="compile.uptodate">
+			<uptodate
+				targetfile="classes/.touch"
+			>
+				<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+			</uptodate>
+		</condition>
+	</target>
+
 	<target name="replace-release-info-tokens">
 		<copy
 			file="src/com/liferay/portal/kernel/util/ReleaseInfo.java"

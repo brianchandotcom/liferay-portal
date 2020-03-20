@@ -449,7 +449,7 @@ describe('The BulkTransitionModal component should', () => {
 		const nextBtn = getByTestId('nextButton');
 
 		expect(alertError).toHaveTextContent(
-			'your-connection-was-unexpectedly-lost select-done-to-retry'
+			'your-connection-has-been-unexpectedly-lost select-done-to-retry'
 		);
 
 		fireEvent.click(nextBtn);
@@ -459,7 +459,7 @@ describe('The BulkTransitionModal component should', () => {
 		const alertError = getByTestId('alertError');
 
 		expect(alertError).toHaveTextContent(
-			'your-connection-was-unexpectedly-lost'
+			'your-connection-has-been-unexpectedly-lost'
 		);
 
 		const nextBtn = getByTestId('nextButton');

@@ -102,7 +102,7 @@ const BulkTransitionModal = () => {
 				.catch(() => {
 					setErrorToast(
 						`${Liferay.Language.get(
-							'your-connection-was-unexpectedly-lost'
+							'your-connection-has-been-unexpectedly-lost'
 						)} ${Liferay.Language.get('select-done-to-retry')}`
 					);
 				});

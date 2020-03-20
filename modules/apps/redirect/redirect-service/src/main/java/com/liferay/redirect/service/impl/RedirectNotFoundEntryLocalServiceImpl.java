@@ -16,8 +16,11 @@ package com.liferay.redirect.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.base.RedirectNotFoundEntryLocalServiceBaseImpl;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -55,6 +58,20 @@ public class RedirectNotFoundEntryLocalServiceImpl
 		redirectNotFoundEntry.setHits(redirectNotFoundEntry.getHits() + 1);
 
 		return redirectNotFoundEntryPersistence.update(redirectNotFoundEntry);
+	}
+
+	@Override
+	public List<RedirectNotFoundEntry> getRedirectNotFoundEntries(
+		long groupId, int start, int end,
+		OrderByComparator<RedirectNotFoundEntry> obc) {
+
+		return redirectNotFoundEntryPersistence.findByGroupId(
+			groupId, start, end, obc);
+	}
+
+	@Override
+	public int getRedirectNotFoundEntriesCount(long groupId) {
+		return redirectNotFoundEntryPersistence.countByGroupId(groupId);
 	}
 
 }

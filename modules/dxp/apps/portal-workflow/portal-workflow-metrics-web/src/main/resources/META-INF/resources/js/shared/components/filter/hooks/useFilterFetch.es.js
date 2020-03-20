@@ -24,7 +24,7 @@ const useFilterFetch = ({
 	filterKey,
 	prefixKey,
 	requestBody: data = {},
-	propertyKey = 'key',
+	propertyKey,
 	requestMethod: method = 'get',
 	requestParams: params = {},
 	requestUrl: url,

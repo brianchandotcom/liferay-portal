@@ -77,10 +77,12 @@ const Filter = ({
 	const filteredItems = useMemo(() => {
 		return searchTerm
 			? items.filter(item =>
-					item.name.toLowerCase().includes(searchTerm.toLowerCase())
+					item[labelPropertyName]
+						.toLowerCase()
+						.includes(searchTerm.toLowerCase())
 			  )
 			: items;
-	}, [items, searchTerm]);
+	}, [items, labelPropertyName, searchTerm]);
 
 	const applyFilterChanges = useCallback(() => {
 		if (!withoutRouteParams) {

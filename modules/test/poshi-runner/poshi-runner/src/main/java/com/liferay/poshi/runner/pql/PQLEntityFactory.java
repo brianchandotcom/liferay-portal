@@ -14,12 +14,20 @@
 
 package com.liferay.poshi.runner.pql;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+
 /**
  * @author Michael Hashimoto
  */
 public class PQLEntityFactory {
 
 	public static PQLEntity newPQLEntity(String pql) throws Exception {
+		if (pql != null) {
+			validateExpressionBalance(pql);
+		}
+
 		if (PQLQuery.isQuery(pql)) {
 			return new PQLQuery(pql);
 		}
@@ -29,5 +37,55 @@ public class PQLEntityFactory {
 
 		return new PQLValue(pql);
 	}
+
+	public static void validateExpressionBalance(String pql) {
+		Stack<Integer> stack = new Stack<>();
+
+		for (int i = 0; i < pql.length(); i++) {
+			char c = pql.charAt(i);
+
+			if (!stack.isEmpty()) {
+				int topIndex = stack.peek();
+
+				Character topCodeBoundary = pql.charAt(topIndex);
+
+				if (c == _codeBoundariesMap.get(topCodeBoundary)) {
+					stack.pop();
+
+					continue;
+				}
+
+				if (topCodeBoundary == '\"') {
+					continue;
+				}
+			}
+
+			if (_codeBoundariesMap.containsKey(c)) {
+				stack.push(i);
+
+				continue;
+			}
+
+			if (_codeBoundariesMap.containsValue(c)) {
+				throw new RuntimeException(
+					"Invalid PQL: Unexpected closing boundary '" +
+						pql.charAt(i) + "'");
+			}
+		}
+
+		if (!stack.isEmpty()) {
+			throw new RuntimeException(
+				"Invalid PQL: Unmatched opening boundary '" +
+					pql.charAt(stack.peek()) + "'");
+		}
+	}
+
+	private static final Map<Character, Character> _codeBoundariesMap =
+		new HashMap<Character, Character>() {
+			{
+				put('(', ')');
+				put('\"', '\"');
+			}
+		};
 
 }

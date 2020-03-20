@@ -170,6 +170,55 @@ function handleDropdownItemClick({currentValue, multiple, option}) {
 	return newValue;
 }
 
+const DropdownItem = ({
+	currentValue,
+	expand,
+	index,
+	multiple,
+	onSelect,
+	option,
+	options,
+}) => (
+	<>
+		<ClayDropDown.Item
+			active={expand && currentValue === option.label}
+			className="ddm-btn-full ddm-select-dropdown"
+			data-testid={`dropdownItem-${index}`}
+			label={option.label}
+			onClick={event =>
+				!multiple &&
+				onSelect({
+					currentValue,
+					event,
+					multiple,
+					option,
+				})
+			}
+			value={options.value}
+		>
+			{multiple ? (
+				<ClayCheckbox
+					aria-label={option.label}
+					checked={currentValue.includes(option.value)}
+					label={option.label}
+					onChange={event =>
+						onSelect({
+							currentValue,
+							event,
+							multiple,
+							option,
+						})
+					}
+				/>
+			) : (
+				option.label
+			)}
+		</ClayDropDown.Item>
+
+		{option && option.separator && <ClayDropDown.Divider />}
+	</>
+);
+
 const Trigger = forwardRef(
 	(
 		{
@@ -268,48 +317,16 @@ const Select = ({
 			>
 				<ClayDropDown.ItemList>
 					{options.map((option, index) => (
-						<>
-							<ClayDropDown.Item
-								active={expand && currentValue === option.label}
-								className="ddm-btn-full ddm-select-dropdown"
-								data-testid={`dropdownItem-${index}`}
-								key={`dropdown-option-${index}`}
-								label={option.label}
-								onClick={event =>
-									!multiple &&
-									handleSelect({
-										currentValue,
-										event,
-										multiple,
-										option,
-									})
-								}
-								value={options.value}
-							>
-								{multiple ? (
-									<ClayCheckbox
-										aria-label={option.label}
-										checked={currentValue.includes(
-											option.value
-										)}
-										label={option.label}
-										onChange={event =>
-											handleSelect({
-												currentValue,
-												event,
-												multiple,
-												option,
-											})
-										}
-									/>
-								) : (
-									option.label
-								)}
-							</ClayDropDown.Item>
-							{option && option.separator && (
-								<ClayDropDown.Divider />
-							)}
-						</>
+						<DropdownItem
+							currentValue={currentValue}
+							expand={expand}
+							index={index}
+							key={option.value}
+							multiple={multiple}
+							onSelect={handleSelect}
+							option={option}
+							options={options}
+						/>
 					))}
 				</ClayDropDown.ItemList>
 			</ClayDropDown.Menu>

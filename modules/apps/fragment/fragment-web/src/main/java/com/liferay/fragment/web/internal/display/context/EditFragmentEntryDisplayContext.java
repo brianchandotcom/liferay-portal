@@ -44,8 +44,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.template.soy.util.SoyContext;
-import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -109,8 +107,8 @@ public class EditFragmentEntryDisplayContext {
 		return _fragmentCollectionId;
 	}
 
-	public SoyContext getFragmentEditorDisplayContext() throws Exception {
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+	public Map<String, Object> getFragmentEditorDisplayContext()
+		throws Exception {
 
 		TemplateManager templateManager =
 			TemplateManagerUtil.getTemplateManager(
@@ -138,19 +136,13 @@ public class EditFragmentEntryDisplayContext {
 
 		freeMarkerVariables.add("configuration");
 
-		soyContext.put(
+		return HashMapBuilder.<String, Object>put(
 			"allowedStatus",
-			() -> {
-				SoyContext allowedStatusSoyContext =
-					SoyContextFactoryUtil.createSoyContext();
-
-				return allowedStatusSoyContext.put(
-					"approved",
-					String.valueOf(WorkflowConstants.STATUS_APPROVED)
-				).put(
-					"draft", String.valueOf(WorkflowConstants.STATUS_DRAFT)
-				);
-			}
+			HashMapBuilder.<String, Object>put(
+				"approved", String.valueOf(WorkflowConstants.STATUS_APPROVED)
+			).put(
+				"draft", String.valueOf(WorkflowConstants.STATUS_DRAFT)
+			).build()
 		).put(
 			"autocompleteTags",
 			_fragmentEntryProcessorRegistry.getAvailableTagsJSONArray()
@@ -245,39 +237,30 @@ public class EditFragmentEntryDisplayContext {
 			}
 		).put(
 			"urls",
-			() -> {
-				SoyContext urlsSoycontext =
-					SoyContextFactoryUtil.createSoyContext();
+			HashMapBuilder.<String, Object>put(
+				"current", _themeDisplay.getURLCurrent()
+			).put(
+				"edit",
+				() -> {
+					PortletURL editActionURL =
+						_renderResponse.createActionURL();
 
-				return urlsSoycontext.put(
-					"current", _themeDisplay.getURLCurrent()
-				).put(
-					"edit",
-					() -> {
-						PortletURL editActionURL =
-							_renderResponse.createActionURL();
+					editActionURL.setParameter(
+						ActionRequest.ACTION_NAME,
+						"/fragment/edit_fragment_entry");
 
-						editActionURL.setParameter(
-							ActionRequest.ACTION_NAME,
-							"/fragment/edit_fragment_entry");
-
-						return editActionURL.toString();
-					}
-				).put(
-					"preview",
-					_getFragmentEntryRenderURL(
-						"/fragment/preview_fragment_entry")
-				).put(
-					"redirect", getRedirect()
-				).put(
-					"render",
-					_getFragmentEntryRenderURL(
-						"/fragment/render_fragment_entry")
-				);
-			}
-		);
-
-		return soyContext;
+					return editActionURL.toString();
+				}
+			).put(
+				"preview",
+				_getFragmentEntryRenderURL("/fragment/preview_fragment_entry")
+			).put(
+				"redirect", getRedirect()
+			).put(
+				"render",
+				_getFragmentEntryRenderURL("/fragment/render_fragment_entry")
+			).build()
+		).build();
 	}
 
 	public FragmentEntry getFragmentEntry() {

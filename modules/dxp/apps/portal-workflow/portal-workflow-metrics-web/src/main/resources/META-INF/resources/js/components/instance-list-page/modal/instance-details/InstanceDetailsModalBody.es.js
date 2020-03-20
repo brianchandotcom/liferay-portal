@@ -23,7 +23,7 @@ const Body = ({
 	assetTitle,
 	assetType,
 	assignees = [{name: Liferay.Language.get('unassigned')}],
-	creatorUser,
+	creator,
 	dateCompletion,
 	dateCreated,
 	setRetry,
@@ -107,7 +107,7 @@ const Body = ({
 
 				<Body.SectionAttribute
 					description={Liferay.Language.get('created-by')}
-					detail={creatorUser ? creatorUser.name : ''}
+					detail={creator ? creator.name : ''}
 				/>
 
 				{dateCreated && (

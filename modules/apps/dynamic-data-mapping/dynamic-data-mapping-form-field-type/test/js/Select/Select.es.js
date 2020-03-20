@@ -12,13 +12,27 @@
  * details.
  */
 
+import {
+	act,
+	fireEvent,
+	getByTestId,
+	waitForElement,
+} from '@testing-library/react';
+import ReactDOM from 'react';
+
 import Select from '../../../src/main/resources/META-INF/resources/Select/Select.es';
+import withContextMock from '../__mocks__/withContextMock.es';
 
 let component;
 const spritemap = 'icons.svg';
 
+const SelectWithContextMock = withContextMock(Select);
+
 describe('Select', () => {
-	beforeEach(() => {
+	beforeAll(() => {
+		ReactDOM.createPortal = jest.fn(element => {
+			return element;
+		});
 		jest.useFakeTimers();
 	});
 
@@ -184,45 +198,53 @@ describe('Select', () => {
 		expect(component).toMatchSnapshot();
 	});
 
-	it('emits a field edit event when an item is selected', () => {
-		const handleFieldEdited = jest.fn();
+	it('emits a field edit event when an item is selected', async () => {
+		const handleFieldEdited = data => {
+			expect(data).toEqual(
+				expect.objectContaining({
+					fieldInstance: expect.any(Object),
+					originalEvent: expect.any(Object),
+					value: [''],
+				})
+			);
+		};
 
 		const events = {fieldEdited: handleFieldEdited};
 
-		jest.useFakeTimers();
-
-		component = new Select({
+		component = new SelectWithContextMock({
 			dataSourceType: 'manual',
 			events,
 			options: [
 				{
-					checked: false,
-					disabled: false,
-					id: 'id',
-					inline: false,
 					label: 'label',
-					name: 'name',
-					showLabel: true,
 					value: 'item',
+				},
+				{
+					label: 'label2',
+					value: 'item2',
 				},
 			],
 			spritemap,
 		});
 
-		const spy = jest.spyOn(component, 'emit');
-
-		jest.runAllTimers();
-
-		component._handleItemClicked({
-			data: {
-				item: {
-					value: 'Liferay',
-				},
-			},
-			preventDefault: () => 0,
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(spy).toHaveBeenCalled();
+		const dropdownTrigger = component.element.querySelector(
+			'.form-builder-select-field.input-group-container'
+		);
+
+		fireEvent.click(dropdownTrigger);
+
+		// Waits for the dropdown being opened.
+		jest.runAllTimers();
+
+		const dropdownItem = await waitForElement(() =>
+			getByTestId(document.body, 'dropdownItem-0')
+		);
+
+		fireEvent.click(dropdownItem);
 	});
 
 	it('renders the dropdown with search when there are more than six options', () => {

@@ -537,4 +537,10 @@ definition {
 		}
 	}
 
+	macro validateFieldIsOnTable {
+		AssertElementPresent(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "AppBuilder#FIELD_LABEL_IN_TABLE");
+	}
+
 }

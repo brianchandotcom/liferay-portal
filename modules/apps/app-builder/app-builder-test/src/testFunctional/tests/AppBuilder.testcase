@@ -1874,9 +1874,9 @@ definition {
 			pageName = "App Builder Test Page",
 			portletName = "My First App (Table View)");
 
-		TableViewBuilder.validatePortletFieldTypeInTV(fieldType = "Text");
+		AppBuilderAdmin.validateFieldIsOnTable(fieldLabel = "Text");
 
-		TableViewBuilder.validatePortletTextInputInTV(textInput = "Content of form deployed as widget.");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
 
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
@@ -1899,7 +1899,7 @@ definition {
 			pageName = "App Builder Test Page",
 			siteName = "App Builder Site Name");
 
-		TableViewBuilder.validatePortletFieldTypeInTV(fieldType = "Upload");
+		AppBuilderAdmin.validateFieldIsOnTable(fieldLabel = "Upload");
 
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
@@ -1922,7 +1922,7 @@ definition {
 			pageName = "App Builder Test Page",
 			siteName = "App Builder Site Name");
 
-		TableViewBuilder.validatePortletTextInputInTV(textInput = "Content of form deployed as widget.");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
 	}
 
 	@description = "Deploy multiple apps using the same Form View and Table View"
@@ -1980,9 +1980,9 @@ definition {
 			pageName = "App Builder Test Page",
 			portletName = "My App 1 (Table View)");
 
-		TableViewBuilder.validatePortletFieldTypeInTV(fieldType = "Text");
+		AppBuilderAdmin.validateFieldIsOnTable(fieldLabel = "Text");
 
-		TableViewBuilder.validatePortletTextInputInTV(textInput = "Content of form deployed as widget.");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
 
 		JSONLayout.addPublicLayout(
 			groupName = "App Builder Site Name",
@@ -2001,9 +2001,9 @@ definition {
 			pageName = "App Builder Test Page 2",
 			portletName = "My App 2 (Table View)");
 
-		TableViewBuilder.validatePortletFieldTypeInTV(fieldType = "Text");
+		AppBuilderAdmin.validateFieldIsOnTable(fieldLabel = "Text");
 
-		TableViewBuilder.validatePortletTextInputInTV(textInput = "Content of form deployed as widget.");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
 	}
 
 	@description = "Clear search results when clicking the Clear button on the search results banner"

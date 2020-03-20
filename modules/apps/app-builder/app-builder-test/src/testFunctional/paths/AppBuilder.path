@@ -308,6 +308,14 @@
 	<td></td>
 </tr>
 
+<!--HOMEPAGE_TABLE_VIEW-->
+
+<tr>
+	<td>FIELD_LABEL_IN_TABLE</td>
+	<td>//*[contains(.,'(Table View)')]//thead//tr//th[contains(text(),'${key_fieldLabel}')]</td>
+	<td></td>
+</tr>
+
 
 </tbody>
 </table>

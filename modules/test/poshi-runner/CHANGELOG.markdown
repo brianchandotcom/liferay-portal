@@ -345,7 +345,6 @@
 
 * [LRQA-43588](https://issues.liferay.com/browse/LRQA-43588) - Investigate stalling Upgrade Test runs
 
-
 ## 1.0.176
 
 ### Backend

@@ -403,17 +403,17 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
 
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
-			layoutTemplate = "1 Column");
+			widgetName = "Nested Applications");
 
-		for (var portletName : list "Nested Applications,Asset Publisher") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				widgetName = "${portletName}");
-		}
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Asset Publisher");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
@@ -429,7 +429,7 @@ definition {
 
 		DragAndDrop.dragAndDropPortletToObject(
 			key_portletTitleName = "Asset Publisher",
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_HEADER",
+			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_HEADER",
 			locator2 = "Home#PORTLET_COLUMN_1",
 			value1 = "Asset Publisher");
 
@@ -683,14 +683,14 @@ definition {
 			layoutTemplate = "Westeros 2 columns");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = "1",
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name",
-			widgetName = "Profile");
+			widgetName = "Nested Applications");
 
-		for (var portletName : list "Nested Applications,Asset Publisher") {
+		for (var portletName : list "Asset Publisher,Profile") {
 			JSONLayout.addWidgetToPublicLayout(
-				column = "1",
+				column = "2",
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
 				widgetName = "${portletName}");
@@ -700,9 +700,25 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
+		ProductMenuHelper.closeProductMenu();
+
+		AssetPublisherPortlet.gotoConfigurationPG(portletName = "Asset Publisher");
+
+		Navigator.gotoNavTab(navTab = "Asset Selection");
+
+		Click(locator1 = "APConfiguration#ASSET_SELECTION_MANUAL");
+
+		PortletEntry.save();
+
+		SelectFrame(value1 = "relative=top");
+
+		Click(locator1 = "Icon#CLOSE");
+
+		WaitForElementNotPresent(locator1 = "IFrame#DIALOG");
+
 		DragAndDrop.dragAndDropPortletToObject(
 			key_portletTitleName = "Asset Publisher",
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_HEADER",
+			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_HEADER",
 			locator2 = "Home#PORTLET_COLUMN_1",
 			value1 = "Asset Publisher");
 

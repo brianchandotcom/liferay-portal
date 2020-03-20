@@ -54,6 +54,7 @@ const VisibleSelectInput = forwardRef(
 			multiple,
 			onClick,
 			onCloseButtonClicked,
+			onKeyDown,
 			options,
 			readOnly,
 			value,
@@ -81,6 +82,7 @@ const VisibleSelectInput = forwardRef(
 					'form-builder-select-field input-group-container'
 				)}
 				onClick={onClick}
+				onKeyDown={onKeyDown}
 				ref={ref}
 			>
 				<ul

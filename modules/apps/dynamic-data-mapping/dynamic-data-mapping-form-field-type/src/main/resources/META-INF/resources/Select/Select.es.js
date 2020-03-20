@@ -224,6 +224,7 @@ const Trigger = forwardRef(
 		{
 			onCloseButtonClicked,
 			onTriggerClicked,
+			onTriggerKeyDown,
 			readOnly,
 			value,
 			...otherProps
@@ -238,6 +239,7 @@ const Trigger = forwardRef(
 				<VisibleSelectInput
 					onClick={onTriggerClicked}
 					onCloseButtonClicked={onCloseButtonClicked}
+					onKeyDown={onTriggerKeyDown}
 					readOnly={readOnly}
 					ref={ref}
 					value={value}
@@ -264,6 +266,36 @@ const Select = ({
 
 	const [currentValue, setCurrentValue] = useState(value);
 	const [expand, setExpand] = useState(false);
+
+	const handleFocus = (event, direction) => {
+		const target = event.target;
+		const focusabledElements = event.currentTarget.querySelectorAll(
+			'button'
+		);
+		const targetIndex = [...focusabledElements].findIndex(
+			current => current === target
+		);
+
+		let nextElement;
+
+		if (direction) {
+			nextElement = focusabledElements[targetIndex - 1];
+		}
+		else {
+			nextElement = focusabledElements[targetIndex + 1];
+		}
+
+		if (nextElement) {
+			event.preventDefault();
+			event.stopPropagation();
+			nextElement.focus();
+		}
+		else if (targetIndex === 0 && direction) {
+			event.preventDefault();
+			event.stopPropagation();
+			menuElementRef.current.focus();
+		}
+	};
 
 	const handleSelect = ({currentValue, event, multiple, option}) => {
 		const newValue = handleDropdownItemClick({
@@ -301,6 +333,21 @@ const Select = ({
 					setExpand(!expand);
 					onExpand({event, expand: !expand});
 				}}
+				onTriggerKeyDown={event => {
+					if (
+						(event.key === 'Tab' || event.key === 'ArrowDown') &&
+						!event.shiftKey &&
+						expand
+					) {
+						event.preventDefault();
+						event.stopPropagation();
+
+						const firstElement = menuElementRef.current.querySelector(
+							'button'
+						);
+						firstElement.focus();
+					}
+				}}
 				options={options}
 				predefinedValue={predefinedValue}
 				readOnly={readOnly}
@@ -312,6 +359,21 @@ const Select = ({
 				active={expand}
 				alignElementRef={triggerElementRef}
 				className="ddm-btn-full ddm-select-dropdown"
+				onKeyDown={event => {
+					switch (event.key) {
+						case 'ArrowDown':
+							handleFocus(event, false);
+							break;
+						case 'ArrowUp':
+							handleFocus(event, true);
+							break;
+						case 'Tab':
+							handleFocus(event, event.shiftKey);
+							break;
+						default:
+							break;
+					}
+				}}
 				onSetActive={setExpand}
 				ref={menuElementRef}
 			>

@@ -46,7 +46,9 @@ public class LogUtil {
 			throw new RuntimeException(ioException);
 		}
 
-		log.info(unsyncByteArrayOutputStream.toString());
+		String responseOutput = unsyncByteArrayOutputStream.toString();
+
+		log.info(responseOutput.trim());
 	}
 
 	public static void logActionResponse(Log log, BulkResponse bulkResponse) {

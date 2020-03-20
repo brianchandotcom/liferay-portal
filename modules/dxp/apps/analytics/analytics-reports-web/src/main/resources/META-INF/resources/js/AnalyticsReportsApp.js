@@ -95,37 +95,46 @@ function Navigation({
 	}
 
 	return (
-		<div className="overflow-hidden p-3">
+		<>
 			{currentPage.view === 'main' && (
-				<Main
-					authorName={authorName}
-					chartDataProviders={[
-						getHistoricalViews,
-						getHistoricalReads,
-					]}
-					defaultTimeSpanOption={defaultTimeSpanKey}
-					languageTag={languageTag}
-					onTrafficSourceClick={handleTrafficSourceClick}
-					pagePublishDate={pagePublishDate}
-					pageTitle={pageTitle}
-					timeSpanOptions={timeSpanOptions}
-					totalReadsDataProvider={handleTotalReads}
-					totalViewsDataProvider={handleTotalViews}
-					trafficSourcesDataProvider={getTrafficSources}
-				/>
+				<div className="p-3">
+					<Main
+						authorName={authorName}
+						chartDataProviders={[
+							getHistoricalViews,
+							getHistoricalReads,
+						]}
+						defaultTimeSpanOption={defaultTimeSpanKey}
+						languageTag={languageTag}
+						onTrafficSourceClick={handleTrafficSourceClick}
+						pagePublishDate={pagePublishDate}
+						pageTitle={pageTitle}
+						timeSpanOptions={timeSpanOptions}
+						totalReadsDataProvider={handleTotalReads}
+						totalViewsDataProvider={handleTotalViews}
+						trafficSourcesDataProvider={getTrafficSources}
+					/>
+				</div>
 			)}
 
 			{currentPage.view === 'traffic-source-detail' && (
 				<>
-					<ClayButtonWithIcon
-						displayType="secondary"
-						onClick={() => setCurrentPage({view: 'main'})}
-						small="true"
-						symbol="angle-left"
-					/>
-					<h1>{currentPage.data.title}</h1>
+					<div className="d-flex p-2">
+						<ClayButtonWithIcon
+							className="text-secondary"
+							displayType="unstyled"
+							onClick={() => setCurrentPage({view: 'main'})}
+							small="true"
+							symbol="angle-left"
+						/>
+						<div className="align-self-center flex-grow-1 mx-2">
+							{currentPage.data.title}
+						</div>
+					</div>
+
+					<hr className="my-0" />
 				</>
 			)}
-		</div>
+		</>
 	);
 }

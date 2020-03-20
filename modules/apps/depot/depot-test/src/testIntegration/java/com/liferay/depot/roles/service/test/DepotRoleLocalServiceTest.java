@@ -17,21 +17,16 @@ package com.liferay.depot.roles.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.depot.test.util.DepotTestUtil;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -59,49 +54,44 @@ public class DepotRoleLocalServiceTest {
 
 	@Test
 	public void testGetAssigneesTotal() throws Exception {
-		DepotEntry depotEntry = _addDepotEntry("name", "description");
+		DepotTestUtil.withDepotUser(
+			(user, role) -> {
+				DepotEntry depotEntry = _addDepotEntry("name", "description");
 
-		Group group = depotEntry.getGroup();
+				_userGroupRoleLocalService.addUserGroupRoles(
+					user.getUserId(), depotEntry.getGroupId(),
+					new long[] {role.getRoleId()});
 
-		_role = RoleTestUtil.addRole(RoleConstants.TYPE_DEPOT);
-
-		_user = UserTestUtil.addUser();
-
-		long[] roleIds = {_role.getRoleId()};
-
-		_userGroupRoleLocalService.addUserGroupRoles(
-			_user.getUserId(), group.getGroupId(), roleIds);
-
-		Assert.assertEquals(
-			1, _roleLocalService.getAssigneesTotal(_role.getRoleId()));
+				Assert.assertEquals(
+					1, _roleLocalService.getAssigneesTotal(role.getRoleId()));
+			});
 	}
 
 	@Test
 	public void testGetAssigneesTotalWithUserGroup() throws Exception {
-		DepotEntry depotEntry = _addDepotEntry("name", "description");
+		DepotTestUtil.withDepotUser(
+			(user, role) -> {
+				DepotEntry depotEntry = _addDepotEntry("name", "description");
 
-		Group group = depotEntry.getGroup();
+				_userGroup = UserGroupTestUtil.addUserGroup();
 
-		_role = RoleTestUtil.addRole(RoleConstants.TYPE_DEPOT);
+				_groupLocalService.addUserGroup(
+					user.getUserId(), depotEntry.getGroup());
 
-		_user = UserTestUtil.addUser();
+				_groupLocalService.addUserGroupGroup(
+					_userGroup.getUserGroupId(), depotEntry.getGroup());
 
-		_userGroup = UserGroupTestUtil.addUserGroup();
+				_userGroupGroupRoleLocalService.addUserGroupGroupRoles(
+					_userGroup.getGroupId(), depotEntry.getGroupId(),
+					new long[] {role.getRoleId()});
 
-		_groupLocalService.addUserGroup(_user.getUserId(), group);
+				_userGroupRoleLocalService.addUserGroupRoles(
+					user.getUserId(), depotEntry.getGroupId(),
+					new long[] {role.getRoleId()});
 
-		_groupLocalService.addUserGroupGroup(
-			_userGroup.getUserGroupId(), group);
-
-		long[] roleIds = {_role.getRoleId()};
-
-		_userGroupGroupRoleLocalService.addUserGroupGroupRoles(
-			_userGroup.getGroupId(), group.getGroupId(), roleIds);
-		_userGroupRoleLocalService.addUserGroupRoles(
-			_user.getUserId(), group.getGroupId(), roleIds);
-
-		Assert.assertEquals(
-			2, _roleLocalService.getAssigneesTotal(_role.getRoleId()));
+				Assert.assertEquals(
+					2, _roleLocalService.getAssigneesTotal(role.getRoleId()));
+			});
 	}
 
 	private DepotEntry _addDepotEntry(String name, String description)
@@ -130,14 +120,8 @@ public class DepotRoleLocalServiceTest {
 	@Inject
 	private GroupLocalService _groupLocalService;
 
-	@DeleteAfterTestRun
-	private Role _role;
-
 	@Inject
 	private RoleLocalService _roleLocalService;
-
-	@DeleteAfterTestRun
-	private User _user;
 
 	@DeleteAfterTestRun
 	private UserGroup _userGroup;

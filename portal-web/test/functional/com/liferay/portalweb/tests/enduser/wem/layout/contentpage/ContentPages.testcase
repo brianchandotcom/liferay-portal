@@ -1178,6 +1178,48 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-104629. The header of fragment selected can reach the border of the management toolbar."
+	@priority = "5"
+	test ViewHeaderOfFragmentMoveInsideBodyWhenReachTheManagementToolbar {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add Image, Card and HTML fragments to page") {
+			for (var fragmentName : list "Image,Card,HTML") {
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "${fragmentName}");
+			}
+		}
+
+		task ("Assert Header of Card is shown over body when doesn't reach the management toolbar") {
+			ScrollWebElementIntoView(
+				key_fragmentName = "Card",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			Click.clickNoWaitForVisible(
+				key_fragmentName = "Card",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertElementNotPresent(
+				key_fragmentName = "Card",
+				locator1 = "Fragment#FRAGMENT_HEADER_INSET_STYLE");
+		}
+
+		task ("Assert Header of Card moves inside body when reach the management toolbar") {
+			ScrollWebElementIntoView(
+				key_fragmentName = "Image",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertElementPresent(
+				key_fragmentName = "Card",
+				locator1 = "Fragment#FRAGMENT_HEADER_INSET_STYLE");
+		}
+	}
+
 	@description = "This is a test for LPS-107285. When the Section fragment with Heading fragment is duplicated, the mapped content should also be duplicated."
 	@priority = "4"
 	test ViewMappedContentDuplicatedWhenDuplicateSectionWithHeading {

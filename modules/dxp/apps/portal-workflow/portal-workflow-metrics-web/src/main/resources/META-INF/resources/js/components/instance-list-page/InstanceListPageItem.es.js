@@ -155,7 +155,7 @@ const Item = ({totalCount, ...instance}) => {
 				{formattedAssignees}
 			</ClayTable.Cell>
 
-			<ClayTable.Cell data-testid="creatorUserCell">
+			<ClayTable.Cell data-testid="creatorCell">
 				{creator ? creator.name : ''}
 			</ClayTable.Cell>
 

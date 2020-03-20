@@ -20,9 +20,7 @@ import {processStatusConstants} from '../filter/ProcessStatusFilter.es';
 import {slaStatusConstants} from '../filter/SLAStatusFilter.es';
 
 const Item = ({
-	id,
-	image,
-	name,
+	assignee: {id, image, name},
 	onTimeTaskCount,
 	overdueTaskCount,
 	processId,

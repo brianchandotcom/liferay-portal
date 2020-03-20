@@ -65,7 +65,6 @@ public class WorkflowMetricsSLAProcessMessageListener
 	extends BaseMessageListener {
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_workflowMetricsConfiguration = ConfigurableUtil.createConfigurable(
 			WorkflowMetricsConfiguration.class, properties);
@@ -138,6 +137,13 @@ public class WorkflowMetricsSLAProcessMessageListener
 			});
 
 		actionableDynamicQuery.performActions();
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		deactivate();
+
+		activate(properties);
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

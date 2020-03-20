@@ -175,7 +175,7 @@ public class FileInstallDeployTest {
 		Bundle bundle = null;
 
 		try {
-			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, baseVersion);
+			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, baseVersion, null);
 
 			installCountDownLatch.await();
 
@@ -195,7 +195,7 @@ public class FileInstallDeployTest {
 			Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
 			Assert.assertEquals(baseVersion, bundle.getVersion());
 
-			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, updateVersion);
+			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, updateVersion, null);
 
 			updateCountDownLatch.await();
 
@@ -215,7 +215,9 @@ public class FileInstallDeployTest {
 		}
 	}
 
-	private void _createJAR(Path path, String symbolicName, Version version)
+	private void _createJAR(
+			Path path, String symbolicName, Version version,
+			String fragmentHost)
 		throws IOException {
 
 		try (OutputStream outputStream = Files.newOutputStream(path);
@@ -229,6 +231,11 @@ public class FileInstallDeployTest {
 			attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
 			attributes.putValue(Constants.BUNDLE_SYMBOLICNAME, symbolicName);
 			attributes.putValue(Constants.BUNDLE_VERSION, version.toString());
+
+			if (fragmentHost != null) {
+				attributes.putValue(Constants.FRAGMENT_HOST, fragmentHost);
+			}
+
 			attributes.putValue("Manifest-Version", "2");
 
 			jarOutputStream.putNextEntry(new ZipEntry(JarFile.MANIFEST_NAME));

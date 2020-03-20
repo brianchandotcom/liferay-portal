@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SECTION_BACKGROUND_IMAGE</td>
+	<td>//section[contains(@id,'content')]//div[contains(@style,'${key_imageName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_CONTENT_BACKGROUND_IMAGE</td>
 	<td>//div[contains(@class,'fragment-entry-link')]//div[contains(@style,'${key_imageName}')]</td>
 	<td></td>

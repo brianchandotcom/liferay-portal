@@ -1434,7 +1434,11 @@ public class CalendarPortlet extends MVCPortlet {
 			long calendarId = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 
-			Calendar calendar = _calendarService.getCalendar(calendarId);
+			Calendar calendar = _calendarService.fetchCalendar(calendarId);
+
+			if (calendar == null) {
+				continue;
+			}
 
 			CalendarResource calendarResource = calendar.getCalendarResource();
 

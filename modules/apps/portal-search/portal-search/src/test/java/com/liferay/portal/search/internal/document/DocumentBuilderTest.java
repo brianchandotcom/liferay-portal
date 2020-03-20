@@ -85,6 +85,13 @@ public class DocumentBuilderTest {
 	}
 
 	@Test
+	public void testFieldValueOrderIsStable() {
+		assertDocument(
+			"{longs=[1, 10, 2, 20, 3, 30]}",
+			documentBuilder.setLongs("longs", 1L, 10L, 2L, 20L, 3L, 30L));
+	}
+
+	@Test
 	public void testNull() {
 		List<String> nulls = Arrays.asList(null, null);
 
@@ -122,11 +129,7 @@ public class DocumentBuilderTest {
 	protected static void assertDocument(
 		String expected, DocumentBuilder documentBuilder) {
 
-		Assert.assertEquals(
-			expected,
-			String.valueOf(
-				documentBuilder.build(
-				).getFields()));
+		Assert.assertEquals(expected, String.valueOf(documentBuilder.build()));
 	}
 
 	protected DocumentBuilder documentBuilder = new DocumentBuilderImpl();

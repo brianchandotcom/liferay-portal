@@ -196,7 +196,7 @@ function legendFormatterGenerator(totals, languageTag) {
 		return (
 			<span>
 				<span
-					className={`custom-${keyToIconType(value)} mr-1`}
+					className={`custom-${keyToIconType(value)} mr-2`}
 					style={{
 						backgroundColor: keyToHexColor(value),
 					}}

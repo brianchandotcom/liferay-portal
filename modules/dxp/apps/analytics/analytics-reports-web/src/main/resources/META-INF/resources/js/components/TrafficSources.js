@@ -75,6 +75,7 @@ export default function TrafficSources({
 							return (
 								<tr key={entry.name}>
 									<td
+										className="px-0"
 										onMouseOut={handleLegendMouseLeave}
 										onMouseOver={() =>
 											handleLegendMouseEnter(entry.name)
@@ -97,7 +98,8 @@ export default function TrafficSources({
 										}
 									>
 										<ClayButton
-											displayType="unstyled"
+											className="font-weight-semi-bold px-0 py-1 text-secondary"
+											displayType="link"
 											onClick={() =>
 												onTrafficSourceClick(entry.name)
 											}

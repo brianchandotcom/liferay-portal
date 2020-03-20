@@ -44,30 +44,23 @@ export default function Main({
 				{Liferay.Language.get('views-and-reads')}
 			</h5>
 
-			<table>
-				<tbody>
-					<TotalCount
-						dataProvider={totalViewsDataProvider}
-						label={Liferay.Util.sub(
-							Liferay.Language.get('total-views')
-						)}
-						popoverHeader={Liferay.Language.get('total-views')}
-						popoverMessage={Liferay.Language.get(
-							'this-number-refers-to-the-total-number-of-views-since-the-content-was-published'
-						)}
-					/>
-					<TotalCount
-						dataProvider={totalReadsDataProvider}
-						label={Liferay.Util.sub(
-							Liferay.Language.get('total-reads')
-						)}
-						popoverHeader={Liferay.Language.get('total-reads')}
-						popoverMessage={Liferay.Language.get(
-							'this-number-refers-to-the-total-number-of-reads-since-the-content-was-published'
-						)}
-					/>
-				</tbody>
-			</table>
+			<TotalCount
+				className="mb-2"
+				dataProvider={totalViewsDataProvider}
+				label={Liferay.Util.sub(Liferay.Language.get('total-views'))}
+				popoverHeader={Liferay.Language.get('total-views')}
+				popoverMessage={Liferay.Language.get(
+					'this-number-refers-to-the-total-number-of-views-since-the-content-was-published'
+				)}
+			/>
+			<TotalCount
+				dataProvider={totalReadsDataProvider}
+				label={Liferay.Util.sub(Liferay.Language.get('total-reads'))}
+				popoverHeader={Liferay.Language.get('total-reads')}
+				popoverMessage={Liferay.Language.get(
+					'this-number-refers-to-the-total-number-of-reads-since-the-content-was-published'
+				)}
+			/>
 
 			<Chart
 				dataProviders={chartDataProviders}

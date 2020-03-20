@@ -42,11 +42,10 @@ function TotalCount({
 
 	return (
 		<div className={className}>
+			<div className="float-left text-secondary w2-7">{label}</div>
 			<span className="text-secondary">
-				{label}
 				<Hint message={popoverMessage} title={popoverHeader} />
 			</span>
-
 			<span className="font-weight-bold">{value}</span>
 		</div>
 	);

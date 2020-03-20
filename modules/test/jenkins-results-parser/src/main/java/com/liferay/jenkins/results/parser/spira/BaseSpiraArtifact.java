@@ -135,12 +135,9 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 			for (S cachedSpiraArtifact : cachedSpiraArtifacts) {
 				if (searchQuery.matches(cachedSpiraArtifact)) {
-					if (distinctSpiraArtifact != null) {
-						throw new RuntimeException(
-							"Too many results for distinct search");
-					}
-
 					distinctSpiraArtifact = cachedSpiraArtifact;
+
+					break;
 				}
 			}
 
@@ -149,12 +146,9 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 				for (JSONObject jsonObject : spiraArtifactRequest.get()) {
 					if (searchQuery.matches(spiraArtifactClass, jsonObject)) {
-						if (distinctJSONObject != null) {
-							throw new RuntimeException(
-								"Too many results for distinct search");
-						}
-
 						distinctJSONObject = jsonObject;
+
+						break;
 					}
 				}
 
@@ -172,7 +166,11 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 			searchQuery.addSpiraArtifact(distinctSpiraArtifact);
 
-			SearchQuery.cacheSearchQuery(searchQuery);
+			List<S> searchQuerySpiraArtifacts = searchQuery.getSpiraArtifacts();
+
+			if (!searchQuerySpiraArtifacts.isEmpty()) {
+				SearchQuery.cacheSearchQuery(searchQuery);
+			}
 
 			return searchQuery.getSpiraArtifacts();
 		}

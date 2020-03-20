@@ -31,7 +31,6 @@ import org.talend.components.api.component.runtime.Reader;
 import org.talend.components.api.component.runtime.Source;
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.components.api.properties.ComponentProperties;
-import org.talend.components.api.properties.ComponentReferenceProperties;
 import org.talend.daikon.NamedThing;
 import org.talend.daikon.properties.ValidationResult;
 
@@ -90,13 +89,17 @@ public class LiferayBatchOutputSink
 		return ValidationResult.OK;
 	}
 
+	@Override
+	protected String getLiferayConnectionPropertiesPath() {
+		return "liferayBatchFileProperties.resource." +
+			super.getLiferayConnectionPropertiesPath();
+	}
+
 	private String _getBatchOutputURL() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("/o/headless-batch-engine/v1.0/");
+		sb.append("/o/headless-batch-engine/v1.0/import-task/");
 		sb.append(_entityClass);
-		sb.append("/");
-		sb.append(_entityVersion);
 
 		return sb.toString();
 	}
@@ -109,19 +112,15 @@ public class LiferayBatchOutputSink
 				ValidationResult.Result.ERROR,
 				String.format(
 					"Unable to initialize %s with %s", getClass(),
-					String.valueOf(componentProperties)));
+					componentProperties));
 		}
 
 		LiferayBatchOutputProperties liferayBatchOutputProperties =
 			(LiferayBatchOutputProperties)componentProperties;
 
-		ComponentReferenceProperties<LiferayBatchFileProperties>
-			batchFilePropertiesComponentReferenceProperties =
-				liferayBatchOutputProperties.
-					batchFilePropertiesComponentReferenceProperties;
-
 		LiferayBatchFileProperties liferayBatchFileProperties =
-			batchFilePropertiesComponentReferenceProperties.getReference();
+			liferayBatchOutputProperties.
+				getEffectiveLiferayBatchFileProperties();
 
 		if (liferayBatchFileProperties == null) {
 			return new ValidationResult(
@@ -133,13 +132,11 @@ public class LiferayBatchOutputSink
 
 		_batchFilePath = liferayBatchFileProperties.getBatchFilePath();
 		_entityClass = liferayBatchFileProperties.getEntityClassName();
-		_entityVersion = liferayBatchFileProperties.getEntityVersion();
 
 		return ValidationResult.OK;
 	}
 
 	private transient String _batchFilePath;
 	private transient String _entityClass;
-	private transient String _entityVersion;
 
 }

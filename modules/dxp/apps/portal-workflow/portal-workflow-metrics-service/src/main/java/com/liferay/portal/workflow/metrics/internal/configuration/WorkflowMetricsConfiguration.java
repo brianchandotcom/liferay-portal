@@ -21,9 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Rafael Praxedes
  */
-@ExtendedObjectClassDefinition(
-	category = "workflow", scope = ExtendedObjectClassDefinition.Scope.COMPANY
-)
+@ExtendedObjectClassDefinition(category = "workflow")
 @Meta.OCD(
 	id = "com.liferay.portal.workflow.metrics.internal.configuration.WorkflowMetricsConfiguration",
 	localization = "content/Language",

@@ -242,7 +242,7 @@ const FragmentEditor = ({
 			<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
 				<ClayTabs.TabPane aria-labelledby="code">
 					<div className="fragment-editor">
-						<div class="source-editor html">
+						<div className="source-editor html">
 							<CodeMirrorEditor
 								content={initialHTML}
 								customEntities={htmlEditorCustomEntities}
@@ -253,7 +253,7 @@ const FragmentEditor = ({
 							/>
 						</div>
 
-						<div class="source-editor css">
+						<div className="source-editor css">
 							<CodeMirrorEditor
 								content={initialCSS}
 								mode="css"
@@ -262,7 +262,7 @@ const FragmentEditor = ({
 							/>
 						</div>
 
-						<div class="source-editor javascript">
+						<div className="source-editor javascript">
 							<CodeMirrorEditor
 								codeFooterText="}"
 								codeHeaderHelpText={Liferay.Util.sub(
@@ -291,7 +291,7 @@ const FragmentEditor = ({
 				</ClayTabs.TabPane>
 
 				<ClayTabs.TabPane aria-labelledby="configuration">
-					<div class="fragment-editor">
+					<div className="fragment-editor">
 						<CodeMirrorEditor
 							content={initialConfiguration}
 							mode="json"

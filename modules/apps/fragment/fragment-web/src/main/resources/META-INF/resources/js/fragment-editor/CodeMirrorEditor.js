@@ -170,12 +170,12 @@ const noop = () => {};
 
 const FixedText = ({helpText, text = ''}) => {
 	return (
-		<div class="source-editor__fixed-text">
-			<code class="source-editor__fixed-text__content">{text}</code>
+		<div className="source-editor__fixed-text">
+			<code className="source-editor__fixed-text__content">{text}</code>
 
 			{helpText && (
 				<span
-					class="float-right source-editor__fixed-text__help"
+					className="float-right source-editor__fixed-text__help"
 					data-title={helpText}
 				>
 					<ClayIcon
@@ -295,9 +295,9 @@ const CodeMirrorEditor = ({
 
 	return (
 		<>
-			<nav class="source-editor-toolbar tbar">
-				<ul class="tbar-nav">
-					<li class="source-editor-toolbar__syntax tbar-item tbar-item-expand text-center">
+			<nav className="source-editor-toolbar tbar">
+				<ul className="tbar-nav">
+					<li className="source-editor-toolbar__syntax tbar-item tbar-item-expand text-center">
 						{MODES[mode].name}
 					</li>
 				</ul>

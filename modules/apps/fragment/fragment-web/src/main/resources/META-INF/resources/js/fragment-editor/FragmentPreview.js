@@ -159,8 +159,8 @@ const FragmentPreview = ({
 	useEventListener('resize', updatePreviewStyles, true, window);
 
 	return (
-		<div class="fragment-preview" ref={ref}>
-			<div class="btn-group fragment-preview__toolbar">
+		<div className="fragment-preview" ref={ref}>
+			<div className="btn-group fragment-preview__toolbar">
 				{PREVIEW_SIZES.map(previewSize => (
 					<ClayButtonWithIcon
 						borderless={true}
@@ -184,16 +184,16 @@ const FragmentPreview = ({
 				style={previewStyles}
 			>
 				{loading && (
-					<div class="fragment-preview__loading-indicator">
+					<div className="fragment-preview__loading-indicator">
 						<span
 							aria-hidden="true"
-							class="loading-animation"
+							className="loading-animation"
 						></span>
 					</div>
 				)}
 
 				<iframe
-					class="fragment-preview__content"
+					className="fragment-preview__content"
 					onLoad={updatePreview}
 					ref={iframeRef}
 					src={urls.preview}

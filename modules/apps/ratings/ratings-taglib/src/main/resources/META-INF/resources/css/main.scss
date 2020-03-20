@@ -1,5 +1,49 @@
 @import 'atlas-variables';
 
+@keyframes fadeInDown {
+	from {
+		opacity: 0;
+		transform: translate3d(0, -1.5rem, 0);
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translate3d(0, 1.5rem, 0);
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOutDown {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+		transform: translate3d(0, 1.5rem, 0);
+	}
+}
+
+@keyframes fadeOutUp {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+		transform: translate3d(0, -1.5rem, 0);
+	}
+}
+
 .ratings-like {
 	button {
 		&:hover:not(:disabled) .lexicon-icon-heart {
@@ -52,74 +96,32 @@
 		justify-content: center;
 		position: relative;
 
-		.previous {
-			position: absolute;
-		}
-
-		&.animating-up {
-			.previous {
-				animation-duration: $animation-duration;
-				animation-name: fadeOutUp;
-			}
-			.current {
-				animation-duration: $animation-duration;
-				animation-name: fadeInUp;
-			}
-		}
-
 		&.animating-down {
-			.previous {
-				animation-duration: $animation-duration;
-				animation-name: fadeOutDown;
-			}
 			.current {
 				animation-duration: $animation-duration;
 				animation-name: fadeInDown;
 			}
+
+			.previous {
+				animation-duration: $animation-duration;
+				animation-name: fadeOutDown;
+			}
 		}
-	}
-}
 
-@keyframes fadeOutUp {
-	from {
-		opacity: 1;
-	}
+		&.animating-up {
+			.current {
+				animation-duration: $animation-duration;
+				animation-name: fadeInUp;
+			}
 
-	to {
-		opacity: 0;
-		transform: translate3d(0, -1.5rem, 0);
-	}
-}
+			.previous {
+				animation-duration: $animation-duration;
+				animation-name: fadeOutUp;
+			}
+		}
 
-@keyframes fadeInUp {
-	from {
-		opacity: 0;
-		transform: translate3d(0, 1.5rem, 0);
-	}
-
-	to {
-		opacity: 1;
-	}
-}
-
-@keyframes fadeOutDown {
-	from {
-		opacity: 1;
-	}
-
-	to {
-		opacity: 0;
-		transform: translate3d(0, 1.5rem, 0);
-	}
-}
-
-@keyframes fadeInDown {
-	from {
-		opacity: 0;
-		transform: translate3d(0, -1.5rem, 0);
-	}
-
-	to {
-		opacity: 1;
+		.previous {
+			position: absolute;
+		}
 	}
 }

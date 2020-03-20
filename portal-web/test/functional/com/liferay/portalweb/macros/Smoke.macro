@@ -81,43 +81,6 @@ definition {
 					fragmentName = "${fragmentName}");
 			}
 
-			task ("Configure the '${fragmentName}' fragment") {
-				PageEditor.gotoConfiguration(fragmentName = "${fragmentName}");
-
-				PageEditor.configureFragment(
-					headingLevel = "H2",
-					textAlign = "Right",
-					textColor = "secondary");
-			}
-
-			task ("View the '${fragmentName}' fragment style") {
-				PageEditor.viewFragmentStyle(
-					alignment = "right",
-					fragmentName = "heading",
-					headingLevel = "h2",
-					textColor = "secondary");
-			}
-
-			task ("Remove the '${fragmentName}' fragment") {
-				PageEditor.removeFragment(fragmentName = "${fragmentName}");
-			}
-
-			task ("Add a basic '${fragmentName}' component") {
-				PageEditor.addFragment(
-					collectionName = "${collectionName}",
-					fragmentName = "${fragmentName}");
-			}
-
-			task ("Duplicate the '${fragmentName}' fragment") {
-				PageEditor.gotoDuplicate(fragmentName = "${fragmentName}");
-			}
-
-			task ("View the duplicate '${fragmentName}' fragment") {
-				PageEditor.viewDuplicateFragment(
-					fragmentName = "${fragmentName}",
-					id = "Heading");
-			}
-
 			task ("Publish Content Page") {
 				PageEditor.clickPublish();
 			}

@@ -150,33 +150,29 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	const {selectedMappingTypes} = config;
 
 	const [fields, setFields] = useState([]);
-	const [mappedItemTitle, setMappedItemTitle] = useState('');
 	const [selectedItem, setSelectedItem] = useState(mappedItem);
 	const [selectedSourceTypeId, setSelectedSourceTypeId] = useState(
-		MAPPING_SOURCE_TYPE_IDS.content
+		mappedItem.mappedField
+			? MAPPING_SOURCE_TYPE_IDS.structure
+			: MAPPING_SOURCE_TYPE_IDS.content
 	);
 
-	const onInfoItemSelect = selectedItem => {
-		loadFields({
-			dispatch,
-			fieldType,
-			selectedItem: {
-				className: selectedItem.className,
-				classNameId: selectedItem.classNameId,
-				classPK: selectedItem.classPK,
-				title: selectedItem.title,
-			},
-			selectedSourceTypeId,
-		}).then(newFields => {
-			setFields(newFields);
-		});
+	const onInfoItemSelect = selectedInfoItem => {
+		setSelectedItem(selectedInfoItem);
 
-		setSelectedItem({...selectedItem, fieldId: '', mappedField: ''});
+		onMappingSelect({
+			classNameId: '',
+			classPK: '',
+			fieldId: '',
+			mappedField: '',
+		});
 	};
 
 	const onFieldSelect = event => {
+		const fieldValue = event.target.value;
+
 		const data =
-			event.target.value === UNMAPPED_OPTION.value
+			fieldValue === UNMAPPED_OPTION.value
 				? {
 						classNameId: '',
 						classPK: '',
@@ -187,9 +183,9 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 				? {
 						classNameId: selectedItem.classNameId,
 						classPK: selectedItem.classPK,
-						fieldId: event.target.value,
+						fieldId: fieldValue,
 				  }
-				: {mappedField: event.target.value};
+				: {mappedField: fieldValue};
 
 		if (selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content) {
 			const mappedInfoItem = mappedInfoItems.find(
@@ -203,6 +199,17 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 					addMappedInfoItem({title: selectedItem.title, ...data})
 				);
 			}
+
+			setSelectedItem(selectedItem => ({
+				...selectedItem,
+				fieldId: fieldValue,
+			}));
+		}
+		else {
+			setSelectedItem(selectedItem => ({
+				...selectedItem,
+				mappedField: fieldValue,
+			}));
 		}
 
 		onMappingSelect(data);
@@ -211,24 +218,16 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	useEffect(() => {
 		const infoItem = mappedInfoItems.find(
 			infoItem =>
-				infoItem.classNameId === selectedItem.classNameId &&
-				infoItem.classPK === selectedItem.classPK
+				infoItem.classNameId === mappedItem.classNameId &&
+				infoItem.classPK === mappedItem.classPK
 		);
 
-		if (infoItem) {
-			setMappedItemTitle(infoItem.title);
-		}
-	}, [mappedInfoItems, selectedItem]);
-
-	useEffect(() => {
-		setSelectedSourceTypeId(
-			mappedItem.mappedField
-				? MAPPING_SOURCE_TYPE_IDS.structure
-				: MAPPING_SOURCE_TYPE_IDS.content
-		);
-
-		setSelectedItem(mappedItem);
-	}, [mappedItem]);
+		setSelectedItem(selectedItem => ({
+			...infoItem,
+			...mappedItem,
+			...selectedItem,
+		}));
+	}, [mappedItem, mappedInfoItems]);
 
 	useEffect(() => {
 		const data =
@@ -269,6 +268,15 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 						id="mappingSelectorSourceSelect"
 						onChange={event => {
 							setSelectedSourceTypeId(event.target.value);
+
+							setSelectedItem({});
+
+							onMappingSelect({
+								classNameId: '',
+								classPK: '',
+								fieldId: '',
+								mappedField: '',
+							});
 						}}
 						options={[
 							{
@@ -294,9 +302,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 					<ItemSelector
 						label={Liferay.Language.get('content')}
 						onItemSelect={onInfoItemSelect}
-						selectedItemTitle={
-							selectedItem.title || mappedItemTitle
-						}
+						selectedItemTitle={selectedItem.title}
 					/>
 				</ClayForm.Group>
 			)}

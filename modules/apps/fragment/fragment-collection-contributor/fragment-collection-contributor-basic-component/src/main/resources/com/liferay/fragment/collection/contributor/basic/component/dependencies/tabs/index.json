@@ -1,0 +1,45 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "4",
+					"description": "number-of-tabs",
+					"label": "Number Of Tabs",
+					"name": "numberOfTabs",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "3",
+					"label": "bottom-spacing",
+					"name": "bottomSpacing",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "0"
+							},
+							{
+								"value": "1"
+							},
+							{
+								"value": "2"
+							},
+							{
+								"value": "3"
+							},
+							{
+								"value": "4"
+							},
+							{
+								"value": "5"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

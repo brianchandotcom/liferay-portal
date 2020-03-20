@@ -224,19 +224,12 @@ export default function useDragAndDrop({
 						targetPosition: TARGET_POSITION.MIDDLE,
 					});
 					break;
-				case RULES_TYPE.ELEVATE: {
-					const parent = layoutData.items[item.parentId];
-
+				case RULES_TYPE.ELEVATE:
 					dispatch({
-						dropTargetItemId:
-							parent.type !== LAYOUT_DATA_ITEM_TYPES.row &&
-							parent.children.length
-								? parent.parentId || item.parentId
-								: item.parentId,
+						dropTargetItemId: item.parentId || item.itemId,
 						targetPosition: newTargetPosition,
 					});
 					break;
-				}
 				case RULES_TYPE.VALID_MOVE:
 					dispatch({
 						dropTargetItemId: item.itemId,

@@ -1,0 +1,51 @@
+<div class="component-tabs">
+	<nav class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
+		<div class="container-fluid container-fluid-max-xl">
+			<button
+				aria-controls="navigationBarCollapse"
+				aria-expanded="false"
+				aria-label="Tabs Toggle Navigation"
+				class="collapsed navbar-toggler navbar-toggler-link"
+				data-toggle="collapse"
+			>
+				<span class="navbar-text-truncate">Tab 1</span>
+				<span class="icon-caret-bottom"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navigationBarCollapse" style="z-index: 1;">
+				<div class="container-fluid container-fluid-max-xl">
+					<ul class="navbar-nav">
+						[#list 0..configuration.numberOfTabs-1 as i]
+						<li class="nav-item">
+							<a
+								aria-controls="${i+1}-tab-panel"
+								aria-selected="false"
+								class="nav-link"
+								href="#${i+1}-tab-panel"
+								id="${i+1}-tab"
+								role="tab"
+							>
+								<span class="navbar-text-truncate">
+									<lfr-editable id="${i+1}-title" type="rich-text">
+										Tab ${i+1}
+									</lfr-editable>
+								</span>
+							</a>
+						</li>
+						[/#list]
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<div class="tab-panel">
+		[#list 0..configuration.numberOfTabs-1 as i]
+		<div aria-labelledby="${i+1}-tab" class="tab-panel-item d-none" id="${i+1}-tab-panel" role="tabpanel" tabindex="0">
+		<lfr-editable id="${i+1}-editable" type="image">
+			<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=" />
+		</lfr-editable>
+		</div>
+		[/#list]
+	</div>
+</div>

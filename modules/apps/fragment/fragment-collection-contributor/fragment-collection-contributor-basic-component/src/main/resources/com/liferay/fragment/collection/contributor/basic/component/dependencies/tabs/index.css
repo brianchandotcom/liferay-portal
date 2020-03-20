@@ -1,0 +1,18 @@
+.component-tabs .navigation-bar-light .navbar-toggler {
+    color: #272833;
+}
+
+.component-tabs .navigation-bar-light .icon-caret-bottom {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #272833;
+    border-radius: 4px;
+    height: 0;
+    margin-left: 4px;
+    margin-top: 4px;
+    width: 0;
+}
+
+.component-tabs img {
+    width: 100%;
+}

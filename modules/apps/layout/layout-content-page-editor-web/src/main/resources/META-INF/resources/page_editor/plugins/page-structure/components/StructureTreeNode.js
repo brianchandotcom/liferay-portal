@@ -39,9 +39,8 @@ export default function StructureTreeNode({node}) {
 	return (
 		<div
 			className={classNames('page-editor__page-structure__tree-node', {
-				'page-editor__page-structure__tree-node--active': isSelected(
-					node.id
-				),
+				'page-editor__page-structure__tree-node--active':
+					node.activable && isSelected(node.id),
 			})}
 			onMouseLeave={event => {
 				event.stopPropagation();
@@ -56,6 +55,9 @@ export default function StructureTreeNode({node}) {
 			}}
 		>
 			<ClayButton
+				aria-label={Liferay.Util.sub(Liferay.Language.get('select-x'), [
+					node.name,
+				])}
 				className="page-editor__page-structure__tree-node__mask"
 				disabled={node.disabled}
 				displayType="unstyled"
@@ -69,15 +71,22 @@ export default function StructureTreeNode({node}) {
 						origin: ITEM_ACTIVATION_ORIGINS.structureTree,
 					});
 				}}
+				onDoubleClick={event => event.stopPropagation()}
 			/>
 
-			<NameLabel disabled={node.disabled} id={node.id} name={node.name} />
+			<NameLabel
+				activable={node.activable}
+				disabled={node.disabled}
+				id={node.id}
+				name={node.name}
+			/>
 
-			{canUpdateLayoutContent &&
-				node.removable &&
-				(isHovered(node.id) || isSelected(node.id)) && (
-					<RemoveButton node={node} />
-				)}
+			{canUpdateLayoutContent && node.removable && (
+				<RemoveButton
+					node={node}
+					visible={isHovered(node.id) || isSelected(node.id)}
+				/>
+			)}
 		</div>
 	);
 }
@@ -90,7 +99,7 @@ StructureTreeNode.propTypes = {
 	}).isRequired,
 };
 
-const NameLabel = ({disabled, id, name}) => {
+const NameLabel = ({activable, disabled, id, name}) => {
 	const isSelected = useIsSelected();
 
 	return (
@@ -98,9 +107,8 @@ const NameLabel = ({disabled, id, name}) => {
 			className={classNames(
 				'page-editor__page-structure__tree-node__name',
 				{
-					'page-editor__page-structure__tree-node__name--active': isSelected(
-						id
-					),
+					'page-editor__page-structure__tree-node__name--active':
+						activable && isSelected(id),
 					'page-editor__page-structure__tree-node__name--disabled': disabled,
 				}
 			)}
@@ -110,13 +118,21 @@ const NameLabel = ({disabled, id, name}) => {
 	);
 };
 
-const RemoveButton = ({node}) => {
+const RemoveButton = ({node, visible}) => {
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
 
 	return (
 		<ClayButton
-			className="page-editor__page-structure__tree-node__remove-button"
+			aria-label={Liferay.Util.sub(Liferay.Language.get('remove-x'), [
+				node.name,
+			])}
+			className={classNames(
+				'page-editor__page-structure__tree-node__remove-button',
+				{
+					'page-editor__page-structure__tree-node__remove-button--visible': visible,
+				}
+			)}
 			displayType="unstyled"
 			onClick={event => {
 				event.stopPropagation();

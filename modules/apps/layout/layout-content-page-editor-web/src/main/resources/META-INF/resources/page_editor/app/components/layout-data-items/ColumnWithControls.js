@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import React, {useContext, useEffect, useMemo} from 'react';
 
 import {
@@ -87,8 +86,8 @@ const ColumnWithControls = React.forwardRef(
 				{parentItemIsActive && !columnInfo.isLastColumn ? (
 					<div>
 						{children}
-						<ClayButton
-							className="page-editor__col__resizer"
+						<button
+							className="btn-primary page-editor__col__resizer"
 							onMouseDown={onResizeButtonMouseDown}
 						/>
 					</div>

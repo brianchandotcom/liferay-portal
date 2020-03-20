@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ac.csv.data.generator.configuration;
+package com.liferay.analytics.demo.data.creator.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 

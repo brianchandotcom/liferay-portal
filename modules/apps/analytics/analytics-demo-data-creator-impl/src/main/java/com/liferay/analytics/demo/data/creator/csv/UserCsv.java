@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ac.csv.data.generator.csv;
+package com.liferay.analytics.demo.data.creator.csv;
 
 import com.liferay.ac.csv.data.generator.util.GeneratedDataUtil;
 import com.liferay.petra.string.StringPool;

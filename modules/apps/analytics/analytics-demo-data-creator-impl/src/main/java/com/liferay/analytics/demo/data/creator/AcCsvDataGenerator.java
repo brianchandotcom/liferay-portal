@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ac.csv.data.generator;
+package com.liferay.analytics.demo.data.creator;
 
 import com.liferay.ac.csv.data.generator.configuration.AcCsvDataGeneratorConfiguration;
 import com.liferay.ac.csv.data.generator.csv.UserCsv;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ac.csv.data.generator.util;
+package com.liferay.analytics.demo.data.creator.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;

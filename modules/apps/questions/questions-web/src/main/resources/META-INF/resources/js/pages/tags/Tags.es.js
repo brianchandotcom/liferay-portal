@@ -18,8 +18,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import {getTags} from '../../utils/client.es';
 import Link from '../../components/Link.es';
+import {getTags} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {dateToInternationalHuman} from '../../utils/utils.es';
 

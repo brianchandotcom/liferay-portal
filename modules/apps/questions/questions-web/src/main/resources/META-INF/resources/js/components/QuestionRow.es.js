@@ -14,10 +14,7 @@
 
 import React from 'react';
 
-import {
-	dateToInternationalHuman,
-	normalizeRating,
-} from '../utils/utils.es';
+import {dateToInternationalHuman, normalizeRating} from '../utils/utils.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 import Link from './Link.es';
 import QuestionBadge from './QuestionsBadge.es';

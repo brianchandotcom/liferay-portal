@@ -23,7 +23,11 @@ import {AppContext} from '../AppContext.es';
 import Link from '../components/Link.es';
 import SectionSubscription from '../components/SectionSubscription.es';
 import useSection from '../hooks/useSection.es';
-import {slugToText, historyPushWithSlug, useDebounceCallback} from '../utils/utils.es';
+import {
+	historyPushWithSlug,
+	slugToText,
+	useDebounceCallback,
+} from '../utils/utils.es';
 
 function getFilterOptions() {
 	return [
@@ -128,9 +132,7 @@ export default withRouter(
 							<ClayDropDown.Group>
 								{getParentSubSections().map((item, i) => (
 									<ClayDropDown.Item href={item.href} key={i}>
-										<Link
-											to={'/questions/' + item.title}
-										>
+										<Link to={'/questions/' + item.title}>
 											{item.title}
 										</Link>
 									</ClayDropDown.Item>

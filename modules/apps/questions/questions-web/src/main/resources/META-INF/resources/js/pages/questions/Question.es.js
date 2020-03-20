@@ -42,7 +42,7 @@ import lang from '../../utils/lang.es';
 import {
 	dateToBriefInternationalHuman,
 	getCKEditorConfig,
-	onBeforeLoadCKEditor
+	onBeforeLoadCKEditor,
 } from '../../utils/utils.es';
 
 export default withRouter(
@@ -182,9 +182,7 @@ export default withRouter(
 							<div className="col-md-10">
 								<div className="align-items-end flex-column-reverse flex-md-row row">
 									<div className="c-mt-4 c-mt-md-0 col-md-9">
-										<Link
-											to={`/questions/${sectionTitle}`}
-										>
+										<Link to={`/questions/${sectionTitle}`}>
 											<SectionLabel
 												section={
 													question.messageBoardSection

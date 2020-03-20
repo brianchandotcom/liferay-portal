@@ -26,8 +26,8 @@ import useSection from '../../hooks/useSection.es';
 import {createQuestion} from '../../utils/client.es';
 import {
 	getCKEditorConfig,
-	onBeforeLoadCKEditor,
 	historyPushWithSlug,
+	onBeforeLoadCKEditor,
 	useDebounceCallback,
 } from '../../utils/utils.es';
 

@@ -64,12 +64,20 @@ public class WorkflowHandlerRegistryUtil {
 		return _getWorkflowHandlers(_workflowHandlerServiceTrackerMap);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), in favor of {@link Registry#registerService(String, Object, Map)}
+	 */
+	@Deprecated
 	public static void register(List<WorkflowHandler<?>> workflowHandlers) {
 		for (WorkflowHandler<?> workflowHandler : workflowHandlers) {
 			register(workflowHandler);
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), in favor of {@link Registry#registerService(String, Object, Map)}
+	 */
+	@Deprecated
 	public static void register(WorkflowHandler<?> workflowHandler) {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -233,12 +241,20 @@ public class WorkflowHandlerRegistryUtil {
 			classPK, model, serviceContext, workflowContext);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), use {@link ServiceRegistration#unregister()}
+	 */
+	@Deprecated
 	public static void unregister(List<WorkflowHandler<?>> workflowHandlers) {
 		for (WorkflowHandler<?> workflowHandler : workflowHandlers) {
 			unregister(workflowHandler);
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), use {@link ServiceRegistration#unregister()}
+	 */
+	@Deprecated
 	public static void unregister(WorkflowHandler<?> workflowHandler) {
 		ServiceRegistration<WorkflowHandler<?>> serviceRegistration =
 			_serviceRegistrations.remove(workflowHandler);

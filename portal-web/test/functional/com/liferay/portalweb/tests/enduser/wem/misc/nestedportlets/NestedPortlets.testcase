@@ -24,25 +24,23 @@ definition {
 	test ViewWCDNestedPortlets {
 		property testray.component.names = "Training";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Nested Portlets Page");
 
-		SitePages.addPublicPage(pageName = "Nested Portlets Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Nested Portlets Page",
+			widgetName = "Web Content Display");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Nested Portlets Page",
+			widgetName = "Nested Applications");
 
 		Navigator.gotoPage(pageName = "Nested Portlets Page");
-
-		Portlet.addPG(portletName = "Web Content Display");
-
-		Portlet.dragAndDropPortletToColumnPG(
-			columnNumberFrom = "1",
-			columnNumberTo = "2",
-			portletName = "Web Content Display");
-
-		Navigator.gotoPage(pageName = "Nested Portlets Page");
-
-		Portlet.addPG(portletName = "Nested Applications");
 
 		NestedPortlets.viewConfigurationDefaultLayoutTemplate(
 			defaultColumnName = "2 Columns (50/50)",

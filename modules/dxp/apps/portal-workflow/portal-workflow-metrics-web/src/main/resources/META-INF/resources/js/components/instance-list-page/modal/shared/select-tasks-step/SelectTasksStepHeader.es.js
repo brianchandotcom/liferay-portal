@@ -16,12 +16,13 @@ import React, {useCallback, useContext, useEffect, useMemo} from 'react';
 import ResultsBar from '../../../../../shared/components/results-bar/ResultsBar.es';
 import ToolbarWithSelection from '../../../../../shared/components/toolbar-with-selection/ToolbarWithSelection.es';
 import {useFilter} from '../../../../../shared/hooks/useFilter.es';
+import {AppContext} from '../../../../AppContext.es';
 import AssigneeFilter from '../../../../filter/AssigneeFilter.es';
 import ProcessStepFilter from '../../../../filter/ProcessStepFilter.es';
-import {InstanceListContext} from '../../../InstanceListPageProvider.es';
 import {ModalContext} from '../../ModalProvider.es';
 
-const Header = ({items = [], totalCount}) => {
+const Header = ({items = [], totalCount, withoutUnassigned}) => {
+	const {userId, userName} = useContext(AppContext);
 	const filterKeys = ['processStep', 'assignee'];
 	const prefixKey = 'bulk';
 	const prefixKeys = [prefixKey];
@@ -31,17 +32,12 @@ const Header = ({items = [], totalCount}) => {
 		selectTasks: {selectAll, tasks},
 		setSelectTasks,
 	} = useContext(ModalContext);
-	const {selectedItems} = useContext(InstanceListContext);
 
 	const {prefixedKeys, selectedFilters} = useFilter({
 		filterKeys,
 		prefixKeys,
 		withoutRouteParams: true,
 	});
-
-	const instanceIds = useMemo(() => selectedItems.map(({id}) => id), [
-		selectedItems,
-	]);
 
 	const selectedOnPage = useMemo(
 		() => tasks.filter(item => items.find(({id}) => id === item.id)),
@@ -132,13 +128,14 @@ const Header = ({items = [], totalCount}) => {
 							prefixKey={prefixKey}
 							processId={processId}
 						/>
-
-						<AssigneeFilter
-							instanceIds={instanceIds}
-							options={{withoutRouteParams: true}}
-							prefixKey={prefixKey}
-							processId={processId}
-						/>
+						{!withoutUnassigned && (
+							<AssigneeFilter
+								options={{withoutRouteParams: true}}
+								prefixKey={prefixKey}
+								processId={processId}
+								staticData={[{id: userId, name: userName}]}
+							/>
+						)}
 					</>
 				)}
 			</ToolbarWithSelection>

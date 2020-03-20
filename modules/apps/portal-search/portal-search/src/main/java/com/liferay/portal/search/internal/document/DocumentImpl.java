@@ -182,6 +182,11 @@ public class DocumentImpl implements Document {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return _fields.toString();
+	}
+
 	public void unsetField(String name) {
 		removeField(name);
 	}

@@ -80,14 +80,8 @@
 			tofile="build/release_info/ReleaseInfo.java.original"
 		/>
 
-		<copy
-			file="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
-			overwrite="true"
-			tofile="build/temp/ReleaseInfo.java.new"
-		/>
-
 		<replace
-			file="build/temp/ReleaseInfo.java.new"
+			file="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
 		>
 			<replacefilter
 				token="@release.info.build@"
@@ -110,22 +104,5 @@
 				value="${release.info.version.display.name}"
 			/>
 		</replace>
-
-		<condition else="false" property="release.info.uptodate" value="true">
-			<filesmatch file1="build/temp/ReleaseInfo.java.old" file2="build/temp/ReleaseInfo.java.new" />
-		</condition>
-
-		<copy
-			file="build/temp/ReleaseInfo.java.new"
-			overwrite="true"
-			tofile="build/temp/ReleaseInfo.java.old"
-		/>
-
-		<copy
-			file="build/temp/ReleaseInfo.java.new"
-			overwrite="true"
-			tofile="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
-			verbose="true"
-		/>
 	</target>
 </project>

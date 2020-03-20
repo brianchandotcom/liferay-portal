@@ -40,8 +40,6 @@ class FieldBase extends Component {
 		const {delegateTarget} = event;
 		const {fieldName} = delegateTarget.dataset;
 
-		event.stopPropagation();
-
 		this.dispatch('fieldClicked', {
 			fieldName,
 			originalEvent: event,

@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
 import React, {useCallback, useEffect, useState} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 import {
 	deleteMessage,
@@ -24,6 +24,7 @@ import {
 } from '../utils/client.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 import Comments from './Comments.es';
+import Link from './Link.es';
 import Rating from './Rating.es';
 import UserRow from './UserRow.es';
 

@@ -17,12 +17,13 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React, {useContext, useEffect, useState} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
+import Link from '../components/Link.es';
 import SectionSubscription from '../components/SectionSubscription.es';
 import useSection from '../hooks/useSection.es';
-import {slugToText, historyPushWithSlug,stringToSlug, useDebounceCallback} from '../utils/utils.es';
+import {slugToText, historyPushWithSlug, useDebounceCallback} from '../utils/utils.es';
 
 function getFilterOptions() {
 	return [
@@ -115,8 +116,8 @@ export default withRouter(
 						<Link
 							to={`/questions/${(section &&
 								section.parentSection &&
-								slugToText(section.parentSection.title)) ||
-								slugToText(sectionTitle)}`}
+								section.parentSection.title) ||
+								sectionTitle}`}
 						>
 							<ClayDropDown.Help>
 								{Liferay.Language.get('all')}
@@ -128,10 +129,7 @@ export default withRouter(
 								{getParentSubSections().map((item, i) => (
 									<ClayDropDown.Item href={item.href} key={i}>
 										<Link
-											to={
-												'/questions/' +
-												stringToSlug(item.title)
-											}
+											to={'/questions/' + item.title}
 										>
 											{item.title}
 										</Link>

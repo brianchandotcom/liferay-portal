@@ -14,9 +14,9 @@
 
 import ClayLabel from '@clayui/label';
 import React from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
-import {stringToSlug} from '../utils/utils.es';
+import Link from '../components/Link.es';
 
 export default withRouter(({tags = [], match: {params: {sectionTitle}}}) => (
 	<ul className="c-mb-0 d-flex flex-wrap list-unstyled stretched-link-layer">
@@ -26,9 +26,9 @@ export default withRouter(({tags = [], match: {params: {sectionTitle}}}) => (
 					<Link
 						className="questions-disabled-link"
 						key={tag.taxonomyCategoryId}
-						to={`/questions/${stringToSlug(
+						to={`/questions/${
 							sectionTitle ? sectionTitle + '/' : ''
-						)}tag/${tag.taxonomyCategoryId}`}
+						}tag/${tag.taxonomyCategoryId}`}
 					>
 						{tag.taxonomyCategoryName}
 					</Link>

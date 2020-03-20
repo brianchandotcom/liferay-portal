@@ -20,12 +20,13 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import Answer from '../../components/Answer.es';
 import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
 import CreatorRow from '../../components/CreatorRow.es';
+import Link from '../../components/Link.es';
 import Rating from '../../components/Rating.es';
 import RelatedQuestions from '../../components/RelatedQuestions.es';
 import SectionLabel from '../../components/SectionLabel.es';
@@ -41,8 +42,7 @@ import lang from '../../utils/lang.es';
 import {
 	dateToBriefInternationalHuman,
 	getCKEditorConfig,
-	onBeforeLoadCKEditor,
-	stringToSlug,
+	onBeforeLoadCKEditor
 } from '../../utils/utils.es';
 
 export default withRouter(
@@ -183,9 +183,7 @@ export default withRouter(
 								<div className="align-items-end flex-column-reverse flex-md-row row">
 									<div className="c-mt-4 c-mt-md-0 col-md-9">
 										<Link
-											to={`/questions/${stringToSlug(
-												sectionTitle
-											)}`}
+											to={`/questions/${sectionTitle}`}
 										>
 											<SectionLabel
 												section={

@@ -17,16 +17,16 @@ import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useContext, useEffect, useState} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
+import Link from '../../components/Link.es';
 import TagSelector from '../../components/TagSelector.es';
 import useSection from '../../hooks/useSection.es';
 import {createQuestion} from '../../utils/client.es';
 import {
 	getCKEditorConfig,
 	onBeforeLoadCKEditor,
-	stringToSlug,
 	historyPushWithSlug,
 	useDebounceCallback,
 } from '../../utils/utils.es';
@@ -188,9 +188,7 @@ export default withRouter(
 
 								<Link
 									className="btn btn-secondary c-ml-sm-3"
-									to={`/questions/${stringToSlug(
-										sectionTitle
-									)}`}
+									to={`/questions/${sectionTitle}`}
 								>
 									{Liferay.Language.get('cancel')}
 								</Link>

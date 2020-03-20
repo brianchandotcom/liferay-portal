@@ -15,12 +15,13 @@
 import ClayCard, {ClayCardWithNavigation} from '@clayui/card';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import React, {useContext, useEffect, useState} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import {getTags} from '../../utils/client.es';
+import Link from '../../components/Link.es';
 import lang from '../../utils/lang.es';
-import {dateToInternationalHuman, stringToSlug} from '../../utils/utils.es';
+import {dateToInternationalHuman} from '../../utils/utils.es';
 
 export default withRouter(
 	({
@@ -49,9 +50,7 @@ export default withRouter(
 								>
 									<Link
 										className="questions-disabled-link"
-										to={`/questions/${stringToSlug(
-											sectionTitle
-										)}/tag/${tag.taxonomyCategoryId}`}
+										to={`/questions/${sectionTitle}/tag/${tag.taxonomyCategoryId}`}
 									>
 										<ClayCardWithNavigation>
 											<ClayCard.Body>

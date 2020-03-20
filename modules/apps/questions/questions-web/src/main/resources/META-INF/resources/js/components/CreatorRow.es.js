@@ -13,9 +13,10 @@
  */
 
 import React from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
-import {stringToSlug, timeDifference} from '../utils/utils.es';
+import {timeDifference} from '../utils/utils.es';
+import Link from './Link.es';
 import UserIcon from './UserIcon.es';
 import UserPopover from './UserPopover.es';
 
@@ -28,7 +29,7 @@ export default withRouter(
 	}) => (
 		<Link
 			className="align-items-center border-light btn btn-secondary c-ml-md-3 c-mt-3 c-mt-md-0 c-p-3 d-inline-flex justify-content-center position-relative questions-user"
-			to={`/questions/${stringToSlug(sectionTitle)}/creator/${
+			to={`/questions/${sectionTitle}/creator/${
 				creator.id
 			}`}
 		>

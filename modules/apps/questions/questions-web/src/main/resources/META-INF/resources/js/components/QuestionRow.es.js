@@ -13,14 +13,13 @@
  */
 
 import React from 'react';
-import {Link} from 'react-router-dom';
 
 import {
 	dateToInternationalHuman,
 	normalizeRating,
-	stringToSlug,
 } from '../utils/utils.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
+import Link from './Link.es';
 import QuestionBadge from './QuestionsBadge.es';
 import SectionLabel from './SectionLabel.es';
 import TagList from './TagList.es';
@@ -78,9 +77,7 @@ export default ({question}) => {
 
 			<Link
 				className="questions-title stretched-link"
-				to={`/questions/${stringToSlug(sectionTitle)}/${
-					question.friendlyUrlPath
-				}`}
+				to={`/questions/${sectionTitle}/${question.friendlyUrlPath}`}
 			>
 				<h2 className="c-mb-0 stretched-link-layer text-dark">
 					{question.headline}
@@ -94,9 +91,7 @@ export default ({question}) => {
 			<div className="align-items-sm-center align-items-start d-flex flex-column-reverse flex-sm-row justify-content-between">
 				<div className="c-mt-3 c-mt-sm-0 stretched-link-layer">
 					<Link
-						to={`/questions/${stringToSlug(sectionTitle)}/creator/${
-							question.creator.id
-						}`}
+						to={`/questions/${sectionTitle}/creator/${question.creator.id}`}
 					>
 						<UserIcon
 							fullName={question.creator.name}

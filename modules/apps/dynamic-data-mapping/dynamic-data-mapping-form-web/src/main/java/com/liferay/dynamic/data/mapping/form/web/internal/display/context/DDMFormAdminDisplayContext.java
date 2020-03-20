@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -102,6 +103,8 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -280,7 +283,10 @@ public class DDMFormAdminDisplayContext {
 		List<DDMFormFieldType> formFieldTypes =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
 
-		String serializedFormFieldTypes = serialize(formFieldTypes);
+		List<DDMFormFieldType> availableFormFieldTypes =
+			_removeDDMFormFieldTypesOutOfScope(formFieldTypes);
+
+		String serializedFormFieldTypes = serialize(availableFormFieldTypes);
 
 		JSONArray jsonArray = jsonFactory.createJSONArray(
 			serializedFormFieldTypes);
@@ -292,7 +298,7 @@ public class DDMFormAdminDisplayContext {
 			PortalUtil.getHttpServletResponse(renderResponse);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			DDMFormFieldType ddmFormFieldType = formFieldTypes.get(i);
+			DDMFormFieldType ddmFormFieldType = availableFormFieldTypes.get(i);
 
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
@@ -1409,6 +1415,21 @@ public class DDMFormAdminDisplayContext {
 
 		navigationItem.setLabel(
 			LanguageUtil.get(moduleResourceBundle, "data-providers"));
+	}
+
+	private List<DDMFormFieldType> _removeDDMFormFieldTypesOutOfScope(
+		List<DDMFormFieldType> formFieldTypes) {
+
+		List<DDMFormFieldType> availableFormFieldTypes = new ArrayList<>();
+
+		ListUtil.filter(
+			formFieldTypes, availableFormFieldTypes,
+			formFieldType -> !formFieldType.getName(
+			).equals(
+				"geolocation"
+			));
+
+		return Collections.unmodifiableList(availableFormFieldTypes);
 	}
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};

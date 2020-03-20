@@ -101,11 +101,11 @@ const DestinationUrlInput = ({destinationUrl, namespace}) => {
 			</label>
 
 			<ClayInput
+				defaultValue={destinationUrl}
 				id={`${namespace}destinationURL`}
 				name={`${namespace}destinationURL`}
 				onBlur={onInputBlur}
 				type="text"
-				value={destinationUrl}
 			/>
 
 			{validationType && (

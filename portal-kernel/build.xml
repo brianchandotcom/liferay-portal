@@ -16,7 +16,7 @@
 		/>
 	</path>
 
-	<target depends="replace-release-info-tokens" name="compile">
+	<target depends="init-compile,replace-release-info-tokens" name="compile">
 		<if>
 			<istrue value="${build.portal.artifacts.enabled}" />
 			<then>
@@ -42,16 +42,37 @@
 			verbose="true"
 		/>
 
-		<echo file="classes/.releaseinfo"></echo>
+		<echo file="classes/.releaseinfo">${release.properties.files}</echo>
 	</target>
 
 	<target if="${build.portal.artifacts.enabled}" name="init-compile">
+		<fileset
+			dir="${project.dir}"
+			id="release.properties.file.set"
+			includes="release.properties,release.*.properties"
+		/>
+
+		<property name="release.properties.files" refid="release.properties.file.set" />
+
+		<if>
+			<available file="${basedir}/classes/.releaseinfo" />
+			<then>
+				<loadfile
+					property="release.info.content"
+					srcFile="${basedir}/classes/.releaseinfo"
+				/>
+			</then>
+		</if>
+
 		<condition property="release.info.uptodate">
-			<uptodate
-				targetfile="classes/.releaseinfo"
-			>
-				<srcfiles dir="${project.dir}" includes="release.properties,release.*.properties" />
-			</uptodate>
+			<and>
+				<uptodate
+					targetfile="classes/.releaseinfo"
+				>
+					<srcfiles dir="${project.dir}" includes="release.properties,release.*.properties" />
+				</uptodate>
+				<equals arg1="${release.properties.files}" arg2="${release.info.content}" />
+			</and>
 		</condition>
 
 		<condition property="compile.uptodate">

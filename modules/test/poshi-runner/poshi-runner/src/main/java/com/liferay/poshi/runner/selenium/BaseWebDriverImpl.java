@@ -2893,7 +2893,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			return;
 		}
 
-		int maxRetries = 5;
+		int maxRetries = 3;
 		int retryCount = 0;
 
 		while (retryCount < maxRetries) {
@@ -2923,9 +2923,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				System.out.println(
 					message + " Retrying LiferaySelenium.type() attempt #" +
 						(retryCount + 1) + ".");
-			}
-			else {
-				throw new RuntimeException(message);
 			}
 		}
 	}

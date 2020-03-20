@@ -35,9 +35,9 @@ const buildFilterItem = data => {
 	};
 };
 
-const buildFilterItems = ({items, propertyKey, selectedKeys}) => {
+const buildFilterItems = ({items, propertyKey = 'key', selectedKeys}) => {
 	return items.map((item, index) => {
-		const key = item[propertyKey];
+		const key = String(item[propertyKey]);
 
 		return {
 			...item,

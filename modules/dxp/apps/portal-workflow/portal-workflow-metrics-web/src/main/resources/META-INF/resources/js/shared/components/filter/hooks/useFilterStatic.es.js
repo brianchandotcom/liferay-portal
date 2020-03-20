@@ -14,12 +14,13 @@ import {useEffect} from 'react';
 import {buildFilterItems, getCapitalizedFilterKey} from '../util/filterUtil.es';
 import {useFilterState} from './useFilterState.es';
 
-const useFilterStatic = (
+const useFilterStatic = ({
 	filterKey,
 	prefixKey,
+	propertyKey,
+	staticItems,
 	withoutRouteParams,
-	staticItems
-) => {
+}) => {
 	const {items, selectedItems, selectedKeys, setItems} = useFilterState(
 		getCapitalizedFilterKey(prefixKey, filterKey),
 		withoutRouteParams
@@ -28,6 +29,7 @@ const useFilterStatic = (
 	useEffect(() => {
 		const mappedItems = buildFilterItems({
 			items: staticItems,
+			propertyKey,
 			selectedKeys,
 		});
 

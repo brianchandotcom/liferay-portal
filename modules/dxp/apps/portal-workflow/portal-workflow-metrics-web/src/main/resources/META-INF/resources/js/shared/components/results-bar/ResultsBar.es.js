@@ -109,7 +109,7 @@ const FilterItem = ({filter, item, withoutRouteParams}) => {
 
 							<strong>
 								{filter.items[0].key !== 'custom'
-									? item.name
+									? item.label || item.name
 									: item.resultName}
 							</strong>
 						</div>

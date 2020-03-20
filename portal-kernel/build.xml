@@ -41,15 +41,28 @@
 			tofile="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
 			verbose="true"
 		/>
+
+		<echo file="classes/.releaseinfo"></echo>
 	</target>
 
 	<target if="${build.portal.artifacts.enabled}" name="init-compile">
-		<condition property="compile.uptodate">
+		<condition property="release.info.uptodate">
 			<uptodate
-				targetfile="classes/.touch"
+				targetfile="classes/.releaseinfo"
 			>
-				<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+				<srcfiles dir="${project.dir}" includes="release.properties,release.*.properties" />
 			</uptodate>
+		</condition>
+
+		<condition property="compile.uptodate">
+			<and>
+				<uptodate
+					targetfile="classes/.touch"
+				>
+					<srcfiles dir="${basedir}" excludes="src/com/liferay/portal/kernel/util/ReleaseInfo.java" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+				</uptodate>
+				<equals arg1="${release.info.uptodate}" arg2="true" />
+			</and>
 		</condition>
 	</target>
 

@@ -102,11 +102,16 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"instanceId", "instanceId");
 
+		FilterAggregation indexFilterAggregation = _aggregations.filter(
+			"tokensIndex", _queries.term("_index", "workflow-metrics-tokens"));
+
 		TermsAggregation assigneeIdTermsAggregation = _aggregations.terms(
 			"assigneeId", "assigneeId");
 
 		assigneeIdTermsAggregation.setMissing(-1L);
 		assigneeIdTermsAggregation.setSize(10000);
+
+		indexFilterAggregation.addChildAggregation(assigneeIdTermsAggregation);
 
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
 			"onTime", _resourceHelper.createMustNotBooleanQuery());
@@ -133,7 +138,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		taskNameTermsAggregation.setSize(10000);
 
 		termsAggregation.addChildrenAggregations(
-			assigneeIdTermsAggregation, onTimeFilterAggregation,
+			indexFilterAggregation, onTimeFilterAggregation,
 			overdueFilterAggregation, slaDefinitionIdTermsAggregation,
 			taskNameTermsAggregation);
 
@@ -500,9 +505,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private List<AssigneeUser> _getAssigneeUsers(Bucket bucket) {
+		FilterAggregationResult filterAggregationResult =
+			(FilterAggregationResult)bucket.getChildAggregationResult(
+				"tokensIndex");
+
 		TermsAggregationResult termsAggregationResult =
-			(TermsAggregationResult)bucket.getChildAggregationResult(
-				"assigneeId");
+			(TermsAggregationResult)
+				filterAggregationResult.getChildAggregationResult("assigneeId");
 
 		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
 
@@ -543,16 +552,12 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"instanceId", "instanceId");
 
-		TermsAggregation assigneeIdTermsAggregation = _aggregations.terms(
-			"assigneeId", "assigneeId");
+		FilterAggregation instancesIndexFilterAggregation =
+			_aggregations.filter(
+				"instanceIndex",
+				_queries.term("_index", "workflow-metrics-instances"));
 
-		assigneeIdTermsAggregation.setMissing(-1L);
-		assigneeIdTermsAggregation.setSize(10000);
-
-		FilterAggregation indexFilterAggregation = _aggregations.filter(
-			"index", _queries.term("_index", "workflow-metrics-instances"));
-
-		indexFilterAggregation.addChildAggregation(
+		instancesIndexFilterAggregation.addChildAggregation(
 			_aggregations.topHits("topHits"));
 
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
@@ -572,10 +577,22 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		taskNameTermsAggregation.setSize(10000);
 
+		FilterAggregation tokensIndexFilterAggregation = _aggregations.filter(
+			"tokensIndex", _queries.term("_index", "workflow-metrics-tokens"));
+
+		TermsAggregation assigneeIdTermsAggregation = _aggregations.terms(
+			"assigneeId", "assigneeId");
+
+		assigneeIdTermsAggregation.setMissing(-1L);
+		assigneeIdTermsAggregation.setSize(10000);
+
+		tokensIndexFilterAggregation.addChildAggregation(
+			assigneeIdTermsAggregation);
+
 		termsAggregation.addChildrenAggregations(
-			assigneeIdTermsAggregation, indexFilterAggregation,
-			onTimeFilterAggregation, overdueFilterAggregation,
-			taskNameTermsAggregation, _aggregations.topHits("topHits"),
+			instancesIndexFilterAggregation, onTimeFilterAggregation,
+			overdueFilterAggregation, taskNameTermsAggregation,
+			tokensIndexFilterAggregation, _aggregations.topHits("topHits"),
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
 				ListUtil.fromArray(assigneeUserIds), dateEnd, dateStart,
 				ListUtil.fromArray(slaStatuses), ListUtil.fromArray(statuses),
@@ -611,7 +628,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		).map(
 			bucket -> Stream.of(
 				(FilterAggregationResult)bucket.getChildAggregationResult(
-					"index")
+					"instanceIndex")
 			).map(
 				filterAggregationResult ->
 					(TopHitsAggregationResult)

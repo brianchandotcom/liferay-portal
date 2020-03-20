@@ -24,10 +24,12 @@ import com.liferay.talend.common.schema.SchemaBuilder;
 import com.liferay.talend.common.schema.constants.BatchSchemaConstants;
 import com.liferay.talend.internal.oas.LiferayOASSource;
 import com.liferay.talend.properties.resource.LiferayResourceProperties;
+import com.liferay.talend.tliferaybatchfile.TLiferayBatchFileDefinition;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.SortedMap;
@@ -39,6 +41,7 @@ import org.apache.avro.Schema;
 
 import org.talend.components.api.component.Connector;
 import org.talend.components.api.component.PropertyPathConnector;
+import org.talend.components.api.properties.ComponentReferenceProperties;
 import org.talend.components.common.FixedConnectorsComponentProperties;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.presentation.Form;
@@ -79,11 +82,11 @@ public class LiferayBatchFileProperties
 			schemaBuilder.getEntitySchema(
 				_getEntityName(), _getOASJsonObject()));
 
-		OASExplorer oasExplorer = new OASExplorer();
+		return ValidationResult.OK;
+	}
 
-		entityVersion.setValue(oasExplorer.getVersion(_getOASJsonObject()));
-
-		return null;
+	public void afterLiferayBatchFileReferenceProperties() {
+		refreshLayout(getForm(Form.REFERENCE));
 	}
 
 	public ValidationResult beforeEntity() {
@@ -115,6 +118,17 @@ public class LiferayBatchFileProperties
 		return batchFilePath.getStringValue();
 	}
 
+	public LiferayBatchFileProperties getEffectiveLiferayBatchFileProperties() {
+		LiferayBatchFileProperties liferayBatchFileProperties =
+			liferayBatchFileReferenceProperties.getReference();
+
+		if (liferayBatchFileProperties != null) {
+			return liferayBatchFileProperties;
+		}
+
+		return this;
+	}
+
 	public String getEntityClassName() {
 		return entity.getValue();
 	}
@@ -123,46 +137,65 @@ public class LiferayBatchFileProperties
 		return resource.getInboundSchema();
 	}
 
-	public String getEntityVersion() {
-		return entityVersion.getValue();
+	public boolean isLiferayBatchFileReferenceProperties() {
+		Property<String> componentInstanceIdProperty =
+			liferayBatchFileReferenceProperties.componentInstanceId;
+
+		String componentInstanceId =
+			componentInstanceIdProperty.getStringValue();
+
+		if ((componentInstanceId != null) &&
+			componentInstanceId.startsWith(
+				TLiferayBatchFileDefinition.COMPONENT_NAME)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public void refreshLayout(Form form) {
+		super.refreshLayout(form);
+
+		if (!Objects.equals(form.getName(), Form.REFERENCE)) {
+			return;
+		}
+
+		if (!isLiferayBatchFileReferenceProperties()) {
+			form.setHidden(false);
+
+			return;
+		}
+
+		form.setHidden(true);
+
+		Widget widget = form.getWidget(
+			liferayBatchFileReferenceProperties.getName());
+
+		widget.setVisible();
 	}
 
 	@Override
 	public void setupLayout() {
-		Form mainForm = new Form(this, Form.MAIN);
+		_setupLayout(new Form(this, Form.MAIN));
 
-		mainForm.addRow(resource.connection.getForm(Form.REFERENCE));
-		mainForm.addRow(resource.getForm("EndpointInfo"));
-
-		Widget entitySelectWidget = Widget.widget(entity);
-
-		entitySelectWidget.setCallAfter(true);
-		entitySelectWidget.setLongRunning(true);
-		entitySelectWidget.setWidgetType(
-			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
-
-		mainForm.addRow(entitySelectWidget);
-
-		mainForm.addColumn(entityVersion);
-
-		Widget bulkFilePathWidget = widget(batchFilePath);
-
-		bulkFilePathWidget.setWidgetType(Widget.FILE_WIDGET_TYPE);
-
-		mainForm.addRow(bulkFilePathWidget);
+		_setupLayout(new Form(this, Form.REFERENCE));
 	}
 
 	@Override
 	public void setupProperties() {
-		super.setupProperties();
-
 		resource.setOutboundSchema(BatchSchemaConstants.SCHEMA);
 	}
 
 	public Property<String> batchFilePath = PropertyFactory.newProperty(
 		"batchFilePath");
 	public StringProperty entity = new StringProperty("entity");
-	public StringProperty entityVersion = new StringProperty("entityVersion");
+	public ComponentReferenceProperties<LiferayBatchFileProperties>
+		liferayBatchFileReferenceProperties =
+			new ComponentReferenceProperties<>(
+				"liferayBatchFileReferenceProperties",
+				TLiferayBatchFileDefinition.COMPONENT_NAME);
 	public LiferayResourceProperties resource = new LiferayResourceProperties(
 		"resource");
 
@@ -228,6 +261,36 @@ public class LiferayBatchFileProperties
 		}
 
 		return Collections.unmodifiableSortedMap(entityClassNames);
+	}
+
+	private void _setupLayout(Form form) {
+		if (Objects.equals(form.getName(), Form.REFERENCE)) {
+			Widget referencedComponentWidget = Widget.widget(
+				liferayBatchFileReferenceProperties);
+
+			referencedComponentWidget.setWidgetType(
+				Widget.COMPONENT_REFERENCE_WIDGET_TYPE);
+
+			form.addRow(referencedComponentWidget);
+		}
+
+		form.addRow(resource.connection.getForm(Form.REFERENCE));
+		form.addRow(resource.getForm("EndpointInfo"));
+
+		Widget entitySelectWidget = Widget.widget(entity);
+
+		entitySelectWidget.setCallAfter(true);
+		entitySelectWidget.setLongRunning(true);
+		entitySelectWidget.setWidgetType(
+			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
+
+		form.addRow(entitySelectWidget);
+
+		Widget bulkFilePathWidget = widget(batchFilePath);
+
+		bulkFilePathWidget.setWidgetType(Widget.FILE_WIDGET_TYPE);
+
+		form.addRow(bulkFilePathWidget);
 	}
 
 	private transient OASExplorer _oasExplorer = new OASExplorer();

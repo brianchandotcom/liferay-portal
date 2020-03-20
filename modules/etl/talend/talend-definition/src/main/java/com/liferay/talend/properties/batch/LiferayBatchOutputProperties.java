@@ -15,8 +15,6 @@
 package com.liferay.talend.properties.batch;
 
 import com.liferay.talend.common.schema.constants.BatchSchemaConstants;
-import com.liferay.talend.properties.connection.LiferayConnectionProperties;
-import com.liferay.talend.tliferaybatchfile.TLiferayBatchFileDefinition;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -26,11 +24,9 @@ import org.apache.avro.Schema;
 
 import org.talend.components.api.component.Connector;
 import org.talend.components.api.component.PropertyPathConnector;
-import org.talend.components.api.properties.ComponentReferenceProperties;
 import org.talend.components.common.FixedConnectorsComponentProperties;
 import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.properties.presentation.Form;
-import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
 
 /**
@@ -43,21 +39,18 @@ public class LiferayBatchOutputProperties
 		super(name);
 	}
 
+	public LiferayBatchFileProperties getEffectiveLiferayBatchFileProperties() {
+		return liferayBatchFileProperties.
+			getEffectiveLiferayBatchFileProperties();
+	}
+
 	@Override
 	public void setupLayout() {
 		Form mainForm = new Form(this, Form.MAIN);
 
-		mainForm.addRow(connection.getForm(Form.REFERENCE));
 		mainForm.addRow(
 			batchDefinitionSchemaProperties.getForm(Form.REFERENCE));
-
-		Widget batchFilePropertiesWidget = Widget.widget(
-			batchFilePropertiesComponentReferenceProperties);
-
-		batchFilePropertiesWidget.setWidgetType(
-			Widget.COMPONENT_REFERENCE_WIDGET_TYPE);
-
-		mainForm.addRow(batchFilePropertiesWidget);
+		mainForm.addRow(liferayBatchFileProperties.getForm(Form.REFERENCE));
 	}
 
 	@Override
@@ -76,15 +69,10 @@ public class LiferayBatchOutputProperties
 
 	public SchemaProperties batchDefinitionSchemaProperties =
 		new SchemaProperties("batchDefinitionSchemaProperties");
-	public ComponentReferenceProperties<LiferayBatchFileProperties>
-		batchFilePropertiesComponentReferenceProperties =
-			new ComponentReferenceProperties<>(
-				"batchFilePropertiesComponentReferenceProperties",
-				TLiferayBatchFileDefinition.COMPONENT_NAME);
-	public LiferayConnectionProperties connection =
-		new LiferayConnectionProperties("connection");
 	public SchemaProperties flowSchemaProperties = new SchemaProperties(
 		"flowSchemaProperties");
+	public LiferayBatchFileProperties liferayBatchFileProperties =
+		new LiferayBatchFileProperties("liferayBatchFileProperties");
 	public SchemaProperties rejectSchemaProperties = new SchemaProperties(
 		"rejectSchemaProperties");
 

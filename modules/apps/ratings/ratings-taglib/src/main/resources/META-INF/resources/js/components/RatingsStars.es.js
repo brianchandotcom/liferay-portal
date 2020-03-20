@@ -12,8 +12,9 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
 const STAR_SCORES = [1, 2, 3, 4, 5];
@@ -27,12 +28,12 @@ const RatingsStars = () => {
 			active={isDropdownOpen}
 			onActiveChange={isActive => setIsDropdownOpen(isActive)}
 			trigger={
-				<ClayButtonWithIcon
-					borderless
-					displayType="secondary"
-					small
-					symbol="star-o"
-				/>
+				<ClayButton borderless displayType="secondary" small>
+					<span className="inline-item inline-item-before">
+						<ClayIcon symbol={score ? 'star' : 'star-o'} />
+					</span>
+					{score || '-'}
+				</ClayButton>
 			}
 		>
 			<ClayDropDown.ItemList>

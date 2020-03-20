@@ -79,8 +79,8 @@ definition {
 				elasticsearchTasks = JSONCurlUtil.get("${curl}");
 			}
 
-			if ("${reindexStartTime}" == "10") {
-				echo("Elasticsearch failed to receive reindex request after 10 seconds.");
+			if ("${reindexStartTime}" == "60") {
+				echo("Elasticsearch failed to receive reindex request after 60 seconds.");
 			}
 			else {
 				echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");

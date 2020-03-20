@@ -18,8 +18,8 @@ import {MockRouter} from '../../mock/MockRouter.es';
 const query = '?filters.taskKeys%5B0%5D=update';
 
 const items = [
-	{key: 'review', name: 'Review'},
-	{key: 'update', name: 'Update'},
+	{label: 'Review', name: 'review'},
+	{label: 'Update', name: 'update'},
 ];
 
 const clientMock = {

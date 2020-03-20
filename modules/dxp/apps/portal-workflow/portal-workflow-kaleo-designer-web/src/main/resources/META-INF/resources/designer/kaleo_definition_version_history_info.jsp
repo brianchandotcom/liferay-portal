@@ -25,4 +25,4 @@ String userName = kaleoDesignerDisplayContext.getUserNameOrBlank(kaleoDefinition
 %>
 
 <div class="list-group-title"><%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %></div>
-<div class="list-group-subtitle"><%= userName %></div>
+<div class="list-group-subtitle"><%= HtmlUtil.escape(userName) %></div>

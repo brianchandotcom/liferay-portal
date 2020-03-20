@@ -16,11 +16,12 @@ package com.liferay.blogs.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -28,11 +29,14 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
-import com.liferay.portal.search.test.util.IndexerFixture;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.users.admin.test.util.search.UserSearchFixture;
+import com.liferay.users.admin.test.util.search.GroupBlueprint;
+import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +44,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -62,13 +67,22 @@ public class BlogsEntryMultiLanguageSearchTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpUserSearchFixture();
+		Assert.assertEquals(
+			MODEL_INDEXER_CLASS.getName(), indexer.getClassName());
 
-		setUpBlogsEntryFixture();
+		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
-		setUpBlogsEntryIndexerFixture();
+		Group group = groupSearchFixture.addGroup(new GroupBlueprint());
+
+		BlogsEntryFixture blogsEntryFixture = new BlogsEntryFixture(
+			blogsEntryLocalService, group);
+
+		_blogsEntries = blogsEntryFixture.getBlogsEntries();
+		_blogsEntryFixture = blogsEntryFixture;
 
 		_defaultLocale = LocaleThreadLocal.getDefaultLocale();
+		_group = group;
+		_groups = groupSearchFixture.getGroups();
 	}
 
 	@After
@@ -95,43 +109,44 @@ public class BlogsEntryMultiLanguageSearchTest {
 		String prefix, Locale locale, Map<String, String> map,
 		String searchTerm) {
 
-		Document document = blogsEntryIndexerFixture.searchOnlyOne(
-			searchTerm, locale);
-
-		FieldValuesAssert.assertFieldValues(map, prefix, document, searchTerm);
+		FieldValuesAssert.assertFieldValues(
+			map, name -> name.startsWith(prefix),
+			searcher.search(
+				searchRequestBuilderFactory.builder(
+				).companyId(
+					_group.getCompanyId()
+				).fields(
+					StringPool.STAR
+				).groupIds(
+					_group.getGroupId()
+				).locale(
+					locale
+				).modelIndexerClasses(
+					MODEL_INDEXER_CLASS
+				).queryString(
+					searchTerm
+				).build()));
 	}
 
 	protected void setTestLocale(Locale locale) throws Exception {
-		blogsEntryFixture.updateDisplaySettings(locale);
+		_blogsEntryFixture.updateDisplaySettings(locale);
 
 		LocaleThreadLocal.setDefaultLocale(locale);
 	}
 
-	protected void setUpBlogsEntryFixture() {
-		blogsEntryFixture = new BlogsEntryFixture(_group);
+	protected static final Class<?> MODEL_INDEXER_CLASS = BlogsEntry.class;
 
-		_blogsEntries = blogsEntryFixture.getBlogsEntries();
-	}
+	@Inject
+	protected BlogsEntryLocalService blogsEntryLocalService;
 
-	protected void setUpBlogsEntryIndexerFixture() {
-		blogsEntryIndexerFixture = new IndexerFixture<>(BlogsEntry.class);
-	}
+	@Inject(filter = "indexer.class.name=com.liferay.blogs.model.BlogsEntry")
+	protected Indexer<BlogsEntry> indexer;
 
-	protected void setUpUserSearchFixture() throws Exception {
-		userSearchFixture = new UserSearchFixture();
+	@Inject
+	protected Searcher searcher;
 
-		userSearchFixture.setUp();
-
-		_group = userSearchFixture.addGroup();
-
-		_groups = userSearchFixture.getGroups();
-
-		_users = userSearchFixture.getUsers();
-	}
-
-	protected BlogsEntryFixture blogsEntryFixture;
-	protected IndexerFixture<BlogsEntry> blogsEntryIndexerFixture;
-	protected UserSearchFixture userSearchFixture;
+	@Inject
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 	private Map<String, String> _getMapResult(BlogsEntry blogsEntry) {
 		String title = blogsEntry.getTitle();
@@ -160,7 +175,7 @@ public class BlogsEntryMultiLanguageSearchTest {
 
 		setTestLocale(locale);
 
-		BlogsEntry blogsEntry = blogsEntryFixture.createBlogsEntry(keywords);
+		BlogsEntry blogsEntry = _blogsEntryFixture.createBlogsEntry(keywords);
 
 		assertFieldValues(
 			Field.TITLE, locale, _getMapResult(blogsEntry), keywords);
@@ -169,13 +184,11 @@ public class BlogsEntryMultiLanguageSearchTest {
 	@DeleteAfterTestRun
 	private List<BlogsEntry> _blogsEntries;
 
+	private BlogsEntryFixture _blogsEntryFixture;
 	private Locale _defaultLocale;
 	private Group _group;
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
-
-	@DeleteAfterTestRun
-	private List<User> _users;
 
 }

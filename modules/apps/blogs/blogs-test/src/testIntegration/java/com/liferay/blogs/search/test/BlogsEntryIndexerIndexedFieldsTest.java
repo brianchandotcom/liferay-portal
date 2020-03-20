@@ -16,11 +16,12 @@ package com.liferay.blogs.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -30,18 +31,21 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
-import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.users.admin.test.util.search.UserSearchFixture;
+import com.liferay.users.admin.test.util.search.GroupBlueprint;
+import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -64,13 +68,25 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUpUserSearchFixture();
+		Assert.assertEquals(
+			MODEL_INDEXER_CLASS.getName(), indexer.getClassName());
 
-		_setUpBlogsEntryFixture();
+		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
-		_setUpBlogsEntryIndexerFixture();
+		Group group = groupSearchFixture.addGroup(new GroupBlueprint());
 
-		_setUpIndexedFieldsFixture();
+		BlogsEntryFixture blogsEntryFixture = new BlogsEntryFixture(
+			blogsEntryLocalService, group);
+
+		_blogsEntries = blogsEntryFixture.getBlogsEntries();
+		_blogsEntryFixture = blogsEntryFixture;
+
+		_group = group;
+
+		_groups = groupSearchFixture.getGroups();
+
+		_indexedFieldsFixture = new IndexedFieldsFixture(
+			resourcePermissionLocalService, searchEngineHelper);
 	}
 
 	@Test
@@ -81,22 +97,42 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 
 		String title = "新規作成";
 
-		blogsEntryFixture.updateDisplaySettings(locale);
+		_blogsEntryFixture.updateDisplaySettings(locale);
 
-		BlogsEntry blogsEntry = blogsEntryFixture.createBlogsEntry(title);
+		BlogsEntry blogsEntry = _blogsEntryFixture.createBlogsEntry(title);
 
-		Document document = blogsEntryIndexerFixture.searchOnlyOne(
-			searchTerm, locale);
-
-		indexedFieldsFixture.postProcessDocument(document);
-
-		FieldValuesAssert.assertFieldValues(
-			_expectedFieldValues(blogsEntry), document, searchTerm);
+		assertFieldValues(_expectedFieldValues(blogsEntry), searchTerm, locale);
 	}
 
-	protected BlogsEntryFixture blogsEntryFixture;
-	protected IndexerFixture<BlogsEntry> blogsEntryIndexerFixture;
-	protected IndexedFieldsFixture indexedFieldsFixture;
+	protected void assertFieldValues(
+		Map<String, ?> map, String searchTerm, Locale locale) {
+
+		FieldValuesAssert.assertFieldValues(
+			map, name -> !name.equals("score"),
+			searcher.search(
+				searchRequestBuilderFactory.builder(
+				).companyId(
+					_group.getCompanyId()
+				).fields(
+					StringPool.STAR
+				).groupIds(
+					_group.getGroupId()
+				).locale(
+					locale
+				).modelIndexerClasses(
+					MODEL_INDEXER_CLASS
+				).queryString(
+					searchTerm
+				).build()));
+	}
+
+	protected static final Class<?> MODEL_INDEXER_CLASS = BlogsEntry.class;
+
+	@Inject
+	protected BlogsEntryLocalService blogsEntryLocalService;
+
+	@Inject(filter = "indexer.class.name=com.liferay.blogs.model.BlogsEntry")
+	protected Indexer<BlogsEntry> indexer;
 
 	@Inject
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
@@ -104,7 +140,11 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 	@Inject
 	protected SearchEngineHelper searchEngineHelper;
 
-	protected UserSearchFixture userSearchFixture;
+	@Inject
+	protected Searcher searcher;
+
+	@Inject
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 	private Map<String, String> _expectedFieldValues(BlogsEntry blogsEntry)
 		throws Exception {
@@ -143,10 +183,10 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 			"visible", "true"
 		).build();
 
-		indexedFieldsFixture.populateUID(
+		_indexedFieldsFixture.populateUID(
 			BlogsEntry.class.getName(), blogsEntry.getEntryId(), map);
-		indexedFieldsFixture.populatePriority("0.0", map);
-		indexedFieldsFixture.populateViewCount(
+		_indexedFieldsFixture.populatePriority("0.0", map);
+		_indexedFieldsFixture.populateViewCount(
 			BlogsEntry.class, blogsEntry.getEntryId(), map);
 
 		_populateContent(blogsEntry, map);
@@ -172,21 +212,21 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 	private void _populateDates(
 		BlogsEntry blogsEntry, Map<String, String> map) {
 
-		indexedFieldsFixture.populateDate(
+		_indexedFieldsFixture.populateDate(
 			Field.CREATE_DATE, blogsEntry.getCreateDate(), map);
-		indexedFieldsFixture.populateDate(
+		_indexedFieldsFixture.populateDate(
 			Field.DISPLAY_DATE, blogsEntry.getDisplayDate(), map);
-		indexedFieldsFixture.populateDate(
+		_indexedFieldsFixture.populateDate(
 			Field.MODIFIED_DATE, blogsEntry.getModifiedDate(), map);
-		indexedFieldsFixture.populateDate(
+		_indexedFieldsFixture.populateDate(
 			Field.PUBLISH_DATE, blogsEntry.getDisplayDate(), map);
-		indexedFieldsFixture.populateExpirationDateWithForever(map);
+		_indexedFieldsFixture.populateExpirationDateWithForever(map);
 	}
 
 	private void _populateRoles(BlogsEntry blogsEntry, Map<String, String> map)
 		throws Exception {
 
-		indexedFieldsFixture.populateRoleIdFields(
+		_indexedFieldsFixture.populateRoleIdFields(
 			blogsEntry.getCompanyId(), BlogsEntry.class.getName(),
 			blogsEntry.getEntryId(), blogsEntry.getGroupId(), null, map);
 	}
@@ -209,42 +249,15 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		}
 	}
 
-	private void _setUpBlogsEntryFixture() {
-		blogsEntryFixture = new BlogsEntryFixture(_group);
-
-		_blogsEntries = blogsEntryFixture.getBlogsEntries();
-	}
-
-	private void _setUpBlogsEntryIndexerFixture() {
-		blogsEntryIndexerFixture = new IndexerFixture<>(BlogsEntry.class);
-	}
-
-	private void _setUpIndexedFieldsFixture() {
-		indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper);
-	}
-
-	private void _setUpUserSearchFixture() throws Exception {
-		userSearchFixture = new UserSearchFixture();
-
-		userSearchFixture.setUp();
-
-		_group = userSearchFixture.addGroup();
-
-		_groups = userSearchFixture.getGroups();
-
-		_users = userSearchFixture.getUsers();
-	}
-
 	@DeleteAfterTestRun
 	private List<BlogsEntry> _blogsEntries;
 
+	private BlogsEntryFixture _blogsEntryFixture;
 	private Group _group;
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
 
-	@DeleteAfterTestRun
-	private List<User> _users;
+	private IndexedFieldsFixture _indexedFieldsFixture;
 
 }

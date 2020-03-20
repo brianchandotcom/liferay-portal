@@ -227,6 +227,20 @@ public class PQLEntityFactoryTest extends TestCase {
 	}
 
 	@Test
+	public void testPQLQueryGetPQLResultUnbalancedSyntax() throws Exception {
+		_validateGetPQLResultError(
+			"(portal.smoke == true)( OR false",
+			"Invalid PQL: Unmatched opening boundary '('");
+		_validateGetPQLResultError(
+			"(portal.smoke == true)) OR false",
+			"Invalid PQL: Unexpected closing boundary ')'");
+		_validateGetPQLResultError(
+			"portal.smoke == \"string",
+			"Invalid PQL: Unmatched opening boundary '\"'");
+		_validateGetPQLResult("portal.smoke == \"(string\"", Boolean.FALSE);
+	}
+
+	@Test
 	public void testPQLValueGetPQLResult() throws Exception {
 		_validateGetPQLResult("false", Boolean.FALSE);
 		_validateGetPQLResult("'false'", Boolean.FALSE);

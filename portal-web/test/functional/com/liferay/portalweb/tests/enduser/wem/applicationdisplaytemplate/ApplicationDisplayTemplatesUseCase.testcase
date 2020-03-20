@@ -300,6 +300,7 @@ definition {
 			vocabularyName = "Vocabulary Name 2");
 
 		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
 			groupName = "Test Site Name",
 			layoutName = "ADT Test Page",
 			widgetName = "Categories Navigation");

@@ -184,13 +184,9 @@ export const getMessage = (friendlyUrlPath, siteKey) =>
 	request(gql`
         query {
             messageBoardMessageByFriendlyUrlPath(friendlyUrlPath: ${friendlyUrlPath}, siteKey: ${siteKey}){
-                articleBody 
+                articleBody
                 headline
-                id 
-				taxonomyCategoryBriefs {
-                	taxonomyCategoryId
-					taxonomyCategoryName 
-                } 
+                id
             }
         }`);
 

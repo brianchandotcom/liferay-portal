@@ -1220,6 +1220,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-104629. The header of widget selected can reach the border of the management toolbar."
+	@priority = "4"
+	test ViewHeaderOfWidgetMoveInsideBodyWhenReachTheManagementToolbar {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add My Sites, Documents and Media, Blogs and Asset Publisher widgets to page") {
+			for (var portletName : list "My Sites,Documents and Media,Blogs") {
+				PageEditor.addWidget(portletName = "${portletName}");
+
+				Refresh();
+			}
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("Assert Header of Blogs is shown over body when doesn't reach the management toolbar") {
+			ScrollWebElementIntoView(
+				key_fragmentName = "Blogs",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			Click.clickNoWaitForVisible(
+				key_fragmentName = "Blogs",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertElementNotPresent(
+				key_fragmentName = "Blogs",
+				locator1 = "Fragment#FRAGMENT_HEADER_INSET_STYLE");
+		}
+
+		task ("Assert Header of Blogs moves inside body when reach the management toolbar") {
+			ScrollWebElementIntoView(
+				key_fragmentName = "My Sites",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertElementPresent(
+				key_fragmentName = "Blogs",
+				locator1 = "Fragment#FRAGMENT_HEADER_INSET_STYLE");
+		}
+	}
+
 	@description = "This is a test for LPS-107285. When the Section fragment with Heading fragment is duplicated, the mapped content should also be duplicated."
 	@priority = "4"
 	test ViewMappedContentDuplicatedWhenDuplicateSectionWithHeading {

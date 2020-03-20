@@ -87,20 +87,6 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 	}
 
 	@Override
-	public boolean isAllowDefinePermissions(Role role) {
-		if (Objects.equals(
-				role.getName(),
-				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR) ||
-			Objects.equals(
-				role.getName(), DepotRolesConstants.ASSET_LIBRARY_OWNER)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
 	public boolean isAllowDelete(Role role) {
 		if (role == null) {
 			return false;

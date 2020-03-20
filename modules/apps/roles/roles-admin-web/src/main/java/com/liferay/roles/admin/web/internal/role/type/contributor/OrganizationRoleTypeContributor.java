@@ -78,19 +78,6 @@ public class OrganizationRoleTypeContributor implements RoleTypeContributor {
 	}
 
 	@Override
-	public boolean isAllowDefinePermissions(Role role) {
-		String name = role.getName();
-
-		if (name.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
-			name.equals(RoleConstants.ORGANIZATION_OWNER)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
 	public boolean isAllowDelete(Role role) {
 		if (role == null) {
 			return false;

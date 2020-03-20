@@ -15,6 +15,7 @@
 package com.liferay.roles.admin.role.type.contributor;
 
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Locale;
 
@@ -118,7 +119,13 @@ public interface RoleTypeContributor {
 	 * @param role
 	 * @return
 	 */
-	public boolean isAllowDefinePermissions(Role role);
+	public default boolean isAllowDefinePermissions(Role role) {
+		if (ArrayUtil.contains(getExcludedRoleNames(), role.getName())) {
+			return false;
+		}
+
+		return true;
+	}
 
 	/**
 	 * Returns whether or not the given role can be deleted.

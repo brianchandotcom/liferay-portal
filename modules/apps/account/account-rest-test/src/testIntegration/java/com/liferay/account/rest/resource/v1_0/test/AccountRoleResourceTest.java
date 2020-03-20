@@ -24,6 +24,8 @@ import com.liferay.account.rest.resource.v1_0.AccountUserResource;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -39,12 +42,12 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -123,10 +126,62 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 			account, accountRole, accountUser, false);
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGraphQLGetAccountRolesPage() throws Exception {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
+
+		Account account = _addAccount();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"accountRoles",
+				HashMapBuilder.<String, Object>put(
+					"accountId", account.getId()
+				).put(
+					"page", 1
+				).put(
+					"pageSize", 2
+				).build(),
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject accountRolesJSONObject = dataJSONObject.getJSONObject(
+			"accountRoles");
+
+		Assert.assertEquals(0, accountRolesJSONObject.get("totalCount"));
+
+		AccountRole accountRole1 = testGraphQLAccountRole_addAccountRole(
+			account.getId());
+		AccountRole accountRole2 = testGraphQLAccountRole_addAccountRole(
+			account.getId());
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		accountRolesJSONObject = dataJSONObject.getJSONObject("accountRoles");
+
+		Assert.assertEquals(2, accountRolesJSONObject.get("totalCount"));
+
+		assertEqualsJSONArray(
+			Arrays.asList(accountRole1, accountRole2),
+			accountRolesJSONObject.getJSONArray("items"));
 	}
 
 	@Override
@@ -151,6 +206,11 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 			404,
 			accountRoleResource.postAccountRoleUserAssociationHttpResponse(
 				account.getId(), 0L, accountUser.getId()));
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"name"};
 	}
 
 	protected AccountUser randomAccountUser() {
@@ -195,14 +255,11 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		return account.getId();
 	}
 
-	@Override
-	protected AccountRole testGraphQLAccountRole_addAccountRole()
+	protected AccountRole testGraphQLAccountRole_addAccountRole(long accountId)
 		throws Exception {
 
-		Account account = _addAccount();
-
 		return accountRoleResource.postAccountRole(
-			account.getId(), randomAccountRole());
+			accountId, randomAccountRole());
 	}
 
 	@Override

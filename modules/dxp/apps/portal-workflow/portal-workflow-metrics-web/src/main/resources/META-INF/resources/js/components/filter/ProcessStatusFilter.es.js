@@ -32,12 +32,12 @@ const ProcessStatusFilter = ({
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
 
-	const {items, selectedItems} = useFilterStatic(
+	const {items, selectedItems} = useFilterStatic({
 		filterKey,
 		prefixKey,
-		options.withoutRouteParams,
-		processStatuses
-	);
+		staticItems: processStatuses,
+		withoutRouteParams: options.withoutRouteParams,
+	});
 
 	const defaultItem = useMemo(() => (items ? items[0] : undefined), [items]);
 

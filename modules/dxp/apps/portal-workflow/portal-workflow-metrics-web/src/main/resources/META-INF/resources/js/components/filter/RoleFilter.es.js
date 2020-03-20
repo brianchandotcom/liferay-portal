@@ -37,6 +37,7 @@ const RoleFilter = ({
 	const {items, selectedItems} = useFilterFetch({
 		filterKey,
 		prefixKey,
+		propertyKey: 'id',
 		requestUrl: `/processes/${processId}/roles?completed=${completed}`,
 		withoutRouteParams: options.withoutRouteParams,
 	});

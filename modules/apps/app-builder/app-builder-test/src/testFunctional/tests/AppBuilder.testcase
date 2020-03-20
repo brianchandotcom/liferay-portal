@@ -1951,16 +1951,22 @@ definition {
 			formViewName = "My Form View 1",
 			tableViewName = "My Table View 1");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page");
 
-		SitePages.addPublicPage(pageName = "App Builder Test Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page",
+			layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "App Builder Test Page");
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
 
-		Portlet.addPG(portletName = "My App 1");
+		Portlet.addPG(
+			pageName = "App Builder Test Page",
+			portletName = "My App 1");
 
 		AppBuilderAdmin.addEntry();
 
@@ -1968,24 +1974,32 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Content of form deployed as widget.");
 
-		App.saveApp();
+		AppBuilderAdmin.save();
 
-		Portlet.addPG(portletName = "My App 1 (Table View)");
+		Portlet.addPG(
+			pageName = "App Builder Test Page",
+			portletName = "My App 1 (Table View)");
 
 		TableViewBuilder.validatePortletFieldTypeInTV(fieldType = "Text");
 
 		TableViewBuilder.validatePortletTextInputInTV(textInput = "Content of form deployed as widget.");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page 2");
 
-		SitePages.addPublicPage(pageName = "App Builder Test Page 2");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page 2",
+			layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "App Builder Test Page 2");
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page 2",
+			siteName = "App Builder Site Name");
 
-		Portlet.addPG(portletName = "My App 2 (Table View)");
+		Portlet.addPG(
+			pageName = "App Builder Test Page 2",
+			portletName = "My App 2 (Table View)");
 
 		TableViewBuilder.validatePortletFieldTypeInTV(fieldType = "Text");
 

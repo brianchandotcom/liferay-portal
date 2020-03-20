@@ -12,3 +12,7 @@
     margin-top: 4px;
     width: 0;
 }
+
+.component-tabs img {
+    width: 100%;
+}

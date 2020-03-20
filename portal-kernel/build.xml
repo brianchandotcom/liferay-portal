@@ -16,22 +16,8 @@
 		/>
 	</path>
 
-	<target depends="init-compile,replace-release-info-tokens" name="compile">
-		<if>
-			<istrue value="${build.portal.artifacts.enabled}" />
-			<then>
-				<condition property="compile.uptodate">
-					<and>
-						<uptodate
-							targetfile="classes/.touch"
-						>
-							<srcfiles dir="${basedir}" excludes="src/com/liferay/portal/kernel/util/ReleaseInfo.java" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-						</uptodate>
-						<equals arg1="${release.info.uptodate}" arg2="true" />
-					</and>
-				</condition>
-			</then>
-		</if>
+	<target depends="init-compile" name="compile" unless="${compile.uptodate}">
+		<antcall target="replace-release-info-tokens" />
 
 		<antcall target="build-common-java.compile" />
 

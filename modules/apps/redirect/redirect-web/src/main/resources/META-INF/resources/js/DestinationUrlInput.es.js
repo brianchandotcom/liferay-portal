@@ -19,6 +19,8 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+const STR_BLANK = '';
+
 const VALIDATION_TYPE = {
 	checking: 'checking',
 	error: 'has-error',
@@ -60,7 +62,7 @@ const Notification = ({type}) => {
 };
 
 const DestinationUrlInput = ({destinationUrl, namespace}) => {
-	const [validationType, setValidationType] = useState('');
+	const [validationType, setValidationType] = useState(STR_BLANK);
 
 	const onInputBlur = event => {
 		const url = event.currentTarget.value;
@@ -68,7 +70,7 @@ const DestinationUrlInput = ({destinationUrl, namespace}) => {
 		if (!url) {
 			setValidationType(VALIDATION_TYPE.error);
 		}
-		else {
+		else if (url.includes(window.location.hostname)) {
 			setValidationType(VALIDATION_TYPE.checking);
 
 			fetch(url)
@@ -83,6 +85,8 @@ const DestinationUrlInput = ({destinationUrl, namespace}) => {
 				.catch(() => {
 					setValidationType(VALIDATION_TYPE.warning);
 				});
+		} else {
+			setValidationType(STR_BLANK);
 		}
 	};
 

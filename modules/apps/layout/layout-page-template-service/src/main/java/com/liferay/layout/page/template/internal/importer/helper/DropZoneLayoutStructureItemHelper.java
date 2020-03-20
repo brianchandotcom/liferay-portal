@@ -82,8 +82,7 @@ public class DropZoneLayoutStructureItemHelper
 					_KEY_ALLOWED_FRAGMENTS);
 
 			for (Map<String, String> allowedFragmentMap : allowedFragments) {
-				fragmentEntryKeys.add(
-					allowedFragmentMap.get(_KEY_FRAGMENT_KEY));
+				fragmentEntryKeys.add(allowedFragmentMap.get(_KEY_KEY));
 			}
 		}
 
@@ -95,8 +94,7 @@ public class DropZoneLayoutStructureItemHelper
 					_KEY_UNALLOWED_FRAGMENTS);
 
 			for (Map<String, String> allowedFragmentMap : allowedFragments) {
-				fragmentEntryKeys.add(
-					allowedFragmentMap.get(_KEY_FRAGMENT_KEY));
+				fragmentEntryKeys.add(allowedFragmentMap.get(_KEY_KEY));
 			}
 		}
 
@@ -107,7 +105,7 @@ public class DropZoneLayoutStructureItemHelper
 
 	private static final String _KEY_ALLOWED_FRAGMENTS = "allowedFragments";
 
-	private static final String _KEY_FRAGMENT_KEY = "fragmentKey";
+	private static final String _KEY_KEY = "key";
 
 	private static final String _KEY_UNALLOWED_FRAGMENTS = "unallowedFragments";
 

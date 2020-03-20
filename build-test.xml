@@ -7730,6 +7730,10 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 	<category name="com.liferay.portal.search.elasticsearch7.internal.connection.EmbeddedElasticsearchConnection">
 		<priority value="ERROR" />
 	</category>
+
+	<category name="com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexFactory">
+		<priority value="INFO" />
+	</category>
 </log4j:configuration>]]></echo>
 
 		<echo file="${liferay.home}/osgi/log4j/org.apache.aries.jax.rs.whiteboard-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>

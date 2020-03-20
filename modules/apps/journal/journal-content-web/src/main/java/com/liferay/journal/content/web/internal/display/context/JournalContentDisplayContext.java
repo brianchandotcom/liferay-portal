@@ -527,8 +527,8 @@ public class JournalContentDisplayContext {
 		assetEntryItemSelectorCriterion.setSelectedGroupIds(
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(
 				_themeDisplay.getScopeGroupId()));
-		assetEntryItemSelectorCriterion.setShowScheduled(true);
 		assetEntryItemSelectorCriterion.setShowNonindexable(true);
+		assetEntryItemSelectorCriterion.setShowScheduled(true);
 		assetEntryItemSelectorCriterion.setTypeSelection(
 			JournalArticle.class.getName());
 

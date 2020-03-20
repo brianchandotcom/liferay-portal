@@ -113,163 +113,7 @@ public class EditFragmentEntryDisplayContext {
 			Collections.singletonMap(
 				"namespace", _renderResponse.getNamespace())
 		).put(
-			"props", getFragmentEditorDisplayContext()
-		).build();
-	}
-
-	public Map<String, Object> getFragmentEditorDisplayContext()
-		throws Exception {
-
-		TemplateManager templateManager =
-			TemplateManagerUtil.getTemplateManager(
-				TemplateConstants.LANG_TYPE_FTL);
-
-		Template template = templateManager.getTemplate(
-			new StringTemplateResource(
-				TemplateConstants.LANG_TYPE_FTL,
-				TemplateConstants.LANG_TYPE_FTL),
-			true);
-
-		template.prepare(_httpServletRequest);
-
-		Map<String, Object> taglibMap = new HashMap<>();
-
-		templateManager.addTaglibSupport(
-			taglibMap, _httpServletRequest,
-			PortalUtil.getHttpServletResponse(_renderResponse));
-
-		List<String> freeMarkerTaglibs = new ArrayList<>();
-		List<String> freeMarkerVariables = new ArrayList<>();
-
-		freeMarkerTaglibs.addAll(taglibMap.keySet());
-		freeMarkerVariables.addAll(template.keySet());
-
-		freeMarkerVariables.add("configuration");
-
-		return HashMapBuilder.<String, Object>put(
-			"allowedStatus",
-			HashMapBuilder.<String, Object>put(
-				"approved", String.valueOf(WorkflowConstants.STATUS_APPROVED)
-			).put(
-				"draft", String.valueOf(WorkflowConstants.STATUS_DRAFT)
-			).build()
-		).put(
-			"autocompleteTags",
-			_fragmentEntryProcessorRegistry.getAvailableTagsJSONArray()
-		).put(
-			"cacheable", _fragmentEntry.isCacheable()
-		).put(
-			"fragmentCollectionId", getFragmentCollectionId()
-		).put(
-			"fragmentEntryId", getFragmentEntryId()
-		).put(
-			"freeMarkerTaglibs", freeMarkerTaglibs
-		).put(
-			"freeMarkerVariables", freeMarkerVariables
-		).put(
-			"htmlEditorCustomEntities",
-			() -> {
-				List<Map<String, Object>> htmlEditorCustomEntities =
-					new ArrayList<>();
-
-				htmlEditorCustomEntities.add(
-					HashMapBuilder.<String, Object>put(
-						"content", freeMarkerTaglibs
-					).put(
-						"end", "]"
-					).put(
-						"start", "[@"
-					).build());
-
-				htmlEditorCustomEntities.add(
-					HashMapBuilder.<String, Object>put(
-						"content", freeMarkerVariables
-					).put(
-						"end", "}"
-					).put(
-						"start", "${"
-					).build());
-
-				return htmlEditorCustomEntities;
-			}
-		).put(
-			"initialConfiguration", _getConfigurationContent()
-		).put(
-			"initialCSS", _getCssContent()
-		).put(
-			"initialHTML", _getHtmlContent()
-		).put(
-			"initialJS", _getJsContent()
-		).put(
-			"name", getName()
-		).put(
-			"portletNamespace", _renderResponse.getNamespace()
-		).put(
-			"propagationEnabled",
-			() -> {
-				FragmentServiceConfiguration fragmentServiceConfiguration =
-					ConfigurationProviderUtil.getCompanyConfiguration(
-						FragmentServiceConfiguration.class,
-						_themeDisplay.getCompanyId());
-
-				return fragmentServiceConfiguration.propagateChanges();
-			}
-		).put(
-			"readOnly", _isReadOnlyFragmentEntry()
-		).put(
-			"resources",
-			() -> {
-				FragmentCollection fragmentCollection =
-					FragmentCollectionServiceUtil.fetchFragmentCollection(
-						getFragmentCollectionId());
-
-				if (fragmentCollection == null) {
-					return Collections.<String>emptyList();
-				}
-
-				List<String> resources = new ArrayList<>();
-
-				for (FileEntry fileEntry : fragmentCollection.getResources()) {
-					resources.add(fileEntry.getFileName());
-				}
-
-				return resources;
-			}
-		).put(
-			"spritemap",
-			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
-		).put(
-			"status",
-			() -> {
-				FragmentEntry fragmentEntry = getFragmentEntry();
-
-				return String.valueOf(fragmentEntry.getStatus());
-			}
-		).put(
-			"urls",
-			HashMapBuilder.<String, Object>put(
-				"current", _themeDisplay.getURLCurrent()
-			).put(
-				"edit",
-				() -> {
-					PortletURL editActionURL =
-						_renderResponse.createActionURL();
-
-					editActionURL.setParameter(
-						ActionRequest.ACTION_NAME,
-						"/fragment/edit_fragment_entry");
-
-					return editActionURL.toString();
-				}
-			).put(
-				"preview",
-				_getFragmentEntryRenderURL("/fragment/preview_fragment_entry")
-			).put(
-				"redirect", getRedirect()
-			).put(
-				"render",
-				_getFragmentEntryRenderURL("/fragment/render_fragment_entry")
-			).build()
+			"props", _getProps()
 		).build();
 	}
 
@@ -482,6 +326,160 @@ public class EditFragmentEntryDisplayContext {
 		}
 
 		return _jsContent;
+	}
+
+	private Map<String, Object> _getProps() throws Exception {
+		TemplateManager templateManager =
+			TemplateManagerUtil.getTemplateManager(
+				TemplateConstants.LANG_TYPE_FTL);
+
+		Template template = templateManager.getTemplate(
+			new StringTemplateResource(
+				TemplateConstants.LANG_TYPE_FTL,
+				TemplateConstants.LANG_TYPE_FTL),
+			true);
+
+		template.prepare(_httpServletRequest);
+
+		Map<String, Object> taglibMap = new HashMap<>();
+
+		templateManager.addTaglibSupport(
+			taglibMap, _httpServletRequest,
+			PortalUtil.getHttpServletResponse(_renderResponse));
+
+		List<String> freeMarkerTaglibs = new ArrayList<>();
+		List<String> freeMarkerVariables = new ArrayList<>();
+
+		freeMarkerTaglibs.addAll(taglibMap.keySet());
+		freeMarkerVariables.addAll(template.keySet());
+
+		freeMarkerVariables.add("configuration");
+
+		return HashMapBuilder.<String, Object>put(
+			"allowedStatus",
+			HashMapBuilder.<String, Object>put(
+				"approved", String.valueOf(WorkflowConstants.STATUS_APPROVED)
+			).put(
+				"draft", String.valueOf(WorkflowConstants.STATUS_DRAFT)
+			).build()
+		).put(
+			"autocompleteTags",
+			_fragmentEntryProcessorRegistry.getAvailableTagsJSONArray()
+		).put(
+			"cacheable", _fragmentEntry.isCacheable()
+		).put(
+			"fragmentCollectionId", getFragmentCollectionId()
+		).put(
+			"fragmentEntryId", getFragmentEntryId()
+		).put(
+			"freeMarkerTaglibs", freeMarkerTaglibs
+		).put(
+			"freeMarkerVariables", freeMarkerVariables
+		).put(
+			"htmlEditorCustomEntities",
+			() -> {
+				List<Map<String, Object>> htmlEditorCustomEntities =
+					new ArrayList<>();
+
+				htmlEditorCustomEntities.add(
+					HashMapBuilder.<String, Object>put(
+						"content", freeMarkerTaglibs
+					).put(
+						"end", "]"
+					).put(
+						"start", "[@"
+					).build());
+
+				htmlEditorCustomEntities.add(
+					HashMapBuilder.<String, Object>put(
+						"content", freeMarkerVariables
+					).put(
+						"end", "}"
+					).put(
+						"start", "${"
+					).build());
+
+				return htmlEditorCustomEntities;
+			}
+		).put(
+			"initialConfiguration", _getConfigurationContent()
+		).put(
+			"initialCSS", _getCssContent()
+		).put(
+			"initialHTML", _getHtmlContent()
+		).put(
+			"initialJS", _getJsContent()
+		).put(
+			"name", getName()
+		).put(
+			"portletNamespace", _renderResponse.getNamespace()
+		).put(
+			"propagationEnabled",
+			() -> {
+				FragmentServiceConfiguration fragmentServiceConfiguration =
+					ConfigurationProviderUtil.getCompanyConfiguration(
+						FragmentServiceConfiguration.class,
+						_themeDisplay.getCompanyId());
+
+				return fragmentServiceConfiguration.propagateChanges();
+			}
+		).put(
+			"readOnly", _isReadOnlyFragmentEntry()
+		).put(
+			"resources",
+			() -> {
+				FragmentCollection fragmentCollection =
+					FragmentCollectionServiceUtil.fetchFragmentCollection(
+						getFragmentCollectionId());
+
+				if (fragmentCollection == null) {
+					return Collections.<String>emptyList();
+				}
+
+				List<String> resources = new ArrayList<>();
+
+				for (FileEntry fileEntry : fragmentCollection.getResources()) {
+					resources.add(fileEntry.getFileName());
+				}
+
+				return resources;
+			}
+		).put(
+			"spritemap",
+			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+		).put(
+			"status",
+			() -> {
+				FragmentEntry fragmentEntry = getFragmentEntry();
+
+				return String.valueOf(fragmentEntry.getStatus());
+			}
+		).put(
+			"urls",
+			HashMapBuilder.<String, Object>put(
+				"current", _themeDisplay.getURLCurrent()
+			).put(
+				"edit",
+				() -> {
+					PortletURL editActionURL =
+						_renderResponse.createActionURL();
+
+					editActionURL.setParameter(
+						ActionRequest.ACTION_NAME,
+						"/fragment/edit_fragment_entry");
+
+					return editActionURL.toString();
+				}
+			).put(
+				"preview",
+				_getFragmentEntryRenderURL("/fragment/preview_fragment_entry")
+			).put(
+				"redirect", getRedirect()
+			).put(
+				"render",
+				_getFragmentEntryRenderURL("/fragment/render_fragment_entry")
+			).build()
+		).build();
 	}
 
 	private boolean _isReadOnlyFragmentEntry() {

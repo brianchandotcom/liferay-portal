@@ -21,7 +21,6 @@ import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
@@ -33,7 +32,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
@@ -136,36 +134,28 @@ public abstract class BaseWorkflowMetricsTestCase {
 				"Parameters length is not an even number");
 		}
 
-		IdempotentRetryAssert.retryAssert(
-			30, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
-			() -> {
-				CountSearchRequest countSearchRequest =
-					new CountSearchRequest();
+		CountSearchRequest countSearchRequest = new CountSearchRequest();
 
-				countSearchRequest.setIndexNames(indexName);
+		countSearchRequest.setIndexNames(indexName);
 
-				BooleanQuery booleanQuery = queries.booleanQuery();
+		BooleanQuery booleanQuery = queries.booleanQuery();
 
-				for (int i = 0; i < parameters.length; i = i + 2) {
-					booleanQuery.addMustQueryClauses(
-						queries.term(
-							String.valueOf(parameters[i]), parameters[i + 1]));
-				}
+		for (int i = 0; i < parameters.length; i = i + 2) {
+			booleanQuery.addMustQueryClauses(
+				queries.term(String.valueOf(parameters[i]), parameters[i + 1]));
+		}
 
-				countSearchRequest.setQuery(booleanQuery);
+		countSearchRequest.setQuery(booleanQuery);
 
-				countSearchRequest.setTypes(indexType);
+		countSearchRequest.setTypes(indexType);
 
-				CountSearchResponse countSearchResponse =
-					searchEngineAdapter.execute(countSearchRequest);
+		CountSearchResponse countSearchResponse = searchEngineAdapter.execute(
+			countSearchRequest);
 
-				Assert.assertEquals(
-					indexName + " " + indexType + " " +
-						countSearchResponse.getSearchRequestString(),
-					expectedCount, countSearchResponse.getCount());
-
-				return null;
-			});
+		Assert.assertEquals(
+			indexName + " " + indexType + " " +
+				countSearchResponse.getSearchRequestString(),
+			expectedCount, countSearchResponse.getCount());
 	}
 
 	protected void retryAssertCount(

@@ -33,7 +33,6 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.CreatorUser;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
@@ -50,7 +49,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -872,32 +870,24 @@ public class WorkflowMetricsRESTTestHelper {
 				"Parameters length is not an even number");
 		}
 
-		IdempotentRetryAssert.retryAssert(
-			10, TimeUnit.SECONDS,
-			() -> {
-				CountSearchRequest countSearchRequest =
-					new CountSearchRequest();
+		CountSearchRequest countSearchRequest = new CountSearchRequest();
 
-				countSearchRequest.setIndexNames(indexName);
+		countSearchRequest.setIndexNames(indexName);
 
-				BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-				for (int i = 0; i < parameters.length; i = i + 2) {
-					booleanQuery.addMustQueryClauses(
-						_queries.term(
-							String.valueOf(parameters[i]), parameters[i + 1]));
-				}
+		for (int i = 0; i < parameters.length; i = i + 2) {
+			booleanQuery.addMustQueryClauses(
+				_queries.term(
+					String.valueOf(parameters[i]), parameters[i + 1]));
+		}
 
-				countSearchRequest.setQuery(booleanQuery);
+		countSearchRequest.setQuery(booleanQuery);
 
-				CountSearchResponse countSearchResponse =
-					_searchEngineAdapter.execute(countSearchRequest);
+		CountSearchResponse countSearchResponse = _searchEngineAdapter.execute(
+			countSearchRequest);
 
-				Assert.assertEquals(
-					expectedCount, countSearchResponse.getCount());
-
-				return null;
-			});
+		Assert.assertEquals(expectedCount, countSearchResponse.getCount());
 	}
 
 	private void _retryAssertCount(String indexName, Object... parameters)

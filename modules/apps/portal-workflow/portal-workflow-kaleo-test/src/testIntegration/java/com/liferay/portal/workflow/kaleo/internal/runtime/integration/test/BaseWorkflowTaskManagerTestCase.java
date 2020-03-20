@@ -102,7 +102,6 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
@@ -116,7 +115,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Level;
 
@@ -847,25 +845,21 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 	private List<WorkflowTask> _getWorkflowTasks(User user, boolean completed)
 		throws Exception {
 
-		return IdempotentRetryAssert.retryAssert(
-			10, TimeUnit.SECONDS,
-			() -> {
-				List<WorkflowTask> workflowTasks = new ArrayList<>();
+		List<WorkflowTask> workflowTasks = new ArrayList<>();
 
-				workflowTasks.addAll(
-					WorkflowTaskManagerUtil.getWorkflowTasksByUserRoles(
-						user.getCompanyId(), user.getUserId(), completed,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
+		workflowTasks.addAll(
+			WorkflowTaskManagerUtil.getWorkflowTasksByUserRoles(
+				user.getCompanyId(), user.getUserId(), completed,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
 
-				workflowTasks.addAll(
-					WorkflowTaskManagerUtil.getWorkflowTasksByUser(
-						user.getCompanyId(), user.getUserId(), completed,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
+		workflowTasks.addAll(
+			WorkflowTaskManagerUtil.getWorkflowTasksByUser(
+				user.getCompanyId(), user.getUserId(), completed,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
 
-				Assert.assertFalse(workflowTasks.isEmpty());
+		Assert.assertFalse(workflowTasks.isEmpty());
 
-				return workflowTasks;
-			});
+		return workflowTasks;
 	}
 
 	private String _read(String fileName) throws Exception {

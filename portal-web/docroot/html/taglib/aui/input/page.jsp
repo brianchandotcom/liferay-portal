@@ -360,7 +360,7 @@ boolean choiceField = checkboxField || radioField;
 						var DEFAULT_APPEND_CONTENT = '&nbsp;&nbsp;';
 						var inputElement = document.getElementById('<%= namespace + id %>');
 
-						function AutoSize(inputElement) {
+						function autoSize(inputElement) {
 							this.computedStyle = getComputedStyle(inputElement);
 							this.minHeight = parseInt(this.computedStyle.height.replace('px', ''), 10);
 
@@ -370,7 +370,7 @@ boolean choiceField = checkboxField || radioField;
 							inputElement.addEventListener('input', this.handleInput.bind(this));
 						}
 
-						AutoSize.prototype.createTemplate = function(computedStyle) {
+						autoSize.prototype.createTemplate = function(computedStyle) {
 							var template = document.createElement('pre');
 
 							template.style.clip = 'rect(0, 0, 0, 0) !important';
@@ -397,7 +397,7 @@ boolean choiceField = checkboxField || radioField;
 							return template;
 						};
 
-						AutoSize.prototype.handleInput = function(event) {
+						autoSize.prototype.handleInput = function(event) {
 							var self = this;
 							requestAnimationFrame(function() {
 								var target = event.target;
@@ -416,7 +416,7 @@ boolean choiceField = checkboxField || radioField;
 							});
 						};
 
-						var autoSize = new AutoSize(inputElement);
+						new autoSize(inputElement);
 
 					</aui:script>
 				</c:if>

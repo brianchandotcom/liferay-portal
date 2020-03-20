@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.roles.admin.web.internal.role.type.contributor;
+package com.liferay.roles.admin.internal.role.type.contributor;
 
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -29,46 +29,47 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=200",
+	immediate = true, property = "service.ranking:Integer=300",
 	service = RoleTypeContributor.class
 )
-public class SiteRoleTypeContributor implements RoleTypeContributor {
+public class OrganizationRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public String[] getExcludedRoleNames() {
 		return new String[] {
-			RoleConstants.SITE_ADMINISTRATOR, RoleConstants.SITE_OWNER
+			RoleConstants.ORGANIZATION_ADMINISTRATOR,
+			RoleConstants.ORGANIZATION_OWNER
 		};
 	}
 
 	@Override
 	public String getIcon() {
-		return "globe";
+		return "community";
 	}
 
 	@Override
 	public String getName() {
-		return "site";
+		return "organization";
 	}
 
 	@Override
 	public String[] getSubtypes() {
-		return PropsValues.ROLES_SITE_SUBTYPES;
+		return PropsValues.ROLES_ORGANIZATION_SUBTYPES;
 	}
 
 	@Override
 	public String getTabTitle(Locale locale) {
-		return "site-roles";
+		return "organization-roles";
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		return "site-role";
+		return "organization-role";
 	}
 
 	@Override
 	public int getType() {
-		return RoleConstants.TYPE_SITE;
+		return RoleConstants.TYPE_ORGANIZATION;
 	}
 
 	@Override

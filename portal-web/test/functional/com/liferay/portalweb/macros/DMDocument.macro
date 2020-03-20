@@ -244,7 +244,9 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
-		AssertElementPresent.assertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_HOME");
+		Pause(locator1 = "3000");
+
+		AssertElementPresent.pauseAssertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_HOME");
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}

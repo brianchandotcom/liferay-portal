@@ -177,6 +177,21 @@ message.
 		<if>
 			<available file="${project.dir}/.git" type="dir" />
 			<then>
+				<propertyregex
+					input="${build.portal.uptodate.check.outputs}"
+					property="build.portal.uptodate.check.excludes"
+					regexp="\s*,\s*"
+					replace="' -e '!"
+				/>
+
+				<propertyregex
+					input="${build.git.clean.command}"
+					override="true"
+					property="build.git.clean.command"
+					regexp="git clean (.+)"
+					replace="git clean -e '!${build.portal.uptodate.check.excludes}' \1"
+				/>
+
 				<execute>
 					${build.git.clean.command}
 				</execute>

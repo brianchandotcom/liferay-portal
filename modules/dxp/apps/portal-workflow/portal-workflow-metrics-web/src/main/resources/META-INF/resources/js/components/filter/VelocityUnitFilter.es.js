@@ -39,12 +39,12 @@ const VelocityUnitFilter = ({
 		timeRange,
 	]);
 
-	const {items, selectedItems} = useFilterStatic(
+	const {items, selectedItems} = useFilterStatic({
 		filterKey,
 		prefixKey,
-		options.withoutRouteParams,
-		velocityUnits
-	);
+		staticItems: velocityUnits,
+		withoutRouteParams: options.withoutRouteParams,
+	});
 
 	const defaultItem = useMemo(
 		() => items.find(item => item.defaultVelocityUnit) || items[0],

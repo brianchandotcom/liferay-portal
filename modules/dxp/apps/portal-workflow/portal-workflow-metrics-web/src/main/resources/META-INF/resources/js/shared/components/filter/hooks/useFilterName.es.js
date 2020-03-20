@@ -16,16 +16,30 @@ const useFilterName = (
 	selectedItems = [],
 	title,
 	withSelectionTitle
-) => {
+) =>
+	useFilterNameWithLabel({
+		multiple,
+		selectedItems,
+		title,
+		withSelectionTitle,
+	});
+
+const useFilterNameWithLabel = ({
+	labelPropertyName = 'name',
+	multiple,
+	selectedItems = [],
+	title,
+	withSelectionTitle,
+}) => {
 	return useMemo(() => {
 		if (!multiple && withSelectionTitle && selectedItems.length) {
-			const {name, resultName} = selectedItems[0];
+			const [{resultName, [labelPropertyName]: label}] = selectedItems;
 
-			return resultName || name;
+			return resultName || label;
 		}
 
 		return title;
-	}, [multiple, selectedItems, title, withSelectionTitle]);
+	}, [labelPropertyName, multiple, selectedItems, title, withSelectionTitle]);
 };
 
-export {useFilterName};
+export {useFilterName, useFilterNameWithLabel};

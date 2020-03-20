@@ -64,7 +64,7 @@ const getCustomTimeRange = (dateEnd, dateStart) => {
 		dateEnd: decodeURIComponent(dateEnd),
 		dateStart: decodeURIComponent(dateStart),
 		dividerAfter: true,
-		key: 'custom',
+		id: 'custom',
 		name: Liferay.Language.get('custom-range'),
 	};
 

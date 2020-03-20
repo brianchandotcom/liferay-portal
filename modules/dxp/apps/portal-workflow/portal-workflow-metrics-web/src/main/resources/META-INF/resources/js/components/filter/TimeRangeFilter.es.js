@@ -78,12 +78,13 @@ const TimeRangeFilter = ({
 		[customRange, timeRanges, isAmPm]
 	);
 
-	const {items, selectedItems} = useFilterStatic(
+	const {items, selectedItems} = useFilterStatic({
 		filterKey,
 		prefixKey,
-		options.withoutRouteParams,
-		staticItems
-	);
+		propertyKey: 'id',
+		staticItems,
+		withoutRouteParams: options.withoutRouteParams,
+	});
 
 	const defaultItem = useMemo(
 		() => items.find(timeRange => timeRange.defaultTimeRange),

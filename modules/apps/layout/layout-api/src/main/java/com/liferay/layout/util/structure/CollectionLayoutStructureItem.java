@@ -44,9 +44,8 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 			(CollectionLayoutStructureItem)obj;
 
 		if (!Objects.equals(
-				_collectionJSONObject.toJSONString(),
-				collectionLayoutStructureItem._collectionJSONObject.
-					toJSONString()) ||
+				_collectionJSONObject,
+				collectionLayoutStructureItem._collectionJSONObject) ||
 			!Objects.equals(
 				_listFormat, collectionLayoutStructureItem._listFormat) ||
 			!Objects.equals(

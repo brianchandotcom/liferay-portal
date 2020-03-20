@@ -136,32 +136,12 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 	}
 
 	@Test
-	public void testBulkAsynchronous() throws Exception {
-		doTest(
-			HashMapBuilder.put(
-				"nonbulkIndexingOverride", "false"
-			).put(
-				"synchronousExecutionOverride", "false"
-			).build());
-	}
-
-	@Test
 	public void testBulkSynchronous() throws Exception {
 		doTest(
 			HashMapBuilder.put(
 				"nonbulkIndexingOverride", "false"
 			).put(
 				"synchronousExecutionOverride", "true"
-			).build());
-	}
-
-	@Test
-	public void testNonbulkAsynchronous() throws Exception {
-		doTest(
-			HashMapBuilder.put(
-				"nonbulkIndexingOverride", "true"
-			).put(
-				"synchronousExecutionOverride", "false"
 			).build());
 	}
 

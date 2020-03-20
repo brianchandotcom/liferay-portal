@@ -72,6 +72,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -523,6 +524,20 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			GetterUtil::getLong
 		).map(
 			this::_toAssigneeUser
+		).sorted(
+			Comparator.comparing(
+				AssigneeUser::getName,
+				Comparator.comparing(
+					(String name) -> Objects.equals(
+						name,
+						_language.get(
+							ResourceBundleUtil.getModuleAndPortalResourceBundle(
+								contextAcceptLanguage.getPreferredLocale(),
+								InstanceResourceImpl.class),
+							"unassigned"))
+				).thenComparing(
+					Comparator.nullsLast(String::compareToIgnoreCase)
+				))
 		).filter(
 			Objects::nonNull
 		).collect(

@@ -49,12 +49,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -72,6 +75,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -247,6 +251,20 @@ public class MasterLayoutsImporterImpl implements MasterLayoutsImporter {
 			false);
 
 		return fileEntry.getFileEntryId();
+	}
+
+	private String _getThemeId(long companyId, String themeName) {
+		List<Theme> themes = ListUtil.filter(
+			_themeLocalService.getThemes(companyId),
+			theme -> Objects.equals(theme.getName(), themeName));
+
+		if (ListUtil.isNotEmpty(themes)) {
+			Theme theme = themes.get(0);
+
+			return theme.getThemeId();
+		}
+
+		return null;
 	}
 
 	private ZipEntry _getThumbnailZipEntry(String fileName, ZipFile zipFile) {
@@ -494,7 +512,10 @@ public class MasterLayoutsImporterImpl implements MasterLayoutsImporter {
 		}
 
 		if (Validator.isNotNull(settings.getThemeName())) {
-			layout.setThemeId(settings.getThemeName());
+			String themeId = _getThemeId(
+				layout.getCompanyId(), settings.getThemeName());
+
+			layout.setThemeId(themeId);
 		}
 
 		if (Validator.isNotNull(settings.getColorSchemeName())) {
@@ -553,6 +574,9 @@ public class MasterLayoutsImporterImpl implements MasterLayoutsImporter {
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	@Reference
+	private ThemeLocalService _themeLocalService;
 
 	private static class MasterPageEntry {
 

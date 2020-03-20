@@ -225,6 +225,11 @@ public interface RedirectNotFoundEntryLocalService
 	public List<RedirectNotFoundEntry> getRedirectNotFoundEntries(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<RedirectNotFoundEntry> getRedirectNotFoundEntries(
+		long groupId, int start, int end,
+		OrderByComparator<RedirectNotFoundEntry> obc);
+
 	/**
 	 * Returns the number of redirect not found entries.
 	 *
@@ -232,6 +237,9 @@ public interface RedirectNotFoundEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRedirectNotFoundEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRedirectNotFoundEntriesCount(long groupId);
 
 	/**
 	 * Returns the redirect not found entry with the primary key.

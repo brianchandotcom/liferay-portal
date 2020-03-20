@@ -284,6 +284,17 @@ public class RedirectNotFoundEntryLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.redirect.model.RedirectNotFoundEntry>
+		getRedirectNotFoundEntries(
+			long groupId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.redirect.model.RedirectNotFoundEntry> obc) {
+
+		return _redirectNotFoundEntryLocalService.getRedirectNotFoundEntries(
+			groupId, start, end, obc);
+	}
+
 	/**
 	 * Returns the number of redirect not found entries.
 	 *
@@ -293,6 +304,12 @@ public class RedirectNotFoundEntryLocalServiceWrapper
 	public int getRedirectNotFoundEntriesCount() {
 		return _redirectNotFoundEntryLocalService.
 			getRedirectNotFoundEntriesCount();
+	}
+
+	@Override
+	public int getRedirectNotFoundEntriesCount(long groupId) {
+		return _redirectNotFoundEntryLocalService.
+			getRedirectNotFoundEntriesCount(groupId);
 	}
 
 	/**

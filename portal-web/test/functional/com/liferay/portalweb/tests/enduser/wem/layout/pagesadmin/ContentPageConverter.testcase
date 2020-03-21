@@ -307,11 +307,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name 3");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name 3",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Nested Applications");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name 3",
+			widgetName = "Nested Applications");
 
 		ServerAdministration.openServerAdmin();
 
@@ -344,13 +343,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
-
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Test Page Name",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			layoutTemplate = "1 Column");
 
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
@@ -407,25 +403,29 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			layoutTemplate = "1 Column");
 
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Test Page Name",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Nested Applications");
+		for (var portletName : list "Nested Applications,Asset Publisher") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "${portletName}");
+		}
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
-		Portlet.addPG(portletName = "Asset Publisher");
+		NestedPortlets.viewConfigurationDefaultLayoutTemplate(
+			defaultColumnName = "2 Columns (50/50)",
+			portletName = "Nested Applications");
+
+		Click(locator1 = "Icon#CLOSE");
+
+		WaitForElementNotPresent(locator1 = "IFrame#DIALOG");
 
 		DragAndDrop.dragAndDropPortletToObject(
 			key_portletTitleName = "Asset Publisher",
@@ -491,30 +491,22 @@ definition {
 			groupName = "Test Westeros Site",
 			layoutName = "Test Page Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Westeros Site");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Test Westeros Site",
+			layoutName = "Test Page Name",
+			layoutTemplate = "Westeros 2 columns");
 
-		SitePages.configurePage(
-			columnName = "Westeros 2 columns",
-			pageName = "Test Page Name",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Test Westeros Site",
+			layoutName = "Test Page Name",
+			widgetName = "Asset Publisher");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Westeros Site");
-
-		Portlet.addPG(portletName = "Profile");
-
-		Portlet.dragAndDropPortletToColumnPG(
-			columnNumberFrom = "1",
-			columnNumberTo = "2",
-			portletName = "Profile");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Westeros Site");
-
-		Portlet.addPG(portletName = "Asset Publisher");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Test Westeros Site",
+			layoutName = "Test Page Name",
+			widgetName = "Profile");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
@@ -587,13 +579,10 @@ definition {
 			groupName = "Test Westeros Site",
 			layoutName = "Test Page Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Westeros Site");
-
-		SitePages.configurePage(
-			columnName = "Westeros 2 columns",
-			pageName = "Test Page Name",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Test Westeros Site",
+			layoutName = "Test Page Name",
+			layoutTemplate = "Westeros 2 columns");
 
 		SitePages.openPagesAdmin(siteURLKey = "Test Westeros Site");
 
@@ -688,38 +677,28 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			layoutTemplate = "Westeros 2 columns");
 
-		SitePages.configurePage(
-			columnName = "Westeros 2 columns",
-			pageName = "Test Page Name",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Profile");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Profile");
-
-		Portlet.dragAndDropPortletToColumnPG(
-			columnNumberFrom = "1",
-			columnNumberTo = "2",
-			portletName = "Profile");
+		for (var portletName : list "Nested Applications,Asset Publisher") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "${portletName}");
+		}
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Nested Applications");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		DragAndDrop.dragAndDropPortletToObject(
 			key_portletTitleName = "Asset Publisher",

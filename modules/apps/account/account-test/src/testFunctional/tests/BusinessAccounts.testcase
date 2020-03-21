@@ -24,6 +24,8 @@ definition {
 
 	@priority = "4"
 	test AddAccountUser {
+		property portal.acceptance = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
@@ -81,6 +83,8 @@ definition {
 
 	@priority = "4"
 	test AssignExistingUserToAccount {
+		property portal.acceptance = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
@@ -320,6 +324,7 @@ definition {
 
 	@priority = "4"
 	test ImpersonateUser {
+		property portal.acceptance = "quarantine";
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
@@ -631,6 +636,8 @@ definition {
 
 	@priority = "4"
 	test UpdateAccountUser {
+		property portal.acceptance = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",

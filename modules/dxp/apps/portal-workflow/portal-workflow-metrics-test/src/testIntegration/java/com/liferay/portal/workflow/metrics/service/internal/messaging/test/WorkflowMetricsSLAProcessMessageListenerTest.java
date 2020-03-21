@@ -150,7 +150,8 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 			"WorkflowMetricsSLAInstanceResultType", "companyId",
 			kaleoDefinition.getCompanyId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId(), "slaDefinitionId",
-			_workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
+			_workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId(),
+			"status", "RUNNING");
 		retryAssertCount(
 			"workflow-metrics-sla-instance-results",
 			"WorkflowMetricsSLAInstanceResultType", "companyId",

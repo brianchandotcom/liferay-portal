@@ -1574,39 +1574,56 @@ definition {
 		AppBuilderAdmin.openItem(itemName = "My Form View 1");
 
 		FormViewBuilder.fieldEllipsisDelete(fieldLabel = "Text");
+
 		FormViewBuilder.validateDeleteUsedObjectMessage();
 		FormViewBuilder.validateUsedFormView(formViewName = "My Form View 1");
 		FormViewBuilder.validateUsedFormView(formViewName = "My Form View 2");
 		FormViewBuilder.validateUsedTableView(tableViewName = "My Table View");
+
 		FormViewBuilder.deleteButtonInDeleteFromObject();
+
 		FormViewBuilder.validateNoFieldLabel(fieldLabel = "Text");
 		FormViewBuilder.validateNoObjectFieldName(fieldName = "Text");
 
 		FormViewBuilder.deleteFromObjectViaX(fieldName = "Select from List");
+
 		FormViewBuilder.validateDeleteUsedObjectMessage();
 		FormViewBuilder.validateUsedFormView(formViewName = "My Form View 1");
 		FormViewBuilder.validateUsedTableView(tableViewName = "My Table View");
+
 		FormViewBuilder.deleteButtonInDeleteFromObject();
+
 		FormViewBuilder.validateNoFieldLabel(fieldLabel = "Select from List");
 		FormViewBuilder.validateNoObjectFieldName(fieldName = "Select from List");
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
+
 		FormViewBuilder.fieldEllipsisDelete(fieldLabel = "Numeric");
+
 		FormViewBuilder.validateDeleteObjectMessage();
+
 		FormViewBuilder.deleteButtonInDeleteFromObject();
+
 		FormViewBuilder.validateNoFieldLabel(fieldLabel = "Numeric");
 		FormViewBuilder.validateNoObjectFieldName(fieldName = "Numeric");
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Multiple Selection");
+
 		FormViewBuilder.deleteFromObjectViaX(fieldName = "Multiple Selection");
+
 		FormViewBuilder.validateDeleteObjectMessage();
+
 		FormViewBuilder.cancelButtonInDeleteFromObject();
+
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Multiple Selection");
 		FormViewBuilder.validateObjectFieldName(fieldName = "Multiple Selection");
 
 		FormViewBuilder.deleteFromObjectViaX(fieldName = "Multiple Selection");
+
 		FormViewBuilder.validateDeleteObjectMessage();
+
 		FormViewBuilder.deleteButtonInDeleteFromObject();
+
 		FormViewBuilder.validateNoFieldLabel(fieldLabel = "Multiple Selection");
 		FormViewBuilder.validateNoObjectFieldName(fieldName = "Multiple Selection");
 

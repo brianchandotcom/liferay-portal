@@ -15,7 +15,7 @@
 package com.liferay.asset.tags.search.test;
 
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -32,7 +32,10 @@ import java.util.List;
  */
 public class AssetTagFixture {
 
-	public AssetTagFixture(Group group, User user) {
+	public AssetTagFixture(
+		AssetTagLocalService assetTagLocalService, Group group, User user) {
+
+		_assetTagLocalService = assetTagLocalService;
 		_group = group;
 		_user = user;
 	}
@@ -44,7 +47,7 @@ public class AssetTagFixture {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), userId);
 
-		AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
+		AssetTag assetTag = _assetTagLocalService.addTag(
 			userId, _group.getGroupId(), RandomTestUtil.randomString(),
 			serviceContext);
 
@@ -57,6 +60,7 @@ public class AssetTagFixture {
 		return _assetTags;
 	}
 
+	private final AssetTagLocalService _assetTagLocalService;
 	private final List<AssetTag> _assetTags = new ArrayList<>();
 	private final Group _group;
 	private final User _user;

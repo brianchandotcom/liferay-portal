@@ -15,7 +15,7 @@
 package com.liferay.asset.search.test;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -35,7 +35,10 @@ import java.util.Locale;
  */
 public class AssetVocabularyFixture {
 
-	public AssetVocabularyFixture(Group group) {
+	public AssetVocabularyFixture(
+		AssetVocabularyService assetVocabularyService, Group group) {
+
+		_assetVocabularyService = assetVocabularyService;
 		_group = group;
 	}
 
@@ -51,10 +54,9 @@ public class AssetVocabularyFixture {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), getUserId());
 
-		AssetVocabulary assetVocabulary =
-			AssetVocabularyServiceUtil.addVocabulary(
-				serviceContext.getScopeGroupId(), null, titleMap.getValues(),
-				descriptionMap.getValues(), "", serviceContext);
+		AssetVocabulary assetVocabulary = _assetVocabularyService.addVocabulary(
+			serviceContext.getScopeGroupId(), null, titleMap.getValues(),
+			descriptionMap.getValues(), "", serviceContext);
 
 		_assetVocabularies.add(assetVocabulary);
 
@@ -68,9 +70,8 @@ public class AssetVocabularyFixture {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), getUserId());
 
-		AssetVocabulary assetVocabulary =
-			AssetVocabularyServiceUtil.addVocabulary(
-				serviceContext.getScopeGroupId(), title, serviceContext);
+		AssetVocabulary assetVocabulary = _assetVocabularyService.addVocabulary(
+			serviceContext.getScopeGroupId(), title, serviceContext);
 
 		_assetVocabularies.add(assetVocabulary);
 
@@ -93,6 +94,7 @@ public class AssetVocabularyFixture {
 	}
 
 	private final List<AssetVocabulary> _assetVocabularies = new ArrayList<>();
+	private final AssetVocabularyService _assetVocabularyService;
 	private final Group _group;
 
 }

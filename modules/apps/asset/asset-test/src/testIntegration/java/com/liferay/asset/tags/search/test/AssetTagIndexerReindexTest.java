@@ -16,21 +16,34 @@ package com.liferay.asset.tags.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.test.util.IndexerFixture;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.model.uid.UIDFactory;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.users.admin.test.util.search.GroupBlueprint;
+import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -57,59 +70,95 @@ public class AssetTagIndexerReindexTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpUserSearchFixture();
+		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
-		setUpAssetTagFixture();
+		Group group = groupSearchFixture.addGroup(new GroupBlueprint());
 
-		setUpAssetTagIndexerFixture();
-	}
-
-	@Test
-	public void testReindexing() throws Exception {
-		AssetTag assetTag = assetTagFixture.createAssetTag();
-
-		String searchTerm = assetTag.getUserName();
-
-		assetTagIndexerFixture.searchOnlyOne(searchTerm);
-
-		Document document = assetTagIndexerFixture.searchOnlyOne(searchTerm);
-
-		assetTagIndexerFixture.deleteDocument(document);
-
-		assetTagIndexerFixture.searchNoOne(searchTerm);
-
-		assetTagIndexerFixture.reindex(assetTag.getCompanyId());
-
-		assetTagIndexerFixture.searchOnlyOne(searchTerm);
-	}
-
-	protected void setUpAssetTagFixture() throws Exception {
-		assetTagFixture = new AssetTagFixture(_group, _user);
-
-		_assetTags = assetTagFixture.getAssetTags();
-	}
-
-	protected void setUpAssetTagIndexerFixture() {
-		assetTagIndexerFixture = new IndexerFixture<>(AssetTag.class);
-	}
-
-	protected void setUpUserSearchFixture() throws Exception {
-		userSearchFixture = new UserSearchFixture();
+		UserSearchFixture userSearchFixture = new UserSearchFixture(
+			userLocalService, groupSearchFixture, null, null);
 
 		userSearchFixture.setUp();
 
-		_group = userSearchFixture.addGroup();
+		User user = userSearchFixture.addUser(
+			RandomTestUtil.randomString(), group);
 
-		_groups = userSearchFixture.getGroups();
+		AssetTagFixture assetTagFixture = new AssetTagFixture(
+			assetTagLocalService, group, user);
 
-		_user = userSearchFixture.addUser(
-			RandomTestUtil.randomString(), _group);
+		_assetTagFixture = assetTagFixture;
+		_assetTags = assetTagFixture.getAssetTags();
+
+		_group = group;
+
+		_groups = groupSearchFixture.getGroups();
 
 		_users = userSearchFixture.getUsers();
 	}
 
-	protected AssetTagFixture assetTagFixture;
-	protected IndexerFixture<AssetTag> assetTagIndexerFixture;
+	@Test
+	public void testReindexing() throws Exception {
+		AssetTag assetTag = _assetTagFixture.createAssetTag();
+
+		String searchTerm = StringUtil.toLowerCase(assetTag.getUserName());
+
+		assertFieldValue(Field.USER_NAME, searchTerm, searchTerm);
+
+		deleteDocument(assetTag.getCompanyId(), uidFactory.getUID(assetTag));
+
+		assertNoHits(searchTerm);
+
+		reindexAllIndexerModels();
+
+		assertFieldValue(Field.USER_NAME, searchTerm, searchTerm);
+	}
+
+	protected void assertFieldValue(
+		String fieldName, String fieldValue, String searchTerm) {
+
+		FieldValuesAssert.assertFieldValue(
+			fieldName, fieldValue, search(searchTerm));
+	}
+
+	protected void assertNoHits(String searchTerm) {
+		FieldValuesAssert.assertFieldValues(
+			Collections.emptyMap(), search(searchTerm));
+	}
+
+	protected void deleteDocument(long companyId, String uid) throws Exception {
+		indexWriterHelper.deleteDocument(
+			indexer.getSearchEngineId(), companyId, uid, true);
+	}
+
+	protected void reindexAllIndexerModels() throws Exception {
+		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
+	}
+
+	protected SearchResponse search(String searchTerm) {
+		return searcher.search(
+			searchRequestBuilderFactory.builder(
+			).companyId(
+				_group.getCompanyId()
+			).groupIds(
+				_group.getGroupId()
+			).fields(
+				StringPool.STAR
+			).modelIndexerClasses(
+				AssetTag.class
+			).queryString(
+				searchTerm
+			).build());
+	}
+
+	@Inject
+	protected AssetTagLocalService assetTagLocalService;
+
+	@Inject(
+		filter = "indexer.class.name=com.liferay.asset.kernel.model.AssetTag"
+	)
+	protected Indexer<AssetTag> indexer;
+
+	@Inject
+	protected IndexWriterHelper indexWriterHelper;
 
 	@Inject
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
@@ -117,7 +166,19 @@ public class AssetTagIndexerReindexTest {
 	@Inject
 	protected SearchEngineHelper searchEngineHelper;
 
-	protected UserSearchFixture userSearchFixture;
+	@Inject
+	protected Searcher searcher;
+
+	@Inject
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
+
+	@Inject
+	protected UIDFactory uidFactory;
+
+	@Inject
+	protected UserLocalService userLocalService;
+
+	private AssetTagFixture _assetTagFixture;
 
 	@DeleteAfterTestRun
 	private List<AssetTag> _assetTags;
@@ -126,8 +187,6 @@ public class AssetTagIndexerReindexTest {
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
-
-	private User _user;
 
 	@DeleteAfterTestRun
 	private List<User> _users;

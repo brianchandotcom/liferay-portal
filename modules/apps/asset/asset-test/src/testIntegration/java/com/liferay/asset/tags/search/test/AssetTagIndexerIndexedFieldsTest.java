@@ -16,25 +16,31 @@ package com.liferay.asset.tags.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
-import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.users.admin.test.util.search.GroupBlueprint;
+import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.util.List;
@@ -65,13 +71,32 @@ public class AssetTagIndexerIndexedFieldsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpUserSearchFixture();
+		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
-		setUpAssetTagFixture();
+		Group group = groupSearchFixture.addGroup(new GroupBlueprint());
 
-		setUpAssetTagIndexerFixture();
+		UserSearchFixture userSearchFixture = new UserSearchFixture(
+			userLocalService, groupSearchFixture, null, null);
 
-		setUpIndexedFieldsFixture();
+		userSearchFixture.setUp();
+
+		User user = userSearchFixture.addUser(
+			RandomTestUtil.randomString(), group);
+
+		AssetTagFixture assetTagFixture = new AssetTagFixture(
+			assetTagLocalService, group, user);
+
+		_assetTagFixture = assetTagFixture;
+		_assetTags = assetTagFixture.getAssetTags();
+
+		_group = group;
+
+		_groups = groupSearchFixture.getGroups();
+
+		_indexedFieldsFixture = new IndexedFieldsFixture(
+			resourcePermissionLocalService, searchEngineHelper);
+
+		_users = userSearchFixture.getUsers();
 	}
 
 	@Test
@@ -79,16 +104,31 @@ public class AssetTagIndexerIndexedFieldsTest {
 		Assume.assumeFalse(
 			isNumberSortableImplementedAsDoubleForSearchEngine());
 
-		AssetTag assetTag = assetTagFixture.createAssetTag();
+		AssetTag assetTag = _assetTagFixture.createAssetTag();
 
 		String searchTerm = assetTag.getUserName();
 
-		Document document = assetTagIndexerFixture.searchOnlyOne(searchTerm);
+		assertFieldValues(_expectedFieldValues(assetTag), searchTerm);
+	}
 
-		indexedFieldsFixture.postProcessDocument(document);
+	protected void assertFieldValues(
+		Map<String, String> map, String searchTerm) {
 
 		FieldValuesAssert.assertFieldValues(
-			_expectedFieldValues(assetTag), document, searchTerm);
+			map, name -> !name.equals("score"),
+			searcher.search(
+				searchRequestBuilderFactory.builder(
+				).companyId(
+					_group.getCompanyId()
+				).groupIds(
+					_group.getGroupId()
+				).fields(
+					StringPool.STAR
+				).modelIndexerClasses(
+					AssetTag.class
+				).queryString(
+					searchTerm
+				).build()));
 	}
 
 	protected boolean isNumberSortableImplementedAsDoubleForSearchEngine() {
@@ -104,39 +144,13 @@ public class AssetTagIndexerIndexedFieldsTest {
 		return false;
 	}
 
-	protected void setUpAssetTagFixture() throws Exception {
-		assetTagFixture = new AssetTagFixture(_group, _user);
+	@Inject
+	protected AssetTagLocalService assetTagLocalService;
 
-		_assetTags = assetTagFixture.getAssetTags();
-	}
-
-	protected void setUpAssetTagIndexerFixture() {
-		assetTagIndexerFixture = new IndexerFixture<>(AssetTag.class);
-	}
-
-	protected void setUpIndexedFieldsFixture() {
-		indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper);
-	}
-
-	protected void setUpUserSearchFixture() throws Exception {
-		userSearchFixture = new UserSearchFixture();
-
-		userSearchFixture.setUp();
-
-		_group = userSearchFixture.addGroup();
-
-		_groups = userSearchFixture.getGroups();
-
-		_user = userSearchFixture.addUser(
-			RandomTestUtil.randomString(), _group);
-
-		_users = userSearchFixture.getUsers();
-	}
-
-	protected AssetTagFixture assetTagFixture;
-	protected IndexerFixture<AssetTag> assetTagIndexerFixture;
-	protected IndexedFieldsFixture indexedFieldsFixture;
+	@Inject(
+		filter = "indexer.class.name=com.liferay.asset.kernel.model.AssetTag"
+	)
+	protected Indexer<AssetTag> indexer;
 
 	@Inject
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
@@ -144,7 +158,14 @@ public class AssetTagIndexerIndexedFieldsTest {
 	@Inject
 	protected SearchEngineHelper searchEngineHelper;
 
-	protected UserSearchFixture userSearchFixture;
+	@Inject
+	protected Searcher searcher;
+
+	@Inject
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
+
+	@Inject
+	protected UserLocalService userLocalService;
 
 	private Map<String, String> _expectedFieldValues(AssetTag assetTag)
 		throws Exception {
@@ -176,7 +197,7 @@ public class AssetTagIndexerIndexedFieldsTest {
 			"name_String_sortable", assetTag.getName()
 		).build();
 
-		indexedFieldsFixture.populateUID(
+		_indexedFieldsFixture.populateUID(
 			AssetTag.class.getName(), assetTag.getTagId(), map);
 
 		_populateDates(assetTag, map);
@@ -186,19 +207,21 @@ public class AssetTagIndexerIndexedFieldsTest {
 	}
 
 	private void _populateDates(AssetTag assetTag, Map<String, String> map) {
-		indexedFieldsFixture.populateDate(
+		_indexedFieldsFixture.populateDate(
 			Field.CREATE_DATE, assetTag.getCreateDate(), map);
-		indexedFieldsFixture.populateDate(
+		_indexedFieldsFixture.populateDate(
 			Field.MODIFIED_DATE, assetTag.getModifiedDate(), map);
 	}
 
 	private void _populateRoles(AssetTag assetTag, Map<String, String> map)
 		throws Exception {
 
-		indexedFieldsFixture.populateRoleIdFields(
+		_indexedFieldsFixture.populateRoleIdFields(
 			assetTag.getCompanyId(), AssetTag.class.getName(),
 			assetTag.getTagId(), assetTag.getGroupId(), null, map);
 	}
+
+	private AssetTagFixture _assetTagFixture;
 
 	@DeleteAfterTestRun
 	private List<AssetTag> _assetTags;
@@ -208,7 +231,7 @@ public class AssetTagIndexerIndexedFieldsTest {
 	@DeleteAfterTestRun
 	private List<Group> _groups;
 
-	private User _user;
+	private IndexedFieldsFixture _indexedFieldsFixture;
 
 	@DeleteAfterTestRun
 	private List<User> _users;

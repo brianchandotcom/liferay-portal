@@ -16,7 +16,7 @@ package com.liferay.asset.search.test;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
+import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -36,10 +36,13 @@ import java.util.Locale;
  */
 public class AssetCategoryFixture {
 
-	public AssetCategoryFixture(Group group) {
-		_group = group;
+	public AssetCategoryFixture(
+		AssetCategoryService assetCategoryService,
+		AssetVocabularyFixture assetVocabularyFixture, Group group) {
 
-		_assetVocabularyFixture = new AssetVocabularyFixture(group);
+		_assetCategoryService = assetCategoryService;
+		_assetVocabularyFixture = assetVocabularyFixture;
+		_group = group;
 	}
 
 	public AssetCategory createAssetCategory() throws Exception {
@@ -57,7 +60,7 @@ public class AssetCategoryFixture {
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyFixture.createAssetVocabulary();
 
-		AssetCategory assetCategory = AssetCategoryServiceUtil.addCategory(
+		AssetCategory assetCategory = _assetCategoryService.addCategory(
 			serviceContext.getScopeGroupId(), 0L, titleMap.getValues(),
 			descriptionMap.getValues(), assetVocabulary.getVocabularyId(),
 			new String[0], serviceContext);
@@ -75,7 +78,7 @@ public class AssetCategoryFixture {
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyFixture.createAssetVocabulary();
 
-		AssetCategory assetCategory = AssetCategoryServiceUtil.addCategory(
+		AssetCategory assetCategory = _assetCategoryService.addCategory(
 			serviceContext.getScopeGroupId(), title,
 			assetVocabulary.getVocabularyId(), serviceContext);
 
@@ -86,10 +89,6 @@ public class AssetCategoryFixture {
 
 	public List<AssetCategory> getAssetCategories() {
 		return _assetCategories;
-	}
-
-	public List<AssetVocabulary> getAssetVocabularies() {
-		return _assetVocabularyFixture.getAssetVocabularies();
 	}
 
 	public void updateDisplaySettings(Locale locale) throws Exception {
@@ -104,6 +103,7 @@ public class AssetCategoryFixture {
 	}
 
 	private final List<AssetCategory> _assetCategories = new ArrayList<>();
+	private final AssetCategoryService _assetCategoryService;
 	private final AssetVocabularyFixture _assetVocabularyFixture;
 	private final Group _group;
 

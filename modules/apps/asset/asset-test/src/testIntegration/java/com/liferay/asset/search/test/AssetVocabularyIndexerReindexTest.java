@@ -16,20 +16,29 @@ package com.liferay.asset.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.search.test.util.IndexerFixture;
+import com.liferay.portal.search.model.uid.UIDFactory;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.users.admin.test.util.search.UserSearchFixture;
+import com.liferay.users.admin.test.util.search.GroupBlueprint;
+import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -56,59 +65,87 @@ public class AssetVocabularyIndexerReindexTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpUserSearchFixture();
+		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
-		setUpAssetVocabularyFixture();
+		Group group = groupSearchFixture.addGroup(new GroupBlueprint());
 
-		setUpAssetVocabularyIndexerFixture();
+		AssetVocabularyFixture assetVocabularyFixture =
+			new AssetVocabularyFixture(assetVocabularyService, group);
+
+		_assetVocabularies = assetVocabularyFixture.getAssetVocabularies();
+		_assetVocabularyFixture = assetVocabularyFixture;
+
+		_group = group;
+
+		_groups = groupSearchFixture.getGroups();
 	}
 
 	@Test
 	public void testReindexing() throws Exception {
 		AssetVocabulary assetVocabulary =
-			assetVocabularyFixture.createAssetVocabulary();
+			_assetVocabularyFixture.createAssetVocabulary();
 
 		String searchTerm = assetVocabulary.getName();
 
-		assetVocabularyIndexerFixture.searchOnlyOne(searchTerm);
+		assertFieldValue(Field.NAME, searchTerm, searchTerm);
 
-		Document document = assetVocabularyIndexerFixture.searchOnlyOne(
-			searchTerm);
+		deleteDocument(
+			assetVocabulary.getCompanyId(), uidFactory.getUID(assetVocabulary));
 
-		assetVocabularyIndexerFixture.deleteDocument(document);
+		assertNoHits(searchTerm);
 
-		assetVocabularyIndexerFixture.searchNoOne(searchTerm);
+		reindexAllIndexerModels();
 
-		assetVocabularyIndexerFixture.reindex(assetVocabulary.getCompanyId());
-
-		assetVocabularyIndexerFixture.searchOnlyOne(searchTerm);
+		assertFieldValue(Field.NAME, searchTerm, searchTerm);
 	}
 
-	protected void setUpAssetVocabularyFixture() throws Exception {
-		assetVocabularyFixture = new AssetVocabularyFixture(_group);
+	protected void assertFieldValue(
+		String fieldName, String fieldValue, String searchTerm) {
 
-		_assetVocabularies = assetVocabularyFixture.getAssetVocabularies();
+		FieldValuesAssert.assertFieldValue(
+			fieldName, fieldValue, search(searchTerm));
 	}
 
-	protected void setUpAssetVocabularyIndexerFixture() {
-		assetVocabularyIndexerFixture = new IndexerFixture<>(
-			AssetVocabulary.class);
+	protected void assertNoHits(String searchTerm) {
+		FieldValuesAssert.assertFieldValues(
+			Collections.emptyMap(), search(searchTerm));
 	}
 
-	protected void setUpUserSearchFixture() throws Exception {
-		userSearchFixture = new UserSearchFixture();
-
-		userSearchFixture.setUp();
-
-		_group = userSearchFixture.addGroup();
-
-		_groups = userSearchFixture.getGroups();
-
-		_users = userSearchFixture.getUsers();
+	protected void deleteDocument(long companyId, String uid) throws Exception {
+		indexWriterHelper.deleteDocument(
+			indexer.getSearchEngineId(), companyId, uid, true);
 	}
 
-	protected AssetVocabularyFixture assetVocabularyFixture;
-	protected IndexerFixture<AssetVocabulary> assetVocabularyIndexerFixture;
+	protected void reindexAllIndexerModels() throws Exception {
+		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
+	}
+
+	protected SearchResponse search(String searchTerm) {
+		return searcher.search(
+			searchRequestBuilderFactory.builder(
+			).companyId(
+				_group.getCompanyId()
+			).groupIds(
+				_group.getGroupId()
+			).fields(
+				StringPool.STAR
+			).modelIndexerClasses(
+				AssetVocabulary.class
+			).queryString(
+				searchTerm
+			).build());
+	}
+
+	@Inject
+	protected AssetVocabularyService assetVocabularyService;
+
+	@Inject(
+		filter = "indexer.class.name=com.liferay.asset.kernel.model.AssetVocabulary"
+	)
+	protected Indexer<AssetVocabulary> indexer;
+
+	@Inject
+	protected IndexWriterHelper indexWriterHelper;
 
 	@Inject
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
@@ -116,17 +153,22 @@ public class AssetVocabularyIndexerReindexTest {
 	@Inject
 	protected SearchEngineHelper searchEngineHelper;
 
-	protected UserSearchFixture userSearchFixture;
+	@Inject
+	protected Searcher searcher;
+
+	@Inject
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
+
+	@Inject
+	protected UIDFactory uidFactory;
 
 	@DeleteAfterTestRun
 	private List<AssetVocabulary> _assetVocabularies;
 
+	private AssetVocabularyFixture _assetVocabularyFixture;
 	private Group _group;
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
-
-	@DeleteAfterTestRun
-	private List<User> _users;
 
 }

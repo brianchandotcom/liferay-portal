@@ -16,9 +16,11 @@ package com.liferay.asset.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -26,14 +28,18 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
-import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.users.admin.test.util.search.UserSearchFixture;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.users.admin.test.util.search.GroupBlueprint;
+import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 
 import java.util.List;
 import java.util.Locale;
@@ -59,17 +65,24 @@ public class AssetVocabularyMultiLanguageSearchTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
-		setUpUserSearchFixture();
+		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
-		setUpAssetVocabularyFixture();
+		Group group = groupSearchFixture.addGroup(new GroupBlueprint());
 
-		setUpAssetVocabularyIndexerFixture();
+		AssetVocabularyFixture assetVocabularyFixture =
+			new AssetVocabularyFixture(assetVocabularyService, group);
+
+		_assetVocabularies = assetVocabularyFixture.getAssetVocabularies();
+		_assetVocabularyFixture = assetVocabularyFixture;
 
 		_defaultLocale = LocaleThreadLocal.getDefaultLocale();
+		_group = group;
+		_groups = groupSearchFixture.getGroups();
 	}
 
 	@After
@@ -181,47 +194,50 @@ public class AssetVocabularyMultiLanguageSearchTest {
 	}
 
 	protected void assertFieldValues(
-		String prefix, Locale locale, Map<String, String> titleStrings,
+		String prefix, Locale locale, Map<String, String> map,
 		String searchTerm) {
 
-		Document document = assetVocabularyIndexerFixture.searchOnlyOne(
-			searchTerm, locale);
-
 		FieldValuesAssert.assertFieldValues(
-			titleStrings, prefix, document, searchTerm);
+			map, name -> name.startsWith(prefix),
+			searcher.search(
+				searchRequestBuilderFactory.builder(
+				).companyId(
+					getCompanyId()
+				).groupIds(
+					_group.getGroupId()
+				).locale(
+					locale
+				).fields(
+					StringPool.STAR
+				).modelIndexerClasses(
+					AssetVocabulary.class
+				).queryString(
+					searchTerm
+				).build()));
+	}
+
+	protected long getCompanyId() {
+		try {
+			return TestPropsValues.getCompanyId();
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 	}
 
 	protected void setTestLocale(Locale locale) throws Exception {
-		assetVocabularyFixture.updateDisplaySettings(locale);
+		_assetVocabularyFixture.updateDisplaySettings(locale);
 
 		LocaleThreadLocal.setDefaultLocale(locale);
 	}
 
-	protected void setUpAssetVocabularyFixture() {
-		assetVocabularyFixture = new AssetVocabularyFixture(_group);
+	@Inject
+	protected AssetVocabularyService assetVocabularyService;
 
-		_assetVocabularies = assetVocabularyFixture.getAssetVocabularies();
-	}
-
-	protected void setUpAssetVocabularyIndexerFixture() {
-		assetVocabularyIndexerFixture = new IndexerFixture<>(
-			AssetVocabulary.class);
-	}
-
-	protected void setUpUserSearchFixture() throws Exception {
-		userSearchFixture = new UserSearchFixture();
-
-		userSearchFixture.setUp();
-
-		_group = userSearchFixture.addGroup();
-
-		_groups = userSearchFixture.getGroups();
-
-		_users = userSearchFixture.getUsers();
-	}
-
-	protected AssetVocabularyFixture assetVocabularyFixture;
-	protected IndexerFixture<AssetVocabulary> assetVocabularyIndexerFixture;
+	@Inject(
+		filter = "indexer.class.name=com.liferay.asset.kernel.model.AssetVocabulary"
+	)
+	protected Indexer<AssetVocabulary> indexer;
 
 	@Inject
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
@@ -229,10 +245,14 @@ public class AssetVocabularyMultiLanguageSearchTest {
 	@Inject
 	protected SearchEngineHelper searchEngineHelper;
 
-	protected UserSearchFixture userSearchFixture;
+	@Inject
+	protected Searcher searcher;
+
+	@Inject
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 	private void _addAssetVocabularyMultiLanguage() throws Exception {
-		assetVocabularyFixture.createAssetVocabulary(
+		_assetVocabularyFixture.createAssetVocabulary(
 			new LocalizedValuesMap() {
 				{
 					put(LocaleUtil.US, _ENGLISH_TITLE);
@@ -258,13 +278,11 @@ public class AssetVocabularyMultiLanguageSearchTest {
 	@DeleteAfterTestRun
 	private List<AssetVocabulary> _assetVocabularies;
 
+	private AssetVocabularyFixture _assetVocabularyFixture;
 	private Locale _defaultLocale;
 	private Group _group;
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
-
-	@DeleteAfterTestRun
-	private List<User> _users;
 
 }

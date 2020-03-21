@@ -17,20 +17,32 @@ package com.liferay.asset.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryService;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.search.test.util.IndexerFixture;
+import com.liferay.portal.search.model.uid.UIDFactory;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.test.util.FieldValuesAssert;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.users.admin.test.util.search.UserSearchFixture;
+import com.liferay.users.admin.test.util.search.GroupBlueprint;
+import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -56,11 +68,25 @@ public class AssetCategoryIndexerReindexTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpUserSearchFixture();
+		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
-		setUpAssetCategoryFixture();
+		Group group = groupSearchFixture.addGroup(new GroupBlueprint());
 
-		setUpAssetCategoryIndexerFixture();
+		AssetVocabularyFixture assetVocabularyFixture =
+			new AssetVocabularyFixture(assetVocabularyService, group);
+
+		AssetCategoryFixture assetCategoryFixture = new AssetCategoryFixture(
+			assetCategoryService, assetVocabularyFixture, group);
+
+		_assetCategories = assetCategoryFixture.getAssetCategories();
+
+		_assetCategoryFixture = assetCategoryFixture;
+
+		_assetVocabularies = assetVocabularyFixture.getAssetVocabularies();
+
+		_group = group;
+
+		_groups = groupSearchFixture.getGroups();
 	}
 
 	@Test
@@ -68,54 +94,89 @@ public class AssetCategoryIndexerReindexTest {
 		Locale locale = LocaleUtil.US;
 
 		AssetCategory assetCategory =
-			assetCategoryFixture.createAssetCategory();
+			_assetCategoryFixture.createAssetCategory();
 
 		String searchTerm = assetCategory.getName();
 
-		assetCategoryIndexerFixture.searchOnlyOne(searchTerm);
+		String fieldName = Field.NAME;
 
-		Document document = assetCategoryIndexerFixture.searchOnlyOne(
-			searchTerm, locale);
+		Map map = Collections.singletonMap(fieldName, searchTerm);
 
-		assetCategoryIndexerFixture.deleteDocument(document);
+		assertFieldValues(fieldName, map, locale, searchTerm);
 
-		assetCategoryIndexerFixture.searchNoOne(searchTerm, locale);
+		deleteDocument(
+			assetCategory.getCompanyId(), uidFactory.getUID(assetCategory));
 
-		assetCategoryIndexerFixture.reindex(assetCategory.getCompanyId());
+		assertFieldValues(
+			fieldName, Collections.emptyMap(), locale, searchTerm);
 
-		assetCategoryIndexerFixture.searchOnlyOne(searchTerm);
+		reindexAllIndexerModels();
+
+		assertFieldValues(fieldName, map, locale, searchTerm);
 	}
 
-	protected void setUpAssetCategoryFixture() throws Exception {
-		assetCategoryFixture = new AssetCategoryFixture(_group);
+	protected void assertFieldValues(
+		String fieldName, Map<String, String> map, Locale locale,
+		String searchTerm) {
 
-		_assetCategories = assetCategoryFixture.getAssetCategories();
-
-		_assetVocabularies = assetCategoryFixture.getAssetVocabularies();
+		FieldValuesAssert.assertFieldValues(
+			map, fieldName::equals,
+			searcher.search(
+				searchRequestBuilderFactory.builder(
+				).companyId(
+					_group.getCompanyId()
+				).groupIds(
+					_group.getGroupId()
+				).locale(
+					locale
+				).fields(
+					StringPool.STAR
+				).modelIndexerClasses(
+					AssetCategory.class
+				).queryString(
+					searchTerm
+				).build()));
 	}
 
-	protected void setUpAssetCategoryIndexerFixture() {
-		assetCategoryIndexerFixture = new IndexerFixture<>(AssetCategory.class);
+	protected void deleteDocument(long companyId, String uid) throws Exception {
+		indexWriterHelper.deleteDocument(
+			indexer.getSearchEngineId(), companyId, uid, true);
 	}
 
-	protected void setUpUserSearchFixture() throws Exception {
-		userSearchFixture = new UserSearchFixture();
-
-		userSearchFixture.setUp();
-
-		_group = userSearchFixture.addGroup();
-
-		_groups = userSearchFixture.getGroups();
-
-		_users = userSearchFixture.getUsers();
+	protected void reindexAllIndexerModels() throws Exception {
+		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
 	}
 
-	protected AssetCategoryFixture assetCategoryFixture;
-	protected IndexerFixture<AssetCategory> assetCategoryIndexerFixture;
-	protected UserSearchFixture userSearchFixture;
+	@Inject
+	protected AssetCategoryService assetCategoryService;
+
+	@Inject
+	protected AssetVocabularyService assetVocabularyService;
+
+	@Inject(
+		filter = "indexer.class.name=com.liferay.asset.kernel.model.AssetCategory"
+	)
+	protected Indexer<AssetCategory> indexer;
+
+	@Inject
+	protected IndexWriterHelper indexWriterHelper;
+
+	@Inject
+	protected SearchEngineHelper searchEngineHelper;
+
+	@Inject
+	protected Searcher searcher;
+
+	@Inject
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
+
+	@Inject
+	protected UIDFactory uidFactory;
 
 	@DeleteAfterTestRun
 	private List<AssetCategory> _assetCategories;
+
+	private AssetCategoryFixture _assetCategoryFixture;
 
 	@DeleteAfterTestRun
 	private List<AssetVocabulary> _assetVocabularies;
@@ -124,8 +185,5 @@ public class AssetCategoryIndexerReindexTest {
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
-
-	@DeleteAfterTestRun
-	private List<User> _users;
 
 }

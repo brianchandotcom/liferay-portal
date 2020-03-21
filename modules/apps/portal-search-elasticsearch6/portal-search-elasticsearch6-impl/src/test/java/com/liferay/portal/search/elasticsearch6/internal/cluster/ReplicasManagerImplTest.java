@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.IndexCreator;
 import com.liferay.portal.search.elasticsearch6.internal.connection.IndexName;
@@ -42,6 +43,8 @@ public class ReplicasManagerImplTest {
 
 	@Before
 	public void setUp() throws Exception {
+		SystemProperties.clear("liferay.mode");
+
 		MockitoAnnotations.initMocks(this);
 
 		_replicasClusterContext = createReplicasClusterContext();

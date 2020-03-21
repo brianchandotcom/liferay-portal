@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch6.internal.cluster;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 
 import java.net.InetAddress;
@@ -80,6 +81,8 @@ public class TestCluster {
 	}
 
 	public void setUp() throws Exception {
+		SystemProperties.clear("liferay.mode");
+
 		createNodes();
 	}
 

@@ -118,7 +118,9 @@ buildChangelogs {
 							!commitMessage.matches("Revert \".* SF\"") &&
 							!commitMessage.startsWith("Semver")) {
 
-							commits = commits + "\n" + _format("- [" + gitLogAttributes["TICKET-NUMBER"] + "] " + commitMessage + " (" + sha.substring(0, 10) + ")")
+							String ticketLink = gitLogAttributes["TICKET-NUMBER"].replaceAll("([A-Z]+-\\d+)", "[\$1]")
+
+							commits = commits + "\n" + _format("- " + ticketLink + " " + commitMessage + " (" + sha.substring(0, 10) + ")")
 
 							ticketNumbers.add(gitLogAttributes["TICKET-NUMBER"])
 						}

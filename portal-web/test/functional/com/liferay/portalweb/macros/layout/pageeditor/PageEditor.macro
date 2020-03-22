@@ -516,6 +516,7 @@ definition {
 				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
 
 			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
 				key_imageName = "${imageFileName}",
 				locator1 = "Fragment#FRAGMENT_CONTENT_BACKGROUND_IMAGE");
 		}

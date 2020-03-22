@@ -297,7 +297,7 @@ to version 2.0.2.
 
 ### Commits
 - [LPS-99977] Update Gradle plugins (f125baba8a)
-- [LPS-98879 LPS-96095] auto SF for servlet-api (032b53ca5e)
+- [LPS-98879] [LPS-96095] auto SF for servlet-api (032b53ca5e)
 
 ## 2.1.3 - 2019-08-09
 
@@ -351,7 +351,7 @@ to version 2.0.2.
 (3d0f0940dc)
 - [LPS-98914] docker should respect liferay.workspace.environment (87d3430153)
 - [LPS-98914] docker label and tag not being set (848c0018f9)
-- [LPS-98877 LPS-96095] auto SF for portlet-api (fc1fff6de9)
+- [LPS-98877] [LPS-96095] auto SF for portlet-api (fc1fff6de9)
 
 ## 2.0.8 - 2019-07-31
 
@@ -804,7 +804,7 @@ logic for gradle and maven (7989765c5b)
 ## 1.10.19 - 2019-02-19
 
 ### Commits
-- [LRQA-46662/LRQA-45313] Add compatibility version 7.2.0+ (ca1221e227)
+- [LRQA-46662]/[LRQA-45313] Add compatibility version 7.2.0+ (ca1221e227)
 
 ### Dependencies
 - [LRQA-46662] Update the com.liferay.gradle.plugins.target.platform dependency

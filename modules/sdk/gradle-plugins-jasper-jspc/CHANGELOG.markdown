@@ -33,7 +33,7 @@
 (b936b01cf7)
 - [LPS-98937] refactor compileJSP generateJSPJava tasks to run before building
 jar (5bdc217573)
-- [LPS-98877 LPS-96095] auto SF for portlet-api (fc1fff6de9)
+- [LPS-98877] [LPS-96095] auto SF for portlet-api (fc1fff6de9)
 - [LPS-85609] Update readme (c182ff396d)
 - [LPS-85609] Simplify gradleTest (a8b0feff31)
 - [LPS-85609] Use Gradle 4.10.2 (9aa90f8961)

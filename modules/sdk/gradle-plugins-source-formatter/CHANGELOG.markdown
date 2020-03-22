@@ -127,7 +127,7 @@
 ## 2.3.481 - 2020-01-07
 
 ### Commits
-- [LPS-106315 LPS-94003] publish SF required changes (43df93d5ff)
+- [LPS-106315] [LPS-94003] publish SF required changes (43df93d5ff)
 
 ### Dependencies
 - [LPS-106315 LPS-94003] Update the com.liferay.source.formatter dependency to
@@ -4475,7 +4475,7 @@ file when running SF configurable (ad37297cb9)
 ## 1.0.10 - 2016-05-16
 
 ### Commits
-- [LPS-65716 LPS-65799] Use SourceFormatterArgs so this works for both ant and
+- [LPS-65716] [LPS-65799] Use SourceFormatterArgs so this works for both ant and
 gradle (0643834abf)
 - [LPS-64816] Update Gradle plugin samples (3331002e5d)
 - [LPS-61099] Delete build.xml in modules (c9a7e1d370)

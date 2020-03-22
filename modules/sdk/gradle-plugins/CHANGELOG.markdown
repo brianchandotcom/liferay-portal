@@ -618,7 +618,7 @@ version 1.0.50.
 ## 4.5.2 - 2020-01-07
 
 ### Commits
-- [LPS-106315 LPS-94003] publish SF required changes (43df93d5ff)
+- [LPS-106315] [LPS-94003] publish SF required changes (43df93d5ff)
 
 ### Dependencies
 - [LPS-106315 LPS-94003] Update the com.liferay.gradle.plugins.source.formatter
@@ -955,7 +955,7 @@ to version 2.3.466.
 ## 4.4.81 - 2019-11-13
 
 ### Commits
-- [LPS-102655 | LPS-103339] Run `ant format-javadoc` (ee2d87705f)
+- [LPS-102655] | [LPS-103339] Run `ant format-javadoc` (ee2d87705f)
 
 ### Dependencies
 - [LPS-104435] Update the com.liferay.gradle.plugins.source.formatter dependency
@@ -1795,7 +1795,7 @@ version 2.4.38.
 
 ### Commits
 - [LPS-99740] Set environment variable (701d7920e1)
-- [LPS-98879 LPS-96095] auto SF for servlet-api (032b53ca5e)
+- [LPS-98879] [LPS-96095] auto SF for servlet-api (032b53ca5e)
 - [LPS-90052] [$USER_PASSWORD$] token no longer available (0859fcc133)
 - [LPS-90049] Remove "Allow users to request forgotten passwords" option from IU
 (385d17395c)
@@ -1858,7 +1858,7 @@ to version 2.3.426.
 ## 4.0.69 - 2019-08-03
 
 ### Commits
-- [LPS-98877 LPS-96095] auto SF for portlet-api (fc1fff6de9)
+- [LPS-98877] [LPS-96095] auto SF for portlet-api (fc1fff6de9)
 
 ### Dependencies
 - [LPS-84119] Update the com.liferay.gradle.plugins.source.formatter dependency
@@ -11595,7 +11595,7 @@ version 1.0.12.
 ### Commits
 - [LPS-65716] Do not override the defaults if the properties have no value
 (f2340c3cfa)
-- [LPS-65716 LPS-65799] Use SourceFormatterArgs so this works for both ant and
+- [LPS-65716] [LPS-65799] Use SourceFormatterArgs so this works for both ant and
 gradle (0643834abf)
 
 ### Dependencies

@@ -7,7 +7,7 @@
 - [LPS-106149] Cacheable tasks (5f1911b5ba)
 - [LPS-100515] Update README.markdown (694b3791de)
 - [LPS-100515] Update plugins Gradle version (448efac158)
-- [LPS-102655 | LPS-103339] Run `ant format-javadoc` (ee2d87705f)
+- [LPS-102655] | [LPS-103339] Run `ant format-javadoc` (ee2d87705f)
 - [LPS-102367] Deprecate unused Gradle plugins (8a7245d0c3)
 - [LPS-96376] Update to liferay-npm-scripts v2.1.0 (prettier) (7930ab3625)
 - [LPS-84119] Use toArray(new T[0]) instead of toArray(new T[size()])

@@ -148,7 +148,7 @@ dependency-management-plugin (4283a850ef)
 - [LPS-100448] Auto-SF (0ff1cd4057)
 - [LPS-99577] fix classpath problem in tests (13be6aecd6)
 - [LPS-93483] try 2.1.1? (9b15f81863)
-- [LPS-98877 LPS-96095] auto SF for portlet-api (fc1fff6de9)
+- [LPS-98877] [LPS-96095] auto SF for portlet-api (fc1fff6de9)
 
 ## 2.0.1 - 2019-07-30
 

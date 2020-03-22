@@ -10,7 +10,7 @@
 - [LRCI-498] Simplify (1e2f8d53f5)
 - [LRCI-498] Create symbolic link if symbolic attribute is set to TRUE
 (946c5c492d)
-- [LPS-98801 LPS-96095] auto SF for ant (bf3c0ef390)
+- [LPS-98801] [LPS-96095] auto SF for ant (bf3c0ef390)
 - [LPS-77425] Partial revert of d25f48516a9ad080bcbd50e228979853d3f2dda5
 (60d3a950d6)
 - [LPS-77425] Increment all major versions (d25f48516a)

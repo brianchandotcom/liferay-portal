@@ -11,11 +11,11 @@
 - [LPS-100515] Update plugins Gradle version (448efac158)
 - [LPS-94523] Bump up jackson dependencies to 2.9.10 or 2.9.10.1 (1f4f471bfc)
 - [LPS-100448] Auto-SF (0ff1cd4057)
-- [LPS-98879 LPS-96095] auto SF for servlet-api (032b53ca5e)
-- [LPS-98631 LPS-96095] auto SF for xstream (349cd5e076)
-- [LPS-98631 LPS-96095] Revert "LPS-98631 LPS-96095 auto SF for xstream"
+- [LPS-98879] [LPS-96095] auto SF for servlet-api (032b53ca5e)
+- [LPS-98631] [LPS-96095] auto SF for xstream (349cd5e076)
+- [LPS-98631] [LPS-96095] Revert "LPS-98631 LPS-96095 auto SF for xstream"
 (267420ee84)
-- [LPS-98631 LPS-96095] auto SF for xstream (a0bc3d419a)
+- [LPS-98631] [LPS-96095] auto SF for xstream (a0bc3d419a)
 - [LPS-84119] Use toArray(new T[0]) instead of toArray(new T[size()])
 (c23914c90b)
 - [LPS-85609] Simplify gradleTest (a8b0feff31)

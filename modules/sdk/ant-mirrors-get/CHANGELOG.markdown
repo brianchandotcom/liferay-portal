@@ -11,7 +11,7 @@
 ### Commits
 - [LRCI-901] Add configurable retry logic for mirrors-get (a71fc0d1a5)
 - [LPS-84119] Add line breaks (b8db59dbc4)
-- [LPS-98801 LPS-96095] auto SF for ant (bf3c0ef390)
+- [LPS-98801] [LPS-96095] auto SF for ant (bf3c0ef390)
 
 ### Dependencies
 - [LPS-98801 LPS-96095] Update the ant dependency to version 1.9.14.

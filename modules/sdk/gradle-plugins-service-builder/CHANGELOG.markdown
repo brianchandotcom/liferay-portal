@@ -1616,7 +1616,7 @@ version 2.4.
 ## 1.0.1 - 2015-04-29
 
 ### Commits
-- [LPS-52594 LPS-55043] increment (b7b7f70a44)
+- [LPS-52594] [LPS-55043] increment (b7b7f70a44)
 - [LPS-52594] consistency (194d69a3dd)
 
 [LPS-41848]: https://issues.liferay.com/browse/LPS-41848

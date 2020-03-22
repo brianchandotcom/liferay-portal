@@ -42,7 +42,7 @@ previous version of the code (daf6c5c8c5)
 - [LPS-98190] Source formatting (b932ed61a9)
 - [LPS-98190] move MetatypePlugin back to ant-bnd to support maven as well
 (8c822456cc)
-- [LPS-98801 LPS-96095] auto SF for ant (bf3c0ef390)
+- [LPS-98801] [LPS-96095] auto SF for ant (bf3c0ef390)
 - [LPS-84119] Pass methodcall directly instead of declaring variable first
 (1e8886f5ef)
 - [LPS-98198] I think this is more accurate (4ab7b5b5f8)

@@ -19,7 +19,7 @@
 - [LPS-106149] Cacheable tasks (5f1911b5ba)
 - [LPS-100515] Update README.markdown (694b3791de)
 - [LPS-100515] Update plugins Gradle version (448efac158)
-- [LPS-102655 | LPS-103339] Run `ant format-javadoc` (ee2d87705f)
+- [LPS-102655] | [LPS-103339] Run `ant format-javadoc` (ee2d87705f)
 - [LPS-104132] Apply it everywhere (02f1d1d169)
 
 ### Dependencies

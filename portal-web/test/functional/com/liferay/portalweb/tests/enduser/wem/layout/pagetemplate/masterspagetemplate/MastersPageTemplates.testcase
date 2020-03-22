@@ -937,7 +937,9 @@ definition {
 
 		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 
-		Button.clickPublish();
+		Alert.viewSuccessMessage();
+
+		PortletEntry.publish();
 
 		task ("Assert the new fragment does not exist in page with the first custom master") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name-1");

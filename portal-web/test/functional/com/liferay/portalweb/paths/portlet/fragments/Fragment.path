@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONTENT_BACKGROUND_IMAGE</td>
-	<td>//div[contains(@class,'fragment-entry-link')]//div[contains(@style,'${key_imageName}')]</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//div[contains(@style,'${key_imageName}')]</td>
 	<td></td>
 </tr>
 <tr>

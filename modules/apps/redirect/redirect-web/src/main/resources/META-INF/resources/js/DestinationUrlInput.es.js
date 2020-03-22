@@ -61,7 +61,7 @@ const Notification = ({type}) => {
 	}
 };
 
-const DestinationUrlInput = ({destinationUrl, namespace}) => {
+const DestinationUrlInput = ({destinationUrl = STR_BLANK, namespace}) => {
 	const [validationType, setValidationType] = useState(STR_BLANK);
 
 	const onInputBlur = event => {
@@ -85,7 +85,8 @@ const DestinationUrlInput = ({destinationUrl, namespace}) => {
 				.catch(() => {
 					setValidationType(VALIDATION_TYPE.warning);
 				});
-		} else {
+		}
+		else {
 			setValidationType(STR_BLANK);
 		}
 	};
@@ -105,6 +106,7 @@ const DestinationUrlInput = ({destinationUrl, namespace}) => {
 			</label>
 
 			<ClayInput
+				aria-label={Liferay.Language.get('destination-url')}
 				defaultValue={destinationUrl}
 				id={`${namespace}destinationURL`}
 				name={`${namespace}destinationURL`}
@@ -124,7 +126,7 @@ const DestinationUrlInput = ({destinationUrl, namespace}) => {
 };
 
 DestinationUrlInput.propTypes = {
-	destinationUrl: PropTypes.string.isRequired,
+	destinationUrl: PropTypes.string,
 	namespace: PropTypes.string.isRequired,
 };
 

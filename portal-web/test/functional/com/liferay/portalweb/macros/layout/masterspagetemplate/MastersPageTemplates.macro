@@ -22,11 +22,11 @@ definition {
 
 			Check.checkToggleSwitch(
 				key_fragmentName = "${fragmentName}",
-				locator1 = "Checkbox#ALLowed_FRAGMENT");
+				locator1 = "Checkbox#ALLOWED_FRAGMENT");
 
 			AssertChecked.assertCheckedNotVisible(
 				key_fragmentName = "${fragmentName}",
-				locator1 = "Checkbox#ALLowed_FRAGMENT");
+				locator1 = "Checkbox#ALLOWED_FRAGMENT");
 		}
 
 		Button.clickSave();

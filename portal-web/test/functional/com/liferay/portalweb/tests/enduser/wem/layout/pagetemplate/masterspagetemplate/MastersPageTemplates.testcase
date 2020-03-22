@@ -875,7 +875,7 @@ definition {
 
 		Uncheck.uncheckToggleSwitch(
 			key_fragmentName = "Select New Fragments Automatically",
-			locator1 = "Checkbox#ALLowed_FRAGMENT");
+			locator1 = "Checkbox#ALLOWED_FRAGMENT");
 
 		Button.clickSave();
 
@@ -901,7 +901,7 @@ definition {
 
 		AssertChecked.assertCheckedNotVisible(
 			key_fragmentName = "Select New Fragments Automatically",
-			locator1 = "Checkbox#ALLowed_FRAGMENT");
+			locator1 = "Checkbox#ALLOWED_FRAGMENT");
 
 		Button.clickSave();
 
@@ -1256,21 +1256,21 @@ definition {
 
 		Uncheck.uncheckToggleSwitch(
 			key_fragmentName = "Heading",
-			locator1 = "Checkbox#ALLowed_FRAGMENT");
+			locator1 = "Checkbox#ALLOWED_FRAGMENT");
 
 		AssertNotChecked.assertNotCheckedNotVisible(
 			key_fragmentName = "Heading",
-			locator1 = "Checkbox#ALLowed_FRAGMENT");
+			locator1 = "Checkbox#ALLOWED_FRAGMENT");
 
 		MastersPageTemplates.searchAllowedFragments(searchValue = "Button");
 
 		Check.checkToggleSwitch(
 			key_fragmentName = "Button",
-			locator1 = "Checkbox#ALLowed_FRAGMENT");
+			locator1 = "Checkbox#ALLOWED_FRAGMENT");
 
 		AssertChecked.assertCheckedNotVisible(
 			key_fragmentName = "Button",
-			locator1 = "Checkbox#ALLowed_FRAGMENT");
+			locator1 = "Checkbox#ALLOWED_FRAGMENT");
 
 		Button.clickSave();
 

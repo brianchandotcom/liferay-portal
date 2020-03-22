@@ -364,7 +364,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ALLowed_FRAGMENT</td>
+	<td>ALLOWED_FRAGMENT</td>
 	<td>//label[contains(.,'${key_fragmentName}')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>

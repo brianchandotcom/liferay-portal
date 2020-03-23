@@ -65,8 +65,10 @@ import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletMode;
@@ -412,25 +414,26 @@ public class PortletConfigurationPermissionsDisplayContext {
 			}
 		}
 
-		List<String> excludedRoleNames = new ArrayList<>();
+		Set<String> excludedRoleNamesSet = new HashSet<>();
 
-		excludedRoleNames.add(RoleConstants.ADMINISTRATOR);
+		excludedRoleNamesSet.add(RoleConstants.ADMINISTRATOR);
 
 		if (filterGroupRoles) {
-			Role modelResourceRole = RoleLocalServiceUtil.getRole(
-				modelResourceRoleId);
+			for (RoleTypeContributor roleTypeContributor :
+					_roleTypeContributorProvider.getRoleTypeContributors()) {
 
-			RoleTypeContributor roleTypeContributor =
-				_roleTypeContributorProvider.getRoleTypeContributor(
-					modelResourceRole.getType());
-
-			Collections.addAll(
-				excludedRoleNames, roleTypeContributor.getExcludedRoleNames());
+				Collections.addAll(
+					excludedRoleNamesSet,
+					roleTypeContributor.getExcludedRoleNames());
+			}
 		}
 
 		if (filterGuestRole) {
-			excludedRoleNames.add(RoleConstants.GUEST);
+			excludedRoleNamesSet.add(RoleConstants.GUEST);
 		}
+
+		List<String> excludedRoleNames = ListUtil.fromCollection(
+			excludedRoleNamesSet);
 
 		long teamGroupId = _group.getGroupId();
 

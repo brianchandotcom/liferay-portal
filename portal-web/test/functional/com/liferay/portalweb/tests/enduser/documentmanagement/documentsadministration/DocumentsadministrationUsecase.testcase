@@ -466,6 +466,7 @@ definition {
 	}
 
 	@description = "This test ensures that a checked out document cannot be edited by another user."
+	@ignore = "true"
 	@priority = "5"
 	test CheckOutDocument {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -592,6 +593,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test Comments {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -770,6 +772,7 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test ImportAudioAndLimitPermissionsToSubfolder {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -948,6 +951,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-91597. It ensures that a user can delete multiple documents simultaneously."
+	@ignore = "true"
 	@priority = "4"
 	test SelectMultipleDocumentsAndDeleteViaActionsButton {
 		JSONLayout.addPublicLayout(
@@ -1416,6 +1420,7 @@ definition {
 			tagNameList = "tag1,tag2");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test ViewFolderAsOrganizationUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

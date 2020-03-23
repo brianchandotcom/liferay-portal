@@ -766,6 +766,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-91598. It makes sure that all files are deleted when user selects all."
+	@ignore = "true"
 	@priority = "4"
 	test SelectAllAndDelete {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

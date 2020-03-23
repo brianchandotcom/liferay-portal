@@ -190,6 +190,7 @@ definition {
 		BlogsEntry.viewNoPG(entryTitle = "");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AddBlogsEntryWithSamePageScope {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -585,6 +586,7 @@ definition {
 			value1 = "blogs-entry-title");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test DeleteBlogsEntries {
 		property portal.acceptance = "quarantine";
@@ -1518,6 +1520,7 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewBlogsEntryWithGuestPermissionsRemoved {
 		Blogs.addEntry(

@@ -115,6 +115,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can only view memberships with view permissions."
+	@ignore = "true"
 	@priority = "5"
 	test AccessMembershipWithViewOnlyPermissions {
 		JSONUser.addUser(
@@ -484,6 +485,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can view documents on site and library with all sites and libraries scope view permissions."
+	@ignore = "true"
 	@priority = "5"
 	test ViewDocumentOnSiteAndLibrary {
 		JSONDocument.addFile(

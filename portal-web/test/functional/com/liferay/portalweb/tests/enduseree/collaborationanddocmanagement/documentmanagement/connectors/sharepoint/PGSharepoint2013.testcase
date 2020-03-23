@@ -116,6 +116,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewDocumentAsGuest {
 		Navigator.gotoPage(pageName = "Documents and Media Page");

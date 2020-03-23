@@ -30,6 +30,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ChangeSocialBookmarkSitesForKBArticle {
 		property osgi.app.includes = "social-bookmarks, knowledge-base";
@@ -134,6 +135,7 @@ definition {
 		SocialBookmarks.viewBookmarkMenuItems(socialBookmarks = "AddThis,Delicious,Digg,Evernote,Reddit,Slashdot");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test ViewKBArticleWithAllSocialBookmarkSites {
 		property osgi.app.includes = "social-bookmarks, knowledge-base";

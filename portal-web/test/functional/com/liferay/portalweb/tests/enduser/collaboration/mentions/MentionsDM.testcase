@@ -60,6 +60,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test ViewMentionViaDMComment {
 		ProductMenu.gotoPortlet(
@@ -111,6 +112,7 @@ definition {
 			mentionsUserScreenName = "test");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test ViewReplyMentionViaDMComment {
 		ProductMenu.gotoPortlet(

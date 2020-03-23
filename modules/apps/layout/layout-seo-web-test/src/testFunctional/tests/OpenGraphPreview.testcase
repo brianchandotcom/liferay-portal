@@ -29,6 +29,7 @@ definition {
 	}
 
 	@description = "This ensures that the OG preview is updated when the image is changed."
+	@ignore = "true"
 	@priority = "5"
 	test PreviewAfterReplacingImage {
 		var portalURL = PropsUtil.get("portal.url");

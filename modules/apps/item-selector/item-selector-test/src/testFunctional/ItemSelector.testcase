@@ -59,6 +59,7 @@ definition {
 	}
 
 	@description = "This ensures that the SVG image can be added to a fragment background."
+	@ignore = "true"
 	@priority = "5"
 	test AddSVGImageToFragmentBackground {
 		JSONLayout.addPublicLayout(
@@ -130,6 +131,7 @@ definition {
 	}
 
 	@description = "This ensures that the background image of a fragment can be added."
+	@ignore = "true"
 	@priority = "5"
 	test FragmentSmoke {
 		property portal.acceptance = "true";

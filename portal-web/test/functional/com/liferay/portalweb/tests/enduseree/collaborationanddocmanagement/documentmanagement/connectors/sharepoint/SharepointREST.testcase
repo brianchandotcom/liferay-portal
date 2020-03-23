@@ -142,6 +142,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test CheckinDocument {
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
@@ -195,6 +196,7 @@ definition {
 			dmRepositoryName = "true");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test DeleteDocumentInSubfolder {
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
@@ -253,6 +255,7 @@ definition {
 		DMDocument.viewDefaultCP();
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test DeleteSubfolder {
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
@@ -275,6 +278,7 @@ definition {
 		DMFolder.cannotViewCP(dmFolderName = "DM Folder Name");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test EditDocumentFile {
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
@@ -324,6 +328,7 @@ definition {
 			metadataLabel = "Content Encoding");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test MoveCheckedoutDocumentToFolder {
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
@@ -391,6 +396,7 @@ definition {
 		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test MoveDocumentToHome {
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
@@ -426,6 +432,7 @@ definition {
 		DMDocument.cannotViewCP(dmDocumentTitle = "Document_1.odt");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test SearchDocumentViaHome {
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
@@ -448,6 +455,7 @@ definition {
 			dmRepositoryName = "Collaboration Test Application");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewDocumentAsGuest {
 		ProductMenu.gotoPortlet(
@@ -497,6 +505,7 @@ definition {
 		AssertElementPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewEditedCheckedoutDocument {
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
@@ -546,6 +555,7 @@ definition {
 		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange {
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
@@ -582,6 +592,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.docx");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval {
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
@@ -618,6 +629,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Document_3.docx");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewRepository {
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");

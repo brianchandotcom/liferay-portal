@@ -67,6 +67,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test DeleteNotifications {
 		Navigator.gotoPage(pageName = "Blogs Page");
@@ -118,6 +119,7 @@ definition {
 		Notifications.viewNoNotifications(activePanel = "Notifications");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test MarkAllNotificationsAsRead {
 		Navigator.gotoPage(pageName = "Blogs Page");
@@ -159,6 +161,7 @@ definition {
 		Notifications.viewNoNotifications(activePanel = "Notifications");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewMultipleNotifications {
 		Navigator.gotoPage(pageName = "Blogs Page");
@@ -452,6 +455,7 @@ definition {
 		Notifications.viewBadgeCount(notificationCount = "0");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewWebsiteNotificationForNewCommentViaBlogs {
 		Navigator.gotoPage(pageName = "Blogs Page");

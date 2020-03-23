@@ -36,6 +36,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test DeleteKBArticleViaKBArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");

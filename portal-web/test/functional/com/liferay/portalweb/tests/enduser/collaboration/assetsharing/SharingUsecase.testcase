@@ -296,6 +296,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can Order By Shared Date in the Shared Content app."
+	@ignore = "true"
 	@priority = "3"
 	test OrderBySharedDate {
 		property portal.acceptance = "quarantine";

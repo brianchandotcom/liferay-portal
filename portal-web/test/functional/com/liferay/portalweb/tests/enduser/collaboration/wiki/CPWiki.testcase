@@ -93,6 +93,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-89884. It ensures that a DL image can be added to a wiki page via URL."
+	@ignore = "true"
 	@priority = "5"
 	test AddPageWithDMImageViaURL {
 		property test.name.skip.portal.instance = "CPWiki#AddPageWithDMImageViaURL";

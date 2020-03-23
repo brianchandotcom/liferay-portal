@@ -27,6 +27,7 @@ definition {
 	}
 
 	@description = "This ensures that the documents with document type can be selected through Content Sets in a depot."
+	@ignore = "true"
 	@priority = "5"
 	test AddDocTypeDocumentsManually {
 		for (var i : list "1,2") {
@@ -405,6 +406,7 @@ definition {
 	}
 
 	@description = "This ensures that the image is displayed by AP through Content Sets in a depot."
+	@ignore = "true"
 	@priority = "5"
 	test DisplayImageInAP {
 		property portal.acceptance = "quarantine";

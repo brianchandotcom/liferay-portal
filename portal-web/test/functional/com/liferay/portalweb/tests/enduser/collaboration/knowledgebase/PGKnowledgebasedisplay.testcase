@@ -38,6 +38,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AddChildArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -62,6 +63,7 @@ definition {
 			kbChildArticleTitle = "Child Article Title");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test AddKBArticleContentNull {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -76,6 +78,7 @@ definition {
 		KBArticle.viewNoPGViaKBDisplay(kbArticleTitle = "Knowledge Base Article Title");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AddKBArticleSuggestion {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -102,6 +105,7 @@ definition {
 			status = "New");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test AddKBArticleTitleNull {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -115,6 +119,7 @@ definition {
 		KBArticle.viewNoPGViaKBDisplay(kbArticleTitle = "Knowledge Base Article Content");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AddMultipleKBArticleSuggestions {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -149,6 +154,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test CancelAddChildArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -173,6 +179,7 @@ definition {
 		AssertElementNotPresent(locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_CHILD");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test CannotViewDuplicateBreadcrumbsWhenAddingParentArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -200,6 +207,7 @@ definition {
 		AssertElementNotPresent(locator1 = "//ul[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test DeleteChildArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -226,6 +234,7 @@ definition {
 		KBArticle.deletePG();
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test DeleteKBArticleViaKBDisplay {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -241,6 +250,7 @@ definition {
 		KBArticle.viewDefaultViaKBDisplayPG();
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test EditChildArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -286,6 +296,7 @@ definition {
 		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title Edited 1");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test EditKBArticle {
 		property portal.acceptance = "true";
@@ -318,6 +329,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title Edit");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test EditKBArticleDisplaySettingsViaKBDisplayConfiguration {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -343,6 +355,7 @@ definition {
 			subscribe = "false");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test SelectParentArticleViaKBDisplay {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -370,6 +383,7 @@ definition {
 		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewEditedKBArticleTitleHistory {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -395,6 +409,7 @@ definition {
 			viewNoXMLInTitle = "true");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewKBArticleSuggestionsWorkflow {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -437,6 +452,7 @@ definition {
 			status = "Resolved");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewKBArticleViaDefaultFriendlyURL {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -462,6 +478,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article2 Title");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test ViewKBArticleViaNavigationLinks {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -523,6 +540,7 @@ definition {
 			previous = "false");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewKBArticleViaUserDefinedFriendlyURL {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -549,6 +567,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article2 Title");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test ViewKBArticleWithBlogsEntryRelatedAsset {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
@@ -582,6 +601,7 @@ definition {
 		KBArticle.viewBlogsEntryRelatedAsset();
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewKBArticleWithKBChildArticleHierarchyNavigation {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -639,6 +659,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Parent Title 2 Child 2");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewKBArticleWithoutConfiguration {
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
@@ -658,6 +679,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test ViewKBArticleWithXSSCodeInjectedTitle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -683,6 +705,7 @@ definition {
 			kbArticleTitle = '''><img onerror="alert('xss')" src="xx" /><''');
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewKBChildArticleViaNextLink {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -705,6 +728,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test ViewNoDuplicateKBSuggestionAfterRefresh {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");

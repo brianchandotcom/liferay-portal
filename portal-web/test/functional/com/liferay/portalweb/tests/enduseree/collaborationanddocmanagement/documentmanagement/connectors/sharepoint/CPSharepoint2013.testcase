@@ -98,6 +98,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test CheckinDocument {
 		property test.name.skip.portal.instance = "CPSharepoint#CheckinDocument";
@@ -155,6 +156,7 @@ definition {
 			dmRepositoryName = "true");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test DeleteDocumentInSubfolder {
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -213,6 +215,7 @@ definition {
 		DMDocument.viewDefaultCP();
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test DeleteSubfolder {
 		property test.name.skip.portal.instance = "CPSharepoint#DeleteSubfolder";
@@ -239,6 +242,7 @@ definition {
 		DMFolder.viewDefaultCP();
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test EditDocumentFile {
 		property test.name.skip.portal.instance = "CPSharepoint#EditDocumentFile";
@@ -292,6 +296,7 @@ definition {
 			metadataLabel = "Content Encoding");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test EditRepository {
 		property test.name.skip.portal.instance = "CPSharepoint#EditRepository";
@@ -353,6 +358,7 @@ definition {
 			value1 = "Sharepoint Repository Name Edit");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test MoveCheckedoutDocumentToFolder {
 		property test.name.skip.portal.instance = "CPSharepoint#MoveCheckedoutDocumentToFolder";
@@ -427,6 +433,7 @@ definition {
 		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test MoveDocumentToHome {
 		property test.name.skip.portal.instance = "CPSharepoint#MoveDocumentToHome";
@@ -464,6 +471,7 @@ definition {
 		DMDocument.cannotViewCP(dmDocumentTitle = "Document_1.odt");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test SearchDocumentViaHome {
 		property test.name.skip.portal.instance = "CPSharepoint#SearchDocumentViaHome";
@@ -488,6 +496,7 @@ definition {
 			dmRepositoryName = "Sharepoint Repository Name");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewEditedCheckedoutDocument {
 		property test.name.skip.portal.instance = "CPSharepoint#ViewEditedCheckedoutDocument";
@@ -578,6 +587,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.docx");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval {
 		property portal.release = "false";

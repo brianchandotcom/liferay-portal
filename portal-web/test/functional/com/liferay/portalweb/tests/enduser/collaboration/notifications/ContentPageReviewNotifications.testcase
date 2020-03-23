@@ -68,6 +68,7 @@ definition {
 	}
 
 	@description = "This case ensures that the user is notified when someone comments on their content page fragment."
+	@ignore = "true"
 	@priority = "5"
 	test ViewComment {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -120,6 +121,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-101493. It ensures that a user who replies to a comment will receive further reply notifications."
+	@ignore = "true"
 	@priority = "4"
 	test ViewCommentFurtherReply {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -204,6 +206,7 @@ definition {
 	}
 
 	@description = "This case ensures that a user is notified when a reply is added to their comment."
+	@ignore = "true"
 	@priority = "5"
 	test ViewCommentReply {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -266,6 +269,7 @@ definition {
 	}
 
 	@description = "This case ensures a user who is mentioned in a comment will receive notifications."
+	@ignore = "true"
 	@priority = "4"
 	test ViewMentionFromComment {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");

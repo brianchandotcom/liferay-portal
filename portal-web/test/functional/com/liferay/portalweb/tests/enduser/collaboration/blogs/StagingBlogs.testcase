@@ -363,6 +363,7 @@ definition {
 		Staging.publishToLive();
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test StagingBlogsPG {
 		Navigator.gotoStagedSitePage(
@@ -543,6 +544,7 @@ definition {
 			viewNoEntryTitle = "Blogs Entry Title 2");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test StagingBlogsWithScheduledPublishing {
 		property test.name.skip.portal.instance = "BlogsUsecase#StagingBlogsWithScheduledPublishing";
@@ -599,6 +601,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-72949."
+	@ignore = "true"
 	@priority = "5"
 	test StagingLocalLiveLockAndEditBlogsEntry {
 		Navigator.gotoStagedSitePage(

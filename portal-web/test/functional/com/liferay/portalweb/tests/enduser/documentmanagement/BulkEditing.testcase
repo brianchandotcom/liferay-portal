@@ -336,6 +336,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-94994. It ensures that users can edit category tags by using the bulk append action."
+	@ignore = "true"
 	@priority = "5"
 	test ReplaceUncommonCategoryTags {
 		property portal.acceptance = "quarantine";
@@ -391,6 +392,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-89636. It saves tags without clicking Enter or adding a Comma."
+	@ignore = "true"
 	@priority = "4"
 	test SaveTags {
 		property portal.acceptance = "quarantine";

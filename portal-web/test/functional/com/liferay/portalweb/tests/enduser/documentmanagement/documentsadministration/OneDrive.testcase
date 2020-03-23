@@ -409,6 +409,7 @@ definition {
 	}
 
 	@description = "This test ensures that a Powerpoint presentation title can be changed via the OneDrive editor."
+	@ignore = "true"
 	@priority = "4"
 	test EditPowerPointPresentation {
 		property test.name.skip.portal.instance = "OneDrive#EditPowerPointPresentation";

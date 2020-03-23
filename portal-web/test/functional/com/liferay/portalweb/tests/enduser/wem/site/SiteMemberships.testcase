@@ -662,12 +662,13 @@ definition {
 	test SiteMembershipsPagination {
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addMultipleCP(usersEmailsList = "userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn7@liferay.com,userfn8@liferay.com,userfn9@liferay.com,userfn10@liferay.com");
+		for (var screenName : list "userfn1,userfn2,userfn3,userfn4,userfn5,userfn6,userfn7,userfn8,userfn9,userfn10") {
+			JSONUser.addUser(
+				userEmailAddress = "${screenName}@liferay.com",
+				userFirstName = "${screenName}",
+				userLastName = "${screenName}",
+				userScreenName = "${screenName}");
+		}
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",

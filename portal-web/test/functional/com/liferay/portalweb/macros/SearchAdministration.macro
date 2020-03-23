@@ -87,9 +87,9 @@ definition {
 			}
 
 			while (((contains("${elasticsearchTasks}", "indices:data/write/bulk")) || IsElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && ("${reindexElapsedTime}" != "120")) {
-				Pause.pauseNoSPARefresh(locator1 = "5000");
+				Pause.pauseNoSPARefresh(locator1 = "10000");
 
-				var reindexElapsedTime = ${reindexElapsedTime} + 5;
+				var reindexElapsedTime = ${reindexElapsedTime} + 10;
 
 				echo("Current Elasticsearch Tasks:");
 
@@ -111,9 +111,9 @@ definition {
 			}
 
 			while ((IsElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && ("${reindexElapsedTime}" != "120")) {
-				Pause.pauseNoSPARefresh(locator1 = "5000");
+				Pause.pauseNoSPARefresh(locator1 = "10000");
 
-				var reindexElapsedTime = ${reindexElapsedTime} + 5;
+				var reindexElapsedTime = ${reindexElapsedTime} + 10;
 			}
 		}
 

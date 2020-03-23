@@ -420,6 +420,7 @@ definition {
 			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test RolesOrganizationSearch {
 		ProductMenu.gotoPortlet(
@@ -664,6 +665,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test RolesPermissionsDynamicDataLists {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

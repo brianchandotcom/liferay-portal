@@ -385,6 +385,7 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AddBlogsEntrySiteRoleInline {
 		Permissions.setUpSiteRoleLoginUserPG(

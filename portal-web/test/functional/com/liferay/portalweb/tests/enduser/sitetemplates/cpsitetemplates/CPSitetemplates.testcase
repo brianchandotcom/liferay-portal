@@ -133,6 +133,7 @@ definition {
 			themeName = "Fjord");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AddSiteTemplateDisablePageModification {
 		ProductMenu.gotoPortlet(

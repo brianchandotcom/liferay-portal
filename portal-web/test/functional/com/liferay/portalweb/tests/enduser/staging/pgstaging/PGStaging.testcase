@@ -532,6 +532,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-72893."
+	@ignore = "true"
 	@priority = "4"
 	test PublishLayoutIconDeletion {
 		Navigator.openSiteURL(siteName = "Site Name");

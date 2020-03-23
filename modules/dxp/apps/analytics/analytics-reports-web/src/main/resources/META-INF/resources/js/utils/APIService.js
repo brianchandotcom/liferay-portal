@@ -172,6 +172,21 @@ function APIService({endpoints, namespace, page}) {
 		);
 	}
 
+	function getTrafficSourcesDetails(name) {
+		// TODO remove frontend mock
+		return new Promise(resolve =>
+			setTimeout(() => {
+				resolve(
+					MOCK_TRAFFIC_SOURCES.analyticsReportsTrafficSources.find(
+						trafficSource => {
+							return trafficSource['name'] == name;
+						}
+					)
+				);
+			}, 900)
+		);
+	}
+
 	return {
 		getHistoricalReads,
 		getHistoricalViews,
@@ -179,6 +194,7 @@ function APIService({endpoints, namespace, page}) {
 		getTotalViews,
 		getTrafficSourceDetails,
 		getTrafficSources,
+		getTrafficSourcesDetails,
 	};
 }
 

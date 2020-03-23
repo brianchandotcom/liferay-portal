@@ -883,6 +883,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test UpdatePortalPropertiesWithMultipleClusters {
 		property app.server.bundles.size = "2";

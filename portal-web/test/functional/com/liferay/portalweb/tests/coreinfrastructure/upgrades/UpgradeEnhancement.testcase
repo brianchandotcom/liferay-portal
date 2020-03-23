@@ -143,6 +143,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test DirectUpgradeFromArchive6012 {
 		property data.archive.type = "data-archive-portal";

@@ -28,6 +28,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AddAndDeleteBlogEntriesOnSeparateNodes {
 		property test.name.skip.portal.instance = "Clustering#AddAndDeleteBlogEntriesOnSeparateNodes";
@@ -156,6 +157,7 @@ definition {
 			searchAssetType = "Blogs Entry");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test ShutdownAndStartupNodes {
 		property test.name.skip.portal.instance = "Clustering#ShutdownAndStartupNodes";
@@ -218,6 +220,7 @@ definition {
 		Page.assertNodePortPG(nodePort = "9080");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ValidateDocumentOnSeparateNodes {
 		property test.name.skip.portal.instance = "Clustering#ValidateDocumentOnSeparateNodes";
@@ -327,6 +330,7 @@ definition {
 		Clustering.viewLiveSessionCount(count = "3");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ValidateSchedulerOnSeparateNodes {
 		property test.name.skip.portal.instance = "Clustering#ValidateSchedulerOnSeparateNodes";

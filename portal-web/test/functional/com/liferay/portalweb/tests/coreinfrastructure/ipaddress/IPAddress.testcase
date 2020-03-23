@@ -17,6 +17,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test RunPortalOnIPV6 {
 		property custom.properties = "redirect.url.ips.allowed=127.0.0.1,SERVER_IP,0:0:0:0:0:0:0:1${line.separator}tunnel.servlet.hosts.allowed=[0:0:0:0:0:0:0:1]";

@@ -51,7 +51,7 @@ public class RedirectEntryLocalServiceTest {
 	public void testAddRedirectEntryFailsWhenDuplicateSourceURL()
 		throws Exception {
 
-		_withRedirectEnabled(
+		RedirectTestUtil.withRedirectEnabled(
 			() -> {
 				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
 					TestPropsValues.getGroupId(), "destinationURL", null, false,
@@ -67,7 +67,7 @@ public class RedirectEntryLocalServiceTest {
 	public void testAddRedirectEntryFailsWhenDuplicateSourceURLAndDifferentType()
 		throws Exception {
 
-		_withRedirectEnabled(
+		RedirectTestUtil.withRedirectEnabled(
 			() -> {
 				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
 					TestPropsValues.getGroupId(), "destinationURL", null, true,
@@ -83,7 +83,7 @@ public class RedirectEntryLocalServiceTest {
 	public void testAddRedirectEntryFailsWhenDuplicateSourceURLAndExpirationDate()
 		throws Exception {
 
-		_withRedirectEnabled(
+		RedirectTestUtil.withRedirectEnabled(
 			() -> {
 				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
 					TestPropsValues.getGroupId(), "destinationURL", new Date(),

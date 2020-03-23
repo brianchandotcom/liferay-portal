@@ -31,6 +31,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.charset.StandardCharsets;
+
 import java.util.Date;
 import java.util.List;
 
@@ -394,22 +396,9 @@ public class SharepointConnectionTest {
 			new ContainsOperator(
 				new QueryField("BaseName"), new QueryValue("SubFile")));
 
-		QueryOptionsList queryOptionsList = null;
-
-		if (_SERVER_VERSION.equals(
-				SharepointConnection.ServerVersion.SHAREPOINT_2013)) {
-
-			queryOptionsList = new QueryOptionsList(
-				new FolderQueryOption(StringPool.BLANK),
-				new ViewAttributesQueryOption(true));
-		}
-		else {
-			queryOptionsList = new QueryOptionsList(
-				new FolderQueryOption(StringPool.BLANK));
-		}
-
 		List<SharepointObject> sharepointObjects =
-			_sharepointConnection.getSharepointObjects(query, queryOptionsList);
+			_sharepointConnection.getSharepointObjects(
+				query, _getQueryOptionsList());
 
 		Assert.assertEquals(
 			sharepointObjects.toString(), 2, sharepointObjects.size());
@@ -650,7 +639,7 @@ public class SharepointConnectionTest {
 	protected void addFileVersion(
 			String filePath, String content,
 			SharepointConnection.CheckInType checkInType)
-		throws IOException, SharepointException {
+		throws SharepointException {
 
 		_sharepointConnection.checkOutFile(filePath);
 
@@ -662,7 +651,7 @@ public class SharepointConnectionTest {
 
 	protected void addSharepointObjects(
 			boolean file1, boolean file2, boolean folder1, boolean folder2)
-		throws IOException, SharepointException {
+		throws SharepointException {
 
 		if (file1) {
 			_sharepointConnection.addFile(
@@ -755,14 +744,26 @@ public class SharepointConnectionTest {
 		}
 	}
 
-	protected InputStream getInputStream(String content) throws IOException {
-		return new ByteArrayInputStream(content.getBytes(StringPool.UTF8));
+	protected InputStream getInputStream(String content) {
+		return new ByteArrayInputStream(
+			content.getBytes(StandardCharsets.UTF_8));
 	}
 
 	protected String getString(InputStream inputStream) throws IOException {
-		byte[] bytes = FileUtil.getBytes(inputStream);
+		return new String(
+			FileUtil.getBytes(inputStream), StandardCharsets.UTF_8);
+	}
 
-		return new String(bytes, StringPool.UTF8);
+	private QueryOptionsList _getQueryOptionsList() {
+		if (_SERVER_VERSION.equals(
+				SharepointConnection.ServerVersion.SHAREPOINT_2013)) {
+
+			return new QueryOptionsList(
+				new FolderQueryOption(StringPool.BLANK),
+				new ViewAttributesQueryOption(true));
+		}
+
+		return new QueryOptionsList(new FolderQueryOption(StringPool.BLANK));
 	}
 
 	private static final String _CONTENT_BYE_WORLD = "Bye world!";

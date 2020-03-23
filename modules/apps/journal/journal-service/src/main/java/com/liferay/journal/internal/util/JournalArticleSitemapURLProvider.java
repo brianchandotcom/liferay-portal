@@ -157,8 +157,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	protected Layout getDisplayPageTemplateLayout(
-			long groupId, long journalArticleResourcePrimKey)
-		throws PortalException {
+		long groupId, long journalArticleResourcePrimKey) {
 
 		long classNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class.getName());

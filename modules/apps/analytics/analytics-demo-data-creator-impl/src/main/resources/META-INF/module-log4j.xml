@@ -2,7 +2,7 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<category name="com.liferay.ac.csv.data.generator">
+	<category name="com.liferay.analytics.demo.data.creator">
 		<priority value="ALL" />
 	</category>
 </log4j:configuration>

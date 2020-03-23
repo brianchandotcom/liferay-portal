@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.HtmlImpl;
+import com.liferay.sharepoint.soap.repository.connector.internal.util.test.SharepointConnectionTestUtil;
 import com.liferay.sharepoint.soap.repository.connector.schema.query.Query;
 import com.liferay.sharepoint.soap.repository.connector.schema.query.QueryField;
 import com.liferay.sharepoint.soap.repository.connector.schema.query.QueryOptionsList;
@@ -37,14 +38,34 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author Iván Zaera
  */
 public class SharepointConnectionTest {
+
+	@BeforeClass
+	public static void setUpClass() {
+		_sharepointConnection = SharepointConnectionFactory.getInstance(
+			_SERVER_VERSION, _SERVER_PROTOCOL,
+			SharepointConnectionTestUtil.getSharepointVMHostname(),
+			_SERVER_PORT, _SITE_PATH, _LIBRARY_NAME, _LIBRARY_PATH, _USERNAME,
+			_PASSWORD);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		SharepointConnectionInfo sharepointConnectionInfo =
+			_sharepointConnection.getSharepointConnectionInfo();
+
+		SharepointConnectionTestUtil.releaseSharepointVM(
+			sharepointConnectionInfo.getServerAddress());
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -62,10 +83,6 @@ public class SharepointConnectionTest {
 
 		_folderPath1 = StringPool.SLASH + _folderName1;
 		_folderPath2 = StringPool.SLASH + _folderName2;
-
-		_sharepointConnection = SharepointConnectionFactory.getInstance(
-			_SERVER_VERSION, _SERVER_PROTOCOL, _SERVER_ADDRESS, _SERVER_PORT,
-			_SITE_PATH, _LIBRARY_NAME, _LIBRARY_PATH, _USERNAME, _PASSWORD);
 
 		FileUtil fileUtil = new FileUtil();
 
@@ -272,11 +289,6 @@ public class SharepointConnectionTest {
 		Assert.assertEquals(StringPool.SLASH, sharepointObject.getFolderPath());
 		Assert.assertEquals(_fileName1, sharepointObject.getName());
 		Assert.assertEquals(_filePath1, sharepointObject.getPath());
-		Assert.assertEquals(
-			_SERVER_PROTOCOL + "://" + _SERVER_ADDRESS + StringPool.COLON +
-				_SERVER_PORT + _SITE_PATH + StringPool.SLASH + _LIBRARY_PATH +
-					_filePath1,
-			String.valueOf(sharepointObject.getURL()));
 		Assert.assertTrue(sharepointObject.isFile());
 	}
 
@@ -308,11 +320,6 @@ public class SharepointConnectionTest {
 		Assert.assertEquals(StringPool.SLASH, sharepointObject.getFolderPath());
 		Assert.assertEquals(_folderName1, sharepointObject.getName());
 		Assert.assertEquals(_folderPath1, sharepointObject.getPath());
-		Assert.assertEquals(
-			_SERVER_PROTOCOL + "://" + _SERVER_ADDRESS + StringPool.COLON +
-				_SERVER_PORT + _SITE_PATH + StringPool.SLASH + _LIBRARY_PATH +
-					_folderPath1,
-			String.valueOf(sharepointObject.getURL()));
 		Assert.assertTrue(sharepointObject.isFolder());
 	}
 
@@ -726,10 +733,6 @@ public class SharepointConnectionTest {
 			SharepointConnectionImpl.
 				SHAREPOINT_ROOT_FOLDER_SHAREPOINT_OBJECT_ID,
 			rootFolderSharepointObject.getSharepointObjectId());
-		Assert.assertEquals(
-			_SERVER_PROTOCOL + "://" + _SERVER_ADDRESS + StringPool.COLON +
-				_SERVER_PORT + _SITE_PATH + StringPool.SLASH + _LIBRARY_PATH,
-			String.valueOf(rootFolderSharepointObject.getURL()));
 		Assert.assertTrue(rootFolderSharepointObject.isFolder());
 	}
 
@@ -776,8 +779,6 @@ public class SharepointConnectionTest {
 
 	private static final String _PASSWORD = "password";
 
-	private static final String _SERVER_ADDRESS = "liferay-abb20d6";
-
 	private static final int _SERVER_PORT = 80;
 
 	private static final String _SERVER_PROTOCOL = "http";
@@ -791,6 +792,8 @@ public class SharepointConnectionTest {
 
 	private static final String _USERNAME = "Administrator";
 
+	private static SharepointConnection _sharepointConnection;
+
 	private String _fileExtension1;
 	private String _fileName1;
 	private String _fileName2;
@@ -799,6 +802,5 @@ public class SharepointConnectionTest {
 	private String _folderName2;
 	private String _folderPath1;
 	private String _folderPath2;
-	private SharepointConnection _sharepointConnection;
 
 }

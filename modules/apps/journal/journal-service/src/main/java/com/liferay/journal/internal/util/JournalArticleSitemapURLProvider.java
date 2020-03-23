@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -95,8 +94,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	protected List<JournalArticle> getDisplayPageTemplateArticles(
-			String layoutUuid, LayoutSet layoutSet)
-		throws PortalException {
+		String layoutUuid, LayoutSet layoutSet) {
 
 		List<JournalArticle> journalArticles = new ArrayList<>();
 
@@ -110,7 +108,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		DynamicQuery assetDisplayPageEntryDynamicQuery =
 			_assetDisplayPageEntryLocalService.dynamicQuery();
 
-		long classNameId = _classNameLocalService.getClassNameId(
+		long classNameId = _portal.getClassNameId(
 			JournalArticle.class.getName());
 
 		Property classNameIdProperty = PropertyFactoryUtil.forName(
@@ -159,7 +157,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	protected Layout getDisplayPageTemplateLayout(
 		long groupId, long journalArticleResourcePrimKey) {
 
-		long classNameId = _classNameLocalService.getClassNameId(
+		long classNameId = _portal.getClassNameId(
 			JournalArticle.class.getName());
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
@@ -250,9 +248,6 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	@Reference
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

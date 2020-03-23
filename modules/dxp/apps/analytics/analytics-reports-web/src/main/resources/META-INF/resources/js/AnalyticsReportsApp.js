@@ -102,10 +102,12 @@ export default function({context, props}) {
 				timeSpanOptions={timeSpans}
 			/>
 
-			<h5 className="mt-4 sheet-subtitle text-secondary">
+					<h5 className="mt-3 sheet-subtitle text-secondary">
 				{Liferay.Language.get('traffic-sources')}
 				<Hint
-					message={Liferay.Language.get('traffic-sources-help')}
+							message={Liferay.Language.get(
+								'traffic-sources-help'
+							)}
 					title={Liferay.Language.get('traffic-sources')}
 				/>
 			</h5>

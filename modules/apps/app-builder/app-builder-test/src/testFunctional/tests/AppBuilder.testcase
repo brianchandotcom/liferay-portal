@@ -3466,11 +3466,7 @@ definition {
 
 		AppBuilderAdmin.undeployApp(itemName = "Test App A");
 
-		AppBuilderAdmin.gotoCustomAppCP(
-			panel = "Control Panel",
-			portlet = "Test App A");
-
-		AppBuilderAdmin.validateUndeployedApp();
+		AppBuilderAdmin.validateAppIsNotPresentOnControlPanel(portlet = "Test App A");
 
 		ProductMenu.gotoPortlet(
 			category = "App Builder",

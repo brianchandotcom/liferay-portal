@@ -39,9 +39,9 @@ definition {
 		if (isSet(customImage)) {
 			var key_uploadFileName = "${uploadFileName}";
 
-			AssertElementPresent.assertVisible(locator1 = "Button#SELECT_OPEN_GRAPH_IMAGE");
+			AssertElementPresent.pauseAssertVisible(locator1 = "Button#SELECT_OPEN_GRAPH_IMAGE");
 
-			Click(locator1 = "Button#SELECT_OPEN_GRAPH_IMAGE");
+			Click.pauseClickAt(locator1 = "Button#SELECT_OPEN_GRAPH_IMAGE");
 
 			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 

@@ -28,8 +28,8 @@ import {
 	getCKEditorConfig,
 	historyPushWithSlug,
 	onBeforeLoadCKEditor,
-	useDebounceCallback,
 	slugToText,
+	useDebounceCallback,
 } from '../../utils/utils.es';
 
 export default withRouter(

@@ -374,10 +374,16 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "${mbThreadAttachment}");
 
+			Pause(locator1 = "3000");
+
 			AssertTextEquals(
 				key_attachmentName = "${mbThreadAttachment}",
 				locator1 = "MessageBoardsEditMessage#ATTACHMENTS_SELECTED_FILE",
 				value1 = "${mbThreadAttachment}");
+
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "${mbThreadAttachment}",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
 		PortletEntry.publish();

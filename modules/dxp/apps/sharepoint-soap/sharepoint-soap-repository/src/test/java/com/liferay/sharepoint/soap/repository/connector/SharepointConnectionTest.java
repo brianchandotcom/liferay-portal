@@ -775,7 +775,7 @@ public class SharepointConnectionTest {
 
 	private static final String _PASSWORD = "password";
 
-	private static final String _SERVER_ADDRESS = "liferay-20jf4ic";
+	private static final String _SERVER_ADDRESS = "liferay-abb20d6";
 
 	private static final int _SERVER_PORT = 80;
 

@@ -110,6 +110,7 @@ definition {
 	}
 
 	@description = "This is for LPS-106813. Widgets inherited from custom master will inherit permissions set in custom master."
+	@ignore = "true"
 	@priority = "4"
 	test APWithPermissionsInheritedFromMasterPageTemplateTogether {
 		task ("Add a WC") {

@@ -1110,6 +1110,7 @@ definition {
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewWebContentDisplayPortletMessages {
 		property testray.component.names = "Web Content Display";

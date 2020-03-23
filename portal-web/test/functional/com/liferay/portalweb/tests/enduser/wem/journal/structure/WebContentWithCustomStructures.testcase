@@ -208,6 +208,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AddStructureWithUnlocalizableFields {
 		property testray.component.names = "Localization,Web Content Administration";
@@ -1347,6 +1348,7 @@ definition {
 		AssertElementNotPresent(locator1 = "WC#SOURCE_GARBAGE_DATA");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test WebContentAdministrationDataValidation {
 		property testray.component.names = "Web Content Administration";

@@ -563,6 +563,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-105943. When convert a widget page with one Customizable column and a non-standard layout, there will be two warning messages shown in conversion preview"
+	@ignore = "true"
 	@priority = "3"
 	test ConvertWidgetPageWithNonStandardLayoutAndCustomizableColumns {
 		ProductMenu.gotoPortlet(
@@ -659,6 +660,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-105943. When convert a widget page with one Nested Applications widget containing widgets and a non-standard layout, there will be two warning messages shown in conversion preview"
+	@ignore = "true"
 	@priority = "3"
 	test ConvertWidgetPageWithNonStandardLayoutAndNestedApplicationsContainingWidgets {
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");

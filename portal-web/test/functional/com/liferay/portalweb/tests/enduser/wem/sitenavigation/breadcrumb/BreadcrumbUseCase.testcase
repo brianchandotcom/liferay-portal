@@ -25,6 +25,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test BreadcrumbConfiguration {
 		property test.name.skip.portal.instance = "BreadcrumbUsecase#BreadcrumbConfiguration";

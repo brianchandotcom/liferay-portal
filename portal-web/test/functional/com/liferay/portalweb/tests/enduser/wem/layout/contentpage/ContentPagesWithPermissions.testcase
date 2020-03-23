@@ -294,6 +294,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-96795. Content author having permissions to update web content and Update Page Content could see edit icon in the content page displaying the web contents and could edit web content in editmode."
+	@ignore = "true"
 	@priority = "5"
 	test EditContentWithUpdateWebContentAndUpdatePageContentPermissions {
 		JSONUser.addUser(
@@ -435,6 +436,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-103454. Content author having permission to update web content could see edit icon in the content page displaying the web contents and could edit web content in editmode, but could not edit editable field "
+	@ignore = "true"
 	@priority = "5"
 	test EditContentWithWebContentArticleUpdatePermission {
 		JSONUser.addUser(
@@ -554,6 +556,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-105109. Content author having permissions to update page content can introduce new inline content after clicking edit icon in content page."
+	@ignore = "true"
 	@priority = "5"
 	test EditInlineContentWithUpdatePageContentPermission {
 		PageEditor.addFragment(
@@ -630,6 +633,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-105109. Content author having permissions to update page content can introduce new inline content after clicking edit icon in content page."
+	@ignore = "true"
 	@priority = "5"
 	test MapInlineContentWithUpdatePageContentPermission {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

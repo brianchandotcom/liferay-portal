@@ -102,6 +102,7 @@ definition {
 			totalPortletCount = "3");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test ViewWebContentArchive625 {
 		property data.archive.type = "data-archive-web-content-draft";

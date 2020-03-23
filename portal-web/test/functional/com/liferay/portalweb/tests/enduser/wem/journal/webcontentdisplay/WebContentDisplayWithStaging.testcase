@@ -95,6 +95,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-77769."
+	@ignore = "true"
 	@priority = "5"
 	test StagingPublishWCWithImageFieldEdit {
 		JSONLayout.addPublicLayout(

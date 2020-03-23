@@ -1096,6 +1096,7 @@ definition {
 			userName = "Test Test");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test WebContentAdministrationSitesPageTypes {
 		property osgi.app.includes = "directory-web";

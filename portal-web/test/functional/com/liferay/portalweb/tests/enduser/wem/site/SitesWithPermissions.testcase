@@ -26,6 +26,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test SitesTemplatePermissionPersistence {
 		property testray.component.names = "Permissions,Site Administration";

@@ -895,6 +895,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test SitesDemoSiteManagement {
 		property portal.release = "false";

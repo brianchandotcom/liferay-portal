@@ -35,6 +35,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-82674."
+	@ignore = "true"
 	@priority = "4"
 	test PublishDeleteWCFolderWithArticleViaAP {
 		Navigator.openSiteURL(siteName = "Site Name");

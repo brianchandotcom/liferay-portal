@@ -75,6 +75,10 @@ definition {
 			key_elementType = "Fragment",
 			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 
+		AssertElementPresent.assertVisible(
+			locator1 = "Button#RESTORE_VALUES",
+			value1 = "Restore Values");
+
 		Check.checkToggleSwitch(
 			checkboxName = "${checkboxName}",
 			locator1 = "Fragment#FRAGMENT_CHECKBOX");

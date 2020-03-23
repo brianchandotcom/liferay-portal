@@ -28,12 +28,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AnalyticsDemoDataCreatorConfiguration {
 
 	@Meta.AD
-	public String customActivationMessage();
+	public String pathToUsersCSV();
 
 	@Meta.AD
-	public String pathToUserCsv();
-
-	@Meta.AD
-	public String virtualHostName();
+	public String virtualHostname();
 
 }

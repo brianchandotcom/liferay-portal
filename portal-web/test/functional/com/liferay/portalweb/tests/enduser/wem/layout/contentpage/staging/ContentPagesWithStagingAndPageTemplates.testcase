@@ -67,8 +67,12 @@ definition {
 	}
 
 	@description = "Content pages created from page templates can be published to live and will not appear in live until published."
+	@ignore = "true"
 	@priority = "5"
 	test PublishContentPage {
+
+		// Ignore test until LRQA-55174 is resolved
+
 		property portal.acceptance = "true";
 
 		task ("Add a content page that uses the page template") {

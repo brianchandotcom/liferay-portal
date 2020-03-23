@@ -63,6 +63,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -200,6 +201,7 @@ public class AMThumbnailsOSGiCommandsTest {
 		Assert.assertEquals(count + 2, _getThumbnailCount());
 	}
 
+	@Ignore
 	@Test
 	public void testMigrateOnlyProcessesImages() throws Exception {
 		try (PropsValuesReplacer propsValuesReplacer1 = new PropsValuesReplacer(

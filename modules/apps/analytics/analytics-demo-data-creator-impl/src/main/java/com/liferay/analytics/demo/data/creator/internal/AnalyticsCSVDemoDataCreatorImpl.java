@@ -19,7 +19,10 @@ import com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCr
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
+import com.liferay.portal.kernel.exception.DuplicateTeamException;
+import com.liferay.portal.kernel.exception.DuplicateUserGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -209,20 +212,22 @@ public class AnalyticsCSVDemoDataCreatorImpl
 		for (int i = 0; i < values.length; i++) {
 			String name = values[i].trim();
 
-			if (_organizations.containsKey(name)) {
-				Organization org = _organizations.get(name);
+			Organization organization = null;
 
-				ids[i] = org.getPrimaryKey();
+			try {
+				organization = _organizationLocalService.addOrganization(
+					_defaultUserId, 0, name, false);
 			}
-			else {
-				Organization newOrg =
-					_organizationLocalService.addOrganization(
-						_defaultUserId, 0, name, false);
+			catch (DuplicateOrganizationException
+						duplicateOrganizationException) {
 
-				_organizations.put(name, newOrg);
-
-				ids[i] = newOrg.getPrimaryKey();
+				organization = _organizationLocalService.getOrganization(
+					_companyId, name);
 			}
+
+			_organizations.put(name, organization);
+
+			ids[i] = organization.getPrimaryKey();
 		}
 
 		return ids;
@@ -234,28 +239,20 @@ public class AnalyticsCSVDemoDataCreatorImpl
 		for (int i = 0; i < values.length; i++) {
 			String name = values[i].trim();
 
-			if (_roles.containsRoleKey(name)) {
-				Role role = _roles.get(name);
+			Role role = null;
 
-				ids[i] = role.getPrimaryKey();
+			try {
+				role = _roleLocalService.addRole(
+					_defaultUserId, null, 0, name, null, null,
+					RoleConstants.TYPE_REGULAR, null, null);
 			}
-			else {
-				Role role;
-
-				try {
-					role = _roleLocalService.addRole(
-						_defaultUserId, null, 0, name, null, null,
-						RoleConstants.TYPE_REGULAR, null, null);
-				}
-				catch (DuplicateRoleException duplicateRoleException) {
-					role = _roleLocalService.getRole(
-						_companyId, name);
-				}
-
-				_roles.put(name, role);
-
-				ids[i] = role.getPrimaryKey();
+			catch (DuplicateRoleException duplicateRoleException) {
+				role = _roleLocalService.getRole(_companyId, name);
 			}
+
+			_roles.put(name, role);
+
+			ids[i] = role.getPrimaryKey();
 		}
 
 		return ids;
@@ -267,20 +264,20 @@ public class AnalyticsCSVDemoDataCreatorImpl
 		for (int i = 0; i < values.length; i++) {
 			String name = values[i].trim();
 
-			if (_teams.containsTeamKey(name)) {
-				Team team = _teams.get(name);
+			Team team = null;
 
-				ids[i] = team.getPrimaryKey();
-			}
-			else {
-				Team newTeam = _teamLocalService.addTeam(
+			try {
+				team = _teamLocalService.addTeam(
 					_defaultUserId, _defaultGroupId, name, null,
 					new ServiceContext());
-
-				_teams.put(name, newTeam);
-
-				ids[i] = newTeam.getPrimaryKey();
 			}
+			catch (DuplicateTeamException duplicateTeamException) {
+				team = _teamLocalService.getTeam(_defaultGroupId, name);
+			}
+
+			_teams.put(name, team);
+
+			ids[i] = team.getPrimaryKey();
 		}
 
 		return ids;
@@ -321,21 +318,20 @@ public class AnalyticsCSVDemoDataCreatorImpl
 		for (int i = 0; i < values.length; i++) {
 			String name = values[i].trim();
 
-			if (_userGroups.containsKey(name)) {
-				UserGroup userGroup = _userGroups.get(name);
+			UserGroup userGroup = null;
 
-				ids[i] = userGroup.getPrimaryKey();
+			try {
+				userGroup = _userGroupLocalService.addUserGroup(
+					_defaultUserId, _companyId, name, null, null);
 			}
-			else {
-				UserGroup newUserGroup =
-					_userGroupLocalService.addUserGroup(
-						_defaultUserId, _companyId, name, null,
-						null);
-
-				_userGroups.put(name, newUserGroup);
-
-				ids[i] = newUserGroup.getPrimaryKey();
+			catch (DuplicateUserGroupException duplicateUserGroupException) {
+				userGroup = _userGroupLocalService.getUserGroup(
+					_companyId, name);
 			}
+
+			_userGroups.put(name, userGroup);
+
+			ids[i] = userGroup.getPrimaryKey();
 		}
 
 		return ids;

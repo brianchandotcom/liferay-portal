@@ -15,7 +15,6 @@
 package com.liferay.analytics.demo.data.creator;
 
 import com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCreatorConfiguration;
-import com.liferay.analytics.demo.data.creator.util.GeneratedDataUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -46,6 +47,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.csv.CSVFormat;
@@ -73,7 +75,7 @@ public class AnalyticsCSVDemoDataCreatorImpl {
 		_loadConfig(properties);
 
 		_addCsvUsers(
-			_analyticsDemoDataCreatorConfiguration.pathToUserCsv());
+			_analyticsDemoDataCreatorConfiguration.pathToUserCSV());
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -83,12 +85,6 @@ public class AnalyticsCSVDemoDataCreatorImpl {
 
 	@Deactivate
 	protected void deactivate() {
-		try {
-			_generatedDataUtil.deleteAll();
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-		}
 	}
 
 	@Reference(target = ModuleServiceLifecycle.SYSTEM_CHECK, unbind = "-")
@@ -103,11 +99,16 @@ public class AnalyticsCSVDemoDataCreatorImpl {
 
 		try {
 			Company company = _companyLocalService.getCompanyByVirtualHost(
-				_analyticsDemoDataCreatorConfiguration.virtualHostName());
+				_analyticsDemoDataCreatorConfiguration.virtualHostname());
 
-			long companyId = company.getPrimaryKey();
+			_companyId = company.getCompanyId();
 
-			_generatedDataUtil.setCompanyId(companyId);
+			_defaultUserId = _userLocalService.getDefaultUserId(_companyId);
+
+			Group group = _groupLocalService.getGroup(
+				company.getCompanyId(), "Guest");
+
+			_defaultGroupId = group.getGroupId();
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
@@ -122,14 +123,14 @@ public class AnalyticsCSVDemoDataCreatorImpl {
 		for (CSVRecord csvRecord : csvParser) {
 			String emailAddress = csvRecord.get("emailAddress");
 
-			if (_generatedDataUtil.containsUserKey(emailAddress)) {
+			if (_users.containsKey(emailAddress)) {
 				continue;
 			}
 
 			try {
 				User user = _addCsvUser(csvRecord);
 
-				_generatedDataUtil.putUser(emailAddress, user);
+				_users.put(emailAddress, user);
 
 				if (_log.isInfoEnabled()) {
 					_log.info("Created user: " + emailAddress);
@@ -172,8 +173,7 @@ public class AnalyticsCSVDemoDataCreatorImpl {
 		long[] teamIds = _getIdArrayFromRowCell(csvRecord, "teams");
 
 		User user = _userLocalService.addUser(
-			_generatedDataUtil.getDefaultUserId(),
-			_generatedDataUtil.getCompanyId(), false, password, password, false,
+			_defaultUserId, _companyId, false, password, password, false,
 			screenName, emailAddress, 0, StringPool.BLANK,
 			LocaleUtil.getDefault(), firstName, middleName, lastName, 0, 0,
 			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
@@ -223,45 +223,41 @@ public class AnalyticsCSVDemoDataCreatorImpl {
 
 			try {
 				if (header.equalsIgnoreCase("organizations")) {
-					if (_generatedDataUtil.containsOrganizationKey(name)) {
-						Organization org = _generatedDataUtil.getOrganization(
-							name);
+					if (_organizations.containsKey(name)) {
+						Organization org = _organizations.get(name);
 
 						idArray[i] = org.getPrimaryKey();
 					}
 					else {
 						Organization newOrg =
 							_organizationLocalService.addOrganization(
-								_generatedDataUtil.getDefaultUserId(), 0, name,
-								false);
+								_defaultUserId, 0, name, false);
 
-						_generatedDataUtil.putOrganization(name, newOrg);
+						_organizations.put(name, newOrg);
 
 						idArray[i] = newOrg.getPrimaryKey();
 					}
 				}
 				else if (header.equalsIgnoreCase("userGroups")) {
-					if (_generatedDataUtil.containsUserGroupKey(name)) {
-						UserGroup userGroup = _generatedDataUtil.getUserGroup(
-							name);
+					if (_userGroups.containsKey(name)) {
+						UserGroup userGroup = _userGroups.get(name);
 
 						idArray[i] = userGroup.getPrimaryKey();
 					}
 					else {
 						UserGroup newUserGroup =
 							_userGroupLocalService.addUserGroup(
-								_generatedDataUtil.getDefaultUserId(),
-								_generatedDataUtil.getCompanyId(), name, null,
+								_defaultUserId, _companyId, name, null,
 								null);
 
-						_generatedDataUtil.putUserGroup(name, newUserGroup);
+						_userGroups.put(name, newUserGroup);
 
 						idArray[i] = newUserGroup.getPrimaryKey();
 					}
 				}
 				else if (header.equalsIgnoreCase("roles")) {
-					if (_generatedDataUtil.containsRoleKey(name)) {
-						Role role = _generatedDataUtil.getRole(name);
+					if (_roles.containsRoleKey(name)) {
+						Role role = _roles.get(name);
 
 						idArray[i] = role.getPrimaryKey();
 					}
@@ -270,33 +266,31 @@ public class AnalyticsCSVDemoDataCreatorImpl {
 
 						try {
 							role = _roleLocalService.addRole(
-								_generatedDataUtil.getDefaultUserId(), null, 0,
-								name, null, null, RoleConstants.TYPE_REGULAR,
-								null, null);
+								_defaultUserId, null, 0, name, null, null,
+								RoleConstants.TYPE_REGULAR, null, null);
 						}
 						catch (DuplicateRoleException duplicateRoleException) {
 							role = _roleLocalService.getRole(
-								_generatedDataUtil.getCompanyId(), name);
+								_companyId, name);
 						}
 
-						_generatedDataUtil.putRole(name, role);
+						_roles.put(name, role);
 
 						idArray[i] = role.getPrimaryKey();
 					}
 				}
 				else if (header.equalsIgnoreCase("teams")) {
-					if (_generatedDataUtil.containsTeamKey(name)) {
-						Team team = _generatedDataUtil.getTeam(name);
+					if (_teams.containsTeamKey(name)) {
+						Team team = _teams.get(name);
 
 						idArray[i] = team.getPrimaryKey();
 					}
 					else {
 						Team newTeam = _teamLocalService.addTeam(
-							_generatedDataUtil.getDefaultUserId(),
-							_generatedDataUtil.getDefaultGroupId(), name, null,
+							_defaultUserId, _defaultGroupId, name, null,
 							new ServiceContext());
 
-						_generatedDataUtil.putTeam(name, newTeam);
+						_teams.put(name, newTeam);
 
 						idArray[i] = newTeam.getPrimaryKey();
 					}
@@ -323,26 +317,41 @@ public class AnalyticsCSVDemoDataCreatorImpl {
 
 	private AnalyticsDemoDataCreatorConfiguration
 		_analyticsDemoDataCreatorConfiguration;
+	private long _companyId;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	private long _defaultGroupId;
+	private long _defaultUserId;
+
 	@Reference
-	private GeneratedDataUtil _generatedDataUtil;
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
 
+	private final HashMap<String, Organization> _organizations =
+		new HashMap<>();
+
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	private final HashMap<String, Role> _roles = new HashMap<>();
 
 	@Reference
 	private TeamLocalService _teamLocalService;
 
+	private final HashMap<String, Team> _teams = new HashMap<>();
+
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;
 
+	private final HashMap<String, UserGroup> _userGroups = new HashMap<>();
+
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private final HashMap<String, User> _users = new HashMap<>();
 
 }

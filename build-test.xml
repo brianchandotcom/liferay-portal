@@ -12296,10 +12296,19 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 					<then>
 						<var name="app.server.bundle.index" value="1" />
 
+						<get-testcase-property property.name="skip.start.app.server.index" />
+
 						<antelope:repeat count="${app.server.bundles.size}">
-							<start-app-server
-								app.server.bundle.index="${app.server.bundle.index}"
-							/>
+							<if>
+								<not>
+									<contains string="${skip.start.app.server.index}" substring="${app.server.bundle.index}" />
+								</not>
+								<then>
+									<start-app-server
+										app.server.bundle.index="${app.server.bundle.index}"
+									/>
+								</then>
+							</if>
 
 							<math
 								datatype="int"

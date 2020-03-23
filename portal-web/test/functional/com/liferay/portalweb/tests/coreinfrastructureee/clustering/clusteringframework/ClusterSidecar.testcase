@@ -29,18 +29,8 @@ definition {
 	@priority = "5"
 	test AddAndRemoveSidecarNodes {
 		property app.server.bundles.size = "2";
-		property skip.start-app-server = "true";
+		property skip.start.app.server.index = "2";
 		property test.name.skip.portal.instance = "ClusterSidecar#AddAndRemoveSidecarNodes";
-
-		Clustering.startSpecificServer(
-			deleteLiferayHome = "true",
-			keepCachedAppServerData = "true",
-			nodePort = "8080");
-
-		Clustering.startSpecificServer(
-			deleteLiferayHome = "true",
-			keepCachedAppServerData = "true",
-			nodePort = "9080");
 
 		User.loginPG(
 			password = "test",

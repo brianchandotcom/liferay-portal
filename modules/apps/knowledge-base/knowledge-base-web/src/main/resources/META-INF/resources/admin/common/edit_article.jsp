@@ -148,7 +148,7 @@ if (portletTitleBasedNavigation) {
 						<%
 						String taglibOnChange = renderResponse.getNamespace() + "onChangeTitle(event.target.value)";
 						%>
-						<aui:input autocomplete="off" label="" name="title" onChange='<%= (kbArticle == null) ? taglibOnChange: StringPool.BLANK %>' placeholder='<%= LanguageUtil.get(request, "title") %>' type="text" value="<%= HtmlUtil.escape(title) %>" />
+						<aui:input autocomplete="off" label='<%= LanguageUtil.get(request, "title") %>' name="title" onChange='<%= (kbArticle == null) ? taglibOnChange: StringPool.BLANK %>' required="<%= true %>" type="text" value="<%= HtmlUtil.escape(title) %>" />
 					</h1>
 
 					<div class="kb-entity-body">

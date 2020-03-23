@@ -29,6 +29,7 @@ import {useSelector} from '../store/index';
 import PageEditor from './PageEditor';
 import UnsafeHTML from './UnsafeHTML';
 import getAllEditables from './fragment-content/getAllEditables';
+import isMapped from './fragment-content/isMapped';
 import {Column, Container, Row} from './layout-data-items/index';
 
 const LAYOUT_DATA_ITEMS = {
@@ -157,7 +158,7 @@ const FragmentContent = React.memo(function FragmentContent({
 					editable.editableId
 				];
 
-			if (editableIsMapped(editableValue)) {
+			if (isMapped(editableValue)) {
 				return;
 			}
 
@@ -219,13 +220,3 @@ Fragment.propTypes = {
 		}),
 	}).isRequired,
 };
-
-function editableIsMapped(editableValue) {
-	return (
-		editableValue &&
-		((editableValue.classNameId &&
-			editableValue.classPK &&
-			editableValue.fieldId) ||
-			editableValue.mappedField)
-	);
-}

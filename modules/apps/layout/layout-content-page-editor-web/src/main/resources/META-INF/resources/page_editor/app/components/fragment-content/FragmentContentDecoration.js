@@ -32,6 +32,7 @@ import {EDITABLE_DECORATION_CLASS_NAMES} from './EditableDecorationMask';
 import getAllEditables from './getAllEditables';
 import getEditableElementId from './getEditableElementId';
 import getEditableUniqueId from './getEditableUniqueId';
+import isMapped from './isMapped';
 
 export default function FragmentContentDecoration({
 	editableElement,
@@ -92,12 +93,7 @@ export default function FragmentContentDecoration({
 		]),
 
 		[EDITABLE_DECORATION_CLASS_NAMES.mapped]: useMemo(
-			() =>
-				editableValue &&
-				((editableValue.classNameId &&
-					editableValue.classPK &&
-					editableValue.fieldId) ||
-					editableValue.mappedField),
+			() => isMapped(editableValue),
 			[editableValue]
 		),
 

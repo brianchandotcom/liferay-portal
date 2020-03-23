@@ -24,6 +24,7 @@ import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperience
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
 import {useGetFieldValue} from '../ControlsIdConverterContext';
+import isMapped from '../fragment-content/isMapped';
 import MappingSelector from './MappingSelector';
 
 const SOURCE_TYPES = {
@@ -76,13 +77,10 @@ export default function LinkPanel({item}) {
 
 	const editableConfig = editableValue.config || {};
 
-	const isMapped =
-		editableConfig.mappedField ||
-		editableConfig.fieldId ||
-		editableConfig.collectionFieldId;
-
 	const [sourceType, setSourceType] = useState(
-		isMapped ? SOURCE_TYPES.fromContentField : SOURCE_TYPES.manual
+		isMapped(editableConfig)
+			? SOURCE_TYPES.fromContentField
+			: SOURCE_TYPES.manual
 	);
 
 	const [href, setHref] = useState(editableConfig.href);

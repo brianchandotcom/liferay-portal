@@ -32,6 +32,7 @@ import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
 import {getEditableElement} from './getEditableElement';
 import getEditableElementId from './getEditableElementId';
 import getEditableUniqueId from './getEditableUniqueId';
+import isMapped from './isMapped';
 
 export default function FragmentContentInteractionsFilter({
 	children,
@@ -66,13 +67,7 @@ export default function FragmentContentInteractionsFilter({
 				const editableElementId = getEditableElementId(editableElement);
 				const editableValue = editableValues[editableElementId] || {};
 
-				const isMapped =
-					(editableValue.classNameId &&
-						editableValue.classPK &&
-						editableValue.fieldId) ||
-					editableValue.mappedField;
-
-				if (isMapped) {
+				if (isMapped(editableValue)) {
 					return;
 				}
 				const editableClickPosition = {

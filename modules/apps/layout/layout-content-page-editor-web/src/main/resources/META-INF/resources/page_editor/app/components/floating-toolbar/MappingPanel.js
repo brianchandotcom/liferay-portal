@@ -21,6 +21,7 @@ import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import selectEditableValue from '../../selectors/selectEditableValue';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
+import isMapped from '../fragment-content/isMapped';
 import MappingSelector from './MappingSelector';
 
 export function MappingPanel({item}) {
@@ -44,18 +45,12 @@ export function MappingPanel({item}) {
 	);
 
 	const updateEditableValue = newEditableValue => {
-		const isMapped =
-			(newEditableValue.classNameId &&
-				newEditableValue.classPK &&
-				newEditableValue.fieldId) ||
-			newEditableValue.mappedField;
-
 		const nextEditableValues = {
 			...fragmentEntryLink.editableValues,
 			[processoryKey]: {
 				...fragmentEntryLink.editableValues[processoryKey],
 				[editableId]: {
-					config: isMapped
+					config: isMapped(newEditableValue)
 						? {...editableValue.config, alt: ''}
 						: editableValue.config,
 					defaultValue: editableValue.defaultValue,

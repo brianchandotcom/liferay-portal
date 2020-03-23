@@ -20,13 +20,25 @@ import {numberFormat} from '../utils/numberFormat';
 import Hint from './Hint';
 import TotalCount from './TotalCount';
 
+const KEYWORD_VALUE_TYPE = [
+	{label: Liferay.Language.get('traffic'), name: 'traffic'},
+	{label: Liferay.Language.get('volume'), name: 'volume'},
+	{label: Liferay.Language.get('position'), name: 'position'},
+];
+
 export default function Detail({
 	currentPage,
 	languageTag,
 	trafficShareDataProvider,
 	trafficVolumeDataProvider,
 }) {
-	const [active, setActive] = React.useState(false);
+	const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
+
+	const [keywordValueType, setKeywordValueType] = React.useState(
+		KEYWORD_VALUE_TYPE.find(keywordValueType => {
+			return keywordValueType.name == 'traffic';
+		})
+	);
 
 	return (
 		<>
@@ -60,8 +72,8 @@ export default function Detail({
 
 				<table className="table-keywords">
 					<thead>
-						<tr>
-							<th className="pb-2">
+						<tr height="40">
+							<th>
 								{Liferay.Language.get('best-keyword')}
 								<span className="text-secondary">
 									<Hint
@@ -74,53 +86,56 @@ export default function Detail({
 									/>
 								</span>
 							</th>
-							<th className="pb-2">
+							<th>
 								<ClayDropDown
-									active={active}
-									onActiveChange={setActive}
+									active={isDropdownOpen}
+									onActiveChange={isActive =>
+										setIsDropdownOpen(isActive)
+									}
 									trigger={
 										<ClayButton
-											className="font-weight-bold p-0 text-body"
+											className="px-0 text-body"
 											displayType="link"
+											small
 										>
-											{Liferay.Language.get('traffic')}
-											<ClayIcon
-												className="font-weight-bold pl-1"
-												symbol="angle-down"
-											/>
+											<span className="font-weight-bold">
+												<span className="pr-2">
+													{keywordValueType.label}
+												</span>
+												<ClayIcon symbol="angle-down" />
+											</span>
 										</ClayButton>
 									}
 								>
 									<ClayDropDown.ItemList>
-										<ClayDropDown.Group>
-											{[
-												{
-													href: '#traffic',
-													label: Liferay.Language.get(
-														'traffic'
-													),
-												},
-												{
-													href: '#volume',
-													label: Liferay.Language.get(
-														'volume'
-													),
-												},
-												{
-													href: '#position',
-													label: Liferay.Language.get(
-														'position'
-													),
-												},
-											].map((item, i) => (
+										{KEYWORD_VALUE_TYPE.map(
+											(valueType, index) => (
 												<ClayDropDown.Item
-													href={item.href}
-													key={i}
+													active={
+														valueType.name ===
+														keywordValueType.name
+													}
+													key={index}
+													onClick={() => {
+														setKeywordValueType(
+															KEYWORD_VALUE_TYPE.find(
+																keywordValueType => {
+																	return (
+																		keywordValueType.name ==
+																		valueType.name
+																	);
+																}
+															)
+														);
+														setIsDropdownOpen(
+															false
+														);
+													}}
 												>
-													{item.label}
+													{valueType.label}
 												</ClayDropDown.Item>
-											))}
-										</ClayDropDown.Group>
+											)
+										)}
 									</ClayDropDown.ItemList>
 								</ClayDropDown>
 							</th>
@@ -137,7 +152,12 @@ export default function Detail({
 									>
 										{numberFormat(
 											languageTag,
-											keyword.value
+											keywordValueType.name == 'traffic'
+												? keyword.value
+												: keywordValueType.name ==
+												  'volume'
+												? keyword.volume
+												: keyword.position
 										)}
 									</td>
 								</tr>

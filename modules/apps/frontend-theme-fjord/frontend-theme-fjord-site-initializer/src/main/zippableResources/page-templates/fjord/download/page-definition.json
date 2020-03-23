@@ -4,9 +4,9 @@
 			{
 				"definition" : {
 					"layout" : {
-						"containerType" : "Fixed",
-						"paddingBottom" : 1,
-						"paddingHorizontal" : 1,
+						"containerType" : "Fluid",
+						"paddingBottom" : 0,
+						"paddingHorizontal" : 0,
 						"paddingTop" : 1
 					}
 				},

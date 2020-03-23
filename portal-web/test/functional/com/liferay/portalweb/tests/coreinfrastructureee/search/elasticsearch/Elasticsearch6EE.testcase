@@ -736,6 +736,7 @@ definition {
 		property remote.elasticsearch.enabled = "true";
 		property remote.elasticsearch.ltr.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch6EE#LearningToRankSmoke";
+		property portal.upstream = "quarantine";
 
 		AntCommand(
 			locator1 = "build-test-elasticsearch6.xml",
@@ -770,6 +771,7 @@ definition {
 		property cluster.enabled = "true";
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch6EE#PortalClusterSmokeTest";
+		property portal.upstream = "quarantine";
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(numberOfNodes = "1");
 

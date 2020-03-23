@@ -67,6 +67,8 @@ definition {
 
 	@priority = "4"
 	test AssertSearchInsightsExplain {
+		property portal.upstream = "quarantine";
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",
@@ -164,6 +166,7 @@ definition {
 		property remote.elasticsearch.cluster.size = "2";
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7#ElasticsearchRemoteClusterSmokeTest";
+		property portal.upstream = "quarantine";
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(numberOfNodes = "2");
 

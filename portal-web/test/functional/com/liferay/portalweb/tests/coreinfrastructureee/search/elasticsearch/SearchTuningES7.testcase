@@ -143,6 +143,7 @@ definition {
 
 	test AssertResultRankingsMiscUI {
 		property test.name.skip.portal.instance = "SearchTuningES7#AssertResultRankingsMiscUI";
+		property portal.upstream = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Search Tuning",

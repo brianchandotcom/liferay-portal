@@ -19,8 +19,10 @@ function TotalCount({
 	className,
 	dataProvider,
 	label,
+	popoverAlign,
 	popoverHeader,
 	popoverMessage,
+	popoverPosition,
 }) {
 	const [value, setValue] = React.useState(null);
 	const isMounted = useIsMounted();
@@ -44,7 +46,12 @@ function TotalCount({
 		<div className={className}>
 			<div className="float-left text-secondary w2-7">{label}</div>
 			<span className="text-secondary">
-				<Hint message={popoverMessage} title={popoverHeader} />
+				<Hint
+					align={popoverAlign}
+					message={popoverMessage}
+					position={popoverPosition}
+					title={popoverHeader}
+				/>
 			</span>
 			<span className="font-weight-bold">{value}</span>
 		</div>

@@ -28,16 +28,22 @@ const Popover = props => {
 	);
 };
 
-const PopoverComponent = ({anchor, children, ...rest}) => {
+const PopoverComponent = ({
+	anchor,
+	align = Align.Top,
+	children,
+	position = 'top',
+	...rest
+}) => {
 	const popRef = useRef(null);
 
 	React.useLayoutEffect(() => {
-		Align.align(popRef.current, anchor, Align.Top, false);
+		Align.align(popRef.current, anchor, align, false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
-		<ClayPopover alignPosition="top" ref={popRef} {...rest}>
+		<ClayPopover alignPosition={position} ref={popRef} {...rest}>
 			{children}
 		</ClayPopover>
 	);

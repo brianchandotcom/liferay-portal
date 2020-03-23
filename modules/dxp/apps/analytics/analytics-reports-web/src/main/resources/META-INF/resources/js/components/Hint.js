@@ -15,7 +15,7 @@ import React from 'react';
 
 import Popover from './Popover';
 
-export default function Hint({message, title}) {
+export default function Hint({align, message, position, title}) {
 	const iconRef = React.useRef();
 	const [showTooltip, setShowTooltip] = React.useState(false);
 
@@ -42,7 +42,12 @@ export default function Hint({message, title}) {
 			</span>
 
 			{showTooltip && (
-				<Popover anchor={iconRef.current} header={title}>
+				<Popover
+					align={align}
+					anchor={iconRef.current}
+					header={title}
+					position={position}
+				>
 					{message}
 				</Popover>
 			)}

@@ -220,6 +220,8 @@ definition {
 	}
 
 	macro gotoCustomAppCP {
+		Refresh();
+
 		ProductMenuHelper.expandPanel(panel = "${panel}");
 
 		Click(
@@ -338,6 +340,8 @@ definition {
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Custom Objects");
+
+		Pause(locator1 = "1000");
 
 		while (IsElementPresent(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON")) {
 			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");

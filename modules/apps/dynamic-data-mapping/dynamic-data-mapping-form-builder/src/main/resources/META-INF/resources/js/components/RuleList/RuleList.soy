@@ -23,10 +23,10 @@
 				label: string,
 				outputLabel: ?
 			]>,
-			logicalOperator: string
+			logicalOperator: string,
+			rulesCardOptions: ?
 		]>
 	}
-	{@param? rulesCardOptions: ?}
 	{@param spritemap: string}
 	{@param strings: map<string, string>}
 	{@param _handleDropdownClicked: any}
@@ -41,7 +41,6 @@
 				{param _handleRuleCardClicked: $_handleRuleCardClicked /}
 				{param dropdownExpandedIndex: $dropdownExpandedIndex /}
 				{param rules: $rules /}
-				{param rulesCardOptions: $rulesCardOptions /}
 				{param spritemap: $spritemap /}
 				{param strings: $strings /}
 			{/call}
@@ -71,7 +70,8 @@
 				label: string,
 				outputLabel: ?
 			]>,
-			logicalOperator: string
+			logicalOperator: string,
+			rulesCardOptions: ?
 		]>
 	}
 	{@param spritemap: string}
@@ -79,7 +79,6 @@
 	{@param _handleDropdownClicked: any}
 	{@param _handleRuleCardClicked: any}
 	{@param? dropdownExpandedIndex: number}
-	{@param? rulesCardOptions: ?}
 
 	<div class="ddm-rule-list-container form-builder-rule-list">
 		{if length($rules) > 0}
@@ -150,7 +149,7 @@
 
 									<div class="ddm-rule-list-settings" data-card-id="{$ruleIndex}">
 										{call ClayActionsDropdown.render}
-											{param items: $rulesCardOptions /}
+											{param items: $rule.rulesCardOptions /}
 											{param expanded: $isExpanded /}
 											{param events: [
 												'itemClicked': $_handleRuleCardClicked

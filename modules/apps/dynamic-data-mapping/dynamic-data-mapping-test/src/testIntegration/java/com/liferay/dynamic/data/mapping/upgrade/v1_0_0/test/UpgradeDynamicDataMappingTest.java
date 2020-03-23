@@ -77,7 +77,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,7 +87,6 @@ import org.skyscreamer.jsonassert.JSONAssert;
  * @author Marcellus Tavares
  * @author Inácio Nery
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class UpgradeDynamicDataMappingTest {
 

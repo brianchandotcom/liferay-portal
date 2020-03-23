@@ -281,7 +281,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
-	protected DDMForm deserialize(String content, String type) {
+	protected DDMForm deserialize(String content, String type)
+		throws Exception {
+
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
 
@@ -297,6 +299,13 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
 				ddmFormDeserializer.deserialize(builder.build());
+
+		Exception exceptionThrown =
+			ddmFormDeserializerDeserializeResponse.getExceptionThrown();
+
+		if (exceptionThrown != null) {
+			throw new UpgradeException(exceptionThrown);
+		}
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}

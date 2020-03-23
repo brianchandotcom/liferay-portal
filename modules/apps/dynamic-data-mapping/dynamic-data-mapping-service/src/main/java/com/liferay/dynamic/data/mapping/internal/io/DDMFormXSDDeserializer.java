@@ -75,6 +75,8 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception, exception);
 			}
+
+			builder = builder.exception(exception);
 		}
 
 		return builder.build();

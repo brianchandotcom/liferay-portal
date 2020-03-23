@@ -52,8 +52,12 @@ definition {
 	}
 
 	@description = "This is a test for LPS-99377. User can change checkbox fragment configuration."
+	@ignore = "true"
 	@priority = "5"
 	test AddCheckboxConfigurationFragmentToContentPage {
+
+		// Ignore test until LRQA-56819 is resolved
+
 		property portal.acceptance = "true";
 
 		task ("Add a section fragment to the fragment collection via JSON") {

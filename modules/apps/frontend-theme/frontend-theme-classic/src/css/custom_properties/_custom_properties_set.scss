@@ -382,7 +382,7 @@
 
 	.navbar-light & {
 		@include hover-focus() {
-			color: var(--navbar-light-brand-hover-color);
+			color: var(--navbar-light-active-color);
 		}
 	}
 }
@@ -449,7 +449,8 @@
 	color: var(--input-color);
 	height: var(--input-height);
 	line-height: var(--input-line-height);
-	padding: var(--input-inset-padding-y) var(--input-inset-padding-x);
+	padding-left: var(--input-group-inset-item-padding-left);
+	padding-right: var(--input-group-inset-item-padding-right);
 
 	&.input-group-inset-item-before {
 		border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
@@ -772,7 +773,6 @@ h6,
 		> th,
 		> td {
 			background-color: var(--table-list-active-bg);
-			color: var(--table-list-active-color);
 		}
 	}
 }
@@ -823,10 +823,6 @@ h6,
 	border: var(--list-group-border-width) solid var(--list-group-border-color);
 	padding: var(--list-group-header-padding-y)
 		var(--list-group-header-padding-x);
-}
-
-.list-group-header-title {
-	color: var(--list-group-header-color);
 }
 
 .list-group-item {

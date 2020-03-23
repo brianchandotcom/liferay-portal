@@ -145,7 +145,10 @@ if (portletTitleBasedNavigation) {
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
 					<h1 class="kb-title">
-						<aui:input autocomplete="off" label="" name="title" onChange='<%= (kbArticle == null) ? renderResponse.getNamespace() + "onChangeEditor" : StringPool.BLANK %>' placeholder='<%= LanguageUtil.get(request, "title") %>' type="text" value="<%= HtmlUtil.escape(title) %>" />
+						<%
+						String taglibOnChange = renderResponse.getNamespace() + "onChangeTitle(event.target.value)";
+						%>
+						<aui:input autocomplete="off" label="" name="title" onChange='<%= (kbArticle == null) ? taglibOnChange: StringPool.BLANK %>' placeholder='<%= LanguageUtil.get(request, "title") %>' type="text" value="<%= HtmlUtil.escape(title) %>" />
 					</h1>
 
 					<div class="kb-entity-body">
@@ -291,11 +294,11 @@ if (portletTitleBasedNavigation) {
 	<c:if test="<%= kbArticle == null %>">
 		var urlTitleInput = document.getElementById('<portlet:namespace />urlTitle');
 
-		function <portlet:namespace />onChangeEditor(html) {
+		function <portlet:namespace />onChangeTitle(title) {
 			var customUrl = urlTitleInput.dataset.customUrl;
 
 			if (customUrl === 'false') {
-				urlTitleInput.value = Liferay.Util.normalizeFriendlyURL(html);
+				urlTitleInput.value = Liferay.Util.normalizeFriendlyURL(title);
 			}
 		}
 

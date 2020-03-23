@@ -518,16 +518,8 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 			"liferay-ui:input-editor:onFocusMethod", _onFocusMethod);
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-editor:onInitMethod", _onInitMethod);
-
-		if (Validator.isNull(_placeholder)) {
-			_placeholder = LanguageUtil.get(
-				TagResourceBundleUtil.getResourceBundle(pageContext),
-				"write-your-content-here");
-		}
-
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-editor:placeholder", _placeholder);
-
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-editor:required", String.valueOf(_required));
 		httpServletRequest.setAttribute(

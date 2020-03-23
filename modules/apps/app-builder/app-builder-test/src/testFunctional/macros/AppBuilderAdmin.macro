@@ -36,9 +36,7 @@ definition {
 
 		AppBuilderAdmin.continueNewCustomObject();
 
-		while (IsElementPresent(locator1 = "AppBuilder#BUTTON_CONTINUE")) {
-			Pause(locator1 = "1000");
-		}
+		AppBuilderAdmin.waitForContinueButtonNotVisible();
 	}
 
 	macro addEntry {
@@ -410,6 +408,12 @@ definition {
 			value1 = "${description}");
 	}
 
+	macro validateFieldIsOnTable {
+		AssertElementPresent(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "AppBuilder#FIELD_LABEL_IN_TABLE");
+	}
+
 	macro validateIfSearchItemIsFound {
 		AssertTextEquals(
 			locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
@@ -530,6 +534,13 @@ definition {
 		MenuItem.clickNoError(menuItem = "View");
 	}
 
+	macro waitForContinueButtonNotVisible {
+		while (IsElementPresent(locator1 = "AppBuilder#BUTTON_CONTINUE")) {
+			Pause(locator1 = "1000");
+		}
+		Pause(locator1 = "1000");
+	}
+
 	macro waitForSaveButtonNotVisible {
 		while (IsElementPresent(locator1 = "AppBuilder#SAVE_BUTTON")) {
 			Pause(locator1 = "1000");
@@ -541,12 +552,6 @@ definition {
 		while (IsElementNotPresent(locator1 = "AppBuilder#SAVE_BUTTON")) {
 			Pause(locator1 = "1000");
 		}
-	}
-
-	macro validateFieldIsOnTable {
-		AssertElementPresent(
-			key_fieldLabel = "${fieldLabel}",
-			locator1 = "AppBuilder#FIELD_LABEL_IN_TABLE");
 	}
 
 }

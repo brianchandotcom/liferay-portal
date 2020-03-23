@@ -25,4 +25,5 @@ String componentId = GetterUtil.getString((String)request.getAttribute("liferay-
 String defaultEventHandler = GetterUtil.getString((String)request.getAttribute("liferay-frontend:empty-result-message:defaultEventHandler"));
 String description = (String)request.getAttribute("liferay-frontend:empty-result-message:description");
 String elementType = (String)request.getAttribute("liferay-frontend:empty-result-message:elementType");
+String title = (String)request.getAttribute("liferay-frontend:empty-result-message:title");
 %>

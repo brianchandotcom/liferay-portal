@@ -55,6 +55,10 @@ public class EmptyResultMessageTag extends IncludeTag {
 		return _elementType;
 	}
 
+	public String getTitle() {
+		return _title;
+	}
+
 	public void setActionDropdownItems(List<DropdownItem> actionDropdownItems) {
 		_actionDropdownItems = actionDropdownItems;
 	}
@@ -88,6 +92,10 @@ public class EmptyResultMessageTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	public void setTitle(String title) {
+		_title = title;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -98,6 +106,7 @@ public class EmptyResultMessageTag extends IncludeTag {
 		_defaultEventHandler = null;
 		_description = null;
 		_elementType = null;
+		_title = null;
 	}
 
 	@Override
@@ -127,6 +136,9 @@ public class EmptyResultMessageTag extends IncludeTag {
 
 		httpServletRequest.setAttribute(
 			"liferay-frontend:empty-result-message:elementType", _elementType);
+
+		httpServletRequest.setAttribute(
+			"liferay-frontend:empty-result-message:title", _title);
 	}
 
 	private static final String _PAGE = "/empty_result_message/page.jsp";
@@ -138,5 +150,6 @@ public class EmptyResultMessageTag extends IncludeTag {
 	private String _defaultEventHandler;
 	private String _description;
 	private String _elementType;
+	private String _title;
 
 }

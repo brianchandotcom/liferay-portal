@@ -1044,6 +1044,7 @@ definition {
 
 	@priority = "4"
 	test UserFlagsEntryAndAdminViewsNotificationInMockMock {
+		property portal.acceptance = "quarantine";
 		property test.smtp.server.enabled = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

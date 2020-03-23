@@ -1194,6 +1194,8 @@ definition {
 
 	@priority = "4"
 	test ViewBlogsEntryWithImageEditedViaItemSelector {
+		property portal.acceptance = "quarantine";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(

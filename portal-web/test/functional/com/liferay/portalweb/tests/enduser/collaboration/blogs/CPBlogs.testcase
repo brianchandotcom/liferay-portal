@@ -482,6 +482,8 @@ definition {
 
 	@priority = "3"
 	test SearchDMImagesViaItemSelector {
+		property portal.acceptance = "quarantine";
+
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntryWithUploadedCoverImage(

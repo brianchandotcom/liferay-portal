@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -1342,8 +1343,13 @@ public class JournalArticleStagedModelDataHandler
 				_portal.getClassNameId(JournalArticle.class),
 				article.getResourcePrimKey());
 
+		Layout layout = _layoutLocalService.fetchLayout(
+			portletDataContext.getPlid());
+
 		if ((assetDisplayPageEntry != null) &&
-			(assetDisplayPageEntry.getPlid() != portletDataContext.getPlid())) {
+			(assetDisplayPageEntry.getPlid() != portletDataContext.getPlid()) &&
+			((layout == null) ||
+			 (assetDisplayPageEntry.getPlid() != layout.getClassPK()))) {
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, article, assetDisplayPageEntry,
@@ -1703,6 +1709,9 @@ public class JournalArticleStagedModelDataHandler
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
 	private JournalCreationStrategy _journalCreationStrategy;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

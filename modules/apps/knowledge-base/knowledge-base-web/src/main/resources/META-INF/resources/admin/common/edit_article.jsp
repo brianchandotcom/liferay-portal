@@ -145,10 +145,7 @@ if (portletTitleBasedNavigation) {
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
 					<h1 class="kb-title">
-						<%
-						String taglibOnChange = renderResponse.getNamespace() + "onChangeTitle(event.target.value)";
-						%>
-						<aui:input autocomplete="off" label='<%= LanguageUtil.get(request, "title") %>' name="title" onChange='<%= (kbArticle == null) ? taglibOnChange: StringPool.BLANK %>' required="<%= true %>" type="text" value="<%= HtmlUtil.escape(title) %>" />
+						<aui:input autocomplete="off" label='<%= LanguageUtil.get(request, "title") %>' name="title" onChange='<%= (kbArticle == null) ? renderResponse.getNamespace() + "onChangeTitle(event.target.value)" : StringPool.BLANK %>' required="<%= true %>" type="text" value="<%= HtmlUtil.escape(title) %>" />
 					</h1>
 
 					<div class="kb-entity-body">

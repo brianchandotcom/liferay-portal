@@ -109,6 +109,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			<liferay-ui:message key="<%= placeholder %>" />
 		</label>
 	</c:if>
+
 	<textarea id="<%= textareaName %>" name="<%= textareaName %>" style="display: none;"></textarea>
 </liferay-util:buffer>
 

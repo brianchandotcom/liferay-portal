@@ -16,6 +16,7 @@ package com.liferay.analytics.demo.data.creator.internal;
 
 import com.liferay.analytics.demo.data.creator.AnalyticsCSVDemoDataCreator;
 import com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCreatorConfiguration;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
@@ -167,16 +168,128 @@ public class AnalyticsCSVDemoDataCreatorImpl
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
+	private long[] _addEntries(CSVRecord csvRecord, String header)
+		throws PortalException {
+
+		String cell = csvRecord.get(header);
+
+		if (cell == null) {
+			return null;
+		}
+
+		long[] ids = new long[0];
+
+		String[] values = cell.split(",");
+
+		if (StringUtil.equalsIgnoreCase(header, "organizations")) {
+			ids = _addOrganizations(values);
+		}
+		else if (StringUtil.equalsIgnoreCase(header, "roles")) {
+			ids = _addRoles(values);
+		}
+		else if (StringUtil.equalsIgnoreCase(header, "teams")) {
+			ids = _addTeams(values);
+		}
+		else if (StringUtil.equalsIgnoreCase(header, "userGroups")) {
+			ids = _addUserGroups(values);
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Added ", header, " with ids: ", Arrays.toString(ids)));
+		}
+
+		return ids;
+	}
+
+	private long[] _addOrganizations(String[] values) throws PortalException {
+		long[] ids = new long[values.length];
+
+		for (int i = 0; i < values.length; i++) {
+			String name = values[i].trim();
+
+			if (_organizations.containsKey(name)) {
+				Organization org = _organizations.get(name);
+
+				ids[i] = org.getPrimaryKey();
+			}
+			else {
+				Organization newOrg =
+					_organizationLocalService.addOrganization(
+						_defaultUserId, 0, name, false);
+
+				_organizations.put(name, newOrg);
+
+				ids[i] = newOrg.getPrimaryKey();
+			}
+		}
+
+		return ids;
+	}
+
+	private long[] _addRoles(String[] values) throws PortalException {
+		long[] ids = new long[values.length];
+
+		for (int i = 0; i < values.length; i++) {
+			String name = values[i].trim();
+
+			if (_roles.containsRoleKey(name)) {
+				Role role = _roles.get(name);
+
+				ids[i] = role.getPrimaryKey();
+			}
+			else {
+				Role role;
+
+				try {
+					role = _roleLocalService.addRole(
+						_defaultUserId, null, 0, name, null, null,
+						RoleConstants.TYPE_REGULAR, null, null);
+				}
+				catch (DuplicateRoleException duplicateRoleException) {
+					role = _roleLocalService.getRole(
+						_companyId, name);
+				}
+
+				_roles.put(name, role);
+
+				ids[i] = role.getPrimaryKey();
+			}
+		}
+
+		return ids;
+	}
+
+	private long[] _addTeams(String[] values) throws PortalException {
+		long[] ids = new long[values.length];
+
+		for (int i = 0; i < values.length; i++) {
+			String name = values[i].trim();
+
+			if (_teams.containsTeamKey(name)) {
+				Team team = _teams.get(name);
+
+				ids[i] = team.getPrimaryKey();
+			}
+			else {
+				Team newTeam = _teamLocalService.addTeam(
+					_defaultUserId, _defaultGroupId, name, null,
+					new ServiceContext());
+
+				_teams.put(name, newTeam);
+
+				ids[i] = newTeam.getPrimaryKey();
+			}
+		}
+
+		return ids;
+	}
+
 	private User _addUser(CSVRecord csvRecord) throws PortalException {
 		String gender = csvRecord.get("gender");
 
 		boolean male = StringUtil.equalsIgnoreCase(gender, "male");
-
-		long[] organizationIds = _getIdArrayFromRowCell(
-			csvRecord, "organizations");
-		long[] roleIds = _getIdArrayFromRowCell(csvRecord, "roles");
-		long[] teamIds = _getIdArrayFromRowCell(csvRecord, "teams");
-		long[] userGroupIds = _getIdArrayFromRowCell(csvRecord, "userGroups");
 
 		User user = _userLocalService.addUser(
 			_userLocalService.getDefaultUserId(_companyId), _companyId, false,
@@ -188,14 +301,44 @@ public class AnalyticsCSVDemoDataCreatorImpl
 			GetterUtil.getInteger(csvRecord.get("birthdayMonth")) - 1,
 			GetterUtil.getInteger(csvRecord.get("birthdayDay")),
 			GetterUtil.getInteger(csvRecord.get("birthdayYear")),
-			csvRecord.get("jobTitle"), null, organizationIds, roleIds,
-			userGroupIds, false, new ServiceContext());
+			csvRecord.get("jobTitle"), null,
+			_addEntries(csvRecord, "organizations"),
+			_addEntries(csvRecord, "roles"),
+			_addEntries(csvRecord, "userGroups"), false, new ServiceContext());
+
+		long[] teamIds = _addEntries(csvRecord, "teams");
 
 		if (teamIds != null) {
 			_teamLocalService.addUserTeams(user.getPrimaryKey(), teamIds);
 		}
 
 		return user;
+	}
+
+	private long[] _addUserGroups(String[] values) throws PortalException {
+		long[] ids = new long[values.length];
+
+		for (int i = 0; i < values.length; i++) {
+			String name = values[i].trim();
+
+			if (_userGroups.containsKey(name)) {
+				UserGroup userGroup = _userGroups.get(name);
+
+				ids[i] = userGroup.getPrimaryKey();
+			}
+			else {
+				UserGroup newUserGroup =
+					_userGroupLocalService.addUserGroup(
+						_defaultUserId, _companyId, name, null,
+						null);
+
+				_userGroups.put(name, newUserGroup);
+
+				ids[i] = newUserGroup.getPrimaryKey();
+			}
+		}
+
+		return ids;
 	}
 
 	private CSVParser _getCSVParser(File csvFile) {
@@ -216,111 +359,6 @@ public class AnalyticsCSVDemoDataCreatorImpl
 		}
 
 		return csvParser;
-	}
-
-	private long[] _getIdArrayFromRowCell(CSVRecord csvRecord, String header) {
-		String recordCell = csvRecord.get(header);
-
-		if (recordCell == null) {
-			return null;
-		}
-
-		String[] stringArray = recordCell.split(",");
-
-		long[] idArray = new long[stringArray.length];
-
-		for (int i = 0; i < stringArray.length; i++) {
-			String name = stringArray[i].trim();
-
-			try {
-				if (header.equalsIgnoreCase("organizations")) {
-					if (_organizations.containsKey(name)) {
-						Organization org = _organizations.get(name);
-
-						idArray[i] = org.getPrimaryKey();
-					}
-					else {
-						Organization newOrg =
-							_organizationLocalService.addOrganization(
-								_defaultUserId, 0, name, false);
-
-						_organizations.put(name, newOrg);
-
-						idArray[i] = newOrg.getPrimaryKey();
-					}
-				}
-				else if (header.equalsIgnoreCase("userGroups")) {
-					if (_userGroups.containsKey(name)) {
-						UserGroup userGroup = _userGroups.get(name);
-
-						idArray[i] = userGroup.getPrimaryKey();
-					}
-					else {
-						UserGroup newUserGroup =
-							_userGroupLocalService.addUserGroup(
-								_defaultUserId, _companyId, name, null,
-								null);
-
-						_userGroups.put(name, newUserGroup);
-
-						idArray[i] = newUserGroup.getPrimaryKey();
-					}
-				}
-				else if (header.equalsIgnoreCase("roles")) {
-					if (_roles.containsRoleKey(name)) {
-						Role role = _roles.get(name);
-
-						idArray[i] = role.getPrimaryKey();
-					}
-					else {
-						Role role;
-
-						try {
-							role = _roleLocalService.addRole(
-								_defaultUserId, null, 0, name, null, null,
-								RoleConstants.TYPE_REGULAR, null, null);
-						}
-						catch (DuplicateRoleException duplicateRoleException) {
-							role = _roleLocalService.getRole(
-								_companyId, name);
-						}
-
-						_roles.put(name, role);
-
-						idArray[i] = role.getPrimaryKey();
-					}
-				}
-				else if (header.equalsIgnoreCase("teams")) {
-					if (_teams.containsTeamKey(name)) {
-						Team team = _teams.get(name);
-
-						idArray[i] = team.getPrimaryKey();
-					}
-					else {
-						Team newTeam = _teamLocalService.addTeam(
-							_defaultUserId, _defaultGroupId, name, null,
-							new ServiceContext());
-
-						_teams.put(name, newTeam);
-
-						idArray[i] = newTeam.getPrimaryKey();
-					}
-				}
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
-			}
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				String.format(
-					"Added %s to %s with ID's: %s%n",
-					csvRecord.get("emailAddress"), header,
-					Arrays.toString(idArray)));
-		}
-
-		return idArray;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

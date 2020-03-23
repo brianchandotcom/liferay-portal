@@ -85,7 +85,7 @@ public class AnalyticsCSVDemoDataCreatorImpl
 			}
 
 			try {
-				_users.put(emailAddress, _addCsvUser(csvRecord));
+				_users.put(emailAddress, _addUser(csvRecord));
 
 				if (_log.isInfoEnabled()) {
 					_log.info("Created user: " + emailAddress);
@@ -167,7 +167,7 @@ public class AnalyticsCSVDemoDataCreatorImpl
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private User _addCsvUser(CSVRecord csvRecord) throws PortalException {
+	private User _addUser(CSVRecord csvRecord) throws PortalException {
 		String gender = csvRecord.get("gender");
 
 		boolean male = StringUtil.equalsIgnoreCase(gender, "male");

@@ -288,7 +288,12 @@ public class DDMDataProviderInstanceServiceImpl
 				definitionJSONObject.toJSONString());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to remove authentication data from data " +
+						"providers search",
+					exception);
+			}
 		}
 
 		return ddmDataProviderInstance;

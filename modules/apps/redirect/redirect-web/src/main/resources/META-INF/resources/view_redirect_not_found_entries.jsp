@@ -29,42 +29,58 @@ RedirectNotFountEntriesManagementToolbarDisplayContext redirectNotFoundEntriesMa
 />
 
 <aui:form action="<%= redirectNotFoundEntriesSearchContainer.getIteratorURL() %>" cssClass="container-fluid-1280" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-	<liferay-ui:search-container
-		id="<%= redirectNotFoundEntriesDisplayContext.getSearchContainerId() %>"
-		searchContainer="<%= redirectNotFoundEntriesSearchContainer %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.redirect.model.RedirectNotFoundEntry"
-			keyProperty="redirectNotFoundEntryId"
-			modelVar="redirectNotFoundEntry"
-		>
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="not-found-urls"
+	<%
+	List<RedirectNotFoundEntry> results = redirectNotFoundEntriesSearchContainer.getResults();
+	%>
+
+	<c:choose>
+		<c:when test="<%= results.size() > 0 %>">
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
+			<liferay-ui:search-container
+				id="<%= redirectNotFoundEntriesDisplayContext.getSearchContainerId() %>"
+				searchContainer="<%= redirectNotFoundEntriesSearchContainer %>"
 			>
+				<liferay-ui:search-container-row
+					className="com.liferay.redirect.model.RedirectNotFoundEntry"
+					keyProperty="redirectNotFoundEntryId"
+					modelVar="redirectNotFoundEntry"
+				>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="not-found-urls"
+					>
 
-				<%
-				String url = RedirectUtil.getGroupBaseURL(themeDisplay) + StringPool.SLASH + redirectNotFoundEntry.getUrl();
-				%>
+						<%
+						String url = RedirectUtil.getGroupBaseURL(themeDisplay) + StringPool.SLASH + redirectNotFoundEntry.getUrl();
+						%>
 
-				<aui:a href="<%= HtmlUtil.escapeAttribute(url) %>" target="_blank">
-					<%= HtmlUtil.escape(url) %>
-				</aui:a>
-			</liferay-ui:search-container-column-text>
+						<aui:a href="<%= HtmlUtil.escapeAttribute(url) %>" target="_blank">
+							<%= HtmlUtil.escape(url) %>
+						</aui:a>
+					</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="requests"
-			>
-				<%= redirectNotFoundEntry.getHits() %>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="requests"
+					>
+						<%= redirectNotFoundEntry.getHits() %>
+					</liferay-ui:search-container-column-text>
+				</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-			searchContainer="<%= redirectNotFoundEntriesSearchContainer %>"
-		/>
-	</liferay-ui:search-container>
+				<liferay-ui:search-iterator
+					markupView="lexicon"
+					searchContainer="<%= redirectNotFoundEntriesSearchContainer %>"
+				/>
+			</liferay-ui:search-container>
+		</c:when>
+		<c:otherwise>
+			<liferay-frontend:empty-result-message
+				animationType="<%= EmptyResultMessageKeys.AnimationType.SEARCH %>"
+				description="<%= LanguageUtil.get(request, redirectNotFoundEntriesSearchContainer.getEmptyResultsMessage()) %>"
+				title='<%= LanguageUtil.get(request, "great-job") %>'
+			/>
+		</c:otherwise>
+	</c:choose>
 </aui:form>

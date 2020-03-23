@@ -73,14 +73,20 @@ export const removeField = (props, pages, fieldName) => {
 		fields
 			.filter(field => field.fieldName !== fieldName)
 			.map(field => {
-				const pages = [{rows: field.rows}];
-				const visitor = new PagesVisitor(pages);
-
 				const nestedFields = field.nestedFields
 					? filter(field.nestedFields)
 					: [];
 
 				field = updateField(props, field, 'nestedFields', nestedFields);
+
+				const visitor = new PagesVisitor([
+					{
+						rows:
+							typeof field.rows === 'string'
+								? JSON.parse(field.rows)
+								: field.rows || [],
+					},
+				]);
 
 				const rows = field.rows
 					? FormSupport.removeEmptyRows(

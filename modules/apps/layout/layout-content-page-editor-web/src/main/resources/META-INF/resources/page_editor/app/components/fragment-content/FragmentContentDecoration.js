@@ -92,10 +92,10 @@ export default function FragmentContentDecoration({
 			() =>
 				[
 					itemId,
-					...getAllEditables(element).map(editableElement =>
+					...getAllEditables(element).map(editable =>
 						getEditableUniqueId(
 							fragmentEntryLinkId,
-							getEditableElementId(editableElement)
+							getEditableElementId(editable.element)
 						)
 					),
 				].some(_itemId => isActive(_itemId)),

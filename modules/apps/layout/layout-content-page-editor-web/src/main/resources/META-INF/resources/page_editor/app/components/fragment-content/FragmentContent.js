@@ -16,13 +16,10 @@ import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {updateFragmentEntryLinkContent} from '../../actions/index';
-import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
-import Processors from '../../processors/index';
 import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
@@ -56,10 +53,15 @@ const FragmentContent = React.forwardRef(
 
 		const getFieldValue = useGetFieldValue();
 
-		const [editableElements, setEditableElements] = useState([]);
+		const [editables, setEditables] = useState([]);
 
-		const updateEditableElements = (parent = element) => {
-			setEditableElements(parent ? getAllEditables(parent) : []);
+		const editableElements = useMemo(
+			() => editables.map(editable => editable.element),
+			[editables]
+		);
+
+		const updateEditables = (parent = element) => {
+			setEditables(parent ? getAllEditables(parent) : []);
 		};
 
 		const languageId = useSelector(state => state.languageId);
@@ -109,45 +111,25 @@ const FragmentContent = React.forwardRef(
 			}, 50);
 
 			if (!editableProcessorUniqueId) {
-				Array.from(
-					element.querySelectorAll('[data-lfr-background-image-id]')
-				).map(editable => {
+				editables.forEach(editable => {
 					resolveEditableValue(
 						editableValues,
-						editable.dataset.lfrBackgroundImageId,
-						BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+						editable.editableId,
+						editable.editableValueNamespace,
 						languageId,
 						prefixedSegmentsExperienceId,
 						getFieldValue
-					).then(([value, _editableConfig]) => {
-						const processor = Processors['background-image'];
+					).then(([value, editableConfig]) => {
+						editable.processor.render(
+							editable.element,
+							value,
+							editableConfig
+						);
 
-						processor.render(editable, value);
 						updateContent();
 					});
 				});
 
-				Array.from(element.querySelectorAll('lfr-editable')).forEach(
-					editable => {
-						editable.classList.add('page-editor__editable');
-
-						resolveEditableValue(
-							editableValues,
-							editable.getAttribute('id'),
-							EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-							languageId,
-							prefixedSegmentsExperienceId,
-							getFieldValue
-						).then(([value, editableConfig]) => {
-							const processor =
-								Processors[editable.getAttribute('type')] ||
-								Processors.fallback;
-
-							processor.render(editable, value, editableConfig);
-							updateContent();
-						});
-					}
-				);
 				updateContent();
 			}
 
@@ -158,6 +140,7 @@ const FragmentContent = React.forwardRef(
 			defaultContent,
 			editableProcessorUniqueId,
 			editableValues,
+			editables,
 			getFieldValue,
 			isMounted,
 			languageId,
@@ -185,7 +168,7 @@ const FragmentContent = React.forwardRef(
 						})}
 						contentRef={ref}
 						markup={content}
-						onRender={updateEditableElements}
+						onRender={updateEditables}
 					/>
 				</FragmentContentInteractionsFilter>
 

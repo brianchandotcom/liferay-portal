@@ -23,14 +23,12 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
-import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/backgroundImageFragmentEntryProcessor';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {config} from '../config/index';
-import Processors from '../processors/index';
 import {useSelector} from '../store/index';
 import PageEditor from './PageEditor';
 import UnsafeHTML from './UnsafeHTML';
+import getAllEditables from './fragment-content/getAllEditables';
 import {Column, Container, Row} from './layout-data-items/index';
 
 const LAYOUT_DATA_ITEMS = {
@@ -153,14 +151,10 @@ const FragmentContent = React.memo(function FragmentContent({
 			}
 		}, 50);
 
-		Array.from(
-			element.querySelectorAll('[data-lfr-background-image-id]')
-		).map(editable => {
-			const editableId = editable.dataset.lfrBackgroundImageId;
-
+		getAllEditables(element).forEach(editable => {
 			const editableValue =
-				editableValues[BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR][
-					editableId
+				editableValues[editable.editableValueNamespace][
+					editable.editableId
 				];
 
 			if (editableIsMapped(editableValue)) {
@@ -169,39 +163,16 @@ const FragmentContent = React.memo(function FragmentContent({
 
 			const value = editableValue[languageId];
 
-			if (value) {
-				const processor = Processors['background-image'];
+			const editableConfig = editableValue.config || {};
 
-				processor.render(editable, value);
+			if (value && editableConfig) {
+				editable.processor.render(
+					editable.element,
+					value,
+					editableConfig
+				);
 			}
 		});
-
-		Array.from(element.querySelectorAll('lfr-editable')).forEach(
-			editable => {
-				const editableId = editable.getAttribute('id');
-
-				const editableValue =
-					editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][
-						editableId
-					];
-
-				if (editableIsMapped(editableValue)) {
-					return;
-				}
-
-				const value = editableValue[languageId];
-
-				const editableConfig = editableValue.config || {};
-
-				if (value && editableConfig) {
-					const processor =
-						Processors[editable.getAttribute('type')] ||
-						Processors.fallback;
-
-					processor.render(editable, value, editableConfig);
-				}
-			}
-		);
 
 		updateContent();
 

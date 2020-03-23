@@ -48,19 +48,19 @@ export default function FragmentContentProcessor({
 	);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
-	const editableElement = useMemo(
-		() =>
-			element
-				? getAllEditables(element).find(
-						editableElement =>
-							getEditableUniqueId(
-								fragmentEntryLinkId,
-								getEditableElementId(editableElement)
-							) === editableProcessorUniqueId
-				  )
-				: null,
-		[editableProcessorUniqueId, element, fragmentEntryLinkId]
-	);
+	const editableElement = useMemo(() => {
+		const editable = element
+			? getAllEditables(element).find(
+					editable =>
+						getEditableUniqueId(
+							fragmentEntryLinkId,
+							getEditableElementId(editable.element)
+						) === editableProcessorUniqueId
+			  )
+			: null;
+
+		return editable ? editable.element : null;
+	}, [editableProcessorUniqueId, element, fragmentEntryLinkId]);
 
 	const editableValues = useSelector(
 		state =>

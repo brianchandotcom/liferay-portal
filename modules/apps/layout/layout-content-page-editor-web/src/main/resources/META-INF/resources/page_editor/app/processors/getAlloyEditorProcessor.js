@@ -12,8 +12,7 @@
  * details.
  */
 
-import {debounce} from 'frontend-js-web';
-import {ItemSelectorDialog} from 'frontend-js-web';
+import {ItemSelectorDialog, debounce} from 'frontend-js-web';
 
 import {config} from '../config/index';
 
@@ -75,13 +74,17 @@ export default function getAlloyEditorProcessor(
 			_editor = AlloyEditor.editable(editorWrapper, {
 				...editorConfig,
 
-				documentBrowseLinkCallback: (editor, url, changeLinkCallback) => {
+				documentBrowseLinkCallback: (
+					editor,
+					url,
+					changeLinkCallback
+				) => {
 					const itemSelectorDialog = new ItemSelectorDialog({
 						eventName: editor.title + 'selectItem',
 						singleSelect: true,
 						title: Liferay.Language.get('select-item'),
-						url: url,
-					}); 
+						url,
+					});
 
 					itemSelectorDialog.open();
 

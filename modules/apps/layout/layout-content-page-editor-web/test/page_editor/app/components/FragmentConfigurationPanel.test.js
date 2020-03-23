@@ -41,7 +41,7 @@ jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService',
 	() => ({
 		renderFragmentEntryLinkContent: jest.fn(() => Promise.resolve({})),
-		updateEditableValues: jest.fn(() => Promise.resolve({})),
+		updateConfigurationValues: jest.fn(() => Promise.resolve({})),
 	})
 );
 
@@ -121,7 +121,7 @@ describe('FragmentConfigurationPanel', () => {
 	afterEach(() => {
 		cleanup();
 
-		FragmentService.updateEditableValues.mockClear();
+		FragmentService.updateConfigurationValues.mockClear();
 		FragmentService.renderFragmentEntryLinkContent.mockClear();
 	});
 
@@ -138,9 +138,9 @@ describe('FragmentConfigurationPanel', () => {
 			target: {value: 'h2'},
 		});
 
-		expect(FragmentService.updateEditableValues).toBeCalledWith(
+		expect(FragmentService.updateConfigurationValues).toBeCalledWith(
 			expect.objectContaining({
-				editableValues: {
+				configurationValues: {
 					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
 					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
 						headingLevel: 'h2',
@@ -148,8 +148,6 @@ describe('FragmentConfigurationPanel', () => {
 				},
 			})
 		);
-
-		expect(FragmentService.renderFragmentEntryLinkContent).toBeCalled();
 	});
 
 	it('prefix values with segments when we have experiences', async () => {
@@ -165,9 +163,9 @@ describe('FragmentConfigurationPanel', () => {
 			target: {value: 'h2'},
 		});
 
-		expect(FragmentService.updateEditableValues).toBeCalledWith(
+		expect(FragmentService.updateConfigurationValues).toBeCalledWith(
 			expect.objectContaining({
-				editableValues: {
+				configurationValues: {
 					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
 					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
 						'segments-experience-id-1': {headingLevel: 'h2'},
@@ -175,8 +173,6 @@ describe('FragmentConfigurationPanel', () => {
 				},
 			})
 		);
-
-		expect(FragmentService.renderFragmentEntryLinkContent).toBeCalled();
 	});
 
 	it('prefix values with default experience when segmentsExperience is null', async () => {
@@ -192,9 +188,9 @@ describe('FragmentConfigurationPanel', () => {
 			target: {value: 'h2'},
 		});
 
-		expect(FragmentService.updateEditableValues).toBeCalledWith(
+		expect(FragmentService.updateConfigurationValues).toBeCalledWith(
 			expect.objectContaining({
-				editableValues: {
+				configurationValues: {
 					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
 					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
 						'segments-experience-id-2': {headingLevel: 'h2'},
@@ -202,8 +198,6 @@ describe('FragmentConfigurationPanel', () => {
 				},
 			})
 		);
-
-		expect(FragmentService.renderFragmentEntryLinkContent).toBeCalled();
 	});
 
 	it('merges configuration values when a new one is added', async () => {
@@ -268,9 +262,9 @@ describe('FragmentConfigurationPanel', () => {
 			target: {value: 'h2'},
 		});
 
-		expect(FragmentService.updateEditableValues).toBeCalledWith(
+		expect(FragmentService.updateConfigurationValues).toBeCalledWith(
 			expect.objectContaining({
-				editableValues: {
+				configurationValues: {
 					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
 					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
 						'segments-experience-id-0': {
@@ -281,7 +275,5 @@ describe('FragmentConfigurationPanel', () => {
 				},
 			})
 		);
-
-		expect(FragmentService.renderFragmentEntryLinkContent).toBeCalled();
 	});
 });

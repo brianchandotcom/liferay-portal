@@ -164,6 +164,10 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
 				groupId, classNameId, journalArticleResourcePrimKey);
 
+		if (assetDisplayPageEntry == null) {
+			return null;
+		}
+
 		long assetDisplayPageEntryPlid = assetDisplayPageEntry.getPlid();
 
 		return _layoutLocalService.fetchLayout(assetDisplayPageEntryPlid);

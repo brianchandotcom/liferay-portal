@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -172,7 +173,7 @@ public class MFAEmailOTPChecker {
 			Date lastFailDate = mfaEmailOTPEntry.getLastFailDate();
 
 			long time =
-				mfaEmailOTPConfiguration.retryTimeout() * 1000 +
+				(mfaEmailOTPConfiguration.retryTimeout() * Time.SECOND) +
 					lastFailDate.getTime();
 
 			if (time <= System.currentTimeMillis()) {
@@ -350,8 +351,8 @@ public class MFAEmailOTPChecker {
 			MFAEmailOTPWebKeys.MFA_EMAIL_OTP_VALIDATED_AT_TIME);
 
 		long time =
-			(mfaEmailOTPConfiguration.validationExpirationTime() * 1000) +
-				mfaEmailOTPValidatedAtTime;
+			(mfaEmailOTPConfiguration.validationExpirationTime() *
+				Time.SECOND) + mfaEmailOTPValidatedAtTime;
 
 		if (time > System.currentTimeMillis()) {
 			_routeAuditMessage(

@@ -22,7 +22,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Workflow._tearDownBlog();
+		BlogsEntry.tearDownCP();
 
 		WorkflowMetrics.executeWorkflowScript(scriptName = "DeleteUsersAndRoles.groovy");
 
@@ -218,20 +218,20 @@ definition {
 			portlet = "Metrics");
 
 		WorkflowMetrics.createUsersAndAssignInstances(
-			numberOfBlogInstances = "6",
-			numberOfUsers = "6");
+			numberOfBlogInstances = "5",
+			numberOfUsers = "5");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(
-			key_assigneesNumber = "6",
+			key_assigneesNumber = "5",
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
 
 		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "1Role");
 
 		WorkflowMetrics.viewWorkloadByAssignee(
 			assigneeName = "1user user1",
-			isNotPresent = "2user user2,3user user3,4user user4,5user user5,6user user6",
+			isNotPresent = "2user user2,3user user3,4user user4,5user user5",
 			onTimeTaskCount = "0",
 			overdueTaskCount = "0",
 			totalPendingTaskCount = "1");
@@ -244,7 +244,7 @@ definition {
 
 		WorkflowMetrics.assertAllItemsValues(
 			assigneeName = "1user user1",
-			isNotPresent = "2user user2,3user user3,4user user4,5user user5,6user user6",
+			isNotPresent = "2user user2,3user user3,4user user4,5user user5",
 			isPresent = "Blogs Entry Title 1",
 			taskName = "Review");
 
@@ -282,7 +282,7 @@ definition {
 
 		WorkflowMetrics.assertAllItemsValues(
 			assigneeName = "1user user1",
-			isNotPresent = "2user user2,3user user3,4user user4,5user user5,6user user6",
+			isNotPresent = "2user user2,3user user3,4user user4,5user user5",
 			isPresent = "Blogs Entry Title 1",
 			taskName = "Review");
 
@@ -294,14 +294,14 @@ definition {
 
 		WorkflowMetrics.viewWorkloadByAssignee(
 			assigneeName = "2user user2",
-			isNotPresent = "1user,user1,3user user3,4user user4,5user user5,6user user6",
+			isNotPresent = "1user,user1,3user user3,4user user4,5user user5",
 			onTimeTaskCount = "0",
 			overdueTaskCount = "0",
 			totalPendingTaskCount = "1");
 
-		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "1Role,3Role,4Role,5Role,6Role");
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "1Role,3Role,4Role,5Role");
 
-		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = "5 Entries");
+		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = "4 Entries");
 
 		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValueProcessStep(workflowStep = "Review");
 
@@ -310,8 +310,8 @@ definition {
 		Click(locator1 = "Pagination#NEXT_LINK");
 
 		WorkflowMetrics.viewWorkloadByAssignee(
-			assigneeName = "6user user6",
-			isNotPresent = "1user user1,2user user2,3user user3,4user user4,5user user5",
+			assigneeName = "5user user5",
+			isNotPresent = "1user user1,2user user2,3user user3,4user user4",
 			onTimeTaskCount = "0",
 			overdueTaskCount = "0",
 			totalPendingTaskCount = "1");
@@ -541,6 +541,8 @@ definition {
 	@description = "LRQA-53638 Automate LPS-100677: [Performance] Search for a step in all steps performance list and LRQA-53637 Automate LPS-100678: [Performance] Filter all step performance by completion period"
 	@priority = "5"
 	test SearchAndFilterOnPerformanceByStepPage {
+		property portal.upstream = "quarantine";
+
 		property test.name.skip.portal.instance = "WorkflowMetrics#SearchAndFilterOnPerformanceByStepPage";
 
 		WorkflowMetrics.createUsersAndAssignInstances(
@@ -1277,6 +1279,8 @@ definition {
 
 	@description = "LRQA-53631 Automate LPS-97666: [Performance] View top assignee performance"
 	test ViewTopAsigneePerformance {
+		property portal.upstream = "quarantine";
+
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewTopAsigneePerformance";
 
@@ -1375,6 +1379,8 @@ definition {
 	@description = "LRQA-53641 Automate LPS-97669 [Dashboard] View overloaded assignees"
 	@priority = "5"
 	test ViewWorkloadByAssigneeCard {
+		property portal.upstream = "quarantine";
+
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneeCard";
 

@@ -209,8 +209,12 @@ definition {
 	}
 
 	@description = "This ensures that users can preview the SVG image in item selector."
+	@ignore = "true"
 	@priority = "5"
 	test PreviewSVG {
+
+		// Ignore test until LRQA-56962 is resolved
+
 		property portal.acceptance = "true";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

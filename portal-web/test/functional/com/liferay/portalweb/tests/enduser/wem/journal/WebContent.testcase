@@ -460,8 +460,12 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test MoveMultipleWebContentToFolder {
+
+		// Ignore test until LRQA-56714 is resolved
+
 		property testray.component.names = "Web Content Administration";
 
 		JSONWebcontent.addFolder(

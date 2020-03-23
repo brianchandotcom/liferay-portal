@@ -136,8 +136,12 @@ definition {
 		RSSPortlet.viewCorruptScript();
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test AddRSSADTWithScript {
+
+		// Ignore test until LRQA-56758 is resolved
+
 		property testray.component.names = "Content and Application Templates,RSS";
 
 		JSONLayout.addWidgetToPublicLayout(

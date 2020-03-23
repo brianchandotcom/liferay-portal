@@ -612,8 +612,12 @@ definition {
 	}
 
 	@description = "This is a test for LPS-108376. Can check Cacheable for fragments when create them in portal and they are non-Cachable by default."
+	@ignore = "true"
 	@priority = "5"
 	test MarkFragmentCreatedInPortalAsCacheable {
+
+		// Ignore test until LRQA-56956 is resolved
+
 		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
 		FragmentsAdminNavigator.gotoEntryEllipsisItem(

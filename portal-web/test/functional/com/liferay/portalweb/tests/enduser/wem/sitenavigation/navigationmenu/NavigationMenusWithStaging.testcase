@@ -443,8 +443,12 @@ definition {
 	}
 
 	@description = "Navigation menus can be published to live and do not appear in live until published. This test has the Navigation Menu widget display a specific navigation menu. This test covers LPS-86142."
+	@ignore = "true"
 	@priority = "5"
 	test PublishNavigationMenu {
+
+		// Ignore test until LRQA-56961 is resolved
+
 		task ("Add the first page to the navigation menu") {
 			NavigationMenusAdmin.addItem(
 				item = "Page",

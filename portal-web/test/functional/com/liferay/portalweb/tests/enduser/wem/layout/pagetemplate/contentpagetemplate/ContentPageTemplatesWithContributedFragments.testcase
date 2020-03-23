@@ -31,8 +31,12 @@ definition {
 	}
 
 	@description = "This case ensures that a user can select content via content display in content page template editor."
+	@ignore = "true"
 	@priority = "4"
 	test SelectWebContentViaContentDisplay {
+
+		// Ignore test until LRQA-56541 is resolved
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Site Name",

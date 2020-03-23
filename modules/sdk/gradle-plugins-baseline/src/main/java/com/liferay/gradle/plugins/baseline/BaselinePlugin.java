@@ -44,8 +44,10 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.ReportingBasePlugin;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.util.VersionNumber;
@@ -164,6 +166,18 @@ public class BaselinePlugin implements Plugin<Project> {
 		_configureConfigurationBaseline(baselineConfiguration);
 
 		baselineTask.setBaselineConfiguration(baselineConfiguration);
+
+		TaskOutputs taskOutputs = baselineTask.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
+				}
+
+			});
 
 		return baselineTask;
 	}

@@ -23,6 +23,7 @@ definition {
 	@priority = "5"
 	test RefreshHomePage {
 		property portal.acceptance = "false";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "UIInfrastructureUsecase#RefreshHomePage";
 
 		Navigator.gotoPage(pageName = "Home");

@@ -168,9 +168,6 @@ public class SampleSQLBuilderTest {
 	private void _loadHypersonic(String sqlDir, String outputDir)
 		throws Exception {
 
-		Connection connection = null;
-		Statement statement = null;
-
 		try (Connection connection = DriverManager.getConnection(
 				"jdbc:hsqldb:mem:testSampleSQLBuilderDB;shutdown=true", "sa",
 				"")) {

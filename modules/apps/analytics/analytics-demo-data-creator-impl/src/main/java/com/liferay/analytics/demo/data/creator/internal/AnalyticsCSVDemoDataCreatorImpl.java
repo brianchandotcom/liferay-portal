@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	service = {}
 )
-public class AnalyticsCSVDemoDataCreator {
+public class AnalyticsCSVDemoDataCreatorImpl {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
@@ -90,7 +90,7 @@ public class AnalyticsCSVDemoDataCreator {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AcCsvDataGenerator.class);
+		AnalyticsCSVDemoDataCreatorImpl.class);
 
 	private AnalyticsDemoDataCreatorConfiguration
 		_analyticsDemoDataCreatorConfiguration;

@@ -362,7 +362,9 @@ public class PoshiRunner {
 			private final Throwable[] _validRetryThrowables = {
 				new TimeoutException(), new UnreachableBrowserException(null),
 				new WebDriverException(
-					"Timed out waiting 45 seconds for Firefox to start.")
+					"Timed out waiting 45 seconds for Firefox to start."),
+				new WebDriverException(
+					"unknown error: unable to discover open pages")
 			};
 
 		}

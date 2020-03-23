@@ -220,6 +220,7 @@ definition {
 	@priority = "5"
 	test ViewPortletBoundries {
 		property portal.acceptance = "false";
+		property portal.upstream = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

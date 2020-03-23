@@ -337,24 +337,22 @@ public class AnalyticsCSVDemoDataCreatorImpl
 		return ids;
 	}
 
-	private CSVParser _getCSVParser(File csvFile) {
-		CSVParser csvParser = null;
+	private CSVParser _getCSVParser(File csvFile) throws Exception {
+		CSVFormat csvFormat = CSVFormat.DEFAULT;
+
+		csvFormat = csvFormat.withFirstRecordAsHeader();
+		csvFormat = csvFormat.withIgnoreSurroundingSpaces();
+		csvFormat = csvFormat.withNullString("");
 
 		try {
-			CSVFormat csvFormat = CSVFormat.DEFAULT;
-
-			csvFormat = csvFormat.withFirstRecordAsHeader();
-			csvFormat = csvFormat.withIgnoreSurroundingSpaces();
-			csvFormat = csvFormat.withNullString("");
-
-			csvParser = CSVParser.parse(
+			return CSVParser.parse(
 				csvFile, Charset.defaultCharset(), csvFormat);
 		}
 		catch (IOException ioException) {
 			_log.error(ioException, ioException);
-		}
 
-		return csvParser;
+			throw ioException;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -119,7 +119,6 @@ public class PortalRequestProcessor {
 		_publicPaths.add(_PATH_PORTAL_LICENSE);
 		_publicPaths.add(_PATH_PORTAL_LOGIN);
 		_publicPaths.add(_PATH_PORTAL_RENDER_PORTLET);
-		_publicPaths.add(_PATH_PORTAL_RESILIENCY);
 		_publicPaths.add(_PATH_PORTAL_TCK);
 		_publicPaths.add(_PATH_PORTAL_UPDATE_LANGUAGE);
 		_publicPaths.add(_PATH_PORTAL_UPDATE_PASSWORD);
@@ -859,8 +858,6 @@ public class PortalRequestProcessor {
 
 	private static final String _PATH_PORTAL_RENDER_PORTLET =
 		"/portal/render_portlet";
-
-	private static final String _PATH_PORTAL_RESILIENCY = "/portal/resiliency";
 
 	private static final String _PATH_PORTAL_SETUP_WIZARD =
 		"/portal/setup_wizard";

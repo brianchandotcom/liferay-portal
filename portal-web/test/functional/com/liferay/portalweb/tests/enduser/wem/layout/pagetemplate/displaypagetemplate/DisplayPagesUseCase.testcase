@@ -440,8 +440,7 @@ definition {
 
 			AssertElementPresent(
 				key_imageName = "Document_2.jpeg",
-				key_position = "1",
-				locator1 = "PageEditor#SECTION_CONFIGURATION_BACKGROUND_IMAGE");
+				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
 		}
 	}
 

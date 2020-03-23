@@ -75,6 +75,8 @@ definition {
 
 	@priority = "5"
 	test ConfigureDisplayTimeZone {
+		property portal.upstream = "quarantine";
+
 		CalendarNavigator.gotoConfiguration();
 
 		CalendarConfiguration.editTimeZoneUTC();

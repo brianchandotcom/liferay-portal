@@ -1082,6 +1082,8 @@ definition {
 	@description = "This is a use case for LPS-49037."
 	@priority = "2"
 	test EditProcessFieldSetPaginationAndViewSelectedForm {
+		property portal.upstream = "quarantine";
+
 		for (var kfFieldSetName : list "Field1,Field2,Field3,Field4,Field5,Field6") {
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
@@ -1471,6 +1473,7 @@ definition {
 
 	@priority = "5"
 	test EditProcessNewWorkflowViaSourceTab {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditProcessNewWorkflowViaSourceTab";
 
 		Navigator.openURL();
@@ -1624,6 +1627,7 @@ definition {
 
 	@priority = "5"
 	test EditSingleApproverWorkflowViaSourceTabViaAddProcess {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditSingleApproverWorkflowViaSourceTabViaAddProcess";
 
 		Navigator.openURL();
@@ -2642,6 +2646,8 @@ definition {
 
 	@priority = "2"
 	test ViewFieldSetParentDefinitionIframeTitle {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2696,6 +2702,8 @@ definition {
 
 	@priority = "3"
 	test ViewProcessRecordDetails {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

@@ -534,6 +534,8 @@ definition {
 	@description = "This is a use case for LPS-50017"
 	@priority = "2"
 	test EditRepeatingAllFollowing {
+		property portal.upstream = "quarantine";
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.editTitle(eventTitle = "Original Event Title");

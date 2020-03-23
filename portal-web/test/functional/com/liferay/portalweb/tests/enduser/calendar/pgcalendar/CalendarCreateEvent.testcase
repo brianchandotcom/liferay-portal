@@ -769,6 +769,8 @@ definition {
 
 	@priority = "4"
 	test AddViaScheduler {
+		property portal.upstream = "quarantine";
+
 		CalendarNavigator.gotoView(viewType = "Day");
 
 		CalendarScheduler.addEventToday(

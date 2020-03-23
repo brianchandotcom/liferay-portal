@@ -41,7 +41,9 @@ import org.gradle.api.reporting.ReportingExtension;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
@@ -150,9 +152,7 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 		return _baselineConfiguration;
 	}
 
-	@Input
 	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getBndFile() {
 		return GradleUtil.toFile(getProject(), _bndFile);
 	}
@@ -162,9 +162,8 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 		return _ignoreFailures;
 	}
 
-	@Input
 	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
+	@OutputFile
 	public File getLogFile() {
 		if (Validator.isNull(_logFileName)) {
 			return null;
@@ -203,11 +202,23 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 		return project.files(project.fileTree(args), getBndFile());
 	}
 
-	@Input
 	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getSourceDir() {
 		return GradleUtil.toFile(getProject(), _sourceDir);
+	}
+
+	@InputFiles
+	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
+	public FileCollection getSourceFiles() {
+		Project project = getProject();
+
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("dir", getSourceDir());
+		args.put("excludes", Collections.singleton("**/packageinfo"));
+
+		return project.fileTree(args);
 	}
 
 	@Input

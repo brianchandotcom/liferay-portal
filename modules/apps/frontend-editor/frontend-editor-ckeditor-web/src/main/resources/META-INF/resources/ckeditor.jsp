@@ -53,6 +53,8 @@ if (Validator.isNotNull(onInitMethod)) {
 	onInitMethod = namespace + onInitMethod;
 }
 
+String placeholder = GetterUtil.getString((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":placeholder"));
+
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":skipEditorLoading"));
 String toolbarSet = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":toolbarSet");
 
@@ -102,6 +104,11 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 <liferay-util:buffer
 	var="editor"
 >
+	<c:if test="<%= Validator.isNotNull(placeholder) %>">
+		<label class="control-label" for="<%= name %>">
+			<liferay-ui:message key="<%= placeholder %>" />
+		</label>
+	</c:if>
 	<textarea id="<%= textareaName %>" name="<%= textareaName %>" style="display: none;"></textarea>
 </liferay-util:buffer>
 

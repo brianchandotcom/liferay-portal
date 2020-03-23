@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -167,42 +168,28 @@ public class AnalyticsCSVDemoDataCreatorImpl
 	}
 
 	private User _addCsvUser(CSVRecord csvRecord) throws PortalException {
-		String emailAddress = csvRecord.get("emailAddress");
-		String password = csvRecord.get("password");
-		String screenName = csvRecord.get("screenName");
-		String firstName = csvRecord.get("firstName");
-		String middleName = csvRecord.get("middleName");
-		String lastName = csvRecord.get("lastName");
-		String jobTitle = csvRecord.get("jobTitle");
-
 		String gender = csvRecord.get("gender");
 
-		boolean male = gender.equalsIgnoreCase("male");
+		boolean male = StringUtil.equalsIgnoreCase(gender, "male");
 
-		int javaMonthOffset = 1; //java.util.Date months start at 0 (meaning 0 for January)
-
-		int birthdayMonth =
-			GetterUtil.getInteger(csvRecord.get("birthdayMonth")) -
-				javaMonthOffset;
-
-		int birthdayDay = GetterUtil.getInteger(csvRecord.get("birthdayDay"));
-
-		int birthdayYear = GetterUtil.getInteger(csvRecord.get("birthdayYear"));
-
-		long[] groupIds = null;
 		long[] organizationIds = _getIdArrayFromRowCell(
 			csvRecord, "organizations");
 		long[] roleIds = _getIdArrayFromRowCell(csvRecord, "roles");
-		long[] userGroupIds = _getIdArrayFromRowCell(csvRecord, "userGroups");
 		long[] teamIds = _getIdArrayFromRowCell(csvRecord, "teams");
+		long[] userGroupIds = _getIdArrayFromRowCell(csvRecord, "userGroups");
 
 		User user = _userLocalService.addUser(
-			_defaultUserId, _companyId, false, password, password, false,
-			screenName, emailAddress, 0, StringPool.BLANK,
-			LocaleUtil.getDefault(), firstName, middleName, lastName, 0, 0,
-			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, false,
-			new ServiceContext());
+			_userLocalService.getDefaultUserId(_companyId), _companyId, false,
+			csvRecord.get("password"), csvRecord.get("password"), false,
+			csvRecord.get("screenName"), csvRecord.get("emailAddress"), 0,
+			StringPool.BLANK, LocaleUtil.getDefault(),
+			csvRecord.get("firstName"), csvRecord.get("middleName"),
+			csvRecord.get("lastName"), 0, 0, male,
+			GetterUtil.getInteger(csvRecord.get("birthdayMonth")) - 1,
+			GetterUtil.getInteger(csvRecord.get("birthdayDay")),
+			GetterUtil.getInteger(csvRecord.get("birthdayYear")),
+			csvRecord.get("jobTitle"), null, organizationIds, roleIds,
+			userGroupIds, false, new ServiceContext());
 
 		if (teamIds != null) {
 			_teamLocalService.addUserTeams(user.getPrimaryKey(), teamIds);

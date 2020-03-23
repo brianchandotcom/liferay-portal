@@ -110,16 +110,11 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		DynamicQuery assetDisplayPageEntryDynamicQuery =
 			_assetDisplayPageEntryLocalService.dynamicQuery();
 
-		Property plidProperty = PropertyFactoryUtil.forName("plid");
-
-		assetDisplayPageEntryDynamicQuery.add(
-			plidProperty.eq(layout.getPlid()));
+		long classNameId = _classNameLocalService.getClassNameId(
+			JournalArticle.class.getName());
 
 		Property classNameIdProperty = PropertyFactoryUtil.forName(
 			"classNameId");
-
-		long classNameId = _classNameLocalService.getClassNameId(
-			JournalArticle.class.getName());
 
 		assetDisplayPageEntryDynamicQuery.add(
 			classNameIdProperty.eq(classNameId));
@@ -129,6 +124,11 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 		assetDisplayPageEntryDynamicQuery.add(
 			layoutPageTemplateEntryIdProperty.ne(Long.valueOf(0)));
+
+		Property plidProperty = PropertyFactoryUtil.forName("plid");
+
+		assetDisplayPageEntryDynamicQuery.add(
+			plidProperty.eq(layout.getPlid()));
 
 		assetDisplayPageEntryDynamicQuery.setProjection(
 			PropertyFactoryUtil.forName("classPK"));

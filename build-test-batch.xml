@@ -3190,6 +3190,8 @@ log.sanitizer.enabled=false</echo>
 	</macrodef>
 
 	<target name="analytics-cloud-cucumber-tomcat90-mysql57-jdk8">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="mysql"

@@ -11,6 +11,58 @@
 
 import {fetch} from 'frontend-js-web';
 
+const MOCK_TRAFFIC_SOURCES = {
+	analyticsReportsTrafficSources: [
+		{
+			helpMessage: Liferay.Language.get(
+				'this-number-refers-to-the-volume-of-people-that-find-your-page-through-a-search-engine'
+			),
+			name: 'organic',
+			share: 0.1,
+			title: Liferay.Language.get('organic'),
+			value: 32178,
+		},
+		{
+			helpMessage: Liferay.Language.get(
+				'this-number-refers-to-the-volume-of-people-that-find-your-page-through-paid-keywords'
+			),
+			name: 'paid',
+			share: 0.9,
+			title: Liferay.Language.get('paid'),
+			value: 278256,
+		},
+	],
+};
+
+const MOCK_TRAFFIC_SOURCES_DETAILS = {
+	organic: {
+		keywords: [
+			{
+				title: 'commerce',
+				value: 90000,
+			},
+			{
+				title: 'e-commerce',
+				value: 14800,
+			},
+		],
+		title: 'Organic Traffic',
+	},
+	paid: {
+		keywords: [
+			{
+				title: 'commerce',
+				value: 90000,
+			},
+			{
+				title: 'e-commerce',
+				value: 14800,
+			},
+		],
+		title: 'Paid Traffic',
+	},
+};
+
 function APIService({endpoints, namespace, page}) {
 	const {
 		getAnalyticsReportsHistoricalReadsURL,
@@ -60,35 +112,19 @@ function APIService({endpoints, namespace, page}) {
 		});
 	}
 
+	function getTrafficSourceDetails(name) {
+		// TODO remove frontend mock
+		return new Promise(resolve =>
+			setTimeout(() => {
+				resolve(MOCK_TRAFFIC_SOURCES_DETAILS[name]);
+			}, 900)
+		);
+	}
+
 	function getTrafficSources() {
 		// TODO remove frontend mock
 		return new Promise(resolve =>
-			setTimeout(
-				() =>
-					resolve({
-						analyticsReportsTrafficSources: [
-							{
-								helpMessage: Liferay.Language.get(
-									'this-number-refers-to-the-volume-of-people-that-find-your-page-through-a-search-engine'
-								),
-								name: 'organic',
-								share: 0.1,
-								title: Liferay.Language.get('organic'),
-								value: 32178,
-							},
-							{
-								helpMessage: Liferay.Language.get(
-									'this-number-refers-to-the-volume-of-people-that-find-your-page-through-paid-keywords'
-								),
-								name: 'paid',
-								share: 0.9,
-								title: Liferay.Language.get('paid'),
-								value: 278256,
-							},
-						],
-					}),
-				300
-			)
+			setTimeout(() => resolve(MOCK_TRAFFIC_SOURCES), 300)
 		);
 	}
 
@@ -97,6 +133,7 @@ function APIService({endpoints, namespace, page}) {
 		getHistoricalViews,
 		getTotalReads,
 		getTotalViews,
+		getTrafficSourceDetails,
 		getTrafficSources,
 	};
 }

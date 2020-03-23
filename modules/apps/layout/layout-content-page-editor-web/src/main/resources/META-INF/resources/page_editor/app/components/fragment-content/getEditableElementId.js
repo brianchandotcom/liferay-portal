@@ -16,5 +16,9 @@
  * @param {string} fragmentEntryLinkId
  */
 export default function getEditableElementId(editableElement) {
-	return editableElement.dataset.lfrBackgroundImageId || editableElement.id;
+	return (
+		editableElement.dataset.lfrBackgroundImageId ||
+		editableElement.dataset.lfrEditableId ||
+		editableElement.getAttribute('id')
+	);
 }

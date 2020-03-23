@@ -32,6 +32,17 @@ export default function getAllEditables(element) {
 			})
 		),
 
+		...Array.from(element.querySelectorAll('[data-lfr-editable-id]')).map(
+			element => ({
+				editableId: element.dataset.lfrEditableId,
+				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				element,
+				processor:
+					Processors[element.dataset.lfrEditableType] ||
+					Processors.fallback,
+			})
+		),
+
 		...Array.from(
 			element.querySelectorAll('[data-lfr-background-image-id]')
 		).map(element => ({

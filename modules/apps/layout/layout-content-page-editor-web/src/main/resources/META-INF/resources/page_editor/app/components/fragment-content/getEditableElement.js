@@ -21,5 +21,9 @@ export function getEditableElement(target) {
 		editableElement = closest(target, '[data-lfr-background-image-id]');
 	}
 
+	if (!editableElement) {
+		editableElement = closest(target, '[data-lfr-editable-id]');
+	}
+
 	return editableElement;
 }

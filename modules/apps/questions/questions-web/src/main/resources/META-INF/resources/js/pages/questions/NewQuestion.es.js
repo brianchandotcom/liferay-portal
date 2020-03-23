@@ -29,6 +29,7 @@ import {
 	historyPushWithSlug,
 	onBeforeLoadCKEditor,
 	useDebounceCallback,
+	slugToText,
 } from '../../utils/utils.es';
 
 export default withRouter(
@@ -47,7 +48,7 @@ export default withRouter(
 		const context = useContext(AppContext);
 		const historyPushParser = historyPushWithSlug(history.push);
 
-		const section = useSection(sectionTitle, context.siteKey);
+		const section = useSection(slugToText(sectionTitle), context.siteKey);
 
 		const [debounceCallback] = useDebounceCallback(
 			() => historyPushParser(`/questions/${sectionTitle}/`),

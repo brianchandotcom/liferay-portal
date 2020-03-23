@@ -379,10 +379,10 @@ export const getThreads = ({
 	filter += ')';
 
 	if (taxonomyCategoryId) {
-		filter = `and taxonomyCategoryId/any(x:x eq ${taxonomyCategoryId})`;
+		filter = `taxonomyCategoryId/any(x:x eq ${taxonomyCategoryId})`;
 	}
 	else if (creatorId) {
-		filter = `and creator/id eq ${creatorId}`;
+		filter = `creator/id eq ${creatorId}`;
 	}
 
 	return request(gql`

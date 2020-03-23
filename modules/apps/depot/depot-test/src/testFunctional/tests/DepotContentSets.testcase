@@ -181,6 +181,8 @@ definition {
 	@description = "This ensures that content sets from a site can select the basic web content stored in a depot."
 	@priority = "5"
 	test CreateSetOnSiteUsingDepotWC {
+		property portal.acceptance = "quarantine";
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
@@ -405,6 +407,8 @@ definition {
 	@description = "This ensures that the image is displayed by AP through Content Sets in a depot."
 	@priority = "5"
 	test DisplayImageInAP {
+		property portal.acceptance = "quarantine";
+
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(
@@ -902,6 +906,8 @@ definition {
 	@description = "This ensures that multiple web content can be selected through Content Sets in a depot."
 	@priority = "5"
 	test SelectMultipleWebContentManually {
+		property portal.acceptance = "quarantine";
+
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",

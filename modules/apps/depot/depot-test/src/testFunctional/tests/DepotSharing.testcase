@@ -45,6 +45,8 @@ definition {
 	@description = "This test asserts that users get the proper notification based on depot sharing permissions granted to him."
 	@priority = "5"
 	test AssertNotifications {
+		property portal.acceptance = "quarantine";
+
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(

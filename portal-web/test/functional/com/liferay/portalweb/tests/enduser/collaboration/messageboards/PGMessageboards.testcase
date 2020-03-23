@@ -349,6 +349,8 @@ definition {
 
 	@priority = "4"
 	test AddMBThreadWithMultipleAttachments {
+		property portal.acceptance = "quarantine";
+
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		AssertClick(

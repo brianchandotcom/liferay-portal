@@ -471,6 +471,8 @@ definition {
 
 	@priority = "4"
 	test RateBlogsEntry {
+		property portal.acceptance = "quarantine";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");

@@ -527,6 +527,8 @@ definition {
 	@description = "This test covers LPS-100024. It ensures that comments from different experiences are independent from one another."
 	@priority = "4"
 	test ViewCommentOnDifferentExperience {
+		property portal.acceptance = "quarantine";
+
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ProductMenu.gotoPortlet(

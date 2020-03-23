@@ -56,6 +56,8 @@ definition {
 	@description = "This ensures that a user can set the depot site connection via settings."
 	@priority = "4"
 	test SearchForDocument {
+		property portal.acceptance = "quarantine";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(

@@ -208,6 +208,12 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>DEPLOY_BUTTON</td>
+	<td>//button[contains(@class,'btn-primary') and contains(text(),'Deploy')]</td>
+	<td></td>
+</tr>
+
 <!--CONTROL_PANEL-->
 <tr>
 	<td>CUSTOM_PORTLET</td>

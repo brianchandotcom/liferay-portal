@@ -1201,12 +1201,12 @@ definition {
 
 		WebContent.paginateRelatedAssets(
 			assetType = "Basic Web Content",
-			itemsPerPage = "5",
+			itemsPerPage = "4",
 			webContentTitle = "WC WebContent 3 Title");
 
 		WebContent.viewPaginateRelatedAssets(
-			itemsPerPage = "5 Entries",
-			numberOfPages = "Showing 1 to 5 of 6 entries.");
+			itemsPerPage = "4 Entries",
+			numberOfPages = "Showing 1 to 4 of 6 entries.");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

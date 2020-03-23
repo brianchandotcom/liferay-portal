@@ -90,6 +90,8 @@ definition {
 
 	@priority = "3"
 	test WithdrawTaskAssignedToMeByDetails {
+		property portal.upstream = "quarantine";
+
 		var webContentContent = "WC WebContent Content";
 		var webContentTitle = "WC WebContent Title";
 
@@ -144,6 +146,8 @@ definition {
 
 	@priority = "4"
 	test WithdrawTaskAssignedToMyRolesByActions {
+		property portal.upstream = "quarantine";
+
 		var webContentContent = "WC WebContent Content";
 		var webContentTitle = "WC WebContent Title";
 

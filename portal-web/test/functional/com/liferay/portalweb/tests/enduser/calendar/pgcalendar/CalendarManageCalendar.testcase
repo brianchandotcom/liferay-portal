@@ -332,6 +332,8 @@ definition {
 
 	@priority = "3"
 	test EditUserCalendarOtherCalendars {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

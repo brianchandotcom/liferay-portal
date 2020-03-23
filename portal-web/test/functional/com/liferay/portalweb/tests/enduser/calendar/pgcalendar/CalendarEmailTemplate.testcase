@@ -173,6 +173,8 @@ definition {
 
 	@priority = "3"
 	test EditReminderForCalendarResourceCalendar {
+		property portal.upstream = "quarantine";
+
 		CalendarResource.add(calendarResourceName = "Calendar Resource Name");
 
 		Navigator.gotoPage(pageName = "Calendar Page");

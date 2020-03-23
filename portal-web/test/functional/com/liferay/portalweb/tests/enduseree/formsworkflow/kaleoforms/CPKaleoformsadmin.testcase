@@ -1692,6 +1692,8 @@ definition {
 
 	@priority = "3"
 	test EditSingleApproverWorkflowViaViewTabViaAddProcess {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

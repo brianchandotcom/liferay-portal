@@ -224,6 +224,8 @@ definition {
 
 	@priority = "4"
 	test ConfigureFolderWorkflow {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",

@@ -255,6 +255,8 @@ definition {
 
 	@priority = "4"
 	test RejectEventWithInvitedUser {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoView(viewType = "Week");

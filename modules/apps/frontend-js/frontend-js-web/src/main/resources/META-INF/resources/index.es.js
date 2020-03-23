@@ -18,6 +18,10 @@
 
 export {default as AOP} from './liferay/aop/AOP.es';
 
+// AutoSize API
+
+export {default as autoSize} from './liferay/autosize/autosize.es';
+
 // Debounce API
 
 export {cancelDebounce, debounce} from './liferay/debounce/debounce.es';

@@ -356,68 +356,9 @@ boolean choiceField = checkboxField || radioField;
 				<textarea class="<%= fieldCssClass %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= namespace + id %>" <%= multiple ? "multiple" : StringPool.BLANK %> name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(resourceBundle, placeholder) + "\"" : StringPool.BLANK %> <%= (storedDimensions.length > 1) ? "style=\"height: " + storedDimensions[0] + "; width: " + storedDimensions[1] + ";" + title + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(title) ? "title=\"" + LanguageUtil.get(resourceBundle, title) + "\"" : StringPool.BLANK %> <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><%= HtmlUtil.escape(valueString) %></textarea>
 
 				<c:if test="<%= autoSize %>">
-					<aui:script>
-						var DEFAULT_APPEND_CONTENT = '&nbsp;&nbsp;';
+					<aui:script require="frontend-js-web/liferay/autosize/autosize.es as autoSizeModule">
 						var inputElement = document.getElementById('<%= namespace + id %>');
-
-						function autoSize(inputElement) {
-							this.computedStyle = getComputedStyle(inputElement);
-							this.minHeight = parseInt(this.computedStyle.height.replace('px', ''), 10);
-
-							this.template = this.createTemplate(this.computedStyle);
-							document.body.appendChild(this.template);
-
-							inputElement.addEventListener('input', this.handleInput.bind(this));
-						}
-
-						autoSize.prototype.createTemplate = function(computedStyle) {
-							var template = document.createElement('pre');
-
-							template.style.clip = 'rect(0, 0, 0, 0) !important';
-							template.style.left = '0';
-							template.style.overflowWrap = 'break-word';
-							template.style.position = 'absolute';
-							template.style.top = '0';
-							template.style.transform = 'scale(0)';
-							template.style.whiteSpace = 'pre-wrap';
-							template.style.wordBreak = 'break-word';
-
-							template.style.fontFamily = computedStyle.fontFamily;
-							template.style.fontSize = computedStyle.fontSize;
-							template.style.fontStyle = computedStyle.fontStyle;
-							template.style.fontWeight = computedStyle.fontWeight;
-							template.style.lineHeight = computedStyle.lineHeight;
-							template.style.letterSpacing = computedStyle.letterSpacing;
-							template.style.textTransform = computedStyle.textTransform;
-
-							template.style.width = computedStyle.width;
-
-							template.textContent = DEFAULT_APPEND_CONTENT;
-
-							return template;
-						};
-
-						autoSize.prototype.handleInput = function(event) {
-							var self = this;
-							requestAnimationFrame(function() {
-								var target = event.target;
-								var value = target.value;
-
-								if (self.template.style.width !== self.computedStyle.width) {
-									self.template.style.width = self.computedStyle.width;
-								}
-
-								self.template.innerHTML = value + DEFAULT_APPEND_CONTENT;
-
-								var height = self.template.scrollHeight < self.minHeight ?
-									self.minHeight : self.template.scrollHeight;
-
-								target.style.height = height + 'px';
-							});
-						};
-
-						new autoSize(inputElement);
-
+						new autoSizeModule.default(inputElement);
 					</aui:script>
 				</c:if>
 

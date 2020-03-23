@@ -1038,44 +1038,6 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	macro searchForAssetsAfterUpgrade {
-		Navigator.openURL();
-
-		SearchPortlets.searchEmbedded(searchTerm = "Web Content");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetSummary = "Web Content Content",
-			searchAssetTitle = "Web Content Title",
-			searchAssetType = "Web Content Article");
-
-		SearchPortlets.searchEmbedded(searchTerm = "Document1");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "Document1",
-			searchAssetType = "Document");
-
-		SearchPortlets.searchEmbedded(searchTerm = "Message Boards");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetSummary = "Message Boards Body",
-			searchAssetTitle = "Message Boards Subject",
-			searchAssetType = "Message Boards Message");
-
-		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetSummary = "Wiki Front Page Content",
-			searchAssetTitle = "FrontPage",
-			searchAssetType = "Wiki Page");
-
-		SearchPortlets.searchEmbedded(searchTerm = "Blogs");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetSummary = "Blogs Entry Content",
-			searchAssetTitle = "Blogs Entry Title",
-			searchAssetType = "Blogs Entry");
-	}
-
 	macro submitNewWorkflow {
 		Navigator.openURL();
 

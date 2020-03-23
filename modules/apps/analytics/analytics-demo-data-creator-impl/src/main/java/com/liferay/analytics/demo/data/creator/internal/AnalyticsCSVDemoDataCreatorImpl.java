@@ -358,7 +358,7 @@ public class AnalyticsCSVDemoDataCreatorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsCSVDemoDataCreatorImpl.class);
 
-	private AnalyticsDemoDataCreatorConfiguration
+	private volatile AnalyticsDemoDataCreatorConfiguration
 		_analyticsDemoDataCreatorConfiguration;
 	private long _companyId;
 

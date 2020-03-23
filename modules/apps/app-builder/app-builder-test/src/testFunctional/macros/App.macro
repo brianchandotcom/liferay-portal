@@ -30,6 +30,7 @@ definition {
 
 	macro clickDeploy {
 		Button.click(button = "Deploy");
+		App.waitForDeployButtonNotVisible();
 	}
 
 	macro clickNewAppButton {
@@ -61,7 +62,7 @@ definition {
 			App.selectProductMenuSiteOption(siteOption = "${siteOption}");
 		}
 
-		Button.click(button = "Save");
+		App.saveApp();
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}
@@ -75,7 +76,7 @@ definition {
 	}
 
 	macro saveApp {
-		Button.click(button = "Save");
+		AppBuilderAdmin.save();
 	}
 
 	macro selectFormView {
@@ -137,6 +138,12 @@ definition {
 
 	macro validateProductMenuSiteDropdownPresent {
 		AssertElementPresent(locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN");
+	}
+
+	macro waitForDeployButtonNotVisible {
+		while (IsElementPresent(locator1 = "AppBuilder#DEPLOY_BUTTON")) {
+			Pause(locator1 = "1000");
+		}
 	}
 
 }

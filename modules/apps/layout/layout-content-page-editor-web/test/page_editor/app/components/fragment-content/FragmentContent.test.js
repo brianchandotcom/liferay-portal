@@ -160,6 +160,24 @@ describe('FragmentContent', () => {
 		);
 	});
 
+	it('calls resolve editable values with the correct parameters when content has a data-lfr-editable-id', () => {
+		const fragmentEntryLink = getFragmentEntryLink({
+			content:
+				'<p data-lfr-editable-id="editable-id" data-lfr-editable-type="text">Default content</p>',
+		});
+
+		renderFragmentContent(fragmentEntryLink);
+
+		expect(resolveEditableValue).toBeCalledWith(
+			fragmentEntryLink.editableValues,
+			'editable-id',
+			EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+			'en_US',
+			'segments-experience-id-0',
+			expect.any(Function)
+		);
+	});
+
 	it('calls resolve editable values with the correct parameters when content has a background image editable', () => {
 		const fragmentEntryLink = getFragmentEntryLink({
 			content: '<div data-lfr-background-image-id="background-id"></div>',

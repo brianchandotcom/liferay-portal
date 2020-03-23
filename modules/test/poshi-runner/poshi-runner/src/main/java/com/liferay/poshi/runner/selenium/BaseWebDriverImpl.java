@@ -208,7 +208,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void assertAccessible() throws Exception {
 		WebDriver webDriver = WebDriverUtil.getWebDriver();
 
-		String sourceDirFilePath = LiferaySeleniumUtil.getSourceDirFilePath(
+		String sourceDirFilePath = LiferaySeleniumHelper.getSourceDirFilePath(
 			getTestDependenciesDirName());
 
 		File file = new File(sourceDirFilePath + "/axe.min.js");
@@ -296,7 +296,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void assertConsoleErrors() throws Exception {
-		LiferaySeleniumUtil.assertConsoleErrors();
+		LiferaySeleniumHelper.assertConsoleErrors();
 	}
 
 	@Override
@@ -438,7 +438,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 					continue;
 				}
 
-				if (LiferaySeleniumUtil.isInIgnoreErrorsFile(
+				if (LiferaySeleniumHelper.isInIgnoreErrorsFile(
 						javaScriptErrorValue, "javascript")) {
 
 					continue;
@@ -453,7 +453,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		}
 
 		if (!exceptions.isEmpty()) {
-			LiferaySeleniumUtil.addToJavaScriptExceptions(exceptions);
+			LiferaySeleniumHelper.addToJavaScriptExceptions(exceptions);
 
 			throw exceptions.get(0);
 		}
@@ -461,7 +461,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void assertLiferayErrors() throws Exception {
-		LiferaySeleniumUtil.assertConsoleErrors();
+		LiferaySeleniumHelper.assertConsoleErrors();
 	}
 
 	@Override
@@ -471,12 +471,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void assertNoJavaScriptExceptions() throws Exception {
-		LiferaySeleniumUtil.assertNoJavaScriptExceptions();
+		LiferaySeleniumHelper.assertNoJavaScriptExceptions();
 	}
 
 	@Override
 	public void assertNoLiferayExceptions() throws Exception {
-		LiferaySeleniumUtil.assertNoLiferayExceptions();
+		LiferaySeleniumHelper.assertNoLiferayExceptions();
 	}
 
 	@Override
@@ -855,7 +855,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void connectToEmailAccount(String emailAddress, String emailPassword)
 		throws Exception {
 
-		LiferaySeleniumUtil.connectToEmailAccount(emailAddress, emailPassword);
+		LiferaySeleniumHelper.connectToEmailAccount(
+			emailAddress, emailPassword);
 	}
 
 	@Override
@@ -870,7 +871,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void deleteAllEmails() throws Exception {
-		LiferaySeleniumUtil.deleteAllEmails();
+		LiferaySeleniumHelper.deleteAllEmails();
 	}
 
 	@Override
@@ -990,12 +991,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void echo(String message) {
-		LiferaySeleniumUtil.echo(message);
+		LiferaySeleniumHelper.echo(message);
 	}
 
 	@Override
 	public void fail(String message) {
-		LiferaySeleniumUtil.fail(message);
+		LiferaySeleniumHelper.fail(message);
 	}
 
 	@Override
@@ -1107,12 +1108,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public String getEmailBody(String index) throws Exception {
-		return LiferaySeleniumUtil.getEmailBody(index);
+		return LiferaySeleniumHelper.getEmailBody(index);
 	}
 
 	@Override
 	public String getEmailSubject(String index) throws Exception {
-		return LiferaySeleniumUtil.getEmailSubject(index);
+		return LiferaySeleniumHelper.getEmailSubject(index);
 	}
 
 	@Override
@@ -1303,12 +1304,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public String getNumberDecrement(String value) {
-		return LiferaySeleniumUtil.getNumberDecrement(value);
+		return LiferaySeleniumHelper.getNumberDecrement(value);
 	}
 
 	@Override
 	public String getNumberIncrement(String value) {
-		return LiferaySeleniumUtil.getNumberIncrement(value);
+		return LiferaySeleniumHelper.getNumberIncrement(value);
 	}
 
 	@Override
@@ -2189,7 +2190,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void pause(String waitTime) throws Exception {
-		LiferaySeleniumUtil.pause(waitTime);
+		LiferaySeleniumHelper.pause(waitTime);
 	}
 
 	@Override
@@ -2232,7 +2233,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		_screenshotCount++;
 
-		LiferaySeleniumUtil.captureScreen(
+		LiferaySeleniumHelper.captureScreen(
 			_CURRENT_DIR_NAME + "test-results/functional/screenshots/" +
 				_screenshotCount + ".jpg");
 	}
@@ -2253,7 +2254,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			_screenshotErrorCount++;
 		}
 
-		LiferaySeleniumUtil.captureScreen(
+		LiferaySeleniumHelper.captureScreen(
 			_CURRENT_DIR_NAME + "test-results/functional/screenshots" +
 				"/ScreenshotBeforeAction" + _screenshotErrorCount + ".jpg");
 	}
@@ -2334,7 +2335,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void selectFieldText() {
-		LiferaySeleniumUtil.selectFieldText();
+		LiferaySeleniumHelper.selectFieldText();
 	}
 
 	@Override
@@ -2745,7 +2746,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			FileUtil.getSeparator() + _TEST_DEPENDENCIES_DIR_NAME +
 				FileUtil.getSeparator() + value;
 
-		filePath = LiferaySeleniumUtil.getSourceDirFilePath(filePath);
+		filePath = LiferaySeleniumHelper.getSourceDirFilePath(filePath);
 
 		filePath = StringUtil.replace(filePath, "/", FileUtil.getSeparator());
 
@@ -3055,7 +3056,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void typeScreen(String value) {
-		LiferaySeleniumUtil.typeScreen(value);
+		LiferaySeleniumHelper.typeScreen(value);
 	}
 
 	@Override
@@ -3075,7 +3076,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			FileUtil.getSeparator() + _testDependenciesDirName +
 				FileUtil.getSeparator() + value;
 
-		filePath = LiferaySeleniumUtil.getSourceDirFilePath(filePath);
+		filePath = LiferaySeleniumHelper.getSourceDirFilePath(filePath);
 
 		if (value.endsWith(".jar") || value.endsWith(".lar") ||
 			value.endsWith(".war") || value.endsWith(".zip")) {
@@ -3458,7 +3459,42 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	protected By getBy(String locator) {
-		return LiferaySeleniumUtil.getBy(locator);
+		if (locator.startsWith("//")) {
+			return By.xpath(locator);
+		}
+		else if (locator.startsWith("class=")) {
+			locator = locator.substring(6);
+
+			return By.className(locator);
+		}
+		else if (locator.startsWith("css=")) {
+			locator = locator.substring(4);
+
+			return By.cssSelector(locator);
+		}
+		else if (locator.startsWith("link=")) {
+			locator = locator.substring(5);
+
+			return By.linkText(locator);
+		}
+		else if (locator.startsWith("name=")) {
+			locator = locator.substring(5);
+
+			return By.name(locator);
+		}
+		else if (locator.startsWith("tag=")) {
+			locator = locator.substring(4);
+
+			return By.tagName(locator);
+		}
+		else if (locator.startsWith("xpath=") || locator.startsWith("xPath=")) {
+			locator = locator.substring(6);
+
+			return By.xpath(locator);
+		}
+		else {
+			return By.id(locator);
+		}
 	}
 
 	protected Condition getConfirmationCondition(String pattern) {
@@ -3491,7 +3527,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			@Override
 			public boolean evaluate() throws Exception {
-				return !LiferaySeleniumUtil.isConsoleTextPresent(text);
+				return !LiferaySeleniumHelper.isConsoleTextPresent(text);
 			}
 
 		};
@@ -3504,7 +3540,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			@Override
 			public boolean evaluate() throws Exception {
-				return LiferaySeleniumUtil.isConsoleTextPresent(text);
+				return LiferaySeleniumHelper.isConsoleTextPresent(text);
 			}
 
 		};
@@ -3694,7 +3730,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			FileUtil.getSeparator() + getSikuliImagesDirName() + image;
 
 		File file = new File(
-			LiferaySeleniumUtil.getSourceDirFilePath(filePath));
+			LiferaySeleniumHelper.getSourceDirFilePath(filePath));
 
 		return new ImageTarget(file);
 	}

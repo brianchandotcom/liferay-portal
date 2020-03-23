@@ -40,9 +40,14 @@ function handleDropdown({event, item}) {
 }
 
 function handleDropdownButtonName(item) {
-	dropdownButton.querySelector(
-		'.navbar-text-truncate'
-	).innerHTML = item.querySelector('lfr-editable').textContent;
+	const tabText =
+		item.querySelector('lfr-editable') ||
+		item.querySelector('.navbar-text-truncate');
+
+	if (tabText) {
+		dropdownButton.querySelector('.navbar-text-truncate').innerHTML =
+			tabText.textContent;
+	}
 }
 
 function openTabPanel(event, i) {

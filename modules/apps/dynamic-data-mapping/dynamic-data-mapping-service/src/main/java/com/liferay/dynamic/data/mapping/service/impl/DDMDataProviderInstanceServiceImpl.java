@@ -176,7 +176,7 @@ public class DDMDataProviderInstanceServiceImpl
 		Stream<DDMDataProviderInstance> ddmDataProviderInstanceStream =
 			ddmDataProviderInstances.stream();
 
-		ddmDataProviderInstanceStream = ddmDataProviderInstanceStream.filter(
+		return ddmDataProviderInstanceStream.filter(
 			ddmDataProviderInstance -> {
 				try {
 					return _ddmDataProviderInstanceModelResourcePermission.
@@ -190,10 +190,9 @@ public class DDMDataProviderInstanceServiceImpl
 
 					return false;
 				}
-			});
-
-		return ddmDataProviderInstanceStream.map(
-			ddmDataProviderInstance -> _transformDDMDataProviderInstance(
+			}
+		).map(
+			ddmDataProviderInstance -> _removeAuthenticationData(
 				ddmDataProviderInstance)
 		).collect(
 			Collectors.toList()
@@ -268,7 +267,7 @@ public class DDMDataProviderInstanceServiceImpl
 		return filteredFieldValuesJSONArray;
 	}
 
-	private DDMDataProviderInstance _transformDDMDataProviderInstance(
+	private DDMDataProviderInstance _removeAuthenticationData(
 		DDMDataProviderInstance ddmDataProviderInstance) {
 
 		try {

@@ -83,11 +83,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		template.put("saveEventName", eventName);
 
-		String saveFileDescription = ParamUtil.getString(
-			renderRequest, "saveFileDescription");
-
-		template.put("saveFileDescription", saveFileDescription);
-
 		String saveFileEntryId = ParamUtil.getString(
 			renderRequest, "saveFileEntryId");
 

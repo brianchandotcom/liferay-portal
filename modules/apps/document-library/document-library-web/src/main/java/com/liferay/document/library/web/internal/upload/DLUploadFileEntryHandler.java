@@ -73,10 +73,17 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 
 		String contentType = uploadPortletRequest.getContentType(
 			_PARAMETER_NAME);
-		String description = uploadPortletRequest.getParameter("description");
 
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 				_PARAMETER_NAME)) {
+
+			String description = StringPool.BLANK;
+			DLFileEntry dlFileEntry = _getOriginalDLFileEntry(
+				uploadPortletRequest);
+
+			if (dlFileEntry != null) {
+				description = dlFileEntry.getDescription();
+			}
 
 			String uniqueFileName = _uniqueFileNameProvider.provide(
 				fileName,
@@ -109,28 +116,31 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 		}
 	}
 
-	private ServiceContext _getServiceContext(
-			UploadPortletRequest uploadPortletRequest)
-		throws PortalException {
+	private DLFileEntry _getOriginalDLFileEntry(
+		UploadPortletRequest uploadPortletRequest) {
 
 		long fileEntryId = GetterUtil.getLong(
 			uploadPortletRequest.getParameter("fileEntryId"));
 
 		if (fileEntryId == 0) {
-			return ServiceContextFactory.getInstance(
-				DLFileEntry.class.getName(), uploadPortletRequest);
+			return null;
 		}
 
-		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
-			fileEntryId);
+		return _dlFileEntryLocalService.fetchDLFileEntry(fileEntryId);
+	}
 
-		if (dlFileEntry == null) {
-			return ServiceContextFactory.getInstance(
-				DLFileEntry.class.getName(), uploadPortletRequest);
-		}
+	private ServiceContext _getServiceContext(
+			UploadPortletRequest uploadPortletRequest)
+		throws PortalException {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), uploadPortletRequest);
+
+		DLFileEntry dlFileEntry = _getOriginalDLFileEntry(uploadPortletRequest);
+
+		if (dlFileEntry == null) {
+			return serviceContext;
+		}
 
 		ExpandoBridge expandoBridge = dlFileEntry.getExpandoBridge();
 

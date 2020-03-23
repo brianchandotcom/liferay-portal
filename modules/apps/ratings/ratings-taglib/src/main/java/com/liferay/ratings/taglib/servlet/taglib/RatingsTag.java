@@ -173,6 +173,8 @@ public class RatingsTag extends IncludeTag {
 					"thumbUp", _isThumbUp(_getUserScore(ratingsEntry))
 				).put(
 					"url", _getURL(themeDisplay)
+				).put(
+					"userScore", ratingsEntry != null ? _getUserScore(ratingsEntry) : -1
 				).build());
 
 			httpServletRequest.setAttribute(

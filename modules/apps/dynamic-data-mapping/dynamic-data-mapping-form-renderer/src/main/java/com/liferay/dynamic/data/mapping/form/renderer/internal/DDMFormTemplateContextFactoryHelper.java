@@ -17,7 +17,9 @@ package com.liferay.dynamic.data.mapping.form.renderer.internal;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -34,7 +36,9 @@ import java.util.regex.Pattern;
  */
 public class DDMFormTemplateContextFactoryHelper {
 
-	public Set<String> getEvaluableDDMFormFieldNames(DDMForm ddmForm) {
+	public Set<String> getEvaluableDDMFormFieldNames(
+		DDMForm ddmForm, DDMFormLayout ddmFormLayout) {
+
 		Set<String> evaluableDDMFormFieldNames = new HashSet<>();
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
@@ -42,9 +46,15 @@ public class DDMFormTemplateContextFactoryHelper {
 
 		Set<String> ddmFormFieldNames = ddmFormFieldsMap.keySet();
 
+		List<DDMFormRule> ddmFormRules = ddmFormLayout.getDDMFormRules();
+
+		if (ListUtil.isEmpty(ddmFormRules)) {
+			ddmFormRules = ddmForm.getDDMFormRules();
+		}
+
 		evaluableDDMFormFieldNames.addAll(
 			getReferencedFieldNamesByDDMFormRules(
-				ddmForm.getDDMFormRules(), ddmFormFieldNames));
+				ddmFormRules, ddmFormFieldNames));
 
 		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
 			if (isDDMFormFieldEvaluable(ddmFormField)) {

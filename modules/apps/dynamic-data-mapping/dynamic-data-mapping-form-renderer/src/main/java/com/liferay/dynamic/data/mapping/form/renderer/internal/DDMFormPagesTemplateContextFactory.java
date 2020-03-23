@@ -336,6 +336,8 @@ public class DDMFormPagesTemplateContextFactory {
 			formEvaluatorEvaluateRequestBuilder.withCompanyId(
 				PortalUtil.getCompanyId(
 					_ddmFormRenderingContext.getHttpServletRequest()));
+			formEvaluatorEvaluateRequestBuilder.withDDMFormLayout(
+				_ddmFormLayout);
 			formEvaluatorEvaluateRequestBuilder.withGroupId(
 				_ddmFormRenderingContext.getGroupId());
 			formEvaluatorEvaluateRequestBuilder.withUserId(

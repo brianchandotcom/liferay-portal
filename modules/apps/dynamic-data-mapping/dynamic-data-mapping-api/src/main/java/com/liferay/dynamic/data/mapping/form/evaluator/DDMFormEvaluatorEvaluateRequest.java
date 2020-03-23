@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.evaluator;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 
 import java.util.Locale;
@@ -30,6 +31,10 @@ public final class DDMFormEvaluatorEvaluateRequest {
 
 	public DDMForm getDDMForm() {
 		return _ddmForm;
+	}
+
+	public DDMFormLayout getDDMFormLayout() {
+		return _ddmFormLayout;
 	}
 
 	public DDMFormValues getDDMFormValues() {
@@ -66,6 +71,12 @@ public final class DDMFormEvaluatorEvaluateRequest {
 			return this;
 		}
 
+		public Builder withDDMFormLayout(DDMFormLayout ddmFormLayout) {
+			_ddmFormEvaluatorEvaluateRequest._ddmFormLayout = ddmFormLayout;
+
+			return this;
+		}
+
 		public Builder withGroupId(long groupId) {
 			_ddmFormEvaluatorEvaluateRequest._groupId = groupId;
 
@@ -97,6 +108,7 @@ public final class DDMFormEvaluatorEvaluateRequest {
 
 	private long _companyId;
 	private DDMForm _ddmForm;
+	private DDMFormLayout _ddmFormLayout;
 	private DDMFormValues _ddmFormValues;
 	private long _groupId;
 	private Locale _locale;

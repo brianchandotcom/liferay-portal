@@ -29,6 +29,8 @@ definition {
 	@description = "This makes sure that multiple blog images can be previewed by using the keyboard."
 	@priority = "5"
 	test PreviewMultipleImagesInBlogsImages {
+		property portal.acceptance = "quarantine";
+
 		for (var i : list "1,2,3") {
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 

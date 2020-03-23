@@ -289,12 +289,11 @@ public class AnalyticsCSVDemoDataCreatorImpl
 		boolean male = StringUtil.equalsIgnoreCase(gender, "male");
 
 		User user = _userLocalService.addUser(
-			_userLocalService.getDefaultUserId(_companyId), _companyId, false,
-			csvRecord.get("password"), csvRecord.get("password"), false,
-			csvRecord.get("screenName"), csvRecord.get("emailAddress"), 0,
-			StringPool.BLANK, LocaleUtil.getDefault(),
-			csvRecord.get("firstName"), csvRecord.get("middleName"),
-			csvRecord.get("lastName"), 0, 0, male,
+			_defaultUserId, _companyId, false, csvRecord.get("password"),
+			csvRecord.get("password"), false, csvRecord.get("screenName"),
+			csvRecord.get("emailAddress"), 0, StringPool.BLANK,
+			LocaleUtil.getDefault(), csvRecord.get("firstName"),
+			csvRecord.get("middleName"), csvRecord.get("lastName"), 0, 0, male,
 			GetterUtil.getInteger(csvRecord.get("birthdayMonth")) - 1,
 			GetterUtil.getInteger(csvRecord.get("birthdayDay")),
 			GetterUtil.getInteger(csvRecord.get("birthdayYear")),
@@ -342,7 +341,7 @@ public class AnalyticsCSVDemoDataCreatorImpl
 
 		csvFormat = csvFormat.withFirstRecordAsHeader();
 		csvFormat = csvFormat.withIgnoreSurroundingSpaces();
-		csvFormat = csvFormat.withNullString("");
+		csvFormat = csvFormat.withNullString(StringPool.BLANK);
 
 		try {
 			return CSVParser.parse(

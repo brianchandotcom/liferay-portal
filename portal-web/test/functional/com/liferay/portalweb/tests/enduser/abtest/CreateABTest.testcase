@@ -83,8 +83,6 @@ definition {
 		}
 
 		task ("Run the A/B Test") {
-			Pause(locator1 = "2000");
-
 			Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
 
 			Click(locator1 = "ABTest#RUN_TEST_BUTTON");
@@ -96,8 +94,6 @@ definition {
 			Click(locator1 = "ABTest#CONTROL_VARIANT");
 
 			Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
-
-			Pause(locator1 = "15000");
 
 			SelectWindow(locator1 = "title=Analytics Cloud");
 

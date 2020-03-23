@@ -15,6 +15,8 @@
 package com.liferay.data.engine.field.type.util;
 
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -42,6 +44,7 @@ public class LocalizedValueUtilTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
+		_setUpJSONFactoryUtil();
 		_setUpLanguageUtil();
 	}
 
@@ -124,6 +127,12 @@ public class LocalizedValueUtilTest extends PowerMockito {
 				HashMapBuilder.put(
 					LocaleUtil.US, "en_US"
 				).build()));
+	}
+
+	private void _setUpJSONFactoryUtil() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	private void _setUpLanguageUtil() {

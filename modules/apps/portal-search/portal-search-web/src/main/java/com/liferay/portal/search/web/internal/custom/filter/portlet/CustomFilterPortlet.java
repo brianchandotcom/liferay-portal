@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.searcher.SearchRequest;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.custom.filter.constants.CustomFilterPortletKeys;
 import com.liferay.portal.search.web.internal.custom.filter.display.context.CustomFilterDisplayBuilder;
 import com.liferay.portal.search.web.internal.custom.filter.display.context.CustomFilterDisplayContext;
@@ -160,7 +162,20 @@ public class CustomFilterPortlet extends MVCPortlet {
 		Optional<String> keywordsOptional =
 			portletSharedSearchResponse.getKeywordsOptional();
 
-		return !keywordsOptional.isPresent();
+		if (keywordsOptional.isPresent()) {
+			return false;
+		}
+
+		SearchResponse searchResponse =
+			portletSharedSearchResponse.getSearchResponse();
+
+		SearchRequest searchRequest = searchResponse.getRequest();
+
+		if (searchRequest.isEmptySearchEnabled()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Reference

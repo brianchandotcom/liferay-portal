@@ -69,11 +69,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIVE_ITEMS_PER_PAGE</td>
-	<td>//a[contains(.,'5')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RESULTS</td>
 	<td>//p[@class='pagination-results']</td>
 	<td></td>

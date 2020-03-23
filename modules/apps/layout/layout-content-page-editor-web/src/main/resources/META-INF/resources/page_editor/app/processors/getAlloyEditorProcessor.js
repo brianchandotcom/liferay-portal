@@ -65,7 +65,13 @@ export default function getAlloyEditorProcessor(
 			_element = element;
 
 			const editorName = `${config.portletNamespace}FragmentEntryLinkEditable_${element.id}`;
-			_editor = AlloyEditor.editable(getEditorWrapper(element), {
+
+			const editorWrapper = getEditorWrapper(element);
+
+			editorWrapper.setAttribute('id', editorName);
+			editorWrapper.setAttribute('name', editorName);
+
+			_editor = AlloyEditor.editable(editorWrapper, {
 				...editorConfig,
 
 				filebrowserImageBrowseLinkUrl: editorConfig.filebrowserImageBrowseLinkUrl.replace(

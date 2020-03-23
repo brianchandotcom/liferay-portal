@@ -9,7 +9,7 @@ definition {
 	}
 
 	macro viewBookmarkMenuItems {
-		Click(locator1 = "Icon#SHARE");
+		Click.pauseClickAt(locator1 = "Icon#SHARE");
 
 		for (var socialBookmark : list "${socialBookmarks}") {
 			MenuItem.viewPresent(menuItem = "${socialBookmark}");

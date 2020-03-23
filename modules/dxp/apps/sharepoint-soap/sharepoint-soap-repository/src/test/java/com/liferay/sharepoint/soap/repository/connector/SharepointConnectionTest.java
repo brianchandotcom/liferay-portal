@@ -46,7 +46,8 @@ import org.junit.Test;
 @Ignore
 public class SharepointConnectionTest {
 
-	public SharepointConnectionTest() {
+	@Before
+	public void setUp() throws Exception {
 		_fileExtension1 = "txt";
 
 		_fileName1 =
@@ -61,10 +62,11 @@ public class SharepointConnectionTest {
 
 		_folderPath1 = StringPool.SLASH + _folderName1;
 		_folderPath2 = StringPool.SLASH + _folderName2;
-	}
 
-	@Before
-	public void setUp() throws Exception {
+		_sharepointConnection = SharepointConnectionFactory.getInstance(
+			_SERVER_VERSION, _SERVER_PROTOCOL, _SERVER_ADDRESS, _SERVER_PORT,
+			_SITE_PATH, _LIBRARY_NAME, _LIBRARY_PATH, _USERNAME, _PASSWORD);
+
 		FileUtil fileUtil = new FileUtil();
 
 		fileUtil.setFile(new FileImpl());
@@ -790,17 +792,14 @@ public class SharepointConnectionTest {
 
 	private static final String _USERNAME = "Administrator";
 
-	private final String _fileExtension1;
-	private final String _fileName1;
-	private final String _fileName2;
-	private final String _filePath1;
-	private final String _folderName1;
-	private final String _folderName2;
-	private final String _folderPath1;
-	private final String _folderPath2;
-	private final SharepointConnection _sharepointConnection =
-		SharepointConnectionFactory.getInstance(
-			_SERVER_VERSION, _SERVER_PROTOCOL, _SERVER_ADDRESS, _SERVER_PORT,
-			_SITE_PATH, _LIBRARY_NAME, _LIBRARY_PATH, _USERNAME, _PASSWORD);
+	private String _fileExtension1;
+	private String _fileName1;
+	private String _fileName2;
+	private String _filePath1;
+	private String _folderName1;
+	private String _folderName2;
+	private String _folderPath1;
+	private String _folderPath2;
+	private SharepointConnection _sharepointConnection;
 
 }

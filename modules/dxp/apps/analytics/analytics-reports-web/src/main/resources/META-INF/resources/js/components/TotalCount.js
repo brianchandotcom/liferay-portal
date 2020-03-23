@@ -19,12 +19,13 @@ function TotalCount({
 	className,
 	dataProvider,
 	label,
+	percentage = false,
 	popoverAlign,
 	popoverHeader,
 	popoverMessage,
 	popoverPosition,
 }) {
-	const [value, setValue] = React.useState(null);
+	const [value, setValue] = React.useState('-');
 	const isMounted = useIsMounted();
 
 	React.useEffect(() => {
@@ -44,7 +45,7 @@ function TotalCount({
 
 	return (
 		<div className={className}>
-			<div className="float-left text-secondary w2-7">{label}</div>
+			<span className="text-secondary">{label}</span>
 			<span className="text-secondary">
 				<Hint
 					align={popoverAlign}
@@ -53,7 +54,13 @@ function TotalCount({
 					title={popoverHeader}
 				/>
 			</span>
-			<span className="font-weight-bold">{value}</span>
+			<span className="font-weight-bold">
+				{percentage && value != '-' ? (
+					<span>{`${value * 100}%`}</span>
+				) : (
+					value
+				)}
+			</span>
 		</div>
 	);
 }

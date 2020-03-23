@@ -46,7 +46,7 @@ RedirectNotFountEntriesManagementToolbarDisplayContext redirectNotFoundEntriesMa
 			>
 
 				<%
-				String url = redirectNotFoundEntriesDisplayContext.getGroupBaseURL() + StringPool.SLASH + redirectNotFoundEntry.getUrl();
+				String url = RedirectUtil.getGroupBaseURL(themeDisplay) + StringPool.SLASH + redirectNotFoundEntry.getUrl();
 				%>
 
 				<aui:a href="<%= HtmlUtil.escapeAttribute(url) %>" target="_blank">

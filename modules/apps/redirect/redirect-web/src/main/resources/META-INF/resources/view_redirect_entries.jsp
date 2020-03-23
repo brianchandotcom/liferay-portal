@@ -51,7 +51,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 			>
 
 				<%
-				String url = redirectDisplayContext.getGroupBaseURL() + StringPool.SLASH + redirectEntry.getSourceURL();
+				String url = RedirectUtil.getGroupBaseURL(themeDisplay) + StringPool.SLASH + redirectEntry.getSourceURL();
 				%>
 
 				<aui:a href="<%= HtmlUtil.escapeAttribute(url) %>" target="_blank">

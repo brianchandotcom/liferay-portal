@@ -56,7 +56,7 @@ else {
 		<liferay-ui:error exception="<%= RequiredRedirectEntrySourceURLException.class %>" focusField="sourceURL" message="the-source-url-must-be-specified" />
 
 		<aui:field-wrapper cssClass="form-group" label="source-url" name="sourceURL" required="<%= true %>">
-			<div class="form-text"><%= redirectDisplayContext.getGroupBaseURL() %></div>
+			<div class="form-text"><%= RedirectUtil.getGroupBaseURL(themeDisplay) %></div>
 
 			<div class="input-group">
 				<div class="input-group-item input-group-item-shrink input-group-prepend">

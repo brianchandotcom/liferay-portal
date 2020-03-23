@@ -15,18 +15,13 @@
 package com.liferay.redirect.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalServiceUtil;
 import com.liferay.redirect.web.internal.search.RedirectNotFoundEntrySearch;
-
-import java.util.TreeMap;
 
 import javax.portlet.PortletURL;
 
@@ -48,28 +43,6 @@ public class RedirectNotFoundEntriesDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	public String getGroupBaseURL() {
-		StringBuilder groupBaseURL = new StringBuilder();
-
-		groupBaseURL.append(_themeDisplay.getPortalURL());
-
-		Group group = _themeDisplay.getScopeGroup();
-
-		LayoutSet layoutSet = group.getPublicLayoutSet();
-
-		TreeMap<String, String> virtualHostnames =
-			layoutSet.getVirtualHostnames();
-
-		if (virtualHostnames.isEmpty() ||
-			!_matchesHostname(groupBaseURL, virtualHostnames)) {
-
-			groupBaseURL.append(group.getPathFriendlyURL(false, _themeDisplay));
-			groupBaseURL.append(HttpUtil.decodeURL(group.getFriendlyURL()));
-		}
-
-		return groupBaseURL.toString();
 	}
 
 	public String getSearchContainerId() {
@@ -104,19 +77,6 @@ public class RedirectNotFoundEntriesDisplayContext {
 
 	private PortletURL _getPortletURL() {
 		return _liferayPortletResponse.createRenderURL();
-	}
-
-	private boolean _matchesHostname(
-		StringBuilder friendlyURLBase,
-		TreeMap<String, String> virtualHostnames) {
-
-		for (String virtualHostname : virtualHostnames.keySet()) {
-			if (friendlyURLBase.indexOf(virtualHostname) != -1) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

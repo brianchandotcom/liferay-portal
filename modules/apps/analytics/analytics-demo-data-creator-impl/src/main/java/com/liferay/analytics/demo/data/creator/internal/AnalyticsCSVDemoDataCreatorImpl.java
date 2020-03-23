@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.analytics.demo.data.creator;
+package com.liferay.analytics.demo.data.creator.internal;
 
+import com.liferay.analytics.demo.data.creator.AnalyticsCSVDemoDataCreator;
 import com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCreatorConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -66,61 +67,16 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCreatorConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
-	service = {}
+	service = AnalyticsCSVDemoDataCreator.class
 )
-public class AnalyticsCSVDemoDataCreatorImpl {
+public class AnalyticsCSVDemoDataCreatorImpl
+	implements AnalyticsCSVDemoDataCreator {
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_loadConfig(properties);
+	public void create() throws Exception {
+		File file = new File(
+			_analyticsDemoDataCreatorConfiguration.pathToUsersCSV());
 
-		_addCsvUsers(
-			_analyticsDemoDataCreatorConfiguration.pathToUserCSV());
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				_analyticsDemoDataCreatorConfiguration.customActivationMessage());
-		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-	}
-
-	@Reference(target = ModuleServiceLifecycle.SYSTEM_CHECK, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	private void _loadConfig(Map<String, Object> properties) {
-		_analyticsDemoDataCreatorConfiguration =
-			ConfigurableUtil.createConfigurable(
-				AnalyticsDemoDataCreatorConfiguration.class, properties);
-
-		try {
-			Company company = _companyLocalService.getCompanyByVirtualHost(
-				_analyticsDemoDataCreatorConfiguration.virtualHostname());
-
-			_companyId = company.getCompanyId();
-
-			_defaultUserId = _userLocalService.getDefaultUserId(_companyId);
-
-			Group group = _groupLocalService.getGroup(
-				company.getCompanyId(), "Guest");
-
-			_defaultGroupId = group.getGroupId();
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-		}
-	}
-
-	private void _addCsvUsers(String csvFilePath) {
-		File userCsvFile = new File(csvFilePath);
-
-		CSVParser csvParser = _getCSVParser(userCsvFile);
-
-		for (CSVRecord csvRecord : csvParser) {
+		for (CSVRecord csvRecord : _getCSVParser(file)) {
 			String emailAddress = csvRecord.get("emailAddress");
 
 			if (_users.containsKey(emailAddress)) {
@@ -128,9 +84,7 @@ public class AnalyticsCSVDemoDataCreatorImpl {
 			}
 
 			try {
-				User user = _addCsvUser(csvRecord);
-
-				_users.put(emailAddress, user);
+				_users.put(emailAddress, _addCsvUser(csvRecord));
 
 				if (_log.isInfoEnabled()) {
 					_log.info("Created user: " + emailAddress);
@@ -140,6 +94,76 @@ public class AnalyticsCSVDemoDataCreatorImpl {
 				_log.error(portalException, portalException);
 			}
 		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Finished adding analytics demo data");
+		}
+	}
+
+	public void delete() throws PortalException {
+		for (Map.Entry<String, User> entry : _users.entrySet()) {
+			_userLocalService.deleteUser(entry.getValue());
+		}
+
+		for (Map.Entry<String, Organization> entry :
+				_organizations.entrySet()) {
+
+			_organizationLocalService.deleteOrganization(entry.getValue());
+		}
+
+		for (Map.Entry<String, Role> entry : _roles.entrySet()) {
+			_roleLocalService.deleteRole(entry.getValue());
+		}
+
+		for (Map.Entry<String, Team> entry : _teams.entrySet()) {
+			_teamLocalService.deleteTeam(entry.getValue());
+		}
+
+		for (Map.Entry<String, UserGroup> entry : _userGroups.entrySet()) {
+			_userGroupLocalService.deleteUserGroup(entry.getValue());
+		}
+
+		_organizations.clear();
+		_roles.clear();
+		_teams.clear();
+		_userGroups.clear();
+		_users.clear();
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) throws Exception {
+		_analyticsDemoDataCreatorConfiguration =
+			ConfigurableUtil.createConfigurable(
+				AnalyticsDemoDataCreatorConfiguration.class, properties);
+
+		Company company = _companyLocalService.getCompanyByVirtualHost(
+			_analyticsDemoDataCreatorConfiguration.virtualHostname());
+
+		_companyId = company.getCompanyId();
+
+		_defaultUserId = _userLocalService.getDefaultUserId(_companyId);
+
+		Group group = _groupLocalService.getGroup(
+			company.getCompanyId(), "Guest");
+
+		_defaultGroupId = group.getGroupId();
+
+		create();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		try {
+			delete();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
+	}
+
+	@Reference(target = ModuleServiceLifecycle.SYSTEM_CHECK, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	private User _addCsvUser(CSVRecord csvRecord) throws PortalException {

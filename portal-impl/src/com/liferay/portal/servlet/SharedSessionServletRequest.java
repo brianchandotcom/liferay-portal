@@ -14,8 +14,6 @@
 
 package com.liferay.portal.servlet;
 
-import com.liferay.portal.resiliency.spi.agent.SPIAgentRequest;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
@@ -53,9 +51,6 @@ public class SharedSessionServletRequest extends HttpServletRequestWrapper {
 		HttpSession portletSession = super.getSession(create);
 
 		if ((portletSession != null) && (portletSession != _portalSession)) {
-			SPIAgentRequest.populatePortletSessionAttributes(
-				this, portletSession);
-
 			return getSharedSessionWrapper(_portalSession, portletSession);
 		}
 

@@ -140,9 +140,9 @@ class RuleList extends Component {
 						};
 					}),
 					logicalOperator,
+					rulesCardOptions: this._getRulesCardOptions(rule),
 				};
 			}),
-			rulesCardOptions: this._getRulesCardOptions(),
 		};
 	}
 
@@ -239,13 +239,17 @@ class RuleList extends Component {
 		return fieldLabel;
 	}
 
-	_getRulesCardOptions() {
+	_getRulesCardOptions(rule) {
+		const hasNestedCondition = this._hasNestedCondition(rule);
+
 		const rulesCardOptions = [
 			{
+				disabled: hasNestedCondition,
 				label: Liferay.Language.get('edit'),
 				settingsItem: 'edit',
 			},
 			{
+				confirm: hasNestedCondition,
 				label: Liferay.Language.get('delete'),
 				settingsItem: 'delete',
 			},
@@ -293,10 +297,27 @@ class RuleList extends Component {
 			});
 		}
 		else if (data.item.settingsItem == 'delete') {
-			this.emit('ruleDeleted', {
-				ruleId: cardId,
-			});
+			if (
+				!data.item.confirm ||
+				confirm(
+					'You cannot create a new rule with nested functions yet. Are you sure you want to delete this?'
+				)
+			) {
+				this.emit('ruleDeleted', {
+					ruleId: cardId,
+				});
+			}
 		}
+	}
+
+	_hasNestedCondition(rule) {
+		return (
+			rule.conditions.find(condition =>
+				condition.operands.find(operand =>
+					operand.value.match(/[aA-zZ]+[(].*[,]+.*[)]/)
+				)
+			) !== undefined
+		);
 	}
 
 	_setDataProviderNames(states) {

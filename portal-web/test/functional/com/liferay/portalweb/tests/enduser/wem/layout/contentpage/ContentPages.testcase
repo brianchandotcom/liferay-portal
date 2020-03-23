@@ -310,8 +310,12 @@ definition {
 	}
 
 	@description = "This is a test for LPS-91000 and LPS-95002. User can edit number of columns a section has as well as padding options."
+	@ignore = "true"
 	@priority = "5"
 	test ChangeLayoutElementProperties {
+
+		// Ignore test until LRQA-56815 is resolved
+
 		property portal.acceptance = "true";
 
 		task ("Add a content page") {

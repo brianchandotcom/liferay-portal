@@ -1284,7 +1284,7 @@ xpack.monitoring.collection.enabled: true</echo>
 					<then>
 						<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
 							<arg value="-c" />
-							<arg value="./elasticsearch -d -p pid-elasticsearch" />
+							<arg value="./elasticsearch -d -v -p pid-elasticsearch" />
 						</exec>
 					</then>
 					<elseif>
@@ -1292,7 +1292,7 @@ xpack.monitoring.collection.enabled: true</echo>
 						<then>
 							<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
 								<arg value="-c" />
-								<arg value="sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -p pid-elasticsearch'" />
+								<arg value="sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -v -p pid-elasticsearch'" />
 							</exec>
 						</then>
 					</elseif>
@@ -1301,7 +1301,7 @@ xpack.monitoring.collection.enabled: true</echo>
 						<then>
 							<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="cmd" spawn="true">
 								<arg value="/c" />
-								<arg value="elasticsearch -d -p pid-elasticsearch" />
+								<arg value="elasticsearch -d -v -p pid-elasticsearch" />
 							</exec>
 						</then>
 					</elseif>

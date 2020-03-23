@@ -375,6 +375,8 @@ definition {
 	}
 
 	macro validateAppIsNotPresentOnControlPanel {
+		Navigator.openURL();
+
 		ProductMenuHelper.expandPanel(panel = "Control Panel");
 
 		AssertElementNotPresent(

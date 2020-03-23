@@ -21,7 +21,7 @@
 />
 
 <aui:form action="<%= assetBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectAssetFm">
-	<c:if test="<%= assetBrowserDisplayContext.isMultipleSelection() %>">
+	<c:if test="<%= assetBrowserDisplayContext.isShowBreadcrumb() %>">
 		<liferay-site-navigation:breadcrumb
 			breadcrumbEntries="<%= assetBrowserDisplayContext.getPortletBreadcrumbEntries() %>"
 		/>

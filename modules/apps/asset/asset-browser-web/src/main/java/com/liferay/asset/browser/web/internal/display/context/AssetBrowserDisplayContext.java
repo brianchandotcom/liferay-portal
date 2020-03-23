@@ -23,6 +23,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -380,6 +381,23 @@ public class AssetBrowserDisplayContext {
 
 	public boolean isShowAssetEntryStatus() {
 		if (_isShowNonindexable() || _isShowScheduled()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowBreadcrumb() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		if (Objects.equals(
+				ItemSelectorPortletKeys.ITEM_SELECTOR,
+				portletDisplay.getPortletName())) {
+
 			return true;
 		}
 

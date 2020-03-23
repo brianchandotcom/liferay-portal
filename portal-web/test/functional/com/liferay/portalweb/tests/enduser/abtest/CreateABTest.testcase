@@ -1,8 +1,10 @@
 @component-name = "portal-ab-test"
 definition {
+	
+	// Ignore test until AC connection is full automated
 
 	property portal.release = "true";
-	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property testray.main.component.name = "A/B Test";
 
 	// User has to be connected to AC and logged in AC
@@ -52,9 +54,9 @@ definition {
 
 	@description = "Validate if the user can create an A/B Test"
 	@priority = "5"
-	test CreateABTest {
+	test CreateABTestByBounceRate {
 
-		task ("Create the A/B Test") {
+		task ("Create the A/B Test by Bounce Rate") {
 			Click(locator1 = "ABTest#AB_TEST_BUTTON");
 
 			Click(locator1 = "ABTest#CREATE_TEST_BUTTON");

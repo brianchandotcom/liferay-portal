@@ -1,6 +1,6 @@
 @component-name = "portal-ab-test"
 definition {
-	
+
 	// Ignore test until AC connection is full automated
 
 	property portal.release = "true";
@@ -39,7 +39,7 @@ definition {
 			Click(locator1 = "AnalyticsCloudConnection#INPUT_LIFERAY_DXP_CHECKBOX");
 
 			Click(locator1 = "AnalyticsCloudConnection#DONE_BUTTON");
-		}		
+		}
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/content-page");
 	}

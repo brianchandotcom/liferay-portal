@@ -526,6 +526,8 @@ definition {
 
 	@priority = "3"
 	test AddRepeatingRSVPYes {
+		property portal.upstream = "quarantine";
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.add(
@@ -802,6 +804,8 @@ definition {
 
 	@priority = "4"
 	test AddWithRelatedAssetViaAssetPublisher {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(

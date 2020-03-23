@@ -513,6 +513,8 @@ definition {
 
 	@priority = "4"
 	test AssignRolePermissionsAddProcessCP {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -663,6 +665,8 @@ definition {
 
 	@priority = "5"
 	test AssignRolePermissionsApprovePG {
+		property portal.upstream = "quarantine";
+
 		property test.name.skip.portal.instance = "KaleoformsUsecase#AssignRolePermissionsApprovePG";
 
 		ProductMenu.gotoPortlet(
@@ -1364,6 +1368,8 @@ definition {
 
 	@priority = "3"
 	test AssignRolePermissionsViewPG {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -2019,6 +2025,7 @@ definition {
 	@priority = "4"
 	test CompleteProcessWithEditedSingleApproverWorkflow {
 		property test.name.skip.portal.instance = "KaleoformsUsecase#CompleteProcessWithEditedSingleApproverWorkflow";
+		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 
@@ -4088,6 +4095,8 @@ definition {
 
 	@priority = "4"
 	test UpdateDueDate {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4853,6 +4862,8 @@ definition {
 
 	@priority = "4"
 	test ViewProcessWithComments {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

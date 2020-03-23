@@ -201,6 +201,8 @@ definition {
 	@description = "Apply filter for workload distribution for all assignees(LRQA-53632)"
 	@priority = "5"
 	test ApplyFilterForWorkloadDistribution {
+		property portal.upstream = "quarantine";
+
 		property test.name.skip.portal.instance = "WorkflowMetrics#ApplyFilterForWorkloadDistribution";
 
 		ProductMenu.gotoPortlet(
@@ -1080,6 +1082,7 @@ definition {
 	@description = "LRQA-53662 Automate LPS-92053 View process item detail page"
 	@priority = "5"
 	test ViewProcessItemDetailPage {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewProcessItemDetailPage";
 
 		ProductMenu.gotoPortlet(

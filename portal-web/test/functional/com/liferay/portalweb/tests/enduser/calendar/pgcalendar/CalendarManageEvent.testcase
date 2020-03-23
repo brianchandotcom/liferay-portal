@@ -66,6 +66,7 @@ definition {
 
 	@priority = "5"
 	test DeleteRegular {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Calendar#DeleteEventRegular";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -259,6 +260,8 @@ definition {
 	@description = "This is a use case for LPS-59097."
 	@priority = "4"
 	test EditAndViewRSVP {
+		property portal.upstream = "quarantine";
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.addRegular(
@@ -420,6 +423,8 @@ definition {
 	@description = "This is a use case for LPS-50026."
 	@priority = "4"
 	test EditRegularWithUserInvite {
+		property portal.upstream = "quarantine";
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.add(
@@ -491,6 +496,8 @@ definition {
 	@description = "This is a use case for LPS-50016."
 	@priority = "3"
 	test EditRepeatingAllEventsInTheSeries {
+		property portal.upstream = "quarantine";
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.editTitle(eventTitle = "Original Event Title");

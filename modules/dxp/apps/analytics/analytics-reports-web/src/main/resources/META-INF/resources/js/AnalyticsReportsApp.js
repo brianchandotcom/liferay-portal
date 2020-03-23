@@ -63,9 +63,13 @@ function Navigation({
 }) {
 	const [currentPage, setCurrentPage] = React.useState({view: 'main'});
 
+	const [trafficSourceName, setTrafficSourceName] = React.useState('');
+
 	const {getHistoricalReads, getHistoricalViews, getTrafficSources} = api;
 
 	function handleTrafficSourceClick(trafficSourceName) {
+		setTrafficSourceName(trafficSourceName);
+
 		api.getTrafficSourceDetails(trafficSourceName).then(
 			trafficSourceData => {
 				setCurrentPage({
@@ -92,6 +96,22 @@ function Navigation({
 				response.analyticsReportsTotalViews
 			);
 		});
+	}
+
+	function handleTrafficShare() {
+		return api
+			.getTrafficSourcesDetails(trafficSourceName)
+			.then(response => {
+				return numberFormat(languageTag, response.share);
+			});
+	}
+
+	function handleTrafficVolume() {
+		return api
+			.getTrafficSourcesDetails(trafficSourceName)
+			.then(response => {
+				return numberFormat(languageTag, response.value);
+			});
 	}
 
 	return (
@@ -123,7 +143,10 @@ function Navigation({
 						<ClayButtonWithIcon
 							className="text-secondary"
 							displayType="unstyled"
-							onClick={() => setCurrentPage({view: 'main'})}
+							onClick={() => {
+								setCurrentPage({view: 'main'});
+								setTrafficSourceName('');
+							}}
 							small="true"
 							symbol="angle-left"
 						/>

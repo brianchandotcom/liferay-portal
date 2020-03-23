@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
@@ -91,7 +92,7 @@ public class DDMFormTemplateContextFactoryHelperTest extends PowerMockito {
 
 		Set<String> actualEvaluableFieldNames =
 			_ddmFormTemplateContextFactoryHelper.getEvaluableDDMFormFieldNames(
-				ddmForm);
+				ddmForm, new DDMFormLayout());
 
 		Assert.assertEquals(
 			expectedEvaluableFieldNames, actualEvaluableFieldNames);

@@ -76,6 +76,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Leonardo Barros
@@ -350,7 +351,9 @@ public class DDMFormAdminFieldSetDisplayContext
 	}
 
 	@Override
-	public String serializeSettingsForm() throws PortalException {
+	public String serializeSettingsForm(PageContext pageContext)
+		throws PortalException {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -361,7 +364,7 @@ public class DDMFormAdminFieldSetDisplayContext
 
 		return ddmFormRenderer.render(
 			createSettingsDDMForm(0L, themeDisplay), ddmFormLayout,
-			createDDMFormRenderingContext(renderRequest, renderResponse));
+			createDDMFormRenderingContext(pageContext, renderRequest));
 	}
 
 	protected OrderByComparator<DDMStructure> getDDMStructureOrderByComparator(

@@ -19,8 +19,6 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String serializedSettingsForm = ddmFormAdminDisplayContext.serializeSettingsForm();
-
 DDMFormInstance formInstance = ddmFormAdminDisplayContext.getDDMFormInstance();
 
 long formInstanceId = BeanParamUtil.getLong(formInstance, request, "formInstanceId");
@@ -133,7 +131,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 	</aui:form>
 
 	<div class="container-fluid-1280 ddm-form-instance-settings hide" id="<portlet:namespace />settings">
-		<%= serializedSettingsForm %>
+		<%= ddmFormAdminDisplayContext.serializeSettingsForm(pageContext) %>
 	</div>
 </div>
 

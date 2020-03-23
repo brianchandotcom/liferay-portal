@@ -117,7 +117,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 </div>
 
 <div class="hide">
-	<%= ddmFormAdminDisplayContext.serializeSettingsForm() %>
+	<%= ddmFormAdminDisplayContext.serializeSettingsForm(pageContext) %>
 </div>
 
 <aui:script>

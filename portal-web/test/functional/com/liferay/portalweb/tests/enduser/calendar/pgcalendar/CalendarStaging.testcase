@@ -65,7 +65,7 @@ definition {
 	@priority = "3"
 	test AddEvent {
 		property portal.upstream = "quarantine";
-		
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");

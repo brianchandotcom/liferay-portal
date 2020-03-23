@@ -1471,6 +1471,8 @@ definition {
 
 	@priority = "5"
 	test EditProcessNewWorkflowViaSourceTab {
+		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditProcessNewWorkflowViaSourceTab";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1622,6 +1624,8 @@ definition {
 
 	@priority = "5"
 	test EditSingleApproverWorkflowViaSourceTabViaAddProcess {
+		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditSingleApproverWorkflowViaSourceTabViaAddProcess";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1692,6 +1696,8 @@ definition {
 
 	@priority = "3"
 	test EditSingleApproverWorkflowViaViewTabViaAddProcess {
+		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditSingleApproverWorkflowViaViewTabViaAddProcess";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

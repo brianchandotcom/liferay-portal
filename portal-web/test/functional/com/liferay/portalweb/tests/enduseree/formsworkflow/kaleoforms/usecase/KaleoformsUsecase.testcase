@@ -2018,6 +2018,8 @@ definition {
 
 	@priority = "4"
 	test CompleteProcessWithEditedSingleApproverWorkflow {
+		property test.name.skip.portal.instance = "KaleoformsUsecase#CompleteProcessWithEditedSingleApproverWorkflow";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

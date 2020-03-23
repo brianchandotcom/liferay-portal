@@ -28,13 +28,13 @@ definition {
 
 		MenuItem.click(menuItem = "Add Child Article");
 
-		AssertElementPresent(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
+		AssertElementPresent(locator1 = "TextInput#TITLE");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${kbChildArticleContent}",
-			title = "${kbChildArticleTitle}");
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${kbChildArticleTitle}");
+
+		CKEditor.addContent(content = "${kbChildArticleContent}");
 
 		PortletEntry.publish();
 	}
@@ -45,13 +45,13 @@ definition {
 			locator1 = "KnowledgeBase#KB_TOOLS",
 			value1 = "Add Child Article");
 
-		AssertElementPresent(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
+		AssertElementPresent(locator1 = "TextInput#TITLE");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${kbArticleContent}",
-			title = "${kbArticleTitle}");
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${kbArticleTitle}");
+
+		CKEditor.addContent(content = "${kbArticleContent}");
 
 		Panel.expandPanel(panel = "Configuration");
 
@@ -93,18 +93,17 @@ definition {
 			LexiconEntry.gotoAddMenuItem(menuItem = "Basic Article");
 		}
 
-		AssertElementPresent(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
+		AssertElementPresent(locator1 = "TextInput#TITLE");
 
 		if (isSet(specialCharacters)) {
 			Type.sendKeys(
-				key_editor = "title",
-				locator1 = "AlloyEditor#EDITOR",
+				locator1 = "TextInput#TITLE",
 				value1 = "${kbArticleTitle}");
 		}
 		else {
-			AlloyEditor.addTitle(title = "${kbArticleTitle}");
+			Type(
+				locator1 = "TextInput#TITLE",
+				value1 = "${kbArticleTitle}");
 		}
 
 		Panel.expandPanel(panel = "Configuration");
@@ -127,10 +126,16 @@ definition {
 		}
 
 		if ("${kbArticleAddViaSource}" == "true") {
-			AlloyEditor.addSourceContent(content = "${kbArticleContentSource}");
+			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
+
+			Type(
+				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+				value1 = "${kbArticleContentSource}");
+
+			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 		}
 		else {
-			AlloyEditor.addContent(content = "${kbArticleContent}");
+			CKEditor.addContent(content = "${kbArticleContent}");
 		}
 
 		if (isSet(kbArticleAttachment)) {
@@ -209,13 +214,13 @@ definition {
 
 		MenuItem.click(menuItem = "Basic Article");
 
-		AssertElementPresent(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
+		AssertElementPresent(locator1 = "TextInput#TITLE");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${kbArticleContent}",
-			title = "${kbArticleTitle}");
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${kbArticleTitle}");
+
+		CKEditor.addContent(content = "${kbArticleContent}");
 
 		KBArticle.selectAttachmentCP(kbArticleAttachment = "${kbArticleAttachment}");
 
@@ -231,13 +236,13 @@ definition {
 
 		MenuItem.click(menuItem = "Basic Article");
 
-		AssertElementPresent(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
+		AssertElementPresent(locator1 = "TextInput#TITLE");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${kbArticleContent}",
-			title = "${kbArticleTitle}");
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${kbArticleTitle}");
+
+		CKEditor.addContent(content = "${kbArticleContent}");
 
 		AssertClick(
 			locator1 = "Button#PUBLISH",
@@ -255,13 +260,13 @@ definition {
 
 		MenuItem.click(menuItem = "Basic Article");
 
-		AssertElementPresent(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
+		AssertElementPresent(locator1 = "TextInput#TITLE");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${kbArticleContent}",
-			title = "${kbArticleTitle}");
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${kbArticleTitle}");
+
+		CKEditor.addContent(content = "${kbArticleContent}");
 
 		Panel.expandPanel(panel = "Custom Fields");
 
@@ -275,13 +280,13 @@ definition {
 	macro addPGViaAP {
 		AssetPublisherPortlet.addAsset(assetType = "Knowledge Base Article");
 
-		AssertElementPresent(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
+		AssertElementPresent(locator1 = "TextInput#TITLE");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${kbArticleContent}",
-			title = "${kbArticleTitle}");
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${kbArticleTitle}");
+
+		CKEditor.addContent(content = "${kbArticleContent}");
 
 		AssertClick(
 			locator1 = "Button#PUBLISH",
@@ -291,13 +296,13 @@ definition {
 	macro cancelAddKBArticle {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Basic Article");
 
-		AssertElementPresent(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
+		AssertElementPresent(locator1 = "TextInput#TITLE");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${kbArticleContent}",
-			title = "${kbArticleTitle}");
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${kbArticleTitle}");
+
+		CKEditor.addContent(content = "${kbArticleContent}");
 
 		Button.clickCancel();
 	}
@@ -578,13 +583,13 @@ definition {
 			locator1 = "Message#INFO",
 			value1 = "A new version is created automatically if this content is modified.");
 
-		AssertElementPresent(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
+		AssertElementPresent(locator1 = "TextInput#TITLE");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${kbArticleContentEdit}",
-			title = "${kbArticleTitleEdit}");
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${kbArticleTitleEdit}");
+
+		CKEditor.addContent(content = "${kbArticleContentEdit}");
 
 		if (isSet(kbArticleAttachment)) {
 			KBArticle.selectAttachmentCP(kbArticleAttachment = "${kbArticleAttachment}");
@@ -619,13 +624,13 @@ definition {
 			locator1 = "Message#INFO",
 			value1 = "A new version is created automatically if this content is modified.");
 
-		AssertElementPresent(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
+		AssertElementPresent(locator1 = "TextInput#TITLE");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${kbArticleContentEdit}",
-			title = "${kbArticleTitleEdit}");
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${kbArticleTitleEdit}");
+
+		CKEditor.addContent(content = "${kbArticleContentEdit}");
 
 		if ("${cancel}" == "true") {
 			Button.clickCancel();
@@ -654,13 +659,13 @@ definition {
 			locator1 = "Portlet#H3_HEADER",
 			value1 = "${kbArticleTitle}");
 
-		AssertElementPresent(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
+		AssertElementPresent(locator1 = "TextInput#TITLE");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${kbArticleContentEdit}",
-			title = "${kbArticleTitleEdit}");
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${kbArticleTitleEdit}");
+
+		CKEditor.addContent(content = "${kbArticleContentEdit}");
 
 		if (IsElementPresent(locator1 = "Home#PORTAL_LOCALIZATION_TRANSLATION_LANGUAGE_MESSAGE")) {
 			Click(locator1 = "Home#PORTAL_LOCALIZATION_IGNORE_BUTTON");
@@ -1377,8 +1382,7 @@ definition {
 			value1 = "${kbArticleTitle}");
 
 		AssertTextEquals(
-			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR",
+			locator1 = "CKEditor#BODY",
 			value1 = "${kbArticleContent}");
 
 		if (IsElementNotPresent(locator1 = "KnowledgeBaseArticle#ATTACHMENTS_HEADER_EXPANDED")) {

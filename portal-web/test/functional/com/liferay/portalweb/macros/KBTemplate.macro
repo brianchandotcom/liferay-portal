@@ -5,9 +5,11 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		AlloyEditor.addTitleAndContent(
-			content = "${kbTemplateContent}",
-			title = "${kbTemplateTitle}");
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${kbTemplateTitle}");
+
+		CKEditor.addContent(content = "${kbTemplateTitle}");
 
 		PortletEntry.publish();
 	}
@@ -60,13 +62,13 @@ definition {
 
 		AssertTextEquals(
 			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR",
+			locator1 = "TextInput#TITLE",
 			value1 = "${kbTemplateTitle}");
 
 		AssertTextEquals(
 			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR",
-			value1 = "${kbTemplateContent}");
+			locator1 = "CKEditor#BODY",
+			value1 = "${kbTemplateTitle}");
 	}
 
 }

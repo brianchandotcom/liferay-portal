@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.resiliency.spi.agent.annotation;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public enum MatchType {
 
 	EXACT, POSTFIX, PREFIX

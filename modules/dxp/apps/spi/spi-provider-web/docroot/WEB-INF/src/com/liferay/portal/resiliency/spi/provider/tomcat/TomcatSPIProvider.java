@@ -36,7 +36,9 @@ import java.util.List;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class TomcatSPIProvider extends BaseSPIProvider {
 
 	public static final String NAME = "Tomcat SPI Provider";

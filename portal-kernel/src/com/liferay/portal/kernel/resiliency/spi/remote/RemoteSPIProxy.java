@@ -35,7 +35,9 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class RemoteSPIProxy implements SPI {
 
 	public static final int SIGINT = 130;

@@ -32,7 +32,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class AcceptorServlet extends HttpServlet {
 
 	protected void doService(

@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public interface SPIProvider {
 
 	public SPI createSPI(SPIConfiguration spiConfiguration)

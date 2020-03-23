@@ -9,7 +9,4 @@
 		<param-name>spiProviderClassName</param-name>
 		<param-value>com.liferay.portal.resiliency.spi.provider.tomcat.TomcatSPIProvider</param-value>
 	</context-param>
-	<listener>
-		<listener-class>com.liferay.util.resiliency.spi.provider.SPIClassPathContextListener</listener-class>
-	</listener>
 </web-app>

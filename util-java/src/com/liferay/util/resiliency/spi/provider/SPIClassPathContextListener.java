@@ -44,7 +44,9 @@ import javax.servlet.ServletContextListener;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class SPIClassPathContextListener implements ServletContextListener {
 
 	public static volatile String SPI_CLASS_PATH = StringPool.BLANK;

@@ -9,7 +9,6 @@
 		<suppress checks="ConcatCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />
 		<suppress checks="ConstantNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/nio/intraband/BaseIntraband\.java" />
 		<suppress checks="ConstantNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/nio/intraband/welder/socket/SocketWelder\.java" />
-		<suppress checks="ConstantNameCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/resiliency/spi/agent/annotation/DistributedRegistryTest\.java" />
 		<suppress checks="ConstantNameCheck" files="portal-test/src/com/liferay/portal/kernel/test/rule/CodeCoverageAssertor\.java" />
 		<suppress checks="EnumConstantOrderCheck" files="portal-kernel/src/com/liferay/portal/kernel/process/ProcessLog\.java" />
 		<suppress checks="FactoryCheck" files="portal-kernel/src/com/liferay/portal/kernel/service/ServiceContext\.java" />
@@ -54,7 +53,6 @@
 		<suppress checks="MissingModifierCheck" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
 		<suppress checks="MissingModifierCheck" files="portal-kernel/src/com/liferay/portal/kernel/process/local/LocalProcessLog\.java" />
 		<suppress checks="MissingModifierCheck" files="portal-kernel/src/com/liferay/portal/kernel/process/local/ResultProcessCallable\.java" />
-		<suppress checks="MissingModifierCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/resiliency/spi/agent/annotation/DistributedRegistryTest\.java" />
 		<suppress checks="StaticVariableNameCheck" files="portal-impl/src/com/liferay/portal/language/LanguageResources\.java" />
 		<suppress checks="StaticVariableNameCheck" files="portal-impl/src/com/liferay/portal/util/PropsValues\.java" />
 		<suppress checks="StaticVariableNameCheck" files="portal-impl/test/unit/com/liferay/portal/bean/ConstantsBeanFactoryImplTest\.java" />

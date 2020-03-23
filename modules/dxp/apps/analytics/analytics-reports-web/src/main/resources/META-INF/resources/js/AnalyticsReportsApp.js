@@ -12,6 +12,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
 
+import Detail from './components/Detail';
 import Main from './components/Main';
 import APIService from './utils/APIService';
 import {numberFormat} from './utils/numberFormat';
@@ -156,6 +157,13 @@ function Navigation({
 					</div>
 
 					<hr className="my-0" />
+
+					<Detail
+						currentPage={currentPage}
+						languageTag={languageTag}
+						trafficShareDataProvider={handleTrafficShare}
+						trafficVolumeDataProvider={handleTrafficVolume}
+					/>
 				</>
 			)}
 		</>

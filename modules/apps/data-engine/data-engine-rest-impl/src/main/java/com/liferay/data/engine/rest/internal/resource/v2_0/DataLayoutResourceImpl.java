@@ -14,7 +14,6 @@
 
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
-import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeTracker;
@@ -112,13 +111,11 @@ public class DataLayoutResourceImpl
 			Long siteId, String contentType, String dataLayoutKey)
 		throws Exception {
 
-		DataDefinitionContentType dataDefinitionContentType =
-			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
-				contentType);
-
 		DDMStructureLayout ddmStructureLayout =
 			_ddmStructureLayoutLocalService.getStructureLayout(
-				siteId, dataDefinitionContentType.getClassNameId(),
+				siteId,
+				_dataDefinitionContentTypeTracker.getClassNameIdContentType(
+					contentType),
 				dataLayoutKey);
 
 		_dataDefinitionModelResourcePermission.check(
@@ -129,7 +126,9 @@ public class DataLayoutResourceImpl
 			_getSPIDataLayoutResource();
 
 		return spiDataLayoutResource.getDataLayout(
-			dataDefinitionContentType.getClassNameId(), dataLayoutKey, siteId);
+			_dataDefinitionContentTypeTracker.getClassNameIdContentType(
+				contentType),
+			dataLayoutKey, siteId);
 	}
 
 	@Override

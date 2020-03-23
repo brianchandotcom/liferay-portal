@@ -14,7 +14,6 @@
 
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
-import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
@@ -286,14 +285,12 @@ public class DataDefinitionResourceImpl
 			Long siteId, String contentType, String dataDefinitionKey)
 		throws Exception {
 
-		DataDefinitionContentType dataDefinitionContentType =
-			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
-				contentType);
-
 		return DataDefinitionUtil.toDataDefinition(
 			_ddmFormFieldTypeServicesTracker,
 			_ddmStructureLocalService.getStructure(
-				siteId, dataDefinitionContentType.getClassNameId(),
+				siteId,
+				_dataDefinitionContentTypeTracker.getClassNameIdContentType(
+					contentType),
 				dataDefinitionKey));
 	}
 
@@ -319,15 +316,13 @@ public class DataDefinitionResourceImpl
 			};
 		}
 
-		DataDefinitionContentType dataDefinitionContentType =
-			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
-				contentType);
-
 		if (Validator.isNull(keywords)) {
 			return Page.of(
 				transform(
 					_ddmStructureLocalService.getStructures(
-						siteId, dataDefinitionContentType.getClassNameId(),
+						siteId,
+						_dataDefinitionContentTypeTracker.
+							getClassNameIdContentType(contentType),
 						pagination.getStartPosition(),
 						pagination.getEndPosition(),
 						_toOrderByComparator(
@@ -335,7 +330,9 @@ public class DataDefinitionResourceImpl
 					this::_toDataDefinition),
 				pagination,
 				_ddmStructureLocalService.getStructuresCount(
-					siteId, dataDefinitionContentType.getClassNameId()));
+					siteId,
+					_dataDefinitionContentTypeTracker.getClassNameIdContentType(
+						contentType)));
 		}
 
 		return SearchUtil.search(
@@ -348,7 +345,8 @@ public class DataDefinitionResourceImpl
 			searchContext -> {
 				searchContext.setAttribute(
 					Field.CLASS_NAME_ID,
-					dataDefinitionContentType.getClassNameId());
+					_dataDefinitionContentTypeTracker.getClassNameIdContentType(
+						contentType));
 				searchContext.setAttribute(Field.DESCRIPTION, keywords);
 				searchContext.setAttribute(Field.NAME, keywords);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
@@ -380,10 +378,6 @@ public class DataDefinitionResourceImpl
 			PermissionThreadLocal.getPermissionChecker(), contentType, siteId,
 			DataActionKeys.ADD_DATA_DEFINITION);
 
-		DataDefinitionContentType dataDefinitionContentType =
-			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
-				contentType);
-
 		DDMFormSerializerSerializeRequest.Builder builder =
 			DDMFormSerializerSerializeRequest.Builder.newBuilder(
 				DataDefinitionUtil.toDDMForm(
@@ -395,7 +389,8 @@ public class DataDefinitionResourceImpl
 		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
 			PrincipalThreadLocal.getUserId(), siteId,
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-			dataDefinitionContentType.getClassNameId(),
+			_dataDefinitionContentTypeTracker.getClassNameIdContentType(
+				contentType),
 			dataDefinition.getDataDefinitionKey(),
 			LocalizedValueUtil.toLocaleStringMap(dataDefinition.getName()),
 			LocalizedValueUtil.toLocaleStringMap(
@@ -429,7 +424,8 @@ public class DataDefinitionResourceImpl
 			PrincipalThreadLocal.getUserId(),
 			ResourceActionsUtil.getCompositeModelName(
 				_portal.getClassName(
-					dataDefinitionContentType.getClassNameId()),
+					_dataDefinitionContentTypeTracker.getClassNameIdContentType(
+						contentType)),
 				DDMStructure.class.getName()),
 			dataDefinition.getId(), false, false, false);
 

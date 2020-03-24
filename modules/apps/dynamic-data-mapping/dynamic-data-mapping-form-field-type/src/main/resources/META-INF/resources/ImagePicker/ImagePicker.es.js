@@ -56,15 +56,13 @@ const ImagePicker = ({
 		onClose: () => setModalVisible(false),
 	});
 
-	const dispatchValue = ({clear, value}, callback) => {
+	const dispatchValue = ({clear, value}, callback = () => {}) => {
 		setImageValues(oldValues => {
 			let mergedValues = {...oldValues, ...value};
 
 			mergedValues = clear ? {} : mergedValues;
 
-			if (callback) {
-				callback(mergedValues);
-			}
+			callback(mergedValues);
 
 			return mergedValues;
 		});

@@ -19,7 +19,7 @@ definition {
 	}
 
 	macro deleteGridOptionsRow {
-		Click(
+		Click.javaScriptClick(
 			key_gridField = "${gridField}",
 			key_rowNumber = "${rowNumber}",
 			locator1 = "FormFields#GRID_OPTIONS_OPTION_DELETE_ROW_BUTTON");

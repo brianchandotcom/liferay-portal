@@ -18,6 +18,10 @@
 		<field name="recordSetVersion" type="String" />
 		<field name="version" type="String" />
 		<field name="displayIndex" type="int" />
+		<field name="className" type="String">
+			<hint name="max-length">300</hint>
+		</field>
+		<field name="classPK" type="long" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.dynamic.data.lists.model.DDLRecordSet">

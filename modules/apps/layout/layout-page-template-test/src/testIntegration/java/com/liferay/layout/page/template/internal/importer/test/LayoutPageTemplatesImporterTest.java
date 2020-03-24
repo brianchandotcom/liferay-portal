@@ -202,6 +202,27 @@ public class LayoutPageTemplatesImporterTest {
 	}
 
 	@Test
+	public void testImportLayoutPageTemplateEntryHTMLFragment()
+		throws Exception {
+
+		String html =
+			"<lfr-editable id=\"element-html\" type=\"html\">\n\t\t<h1>" +
+				"\n\t\t\tEdited HTML\n\t\t</h1>\n\n\t\t<p>\n\t\t\tEdited " +
+					"<strong>paragraph</strong>.\n\t\t</p>\n\t</lfr-editable>";
+
+		_createFragmentEntry("test-html-fragment", "Test HTML Fragment", html);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getImportLayoutPageTemplateEntry("html-fragment");
+
+		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
+			layoutPageTemplateEntry);
+
+		_validateHTMLFragmentEntryLinkEditableValues(
+			fragmentEntryLink.getEditableValues());
+	}
+
+	@Test
 	public void testImportLayoutPageTemplateEntryImageFragment()
 		throws Exception {
 
@@ -438,6 +459,32 @@ public class LayoutPageTemplatesImporterTest {
 
 			_addZipWriterEntry(zipWriter, elementUrl);
 		}
+	}
+
+	private void _validateHTMLFragmentEntryLinkEditableValues(
+			String editableValues)
+		throws JSONException {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			editableValues);
+
+		JSONObject editableFragmentEntryProcessorJSONObject =
+			jsonObject.getJSONObject(
+				"com.liferay.fragment.entry.processor.editable." +
+					"EditableFragmentEntryProcessor");
+
+		Assert.assertNotNull(editableFragmentEntryProcessorJSONObject);
+
+		JSONObject elementJSONObject =
+			editableFragmentEntryProcessorJSONObject.getJSONObject(
+				"element-html");
+
+		Assert.assertNotNull(elementJSONObject);
+
+		Assert.assertEquals(
+			"\n\t\t<h1>\n\t\t\tEdited HTML\n\t\t</h1>\n\n\t\t<p>\n\t\t\t" +
+				"Edited <strong>paragraph</strong>.\n\t\t</p>\n\t",
+			elementJSONObject.getString("en_US"));
 	}
 
 	private void _validateImageFragmentEntryLinkEditableValues(

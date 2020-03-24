@@ -28,6 +28,7 @@ definition {
 	test AddThemeSite {
 		property osgi.app.includes = "frontend-theme-fjord";
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FjordTheme#AddThemeSite";
 
 		ProductMenu.gotoPortlet(

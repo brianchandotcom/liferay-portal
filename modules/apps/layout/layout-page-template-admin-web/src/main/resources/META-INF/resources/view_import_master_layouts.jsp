@@ -29,7 +29,7 @@
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<aui:input label="select-file" name="file" type="file">
+				<aui:input helpMessage='<%= LanguageUtil.format(request, "import-master-layouts-help", "https://portal.liferay.dev/docs", false) %>' label="select-file" name="file" type="file">
 					<aui:validator name="required" />
 
 					<aui:validator name="acceptFiles">

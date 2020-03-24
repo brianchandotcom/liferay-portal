@@ -46,6 +46,42 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="set-weblogic-log-levels">
+		<sequential>
+			<replace
+				file="${app.server.weblogic.instance.dir}/config/config.xml"
+			>
+				<replacetoken><![CDATA[<name>AdminServer</name>]]></replacetoken>
+				<replacevalue><![CDATA[<name>AdminServer</name>
+    <log>
+      <date-format-pattern>MMM d, yyyy h:mm:ss,SSS a z</date-format-pattern>
+      <file-name>logs/AdminServer.log</file-name>
+      <rotation-type>bySize</rotation-type>
+      <number-of-files-limited>true</number-of-files-limited>
+      <file-count>7</file-count>
+      <file-min-size>500</file-min-size>
+      <rotate-log-on-startup>true</rotate-log-on-startup>
+      <buffer-size-kb>8</buffer-size-kb>
+      <logger-severity>Warning</logger-severity>
+      <log-file-severity>Trace</log-file-severity>
+      <stdout-severity>Error</stdout-severity>
+      <stdout-format>standard</stdout-format>
+      <stdout-log-stack>true</stdout-log-stack>
+      <stacktrace-depth>5</stacktrace-depth>
+      <domain-log-broadcast-severity>Notice</domain-log-broadcast-severity>
+      <redirect-stdout-to-server-log-enabled>false</redirect-stdout-to-server-log-enabled>
+      <redirect-stderr-to-server-log-enabled>true</redirect-stderr-to-server-log-enabled>
+      <domain-log-broadcaster-buffer-size>1</domain-log-broadcaster-buffer-size>
+      <log-monitoring-enabled>true</log-monitoring-enabled>
+      <log-monitoring-interval-secs>30</log-monitoring-interval-secs>
+      <log-monitoring-throttle-threshold>1500</log-monitoring-throttle-threshold>
+      <log-monitoring-throttle-message-length>50</log-monitoring-throttle-message-length>
+      <log-monitoring-max-throttle-message-signature-count>1000</log-monitoring-max-throttle-message-signature-count>
+    </log>]]></replacevalue>
+			</replace>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="update-plugins-includes-plugin">
 		<attribute name="plugins.includes.plugin.bundle" />
 		<attribute name="plugins.includes.plugin.dependent-apps" />
@@ -1629,6 +1665,8 @@ closeTemplate()
 			</else>
 		</if>
 
+		<set-weblogic-log-levels />
+
 		<delete dir="${tstamp.value}" />
 	</target>
 
@@ -1768,6 +1806,8 @@ this task.
 				</then>
 			</elseif>
 		</if>
+
+		<set-weblogic-log-levels />
 	</target>
 
 	<target name="unzip-websphere">

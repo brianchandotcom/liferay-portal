@@ -296,10 +296,9 @@ definition {
 	}
 
 	@description = "This test ensures that users can Order By Shared Date in the Shared Content app."
-	@ignore = "true"
 	@priority = "3"
 	test OrderBySharedDate {
-		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SharingUsecase#OrderBySharedDate";
 
 		JSONLayout.addWidgetToPublicLayout(

@@ -290,7 +290,7 @@ definition {
 
 	@priority = "4"
 	test AddFrontPageWithAttachments {
-		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 

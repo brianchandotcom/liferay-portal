@@ -86,10 +86,9 @@ definition {
 	}
 
 	@description = "This ensures that a depot image can be used through page creation on a connected site."
-	@ignore = "true"
 	@priority = "5"
 	test AddImageViaContentPage {
-		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		DepotNavigator.openDepotAdmin();
 

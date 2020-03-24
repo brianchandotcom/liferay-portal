@@ -586,10 +586,9 @@ definition {
 			value1 = "blogs-entry-title");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test DeleteBlogsEntries {
-		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		for (var entryCount : list "1,2,3") {
 			Navigator.gotoPage(pageName = "Blogs Page");
@@ -1046,7 +1045,7 @@ definition {
 
 	@priority = "4"
 	test UserFlagsEntryAndAdminViewsNotificationInMockMock {
-		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.smtp.server.enabled = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

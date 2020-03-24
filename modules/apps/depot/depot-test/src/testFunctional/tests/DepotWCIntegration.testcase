@@ -168,7 +168,7 @@ definition {
 	@description = "This ensures that a depot web content can be selected through the fragment in a content page on a connected site."
 	@priority = "5"
 	test SelectFromFragmentInContentPage {
-		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
@@ -207,10 +207,9 @@ definition {
 	}
 
 	@description = "This ensures that a depot web content can be selected through the fragment in a display page template on a connected site."
-	@ignore = "true"
 	@priority = "5"
 	test SelectFromFragmentInDisplayPageTemplate {
-		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
@@ -338,7 +337,7 @@ definition {
 	@description = "This ensures that a depot web content can be selected through WCD in a display page template on a connected site."
 	@priority = "4"
 	test SelectFromWidgetInDisplayPageTemplate {
-		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",

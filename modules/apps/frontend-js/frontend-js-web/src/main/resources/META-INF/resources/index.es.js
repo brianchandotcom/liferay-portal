@@ -36,6 +36,8 @@ export {default as PortletBase} from './liferay/PortletBase.es';
 
 // Modal API
 
+export {openModal} from './liferay/modal/Modal.es';
+
 export {default as openSimpleInputModal} from './liferay/modal/commands/OpenSimpleInputModal.es';
 
 // PortletURL API

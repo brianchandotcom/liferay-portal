@@ -136,4 +136,13 @@
 			transform: translateX(-50%);
 		}
 	}
+
+	.traffic-source-detail {
+		thead > tr {
+			height: 40px;
+		}
+		tbody > tr {
+			height: 30px;
+		}
+	}
 }

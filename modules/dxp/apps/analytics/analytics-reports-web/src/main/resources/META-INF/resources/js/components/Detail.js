@@ -42,7 +42,7 @@ export default function Detail({
 
 	return (
 		<>
-			<div className="p-3">
+			<div className="p-3 traffic-source-detail">
 				<TotalCount
 					className="mb-2"
 					dataProvider={trafficVolumeDataProvider}
@@ -72,7 +72,7 @@ export default function Detail({
 
 				<table className="table-keywords">
 					<thead>
-						<tr height="40">
+						<tr>
 							<th>
 								{Liferay.Language.get('best-keyword')}
 								<span className="text-secondary">
@@ -144,7 +144,7 @@ export default function Detail({
 					<tbody>
 						{currentPage.data.keywords.map(keyword => {
 							return (
-								<tr height="30" key={keyword.title}>
+								<tr key={keyword.title}>
 									<td>{keyword.title}</td>
 									<td
 										align="right"

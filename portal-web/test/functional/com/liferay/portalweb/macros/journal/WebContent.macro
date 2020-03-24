@@ -74,6 +74,8 @@ definition {
 			assetType = "${assetType}",
 			scopeSite = "${scopeSite}");
 
+		Pause(locator1 = "3000");
+
 		SelectFrame(value1 = "relative=top");
 
 		var key_assetTitle = "${assetTitle}";

@@ -20,11 +20,11 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
 import {useSelector} from '../store/index';
-import getLabelName from './layout-data-items/getLabelName';
 import useDragAndDrop, {
 	DragDropManagerImpl,
 	TARGET_POSITION,
-} from './useDragAndDrop';
+} from '../utils/useDragAndDrop';
+import getLabelName from './layout-data-items/getLabelName';
 
 export default function TopperEmpty({children, item, layoutData}) {
 	const {

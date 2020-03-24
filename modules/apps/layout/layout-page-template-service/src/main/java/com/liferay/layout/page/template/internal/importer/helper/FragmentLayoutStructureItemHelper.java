@@ -241,22 +241,22 @@ public class FragmentLayoutStructureItemHelper
 	private JSONObject _createFragmentLinkJSONObject(
 		Map<String, Object> fragmentLinkMap) {
 
-		JSONObject fragmentLinkJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (fragmentLinkMap == null) {
-			return fragmentLinkJSONObject;
+			return jsonObject;
 		}
 
-		fragmentLinkJSONObject.put("target", fragmentLinkMap.get("target"));
+		jsonObject.put("target", fragmentLinkMap.get("target"));
 
 		Map<String, Object> valueMap = (Map<String, Object>)fragmentLinkMap.get(
 			"value");
 
 		if (valueMap != null) {
-			fragmentLinkJSONObject.put("href", valueMap.get("href"));
+			jsonObject.put("href", valueMap.get("href"));
 		}
 
-		return fragmentLinkJSONObject;
+		return jsonObject;
 	}
 
 	private JSONObject _createImageLocalizationJSONObject(

@@ -202,10 +202,14 @@ const DocumentLibrary = ({
 const DocumentLibraryProxy = connectStore(
 	({
 		emit,
+		id,
+		name,
+		readOnly,
 		fileEntryTitle,
 		fileEntryURL,
 		itemSelectorAuthToken,
 		store,
+		placeholder,
 		value = {},
 		...otherProps
 	}) => {
@@ -258,10 +262,18 @@ const DocumentLibraryProxy = connectStore(
 		);
 
 		return (
-			<FieldBaseProxy store={store} {...otherProps}>
+			<FieldBaseProxy
+				{...otherProps}
+				id={id}
+				name={name}
+				readOnly={readOnly}
+				store={store}
+			>
 				<DocumentLibrary
 					fileEntryTitle={fileEntryTitle}
 					fileEntryURL={fileEntryURL}
+					id={id}
+					name={name}
 					onClearButtonClicked={event => {
 						setCurrentValue(null);
 
@@ -273,6 +285,8 @@ const DocumentLibraryProxy = connectStore(
 							portletNamespace: store.portletNamespace,
 						})
 					}
+					placeholder={placeholder}
+					readOnly={readOnly}
 					value={currentValue}
 					{...otherProps}
 				/>

@@ -238,7 +238,7 @@ public class FragmentLayoutStructureItemHelper
 		return null;
 	}
 
-	private JSONObject _createFragmentLinkJSONObject(
+	private JSONObject _createFragmentLinkConfigJSONObject(
 		Map<String, Object> fragmentLinkMap) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -431,8 +431,9 @@ public class FragmentLayoutStructureItemHelper
 				continue;
 			}
 
-			JSONObject fragmentLinkJSONObject = _createFragmentLinkJSONObject(
-				(Map<String, Object>)valueMap.get("fragmentLink"));
+			JSONObject fragmentLinkJSONObject =
+				_createFragmentLinkConfigJSONObject(
+					(Map<String, Object>)valueMap.get("fragmentLink"));
 
 			if (fragmentLinkJSONObject.length() > 0) {
 				fragmentFieldJSONObject.put("config", fragmentLinkJSONObject);

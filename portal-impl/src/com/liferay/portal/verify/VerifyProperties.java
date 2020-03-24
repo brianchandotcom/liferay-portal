@@ -1810,6 +1810,8 @@ public class VerifyProperties extends VerifyProcess {
 		"organizations.indexer.enabled", "organizations.rootable",
 		"organizations.types", "portal.cache.manager.type.multi.vm",
 		"portal.cache.manager.type.single.vm", "portal.ctx",
+		"portal.resiliency.enabled", "portal.resiliency.portlet.show.footer",
+		"portal.resiliency.spi.agent.client.pool.max.size",
 		"portal.security.manager.enable",
 		"permissions.inline.sql.resource.block.query.threshold",
 		"permissions.list.filter", "permissions.thread.local.cache.max.size",

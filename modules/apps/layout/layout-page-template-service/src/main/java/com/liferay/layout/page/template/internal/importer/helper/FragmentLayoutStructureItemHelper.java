@@ -456,13 +456,9 @@ public class FragmentLayoutStructureItemHelper
 				continue;
 			}
 
-			JSONObject fragmentLinkJSONObject =
+			JSONObject editableFieldConfigJSONObject =
 				_createFragmentLinkConfigJSONObject(
 					(Map<String, Object>)valueMap.get("fragmentLink"));
-
-			if (fragmentLinkJSONObject.length() > 0) {
-				fragmentFieldJSONObject.put("config", fragmentLinkJSONObject);
-			}
 
 			JSONObject localizationJSONObject =
 				_createTextLocalizationJSONObject(
@@ -476,6 +472,11 @@ public class FragmentLayoutStructureItemHelper
 			if (Objects.equals(editableTypes.get(fragmentFieldId), "image")) {
 				localizationJSONObject = _createImageLocalizationJSONObject(
 					(Map<String, Object>)valueMap.get("fragmentImage"));
+			}
+
+			if (editableFieldConfigJSONObject.length() > 0) {
+				fragmentFieldJSONObject.put(
+					"config", editableFieldConfigJSONObject);
 			}
 
 			try {

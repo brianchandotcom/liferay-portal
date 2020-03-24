@@ -1046,7 +1046,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			204,
 			structuredContentResource.
 				putSiteStructuredContentPermissionHttpResponse(
-					testGroup.getGroupId(),
+					structuredContent.getSiteId(),
 					new Permission[] {
 						new Permission() {
 							{
@@ -1060,7 +1060,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			404,
 			structuredContentResource.
 				putSiteStructuredContentPermissionHttpResponse(
-					testGroup.getGroupId(),
+					structuredContent.getSiteId(),
 					new Permission[] {
 						new Permission() {
 							{

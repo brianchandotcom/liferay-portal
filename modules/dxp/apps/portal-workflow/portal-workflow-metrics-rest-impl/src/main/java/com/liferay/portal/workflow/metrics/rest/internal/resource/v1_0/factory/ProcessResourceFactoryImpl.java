@@ -22,11 +22,22 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+
+import javax.annotation.Generated;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Activate;
@@ -37,8 +48,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Rafael Praxedes
+ * @generated
  */
 @Component(immediate = true, service = ProcessResource.Factory.class)
+@Generated("")
 public class ProcessResourceFactoryImpl implements ProcessResource.Factory {
 
 	@Override
@@ -55,7 +68,8 @@ public class ProcessResourceFactoryImpl implements ProcessResource.Factory {
 					ProcessResource.class.getClassLoader(),
 					new Class<?>[] {ProcessResource.class},
 					(proxy, method, arguments) -> _invoke(
-						method, arguments, _checkPermissions, _user));
+						method, arguments, _checkPermissions,
+						_httpServletRequest, _user));
 			}
 
 			@Override
@@ -68,6 +82,15 @@ public class ProcessResourceFactoryImpl implements ProcessResource.Factory {
 			}
 
 			@Override
+			public ProcessResource.Builder httpServletRequest(
+				HttpServletRequest httpServletRequest) {
+
+				_httpServletRequest = httpServletRequest;
+
+				return this;
+			}
+
+			@Override
 			public ProcessResource.Builder user(User user) {
 				_user = user;
 
@@ -75,6 +98,7 @@ public class ProcessResourceFactoryImpl implements ProcessResource.Factory {
 			}
 
 			private boolean _checkPermissions = true;
+			private HttpServletRequest _httpServletRequest;
 			private User _user;
 
 		};
@@ -92,7 +116,7 @@ public class ProcessResourceFactoryImpl implements ProcessResource.Factory {
 
 	private Object _invoke(
 			Method method, Object[] arguments, boolean checkPermissions,
-			User user)
+			HttpServletRequest httpServletRequest, User user)
 		throws Throwable {
 
 		String name = PrincipalThreadLocal.getName();
@@ -113,10 +137,13 @@ public class ProcessResourceFactoryImpl implements ProcessResource.Factory {
 
 		ProcessResource processResource = _componentServiceObjects.getService();
 
+		processResource.setContextAcceptLanguage(new AcceptLanguageImpl(user));
+
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
 		processResource.setContextCompany(company);
 
+		processResource.setContextHttpServletRequest(httpServletRequest);
 		processResource.setContextUser(user);
 
 		try {
@@ -148,5 +175,41 @@ public class ProcessResourceFactoryImpl implements ProcessResource.Factory {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private class AcceptLanguageImpl implements AcceptLanguage {
+
+		public AcceptLanguageImpl(User user) {
+			_user = user;
+		}
+
+		@Override
+		public List<Locale> getLocales() {
+			return Collections.emptyList();
+		}
+
+		@Override
+		public String getPreferredLanguageId() {
+			return LocaleUtil.toLanguageId(getPreferredLocale());
+		}
+
+		@Override
+		public Locale getPreferredLocale() {
+			List<Locale> locales = getLocales();
+
+			if (ListUtil.isNotEmpty(locales)) {
+				return locales.get(0);
+			}
+
+			return _user.getLocale();
+		}
+
+		@Override
+		public boolean isAcceptAllLanguages() {
+			return false;
+		}
+
+		private final User _user;
+
+	}
 
 }

@@ -39,7 +39,11 @@ describe('TrafficSources', () => {
 		);
 
 		const {getByText} = render(
-			<TrafficSources dataProvider={mockedAPI} languageTag="en-EN" />
+			<TrafficSources
+				dataProvider={mockedAPI}
+				languageTag="en-EN"
+				onTrafficSourceClick={() => {}}
+			/>
 		);
 
 		await wait(() => expect(mockedAPI).toHaveBeenCalled());

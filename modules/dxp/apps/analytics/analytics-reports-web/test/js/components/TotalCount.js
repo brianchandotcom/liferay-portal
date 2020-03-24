@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, render, wait, within} from '@testing-library/react';
+import {cleanup, render, wait} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -32,7 +32,7 @@ describe('TotalCount', () => {
 				'This number refers to the total number of views since the content was published.',
 		};
 
-		const {getByText} = render(
+		const {getByRole, getByText} = render(
 			<TotalCount
 				dataProvider={testProps.dataProvider}
 				label={testProps.label}
@@ -46,7 +46,7 @@ describe('TotalCount', () => {
 		const label = getByText(testProps.label);
 		expect(label).toBeInTheDocument();
 
-		const helpTextIcon = within(label).getByRole('presentation');
+		const helpTextIcon = getByRole('presentation');
 
 		userEvent.click(helpTextIcon);
 

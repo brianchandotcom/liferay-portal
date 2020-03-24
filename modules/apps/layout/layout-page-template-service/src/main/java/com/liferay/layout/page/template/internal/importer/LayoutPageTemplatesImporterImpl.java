@@ -706,6 +706,18 @@ public class LayoutPageTemplatesImporterImpl
 									"the-same-key-already-exists",
 								pageTemplateEntry.getZipPath())));
 				}
+
+				Layout draftLayout = _layoutLocalService.fetchLayout(
+					_portal.getClassNameId(Layout.class),
+					layoutPageTemplateEntry.getPlid());
+
+				if (draftLayout != null) {
+					_layoutLocalService.updateStatus(
+						layoutPageTemplateEntry.getUserId(),
+						draftLayout.getPlid(),
+						WorkflowConstants.STATUS_APPROVED,
+						ServiceContextThreadLocal.getServiceContext());
+				}
 			}
 			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {

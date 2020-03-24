@@ -479,7 +479,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			accountRoleResource.deleteAccountRoleUserAssociationHttpResponse(
-				null, accountRole.getId(), null));
+				accountRole.getAccountId(), accountRole.getId(), null));
 	}
 
 	protected AccountRole testDeleteAccountRoleUserAssociation_addAccountRole()
@@ -498,12 +498,12 @@ public abstract class BaseAccountRoleResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			accountRoleResource.postAccountRoleUserAssociationHttpResponse(
-				null, accountRole.getId(), null));
+				accountRole.getAccountId(), accountRole.getId(), null));
 
 		assertHttpResponseStatusCode(
 			404,
 			accountRoleResource.postAccountRoleUserAssociationHttpResponse(
-				null, 0L, null));
+				accountRole.getAccountId(), 0L, null));
 	}
 
 	protected AccountRole testPostAccountRoleUserAssociation_addAccountRole()

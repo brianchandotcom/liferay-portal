@@ -23,6 +23,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.search.DocumentContributor;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
@@ -373,6 +374,10 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		_documentContributors;
 	private ServiceTrackerMap<String, ModelResourcePermission>
 		_modelResourcePermissionServiceTrackerMap;
+
+	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
 	private ServiceTrackerList<QueryConfigContributor, QueryConfigContributor>
 		_queryConfigContributors;
 	private ServiceTrackerList

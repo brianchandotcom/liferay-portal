@@ -589,6 +589,7 @@ definition {
 
 	@priority = "5"
 	test AddListAndRecordWithToDoPredefinedDataDefinition {
+		property portal.upstream = "quarantine";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPDynamicdatalists#AddListAndRecordWithToDoPredefinedDataDefinition";
 
@@ -923,6 +924,8 @@ definition {
 
 	@priority = "4"
 	test AddListRecordWithDocumentsAndMediaField {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2666,6 +2669,8 @@ definition {
 
 	@priority = "4"
 	test EditBooleanFieldShowLabel {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

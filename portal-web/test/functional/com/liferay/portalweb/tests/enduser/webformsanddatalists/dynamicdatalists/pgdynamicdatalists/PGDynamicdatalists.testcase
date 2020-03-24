@@ -671,6 +671,8 @@ definition {
 
 	@priority = "4"
 	test EditListRecordViaRecordView {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1083,6 +1085,8 @@ definition {
 
 	@priority = "3"
 	test ViewDateFieldPredefinedValue {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

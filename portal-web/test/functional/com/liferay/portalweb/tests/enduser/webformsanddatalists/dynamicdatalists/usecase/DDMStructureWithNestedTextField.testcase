@@ -74,6 +74,8 @@ definition {
 	@description = "This is a use case for LPS-69335."
 	@priority = "4"
 	test ViewFieldTranslations {
+		property portal.upstream = "quarantine";
+
 		DDLRecord.addCP();
 
 		DDLRecord.populateFieldText(

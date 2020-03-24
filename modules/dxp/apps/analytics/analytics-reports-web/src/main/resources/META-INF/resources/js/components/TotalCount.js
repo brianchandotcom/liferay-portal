@@ -55,7 +55,7 @@ function TotalCount({
 				/>
 			</span>
 			<span className="font-weight-bold">
-				{percentage && value != '-' ? (
+				{percentage && value !== '-' ? (
 					<span>{`${value * 100}%`}</span>
 				) : (
 					value

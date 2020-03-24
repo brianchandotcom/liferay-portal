@@ -179,7 +179,7 @@ function APIService({endpoints, namespace, page}) {
 				resolve(
 					MOCK_TRAFFIC_SOURCES.analyticsReportsTrafficSources.find(
 						trafficSource => {
-							return trafficSource['name'] == name;
+							return trafficSource['name'] === name;
 						}
 					)
 				);

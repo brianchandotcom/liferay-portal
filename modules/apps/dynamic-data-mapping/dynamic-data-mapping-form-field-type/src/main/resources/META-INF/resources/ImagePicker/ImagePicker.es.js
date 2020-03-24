@@ -53,7 +53,7 @@ const ImagePicker = ({
 		});
 	}, [inputValue]);
 
-	const {observer} = useModal({
+	const {observer, onClose} = useModal({
 		onClose: () => setModalVisible(false),
 	});
 
@@ -198,7 +198,7 @@ const ImagePicker = ({
 						<img
 							alt={imageValues.description}
 							className="d-block img-fluid mb-2 mx-auto rounded"
-							onClick={() => setModalVisible(false)}
+							onClick={onClose}
 							src={imageValues.url}
 							style={{cursor: 'zoom-out', maxHeight: '95%'}}
 						/>

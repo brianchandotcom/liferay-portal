@@ -23,5 +23,5 @@ create table RedirectNotFoundEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	hits LONG,
-	url VARCHAR(75) null
+	url STRING null
 );

@@ -569,11 +569,13 @@ public class MessageBoardThreadResourceImpl
 				).put(
 					"subscribe",
 					addAction(
-						"UPDATE", mbMessage, "putMessageBoardThreadSubscribe")
+						"SUBSCRIBE", mbMessage,
+						"putMessageBoardThreadSubscribe")
 				).put(
 					"unsubscribe",
 					addAction(
-						"UPDATE", mbMessage, "putMessageBoardThreadUnsubscribe")
+						"SUBSCRIBE", mbMessage,
+						"putMessageBoardThreadUnsubscribe")
 				).build();
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(

@@ -129,7 +129,8 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		if ((group == null) ||
 			(!group.isActive() &&
-			 !inactiveRequestHandler.isShowInactiveRequestMessageEnabled())) {
+			 !inactiveRequestHandler.isShowInactiveRequestMessageEnabled() &&
+			 !path.contains("/control_panel/"))) {
 
 			StringBundler sb = new StringBundler(5);
 

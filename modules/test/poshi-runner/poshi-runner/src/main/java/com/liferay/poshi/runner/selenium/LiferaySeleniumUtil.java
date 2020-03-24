@@ -34,16 +34,13 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.SortedSet;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -459,8 +456,6 @@ public class LiferaySeleniumUtil {
 			return "";
 		}
 
-		Map<String, File> consoleLogFiles = new TreeMap<>();
-
 		String baseDirName = PropsValues.TEST_CONSOLE_LOG_FILE_NAME;
 
 		int x = PropsValues.TEST_CONSOLE_LOG_FILE_NAME.lastIndexOf("/");
@@ -473,20 +468,33 @@ public class LiferaySeleniumUtil {
 		List<URL> urls = FileUtil.getIncludedResourceURLs(
 			new String[] {PropsValues.TEST_CONSOLE_LOG_FILE_NAME}, baseDirName);
 
-		for (URL url : urls) {
-			File file = new File(url.toURI());
+		try {
+			urls.sort(
+				(URL url1, URL url2) -> {
+					try {
+						File file1 = new File(url1.toURI());
+						File file2 = new File(url2.toURI());
 
-			consoleLogFiles.put(Long.toString(file.lastModified()), file);
+						Long file1LastModified = Long.valueOf(
+							file1.lastModified());
+
+						return file1LastModified.compareTo(
+							Long.valueOf(file2.lastModified()));
+					}
+					catch (URISyntaxException uriSyntaxException) {
+						throw new RuntimeException(uriSyntaxException);
+					}
+				});
+		}
+		catch (RuntimeException runtimeException) {
+			throw new PoshiRunnerWarningException(
+				"Unable to get console log file content", runtimeException);
 		}
 
 		StringBuilder sb = new StringBuilder();
 
-		SortedSet<String> keys = new TreeSet<>(consoleLogFiles.keySet());
-
-		for (String key : keys) {
-			File file = consoleLogFiles.get(key);
-
-			sb.append(FileUtil.read(file));
+		for (URL url : urls) {
+			sb.append(FileUtil.read(url));
 		}
 
 		return sb.toString();

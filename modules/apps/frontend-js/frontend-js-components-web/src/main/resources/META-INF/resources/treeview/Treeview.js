@@ -601,7 +601,7 @@ function reducer(state, action) {
 					node,
 					node => {
 						const {selectedNodeIds} = state;
-						const oldNode = nodeMap[node.id];
+						const oldNode = nodeMap[node.id] || {};
 
 						const expanded =
 							oldNode.expanded ||

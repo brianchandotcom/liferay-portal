@@ -78,7 +78,7 @@ public class RedirectNotFoundEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -88,6 +88,10 @@ public class RedirectNotFoundEntryCacheModel
 		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -111,6 +115,14 @@ public class RedirectNotFoundEntryCacheModel
 			redirectNotFoundEntryId);
 		redirectNotFoundEntryImpl.setGroupId(groupId);
 		redirectNotFoundEntryImpl.setCompanyId(companyId);
+		redirectNotFoundEntryImpl.setUserId(userId);
+
+		if (userName == null) {
+			redirectNotFoundEntryImpl.setUserName("");
+		}
+		else {
+			redirectNotFoundEntryImpl.setUserName(userName);
+		}
 
 		if (createDate == Long.MIN_VALUE) {
 			redirectNotFoundEntryImpl.setCreateDate(null);
@@ -149,6 +161,9 @@ public class RedirectNotFoundEntryCacheModel
 		groupId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
@@ -165,6 +180,16 @@ public class RedirectNotFoundEntryCacheModel
 		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
@@ -182,6 +207,8 @@ public class RedirectNotFoundEntryCacheModel
 	public long redirectNotFoundEntryId;
 	public long groupId;
 	public long companyId;
+	public long userId;
+	public String userName;
 	public long createDate;
 	public long modifiedDate;
 	public long hits;

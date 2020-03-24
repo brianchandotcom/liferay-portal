@@ -26,6 +26,7 @@ definition {
 
 	@priority = "4"
 	test AssertRelatedAssetsDisplayWithCategory {
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Categories,Staging,Related Assets,Web Content Administration";
 
 		JSONLayout.addPublicLayout(
@@ -127,6 +128,8 @@ definition {
 	@description = "This is a use case for LPS-72472."
 	@priority = "4"
 	test AssertRelatedAssetsWithGlobalWebContent {
+		property portal.upstream = "quarantine";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Test Page");

@@ -78,7 +78,8 @@ public final class CopySharepointObjectOperation extends BaseOperation {
 					getCopyIntoItemsLocalDocument(path, newPath));
 		}
 		catch (RemoteException remoteException) {
-			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
+			throw RemoteExceptionSharepointExceptionMapper.map(
+				remoteException, sharepointConnectionInfo);
 		}
 
 		processCopyIntoItemsLocalResponseDocument(

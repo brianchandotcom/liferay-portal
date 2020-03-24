@@ -69,7 +69,8 @@ public final class GetSharepointVersionsOperation extends BaseOperation {
 				getGetVersionsDocument(filePath));
 		}
 		catch (RemoteException remoteException) {
-			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
+			throw RemoteExceptionSharepointExceptionMapper.map(
+				remoteException, sharepointConnectionInfo);
 		}
 
 		return getSharepointVersions(

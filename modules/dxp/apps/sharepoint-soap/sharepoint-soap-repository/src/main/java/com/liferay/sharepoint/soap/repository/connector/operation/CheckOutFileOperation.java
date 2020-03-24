@@ -36,7 +36,8 @@ public final class CheckOutFileOperation extends BaseOperation {
 				getCheckOutFileDocument(filePath));
 		}
 		catch (RemoteException remoteException) {
-			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
+			throw RemoteExceptionSharepointExceptionMapper.map(
+				remoteException, sharepointConnectionInfo);
 		}
 
 		return getResponse(checkOutFileResponseDocument);

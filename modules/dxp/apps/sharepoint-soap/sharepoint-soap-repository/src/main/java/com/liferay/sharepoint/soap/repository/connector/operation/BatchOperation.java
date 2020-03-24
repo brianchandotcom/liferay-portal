@@ -43,7 +43,8 @@ public final class BatchOperation extends BaseOperation {
 				getUpdateListItemsDocument(batch));
 		}
 		catch (RemoteException remoteException) {
-			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
+			throw RemoteExceptionSharepointExceptionMapper.map(
+				remoteException, sharepointConnectionInfo);
 		}
 
 		processUpdateListItemsResponseDocument(updateListItemsResponseDocument);

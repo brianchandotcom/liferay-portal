@@ -59,7 +59,8 @@ public final class GetObjectsByQueryPacketOperation extends BaseOperation {
 				getQueryDocument(queryPacket));
 		}
 		catch (RemoteException remoteException) {
-			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
+			throw RemoteExceptionSharepointExceptionMapper.map(
+				remoteException, sharepointConnectionInfo);
 		}
 
 		return getSharepointObjects(queryResponseDocument);

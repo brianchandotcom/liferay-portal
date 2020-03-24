@@ -76,7 +76,8 @@ public final class GetSharepointObjectsByQueryOperation extends BaseOperation {
 					queryFieldNames));
 		}
 		catch (RemoteException remoteException) {
-			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
+			throw RemoteExceptionSharepointExceptionMapper.map(
+				remoteException, sharepointConnectionInfo);
 		}
 
 		log(query, queryOptionsList, getListItemsResponseDocument);

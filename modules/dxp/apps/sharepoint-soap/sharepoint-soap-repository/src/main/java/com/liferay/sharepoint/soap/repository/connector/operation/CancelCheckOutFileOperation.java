@@ -35,7 +35,8 @@ public final class CancelCheckOutFileOperation extends BaseOperation {
 				getUndoCheckOutDocument(filePath));
 		}
 		catch (RemoteException remoteException) {
-			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
+			throw RemoteExceptionSharepointExceptionMapper.map(
+				remoteException, sharepointConnectionInfo);
 		}
 
 		return getResponse(undoCheckOutResponseDocument);

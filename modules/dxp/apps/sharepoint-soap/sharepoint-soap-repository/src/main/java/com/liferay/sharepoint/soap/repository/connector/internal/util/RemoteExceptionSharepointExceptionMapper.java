@@ -15,6 +15,7 @@
 package com.liferay.sharepoint.soap.repository.connector.internal.util;
 
 import com.liferay.portal.kernel.repository.AuthenticationRepositoryException;
+import com.liferay.sharepoint.soap.repository.connector.SharepointConnectionInfo;
 import com.liferay.sharepoint.soap.repository.connector.SharepointException;
 
 import java.rmi.RemoteException;
@@ -26,7 +27,10 @@ import org.apache.axis2.AxisFault;
  */
 public class RemoteExceptionSharepointExceptionMapper {
 
-	public static SharepointException map(RemoteException remoteException) {
+	public static SharepointException map(
+		RemoteException remoteException,
+		SharepointConnectionInfo sharepointConnectionInfo) {
+
 		if (remoteException instanceof AxisFault) {
 			AxisFault axisFault = (AxisFault)remoteException;
 
@@ -38,7 +42,8 @@ public class RemoteExceptionSharepointExceptionMapper {
 		}
 
 		return new SharepointException(
-			"Unable to communicate with the Sharepoint server",
+			"Unable to communicate with the Sharepoint server " +
+				sharepointConnectionInfo.getServiceURL(),
 			remoteException);
 	}
 

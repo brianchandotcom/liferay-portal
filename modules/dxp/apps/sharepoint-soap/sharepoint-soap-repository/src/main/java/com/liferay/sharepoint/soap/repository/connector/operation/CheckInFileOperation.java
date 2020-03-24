@@ -40,7 +40,8 @@ public final class CheckInFileOperation extends BaseOperation {
 				getCheckInFileDocument(filePath, comment, checkInType));
 		}
 		catch (RemoteException remoteException) {
-			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
+			throw RemoteExceptionSharepointExceptionMapper.map(
+				remoteException, sharepointConnectionInfo);
 		}
 
 		return getResponse(checkInFileResponseDocument);

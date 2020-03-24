@@ -55,7 +55,8 @@ public final class AddOrUpdateFileOperation extends BaseOperation {
 				getCopyIntoItemsDocument(filePath, inputStream));
 		}
 		catch (RemoteException remoteException) {
-			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
+			throw RemoteExceptionSharepointExceptionMapper.map(
+				remoteException, sharepointConnectionInfo);
 		}
 
 		processCopyIntoItemsResponseDocument(copyIntoItemsResponseDocument);

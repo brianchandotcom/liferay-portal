@@ -1,0 +1,111 @@
+definition {
+
+	macro addRedirect {
+		var portalURL = PropsUtil.get("portal.url");
+
+		LexiconEntry.gotoAdd();
+
+		AssertTextEquals(
+			locator1 = "TextInput#REDIRECT_SOURCE_URL_PREFIX",
+			value1 = "${portalURL}/web/${siteName}");
+
+		Type(
+			locator1 = "TextInput#REDIRECT_SOURCE_URL",
+			value1 = "${sourceURL}");
+
+		Type(
+			locator1 = "TextInput#REDIRECT_DESTINATION_URL",
+			value1 = "${destinationURL}");
+
+		if (isSet(redirectType)) {
+			Select(
+				locator1 = "Select#REDIRECT_TYPE",
+				value1 = "${redirectType}");
+		}
+
+		Button.clickSave();
+
+		if ("${redirectURLVariation}" == "Null") {
+			Alert.viewRequiredField();
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro deleteCP {
+		if (isSet(deletions)) {
+			ClickNoError(locator1 = "Icon#DELETE");
+		}
+
+		else {
+			Redirect.gotoEntryMenuItem(
+				item = "Delete",
+				sourceURL = "${sourceURL}");
+		}
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro editRedirect {
+		Redirect.gotoEntryMenuItem(
+			item = "Edit",
+			sourceURL = "${sourceURL}");
+
+		if (isSet(sourceURLEdit)) {
+			Type(
+				locator1 = "TextInput#REDIRECT_SOURCE_URL",
+				value1 = "${sourceURLEdit}");
+		}
+
+		if (isSet(destinationURLEdit)) {
+			Type(
+				locator1 = "TextInput#REDIRECT_DESTINATION_URL",
+				value1 = "${destinationURLEdit}");
+		}
+
+		if (isSet(redirectTypeEdit)) {
+			Select(
+				locator1 = "Select#REDIRECT_TYPE",
+				value1 = "${redirectTypeEdit}");
+		}
+
+		Button.clickSave();
+	}
+
+	macro gotoEntryMenuItem {
+		LexiconTable.clickEllipsisItem(
+			item = "${item}",
+			tableEntry = "${sourceURL}");
+	}
+
+	macro openRedirectAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet");
+	}
+
+	macro viewDefaultCP {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO_TAGLIB",
+			value1 = "No redirects were found.");
+	}
+
+	macro viewRedirect {
+		AssertTextEquals.assertPartialText(
+			key_rowEntry = "${sourceURL}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${sourceURL}");
+
+		AssertTextEquals.assertPartialText(
+			key_rowEntry = "${destinationURL}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${destinationURL}");
+
+		if (isSet(redirectType)) {
+			AssertTextEquals(
+				key_rowEntry = "${redirectType}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+				value1 = "${redirectType}");
+		}
+	}
+
+}

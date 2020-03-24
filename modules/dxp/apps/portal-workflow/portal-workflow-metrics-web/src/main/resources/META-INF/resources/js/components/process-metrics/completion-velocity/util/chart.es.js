@@ -316,10 +316,12 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 				};
 			}
 			else if (type === WEEKS) {
+				const pad = diffLeftDays < 7 ? 3 : 0;
+
 				return {
 					offset: 2,
-					padLeft: 0,
-					padRight: 0,
+					padLeft: pad,
+					padRight: pad,
 				};
 			}
 

@@ -134,6 +134,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REDIRECT_TYPE</td>
+	<td>//div[label[contains(.,'Type')]]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REGION</td>
 	<td>//div[label[contains(.,'Region')]]/select</td>
 	<td></td>

@@ -488,12 +488,33 @@ public class LiferaySeleniumUtil {
 		}
 		catch (RuntimeException runtimeException) {
 			throw new PoshiRunnerWarningException(
-				"Unable to get console log file content", runtimeException);
+				"Unable to get console log file content. Please check log " +
+					"file(s): " + PropsValues.TEST_CONSOLE_LOG_FILE_NAME,
+				runtimeException);
 		}
 
 		StringBuilder sb = new StringBuilder();
 
+		long consoleLogSize = 0;
+
 		for (URL url : urls) {
+			File file = new File(url.toURI());
+
+			consoleLogSize = consoleLogSize + file.length();
+
+			if (consoleLogSize > _BYTES_MAX_SIZE_CONSOLE_LOG) {
+				String largeConsoleLogSizeMessage =
+					"Unable to get console log file content. Console log has " +
+						"exceeded " + _BYTES_MAX_SIZE_CONSOLE_LOG + " bytes, " +
+							"please clean old or unused log file(s): " +
+								PropsValues.TEST_CONSOLE_LOG_FILE_NAME;
+
+				System.out.println(largeConsoleLogSizeMessage);
+
+				throw new PoshiRunnerWarningException(
+					largeConsoleLogSizeMessage);
+			}
+
 			sb.append(FileUtil.read(url));
 		}
 
@@ -750,6 +771,8 @@ public class LiferaySeleniumUtil {
 
 		return new BufferedReader(inputStreamReader);
 	}
+
+	private static final long _BYTES_MAX_SIZE_CONSOLE_LOG = 20 * 1024 * 1024;
 
 	private static final List<String> _errorTimestamps = new ArrayList<>();
 	private static final List<Exception> _javaScriptExceptions =

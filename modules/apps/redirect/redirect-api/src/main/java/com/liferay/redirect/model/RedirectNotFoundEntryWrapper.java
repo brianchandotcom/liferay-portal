@@ -48,6 +48,8 @@ public class RedirectNotFoundEntryWrapper
 		attributes.put("redirectNotFoundEntryId", getRedirectNotFoundEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("hits", getHits());
@@ -81,6 +83,18 @@ public class RedirectNotFoundEntryWrapper
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -198,6 +212,36 @@ public class RedirectNotFoundEntryWrapper
 		return model.getUrl();
 	}
 
+	/**
+	 * Returns the user ID of this redirect not found entry.
+	 *
+	 * @return the user ID of this redirect not found entry
+	 */
+	@Override
+	public long getUserId() {
+		return model.getUserId();
+	}
+
+	/**
+	 * Returns the user name of this redirect not found entry.
+	 *
+	 * @return the user name of this redirect not found entry
+	 */
+	@Override
+	public String getUserName() {
+		return model.getUserName();
+	}
+
+	/**
+	 * Returns the user uuid of this redirect not found entry.
+	 *
+	 * @return the user uuid of this redirect not found entry
+	 */
+	@Override
+	public String getUserUuid() {
+		return model.getUserUuid();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -291,6 +335,36 @@ public class RedirectNotFoundEntryWrapper
 	@Override
 	public void setUrl(String url) {
 		model.setUrl(url);
+	}
+
+	/**
+	 * Sets the user ID of this redirect not found entry.
+	 *
+	 * @param userId the user ID of this redirect not found entry
+	 */
+	@Override
+	public void setUserId(long userId) {
+		model.setUserId(userId);
+	}
+
+	/**
+	 * Sets the user name of this redirect not found entry.
+	 *
+	 * @param userName the user name of this redirect not found entry
+	 */
+	@Override
+	public void setUserName(String userName) {
+		model.setUserName(userName);
+	}
+
+	/**
+	 * Sets the user uuid of this redirect not found entry.
+	 *
+	 * @param userUuid the user uuid of this redirect not found entry
+	 */
+	@Override
+	public void setUserUuid(String userUuid) {
+		model.setUserUuid(userUuid);
 	}
 
 	@Override

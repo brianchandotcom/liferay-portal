@@ -134,6 +134,10 @@ public class RedirectNotFoundEntryPersistenceTest {
 
 		newRedirectNotFoundEntry.setCompanyId(RandomTestUtil.nextLong());
 
+		newRedirectNotFoundEntry.setUserId(RandomTestUtil.nextLong());
+
+		newRedirectNotFoundEntry.setUserName(RandomTestUtil.randomString());
+
 		newRedirectNotFoundEntry.setCreateDate(RandomTestUtil.nextDate());
 
 		newRedirectNotFoundEntry.setModifiedDate(RandomTestUtil.nextDate());
@@ -161,6 +165,12 @@ public class RedirectNotFoundEntryPersistenceTest {
 		Assert.assertEquals(
 			existingRedirectNotFoundEntry.getCompanyId(),
 			newRedirectNotFoundEntry.getCompanyId());
+		Assert.assertEquals(
+			existingRedirectNotFoundEntry.getUserId(),
+			newRedirectNotFoundEntry.getUserId());
+		Assert.assertEquals(
+			existingRedirectNotFoundEntry.getUserName(),
+			newRedirectNotFoundEntry.getUserName());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingRedirectNotFoundEntry.getCreateDate()),
@@ -223,8 +233,8 @@ public class RedirectNotFoundEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"RedirectNotFoundEntry", "mvccVersion", true,
 			"redirectNotFoundEntryId", true, "groupId", true, "companyId", true,
-			"createDate", true, "modifiedDate", true, "hits", true, "url",
-			true);
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "hits", true, "url", true);
 	}
 
 	@Test
@@ -499,6 +509,10 @@ public class RedirectNotFoundEntryPersistenceTest {
 		redirectNotFoundEntry.setGroupId(RandomTestUtil.nextLong());
 
 		redirectNotFoundEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		redirectNotFoundEntry.setUserId(RandomTestUtil.nextLong());
+
+		redirectNotFoundEntry.setUserName(RandomTestUtil.randomString());
 
 		redirectNotFoundEntry.setCreateDate(RandomTestUtil.nextDate());
 

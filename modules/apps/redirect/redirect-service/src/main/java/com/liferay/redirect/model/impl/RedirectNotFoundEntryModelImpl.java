@@ -18,10 +18,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
@@ -67,7 +70,8 @@ public class RedirectNotFoundEntryModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT},
 		{"redirectNotFoundEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"hits", Types.BIGINT},
 		{"url", Types.VARCHAR}
 	};
@@ -80,6 +84,8 @@ public class RedirectNotFoundEntryModelImpl
 		TABLE_COLUMNS_MAP.put("redirectNotFoundEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("hits", Types.BIGINT);
@@ -87,7 +93,7 @@ public class RedirectNotFoundEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RedirectNotFoundEntry (mvccVersion LONG default 0 not null,redirectNotFoundEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,hits LONG,url STRING null)";
+		"create table RedirectNotFoundEntry (mvccVersion LONG default 0 not null,redirectNotFoundEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,hits LONG,url STRING null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table RedirectNotFoundEntry";
@@ -276,6 +282,18 @@ public class RedirectNotFoundEntryModelImpl
 			(BiConsumer<RedirectNotFoundEntry, Long>)
 				RedirectNotFoundEntry::setCompanyId);
 		attributeGetterFunctions.put(
+			"userId", RedirectNotFoundEntry::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<RedirectNotFoundEntry, Long>)
+				RedirectNotFoundEntry::setUserId);
+		attributeGetterFunctions.put(
+			"userName", RedirectNotFoundEntry::getUserName);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<RedirectNotFoundEntry, String>)
+				RedirectNotFoundEntry::setUserName);
+		attributeGetterFunctions.put(
 			"createDate", RedirectNotFoundEntry::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
@@ -354,6 +372,47 @@ public class RedirectNotFoundEntryModelImpl
 	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	@Override
+	public long getUserId() {
+		return _userId;
+	}
+
+	@Override
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
+	}
+
+	@Override
+	public String getUserName() {
+		if (_userName == null) {
+			return "";
+		}
+		else {
+			return _userName;
+		}
+	}
+
+	@Override
+	public void setUserName(String userName) {
+		_userName = userName;
 	}
 
 	@Override
@@ -462,6 +521,8 @@ public class RedirectNotFoundEntryModelImpl
 			getRedirectNotFoundEntryId());
 		redirectNotFoundEntryImpl.setGroupId(getGroupId());
 		redirectNotFoundEntryImpl.setCompanyId(getCompanyId());
+		redirectNotFoundEntryImpl.setUserId(getUserId());
+		redirectNotFoundEntryImpl.setUserName(getUserName());
 		redirectNotFoundEntryImpl.setCreateDate(getCreateDate());
 		redirectNotFoundEntryImpl.setModifiedDate(getModifiedDate());
 		redirectNotFoundEntryImpl.setHits(getHits());
@@ -563,6 +624,16 @@ public class RedirectNotFoundEntryModelImpl
 		redirectNotFoundEntryCacheModel.groupId = getGroupId();
 
 		redirectNotFoundEntryCacheModel.companyId = getCompanyId();
+
+		redirectNotFoundEntryCacheModel.userId = getUserId();
+
+		redirectNotFoundEntryCacheModel.userName = getUserName();
+
+		String userName = redirectNotFoundEntryCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			redirectNotFoundEntryCacheModel.userName = null;
+		}
 
 		Date createDate = getCreateDate();
 
@@ -677,6 +748,8 @@ public class RedirectNotFoundEntryModelImpl
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _userId;
+	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;

@@ -16,6 +16,7 @@ package com.liferay.redirect.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
@@ -36,7 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface RedirectNotFoundEntryModel
-	extends BaseModel<RedirectNotFoundEntry>, MVCCModel, ShardedModel {
+	extends BaseModel<RedirectNotFoundEntry>, GroupedModel, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -93,6 +95,7 @@ public interface RedirectNotFoundEntryModel
 	 *
 	 * @return the group ID of this redirect not found entry
 	 */
+	@Override
 	public long getGroupId();
 
 	/**
@@ -100,6 +103,7 @@ public interface RedirectNotFoundEntryModel
 	 *
 	 * @param groupId the group ID of this redirect not found entry
 	 */
+	@Override
 	public void setGroupId(long groupId);
 
 	/**
@@ -119,10 +123,60 @@ public interface RedirectNotFoundEntryModel
 	public void setCompanyId(long companyId);
 
 	/**
+	 * Returns the user ID of this redirect not found entry.
+	 *
+	 * @return the user ID of this redirect not found entry
+	 */
+	@Override
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this redirect not found entry.
+	 *
+	 * @param userId the user ID of this redirect not found entry
+	 */
+	@Override
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this redirect not found entry.
+	 *
+	 * @return the user uuid of this redirect not found entry
+	 */
+	@Override
+	public String getUserUuid();
+
+	/**
+	 * Sets the user uuid of this redirect not found entry.
+	 *
+	 * @param userUuid the user uuid of this redirect not found entry
+	 */
+	@Override
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this redirect not found entry.
+	 *
+	 * @return the user name of this redirect not found entry
+	 */
+	@AutoEscape
+	@Override
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this redirect not found entry.
+	 *
+	 * @param userName the user name of this redirect not found entry
+	 */
+	@Override
+	public void setUserName(String userName);
+
+	/**
 	 * Returns the create date of this redirect not found entry.
 	 *
 	 * @return the create date of this redirect not found entry
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -130,6 +184,7 @@ public interface RedirectNotFoundEntryModel
 	 *
 	 * @param createDate the create date of this redirect not found entry
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -137,6 +192,7 @@ public interface RedirectNotFoundEntryModel
 	 *
 	 * @return the modified date of this redirect not found entry
 	 */
+	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -144,6 +200,7 @@ public interface RedirectNotFoundEntryModel
 	 *
 	 * @param modifiedDate the modified date of this redirect not found entry
 	 */
+	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**

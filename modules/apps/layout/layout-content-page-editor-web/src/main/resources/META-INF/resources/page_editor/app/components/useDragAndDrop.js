@@ -18,7 +18,6 @@ import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {useActiveItemId, useSelectItem} from './Controls';
 
 const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
 	[LAYOUT_DATA_ITEM_TYPES.root]: [
@@ -127,15 +126,8 @@ export default function useDragAndDrop({
 		store: {dropTargetItemId, droppable, targetPosition},
 	} = useContext(DragDropManagerImpl);
 
-	const activeItemId = useActiveItemId();
-	const selectItem = useSelectItem();
-
 	const [dragOptions, drag, preview] = useDrag({
 		collect: _monitor => {
-			if (activeItemId) {
-				selectItem(null);
-			}
-
 			return {
 				isDragging: _monitor.isDragging(),
 			};

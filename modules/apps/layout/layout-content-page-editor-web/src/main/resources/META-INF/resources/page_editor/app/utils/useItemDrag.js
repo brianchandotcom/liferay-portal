@@ -16,8 +16,16 @@ import {useEffect} from 'react';
 import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
+import {useSelectItem} from '../components/Controls';
+
 export function useItemDrag({canDrag = () => true, type, name, onDragEnd}) {
+	const selectItem = useSelectItem();
+
 	const [, dragRef, preview] = useDrag({
+		begin() {
+			selectItem(null);
+		},
+
 		canDrag(...args) {
 			return canDrag(...args);
 		},

@@ -438,15 +438,18 @@ public class FragmentLayoutStructureItemHelper
 				fragmentFieldJSONObject.put("config", fragmentLinkJSONObject);
 			}
 
-			JSONObject localizationJSONObject = null;
+			JSONObject localizationJSONObject =
+				_createTextLocalizationJSONObject(
+					(Map<String, Object>)valueMap.get("text"));
+
+			if (Objects.equals(editableTypes.get(fragmentFieldId), "html")) {
+				localizationJSONObject = _createTextLocalizationJSONObject(
+					(Map<String, Object>)valueMap.get("html"));
+			}
 
 			if (Objects.equals(editableTypes.get(fragmentFieldId), "image")) {
 				localizationJSONObject = _createImageLocalizationJSONObject(
 					(Map<String, Object>)valueMap.get("fragmentImage"));
-			}
-			else {
-				localizationJSONObject = _createTextLocalizationJSONObject(
-					(Map<String, Object>)valueMap.get("text"));
 			}
 
 			try {

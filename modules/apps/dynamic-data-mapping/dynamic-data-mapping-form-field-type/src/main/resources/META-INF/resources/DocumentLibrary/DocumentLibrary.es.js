@@ -288,7 +288,6 @@ const DocumentLibraryProxy = connectStore(
 					placeholder={placeholder}
 					readOnly={readOnly}
 					value={currentValue || ''}
-					{...otherProps}
 				/>
 			</FieldBaseProxy>
 		);

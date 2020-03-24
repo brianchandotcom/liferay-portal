@@ -61,6 +61,7 @@ public interface RedirectNotFoundEntryLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RedirectNotFoundEntryLocalServiceUtil} to access the redirect not found entry local service. Add custom service methods to <code>com.liferay.redirect.service.impl.RedirectNotFoundEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public RedirectNotFoundEntry addOrUpdateRedirectNotFoundEntry(
 		Group group, String url);
 

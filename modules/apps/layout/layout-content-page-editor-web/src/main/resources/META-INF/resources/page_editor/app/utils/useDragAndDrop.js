@@ -93,7 +93,8 @@ const getAncestorId = (parent, toControlsId) => {
 			? parent.parentId
 			: parent.itemId;
 
-	return parent.type === LAYOUT_DATA_ITEM_TYPES.collectionItem
+	return parent.type === LAYOUT_DATA_ITEM_TYPES.collectionItem ||
+		parent.type === LAYOUT_DATA_ITEM_TYPES.collection
 		? ancestorId
 		: toControlsId(ancestorId);
 };

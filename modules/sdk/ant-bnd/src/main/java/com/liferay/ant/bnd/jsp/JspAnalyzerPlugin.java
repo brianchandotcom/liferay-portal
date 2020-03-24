@@ -324,7 +324,8 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			if (containsTLD(
 					analyzer, analyzer.getJar(), "META-INF/resources", uri) ||
 				containsTLD(analyzer, analyzer.getJar(), "WEB-INF/tld", uri) ||
-				containsTLDInBundleClassPath(analyzer, "META-INF", uri)) {
+				containsTLDInBundleClassPath(
+					analyzer, "META-INF/resources", uri)) {
 
 				continue;
 			}

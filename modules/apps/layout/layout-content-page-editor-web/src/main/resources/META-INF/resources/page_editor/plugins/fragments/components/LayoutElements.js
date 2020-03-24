@@ -20,6 +20,7 @@ import {getEmptyImage} from 'react-dnd-html5-backend';
 import {useSelectItem} from '../../../app/components/Controls';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import addItem from '../../../app/thunks/addItem';
+import {useItemDrag} from '../../../app/utils/useItemDrag';
 import Collapse from '../../../common/components/Collapse';
 
 const layoutElements = [
@@ -40,37 +41,20 @@ const LayoutElementCard = ({label, layoutColumns, type}) => {
 	const store = useSelector(state => state);
 	const selectItem = useSelectItem();
 
-	const [, drag, preview] = useDrag({
-		end(item, monitor) {
-			const result = monitor.getDropResult();
-
-			if (!result) {
-				return;
-			}
-
-			const {parentId, position} = result;
-
-			if (parentId) {
-				dispatch(
-					addItem({
-						itemType: item.type,
-						parentItemId: parentId,
-						position,
-						selectItem,
-						store,
-					})
-				);
-			}
-		},
-		item: {
-			name: label,
-			type,
-		},
+	const dragRef = useItemDrag({
+		name: label,
+		onDragEnd: (parentId, position) =>
+			dispatch(
+				addItem({
+					itemType: type,
+					parentItemId: parentId,
+					position,
+					selectItem,
+					store,
+				})
+			),
+		type,
 	});
-
-	useEffect(() => {
-		preview(getEmptyImage(), {captureDraggingState: true});
-	}, [preview]);
 
 	return (
 		<button
@@ -82,7 +66,7 @@ const LayoutElementCard = ({label, layoutColumns, type}) => {
 				'card-interactive-secondary',
 				'selector-button'
 			)}
-			ref={drag}
+			ref={dragRef}
 			type="button"
 		>
 			<div className="card-body px-2 py-3" role="image">

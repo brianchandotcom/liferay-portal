@@ -21,6 +21,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {ItemSelectorDialog, cancelDebounce, debounce} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
+import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import templates from './ImagePickerAdapter.soy';
@@ -250,26 +251,44 @@ const ImagePicker = ({
 	);
 };
 
-const ImagePickerProxy = connectStore(({emit, ...otherProps}) => (
-	<ImagePicker
-		{...otherProps}
-		onClearClick={data => {
-			const {event} = data;
+const ImagePickerProxy = connectStore(
+	({
+		emit,
+		id,
+		inputValue,
+		itemSelectorURL,
+		name,
+		portletNamespace,
+		readOnly,
+		...otherProps
+	}) => (
+		<FieldBaseProxy {...otherProps} id={id} name={name} readOnly={readOnly}>
+			<ImagePicker
+				id={id}
+				inputValue={inputValue}
+				itemSelectorURL={itemSelectorURL}
+				name={name}
+				onClearClick={data => {
+					const {event} = data;
 
-			emit('fieldEdited', event, data);
-		}}
-		onDescriptionChange={data => {
-			const {event} = data;
+					emit('fieldEdited', event, data);
+				}}
+				onDescriptionChange={data => {
+					const {event} = data;
 
-			emit('fieldEdited', event, data);
-		}}
-		onFieldChanged={data => {
-			const {event} = data;
+					emit('fieldEdited', event, data);
+				}}
+				onFieldChanged={data => {
+					const {event} = data;
 
-			emit('fieldEdited', event, data);
-		}}
-	/>
-));
+					emit('fieldEdited', event, data);
+				}}
+				portletNamespace={portletNamespace}
+				readOnly={readOnly}
+			/>
+		</FieldBaseProxy>
+	)
+);
 
 const ReactImagePickerAdapter = getConnectedReactComponentAdapter(
 	ImagePickerProxy,

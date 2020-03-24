@@ -51,7 +51,7 @@ public class AccountUserAccountsScreenNavigationEntry
 	}
 
 	public String getJspPath() {
-		return "/account_users_admin/account_user/accounts.jsp";
+		return "/account_users_admin/account_user/account_entries.jsp";
 	}
 
 	@Override

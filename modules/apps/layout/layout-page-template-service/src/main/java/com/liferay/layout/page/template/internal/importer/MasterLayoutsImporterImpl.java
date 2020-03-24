@@ -493,7 +493,12 @@ public class MasterLayoutsImporterImpl implements MasterLayoutsImporter {
 		Layout draftLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class.getName()), layout.getPlid());
 
-		_layoutCopyHelper.copyLayout(layout, draftLayout);
+		draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);
+
+		_layoutLocalService.updateStatus(
+			layoutPageTemplateEntry.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	private void _updateLayoutSettings(Layout layout, Settings settings) {

@@ -38,6 +38,8 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test PublishDeleteWCFolderWithArticleViaAP {
+		property portal.upstream = "quarantine";
+
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Asset Publisher");

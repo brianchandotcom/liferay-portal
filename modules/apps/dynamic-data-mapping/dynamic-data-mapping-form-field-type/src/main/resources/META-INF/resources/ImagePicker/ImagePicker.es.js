@@ -79,14 +79,14 @@ const ImagePicker = ({
 		);
 	};
 
-	const [debouncedTest] = useDebounceCallback(({event, value}) => {
+	const [debounce] = useDebounceCallback(({event, value}) => {
 		dispatchValue({value: {description: value, event}}, mergedValues => {
 			onDescriptionChange(mergedValues);
 		});
 	}, 500);
 
 	const handleDescriptionChange = ({event, target: {value}}) =>
-		debouncedTest({event, value});
+		debounce({event, value});
 
 	const handleFieldChanged = event => {
 		const selectedItem = event.selectedItem;

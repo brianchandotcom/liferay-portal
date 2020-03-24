@@ -56,7 +56,7 @@ const ImagePicker = ({
 		onClose: () => setModalVisible(false),
 	});
 
-	const _dispatchValue = ({clear, value}, callback) => {
+	const dispatchValue = ({clear, value}, callback) => {
 		setImageValues(oldValues => {
 			let mergedValues = {...oldValues, ...value};
 
@@ -70,8 +70,8 @@ const ImagePicker = ({
 		});
 	};
 
-	const _handleClearClick = event => {
-		_dispatchValue(
+	const handleClearClick = event => {
+		dispatchValue(
 			{clear: true, value: {description: '', event, title: '', url: ''}},
 			mergedValues => {
 				onClearClick(mergedValues);
@@ -80,15 +80,15 @@ const ImagePicker = ({
 	};
 
 	const [debouncedTest] = useDebounceCallback(({event, value}) => {
-		_dispatchValue({value: {description: value, event}}, mergedValues => {
+		dispatchValue({value: {description: value, event}}, mergedValues => {
 			onDescriptionChange(mergedValues);
 		});
 	}, 500);
 
-	const _handleDescriptionChange = ({event, target: {value}}) =>
+	const handleDescriptionChange = ({event, target: {value}}) =>
 		debouncedTest({event, value});
 
-	const _handleFieldChanged = event => {
+	const handleFieldChanged = event => {
 		const selectedItem = event.selectedItem;
 
 		if (selectedItem && selectedItem.value) {
@@ -111,7 +111,7 @@ const ImagePicker = ({
 					...item,
 				};
 
-				_dispatchValue({value: imageData}, mergedValues => {
+				dispatchValue({value: imageData}, mergedValues => {
 					onFieldChanged(mergedValues);
 				});
 			});
@@ -119,7 +119,7 @@ const ImagePicker = ({
 		}
 	};
 
-	const _handleItemSelectorTriggerClick = event => {
+	const handleItemSelectorTriggerClick = event => {
 		event.preventDefault();
 
 		const itemSelectorDialog = new ItemSelectorDialog({
@@ -128,7 +128,7 @@ const ImagePicker = ({
 			url: itemSelectorURL,
 		});
 
-		itemSelectorDialog.on('selectedItemChange', _handleFieldChanged);
+		itemSelectorDialog.on('selectedItemChange', handleFieldChanged);
 
 		itemSelectorDialog.open();
 	};
@@ -161,7 +161,7 @@ const ImagePicker = ({
 						<ClayInput
 							className="bg-light"
 							disabled={readOnly}
-							onClick={_handleItemSelectorTriggerClick}
+							onClick={handleItemSelectorTriggerClick}
 							readOnly
 							type="text"
 							value={imageValues.title}
@@ -172,7 +172,7 @@ const ImagePicker = ({
 						<ClayButton
 							disabled={readOnly}
 							displayType="secondary"
-							onClick={_handleItemSelectorTriggerClick}
+							onClick={handleItemSelectorTriggerClick}
 							type="button"
 						>
 							{Liferay.Language.get('select')}
@@ -184,7 +184,7 @@ const ImagePicker = ({
 							<ClayButton
 								disabled={readOnly}
 								displayType="secondary"
-								onClick={_handleClearClick}
+								onClick={handleClearClick}
 								type="button"
 							>
 								{Liferay.Language.get('clear')}
@@ -245,7 +245,7 @@ const ImagePicker = ({
 							defaultValue={imageValues.description}
 							disabled={readOnly}
 							name={`${name}-description`}
-							onChange={_handleDescriptionChange}
+							onChange={handleDescriptionChange}
 							placeholder={placeholder}
 							type="text"
 						/>

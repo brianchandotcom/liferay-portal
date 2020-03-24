@@ -656,35 +656,75 @@ public interface WebKeys {
 
 	public static final String SOURCE_VERSION = "SOURCE_VERSION";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Distributed(direction = Direction.RESPONSE)
 	public static final String SPI_AGENT_ACTION_RESULT =
 		"SPI_AGENT_ACTION_RESULT";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Distributed(direction = Direction.REQUEST)
 	public static final String SPI_AGENT_EVENT = "SPI_AGENT_EVENT";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Distributed(direction = Direction.RESPONSE)
 	public static final String SPI_AGENT_EVENT_RESULT =
 		"SPI_AGENT_EVENT_RESULT";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Distributed(direction = Direction.REQUEST)
 	public static final String SPI_AGENT_LAYOUT = "SPI_AGENT_LAYOUT";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Distributed(direction = Direction.RESPONSE)
 	public static final String SPI_AGENT_LAYOUT_TYPE_SETTINGS =
 		"SPI_AGENT_LAYOUT_TYPE_SETTINGS";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Distributed(direction = Direction.REQUEST)
 	public static final String SPI_AGENT_LIFECYCLE = "SPI_AGENT_LIFECYCLE";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String SPI_AGENT_ORIGINAL_RESPONSE =
 		"SPI_AGENT_ORIGINAL_RESPONSE";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Distributed(direction = Direction.REQUEST)
 	public static final String SPI_AGENT_PORTLET = "SPI_AGENT_PORTLET";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String SPI_AGENT_REQUEST = "SPI_AGENT_REQUEST";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String SPI_AGENT_RESPONSE = "SPI_AGENT_RESPONSE";
 
 	public static final String STALE_SESSION = "STALE_SESSION";

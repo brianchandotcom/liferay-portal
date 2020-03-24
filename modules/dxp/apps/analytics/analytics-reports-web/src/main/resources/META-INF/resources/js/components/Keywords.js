@@ -13,7 +13,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {numberFormat} from '../utils/numberFormat';
 import Hint from './Hint';
@@ -25,9 +25,9 @@ const KEYWORD_VALUE_TYPE = [
 ];
 
 export default function Keywords({currentPage, languageTag}) {
-	const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-	const [keywordValueType, setKeywordValueType] = React.useState(
+	const [keywordValueType, setKeywordValueType] = useState(
 		KEYWORD_VALUE_TYPE.find(keywordValueType => {
 			return keywordValueType.name === 'traffic';
 		})

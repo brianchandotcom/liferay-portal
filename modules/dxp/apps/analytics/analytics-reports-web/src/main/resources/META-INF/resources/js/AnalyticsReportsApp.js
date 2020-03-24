@@ -10,7 +10,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import React from 'react';
+import React, {useState} from 'react';
 
 import Detail from './components/Detail';
 import Main from './components/Main';
@@ -62,9 +62,9 @@ function Navigation({
 	pageTitle,
 	timeSpanOptions,
 }) {
-	const [currentPage, setCurrentPage] = React.useState({view: 'main'});
+	const [currentPage, setCurrentPage] = useState({view: 'main'});
 
-	const [trafficSourceName, setTrafficSourceName] = React.useState('');
+	const [trafficSourceName, setTrafficSourceName] = useState('');
 
 	const {getHistoricalReads, getHistoricalViews, getTrafficSources} = api;
 

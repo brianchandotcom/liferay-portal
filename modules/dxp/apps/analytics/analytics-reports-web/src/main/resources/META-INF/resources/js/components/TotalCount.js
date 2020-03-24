@@ -11,7 +11,7 @@
 
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Hint from './Hint';
 
@@ -25,10 +25,10 @@ function TotalCount({
 	popoverMessage,
 	popoverPosition,
 }) {
-	const [value, setValue] = React.useState('-');
+	const [value, setValue] = useState('-');
 	const isMounted = useIsMounted();
 
-	React.useEffect(() => {
+	useEffect(() => {
 		dataProvider()
 			.then(value => {
 				if (isMounted()) {

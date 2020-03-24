@@ -11,13 +11,13 @@
 
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useRef, useState} from 'react';
 
 import Popover from './Popover';
 
 export default function Hint({align, message, position, title}) {
-	const iconRef = React.useRef();
-	const [showTooltip, setShowTooltip] = React.useState(false);
+	const iconRef = useRef();
+	const [showTooltip, setShowTooltip] = useState(false);
 
 	const handleMouseEnter = () => {
 		setShowTooltip(true);

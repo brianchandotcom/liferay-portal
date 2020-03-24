@@ -12,7 +12,7 @@
 import ClayPopover from '@clayui/popover';
 import {Align} from 'metal-position';
 import Proptypes from 'prop-types';
-import React, {useRef} from 'react';
+import React, {useLayoutEffect, useRef} from 'react';
 import ReactDOM from 'react-dom';
 
 /**
@@ -37,7 +37,7 @@ const PopoverComponent = ({
 }) => {
 	const popRef = useRef(null);
 
-	React.useLayoutEffect(() => {
+	useLayoutEffect(() => {
 		Align.align(popRef.current, anchor, align, false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

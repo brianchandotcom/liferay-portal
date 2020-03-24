@@ -1,8 +1,114 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LayoutProvider Field events activePageUpdated should listen the activePageUpdated event and change the state of the active page for the data wich was received 1`] = `
+exports[`LayoutProvider Field events fieldBlurred listens the fieldBlurred event and change the state of the focusedField to the data receive 1`] = `Object {}`;
+
+exports[`LayoutProvider Field events fieldClicked listens the fieldClicked event and change the state of the focusedField to the data receive 1`] = `
+Object {
+  "fieldName": "radio",
+  "label": "Radio Field",
+  "localizedValue": Object {},
+  "options": Array [
+    Object {
+      "label": "Option 1",
+      "value": "option1",
+    },
+    Object {
+      "label": "Option 2",
+      "value": "option2",
+    },
+  ],
+  "readOnly": true,
+  "settingsContext": Object {
+    "pages": Array [
+      Object {
+        "rows": Array [
+          Object {
+            "columns": Array [
+              Object {
+                "fields": Array [
+                  Object {
+                    "defaultLanguageId": undefined,
+                    "editingLanguageId": "en_US",
+                    "fieldName": "label",
+                    "localizable": true,
+                    "localizedValue": Object {
+                      "en_US": "Radio Field",
+                    },
+                    "settingsContext": Object {
+                      "pages": Array [
+                        Object {
+                          "rows": Array [
+                            Object {
+                              "columns": Array [],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    "value": "Radio Field",
+                  },
+                  Object {
+                    "defaultLanguageId": undefined,
+                    "editingLanguageId": "en_US",
+                    "fieldName": "name",
+                    "localizedValue": Object {
+                      "en_US": undefined,
+                    },
+                    "value": undefined,
+                  },
+                  Object {
+                    "defaultLanguageId": undefined,
+                    "editingLanguageId": "en_US",
+                    "fieldName": "required",
+                    "localizedValue": Object {
+                      "en_US": undefined,
+                    },
+                    "value": undefined,
+                  },
+                  Object {
+                    "defaultLanguageId": undefined,
+                    "editingLanguageId": "en_US",
+                    "fieldName": "type",
+                    "localizedValue": Object {
+                      "en_US": undefined,
+                    },
+                    "value": undefined,
+                  },
+                  Object {
+                    "defaultLanguageId": undefined,
+                    "editingLanguageId": "en_US",
+                    "fieldName": "validation",
+                    "localizedValue": Object {
+                      "en_US": Object {},
+                    },
+                    "validation": Object {
+                      "fieldName": "radio",
+                    },
+                    "value": Object {},
+                  },
+                ],
+                "size": 12,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  "type": "radio",
+  "value": undefined,
+  "visible": true,
+}
+`;
+
+exports[`LayoutProvider Field events fieldDeleted listens the fieldDeleted event and delete the field in the column to the pages 1`] = `
 Array [
   Object {
+    "description": "Page Description",
+    "localizedDescription": Object {},
+    "localizedTitle": Object {
+      "en_US": "Localized Title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -12,6 +118,7 @@ Array [
                 "fieldName": "radio",
                 "label": "Radio Field",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -23,6 +130,7 @@ Array [
                   },
                 ],
                 "readOnly": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [
                     Object {
@@ -34,6 +142,9 @@ Array [
                                 Object {
                                   "fieldName": "label",
                                   "localizable": true,
+                                  "localizedValue": Object {
+                                    "en_US": "Radio Field",
+                                  },
                                   "settingsContext": Object {
                                     "pages": Array [
                                       Object {
@@ -54,6 +165,10 @@ Array [
                                 },
                                 Object {
                                   "fieldName": "type",
+                                },
+                                Object {
+                                  "fieldName": "validation",
+                                  "value": Object {},
                                 },
                               ],
                               "size": 12,
@@ -81,25 +196,15 @@ Array [
         "columns": Array [
           Object {
             "fields": Array [
-              Object {
-                "fieldName": "text1",
-                "label": "Text Field 1",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "text",
-                "value": undefined,
-                "visible": true,
-              },
               Object {
                 "fieldName": "text2",
                 "label": "Text Field 2",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -116,6 +221,7 @@ Array [
                 "fieldName": "select",
                 "label": "Select Field",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -128,6 +234,7 @@ Array [
                 ],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -152,8 +259,11 @@ Array [
                 "fieldName": "date",
                 "label": "Date Field",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -174,8 +284,11 @@ Array [
                 "fieldName": "numeric",
                 "label": "Numeric Field",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -194,372 +307,14 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldBlurred should listen the fieldBlurred event and change the state of the focusedField to the data receive 1`] = `Object {}`;
-
-exports[`LayoutProvider Field events fieldChangesCanceled should listen the fieldChangesCanceled event and change the state of the focusedField and pages for the data wich was received 1`] = `
+exports[`LayoutProvider Field events fieldDuplicated listens the duplicate field event and add this field in the pages 1`] = `
 Array [
   Object {
-    "rows": Array [
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "radio",
-                "label": "Radio Field",
-                "localizedValue": Object {},
-                "options": Array [
-                  Object {
-                    "label": "Option 1",
-                    "value": "option1",
-                  },
-                  Object {
-                    "label": "Option 2",
-                    "value": "option2",
-                  },
-                ],
-                "readOnly": true,
-                "settingsContext": Object {
-                  "pages": Array [
-                    Object {
-                      "rows": Array [
-                        Object {
-                          "columns": Array [
-                            Object {
-                              "fields": Array [
-                                Object {
-                                  "fieldName": "label",
-                                  "localizable": true,
-                                  "settingsContext": Object {
-                                    "pages": Array [
-                                      Object {
-                                        "rows": Array [
-                                          Object {
-                                            "columns": Array [],
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                  },
-                                },
-                                Object {
-                                  "fieldName": "name",
-                                },
-                                Object {
-                                  "fieldName": "required",
-                                },
-                                Object {
-                                  "fieldName": "type",
-                                },
-                              ],
-                              "size": 12,
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                },
-                "type": "radio",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 3,
-          },
-          Object {
-            "fields": Array [],
-            "size": 9,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "text1",
-                "label": "Text Field 1",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "text",
-                "value": undefined,
-                "visible": true,
-              },
-              Object {
-                "fieldName": "text2",
-                "label": "Text Field 2",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "text",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 4,
-          },
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "select",
-                "label": "Select Field",
-                "localizedValue": Object {},
-                "options": Array [
-                  Object {
-                    "label": "Option 1",
-                    "value": "option1",
-                  },
-                  Object {
-                    "label": "Option 2",
-                    "value": "option2",
-                  },
-                ],
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "select",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 6,
-          },
-          Object {
-            "fields": Array [],
-            "size": 2,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "date",
-                "label": "Date Field",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "date",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "numeric",
-                "label": "Numeric Field",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "numeric",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-    ],
-    "title": "Untitled name",
-  },
-]
-`;
-
-exports[`LayoutProvider Field events fieldDeleted should listen the fieldDeleted event and delete the field in the column to the pages 1`] = `
-Array [
-  Object {
-    "rows": Array [
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "radio",
-                "label": "Radio Field",
-                "localizedValue": Object {},
-                "options": Array [
-                  Object {
-                    "label": "Option 1",
-                    "value": "option1",
-                  },
-                  Object {
-                    "label": "Option 2",
-                    "value": "option2",
-                  },
-                ],
-                "readOnly": true,
-                "settingsContext": Object {
-                  "pages": Array [
-                    Object {
-                      "rows": Array [
-                        Object {
-                          "columns": Array [
-                            Object {
-                              "fields": Array [
-                                Object {
-                                  "fieldName": "label",
-                                  "localizable": true,
-                                  "settingsContext": Object {
-                                    "pages": Array [
-                                      Object {
-                                        "rows": Array [
-                                          Object {
-                                            "columns": Array [],
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                  },
-                                },
-                                Object {
-                                  "fieldName": "name",
-                                },
-                                Object {
-                                  "fieldName": "required",
-                                },
-                                Object {
-                                  "fieldName": "type",
-                                },
-                              ],
-                              "size": 12,
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                },
-                "type": "radio",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 3,
-          },
-          Object {
-            "fields": Array [],
-            "size": 9,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [],
-            "size": 4,
-          },
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "select",
-                "label": "Select Field",
-                "localizedValue": Object {},
-                "options": Array [
-                  Object {
-                    "label": "Option 1",
-                    "value": "option1",
-                  },
-                  Object {
-                    "label": "Option 2",
-                    "value": "option2",
-                  },
-                ],
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "select",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 6,
-          },
-          Object {
-            "fields": Array [],
-            "size": 2,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "date",
-                "label": "Date Field",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "date",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "numeric",
-                "label": "Numeric Field",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "numeric",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-    ],
-    "title": "Untitled name",
-  },
-]
-`;
-
-exports[`LayoutProvider Field events fieldDuplicated should listen the duplicate field event and add this field in the pages 1`] = `
-Array [
-  Object {
+    "description": "Page Description",
+    "localizedDescription": Object {},
+    "localizedTitle": Object {
+      "en_US": "Localized Title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -592,6 +347,9 @@ Array [
                                 Object {
                                   "fieldName": "label",
                                   "localizable": true,
+                                  "localizedValue": Object {
+                                    "en_US": "Radio Field",
+                                  },
                                   "settingsContext": Object {
                                     "pages": Array [
                                       Object {
@@ -613,6 +371,10 @@ Array [
                                 },
                                 Object {
                                   "fieldName": "type",
+                                },
+                                Object {
+                                  "fieldName": "validation",
+                                  "value": Object {},
                                 },
                               ],
                               "size": 12,
@@ -693,6 +455,15 @@ Array [
                                 Object {
                                   "fieldName": "type",
                                 },
+                                Object {
+                                  "fieldName": "validation",
+                                  "validation": Object {
+                                    "fieldName": "copyofx",
+                                  },
+                                  "value": Object {
+                                    "expression": undefined,
+                                  },
+                                },
                               ],
                               "size": 12,
                             },
@@ -703,6 +474,9 @@ Array [
                   ],
                 },
                 "type": "radio",
+                "validation": Object {
+                  "expression": undefined,
+                },
                 "value": undefined,
                 "visible": true,
               },
@@ -720,6 +494,7 @@ Array [
                 "label": "Text Field 1",
                 "localizedValue": Object {},
                 "name": "name0020",
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
                 "settingsContext": Object {
@@ -734,6 +509,7 @@ Array [
                 "label": "Text Field 2",
                 "localizedValue": Object {},
                 "name": "name1020",
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
                 "settingsContext": Object {
@@ -790,6 +566,7 @@ Array [
                 "label": "Date Field",
                 "localizedValue": Object {},
                 "name": "name0030",
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
                 "settingsContext": Object {
@@ -813,6 +590,7 @@ Array [
                 "label": "Numeric Field",
                 "localizedValue": Object {},
                 "name": "name0040",
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
                 "settingsContext": Object {
@@ -833,9 +611,14 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldMoved should listen to the fieldMoved event and move the field to the column in pages 1`] = `
+exports[`LayoutProvider Field events fieldMoved listens to the fieldMoved event and move the field to the column in pages 1`] = `
 Array [
   Object {
+    "description": "Page Description",
+    "localizedDescription": Object {},
+    "localizedTitle": Object {
+      "en_US": "Localized Title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -845,6 +628,7 @@ Array [
                 "fieldName": "radio",
                 "label": "Radio Field",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -856,6 +640,7 @@ Array [
                   },
                 ],
                 "readOnly": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [
                     Object {
@@ -867,6 +652,9 @@ Array [
                                 Object {
                                   "fieldName": "label",
                                   "localizable": true,
+                                  "localizedValue": Object {
+                                    "en_US": "Radio Field",
+                                  },
                                   "settingsContext": Object {
                                     "pages": Array [
                                       Object {
@@ -887,6 +675,10 @@ Array [
                                 },
                                 Object {
                                   "fieldName": "type",
+                                },
+                                Object {
+                                  "fieldName": "validation",
+                                  "value": Object {},
                                 },
                               ],
                               "size": 12,
@@ -942,8 +734,11 @@ Array [
                 "fieldName": "text1",
                 "label": "Text Field 1",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -955,8 +750,11 @@ Array [
                 "fieldName": "text2",
                 "label": "Text Field 2",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -985,8 +783,11 @@ Array [
                 "fieldName": "date",
                 "label": "Date Field",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -1007,8 +808,11 @@ Array [
                 "fieldName": "numeric",
                 "label": "Numeric Field",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -1027,9 +831,14 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldMoved should listen to the pagesUpdated event 1`] = `
+exports[`LayoutProvider Field events fieldMoved listens to the pagesUpdated event 1`] = `
 Array [
   Object {
+    "description": "Page Description",
+    "localizedDescription": Object {},
+    "localizedTitle": Object {
+      "en_US": "Localized Title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -1038,6 +847,9 @@ Array [
               Object {
                 "fieldName": "radio",
                 "label": "Radio Field",
+                "localizedValue": Object {
+                  "en_US": "Radio Field",
+                },
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1059,6 +871,9 @@ Array [
                                 Object {
                                   "fieldName": "label",
                                   "localizable": true,
+                                  "localizedValue": Object {
+                                    "en_US": "Radio Field",
+                                  },
                                   "settingsContext": Object {
                                     "pages": Array [
                                       Object {
@@ -1079,6 +894,10 @@ Array [
                                 },
                                 Object {
                                   "fieldName": "type",
+                                },
+                                Object {
+                                  "fieldName": "validation",
+                                  "value": Object {},
                                 },
                               ],
                               "size": 12,
@@ -1107,6 +926,7 @@ Array [
               Object {
                 "fieldName": "text1",
                 "label": "Text Field 1",
+                "options": Array [],
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -1116,6 +936,7 @@ Array [
               Object {
                 "fieldName": "text2",
                 "label": "Text Field 2",
+                "options": Array [],
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -1162,6 +983,7 @@ Array [
               Object {
                 "fieldName": "date",
                 "label": "Date Field",
+                "options": Array [],
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -1180,6 +1002,7 @@ Array [
               Object {
                 "fieldName": "numeric",
                 "label": "Numeric Field",
+                "options": Array [],
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -1197,9 +1020,14 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldMoved should move the field to the column in pages and remove the row if there are no fields 1`] = `
+exports[`LayoutProvider Field events fieldMoved moves the field to the column in pages and remove the row if there are no fields 1`] = `
 Array [
   Object {
+    "description": "Page Description",
+    "localizedDescription": Object {},
+    "localizedTitle": Object {
+      "en_US": "Localized Title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -1209,6 +1037,7 @@ Array [
                 "fieldName": "radio",
                 "label": "Radio Field",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1220,6 +1049,7 @@ Array [
                   },
                 ],
                 "readOnly": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [
                     Object {
@@ -1231,6 +1061,9 @@ Array [
                                 Object {
                                   "fieldName": "label",
                                   "localizable": true,
+                                  "localizedValue": Object {
+                                    "en_US": "Radio Field",
+                                  },
                                   "settingsContext": Object {
                                     "pages": Array [
                                       Object {
@@ -1251,6 +1084,10 @@ Array [
                                 },
                                 Object {
                                   "fieldName": "type",
+                                },
+                                Object {
+                                  "fieldName": "validation",
+                                  "value": Object {},
                                 },
                               ],
                               "size": 12,
@@ -1274,6 +1111,7 @@ Array [
                 "fieldName": "date",
                 "label": "Date Field",
                 "localizedValue": Object {},
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
                 "settingsContext": Object {
@@ -1296,8 +1134,11 @@ Array [
                 "fieldName": "text1",
                 "label": "Text Field 1",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -1309,8 +1150,11 @@ Array [
                 "fieldName": "text2",
                 "label": "Text Field 2",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -1327,6 +1171,7 @@ Array [
                 "fieldName": "select",
                 "label": "Select Field",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1339,6 +1184,7 @@ Array [
                 ],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -1363,8 +1209,11 @@ Array [
                 "fieldName": "numeric",
                 "label": "Numeric Field",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -1383,9 +1232,14 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldMoved should move the field to the row in pages and remove the row if there are no fields 1`] = `
+exports[`LayoutProvider Field events fieldMoved moves the field to the row in pages and remove the row if there are no fields 1`] = `
 Array [
   Object {
+    "description": "Page Description",
+    "localizedDescription": Object {},
+    "localizedTitle": Object {
+      "en_US": "Localized Title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -1417,6 +1271,9 @@ Array [
                                 Object {
                                   "fieldName": "label",
                                   "localizable": true,
+                                  "localizedValue": Object {
+                                    "en_US": "Radio Field",
+                                  },
                                   "settingsContext": Object {
                                     "pages": Array [
                                       Object {
@@ -1437,6 +1294,10 @@ Array [
                                 },
                                 Object {
                                   "fieldName": "type",
+                                },
+                                Object {
+                                  "fieldName": "validation",
+                                  "value": Object {},
                                 },
                               ],
                               "size": 12,
@@ -1464,8 +1325,11 @@ Array [
                 "fieldName": "text1",
                 "label": "Text Field 1",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -1477,8 +1341,11 @@ Array [
                 "fieldName": "text2",
                 "label": "Text Field 2",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -1495,6 +1362,7 @@ Array [
                 "fieldName": "select",
                 "label": "Select Field",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
                 "options": Array [
                   Object {
                     "label": "Option 1",
@@ -1507,6 +1375,7 @@ Array [
                 ],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -1531,8 +1400,11 @@ Array [
                 "fieldName": "date",
                 "label": "Date Field",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -1553,8 +1425,11 @@ Array [
                 "fieldName": "numeric",
                 "label": "Numeric Field",
                 "localizedValue": Object {},
+                "nestedFields": Array [],
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
+                "rows": Array [],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -1573,342 +1448,65 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldResized should listen to the columnResized event and resize the field when the left arrow is pulled 1`] = `
-Array [
-  Object {
-    "rows": Array [
+exports[`LayoutProvider Field events focusedFieldUpdated listens the focusedFieldEvaluationEnded event and change the state of the focusedField and pages for the data wich was received 1`] = `
+Object {
+  "fieldName": "TextField",
+  "label": "Text Field",
+  "name": "TextField",
+  "required": true,
+  "settingsContext": Object {
+    "pages": Array [
       Object {
-        "columns": Array [
+        "rows": Array [
           Object {
-            "fields": Array [
+            "columns": Array [
               Object {
-                "fieldName": "radio",
-                "label": "Radio Field",
-                "localizedValue": Object {},
-                "options": Array [
+                "fields": Array [
                   Object {
-                    "label": "Option 1",
-                    "value": "option1",
-                  },
-                  Object {
-                    "label": "Option 2",
-                    "value": "option2",
-                  },
-                ],
-                "readOnly": true,
-                "settingsContext": Object {
-                  "pages": Array [
-                    Object {
-                      "rows": Array [
-                        Object {
-                          "columns": Array [
-                            Object {
-                              "fields": Array [
-                                Object {
-                                  "fieldName": "label",
-                                  "localizable": true,
-                                  "settingsContext": Object {
-                                    "pages": Array [
-                                      Object {
-                                        "rows": Array [
-                                          Object {
-                                            "columns": Array [],
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                  },
-                                },
-                                Object {
-                                  "fieldName": "name",
-                                },
-                                Object {
-                                  "fieldName": "required",
-                                },
-                                Object {
-                                  "fieldName": "type",
-                                },
-                              ],
-                              "size": 12,
-                            },
-                          ],
-                        },
-                      ],
+                    "fieldName": "label",
+                    "localizable": true,
+                    "localizedValue": Object {
+                      "en_US": "Text Field",
                     },
-                  ],
-                },
-                "type": "radio",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 7,
-          },
-          Object {
-            "fields": Array [],
-            "size": 5,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "text1",
-                "label": "Text Field 1",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "text",
-                "value": undefined,
-                "visible": true,
-              },
-              Object {
-                "fieldName": "text2",
-                "label": "Text Field 2",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "text",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 4,
-          },
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "select",
-                "label": "Select Field",
-                "localizedValue": Object {},
-                "options": Array [
-                  Object {
-                    "label": "Option 1",
-                    "value": "option1",
+                    "type": "text",
+                    "value": "Text Field",
+                    "visible": true,
                   },
                   Object {
-                    "label": "Option 2",
-                    "value": "option2",
+                    "fieldName": "name",
+                    "value": "TextField",
+                    "visible": true,
+                  },
+                  Object {
+                    "fieldName": "required",
+                    "value": true,
+                    "visible": true,
+                  },
+                  Object {
+                    "fieldName": "showLabel",
+                    "value": false,
+                    "visible": true,
                   },
                 ],
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "select",
-                "value": undefined,
-                "visible": true,
               },
             ],
-            "size": 6,
-          },
-          Object {
-            "fields": Array [],
-            "size": 2,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "date",
-                "label": "Date Field",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "date",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "numeric",
-                "label": "Numeric Field",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "numeric",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 12,
           },
         ],
       },
     ],
-    "title": "Untitled name",
   },
-]
+  "showLabel": false,
+}
 `;
 
-exports[`LayoutProvider Field events focusedFieldUpdated should listen the focusedFieldUpdated event and change the state of the focusedField and pages for the data wich was received 1`] = `
+exports[`LayoutProvider Field events pageAdded listens the pageAdded event and change the state of pages for the data wich was received 1`] = `
 Array [
   Object {
-    "rows": Array [
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "columnIndex": 0,
-                "pageIndex": 0,
-                "rowIndex": 0,
-              },
-            ],
-            "size": 3,
-          },
-          Object {
-            "fields": Array [],
-            "size": 9,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "text1",
-                "label": "Text Field 1",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "text",
-                "value": undefined,
-                "visible": true,
-              },
-              Object {
-                "fieldName": "text2",
-                "label": "Text Field 2",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "text",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 4,
-          },
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "select",
-                "label": "Select Field",
-                "localizedValue": Object {},
-                "options": Array [
-                  Object {
-                    "label": "Option 1",
-                    "value": "option1",
-                  },
-                  Object {
-                    "label": "Option 2",
-                    "value": "option2",
-                  },
-                ],
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "select",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 6,
-          },
-          Object {
-            "fields": Array [],
-            "size": 2,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "date",
-                "label": "Date Field",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "date",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "numeric",
-                "label": "Numeric Field",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "numeric",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-    ],
-    "title": "Untitled name",
-  },
-]
-`;
-
-exports[`LayoutProvider Field events pageAdded should listen the pageAdded event and change the state of pages for the data wich was received 1`] = `
-Array [
-  Object {
+    "description": "Page Description",
+    "localizedDescription": Object {},
+    "localizedTitle": Object {
+      "en_US": "Localized Title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -1940,6 +1538,9 @@ Array [
                                 Object {
                                   "fieldName": "label",
                                   "localizable": true,
+                                  "localizedValue": Object {
+                                    "en_US": "Radio Field",
+                                  },
                                   "settingsContext": Object {
                                     "pages": Array [
                                       Object {
@@ -1960,6 +1561,10 @@ Array [
                                 },
                                 Object {
                                   "fieldName": "type",
+                                },
+                                Object {
+                                  "fieldName": "validation",
+                                  "value": Object {},
                                 },
                               ],
                               "size": 12,
@@ -1991,6 +1596,7 @@ Array [
                 "fieldName": "text1",
                 "label": "Text Field 1",
                 "localizedValue": Object {},
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
                 "settingsContext": Object {
@@ -2004,6 +1610,7 @@ Array [
                 "fieldName": "text2",
                 "label": "Text Field 2",
                 "localizedValue": Object {},
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
                 "settingsContext": Object {
@@ -2058,6 +1665,7 @@ Array [
                 "fieldName": "date",
                 "label": "Date Field",
                 "localizedValue": Object {},
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
                 "settingsContext": Object {
@@ -2080,6 +1688,7 @@ Array [
                 "fieldName": "numeric",
                 "label": "Numeric Field",
                 "localizedValue": Object {},
+                "options": Array [],
                 "readOnly": true,
                 "required": true,
                 "settingsContext": Object {
@@ -2122,9 +1731,9 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events pageDeleted should listen the pageDeleted event and change the state of pages for the data wich was received 1`] = `Array []`;
+exports[`LayoutProvider Field events pageDeleted listens the pageDeleted event and change the state of pages for the data wich was received 1`] = `Array []`;
 
-exports[`LayoutProvider Field events pageReset should listen the pageReset event and change the state of pages for the data wich was received 1`] = `
+exports[`LayoutProvider Field events pageReset listens the pageReset event and change the state of pages for the data wich was received 1`] = `
 Array [
   Object {
     "description": "",
@@ -2151,590 +1760,34 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events paginationModeUpdated should listen the paginationModeUpdated event and change the state of pagination mode for the data wich was received 1`] = `
+exports[`LayoutProvider receives ruleAdded event to save a rule 1`] = `
 Array [
   Object {
-    "rows": Array [
+    "actions": Array [
       Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "radio",
-                "label": "Radio Field",
-                "localizedValue": Object {},
-                "options": Array [
-                  Object {
-                    "label": "Option 1",
-                    "value": "option1",
-                  },
-                  Object {
-                    "label": "Option 2",
-                    "value": "option2",
-                  },
-                ],
-                "readOnly": true,
-                "settingsContext": Object {
-                  "pages": Array [
-                    Object {
-                      "rows": Array [
-                        Object {
-                          "columns": Array [
-                            Object {
-                              "fields": Array [
-                                Object {
-                                  "fieldName": "label",
-                                  "localizable": true,
-                                  "settingsContext": Object {
-                                    "pages": Array [
-                                      Object {
-                                        "rows": Array [
-                                          Object {
-                                            "columns": Array [],
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                  },
-                                },
-                                Object {
-                                  "fieldName": "name",
-                                },
-                                Object {
-                                  "fieldName": "required",
-                                },
-                                Object {
-                                  "fieldName": "type",
-                                },
-                              ],
-                              "size": 12,
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                },
-                "type": "radio",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 3,
-          },
-          Object {
-            "fields": Array [],
-            "size": 9,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "text1",
-                "label": "Text Field 1",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "text",
-                "value": undefined,
-                "visible": true,
-              },
-              Object {
-                "fieldName": "text2",
-                "label": "Text Field 2",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "text",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 4,
-          },
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "select",
-                "label": "Select Field",
-                "localizedValue": Object {},
-                "options": Array [
-                  Object {
-                    "label": "Option 1",
-                    "value": "option1",
-                  },
-                  Object {
-                    "label": "Option 2",
-                    "value": "option2",
-                  },
-                ],
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "select",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 6,
-          },
-          Object {
-            "fields": Array [],
-            "size": 2,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "date",
-                "label": "Date Field",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "date",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "numeric",
-                "label": "Numeric Field",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "numeric",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 12,
-          },
-        ],
+        "action": "require",
+        "expression": "[x+2]",
+        "label": "label text 1",
+        "target": "text1",
       },
     ],
-    "title": "Untitled name",
-  },
-]
-`;
-
-exports[`LayoutProvider Field events paginationModeUpdated should listen the paginationModeUpdated event and change the state of pagination mode from pagination to wizard 1`] = `
-Array [
-  Object {
-    "rows": Array [
+    "conditions": Array [
       Object {
-        "columns": Array [
+        "operands": Array [
           Object {
-            "fields": Array [
-              Object {
-                "fieldName": "radio",
-                "label": "Radio Field",
-                "localizedValue": Object {},
-                "options": Array [
-                  Object {
-                    "label": "Option 1",
-                    "value": "option1",
-                  },
-                  Object {
-                    "label": "Option 2",
-                    "value": "option2",
-                  },
-                ],
-                "readOnly": true,
-                "settingsContext": Object {
-                  "pages": Array [
-                    Object {
-                      "rows": Array [
-                        Object {
-                          "columns": Array [
-                            Object {
-                              "fields": Array [
-                                Object {
-                                  "fieldName": "label",
-                                  "localizable": true,
-                                  "settingsContext": Object {
-                                    "pages": Array [
-                                      Object {
-                                        "rows": Array [
-                                          Object {
-                                            "columns": Array [],
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                  },
-                                },
-                                Object {
-                                  "fieldName": "name",
-                                },
-                                Object {
-                                  "fieldName": "required",
-                                },
-                                Object {
-                                  "fieldName": "type",
-                                },
-                              ],
-                              "size": 12,
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                },
-                "type": "radio",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 3,
+            "type": "field",
+            "value": "text1",
           },
           Object {
-            "fields": Array [],
-            "size": 9,
+            "type": "value",
+            "value": "value 2",
           },
         ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "text1",
-                "label": "Text Field 1",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "text",
-                "value": undefined,
-                "visible": true,
-              },
-              Object {
-                "fieldName": "text2",
-                "label": "Text Field 2",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "text",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 4,
-          },
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "select",
-                "label": "Select Field",
-                "localizedValue": Object {},
-                "options": Array [
-                  Object {
-                    "label": "Option 1",
-                    "value": "option1",
-                  },
-                  Object {
-                    "label": "Option 2",
-                    "value": "option2",
-                  },
-                ],
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "select",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 6,
-          },
-          Object {
-            "fields": Array [],
-            "size": 2,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "date",
-                "label": "Date Field",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "date",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "numeric",
-                "label": "Numeric Field",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "numeric",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 12,
-          },
-        ],
+        "operator": "equals-to",
       },
     ],
-    "title": "Untitled name",
+    "logical-operator": "OR",
   },
-]
-`;
-
-exports[`LayoutProvider Field events successPageChanged should listen the successPageChanged event and change the state of success page for the data wich was received 1`] = `
-Array [
-  Object {
-    "rows": Array [
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "radio",
-                "label": "Radio Field",
-                "localizedValue": Object {},
-                "options": Array [
-                  Object {
-                    "label": "Option 1",
-                    "value": "option1",
-                  },
-                  Object {
-                    "label": "Option 2",
-                    "value": "option2",
-                  },
-                ],
-                "readOnly": true,
-                "settingsContext": Object {
-                  "pages": Array [
-                    Object {
-                      "rows": Array [
-                        Object {
-                          "columns": Array [
-                            Object {
-                              "fields": Array [
-                                Object {
-                                  "fieldName": "label",
-                                  "localizable": true,
-                                  "settingsContext": Object {
-                                    "pages": Array [
-                                      Object {
-                                        "rows": Array [
-                                          Object {
-                                            "columns": Array [],
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                  },
-                                },
-                                Object {
-                                  "fieldName": "name",
-                                },
-                                Object {
-                                  "fieldName": "required",
-                                },
-                                Object {
-                                  "fieldName": "type",
-                                },
-                              ],
-                              "size": 12,
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                },
-                "type": "radio",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 3,
-          },
-          Object {
-            "fields": Array [],
-            "size": 9,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "text1",
-                "label": "Text Field 1",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "text",
-                "value": undefined,
-                "visible": true,
-              },
-              Object {
-                "fieldName": "text2",
-                "label": "Text Field 2",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "text",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 4,
-          },
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "select",
-                "label": "Select Field",
-                "localizedValue": Object {},
-                "options": Array [
-                  Object {
-                    "label": "Option 1",
-                    "value": "option1",
-                  },
-                  Object {
-                    "label": "Option 2",
-                    "value": "option2",
-                  },
-                ],
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "select",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 6,
-          },
-          Object {
-            "fields": Array [],
-            "size": 2,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "date",
-                "label": "Date Field",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "date",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "numeric",
-                "label": "Numeric Field",
-                "localizedValue": Object {},
-                "readOnly": true,
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "numeric",
-                "value": undefined,
-                "visible": true,
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-    ],
-    "title": "Untitled name",
-  },
-]
-`;
-
-exports[`LayoutProvider should receive ruleAdded event to save a rule 1`] = `
-Array [
   Object {
     "action": "calculate",
     "expression": "22+2",

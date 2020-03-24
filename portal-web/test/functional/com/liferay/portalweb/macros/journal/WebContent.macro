@@ -1126,6 +1126,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
+		Pause(locator1 = "3000");
+
 		WebContentFolder.selectFolderTreeNode(nodeName = "${folderName}");
 
 		SelectFrameTop();
@@ -1153,6 +1155,8 @@ definition {
 			value1 = "Select");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		Pause(locator1 = "3000");
 
 		WebContentFolder.selectFolderTreeNode(nodeName = "${folderName}");
 

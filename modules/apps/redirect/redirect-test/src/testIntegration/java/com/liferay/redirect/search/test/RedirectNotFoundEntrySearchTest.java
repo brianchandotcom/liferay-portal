@@ -138,14 +138,13 @@ public class RedirectNotFoundEntrySearchTest extends BaseSearchTestCase {
 
 	@Override
 	protected String getSearchKeywords() {
-		return "sourceURL";
+		return "url";
 	}
 
 	@Override
 	protected BaseModel<?> updateBaseModel(
-			BaseModel<?> baseModel, String keywords,
-			ServiceContext serviceContext)
-		throws Exception {
+		BaseModel<?> baseModel, String keywords,
+		ServiceContext serviceContext) {
 
 		RedirectNotFoundEntry redirectNotFoundEntry =
 			(RedirectNotFoundEntry)baseModel;

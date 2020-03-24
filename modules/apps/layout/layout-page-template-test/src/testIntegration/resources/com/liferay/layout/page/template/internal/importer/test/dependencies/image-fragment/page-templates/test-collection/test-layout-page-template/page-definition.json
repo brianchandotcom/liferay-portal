@@ -18,6 +18,9 @@
 							"id" : "element-image",
 							"value" : {
 								"fragmentImage" : {
+									"description" : {
+										"value" : "Test image description"
+									},
 									"title" : {
 										"value" : "Test Image"
 									},

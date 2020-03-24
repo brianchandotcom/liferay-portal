@@ -511,8 +511,9 @@ public class LayoutPageTemplatesImporterTest {
 
 		Assert.assertNotNull(configJSONObject);
 
+		Assert.assertEquals(
+			"Test image description", configJSONObject.getString("alt"));
 		Assert.assertEquals("www.test.com", configJSONObject.getString("href"));
-
 		Assert.assertEquals("Blank", configJSONObject.getString("target"));
 
 		JSONObject freeMarkerFragmentEntryProcessorJSONObject =

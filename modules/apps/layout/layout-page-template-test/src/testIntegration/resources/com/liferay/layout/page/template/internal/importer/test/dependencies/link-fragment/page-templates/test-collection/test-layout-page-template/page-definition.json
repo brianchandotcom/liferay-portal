@@ -1,0 +1,38 @@
+{
+	"pageElement" : {
+		"pageElements" : [
+			{
+				"definition" : {
+					"fragment" : {
+						"collectionName" : "Test Collection",
+						"key" : "test-link-fragment",
+						"name" : "Test Link Fragment"
+					},
+					"fragmentFields" : [
+						{
+							"id" : "element-link",
+							"value" : {
+								"fragmentLink" : {
+									"value" : {
+										"href" : "http://www.test.com"
+									}
+								},
+								"text" : {
+									"value_i18n" : {
+										"en_US" : "Edited Link"
+									}
+								}
+							}
+						}
+					]
+				},
+				"type" : "Fragment"
+			}
+		],
+		"type" : "Root"
+	},
+	"settings" : {
+		"colorSchemeName" : "01",
+		"themeName" : "Classic"
+	}
+}

@@ -883,13 +883,12 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test UpdatePortalPropertiesWithMultipleClusters {
 		property app.server.bundles.size = "2";
 		property custom.properties = "company.security.auth.type=emailAddress";
 		property portal.release = "true";
-		property portal.upstream = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "RollingRestartEE#UpdatePortalPropertiesWithMultipleClusters";
 
 		Clustering.viewClusterStatusInConsole();

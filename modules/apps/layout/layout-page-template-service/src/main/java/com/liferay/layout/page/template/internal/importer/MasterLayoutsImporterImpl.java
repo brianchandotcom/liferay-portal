@@ -271,7 +271,16 @@ public class MasterLayoutsImporterImpl implements MasterLayoutsImporter {
 		String path = fileName.substring(
 			0, fileName.lastIndexOf(StringPool.FORWARD_SLASH) + 1);
 
-		return zipFile.getEntry(path + _FILE_NAME_THUMBNAIL);
+		for (String thumbnailExtension : _VALID_THUMBNAIL_EXTENSIONS) {
+			ZipEntry zipEntry = zipFile.getEntry(
+				path + _FILE_NAME_THUMBNAIL + thumbnailExtension);
+
+			if (zipEntry != null) {
+				return zipEntry;
+			}
+		}
+
+		return null;
 	}
 
 	private boolean _isMasterPageFile(String fileName) {
@@ -534,7 +543,11 @@ public class MasterLayoutsImporterImpl implements MasterLayoutsImporter {
 		_layoutLocalService.updateLayout(layout);
 	}
 
-	private static final String _FILE_NAME_THUMBNAIL = "thumbnail.jpg";
+	private static final String _FILE_NAME_THUMBNAIL = "thumbnail";
+
+	private static final String[] _VALID_THUMBNAIL_EXTENSIONS = {
+		".bmp", ".gif", ".jpeg", ".jpg", ".png", ".svg", ".tiff"
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MasterLayoutsImporterImpl.class);

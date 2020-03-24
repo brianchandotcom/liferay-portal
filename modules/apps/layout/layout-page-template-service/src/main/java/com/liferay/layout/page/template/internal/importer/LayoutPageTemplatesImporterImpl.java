@@ -517,7 +517,16 @@ public class LayoutPageTemplatesImporterImpl
 		String path = fileName.substring(
 			0, fileName.lastIndexOf(StringPool.FORWARD_SLASH) + 1);
 
-		return zipFile.getEntry(path + _FILE_NAME_THUMBNAIL);
+		for (String thumbnailExtension : _VALID_THUMBNAIL_EXTENSIONS) {
+			ZipEntry zipEntry = zipFile.getEntry(
+				path + _FILE_NAME_THUMBNAIL + thumbnailExtension);
+
+			if (zipEntry != null) {
+				return zipEntry;
+			}
+		}
+
+		return null;
 	}
 
 	private boolean _isPageTemplateCollectionFile(String fileName) {
@@ -821,7 +830,11 @@ public class LayoutPageTemplatesImporterImpl
 
 	private static final String _DEFAULT_PAGE_TEMPLATE_ENTRY_KEY = "imported";
 
-	private static final String _FILE_NAME_THUMBNAIL = "thumbnail.jpg";
+	private static final String _FILE_NAME_THUMBNAIL = "thumbnail";
+
+	private static final String[] _VALID_THUMBNAIL_EXTENSIONS = {
+		".bmp", ".gif", ".jpeg", ".jpg", ".png", ".svg", ".tiff"
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplatesImporterImpl.class);

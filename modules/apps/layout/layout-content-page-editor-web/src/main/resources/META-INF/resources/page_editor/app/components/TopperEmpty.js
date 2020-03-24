@@ -13,28 +13,28 @@
  */
 
 import classNames from 'classnames';
-import React, {useContext, useRef} from 'react';
+import React, {useRef} from 'react';
 
 import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
 import {useSelector} from '../store/index';
-import useDragAndDrop, {
-	DragDropManagerImpl,
-	TARGET_POSITION,
-} from '../utils/useDragAndDrop';
+import useDragAndDrop, {TARGET_POSITION} from '../utils/useDragAndDrop';
 import getLabelName from './layout-data-items/getLabelName';
 
 export default function TopperEmpty({children, item, layoutData}) {
-	const {
-		store: {dropItem, dropTargetItemId, droppable, targetPosition},
-	} = useContext(DragDropManagerImpl);
 	const containerRef = useRef(null);
 	const store = useSelector(state => state);
 	const fragmentEntryLinks = store.fragmentEntryLinks;
 
-	const {canDrop, drop, isDragging, isOver} = useDragAndDrop({
+	const {
+		canDrop,
+		drop,
+		isDragging,
+		isOver,
+		state: {dropItem, dropTargetItemId, droppable, targetPosition},
+	} = useDragAndDrop({
 		containerRef,
 		item,
 		layoutData,

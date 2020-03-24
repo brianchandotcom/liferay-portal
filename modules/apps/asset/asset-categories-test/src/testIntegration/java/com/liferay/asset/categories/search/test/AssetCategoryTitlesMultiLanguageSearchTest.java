@@ -31,12 +31,12 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -52,6 +52,7 @@ import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.users.admin.test.util.search.GroupBlueprint;
+import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.util.ArrayList;
@@ -86,32 +87,34 @@ public class AssetCategoryTitlesMultiLanguageSearchTest {
 	public void setUp() throws Exception {
 		WorkflowThreadLocal.setEnabled(false);
 
-		_journalArticleSearchFixture = new JournalArticleSearchFixture(
-			journalArticleLocalService);
+		JournalArticleSearchFixture journalArticleSearchFixture =
+			new JournalArticleSearchFixture(journalArticleLocalService);
 
-		_journalArticleSearchFixture.setUp();
+		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
-		_journalArticles = _journalArticleSearchFixture.getJournalArticles();
+		UserSearchFixture userSearchFixture = new UserSearchFixture(
+			userLocalService, groupSearchFixture, null, null);
 
-		_userSearchFixture = new UserSearchFixture();
+		userSearchFixture.setUp();
 
-		_userSearchFixture.setUp();
+		Group group = groupSearchFixture.addGroup(new GroupBlueprint());
 
-		_groups = _userSearchFixture.getGroups();
-		_users = _userSearchFixture.getUsers();
+		User user = userSearchFixture.addUser(
+			RandomTestUtil.randomString(), group);
 
 		_assetCategories = new ArrayList<>();
 		_assetVocabularies = new ArrayList<>();
-
-		Group group = _userSearchFixture.addGroup();
-
-		_user = _userSearchFixture.addUser(
-			RandomTestUtil.randomString(), group);
+		_groups = groupSearchFixture.getGroups();
+		_groupSearchFixture = groupSearchFixture;
+		_journalArticles = journalArticleSearchFixture.getJournalArticles();
+		_journalArticleSearchFixture = journalArticleSearchFixture;
+		_user = user;
+		_users = userSearchFixture.getUsers();
+		_userSearchFixture = userSearchFixture;
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_journalArticleSearchFixture.tearDown();
 		_userSearchFixture.tearDown();
 	}
 
@@ -123,7 +126,7 @@ public class AssetCategoryTitlesMultiLanguageSearchTest {
 
 		Locale locale = LocaleUtil.CHINA;
 
-		Group group = _userSearchFixture.addGroup(
+		Group group = _groupSearchFixture.addGroup(
 			new GroupBlueprint() {
 				{
 					setDefaultLocale(locale);
@@ -169,7 +172,7 @@ public class AssetCategoryTitlesMultiLanguageSearchTest {
 
 		Locale locale = LocaleUtil.US;
 
-		Group group = _userSearchFixture.addGroup(
+		Group group = _groupSearchFixture.addGroup(
 			new GroupBlueprint() {
 				{
 					setDefaultLocale(locale);
@@ -218,7 +221,7 @@ public class AssetCategoryTitlesMultiLanguageSearchTest {
 		Locale locale = LocaleUtil.JAPAN;
 		String vocabularyTitleString = "ボキャブラリ";
 
-		Group group = _userSearchFixture.addGroup(
+		Group group = _groupSearchFixture.addGroup(
 			new GroupBlueprint() {
 				{
 					setDefaultLocale(locale);
@@ -372,9 +375,6 @@ public class AssetCategoryTitlesMultiLanguageSearchTest {
 			Locale locale, Group group)
 		throws Exception {
 
-		Indexer<JournalArticle> indexer = indexerRegistry.getIndexer(
-			JournalArticle.class);
-
 		SearchContext searchContext = getSearchContext(
 			categoryTitleString, locale, group);
 
@@ -423,11 +423,14 @@ public class AssetCategoryTitlesMultiLanguageSearchTest {
 	@Inject
 	protected static FacetedSearcherManager facetedSearcherManager;
 
-	@Inject
-	protected static IndexerRegistry indexerRegistry;
+	@Inject(filter = "component.name=*.JournalArticleIndexer")
+	protected static Indexer<JournalArticle> indexer;
 
 	@Inject
 	protected static JournalArticleLocalService journalArticleLocalService;
+
+	@Inject
+	protected static UserLocalService userLocalService;
 
 	@DeleteAfterTestRun
 	private List<AssetCategory> _assetCategories;
@@ -437,6 +440,8 @@ public class AssetCategoryTitlesMultiLanguageSearchTest {
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
+
+	private GroupSearchFixture _groupSearchFixture;
 
 	@DeleteAfterTestRun
 	private List<JournalArticle> _journalArticles;

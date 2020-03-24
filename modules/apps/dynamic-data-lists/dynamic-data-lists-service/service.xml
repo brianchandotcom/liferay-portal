@@ -31,6 +31,8 @@
 		<column name="version" type="String" />
 		<column name="displayIndex" type="int" />
 		<column name="lastPublishDate" type="Date" />
+		<column name="className" type="String" />
+		<column name="classPK" type="long" />
 
 		<!-- Finder methods -->
 
@@ -47,6 +49,10 @@
 		<finder name="R_R" return-type="Collection">
 			<finder-column name="recordSetId" />
 			<finder-column name="recordSetVersion" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="className" />
+			<finder-column name="classPK" />
 		</finder>
 
 		<!-- References -->

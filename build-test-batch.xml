@@ -2040,6 +2040,12 @@ com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=300000</echo>
 									<antcall inheritall="false" target="run-selenium-test">
 										<param name="test.class" value="PortalSmoke#Smoke" />
 									</antcall>
+
+									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
+										<arg value="testIntegration" />
+										<arg value="--tests" />
+										<arg value="*.LPKGDeployerHotDeployTest" />
+									</gradle-execute>
 								</try>
 
 								<finally>

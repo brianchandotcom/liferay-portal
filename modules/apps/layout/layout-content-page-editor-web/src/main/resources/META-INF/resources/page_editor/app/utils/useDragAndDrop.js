@@ -390,6 +390,10 @@ function checkElevate({
 	let isElevate = false;
 
 	if (parent) {
+		if (draggingCollectionInCollection(dropItem, dropTargetItem, items)) {
+			return false;
+		}
+
 		const difference = Math.min(
 			hoverBoundingRect.height * DISTANCE,
 			MAX_DIFFERENCE
@@ -425,9 +429,10 @@ function checkElevate({
 	return isElevate;
 }
 
-function isValidMoveToMiddle({dropItem, dropTargetItem}) {
+function isValidMoveToMiddle({dropItem, dropTargetItem, items}) {
 	return (
 		!dropTargetItem.children.length &&
+		!draggingCollectionInCollection(dropItem, dropTargetItem, items) &&
 		isNestingSupported(dropItem.type, dropTargetItem.type)
 	);
 }
@@ -465,6 +470,10 @@ function isValidMoveToTargetPosition({
 		if (!parent || parent.type !== LAYOUT_DATA_ITEM_TYPES.root) {
 			return false;
 		}
+	}
+
+	if (draggingCollectionInCollection(dropItem, dropTargetItem, items)) {
+		return false;
 	}
 
 	if (children.includes(dropItem.itemId)) {
@@ -602,4 +611,22 @@ function getParentItemIdAndPositon({
 
 function isNestingSupported(itemType, parentType) {
 	return LAYOUT_DATA_ALLOWED_CHILDREN_TYPES[parentType].includes(itemType);
+}
+
+function draggingCollectionInCollection(item, siblingOrParent, items) {
+	return (
+		item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
+		hasCollectionItemAncestor(siblingOrParent, items)
+	);
+}
+
+function hasCollectionItemAncestor(parent, items) {
+	if (!parent) {
+		return false;
+	}
+
+	return (
+		parent.type === LAYOUT_DATA_ITEM_TYPES.collectionItem ||
+		hasCollectionItemAncestor(items[parent.parentId], items)
+	);
 }

@@ -1,0 +1,192 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.redirect.web.internal.configuration.FFRedirectConfiguration.config";
+	property osgi.module.configurations = "enabled=B&quot;true&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Redirect";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Source Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Destination Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "This ensures that a permanent redirect can be added."
+	@priority = "5"
+	test AddPermanentRedirect {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Permanent",
+			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
+	}
+
+	@description = "This ensures that all redirect entries can be deleted when the user selects all."
+	@priority = "5"
+	test DeleteRedirectEntries {
+		var portalURL = PropsUtil.get("portal.url");
+
+		for (var pageCount : list "1,2,3") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Source Page ${pageCount}");
+		}
+
+		for (var pageCount : list "1,2,3") {
+			Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+			Redirect.addRedirect(
+				destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+				siteName = "test-site-name",
+				sourceURL = "test-source-page-${pageCount}");
+		}
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		for (var pageCount : list "1,2,3") {
+			Redirect.viewRedirect(
+				destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+				redirectType = "Permanent",
+				sourceURL = "${portalURL}/web/test-site-name/test-source-page-${pageCount}");
+		}
+
+		PortletEntry.selectAll();
+
+		Redirect.deleteCP(
+			deletions = "true",
+			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
+
+		Redirect.viewDefaultCP();
+	}
+
+	@description = "This ensures that a redirect entry can be deleted."
+	@priority = "5"
+	test DeleteRedirectEntry {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Permanent",
+			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
+
+		Redirect.deleteCP(sourceURL = "${portalURL}/web/test-site-name/test-source-page");
+
+		Redirect.viewDefaultCP();
+	}
+
+	@description = "This ensures that a redirect entry can be edited."
+	@priority = "5"
+	test EditRedirectEntry {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "New Source Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "New Destination Page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Permanent",
+			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
+
+		Redirect.editRedirect(
+			destinationURLEdit = "${portalURL}/web/test-site-name/new-destination-page",
+			redirectTypeEdit = "Temporary (302)",
+			sourceURL = "test-source-page",
+			sourceURLEdit = "new-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/new-destination-page",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/new-source-page");
+	}
+
+	@description = "This ensures that the redirect can be set."
+	@priority = "5"
+	test Smoke {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Redirection");
+
+		Redirect.viewDefaultCP();
+
+		Redirect.addRedirect(
+			destinationURL = " ",
+			redirectURLVariation = "Null",
+			siteName = "guest",
+			sourceURL = "sourceURL");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Redirection");
+
+		Redirect.addRedirect(
+			destinationURL = "http://localhost:8080",
+			redirectURLVariation = "Null",
+			siteName = "guest",
+			sourceURL = " ");
+
+		AssertSelectedLabel(
+			locator1 = "Select#REDIRECT_TYPE",
+			value1 = "Permanent (301)");
+	}
+
+}

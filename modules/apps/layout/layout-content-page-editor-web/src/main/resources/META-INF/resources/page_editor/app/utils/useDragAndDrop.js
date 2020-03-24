@@ -70,7 +70,7 @@ const RULES = {
 
 const initialDragDrop = {
 	dispatch: null,
-	store: {
+	state: {
 		dropItem: null,
 		dropTargetItemId: null,
 		droppable: true,
@@ -90,28 +90,28 @@ const isAncestor = (item, layoutData, childId) => {
 	return false;
 };
 
-export const DragDropManagerImpl = React.createContext(initialDragDrop);
+const DragAndDropContext = React.createContext(initialDragDrop);
 
-export const DragDropManager = ({children}) => {
-	const [store, reducerDispatch] = useReducer((oldStore, newStore) => {
+export const DragAndDropContextProvider = ({children}) => {
+	const [state, reducerDispatch] = useReducer((prevState, nextState) => {
 		if (
-			oldStore.dropTargetItemId !== newStore.dropTargetItemId ||
-			oldStore.targetPosition !== newStore.targetPosition
+			prevState.dropTargetItemId !== nextState.dropTargetItemId ||
+			prevState.targetPosition !== nextState.targetPosition
 		) {
-			return newStore;
+			return nextState;
 		}
 
-		return oldStore;
-	}, initialDragDrop.store);
+		return prevState;
+	}, initialDragDrop.state);
 
 	const dispatch = useMemo(() => throttle(reducerDispatch, 100), [
 		reducerDispatch,
 	]);
 
 	return (
-		<DragDropManagerImpl.Provider value={{dispatch, store}}>
+		<DragAndDropContext.Provider value={{dispatch, state}}>
 			{children}
-		</DragDropManagerImpl.Provider>
+		</DragAndDropContext.Provider>
 	);
 };
 
@@ -121,10 +121,8 @@ export default function useDragAndDrop({
 	layoutData,
 	onDragEnd,
 }) {
-	const {
-		dispatch,
-		store: {dropTargetItemId, droppable, targetPosition},
-	} = useContext(DragDropManagerImpl);
+	const {dispatch, state} = useContext(DragAndDropContext);
+	const {dropTargetItemId, droppable, targetPosition} = state;
 
 	const [dragOptions, drag, preview] = useDrag({
 		collect: _monitor => {
@@ -290,6 +288,7 @@ export default function useDragAndDrop({
 		...dropOptions,
 		drag,
 		drop,
+		state,
 	};
 }
 

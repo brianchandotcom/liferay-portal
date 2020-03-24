@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -29,10 +29,7 @@ import selectCanUpdateLayoutContent from '../selectors/selectCanUpdateLayoutCont
 import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
 import moveItem from '../thunks/moveItem';
-import useDragAndDrop, {
-	DragDropManagerImpl,
-	TARGET_POSITION,
-} from '../utils/useDragAndDrop';
+import useDragAndDrop, {TARGET_POSITION} from '../utils/useDragAndDrop';
 import {
 	useActiveItemId,
 	useHoverItem,
@@ -79,10 +76,13 @@ export default function Topper({children, item, itemRef, layoutData}) {
 	const selectItem = useSelectItem();
 
 	const {
-		store: {dropItem, dropTargetItemId, droppable, targetPosition},
-	} = useContext(DragDropManagerImpl);
-
-	const {canDrop, drag, drop, isDragging, isOver} = useDragAndDrop({
+		canDrop,
+		drag,
+		drop,
+		isDragging,
+		isOver,
+		state: {dropItem, dropTargetItemId, droppable, targetPosition},
+	} = useDragAndDrop({
 		containerRef,
 		item,
 		layoutData,

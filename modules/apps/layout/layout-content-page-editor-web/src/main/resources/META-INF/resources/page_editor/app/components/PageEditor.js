@@ -34,6 +34,7 @@ import {PAGE_TYPES} from '../config/constants/pageTypes';
 import {config} from '../config/index';
 import {useDispatch, useSelector} from '../store/index';
 import moveItem from '../thunks/moveItem';
+import {DragDropManager} from '../utils/useDragAndDrop';
 import {
 	useActivationOrigin,
 	useActiveItemId,
@@ -53,7 +54,6 @@ import {
 	Root,
 	RowWithControls,
 } from './layout-data-items/index';
-import {DragDropManager} from './useDragAndDrop';
 
 const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.collection]: CollectionWithControls,

@@ -29,6 +29,10 @@ import selectCanUpdateLayoutContent from '../selectors/selectCanUpdateLayoutCont
 import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
 import moveItem from '../thunks/moveItem';
+import useDragAndDrop, {
+	DragDropManagerImpl,
+	TARGET_POSITION,
+} from '../utils/useDragAndDrop';
 import {
 	useActiveItemId,
 	useHoverItem,
@@ -39,10 +43,6 @@ import {
 } from './Controls';
 import getLabelName from './layout-data-items/getLabelName';
 import hasDropZoneChild from './layout-data-items/hasDropZoneChild';
-import useDragAndDrop, {
-	DragDropManagerImpl,
-	TARGET_POSITION,
-} from './useDragAndDrop';
 
 const TOPPER_BAR_HEIGHT = 24;
 

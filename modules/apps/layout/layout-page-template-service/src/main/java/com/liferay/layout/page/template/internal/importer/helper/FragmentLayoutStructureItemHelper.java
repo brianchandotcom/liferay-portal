@@ -475,6 +475,17 @@ public class FragmentLayoutStructureItemHelper
 
 				localizationJSONObject = _createImageLocalizationJSONObject(
 					fragmentImageMap);
+
+				try {
+					editableFieldConfigJSONObject = JSONUtil.merge(
+						editableFieldConfigJSONObject,
+						_createImageConfigJSONObject(fragmentImageMap));
+				}
+				catch (JSONException jsonException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(jsonException, jsonException);
+					}
+				}
 			}
 
 			if (editableFieldConfigJSONObject.length() > 0) {

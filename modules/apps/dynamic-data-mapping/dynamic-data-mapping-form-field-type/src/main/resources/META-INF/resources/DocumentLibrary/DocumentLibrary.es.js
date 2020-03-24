@@ -158,7 +158,7 @@ const DocumentLibrary = ({
 							className="field"
 							disabled
 							id={`${name}inputFile`}
-							value={transformedFileEntryTitle}
+							value={transformedFileEntryTitle || ''}
 						/>
 					</ClayInput.GroupItem>
 
@@ -193,7 +193,7 @@ const DocumentLibrary = ({
 				name={name}
 				placeholder={placeholder}
 				type="hidden"
-				value={transformedFileEntryTitle}
+				value={transformedFileEntryTitle || ''}
 			/>
 		</div>
 	);
@@ -287,7 +287,7 @@ const DocumentLibraryProxy = connectStore(
 					}
 					placeholder={placeholder}
 					readOnly={readOnly}
-					value={currentValue}
+					value={currentValue || ''}
 					{...otherProps}
 				/>
 			</FieldBaseProxy>

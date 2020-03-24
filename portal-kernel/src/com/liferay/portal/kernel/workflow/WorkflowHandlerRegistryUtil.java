@@ -332,12 +332,6 @@ public class WorkflowHandlerRegistryUtil {
 	private static class WorkflowHandlerServiceReferenceMapper
 		implements ServiceReferenceMapper<String, WorkflowHandler<?>> {
 
-		public WorkflowHandlerServiceReferenceMapper(
-			Predicate<WorkflowHandler<?>> predicate) {
-
-			_predicate = predicate;
-		}
-
 		@Override
 		public void map(
 			ServiceReference<WorkflowHandler<?>> serviceReference,
@@ -351,6 +345,12 @@ public class WorkflowHandlerRegistryUtil {
 			if (_predicate.test(workflowHandler)) {
 				emitter.emit(workflowHandler.getClassName());
 			}
+		}
+
+		private WorkflowHandlerServiceReferenceMapper(
+			Predicate<WorkflowHandler<?>> predicate) {
+
+			_predicate = predicate;
 		}
 
 		private final Predicate<WorkflowHandler<?>> _predicate;

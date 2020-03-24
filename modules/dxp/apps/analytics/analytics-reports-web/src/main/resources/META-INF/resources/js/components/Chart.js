@@ -329,7 +329,7 @@ export default function Chart({
 	return (
 		<>
 			{timeSpanOptions.length && (
-				<div className="d-flex mb-3">
+				<div className="d-flex mb-3 mt-3">
 					<ClaySelect
 						aria-label={Liferay.Language.get('select-date-range')}
 						onChange={handleTimeSpanChange}

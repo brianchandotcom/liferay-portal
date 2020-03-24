@@ -14,6 +14,11 @@
 
 export default [
 	{
+		description: 'Page Description',
+		localizedDescription: {},
+		localizedTitle: {
+			en_US: 'Localized Title',
+		},
 		rows: [
 			{
 				columns: [
@@ -22,6 +27,9 @@ export default [
 							{
 								fieldName: 'radio',
 								label: 'Radio Field',
+								localizedValue: {
+									en_US: 'Radio Field',
+								},
 								options: [
 									{
 										label: 'Option 1',
@@ -44,6 +52,10 @@ export default [
 																	fieldName:
 																		'label',
 																	localizable: true,
+																	localizedValue: {
+																		en_US:
+																			'Radio Field',
+																	},
 																	settingsContext: {
 																		pages: [
 																			{
@@ -67,6 +79,11 @@ export default [
 																{
 																	fieldName:
 																		'type',
+																},
+																{
+																	fieldName:
+																		'validation',
+																	value: {},
 																},
 															],
 															size: 12,
@@ -95,6 +112,7 @@ export default [
 							{
 								fieldName: 'text1',
 								label: 'Text Field 1',
+								options: [],
 								required: true,
 								settingsContext: {
 									pages: [],
@@ -104,6 +122,7 @@ export default [
 							{
 								fieldName: 'text2',
 								label: 'Text Field 2',
+								options: [],
 								required: true,
 								settingsContext: {
 									pages: [],
@@ -150,6 +169,7 @@ export default [
 							{
 								fieldName: 'date',
 								label: 'Date Field',
+								options: [],
 								required: true,
 								settingsContext: {
 									pages: [],
@@ -168,6 +188,7 @@ export default [
 							{
 								fieldName: 'numeric',
 								label: 'Numeric Field',
+								options: [],
 								required: true,
 								settingsContext: {
 									pages: [],

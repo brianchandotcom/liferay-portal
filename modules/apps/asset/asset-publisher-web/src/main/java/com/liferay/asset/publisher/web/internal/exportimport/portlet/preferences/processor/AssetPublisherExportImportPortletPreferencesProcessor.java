@@ -288,9 +288,13 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				continue;
 			}
 
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, portletDataContext.getPortletId(),
-				(StagedModel)assetRenderer.getAssetObject());
+			if (!portletDataContext.addPrimaryKey(
+					AssetEntry.class, assetRenderer.getUuid())) {
+
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, portletDataContext.getPortletId(),
+					(StagedModel)assetRenderer.getAssetObject());
+			}
 		}
 	}
 

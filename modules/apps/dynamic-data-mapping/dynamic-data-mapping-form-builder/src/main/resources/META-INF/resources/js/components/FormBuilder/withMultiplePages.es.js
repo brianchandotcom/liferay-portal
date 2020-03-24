@@ -133,7 +133,12 @@ const withMultiplePages = ChildComponent => {
 		}
 
 		_getPageSettingsItems() {
-			const {pages, paginationMode, successPageSettings} = this.props;
+			const {
+				allowSuccessPage,
+				pages,
+				paginationMode,
+				successPageSettings,
+			} = this.props;
 			const pageSettingsItems = [
 				{
 					label: Liferay.Language.get('add-new-page'),
@@ -154,7 +159,7 @@ const withMultiplePages = ChildComponent => {
 				});
 			}
 
-			if (!successPageSettings.enabled) {
+			if (allowSuccessPage && !successPageSettings.enabled) {
 				pageSettingsItems.push({
 					label: Liferay.Language.get('add-success-page'),
 					settingsItem: 'add-success-page',
@@ -245,6 +250,14 @@ const withMultiplePages = ChildComponent => {
 	}
 
 	MultiplePages.PROPS = {
+		/**
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {boolean}
+		 */
+
+		allowSuccessPage: Config.bool().value(true),
+
 		...formBuilderProps,
 	};
 

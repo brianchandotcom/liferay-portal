@@ -239,6 +239,7 @@ class LayoutProvider extends Component {
 
 	render() {
 		const {
+			allowSuccessPage,
 			children,
 			defaultLanguageId,
 			editingLanguageId,
@@ -259,6 +260,7 @@ class LayoutProvider extends Component {
 				Object.assign(child.props, {
 					...this.otherProps(),
 					activePage,
+					allowSuccessPage,
 					defaultLanguageId,
 					editingLanguageId,
 					fieldActions,
@@ -609,6 +611,14 @@ class LayoutProvider extends Component {
 }
 
 LayoutProvider.PROPS = {
+	/**
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {boolean}
+	 */
+
+	allowSuccessPage: Config.bool().value(true),
+
 	/**
 	 * @default undefined
 	 * @instance

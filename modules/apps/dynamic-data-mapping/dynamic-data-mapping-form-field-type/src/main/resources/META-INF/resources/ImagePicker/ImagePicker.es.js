@@ -131,9 +131,6 @@ const ImagePicker = ({
 		itemSelectorDialog.open();
 	};
 
-	const spritemap =
-		Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
-
 	const placeholder = readOnly
 		? ''
 		: Liferay.Language.get('add-image-description');
@@ -197,7 +194,6 @@ const ImagePicker = ({
 					className="image-picker-preview-modal"
 					observer={observer}
 					size="full-screen"
-					spritemap={spritemap}
 				>
 					<ClayModal.Header />
 					<ClayModal.Body>

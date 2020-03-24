@@ -31,6 +31,9 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="hits" type="long" />
-		<field name="url" type="String" />
+		<field name="url" type="String">
+			<hint-collection name="URL" />
+			<sanitize content-type="text/plain" modes="ALL" />
+		</field>
 	</model>
 </model-hints>

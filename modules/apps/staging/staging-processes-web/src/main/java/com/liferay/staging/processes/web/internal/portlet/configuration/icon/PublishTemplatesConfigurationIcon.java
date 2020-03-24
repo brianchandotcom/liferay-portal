@@ -14,7 +14,10 @@
 
 package com.liferay.staging.processes.web.internal.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -92,7 +95,11 @@ public class PublishTemplatesConfigurationIcon
 				return false;
 			}
 		}
-		catch (Exception exception) {
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+
 			return false;
 		}
 
@@ -124,6 +131,8 @@ public class PublishTemplatesConfigurationIcon
 		return false;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		PublishTemplatesConfigurationIcon.class);
 	@Reference
 	private Portal _portal;
 

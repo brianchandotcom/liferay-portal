@@ -32,22 +32,24 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 )
 public interface MFAEmailOTPConfiguration {
 
-	@Meta.AD(deflt = "-1", name = "retry-timeout", required = false)
-	public long retryTimeout();
-
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
-	@Meta.AD(deflt = "30", name = "resend-email-timeout", required = false)
+	@Meta.AD(
+		deflt = "6", description = "otp-size-description", name = "otp-size",
+		required = false
+	)
+	public int otpSize();
+
+	@Meta.AD(
+		deflt = "30", description = "resend-email-timeout-description",
+		name = "resend-email-timeout", required = false
+	)
 	public long resendEmailTimeout();
 
 	@Meta.AD(
-		deflt = "-1", name = "validation-expiration-time", required = false
-	)
-	public long validationExpirationTime();
-
-	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",
+		description = "email-from-address-description",
 		name = "email-from-address", required = false
 	)
 	public String emailFromAddress();
@@ -70,10 +72,22 @@ public interface MFAEmailOTPConfiguration {
 	)
 	public LocalizedValuesMap emailOTPSentBody();
 
-	@Meta.AD(deflt = "-1", name = "failed-attempts-allowed", required = false)
+	@Meta.AD(
+		deflt = "-1", description = "failed-attempts-allowed-description",
+		name = "failed-attempts-allowed", required = false
+	)
 	public int failedAttemptsAllowed();
 
-	@Meta.AD(deflt = "6", name = "otp-size", required = false)
-	public int otpSize();
+	@Meta.AD(
+		deflt = "-1", description = "retry-timeout-description",
+		name = "retry-timeout", required = false
+	)
+	public long retryTimeout();
+
+	@Meta.AD(
+		deflt = "-1", description = "validation-expiration-time-description",
+		name = "validation-expiration-time", required = false
+	)
+	public long validationExpirationTime();
 
 }

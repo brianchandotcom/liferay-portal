@@ -227,7 +227,7 @@ public class LayoutPageTemplatesImporterTest {
 		throws Exception {
 
 		String html =
-			"<lfr-editable id=\"element-text\" type=\"image\"><img src=\"#\"" +
+			"<lfr-editable id=\"element-image\" type=\"image\"><img src=\"#\"" +
 				"</lfr-editable>";
 
 		_createFragmentEntry(

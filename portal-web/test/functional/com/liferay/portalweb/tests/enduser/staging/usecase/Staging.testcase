@@ -166,6 +166,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-94325."
+	@ignore = "true"
 	@priority = "3"
 	test ActivateStagingWithWCDOnFragment {
 		JSONFragment.addFragmentCollection(
@@ -404,6 +405,7 @@ definition {
 			privacy = "Public Pages");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test EnableStagingWithWebContentReferencedFromDeletedSite {
 		JSONWebcontent.addWebContent(
@@ -2638,6 +2640,7 @@ definition {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteWithDynamicExportLimit";
 
 		Staging.remoteStagingSetUp(
@@ -3678,9 +3681,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-87280."
-	@ignore = "true"
 	@priority = "4"
 	test ViewPublishedWCWithApostropheInImageField {
+		property portal.upstream = "quarantine";
+
 		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.activateStagingCP(siteName = "Site Name");

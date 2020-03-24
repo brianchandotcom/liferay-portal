@@ -184,6 +184,8 @@ definition {
 	@description = "This is a use case for LPS-71786"
 	@priority = "3"
 	test AssertDeletedAssetLinkRemovedFromLiveSite {
+		property portal.upstream = "quarantine";
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
@@ -752,7 +754,7 @@ definition {
 
 	@priority = "5"
 	test PublishPortlet {
-		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
@@ -1099,6 +1101,7 @@ definition {
 			webContentTitle = "Web Content Title 2");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test StagingPublishChildSiteWithReference {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");

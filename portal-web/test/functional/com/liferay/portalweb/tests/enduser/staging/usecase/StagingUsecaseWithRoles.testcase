@@ -411,10 +411,9 @@ definition {
 			privacy = "Public Pages");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test StagingDemoLocalLive4 {
-		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(
@@ -883,10 +882,9 @@ definition {
 			workflowTask = "Review");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test StagingPublishPage {
-		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(

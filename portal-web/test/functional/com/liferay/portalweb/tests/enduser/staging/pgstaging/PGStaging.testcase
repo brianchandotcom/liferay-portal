@@ -532,9 +532,10 @@ definition {
 	}
 
 	@description = "This test covers LPS-72893."
-	@ignore = "true"
 	@priority = "4"
 	test PublishLayoutIconDeletion {
+		property portal.upstream = "quarantine";
+
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
@@ -727,6 +728,7 @@ definition {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
+		property portal.upstream = "quarantine";
 
 		Staging.remoteStagingSetUp(
 			pageVersioningEnabled = "true",

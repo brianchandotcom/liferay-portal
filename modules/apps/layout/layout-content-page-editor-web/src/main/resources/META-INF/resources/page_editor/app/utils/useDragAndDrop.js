@@ -86,11 +86,17 @@ const initialDragDrop = {
 	},
 };
 
-const getAncestorId = parent =>
-	parent.type === LAYOUT_DATA_ITEM_TYPES.column ||
-	parent.type === LAYOUT_DATA_ITEM_TYPES.collectionItem
-		? parent.parentId
-		: parent.itemId;
+const getAncestorId = (parent, toControlsId) => {
+	const ancestorId =
+		parent.type === LAYOUT_DATA_ITEM_TYPES.column ||
+		parent.type === LAYOUT_DATA_ITEM_TYPES.collectionItem
+			? parent.parentId
+			: parent.itemId;
+
+	return parent.type === LAYOUT_DATA_ITEM_TYPES.collectionItem
+		? ancestorId
+		: toControlsId(ancestorId);
+};
 
 const dropTargetIsAncestor = (dropItem, layoutData, dropTargetId) => {
 	const dropTarget = layoutData.items[dropTargetId];
@@ -279,18 +285,20 @@ export default function useDragAndDrop({
 						targetPositionWithoutMiddle: newTargetPositionWithoutMiddle,
 					});
 					break;
-				case RULES_TYPE.ELEVATE:
+				case RULES_TYPE.ELEVATE: {
 					dispatch({
 						dropItem,
 						dropTargetItemId:
 							getAncestorId(
-								layoutData.items[dropTargetItem.parentId]
+								layoutData.items[dropTargetItem.parentId],
+								toControlsId
 							) || toControlsId(dropTargetItem.itemId),
 						droppable: true,
 						targetPositionWithMiddle: newTargetPositionWithMiddle,
 						targetPositionWithoutMiddle: newTargetPositionWithoutMiddle,
 					});
 					break;
+				}
 				case RULES_TYPE.VALID_MOVE:
 					dispatch({
 						dropItem,

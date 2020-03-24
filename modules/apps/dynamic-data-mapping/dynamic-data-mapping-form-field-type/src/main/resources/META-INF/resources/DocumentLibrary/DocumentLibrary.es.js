@@ -211,7 +211,7 @@ const DocumentLibraryProxy = connectStore(
 	}) => {
 		const [currentValue, setCurrentValue] = useState(value);
 
-		const _handleVisibleChange = useCallback(
+		const handleVisibleChange = useCallback(
 			event => {
 				if (event.selectedItem) {
 					emit('fieldFocused', event, event.selectedItem);
@@ -223,7 +223,7 @@ const DocumentLibraryProxy = connectStore(
 			[emit]
 		);
 
-		const _handleSelectButtonClicked = useCallback(
+		const handleSelectButtonClicked = useCallback(
 			({itemSelectorAuthToken, portletNamespace}) => {
 				const itemSelectorDialog = new ItemSelectorDialog({
 					eventName: `${portletNamespace}selectDocumentLibrary`,
@@ -234,18 +234,15 @@ const DocumentLibraryProxy = connectStore(
 					}),
 				});
 
-				itemSelectorDialog.on(
-					'selectedItemChange',
-					_handleFieldChanged
-				);
-				itemSelectorDialog.on('visibleChange', _handleVisibleChange);
+				itemSelectorDialog.on('selectedItemChange', handleFieldChanged);
+				itemSelectorDialog.on('visibleChange', handleVisibleChange);
 
 				itemSelectorDialog.open();
 			},
-			[_handleFieldChanged, _handleVisibleChange]
+			[handleFieldChanged, handleVisibleChange]
 		);
 
-		const _handleFieldChanged = useCallback(
+		const handleFieldChanged = useCallback(
 			event => {
 				const selectedItem = event.selectedItem;
 
@@ -270,13 +267,12 @@ const DocumentLibraryProxy = connectStore(
 
 						emit('fieldEdited', event, '{}');
 					}}
-					onSelectButtonClicked={() => {
-						// itemSelectorAuthToken só será preenchido no readOnly false
-						_handleSelectButtonClicked({
+					onSelectButtonClicked={() =>
+						handleSelectButtonClicked({
 							itemSelectorAuthToken,
 							portletNamespace: store.portletNamespace,
-						});
-					}}
+						})
+					}
 					value={currentValue}
 					{...otherProps}
 				/>

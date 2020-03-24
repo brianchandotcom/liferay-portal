@@ -428,6 +428,7 @@ export const getSection = (title, siteKey) => {
 		query {
 			messageBoardSections(filter: ${filter}, flatten:true, pageSize: 1, siteKey: ${siteKey}, sort: "title:desc") {
 				items {
+					actions
 					id
 					messageBoardSections(sort: "title:asc") {
 						items {

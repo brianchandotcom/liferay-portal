@@ -204,37 +204,41 @@ export default withRouter(
 							</ClayInput.GroupInsetItem>
 						</ClayInput.GroupItem>
 
-						{context.canCreateThread && (
-							<ClayInput.GroupItem shrink>
-								<ClayButton
-									className="c-ml-3 d-none d-sm-block text-nowrap"
-									displayType="primary"
-									onClick={() =>
-										historyPushParser(
-											`/questions/${sectionTitle}/new`
-										)
-									}
-								>
-									{Liferay.Language.get('ask-question')}
-								</ClayButton>
-
-								<ClayButton
-									className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
-									displayType="primary"
-									onClick={() =>
-										historyPushParser(
-											`/questions/${sectionTitle}/new`
-										)
-									}
-								>
-									<ClayIcon symbol="pencil" />
-
-									<span className="sr-only">
+						{section &&
+							section.actions &&
+							section.actions['add-thread'] && (
+								<ClayInput.GroupItem shrink>
+									<ClayButton
+										className="c-ml-3 d-none d-sm-block text-nowrap"
+										displayType="primary"
+										onClick={() =>
+											historyPushParser(
+												`/questions/${sectionTitle}/new`
+											)
+										}
+									>
 										{Liferay.Language.get('ask-question')}
-									</span>
-								</ClayButton>
-							</ClayInput.GroupItem>
-						)}
+									</ClayButton>
+
+									<ClayButton
+										className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
+										displayType="primary"
+										onClick={() =>
+											historyPushParser(
+												`/questions/${sectionTitle}/new`
+											)
+										}
+									>
+										<ClayIcon symbol="pencil" />
+
+										<span className="sr-only">
+											{Liferay.Language.get(
+												'ask-question'
+											)}
+										</span>
+									</ClayButton>
+								</ClayInput.GroupItem>
+							)}
 					</ClayInput.Group>
 				</div>
 			</div>

@@ -41,6 +41,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
@@ -274,12 +275,19 @@ public class MessageBoardSectionResourceImpl
 		return new MessageBoardSection() {
 			{
 				actions = HashMapBuilder.<String, Map<String, String>>put(
-					"create",
+					"add-subcategory",
 					addAction(
-						"ADD_CATEGORY", mbCategory.getCategoryId(),
-						"postMessageBoardSectionMessageBoardSection",
-						mbCategory.getUserId(), "com.liferay.message.boards",
-						mbCategory.getGroupId())
+						"ADD_SUBCATEGORY", mbCategory,
+						"postMessageBoardSectionMessageBoardSection")
+				).put(
+					"add-thread",
+					ActionUtil.addAction(
+						"ADD_MESSAGE", MessageBoardThreadResourceImpl.class,
+						mbCategory.getCategoryId(),
+						"postMessageBoardSectionMessageBoardThread",
+						contextScopeChecker, mbCategory.getUserId(),
+						MBCategory.class.getName(), mbCategory.getGroupId(),
+						contextUriInfo)
 				).put(
 					"delete",
 					addAction("DELETE", mbCategory, "deleteMessageBoardSection")

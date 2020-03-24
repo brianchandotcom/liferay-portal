@@ -606,9 +606,9 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewBlogsEntriesAsGuestViaAP {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntriesAsGuestViaAP";
 
 		Portlet.deletePG(portletName = "Blogs");

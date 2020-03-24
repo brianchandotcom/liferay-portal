@@ -327,7 +327,6 @@ definition {
 
 	@priority = "5"
 	test StagingBlogsCP {
-		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		Navigator.gotoStagedSitePage(
@@ -363,9 +362,10 @@ definition {
 		Staging.publishToLive();
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test StagingBlogsPG {
+		property portal.upstream = "quarantine";
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",
 			siteName = "Site Name");
@@ -544,9 +544,9 @@ definition {
 			viewNoEntryTitle = "Blogs Entry Title 2");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test StagingBlogsWithScheduledPublishing {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "BlogsUsecase#StagingBlogsWithScheduledPublishing";
 
 		Navigator.gotoStagedSitePage(
@@ -601,9 +601,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-72949."
-	@ignore = "true"
 	@priority = "5"
 	test StagingLocalLiveLockAndEditBlogsEntry {
+		property portal.upstream = "quarantine";
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",
 			siteName = "Site Name");

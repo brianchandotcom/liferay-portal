@@ -288,9 +288,9 @@ definition {
 	}
 
 	@description = "This test ensures that special characters  can be saved through the Google Doc editor"
-	@ignore = "true"
 	@priority = "4"
 	test EditGoogleDocWithSpecialCharacters {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GoogleDrive#EditGoogleDocWithSpecialCharacters";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -464,9 +464,9 @@ definition {
 	}
 
 	@description = "This test covers LPS-93897. It ensures that previously entered Google credentials can be cleared."
-	@ignore = "true"
 	@priority = "5"
 	test RevokeGoogleDriveCredentials {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GoogleDrive#RevokeGoogleDriveCredential";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");

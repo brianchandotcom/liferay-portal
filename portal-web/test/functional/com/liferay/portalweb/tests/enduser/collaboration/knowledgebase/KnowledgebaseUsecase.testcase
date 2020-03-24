@@ -3,7 +3,7 @@ definition {
 
 	property custom.properties = "default.layout.template.id=1_column";
 	property portal.release = "true";
-	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property testray.main.component.name = "Knowledge Base";
 
 	setUp {
@@ -32,7 +32,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-68599."
-	@ignore = "true"
 	@priority = "5"
 	test AddCommentInWorkflowSubmission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -95,7 +94,6 @@ definition {
 		WorkflowComment.add(workflowComment = "Workflow Comment");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test AddKBChildArticleAsDraft {
 		JSONLayout.addPublicLayout(
@@ -142,7 +140,6 @@ definition {
 	}
 
 	@description = "This test covers LPS-91303. It ensures that the configured KB root folder is available for selection."
-	@ignore = "true"
 	@priority = "3"
 	test ConfiguredKBRootFolder {
 		JSONLayout.addPublicLayout(
@@ -208,7 +205,6 @@ definition {
 
 	@priority = "5"
 	test DeleteConfiguredKBFolder {
-		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(
@@ -297,7 +293,6 @@ definition {
 		KBArticle.deleteCP();
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test EditKBArticleWithCustomField {
 		ProductMenu.gotoPortlet(
@@ -354,7 +349,6 @@ definition {
 			kbArticleTitle = "KB Article Title Edited");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test EditKBFolderWithCustomField {
 		ProductMenu.gotoPortlet(
@@ -438,7 +432,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test SaveEditedChildArticleAsDraft {
 		JSONLayout.addPublicLayout(
@@ -498,7 +491,6 @@ definition {
 			kbStatus = "Draft");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test SearchChildArticleViaSearchPortletPG {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -526,7 +518,6 @@ definition {
 			searchAssetType = "Knowledge Base Article");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test SearchKBArticleInFolderViaSearchPortlet {
 		JSONLayout.addPublicLayout(
@@ -571,7 +562,6 @@ definition {
 			searchAssetType = "Knowledge Base Article");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test SearchKBArticleViaSearchPortlet {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -594,7 +584,6 @@ definition {
 			searchAssetType = "Knowledge Base Article");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test SearchKBArticleWithSpecialCharactersViaSearchPortletPG {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -618,7 +607,6 @@ definition {
 			searchAssetType = "Knowledge Base Article");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewChildArticleViaUserDefinedFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
@@ -660,7 +648,6 @@ definition {
 		AssertLocation(value1 = "${portalURL}/web/guest/knowledge-base-page/-/knowledge_base/friendly-url");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewConfiguredKBArticleWithinFolderViaKBDisplay {
 		JSONLayout.addPublicLayout(
@@ -900,7 +887,6 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewKBArticleFriendlyURL {
 		property test.name.skip.portal.instance = "KnowledgebaseUsecase#ViewKBArticleFriendlyURL";
@@ -941,7 +927,6 @@ definition {
 			kbArticleTitle = "Article Title");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewKBArticleGitHubSourceURL {
 		property test.name.skip.portal.instance = "KnowledgebaseUsecase#ViewKBArticleGitHubSourceURL";
@@ -992,7 +977,6 @@ definition {
 			subscribe = "true");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewKBArticleNoHierarchyInFolder {
 		JSONLayout.addPublicLayout(
@@ -1139,7 +1123,6 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1 Grandchild");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewKBArticlesInDifferentScopesPerSite {
 		JSONLayout.addPublicLayout(
@@ -1334,7 +1317,6 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Folder 2 Title 2");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewKBArticleSuggestionsWorkflow {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1441,7 +1423,6 @@ definition {
 		KBArticleSuggestion.viewNoSuggestions();
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewKBArticleSuggestionsWorkflowNotificationEmail {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1569,7 +1550,6 @@ definition {
 			subject = "We have resolved your suggestion for article KB Article Title");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewKBArticlesWithTheSamePriorityViaNavigationLinks {
 		JSONLayout.addPublicLayout(
@@ -1673,7 +1653,6 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Parent Title 1");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewKBArticleWithTheSameTitleAndPriorityInDifferentFolders {
 		JSONLayout.addPublicLayout(
@@ -1753,7 +1732,6 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title 2");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewSuggestionsWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1936,7 +1914,6 @@ definition {
 			status = "New");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewUnchangedKBArticlePriorityAfterEdit {
 		JSONLayout.addPublicLayout(
@@ -2006,7 +1983,6 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 2");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewUnchangedKBArticleTitleViaLocalizedPage {
 		var portalURL = PropsUtil.get("portal.url");

@@ -190,9 +190,10 @@ definition {
 		BlogsEntry.viewNoPG(entryTitle = "");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test AddBlogsEntryWithSamePageScope {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONLayout.addPublicLayout(
@@ -1340,9 +1341,10 @@ definition {
 		Navigator.gotoPage(pageName = "Blogs Page");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewBlogsEntryRSS {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONBlog.addEntry(
@@ -1519,9 +1521,10 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewBlogsEntryWithGuestPermissionsRemoved {
+		property portal.upstream = "quarantine";
+
 		Blogs.addEntry(
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");

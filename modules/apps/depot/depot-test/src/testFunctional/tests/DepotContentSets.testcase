@@ -27,9 +27,10 @@ definition {
 	}
 
 	@description = "This ensures that the documents with document type can be selected through Content Sets in a depot."
-	@ignore = "true"
 	@priority = "5"
 	test AddDocTypeDocumentsManually {
+		property portal.upstream = "quarantine";
+
 		for (var i : list "1,2") {
 			DepotNavigator.openDepotAdmin();
 
@@ -851,6 +852,8 @@ definition {
 	@description = "This ensures that multiple documents can be selected through Content Sets in a depot."
 	@priority = "5"
 	test SelectMultipleDocumentsManually {
+		property portal.upstream = "quarantine";
+
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(

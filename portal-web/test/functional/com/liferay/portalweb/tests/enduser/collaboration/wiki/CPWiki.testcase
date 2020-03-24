@@ -93,9 +93,9 @@ definition {
 	}
 
 	@description = "This test covers LPS-89884. It ensures that a DL image can be added to a wiki page via URL."
-	@ignore = "true"
 	@priority = "5"
 	test AddPageWithDMImageViaURL {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPWiki#AddPageWithDMImageViaURL";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -479,9 +479,10 @@ definition {
 		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 1");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewPageRSS {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

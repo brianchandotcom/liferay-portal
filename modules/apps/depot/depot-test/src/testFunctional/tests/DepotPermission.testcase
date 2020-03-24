@@ -29,8 +29,6 @@ definition {
 	@description = "This ensures that the user can perform operations to memberships with all permissions."
 	@priority = "5"
 	test AccessMembershipWithAllPermissions {
-		property portal.acceptance = "true";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
@@ -115,9 +113,10 @@ definition {
 	}
 
 	@description = "This ensures that the user can only view memberships with view permissions."
-	@ignore = "true"
 	@priority = "5"
 	test AccessMembershipWithViewOnlyPermissions {
+		property portal.upstream = "quarantine";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
@@ -485,9 +484,10 @@ definition {
 	}
 
 	@description = "This ensures that the user can view documents on site and library with all sites and libraries scope view permissions."
-	@ignore = "true"
 	@priority = "5"
 	test ViewDocumentOnSiteAndLibrary {
+		property portal.upstream = "quarantine";
+
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Depot DM Document Title",

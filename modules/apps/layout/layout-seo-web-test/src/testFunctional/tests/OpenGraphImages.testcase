@@ -107,10 +107,10 @@ definition {
 	}
 
 	@description = "This makes sure that the previously added image can be cleared at the page level."
-	@ignore = "true"
 	@priority = "5"
 	test ClearImageAtPageLevel {
-		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -287,10 +287,9 @@ definition {
 	}
 
 	@description = "This makes sure that it will apply the OG image of the page when images are set at both the site level and the page level."
-	@ignore = "true"
 	@priority = "5"
 	test ConfigurePageSpecificImage {
-		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		var portalURL = PropsUtil.get("portal.url");
 

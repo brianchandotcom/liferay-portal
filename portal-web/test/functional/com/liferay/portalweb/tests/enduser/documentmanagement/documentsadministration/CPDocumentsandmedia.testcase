@@ -766,9 +766,10 @@ definition {
 	}
 
 	@description = "This test covers LPS-91598. It makes sure that all files are deleted when user selects all."
-	@ignore = "true"
 	@priority = "4"
 	test SelectAllAndDelete {
+		property portal.upstream = "quarantine";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt,Document_1.txt,Document_2.xls,Document_3.jpg,Document_4.jpg,Document_1.xls,Document_2.doc");

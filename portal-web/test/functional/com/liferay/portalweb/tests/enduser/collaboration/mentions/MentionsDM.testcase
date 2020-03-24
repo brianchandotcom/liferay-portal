@@ -60,9 +60,10 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewMentionViaDMComment {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
@@ -112,9 +113,10 @@ definition {
 			mentionsUserScreenName = "test");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewReplyMentionViaDMComment {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",

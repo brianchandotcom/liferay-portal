@@ -29,6 +29,8 @@ definition {
 	@description = "This ensures that previous asset selections persist in content sets after DM and WC applications are disabled."
 	@priority = "5"
 	test SelectDisabledAssetsFromContentSets {
+		property portal.upstream = "quarantine";
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
@@ -358,9 +360,10 @@ definition {
 	}
 
 	@description = "This ensures that a depot image persists in blog entry as previously and it's not appeared in the item selector on a connected site when DM application is disabled."
-	@ignore = "true"
 	@priority = "5"
 	test ViewDisabledImageViaBlogs {
+		property portal.upstream = "quarantine";
+
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		DepotNavigator.openDepotAdmin();

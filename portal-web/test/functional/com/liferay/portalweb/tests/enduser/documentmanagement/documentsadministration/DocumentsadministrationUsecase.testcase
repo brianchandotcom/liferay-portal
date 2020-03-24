@@ -73,7 +73,6 @@ definition {
 	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."
 	@priority = "5"
 	test AddAutoAssertionCategoryViaDMDocument {
-
 		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#AddAutoAssertionCategoryViaDMDocument";
 
 		ProductMenu.gotoPortlet(
@@ -466,10 +465,10 @@ definition {
 	}
 
 	@description = "This test ensures that a checked out document cannot be edited by another user."
-	@ignore = "true"
 	@priority = "5"
 	test CheckOutDocument {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.upstream = "quarantine";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -593,9 +592,10 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test Comments {
+		property portal.upstream = "quarantine";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMFolder.addCP(dmFolderName = "Folder1");
@@ -772,10 +772,10 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ImportAudioAndLimitPermissionsToSubfolder {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		JSONGroup.addGroup(groupName = "Moon Rocks 101");
@@ -951,9 +951,10 @@ definition {
 	}
 
 	@description = "This test covers LPS-91597. It ensures that a user can delete multiple documents simultaneously."
-	@ignore = "true"
 	@priority = "4"
 	test SelectMultipleDocumentsAndDeleteViaActionsButton {
+		property portal.upstream = "quarantine";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");
@@ -1420,10 +1421,10 @@ definition {
 			tagNameList = "tag1,tag2");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewFolderAsOrganizationUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		JSONUser.addUser(

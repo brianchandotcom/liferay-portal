@@ -27,8 +27,6 @@ definition {
 	@description = "This makes sure that an image can be uploaded via URL."
 	@priority = "5"
 	test AddBlogsImageViaURL {
-		property portal.acceptance = "true";
-
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		BlogsNavigator.gotoAddEntry();
@@ -59,9 +57,10 @@ definition {
 	}
 
 	@description = "This ensures that the SVG image can be added to a fragment background."
-	@ignore = "true"
 	@priority = "5"
 	test AddSVGImageToFragmentBackground {
+		property portal.upstream = "quarantine";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");
@@ -131,10 +130,9 @@ definition {
 	}
 
 	@description = "This ensures that the background image of a fragment can be added."
-	@ignore = "true"
 	@priority = "5"
 	test FragmentSmoke {
-		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -211,13 +209,12 @@ definition {
 	}
 
 	@description = "This ensures that users can preview the SVG image in item selector."
-	@ignore = "true"
 	@priority = "5"
 	test PreviewSVG {
 
 		// Ignore test until LRQA-56962 is resolved
 
-		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

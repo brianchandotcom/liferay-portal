@@ -15,9 +15,6 @@
 package com.liferay.app.builder.web.internal.servlet.taglib.definition;
 
 import com.liferay.data.engine.taglib.servlet.taglib.definition.DataLayoutBuilderDefinition;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,10 +29,8 @@ public class AppBuilderDataLayoutBuilderDefinition
 	implements DataLayoutBuilderDefinition {
 
 	@Override
-	public Map<String, Object> getSuccessPageSettings() {
-		return HashMapBuilder.<String, Object>put(
-			"enabled", false
-		).build();
+	public boolean allowSuccessPage() {
+		return false;
 	}
 
 }

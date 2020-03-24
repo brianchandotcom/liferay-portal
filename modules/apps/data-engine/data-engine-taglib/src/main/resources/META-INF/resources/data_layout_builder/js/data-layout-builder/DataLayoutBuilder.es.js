@@ -65,12 +65,12 @@ class DataLayoutBuilder extends React.Component {
 				},
 				layoutProviderProps: {
 					...this.props,
+					allowSuccessPage: config.allowSuccessPage,
 					context,
 					defaultLanguageId: themeDisplay.getDefaultLanguageId(),
 					editingLanguageId: themeDisplay.getDefaultLanguageId(),
 					initialPages: context.pages,
 					initialPaginationMode: paginationMode,
-					initialSuccessPageSettings: config.successPageSettings,
 					ref: 'layoutProvider',
 				},
 			},

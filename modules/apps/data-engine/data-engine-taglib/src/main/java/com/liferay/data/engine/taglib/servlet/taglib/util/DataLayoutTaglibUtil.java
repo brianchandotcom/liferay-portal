@@ -136,6 +136,8 @@ public class DataLayoutTaglibUtil {
 		).put(
 			"allowRules", dataLayoutBuilderDefinition.allowRules()
 		).put(
+			"allowSuccessPage", dataLayoutBuilderDefinition.allowSuccessPage()
+		).put(
 			"disabledProperties",
 			dataLayoutBuilderDefinition.getDisabledProperties()
 		).put(
@@ -159,12 +161,8 @@ public class DataLayoutTaglibUtil {
 		}
 
 		dataLayoutConfigJSONObject.put(
-			"successPageSettings",
-			dataLayoutBuilderDefinition.getSuccessPageSettings()
-		).put(
 			"unimplementedProperties",
-			dataLayoutBuilderDefinition.getUnimplementedProperties()
-		);
+			dataLayoutBuilderDefinition.getUnimplementedProperties());
 
 		return dataLayoutConfigJSONObject;
 	}

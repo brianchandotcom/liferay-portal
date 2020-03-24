@@ -470,8 +470,11 @@ public class FragmentLayoutStructureItemHelper
 			}
 
 			if (Objects.equals(editableTypes.get(fragmentFieldId), "image")) {
+				Map<String, Object> fragmentImageMap =
+					(Map<String, Object>)valueMap.get("fragmentImage");
+
 				localizationJSONObject = _createImageLocalizationJSONObject(
-					(Map<String, Object>)valueMap.get("fragmentImage"));
+					fragmentImageMap);
 			}
 
 			if (editableFieldConfigJSONObject.length() > 0) {

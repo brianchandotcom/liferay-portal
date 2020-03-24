@@ -136,12 +136,9 @@ const ImagePicker = ({
 		? ''
 		: Liferay.Language.get('add-image-description');
 
-	let {height = '0', width = '0'} = {
+	const {height = '0', width = '0'} = {
 		...JSON.parse(inputValue || '{}'),
 	};
-
-	height = `${height}px`;
-	width = `${width}px`;
 
 	return (
 		<>
@@ -227,8 +224,8 @@ const ImagePicker = ({
 							className="image-picker-priview-backdor"
 							onClick={() => setModalVisible(true)}
 							style={{
-								height,
-								width,
+								height: `${height}px`,
+								width: `${width}px`,
 							}}
 						>
 							<ClayIcon symbol="search" />

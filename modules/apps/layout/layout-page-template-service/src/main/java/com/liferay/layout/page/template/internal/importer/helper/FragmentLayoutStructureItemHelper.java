@@ -259,6 +259,31 @@ public class FragmentLayoutStructureItemHelper
 		return jsonObject;
 	}
 
+	private JSONObject _createImageConfigJSONObject(
+		Map<String, Object> fragmentImageMap) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (fragmentImageMap == null) {
+			return jsonObject;
+		}
+
+		Map<String, Object> descriptionMap =
+			(Map<String, Object>)fragmentImageMap.get("description");
+
+		if (descriptionMap == null) {
+			return jsonObject;
+		}
+
+		String value = (String)descriptionMap.get("value");
+
+		if (value != null) {
+			jsonObject.put("alt", value);
+		}
+
+		return jsonObject;
+	}
+
 	private JSONObject _createImageLocalizationJSONObject(
 		Map<String, Object> fragmentImageMap) {
 

@@ -25,7 +25,7 @@ import {
 	createActionURL,
 	createPortletURL,
 } from 'frontend-js-web';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
@@ -215,51 +215,45 @@ const DocumentLibraryProxy = connectStore(
 	}) => {
 		const [currentValue, setCurrentValue] = useState(value);
 
-		const handleVisibleChange = useCallback(
-			event => {
-				if (event.selectedItem) {
-					emit('fieldFocused', event, event.selectedItem);
-				}
-				else {
-					emit('fieldBlurred', event);
-				}
-			},
-			[emit]
-		);
+		const handleVisibleChange = event => {
+			if (event.selectedItem) {
+				emit('fieldFocused', event, event.selectedItem);
+			}
+			else {
+				emit('fieldBlurred', event);
+			}
+		};
 
-		const handleSelectButtonClicked = useCallback(
-			({itemSelectorAuthToken, portletNamespace}) => {
-				const itemSelectorDialog = new ItemSelectorDialog({
-					eventName: `${portletNamespace}selectDocumentLibrary`,
-					singleSelect: true,
-					url: getDocumentLibrarySelectorURL({
-						itemSelectorAuthToken,
-						portletNamespace,
-					}),
-				});
+		const handleSelectButtonClicked = ({
+			itemSelectorAuthToken,
+			portletNamespace,
+		}) => {
+			const itemSelectorDialog = new ItemSelectorDialog({
+				eventName: `${portletNamespace}selectDocumentLibrary`,
+				singleSelect: true,
+				url: getDocumentLibrarySelectorURL({
+					itemSelectorAuthToken,
+					portletNamespace,
+				}),
+			});
 
-				itemSelectorDialog.on('selectedItemChange', handleFieldChanged);
-				itemSelectorDialog.on('visibleChange', handleVisibleChange);
+			itemSelectorDialog.on('selectedItemChange', handleFieldChanged);
+			itemSelectorDialog.on('visibleChange', handleVisibleChange);
 
-				itemSelectorDialog.open();
-			},
-			[handleFieldChanged, handleVisibleChange]
-		);
+			itemSelectorDialog.open();
+		};
 
-		const handleFieldChanged = useCallback(
-			event => {
-				const selectedItem = event.selectedItem;
+		const handleFieldChanged = event => {
+			const selectedItem = event.selectedItem;
 
-				if (selectedItem) {
-					const {value} = selectedItem;
+			if (selectedItem) {
+				const {value} = selectedItem;
 
-					setCurrentValue(value);
+				setCurrentValue(value);
 
-					emit('fieldEdited', event, value);
-				}
-			},
-			[emit]
-		);
+				emit('fieldEdited', event, value);
+			}
+		};
 
 		return (
 			<FieldBaseProxy

@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
 
 import Main from './components/Main';
@@ -38,9 +39,42 @@ export default function({context, props}) {
 		page,
 	});
 
+	return (
+		<Navigation
+			api={api}
+			authorName={authorName}
+			defaultTimeSpanKey={defaultTimeSpanKey}
+			languageTag={languageTag}
+			pagePublishDate={publishDate}
+			pageTitle={title}
+			timeSpanOptions={timeSpans}
+		/>
+	);
+}
+
+function Navigation({
+	api,
+	authorName,
+	defaultTimeSpanKey,
+	languageTag,
+	pagePublishDate,
+	pageTitle,
+	timeSpanOptions,
+}) {
+	const [currentPage, setCurrentPage] = React.useState({view: 'main'});
+
 	const {getHistoricalReads, getHistoricalViews, getTrafficSources} = api;
 
-	function handleTrafficSourceClick() {}
+	function handleTrafficSourceClick(trafficSourceName) {
+		api.getTrafficSourceDetails(trafficSourceName).then(
+			trafficSourceData => {
+				setCurrentPage({
+					data: trafficSourceData,
+					view: 'traffic-source-detail',
+				});
+			}
+		);
+	}
 
 	function handleTotalReads() {
 		return api.getTotalReads().then(response => {
@@ -62,20 +96,36 @@ export default function({context, props}) {
 
 	return (
 		<div className="overflow-hidden p-3">
-			<Main
-				authorName={authorName}
-				chartDataProviders={[getHistoricalViews, getHistoricalReads]}
-				defaultTimeSpanOption={defaultTimeSpanKey}
-				languageTag={languageTag}
-				onTrafficSourceClick={handleTrafficSourceClick}
-				pagePublishDate={publishDate}
-				pageTitle={title}
-				timeSpanOptions={timeSpans}
-				totalReadsDataProvider={handleTotalReads}
-				totalViewsDataProvider={handleTotalViews}
-				trafficSourcesDataProvider={getTrafficSources}
-			/>
-			)
+			{currentPage.view === 'main' && (
+				<Main
+					authorName={authorName}
+					chartDataProviders={[
+						getHistoricalViews,
+						getHistoricalReads,
+					]}
+					defaultTimeSpanOption={defaultTimeSpanKey}
+					languageTag={languageTag}
+					onTrafficSourceClick={handleTrafficSourceClick}
+					pagePublishDate={pagePublishDate}
+					pageTitle={pageTitle}
+					timeSpanOptions={timeSpanOptions}
+					totalReadsDataProvider={handleTotalReads}
+					totalViewsDataProvider={handleTotalViews}
+					trafficSourcesDataProvider={getTrafficSources}
+				/>
+			)}
+
+			{currentPage.view === 'traffic-source-detail' && (
+				<>
+					<ClayButtonWithIcon
+						displayType="secondary"
+						onClick={() => setCurrentPage({view: 'main'})}
+						small="true"
+						symbol="angle-left"
+					/>
+					<h1>{currentPage.data.title}</h1>
+				</>
+			)}
 		</div>
 	);
 }

@@ -15,29 +15,31 @@
 package com.liferay.users.admin.indexer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.test.util.AssertUtils;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,11 +55,6 @@ public class OrganizationIndexerTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@Before
-	public void setUp() throws Exception {
-		_indexer = _indexerRegistry.getIndexer(Organization.class);
-	}
 
 	@Test
 	public void testEmptyQuery() throws Exception {
@@ -132,7 +129,7 @@ public class OrganizationIndexerTest {
 		long parentOrganizationId = 0;
 		boolean site = false;
 
-		Organization organization = _organizationLocalService.addOrganization(
+		Organization organization = organizationLocalService.addOrganization(
 			userId, parentOrganizationId, name, site);
 
 		_organizations.add(organization);
@@ -141,9 +138,14 @@ public class OrganizationIndexerTest {
 	}
 
 	protected void assertHits(String keywords, int length) throws Exception {
-		Hits hits = search(keywords);
+		SearchResponse searchResponse = search(keywords);
 
-		Assert.assertEquals(hits.toString(), length, hits.getLength());
+		Stream<Document> stream = searchResponse.getDocumentsStream();
+
+		AssertUtils.assertEquals(
+			() -> StringBundler.concat(
+				keywords, "->", stream.collect(Collectors.toList())),
+			length, searchResponse.getTotalHits());
 	}
 
 	protected void assertSearch(String keywords, List<String> names)
@@ -153,32 +155,31 @@ public class OrganizationIndexerTest {
 	}
 
 	protected List<String> getNames(String keywords) throws Exception {
-		Hits hits = search(keywords);
+		SearchResponse searchResponse = search(keywords);
 
-		Document[] documents = hits.getDocs();
+		Stream<Document> stream = searchResponse.getDocumentsStream();
 
-		List<String> names = new ArrayList<>(documents.length);
-
-		for (Document document : documents) {
-			names.add(document.get(Field.NAME));
-		}
-
-		return names;
+		return stream.map(
+			document -> document.getString(Field.NAME)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
-	protected Hits search(String keywords) throws Exception {
-		SearchContext searchContext = new SearchContext();
+	protected SearchResponse search(String keywords) throws Exception {
+		long companyId = TestPropsValues.getCompanyId();
 
-		searchContext.setCompanyId(TestPropsValues.getCompanyId());
-		searchContext.setEntryClassNames(
-			new String[] {Organization.class.getName()});
-		searchContext.setKeywords(keywords);
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.setSelectedFieldNames(Field.NAME);
-
-		return _indexer.search(searchContext);
+		return searcher.search(
+			searchRequestBuilderFactory.builder(
+			).companyId(
+				companyId
+			).fields(
+				Field.NAME
+			).modelIndexerClasses(
+				Organization.class
+			).queryString(
+				keywords
+			).build());
 	}
 
 	protected String toString(List<String> list) {
@@ -187,13 +188,19 @@ public class OrganizationIndexerTest {
 		return list.toString();
 	}
 
-	@Inject
-	private static IndexerRegistry _indexerRegistry;
+	@Inject(
+		filter = "indexer.class.name=com.liferay.portal.kernel.model.Organization"
+	)
+	protected Indexer<Organization> indexer;
 
 	@Inject
-	private static OrganizationLocalService _organizationLocalService;
+	protected OrganizationLocalService organizationLocalService;
 
-	private Indexer<Organization> _indexer;
+	@Inject
+	protected Searcher searcher;
+
+	@Inject
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();

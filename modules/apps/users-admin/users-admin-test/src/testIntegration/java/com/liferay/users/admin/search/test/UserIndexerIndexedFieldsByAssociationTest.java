@@ -287,8 +287,8 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 	protected SearchRequestBuilder getSearchRequestBuilder(long companyId) {
 		return _searchRequestBuilderFactory.builder(
-		).withSearchContext(
-			searchContext -> searchContext.setCompanyId(companyId)
+		).companyId(
+			companyId
 		);
 	}
 

@@ -34,8 +34,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
@@ -51,7 +51,6 @@ import com.liferay.users.admin.test.util.search.UserGroupSearchFixture;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -102,7 +101,7 @@ public class UserIndexerIndexedFieldsTest {
 
 		indexedFieldsFixture.postProcessDocument(document);
 
-		Map<String, String> map = _getExpectedFieldValues(user2);
+		Map<String, Object> map = _getExpectedFieldValues(user2);
 
 		_populateAddressFieldValues(user2, map);
 
@@ -123,7 +122,7 @@ public class UserIndexerIndexedFieldsTest {
 
 		indexedFieldsFixture.postProcessDocument(document);
 
-		Map<String, String> map = _getExpectedFieldValues(user2);
+		Map<String, Object> map = _getExpectedFieldValues(user2);
 
 		map.put("jobTitle", user2.getJobTitle());
 		map.put(
@@ -147,7 +146,7 @@ public class UserIndexerIndexedFieldsTest {
 
 		indexedFieldsFixture.postProcessDocument(document);
 
-		Map<String, String> map = _getExpectedFieldValues(user);
+		Map<String, Object> map = _getExpectedFieldValues(user);
 
 		map.put("organizationIds", _getValues(user.getOrganizationIds()));
 
@@ -171,7 +170,7 @@ public class UserIndexerIndexedFieldsTest {
 
 		indexedFieldsFixture.postProcessDocument(document);
 
-		Map<String, String> map = _getExpectedFieldValues(user);
+		Map<String, Object> map = _getExpectedFieldValues(user);
 
 		map.put("userGroupIds", _getValues(user.getUserGroupIds()));
 
@@ -255,29 +254,29 @@ public class UserIndexerIndexedFieldsTest {
 
 	protected UserSearchFixture userSearchFixture;
 
-	private Map<String, String> _getExpectedFieldValues(User user)
+	private Map<String, Object> _getExpectedFieldValues(User user)
 		throws Exception {
 
-		String groupId = String.valueOf(user.getGroupIds()[0]);
+		Long groupId = user.getGroupIds()[0];
 
-		Map<String, String> map = HashMapBuilder.put(
-			Field.COMPANY_ID, String.valueOf(user.getCompanyId())
+		Map<String, Object> map = HashMapBuilder.put(
+			Field.COMPANY_ID, (Object)user.getCompanyId()
 		).put(
 			Field.ENTRY_CLASS_NAME, User.class.getName()
 		).put(
-			Field.ENTRY_CLASS_PK, String.valueOf(user.getUserId())
+			Field.ENTRY_CLASS_PK, user.getUserId()
 		).put(
 			Field.GROUP_ID, groupId
 		).put(
 			Field.SCOPE_GROUP_ID, groupId
 		).put(
-			Field.STATUS, String.valueOf(user.getStatus())
+			Field.STATUS, user.getStatus()
 		).put(
-			Field.USER_ID, String.valueOf(user.getUserId())
+			Field.USER_ID, user.getUserId()
 		).put(
 			Field.USER_NAME, StringUtil.toLowerCase(user.getFullName())
 		).put(
-			"defaultUser", String.valueOf(user.isDefaultUser())
+			"defaultUser", user.isDefaultUser()
 		).put(
 			"emailAddress", user.getEmailAddress()
 		).put(
@@ -297,7 +296,7 @@ public class UserIndexerIndexedFieldsTest {
 			() -> {
 				long[] organizationIds = user.getOrganizationIds();
 
-				return String.valueOf(organizationIds.length);
+				return organizationIds.length;
 			}
 		).put(
 			"roleIds", _getValues(user.getRoleIds())
@@ -336,20 +335,12 @@ public class UserIndexerIndexedFieldsTest {
 		return countryNames;
 	}
 
-	private String _getValues(List<String> stringValues) {
-		if (stringValues.size() == 1) {
-			return stringValues.get(0);
-		}
-
-		return String.valueOf(stringValues);
-	}
-
-	private String _getValues(long[] longValues) {
-		return _getValues(Arrays.asList(ArrayUtil.toStringArray(longValues)));
+	private List<Long> _getValues(long[] longValues) {
+		return ListUtil.fromArray(longValues);
 	}
 
 	private void _populateAddressFieldValues(
-		User user, Map<String, String> map) {
+		User user, Map<String, Object> map) {
 
 		List<String> cities = new ArrayList<>();
 		List<String> countries = new ArrayList<>();
@@ -373,11 +364,11 @@ public class UserIndexerIndexedFieldsTest {
 			zips.add(StringUtil.toLowerCase(address.getZip()));
 		}
 
-		map.put("city", _getValues(cities));
-		map.put("country", _getValues(countries));
-		map.put("region", _getValues(regions));
-		map.put("street", _getValues(streets));
-		map.put("zip", _getValues(zips));
+		map.put("city", cities);
+		map.put("country", countries);
+		map.put("region", regions);
+		map.put("street", streets);
+		map.put("zip", zips);
 	}
 
 	@DeleteAfterTestRun

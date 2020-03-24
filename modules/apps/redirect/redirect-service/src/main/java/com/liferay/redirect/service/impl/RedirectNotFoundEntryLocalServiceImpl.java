@@ -16,6 +16,8 @@ package com.liferay.redirect.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.base.RedirectNotFoundEntryLocalServiceBaseImpl;
@@ -34,6 +36,7 @@ import org.osgi.service.component.annotations.Component;
 public class RedirectNotFoundEntryLocalServiceImpl
 	extends RedirectNotFoundEntryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RedirectNotFoundEntry addOrUpdateRedirectNotFoundEntry(
 		Group group, String url) {

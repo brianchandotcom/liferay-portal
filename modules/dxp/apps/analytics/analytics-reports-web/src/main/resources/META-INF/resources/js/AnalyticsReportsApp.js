@@ -11,11 +11,7 @@
 
 import React from 'react';
 
-import BasicInformation from './components/BasicInformation';
-import Chart from './components/Chart';
-import Hint from './components/Hint';
-import TotalCount from './components/TotalCount';
-import TrafficSources from './components/TrafficSources';
+import Main from './components/Main';
 import APIService from './utils/APIService';
 import {numberFormat} from './utils/numberFormat';
 
@@ -42,9 +38,11 @@ export default function({context, props}) {
 		page,
 	});
 
-	const {getHistoricalReads, getHistoricalViews} = api;
+	const {getHistoricalReads, getHistoricalViews, getTrafficSources} = api;
 
-	function _handleTotalReads() {
+	function handleTrafficSourceClick() {}
+
+	function handleTotalReads() {
 		return api.getTotalReads().then(response => {
 			return numberFormat(
 				languageTag,
@@ -52,7 +50,8 @@ export default function({context, props}) {
 			);
 		});
 	}
-	function _handleTotalViews() {
+
+	function handleTotalViews() {
 		return api.getTotalViews().then(response => {
 			return numberFormat(
 				languageTag,
@@ -63,59 +62,20 @@ export default function({context, props}) {
 
 	return (
 		<div className="overflow-hidden p-3">
-			<BasicInformation
+			<Main
 				authorName={authorName}
-				languageTag={languageTag}
-				publishDate={publishDate}
-				title={title}
-			/>
-
-			<h5 className="mt-4 sheet-subtitle text-secondary">
-				{Liferay.Language.get('views-and-reads')}
-			</h5>
-
-			<TotalCount
-				className="mt-2"
-				dataProvider={_handleTotalViews}
-				label={Liferay.Util.sub(Liferay.Language.get('total-views'))}
-				popoverHeader={Liferay.Language.get('total-views')}
-				popoverMessage={Liferay.Language.get(
-					'this-number-refers-to-the-total-number-of-views-since-the-content-was-published'
-				)}
-			/>
-
-			<TotalCount
-				className="mb-3 mt-2"
-				dataProvider={_handleTotalReads}
-				label={Liferay.Util.sub(Liferay.Language.get('total-reads'))}
-				popoverHeader={Liferay.Language.get('total-reads')}
-				popoverMessage={Liferay.Language.get(
-					'this-number-refers-to-the-total-number-of-reads-since-the-content-was-published'
-				)}
-			/>
-
-			<Chart
-				dataProviders={[getHistoricalViews, getHistoricalReads]}
+				chartDataProviders={[getHistoricalViews, getHistoricalReads]}
 				defaultTimeSpanOption={defaultTimeSpanKey}
 				languageTag={languageTag}
-				publishDate={publishDate}
+				onTrafficSourceClick={handleTrafficSourceClick}
+				pagePublishDate={publishDate}
+				pageTitle={title}
 				timeSpanOptions={timeSpans}
+				totalReadsDataProvider={handleTotalReads}
+				totalViewsDataProvider={handleTotalViews}
+				trafficSourcesDataProvider={getTrafficSources}
 			/>
-
-					<h5 className="mt-3 sheet-subtitle text-secondary">
-				{Liferay.Language.get('traffic-sources')}
-				<Hint
-							message={Liferay.Language.get(
-								'traffic-sources-help'
-							)}
-					title={Liferay.Language.get('traffic-sources')}
-				/>
-			</h5>
-
-			<TrafficSources
-				dataProvider={api.getTrafficSources}
-				languageTag={languageTag}
-			/>
+			)
 		</div>
 	);
 }

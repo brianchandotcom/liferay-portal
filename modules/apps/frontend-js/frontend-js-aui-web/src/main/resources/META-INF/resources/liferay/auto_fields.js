@@ -249,24 +249,15 @@ AUI.add(
 
 					instance._clearInputsLocalized(node);
 
-					inputsLocalized.each(item => {
-						var inputId = item.attr('id');
+					instance.once('clone', () => {
+						inputsLocalized.each(item => {
+							var inputId = item.attr('id');
 
-						var inputLocalized;
-
-						if (inputId) {
-							inputLocalized =
-								Liferay.InputLocalized._registered[inputId];
-
-							if (inputLocalized) {
-								Liferay.component(inputId).render();
-							}
-
-							inputLocalized =
-								Liferay.InputLocalized._instances[inputId];
-						}
-
-						instance._registerInputLocalized(inputLocalized, guid);
+							instance._registerInputLocalized(
+								Liferay.InputLocalized._instances[inputId],
+								guid
+							);
+						});
 					});
 
 					node.all('.form-validator-stack').remove();

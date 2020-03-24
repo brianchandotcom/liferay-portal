@@ -142,7 +142,7 @@ definition {
 	}
 
 	test AssertResultRankingsMiscUI {
-		property portal.upstream = "quarantine";
+		property portal.suite.search.engine = "disabled";
 		property test.name.skip.portal.instance = "SearchTuningES7#AssertResultRankingsMiscUI";
 
 		ProductMenu.gotoPortlet(

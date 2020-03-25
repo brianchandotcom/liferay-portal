@@ -168,28 +168,10 @@ public class AddFormInstanceRecordMVCActionCommand
 	}
 
 	@Reference(unbind = "-")
-	protected void setAddFormInstanceRecordMVCCommandHelper(
-		AddFormInstanceRecordMVCCommandHelper
-			addFormInstanceRecordMVCCommandHelper) {
-
-		_addFormInstanceMVCCommandHelper =
-			addFormInstanceRecordMVCCommandHelper;
-	}
-
-	@Reference(unbind = "-")
 	protected void setDDMFormInstanceRecordService(
 		DDMFormInstanceRecordService ddmFormInstanceRecordService) {
 
 		_ddmFormInstanceRecordService = ddmFormInstanceRecordService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormInstanceRecordVersionLocalService(
-		DDMFormInstanceRecordVersionLocalService
-			ddmFormInstanceRecordVersionLocalService) {
-
-		_ddmFormInstanceRecordVersionLocalService =
-			ddmFormInstanceRecordVersionLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -204,11 +186,6 @@ public class AddFormInstanceRecordMVCActionCommand
 		DDMFormValuesFactory ddmFormValuesFactory) {
 
 		_ddmFormValuesFactory = ddmFormValuesFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
 	}
 
 	protected void validateCaptcha(
@@ -295,10 +272,15 @@ public class AddFormInstanceRecordMVCActionCommand
 		_addFormInstanceMVCCommandHelper;
 
 	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;
+
+	@Reference
 	private DDMFormInstanceRecordVersionLocalService
 		_ddmFormInstanceRecordVersionLocalService;
+
 	private DDMFormInstanceService _ddmFormInstanceService;
 	private DDMFormValuesFactory _ddmFormValuesFactory;
+
+	@Reference
 	private Portal _portal;
 
 }

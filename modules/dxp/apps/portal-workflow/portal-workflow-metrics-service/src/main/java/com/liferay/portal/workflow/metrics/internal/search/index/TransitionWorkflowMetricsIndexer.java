@@ -24,10 +24,12 @@ import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
+import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
@@ -73,8 +75,9 @@ public class TransitionWorkflowMetricsIndexer
 	}
 
 	@Override
-	public String getIndexName() {
-		return "workflow-metrics-transitions";
+	public String getIndexName(long companyId) {
+		return _transitionWorkflowMetricsIndexNameBuilder.getIndexName(
+			companyId);
 	}
 
 	@Override
@@ -116,5 +119,9 @@ public class TransitionWorkflowMetricsIndexer
 
 		return kaleoTask.getKaleoTaskId();
 	}
+
+	@Reference(target = "(workflow.metrics.index.entity.name=transition)")
+	private WorkflowMetricsIndexNameBuilder
+		_transitionWorkflowMetricsIndexNameBuilder;
 
 }

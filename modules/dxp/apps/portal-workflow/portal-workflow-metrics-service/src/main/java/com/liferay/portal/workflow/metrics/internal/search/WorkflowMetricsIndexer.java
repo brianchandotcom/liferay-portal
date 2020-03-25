@@ -87,11 +87,11 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 		_tokenWorkflowMetricsIndexer.deleteIndex(companyId);
 		_transitionWorkflowMetricsIndexer.deleteIndex(companyId);
 
-		_instanceWorkflowMetricsIndexer.createIndex();
-		_nodeWorkflowMetricsIndexer.createIndex();
-		_processWorkflowMetricsIndexer.createIndex();
-		_tokenWorkflowMetricsIndexer.createIndex();
-		_transitionWorkflowMetricsIndexer.createIndex();
+		_instanceWorkflowMetricsIndexer.createIndex(companyId);
+		_nodeWorkflowMetricsIndexer.createIndex(companyId);
+		_processWorkflowMetricsIndexer.createIndex(companyId);
+		_tokenWorkflowMetricsIndexer.createIndex(companyId);
+		_transitionWorkflowMetricsIndexer.createIndex(companyId);
 
 		_instanceWorkflowMetricsIndexer.reindex(companyId);
 		_nodeWorkflowMetricsIndexer.reindex(companyId);

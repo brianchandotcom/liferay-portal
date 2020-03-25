@@ -30,6 +30,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
 import java.text.ParseException;
 
@@ -133,8 +134,8 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	}
 
 	@Override
-	public String getIndexName() {
-		return "workflow-metrics-tokens";
+	public String getIndexName(long companyId) {
+		return _tokenWorkflowMetricsIndexNameBuilder.getIndexName(companyId);
 	}
 
 	@Override
@@ -180,6 +181,7 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 				"tokenId", GetterUtil.getLong(document.get("tokenId"))));
 
 		_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
+			GetterUtil.getLong(document.get("companyId")),
 			documentImpl -> new DocumentImpl() {
 				{
 					if (!Objects.isNull(document.get("assigneeId"))) {
@@ -223,5 +225,9 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer
 		_slaTaskResultWorkflowMetricsIndexer;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=token)")
+	private WorkflowMetricsIndexNameBuilder
+		_tokenWorkflowMetricsIndexNameBuilder;
 
 }

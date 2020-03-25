@@ -144,6 +144,8 @@ definition {
 
 	@priority = "4"
 	test ChangeReportName {
+		property portal.acceptance = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -180,6 +182,7 @@ definition {
 
 	@priority = "4"
 	test DeleteReportFile {
+		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
@@ -228,6 +231,8 @@ definition {
 
 	@priority = "4"
 	test DeliverReportToEmail {
+		property portal.acceptance = "true";
+
 		property test.assert.javascript.errors = "false";
 		property test.smtp.server.enabled = "true";
 		var portalURL = PropsUtil.get("portal.url");
@@ -348,6 +353,8 @@ definition {
 
 	@priority = "4"
 	test DownloadReportPDF {
+		property portal.acceptance = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -526,6 +533,8 @@ definition {
 	@description = "This is a use case for LPS-43525."
 	@priority = "3"
 	test TestDatabaseConnection {
+		property portal.acceptance = "true";
+
 		var databasePassword = PropsUtil.get("database.mysql.password");
 		var databaseURL = PropsUtil.get("database.mysql.url");
 		var databaseUsername = PropsUtil.get("database.mysql.username");
@@ -696,6 +705,8 @@ definition {
 
 	@priority = "3"
 	test ViewReportDefinitionParametersFields {
+		property portal.acceptance = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

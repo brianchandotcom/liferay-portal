@@ -25,6 +25,8 @@ definition {
 
 	@priority = "4"
 	test ViewWebContentInSampleDrools {
+		property portal.acceptance = "true";
+
 		property osgi.modules.includes = "portal-rules-engine-sample-web";
 
 		Navigator.openURL();

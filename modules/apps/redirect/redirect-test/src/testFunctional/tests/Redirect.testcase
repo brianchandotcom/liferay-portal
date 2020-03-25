@@ -119,6 +119,8 @@ definition {
 	@description = "This ensures that an unexpired redirect can be edited."
 	@priority = "5"
 	test EditEntry {
+		property portal.upstream = "quarantine";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -190,6 +192,8 @@ definition {
 	@description = "This ensures that an expired permanent redirect can be viewed."
 	@priority = "5"
 	test ViewExpiredPermanentEntry {
+		property portal.upstream = "quarantine";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -212,6 +216,8 @@ definition {
 	@description = "This ensures that an expired temporary redirect can be viewed."
 	@priority = "5"
 	test ViewExpiredTempEntry {
+		property portal.upstream = "quarantine";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");

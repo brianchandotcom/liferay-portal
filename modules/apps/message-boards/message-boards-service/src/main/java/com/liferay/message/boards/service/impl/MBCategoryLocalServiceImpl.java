@@ -808,6 +808,13 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		category = mbCategoryPersistence.update(category);
 
+		// Indexer
+
+		Indexer<MBCategory> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(MBCategory.class);
+
+		indexer.reindex(category);
+
 		// Mailing list
 
 		MBMailingList mailingList =

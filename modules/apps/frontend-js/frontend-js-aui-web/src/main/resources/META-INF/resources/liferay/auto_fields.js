@@ -133,7 +133,7 @@ AUI.add(
 
 				_clearInputsLocalized(node) {
 					node.all('.language-value').attr('placeholder', '');
-					node.all('.form-text').remove();
+					node.all('.form-text').setHTML('');
 				},
 
 				_createClone(node) {
@@ -184,7 +184,7 @@ AUI.add(
 						rules = formValidator.get('rules');
 					}
 
-					node.all('input, select, textarea, span, div').each(
+					node.all('button, input, select, textarea, span, div').each(
 						item => {
 							var inputNodeName = item.attr('nodeName');
 							var inputType = item.attr('type');
@@ -339,15 +339,16 @@ AUI.add(
 						.get('id')
 						.replace(/([0-9]+)$/, guid);
 
-					var inputLocalizedNamespaceId =
-						inputLocalized.get('namespace') + inputLocalizedId;
+					var inputLocalizedNamespace = inputLocalized.get(
+						'namespace'
+					);
+
+					var inputLocalizedNamespaceId = `${inputLocalizedNamespace}${inputLocalizedId}`;
 
 					Liferay.InputLocalized.register(inputLocalizedNamespaceId, {
-						boundingBox:
-							'#' + inputLocalizedNamespaceId + 'BoundingBox',
+						boundingBox: `#${inputLocalizedNamespaceId}PaletteBoundingBox`,
 						columns: inputLocalized.get('columns'),
-						contentBox:
-							'#' + inputLocalizedNamespaceId + 'ContentBox',
+						contentBox: `#${inputLocalizedNamespaceId}PaletteContentBox`,
 						defaultLanguageId: inputLocalized.get(
 							'defaultLanguageId'
 						),
@@ -355,11 +356,12 @@ AUI.add(
 						fieldPrefixSeparator: inputLocalized.get(
 							'fieldPrefixSeparator'
 						),
+						helpMessage: inputLocalized.get('helpMessage'),
 						id: inputLocalizedId,
+						inputBox: `#${inputLocalizedNamespaceId}BoundingBox`,
 						inputPlaceholder: '#' + inputLocalizedNamespaceId,
 						items: inputLocalized.get('items'),
 						itemsError: inputLocalized.get('itemsError'),
-						lazy: true,
 						name: inputLocalizedId,
 						namespace: inputLocalized.get('namespace'),
 						toggleSelection: inputLocalized.get('toggleSelection'),
@@ -367,6 +369,10 @@ AUI.add(
 							'translatedLanguages'
 						),
 					});
+
+					var inputLocalizedMenuId = `${inputLocalizedNamespace}${inputLocalizedNamespaceId}Menu`;
+
+					Liferay.Menu.register(inputLocalizedMenuId);
 				},
 
 				_updateContentButtons() {
@@ -699,6 +705,7 @@ AUI.add(
 			'aui-parse-content',
 			'base',
 			'liferay-form',
+			'liferay-menu',
 			'liferay-portlet-base',
 			'liferay-undo-manager',
 			'sortable',

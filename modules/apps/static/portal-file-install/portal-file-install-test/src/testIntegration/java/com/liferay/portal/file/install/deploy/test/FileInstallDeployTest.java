@@ -34,6 +34,7 @@ import java.nio.file.Paths;
 import java.util.Dictionary;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
@@ -128,6 +129,50 @@ public class FileInstallDeployTest {
 	}
 
 	@Test
+	public void testConfigurationSystem() throws Exception {
+		Path path = Paths.get(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+			_CONFIGURATION_PID.concat(".config"));
+
+		String systemTestProperty = "systemTestProp";
+		String systemTestPropertyValue = "systemTestPropValue";
+
+		String propertyOriginal = System.getProperty(systemTestProperty);
+
+		try {
+			System.setProperty(systemTestProperty, systemTestPropertyValue);
+
+			_updateConfiguration(
+				() -> {
+					String content = StringBundler.concat(
+						_TEST_KEY, StringPool.EQUAL, "${", systemTestProperty,
+						"}");
+
+					Files.write(path, content.getBytes());
+				});
+
+			Configuration configuration = _configurationAdmin.getConfiguration(
+				_CONFIGURATION_PID, StringPool.QUESTION);
+
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
+
+			Assert.assertEquals(
+				systemTestPropertyValue, properties.get(_TEST_KEY));
+		}
+		finally {
+			if (propertyOriginal == null) {
+				System.clearProperty(systemTestProperty);
+			}
+			else {
+				System.setProperty(systemTestProperty, propertyOriginal);
+			}
+
+			Files.deleteIfExists(path);
+		}
+	}
+
+	@Test
 	public void testDeployAndDelete() throws Exception {
 		Path path = Paths.get(
 			PropsValues.MODULE_FRAMEWORK_MODULES_DIR, _TEST_JAR_NAME);
@@ -179,16 +224,7 @@ public class FileInstallDeployTest {
 
 			installCountDownLatch.await();
 
-			for (Bundle currentBundle : _bundleContext.getBundles()) {
-				if (Objects.equals(
-						currentBundle.getSymbolicName(),
-						_TEST_JAR_SYMBOLIC_NAME)) {
-
-					bundle = currentBundle;
-
-					break;
-				}
-			}
+			bundle = _getBundle(_TEST_JAR_SYMBOLIC_NAME);
 
 			Assert.assertNotNull(bundle);
 
@@ -212,6 +248,82 @@ public class FileInstallDeployTest {
 			_bundleContext.removeBundleListener(bundleListener);
 
 			Files.deleteIfExists(path);
+		}
+	}
+
+	@Test
+	public void testDeployAndDeleteFragmentHost() throws Exception {
+		String testFragmentSymbolicName =
+			"com.liferay.portal.file.install.deploy.test.fragment";
+
+		String testFragmentJarName = testFragmentSymbolicName.concat(".jar");
+
+		Path path = Paths.get(
+			PropsValues.MODULE_FRAMEWORK_MODULES_DIR, _TEST_JAR_NAME);
+
+		Path fragmentPath = Paths.get(
+			PropsValues.MODULE_FRAMEWORK_MODULES_DIR, testFragmentJarName);
+
+		CountDownLatch installCountDownLatch = new CountDownLatch(1);
+
+		CountDownLatch fragmentInstallCountDownLatch = new CountDownLatch(1);
+
+		BundleListener bundleListener = new BundleListener() {
+
+			@Override
+			public void bundleChanged(BundleEvent bundleEvent) {
+				Bundle bundle = bundleEvent.getBundle();
+
+				int type = bundleEvent.getType();
+
+				if (Objects.equals(
+						bundle.getSymbolicName(), testFragmentSymbolicName) &&
+					(type == BundleEvent.RESOLVED)) {
+
+					fragmentInstallCountDownLatch.countDown();
+				}
+
+				if (Objects.equals(
+						bundle.getSymbolicName(), _TEST_JAR_SYMBOLIC_NAME) &&
+					(type == BundleEvent.STARTED)) {
+
+					installCountDownLatch.countDown();
+				}
+			}
+
+		};
+
+		_bundleContext.addBundleListener(bundleListener);
+
+		Version baseVersion = new Version(1, 0, 0);
+
+		Bundle bundle = null;
+
+		try {
+			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, baseVersion, null);
+
+			installCountDownLatch.await(30, TimeUnit.SECONDS);
+
+			bundle = _getBundle(_TEST_JAR_SYMBOLIC_NAME);
+
+			Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
+
+			_createJAR(
+				fragmentPath, testFragmentSymbolicName, baseVersion,
+				_TEST_JAR_SYMBOLIC_NAME);
+
+			fragmentInstallCountDownLatch.await(30, TimeUnit.SECONDS);
+
+			bundle = _getBundle(testFragmentSymbolicName);
+
+			Assert.assertEquals(Bundle.RESOLVED, bundle.getState());
+		}
+		finally {
+			_bundleContext.removeBundleListener(bundleListener);
+
+			Files.deleteIfExists(path);
+
+			Files.deleteIfExists(fragmentPath);
 		}
 	}
 
@@ -244,6 +356,16 @@ public class FileInstallDeployTest {
 
 			jarOutputStream.closeEntry();
 		}
+	}
+
+	private Bundle _getBundle(String symbolicName) {
+		for (Bundle currentBundle : _bundleContext.getBundles()) {
+			if (Objects.equals(currentBundle.getSymbolicName(), symbolicName)) {
+				return currentBundle;
+			}
+		}
+
+		return null;
 	}
 
 	private void _updateConfiguration(UnsafeRunnable<Exception> runnable)

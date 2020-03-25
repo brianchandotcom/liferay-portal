@@ -483,7 +483,6 @@
 	<td>//label[contains(.,'${key_checkboxOption}')]/input[@type='checkbox']/../span</td>
 	<td></td>
 </tr>
-
 </tbody>
 </table>
 </body>

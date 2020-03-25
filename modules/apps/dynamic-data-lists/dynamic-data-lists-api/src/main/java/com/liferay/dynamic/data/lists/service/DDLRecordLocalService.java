@@ -110,6 +110,12 @@ public interface DDLRecordLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public DDLRecord addRecord(
+			long userId, long groupId, long ddmStorageId, long ddlRecordSetId,
+			String className, long classPK, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new ddl record with the primary key. Does not add the ddl record to the database.
 	 *

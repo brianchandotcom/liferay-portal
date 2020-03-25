@@ -15,6 +15,8 @@ create table DDLRecord (
 	recordSetVersion VARCHAR(75) null,
 	version VARCHAR(75) null,
 	displayIndex INTEGER,
+	className VARCHAR(300) null,
+	classPK LONG,
 	lastPublishDate DATE null
 );
 

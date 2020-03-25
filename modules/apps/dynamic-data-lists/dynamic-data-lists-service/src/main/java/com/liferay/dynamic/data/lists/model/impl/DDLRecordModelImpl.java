@@ -82,6 +82,7 @@ public class DDLRecordModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"DDMStorageId", Types.BIGINT},
 		{"recordSetId", Types.BIGINT}, {"recordSetVersion", Types.VARCHAR},
 		{"version", Types.VARCHAR}, {"displayIndex", Types.INTEGER},
+		{"className", Types.VARCHAR}, {"classPK", Types.BIGINT},
 		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
@@ -105,11 +106,13 @@ public class DDLRecordModelImpl
 		TABLE_COLUMNS_MAP.put("recordSetVersion", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("displayIndex", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("className", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDLRecord (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,recordId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DDMStorageId LONG,recordSetId LONG,recordSetVersion VARCHAR(75) null,version VARCHAR(75) null,displayIndex INTEGER,lastPublishDate DATE null)";
+		"create table DDLRecord (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,recordId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DDMStorageId LONG,recordSetId LONG,recordSetVersion VARCHAR(75) null,version VARCHAR(75) null,displayIndex INTEGER,className VARCHAR(300) null,classPK LONG,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DDLRecord";
 
@@ -125,19 +128,23 @@ public class DDLRecordModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long CLASSNAME_COLUMN_BITMASK = 1L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 
-	public static final long RECORDSETID_COLUMN_BITMASK = 4L;
+	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
-	public static final long RECORDSETVERSION_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
-	public static final long USERID_COLUMN_BITMASK = 16L;
+	public static final long RECORDSETID_COLUMN_BITMASK = 16L;
 
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long RECORDSETVERSION_COLUMN_BITMASK = 32L;
 
-	public static final long RECORDID_COLUMN_BITMASK = 64L;
+	public static final long USERID_COLUMN_BITMASK = 64L;
+
+	public static final long UUID_COLUMN_BITMASK = 128L;
+
+	public static final long RECORDID_COLUMN_BITMASK = 256L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -176,6 +183,8 @@ public class DDLRecordModelImpl
 		model.setRecordSetVersion(soapModel.getRecordSetVersion());
 		model.setVersion(soapModel.getVersion());
 		model.setDisplayIndex(soapModel.getDisplayIndex());
+		model.setClassName(soapModel.getClassName());
+		model.setClassPK(soapModel.getClassPK());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
@@ -390,6 +399,13 @@ public class DDLRecordModelImpl
 		attributeSetterBiConsumers.put(
 			"displayIndex",
 			(BiConsumer<DDLRecord, Integer>)DDLRecord::setDisplayIndex);
+		attributeGetterFunctions.put("className", DDLRecord::getClassName);
+		attributeSetterBiConsumers.put(
+			"className",
+			(BiConsumer<DDLRecord, String>)DDLRecord::setClassName);
+		attributeGetterFunctions.put("classPK", DDLRecord::getClassPK);
+		attributeSetterBiConsumers.put(
+			"classPK", (BiConsumer<DDLRecord, Long>)DDLRecord::setClassPK);
 		attributeGetterFunctions.put(
 			"lastPublishDate", DDLRecord::getLastPublishDate);
 		attributeSetterBiConsumers.put(
@@ -711,6 +727,55 @@ public class DDLRecordModelImpl
 
 	@JSON
 	@Override
+	public String getClassName() {
+		if (_className == null) {
+			return "";
+		}
+		else {
+			return _className;
+		}
+	}
+
+	@Override
+	public void setClassName(String className) {
+		_columnBitmask |= CLASSNAME_COLUMN_BITMASK;
+
+		if (_originalClassName == null) {
+			_originalClassName = _className;
+		}
+
+		_className = className;
+	}
+
+	public String getOriginalClassName() {
+		return GetterUtil.getString(_originalClassName);
+	}
+
+	@JSON
+	@Override
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	@Override
+	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
+		if (!_setOriginalClassPK) {
+			_setOriginalClassPK = true;
+
+			_originalClassPK = _classPK;
+		}
+
+		_classPK = classPK;
+	}
+
+	public long getOriginalClassPK() {
+		return _originalClassPK;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -778,6 +843,8 @@ public class DDLRecordModelImpl
 		ddlRecordImpl.setRecordSetVersion(getRecordSetVersion());
 		ddlRecordImpl.setVersion(getVersion());
 		ddlRecordImpl.setDisplayIndex(getDisplayIndex());
+		ddlRecordImpl.setClassName(getClassName());
+		ddlRecordImpl.setClassPK(getClassPK());
 		ddlRecordImpl.setLastPublishDate(getLastPublishDate());
 
 		ddlRecordImpl.resetOriginalValues();
@@ -865,6 +932,12 @@ public class DDLRecordModelImpl
 		ddlRecordModelImpl._originalRecordSetVersion =
 			ddlRecordModelImpl._recordSetVersion;
 
+		ddlRecordModelImpl._originalClassName = ddlRecordModelImpl._className;
+
+		ddlRecordModelImpl._originalClassPK = ddlRecordModelImpl._classPK;
+
+		ddlRecordModelImpl._setOriginalClassPK = false;
+
 		ddlRecordModelImpl._columnBitmask = 0;
 	}
 
@@ -947,6 +1020,16 @@ public class DDLRecordModelImpl
 		}
 
 		ddlRecordCacheModel.displayIndex = getDisplayIndex();
+
+		ddlRecordCacheModel.className = getClassName();
+
+		String className = ddlRecordCacheModel.className;
+
+		if ((className != null) && (className.length() == 0)) {
+			ddlRecordCacheModel.className = null;
+		}
+
+		ddlRecordCacheModel.classPK = getClassPK();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -1060,6 +1143,11 @@ public class DDLRecordModelImpl
 	private String _originalRecordSetVersion;
 	private String _version;
 	private int _displayIndex;
+	private String _className;
+	private String _originalClassName;
+	private long _classPK;
+	private long _originalClassPK;
+	private boolean _setOriginalClassPK;
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private DDLRecord _escapedModel;

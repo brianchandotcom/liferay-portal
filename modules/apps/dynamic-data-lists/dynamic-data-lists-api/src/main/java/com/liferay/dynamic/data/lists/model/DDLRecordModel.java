@@ -335,6 +335,35 @@ public interface DDLRecordModel
 	public void setDisplayIndex(int displayIndex);
 
 	/**
+	 * Returns the class name of this ddl record.
+	 *
+	 * @return the class name of this ddl record
+	 */
+	@AutoEscape
+	public String getClassName();
+
+	/**
+	 * Sets the class name of this ddl record.
+	 *
+	 * @param className the class name of this ddl record
+	 */
+	public void setClassName(String className);
+
+	/**
+	 * Returns the class pk of this ddl record.
+	 *
+	 * @return the class pk of this ddl record
+	 */
+	public long getClassPK();
+
+	/**
+	 * Sets the class pk of this ddl record.
+	 *
+	 * @param classPK the class pk of this ddl record
+	 */
+	public void setClassPK(long classPK);
+
+	/**
 	 * Returns the last publish date of this ddl record.
 	 *
 	 * @return the last publish date of this ddl record

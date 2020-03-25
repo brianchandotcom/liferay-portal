@@ -3604,6 +3604,592 @@ public class DDLRecordPersistenceImpl
 	private static final String _FINDER_COLUMN_R_R_RECORDSETVERSION_3 =
 		"(ddlRecord.recordSetVersion IS NULL OR ddlRecord.recordSetVersion = '')";
 
+	private FinderPath _finderPathWithPaginationFindByC_C;
+	private FinderPath _finderPathWithoutPaginationFindByC_C;
+	private FinderPath _finderPathCountByC_C;
+
+	/**
+	 * Returns all the ddl records where className = &#63; and classPK = &#63;.
+	 *
+	 * @param className the class name
+	 * @param classPK the class pk
+	 * @return the matching ddl records
+	 */
+	@Override
+	public List<DDLRecord> findByC_C(String className, long classPK) {
+		return findByC_C(
+			className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the ddl records where className = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param className the class name
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @return the range of matching ddl records
+	 */
+	@Override
+	public List<DDLRecord> findByC_C(
+		String className, long classPK, int start, int end) {
+
+		return findByC_C(className, classPK, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddl records where className = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param className the class name
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddl records
+	 */
+	@Override
+	public List<DDLRecord> findByC_C(
+		String className, long classPK, int start, int end,
+		OrderByComparator<DDLRecord> orderByComparator) {
+
+		return findByC_C(
+			className, classPK, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddl records where className = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param className the class name
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ddl records
+	 */
+	@Override
+	public List<DDLRecord> findByC_C(
+		String className, long classPK, int start, int end,
+		OrderByComparator<DDLRecord> orderByComparator,
+		boolean useFinderCache) {
+
+		className = Objects.toString(className, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_C;
+				finderArgs = new Object[] {className, classPK};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_C;
+			finderArgs = new Object[] {
+				className, classPK, start, end, orderByComparator
+			};
+		}
+
+		List<DDLRecord> list = null;
+
+		if (useFinderCache) {
+			list = (List<DDLRecord>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (DDLRecord ddlRecord : list) {
+					if (!className.equals(ddlRecord.getClassName()) ||
+						(classPK != ddlRecord.getClassPK())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_DDLRECORD_WHERE);
+
+			boolean bindClassName = false;
+
+			if (className.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_C_CLASSNAME_3);
+			}
+			else {
+				bindClassName = true;
+
+				sb.append(_FINDER_COLUMN_C_C_CLASSNAME_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(DDLRecordModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindClassName) {
+					queryPos.add(className);
+				}
+
+				queryPos.add(classPK);
+
+				list = (List<DDLRecord>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first ddl record in the ordered set where className = &#63; and classPK = &#63;.
+	 *
+	 * @param className the class name
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddl record
+	 * @throws NoSuchRecordException if a matching ddl record could not be found
+	 */
+	@Override
+	public DDLRecord findByC_C_First(
+			String className, long classPK,
+			OrderByComparator<DDLRecord> orderByComparator)
+		throws NoSuchRecordException {
+
+		DDLRecord ddlRecord = fetchByC_C_First(
+			className, classPK, orderByComparator);
+
+		if (ddlRecord != null) {
+			return ddlRecord;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("className=");
+		sb.append(className);
+
+		sb.append(", classPK=");
+		sb.append(classPK);
+
+		sb.append("}");
+
+		throw new NoSuchRecordException(sb.toString());
+	}
+
+	/**
+	 * Returns the first ddl record in the ordered set where className = &#63; and classPK = &#63;.
+	 *
+	 * @param className the class name
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddl record, or <code>null</code> if a matching ddl record could not be found
+	 */
+	@Override
+	public DDLRecord fetchByC_C_First(
+		String className, long classPK,
+		OrderByComparator<DDLRecord> orderByComparator) {
+
+		List<DDLRecord> list = findByC_C(
+			className, classPK, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last ddl record in the ordered set where className = &#63; and classPK = &#63;.
+	 *
+	 * @param className the class name
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddl record
+	 * @throws NoSuchRecordException if a matching ddl record could not be found
+	 */
+	@Override
+	public DDLRecord findByC_C_Last(
+			String className, long classPK,
+			OrderByComparator<DDLRecord> orderByComparator)
+		throws NoSuchRecordException {
+
+		DDLRecord ddlRecord = fetchByC_C_Last(
+			className, classPK, orderByComparator);
+
+		if (ddlRecord != null) {
+			return ddlRecord;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("className=");
+		sb.append(className);
+
+		sb.append(", classPK=");
+		sb.append(classPK);
+
+		sb.append("}");
+
+		throw new NoSuchRecordException(sb.toString());
+	}
+
+	/**
+	 * Returns the last ddl record in the ordered set where className = &#63; and classPK = &#63;.
+	 *
+	 * @param className the class name
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddl record, or <code>null</code> if a matching ddl record could not be found
+	 */
+	@Override
+	public DDLRecord fetchByC_C_Last(
+		String className, long classPK,
+		OrderByComparator<DDLRecord> orderByComparator) {
+
+		int count = countByC_C(className, classPK);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DDLRecord> list = findByC_C(
+			className, classPK, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the ddl records before and after the current ddl record in the ordered set where className = &#63; and classPK = &#63;.
+	 *
+	 * @param recordId the primary key of the current ddl record
+	 * @param className the class name
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ddl record
+	 * @throws NoSuchRecordException if a ddl record with the primary key could not be found
+	 */
+	@Override
+	public DDLRecord[] findByC_C_PrevAndNext(
+			long recordId, String className, long classPK,
+			OrderByComparator<DDLRecord> orderByComparator)
+		throws NoSuchRecordException {
+
+		className = Objects.toString(className, "");
+
+		DDLRecord ddlRecord = findByPrimaryKey(recordId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DDLRecord[] array = new DDLRecordImpl[3];
+
+			array[0] = getByC_C_PrevAndNext(
+				session, ddlRecord, className, classPK, orderByComparator,
+				true);
+
+			array[1] = ddlRecord;
+
+			array[2] = getByC_C_PrevAndNext(
+				session, ddlRecord, className, classPK, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DDLRecord getByC_C_PrevAndNext(
+		Session session, DDLRecord ddlRecord, String className, long classPK,
+		OrderByComparator<DDLRecord> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_DDLRECORD_WHERE);
+
+		boolean bindClassName = false;
+
+		if (className.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_C_CLASSNAME_3);
+		}
+		else {
+			bindClassName = true;
+
+			sb.append(_FINDER_COLUMN_C_C_CLASSNAME_2);
+		}
+
+		sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(DDLRecordModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindClassName) {
+			queryPos.add(className);
+		}
+
+		queryPos.add(classPK);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(ddlRecord)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<DDLRecord> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the ddl records where className = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param className the class name
+	 * @param classPK the class pk
+	 */
+	@Override
+	public void removeByC_C(String className, long classPK) {
+		for (DDLRecord ddlRecord :
+				findByC_C(
+					className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(ddlRecord);
+		}
+	}
+
+	/**
+	 * Returns the number of ddl records where className = &#63; and classPK = &#63;.
+	 *
+	 * @param className the class name
+	 * @param classPK the class pk
+	 * @return the number of matching ddl records
+	 */
+	@Override
+	public int countByC_C(String className, long classPK) {
+		className = Objects.toString(className, "");
+
+		FinderPath finderPath = _finderPathCountByC_C;
+
+		Object[] finderArgs = new Object[] {className, classPK};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_DDLRECORD_WHERE);
+
+			boolean bindClassName = false;
+
+			if (className.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_C_CLASSNAME_3);
+			}
+			else {
+				bindClassName = true;
+
+				sb.append(_FINDER_COLUMN_C_C_CLASSNAME_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindClassName) {
+					queryPos.add(className);
+				}
+
+				queryPos.add(classPK);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_C_CLASSNAME_2 =
+		"ddlRecord.className = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_CLASSNAME_3 =
+		"(ddlRecord.className IS NULL OR ddlRecord.className = '') AND ";
+
+	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 =
+		"ddlRecord.classPK = ?";
+
 	public DDLRecordPersistenceImpl() {
 		setModelClass(DDLRecord.class);
 
@@ -3981,6 +4567,15 @@ public class DDLRecordPersistenceImpl
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByR_R, args);
 
+			args = new Object[] {
+				ddlRecordModelImpl.getClassName(),
+				ddlRecordModelImpl.getClassPK()
+			};
+
+			finderCache.removeResult(_finderPathCountByC_C, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByC_C, args);
+
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
@@ -4110,6 +4705,29 @@ public class DDLRecordPersistenceImpl
 				finderCache.removeResult(_finderPathCountByR_R, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByR_R, args);
+			}
+
+			if ((ddlRecordModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_C.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					ddlRecordModelImpl.getOriginalClassName(),
+					ddlRecordModelImpl.getOriginalClassPK()
+				};
+
+				finderCache.removeResult(_finderPathCountByC_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByC_C, args);
+
+				args = new Object[] {
+					ddlRecordModelImpl.getClassName(),
+					ddlRecordModelImpl.getClassPK()
+				};
+
+				finderCache.removeResult(_finderPathCountByC_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByC_C, args);
 			}
 		}
 
@@ -4539,6 +5157,27 @@ public class DDLRecordPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_R",
 			new String[] {Long.class.getName(), String.class.getName()});
+
+		_finderPathWithPaginationFindByC_C = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, DDLRecordImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByC_C = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, DDLRecordImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			DDLRecordModelImpl.CLASSNAME_COLUMN_BITMASK |
+			DDLRecordModelImpl.CLASSPK_COLUMN_BITMASK);
+
+		_finderPathCountByC_C = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {String.class.getName(), Long.class.getName()});
 	}
 
 	@Deactivate

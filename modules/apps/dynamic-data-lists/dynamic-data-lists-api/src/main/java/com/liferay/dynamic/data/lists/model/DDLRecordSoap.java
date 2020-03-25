@@ -47,6 +47,8 @@ public class DDLRecordSoap implements Serializable {
 		soapModel.setRecordSetVersion(model.getRecordSetVersion());
 		soapModel.setVersion(model.getVersion());
 		soapModel.setDisplayIndex(model.getDisplayIndex());
+		soapModel.setClassName(model.getClassName());
+		soapModel.setClassPK(model.getClassPK());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
@@ -229,6 +231,22 @@ public class DDLRecordSoap implements Serializable {
 		_displayIndex = displayIndex;
 	}
 
+	public String getClassName() {
+		return _className;
+	}
+
+	public void setClassName(String className) {
+		_className = className;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public void setClassPK(long classPK) {
+		_classPK = classPK;
+	}
+
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -253,6 +271,8 @@ public class DDLRecordSoap implements Serializable {
 	private String _recordSetVersion;
 	private String _version;
 	private int _displayIndex;
+	private String _className;
+	private long _classPK;
 	private Date _lastPublishDate;
 
 }

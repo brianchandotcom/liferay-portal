@@ -51,6 +51,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -228,11 +230,15 @@ public class JournalArticleAssetRenderer
 			String ddmTemplateKey = ParamUtil.getString(
 				portletRequest, "ddmTemplateKey");
 
+			_setServiceContextThreadLocalReadOnly(true);
+
 			JournalArticleDisplay articleDisplay =
 				JournalArticleLocalServiceUtil.getArticleDisplay(
 					_article, ddmTemplateKey, null,
 					LanguageUtil.getLanguageId(locale), 1, portletRequestModel,
 					themeDisplay);
+
+			_setServiceContextThreadLocalReadOnly(false);
 
 			summary = HtmlUtil.render(
 				HtmlUtil.stripHtml(articleDisplay.getContent()));
@@ -660,6 +666,19 @@ public class JournalArticleAssetRenderer
 		}
 
 		return true;
+	}
+
+	private void _setServiceContextThreadLocalReadOnly(boolean readOnly) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.popServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+		}
+
+		serviceContext.setAttribute("readOnly", readOnly);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

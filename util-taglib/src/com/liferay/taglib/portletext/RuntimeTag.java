@@ -38,9 +38,12 @@ import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -279,6 +282,15 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 
 			Layout layout = themeDisplay.getLayout();
 
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			boolean readOnly = false;
+
+			if (serviceContext != null) {
+				readOnly = ParamUtil.getBoolean(serviceContext, "readOnly");
+			}
+
 			httpServletRequest.setAttribute(
 				WebKeys.SETTINGS_SCOPE, settingsScope);
 
@@ -286,7 +298,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 
 			boolean writeObject = false;
 
-			if (persistSettings &&
+			if (persistSettings && !readOnly &&
 				!layout.isPortletEmbedded(
 					portlet.getPortletId(), layout.getGroupId())) {
 
@@ -304,7 +316,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
 					portletInstanceKey);
 
-			if (count < 1) {
+			if (!readOnly && (count < 1)) {
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					layout, portletInstanceKey, defaultPreferences);
 				PortletPreferencesFactoryUtil.getPortletSetup(

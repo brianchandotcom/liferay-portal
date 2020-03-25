@@ -1,88 +1,5 @@
+@import './animations';
 @import 'atlas-variables';
-
-@keyframes fadeInDown {
-	from {
-		opacity: 0;
-		transform: translate3d(0, -1.5rem, 0);
-	}
-
-	to {
-		opacity: 1;
-	}
-}
-
-@keyframes fadeInUp {
-	from {
-		opacity: 0;
-		transform: translate3d(0, 1.5rem, 0);
-	}
-
-	to {
-		opacity: 1;
-	}
-}
-
-@keyframes fadeOutDown {
-	from {
-		opacity: 1;
-	}
-
-	to {
-		opacity: 0;
-		transform: translate3d(0, 1.5rem, 0);
-	}
-}
-
-@keyframes fadeOutUp {
-	from {
-		opacity: 1;
-	}
-
-	to {
-		opacity: 0;
-		transform: translate3d(0, -1.5rem, 0);
-	}
-}
-
-.ratings-like {
-	button {
-		&:hover:not(:disabled) .lexicon-icon-heart {
-			color: $dark;
-			transform: scale(1.3);
-		}
-	}
-
-	.lexicon-icon-heart {
-		transition: all 0.2s ease-in-out;
-
-		&.liked {
-			color: $red;
-			fill: $red;
-		}
-	}
-
-	.likes {
-		margin-left: 0.5rem;
-	}
-}
-
-.ratings-thumbs {
-	.btn {
-		&:hover:not(:disabled) .lexicon-icon {
-			transform: scale(1.3);
-		}
-
-		&[aria-pressed='true'] {
-			.lexicon-icon {
-				color: $primary;
-			}
-		}
-	}
-
-	.lexicon-icon {
-		transition: all 0.2s ease-in-out;
-	}
-}
 
 .ratings {
 	.btn {
@@ -123,5 +40,45 @@
 		.previous {
 			position: absolute;
 		}
+	}
+}
+
+.ratings-like {
+	button {
+		&:hover:not(:disabled) .lexicon-icon-heart {
+			color: $dark;
+			transform: scale(1.3);
+		}
+	}
+
+	.lexicon-icon-heart {
+		transition: all 0.2s ease-in-out;
+
+		&.liked {
+			color: $red;
+			fill: $red;
+		}
+	}
+
+	.likes {
+		margin-left: 0.5rem;
+	}
+}
+
+.ratings-thumbs {
+	.btn {
+		&:hover:not(:disabled) .lexicon-icon {
+			transform: scale(1.3);
+		}
+
+		&[aria-pressed='true'] {
+			.lexicon-icon {
+				color: $primary;
+			}
+		}
+	}
+
+	.lexicon-icon {
+		transition: all 0.2s ease-in-out;
 	}
 }

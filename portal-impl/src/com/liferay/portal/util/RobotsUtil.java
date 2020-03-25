@@ -17,6 +17,8 @@ package com.liferay.portal.util;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -45,18 +47,7 @@ public class RobotsUtil {
 				RobotsUtil.class.getClassLoader(),
 				PropsValues.ROBOTS_TXT_WITH_SITEMAP);
 
-			content = StringUtil.replace(content, "[$HOST$]", virtualHostname);
-			content = StringUtil.replace(
-				content, "[$PORT$]", String.valueOf(port));
-
-			if (secure) {
-				content = StringUtil.replace(content, "[$PROTOCOL$]", "https");
-			}
-			else {
-				content = StringUtil.replace(content, "[$PROTOCOL$]", "http");
-			}
-
-			return content;
+			return _replaceWildcards(content, virtualHostname, secure, port);
 		}
 
 		return ContentUtil.get(
@@ -82,10 +73,48 @@ public class RobotsUtil {
 			virtualHostname = virtualHostnames.firstKey();
 		}
 
-		return GetterUtil.get(
+		String robotsTxt = GetterUtil.getString(
 			layoutSet.getSettingsProperty(
 				layoutSet.isPrivateLayout() + "-robots.txt"),
-			getDefaultRobots(virtualHostname, secure, portalServerPort));
+			null);
+
+		if (robotsTxt != null) {
+			robotsTxt = _replaceWildcards(
+				robotsTxt, virtualHostname, secure, portalServerPort);
+
+			if (robotsTxt.contains("[$HOST$]") && _log.isWarnEnabled()) {
+				_log.warn(
+					"Wildcard [$HOST$] could not be replaced with the actual " +
+						"virtualhost");
+			}
+
+			return robotsTxt;
+		}
+
+		return getDefaultRobots(virtualHostname, secure, portalServerPort);
 	}
+
+	private static String _replaceWildcards(
+		String robotsTxt, String virtualHostname, boolean secure, int port) {
+
+		if (Validator.isNotNull(virtualHostname)) {
+			robotsTxt = StringUtil.replace(
+				robotsTxt, "[$HOST$]", virtualHostname);
+		}
+
+		robotsTxt = StringUtil.replace(
+			robotsTxt, "[$PORT$]", String.valueOf(port));
+
+		if (secure) {
+			robotsTxt = StringUtil.replace(robotsTxt, "[$PROTOCOL$]", "https");
+		}
+		else {
+			robotsTxt = StringUtil.replace(robotsTxt, "[$PROTOCOL$]", "http");
+		}
+
+		return robotsTxt;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(RobotsUtil.class);
 
 }

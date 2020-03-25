@@ -102,7 +102,8 @@
 		position: absolute;
 		z-index: 1;
 	}
-	&.not-droppable[data-advice]:before {
+	&.not-droppable.page-editor__col[data-advice]:before,
+	&.not-droppable .page-editor__container[data-advice]:before {
 		background-color: $danger;
 		border-radius: 2px;
 		color: $white;
@@ -112,13 +113,12 @@
 		left: 16px;
 		padding: 2px 6px;
 		position: absolute;
-		top: 20px;
+		transform: translateY(4px);
 		width: auto;
+		z-index: 1;
 	}
 	&.not-droppable.page-editor__col[data-advice]:before {
 		height: auto;
-		left: 16px;
-		top: 4px;
 		width: calc(100% - 32px);
 		@include media-breakpoint-up(lg) {
 			height: 20px;

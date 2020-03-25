@@ -133,15 +133,7 @@ AUI.add(
 
 				_clearInputsLocalized(node) {
 					node.all('.language-value').attr('placeholder', '');
-					node.all('.lfr-input-localized-state').removeClass(
-						'lfr-input-localized-state-error'
-					);
-					node.all('.palette-item')
-						.removeClass('palette-item-selected')
-						.removeClass('lfr-input-localized');
-					node.all('.lfr-input-localized-default').addClass(
-						'palette-item-selected'
-					);
+					node.all('.form-text').remove();
 				},
 
 				_createClone(node) {

@@ -87,7 +87,7 @@ const FragmentEditor = ({
 				return response;
 			})
 			.then(response => {
-				const redirectURL = response.redirect || this.urls.redirect;
+				const redirectURL = response.redirect || urls.redirect;
 
 				Liferay.Util.navigate(redirectURL);
 			})

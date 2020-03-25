@@ -21,6 +21,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
+import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
@@ -791,6 +792,20 @@ public class LayoutPageTemplatesImporterImpl
 
 		if (Validator.isNotNull(settings.getCss())) {
 			layout.setCss(settings.getCss());
+		}
+
+		MasterPage masterPage = settings.getMasterPage();
+
+		if (masterPage != null) {
+			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(
+						layout.getGroupId(), masterPage.getKey());
+
+			if (masterLayoutPageTemplateEntry != null) {
+				layout.setMasterLayoutPlid(
+					masterLayoutPageTemplateEntry.getPlid());
+			}
 		}
 
 		_layoutLocalService.updateLayout(layout);

@@ -343,7 +343,7 @@ export default withRouter(
 										/>
 									)}
 
-								{context.canCreateThread && (
+								{question && question.actions && question.actions['reply-to-message'] && (
 									<div className="c-mt-5">
 										<ClayForm>
 											<ClayForm.Group className="form-group-sm">

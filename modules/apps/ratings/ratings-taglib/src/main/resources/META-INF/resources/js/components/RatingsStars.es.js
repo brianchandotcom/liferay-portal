@@ -234,7 +234,6 @@ RatingsStars.propTypes = {
 	initialAverageScore: PropTypes.number,
 	initialTotalEntries: PropTypes.number,
 	numberOfStars: PropTypes.number.isRequired,
-	round: PropTypes.bool,
 	signedIn: PropTypes.bool.isRequired,
 	url: PropTypes.string.isRequired,
 	userScore: PropTypes.number,

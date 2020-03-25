@@ -81,9 +81,6 @@ public class SLAWorkflowMetricsIndexer extends BaseIndexer<Object> {
 		_slaInstanceResultWorkflowMetricsIndexer.deleteIndex(companyId);
 		_slaTaskResultWorkflowMetricsIndexer.deleteIndex(companyId);
 
-		_slaInstanceResultWorkflowMetricsIndexer.createIndex(companyId);
-		_slaTaskResultWorkflowMetricsIndexer.createIndex(companyId);
-
 		_slaInstanceResultWorkflowMetricsIndexer.reindex(companyId);
 		_slaTaskResultWorkflowMetricsIndexer.reindex(companyId);
 	}

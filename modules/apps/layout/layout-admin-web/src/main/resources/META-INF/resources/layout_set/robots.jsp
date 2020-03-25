@@ -29,7 +29,7 @@ String virtualHostname = layoutsAdminDisplayContext.getVirtualHostname();
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(virtualHostname) %>">
-		<aui:input label="set-the-robots-txt" name='<%= "TypeSettingsProperties--" + layoutSet.isPrivateLayout() + "-robots.txt--" %>' placeholder="robots" type="textarea" value="<%= layoutsAdminDisplayContext.getRobots() %>" />
+		<aui:input helpMessage="robots-txt-help" label="set-the-robots-txt" name='<%= "TypeSettingsProperties--" + layoutSet.isPrivateLayout() + "-robots.txt--" %>' placeholder="robots" type="textarea" value="<%= layoutsAdminDisplayContext.getRobots() %>" />
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-info">

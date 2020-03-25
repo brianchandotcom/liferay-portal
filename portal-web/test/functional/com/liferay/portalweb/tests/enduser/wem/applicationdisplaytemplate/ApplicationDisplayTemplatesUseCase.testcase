@@ -42,14 +42,11 @@ definition {
 		property portal.upstream = "quarantine";
 		property testray.component.names = "Content and Application Templates,RSS";
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "ADT Test Page",
-			widgetName = "RSS Publisher");
-
 		Navigator.gotoSitePage(
 			pageName = "ADT Test Page",
 			siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
 
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",
@@ -95,14 +92,11 @@ definition {
 		property portal.upstream = "quarantine";
 		property testray.component.names = "Content and Application Templates,RSS";
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "ADT Test Page",
-			widgetName = "RSS Publisher");
-
 		Navigator.gotoSitePage(
 			pageName = "ADT Test Page",
 			siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
 
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",
@@ -143,14 +137,11 @@ definition {
 		property portal.upstream = "quarantine";
 		property testray.component.names = "Content and Application Templates,RSS";
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "ADT Test Page",
-			widgetName = "RSS Publisher");
-
 		Navigator.gotoSitePage(
 			pageName = "ADT Test Page",
 			siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
 
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",

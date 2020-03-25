@@ -81,11 +81,11 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		_instanceWorkflowMetricsIndexer.deleteIndex(companyId);
-		_nodeWorkflowMetricsIndexer.deleteIndex(companyId);
-		_processWorkflowMetricsIndexer.deleteIndex(companyId);
-		_tokenWorkflowMetricsIndexer.deleteIndex(companyId);
-		_transitionWorkflowMetricsIndexer.deleteIndex(companyId);
+		_instanceWorkflowMetricsIndexer.clearIndex(companyId);
+		_nodeWorkflowMetricsIndexer.clearIndex(companyId);
+		_processWorkflowMetricsIndexer.clearIndex(companyId);
+		_tokenWorkflowMetricsIndexer.clearIndex(companyId);
+		_transitionWorkflowMetricsIndexer.clearIndex(companyId);
 
 		_instanceWorkflowMetricsIndexer.createIndex(companyId);
 		_nodeWorkflowMetricsIndexer.createIndex(companyId);

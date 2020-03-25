@@ -26,13 +26,16 @@ import {
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {config} from '../config/index';
 import {useSelector} from '../store/index';
+import {useGetFieldValue} from './ControlsIdConverterContext';
 import PageEditor from './PageEditor';
 import UnsafeHTML from './UnsafeHTML';
 import getAllEditables from './fragment-content/getAllEditables';
-import isMapped from './fragment-content/isMapped';
-import {Column, Container, Row} from './layout-data-items/index';
+import resolveEditableValue from './fragment-content/resolveEditableValue';
+import {Collection, Column, Container, Row} from './layout-data-items/index';
 
 const LAYOUT_DATA_ITEMS = {
+	[LAYOUT_DATA_ITEM_TYPES.collection]: Collection,
+	[LAYOUT_DATA_ITEM_TYPES.collectionItem]: CollectionItem,
 	[LAYOUT_DATA_ITEM_TYPES.column]: Column,
 	[LAYOUT_DATA_ITEM_TYPES.container]: Container,
 	[LAYOUT_DATA_ITEM_TYPES.dropZone]: DropZoneContainer,
@@ -111,6 +114,10 @@ function Root({children}) {
 	return <div>{children}</div>;
 }
 
+function CollectionItem({children}) {
+	return <div>{children}</div>;
+}
+
 const FragmentContent = React.memo(function FragmentContent({
 	content: defaultContent,
 	editableValues,
@@ -119,6 +126,8 @@ const FragmentContent = React.memo(function FragmentContent({
 	const ref = useRef(null);
 	const isMounted = useIsMounted();
 	const [content, setContent] = useState(defaultContent);
+
+	const getFieldValue = useGetFieldValue();
 
 	useEffect(() => {
 		const element = ref.current;
@@ -153,26 +162,20 @@ const FragmentContent = React.memo(function FragmentContent({
 		}, 50);
 
 		getAllEditables(element).forEach(editable => {
-			const editableValue =
-				editableValues[editable.editableValueNamespace][
-					editable.editableId
-				];
-
-			if (isMapped(editableValue)) {
-				return;
-			}
-
-			const value = editableValue[languageId];
-
-			const editableConfig = editableValue.config || {};
-
-			if (value && editableConfig) {
+			resolveEditableValue(
+				editableValues,
+				editable.editableId,
+				editable.editableValueNamespace,
+				languageId,
+				null,
+				getFieldValue
+			).then(([value, editableConfig]) => {
 				editable.processor.render(
 					editable.element,
 					value,
 					editableConfig
 				);
-			}
+			});
 		});
 
 		updateContent();
@@ -180,7 +183,14 @@ const FragmentContent = React.memo(function FragmentContent({
 		return () => {
 			element = null;
 		};
-	}, [defaultContent, content, isMounted, editableValues, languageId]);
+	}, [
+		defaultContent,
+		content,
+		isMounted,
+		editableValues,
+		languageId,
+		getFieldValue,
+	]);
 
 	return (
 		<UnsafeHTML

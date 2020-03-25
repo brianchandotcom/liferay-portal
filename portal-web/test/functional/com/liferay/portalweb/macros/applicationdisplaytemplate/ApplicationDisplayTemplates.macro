@@ -131,10 +131,6 @@ definition {
 
 		PortletEntry.save();
 
-		AssertTextEquals(
-			locator1 = "ApplicationDisplayTemplates#ADT_TABLE_NAME_1",
-			value1 = "${adtType} Test ADT");
-
 		SelectFrameTop(value1 = "relative=top");
 	}
 

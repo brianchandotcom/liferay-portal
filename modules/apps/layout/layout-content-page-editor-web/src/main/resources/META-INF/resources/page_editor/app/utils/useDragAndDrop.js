@@ -73,17 +73,17 @@ const initialDragDrop = {
 		dropItem: null,
 		dropTargetItemId: null,
 		droppable: true,
-		targetPositionWithMiddle: null, // TOP/BOTTOM/MIDDLE
-		targetPositionWithoutMiddle: null, // TOP/BOTTOM
+		targetPositionWithMiddle: null,
+		targetPositionWithoutMiddle: null,
 	},
 };
 
-const isAncestor = (item, layoutData, childId) => {
-	const child = layoutData.items[childId];
+const dropTargetIsAncestor = (dropItem, layoutData, dropTargetId) => {
+	const dropTarget = layoutData.items[dropTargetId];
 
-	if (child) {
-		return child.itemId !== item.itemId
-			? isAncestor(item, layoutData, child.parentId)
+	if (dropTarget) {
+		return dropTarget.itemId !== dropItem.itemId
+			? dropTargetIsAncestor(dropItem, layoutData, dropTarget.parentId)
 			: true;
 	}
 
@@ -212,7 +212,13 @@ export default function useDragAndDrop({
 				return;
 			}
 
-			if (isAncestor(dropItem, layoutData, dropTargetItem.itemId)) {
+			if (
+				dropTargetIsAncestor(
+					dropItem,
+					layoutData,
+					dropTargetItem.itemId
+				)
+			) {
 				return;
 			}
 
@@ -279,8 +285,11 @@ export default function useDragAndDrop({
 					dispatch({
 						dropItem,
 						dropTargetItemId:
-							dropTargetItem.itemId !== dropItem.parentId &&
-							dropTargetItem.itemId,
+							dropTargetItem.type ===
+							LAYOUT_DATA_ITEM_TYPES.fragment
+								? dropTargetItem.parentId
+								: dropTargetItem.itemId !== dropItem.parentId &&
+								  dropTargetItem.itemId,
 						droppable: isNestingSupported(
 							dropItem.type,
 							dropTargetItem.type

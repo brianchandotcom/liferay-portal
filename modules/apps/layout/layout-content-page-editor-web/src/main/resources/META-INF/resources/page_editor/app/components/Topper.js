@@ -201,7 +201,6 @@ export default function Topper({children, item, itemRef, layoutData}) {
 					!droppable && isDraggableInPosition(TARGET_POSITION.MIDDLE),
 				'page-editor__topper': true,
 			})}
-			data-advice={dataAdvice}
 			onClick={event => {
 				event.stopPropagation();
 
@@ -307,7 +306,15 @@ export default function Topper({children, item, itemRef, layoutData}) {
 			</div>
 
 			<div className="page-editor__topper__content" ref={drop}>
-				{childrenElement}
+				{dataAdvice
+					? {
+							...childrenElement,
+							props: {
+								...childrenElement.props,
+								'data-advice': dataAdvice,
+							},
+					  }
+					: childrenElement}
 			</div>
 		</div>
 	);

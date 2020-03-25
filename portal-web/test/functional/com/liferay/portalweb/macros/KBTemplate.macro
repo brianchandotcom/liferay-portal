@@ -9,7 +9,7 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "${kbTemplateTitle}");
 
-		CKEditor.addContent(content = "${kbTemplateTitle}");
+		CKEditor.addContent(content = "${kbTemplateContent}");
 
 		PortletEntry.publish();
 	}

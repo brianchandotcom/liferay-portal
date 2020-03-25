@@ -67,6 +67,7 @@ definition {
 
 	@priority = "4"
 	test ViewDisplayOptionsViaLanguagePortlet {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "LocalizationUsecase#ViewDisplayOptionsViaLanguagePortlet";
 		property testray.component.names = "Localization";
 

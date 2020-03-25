@@ -238,6 +238,7 @@ definition {
 	@priority = "5"
 	test AddTextConfigurationFragmentToContentPage {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");

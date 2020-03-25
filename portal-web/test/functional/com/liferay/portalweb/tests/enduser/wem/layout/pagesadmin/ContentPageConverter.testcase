@@ -399,6 +399,8 @@ definition {
 	@description = "This is a test for LPS-105943. When convert a widget page with one Nested Applications widget containing widgets, there will be a warning message shown in conversion preview"
 	@priority = "5"
 	test ConvertWidgetPageWithNestedApplicationsContainingWidgets {
+		property portal.upstream = "quarantine";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
@@ -476,6 +478,7 @@ definition {
 	@priority = "5"
 	test ConvertWidgetPageWithNonStandardLayout {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
@@ -563,9 +566,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-105943. When convert a widget page with one Customizable column and a non-standard layout, there will be two warning messages shown in conversion preview"
-	@ignore = "true"
 	@priority = "3"
 	test ConvertWidgetPageWithNonStandardLayoutAndCustomizableColumns {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
@@ -660,9 +664,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-105943. When convert a widget page with one Nested Applications widget containing widgets and a non-standard layout, there will be two warning messages shown in conversion preview"
-	@ignore = "true"
 	@priority = "3"
 	test ConvertWidgetPageWithNonStandardLayoutAndNestedApplicationsContainingWidgets {
+		property portal.upstream = "quarantine";
+
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
 		ProductMenu.gotoPortlet(

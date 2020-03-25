@@ -39,6 +39,7 @@ definition {
 	@priority = "5"
 	test AddRSSADTViaPortletConfiguration {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Content and Application Templates,RSS";
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -91,6 +92,7 @@ definition {
 
 	@priority = "3"
 	test AddRSSADTWithCorruptScript {
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Content and Application Templates,RSS";
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -136,12 +138,9 @@ definition {
 		RSSPortlet.viewCorruptScript();
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test AddRSSADTWithScript {
-
-		// Ignore test until LRQA-56758 is resolved
-
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Content and Application Templates,RSS";
 
 		JSONLayout.addWidgetToPublicLayout(

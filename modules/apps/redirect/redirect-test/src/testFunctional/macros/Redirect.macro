@@ -23,6 +23,12 @@ definition {
 				value1 = "${redirectType}");
 		}
 
+		if (isSet(expirationDate)) {
+			Type.clickAtType(
+				locator1 = "TextInput#EXPIRATION_DATE",
+				value1 = "${expirationDate}");
+		}
+
 		Button.clickSave();
 
 		if ("${redirectURLVariation}" == "Null") {
@@ -70,6 +76,12 @@ definition {
 				value1 = "${redirectTypeEdit}");
 		}
 
+		if (isSet(expirationDate)) {
+			Type.clickAtType(
+				locator1 = "TextInput#EXPIRATION_DATE",
+				value1 = "${expirationDate}");
+		}
+
 		Button.clickSave();
 	}
 
@@ -105,6 +117,13 @@ definition {
 				key_rowEntry = "${redirectType}",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
 				value1 = "${redirectType}");
+		}
+
+		if (isSet(expirationDate)) {
+			AssertTextEquals(
+				key_rowEntry = "${expirationDate}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+				value1 = "${expirationDate}");
 		}
 	}
 

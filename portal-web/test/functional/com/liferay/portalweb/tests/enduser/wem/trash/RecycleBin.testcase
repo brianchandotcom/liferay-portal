@@ -182,6 +182,8 @@ definition {
 
 	@priority = "3"
 	test RecycleBinMBAttachment {
+		property portal.upstream = "quarantine";
+
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsThread.addCP(

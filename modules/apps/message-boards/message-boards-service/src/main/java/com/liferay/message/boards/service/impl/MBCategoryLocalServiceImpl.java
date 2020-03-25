@@ -810,8 +810,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer<MBCategory> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(MBCategory.class);
+		Indexer<MBCategory> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBCategory.class);
 
 		indexer.reindex(category);
 

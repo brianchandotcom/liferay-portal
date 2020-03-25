@@ -133,15 +133,17 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		Map<Long, Map<String, Object>> infoDisplaysFieldValues =
 			new HashMap<>();
 
-		for (Element element : document.select("lfr-editable")) {
+		for (Element element :
+				document.select("lfr-editable,*[data-lfr-editable-id]")) {
+
 			EditableElementParser editableElementParser =
-				_editableElementParsers.get(element.attr("type"));
+				_getEditableElementParser(element);
 
 			if (editableElementParser == null) {
 				continue;
 			}
 
-			String id = element.attr("id");
+			String id = _getElementId(element);
 
 			Class<?> clazz = getClass();
 
@@ -329,9 +331,11 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Document document = _getDocument(html);
 
-		for (Element element : document.select("lfr-editable")) {
+		for (Element element :
+				document.select("lfr-editable,*[data-lfr-editable-id]")) {
+
 			EditableElementParser editableElementParser =
-				_editableElementParsers.get(element.attr("type"));
+				_getEditableElementParser(element);
 
 			if (editableElementParser == null) {
 				continue;
@@ -344,7 +348,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			);
 
 			defaultEditableValuesJSONObject.put(
-				element.attr("id"), defaultValueJSONObject);
+				_getElementId(element), defaultValueJSONObject);
 		}
 
 		return defaultEditableValuesJSONObject;
@@ -360,6 +364,23 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		document.outputSettings(outputSettings);
 
 		return document;
+	}
+
+	private EditableElementParser _getEditableElementParser(Element element) {
+		if (Objects.equals(element.tagName(), "lfr-editable")) {
+			return _editableElementParsers.get(element.attr("type"));
+		}
+
+		return _editableElementParsers.get(
+			element.attr("data-lfr-editable-type"));
+	}
+
+	private String _getElementId(Element element) {
+		if (Objects.equals(element.tagName(), "lfr-editable")) {
+			return element.attr("id");
+		}
+
+		return element.attr("data-lfr-editable-id");
 	}
 
 	private void _validateAttribute(Element element, String attributeName)
@@ -392,6 +413,14 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			_validateType(element);
 		}
+
+		for (Element element :
+				document.getElementsByAttribute("data-lfr-editable-id")) {
+
+			_validateAttribute(element, "data-lfr-editable-type");
+
+			_validateType(element);
+		}
 	}
 
 	private void _validateDuplicatedIds(String html)
@@ -399,13 +428,14 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Document document = _getDocument(html);
 
-		Elements elements = document.getElementsByTag("lfr-editable");
+		Elements elements = document.select(
+			"lfr-editable,*[data-lfr-editable-id]");
 
 		Stream<Element> uniqueNodesStream = elements.stream();
 
 		Map<String, Long> idsMap = uniqueNodesStream.collect(
 			Collectors.groupingBy(
-				element -> element.attr("id"), Collectors.counting()));
+				element -> _getElementId(element), Collectors.counting()));
 
 		Collection<String> ids = idsMap.keySet();
 
@@ -429,9 +459,11 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Document document = _getDocument(html);
 
-		for (Element element : document.select("lfr-editable")) {
+		for (Element element :
+				document.select("lfr-editable,*[data-lfr-editable-id]")) {
+
 			EditableElementParser editableElementParser =
-				_editableElementParsers.get(element.attr("type"));
+				_getEditableElementParser(element);
 
 			if (editableElementParser == null) {
 				continue;
@@ -446,9 +478,12 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	private void _validateNestedEditableElements(Element element)
 		throws FragmentEntryContentException {
 
-		Elements elements = element.select("> lfr-editable");
+		Elements attributeElements = element.getElementsByAttribute(
+			"[data-lfr-editable-id]");
 
-		if (elements.size() > 0) {
+		Elements tagElements = element.select("> lfr-editable");
+
+		if ((attributeElements.size() > 0) || (tagElements.size() > 0)) {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content.Language", getClass());
 
@@ -462,8 +497,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	private void _validateType(Element element)
 		throws FragmentEntryContentException {
 
-		EditableElementParser editableElementParser =
-			_editableElementParsers.get(element.attr("type"));
+		EditableElementParser editableElementParser = _getEditableElementParser(
+			element);
 
 		if (editableElementParser != null) {
 			return;

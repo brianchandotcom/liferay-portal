@@ -74,8 +74,16 @@ definition {
 		Button.click(button = "Edit");
 
 		Depot.configureCurrentLanguages(
-			currentLanguages = "English (United States),Spanish (Spain),Japanese (Japan)",
+			currentLanguages = "English (United States),French (France),Japanese (Japan),Spanish (Spain)",
 			defaultDepotLanguage = "English (United States)");
+
+		Depot.changeLanguagesOrder(
+			fromRowNumber = "2",
+			toRowNumber = "3");
+
+		Depot.changeLanguagesOrder(
+			fromRowNumber = "4",
+			toRowNumber = "1");
 
 		Button.click(button = "Save");
 
@@ -85,7 +93,20 @@ definition {
 
 		DepotNavigator.gotoGeneral(depotName = "Test Depot Name");
 
-		Depot.viewGeneralLanguageOptions(currentLanguageList = "en_US,ja_JP,es_ES");
+		Pause(locator1 = "3000");
+
+		for (var fieldName : list "Name,Description") {
+
+			Click(
+				key_fieldName = "${fieldName}",
+				locator1 = "Button#LOCALIZATION");
+
+			Depot.view4LanguagesOrder(
+				localizationName1 = "en-US",
+				localizationName2 = "es-ES",
+				localizationName3 = "ja-JP",
+				localizationName4 = "fr-FR");
+		}
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -101,7 +122,11 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		Depot.viewLanguageOptionsInWebContent(currentLanguageList = "en_US,ja_JP,es_ES");
+		Depot.viewLanguageOrderInWebContent(
+			localizationName1 = "en-US",
+			localizationName2 = "es-ES",
+			localizationName3 = "ja-JP",
+			localizationName4 = "fr-FR");
 	}
 
 }

@@ -483,6 +483,16 @@
 	<td>//label[contains(.,'${key_checkboxOption}')]/input[@type='checkbox']/../span</td>
 	<td></td>
 </tr>
+<tr>
+	<td>UPLOAD_FILE_ENTRY</td>
+	<td>//li[contains(@class,'upload-file')]//input[@type='checkbox' and contains(@data-title,'${key_fileName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPLOAD_FILE_ENTRY_CHECKED</td>
+	<td>//li[contains(@class,'upload-file') and contains(@class,'selected')]//input[@type='checkbox' and contains(@data-title,'${key_fileName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

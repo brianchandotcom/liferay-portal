@@ -119,7 +119,7 @@ definition {
 
 	@priority = "4"
 	test AssignExistingSegmentToRegularRole {
-		Navigator.openURL();
+		ProductMenu.gotoSite(site = "Global");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -292,7 +292,7 @@ definition {
 
 	@priority = "4"
 	test RemoveSegmentFromRegularRole {
-		Navigator.openURL();
+		ProductMenu.gotoSite(site = "Global");
 
 		ProductMenu.gotoPortlet(
 			category = "People",

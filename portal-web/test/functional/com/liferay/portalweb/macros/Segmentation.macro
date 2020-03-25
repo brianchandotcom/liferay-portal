@@ -57,6 +57,10 @@ definition {
 			value1 = "${titleField}");
 	}
 
+	macro openSegmentsAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_segments_web_internal_portlet_SegmentsPortlet");
+	}
+
 	macro selectOrganization {
 		Click(locator1 = "Segmentation#ORGANIZATION_MENU");
 	}

@@ -141,9 +141,13 @@ export default withRouter(
 						</ClayDropDown.ItemList>
 					</ClayDropDown>
 
-					<div className="c-ml-3">
-						<SectionSubscription section={section} />
-					</div>
+					{section &&
+						section.actions &&
+						section.actions['subscribe'] && (
+							<div className="c-ml-3">
+								<SectionSubscription section={section} />
+							</div>
+						)}
 				</div>
 
 				<div className="c-mt-3 c-mt-lg-0 d-flex flex-column flex-md-row">

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.FieldArray;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -152,6 +153,10 @@ public class DDMIndexerImpl implements DDMIndexer {
 				ddmStructureFieldValue, structure.getFieldType(fieldName));
 		}
 
+		String ddmFieldsFieldValueSuffix =
+			StringUtil.upperCaseFirstLetter(ddmStructureFieldNameParts[1]) +
+				StringPool.UNDERLINE + LocaleUtil.toLanguageId(locale);
+
 		if (ddmStructureFieldValue instanceof String[]) {
 			String[] ddmStructureFieldValueArray =
 				(String[])ddmStructureFieldValue;
@@ -160,7 +165,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 					ddmStructureFieldValueArray) {
 
 				booleanQuery.addRequiredTerm(
-					ddmStructureFieldName,
+					"ddmFields.fieldName", ddmStructureFieldName);
+				booleanQuery.addRequiredTerm(
+					"ddmFields.fieldValue" + ddmFieldsFieldValueSuffix,
 					StringPool.QUOTE + ddmStructureFieldValueString +
 						StringPool.QUOTE);
 			}
@@ -169,11 +176,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 			booleanQuery.addRequiredTerm(
 				"ddmFields.fieldName", ddmStructureFieldName);
 			booleanQuery.addRequiredTerm(
-				"ddmFields.ddmFieldValue",
+				"ddmFields.fieldValue" + ddmFieldsFieldValueSuffix,
 				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 		}
 
-		return new QueryFilter(booleanQuery);
+		return new QueryFilter(new NestedQuery("ddmFields", booleanQuery));
 	}
 
 	@Override

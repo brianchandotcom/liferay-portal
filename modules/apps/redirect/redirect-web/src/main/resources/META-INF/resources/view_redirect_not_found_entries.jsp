@@ -51,14 +51,7 @@ RedirectNotFountEntriesManagementToolbarDisplayContext redirectNotFoundEntriesMa
 						cssClass="table-cell-content"
 						name="not-found-urls"
 					>
-
-						<%
-						String url = RedirectUtil.getGroupBaseURL(themeDisplay) + StringPool.SLASH + redirectNotFoundEntry.getUrl();
-						%>
-
-						<aui:a href="<%= HtmlUtil.escapeAttribute(url) %>" target="_blank">
-							<%= HtmlUtil.escape(url) %>
-						</aui:a>
+						<%= HtmlUtil.escape(RedirectUtil.getGroupBaseURL(themeDisplay) + StringPool.SLASH + redirectNotFoundEntry.getUrl()) %>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

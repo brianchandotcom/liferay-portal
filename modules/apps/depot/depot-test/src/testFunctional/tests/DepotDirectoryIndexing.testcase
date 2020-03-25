@@ -34,6 +34,7 @@ definition {
 	@priority = "5"
 	test DisableIndexing {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		DepotNavigator.openDepotAdmin();
 

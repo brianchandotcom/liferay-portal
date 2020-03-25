@@ -205,7 +205,6 @@ definition {
 
 	@priority = "5"
 	test DeleteConfiguredKBFolder {
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(

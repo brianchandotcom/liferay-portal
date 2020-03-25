@@ -33,6 +33,9 @@ const getLabelScore = score => {
 	return (startScore && startScore.label) || 0;
 };
 
+const formatAverageScore = averageScore =>
+	(averageScore * STAR_SCORES.length).toFixed(1);
+
 const RATING_TYPE = 'stars';
 
 const RatingsStars = ({
@@ -40,12 +43,18 @@ const RatingsStars = ({
 	classPK,
 	enabled = false,
 	inTrash = false,
+	initialAverageScore = 0,
+	initialTotalEntries = 0,
 	signedIn,
 	url,
 	userScore,
 }) => {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [score, setScore] = useState(getLabelScore(userScore));
+	const [averageScore, setAverageScore] = useState(
+		formatAverageScore(initialAverageScore)
+	);
+	const [totalEntries, setTotalEntries] = useState(initialTotalEntries);
 
 	const handleOnClick = index => {
 		const {label, value} = STAR_SCORES[index];
@@ -75,8 +84,13 @@ const RatingsStars = ({
 			fetch(url, {
 				body,
 				method: 'POST',
-			});
-			// .then(response => response.json())
+			})
+				.then(response => response.json())
+				.then(response => {
+					setTotalEntries(response.totalEntries);
+					setAverageScore(formatAverageScore(response.averageScore));
+					setScore(getLabelScore(response.score));
+				});
 		},
 		[className, classPK, url]
 	);
@@ -95,49 +109,60 @@ const RatingsStars = ({
 	}, [inTrash, enabled]);
 
 	return (
-		<ClayDropDown
-			active={isDropdownOpen}
-			onActiveChange={isActive => setIsDropdownOpen(isActive)}
-			trigger={
-				<ClayButton
-					borderless
-					disabled={!signedIn || !enabled}
-					displayType="secondary"
-					small
-					title={getTitle()}
+		<div className="autofit-row autofit-row-center ratings ratings-stars">
+			<div className="autofit-col">
+				<ClayDropDown
+					active={isDropdownOpen}
+					onActiveChange={isActive => setIsDropdownOpen(isActive)}
+					trigger={
+						<ClayButton
+							borderless
+							disabled={!signedIn || !enabled}
+							displayType="secondary"
+							small
+							title={getTitle()}
+						>
+							<span className="inline-item inline-item-before">
+								<ClayIcon symbol={score ? 'star' : 'star-o'} />
+							</span>
+							<span className="inline-item">{score || '-'}</span>
+						</ClayButton>
+					}
 				>
-					<span className="inline-item inline-item-before">
-						<ClayIcon symbol={score ? 'star' : 'star-o'} />
-					</span>
-					<span className="inline-item">{score || '-'}</span>
-				</ClayButton>
-			}
-		>
-			<ClayDropDown.ItemList>
-				{STAR_SCORES.map(({label}, index) => (
-					<ClayDropDown.Item
-						active={label === score}
-						key={index}
-						onClick={() => {
-							handleOnClick(index);
-						}}
-					>
-						{label}
-					</ClayDropDown.Item>
-				))}
-			</ClayDropDown.ItemList>
-		</ClayDropDown>
+					<ClayDropDown.ItemList>
+						{STAR_SCORES.map(({label}, index) => (
+							<ClayDropDown.Item
+								active={label === score}
+								key={index}
+								onClick={() => {
+									handleOnClick(index);
+								}}
+							>
+								{label}
+							</ClayDropDown.Item>
+						))}
+					</ClayDropDown.ItemList>
+				</ClayDropDown>
+			</div>
+			{!!totalEntries && (
+				<div className="autofit-col">
+					{averageScore} ({totalEntries} votes)
+				</div>
+			)}
+		</div>
 	);
 };
 
 RatingsStars.propTypes = {
+	averageIndex: PropTypes.number.isRequired,
 	className: PropTypes.string.isRequired,
 	classPK: PropTypes.string.isRequired,
 	enabled: PropTypes.bool,
 	inTrash: PropTypes.bool,
+	initialAverageScore: PropTypes.number,
+	initialTotalEntries: PropTypes.number,
+	round: PropTypes.bool,
 	signedIn: PropTypes.bool.isRequired,
-	thumbDown: PropTypes.bool,
-	thumbUp: PropTypes.bool,
 	url: PropTypes.string.isRequired,
 	userScore: PropTypes.number,
 };

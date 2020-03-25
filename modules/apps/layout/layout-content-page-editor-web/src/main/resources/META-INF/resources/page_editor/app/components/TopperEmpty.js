@@ -33,10 +33,15 @@ export default function TopperEmpty({children, item, layoutData}) {
 		drop,
 		isDragging,
 		isOver,
-		state: {dropItem, dropTargetItemId, droppable, targetPosition},
+		state: {
+			dropItem,
+			dropTargetItemId,
+			droppable,
+			targetPositionWithMiddle,
+		},
 	} = useDragAndDrop({
 		containerRef,
-		item,
+		dropTargetItem: item,
 		layoutData,
 	});
 
@@ -48,7 +53,9 @@ export default function TopperEmpty({children, item, layoutData}) {
 		: childrenElement;
 
 	const isDraggableInPosition = position =>
-		targetPosition === position && dropTargetItemId === item.itemId;
+		targetPositionWithMiddle === position &&
+		dropTargetItemId === item.itemId;
+
 	const dataAdvice =
 		!droppable && isDraggableInPosition(TARGET_POSITION.MIDDLE)
 			? Liferay.Util.sub(

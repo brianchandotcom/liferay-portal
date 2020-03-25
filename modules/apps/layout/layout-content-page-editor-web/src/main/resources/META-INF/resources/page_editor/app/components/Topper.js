@@ -81,10 +81,15 @@ export default function Topper({children, item, itemRef, layoutData}) {
 		drop,
 		isDragging,
 		isOver,
-		state: {dropItem, dropTargetItemId, droppable, targetPosition},
+		state: {
+			dropItem,
+			dropTargetItemId,
+			droppable,
+			targetPositionWithMiddle,
+		},
 	} = useDragAndDrop({
 		containerRef,
-		item,
+		dropTargetItem: item,
 		layoutData,
 		onDragEnd: data =>
 			dispatch(
@@ -165,7 +170,8 @@ export default function Topper({children, item, itemRef, layoutData}) {
 	}, [itemRef, layoutData, windowScrollPosition]);
 
 	const isDraggableInPosition = position =>
-		targetPosition === position && dropTargetItemId === item.itemId;
+		targetPositionWithMiddle === position &&
+		dropTargetItemId === item.itemId;
 
 	const dataAdvice =
 		!droppable && isDraggableInPosition(TARGET_POSITION.MIDDLE)

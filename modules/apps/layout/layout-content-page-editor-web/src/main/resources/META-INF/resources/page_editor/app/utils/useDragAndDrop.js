@@ -49,6 +49,9 @@ const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: [],
 };
 
+const DISTANCE = 0.2;
+const MAX_DIFFERENCE = 50;
+
 export const TARGET_POSITION = {
 	BOTTOM: 0,
 	MIDDLE: 1,
@@ -74,7 +77,8 @@ const initialDragDrop = {
 		dropItem: null,
 		dropTargetItemId: null,
 		droppable: true,
-		targetPosition: null,
+		targetPositionWithMiddle: null, // TOP/BOTTOM/MIDDLE
+		targetPositionWithoutMiddle: null, // TOP/BOTTOM
 	},
 };
 
@@ -96,7 +100,10 @@ export const DragAndDropContextProvider = ({children}) => {
 	const [state, reducerDispatch] = useReducer((prevState, nextState) => {
 		if (
 			prevState.dropTargetItemId !== nextState.dropTargetItemId ||
-			prevState.targetPosition !== nextState.targetPosition
+			prevState.targetPositionWithMiddle !==
+				nextState.targetPositionWithMiddle ||
+			prevState.targetPositionWithoutMiddle !==
+				nextState.targetPositionWithoutMiddle
 		) {
 			return nextState;
 		}
@@ -117,12 +124,18 @@ export const DragAndDropContextProvider = ({children}) => {
 
 export default function useDragAndDrop({
 	containerRef,
-	item,
+	dropTargetItem,
 	layoutData,
 	onDragEnd,
 }) {
 	const {dispatch, state} = useContext(DragAndDropContext);
-	const {dropTargetItemId, droppable, targetPosition} = state;
+
+	const {
+		dropTargetItemId,
+		droppable,
+		targetPositionWithMiddle,
+		targetPositionWithoutMiddle,
+	} = state;
 
 	const [dragOptions, drag, preview] = useDrag({
 		collect: _monitor => {
@@ -130,12 +143,16 @@ export default function useDragAndDrop({
 				isDragging: _monitor.isDragging(),
 			};
 		},
-		end(_item, _monitor) {
+
+		end(dropItem, _monitor) {
 			const result = _monitor.getDropResult();
+
 			if (!result) {
 				return;
 			}
+
 			const {itemId, parentId, position} = result;
+
 			if (itemId !== parentId) {
 				onDragEnd({
 					itemId,
@@ -144,7 +161,8 @@ export default function useDragAndDrop({
 				});
 			}
 		},
-		item,
+
+		item: dropTargetItem,
 	});
 
 	const [dropOptions, drop] = useDrop({
@@ -156,46 +174,49 @@ export default function useDragAndDrop({
 				isOver: _monitor.isOver({shallow: true}),
 			};
 		},
-		drop(_item, _monitor) {
+
+		drop(dropItem, _monitor) {
 			if (!droppable) {
 				return;
 			}
 
 			if (!_monitor.didDrop() && dropTargetItemId) {
 				const {parentId, position} = getParentItemIdAndPositon({
-					item: _item,
+					dropItem,
+					dropTargetItemId,
 					items: layoutData.items,
-					siblingOrParentId: dropTargetItemId,
-					targetPosition,
+					targetPositionWithMiddle,
 				});
 
 				return {
-					itemId: _item.itemId,
+					itemId: dropItem.itemId,
 					itemType: _monitor.getItemType(),
 					parentId,
 					position,
 				};
 			}
 		},
-		hover(_item, _monitor) {
+
+		hover(dropItem, _monitor) {
 			if (
 				!_monitor.isOver({shallow: true}) ||
-				_item.itemId === item.itemId
+				dropItem.itemId === dropTargetItem.itemId
 			) {
 				return;
 			}
 
-			if (rootVoid(item)) {
+			if (rootVoid(dropTargetItem)) {
 				dispatch({
-					dropTargetItemId: item.itemId,
+					dropTargetItemId: dropTargetItem.itemId,
 					droppable: true,
-					targetPosition: TARGET_POSITION.MIDDLE,
+					targetPositionWithMiddle: TARGET_POSITION.MIDDLE,
+					targetPositionWithoutMiddle,
 				});
 
 				return;
 			}
 
-			if (isAncestor(_item, layoutData, item.itemId)) {
+			if (isAncestor(dropItem, layoutData, dropTargetItem.itemId)) {
 				return;
 			}
 
@@ -212,60 +233,67 @@ export default function useDragAndDrop({
 			// Get pixels to the top
 			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-			const newTargetPosition = getTargetPosition(
-				hoverClientY,
-				hoverMiddleY
-			);
+			const [
+				newTargetPositionWithMiddle,
+				newTargetPositionWithoutMiddle,
+			] = getTargetPosition(hoverClientY, hoverMiddleY);
 
 			const result = checkRules(RULES, {
 				clientOffset,
+				dropItem,
+				dropTargetItem,
 				hoverBoundingRect,
 				hoverClientY,
 				hoverMiddleY,
-				item: _item,
 				items: layoutData.items,
-				siblingOrParent: item,
-				targetPosition: newTargetPosition,
+				targetPositionWithMiddle: newTargetPositionWithMiddle,
+				targetPositionWithoutMiddle: newTargetPositionWithoutMiddle,
 			});
 
 			switch (result) {
-				case null:
-					dispatch({
-						dropItem: _item,
-						dropTargetItemId:
-							item.itemId !== _item.parentId && item.itemId,
-						droppable:
-							item.type !== LAYOUT_DATA_ITEM_TYPES.column &&
-							item.type !== LAYOUT_DATA_ITEM_TYPES.container,
-						targetPosition: TARGET_POSITION.MIDDLE,
-					});
-					break;
 				case RULES_TYPE.MIDDLE:
 					dispatch({
-						dropItem: _item,
-						dropTargetItemId: item.itemId,
+						dropItem,
+						dropTargetItemId: dropTargetItem.itemId,
 						droppable: true,
-						targetPosition: TARGET_POSITION.MIDDLE,
+						targetPositionWithMiddle: TARGET_POSITION.MIDDLE,
+						targetPositionWithoutMiddle: newTargetPositionWithoutMiddle,
 					});
 					break;
 				case RULES_TYPE.ELEVATE:
 					dispatch({
-						dropItem: _item,
-						dropTargetItemId: item.parentId || item.itemId,
+						dropItem,
+						dropTargetItemId:
+							dropTargetItem.parentId || dropTargetItem.itemId,
 						droppable: true,
-						targetPosition: newTargetPosition,
+						targetPositionWithMiddle: newTargetPositionWithMiddle,
+						targetPositionWithoutMiddle: newTargetPositionWithoutMiddle,
 					});
 					break;
 				case RULES_TYPE.VALID_MOVE:
 					dispatch({
-						dropItem: _item,
-						dropTargetItemId: item.itemId,
+						dropItem,
+						dropTargetItemId: dropTargetItem.itemId,
 						droppable: true,
-						targetPosition: newTargetPosition,
+						targetPositionWithMiddle: newTargetPositionWithMiddle,
+						targetPositionWithoutMiddle: newTargetPositionWithoutMiddle,
 					});
 					break;
-				default:
+				default: {
+					dispatch({
+						dropItem,
+						dropTargetItemId:
+							dropTargetItem.itemId !== dropItem.parentId &&
+							dropTargetItem.itemId,
+						droppable: isNestingSupported(
+							dropItem.type,
+							dropTargetItem.type
+						),
+						targetPositionWithMiddle: TARGET_POSITION.MIDDLE,
+						targetPositionWithoutMiddle: newTargetPositionWithoutMiddle,
+					});
 					break;
+				}
 			}
 		},
 	});
@@ -274,7 +302,8 @@ export default function useDragAndDrop({
 		if (!dropOptions.isOver) {
 			dispatch({
 				dropTargetItemId: null,
-				targetPosition: null,
+				targetPositionWithMiddle: null,
+				targetPositionWithoutMiddle: null,
 			});
 		}
 	}, [dispatch, dropOptions.isOver]);
@@ -312,9 +341,6 @@ function checkRules(rules, args) {
 	return passed;
 }
 
-const DISTANCE = 0.2;
-const MAX_DIFFERENCE = 50;
-
 /**
  * The closer you get to the edge of the element, the elevate will trigger,
  * which will move the interaction to the parent element. The calculation subtracts the
@@ -322,12 +348,12 @@ const MAX_DIFFERENCE = 50;
  */
 function checkElevate({
 	clientOffset,
+	dropItem,
+	dropTargetItem,
 	hoverBoundingRect,
-	item,
 	items,
-	siblingOrParent,
 }) {
-	const parent = items[siblingOrParent.parentId];
+	const parent = items[dropTargetItem.parentId];
 
 	let isElevate = false;
 
@@ -341,20 +367,20 @@ function checkElevate({
 
 		if (
 			!isElevate &&
-			(parentIsRow || isFirstItem(parent.children, siblingOrParent))
+			(parentIsRow || isFirstItem(parent.children, dropTargetItem))
 		) {
 			isElevate = clientOffset.y < difference + hoverBoundingRect.top;
 		}
 
 		if (
 			!isElevate &&
-			(parentIsRow || isLastItem(parent.children, siblingOrParent))
+			(parentIsRow || isLastItem(parent.children, dropTargetItem))
 		) {
 			isElevate = clientOffset.y > hoverBoundingRect.bottom - difference;
 		}
 	}
 
-	if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
+	if (dropItem.type === LAYOUT_DATA_ITEM_TYPES.container) {
 		return (
 			isElevate &&
 			(parent.type === LAYOUT_DATA_ITEM_TYPES.root ||
@@ -367,51 +393,65 @@ function checkElevate({
 	return isElevate;
 }
 
-function isValidMoveToMiddle({item, siblingOrParent}) {
+function isValidMoveToMiddle({dropItem, dropTargetItem}) {
 	return (
-		!siblingOrParent.children.length &&
-		isNestingSupported(item.type, siblingOrParent.type)
+		!dropTargetItem.children.length &&
+		isNestingSupported(dropItem.type, dropTargetItem.type)
 	);
 }
 
 function isValidMoveToTargetPosition({
-	item,
+	dropItem,
+	dropTargetItem,
 	items,
-	siblingOrParent,
-	targetPosition,
+	targetPositionWithMiddle,
 }) {
 	const {children} = items[
-		siblingOrParent.parentId !== ''
-			? siblingOrParent.parentId
-			: siblingOrParent.itemId
+		dropTargetItem.parentId !== ''
+			? dropTargetItem.parentId
+			: dropTargetItem.itemId
 	];
 
-	if (typeof targetPosition !== 'number' && !rootVoid(siblingOrParent)) {
+	if (
+		typeof targetPositionWithMiddle !== 'number' &&
+		!rootVoid(dropTargetItem)
+	) {
 		return false;
 	}
 
-	if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
-		const parent = items[siblingOrParent.parentId];
+	if (
+		dropItem.type === LAYOUT_DATA_ITEM_TYPES.container &&
+		dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.container &&
+		targetPositionWithMiddle === TARGET_POSITION.MIDDLE
+	) {
+		return false;
+	}
+
+	if (dropItem.type === LAYOUT_DATA_ITEM_TYPES.container) {
+		const parent = items[dropTargetItem.parentId];
 
 		if (!parent || parent.type !== LAYOUT_DATA_ITEM_TYPES.root) {
 			return false;
 		}
 	}
 
-	if (children.includes(item.itemId)) {
+	if (children.includes(dropItem.itemId)) {
 		return !(
-			isSibling(children, item, targetPosition, siblingOrParent.itemId) ||
-			(isFirstItem(children, item) &&
-				targetPosition === TARGET_POSITION.TOP) ||
-			(isLastItem(children, item) &&
-				targetPosition === TARGET_POSITION.BOTTOM)
+			isSibling(
+				children,
+				dropItem,
+				targetPositionWithMiddle,
+				dropTargetItem.itemId
+			) ||
+			(isFirstItem(children, dropItem) &&
+				targetPositionWithMiddle === TARGET_POSITION.TOP) ||
+			(isLastItem(children, dropItem) &&
+				targetPositionWithMiddle === TARGET_POSITION.BOTTOM)
 		);
 	}
 
 	return true;
 }
-
-const MIDDLE_PERCENTAGE = 0.3;
 
 /**
  * The calculation to identify when the mouse position is over the middle of the element,
@@ -419,14 +459,12 @@ const MIDDLE_PERCENTAGE = 0.3;
  * by two, creating the region from the middle.
  */
 function isMiddle(hoverClientY, hoverMiddleY) {
-	if (
-		hoverClientY > hoverMiddleY - hoverMiddleY * MIDDLE_PERCENTAGE &&
-		hoverClientY < hoverMiddleY + hoverMiddleY * MIDDLE_PERCENTAGE
-	) {
-		return true;
-	}
+	const difference = Math.min(MAX_DIFFERENCE, hoverMiddleY * DISTANCE);
 
-	return false;
+	return (
+		hoverClientY > hoverMiddleY - difference &&
+		hoverClientY < hoverMiddleY + difference
+	);
 }
 
 /**
@@ -434,22 +472,26 @@ function isMiddle(hoverClientY, hoverMiddleY) {
  * When dragging upwards, only move when the cursor is above 50%
  */
 function getTargetPosition(hoverClientY, hoverMiddleY) {
-	if (hoverClientY < hoverMiddleY) {
-		return TARGET_POSITION.TOP;
-	}
-	else if (hoverClientY > hoverMiddleY) {
-		return TARGET_POSITION.BOTTOM;
-	}
+	const targetPositionWithoutMiddle =
+		hoverClientY < hoverMiddleY
+			? TARGET_POSITION.TOP
+			: TARGET_POSITION.BOTTOM;
+
+	const targetPositionWithMiddle = isMiddle(hoverClientY, hoverMiddleY)
+		? TARGET_POSITION.MIDDLE
+		: targetPositionWithoutMiddle;
+
+	return [targetPositionWithMiddle, targetPositionWithoutMiddle];
 }
 
-function isSibling(children, item, targetPosition, hoverId) {
+function isSibling(children, item, targetPositionWithMiddle, hoverId) {
 	const itemIndex = children.findIndex(id => id === item.itemId);
 
 	return (
 		(children[itemIndex + 1] === hoverId &&
-			targetPosition === TARGET_POSITION.TOP) ||
+			targetPositionWithMiddle === TARGET_POSITION.TOP) ||
 		(children[itemIndex - 1] === hoverId &&
-			targetPosition === TARGET_POSITION.BOTTOM)
+			targetPositionWithMiddle === TARGET_POSITION.BOTTOM)
 	);
 }
 
@@ -468,29 +510,29 @@ function rootVoid(item) {
 }
 
 function getParentItemIdAndPositon({
-	item,
+	dropItem,
+	dropTargetItemId,
 	items,
-	siblingOrParentId,
-	targetPosition,
+	targetPositionWithMiddle,
 }) {
-	const siblingOrParent = items[siblingOrParentId];
+	const siblingOrParent = items[dropTargetItemId];
 
 	if (
 		siblingOrParent.type === LAYOUT_DATA_ITEM_TYPES.column &&
-		targetPosition !== TARGET_POSITION.MIDDLE
+		targetPositionWithMiddle !== TARGET_POSITION.MIDDLE
 	) {
-		targetPosition = TARGET_POSITION.MIDDLE;
+		targetPositionWithMiddle = TARGET_POSITION.MIDDLE;
 	}
 
 	if (
 		(siblingOrParent.type === LAYOUT_DATA_ITEM_TYPES.root ||
-			targetPosition === TARGET_POSITION.MIDDLE) &&
-		isNestingSupported(item.type, siblingOrParent.type)
+			targetPositionWithMiddle === TARGET_POSITION.MIDDLE) &&
+		isNestingSupported(dropItem.type, siblingOrParent.type)
 	) {
 		return {
 			parentId: siblingOrParent.itemId,
 			position:
-				targetPosition !== TARGET_POSITION.TOP
+				targetPositionWithMiddle !== TARGET_POSITION.TOP
 					? siblingOrParent.children.length
 					: 0,
 		};
@@ -503,13 +545,13 @@ function getParentItemIdAndPositon({
 		const siblingIndex = parent.children.indexOf(sibling.itemId);
 
 		let position =
-			targetPosition === TARGET_POSITION.TOP
+			targetPositionWithMiddle === TARGET_POSITION.TOP
 				? siblingIndex
 				: siblingIndex + 1;
 
 		// Moving an item in the same parent
-		if (parent.children.includes(item.itemId)) {
-			const itemIndex = parent.children.indexOf(item.itemId);
+		if (parent.children.includes(dropItem.itemId)) {
+			const itemIndex = parent.children.indexOf(dropItem.itemId);
 
 			if (parent.children.length === 1) {
 				position = 0;

@@ -180,12 +180,8 @@ definition {
 			bookmarkURL = "https://www.liferay.com");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test RecycleBinMBAttachment {
-
-		// Ignore test until LRQA-56957 is resolved
-
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsThread.addCP(

@@ -326,6 +326,7 @@ definition {
 
 	test ConfigureMultipleElasticsearchConnections {
 		property osgi.app.includes = "portal-search-elasticsearch7";
+		property portal.upstream = "quarantine";
 		property remote.elasticsearch.clusters.enabled = "true";
 		property remote.elasticsearch.enabled = "true";
 

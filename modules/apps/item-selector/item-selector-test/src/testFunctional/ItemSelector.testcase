@@ -236,4 +236,76 @@ definition {
 		AssertVisible(locator1 = "ItemSelector#SELECT_IMAGE_PREVIEW");
 	}
 
+	@priority = "4"
+	test ViewBlogsEntryWithImageEditedViaItemSelector {
+		property portal.acceptance = "quarantine";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addContent(entryContent = "Blogs Entry Content");
+
+		ImageEditor.gotoImageEditorViaItemSelector(
+			imageFileName = "Document_2.jpg",
+			navTab = "Documents and Media");
+
+		ImageEditor.rotateImage(rotateDirection = "right");
+
+		Pause(locator1 = "3000");
+
+		ImageEditor.applyChangesAndSaveFile();
+
+		Pause(locator1 = "3000");
+
+		SelectFrameTop(value1 = "relative=top");
+
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		AssertClick(
+			locator1 = "ItemSelector#ADD_BUTTON",
+			value1 = "Add");
+
+		BlogsEntry.viewInlineImage(uploadFileName = '''Document_2+%281%29.jpg''');
+
+		AssertClick(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Blogs");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2 (1).jpg");
+
+		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "1.0");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewInlineImage(uploadFileName = '''Document_2+%281%29.jpg''');
+
+		ScrollWebElementIntoView(locator1 = "Button#SUBSCRIBE");
+
+		SikuliAssertElementPresent(locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE_PREVIEW");
+	}
+
 }

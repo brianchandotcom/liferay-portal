@@ -20,7 +20,10 @@ import {
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
-import {useSelector} from '../../store/index';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
+import {useDispatch, useSelector} from '../../store/index';
+import duplicateItem from '../../thunks/duplicateItem';
+import {useSelectItem} from '../Controls';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import Collection from './Collection';
@@ -30,12 +33,28 @@ const CollectionWithControls = React.forwardRef(
 		const canUpdateLayoutContent = useSelector(
 			selectCanUpdateLayoutContent
 		);
+		const dispatch = useDispatch();
+		const selectItem = useSelectItem();
+		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 		const buttons = [];
 
 		buttons.push(
+			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
 			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.collectionConfiguration
 		);
+
+		const handleButtonClick = id => {
+			if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
+				dispatch(
+					duplicateItem({
+						itemId: item.itemId,
+						selectItem,
+						store: {segmentsExperienceId},
+					})
+				);
+			}
+		};
 
 		const content = (
 			<>
@@ -43,7 +62,12 @@ const CollectionWithControls = React.forwardRef(
 					{children}
 				</Collection>
 
-				<FloatingToolbar buttons={buttons} item={item} itemRef={ref} />
+				<FloatingToolbar
+					buttons={buttons}
+					item={item}
+					itemRef={ref}
+					onButtonClick={handleButtonClick}
+				/>
 			</>
 		);
 

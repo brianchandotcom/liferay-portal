@@ -36,7 +36,7 @@ definition {
 
 	@description = "This ensures that a permanent redirect can be added."
 	@priority = "5"
-	test AddPermanentRedirect {
+	test AddPermanentEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -56,7 +56,7 @@ definition {
 
 	@description = "This ensures that all redirect entries can be deleted when the user selects all."
 	@priority = "5"
-	test DeleteRedirectEntries {
+	test DeleteEntries {
 		var portalURL = PropsUtil.get("portal.url");
 
 		for (var pageCount : list "1,2,3") {
@@ -94,7 +94,7 @@ definition {
 
 	@description = "This ensures that a redirect entry can be deleted."
 	@priority = "5"
-	test DeleteRedirectEntry {
+	test DeleteEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -118,7 +118,7 @@ definition {
 
 	@description = "This ensures that an unexpired redirect can be edited."
 	@priority = "5"
-	test EditRedirect {
+	test EditEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -151,47 +151,6 @@ definition {
 		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/test-site-name/new-destination-page",
 			expirationDate = "Expired",
-			redirectType = "Temporary",
-			sourceURL = "${portalURL}/web/test-site-name/new-source-page");
-	}
-
-	@description = "This ensures that a redirect entry can be edited."
-	@priority = "5"
-	test EditRedirectEntry {
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "New Source Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "New Destination Page");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			siteName = "test-site-name",
-			sourceURL = "test-source-page");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.viewEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			redirectType = "Permanent",
-			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
-
-		Redirect.editEntry(
-			destinationURLEdit = "${portalURL}/web/test-site-name/new-destination-page",
-			redirectTypeEdit = "Temporary (302)",
-			sourceURL = "test-source-page",
-			sourceURLEdit = "new-source-page");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.viewEntry(
-			destinationURL = "${portalURL}/web/test-site-name/new-destination-page",
 			redirectType = "Temporary",
 			sourceURL = "${portalURL}/web/test-site-name/new-source-page");
 	}
@@ -230,7 +189,7 @@ definition {
 
 	@description = "This ensures that an expired permanent redirect can be viewed."
 	@priority = "5"
-	test ViewExpiredPermanentRedirect {
+	test ViewExpiredPermanentEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -252,7 +211,7 @@ definition {
 
 	@description = "This ensures that an expired temporary redirect can be viewed."
 	@priority = "5"
-	test ViewExpiredTempRedirect {
+	test ViewExpiredTempEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");

@@ -268,8 +268,11 @@ public class PoshiRunner {
 		_runNamespacedClassCommandName(_testNamespacedClassName + "#tear-down");
 	}
 
+	private static final int _MAX_RETRY_COUNT = 2;
+
 	private final PoshiLogger _poshiLogger;
 	private final PoshiRunnerExecutor _poshiRunnerExecutor;
+	private int _retryCount;
 	private final String _testNamespacedClassCommandName;
 	private final String _testNamespacedClassName;
 
@@ -287,16 +290,16 @@ public class PoshiRunner {
 
 			@Override
 			public void evaluate() throws Throwable {
-				for (int i = 0; i <= _MAX_RETRY_COUNT; i++) {
+				while (_retryCount <= _MAX_RETRY_COUNT) {
 					try {
 						_statement.evaluate();
 
 						return;
 					}
 					catch (Throwable t) {
-						if ((i == _MAX_RETRY_COUNT) ||
-							!_isValidRetryThrowable(t)) {
+						_retryCount++;
 
+						if (!_isRetryable(t)) {
 							throw t;
 						}
 					}
@@ -317,7 +320,7 @@ public class PoshiRunner {
 				return message;
 			}
 
-			private boolean _isValidRetryThrowable(Throwable throwable) {
+			private boolean _isKnownFlakyIssue(Throwable throwable) {
 				List<Throwable> throwables = null;
 
 				if (throwable instanceof MultipleFailureException) {
@@ -356,7 +359,9 @@ public class PoshiRunner {
 				return false;
 			}
 
-			private static final int _MAX_RETRY_COUNT = 2;
+			private boolean _isRetryable(Throwable throwable) {
+				return _isKnownFlakyIssue(throwable);
+			}
 
 			private final Statement _statement;
 			private final Throwable[] _validRetryThrowables = {

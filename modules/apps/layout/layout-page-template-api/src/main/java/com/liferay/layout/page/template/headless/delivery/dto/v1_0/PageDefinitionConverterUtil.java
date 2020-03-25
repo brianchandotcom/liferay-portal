@@ -581,7 +581,6 @@ public class PageDefinitionConverterUtil {
 								key =
 									layoutPageTemplateEntry.
 										getLayoutPageTemplateEntryKey();
-								name = layoutPageTemplateEntry.getName();
 							}
 						};
 					});

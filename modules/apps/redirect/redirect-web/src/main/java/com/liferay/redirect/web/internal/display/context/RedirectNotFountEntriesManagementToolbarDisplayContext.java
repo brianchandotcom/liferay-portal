@@ -15,9 +15,12 @@
 package com.liferay.redirect.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,12 +42,28 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 	}
 
 	@Override
-	public Boolean isSelectable() {
-		return false;
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		clearResultsURL.setParameter("orderByCol", getOrderByCol());
+		clearResultsURL.setParameter("orderByType", getOrderByType());
+
+		return clearResultsURL.toString();
 	}
 
 	@Override
-	public Boolean isShowSearch() {
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getPortletURL();
+
+		searchActionURL.setParameter("orderByCol", getOrderByCol());
+		searchActionURL.setParameter("orderByType", getOrderByType());
+
+		return searchActionURL.toString();
+	}
+
+	@Override
+	public Boolean isSelectable() {
 		return false;
 	}
 

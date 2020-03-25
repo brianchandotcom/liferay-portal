@@ -15,13 +15,29 @@
 package com.liferay.redirect.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalServiceUtil;
 import com.liferay.redirect.web.internal.search.RedirectNotFoundEntrySearch;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -49,7 +65,9 @@ public class RedirectNotFoundEntriesDisplayContext {
 		return "redirectEntries";
 	}
 
-	public SearchContainer<RedirectNotFoundEntry> searchContainer() {
+	public SearchContainer<RedirectNotFoundEntry> searchContainer()
+		throws PortalException {
+
 		if (_redirectNotFoundEntrySearch != null) {
 			return _redirectNotFoundEntrySearch;
 		}
@@ -57,26 +75,71 @@ public class RedirectNotFoundEntriesDisplayContext {
 		_redirectNotFoundEntrySearch = new RedirectNotFoundEntrySearch(
 			_liferayPortletRequest, _getPortletURL(), getSearchContainerId());
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		_redirectNotFoundEntrySearch.setTotal(
-			RedirectNotFoundEntryLocalServiceUtil.
-				getRedirectNotFoundEntriesCount(
-					themeDisplay.getScopeGroupId()));
-
-		_redirectNotFoundEntrySearch.setResults(
-			RedirectNotFoundEntryLocalServiceUtil.getRedirectNotFoundEntries(
-				themeDisplay.getScopeGroupId(),
-				_redirectNotFoundEntrySearch.getStart(),
-				_redirectNotFoundEntrySearch.getEnd(), null));
+		if (_redirectNotFoundEntrySearch.isSearch()) {
+			_populateWithSearchIndex(_redirectNotFoundEntrySearch);
+		}
+		else {
+			_populateWithDatabase(_redirectNotFoundEntrySearch);
+		}
 
 		return _redirectNotFoundEntrySearch;
 	}
 
 	private PortletURL _getPortletURL() {
 		return _liferayPortletResponse.createRenderURL();
+	}
+
+	private void _populateWithDatabase(
+		RedirectNotFoundEntrySearch redirectNotFoundEntrySearch) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		redirectNotFoundEntrySearch.setTotal(
+			RedirectNotFoundEntryLocalServiceUtil.
+				getRedirectNotFoundEntriesCount(
+					themeDisplay.getScopeGroupId()));
+
+		redirectNotFoundEntrySearch.setResults(
+			RedirectNotFoundEntryLocalServiceUtil.getRedirectNotFoundEntries(
+				themeDisplay.getScopeGroupId(),
+				_redirectNotFoundEntrySearch.getStart(),
+				_redirectNotFoundEntrySearch.getEnd(), null));
+	}
+
+	private void _populateWithSearchIndex(
+			RedirectNotFoundEntrySearch redirectNotFoundEntrySearch)
+		throws PortalException {
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(
+			RedirectNotFoundEntry.class);
+
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			PortalUtil.getHttpServletRequest(_liferayPortletRequest));
+
+		searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
+		searchContext.setEnd(redirectNotFoundEntrySearch.getEnd());
+		searchContext.setStart(redirectNotFoundEntrySearch.getStart());
+
+		Hits hits = indexer.search(searchContext);
+
+		List<SearchResult> searchResults = SearchResultUtil.getSearchResults(
+			hits, LocaleUtil.getDefault());
+
+		Stream<SearchResult> stream = searchResults.stream();
+
+		redirectNotFoundEntrySearch.setResults(
+			stream.map(
+				SearchResult::getClassPK
+			).map(
+				RedirectNotFoundEntryLocalServiceUtil::
+					fetchRedirectNotFoundEntry
+			).collect(
+				Collectors.toList()
+			));
+
+		redirectNotFoundEntrySearch.setTotal(hits.getLength());
 	}
 
 	private final HttpServletRequest _httpServletRequest;

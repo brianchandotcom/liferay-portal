@@ -113,9 +113,13 @@ const RatingsStars = ({
 			<div className="autofit-col">
 				<ClayDropDown
 					active={isDropdownOpen}
+					menuElementAttrs={{
+						className: 'ratings-stars-dropdown',
+					}}
 					onActiveChange={isActive => setIsDropdownOpen(isActive)}
 					trigger={
 						<ClayButton
+							aria-pressed={!!score}
 							borderless
 							disabled={!signedIn || !enabled}
 							displayType="secondary"
@@ -144,11 +148,17 @@ const RatingsStars = ({
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
 			</div>
-			{!!totalEntries && (
-				<div className="autofit-col">
-					{averageScore} ({totalEntries} votes)
-				</div>
-			)}
+			<div className="autofit-col">
+				<ClayIcon
+					className="ratings-stars-average-icon"
+					symbol="star"
+				/>
+			</div>
+			<div className="autofit-col">
+				<span className="ratings-stars-average-text">
+					{averageScore} {!!totalEntries && `(${totalEntries} votes)`}
+				</span>
+			</div>
 		</div>
 	);
 };

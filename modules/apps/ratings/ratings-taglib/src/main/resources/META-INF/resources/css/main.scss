@@ -82,3 +82,23 @@
 		transition: all 0.2s ease-in-out;
 	}
 }
+
+.ratings-stars {
+	.btn[aria-pressed='true'] .lexicon-icon {
+		color: $primary;
+	}
+
+	.ratings-stars-average-text {
+		color: $secondary;
+		font-size: 0.875rem;
+		font-weight: 600;
+	}
+
+	.ratings-stars-average-icon {
+		color: $yellow;
+	}
+}
+
+.ratings-stars-dropdown {
+	min-width: auto;
+}

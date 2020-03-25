@@ -127,6 +127,38 @@ public abstract class BaseWorkflowMetricsIndexer {
 		}
 	}
 
+	public void clearIndex(long companyId) throws PortalException {
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
+		if (!hasIndex(getIndexName(companyId))) {
+			return;
+		}
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		booleanFilter.add(
+			new TermFilter("companyId", String.valueOf(companyId)),
+			BooleanClauseOccur.MUST);
+
+		booleanQuery.setPreBooleanFilter(booleanFilter);
+
+		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
+			new DeleteByQueryDocumentRequest(
+				booleanQuery, getIndexName(companyId));
+
+		if (PortalRunMode.isTestMode()) {
+			deleteByQueryDocumentRequest.setRefresh(true);
+		}
+
+		searchEngineAdapter.execute(deleteByQueryDocumentRequest);
+	}
+
 	public void createIndex(long companyId) throws PortalException {
 		if (searchEngineAdapter == null) {
 			return;
@@ -160,38 +192,6 @@ public abstract class BaseWorkflowMetricsIndexer {
 		document.addKeyword("deleted", true);
 
 		_updateDocument(document);
-	}
-
-	public void deleteIndex(long companyId) throws PortalException {
-		if (searchEngineAdapter == null) {
-			return;
-		}
-
-		if (!hasIndex(getIndexName(companyId))) {
-			return;
-		}
-
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
-
-		booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
-
-		BooleanFilter booleanFilter = new BooleanFilter();
-
-		booleanFilter.add(
-			new TermFilter("companyId", String.valueOf(companyId)),
-			BooleanClauseOccur.MUST);
-
-		booleanQuery.setPreBooleanFilter(booleanFilter);
-
-		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
-			new DeleteByQueryDocumentRequest(
-				booleanQuery, getIndexName(companyId));
-
-		if (PortalRunMode.isTestMode()) {
-			deleteByQueryDocumentRequest.setRefresh(true);
-		}
-
-		searchEngineAdapter.execute(deleteByQueryDocumentRequest);
 	}
 
 	public abstract String getIndexName(long companyId);

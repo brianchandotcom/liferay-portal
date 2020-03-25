@@ -143,7 +143,7 @@ export default withRouter(
 
 					{section &&
 						section.actions &&
-						section.actions['subscribe'] && (
+						section.actions.subscribe && (
 							<div className="c-ml-3">
 								<SectionSubscription section={section} />
 							</div>

@@ -107,6 +107,17 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	}
 
 	@Override
+	public boolean isContentReviewer(long companyId, long groupId) {
+		if (super.isContentReviewer(companyId, groupId) ||
+			isGroupAdmin(groupId)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isGroupAdmin(long groupId) {
 		try {
 			if (!isSignedIn()) {
@@ -150,17 +161,6 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 			return false;
 		}
-	}
-
-	@Override
-	public boolean isContentReviewer(long companyId, long groupId) {
-		if (super.isContentReviewer(companyId, groupId) ||
-			isGroupAdmin(groupId)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

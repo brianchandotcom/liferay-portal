@@ -2235,14 +2235,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		List<String> keys = Arrays.asList(value.split("\\s\\+\\s"));
 
-		Map<String, Integer> keyCodeMap = new Hashtable<>();
-
-		keyCodeMap.put("ALT", Integer.valueOf(KeyEvent.VK_ALT));
-		keyCodeMap.put("COMMAND", Integer.valueOf(KeyEvent.VK_META));
-		keyCodeMap.put("CONTROL", Integer.valueOf(KeyEvent.VK_CONTROL));
-		keyCodeMap.put("CTRL", Integer.valueOf(KeyEvent.VK_CONTROL));
-		keyCodeMap.put("SHIFT", Integer.valueOf(KeyEvent.VK_SHIFT));
-
 		Collections.sort(keys, Comparator.comparing(String::length));
 
 		Collections.reverse(keys);
@@ -2252,7 +2244,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				keyboard.type(key);
 			}
 			else {
-				keyboard.keyDown(keyCodeMap.get(key.toUpperCase()));
+				keyboard.keyDown(_keyCodeMap.get(key.toUpperCase()));
 			}
 		}
 
@@ -2262,7 +2254,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			if (key.length() == 1) {
 			}
 			else {
-				keyboard.keyUp(keyCodeMap.get(key.toUpperCase()));
+				keyboard.keyUp(_keyCodeMap.get(key.toUpperCase()));
 			}
 		}
 	}
@@ -4514,6 +4506,16 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		"\\(|\\$\\{line\\.separator\\}");
 	private static final Pattern _coordinatePairsPattern = Pattern.compile(
 		"[+-]?\\d+\\,[+-]?\\d+(\\|[+-]?\\d+\\,[+-]?\\d+)*");
+	private static final Map<String, Integer> _keyCodeMap =
+		new Hashtable<String, Integer>() {
+			{
+				put("ALT", Integer.valueOf(KeyEvent.VK_ALT));
+				put("COMMAND", Integer.valueOf(KeyEvent.VK_META));
+				put("CONTROL", Integer.valueOf(KeyEvent.VK_CONTROL));
+				put("CTRL", Integer.valueOf(KeyEvent.VK_CONTROL));
+				put("SHIFT", Integer.valueOf(KeyEvent.VK_SHIFT));
+			}
+		};
 
 	private String _clipBoard = "";
 	private String _defaultWindowHandle;

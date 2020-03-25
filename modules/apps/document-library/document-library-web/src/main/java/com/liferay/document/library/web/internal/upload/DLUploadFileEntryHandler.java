@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.upload;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -107,36 +108,49 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 		}
 	}
 
-	private DLFileEntry _fetchDLFileEntry(
-		UploadPortletRequest uploadPortletRequest) {
+	private FileEntry _fetchFileEntry(UploadPortletRequest uploadPortletRequest)
+		throws PortalException {
 
-		long fileEntryId = GetterUtil.getLong(
-			uploadPortletRequest.getParameter("fileEntryId"));
+		try {
+			long fileEntryId = GetterUtil.getLong(
+				uploadPortletRequest.getParameter("fileEntryId"));
 
-		if (fileEntryId == 0) {
+			if (fileEntryId == 0) {
+				return null;
+			}
+
+			return _dlAppService.getFileEntry(fileEntryId);
+		}
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
+			}
+
 			return null;
 		}
-
-		return _dlFileEntryLocalService.fetchDLFileEntry(fileEntryId);
 	}
 
-	private String _getDescription(UploadPortletRequest uploadPortletRequest) {
-		DLFileEntry dlFileEntry = _fetchDLFileEntry(uploadPortletRequest);
+	private String _getDescription(UploadPortletRequest uploadPortletRequest)
+		throws PortalException {
 
-		if (dlFileEntry == null) {
+		FileEntry fileEntry = _fetchFileEntry(uploadPortletRequest);
+
+		if (fileEntry == null) {
 			return StringPool.BLANK;
 		}
 
-		return dlFileEntry.getDescription();
+		return fileEntry.getDescription();
 	}
 
 	private ServiceContext _getServiceContext(
 			UploadPortletRequest uploadPortletRequest)
 		throws PortalException {
 
-		DLFileEntry dlFileEntry = _fetchDLFileEntry(uploadPortletRequest);
+		FileEntry fileEntry = _fetchFileEntry(uploadPortletRequest);
 
-		if (dlFileEntry == null) {
+		if ((fileEntry == null) ||
+			!(fileEntry.getModel() instanceof DLFileEntry)) {
+
 			return ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), uploadPortletRequest);
 		}
@@ -144,7 +158,7 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), uploadPortletRequest);
 
-		ExpandoBridge expandoBridge = dlFileEntry.getExpandoBridge();
+		ExpandoBridge expandoBridge = fileEntry.getExpandoBridge();
 
 		serviceContext.setExpandoBridgeAttributes(
 			expandoBridge.getAttributes());

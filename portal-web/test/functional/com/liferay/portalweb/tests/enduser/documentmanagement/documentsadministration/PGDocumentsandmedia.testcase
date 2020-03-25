@@ -314,6 +314,8 @@ definition {
 
 	@priority = "4"
 	test AddFolderImage {
+		property portal.upstream = "quarantine";
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
@@ -334,6 +336,8 @@ definition {
 
 	@priority = "4"
 	test AddFolderImageDuplicate {
+		property portal.upstream = "quarantine";
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
@@ -356,6 +360,8 @@ definition {
 
 	@priority = "4"
 	test AddFolderImages {
+		property portal.upstream = "quarantine";
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
@@ -404,6 +410,8 @@ definition {
 
 	@priority = "4"
 	test AddFolderNameSymbol {
+		property portal.upstream = "quarantine";
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
@@ -555,6 +563,8 @@ definition {
 	@description = "This test covers LPS-94508. It ensures that a tag can be created when selecting an item from autocomplete."
 	@priority = "5"
 	test CreateTagUsingAutocomplete {
+		property portal.upstream = "quarantine";
+
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.docx");
 
 		for (var tagName : list "tagone,tagtwo,tagthree") {
@@ -886,6 +896,8 @@ definition {
 
 	@priority = "5"
 	test EditFolderDocument {
+		property portal.upstream = "quarantine";
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
@@ -945,7 +957,7 @@ definition {
 
 	@priority = "5"
 	test EditSubFolder {
-		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

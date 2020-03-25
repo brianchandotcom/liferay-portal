@@ -116,6 +116,45 @@ definition {
 		Redirect.viewDefaultCP();
 	}
 
+	@description = "This ensures that an unexpired redirect can be edited."
+	@priority = "5"
+	test EditRedirect {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			expirationDate = "12/31/2024",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			expirationDate = "12/31/24",
+			redirectType = "Permanent",
+			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.editRedirect(
+			destinationURLEdit = "${portalURL}/web/test-site-name/new-destination-page",
+			expirationDate = "12/31/2013",
+			redirectTypeEdit = "Temporary (302)",
+			sourceURL = "test-source-page",
+			sourceURLEdit = "new-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/new-destination-page",
+			expirationDate = "Expired",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/new-source-page");
+	}
+
 	@description = "This ensures that a redirect entry can be edited."
 	@priority = "5"
 	test EditRedirectEntry {
@@ -187,6 +226,51 @@ definition {
 		AssertSelectedLabel(
 			locator1 = "Select#REDIRECT_TYPE",
 			value1 = "Permanent (301)");
+	}
+
+	@description = "This ensures that an expired permanent redirect can be viewed."
+	@priority = "5"
+	test ViewExpiredPermanentRedirect {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			expirationDate = "12/31/2013",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			expirationDate = "Expired",
+			redirectType = "Permanent",
+			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
+	}
+
+	@description = "This ensures that an expired temporary redirect can be viewed."
+	@priority = "5"
+	test ViewExpiredTempRedirect {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			expirationDate = "12/31/2013",
+			redirectType = "Temporary (302)",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			expirationDate = "Expired",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
 	}
 
 }

@@ -152,7 +152,9 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 		return _baselineConfiguration;
 	}
 
+	@Input
 	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getBndFile() {
 		return GradleUtil.toFile(getProject(), _bndFile);
 	}
@@ -199,7 +201,7 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 		args.put("dir", getSourceDir());
 		args.put("includes", Collections.singleton("**/packageinfo"));
 
-		return project.files(project.fileTree(args), getBndFile());
+		return project.fileTree(args);
 	}
 
 	@Optional

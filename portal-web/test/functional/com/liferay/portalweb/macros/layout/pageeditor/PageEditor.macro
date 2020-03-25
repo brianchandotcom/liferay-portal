@@ -876,14 +876,9 @@ definition {
 	}
 
 	macro gotoTab {
-		if (IsElementNotPresent(key_tabName = "${tabName}", locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON_ACTIVE")) {
-
-			Pause(locator1 = "3000");
-
-			Click.clickNoMouseOver(
-				key_tabName = "${tabName}",
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
-		}
+		Click.clickNoMouseOver(
+			key_tabName = "${tabName}",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
 	}
 
 	macro removeFragment {

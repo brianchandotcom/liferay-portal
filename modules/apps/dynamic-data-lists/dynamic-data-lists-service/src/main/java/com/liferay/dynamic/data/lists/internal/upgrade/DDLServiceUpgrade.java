@@ -78,6 +78,11 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 			"2.0.0", "2.1.0",
 			new com.liferay.dynamic.data.lists.internal.upgrade.v2_1_0.
 				UpgradeSchema());
+
+		registry.register(
+			"2.1.0", "2.2.0",
+			new com.liferay.dynamic.data.lists.internal.upgrade.v2_2_0.
+				UpgradeSchema());
 	}
 
 	@Reference

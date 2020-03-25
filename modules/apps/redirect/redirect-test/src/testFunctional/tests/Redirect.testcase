@@ -54,7 +54,7 @@ definition {
 			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
 	}
 
-	@description = "This ensures that all redirect entries can be deleted when the user selects all."
+	@description = "This ensures that all redirect entries can be deleted simultaneously."
 	@priority = "5"
 	test DeleteEntries {
 		var portalURL = PropsUtil.get("portal.url");

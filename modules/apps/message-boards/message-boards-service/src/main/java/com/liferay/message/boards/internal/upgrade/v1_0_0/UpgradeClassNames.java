@@ -43,7 +43,8 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 		},
 		{
 			"com.liferay.message.boards.kernel.model.MBDiscussion",
-			"com.liferay.message.boards.model.MBDiscussion"
+			"com.liferay.message.boards.model.MBDiscussion",
+			"com.liferay.message.boards.model.MBDiscussion_"
 		},
 		{
 			"com.liferay.message.boards.kernel.model.MBMailingList",

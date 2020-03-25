@@ -207,9 +207,17 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		throws Exception {
 
 		for (String[] name : names) {
-			runSQL(
-				"delete from " + tableName +
-					_getWhereClause(columnName, name[1], wildcardMode));
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("delete from ");
+			sb.append(tableName);
+			sb.append(_getWhereClause(columnName, name[1], wildcardMode));
+
+			if (name.length == 3) {
+				sb.append(_getNotLikeClause(columnName, name[2], wildcardMode));
+			}
+
+			runSQL(sb.toString());
 		}
 	}
 
@@ -248,6 +256,23 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 
 			sb2.setIndex(0);
 		}
+	}
+
+	private String _getNotLikeClause(
+		String columnName, String value, WildcardMode wildcardMode) {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(" and ");
+		sb.append(columnName);
+		sb.append(" not like ");
+		sb.append(StringPool.APOSTROPHE);
+		sb.append(wildcardMode.getLeadingWildcard());
+		sb.append(value);
+		sb.append(wildcardMode.getTrailingWildcard());
+		sb.append(StringPool.APOSTROPHE);
+
+		return sb.toString();
 	}
 
 	private String _getWhereClause(

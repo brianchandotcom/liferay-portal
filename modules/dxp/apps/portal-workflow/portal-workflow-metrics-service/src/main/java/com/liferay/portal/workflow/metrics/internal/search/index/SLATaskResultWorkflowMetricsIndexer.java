@@ -26,6 +26,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLATaskResult;
+import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.sql.Timestamp;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
@@ -120,8 +122,9 @@ public class SLATaskResultWorkflowMetricsIndexer
 	}
 
 	@Override
-	public String getIndexName() {
-		return "workflow-metrics-sla-task-results";
+	public String getIndexName(long companyId) {
+		return _slaTaskResultWorkflowMetricsIndexNameBuilder.getIndexName(
+			companyId);
 	}
 
 	@Override
@@ -150,14 +153,16 @@ public class SLATaskResultWorkflowMetricsIndexer
 
 	private void _creatDefaultDocuments(long companyId) {
 		if ((searchEngineAdapter == null) ||
-			!hasIndex("workflow-metrics-nodes")) {
+			!hasIndex(
+				_nodeWorkflowMetricsIndexNameBuilder.getIndexName(companyId))) {
 
 			return;
 		}
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		searchSearchRequest.setIndexNames("workflow-metrics-nodes");
+		searchSearchRequest.setIndexNames(
+			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(companyId));
 
 		BooleanQuery booleanQuery = queries.booleanQuery();
 
@@ -191,7 +196,9 @@ public class SLATaskResultWorkflowMetricsIndexer
 				companyId, document.getLong("processId"),
 				document.getLong("nodeId"), document.getString("name"))
 		).map(
-			document -> new IndexDocumentRequest(getIndexName(), document) {
+			document -> new IndexDocumentRequest(
+				getIndexName(companyId), document) {
+
 				{
 					setType(getIndexType());
 				}
@@ -210,5 +217,13 @@ public class SLATaskResultWorkflowMetricsIndexer
 			searchEngineAdapter.execute(bulkDocumentRequest);
 		}
 	}
+
+	@Reference(target = "(workflow.metrics.index.entity.name=node)")
+	private WorkflowMetricsIndexNameBuilder
+		_nodeWorkflowMetricsIndexNameBuilder;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=sla-task-result)")
+	private WorkflowMetricsIndexNameBuilder
+		_slaTaskResultWorkflowMetricsIndexNameBuilder;
 
 }

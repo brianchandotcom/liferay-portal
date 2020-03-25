@@ -48,6 +48,7 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.internal.odata.entity.v1_0.TaskEntityModel;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
+import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.util.Collection;
@@ -128,7 +129,10 @@ public class TaskResourceImpl
 		BooleanQuery slaTaskResultsBooleanQuery = _queries.booleanQuery();
 
 		slaTaskResultsBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-sla-task-results"));
+			_queries.term(
+				"_index",
+				_slaTaskResultWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
 		slaTaskResultsBooleanQuery.addMustQueryClauses(
 			_createSLATaskResultsBooleanQuery(
 				completed, dateEnd, dateStart, processId, taskNames));
@@ -136,7 +140,10 @@ public class TaskResourceImpl
 		BooleanQuery tokensBooleanQuery = _queries.booleanQuery();
 
 		tokensBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-tokens"));
+			_queries.term(
+				"_index",
+				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
 		tokensBooleanQuery.addMustQueryClauses(
 			_createTokensBooleanQuery(
 				completed, dateEnd, dateStart, processId, taskNames));
@@ -338,7 +345,9 @@ public class TaskResourceImpl
 
 		searchSearchRequest.addAggregation(termsAggregation);
 
-		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
+		searchSearchRequest.setIndexNames(
+			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
 			_createTokensBooleanQuery(completed, key, processId, version));
 
@@ -377,7 +386,9 @@ public class TaskResourceImpl
 			_resourceHelper.createBreachedScriptedMetricAggregation());
 
 		FilterAggregation countFilterAggregation = _aggregations.filter(
-			"countFilter", _resourceHelper.createTokensBooleanQuery(completed));
+			"countFilter",
+			_resourceHelper.createTokensBooleanQuery(
+				contextCompany.getCompanyId(), completed));
 
 		countFilterAggregation.addChildrenAggregations(
 			_aggregations.avg("durationAvg", "duration"),
@@ -415,7 +426,10 @@ public class TaskResourceImpl
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-tokens", "workflow-metrics-sla-task-results");
+			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()),
+			_slaTaskResultWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(
 				completed, dateEnd, dateStart, processId, tasksMap.keySet()));
@@ -457,7 +471,9 @@ public class TaskResourceImpl
 
 		searchSearchRequest.addAggregation(termsAggregation);
 
-		searchSearchRequest.setIndexNames("workflow-metrics-nodes");
+		searchSearchRequest.setIndexNames(
+			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
 			_createNodesBooleanQuery(key, processId, taskNames, version));
 
@@ -664,6 +680,10 @@ public class TaskResourceImpl
 	@Reference
 	private Language _language;
 
+	@Reference(target = "(workflow.metrics.index.entity.name=node)")
+	private WorkflowMetricsIndexNameBuilder
+		_nodeWorkflowMetricsIndexNameBuilder;
+
 	@Reference
 	private Queries _queries;
 
@@ -673,7 +693,15 @@ public class TaskResourceImpl
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;
 
+	@Reference(target = "(workflow.metrics.index.entity.name=sla-task-result)")
+	private WorkflowMetricsIndexNameBuilder
+		_slaTaskResultWorkflowMetricsIndexNameBuilder;
+
 	@Reference
 	private Sorts _sorts;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=token)")
+	private WorkflowMetricsIndexNameBuilder
+		_tokenWorkflowMetricsIndexNameBuilder;
 
 }

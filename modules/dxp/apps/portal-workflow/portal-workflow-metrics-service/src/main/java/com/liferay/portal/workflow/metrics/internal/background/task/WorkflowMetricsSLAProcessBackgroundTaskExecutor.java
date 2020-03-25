@@ -57,6 +57,7 @@ import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetric
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLATaskResult;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
+import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalService;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
@@ -176,7 +177,10 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		BooleanQuery instancesBooleanQuery = _queries.booleanQuery();
 
 		instancesBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-instances"));
+			_queries.term(
+				"_index",
+				_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+					companyId)));
 		instancesBooleanQuery.addMustQueryClauses(
 			_createInstancesBooleanQuery(
 				companyId, true, endDate, processId, startDate));
@@ -184,7 +188,10 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		BooleanQuery slaInstanceResultsBooleanQuery = _queries.booleanQuery();
 
 		slaInstanceResultsBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-sla-instance-results"));
+			_queries.term(
+				"_index",
+				_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
+					companyId)));
 		slaInstanceResultsBooleanQuery.addMustQueryClauses(
 			_createSLAResultsBooleanQuery(
 				companyId, processId, slaDefinitionId));
@@ -291,7 +298,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		searchSearchRequest.setIndexNames("workflow-metrics-nodes");
+		searchSearchRequest.setIndexNames(
+			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(companyId));
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -332,7 +340,11 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			"instanceId", "instanceId");
 
 		FilterAggregation indexFilterAggregation = _aggregations.filter(
-			"index", _queries.term("_index", "workflow-metrics-instances"));
+			"index",
+			_queries.term(
+				"_index",
+				_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+					companyId)));
 
 		indexFilterAggregation.addChildAggregation(
 			_aggregations.topHits("topHits"));
@@ -350,8 +362,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-instances",
-			"workflow-metrics-sla-instance-results");
+			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
+			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
+				companyId));
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -512,7 +525,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		searchSearchRequest.addAggregation(termsAggregation);
 
-		searchSearchRequest.setIndexNames("workflow-metrics-instances");
+		searchSearchRequest.setIndexNames(
+			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+				workflowMetricsSLADefinitionVersion.getCompanyId()));
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -602,6 +617,14 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	@Reference
 	private Aggregations _aggregations;
 
+	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
+	private WorkflowMetricsIndexNameBuilder
+		_instanceWorkflowMetricsIndexNameBuilder;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=node)")
+	private WorkflowMetricsIndexNameBuilder
+		_nodeWorkflowMetricsIndexNameBuilder;
+
 	@Reference
 	private Queries _queries;
 
@@ -619,6 +642,12 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	@Reference
 	private SLAInstanceResultWorkflowMetricsIndexer
 		_slaInstanceResultWorkflowMetricsIndexer;
+
+	@Reference(
+		target = "(workflow.metrics.index.entity.name=sla-instance-result)"
+	)
+	private WorkflowMetricsIndexNameBuilder
+		_slaInstanceResultWorkflowMetricsIndexNameBuilder;
 
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer

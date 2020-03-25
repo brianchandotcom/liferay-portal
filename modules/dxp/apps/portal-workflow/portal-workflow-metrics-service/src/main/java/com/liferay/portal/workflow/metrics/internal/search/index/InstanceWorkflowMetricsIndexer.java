@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
+import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
 import java.text.ParseException;
 
@@ -124,8 +125,8 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	}
 
 	@Override
-	public String getIndexName() {
-		return "workflow-metrics-instances";
+	public String getIndexName(long companyId) {
+		return _instanceWorkflowMetricsIndexNameBuilder.getIndexName(companyId);
 	}
 
 	@Override
@@ -170,6 +171,7 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 				"instanceId", GetterUtil.getLong(document.get("instanceId"))));
 
 		_slaInstanceResultWorkflowMetricsIndexer.updateDocuments(
+			GetterUtil.getLong(document.get("companyId")),
 			documentImpl -> new DocumentImpl() {
 				{
 					try {
@@ -190,6 +192,7 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			booleanQuery);
 
 		_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
+			GetterUtil.getLong(document.get("companyId")),
 			documentImpl -> new DocumentImpl() {
 				{
 					addKeyword("instanceCompleted", Boolean.TRUE);
@@ -199,6 +202,7 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			booleanQuery);
 
 		_tokenWorkflowMetricsIndexer.updateDocuments(
+			GetterUtil.getLong(document.get("companyId")),
 			documentImpl -> new DocumentImpl() {
 				{
 					addKeyword("instanceCompleted", Boolean.TRUE);
@@ -285,6 +289,10 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InstanceWorkflowMetricsIndexer.class);
+
+	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
+	private WorkflowMetricsIndexNameBuilder
+		_instanceWorkflowMetricsIndexNameBuilder;
 
 	@Reference
 	private SLAInstanceResultWorkflowMetricsIndexer

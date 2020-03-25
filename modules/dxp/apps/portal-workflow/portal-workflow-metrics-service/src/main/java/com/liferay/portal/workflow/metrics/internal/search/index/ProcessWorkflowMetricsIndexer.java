@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,7 +49,8 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
-				_instanceWorkflowMetricsIndexer.getIndexName(),
+				_instanceWorkflowMetricsIndexer.getIndexName(
+					GetterUtil.getLong(document.get("companyId"))),
 				_createWorkflowMetricsInstanceDocument(
 					GetterUtil.getLong(document.get("companyId")),
 					GetterUtil.getLong(document.get("processId")))) {
@@ -59,7 +61,8 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			});
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
-				_slaInstanceResultWorkflowMetricsIndexer.getIndexName(),
+				_slaInstanceResultWorkflowMetricsIndexer.getIndexName(
+					GetterUtil.getLong(document.get("companyId"))),
 				_slaInstanceResultWorkflowMetricsIndexer.creatDefaultDocument(
 					GetterUtil.getLong(document.get("companyId")),
 					GetterUtil.getLong(document.get("processId")))) {
@@ -71,7 +74,10 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 				}
 			});
 		bulkDocumentRequest.addBulkableDocumentRequest(
-			new IndexDocumentRequest(getIndexName(), document) {
+			new IndexDocumentRequest(
+				getIndexName(GetterUtil.getLong(document.get("companyId"))),
+				document) {
+
 				{
 					setType(getIndexType());
 				}
@@ -119,8 +125,8 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	}
 
 	@Override
-	public String getIndexName() {
-		return "workflow-metrics-processes";
+	public String getIndexName(long companyId) {
+		return _processWorkflowMetricsIndexNameBuilder.getIndexName(companyId);
 	}
 
 	@Override
@@ -166,6 +172,10 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	@Reference
 	private InstanceWorkflowMetricsIndexer _instanceWorkflowMetricsIndexer;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=process)")
+	private WorkflowMetricsIndexNameBuilder
+		_processWorkflowMetricsIndexNameBuilder;
 
 	@Reference
 	private SLAInstanceResultWorkflowMetricsIndexer

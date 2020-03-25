@@ -157,20 +157,15 @@ public class FragmentLayoutStructureItemHelper
 		FragmentEntry fragmentEntry = _getFragmentEntry(
 			fragmentCollectionContributorTracker, fragmentKey, layout);
 
-		long fragmentEntryId = 0;
-		String html = StringPool.BLANK;
-		String js = StringPool.BLANK;
-		String css = StringPool.BLANK;
-		String configuration = StringPool.BLANK;
-
-		if (fragmentEntry != null) {
-			fragmentEntryId = fragmentEntry.getFragmentEntryId();
-
-			html = fragmentEntry.getHtml();
-			js = fragmentEntry.getJs();
-			css = fragmentEntry.getCss();
-			configuration = fragmentEntry.getConfiguration();
+		if (fragmentEntry == null) {
+			return null;
 		}
+
+		long fragmentEntryId = fragmentEntry.getFragmentEntryId();
+		String html = fragmentEntry.getHtml();
+		String js = fragmentEntry.getJs();
+		String css = fragmentEntry.getCss();
+		String configuration = fragmentEntry.getConfiguration();
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.fetchFragmentCollection(

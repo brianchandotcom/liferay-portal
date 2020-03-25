@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -45,27 +43,19 @@ public class TaxonomyCategoryResourceTest
 			new ServiceContext());
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testGetTaxonomyCategoryRankedPage() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testGetTaxonomyCategoryRankedPageWithPagination() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testGraphQLDeleteTaxonomyCategory() {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testGraphQLGetTaxonomyCategory() {
 	}
 

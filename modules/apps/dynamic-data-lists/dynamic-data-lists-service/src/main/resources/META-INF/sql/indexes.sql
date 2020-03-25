@@ -1,3 +1,4 @@
+create index IX_D443D273 on DDLRecord (className[$COLUMN_LENGTH:300$], classPK);
 create index IX_6A6C1C85 on DDLRecord (companyId);
 create index IX_F12C61D4 on DDLRecord (recordSetId, recordSetVersion[$COLUMN_LENGTH:75$]);
 create index IX_AAC564D3 on DDLRecord (recordSetId, userId);

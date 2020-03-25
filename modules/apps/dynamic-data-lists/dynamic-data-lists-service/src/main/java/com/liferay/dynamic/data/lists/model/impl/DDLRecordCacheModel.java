@@ -76,7 +76,7 @@ public class DDLRecordCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -112,6 +112,10 @@ public class DDLRecordCacheModel
 		sb.append(displayIndex);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", className=");
+		sb.append(className);
+		sb.append(", classPK=");
+		sb.append(classPK);
 		sb.append("}");
 
 		return sb.toString();
@@ -191,6 +195,15 @@ public class DDLRecordCacheModel
 			ddlRecordImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		if (className == null) {
+			ddlRecordImpl.setClassName("");
+		}
+		else {
+			ddlRecordImpl.setClassName(className);
+		}
+
+		ddlRecordImpl.setClassPK(classPK);
+
 		ddlRecordImpl.resetOriginalValues();
 
 		return ddlRecordImpl;
@@ -223,6 +236,9 @@ public class DDLRecordCacheModel
 
 		displayIndex = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
+		className = objectInput.readUTF();
+
+		classPK = objectInput.readLong();
 	}
 
 	@Override
@@ -283,6 +299,15 @@ public class DDLRecordCacheModel
 
 		objectOutput.writeInt(displayIndex);
 		objectOutput.writeLong(lastPublishDate);
+
+		if (className == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(className);
+		}
+
+		objectOutput.writeLong(classPK);
 	}
 
 	public long mvccVersion;
@@ -302,5 +327,7 @@ public class DDLRecordCacheModel
 	public String version;
 	public int displayIndex;
 	public long lastPublishDate;
+	public String className;
+	public long classPK;
 
 }

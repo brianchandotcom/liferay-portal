@@ -578,6 +578,9 @@ public class PageDefinitionConverterUtil {
 
 						return new MasterPage() {
 							{
+								key =
+									layoutPageTemplateEntry.
+										getLayoutPageTemplateEntryKey();
 								name = layoutPageTemplateEntry.getName();
 							}
 						};

@@ -40,6 +40,7 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
+import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendar;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarTracker;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
@@ -180,7 +181,8 @@ public class WorkflowMetricsSLAProcessor {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-sla-instance-results");
+			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
+				workflowMetricsSLADefinitionVersion.getCompanyId()));
 		searchSearchRequest.setQuery(
 			new BooleanQueryImpl() {
 				{
@@ -257,7 +259,8 @@ public class WorkflowMetricsSLAProcessor {
 					StringBundler.concat(
 						"createDate", StringPool.UNDERLINE, "Number")),
 				SortOrder.ASC));
-		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
+		searchSearchRequest.setIndexNames(
+			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(companyId));
 		searchSearchRequest.setQuery(
 			new BooleanQueryImpl() {
 				{
@@ -783,8 +786,18 @@ public class WorkflowMetricsSLAProcessor {
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;
 
+	@Reference(
+		target = "(workflow.metrics.index.entity.name=sla-instance-result)"
+	)
+	private WorkflowMetricsIndexNameBuilder
+		_slaInstanceResultWorkflowMetricsIndexNameBuilder;
+
 	@Reference
 	private Sorts _sorts;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=token)")
+	private WorkflowMetricsIndexNameBuilder
+		_tokenWorkflowMetricsIndexNameBuilder;
 
 	@Reference
 	private WorkflowMetricsSLACalendarTracker

@@ -52,6 +52,7 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.internal.odata.entity.v1_0.ProcessEntityModel;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
+import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -185,7 +186,10 @@ public class ProcessResourceImpl
 		BooleanQuery instancesBooleanQuery = _queries.booleanQuery();
 
 		instancesBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-instances"));
+			_queries.term(
+				"_index",
+				_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
 		instancesBooleanQuery.addMustNotQueryClauses(
 			_queries.term("instanceId", 0));
 		instancesBooleanQuery.addMustQueryClauses(
@@ -195,7 +199,10 @@ public class ProcessResourceImpl
 		BooleanQuery slaInstanceResultsBooleanQuery = _queries.booleanQuery();
 
 		slaInstanceResultsBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-sla-instance-results"));
+			_queries.term(
+				"_index",
+				_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
 		slaInstanceResultsBooleanQuery.addMustNotQueryClauses(
 			_queries.term("slaDefinitionId", 0));
 		slaInstanceResultsBooleanQuery.addMustQueryClauses(
@@ -372,7 +379,9 @@ public class ProcessResourceImpl
 
 		searchSearchRequest.addAggregation(termsAggregation);
 
-		searchSearchRequest.setIndexNames("workflow-metrics-instances");
+		searchSearchRequest.setIndexNames(
+			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
 			_createInstanceBooleanQuery(completed, null, null, processIds));
 
@@ -418,8 +427,10 @@ public class ProcessResourceImpl
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-instances",
-			"workflow-metrics-sla-instance-results");
+			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()),
+			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
 
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(
@@ -517,7 +528,9 @@ public class ProcessResourceImpl
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		searchSearchRequest.setIndexNames("workflow-metrics-processes");
+		searchSearchRequest.setIndexNames(
+			_processWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
 			_createProcessBooleanQuery(processId, title));
 		searchSearchRequest.setSelectedFieldNames(
@@ -574,7 +587,8 @@ public class ProcessResourceImpl
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-sla-instance-results");
+			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
 			_createSLAInstanceResultsBooleanQuery(
 				completed, null, null, processIds));
@@ -705,6 +719,14 @@ public class ProcessResourceImpl
 	@Reference
 	private Aggregations _aggregations;
 
+	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
+	private WorkflowMetricsIndexNameBuilder
+		_instanceWorkflowMetricsIndexNameBuilder;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=process)")
+	private WorkflowMetricsIndexNameBuilder
+		_processWorkflowMetricsIndexNameBuilder;
+
 	@Reference
 	private Queries _queries;
 
@@ -716,6 +738,12 @@ public class ProcessResourceImpl
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;
+
+	@Reference(
+		target = "(workflow.metrics.index.entity.name=sla-instance-result)"
+	)
+	private WorkflowMetricsIndexNameBuilder
+		_slaInstanceResultWorkflowMetricsIndexNameBuilder;
 
 	@Reference
 	private Sorts _sorts;

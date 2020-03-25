@@ -57,6 +57,7 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUserBulkSelecti
 import com.liferay.portal.workflow.metrics.rest.internal.odata.entity.v1_0.AssigneeUserEntityModel;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeUserResource;
+import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.util.Collection;
@@ -175,7 +176,10 @@ public class AssigneeUserResourceImpl
 		BooleanQuery slaTaskResultsBooleanQuery = _queries.booleanQuery();
 
 		slaTaskResultsBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-sla-task-results"));
+			_queries.term(
+				"_index",
+				_slaTaskResultWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
 		slaTaskResultsBooleanQuery.addMustQueryClauses(
 			_createSLATaskResultsBooleanQuery(
 				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
@@ -184,7 +188,10 @@ public class AssigneeUserResourceImpl
 		BooleanQuery tokensBooleanQuery = _queries.booleanQuery();
 
 		tokensBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-tokens"));
+			_queries.term(
+				"_index",
+				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
 		tokensBooleanQuery.addMustQueryClauses(
 			_createTokensBooleanQuery(
 				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
@@ -265,7 +272,10 @@ public class AssigneeUserResourceImpl
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-tokens"));
+			_queries.term(
+				"_index",
+				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
 
 		return booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", 0));
 	}
@@ -366,7 +376,10 @@ public class AssigneeUserResourceImpl
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-sla-task-results", "workflow-metrics-tokens");
+			_slaTaskResultWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()),
+			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(
 				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
@@ -404,7 +417,9 @@ public class AssigneeUserResourceImpl
 
 		searchSearchRequest.addAggregation(termsAggregation);
 
-		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
+		searchSearchRequest.setIndexNames(
+			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
 			_createTokensBooleanQuery(
 				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
@@ -442,7 +457,9 @@ public class AssigneeUserResourceImpl
 		searchSearchRequest.addAggregation(
 			_aggregations.cardinality(
 				"assigneeId", completed ? "completionUserId" : "assigneeId"));
-		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
+		searchSearchRequest.setIndexNames(
+			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
 			_createTokensBooleanQuery(
 				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
@@ -669,8 +686,16 @@ public class AssigneeUserResourceImpl
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;
 
+	@Reference(target = "(workflow.metrics.index.entity.name=sla-task-result)")
+	private WorkflowMetricsIndexNameBuilder
+		_slaTaskResultWorkflowMetricsIndexNameBuilder;
+
 	@Reference
 	private Sorts _sorts;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=token)")
+	private WorkflowMetricsIndexNameBuilder
+		_tokenWorkflowMetricsIndexNameBuilder;
 
 	@Reference
 	private UserLocalService _userLocalService;

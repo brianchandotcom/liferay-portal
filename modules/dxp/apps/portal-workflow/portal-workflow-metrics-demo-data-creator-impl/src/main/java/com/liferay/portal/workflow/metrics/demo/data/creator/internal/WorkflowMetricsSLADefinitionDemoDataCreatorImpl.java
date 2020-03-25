@@ -29,6 +29,7 @@ import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.util.NodeUtil;
 import com.liferay.portal.workflow.metrics.rest.spi.resource.SPINodeResource;
+import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 
 import java.util.Collection;
@@ -202,7 +203,9 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 
 	private SPINodeResource<Node> _getSPINodeResource(long companyId) {
 		return new SPINodeResource<>(
-			companyId, _queries, _searchRequestExecutor,
+			companyId, _nodeWorkflowMetricsIndexNameBuilder,
+			_processWorkflowMetricsIndexNameBuilder, _queries,
+			_searchRequestExecutor,
 			document -> NodeUtil.toNode(
 				document, _language,
 				ResourceBundleUtil.getModuleAndPortalResourceBundle(
@@ -220,6 +223,14 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 
 	@Reference
 	private Language _language;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=node)")
+	private WorkflowMetricsIndexNameBuilder
+		_nodeWorkflowMetricsIndexNameBuilder;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=process)")
+	private WorkflowMetricsIndexNameBuilder
+		_processWorkflowMetricsIndexNameBuilder;
 
 	@Reference
 	private Queries _queries;

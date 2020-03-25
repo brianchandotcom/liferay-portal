@@ -28,6 +28,7 @@ import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
+import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
 import java.util.Date;
 import java.util.Objects;
@@ -55,7 +56,8 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 			bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
-					_slaTaskResultWorkflowMetricsIndexer.getIndexName(),
+					_slaTaskResultWorkflowMetricsIndexer.getIndexName(
+						GetterUtil.getLong(document.get("companyId"))),
 					_slaTaskResultWorkflowMetricsIndexer.creatDefaultDocument(
 						GetterUtil.getLong(document.get("companyId")),
 						GetterUtil.getLong(document.get("processId")),
@@ -71,7 +73,8 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 			bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
-					_tokenWorkflowMetricsIndexer.getIndexName(),
+					_tokenWorkflowMetricsIndexer.getIndexName(
+						GetterUtil.getLong(document.get("companyId"))),
 					_createWorkflowMetricsTokenDocument(
 						GetterUtil.getLong(document.get("companyId")),
 						GetterUtil.getLong(document.get("processId")),
@@ -86,7 +89,10 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		}
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
-			new IndexDocumentRequest(getIndexName(), document) {
+			new IndexDocumentRequest(
+				getIndexName(GetterUtil.getLong(document.get("companyId"))),
+				document) {
+
 				{
 					setType(getIndexType());
 				}
@@ -119,8 +125,8 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	}
 
 	@Override
-	public String getIndexName() {
-		return "workflow-metrics-nodes";
+	public String getIndexName(long companyId) {
+		return _nodeWorkflowMetricsIndexNameBuilder.getIndexName(companyId);
 	}
 
 	@Override
@@ -231,6 +237,10 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 		actionableDynamicQuery.performActions();
 	}
+
+	@Reference(target = "(workflow.metrics.index.entity.name=node)")
+	private WorkflowMetricsIndexNameBuilder
+		_nodeWorkflowMetricsIndexNameBuilder;
 
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer

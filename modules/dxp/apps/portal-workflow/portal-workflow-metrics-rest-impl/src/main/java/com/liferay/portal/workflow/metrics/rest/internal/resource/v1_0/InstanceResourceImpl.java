@@ -64,6 +64,7 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Transition;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
+import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
@@ -104,7 +105,11 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			"instanceId", "instanceId");
 
 		FilterAggregation indexFilterAggregation = _aggregations.filter(
-			"tokensIndex", _queries.term("_index", "workflow-metrics-tokens"));
+			"tokensIndex",
+			_queries.term(
+				"_index",
+				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
 
 		TermsAggregation assigneeIdTermsAggregation = _aggregations.terms(
 			"assigneeId", "assigneeId");
@@ -146,8 +151,12 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-instances",
-			"workflow-metrics-sla-instance-results", "workflow-metrics-tokens");
+			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()),
+			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()),
+			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
 
 		BooleanQuery booleanQuery = _createBooleanQuery(
 			new Long[0], processId, new String[0]);
@@ -279,14 +288,20 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		BooleanQuery tokensBooleanQuery = _queries.booleanQuery();
 
 		tokensBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-tokens"));
+			_queries.term(
+				"_index",
+				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
 		tokensBooleanQuery.addMustQueryClauses(
 			_createTokensBooleanQuery(processId, instanceId));
 
 		BooleanQuery transitionsBooleanQuery = _queries.booleanQuery();
 
 		transitionsBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-transitions"));
+			_queries.term(
+				"_index",
+				_transitionWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
 		transitionsBooleanQuery.addMustQueryClauses(
 			_createBooleanQuery(processId));
 
@@ -304,21 +319,30 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		BooleanQuery instancesBooleanQuery = _queries.booleanQuery();
 
 		instancesBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-instances"));
+			_queries.term(
+				"_index",
+				_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
 		instancesBooleanQuery.addMustQueryClauses(
 			_createInstancesBooleanQuery(processId, statuses));
 
 		BooleanQuery slaInstanceResultsBooleanQuery = _queries.booleanQuery();
 
 		slaInstanceResultsBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-sla-instance-results"));
+			_queries.term(
+				"_index",
+				_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
 		slaInstanceResultsBooleanQuery.addMustQueryClauses(
 			_createSLAInstanceResultsBooleanQuery(processId));
 
 		BooleanQuery tokensBooleanQuery = _queries.booleanQuery();
 
 		tokensBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-tokens"));
+			_queries.term(
+				"_index",
+				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
 		tokensBooleanQuery.addMustQueryClauses(
 			_createTokensBooleanQuery(assigneeUserIds, processId));
 
@@ -379,7 +403,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		return booleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-tokens"));
+			_queries.term(
+				"_index",
+				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
 	}
 
 	private Instance _createInstance(Document document) {
@@ -570,7 +597,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		FilterAggregation instancesIndexFilterAggregation =
 			_aggregations.filter(
 				"instanceIndex",
-				_queries.term("_index", "workflow-metrics-instances"));
+				_queries.term(
+					"_index",
+					_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+						contextCompany.getCompanyId())));
 
 		instancesIndexFilterAggregation.addChildAggregation(
 			_aggregations.topHits("topHits"));
@@ -593,7 +623,11 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		taskNameTermsAggregation.setSize(10000);
 
 		FilterAggregation tokensIndexFilterAggregation = _aggregations.filter(
-			"tokensIndex", _queries.term("_index", "workflow-metrics-tokens"));
+			"tokensIndex",
+			_queries.term(
+				"_index",
+				_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+					contextCompany.getCompanyId())));
 
 		TermsAggregation assigneeIdTermsAggregation = _aggregations.terms(
 			"assigneeId", "assigneeId");
@@ -623,8 +657,12 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-instances",
-			"workflow-metrics-sla-instance-results", "workflow-metrics-tokens");
+			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()),
+			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()),
+			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
 
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(assigneeUserIds, processId, statuses));
@@ -723,7 +761,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-tokens", "workflow-metrics-transitions");
+			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()),
+			_transitionWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -774,8 +815,12 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				ListUtil.fromArray(slaStatuses), ListUtil.fromArray(statuses),
 				ListUtil.fromArray(taskKeys)));
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-instances",
-			"workflow-metrics-sla-instance-results", "workflow-metrics-tokens");
+			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()),
+			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()),
+			_tokenWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(assigneeUserIds, processId, statuses));
 
@@ -1056,6 +1101,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	@Reference
 	private Aggregations _aggregations;
 
+	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
+	private WorkflowMetricsIndexNameBuilder
+		_instanceWorkflowMetricsIndexNameBuilder;
+
 	@Reference
 	private Language _language;
 
@@ -1074,8 +1123,22 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;
 
+	@Reference(
+		target = "(workflow.metrics.index.entity.name=sla-instance-result)"
+	)
+	private WorkflowMetricsIndexNameBuilder
+		_slaInstanceResultWorkflowMetricsIndexNameBuilder;
+
 	@Reference
 	private Sorts _sorts;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=token)")
+	private WorkflowMetricsIndexNameBuilder
+		_tokenWorkflowMetricsIndexNameBuilder;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=transition)")
+	private WorkflowMetricsIndexNameBuilder
+		_transitionWorkflowMetricsIndexNameBuilder;
 
 	@Reference
 	private UserLocalService _userLocalService;

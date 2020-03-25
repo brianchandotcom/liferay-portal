@@ -3,9 +3,16 @@ definition {
 	macro addContent {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-		KeyPress(
-			locator1 = "CKEditor#BODY",
-			value1 = "${content}");
+		if (isSet(kbArticleContentEdit)) {
+			Type(
+				locator1 = "CKEditor#BODY",
+				value1 = "${kbArticleContentEdit}");
+		}
+		else {
+			KeyPress(
+				locator1 = "CKEditor#BODY",
+				value1 = "${content}");
+		}
 
 		SelectFrame(value1 = "relative=top");
 	}

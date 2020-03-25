@@ -48,6 +48,7 @@ export const connectStore = Component => {
 		return (
 			<Component
 				{...otherProps}
+				context={context}
 				dispatch={dispatch}
 				emit={emit}
 				store={store}

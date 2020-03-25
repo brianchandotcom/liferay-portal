@@ -1,6 +1,6 @@
 definition {
 
-	macro addRedirect {
+	macro addEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
 		LexiconEntry.gotoAdd();
@@ -39,7 +39,7 @@ definition {
 		}
 	}
 
-	macro deleteCP {
+	macro deleteEntry {
 		if (isSet(deletions)) {
 			ClickNoError(locator1 = "Icon#DELETE");
 		}
@@ -53,7 +53,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editRedirect {
+	macro editEntry {
 		Redirect.gotoEntryMenuItem(
 			item = "Edit",
 			sourceURL = "${sourceURL}");
@@ -95,13 +95,13 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet");
 	}
 
-	macro viewDefaultCP {
+	macro viewDefault {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO_TAGLIB",
 			value1 = "No redirects were found.");
 	}
 
-	macro viewRedirect {
+	macro viewEntry {
 		AssertTextEquals.assertPartialText(
 			key_rowEntry = "${sourceURL}",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",

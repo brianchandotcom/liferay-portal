@@ -41,14 +41,14 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.addRedirect(
+		Redirect.addEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			siteName = "test-site-name",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.viewRedirect(
+		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			redirectType = "Permanent",
 			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
@@ -68,7 +68,7 @@ definition {
 		for (var pageCount : list "1,2,3") {
 			Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-			Redirect.addRedirect(
+			Redirect.addEntry(
 				destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 				siteName = "test-site-name",
 				sourceURL = "test-source-page-${pageCount}");
@@ -77,7 +77,7 @@ definition {
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
 		for (var pageCount : list "1,2,3") {
-			Redirect.viewRedirect(
+			Redirect.viewEntry(
 				destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 				redirectType = "Permanent",
 				sourceURL = "${portalURL}/web/test-site-name/test-source-page-${pageCount}");
@@ -85,11 +85,11 @@ definition {
 
 		PortletEntry.selectAll();
 
-		Redirect.deleteCP(
+		Redirect.deleteEntry(
 			deletions = "true",
 			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
 
-		Redirect.viewDefaultCP();
+		Redirect.viewDefault();
 	}
 
 	@description = "This ensures that a redirect entry can be deleted."
@@ -99,21 +99,21 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.addRedirect(
+		Redirect.addEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			siteName = "test-site-name",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.viewRedirect(
+		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			redirectType = "Permanent",
 			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
 
-		Redirect.deleteCP(sourceURL = "${portalURL}/web/test-site-name/test-source-page");
+		Redirect.deleteEntry(sourceURL = "${portalURL}/web/test-site-name/test-source-page");
 
-		Redirect.viewDefaultCP();
+		Redirect.viewDefault();
 	}
 
 	@description = "This ensures that an unexpired redirect can be edited."
@@ -123,7 +123,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.addRedirect(
+		Redirect.addEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			expirationDate = "12/31/2024",
 			siteName = "test-site-name",
@@ -131,7 +131,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.viewRedirect(
+		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			expirationDate = "12/31/24",
 			redirectType = "Permanent",
@@ -139,7 +139,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.editRedirect(
+		Redirect.editEntry(
 			destinationURLEdit = "${portalURL}/web/test-site-name/new-destination-page",
 			expirationDate = "12/31/2013",
 			redirectTypeEdit = "Temporary (302)",
@@ -148,7 +148,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.viewRedirect(
+		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/test-site-name/new-destination-page",
 			expirationDate = "Expired",
 			redirectType = "Temporary",
@@ -170,19 +170,19 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.addRedirect(
+		Redirect.addEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			siteName = "test-site-name",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.viewRedirect(
+		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			redirectType = "Permanent",
 			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
 
-		Redirect.editRedirect(
+		Redirect.editEntry(
 			destinationURLEdit = "${portalURL}/web/test-site-name/new-destination-page",
 			redirectTypeEdit = "Temporary (302)",
 			sourceURL = "test-source-page",
@@ -190,7 +190,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.viewRedirect(
+		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/test-site-name/new-destination-page",
 			redirectType = "Temporary",
 			sourceURL = "${portalURL}/web/test-site-name/new-source-page");
@@ -204,9 +204,9 @@ definition {
 			panel = "Site Administration",
 			portlet = "Redirection");
 
-		Redirect.viewDefaultCP();
+		Redirect.viewDefault();
 
-		Redirect.addRedirect(
+		Redirect.addEntry(
 			destinationURL = " ",
 			redirectURLVariation = "Null",
 			siteName = "guest",
@@ -217,7 +217,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Redirection");
 
-		Redirect.addRedirect(
+		Redirect.addEntry(
 			destinationURL = "http://localhost:8080",
 			redirectURLVariation = "Null",
 			siteName = "guest",
@@ -235,7 +235,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.addRedirect(
+		Redirect.addEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			expirationDate = "12/31/2013",
 			siteName = "test-site-name",
@@ -243,7 +243,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.viewRedirect(
+		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			expirationDate = "Expired",
 			redirectType = "Permanent",
@@ -257,7 +257,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.addRedirect(
+		Redirect.addEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			expirationDate = "12/31/2013",
 			redirectType = "Temporary (302)",
@@ -266,7 +266,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.viewRedirect(
+		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			expirationDate = "Expired",
 			redirectType = "Temporary",

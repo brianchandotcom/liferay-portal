@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.staging.impl;
+package com.liferay.dynamic.data.mapping.form.web.internal.display.context.util;
 
 import com.liferay.dynamic.data.mapping.service.http.DDMFormInstanceServiceHttp;
-import com.liferay.dynamic.data.mapping.staging.DDMFormInstanceStagingHelper;
 import com.liferay.exportimport.kernel.staging.StagingURLHelperUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -25,17 +24,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Marcos Martins
  */
-@Component(immediate = true, service = DDMFormInstanceStagingHelper.class)
-public class DDMFormInstanceStagingHelperImpl
-	implements DDMFormInstanceStagingHelper {
+public class DDMFormInstanceStagingUtil {
 
-	@Override
-	public boolean isFormInstancePublishedToRemoteLive(
+	public static boolean isFormInstancePublishedToRemoteLive(
 		Group group, User user, String uuid) {
 
 		try {
@@ -58,7 +52,9 @@ public class DDMFormInstanceStagingHelperImpl
 		}
 		catch (PortalException | SystemException exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(
+					"Unable to verify if form instance was published to live",
+					exception);
 			}
 
 			return false;
@@ -66,6 +62,6 @@ public class DDMFormInstanceStagingHelperImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormInstanceStagingHelperImpl.class);
+		DDMFormInstanceStagingUtil.class);
 
 }

@@ -27,7 +27,6 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
-import com.liferay.dynamic.data.mapping.staging.DDMFormInstanceStagingHelper;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -224,8 +223,8 @@ public class DDMFormPortlet extends MVCPortlet {
 			renderRequest, renderResponse, _ddmFormFieldTypeServicesTracker,
 			_ddmFormInstanceLocalService,
 			_ddmFormInstanceRecordVersionLocalService, _ddmFormInstanceService,
-			_ddmFormInstanceStagingHelper, _ddmFormInstanceVersionLocalService,
-			_ddmFormRenderer, _ddmFormValuesFactory, _ddmFormValuesMerger,
+			_ddmFormInstanceVersionLocalService, _ddmFormRenderer,
+			_ddmFormValuesFactory, _ddmFormValuesMerger,
 			_ddmFormWebConfigurationActivator.getDDMFormWebConfiguration(),
 			_groupLocalService, _jsonFactory,
 			_workflowDefinitionLinkLocalService, _portal);
@@ -252,9 +251,6 @@ public class DDMFormPortlet extends MVCPortlet {
 
 	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
-
-	@Reference
-	private DDMFormInstanceStagingHelper _ddmFormInstanceStagingHelper;
 
 	@Reference
 	private DDMFormInstanceVersionLocalService

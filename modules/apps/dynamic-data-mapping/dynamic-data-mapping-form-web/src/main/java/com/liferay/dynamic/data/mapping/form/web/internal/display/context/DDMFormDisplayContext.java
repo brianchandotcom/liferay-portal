@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
+import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormInstanceStagingUtil;
 import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormInstancePermission;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -38,7 +39,6 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
-import com.liferay.dynamic.data.mapping.staging.DDMFormInstanceStagingHelper;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.petra.string.StringPool;
@@ -96,7 +96,6 @@ public class DDMFormDisplayContext {
 		DDMFormInstanceRecordVersionLocalService
 			ddmFormInstanceRecordVersionLocalService,
 		DDMFormInstanceService ddmFormInstanceService,
-		DDMFormInstanceStagingHelper ddmFormInstanceStagingHelper,
 		DDMFormInstanceVersionLocalService ddmFormInstanceVersionLocalService,
 		DDMFormRenderer ddmFormRenderer,
 		DDMFormValuesFactory ddmFormValuesFactory,
@@ -113,7 +112,6 @@ public class DDMFormDisplayContext {
 		_ddmFormInstanceRecordVersionLocalService =
 			ddmFormInstanceRecordVersionLocalService;
 		_ddmFormInstanceService = ddmFormInstanceService;
-		_ddmFormInstanceStagingHelper = ddmFormInstanceStagingHelper;
 		_ddmFormInstanceVersionLocalService =
 			ddmFormInstanceVersionLocalService;
 		_ddmFormRenderer = ddmFormRenderer;
@@ -391,7 +389,7 @@ public class DDMFormDisplayContext {
 			if ((group != null) && group.isStagedRemotely()) {
 				ThemeDisplay themeDisplay = getThemeDisplay();
 
-				if (!_ddmFormInstanceStagingHelper.
+				if (!DDMFormInstanceStagingUtil.
 						isFormInstancePublishedToRemoteLive(
 							group, themeDisplay.getUser(),
 							formInstance.getUuid())) {
@@ -780,7 +778,6 @@ public class DDMFormDisplayContext {
 	private final DDMFormInstanceRecordVersionLocalService
 		_ddmFormInstanceRecordVersionLocalService;
 	private final DDMFormInstanceService _ddmFormInstanceService;
-	private final DDMFormInstanceStagingHelper _ddmFormInstanceStagingHelper;
 	private final DDMFormInstanceVersionLocalService
 		_ddmFormInstanceVersionLocalService;
 	private final DDMFormRenderer _ddmFormRenderer;

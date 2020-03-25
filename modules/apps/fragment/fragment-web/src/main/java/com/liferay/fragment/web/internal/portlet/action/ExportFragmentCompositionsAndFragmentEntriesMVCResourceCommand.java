@@ -22,6 +22,7 @@ import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.fragment.web.internal.portlet.helper.ExportHelper;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -77,24 +78,28 @@ public class ExportFragmentCompositionsAndFragmentEntriesMVCResourceCommand
 		try {
 			List<FragmentComposition> fragmentCompositions = new ArrayList<>();
 
-			for (long exportFragmentCompositionId :
-					exportFragmentCompositionIds) {
+			if (ArrayUtil.isNotEmpty(exportFragmentCompositionIds)) {
+				for (long exportFragmentCompositionId :
+						exportFragmentCompositionIds) {
 
-				FragmentComposition fragmentComposition =
-					_fragmentCompositionService.fetchFragmentComposition(
-						exportFragmentCompositionId);
+					FragmentComposition fragmentComposition =
+						_fragmentCompositionService.fetchFragmentComposition(
+							exportFragmentCompositionId);
 
-				fragmentCompositions.add(fragmentComposition);
+					fragmentCompositions.add(fragmentComposition);
+				}
 			}
 
 			List<FragmentEntry> fragmentEntries = new ArrayList<>();
 
-			for (long exportFragmentEntryId : exportFragmentEntryIds) {
-				FragmentEntry fragmentEntry =
-					_fragmentEntryService.fetchFragmentEntry(
-						exportFragmentEntryId);
+			if (ArrayUtil.isNotEmpty(exportFragmentEntryIds)) {
+				for (long exportFragmentEntryId : exportFragmentEntryIds) {
+					FragmentEntry fragmentEntry =
+						_fragmentEntryService.fetchFragmentEntry(
+							exportFragmentEntryId);
 
-				fragmentEntries.add(fragmentEntry);
+					fragmentEntries.add(fragmentEntry);
+				}
 			}
 
 			File file =

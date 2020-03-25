@@ -67,6 +67,8 @@ definition {
 	}
 
 	macro addContentDisplay {
+		Pause(locator1 = "10000");
+
 		PageEditor.gotoTab(tabName = "Fragments");
 
 		PageEditor.expandFragmentCollection(collectionName = "Content Display");

@@ -343,48 +343,50 @@ export default withRouter(
 										/>
 									)}
 
-								{question && question.actions && question.actions['reply-to-message'] && (
-									<div className="c-mt-5">
-										<ClayForm>
-											<ClayForm.Group className="form-group-sm">
-												<label htmlFor="basicInput">
-													{Liferay.Language.get(
-														'your-answer'
-													)}
+								{question &&
+									question.actions &&
+									question.actions['reply-to-message'] && (
+										<div className="c-mt-5">
+											<ClayForm>
+												<ClayForm.Group className="form-group-sm">
+													<label htmlFor="basicInput">
+														{Liferay.Language.get(
+															'your-answer'
+														)}
 
-													<span className="c-ml-2 reference-mark">
-														<ClayIcon symbol="asterisk" />
-													</span>
-												</label>
+														<span className="c-ml-2 reference-mark">
+															<ClayIcon symbol="asterisk" />
+														</span>
+													</label>
 
-												<div className="c-mt-2">
-													<Editor
-														config={getCKEditorConfig()}
-														data={articleBody}
-														onBeforeLoad={
-															onBeforeLoadCKEditor
-														}
-														onChange={event =>
-															setArticleBody(
-																event.editor.getData()
-															)
-														}
-													/>
-												</div>
-											</ClayForm.Group>
-										</ClayForm>
+													<div className="c-mt-2">
+														<Editor
+															config={getCKEditorConfig()}
+															data={articleBody}
+															onBeforeLoad={
+																onBeforeLoadCKEditor
+															}
+															onChange={event =>
+																setArticleBody(
+																	event.editor.getData()
+																)
+															}
+														/>
+													</div>
+												</ClayForm.Group>
+											</ClayForm>
 
-										<ClayButton
-											disabled={!articleBody}
-											displayType="primary"
-											onClick={postAnswer}
-										>
-											{Liferay.Language.get(
-												'post-answer'
-											)}
-										</ClayButton>
-									</div>
-								)}
+											<ClayButton
+												disabled={!articleBody}
+												displayType="primary"
+												onClick={postAnswer}
+											>
+												{Liferay.Language.get(
+													'post-answer'
+												)}
+											</ClayButton>
+										</div>
+									)}
 							</div>
 						</div>
 					)}

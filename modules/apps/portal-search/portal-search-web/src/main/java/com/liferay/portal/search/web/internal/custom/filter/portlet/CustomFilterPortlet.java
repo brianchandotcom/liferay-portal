@@ -171,11 +171,7 @@ public class CustomFilterPortlet extends MVCPortlet {
 
 		SearchRequest searchRequest = searchResponse.getRequest();
 
-		if (searchRequest.isEmptySearchEnabled()) {
-			return false;
-		}
-
-		return true;
+		return !searchRequest.isEmptySearchEnabled();
 	}
 
 	@Reference

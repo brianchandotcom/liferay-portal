@@ -106,11 +106,13 @@ definition {
 		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "${siteName},Site Name,Parent Page Name,Child Page Name");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test DisableShowApplicationBreadcrumb {
 		property custom.properties = "default.layout.template.id=1_column";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Breadcrumb";
+
+		//Quarantine for LPS-104367
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -309,13 +311,13 @@ definition {
 			pathLocator = "PAGE");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test DisableShowPage {
 
-		// Ignoring test from acceptance until LRQA-52643 is resolved
+		//Quarantine for LPS-104367
 
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Breadcrumb";
 
 		ProductMenu.gotoPortlet(
@@ -511,11 +513,13 @@ definition {
 			pathLocator = "PAGE");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test EnableShowGuestSite {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Breadcrumb#EnableShowGuestSite";
 		property testray.component.names = "Breadcrumb";
+
+		//Quarantine for LPS-104367
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

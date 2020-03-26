@@ -524,7 +524,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-90064 and is a supplementary frontend test to the integration tests in LPS-90307. Fragments can be copied."
-	@ignore = "true"
 	@priority = "5"
 	test CopyFragment {
 		task ("Navigate to the fragment collection") {

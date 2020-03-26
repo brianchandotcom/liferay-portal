@@ -95,9 +95,12 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-77769."
-	@ignore = "true"
 	@priority = "5"
 	test StagingPublishWCWithImageFieldEdit {
+		property portal.upstream = "quarantine";
+
+		//Quarantine for LRQA-57151
+
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Staging Test Page");

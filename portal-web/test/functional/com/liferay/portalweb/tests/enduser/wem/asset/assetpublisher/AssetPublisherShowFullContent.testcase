@@ -93,7 +93,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-47619 and LPS-67326."
-	@ignore = "true"
 	@priority = "5"
 	test AddAssetTypesViaAPAndAddRespectivePortletsToSamePage {
 		property plugins.deployment.type = "osgi";

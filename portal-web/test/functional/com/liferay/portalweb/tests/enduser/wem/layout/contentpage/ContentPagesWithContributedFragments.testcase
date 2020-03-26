@@ -136,7 +136,6 @@ definition {
 	}
 
 	@description = "This case ensures that a user can map an image to a fragment via the content display."
-	@ignore = "true"
 	@priority = "5"
 	test MapImageViaContentDisplay {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");

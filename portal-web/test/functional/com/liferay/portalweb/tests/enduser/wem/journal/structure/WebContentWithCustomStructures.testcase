@@ -208,10 +208,12 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test AddStructureWithUnlocalizableFields {
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Localization,Web Content Administration";
+
+		//Quarantine for LPS-96630
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1349,10 +1351,12 @@ definition {
 		AssertElementNotPresent(locator1 = "WC#SOURCE_GARBAGE_DATA");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test WebContentAdministrationDataValidation {
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Web Content Administration";
+
+		//Quarantine for LRQA-57161
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

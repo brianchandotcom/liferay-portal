@@ -900,9 +900,12 @@ definition {
 	@priority = "4"
 	test SitesDemoSiteManagement {
 		property portal.release = "false";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SitesUsecase#SitesDemoSiteManagement";
 		property testray.component.names = "Site Administration,Site Pages Administration";
 		var portalURL = PropsUtil.get("portal.url");
+
+		//Quarantine for LRQA-56385
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",

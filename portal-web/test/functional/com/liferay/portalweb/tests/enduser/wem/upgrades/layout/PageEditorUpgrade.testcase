@@ -24,17 +24,22 @@ definition {
 	test ConfigureFragmentInPageEditorAfterUpgrade721 {
 		property data.archive.type = "data-archive-page-editor";
 		property database.types = "mariadb,mysql,postgresql";
+		property portal.upstream = "quarantine";
 		property portal.version = "7.2.1";
+
+		//Quarantine for LPS-110532
 
 		Upgrade.configurePageEditor();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ConfigureFragmentInPageEditorAfterUpgrade72101 {
 		property data.archive.type = "data-archive-page-editor";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql";
+		property portal.upstream = "quarantine";
 		property portal.version = "7.2.10.1";
+
+		//Quarantine for LPS-110532
 
 		Upgrade.configurePageEditor();
 	}

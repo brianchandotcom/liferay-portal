@@ -254,9 +254,12 @@ definition {
 		RecycleBin.viewDefaultCP(assetName = "Blogs Entry Title");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test RecycleBinSearchBlogsEntries {
+		property portal.upstream = "quarantine";
+
+		//Quarantine for LPS-109573
+
 		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntry(
@@ -451,9 +454,12 @@ definition {
 			deleteUser = "Test Test");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test RecycleBinWebContent {
+		property portal.upstream = "quarantine";
+
+		//Quarantine for LRQA-57155
+
 		WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
 
 		WebContentStructures.addCP(

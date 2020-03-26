@@ -873,7 +873,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-102194. When checking the checkbox beside Select New Fragments Automatically, the new fragment will be available in content page."
-	@ignore = "true"
 	@priority = "5"
 	test CheckSelectNewFragmentsAutomaticallyInAllowedFragments {
 		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(

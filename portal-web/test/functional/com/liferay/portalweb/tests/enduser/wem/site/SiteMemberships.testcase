@@ -662,7 +662,6 @@ definition {
 		Site.searchMembershipCP(searchValue = "&quot;User Group Name 1&quot;");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test SiteMembershipsPagination {
 		property testray.component.names = "Site Administration,Users and Organizations";

@@ -294,7 +294,7 @@ definition {
 
 	@priority = "5"
 	test EditWebContentViaArticleTitle {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property testray.component.names = "Web Content Administration";
 
 		JSONWebcontent.addWebContent(

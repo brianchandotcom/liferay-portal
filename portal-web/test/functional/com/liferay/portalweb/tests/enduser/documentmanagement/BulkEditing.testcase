@@ -125,6 +125,7 @@ definition {
 	@priority = "5"
 	test EditAndAppendCategoryTags {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg");
 

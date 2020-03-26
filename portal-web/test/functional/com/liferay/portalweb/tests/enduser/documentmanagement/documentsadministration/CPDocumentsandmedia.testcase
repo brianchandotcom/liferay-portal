@@ -794,6 +794,7 @@ definition {
 	@priority = "5"
 	test ViewImageEditorControls {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

@@ -29,6 +29,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentFieldValue;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
+import com.liferay.headless.delivery.client.serdes.v1_0.StructuredContentSerDes;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -180,9 +181,10 @@ public class StructuredContentResourceTest
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
+			equals(
 				structuredContent,
-				dataJSONObject.getJSONObject("structuredContentByKey")));
+				StructuredContentSerDes.toDTO(
+					dataJSONObject.getString("structuredContentByKey"))));
 	}
 
 	@Override
@@ -211,9 +213,10 @@ public class StructuredContentResourceTest
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
+			equals(
 				structuredContent,
-				dataJSONObject.getJSONObject("structuredContentByUuid")));
+				StructuredContentSerDes.toDTO(
+					dataJSONObject.getString("structuredContentByUuid"))));
 	}
 
 	@Test

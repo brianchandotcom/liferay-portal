@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
+import com.liferay.headless.admin.user.client.serdes.v1_0.UserAccountSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -232,8 +233,10 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
-				userAccount, dataJSONObject.getJSONObject("myUserAccount")));
+			equals(
+				userAccount,
+				UserAccountSerDes.toDTO(
+					dataJSONObject.getString("myUserAccount"))));
 	}
 
 	@Override
@@ -241,6 +244,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	public void testGraphQLGetUserAccountsPage() throws Exception {
 		UserAccount userAccount1 = testGraphQLUserAccount_addUserAccount();
 		UserAccount userAccount2 = testGraphQLUserAccount_addUserAccount();
+		UserAccount userAccount3 = userAccountResource.getUserAccount(
+			_testUser.getUserId());
 
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
@@ -274,9 +279,11 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		Assert.assertEquals(3, userAccountsJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
-			Arrays.asList(userAccount1, userAccount2),
-			userAccountsJSONObject.getJSONArray("items"));
+		assertEqualsIgnoringOrder(
+			Arrays.asList(userAccount1, userAccount2, userAccount3),
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					userAccountsJSONObject.getString("items"))));
 	}
 
 	@Rule

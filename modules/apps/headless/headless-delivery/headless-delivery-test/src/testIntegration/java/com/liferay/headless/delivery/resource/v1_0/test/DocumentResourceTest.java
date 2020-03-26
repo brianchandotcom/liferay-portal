@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
+import com.liferay.headless.delivery.client.serdes.v1_0.DocumentSerDes;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -87,9 +88,10 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 		Assert.assertEquals(2, documentsJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
+		assertEqualsIgnoringOrder(
 			Arrays.asList(document1, document2),
-			documentsJSONObject.getJSONArray("items"));
+			Arrays.asList(
+				DocumentSerDes.toDTOs(documentsJSONObject.getString("items"))));
 	}
 
 	@Rule

@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.delivery.client.serdes.v1_0.MessageBoardThreadSerDes;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
@@ -103,10 +104,11 @@ public class MessageBoardThreadResourceTest
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
+			equals(
 				messageBoardThread,
-				dataJSONObject.getJSONObject(
-					"messageBoardThreadByFriendlyUrlPath")));
+				MessageBoardThreadSerDes.toDTO(
+					dataJSONObject.getString(
+						"messageBoardThreadByFriendlyUrlPath"))));
 	}
 
 	@Rule

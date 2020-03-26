@@ -3432,6 +3432,8 @@ definition {
 	@description = "This is a use case for LPS-82355."
 	@priority = "5"
 	test ViewPublishDocumentTypeWithConfiguredAssetType {
+		property portal.upstream = "quarantine";
+
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Staging Test Page",

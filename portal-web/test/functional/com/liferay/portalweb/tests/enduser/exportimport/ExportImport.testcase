@@ -1123,6 +1123,7 @@ definition {
 	@priority = "4"
 	test ExportImportThemeSettings {
 		property osgi.app.includes = "frontend-theme-porygon";
+		property portal.upstream = "quarantine";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 

@@ -99,6 +99,7 @@ definition {
 	@priority = "5"
 	test AddSiteTemplateChangeCurrentTheme {
 		property osgi.app.includes = "frontend-theme-fjord";
+		property portal.upstream = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",

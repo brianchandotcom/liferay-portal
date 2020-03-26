@@ -13,6 +13,28 @@ definition {
 
 		SelectWindow.selectPopUp(locator1 = "null");
 
+		if (IsElementNotPresent(locator1 = "IFrame#WEB_APPLICATION")) {
+			Close.closeWindow(locator1 = "null");
+
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			DMDocument.deletePG(dmDocumentTitle = "${dmDocumentTitle}");
+
+			DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "${dmDocumentTypeName}");
+
+			Type(
+				locator1 = "TextInput#TITLE",
+				value1 = "${dmDocumentTitle}");
+
+			Click(locator1 = "Button#SAVE");
+
+			Pause(locator1 = "10000");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+		}
+
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
 
 		Pause(locator1 = "10000");

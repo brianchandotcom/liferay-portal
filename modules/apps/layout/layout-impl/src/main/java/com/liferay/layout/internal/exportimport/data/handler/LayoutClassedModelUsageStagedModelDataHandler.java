@@ -122,7 +122,8 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, layoutClassedModelUsage,
 					(StagedModel)assetRenderer.getAssetObject(),
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
+					assetRendererFactory.getPortletId());
 			}
 		}
 

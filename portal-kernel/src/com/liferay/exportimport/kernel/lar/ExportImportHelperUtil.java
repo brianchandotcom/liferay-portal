@@ -223,6 +223,14 @@ public class ExportImportHelperUtil {
 			portletDataContext, referenceStagedModel);
 	}
 
+	public static boolean isAlwaysIncludeReference(
+		PortletDataContext portletDataContext, StagedModel referenceStagedModel,
+		String rootPortletId) {
+
+		return _exportImportHelper.isAlwaysIncludeReference(
+			portletDataContext, referenceStagedModel, rootPortletId);
+	}
+
 	public static boolean isExportPortletData(
 		PortletDataContext portletDataContext) {
 

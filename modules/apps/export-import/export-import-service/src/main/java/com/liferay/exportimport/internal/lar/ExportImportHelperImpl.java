@@ -659,6 +659,15 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			return true;
 		}
 
+		return isAlwaysIncludeReference(
+			portletDataContext, referenceStagedModel, rootPortletId);
+	}
+
+	@Override
+	public boolean isAlwaysIncludeReference(
+		PortletDataContext portletDataContext, StagedModel referenceStagedModel,
+		String rootPortletId) {
+
 		Portlet portlet = _portletLocalService.getPortletById(rootPortletId);
 
 		if (portlet == null) {

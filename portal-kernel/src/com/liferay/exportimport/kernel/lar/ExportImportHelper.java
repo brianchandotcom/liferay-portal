@@ -144,6 +144,10 @@ public interface ExportImportHelper {
 		PortletDataContext portletDataContext,
 		StagedModel referenceStagedModel);
 
+	public boolean isAlwaysIncludeReference(
+		PortletDataContext portletDataContext, StagedModel referenceStagedModel,
+		String rootPortletId);
+
 	public boolean isExportPortletData(PortletDataContext portletDataContext);
 
 	public boolean isLayoutRevisionInReview(Layout layout);

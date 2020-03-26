@@ -162,9 +162,15 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 				onNetworkStatus: dispatch,
 				segmentsExperienceId,
 				size: collectionConfig.numberOfItems,
-			}).then(response => {
-				setCollection(response);
-			});
+			})
+				.then(response => {
+					setCollection(response);
+				})
+				.catch(error => {
+					if (process.env.NODE_ENV === 'development') {
+						console.error(error);
+					}
+				});
 		}
 	}, [
 		collectionConfig.collection,
@@ -181,9 +187,15 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 				classNameId: collectionConfig.collection.itemType,
 				classTypeId: collectionConfig.collection.itemSubtype,
 				onNetworkStatus: dispatch,
-			}).then(({infoDisplayFields}) => {
-				setCollectionFields(infoDisplayFields);
-			});
+			})
+				.then(({infoDisplayFields}) => {
+					setCollectionFields(infoDisplayFields);
+				})
+				.catch(error => {
+					if (process.env.NODE_ENV === 'development') {
+						console.error(error);
+					}
+				});
 		}
 	}, [dispatch, collectionConfig.collection]);
 

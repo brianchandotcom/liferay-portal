@@ -109,6 +109,9 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 			new TemplateVariableGroup("journal-util", restrictedVariables);
 
 		journalUtilTemplateVariableGroup.addVariable(
+			"friendly-urls", Map.class, "friendlyURLs");
+
+		journalUtilTemplateVariableGroup.addVariable(
 			"journal-content", JournalContent.class, "journalContent");
 
 		templateVariableGroups.put(

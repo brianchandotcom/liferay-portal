@@ -29,17 +29,22 @@ definition {
 			groupName = "Guest",
 			layoutName = "Nested Portlets Page");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
 			groupName = "Guest",
 			layoutName = "Nested Portlets Page",
-			widgetName = "Web Content Display");
+			layoutTemplate = "1 Column");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Guest",
 			layoutName = "Nested Portlets Page",
 			widgetName = "Nested Applications");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Nested Portlets Page",
+			widgetName = "Web Content Display");
 
 		Navigator.gotoPage(pageName = "Nested Portlets Page");
 
@@ -52,7 +57,7 @@ definition {
 		WaitForElementNotPresent(locator1 = "IFrame#DIALOG");
 
 		NestedPortlets.dragAndDropPortletToPortletColumnPG(
-			columnNumberFrom = "2",
+			columnNumberFrom = "1",
 			portletColumnNumberTo = "1",
 			portletName = "Web Content Display");
 

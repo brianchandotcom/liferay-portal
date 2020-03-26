@@ -181,7 +181,7 @@ const FragmentContent = React.forwardRef(
 				)}
 
 				<FragmentContentProcessor
-					element={element}
+					editables={editables}
 					fragmentEntryLinkId={fragmentEntryLinkId}
 				/>
 

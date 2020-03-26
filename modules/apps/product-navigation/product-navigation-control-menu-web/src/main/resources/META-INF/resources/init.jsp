@@ -79,11 +79,11 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.WebAppPool" %><%@
 page import="com.liferay.product.navigation.control.menu.web.internal.constants.ProductNavigationControlMenuPortletKeys" %><%@
 page import="com.liferay.product.navigation.control.menu.web.internal.constants.ProductNavigationControlMenuWebKeys" %><%@
+page import="com.liferay.product.navigation.control.menu.web.internal.servlet.taglib.clay.AssetRendererHorizontalCard" %><%@
 page import="com.liferay.product.navigation.control.menu.web.internal.servlet.taglib.clay.AssetRendererVerticalCard" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@

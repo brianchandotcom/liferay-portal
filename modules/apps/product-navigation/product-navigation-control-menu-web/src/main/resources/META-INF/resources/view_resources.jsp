@@ -112,139 +112,100 @@ if (Validator.isNotNull(keywords)) {
 	/>
 </div>
 
-<div class="lfr-content-category panel-page-category">
-	<a class="collapse-icon list-group-heading panel-header panel-header-link" data-toggle="liferay-collapse" href="#manageRecentPanel">
-		<liferay-ui:message key="<%= panelTitle %>" />
-	</a>
+<h4 class="m-3">
+	<liferay-ui:message key="<%= panelTitle %>" />
+</h4>
 
-	<div class="collapse list-group-panel show" id="manageRecentPanel">
-		<div class="list-group-item">
-			<ul class="<%= displayStyle.equals("descriptive") ? "tabular-list-group" : "list-unstyled row" %>">
+<div class="m-1 row">
 
-				<%
-				long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
+	<%
+	long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
 
-				for (long classNameId : availableClassNameIds) {
-					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(classNameId);
+	for (long classNameId : availableClassNameIds) {
+		AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(classNameId);
 
-					if (!assetRendererFactory.isSelectable()) {
-						availableClassNameIds = ArrayUtil.remove(availableClassNameIds, classNameId);
-					}
-				}
+		if (!assetRendererFactory.isSelectable()) {
+			availableClassNameIds = ArrayUtil.remove(availableClassNameIds, classNameId);
+		}
+	}
 
-				AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+	AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-				assetEntryQuery.setClassNameIds(availableClassNameIds);
-				assetEntryQuery.setEnd(delta);
-				assetEntryQuery.setGroupIds(new long[] {scopeGroupId});
-				assetEntryQuery.setKeywords(keywords);
-				assetEntryQuery.setOrderByCol1("modifiedDate");
-				assetEntryQuery.setOrderByCol2("title");
-				assetEntryQuery.setOrderByType1("DESC");
-				assetEntryQuery.setOrderByType2("ASC");
-				assetEntryQuery.setStart(0);
+	assetEntryQuery.setClassNameIds(availableClassNameIds);
+	assetEntryQuery.setEnd(delta);
+	assetEntryQuery.setGroupIds(new long[] {scopeGroupId});
+	assetEntryQuery.setKeywords(keywords);
+	assetEntryQuery.setOrderByCol1("modifiedDate");
+	assetEntryQuery.setOrderByCol2("title");
+	assetEntryQuery.setOrderByType1("DESC");
+	assetEntryQuery.setOrderByType2("ASC");
+	assetEntryQuery.setStart(0);
 
-				BaseModelSearchResult<AssetEntry> baseModelSearchResult = assetHelper.searchAssetEntries(request, assetEntryQuery, 0, delta);
+	BaseModelSearchResult<AssetEntry> baseModelSearchResult = assetHelper.searchAssetEntries(request, assetEntryQuery, 0, delta);
 
-				for (AssetEntry assetEntry : baseModelSearchResult.getBaseModels()) {
-					String className = PortalUtil.getClassName(assetEntry.getClassNameId());
-					long classPK = assetEntry.getClassPK();
+	for (AssetEntry assetEntry : baseModelSearchResult.getBaseModels()) {
+		String className = PortalUtil.getClassName(assetEntry.getClassNameId());
+		long classPK = assetEntry.getClassPK();
 
-					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+		AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
-					if (assetRendererFactory == null) {
-						continue;
-					}
+		if (assetRendererFactory == null) {
+			continue;
+		}
 
-					AssetRenderer<?> assetRenderer = null;
+		AssetRenderer<?> assetRenderer = null;
 
-					try {
-						assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
-					}
-					catch (Exception e) {
-					}
+		try {
+			assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+		}
+		catch (Exception e) {
+		}
 
-					if ((assetRenderer == null) || !assetRenderer.isDisplayable()) {
-						continue;
-					}
+		if ((assetRenderer == null) || !assetRenderer.isDisplayable()) {
+			continue;
+		}
 
-					String title = HtmlUtil.escape(StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60));
+		String title = HtmlUtil.escape(StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60));
 
-					String portletId = PortletProviderUtil.getPortletId(assetEntry.getClassName(), PortletProvider.Action.ADD);
+		String portletId = PortletProviderUtil.getPortletId(assetEntry.getClassName(), PortletProvider.Action.ADD);
 
-					boolean hasAddToPagePermission = PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.ADD_TO_PAGE);
+		boolean hasAddToPagePermission = PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.ADD_TO_PAGE);
 
-					Map<String, Object> itemData = new HashMap<String, Object>();
+		Map<String, Object> itemData = new HashMap<String, Object>();
 
-					itemData.put("class-name", assetEntry.getClassName());
-					itemData.put("class-pk", assetEntry.getClassPK());
+		itemData.put("class-name", assetEntry.getClassName());
+		itemData.put("class-pk", assetEntry.getClassPK());
 
-					if (hasAddToPagePermission) {
-						itemData.put("draggable", true);
-					}
+		if (hasAddToPagePermission) {
+			itemData.put("draggable", true);
+		}
 
-					itemData.put("instanceable", true);
-					itemData.put("portlet-id", portletId);
-					itemData.put("title", title);
-				%>
+		itemData.put("instanceable", true);
+		itemData.put("portlet-id", portletId);
+		itemData.put("title", title);
+	%>
 
-					<c:choose>
-						<c:when test='<%= displayStyle.equals("icon") %>'>
-							<li class="col-md-6 col-sm-6 col-xs-6 drag-content-item lfr-content-item" <%= AUIUtil.buildData(itemData) %>>
-								<clay:vertical-card
-									verticalCard="<%= new AssetRendererVerticalCard(assetRenderer, liferayPortletRequest) %>"
-								/>
-							</li>
-						</c:when>
-						<c:otherwise>
+		<c:choose>
+			<c:when test='<%= displayStyle.equals("icon") %>'>
+				<div class="col-md-6 col-sm-6 col-xs-6 drag-content-item" <%= AUIUtil.buildData(itemData) %>>
+					<clay:vertical-card
+						verticalCard="<%= new AssetRendererVerticalCard(assetRenderer, liferayPortletRequest) %>"
+					/>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="col-md-12 col-sm-12 col-xs-12 drag-content-item" <%= AUIUtil.buildData(itemData) %>>
+					<clay:horizontal-card
+						horizontalCard="<%= new AssetRendererHorizontalCard(assetRenderer, liferayPortletRequest) %>"
+					/>
+				</div>
+			</c:otherwise>
+		</c:choose>
 
-							<%
-							String thumbnailPath = HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest));
-							%>
+	<%
+	}
+	%>
 
-							<li class="drag-content-item entry-display-style lfr-content-item list-group-item" <%= AUIUtil.buildData(itemData) %>>
-								<div class=" list-group-item-field">
-									<c:choose>
-										<c:when test="<%= Validator.isNotNull(thumbnailPath) %>">
-											<div class="user-icon user-icon-square user-icon-xl">
-												<img alt="thumbnail" class="img-responsive img-rounded" src="<%= thumbnailPath %>" />
-											</div>
-										</c:when>
-										<c:otherwise>
-											<span class="sticker sticker-secondary">
-												<liferay-ui:icon
-													icon="<%= assetRenderer.getIconCssClass() %>"
-													markupView="lexicon"
-												/>
-											</span>
-										</c:otherwise>
-									</c:choose>
-								</div>
-
-								<div class=" list-group-item-content">
-									<h1><%= title %></h1>
-
-									<%
-									Date modifiedDate = assetEntry.getModifiedDate();
-
-									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
-									%>
-
-									<h2 class="text-default">
-										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(assetRenderer.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-									</h2>
-								</div>
-							</li>
-						</c:otherwise>
-					</c:choose>
-
-				<%
-				}
-				%>
-
-			</ul>
-		</div>
-	</div>
 </div>
 
 <aui:script use="aui-base">

@@ -174,7 +174,7 @@ const FragmentContent = React.forwardRef(
 
 				{canUpdateLayoutContent && (
 					<FragmentContentFloatingToolbar
-						editableElements={editableElements}
+						editables={editables}
 						fragmentEntryLinkId={fragmentEntryLinkId}
 						onButtonClick={onFloatingToolbarButtonClick}
 					/>

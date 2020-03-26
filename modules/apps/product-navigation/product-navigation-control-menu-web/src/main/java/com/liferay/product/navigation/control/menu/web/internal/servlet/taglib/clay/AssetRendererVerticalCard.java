@@ -39,6 +39,12 @@ public class AssetRendererVerticalCard implements VerticalCard {
 	}
 
 	@Override
+	public String getAspectRatioCssClasses() {
+		return "aspect-ratio-item-center-middle " +
+			"aspect-ratio-item-vertical-fluid";
+	}
+
+	@Override
 	public String getElementClasses() {
 		return "card-interactive card-interactive-secondary";
 	}

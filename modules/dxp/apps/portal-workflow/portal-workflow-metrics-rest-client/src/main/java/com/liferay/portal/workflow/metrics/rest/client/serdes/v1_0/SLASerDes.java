@@ -213,9 +213,14 @@ public class SLASerDes {
 			map.put("calendarKey", String.valueOf(sla.getCalendarKey()));
 		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(sla.getDateModified()));
+		if (sla.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(sla.getDateModified()));
+		}
 
 		if (sla.getDescription() == null) {
 			map.put("description", null);

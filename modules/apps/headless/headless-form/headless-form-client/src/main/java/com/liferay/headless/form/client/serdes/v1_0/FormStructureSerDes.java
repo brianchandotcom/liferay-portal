@@ -266,13 +266,24 @@ public class FormStructureSerDes {
 			map.put("creator", String.valueOf(formStructure.getCreator()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(formStructure.getDateCreated()));
+		if (formStructure.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(formStructure.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(formStructure.getDateModified()));
+		if (formStructure.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(
+					formStructure.getDateModified()));
+		}
 
 		if (formStructure.getDescription() == null) {
 			map.put("description", null);

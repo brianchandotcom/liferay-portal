@@ -30,6 +30,7 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.DocumentSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -57,6 +58,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.io.File;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -625,8 +627,9 @@ public abstract class BaseDocumentResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
-				document, dataJSONObject.getJSONObject("document")));
+			equals(
+				document,
+				DocumentSerDes.toDTO(dataJSONObject.getString("document"))));
 	}
 
 	@Test
@@ -1020,9 +1023,10 @@ public abstract class BaseDocumentResourceTestCase {
 
 		Assert.assertEquals(2, documentsJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
+		assertEqualsIgnoringOrder(
 			Arrays.asList(document1, document2),
-			documentsJSONObject.getJSONArray("items"));
+			Arrays.asList(
+				DocumentSerDes.toDTOs(documentsJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -1054,11 +1058,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		Document document = testGraphQLDocument_addDocument(randomDocument);
 
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomDocument,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(document))));
+		Assert.assertTrue(equals(randomDocument, document));
 	}
 
 	@Test
@@ -1122,6 +1122,10 @@ public abstract class BaseDocumentResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("contentUrl", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1135,11 +1139,13 @@ public abstract class BaseDocumentResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1153,11 +1159,13 @@ public abstract class BaseDocumentResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("documentFolderId", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1171,11 +1179,13 @@ public abstract class BaseDocumentResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1189,11 +1199,13 @@ public abstract class BaseDocumentResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("fileExtension", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1207,11 +1219,13 @@ public abstract class BaseDocumentResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1225,11 +1239,13 @@ public abstract class BaseDocumentResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("numberOfComments", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1243,11 +1259,13 @@ public abstract class BaseDocumentResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("sizeInBytes", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1261,11 +1279,13 @@ public abstract class BaseDocumentResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("title", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1279,8 +1299,6 @@ public abstract class BaseDocumentResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 		}
 
@@ -1366,25 +1384,6 @@ public abstract class BaseDocumentResourceTestCase {
 
 			Assert.assertTrue(
 				documents2 + " does not contain " + document1, contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<Document> documents, JSONArray jsonArray) {
-
-		for (Document document : documents) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(document, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + document, contains);
 		}
 	}
 
@@ -1661,13 +1660,51 @@ public abstract class BaseDocumentResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.headless.delivery.dto.v1_0.Document.class)) {
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -2008,114 +2045,6 @@ public abstract class BaseDocumentResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(
-		Document document, JSONObject jsonObject) {
-
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("contentUrl", fieldName)) {
-				if (!Objects.deepEquals(
-						document.getContentUrl(),
-						jsonObject.getString("contentUrl"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("description", fieldName)) {
-				if (!Objects.deepEquals(
-						document.getDescription(),
-						jsonObject.getString("description"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("documentFolderId", fieldName)) {
-				if (!Objects.deepEquals(
-						document.getDocumentFolderId(),
-						jsonObject.getLong("documentFolderId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("encodingFormat", fieldName)) {
-				if (!Objects.deepEquals(
-						document.getEncodingFormat(),
-						jsonObject.getString("encodingFormat"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("fileExtension", fieldName)) {
-				if (!Objects.deepEquals(
-						document.getFileExtension(),
-						jsonObject.getString("fileExtension"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						document.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("numberOfComments", fieldName)) {
-				if (!Objects.deepEquals(
-						document.getNumberOfComments(),
-						jsonObject.getInt("numberOfComments"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("sizeInBytes", fieldName)) {
-				if (!Objects.deepEquals(
-						document.getSizeInBytes(),
-						jsonObject.getLong("sizeInBytes"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("title", fieldName)) {
-				if (!Objects.deepEquals(
-						document.getTitle(), jsonObject.getString("title"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

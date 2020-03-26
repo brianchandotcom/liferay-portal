@@ -22,8 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -48,6 +48,7 @@ import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.TaskResource;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.TaskSerDes;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
@@ -327,8 +328,9 @@ public abstract class BaseTaskResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
-				task, dataJSONObject.getJSONObject("processTask")));
+			equals(
+				task,
+				TaskSerDes.toDTO(dataJSONObject.getString("processTask"))));
 	}
 
 	@Test
@@ -419,25 +421,6 @@ public abstract class BaseTaskResourceTestCase {
 			}
 
 			Assert.assertTrue(tasks2 + " does not contain " + task1, contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<Task> tasks, JSONArray jsonArray) {
-
-		for (Task task : tasks) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(task, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + task, contains);
 		}
 	}
 
@@ -592,13 +575,52 @@ public abstract class BaseTaskResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task.
+						class)) {
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -772,151 +794,6 @@ public abstract class BaseTaskResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(Task task, JSONObject jsonObject) {
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("assigneeId", fieldName)) {
-				if (!Objects.deepEquals(
-						task.getAssigneeId(),
-						jsonObject.getLong("assigneeId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("className", fieldName)) {
-				if (!Objects.deepEquals(
-						task.getClassName(),
-						jsonObject.getString("className"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("classPK", fieldName)) {
-				if (!Objects.deepEquals(
-						task.getClassPK(), jsonObject.getLong("classPK"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("completed", fieldName)) {
-				if (!Objects.deepEquals(
-						task.getCompleted(),
-						jsonObject.getBoolean("completed"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("completionUserId", fieldName)) {
-				if (!Objects.deepEquals(
-						task.getCompletionUserId(),
-						jsonObject.getLong("completionUserId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("duration", fieldName)) {
-				if (!Objects.deepEquals(
-						task.getDuration(), jsonObject.getLong("duration"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						task.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("instanceId", fieldName)) {
-				if (!Objects.deepEquals(
-						task.getInstanceId(),
-						jsonObject.getLong("instanceId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("label", fieldName)) {
-				if (!Objects.deepEquals(
-						task.getLabel(), jsonObject.getString("label"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", fieldName)) {
-				if (!Objects.deepEquals(
-						task.getName(), jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("nodeId", fieldName)) {
-				if (!Objects.deepEquals(
-						task.getNodeId(), jsonObject.getLong("nodeId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("processId", fieldName)) {
-				if (!Objects.deepEquals(
-						task.getProcessId(), jsonObject.getLong("processId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("processVersion", fieldName)) {
-				if (!Objects.deepEquals(
-						task.getProcessVersion(),
-						jsonObject.getString("processVersion"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

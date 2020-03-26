@@ -29,6 +29,7 @@ import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.TaxonomyVocabularySerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -54,6 +55,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -561,9 +563,11 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Assert.assertEquals(
 			2, taxonomyVocabulariesJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
+		assertEqualsIgnoringOrder(
 			Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
-			taxonomyVocabulariesJSONObject.getJSONArray("items"));
+			Arrays.asList(
+				TaxonomyVocabularySerDes.toDTOs(
+					taxonomyVocabulariesJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -598,11 +602,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGraphQLTaxonomyVocabulary_addTaxonomyVocabulary(
 				randomTaxonomyVocabulary);
 
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomTaxonomyVocabulary,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(taxonomyVocabulary))));
+		Assert.assertTrue(equals(randomTaxonomyVocabulary, taxonomyVocabulary));
 	}
 
 	@Test
@@ -729,9 +729,10 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
+			equals(
 				taxonomyVocabulary,
-				dataJSONObject.getJSONObject("taxonomyVocabulary")));
+				TaxonomyVocabularySerDes.toDTO(
+					dataJSONObject.getString("taxonomyVocabulary"))));
 	}
 
 	@Test
@@ -818,6 +819,10 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -831,11 +836,13 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -849,11 +856,13 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -867,12 +876,14 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals(
 					"numberOfTaxonomyCategories", additionalAssertFieldName)) {
+
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
 
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -888,11 +899,13 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("siteId", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -906,8 +919,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 		}
 
@@ -1001,26 +1012,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			Assert.assertTrue(
 				taxonomyVocabularies2 + " does not contain " +
 					taxonomyVocabulary1,
-				contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<TaxonomyVocabulary> taxonomyVocabularies, JSONArray jsonArray) {
-
-		for (TaxonomyVocabulary taxonomyVocabulary : taxonomyVocabularies) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(taxonomyVocabulary, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + taxonomyVocabulary,
 				contains);
 		}
 	}
@@ -1165,13 +1156,54 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		graphQLFields.add(new GraphQLField("siteId"));
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.headless.admin.taxonomy.dto.v1_0.
+						TaxonomyVocabulary.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -1349,60 +1381,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(
-		TaxonomyVocabulary taxonomyVocabulary, JSONObject jsonObject) {
-
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("description", fieldName)) {
-				if (!Objects.deepEquals(
-						taxonomyVocabulary.getDescription(),
-						jsonObject.getString("description"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						taxonomyVocabulary.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", fieldName)) {
-				if (!Objects.deepEquals(
-						taxonomyVocabulary.getName(),
-						jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("numberOfTaxonomyCategories", fieldName)) {
-				if (!Objects.deepEquals(
-						taxonomyVocabulary.getNumberOfTaxonomyCategories(),
-						jsonObject.getInt("numberOfTaxonomyCategories"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

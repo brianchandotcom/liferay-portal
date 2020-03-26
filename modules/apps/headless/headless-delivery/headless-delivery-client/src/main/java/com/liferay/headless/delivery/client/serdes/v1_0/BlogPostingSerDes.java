@@ -457,17 +457,32 @@ public class BlogPostingSerDes {
 				"customFields", String.valueOf(blogPosting.getCustomFields()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(blogPosting.getDateCreated()));
+		if (blogPosting.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(blogPosting.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(blogPosting.getDateModified()));
+		if (blogPosting.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(blogPosting.getDateModified()));
+		}
 
-		map.put(
-			"datePublished",
-			liferayToJSONDateFormat.format(blogPosting.getDatePublished()));
+		if (blogPosting.getDatePublished() == null) {
+			map.put("datePublished", null);
+		}
+		else {
+			map.put(
+				"datePublished",
+				liferayToJSONDateFormat.format(blogPosting.getDatePublished()));
+		}
 
 		if (blogPosting.getDescription() == null) {
 			map.put("description", null);

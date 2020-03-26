@@ -272,13 +272,25 @@ public class ContentStructureSerDes {
 			map.put("creator", String.valueOf(contentStructure.getCreator()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(contentStructure.getDateCreated()));
+		if (contentStructure.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(
+					contentStructure.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(contentStructure.getDateModified()));
+		if (contentStructure.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(
+					contentStructure.getDateModified()));
+		}
 
 		if (contentStructure.getDescription() == null) {
 			map.put("description", null);

@@ -418,13 +418,23 @@ public class WikiPageSerDes {
 			map.put("customFields", String.valueOf(wikiPage.getCustomFields()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(wikiPage.getDateCreated()));
+		if (wikiPage.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(wikiPage.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(wikiPage.getDateModified()));
+		if (wikiPage.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(wikiPage.getDateModified()));
+		}
 
 		if (wikiPage.getDescription() == null) {
 			map.put("description", null);

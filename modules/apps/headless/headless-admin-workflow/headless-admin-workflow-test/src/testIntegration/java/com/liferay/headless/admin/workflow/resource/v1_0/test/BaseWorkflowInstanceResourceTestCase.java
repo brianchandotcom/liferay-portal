@@ -28,6 +28,7 @@ import com.liferay.headless.admin.workflow.client.pagination.Page;
 import com.liferay.headless.admin.workflow.client.pagination.Pagination;
 import com.liferay.headless.admin.workflow.client.resource.v1_0.WorkflowInstanceResource;
 import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowInstanceSerDes;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -51,6 +52,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
@@ -333,9 +335,11 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 
 		Assert.assertEquals(2, workflowInstancesJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
+		assertEqualsIgnoringOrder(
 			Arrays.asList(workflowInstance1, workflowInstance2),
-			workflowInstancesJSONObject.getJSONArray("items"));
+			Arrays.asList(
+				WorkflowInstanceSerDes.toDTOs(
+					workflowInstancesJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -477,9 +481,10 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
+			equals(
 				workflowInstance,
-				dataJSONObject.getJSONObject("workflowInstance")));
+				WorkflowInstanceSerDes.toDTO(
+					dataJSONObject.getString("workflowInstance"))));
 	}
 
 	@Test
@@ -563,25 +568,6 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 			Assert.assertTrue(
 				workflowInstances2 + " does not contain " + workflowInstance1,
 				contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<WorkflowInstance> workflowInstances, JSONArray jsonArray) {
-
-		for (WorkflowInstance workflowInstance : workflowInstances) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(workflowInstance, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + workflowInstance, contains);
 		}
 	}
 
@@ -673,13 +659,52 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.headless.admin.workflow.dto.v1_0.
+						WorkflowInstance.class)) {
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -783,60 +808,6 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(
-		WorkflowInstance workflowInstance, JSONObject jsonObject) {
-
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("completed", fieldName)) {
-				if (!Objects.deepEquals(
-						workflowInstance.getCompleted(),
-						jsonObject.getBoolean("completed"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						workflowInstance.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("workflowDefinitionName", fieldName)) {
-				if (!Objects.deepEquals(
-						workflowInstance.getWorkflowDefinitionName(),
-						jsonObject.getString("workflowDefinitionName"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("workflowDefinitionVersion", fieldName)) {
-				if (!Objects.deepEquals(
-						workflowInstance.getWorkflowDefinitionVersion(),
-						jsonObject.getString("workflowDefinitionVersion"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

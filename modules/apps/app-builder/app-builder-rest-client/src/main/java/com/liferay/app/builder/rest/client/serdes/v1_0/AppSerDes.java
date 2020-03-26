@@ -243,13 +243,23 @@ public class AppSerDes {
 			map.put("dataListViewId", String.valueOf(app.getDataListViewId()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(app.getDateCreated()));
+		if (app.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(app.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(app.getDateModified()));
+		if (app.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(app.getDateModified()));
+		}
 
 		if (app.getId() == null) {
 			map.put("id", null);

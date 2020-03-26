@@ -29,6 +29,7 @@ import com.liferay.app.builder.rest.client.pagination.Pagination;
 import com.liferay.app.builder.rest.client.resource.v1_0.AppResource;
 import com.liferay.app.builder.rest.client.serdes.v1_0.AppSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -53,6 +54,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -300,7 +302,7 @@ public abstract class BaseAppResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(app, dataJSONObject.getJSONObject("app")));
+			equals(app, AppSerDes.toDTO(dataJSONObject.getString("app"))));
 	}
 
 	@Test
@@ -782,8 +784,9 @@ public abstract class BaseAppResourceTestCase {
 
 		Assert.assertEquals(2, appsJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
-			Arrays.asList(app1, app2), appsJSONObject.getJSONArray("items"));
+		assertEqualsIgnoringOrder(
+			Arrays.asList(app1, app2),
+			Arrays.asList(AppSerDes.toDTOs(appsJSONObject.getString("items"))));
 	}
 
 	protected App testGraphQLApp_addApp() throws Exception {
@@ -829,22 +832,6 @@ public abstract class BaseAppResourceTestCase {
 			}
 
 			Assert.assertTrue(apps2 + " does not contain " + app1, contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(List<App> apps, JSONArray jsonArray) {
-		for (App app : apps) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(app, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(jsonArray + " does not contain " + app, contains);
 		}
 	}
 
@@ -955,13 +942,53 @@ public abstract class BaseAppResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		graphQLFields.add(new GraphQLField("siteId"));
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.app.builder.rest.dto.v1_0.App.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -1079,78 +1106,6 @@ public abstract class BaseAppResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(App app, JSONObject jsonObject) {
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("dataDefinitionId", fieldName)) {
-				if (!Objects.deepEquals(
-						app.getDataDefinitionId(),
-						jsonObject.getLong("dataDefinitionId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("dataLayoutId", fieldName)) {
-				if (!Objects.deepEquals(
-						app.getDataLayoutId(),
-						jsonObject.getLong("dataLayoutId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("dataListViewId", fieldName)) {
-				if (!Objects.deepEquals(
-						app.getDataListViewId(),
-						jsonObject.getLong("dataListViewId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						app.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("status", fieldName)) {
-				if (!Objects.deepEquals(
-						app.getStatus(), jsonObject.getString("status"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userId", fieldName)) {
-				if (!Objects.deepEquals(
-						app.getUserId(), jsonObject.getLong("userId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

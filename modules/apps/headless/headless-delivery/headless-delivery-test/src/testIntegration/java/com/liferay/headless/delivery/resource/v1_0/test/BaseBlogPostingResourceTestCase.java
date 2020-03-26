@@ -30,6 +30,7 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.BlogPostingSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -55,6 +56,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -320,8 +322,10 @@ public abstract class BaseBlogPostingResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
-				blogPosting, dataJSONObject.getJSONObject("blogPosting")));
+			equals(
+				blogPosting,
+				BlogPostingSerDes.toDTO(
+					dataJSONObject.getString("blogPosting"))));
 	}
 
 	@Test
@@ -719,9 +723,11 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		Assert.assertEquals(2, blogPostingsJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
+		assertEqualsIgnoringOrder(
 			Arrays.asList(blogPosting1, blogPosting2),
-			blogPostingsJSONObject.getJSONArray("items"));
+			Arrays.asList(
+				BlogPostingSerDes.toDTOs(
+					blogPostingsJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -750,11 +756,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting = testGraphQLBlogPosting_addBlogPosting(
 			randomBlogPosting);
 
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomBlogPosting,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(blogPosting))));
+		Assert.assertTrue(equals(randomBlogPosting, blogPosting));
 	}
 
 	@Test
@@ -874,6 +876,10 @@ public abstract class BaseBlogPostingResourceTestCase {
 			if (Objects.equals(
 					"alternativeHeadline", additionalAssertFieldName)) {
 
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -887,11 +893,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("articleBody", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -905,11 +913,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -923,11 +933,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -941,11 +953,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -959,11 +973,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("headline", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -977,11 +993,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -995,11 +1013,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("numberOfComments", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1013,11 +1033,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("siteId", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1031,8 +1053,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 		}
 
@@ -1121,25 +1141,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 			Assert.assertTrue(
 				blogPostings2 + " does not contain " + blogPosting1, contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<BlogPosting> blogPostings, JSONArray jsonArray) {
-
-		for (BlogPosting blogPosting : blogPostings) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(blogPosting, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + blogPosting, contains);
 		}
 	}
 
@@ -1414,13 +1415,53 @@ public abstract class BaseBlogPostingResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		graphQLFields.add(new GraphQLField("siteId"));
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.headless.delivery.dto.v1_0.BlogPosting.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -1776,104 +1817,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(
-		BlogPosting blogPosting, JSONObject jsonObject) {
-
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("alternativeHeadline", fieldName)) {
-				if (!Objects.deepEquals(
-						blogPosting.getAlternativeHeadline(),
-						jsonObject.getString("alternativeHeadline"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("articleBody", fieldName)) {
-				if (!Objects.deepEquals(
-						blogPosting.getArticleBody(),
-						jsonObject.getString("articleBody"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("description", fieldName)) {
-				if (!Objects.deepEquals(
-						blogPosting.getDescription(),
-						jsonObject.getString("description"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("encodingFormat", fieldName)) {
-				if (!Objects.deepEquals(
-						blogPosting.getEncodingFormat(),
-						jsonObject.getString("encodingFormat"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("friendlyUrlPath", fieldName)) {
-				if (!Objects.deepEquals(
-						blogPosting.getFriendlyUrlPath(),
-						jsonObject.getString("friendlyUrlPath"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("headline", fieldName)) {
-				if (!Objects.deepEquals(
-						blogPosting.getHeadline(),
-						jsonObject.getString("headline"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						blogPosting.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("numberOfComments", fieldName)) {
-				if (!Objects.deepEquals(
-						blogPosting.getNumberOfComments(),
-						jsonObject.getInt("numberOfComments"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

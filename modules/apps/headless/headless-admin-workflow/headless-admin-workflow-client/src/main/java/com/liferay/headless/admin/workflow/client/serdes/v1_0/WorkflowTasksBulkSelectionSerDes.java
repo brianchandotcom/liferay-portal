@@ -378,15 +378,25 @@ public class WorkflowTasksBulkSelectionSerDes {
 				String.valueOf(workflowTasksBulkSelection.getCompleted()));
 		}
 
-		map.put(
-			"dateDueEnd",
-			liferayToJSONDateFormat.format(
-				workflowTasksBulkSelection.getDateDueEnd()));
+		if (workflowTasksBulkSelection.getDateDueEnd() == null) {
+			map.put("dateDueEnd", null);
+		}
+		else {
+			map.put(
+				"dateDueEnd",
+				liferayToJSONDateFormat.format(
+					workflowTasksBulkSelection.getDateDueEnd()));
+		}
 
-		map.put(
-			"dateDueStart",
-			liferayToJSONDateFormat.format(
-				workflowTasksBulkSelection.getDateDueStart()));
+		if (workflowTasksBulkSelection.getDateDueStart() == null) {
+			map.put("dateDueStart", null);
+		}
+		else {
+			map.put(
+				"dateDueStart",
+				liferayToJSONDateFormat.format(
+					workflowTasksBulkSelection.getDateDueStart()));
+		}
 
 		if (workflowTasksBulkSelection.getSearchByRoles() == null) {
 			map.put("searchByRoles", null);

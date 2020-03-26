@@ -153,9 +153,14 @@ public class SLAResultSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"dateOverdue",
-			liferayToJSONDateFormat.format(slaResult.getDateOverdue()));
+		if (slaResult.getDateOverdue() == null) {
+			map.put("dateOverdue", null);
+		}
+		else {
+			map.put(
+				"dateOverdue",
+				liferayToJSONDateFormat.format(slaResult.getDateOverdue()));
+		}
 
 		if (slaResult.getId() == null) {
 			map.put("id", null);

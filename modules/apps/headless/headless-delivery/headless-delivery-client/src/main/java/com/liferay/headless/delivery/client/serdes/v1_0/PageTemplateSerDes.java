@@ -260,13 +260,23 @@ public class PageTemplateSerDes {
 			map.put("creator", String.valueOf(pageTemplate.getCreator()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(pageTemplate.getDateCreated()));
+		if (pageTemplate.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(pageTemplate.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(pageTemplate.getDateModified()));
+		if (pageTemplate.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(pageTemplate.getDateModified()));
+		}
 
 		if (pageTemplate.getId() == null) {
 			map.put("id", null);

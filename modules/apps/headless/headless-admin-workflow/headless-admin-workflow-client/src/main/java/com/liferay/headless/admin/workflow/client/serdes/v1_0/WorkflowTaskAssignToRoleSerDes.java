@@ -136,10 +136,15 @@ public class WorkflowTaskAssignToRoleSerDes {
 				String.valueOf(workflowTaskAssignToRole.getComment()));
 		}
 
-		map.put(
-			"dueDate",
-			liferayToJSONDateFormat.format(
-				workflowTaskAssignToRole.getDueDate()));
+		if (workflowTaskAssignToRole.getDueDate() == null) {
+			map.put("dueDate", null);
+		}
+		else {
+			map.put(
+				"dueDate",
+				liferayToJSONDateFormat.format(
+					workflowTaskAssignToRole.getDueDate()));
+		}
 
 		if (workflowTaskAssignToRole.getRoleId() == null) {
 			map.put("roleId", null);

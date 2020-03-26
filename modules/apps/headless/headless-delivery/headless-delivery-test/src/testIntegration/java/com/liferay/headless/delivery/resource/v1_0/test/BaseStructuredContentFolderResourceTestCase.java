@@ -29,6 +29,7 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.StructuredContentFolderSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -54,6 +55,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -588,9 +590,11 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		Assert.assertEquals(
 			2, structuredContentFoldersJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
+		assertEqualsIgnoringOrder(
 			Arrays.asList(structuredContentFolder1, structuredContentFolder2),
-			structuredContentFoldersJSONObject.getJSONArray("items"));
+			Arrays.asList(
+				StructuredContentFolderSerDes.toDTOs(
+					structuredContentFoldersJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -627,10 +631,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				randomStructuredContentFolder);
 
 		Assert.assertTrue(
-			equalsJSONObject(
-				randomStructuredContentFolder,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(structuredContentFolder))));
+			equals(randomStructuredContentFolder, structuredContentFolder));
 	}
 
 	@Test
@@ -1146,9 +1147,10 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
+			equals(
 				structuredContentFolder,
-				dataJSONObject.getJSONObject("structuredContentFolder")));
+				StructuredContentFolderSerDes.toDTO(
+					dataJSONObject.getString("structuredContentFolder"))));
 	}
 
 	@Test
@@ -1291,6 +1293,10 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1304,11 +1310,13 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1322,11 +1330,13 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1340,13 +1350,15 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals(
 					"numberOfStructuredContentFolders",
 					additionalAssertFieldName)) {
+
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
 
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1363,12 +1375,14 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals(
 					"numberOfStructuredContents", additionalAssertFieldName)) {
+
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
 
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1384,13 +1398,15 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals(
 					"parentStructuredContentFolderId",
 					additionalAssertFieldName)) {
+
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
 
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1407,11 +1423,13 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("siteId", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1425,11 +1443,13 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1443,8 +1463,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 		}
 
@@ -1544,31 +1562,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			Assert.assertTrue(
 				structuredContentFolders2 + " does not contain " +
 					structuredContentFolder1,
-				contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<StructuredContentFolder> structuredContentFolders,
-		JSONArray jsonArray) {
-
-		for (StructuredContentFolder structuredContentFolder :
-				structuredContentFolders) {
-
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(
-						structuredContentFolder, (JSONObject)object)) {
-
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + structuredContentFolder,
 				contains);
 		}
 	}
@@ -1723,13 +1716,54 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		graphQLFields.add(new GraphQLField("siteId"));
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.headless.delivery.dto.v1_0.
+						StructuredContentFolder.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -1917,99 +1951,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(
-		StructuredContentFolder structuredContentFolder,
-		JSONObject jsonObject) {
-
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("description", fieldName)) {
-				if (!Objects.deepEquals(
-						structuredContentFolder.getDescription(),
-						jsonObject.getString("description"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						structuredContentFolder.getId(),
-						jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", fieldName)) {
-				if (!Objects.deepEquals(
-						structuredContentFolder.getName(),
-						jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("numberOfStructuredContentFolders", fieldName)) {
-				if (!Objects.deepEquals(
-						structuredContentFolder.
-							getNumberOfStructuredContentFolders(),
-						jsonObject.getInt(
-							"numberOfStructuredContentFolders"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("numberOfStructuredContents", fieldName)) {
-				if (!Objects.deepEquals(
-						structuredContentFolder.getNumberOfStructuredContents(),
-						jsonObject.getInt("numberOfStructuredContents"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("parentStructuredContentFolderId", fieldName)) {
-				if (!Objects.deepEquals(
-						structuredContentFolder.
-							getParentStructuredContentFolderId(),
-						jsonObject.getLong(
-							"parentStructuredContentFolderId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("subscribed", fieldName)) {
-				if (!Objects.deepEquals(
-						structuredContentFolder.getSubscribed(),
-						jsonObject.getBoolean("subscribed"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

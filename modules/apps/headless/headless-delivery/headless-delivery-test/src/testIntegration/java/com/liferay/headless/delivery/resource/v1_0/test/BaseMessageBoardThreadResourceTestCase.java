@@ -30,6 +30,7 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.MessageBoardThreadSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -55,6 +56,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -898,9 +900,10 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
+			equals(
 				messageBoardThread,
-				dataJSONObject.getJSONObject("messageBoardThread")));
+				MessageBoardThreadSerDes.toDTO(
+					dataJSONObject.getString("messageBoardThread"))));
 	}
 
 	@Test
@@ -1409,9 +1412,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		Assert.assertEquals(2, messageBoardThreadsJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
+		assertEqualsIgnoringOrder(
 			Arrays.asList(messageBoardThread1, messageBoardThread2),
-			messageBoardThreadsJSONObject.getJSONArray("items"));
+			Arrays.asList(
+				MessageBoardThreadSerDes.toDTOs(
+					messageBoardThreadsJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -1445,11 +1450,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testGraphQLMessageBoardThread_addMessageBoardThread(
 				randomMessageBoardThread);
 
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomMessageBoardThread,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(messageBoardThread))));
+		Assert.assertTrue(equals(randomMessageBoardThread, messageBoardThread));
 	}
 
 	@Test
@@ -1506,10 +1507,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
+			equals(
 				messageBoardThread,
-				dataJSONObject.getJSONObject(
-					"messageBoardThreadByFriendlyUrlPath")));
+				MessageBoardThreadSerDes.toDTO(
+					dataJSONObject.getString(
+						"messageBoardThreadByFriendlyUrlPath"))));
 	}
 
 	@Test
@@ -1586,6 +1588,10 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("articleBody", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1599,11 +1605,13 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1617,11 +1625,13 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1635,11 +1645,13 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("headline", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1653,11 +1665,13 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1671,12 +1685,14 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals(
 					"messageBoardSectionId", additionalAssertFieldName)) {
+
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
 
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1691,13 +1707,15 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals(
 					"numberOfMessageBoardAttachments",
 					additionalAssertFieldName)) {
+
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
 
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1713,13 +1731,15 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals(
 					"numberOfMessageBoardMessages",
 					additionalAssertFieldName)) {
+
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
 
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1735,11 +1755,13 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("showAsQuestion", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1753,11 +1775,13 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("siteId", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1771,11 +1795,13 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1789,11 +1815,13 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("threadType", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1807,11 +1835,13 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("viewCount", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -1825,8 +1855,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 		}
 
@@ -1925,26 +1953,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			Assert.assertTrue(
 				messageBoardThreads2 + " does not contain " +
 					messageBoardThread1,
-				contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<MessageBoardThread> messageBoardThreads, JSONArray jsonArray) {
-
-		for (MessageBoardThread messageBoardThread : messageBoardThreads) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(messageBoardThread, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + messageBoardThread,
 				contains);
 		}
 	}
@@ -2259,13 +2267,54 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		graphQLFields.add(new GraphQLField("siteId"));
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.headless.delivery.dto.v1_0.MessageBoardThread.
+						class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -2671,148 +2720,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(
-		MessageBoardThread messageBoardThread, JSONObject jsonObject) {
-
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("articleBody", fieldName)) {
-				if (!Objects.deepEquals(
-						messageBoardThread.getArticleBody(),
-						jsonObject.getString("articleBody"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("encodingFormat", fieldName)) {
-				if (!Objects.deepEquals(
-						messageBoardThread.getEncodingFormat(),
-						jsonObject.getString("encodingFormat"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("friendlyUrlPath", fieldName)) {
-				if (!Objects.deepEquals(
-						messageBoardThread.getFriendlyUrlPath(),
-						jsonObject.getString("friendlyUrlPath"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("headline", fieldName)) {
-				if (!Objects.deepEquals(
-						messageBoardThread.getHeadline(),
-						jsonObject.getString("headline"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						messageBoardThread.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("messageBoardSectionId", fieldName)) {
-				if (!Objects.deepEquals(
-						messageBoardThread.getMessageBoardSectionId(),
-						jsonObject.getLong("messageBoardSectionId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("numberOfMessageBoardAttachments", fieldName)) {
-				if (!Objects.deepEquals(
-						messageBoardThread.getNumberOfMessageBoardAttachments(),
-						jsonObject.getInt("numberOfMessageBoardAttachments"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("numberOfMessageBoardMessages", fieldName)) {
-				if (!Objects.deepEquals(
-						messageBoardThread.getNumberOfMessageBoardMessages(),
-						jsonObject.getInt("numberOfMessageBoardMessages"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("showAsQuestion", fieldName)) {
-				if (!Objects.deepEquals(
-						messageBoardThread.getShowAsQuestion(),
-						jsonObject.getBoolean("showAsQuestion"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("subscribed", fieldName)) {
-				if (!Objects.deepEquals(
-						messageBoardThread.getSubscribed(),
-						jsonObject.getBoolean("subscribed"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("threadType", fieldName)) {
-				if (!Objects.deepEquals(
-						messageBoardThread.getThreadType(),
-						jsonObject.getString("threadType"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("viewCount", fieldName)) {
-				if (!Objects.deepEquals(
-						messageBoardThread.getViewCount(),
-						jsonObject.getLong("viewCount"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

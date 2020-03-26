@@ -141,14 +141,25 @@ public class CreatorStatisticsSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"joinDate",
-			liferayToJSONDateFormat.format(creatorStatistics.getJoinDate()));
+		if (creatorStatistics.getJoinDate() == null) {
+			map.put("joinDate", null);
+		}
+		else {
+			map.put(
+				"joinDate",
+				liferayToJSONDateFormat.format(
+					creatorStatistics.getJoinDate()));
+		}
 
-		map.put(
-			"lastPostDate",
-			liferayToJSONDateFormat.format(
-				creatorStatistics.getLastPostDate()));
+		if (creatorStatistics.getLastPostDate() == null) {
+			map.put("lastPostDate", null);
+		}
+		else {
+			map.put(
+				"lastPostDate",
+				liferayToJSONDateFormat.format(
+					creatorStatistics.getLastPostDate()));
+		}
 
 		if (creatorStatistics.getPostsNumber() == null) {
 			map.put("postsNumber", null);

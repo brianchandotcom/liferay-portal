@@ -29,6 +29,7 @@ import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.permission.Permission;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataRecordCollectionResource;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataRecordCollectionSerDes;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -52,6 +53,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
@@ -246,10 +248,11 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
+			equals(
 				dataRecordCollection,
-				dataJSONObject.getJSONObject(
-					"dataDefinitionDataRecordCollection")));
+				DataRecordCollectionSerDes.toDTO(
+					dataJSONObject.getString(
+						"dataDefinitionDataRecordCollection"))));
 	}
 
 	@Test
@@ -551,9 +554,10 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
+			equals(
 				dataRecordCollection,
-				dataJSONObject.getJSONObject("dataRecordCollection")));
+				DataRecordCollectionSerDes.toDTO(
+					dataJSONObject.getString("dataRecordCollection"))));
 	}
 
 	@Test
@@ -691,10 +695,11 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
+			equals(
 				dataRecordCollection,
-				dataJSONObject.getJSONObject(
-					"dataRecordCollectionByDataRecordCollectionKey")));
+				DataRecordCollectionSerDes.toDTO(
+					dataJSONObject.getString(
+						"dataRecordCollectionByDataRecordCollectionKey"))));
 	}
 
 	protected DataRecordCollection
@@ -764,30 +769,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			Assert.assertTrue(
 				dataRecordCollections2 + " does not contain " +
 					dataRecordCollection1,
-				contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<DataRecordCollection> dataRecordCollections, JSONArray jsonArray) {
-
-		for (DataRecordCollection dataRecordCollection :
-				dataRecordCollections) {
-
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(
-						dataRecordCollection, (JSONObject)object)) {
-
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + dataRecordCollection,
 				contains);
 		}
 	}
@@ -872,13 +853,54 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		graphQLFields.add(new GraphQLField("siteId"));
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.data.engine.rest.dto.v2_0.DataRecordCollection.
+						class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -966,50 +988,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(
-		DataRecordCollection dataRecordCollection, JSONObject jsonObject) {
-
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("dataDefinitionId", fieldName)) {
-				if (!Objects.deepEquals(
-						dataRecordCollection.getDataDefinitionId(),
-						jsonObject.getLong("dataDefinitionId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("dataRecordCollectionKey", fieldName)) {
-				if (!Objects.deepEquals(
-						dataRecordCollection.getDataRecordCollectionKey(),
-						jsonObject.getString("dataRecordCollectionKey"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						dataRecordCollection.getId(),
-						jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

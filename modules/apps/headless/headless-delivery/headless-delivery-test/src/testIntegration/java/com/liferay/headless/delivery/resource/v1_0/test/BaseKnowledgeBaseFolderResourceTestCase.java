@@ -28,6 +28,7 @@ import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.KnowledgeBaseFolderSerDes;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -52,6 +53,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
@@ -324,9 +326,10 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
+			equals(
 				knowledgeBaseFolder,
-				dataJSONObject.getJSONObject("knowledgeBaseFolder")));
+				KnowledgeBaseFolderSerDes.toDTO(
+					dataJSONObject.getString("knowledgeBaseFolder"))));
 	}
 
 	@Test
@@ -745,9 +748,11 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Assert.assertEquals(
 			2, knowledgeBaseFoldersJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
+		assertEqualsIgnoringOrder(
 			Arrays.asList(knowledgeBaseFolder1, knowledgeBaseFolder2),
-			knowledgeBaseFoldersJSONObject.getJSONArray("items"));
+			Arrays.asList(
+				KnowledgeBaseFolderSerDes.toDTOs(
+					knowledgeBaseFoldersJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -783,10 +788,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				randomKnowledgeBaseFolder);
 
 		Assert.assertTrue(
-			equalsJSONObject(
-				randomKnowledgeBaseFolder,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(knowledgeBaseFolder))));
+			equals(randomKnowledgeBaseFolder, knowledgeBaseFolder));
 	}
 
 	protected KnowledgeBaseFolder
@@ -808,6 +810,10 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -821,11 +827,13 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -839,11 +847,13 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -857,13 +867,15 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals(
 					"numberOfKnowledgeBaseArticles",
 					additionalAssertFieldName)) {
+
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
 
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -879,13 +891,15 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals(
 					"numberOfKnowledgeBaseFolders",
 					additionalAssertFieldName)) {
+
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
 
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -901,12 +915,14 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals(
 					"parentKnowledgeBaseFolderId", additionalAssertFieldName)) {
+
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
 
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -922,11 +938,13 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 
 			if (Objects.equals("siteId", additionalAssertFieldName)) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
 
@@ -940,8 +958,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				else {
 					sb.append(value);
 				}
-
-				sb.append(", ");
 			}
 		}
 
@@ -1035,26 +1051,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			Assert.assertTrue(
 				knowledgeBaseFolders2 + " does not contain " +
 					knowledgeBaseFolder1,
-				contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<KnowledgeBaseFolder> knowledgeBaseFolders, JSONArray jsonArray) {
-
-		for (KnowledgeBaseFolder knowledgeBaseFolder : knowledgeBaseFolders) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(knowledgeBaseFolder, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + knowledgeBaseFolder,
 				contains);
 		}
 	}
@@ -1211,13 +1207,54 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		graphQLFields.add(new GraphQLField("siteId"));
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder.
+						class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -1404,83 +1441,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(
-		KnowledgeBaseFolder knowledgeBaseFolder, JSONObject jsonObject) {
-
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("description", fieldName)) {
-				if (!Objects.deepEquals(
-						knowledgeBaseFolder.getDescription(),
-						jsonObject.getString("description"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						knowledgeBaseFolder.getId(),
-						jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", fieldName)) {
-				if (!Objects.deepEquals(
-						knowledgeBaseFolder.getName(),
-						jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("numberOfKnowledgeBaseArticles", fieldName)) {
-				if (!Objects.deepEquals(
-						knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles(),
-						jsonObject.getInt("numberOfKnowledgeBaseArticles"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("numberOfKnowledgeBaseFolders", fieldName)) {
-				if (!Objects.deepEquals(
-						knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders(),
-						jsonObject.getInt("numberOfKnowledgeBaseFolders"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("parentKnowledgeBaseFolderId", fieldName)) {
-				if (!Objects.deepEquals(
-						knowledgeBaseFolder.getParentKnowledgeBaseFolderId(),
-						jsonObject.getLong("parentKnowledgeBaseFolderId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

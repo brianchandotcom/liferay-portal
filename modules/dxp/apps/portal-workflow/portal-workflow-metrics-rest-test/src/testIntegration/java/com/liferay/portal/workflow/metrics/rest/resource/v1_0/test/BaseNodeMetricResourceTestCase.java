@@ -23,9 +23,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,6 +49,7 @@ import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.NodeMetricResource;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.NodeMetricSerDes;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -449,25 +449,6 @@ public abstract class BaseNodeMetricResourceTestCase {
 		}
 	}
 
-	protected void assertEqualsJSONArray(
-		List<NodeMetric> nodeMetrics, JSONArray jsonArray) {
-
-		for (NodeMetric nodeMetric : nodeMetrics) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(nodeMetric, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + nodeMetric, contains);
-		}
-	}
-
 	protected void assertValid(NodeMetric nodeMetric) {
 		boolean valid = true;
 
@@ -567,13 +548,52 @@ public abstract class BaseNodeMetricResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.portal.workflow.metrics.rest.dto.v1_0.
+						NodeMetric.class)) {
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -678,83 +698,6 @@ public abstract class BaseNodeMetricResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(
-		NodeMetric nodeMetric, JSONObject jsonObject) {
-
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("breachedInstanceCount", fieldName)) {
-				if (!Objects.deepEquals(
-						nodeMetric.getBreachedInstanceCount(),
-						jsonObject.getLong("breachedInstanceCount"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("breachedInstancePercentage", fieldName)) {
-				if (!Objects.deepEquals(
-						nodeMetric.getBreachedInstancePercentage(),
-						jsonObject.getDouble("breachedInstancePercentage"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("durationAvg", fieldName)) {
-				if (!Objects.deepEquals(
-						nodeMetric.getDurationAvg(),
-						jsonObject.getLong("durationAvg"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("instanceCount", fieldName)) {
-				if (!Objects.deepEquals(
-						nodeMetric.getInstanceCount(),
-						jsonObject.getLong("instanceCount"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("onTimeInstanceCount", fieldName)) {
-				if (!Objects.deepEquals(
-						nodeMetric.getOnTimeInstanceCount(),
-						jsonObject.getLong("onTimeInstanceCount"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("overdueInstanceCount", fieldName)) {
-				if (!Objects.deepEquals(
-						nodeMetric.getOverdueInstanceCount(),
-						jsonObject.getLong("overdueInstanceCount"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

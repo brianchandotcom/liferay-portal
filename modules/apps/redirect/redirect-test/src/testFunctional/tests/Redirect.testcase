@@ -219,7 +219,7 @@ definition {
 			value1 = "Permanent (301)");
 	}
 
-	@description = "This ensures that an expired temporary redirect can be actived."
+	@description = "This ensures that an expired temporary redirect can be reactivated."
 	@priority = "5"
 	test ViewExpiredAndActiveEntries {
 		property portal.upstream = "quarantine";

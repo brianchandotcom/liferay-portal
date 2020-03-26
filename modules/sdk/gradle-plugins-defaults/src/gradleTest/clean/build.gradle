@@ -20,6 +20,11 @@ runGradleTest {
 		for (String taskName : taskNames) {
 			assert expectedTaskNames.contains(taskName)
 		}
+
+		assert FileUtil.exists(project, "bnd.bnd")
+		assert FileUtil.exists(project, "build.gradle")
+		assert FileUtil.exists(project, "src/main/java/com/example/sample/GreetingBuilder.java")
+		assert FileUtil.exists(project, "src/main/resources/com/example/sample/packageinfo")
 	}
 }
 

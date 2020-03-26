@@ -14,6 +14,7 @@
 
 package com.liferay.asset.list.service.impl;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
@@ -26,16 +27,24 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsEntryConstants;
+
+import java.io.IOException;
 
 import java.util.Date;
 import java.util.List;
@@ -149,6 +158,8 @@ public class AssetListEntryLocalServiceImpl
 			_generateAssetListEntryKey(groupId, title));
 		assetListEntry.setTitle(title);
 		assetListEntry.setType(type);
+		assetListEntry.setAssetEntryType(
+			_getAssetEntryType(type, typeSettings));
 
 		assetListEntry = assetListEntryPersistence.update(assetListEntry);
 
@@ -339,6 +350,10 @@ public class AssetListEntryLocalServiceImpl
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
 
 		assetListEntry.setModifiedDate(new Date());
+		assetListEntry.setAssetEntryType(
+			_getSegmentsAssetEntryType(
+				assetListEntryId, segmentsEntryId, assetListEntry.getType(),
+				typeSettings));
 
 		assetListEntry = assetListEntryPersistence.update(assetListEntry);
 
@@ -394,6 +409,10 @@ public class AssetListEntryLocalServiceImpl
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
 
 		assetListEntry.setModifiedDate(new Date());
+		assetListEntry.setAssetEntryType(
+			_getSegmentsAssetEntryType(
+				assetListEntryId, segmentsEntryId, assetListEntry.getType(),
+				typeSettings));
 
 		assetListEntryPersistence.update(assetListEntry);
 
@@ -425,6 +444,67 @@ public class AssetListEntryLocalServiceImpl
 		}
 	}
 
+	private String _getAssetEntryType(int type, String typeSettings) {
+		if ((type == AssetListEntryTypeConstants.TYPE_MANUAL) ||
+			Validator.isNull(typeSettings)) {
+
+			return AssetEntry.class.getName();
+		}
+
+		try {
+			UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+			unicodeProperties.load(typeSettings);
+
+			long defaultClassNameId = GetterUtil.getLong(
+				unicodeProperties.getProperty("anyAssetType", null));
+
+			if (defaultClassNameId <= 0) {
+				return AssetEntry.class.getName();
+			}
+
+			return _portal.getClassName(defaultClassNameId);
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException, ioException);
+			}
+		}
+
+		return AssetEntry.class.getName();
+	}
+
+	private String _getSegmentsAssetEntryType(
+		long assetListEntryId, long segmentsEntryId, int type,
+		String typeSettings) {
+
+		String assetEntryType = _getAssetEntryType(type, typeSettings);
+
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
+			_assetListEntrySegmentsEntryRelLocalService.
+				getAssetListEntrySegmentsEntryRels(
+					assetListEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel :
+				assetListEntrySegmentsEntryRels) {
+
+			if ((assetListEntrySegmentsEntryRel.getSegmentsEntryId() ==
+					segmentsEntryId) ||
+				Objects.equals(
+					assetEntryType,
+					_getAssetEntryType(
+						type,
+						assetListEntrySegmentsEntryRel.getTypeSettings()))) {
+
+				continue;
+			}
+
+			return AssetEntry.class.getName();
+		}
+
+		return assetEntryType;
+	}
+
 	private void _validateTitle(long groupId, String title)
 		throws PortalException {
 
@@ -448,6 +528,9 @@ public class AssetListEntryLocalServiceImpl
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetListEntryLocalServiceImpl.class);
+
 	@Reference
 	private AssetListEntryAssetEntryRelLocalService
 		_assetListEntryAssetEntryRelLocalService;
@@ -455,5 +538,8 @@ public class AssetListEntryLocalServiceImpl
 	@Reference
 	private AssetListEntrySegmentsEntryRelLocalService
 		_assetListEntrySegmentsEntryRelLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

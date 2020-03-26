@@ -155,17 +155,34 @@ const RatingsStars = ({
 					}
 				>
 					<ClayDropDown.ItemList>
-						{STAR_SCORES.map(({label}, index) => (
-							<ClayDropDown.Item
-								active={label === score}
-								key={index}
-								onClick={() => {
-									handleOnClick(index);
-								}}
-							>
-								{label}
-							</ClayDropDown.Item>
-						))}
+						{STAR_SCORES.map(({label}, index) => {
+							const srMessage =
+								index === 0
+									? Liferay.Language.get(
+											'rate-this-x-star-out-of-x'
+									  )
+									: Liferay.Language.get(
+											'rate-this-x-stars-out-of-x'
+									  );
+
+							return (
+								<ClayDropDown.Item
+									active={label === score}
+									key={index}
+									onClick={() => {
+										handleOnClick(index);
+									}}
+								>
+									{label}
+									<span className="sr-only">
+										{Lang.sub(srMessage, [
+											index + 1,
+											STAR_SCORES.length,
+										])}
+									</span>
+								</ClayDropDown.Item>
+							);
+						})}
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
 			</div>

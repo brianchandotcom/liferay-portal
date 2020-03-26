@@ -50,6 +50,8 @@ public class JournalArticleDescriptionEditorConfigContributor
 		jsonObject.put(
 			"allowedContent", "p br strong i ol ul li u link pre em a"
 		).put(
+			"height", "120"
+		).put(
 			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale())
 		);
 	}

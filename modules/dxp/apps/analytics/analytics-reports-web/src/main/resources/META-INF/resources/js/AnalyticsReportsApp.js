@@ -103,7 +103,7 @@ function Navigation({
 		return api
 			.getTrafficSourcesDetails(trafficSourceName)
 			.then(response => {
-				return numberFormat(languageTag, response.share);
+				return response.share;
 			});
 	}
 

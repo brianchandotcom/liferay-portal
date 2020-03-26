@@ -136,6 +136,17 @@ const RatingsStars = ({
 		return '';
 	}, [signedIn, inTrash, enabled, score, numberOfStars]);
 
+	const getSrAverageMessage = () => {
+		const srAverageMessage =
+			averageScore === 1.0
+				? Liferay.Language.get('the-average-rating-is-x-star-out-of-x')
+				: Liferay.Language.get(
+						'the-average-rating-is-x-stars-out-of-x'
+				  );
+
+		return Lang.sub(srAverageMessage, [averageScore, numberOfStars]);
+	};
+
 	return (
 		<div className="autofit-row autofit-row-center ratings ratings-stars">
 			<div className="autofit-col">
@@ -209,6 +220,7 @@ const RatingsStars = ({
 								: Liferay.Language.get('votes')
 						})`}
 				</span>
+				<span className="sr-only">{getSrAverageMessage()}</span>
 			</div>
 		</div>
 	);

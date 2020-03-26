@@ -31,8 +31,6 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -54,12 +52,6 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	public void tearDown() {
 		_deleteOrganizations(_childOrganizations);
 		_deleteOrganizations(_organizations);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLDeleteOrganization() {
 	}
 
 	@Override
@@ -117,7 +109,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	protected Organization testGraphQLOrganization_addOrganization()
 		throws Exception {
 
-		return testGetOrganization_addOrganization();
+		return _toOrganization(_addOrganization(randomOrganization(), "0"));
 	}
 
 	@Override

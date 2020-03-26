@@ -48,7 +48,9 @@ definition {
 
 		ABTesting.checkAC();
 
-		AnalyticsCloud.loginAC(EmailAddress = "test@liferay.com", Password = "test");
+		AnalyticsCloud.loginAC(
+			EmailAddress = "test@liferay.com",
+			Password = "test");
 
 		AssertTextEquals(
 			locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE",

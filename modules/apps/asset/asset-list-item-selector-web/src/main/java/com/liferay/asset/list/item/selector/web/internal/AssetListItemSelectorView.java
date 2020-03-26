@@ -14,11 +14,7 @@
 
 package com.liferay.asset.list.item.selector.web.internal;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
-import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.list.util.AssetListPortletUtil;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -29,23 +25,17 @@ import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -55,10 +45,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -114,70 +101,9 @@ public class AssetListItemSelectorView
 				infoListItemSelectorCriterion, portletURL));
 	}
 
-	private String _getClassName(AssetListEntry assetListEntry) {
-		if (assetListEntry.getType() ==
-				AssetListEntryTypeConstants.TYPE_MANUAL) {
-
-			return AssetEntry.class.getName();
-		}
-
-		try {
-			String className = StringPool.BLANK;
-
-			List<AssetListEntrySegmentsEntryRel>
-				assetListEntrySegmentsEntryRels =
-					_assetListEntrySegmentsEntryRelLocalService.
-						getAssetListEntrySegmentsEntryRels(
-							assetListEntry.getAssetListEntryId(),
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel :
-					assetListEntrySegmentsEntryRels) {
-
-				UnicodeProperties unicodeProperties = new UnicodeProperties();
-
-				unicodeProperties.load(
-					assetListEntrySegmentsEntryRel.getTypeSettings());
-
-				long defaultClassNameId = GetterUtil.getLong(
-					unicodeProperties.getProperty("anyAssetType", null));
-
-				if (defaultClassNameId <= 0) {
-					return AssetEntry.class.getName();
-				}
-
-				if (Validator.isNull(className)) {
-					className = _portal.getClassName(defaultClassNameId);
-				}
-				else if (!Objects.equals(
-							className,
-							_portal.getClassName(defaultClassNameId))) {
-
-					return AssetEntry.class.getName();
-				}
-			}
-
-			return className;
-		}
-		catch (IOException ioException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
-			}
-		}
-
-		return AssetEntry.class.getName();
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetListItemSelectorView.class);
-
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new InfoListItemSelectorReturnType());
-
-	@Reference
-	private AssetListEntrySegmentsEntryRelLocalService
-		_assetListEntrySegmentsEntryRelLocalService;
 
 	@Reference
 	private AssetListEntryService _assetListEntryService;
@@ -241,7 +167,8 @@ public class AssetListItemSelectorView
 						"classPK", assetListEntry.getAssetListEntryId()
 					).put(
 						"itemType",
-						_portal.getClassNameId(_getClassName(assetListEntry))
+						_portal.getClassNameId(
+							assetListEntry.getAssetEntryType())
 					).put(
 						"title", assetListEntry.getTitle()
 					).toString();
@@ -325,15 +252,91 @@ public class AssetListItemSelectorView
 			String keywords = ParamUtil.getString(
 				_httpServletRequest, "keywords");
 
-			if (Validator.isNotNull(
+			List<AssetListEntry> assetListEntries = null;
+			int assetListEntriesCount = 0;
+
+			if (Validator.isNull(
 					_infoListItemSelectorCriterion.getItemType())) {
 
-				return _getFilteredSearchContainer(
-					keywords, themeDisplay.getScopeGroupId(), searchContainer);
+				if (Validator.isNotNull(keywords)) {
+					assetListEntries =
+						_assetListEntryService.getAssetListEntries(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()),
+							keywords, searchContainer.getStart(),
+							searchContainer.getEnd(),
+							searchContainer.getOrderByComparator());
+
+					assetListEntriesCount =
+						_assetListEntryService.getAssetListEntriesCount(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()),
+							keywords);
+				}
+				else {
+					assetListEntries =
+						_assetListEntryService.getAssetListEntries(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()),
+							searchContainer.getStart(),
+							searchContainer.getEnd(),
+							searchContainer.getOrderByComparator());
+
+					assetListEntriesCount =
+						_assetListEntryService.getAssetListEntriesCount(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()));
+				}
+			}
+			else {
+				if (Validator.isNotNull(keywords)) {
+					assetListEntries =
+						_assetListEntryService.getAssetListEntries(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()),
+							keywords,
+							new String[] {
+								_infoListItemSelectorCriterion.getItemType()
+							},
+							searchContainer.getStart(),
+							searchContainer.getEnd(),
+							searchContainer.getOrderByComparator());
+
+					assetListEntriesCount =
+						_assetListEntryService.getAssetListEntriesCount(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()),
+							keywords,
+							new String[] {
+								_infoListItemSelectorCriterion.getItemType()
+							});
+				}
+				else {
+					assetListEntries =
+						_assetListEntryService.getAssetListEntries(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()),
+							new String[] {
+								_infoListItemSelectorCriterion.getItemType()
+							},
+							searchContainer.getStart(),
+							searchContainer.getEnd(),
+							searchContainer.getOrderByComparator());
+
+					assetListEntriesCount =
+						_assetListEntryService.getAssetListEntriesCount(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()),
+							new String[] {
+								_infoListItemSelectorCriterion.getItemType()
+							});
+				}
 			}
 
-			return _getSearchContainer(
-				keywords, themeDisplay.getScopeGroupId(), searchContainer);
+			searchContainer.setResults(assetListEntries);
+			searchContainer.setTotal(assetListEntriesCount);
+
+			return searchContainer;
 		}
 
 		@Override
@@ -349,88 +352,6 @@ public class AssetListItemSelectorView
 		@Override
 		public boolean isShowSearch() {
 			return true;
-		}
-
-		private SearchContainer _getFilteredSearchContainer(
-				String keywords, long groupId, SearchContainer searchContainer)
-			throws PortalException {
-
-			List<AssetListEntry> assetListEntries = null;
-
-			if (Validator.isNotNull(keywords)) {
-				assetListEntries = _assetListEntryService.getAssetListEntries(
-					PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
-					keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					searchContainer.getOrderByComparator());
-			}
-			else {
-				assetListEntries = _assetListEntryService.getAssetListEntries(
-					PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					searchContainer.getOrderByComparator());
-			}
-
-			Stream<AssetListEntry> assetListEntriesStream =
-				assetListEntries.stream();
-
-			assetListEntries = assetListEntriesStream.filter(
-				assetListEntry -> {
-					if (Objects.equals(
-							_infoListItemSelectorCriterion.getItemType(),
-							_getClassName(assetListEntry))) {
-
-						return true;
-					}
-
-					return false;
-				}
-			).collect(
-				Collectors.toList()
-			);
-
-			searchContainer.setResults(
-				ListUtil.subList(
-					assetListEntries, searchContainer.getStart(),
-					searchContainer.getEnd()));
-			searchContainer.setTotal(assetListEntries.size());
-
-			return searchContainer;
-		}
-
-		private SearchContainer _getSearchContainer(
-				String keywords, long groupId, SearchContainer searchContainer)
-			throws PortalException {
-
-			List<AssetListEntry> assetListEntries = null;
-			int assetListEntriesCount = 0;
-
-			if (Validator.isNotNull(keywords)) {
-				assetListEntries = _assetListEntryService.getAssetListEntries(
-					PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
-					keywords, searchContainer.getStart(),
-					searchContainer.getEnd(),
-					searchContainer.getOrderByComparator());
-
-				assetListEntriesCount =
-					_assetListEntryService.getAssetListEntriesCount(
-						PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
-						keywords);
-			}
-			else {
-				assetListEntries = _assetListEntryService.getAssetListEntries(
-					PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
-					searchContainer.getStart(), searchContainer.getEnd(),
-					searchContainer.getOrderByComparator());
-
-				assetListEntriesCount =
-					_assetListEntryService.getAssetListEntriesCount(
-						PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId));
-			}
-
-			searchContainer.setResults(assetListEntries);
-			searchContainer.setTotal(assetListEntriesCount);
-
-			return searchContainer;
 		}
 
 		private final HttpServletRequest _httpServletRequest;

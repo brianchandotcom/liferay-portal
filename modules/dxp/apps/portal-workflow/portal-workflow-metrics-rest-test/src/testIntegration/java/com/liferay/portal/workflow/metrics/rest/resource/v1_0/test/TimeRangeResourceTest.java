@@ -19,8 +19,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.TimeRange;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.TimeRangeSerDes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -76,9 +78,11 @@ public class TimeRangeResourceTest extends BaseTimeRangeResourceTestCase {
 
 		Assert.assertEquals(7, timeRangesJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
+		assertEqualsIgnoringOrder(
 			_getDefaultTimeRanges(),
-			timeRangesJSONObject.getJSONArray("items"));
+			Arrays.asList(
+				TimeRangeSerDes.toDTOs(
+					timeRangesJSONObject.getString("items"))));
 	}
 
 	@Override

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Calendar;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.CalendarSerDes;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendar;
 
@@ -128,8 +129,9 @@ public class CalendarResourceTest extends BaseCalendarResourceTestCase {
 
 		JSONArray itemsJSONArray = calendarsJSONObject.getJSONArray("items");
 
-		equalsJSONObject(
-			_getDefaultCalendar(), itemsJSONArray.getJSONObject(0));
+		equals(
+			_getDefaultCalendar(),
+			CalendarSerDes.toDTO(itemsJSONArray.getString(0)));
 
 		_registerCustomCalendar();
 
@@ -142,9 +144,10 @@ public class CalendarResourceTest extends BaseCalendarResourceTestCase {
 
 		Assert.assertEquals(2, calendarsJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
+		assertEqualsIgnoringOrder(
 			Arrays.asList(_getDefaultCalendar(), _getCustomCalendar()),
-			calendarsJSONObject.getJSONArray("items"));
+			Arrays.asList(
+				CalendarSerDes.toDTOs(calendarsJSONObject.getString("items"))));
 	}
 
 	@Override

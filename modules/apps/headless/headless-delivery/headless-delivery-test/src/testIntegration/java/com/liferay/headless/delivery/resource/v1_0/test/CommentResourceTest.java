@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.Objects;
 
@@ -151,7 +152,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 	}
 
 	private String _formatHTML(Comment comment) {
-		String text = comment.getText();
+		String text = HtmlUtil.stripHtml(comment.getText());
 
 		if (!text.startsWith("<p>")) {
 			return StringBundler.concat("<p>", text, "</p>");

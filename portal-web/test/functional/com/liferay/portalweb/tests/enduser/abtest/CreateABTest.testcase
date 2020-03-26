@@ -56,19 +56,7 @@ definition {
 	@priority = "5"
 	test CreateABTestByBounceRate {
 
-		task ("Create the A/B Test by Bounce Rate") {
-			Click(locator1 = "ABTest#AB_TEST_BUTTON");
-
-			Click(locator1 = "ABTest#CREATE_TEST_BUTTON");
-
-			Click(locator1 = "ABTest#AB_TEST_TITLE_FIELD");
-
-			Type(
-				locator1 = "ABTest#AB_TEST_TITLE_FIELD",
-				value1 = "Create A/B Test Title");
-
-			Click(locator1 = "ABTest#SAVE_AB_TEST_BUTTON");
-		}
+		ABTesting.CreateABTestByBounceRate(TestTitle = "AB test title");
 
 		task ("Create the Variant of the A/B Test") {
 			Click(locator1 = "ABTest#CREATE_VARIANT_BUTTON");

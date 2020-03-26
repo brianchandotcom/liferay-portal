@@ -1292,7 +1292,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					Assert.assertEquals(2, ${schemaVarNames}JSONObject.get("totalCount"));
 
-					assertEqualsJSONArray(Arrays.asList(${schemaVarName}1, ${schemaVarName}2), ${schemaVarNames}JSONObject.getJSONArray("items"));
+					assertEqualsIgnoringOrder(Arrays.asList(${schemaVarName}1, ${schemaVarName}2), Arrays.asList((${schemaName}SerDes.toDTOs(${schemaVarNames}JSONObject.getString("items")))));
 				</#if>
 			}
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?ends_with(schemaName)>
@@ -1334,7 +1334,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
-					Assert.assertTrue(equalsJSONObject(${schemaVarName}, dataJSONObject.getJSONObject("${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}")));
+					Assert.assertTrue(equals(${schemaVarName}, ${schemaName}SerDes.toDTO(dataJSONObject.getString("${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}"))));
 				<#else>
 					Assert.assertTrue(true);
 				</#if>
@@ -1346,7 +1346,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				${schemaName} ${schemaVarName} = testGraphQL${schemaName}_add${schemaName}(random${schemaName});
 
-				Assert.assertTrue(equalsJSONObject(random${schemaName}, JSONFactoryUtil.createJSONObject(JSONFactoryUtil.serialize(${schemaVarName}))));
+				Assert.assertTrue(equals(random${schemaName}, ${schemaVarName}));
 			}
 		</#if>
 	</#list>
@@ -1533,22 +1533,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 			}
 
 			Assert.assertTrue(${schemaVarNames}2 + " does not contain " + ${schemaVarName}1, contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(List<${schemaName}> ${schemaVarNames}, JSONArray jsonArray) {
-		for (${schemaName} ${schemaVarName} : ${schemaVarNames}) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(${schemaVarName}, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(jsonArray + " does not contain " + ${schemaVarName}, contains);
 		}
 	}
 
@@ -1791,37 +1775,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 			return true;
 		}
 	</#list>
-
-	protected boolean equalsJSONObject(${schemaName} ${schemaVarName}, JSONObject jsonObject) {
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			<#list properties?keys as propertyName>
-				<#if stringUtil.equals(propertyName, "siteId")>
-					 <#continue>
-				</#if>
-
-				<#if randomDataTypes?seq_contains(properties[propertyName])>
-					if (Objects.equals("${propertyName}", fieldName)) {
-						<#assign capitalizedPropertyName = propertyName?cap_first />
-
-						<#if stringUtil.equals(properties[propertyName], "Integer")>
-							if (!Objects.deepEquals(${schemaVarName}.get${capitalizedPropertyName}(), jsonObject.getInt("${propertyName}"))) {
-						<#else>
-							if (!Objects.deepEquals(${schemaVarName}.get${capitalizedPropertyName}(), jsonObject.get${properties[propertyName]}("${propertyName}"))) {
-						</#if>
-
-							return false;
-						}
-
-						continue;
-					}
-				</#if>
-			</#list>
-
-			throw new IllegalArgumentException("Invalid field name " + fieldName);
-		}
-
-		return true;
-	}
 
 	protected java.util.Collection<EntityField> getEntityFields() throws Exception {
 		if (!(_${schemaVarName}Resource instanceof EntityModelResource)) {

@@ -405,6 +405,8 @@ public class AssetListEntryLocalServiceImpl
 			long assetListEntryId, long segmentsEntryId, String typeSettings)
 		throws PortalException {
 
+		// Asset list entry
+
 		AssetListEntry assetListEntry =
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
 
@@ -415,6 +417,8 @@ public class AssetListEntryLocalServiceImpl
 				typeSettings));
 
 		assetListEntryPersistence.update(assetListEntry);
+
+		// Asset list entry segments entry rel
 
 		_assetListEntrySegmentsEntryRelLocalService.
 			updateAssetListEntrySegmentsEntryRelTypeSettings(

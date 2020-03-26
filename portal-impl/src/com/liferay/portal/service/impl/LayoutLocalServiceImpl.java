@@ -1204,7 +1204,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Property classNameIdProperty = PropertyFactoryUtil.forName(
 			"classNameId");
 
-		dynamicQuery.add(classNameIdProperty.eq(Long.valueOf(0)));
+		long layoutPageTemplateEntryClassNameId =
+			classNameLocalService.getClassNameId(
+				_LAYOT_PAGE_TEMPLATE_ENTRY_CLASS_NAME);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.or(
+				classNameIdProperty.eq(Long.valueOf(0)),
+				classNameIdProperty.eq(layoutPageTemplateEntryClassNameId)));
 
 		Property typeProperty = PropertyFactoryUtil.forName("type");
 
@@ -3891,6 +3898,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				CustomizedPages.namespacePlid(layout.getPlid()));
 		}
 	}
+
+	private static final String _LAYOT_PAGE_TEMPLATE_ENTRY_CLASS_NAME =
+		"com.liferay.layout.page.template.model.LayoutPageTemplateEntry";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutLocalServiceImpl.class);

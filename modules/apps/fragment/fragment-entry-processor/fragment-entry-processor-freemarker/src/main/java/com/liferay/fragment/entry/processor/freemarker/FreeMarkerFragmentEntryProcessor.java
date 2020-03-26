@@ -133,7 +133,7 @@ public class FreeMarkerFragmentEntryProcessor
 				fragmentEntryLink.getConfiguration())
 		).build();
 
-		templateManager.addContextObjects(template, contextObjects);
+		template.putAll(contextObjects);
 
 		templateManager.addTaglibSupport(
 			template, fragmentEntryProcessorContext.getHttpServletRequest(),
@@ -204,7 +204,7 @@ public class FreeMarkerFragmentEntryProcessor
 							configurationDefaultValuesJSONObject, configuration)
 					).build();
 
-				templateManager.addContextObjects(template, contextObjects);
+				template.putAll(contextObjects);
 
 				templateManager.addTaglibSupport(
 					template, httpServletRequest, httpServletResponse);

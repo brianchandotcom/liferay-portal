@@ -440,8 +440,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			TemplateHandlerRegistryUtil.getTemplateHandler(
 				ddmTemplate.getClassNameId());
 
-		templateManager.addContextObjects(
-			contextObjects, templateHandler.getCustomContextObjects());
+		contextObjects.putAll(templateHandler.getCustomContextObjects());
 
 		// Taglibs
 

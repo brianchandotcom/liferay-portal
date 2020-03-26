@@ -95,8 +95,7 @@ public class DDLDisplayTemplateTransformer {
 			TemplateHandlerRegistryUtil.getTemplateHandler(
 				DDLRecordSet.class.getName());
 
-		templateManager.addContextObjects(
-			contextObjects, templateHandler.getCustomContextObjects());
+		contextObjects.putAll(templateHandler.getCustomContextObjects());
 
 		templateManager.addTaglibSupport(
 			contextObjects, PortalUtil.getHttpServletRequest(_renderRequest),

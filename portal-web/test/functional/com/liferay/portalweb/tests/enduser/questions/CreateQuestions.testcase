@@ -1,0 +1,56 @@
+@component-name = "portal-questions"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Questions";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				panel = "Site Administration",
+				portlet = "Message Boards");
+
+			if (IsElementPresent(locator1 = "Questions#QUESTIONS_LIST")) {
+				Questions.tearDown();
+			}
+		}
+	}
+
+	@description = "Validate if the user can create a question category"
+	@priority = "5"
+	test AddQuestionCategory {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
+		}
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Category");
+
+		Questions.fillName(nameField = "question AddQuestionCategory");
+
+		Questions.changeDisplayStyle(displayStyle = "Question");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+}

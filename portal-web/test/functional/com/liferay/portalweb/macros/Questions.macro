@@ -1,0 +1,33 @@
+definition {
+
+	macro _deleteAllQuestions {
+		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
+			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Move to Recycle Bin");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro changeDisplayStyle {
+		Click(locator1 = "Questions#CREATE_QUESTIONS_DISPLAY_STYLE_SELECTOR");
+
+		MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter("${displayStyle}"));
+	}
+
+	macro fillName {
+		Click(locator1 = "Questions#CREATE_QUESTIONS_NAME_FIELD");
+
+		Type(
+			locator1 = "Questions#CREATE_QUESTIONS_NAME_FIELD",
+			value1 = "${nameField}");
+	}
+
+	macro tearDown {
+		while (IsElementPresent(locator1 = "Questions#QUESTIONS_LIST")) {
+			Questions._deleteAllQuestions();
+		}
+
+		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_LIST");
+	}
+
+}

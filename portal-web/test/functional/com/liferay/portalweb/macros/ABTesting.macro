@@ -1,5 +1,11 @@
 definition {
 
+	macro checkAC {
+		Click(locator1 = "ABTest#CONTROL_VARIANT");
+
+		Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
+	}
+
 	macro createABtestByBounceRate {
 		Click(locator1 = "ABTest#AB_TEST_BUTTON");
 
@@ -12,6 +18,26 @@ definition {
 			value1 = "${TestTitle}");
 
 		Click(locator1 = "ABTest#SAVE_AB_TEST_BUTTON");
+	}
+
+	macro createVariant {
+		Click(locator1 = "ABTest#CREATE_VARIANT_BUTTON");
+
+		Click(locator1 = "ABTest#VARIANT_NAME_FIELD");
+
+		Type(
+			locator1 = "ABTest#VARIANT_NAME_FIELD",
+			value1 = "${VariantName}");
+
+		Click(locator1 = "ABTest#SAVE_VARIANT_NAME_BUTTON");
+	}
+
+	macro runTest {
+		Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
+
+		Click(locator1 = "ABTest#RUN_TEST_BUTTON");
+
+		Click(locator1 = "ABTest#OK_BUTTON");
 	}
 
 }

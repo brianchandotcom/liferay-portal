@@ -1,0 +1,21 @@
+definition {
+
+	macro loginAC {
+		SelectWindow(locator1 = "title=Analytics Cloud");
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD");
+
+		Type(
+			locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD",
+			value1 = "${EmailAddress}");
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_PASSWORD_LOGIN_FIELD");
+
+		Type(
+			locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_PASSWORD_LOGIN_FIELD",
+			value1 = "${Password}");
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_LOGIN_BUTTON");
+	}
+
+}

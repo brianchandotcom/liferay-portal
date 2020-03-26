@@ -56,52 +56,19 @@ definition {
 	@priority = "5"
 	test CreateABTestByBounceRate {
 
-		ABTesting.CreateABTestByBounceRate(TestTitle = "AB test title");
+		AbTesting.createABtestByBounceRate(TestTitle = "AB test title");
 
-		task ("Create the Variant of the A/B Test") {
-			Click(locator1 = "ABTest#CREATE_VARIANT_BUTTON");
+		AbTesting.createVariant(VariantName = "Variant name");
 
-			Click(locator1 = "ABTest#VARIANT_NAME_FIELD");
+		AbTesting.runTest();
 
-			Type(
-				locator1 = "ABTest#VARIANT_NAME_FIELD",
-				value1 = "Variant Name");
+		AbTesting.checkAC();
 
-			Click(locator1 = "ABTest#SAVE_VARIANT_NAME_BUTTON");
-		}
+		AnalyticsCloud.loginAC(EmailAddress = "test@liferay.com", Password = "test");
 
-		task ("Run the A/B Test") {
-			Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
-
-			Click(locator1 = "ABTest#RUN_TEST_BUTTON");
-
-			Click(locator1 = "ABTest#OK_BUTTON");
-		}
-
-		task ("Check it on Analytics Cloud") {
-			Click(locator1 = "ABTest#CONTROL_VARIANT");
-
-			Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
-
-			SelectWindow(locator1 = "title=Analytics Cloud");
-
-			Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD");
-
-			Type(
-				locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD",
-				value1 = "test@liferay.com");
-
-			Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_PASSWORD_LOGIN_FIELD");
-
-			Type(
-				locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_PASSWORD_LOGIN_FIELD",
-				value1 = "test");
-
-			Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_LOGIN_BUTTON");
-
-			AssertTextEquals(
-				locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE",
-				value1 = "Create A/B Test Title");
+		AssertTextEquals(
+			locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE",
+			value1 = "Create A/B Test Title");
 		}
 	}
 

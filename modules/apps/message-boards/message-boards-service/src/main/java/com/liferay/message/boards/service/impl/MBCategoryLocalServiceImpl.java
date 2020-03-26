@@ -46,12 +46,13 @@ import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.model.TrashVersion;
 import com.liferay.trash.service.TrashEntryLocalService;
 import com.liferay.trash.service.TrashVersionLocalService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -1204,8 +1205,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		}
 	}
 
-	private <T> void _indexerReindex(Class<T> clazz, T object) throws PortalException {
+	private <T> void _indexerReindex(Class<T> clazz, T object)
+		throws PortalException {
+
 		Indexer<T> indexer = IndexerRegistryUtil.nullSafeGetIndexer(clazz);
+
 		indexer.reindex(object);
 	}
 

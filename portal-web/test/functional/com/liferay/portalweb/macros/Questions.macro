@@ -14,6 +14,18 @@ definition {
 		MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter("${displayStyle}"));
 	}
 
+	macro createQuestion {
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "${menuItem}");
+
+		Questions.fillName(nameField = "${nameField}");
+
+		Questions.changeDisplayStyle(displayStyle = "${displayStyleOption}");
+
+		Button.clickSave();
+	}
+
 	macro fillName {
 		Click(locator1 = "Questions#CREATE_QUESTIONS_NAME_FIELD");
 

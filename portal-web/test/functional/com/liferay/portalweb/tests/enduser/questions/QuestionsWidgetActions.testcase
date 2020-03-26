@@ -1,0 +1,70 @@
+@component-name = "portal-questions"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Questions";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				panel = "Site Administration",
+				portlet = "Message Boards");
+
+			if (IsElementPresent(locator1 = "Questions#QUESTIONS_LIST")) {
+				Questions.tearDown();
+			}
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Validate if the My Activity tab appears"
+	@priority = "4"
+	test ValidateIfTheMyActivityAppears {
+		property osgi.module.configuration.file.names = "com.liferay.questions.web.internal.portlet.QuestionsPortlet.config";
+		property osgi.module.configurations = "com.liferay.portlet.display-category=category.collaboration";
+		
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		ContentPages.addPage(pageName = "Questions Page");
+
+		PageEditor.addWidget(portletName = "Questions");
+
+		PageEditor.clickPublish();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
+
+		Questions.createQuestion(
+			menuItem = "Category",
+			nameField = "question ValidateIfTheMyActivityAppears",
+			displayStyleOption = "Question");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "question ValidateIfTheMyActivityAppears",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		AssertElementPresent(
+			key_questionTabField = "My Activity",
+			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+	}
+}

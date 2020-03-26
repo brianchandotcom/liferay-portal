@@ -11,6 +11,7 @@ definition {
 		User.firstLoginPG();
 
 		Navigator.openURL();
+	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
@@ -39,17 +40,11 @@ definition {
 			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Message Boards");
-		}
 
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = "Category");
-
-		Questions.fillName(nameField = "question AddQuestionCategory");
-
-		Questions.changeDisplayStyle(displayStyle = "Question");
-
-		Button.clickSave();
+		Questions.createQuestion(
+			menuItem = "Category",
+			nameField = "question AddQuestionCategory",
+			displayStyleOption = "Question");
 
 		Alert.viewSuccessMessage();
 	}

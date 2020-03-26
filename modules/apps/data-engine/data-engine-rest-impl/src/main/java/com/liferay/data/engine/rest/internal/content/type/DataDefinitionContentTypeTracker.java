@@ -87,10 +87,10 @@ public class DataDefinitionContentTypeTracker {
 
 		String contentType = MapUtil.getString(properties, "content.type");
 
-		_classNameIds.remove(contentType);
-
 		_dataDefinitionContentTypesByClassNameId.remove(
 			_classNameIds.get(contentType));
+
+		_classNameIds.remove(contentType);
 
 		_dataDefinitionContentTypesByContentType.remove(contentType);
 	}

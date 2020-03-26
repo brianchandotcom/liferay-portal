@@ -976,7 +976,7 @@ public class LayoutsAdminDisplayContext {
 		try {
 			robots = ParamUtil.getString(
 				httpServletRequest, "robots",
-				RobotsUtil.getRobots(
+				RobotsUtil.getStrictRobots(
 					getSelLayoutSet(), httpServletRequest.isSecure()));
 		}
 		catch (PortalException portalException) {

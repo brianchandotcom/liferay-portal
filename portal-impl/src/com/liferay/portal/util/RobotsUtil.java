@@ -62,6 +62,56 @@ public class RobotsUtil {
 			return getDefaultRobots(null, secure, portalServerPort);
 		}
 
+		String virtualHostname = _getVirtualHostName(layoutSet);
+
+		String robotsTxt = GetterUtil.getString(
+			layoutSet.getSettingsProperty(
+				layoutSet.isPrivateLayout() + "-robots.txt"),
+			null);
+
+		if (robotsTxt == null) {
+			robotsTxt = getDefaultRobots(
+				virtualHostname, secure, portalServerPort);
+		}
+
+		robotsTxt = _replaceWildcards(
+			robotsTxt, virtualHostname, secure, portalServerPort);
+
+		if (robotsTxt.contains("[$HOST$]") && _log.isWarnEnabled()) {
+			_log.warn(
+				"Wildcard [$HOST$] could not be replaced with the actual " +
+					"virtualhost");
+		}
+
+		return robotsTxt;
+	}
+
+	public static String getStrictRobots(LayoutSet layoutSet, boolean secure)
+		throws PortalException {
+
+		String strictRobots = null;
+
+		if (layoutSet != null) {
+			strictRobots = GetterUtil.getString(
+				layoutSet.getSettingsProperty(
+					layoutSet.isPrivateLayout() + "-robots.txt"),
+				null);
+		}
+
+		if (strictRobots == null) {
+			return getDefaultRobots(
+				_getVirtualHostName(layoutSet), secure,
+				PortalUtil.getPortalServerPort(secure));
+		}
+
+		return strictRobots;
+	}
+
+	private static String _getVirtualHostName(LayoutSet layoutSet) {
+		if (layoutSet == null) {
+			return null;
+		}
+
 		TreeMap<String, String> virtualHostnames =
 			PortalUtil.getVirtualHostnames(layoutSet);
 
@@ -71,25 +121,7 @@ public class RobotsUtil {
 			virtualHostname = virtualHostnames.firstKey();
 		}
 
-		String robotsTxt = GetterUtil.getString(
-			layoutSet.getSettingsProperty(
-				layoutSet.isPrivateLayout() + "-robots.txt"),
-			null);
-
-		if (robotsTxt != null) {
-			robotsTxt = _replaceWildcards(
-				robotsTxt, virtualHostname, secure, portalServerPort);
-
-			if (robotsTxt.contains("[$HOST$]") && _log.isWarnEnabled()) {
-				_log.warn(
-					"Wildcard [$HOST$] could not be replaced with the actual " +
-						"virtualhost");
-			}
-
-			return robotsTxt;
-		}
-
-		return getDefaultRobots(virtualHostname, secure, portalServerPort);
+		return virtualHostname;
 	}
 
 	private static String _replaceWildcards(

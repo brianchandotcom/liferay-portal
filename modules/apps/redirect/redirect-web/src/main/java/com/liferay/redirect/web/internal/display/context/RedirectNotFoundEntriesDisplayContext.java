@@ -26,16 +26,22 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalServiceUtil;
 import com.liferay.redirect.web.internal.search.RedirectNotFoundEntrySearch;
+import com.liferay.redirect.web.internal.util.comparator.RedirectEntryModifiedDateComparator;
+import com.liferay.redirect.web.internal.util.comparator.RedirectNotFoundEntryHitsComparator;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -85,8 +91,38 @@ public class RedirectNotFoundEntriesDisplayContext {
 		return _redirectNotFoundEntrySearch;
 	}
 
+	private OrderByComparator _getOrderByComparator() {
+		boolean orderByAsc = StringUtil.equals(
+			_redirectNotFoundEntrySearch.getOrderByType(), "asc");
+
+		if (Objects.equals(
+				_redirectNotFoundEntrySearch.getOrderByCol(),
+				"modified-date")) {
+
+			return new RedirectEntryModifiedDateComparator(!orderByAsc);
+		}
+
+		return new RedirectNotFoundEntryHitsComparator(!orderByAsc);
+	}
+
 	private PortletURL _getPortletURL() {
 		return _liferayPortletResponse.createRenderURL();
+	}
+
+	private Sort _getSorts() {
+		boolean orderByAsc = StringUtil.equals(
+			_redirectNotFoundEntrySearch.getOrderByType(), "asc");
+
+		if (Objects.equals(
+				_redirectNotFoundEntrySearch.getOrderByCol(),
+				"modified-date")) {
+
+			return new Sort(
+				Field.getSortableFieldName(Field.MODIFIED_DATE), Sort.LONG_TYPE,
+				orderByAsc);
+		}
+
+		return new Sort("hits", Sort.LONG_TYPE, orderByAsc);
 	}
 
 	private void _populateWithDatabase(
@@ -105,7 +141,8 @@ public class RedirectNotFoundEntriesDisplayContext {
 			RedirectNotFoundEntryLocalServiceUtil.getRedirectNotFoundEntries(
 				themeDisplay.getScopeGroupId(),
 				_redirectNotFoundEntrySearch.getStart(),
-				_redirectNotFoundEntrySearch.getEnd(), null));
+				_redirectNotFoundEntrySearch.getEnd(),
+				_getOrderByComparator()));
 	}
 
 	private void _populateWithSearchIndex(
@@ -120,6 +157,7 @@ public class RedirectNotFoundEntriesDisplayContext {
 
 		searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
 		searchContext.setEnd(redirectNotFoundEntrySearch.getEnd());
+		searchContext.setSorts(_getSorts());
 		searchContext.setStart(redirectNotFoundEntrySearch.getStart());
 
 		Hits hits = indexer.search(searchContext);

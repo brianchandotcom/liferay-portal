@@ -67,4 +67,9 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 		return false;
 	}
 
+	@Override
+	protected String[] getOrderByKeys() {
+		return new String[] {"modified-date", "requests"};
+	}
+
 }

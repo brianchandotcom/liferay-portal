@@ -445,13 +445,10 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		// Taglibs
 
-		templateManager.addTaglibSupport(
-			contextObjects, httpServletRequest, httpServletResponse);
-
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		templateManager.addTaglibTheme(
-			contextObjects, "taglibLiferay", httpServletRequest,
+		templateManager.addTaglibSupport(
+			contextObjects, httpServletRequest,
 			new PipingServletResponse(httpServletResponse, unsyncStringWriter));
 
 		contextObjects.put(TemplateConstants.WRITER, unsyncStringWriter);

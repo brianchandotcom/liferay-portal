@@ -355,9 +355,6 @@ public class JournalTransformer {
 
 					templateManager.addTaglibSupport(
 						template, httpServletRequest,
-						themeDisplay.getResponse());
-					templateManager.addTaglibTheme(
-						template, "taglibLiferay", httpServletRequest,
 						new PipingServletResponse(
 							themeDisplay.getResponse(), unsyncStringWriter));
 				}

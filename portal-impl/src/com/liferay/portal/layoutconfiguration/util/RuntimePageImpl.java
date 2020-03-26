@@ -405,8 +405,8 @@ public class RuntimePageImpl implements RuntimePage {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		templateManager.addTaglibTheme(
-			template, "taglibLiferay", httpServletRequest,
+		templateManager.addTaglibSupport(
+			template, httpServletRequest,
 			new PipingServletResponse(httpServletResponse, unsyncStringWriter));
 
 		try {

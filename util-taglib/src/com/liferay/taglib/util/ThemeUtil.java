@@ -222,8 +222,6 @@ public class ThemeUtil {
 
 		templateManager.addTaglibSupport(
 			template, httpServletRequest, httpServletResponse);
-		templateManager.addTaglibTheme(
-			template, "taglibLiferay", httpServletRequest, httpServletResponse);
 
 		template.put(TemplateConstants.WRITER, writer);
 

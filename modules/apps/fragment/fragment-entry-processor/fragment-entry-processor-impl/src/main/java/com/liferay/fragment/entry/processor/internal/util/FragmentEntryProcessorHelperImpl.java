@@ -280,10 +280,6 @@ public class FragmentEntryProcessorHelperImpl
 		templateManager.addTaglibSupport(
 			template, fragmentEntryProcessorContext.getHttpServletRequest(),
 			fragmentEntryProcessorContext.getHttpServletResponse());
-		templateManager.addTaglibTheme(
-			template, "taglibLiferay",
-			fragmentEntryProcessorContext.getHttpServletRequest(),
-			fragmentEntryProcessorContext.getHttpServletResponse());
 
 		template.put(TemplateConstants.WRITER, unsyncStringWriter);
 		template.put("contentAccessorUtil", ContentAccessorUtil.getInstance());

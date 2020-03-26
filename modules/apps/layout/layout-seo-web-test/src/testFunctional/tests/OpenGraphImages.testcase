@@ -398,6 +398,7 @@ definition {
 	@priority = "5"
 	test EditAltDescription {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		var portalURL = PropsUtil.get("portal.url");
 

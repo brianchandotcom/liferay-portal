@@ -47,6 +47,7 @@ definition {
 	@priority = "5"
 	test AssertNotifications {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 

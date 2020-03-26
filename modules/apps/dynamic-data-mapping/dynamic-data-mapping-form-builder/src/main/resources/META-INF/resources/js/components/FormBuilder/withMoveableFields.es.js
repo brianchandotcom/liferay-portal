@@ -17,6 +17,7 @@ import dom from 'metal-dom';
 import {DragDrop} from 'metal-drag-drop';
 import Component from 'metal-jsx';
 
+import {CSS_DDM_FIELDSET} from '../../util/cssClasses.es';
 import {
 	disableFieldSetDragSources,
 	disableFieldSetDropTargets,
@@ -96,7 +97,7 @@ const withMoveableFields = ChildComponent => {
 						`.ddm-field-container[data-field-name="${parentFieldSet.fieldName}"]`
 					);
 
-					parentFieldSetNode.classList.add('ddm-fieldset');
+					parentFieldSetNode.classList.add(CSS_DDM_FIELDSET);
 				}
 			});
 		}

@@ -202,6 +202,16 @@ public class JournalArticleLocalizationPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_A_T_L() throws Exception {
+		_persistence.countByC_A_T_L(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "", "");
+
+		_persistence.countByC_A_T_L(0L, 0L, "null", "null");
+
+		_persistence.countByC_A_T_L(0L, 0L, (String)null, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		JournalArticleLocalization newJournalArticleLocalization =
 			addJournalArticleLocalization();
@@ -484,6 +494,29 @@ public class JournalArticleLocalizationPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				existingJournalArticleLocalization, "getOriginalArticlePK",
 				new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingJournalArticleLocalization.getLanguageId(),
+				ReflectionTestUtil.invoke(
+					existingJournalArticleLocalization, "getOriginalLanguageId",
+					new Class<?>[0])));
+
+		Assert.assertEquals(
+			Long.valueOf(existingJournalArticleLocalization.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingJournalArticleLocalization, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingJournalArticleLocalization.getArticlePK()),
+			ReflectionTestUtil.<Long>invoke(
+				existingJournalArticleLocalization, "getOriginalArticlePK",
+				new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingJournalArticleLocalization.getTitle(),
+				ReflectionTestUtil.invoke(
+					existingJournalArticleLocalization, "getOriginalTitle",
+					new Class<?>[0])));
 		Assert.assertTrue(
 			Objects.equals(
 				existingJournalArticleLocalization.getLanguageId(),

@@ -233,10 +233,6 @@ if (Validator.isNotNull(keywords)) {
 									<h2 class="text-default">
 										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(assetRenderer.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 									</h2>
-
-									<h3 class="text-default">
-										<%= HtmlUtil.escape(StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), 120)) %>
-									</h3>
 								</div>
 							</li>
 						</c:otherwise>

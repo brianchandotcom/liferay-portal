@@ -14,7 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import {FieldArray, withFormik} from 'formik';
-import {debounce, fetch} from 'frontend-js-web';
+import {debounce, fetch, openModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
@@ -276,15 +276,12 @@ class SegmentEdit extends Component {
 		const {name} = values;
 		const segmentLocalizedName = name[locale];
 
-		Liferay.Util.openWindow({
-			dialog: {
-				destroyOnHide: true,
-			},
+		openModal({
 			id: 'segment-members-dialog',
 			title: sub(Liferay.Language.get('x-members'), [
 				Liferay.Util.escape(segmentLocalizedName),
 			]),
-			uri: previewMembersURL,
+			url: previewMembersURL,
 		});
 	};
 

@@ -75,8 +75,8 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 		CreateIndexRequestBuilder createIndexRequestBuilder, String mappings) {
 
 		createIndexRequestBuilder.addMapping(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
-			_mergeOptionalDefaultTypeMappings(mappings), XContentType.JSON);
+			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE, mappings,
+			XContentType.JSON);
 	}
 
 	public void createOptionalDefaultTypeMappings(String indexName) {
@@ -109,7 +109,8 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 				LIFERAY_DOCUMENT_TYPE_MAPPING_FILE_NAME);
 
 		createLiferayDocumentTypeMappings(
-			createIndexRequestBuilder, requiredDefaultMappings);
+			createIndexRequestBuilder,
+			_mergeOptionalDefaultTypeMappings(requiredDefaultMappings));
 	}
 
 	protected JSONObject createJSONObject(String mappings) {
@@ -201,11 +202,11 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 		JSONArray typeTemplatesJSONArray = typeJSONObject.getJSONArray(
 			"dynamic_templates");
 
-		sourceTypeJSONObject.put(
+		typeJSONObject.put(
 			"dynamic_templates",
 			merge(typeTemplatesJSONArray, sourceTypeTemplatesJSONArray));
 
-		return sourceJSONObject.toString();
+		return mappingsJSONObject.toString();
 	}
 
 	private String _mergeOptionalDefaultTypeMappings(String mappings) {

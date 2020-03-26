@@ -48,6 +48,7 @@ definition {
 	@priority = "4"
 	test AddAndEditAssetsViaVirtualHostOrganizations {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditAssetsViaVirtualHostOrganizations";
 
 		JSONOrganization.addOrganization(

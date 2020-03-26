@@ -56,6 +56,10 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return spiraProjects.get(0);
 	}
 
+	public Integer getProjectTemplateID() {
+		return jsonObject.getInt("ProjectTemplateId");
+	}
+
 	public SpiraRelease getSpiraReleaseByID(int releaseID) {
 		List<SpiraRelease> spiraReleases = SpiraRelease.getSpiraReleases(
 			this,

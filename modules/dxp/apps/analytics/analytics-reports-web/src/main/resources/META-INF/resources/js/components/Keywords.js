@@ -12,6 +12,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -103,7 +104,16 @@ export default function Keywords({currentPage, languageTag}) {
 				{currentPage.data.keywords.map(keyword => {
 					return (
 						<tr key={keyword.title}>
-							<td>{keyword.title}</td>
+							<td>
+								<ClayTooltipProvider>
+									<span
+										data-tooltip-align="top"
+										title={keyword.title}
+									>
+										{keyword.title}
+									</span>
+								</ClayTooltipProvider>
+							</td>
 							<td align="right" className="text-secondary">
 								{numberFormat(
 									languageTag,

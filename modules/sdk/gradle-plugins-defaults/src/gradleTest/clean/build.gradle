@@ -1,0 +1,7 @@
+apply plugin: "com.liferay.defaults.plugin"
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn clean
+}

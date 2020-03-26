@@ -46,6 +46,26 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 		super(advancedFileSystemStoreConfiguration);
 	}
 
+	@Override
+	public String[] getFileVersions(
+		long companyId, long repositoryId, String fileName) {
+
+		String[] versions = super.getFileVersions(
+			companyId, repositoryId, fileName);
+
+		for (int i = 0; i < versions.length; i++) {
+			int x = versions[i].lastIndexOf(CharPool.UNDERLINE);
+
+			if (x > -1) {
+				int y = versions[i].lastIndexOf(CharPool.PERIOD);
+
+				versions[i] = versions[i].substring(x + 1, y);
+			}
+		}
+
+		return versions;
+	}
+
 	protected void buildPath(StringBundler sb, String fileNameFragment) {
 		int fileNameFragmentLength = fileNameFragment.length();
 

@@ -12,365 +12,369 @@
  * details.
  */
 
-import '../FieldBase/FieldBase.es';
-
 import './LocalizableTextRegister.soy';
 
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
+import {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
+import classNames from 'classnames';
+import React, {forwardRef, useState} from 'react';
 
-import templates from './LocalizableText.soy';
+import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
+import {connectStore} from '../util/connectStore.es';
+import InputComponent from './InputComponent.es';
+import templates from './LocalizableTextAdapter.soy';
 
-class LocalizableText extends Component {
-	dispatchEvent(event, name, value) {
-		this.emit(name, {
-			fieldInstance: this,
-			originalEvent: event,
-			value,
-		});
-	}
+function getEditingValue({defaultLocale, editingLocale, value}) {
+	const valueJSON = convertValueToJSON(value);
 
-	prepareStateForRender(state) {
-		const {value} = state;
-
-		return {
-			...state,
-			availableLocales: state.availableLocales.map(availableLocale => {
-				return {
-					...availableLocale,
-					icon: availableLocale.localeId
-						.replace('_', '-')
-						.toLowerCase(),
-					isDefault: this._isDefaultLocale(availableLocale.localeId),
-					isTranslated: this._isTranslated(availableLocale.localeId),
-				};
-			}),
-			value: this._convertValueToString(value),
-		};
-	}
-
-	getEditingValue() {
-		const {defaultLocale, editingLocale, value} = this;
-		const valueJSON = this._convertValueToJSON(value);
-
-		return (
-			valueJSON[editingLocale.localeId] ||
-			valueJSON[defaultLocale.localeId] ||
-			''
-		);
-	}
-
-	_convertValueToJSON(value) {
-		if (value && typeof value === 'string') {
-			try {
-				return JSON.parse(value);
-			}
-			catch (e) {
-				console.warn('Unable to parse JSON', value);
-			}
-		}
-
-		return value;
-	}
-
-	_convertValueToString(value) {
-		if (value && typeof value === 'object') {
-			return JSON.stringify(value);
-		}
-
-		return value;
-	}
-
-	_handleFieldBlurred(event) {
-		this.dispatchEvent(event, 'fieldBlurred', event.target.value);
-	}
-
-	_handleFieldChanged(event) {
-		const {editingLocale, value} = this;
-		const {target} = event;
-		const valueJSON = this._convertValueToJSON(value);
-
-		const newValue = JSON.stringify({
-			...valueJSON,
-			[editingLocale.localeId]: target.value,
-		});
-
-		this.setState(
-			{
-				_value: target.value,
-				value: newValue,
-			},
-			() => this.dispatchEvent(event, 'fieldEdited', newValue)
-		);
-	}
-
-	_handleFieldFocused(event) {
-		this.dispatchEvent(event, 'fieldFocused', event.target.value);
-	}
-
-	_handleLanguageClicked({delegateTarget}) {
-		const {availableLocales} = this;
-		const editingLocale = availableLocales.find(
-			availableLocale =>
-				availableLocale.localeId === delegateTarget.dataset.localeId
-		);
-
-		this.setState({
-			editingLocale: {
-				...editingLocale,
-				icon: editingLocale.localeId.replace('_', '-').toLowerCase(),
-			},
-		});
-
-		this.setState({
-			_value: this.getEditingValue(),
-		});
-	}
-
-	_internalValueFn() {
-		const {editingLocale, value} = this;
-		const valueJSON = this._convertValueToJSON(value);
-
-		return valueJSON[editingLocale.localeId] || '';
-	}
-
-	_isDefaultLocale(localeId) {
-		const {defaultLocale} = this;
-
-		return defaultLocale.localeId === localeId;
-	}
-
-	_isTranslated(localeId) {
-		const {value} = this;
-		const valueJSON = this._convertValueToJSON(value);
-
-		return !!valueJSON[localeId];
-	}
+	return (
+		valueJSON[editingLocale.localeId] ||
+		valueJSON[defaultLocale.localeId] ||
+		''
+	);
 }
 
-LocalizableText.STATE = {
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(string|undefined)}
-	 */
+function convertValueToString(value) {
+	if (value && typeof value === 'object') {
+		return JSON.stringify(value);
+	}
 
-	_value: Config.string()
-		.internal()
-		.valueFn('_internalValueFn'),
+	return value;
+}
 
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(array|undefined)}
-	 */
+function convertValueToJSON(value) {
+	if (value && typeof value === 'string') {
+		try {
+			return JSON.parse(value);
+		}
+		catch (e) {
+			console.warn('Unable to parse JSON', value);
+		}
+	}
 
-	availableLocales: Config.array().value([]),
+	return value;
+}
 
-	/**
-	 * @default 'string'
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(string|undefined)}
-	 */
+function isDefaultLocale({defaultLocale, localeId}) {
+	return defaultLocale.localeId === localeId;
+}
 
-	dataType: Config.string().value('string'),
+function isTranslated({localeId, value}) {
+	const valueJSON = convertValueToJSON(value);
 
-	/**
-	 * @default themeDisplay.getDefaultLanguageId()
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(string|undefined)}
-	 */
+	return !!valueJSON[localeId];
+}
 
-	defaultLocale: Config.object().value({
-		icon: themeDisplay.getDefaultLanguageId(),
-		localeId: themeDisplay.getDefaultLanguageId(),
-	}),
+function getInitialInternalValue({editingLocale, value}) {
+	const valueJSON = convertValueToJSON(value);
 
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(boolean|undefined)}
-	 */
+	return valueJSON[editingLocale.localeId] || '';
+}
 
-	displayErrors: Config.bool().value(false),
+function normalizeLocaleId(localeId) {
+	if (!localeId || localeId === '') {
+		throw new Error(`localeId ${localeId} is invalid`);
+	}
 
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(string|undefined)}
-	 */
+	return localeId.replace('_', '-').toLowerCase();
+}
 
-	displayStyle: Config.string().value('singleline'),
+function transformDataFromServer(props) {
+	const {defaultLocale, value} = props;
 
-	/**
-	 * @default themeDisplay.getDefaultLanguageId()
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(string|undefined)}
-	 */
-
-	editingLocale: Config.object()
-		.internal()
-		.value({
-			icon: themeDisplay
-				.getDefaultLanguageId()
-				.replace('_', '-')
-				.toLowerCase(),
-			localeId: themeDisplay.getDefaultLanguageId(),
+	return {
+		...props,
+		availableLocales: props.availableLocales.map(availableLocale => {
+			return {
+				...availableLocale,
+				icon: normalizeLocaleId(availableLocale.localeId),
+				isDefault: isDefaultLocale({
+					defaultLocale,
+					localeId: availableLocale.localeId,
+				}),
+				isTranslated: isTranslated({
+					localeId: availableLocale.localeId,
+					value,
+				}),
+			};
 		}),
+		value: convertValueToString(value),
+	};
+}
 
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(string|undefined)}
-	 */
-
-	errorMessage: Config.string(),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?bool}
-	 */
-
-	evaluable: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(string|undefined)}
-	 */
-
-	fieldName: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(string|undefined)}
-	 */
-
-	label: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(string|undefined)}
-	 */
-
-	name: Config.string().required(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(string|undefined)}
-	 */
-
-	placeholder: Config.string().value(''),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(string|undefined)}
-	 */
-
-	predefinedValue: Config.string().value(''),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?bool}
-	 */
-
-	readOnly: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof FieldBase
-	 * @type {?(bool|undefined)}
-	 */
-
-	repeatable: Config.bool(),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(bool|undefined)}
-	 */
-
-	required: Config.bool().value(false),
-
-	/**
-	 * @default true
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(bool|undefined)}
-	 */
-
-	showLabel: Config.bool().value(true),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(string|undefined)}
-	 */
-
-	spritemap: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(string|undefined)}
-	 */
-
-	tip: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof FieldBase
-	 * @type {?(string|undefined)}
-	 */
-
-	tooltip: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(string|undefined)}
-	 */
-
-	type: Config.string().value('localizable_text'),
-
-	/**
-	 * @default {}
-	 * @instance
-	 * @memberof LocalizableText
-	 * @type {?(string|undefined)}
-	 */
-
-	value: Config.oneOfType([Config.object(), Config.string()]).value({}),
+const INITIAL_DEFAULT_LOCALE = {
+	icon: themeDisplay.getDefaultLanguageId(),
+	localeId: themeDisplay.getDefaultLanguageId(),
+};
+const INITIAL_EDITING_LOCALE = {
+	icon: normalizeLocaleId(themeDisplay.getDefaultLanguageId()),
+	localeId: themeDisplay.getDefaultLanguageId(),
 };
 
-Soy.register(LocalizableText, templates);
+const DropdownTrigger = forwardRef(
+	({editingLocale, spritemap, ...otherProps}, ref) => {
+		return (
+			<ClayButton
+				aria-expanded="false"
+				aria-haspopup="true"
+				className="dropdown-toggle"
+				displayType="secondary"
+				monospaced
+				ref={ref}
+				{...otherProps}
+			>
+				<span className="inline-item">
+					<ClayIcon
+						spritemap={spritemap}
+						symbol={editingLocale.icon}
+					/>
+				</span>
+				<span className="btn-section">{editingLocale.icon}</span>
+			</ClayButton>
+		);
+	}
+);
 
-export default LocalizableText;
+const AvailableLocaleLabel = ({isDefault, isTranslated}) => {
+	const labelText = isDefault
+		? 'default'
+		: isTranslated
+		? 'translated'
+		: 'not-translated';
+
+	return (
+		<ClayLabel
+			displayType={classNames({
+				info: isDefault,
+				success: isTranslated,
+				warning: !isDefault && !isTranslated,
+			})}
+			large
+		>
+			{Liferay.Language.get(labelText)}
+		</ClayLabel>
+	);
+};
+
+const LocalesDropdown = ({
+	availableLocales,
+	editingLocale,
+	onLanguageClicked = () => {},
+}) => {
+	const [dropdownActive, setDropdownActive] = useState(false);
+
+	const spritemap = `${themeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
+
+	return (
+		<div>
+			<ClayDropDown
+				active={dropdownActive}
+				hasRightSymbols
+				onActiveChange={setDropdownActive}
+				trigger={
+					<DropdownTrigger
+						editingLocale={editingLocale}
+						spritemap={spritemap}
+					/>
+				}
+			>
+				<ClayDropDown.ItemList>
+					{availableLocales.map(
+						({
+							displayName,
+							icon,
+							isDefault,
+							isTranslated,
+							localeId,
+						}) => (
+							<ClayDropDown.Item
+								className="autofit-row custom-dropdown-item-row"
+								key={localeId}
+								onClick={event => {
+									onLanguageClicked({event, localeId});
+									setDropdownActive(false);
+								}}
+							>
+								<span className="autofit-col autofit-col-expand">
+									<span className="autofit-section">
+										<span className="inline-item inline-item-before">
+											<ClayIcon
+												spritemap={spritemap}
+												symbol={icon}
+											/>
+										</span>
+										{displayName}
+									</span>
+								</span>
+
+								<span className="autofit-col">
+									<AvailableLocaleLabel
+										isDefault={isDefault}
+										isTranslated={isTranslated}
+									/>
+								</span>
+							</ClayDropDown.Item>
+						)
+					)}
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
+		</div>
+	);
+};
+
+const LocalizableText = ({
+	availableLocales = [],
+	defaultLocale = INITIAL_DEFAULT_LOCALE,
+	displayStyle = 'singleline',
+	editingLocale = INITIAL_EDITING_LOCALE,
+	id,
+	name,
+	onFieldBlurred,
+	onFieldChanged = () => {},
+	onFieldFocused,
+	placeholder = '',
+	predefinedValue = '',
+	readOnly,
+	value,
+}) => {
+	const [currentEditingLocale, setCurrentEditingLocale] = useState(
+		editingLocale
+	);
+
+	const [currentValue, setCurrentValue] = useState(value);
+
+	const [currentInternalValue, setCurrentInternalValue] = useState(
+		getInitialInternalValue({editingLocale: currentEditingLocale, value})
+	);
+
+	const inputValue = currentInternalValue
+		? currentInternalValue
+		: predefinedValue;
+
+	return (
+		<ClayInput.Group>
+			<InputComponent
+				displayStyle={displayStyle}
+				id={id}
+				inputValue={inputValue}
+				name={name}
+				onFieldBlurred={onFieldBlurred}
+				onFieldChanged={event => {
+					const {target} = event;
+					const valueJSON = convertValueToJSON(currentValue);
+
+					const newValue = JSON.stringify({
+						...valueJSON,
+						[currentEditingLocale.localeId]: target.value,
+					});
+
+					setCurrentValue(newValue);
+					setCurrentInternalValue(target.value);
+
+					onFieldChanged({event, value: newValue});
+				}}
+				onFieldFocused={onFieldFocused}
+				placeholder={placeholder}
+				readOnly={readOnly}
+			/>
+
+			<input
+				id={id}
+				name={name}
+				type="hidden"
+				value={currentValue || ''}
+			/>
+
+			<ClayInput.GroupItem
+				className="liferay-ddm-form-field-localizable-text"
+				shrink
+			>
+				<LocalesDropdown
+					availableLocales={availableLocales}
+					editingLocale={currentEditingLocale}
+					onLanguageClicked={({localeId}) => {
+						const newEditingLocale = availableLocales.find(
+							availableLocale =>
+								availableLocale.localeId === localeId
+						);
+
+						setCurrentEditingLocale({
+							...newEditingLocale,
+							icon: normalizeLocaleId(newEditingLocale.localeId),
+						});
+
+						setCurrentInternalValue(
+							getEditingValue({
+								defaultLocale,
+								editingLocale: newEditingLocale,
+								value: currentValue,
+							})
+						);
+					}}
+				/>
+			</ClayInput.GroupItem>
+		</ClayInput.Group>
+	);
+};
+
+const LocalizableTextWithFieldBase = props => {
+	const {
+		availableLocales,
+		displayStyle,
+		editingLocale,
+		id,
+		name,
+		onFieldBlurred,
+		onFieldChanged,
+		onFieldFocused,
+		placeholder,
+		predefinedValue,
+		readOnly,
+		value,
+		...otherProps
+	} = transformDataFromServer(props);
+
+	return (
+		<FieldBaseProxy {...otherProps} id={id} name={name} readOnly={readOnly}>
+			<LocalizableText
+				availableLocales={availableLocales}
+				displayStyle={displayStyle}
+				editingLocale={editingLocale}
+				id={id}
+				name={name}
+				onFieldBlurred={onFieldBlurred}
+				onFieldChanged={onFieldChanged}
+				onFieldFocused={onFieldFocused}
+				placeholder={placeholder}
+				predefinedValue={predefinedValue}
+				readOnly={readOnly}
+				value={value}
+			/>
+		</FieldBaseProxy>
+	);
+};
+
+const LocalizableTextProxy = connectStore(({emit, ...otherProps}) => (
+	<LocalizableTextWithFieldBase
+		{...otherProps}
+		onFieldBlurred={event =>
+			emit('fieldBlurred', event, event.target.value)
+		}
+		onFieldChanged={({event, value}) => emit('fieldEdited', event, value)}
+		onFieldFocused={event =>
+			emit('fieldFocused', event, event.target.value)
+		}
+	/>
+));
+
+const ReactLocalizableTextAdapter = getConnectedReactComponentAdapter(
+	LocalizableTextProxy,
+	templates
+);
+
+export {ReactLocalizableTextAdapter, LocalizableTextWithFieldBase};
+export default ReactLocalizableTextAdapter;

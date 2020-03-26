@@ -117,6 +117,10 @@ public class StartupAction extends SimpleAction {
 				MessageBus.class, PortalExecutorManager.class);
 		}
 
+		if (PropsValues.PORTAL_FABRIC_ENABLED) {
+			FabricServerUtil.start();
+		}
+
 		// MySQL version
 
 		DB db = DBManagerUtil.getDB();
@@ -250,10 +254,6 @@ public class StartupAction extends SimpleAction {
 				intraband.registerDatagramReceiveHandler(
 					SystemDataType.RPC.getValue(),
 					new RPCDatagramReceiveHandler());
-
-				if (PropsValues.PORTAL_FABRIC_ENABLED) {
-					FabricServerUtil.start();
-				}
 			}
 			catch (Exception exception) {
 				throw new IllegalStateException(

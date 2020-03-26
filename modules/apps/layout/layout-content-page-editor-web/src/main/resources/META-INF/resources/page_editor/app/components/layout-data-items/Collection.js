@@ -18,7 +18,7 @@ import {COLLECTION_LIST_FORMATS} from '../../config/constants/collectionListForm
 import CollectionService from '../../services/CollectionService';
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
-import {ControlsIdConverterContextProvider} from '../ControlsIdConverterContext';
+import {CollectionItemContextProvider} from '../CollectionItemContext';
 
 const COLLECTION_ID_DIVIDER = '$';
 
@@ -81,7 +81,7 @@ const Grid = ({
 				columns.push(
 					<div className={`col col-${12 / numberOfColumns}`}>
 						{itemCount < maxNumberOfItems && (
-							<ControlsIdConverterContextProvider
+							<CollectionItemContextProvider
 								key={index}
 								value={{
 									collectionFields,
@@ -95,7 +95,7 @@ const Grid = ({
 								}}
 							>
 								{React.cloneElement(child)}
-							</ControlsIdConverterContextProvider>
+							</CollectionItemContextProvider>
 						)}
 					</div>
 				);
@@ -121,7 +121,7 @@ const Stack = ({
 	const maxNumberOfItems = Math.min(collectionLength, numberOfItems);
 
 	return Array.from({length: maxNumberOfItems}).map((_element, idx) => (
-		<ControlsIdConverterContextProvider
+		<CollectionItemContextProvider
 			key={idx}
 			value={{
 				collectionFields,
@@ -131,7 +131,7 @@ const Stack = ({
 			}}
 		>
 			{React.cloneElement(child)}
-		</ControlsIdConverterContextProvider>
+		</CollectionItemContextProvider>
 	));
 };
 

@@ -23,30 +23,30 @@ const INITIAL_STATE = {
 	toControlsId: controlId => controlId,
 };
 
-const ControlsIdConverterContext = React.createContext(INITIAL_STATE);
+const CollectionItemContext = React.createContext(INITIAL_STATE);
 
-const ControlsIdConverterContextProvider = ControlsIdConverterContext.Provider;
+const CollectionItemContextProvider = CollectionItemContext.Provider;
 
 const useFromControlsId = () => {
-	const context = useContext(ControlsIdConverterContext);
+	const context = useContext(CollectionItemContext);
 
 	return context.fromControlsId;
 };
 
 const useToControlsId = () => {
-	const context = useContext(ControlsIdConverterContext);
+	const context = useContext(CollectionItemContext);
 
 	return context.toControlsId;
 };
 
 const useCollectionFields = () => {
-	const context = useContext(ControlsIdConverterContext);
+	const context = useContext(CollectionItemContext);
 
 	return context.collectionFields;
 };
 
 const useGetFieldValue = () => {
-	const context = useContext(ControlsIdConverterContext);
+	const context = useContext(CollectionItemContext);
 
 	const getFromServer = useCallback(
 		({classNameId, classPK, fieldId, languageId}) =>
@@ -79,8 +79,8 @@ const useGetFieldValue = () => {
 };
 
 export {
-	ControlsIdConverterContext,
-	ControlsIdConverterContextProvider,
+	CollectionItemContext,
+	CollectionItemContextProvider,
 	useCollectionFields,
 	useFromControlsId,
 	useToControlsId,

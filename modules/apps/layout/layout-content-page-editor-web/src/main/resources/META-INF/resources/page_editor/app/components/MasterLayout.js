@@ -26,7 +26,7 @@ import {
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {config} from '../config/index';
 import {useSelector} from '../store/index';
-import {useGetFieldValue} from './ControlsIdConverterContext';
+import {useGetFieldValue} from './CollectionItemContext';
 import PageEditor from './PageEditor';
 import UnsafeHTML from './UnsafeHTML';
 import getAllEditables from './fragment-content/getAllEditables';

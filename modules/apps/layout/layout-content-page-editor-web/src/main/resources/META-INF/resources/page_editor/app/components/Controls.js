@@ -16,7 +16,7 @@ import React, {useCallback, useContext, useReducer} from 'react';
 
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
-import {useFromControlsId, useToControlsId} from './ControlsIdConverterContext';
+import {useFromControlsId, useToControlsId} from './CollectionItemContext';
 
 const INITIAL_STATE = {
 	activationOrigin: null,

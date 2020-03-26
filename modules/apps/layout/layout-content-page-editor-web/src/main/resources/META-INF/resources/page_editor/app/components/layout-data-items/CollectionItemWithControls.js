@@ -14,12 +14,12 @@
 
 import React, {useContext} from 'react';
 
-import {ControlsIdConverterContext} from '../ControlsIdConverterContext';
+import {CollectionItemContext} from '../CollectionItemContext';
 import TopperEmpty from '../TopperEmpty';
 
 const CollectionItemWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
-		const {collectionItem} = useContext(ControlsIdConverterContext);
+		const {collectionItem} = useContext(CollectionItemContext);
 
 		return (
 			<div className="page-editor__collection__block">

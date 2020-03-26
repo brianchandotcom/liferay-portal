@@ -25,7 +25,7 @@ import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSe
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import FragmentService from '../../services/FragmentService';
 import {useDispatch, useSelector} from '../../store/index';
-import {useGetFieldValue} from '../ControlsIdConverterContext';
+import {useGetFieldValue} from '../CollectionItemContext';
 import UnsafeHTML from '../UnsafeHTML';
 import {
 	useEditableProcessorUniqueId,

@@ -23,7 +23,7 @@ import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
-import {useGetFieldValue} from '../ControlsIdConverterContext';
+import {useGetFieldValue} from '../CollectionItemContext';
 import isMapped from '../fragment-content/isMapped';
 import MappingSelector from './MappingSelector';
 

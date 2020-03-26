@@ -23,7 +23,7 @@ import {PAGE_TYPES} from '../../config/constants/pageTypes';
 import {config} from '../../config/index';
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
-import {useCollectionFields} from '../ControlsIdConverterContext';
+import {useCollectionFields} from '../CollectionItemContext';
 
 const MAPPING_SOURCE_TYPE_IDS = {
 	content: 'content',

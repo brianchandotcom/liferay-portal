@@ -14,10 +14,7 @@
 
 import React, {useCallback, useContext, useReducer} from 'react';
 
-import {
-	useFromControlsId,
-	useToControlsId,
-} from '../ControlsIdConverterContext';
+import {useFromControlsId, useToControlsId} from '../CollectionItemContext';
 
 const EditableProcessorContext = React.createContext(null);
 const INITIAL_STATE = {editableClickPosition: null, editableUniqueId: null};

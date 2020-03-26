@@ -30,6 +30,15 @@ public class UpgradeSchema extends UpgradeProcess {
 			new AlterTableAddColumn("assetEntryType VARCHAR(255) null"));
 
 		runSQL(
+			"create index IX_D604A2E on AssetListEntry (groupId, " +
+				"assetEntryType[$COLUMN_LENGTH:75$], ctCollectionId)");
+
+		runSQL(
+			"create index IX_CBD041F6 on AssetListEntry (groupId, " +
+				"title[$COLUMN_LENGTH:75$], " +
+					"assetEntryType[$COLUMN_LENGTH:75$], ctCollectionId)");
+
+		runSQL(
 			"update AssetListEntry set assetEntryType = '" +
 				AssetEntry.class.getName() + "'");
 	}

@@ -5,6 +5,7 @@ apply plugin: "com.liferay.defaults.plugin"
 task runGradleTest
 
 List<String> outputRelativePaths = []
+List<String> taskNames = []
 
 runGradleTest {
 	dependsOn clean
@@ -12,6 +13,12 @@ runGradleTest {
 	doLast {
 		for (String outputRelativePath : outputRelativePaths) {
 			assert !outputRelativePath.startsWith("src")
+		}
+
+		List<String> expectedTaskNames = ["baseline", "buildBundleDir", "buildCSS", "buildEnvironment", "compileJSP", "compileJava", "compileTestIntegrationJava", "compileTestJava", "copyCSS", "copyLibs", "copyTLDDocResources", "dependencies", "downloadNode", "eclipseJdt", "generateJSPJava", "ideaProject", "ideaWorkspace", "jar", "jarCompileIncludeFragment", "jarJSDoc", "jarJSP", "jarJavadoc", "jarSources", "jarSourcesCommercial", "jarTLDDoc", "javadoc", "jsdoc", "mergeArtifactsPublishCommands", "pmdMain", "pmdTest", "pmdTestIntegration", "processResources", "processTestIntegrationResources", "processTestResources", "projects", "properties", "spotbugsMain", "spotbugsTest", "spotbugsTestIntegration", "tasks", "test", "testIntegration", "tlddoc", "transpileJS", "watch", "wrapper", "writeFindBugsProject"]
+
+		for (String taskName : taskNames) {
+			assert expectedTaskNames.contains(taskName)
 		}
 	}
 }
@@ -22,6 +29,8 @@ tasks.withType(Delete) {
 			Task task = tasks.findByName(name.substring(5).uncapitalize())
 
 			if (task != null) {
+				taskNames.add(task.name)
+
 				task.outputs.files.each {
 					File outputFile ->
 

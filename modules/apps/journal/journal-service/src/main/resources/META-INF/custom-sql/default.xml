@@ -201,7 +201,7 @@
 					FROM
 						JournalArticleLocalization
 					WHERE
-						[$RETRIEVE_TITLE$]
+						1 = ?
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title
 				) JournalArticleLocalization ON
@@ -253,7 +253,7 @@
 					FROM
 						JournalArticleLocalization
 					WHERE
-						[$RETRIEVE_TITLE$]
+						1 = ?
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
 				) JournalArticleLocalization ON
@@ -287,7 +287,7 @@
 					FROM
 						JournalArticleLocalization
 					WHERE
-						[$RETRIEVE_TITLE$]
+						1 = ?
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
 				) JournalArticleLocalization ON
@@ -322,7 +322,7 @@
 					FROM
 						JournalArticleLocalization
 					WHERE
-						[$RETRIEVE_TITLE$]
+						1 = ?
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title
 				) JournalArticleLocalization ON
@@ -357,7 +357,7 @@
 					FROM
 						JournalArticleLocalization
 					WHERE
-						[$RETRIEVE_TITLE$]
+						1 = ?
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
 				) JournalArticleLocalization ON
@@ -393,7 +393,7 @@
 					FROM
 						JournalArticleLocalization
 					WHERE
-						[$RETRIEVE_TITLE$]
+						1 = ?
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title
 				) JournalArticleLocalization ON
@@ -428,7 +428,7 @@
 					FROM
 						JournalArticleLocalization
 					WHERE
-						[$RETRIEVE_TITLE$]
+						1 = ?
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
 				) JournalArticleLocalization ON

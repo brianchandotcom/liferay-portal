@@ -166,7 +166,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.addRedirect(
+		Redirect.addEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			expirationDate = "12/31/2013",
 			siteName = "test-site-name",
@@ -174,13 +174,13 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.editRedirect(
+		Redirect.editEntry(
 			expirationDate = "12/31/2024",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.viewRedirect(
+		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			expirationDate = "12/31/24",
 			redirectType = "Permanent",
@@ -228,7 +228,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.addRedirect(
+		Redirect.addEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			expirationDate = "12/31/2013",
 			redirectType = "Temporary (302)",
@@ -246,7 +246,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.editRedirect(
+		Redirect.editEntry(
 			expirationDate = "12/31/2024",
 			sourceURL = "test-source-page");
 

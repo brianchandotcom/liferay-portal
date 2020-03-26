@@ -35,6 +35,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
@@ -130,6 +131,37 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 	}
 
 	@Test
+	public void testGetPublishedURLForPublishedForm() throws Exception {
+		boolean published = true;
+		boolean requireAuthentication = false;
+
+		DDMFormInstance publishedDDMFormInstance = mockDDMFormInstance(
+			_SHARED_FORM_INSTANCE_ID, published, requireAuthentication);
+
+		String publishedFormURL =
+			_ddmFormAdminDisplayContext.getPublishedFormURL(
+				publishedDDMFormInstance);
+
+		Assert.assertEquals(
+			getSharedFormURL() + _SHARED_FORM_INSTANCE_ID, publishedFormURL);
+	}
+
+	@Test
+	public void testGetPublishedURLForUnpublishedForm() throws Exception {
+		boolean published = false;
+		boolean requireAuthentication = false;
+
+		DDMFormInstance unpublishedDDMFormInstance = mockDDMFormInstance(
+			_SHARED_FORM_INSTANCE_ID, published, requireAuthentication);
+
+		String publishedFormURL =
+			_ddmFormAdminDisplayContext.getPublishedFormURL(
+				unpublishedDDMFormInstance);
+
+		Assert.assertEquals(StringPool.BLANK, publishedFormURL);
+	}
+
+	@Test
 	public void testGetRestrictedFormURL() throws Exception {
 		String restrictedFormURL =
 			_ddmFormAdminDisplayContext.getRestrictedFormURL();
@@ -184,6 +216,26 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 		);
 
 		return formInstance;
+	}
+
+	protected DDMFormInstance mockDDMFormInstance(
+			long formInstanceId, boolean published,
+			boolean requireAuthentication)
+		throws PortalException {
+
+		DDMFormInstance ddmFormInstance = mockDDMFormInstance(
+			formInstanceId, requireAuthentication);
+
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			ddmFormInstance.getSettingsModel();
+
+		when(
+			ddmFormInstanceSettings.published()
+		).thenReturn(
+			published
+		);
+
+		return ddmFormInstance;
 	}
 
 	protected DDMFormInstanceService mockDDMFormInstanceService()

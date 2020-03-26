@@ -46,6 +46,18 @@ $c: '.ddm-form-builder';
 			}
 		}
 	}
+
+	.resizeable .ddm-field-container {
+		&.ddm-fieldset {
+			&.hovered,
+			&.selected {
+				> .ddm-resize-handle-left,
+				> .ddm-resize-handle-right {
+					background-color: #5aca75;
+				}
+			}
+		}
+	}
 }
 
 .ddm-resize-handle {

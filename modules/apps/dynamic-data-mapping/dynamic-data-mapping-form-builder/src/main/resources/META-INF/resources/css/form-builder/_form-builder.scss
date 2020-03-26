@@ -36,6 +36,10 @@ $c: '.ddm-form-builder';
 		&.selected,
 		&.targetOver {
 			border-color: $active-blue;
+
+			&.ddm-fieldset {
+				border-color: #5aca75;
+			}
 		}
 
 		&.hovered {

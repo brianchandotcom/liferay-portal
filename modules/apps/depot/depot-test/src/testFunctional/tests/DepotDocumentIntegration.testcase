@@ -58,6 +58,8 @@ definition {
 
 		BlogsNavigator.gotoAddEntry();
 
+		Pause(locator1 = "3000");
+
 		BlogsNavigator.gotoSelectFile();
 
 		ItemSelector.selectRepositoryImage(

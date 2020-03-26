@@ -19,6 +19,8 @@ import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
+import Lang from '../utils/lang.es';
+
 const STAR_SCORES = [
 	{label: 1, value: 0.2},
 	{label: 2, value: 0.4},
@@ -96,6 +98,10 @@ const RatingsStars = ({
 	);
 
 	const getTitle = useCallback(() => {
+		if (!signedIn) {
+			return '';
+		}
+
 		if (inTrash) {
 			return Liferay.Language.get(
 				'ratings-are-disabled-because-this-entry-is-in-the-recycle-bin'
@@ -104,9 +110,24 @@ const RatingsStars = ({
 		else if (!enabled) {
 			return Liferay.Language.get('ratings-are-disabled-in-staging');
 		}
+		else if (score <= 0) {
+			return Liferay.Language.get('vote');
+		}
+		else if (score > 0) {
+			const title =
+				score === 0
+					? Liferay.Language.get(
+							'you-have-rated-this-x-star-out-of-x'
+					  )
+					: Liferay.Language.get(
+							'you-have-rated-this-x-stars-out-of-x'
+					  );
+
+			return Lang.sub(title, [score, STAR_SCORES.length]);
+		}
 
 		return '';
-	}, [inTrash, enabled]);
+	}, [signedIn, inTrash, enabled, score]);
 
 	return (
 		<div className="autofit-row autofit-row-center ratings ratings-stars">
@@ -156,7 +177,13 @@ const RatingsStars = ({
 			</div>
 			<div className="autofit-col">
 				<span className="ratings-stars-average-text">
-					{averageScore} {!!totalEntries && `(${totalEntries} votes)`}
+					{averageScore}
+					{!!totalEntries &&
+						` (${totalEntries} ${
+							totalEntries === 1
+								? Liferay.Language.get('vote')
+								: Liferay.Language.get('votes')
+						})`}
 				</span>
 			</div>
 		</div>
@@ -164,7 +191,6 @@ const RatingsStars = ({
 };
 
 RatingsStars.propTypes = {
-	averageIndex: PropTypes.number.isRequired,
 	className: PropTypes.string.isRequired,
 	classPK: PropTypes.string.isRequired,
 	enabled: PropTypes.bool,

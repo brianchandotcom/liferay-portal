@@ -1,7 +1,33 @@
+import com.liferay.gradle.util.FileUtil
+
 apply plugin: "com.liferay.defaults.plugin"
 
 task runGradleTest
 
+List<String> outputRelativePaths = []
+
 runGradleTest {
 	dependsOn clean
+
+	doLast {
+		for (String outputRelativePath : outputRelativePaths) {
+			assert !outputRelativePath.startsWith("src")
+		}
+	}
+}
+
+tasks.withType(Delete) {
+	doFirst {
+		if (name.startsWith("clean")) {
+			Task task = tasks.findByName(name.substring(5).uncapitalize())
+
+			if (task != null) {
+				task.outputs.files.each {
+					File outputFile ->
+
+					outputRelativePaths.add(FileUtil.relativize(outputFile, projectDir))
+				}
+			}
+		}
+	}
 }

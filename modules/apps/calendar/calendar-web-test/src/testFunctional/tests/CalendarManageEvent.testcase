@@ -114,6 +114,8 @@ definition {
 
 	@priority = "5"
 	test DeleteRepeatingAllFollowing {
+		property portal.upstream = "quarantine";
+
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "Calendar#DeleteEventRepeatingAllFollowing";
 
@@ -663,6 +665,8 @@ definition {
 
 	@priority = "4"
 	test ViewCalendarChange {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

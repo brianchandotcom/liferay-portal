@@ -1174,6 +1174,8 @@ definition {
 
 	@priority = "4"
 	test AssignRolePermissionsSubmitProcessPG {
+		property portal.upstream = "quarantine";
+
 		property test.name.skip.portal.instance = "KaleoformsUsecase#AssignRolePermissionsSubmitProcessPG";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

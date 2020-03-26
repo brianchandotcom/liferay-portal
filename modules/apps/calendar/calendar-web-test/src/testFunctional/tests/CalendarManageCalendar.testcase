@@ -367,6 +367,8 @@ definition {
 
 	@priority = "5"
 	test SearchForOtherCalendars {
+		property portal.upstream = "quarantine";
+
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "Calendar#SearchForOtherCalendars";
 

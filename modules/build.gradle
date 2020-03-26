@@ -397,6 +397,14 @@ gradle.beforeProject {
 			}
 		}
 
+		pluginManager.withPlugin("java") {
+			compileJava {
+				outputs.cacheIf {
+					false
+				}
+			}
+		}
+
 		pluginManager.withPlugin("org.ysb33r.gradletest") {
 			task prepareGradleTestInputs
 

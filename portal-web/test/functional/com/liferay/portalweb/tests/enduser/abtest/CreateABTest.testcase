@@ -1,7 +1,7 @@
 @component-name = "portal-ab-test"
 definition {
 
-	// Ignore test until AC connection is full automated
+	// Ignore test until AC connection is fully automated
 
 	property portal.release = "true";
 	property portal.upstream = "quarantine";
@@ -55,21 +55,31 @@ definition {
 	@description = "Validate if the user can create an A/B Test"
 	@priority = "5"
 	test CreateABTestByBounceRate {
+		ABTesting.createABtestByBounceRate(TestTitle = "AB test title");
 
-		AbTesting.createABtestByBounceRate(TestTitle = "AB test title");
+		ABTesting.createVariant(VariantName = "Variant name");
 
-		AbTesting.createVariant(VariantName = "Variant name");
+		ABTesting.runTest();
 
-		AbTesting.runTest();
-
-		AbTesting.checkAC();
+		ABTesting.checkAC();
 
 		AnalyticsCloud.loginAC(EmailAddress = "test@liferay.com", Password = "test");
 
 		AssertTextEquals(
 			locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE",
 			value1 = "Create A/B Test Title");
-		}
+	}
+
+	@description = "Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control"
+	@priority = "5"
+	test CreateABTestRunWithNoVariants {
+		ABTesting.createABtestByBounceRate(TestTitle = "AB test title");
+
+		ABTesting.runTest();
+
+		AssertTextEquals(
+			locator1 = "ABTest#VARIANT_NEEDED_MESSAGE",
+			value1 = "Create at least one variant to run the test.");
 	}
 
 }

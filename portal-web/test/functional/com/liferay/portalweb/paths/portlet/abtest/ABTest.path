@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VARIANT_NEEDED_MESSAGE</td>
+	<td>//*[contains(@class,'mb-2 text-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_DATA_ANALYTICS_CLOUD_BUTTON</td>
 	<td>//*[contains(@class,'btn btn-secondary btn-sm mt-3 w-100 link-secondary')]</td>
 	<td></td>

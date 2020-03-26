@@ -14,7 +14,7 @@
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import {BackgroundImagePropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
@@ -30,17 +30,11 @@ export const ContainerBackgroundImageConfiguration = ({
 	backgroundImage,
 	onValueChange,
 }) => {
-	const [imageSource, setImageSource] = useState(
-		IMAGE_SOURCE.manualSelection
+	const [imageSource, setImageSource] = useState(() =>
+		backgroundImage.fieldId || backgroundImage.mappedField
+			? IMAGE_SOURCE.contentMapping
+			: IMAGE_SOURCE.manualSelection
 	);
-
-	useEffect(() => {
-		setImageSource(
-			backgroundImage.fieldId || backgroundImage.mappedField
-				? IMAGE_SOURCE.contentMapping
-				: IMAGE_SOURCE.manualSelection
-		);
-	}, [backgroundImage]);
 
 	return (
 		<>

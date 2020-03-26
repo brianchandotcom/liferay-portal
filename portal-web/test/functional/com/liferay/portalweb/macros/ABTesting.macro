@@ -32,6 +32,14 @@ definition {
 		Click(locator1 = "ABTest#SAVE_VARIANT_NAME_BUTTON");
 	}
 
+	macro deleteVariant {
+		Click(locator1 = "ABTest#VARIANT_DROPDOWN);
+
+		Click(locator1 = "ABTest#DELETE_VARIANT_BUTTON");
+
+		AssertConfirm.waitForConfirmation(value1 = “Are you sure you want to delete this? It will be deleted immediately.“);
+	}
+
 	macro runTest {
 		Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
 

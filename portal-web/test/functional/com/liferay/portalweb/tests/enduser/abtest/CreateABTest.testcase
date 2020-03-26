@@ -69,4 +69,19 @@ definition {
 			value1 = "A variant needs to be created.");
 	}
 
+	@description = "Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control if the user add variants and remove all variants"
+	@priority = "5"
+	test CreateABTestRunWithDeletedVariants {
+		ABTesting.createABtestByBounceRate(TestTitle = "AB test title");
+
+		ABTesting.createVariant(VariantName = "Variant name");
+
+		ABTesting.deleteVariant();
+
+		ABTesting.runTest();
+
+		AssertTextEquals(
+			locator1 = "ABTest#VARIANT_NEEDED_MESSAGE",
+			value1 = "A variant needs to be created.");
+	}
 }

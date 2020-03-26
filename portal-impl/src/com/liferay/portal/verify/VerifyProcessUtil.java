@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.VerifyThreadLocal;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
 /**
@@ -44,15 +43,13 @@ public class VerifyProcessUtil {
 			((verifyFrequency == VerifyProcess.ONCE) && !verified) ||
 			ranUpgradeProcess) {
 
-			return _verifyProcess(ranUpgradeProcess);
+			return _verifyProcess();
 		}
 
 		return false;
 	}
 
-	private static boolean _verifyProcess(boolean ranUpgradeProcess)
-		throws VerifyException {
-
+	private static boolean _verifyProcess() throws VerifyException {
 		boolean ranVerifyProcess = false;
 
 		boolean tempIndexReadOnly = IndexWriterHelperUtil.isIndexReadOnly();

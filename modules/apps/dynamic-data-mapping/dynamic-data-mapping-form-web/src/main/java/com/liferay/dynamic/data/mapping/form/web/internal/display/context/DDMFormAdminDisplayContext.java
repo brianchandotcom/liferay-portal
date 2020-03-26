@@ -1427,10 +1427,19 @@ public class DDMFormAdminDisplayContext {
 
 		ListUtil.filter(
 			ddmFormFieldTypes, availableDDMFormFieldTypes,
-			formFieldType -> !formFieldType.getName(
-			).equals(
-				"geolocation"
-			));
+			ddmFormFieldType ->
+				!ddmFormFieldType.getName(
+				).equals(
+					"geolocation"
+				) &&
+				!ddmFormFieldType.getName(
+				).equals(
+					"journal_article"
+				) &&
+				!ddmFormFieldType.getName(
+				).equals(
+					"link_to_layout"
+				));
 
 		return Collections.unmodifiableList(availableDDMFormFieldTypes);
 	}

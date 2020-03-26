@@ -34,6 +34,7 @@ definition {
 	test StagingDemoDocumentsAndMedia {
 		property custom.properties = "default.layout.template.id=1_column";
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Staging#StagingDemoDocumentsAndMedia";
 		property testray.component.names = "Training";
 

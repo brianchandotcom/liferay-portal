@@ -41,6 +41,9 @@ export default function StructureTreeNode({node}) {
 			className={classNames('page-editor__page-structure__tree-node', {
 				'page-editor__page-structure__tree-node--active':
 					node.activable && isSelected(node.id),
+				'page-editor__page-structure__tree-node--hovered': isHovered(
+					node.id
+				),
 			})}
 			onMouseLeave={event => {
 				event.stopPropagation();

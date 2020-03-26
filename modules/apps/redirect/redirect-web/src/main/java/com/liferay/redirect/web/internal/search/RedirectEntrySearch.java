@@ -55,7 +55,7 @@ public class RedirectEntrySearch extends SearchContainer<RedirectEntry> {
 		}
 		else {
 			orderByCol = preferences.getValue(
-				portletId, "redirect-entries-order-by-col", "modified");
+				portletId, "redirect-entries-order-by-col", "modified-date");
 		}
 
 		if (Validator.isNotNull(orderByType)) {

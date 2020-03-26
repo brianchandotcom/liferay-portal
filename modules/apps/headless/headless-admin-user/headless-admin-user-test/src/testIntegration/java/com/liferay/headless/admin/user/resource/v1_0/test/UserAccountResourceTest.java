@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -45,6 +44,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -99,30 +99,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			indexer.reindex(
 				new String[] {String.valueOf(company.getCompanyId())});
 		}
-	}
-
-	@Override
-	@Test
-	public void testGetMyUserAccount() throws Exception {
-		User user = UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId());
-
-		UserAccount userAccount = new UserAccount() {
-			{
-				additionalName = user.getMiddleName();
-				alternateName = user.getScreenName();
-				birthDate = user.getBirthday();
-				emailAddress = user.getEmailAddress();
-				familyName = user.getFirstName();
-				givenName = user.getLastName();
-				id = user.getUserId();
-				jobTitle = user.getJobTitle();
-			}
-		};
-
-		UserAccount getUserAccount = userAccountResource.getMyUserAccount();
-
-		assertEquals(userAccount, getUserAccount);
-		assertValid(getUserAccount);
 	}
 
 	@Override
@@ -191,10 +167,28 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	public void testGetUserAccountsPageWithSortString() throws Exception {
 	}
 
-	@Ignore
 	@Override
 	@Test
-	public void testGraphQLGetMyUserAccount() {
+	public void testGraphQLGetMyUserAccount() throws Exception {
+		UserAccount userAccount = userAccountResource.getUserAccount(
+			_testUser.getUserId());
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"myUserAccount", new HashMap<>(),
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equalsJSONObject(
+				userAccount, dataJSONObject.getJSONObject("myUserAccount")));
 	}
 
 	@Override
@@ -264,8 +258,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	protected UserAccount testGetMyUserAccount_addUserAccount()
 		throws Exception {
 
-		return _addUserAccount(
-			testGetSiteUserAccountsPage_getSiteId(), randomUserAccount());
+		return userAccountResource.getUserAccount(_testUser.getUserId());
 	}
 
 	@Override
@@ -318,7 +311,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	protected UserAccount testGraphQLUserAccount_addUserAccount()
 		throws Exception {
 
-		return testGetMyUserAccount_addUserAccount();
+		return _addUserAccount(
+			testGetSiteUserAccountsPage_getSiteId(), randomUserAccount());
 	}
 
 	private UserAccount _addUserAccount(long siteId, UserAccount userAccount)

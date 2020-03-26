@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -50,6 +51,7 @@ import com.liferay.segments.asah.rest.client.pagination.Page;
 import com.liferay.segments.asah.rest.client.resource.v1_0.ExperimentResource;
 import com.liferay.segments.asah.rest.client.serdes.v1_0.ExperimentSerDes;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
@@ -305,8 +307,10 @@ public abstract class BaseExperimentResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
-				experiment, dataJSONObject.getJSONObject("experiment")));
+			equals(
+				experiment,
+				ExperimentSerDes.toDTO(
+					dataJSONObject.getString("experiment"))));
 	}
 
 	protected Experiment testGraphQLExperiment_addExperiment()
@@ -363,25 +367,6 @@ public abstract class BaseExperimentResourceTestCase {
 
 			Assert.assertTrue(
 				experiments2 + " does not contain " + experiment1, contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<Experiment> experiments, JSONArray jsonArray) {
-
-		for (Experiment experiment : experiments) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(experiment, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + experiment, contains);
 		}
 	}
 
@@ -468,13 +453,53 @@ public abstract class BaseExperimentResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		graphQLFields.add(new GraphQLField("siteId"));
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.segments.asah.rest.dto.v1_0.Experiment.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -597,70 +622,6 @@ public abstract class BaseExperimentResourceTestCase {
 					return false;
 				}
 			}
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(
-		Experiment experiment, JSONObject jsonObject) {
-
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("description", fieldName)) {
-				if (!Objects.deepEquals(
-						experiment.getDescription(),
-						jsonObject.getString("description"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						experiment.getId(), jsonObject.getString("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", fieldName)) {
-				if (!Objects.deepEquals(
-						experiment.getName(), jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("status", fieldName)) {
-				if (!Objects.deepEquals(
-						experiment.getStatus(),
-						jsonObject.getString("status"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("winnerVariantId", fieldName)) {
-				if (!Objects.deepEquals(
-						experiment.getWinnerVariantId(),
-						jsonObject.getLong("winnerVariantId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

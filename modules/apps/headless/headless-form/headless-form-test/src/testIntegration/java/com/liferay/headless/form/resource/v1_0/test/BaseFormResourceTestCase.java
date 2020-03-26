@@ -30,8 +30,8 @@ import com.liferay.headless.form.client.pagination.Page;
 import com.liferay.headless.form.client.pagination.Pagination;
 import com.liferay.headless.form.client.resource.v1_0.FormResource;
 import com.liferay.headless.form.client.serdes.v1_0.FormSerDes;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -51,6 +51,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
@@ -232,7 +233,7 @@ public abstract class BaseFormResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(form, dataJSONObject.getJSONObject("form")));
+			equals(form, FormSerDes.toDTO(dataJSONObject.getString("form"))));
 	}
 
 	@Test
@@ -367,8 +368,10 @@ public abstract class BaseFormResourceTestCase {
 
 		Assert.assertEquals(2, formsJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
-			Arrays.asList(form1, form2), formsJSONObject.getJSONArray("items"));
+		assertEqualsIgnoringOrder(
+			Arrays.asList(form1, form2),
+			Arrays.asList(
+				FormSerDes.toDTOs(formsJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -443,25 +446,6 @@ public abstract class BaseFormResourceTestCase {
 			}
 
 			Assert.assertTrue(forms2 + " does not contain " + form1, contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<Form> forms, JSONArray jsonArray) {
-
-		for (Form form : forms) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(form, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + form, contains);
 		}
 	}
 
@@ -756,13 +740,53 @@ public abstract class BaseFormResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		graphQLFields.add(new GraphQLField("siteId"));
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.headless.form.dto.v1_0.Form.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -1151,68 +1175,6 @@ public abstract class BaseFormResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(Form form, JSONObject jsonObject) {
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("defaultLanguage", fieldName)) {
-				if (!Objects.deepEquals(
-						form.getDefaultLanguage(),
-						jsonObject.getString("defaultLanguage"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("description", fieldName)) {
-				if (!Objects.deepEquals(
-						form.getDescription(),
-						jsonObject.getString("description"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						form.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", fieldName)) {
-				if (!Objects.deepEquals(
-						form.getName(), jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("structureId", fieldName)) {
-				if (!Objects.deepEquals(
-						form.getStructureId(),
-						jsonObject.getLong("structureId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

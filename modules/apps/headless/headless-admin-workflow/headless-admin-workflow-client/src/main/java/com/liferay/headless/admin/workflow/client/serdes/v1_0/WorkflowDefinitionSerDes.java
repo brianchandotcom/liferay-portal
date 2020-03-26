@@ -195,10 +195,15 @@ public class WorkflowDefinitionSerDes {
 			map.put("content", String.valueOf(workflowDefinition.getContent()));
 		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(
-				workflowDefinition.getDateModified()));
+		if (workflowDefinition.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(
+					workflowDefinition.getDateModified()));
+		}
 
 		if (workflowDefinition.getDescription() == null) {
 			map.put("description", null);

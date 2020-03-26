@@ -497,15 +497,25 @@ public class MessageBoardThreadSerDes {
 				String.valueOf(messageBoardThread.getCustomFields()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(
-				messageBoardThread.getDateCreated()));
+		if (messageBoardThread.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(
+					messageBoardThread.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(
-				messageBoardThread.getDateModified()));
+		if (messageBoardThread.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(
+					messageBoardThread.getDateModified()));
+		}
 
 		if (messageBoardThread.getEncodingFormat() == null) {
 			map.put("encodingFormat", null);

@@ -204,13 +204,23 @@ public class NodeSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(node.getDateCreated()));
+		if (node.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(node.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(node.getDateModified()));
+		if (node.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(node.getDateModified()));
+		}
 
 		if (node.getId() == null) {
 			map.put("id", null);

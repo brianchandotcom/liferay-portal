@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -51,6 +52,7 @@ import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.SLASerDes;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
@@ -351,7 +353,7 @@ public abstract class BaseSLAResourceTestCase {
 			graphQLField = new GraphQLField(
 				"query",
 				new GraphQLField(
-					"sla",
+					"sLA",
 					new HashMap<String, Object>() {
 						{
 							put("slaId", sla.getId());
@@ -406,7 +408,7 @@ public abstract class BaseSLAResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(sla, dataJSONObject.getJSONObject("sLA")));
+			equals(sla, SLASerDes.toDTO(dataJSONObject.getString("sLA"))));
 	}
 
 	@Test
@@ -474,22 +476,6 @@ public abstract class BaseSLAResourceTestCase {
 			}
 
 			Assert.assertTrue(slas2 + " does not contain " + sla1, contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(List<SLA> slas, JSONArray jsonArray) {
-		for (SLA sla : slas) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(sla, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(jsonArray + " does not contain " + sla, contains);
 		}
 	}
 
@@ -608,13 +594,52 @@ public abstract class BaseSLAResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA.
+						class)) {
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -763,87 +788,6 @@ public abstract class BaseSLAResourceTestCase {
 					return false;
 				}
 			}
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(SLA sla, JSONObject jsonObject) {
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("calendarKey", fieldName)) {
-				if (!Objects.deepEquals(
-						sla.getCalendarKey(),
-						jsonObject.getString("calendarKey"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("description", fieldName)) {
-				if (!Objects.deepEquals(
-						sla.getDescription(),
-						jsonObject.getString("description"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("duration", fieldName)) {
-				if (!Objects.deepEquals(
-						sla.getDuration(), jsonObject.getLong("duration"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						sla.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", fieldName)) {
-				if (!Objects.deepEquals(
-						sla.getName(), jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("processId", fieldName)) {
-				if (!Objects.deepEquals(
-						sla.getProcessId(), jsonObject.getLong("processId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("status", fieldName)) {
-				if (!Objects.deepEquals(
-						sla.getStatus(), jsonObject.getInt("status"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

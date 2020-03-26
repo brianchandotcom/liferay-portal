@@ -306,17 +306,33 @@ public class WorkflowTaskSerDes {
 			map.put("completed", String.valueOf(workflowTask.getCompleted()));
 		}
 
-		map.put(
-			"dateCompletion",
-			liferayToJSONDateFormat.format(workflowTask.getDateCompletion()));
+		if (workflowTask.getDateCompletion() == null) {
+			map.put("dateCompletion", null);
+		}
+		else {
+			map.put(
+				"dateCompletion",
+				liferayToJSONDateFormat.format(
+					workflowTask.getDateCompletion()));
+		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(workflowTask.getDateCreated()));
+		if (workflowTask.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(workflowTask.getDateCreated()));
+		}
 
-		map.put(
-			"dateDue",
-			liferayToJSONDateFormat.format(workflowTask.getDateDue()));
+		if (workflowTask.getDateDue() == null) {
+			map.put("dateDue", null);
+		}
+		else {
+			map.put(
+				"dateDue",
+				liferayToJSONDateFormat.format(workflowTask.getDateDue()));
+		}
 
 		if (workflowTask.getDescription() == null) {
 			map.put("description", null);

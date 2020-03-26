@@ -588,19 +588,35 @@ public class StructuredContentSerDes {
 				String.valueOf(structuredContent.getCustomFields()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(structuredContent.getDateCreated()));
+		if (structuredContent.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(
+					structuredContent.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(
-				structuredContent.getDateModified()));
+		if (structuredContent.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(
+					structuredContent.getDateModified()));
+		}
 
-		map.put(
-			"datePublished",
-			liferayToJSONDateFormat.format(
-				structuredContent.getDatePublished()));
+		if (structuredContent.getDatePublished() == null) {
+			map.put("datePublished", null);
+		}
+		else {
+			map.put(
+				"datePublished",
+				liferayToJSONDateFormat.format(
+					structuredContent.getDatePublished()));
+		}
 
 		if (structuredContent.getDescription() == null) {
 			map.put("description", null);

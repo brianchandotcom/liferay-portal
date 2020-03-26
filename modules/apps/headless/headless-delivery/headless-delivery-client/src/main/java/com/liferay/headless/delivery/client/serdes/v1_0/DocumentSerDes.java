@@ -441,13 +441,23 @@ public class DocumentSerDes {
 			map.put("customFields", String.valueOf(document.getCustomFields()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(document.getDateCreated()));
+		if (document.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(document.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(document.getDateModified()));
+		if (document.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(document.getDateModified()));
+		}
 
 		if (document.getDescription() == null) {
 			map.put("description", null);

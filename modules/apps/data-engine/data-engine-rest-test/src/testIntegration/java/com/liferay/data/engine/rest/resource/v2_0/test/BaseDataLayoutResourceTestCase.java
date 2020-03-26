@@ -29,6 +29,7 @@ import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataLayoutSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -53,6 +54,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -577,8 +579,10 @@ public abstract class BaseDataLayoutResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
-				dataLayout, dataJSONObject.getJSONObject("dataLayout")));
+			equals(
+				dataLayout,
+				DataLayoutSerDes.toDTO(
+					dataJSONObject.getString("dataLayout"))));
 	}
 
 	@Test
@@ -656,10 +660,11 @@ public abstract class BaseDataLayoutResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
+			equals(
 				dataLayout,
-				dataJSONObject.getJSONObject(
-					"dataLayoutByContentTypeByDataLayoutKey")));
+				DataLayoutSerDes.toDTO(
+					dataJSONObject.getString(
+						"dataLayoutByContentTypeByDataLayoutKey"))));
 	}
 
 	protected DataLayout testGraphQLDataLayout_addDataLayout()
@@ -716,25 +721,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 			Assert.assertTrue(
 				dataLayouts2 + " does not contain " + dataLayout1, contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<DataLayout> dataLayouts, JSONArray jsonArray) {
-
-		for (DataLayout dataLayout : dataLayouts) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(dataLayout, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + dataLayout, contains);
 		}
 	}
 
@@ -861,13 +847,53 @@ public abstract class BaseDataLayoutResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		graphQLFields.add(new GraphQLField("siteId"));
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.data.engine.rest.dto.v2_0.DataLayout.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -1046,81 +1072,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 					return false;
 				}
 			}
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(
-		DataLayout dataLayout, JSONObject jsonObject) {
-
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("contentType", fieldName)) {
-				if (!Objects.deepEquals(
-						dataLayout.getContentType(),
-						jsonObject.getString("contentType"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("dataDefinitionId", fieldName)) {
-				if (!Objects.deepEquals(
-						dataLayout.getDataDefinitionId(),
-						jsonObject.getLong("dataDefinitionId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("dataLayoutKey", fieldName)) {
-				if (!Objects.deepEquals(
-						dataLayout.getDataLayoutKey(),
-						jsonObject.getString("dataLayoutKey"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						dataLayout.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("paginationMode", fieldName)) {
-				if (!Objects.deepEquals(
-						dataLayout.getPaginationMode(),
-						jsonObject.getString("paginationMode"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userId", fieldName)) {
-				if (!Objects.deepEquals(
-						dataLayout.getUserId(), jsonObject.getLong("userId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

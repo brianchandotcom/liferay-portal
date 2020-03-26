@@ -195,13 +195,23 @@ public class SegmentSerDes {
 			map.put("criteria", String.valueOf(segment.getCriteria()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(segment.getDateCreated()));
+		if (segment.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(segment.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(segment.getDateModified()));
+		if (segment.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(segment.getDateModified()));
+		}
 
 		if (segment.getId() == null) {
 			map.put("id", null);

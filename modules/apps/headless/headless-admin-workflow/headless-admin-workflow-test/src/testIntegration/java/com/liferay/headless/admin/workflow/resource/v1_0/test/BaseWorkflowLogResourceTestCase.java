@@ -28,8 +28,8 @@ import com.liferay.headless.admin.workflow.client.pagination.Page;
 import com.liferay.headless.admin.workflow.client.pagination.Pagination;
 import com.liferay.headless.admin.workflow.client.resource.v1_0.WorkflowLogResource;
 import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowLogSerDes;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -49,6 +49,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
@@ -351,8 +352,10 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
-				workflowLog, dataJSONObject.getJSONObject("workflowLog")));
+			equals(
+				workflowLog,
+				WorkflowLogSerDes.toDTO(
+					dataJSONObject.getString("workflowLog"))));
 	}
 
 	@Test
@@ -529,25 +532,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		}
 	}
 
-	protected void assertEqualsJSONArray(
-		List<WorkflowLog> workflowLogs, JSONArray jsonArray) {
-
-		for (WorkflowLog workflowLog : workflowLogs) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(workflowLog, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + workflowLog, contains);
-		}
-	}
-
 	protected void assertValid(WorkflowLog workflowLog) {
 		boolean valid = true;
 
@@ -671,13 +655,52 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.headless.admin.workflow.dto.v1_0.WorkflowLog.
+						class)) {
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -851,71 +874,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 					return false;
 				}
 			}
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(
-		WorkflowLog workflowLog, JSONObject jsonObject) {
-
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("commentLog", fieldName)) {
-				if (!Objects.deepEquals(
-						workflowLog.getCommentLog(),
-						jsonObject.getString("commentLog"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						workflowLog.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("previousState", fieldName)) {
-				if (!Objects.deepEquals(
-						workflowLog.getPreviousState(),
-						jsonObject.getString("previousState"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("state", fieldName)) {
-				if (!Objects.deepEquals(
-						workflowLog.getState(),
-						jsonObject.getString("state"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("workflowTaskId", fieldName)) {
-				if (!Objects.deepEquals(
-						workflowLog.getWorkflowTaskId(),
-						jsonObject.getLong("workflowTaskId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

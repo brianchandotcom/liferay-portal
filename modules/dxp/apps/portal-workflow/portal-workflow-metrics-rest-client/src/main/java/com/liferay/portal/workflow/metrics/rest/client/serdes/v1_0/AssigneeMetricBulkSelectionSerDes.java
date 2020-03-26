@@ -230,15 +230,25 @@ public class AssigneeMetricBulkSelectionSerDes {
 				String.valueOf(assigneeMetricBulkSelection.getCompleted()));
 		}
 
-		map.put(
-			"dateEnd",
-			liferayToJSONDateFormat.format(
-				assigneeMetricBulkSelection.getDateEnd()));
+		if (assigneeMetricBulkSelection.getDateEnd() == null) {
+			map.put("dateEnd", null);
+		}
+		else {
+			map.put(
+				"dateEnd",
+				liferayToJSONDateFormat.format(
+					assigneeMetricBulkSelection.getDateEnd()));
+		}
 
-		map.put(
-			"dateStart",
-			liferayToJSONDateFormat.format(
-				assigneeMetricBulkSelection.getDateStart()));
+		if (assigneeMetricBulkSelection.getDateStart() == null) {
+			map.put("dateStart", null);
+		}
+		else {
+			map.put(
+				"dateStart",
+				liferayToJSONDateFormat.format(
+					assigneeMetricBulkSelection.getDateStart()));
+		}
 
 		if (assigneeMetricBulkSelection.getInstanceIds() == null) {
 			map.put("instanceIds", null);

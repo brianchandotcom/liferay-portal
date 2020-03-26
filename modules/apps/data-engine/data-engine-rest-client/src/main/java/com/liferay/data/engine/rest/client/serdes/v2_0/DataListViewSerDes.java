@@ -229,13 +229,23 @@ public class DataListViewSerDes {
 				String.valueOf(dataListView.getDataDefinitionId()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(dataListView.getDateCreated()));
+		if (dataListView.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(dataListView.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(dataListView.getDateModified()));
+		if (dataListView.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(dataListView.getDateModified()));
+		}
 
 		if (dataListView.getFieldNames() == null) {
 			map.put("fieldNames", null);

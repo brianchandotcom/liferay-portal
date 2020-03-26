@@ -29,6 +29,7 @@ import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.KeywordResource;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.KeywordSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -54,6 +55,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -370,7 +372,9 @@ public abstract class BaseKeywordResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(keyword, dataJSONObject.getJSONObject("keyword")));
+			equals(
+				keyword,
+				KeywordSerDes.toDTO(dataJSONObject.getString("keyword"))));
 	}
 
 	@Test
@@ -700,9 +704,10 @@ public abstract class BaseKeywordResourceTestCase {
 
 		Assert.assertEquals(2, keywordsJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
+		assertEqualsIgnoringOrder(
 			Arrays.asList(keyword1, keyword2),
-			keywordsJSONObject.getJSONArray("items"));
+			Arrays.asList(
+				KeywordSerDes.toDTOs(keywordsJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -728,11 +733,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		Keyword keyword = testGraphQLKeyword_addKeyword(randomKeyword);
 
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomKeyword,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(keyword))));
+		Assert.assertTrue(equals(randomKeyword, keyword));
 	}
 
 	protected Keyword testGraphQLKeyword_addKeyword() throws Exception {
@@ -744,82 +745,21 @@ public abstract class BaseKeywordResourceTestCase {
 
 		StringBuilder sb = new StringBuilder("{");
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		for (Field field : ReflectionUtil.getDeclaredFields(Keyword.class)) {
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
+				continue;
+			}
 
-				Object value = keyword.getId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
+			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			if (Objects.equals(
-					"keywordUsageCount", additionalAssertFieldName)) {
+			sb.append(field.getName());
+			sb.append(": ");
 
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = keyword.getKeywordUsageCount();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = keyword.getName();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("siteId", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = keyword.getSiteId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
+			appendValue(sb, field.get(keyword));
 		}
 
 		sb.append("}");
@@ -852,6 +792,57 @@ public abstract class BaseKeywordResourceTestCase {
 		return jsonDeserializer.deserialize(
 			String.valueOf(dataJSONObject.getJSONObject("createSiteKeyword")),
 			Keyword.class);
+	}
+
+	protected void appendArray(Object[] objects, StringBuilder sb)
+		throws Exception {
+
+		StringBuilder arraySB = new StringBuilder("[");
+
+		for (Object object : objects) {
+			if (arraySB.length() > 1) {
+				arraySB.append(",");
+			}
+
+			arraySB.append("{");
+
+			Class<?> clazz = object.getClass();
+
+			for (Field field :
+					ReflectionUtil.getDeclaredFields(clazz.getSuperclass())) {
+
+				arraySB.append(field.getName());
+				arraySB.append(": ");
+
+				appendValue(arraySB, field.get(object));
+
+				arraySB.append(",");
+			}
+
+			arraySB.setLength(arraySB.length() - 1);
+
+			arraySB.append("}");
+		}
+
+		arraySB.append("]");
+
+		sb.append(arraySB.toString());
+	}
+
+	protected void appendValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			appendArray((Object[])value, sb);
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -899,25 +890,6 @@ public abstract class BaseKeywordResourceTestCase {
 
 			Assert.assertTrue(
 				keywords2 + " does not contain " + keyword1, contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<Keyword> keywords, JSONArray jsonArray) {
-
-		for (Keyword keyword : keywords) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(keyword, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + keyword, contains);
 		}
 	}
 
@@ -1006,13 +978,54 @@ public abstract class BaseKeywordResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		graphQLFields.add(new GraphQLField("siteId"));
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword.
+						class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -1134,46 +1147,6 @@ public abstract class BaseKeywordResourceTestCase {
 					return false;
 				}
 			}
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(Keyword keyword, JSONObject jsonObject) {
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						keyword.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("keywordUsageCount", fieldName)) {
-				if (!Objects.deepEquals(
-						keyword.getKeywordUsageCount(),
-						jsonObject.getInt("keywordUsageCount"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", fieldName)) {
-				if (!Objects.deepEquals(
-						keyword.getName(), jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

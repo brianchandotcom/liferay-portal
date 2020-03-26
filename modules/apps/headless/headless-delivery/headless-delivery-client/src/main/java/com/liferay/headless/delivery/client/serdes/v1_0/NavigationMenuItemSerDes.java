@@ -247,15 +247,25 @@ public class NavigationMenuItemSerDes {
 			map.put("creator", String.valueOf(navigationMenuItem.getCreator()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(
-				navigationMenuItem.getDateCreated()));
+		if (navigationMenuItem.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(
+					navigationMenuItem.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(
-				navigationMenuItem.getDateModified()));
+		if (navigationMenuItem.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(
+					navigationMenuItem.getDateModified()));
+		}
 
 		if (navigationMenuItem.getId() == null) {
 			map.put("id", null);

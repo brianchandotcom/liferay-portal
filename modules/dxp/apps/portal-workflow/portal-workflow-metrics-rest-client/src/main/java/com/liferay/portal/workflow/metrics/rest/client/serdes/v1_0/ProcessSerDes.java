@@ -202,13 +202,23 @@ public class ProcessSerDes {
 			map.put("active", String.valueOf(process.getActive()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(process.getDateCreated()));
+		if (process.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(process.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(process.getDateModified()));
+		if (process.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(process.getDateModified()));
+		}
 
 		if (process.getDescription() == null) {
 			map.put("description", null);

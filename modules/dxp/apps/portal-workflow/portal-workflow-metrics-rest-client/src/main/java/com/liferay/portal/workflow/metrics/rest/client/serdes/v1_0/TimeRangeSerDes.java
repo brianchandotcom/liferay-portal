@@ -142,12 +142,23 @@ public class TimeRangeSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"dateEnd", liferayToJSONDateFormat.format(timeRange.getDateEnd()));
+		if (timeRange.getDateEnd() == null) {
+			map.put("dateEnd", null);
+		}
+		else {
+			map.put(
+				"dateEnd",
+				liferayToJSONDateFormat.format(timeRange.getDateEnd()));
+		}
 
-		map.put(
-			"dateStart",
-			liferayToJSONDateFormat.format(timeRange.getDateStart()));
+		if (timeRange.getDateStart() == null) {
+			map.put("dateStart", null);
+		}
+		else {
+			map.put(
+				"dateStart",
+				liferayToJSONDateFormat.format(timeRange.getDateStart()));
+		}
 
 		if (timeRange.getDefaultTimeRange() == null) {
 			map.put("defaultTimeRange", null);

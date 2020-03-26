@@ -29,6 +29,7 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.DocumentFolderSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -54,6 +55,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -319,9 +321,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
+			equals(
 				documentFolder,
-				dataJSONObject.getJSONObject("documentFolder")));
+				DocumentFolderSerDes.toDTO(
+					dataJSONObject.getString("documentFolder"))));
 	}
 
 	@Test
@@ -1117,9 +1120,11 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		Assert.assertEquals(2, documentFoldersJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
+		assertEqualsIgnoringOrder(
 			Arrays.asList(documentFolder1, documentFolder2),
-			documentFoldersJSONObject.getJSONArray("items"));
+			Arrays.asList(
+				DocumentFolderSerDes.toDTOs(
+					documentFoldersJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -1148,11 +1153,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder =
 			testGraphQLDocumentFolder_addDocumentFolder(randomDocumentFolder);
 
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomDocumentFolder,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(documentFolder))));
+		Assert.assertTrue(equals(randomDocumentFolder, documentFolder));
 	}
 
 	protected DocumentFolder testGraphQLDocumentFolder_addDocumentFolder()
@@ -1168,158 +1169,23 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		StringBuilder sb = new StringBuilder("{");
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(DocumentFolder.class)) {
 
-			if (Objects.equals("description", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
 
-				Object value = documentFolder.getDescription();
+				continue;
+			}
 
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
+			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
+			sb.append(field.getName());
+			sb.append(": ");
 
-				Object value = documentFolder.getId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = documentFolder.getName();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"numberOfDocumentFolders", additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = documentFolder.getNumberOfDocumentFolders();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"numberOfDocuments", additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = documentFolder.getNumberOfDocuments();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals(
-					"parentDocumentFolderId", additionalAssertFieldName)) {
-
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = documentFolder.getParentDocumentFolderId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("siteId", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = documentFolder.getSiteId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("subscribed", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = documentFolder.getSubscribed();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
+			appendValue(sb, field.get(documentFolder));
 		}
 
 		sb.append("}");
@@ -1353,6 +1219,57 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			String.valueOf(
 				dataJSONObject.getJSONObject("createSiteDocumentFolder")),
 			DocumentFolder.class);
+	}
+
+	protected void appendArray(Object[] objects, StringBuilder sb)
+		throws Exception {
+
+		StringBuilder arraySB = new StringBuilder("[");
+
+		for (Object object : objects) {
+			if (arraySB.length() > 1) {
+				arraySB.append(",");
+			}
+
+			arraySB.append("{");
+
+			Class<?> clazz = object.getClass();
+
+			for (Field field :
+					ReflectionUtil.getDeclaredFields(clazz.getSuperclass())) {
+
+				arraySB.append(field.getName());
+				arraySB.append(": ");
+
+				appendValue(arraySB, field.get(object));
+
+				arraySB.append(",");
+			}
+
+			arraySB.setLength(arraySB.length() - 1);
+
+			arraySB.append("}");
+		}
+
+		arraySB.append("]");
+
+		sb.append(arraySB.toString());
+	}
+
+	protected void appendValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			appendArray((Object[])value, sb);
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -1405,25 +1322,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			Assert.assertTrue(
 				documentFolders2 + " does not contain " + documentFolder1,
 				contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<DocumentFolder> documentFolders, JSONArray jsonArray) {
-
-		for (DocumentFolder documentFolder : documentFolders) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(documentFolder, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + documentFolder, contains);
 		}
 	}
 
@@ -1566,13 +1464,54 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		graphQLFields.add(new GraphQLField("siteId"));
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.headless.delivery.dto.v1_0.DocumentFolder.
+						class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -1772,93 +1711,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 					return false;
 				}
 			}
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(
-		DocumentFolder documentFolder, JSONObject jsonObject) {
-
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("description", fieldName)) {
-				if (!Objects.deepEquals(
-						documentFolder.getDescription(),
-						jsonObject.getString("description"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						documentFolder.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", fieldName)) {
-				if (!Objects.deepEquals(
-						documentFolder.getName(),
-						jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("numberOfDocumentFolders", fieldName)) {
-				if (!Objects.deepEquals(
-						documentFolder.getNumberOfDocumentFolders(),
-						jsonObject.getInt("numberOfDocumentFolders"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("numberOfDocuments", fieldName)) {
-				if (!Objects.deepEquals(
-						documentFolder.getNumberOfDocuments(),
-						jsonObject.getInt("numberOfDocuments"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("parentDocumentFolderId", fieldName)) {
-				if (!Objects.deepEquals(
-						documentFolder.getParentDocumentFolderId(),
-						jsonObject.getLong("parentDocumentFolderId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("subscribed", fieldName)) {
-				if (!Objects.deepEquals(
-						documentFolder.getSubscribed(),
-						jsonObject.getBoolean("subscribed"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

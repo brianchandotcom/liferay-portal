@@ -479,15 +479,25 @@ public class KnowledgeBaseArticleSerDes {
 				String.valueOf(knowledgeBaseArticle.getCustomFields()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(
-				knowledgeBaseArticle.getDateCreated()));
+		if (knowledgeBaseArticle.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(
+					knowledgeBaseArticle.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(
-				knowledgeBaseArticle.getDateModified()));
+		if (knowledgeBaseArticle.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(
+					knowledgeBaseArticle.getDateModified()));
+		}
 
 		if (knowledgeBaseArticle.getDescription() == null) {
 			map.put("description", null);

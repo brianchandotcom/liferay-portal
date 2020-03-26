@@ -186,13 +186,23 @@ public class ExperimentSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(experiment.getDateCreated()));
+		if (experiment.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(experiment.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(experiment.getDateModified()));
+		if (experiment.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(experiment.getDateModified()));
+		}
 
 		if (experiment.getDescription() == null) {
 			map.put("description", null);

@@ -22,8 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -49,6 +49,7 @@ import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.InstanceResource;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.InstanceSerDes;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
@@ -382,8 +383,10 @@ public abstract class BaseInstanceResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
-				instance, dataJSONObject.getJSONObject("processInstance")));
+			equals(
+				instance,
+				InstanceSerDes.toDTO(
+					dataJSONObject.getString("processInstance"))));
 	}
 
 	@Test
@@ -480,25 +483,6 @@ public abstract class BaseInstanceResourceTestCase {
 
 			Assert.assertTrue(
 				instances2 + " does not contain " + instance1, contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<Instance> instances, JSONArray jsonArray) {
-
-		for (Instance instance : instances) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(instance, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + instance, contains);
 		}
 	}
 
@@ -693,13 +677,52 @@ public abstract class BaseInstanceResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance.
+						class)) {
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -959,114 +982,6 @@ public abstract class BaseInstanceResourceTestCase {
 					return false;
 				}
 			}
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(
-		Instance instance, JSONObject jsonObject) {
-
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("assetTitle", fieldName)) {
-				if (!Objects.deepEquals(
-						instance.getAssetTitle(),
-						jsonObject.getString("assetTitle"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("assetType", fieldName)) {
-				if (!Objects.deepEquals(
-						instance.getAssetType(),
-						jsonObject.getString("assetType"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("className", fieldName)) {
-				if (!Objects.deepEquals(
-						instance.getClassName(),
-						jsonObject.getString("className"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("classPK", fieldName)) {
-				if (!Objects.deepEquals(
-						instance.getClassPK(), jsonObject.getLong("classPK"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("completed", fieldName)) {
-				if (!Objects.deepEquals(
-						instance.getCompleted(),
-						jsonObject.getBoolean("completed"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("duration", fieldName)) {
-				if (!Objects.deepEquals(
-						instance.getDuration(),
-						jsonObject.getLong("duration"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						instance.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("processId", fieldName)) {
-				if (!Objects.deepEquals(
-						instance.getProcessId(),
-						jsonObject.getLong("processId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("processVersion", fieldName)) {
-				if (!Objects.deepEquals(
-						instance.getProcessVersion(),
-						jsonObject.getString("processVersion"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

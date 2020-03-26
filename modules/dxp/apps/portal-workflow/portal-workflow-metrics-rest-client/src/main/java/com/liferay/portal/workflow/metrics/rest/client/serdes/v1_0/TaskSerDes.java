@@ -304,17 +304,32 @@ public class TaskSerDes {
 				"completionUserId", String.valueOf(task.getCompletionUserId()));
 		}
 
-		map.put(
-			"dateCompletion",
-			liferayToJSONDateFormat.format(task.getDateCompletion()));
+		if (task.getDateCompletion() == null) {
+			map.put("dateCompletion", null);
+		}
+		else {
+			map.put(
+				"dateCompletion",
+				liferayToJSONDateFormat.format(task.getDateCompletion()));
+		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(task.getDateCreated()));
+		if (task.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(task.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(task.getDateModified()));
+		if (task.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(task.getDateModified()));
+		}
 
 		if (task.getDuration() == null) {
 			map.put("duration", null);

@@ -346,13 +346,25 @@ public class DataDefinitionSerDes {
 			map.put("dataRules", String.valueOf(dataDefinition.getDataRules()));
 		}
 
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(dataDefinition.getDateCreated()));
+		if (dataDefinition.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(
+					dataDefinition.getDateCreated()));
+		}
 
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(dataDefinition.getDateModified()));
+		if (dataDefinition.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(
+					dataDefinition.getDateModified()));
+		}
 
 		if (dataDefinition.getDefaultDataLayout() == null) {
 			map.put("defaultDataLayout", null);

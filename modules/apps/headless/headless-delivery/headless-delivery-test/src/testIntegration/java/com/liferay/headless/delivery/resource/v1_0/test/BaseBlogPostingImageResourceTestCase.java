@@ -29,6 +29,7 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.BlogPostingImageSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -56,6 +57,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.io.File;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -327,9 +329,10 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 		Assert.assertTrue(
-			equalsJSONObject(
+			equals(
 				blogPostingImage,
-				dataJSONObject.getJSONObject("blogPostingImage")));
+				BlogPostingImageSerDes.toDTO(
+					dataJSONObject.getString("blogPostingImage"))));
 	}
 
 	@Test
@@ -688,9 +691,11 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 		Assert.assertEquals(2, blogPostingImagesJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
+		assertEqualsIgnoringOrder(
 			Arrays.asList(blogPostingImage1, blogPostingImage2),
-			blogPostingImagesJSONObject.getJSONArray("items"));
+			Arrays.asList(
+				BlogPostingImageSerDes.toDTOs(
+					blogPostingImagesJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -726,11 +731,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			testGraphQLBlogPostingImage_addBlogPostingImage(
 				randomBlogPostingImage);
 
-		Assert.assertTrue(
-			equalsJSONObject(
-				randomBlogPostingImage,
-				JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.serialize(blogPostingImage))));
+		Assert.assertTrue(equals(randomBlogPostingImage, blogPostingImage));
 	}
 
 	protected BlogPostingImage testGraphQLBlogPostingImage_addBlogPostingImage()
@@ -746,116 +747,23 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 		StringBuilder sb = new StringBuilder("{");
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(BlogPostingImage.class)) {
 
-			if (Objects.equals("contentUrl", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
 
-				Object value = blogPostingImage.getContentUrl();
+				continue;
+			}
 
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
+			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
+			sb.append(field.getName());
+			sb.append(": ");
 
-				Object value = blogPostingImage.getEncodingFormat();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("fileExtension", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = blogPostingImage.getFileExtension();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = blogPostingImage.getId();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("sizeInBytes", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = blogPostingImage.getSizeInBytes();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
-
-			if (Objects.equals("title", additionalAssertFieldName)) {
-				sb.append(additionalAssertFieldName);
-				sb.append(": ");
-
-				Object value = blogPostingImage.getTitle();
-
-				if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(", ");
-			}
+			appendValue(sb, field.get(blogPostingImage));
 		}
 
 		sb.append("}");
@@ -889,6 +797,57 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			String.valueOf(
 				dataJSONObject.getJSONObject("createSiteBlogPostingImage")),
 			BlogPostingImage.class);
+	}
+
+	protected void appendArray(Object[] objects, StringBuilder sb)
+		throws Exception {
+
+		StringBuilder arraySB = new StringBuilder("[");
+
+		for (Object object : objects) {
+			if (arraySB.length() > 1) {
+				arraySB.append(",");
+			}
+
+			arraySB.append("{");
+
+			Class<?> clazz = object.getClass();
+
+			for (Field field :
+					ReflectionUtil.getDeclaredFields(clazz.getSuperclass())) {
+
+				arraySB.append(field.getName());
+				arraySB.append(": ");
+
+				appendValue(arraySB, field.get(object));
+
+				arraySB.append(",");
+			}
+
+			arraySB.setLength(arraySB.length() - 1);
+
+			arraySB.append("}");
+		}
+
+		arraySB.append("]");
+
+		sb.append(arraySB.toString());
+	}
+
+	protected void appendValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			appendArray((Object[])value, sb);
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -944,25 +903,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			Assert.assertTrue(
 				blogPostingImages2 + " does not contain " + blogPostingImage1,
 				contains);
-		}
-	}
-
-	protected void assertEqualsJSONArray(
-		List<BlogPostingImage> blogPostingImages, JSONArray jsonArray) {
-
-		for (BlogPostingImage blogPostingImage : blogPostingImages) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(blogPostingImage, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				jsonArray + " does not contain " + blogPostingImage, contains);
 		}
 	}
 
@@ -1062,13 +1002,52 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		return new String[0];
 	}
 
-	protected List<GraphQLField> getGraphQLFields() {
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		for (String additionalAssertFieldName :
-				getAdditionalAssertFieldNames()) {
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.headless.delivery.dto.v1_0.BlogPostingImage.
+						class)) {
 
-			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				graphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (graphQLField != null) {
+				Class<?> type = field.getType();
+
+				if (type.isArray()) {
+					type = type.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(type));
+
+				graphQLFields.add(
+					new GraphQLField(
+						field.getName(),
+						childrenGraphQLFields.toArray(new GraphQLField[0])));
+			}
 		}
 
 		return graphQLFields;
@@ -1192,82 +1171,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 					return false;
 				}
 			}
-		}
-
-		return true;
-	}
-
-	protected boolean equalsJSONObject(
-		BlogPostingImage blogPostingImage, JSONObject jsonObject) {
-
-		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("contentUrl", fieldName)) {
-				if (!Objects.deepEquals(
-						blogPostingImage.getContentUrl(),
-						jsonObject.getString("contentUrl"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("encodingFormat", fieldName)) {
-				if (!Objects.deepEquals(
-						blogPostingImage.getEncodingFormat(),
-						jsonObject.getString("encodingFormat"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("fileExtension", fieldName)) {
-				if (!Objects.deepEquals(
-						blogPostingImage.getFileExtension(),
-						jsonObject.getString("fileExtension"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", fieldName)) {
-				if (!Objects.deepEquals(
-						blogPostingImage.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("sizeInBytes", fieldName)) {
-				if (!Objects.deepEquals(
-						blogPostingImage.getSizeInBytes(),
-						jsonObject.getLong("sizeInBytes"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("title", fieldName)) {
-				if (!Objects.deepEquals(
-						blogPostingImage.getTitle(),
-						jsonObject.getString("title"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid field name " + fieldName);
 		}
 
 		return true;

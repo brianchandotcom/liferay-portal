@@ -602,7 +602,7 @@ public class AssetListEntryServiceHttp {
 
 	public static java.util.List<com.liferay.asset.list.model.AssetListEntry>
 		getAssetListEntries(
-			HttpPrincipal httpPrincipal, long[] groupIds,
+			HttpPrincipal httpPrincipal, long[] groupIds, String title,
 			String[] assetEntryTypes, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.asset.list.model.AssetListEntry>
@@ -614,7 +614,7 @@ public class AssetListEntryServiceHttp {
 				_getAssetListEntriesParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupIds, assetEntryTypes, start, end,
+				methodKey, groupIds, title, assetEntryTypes, start, end,
 				orderByComparator);
 
 			Object returnObj = null;
@@ -641,7 +641,7 @@ public class AssetListEntryServiceHttp {
 
 	public static java.util.List<com.liferay.asset.list.model.AssetListEntry>
 		getAssetListEntries(
-			HttpPrincipal httpPrincipal, long[] groupIds, String title,
+			HttpPrincipal httpPrincipal, long[] groupIds,
 			String[] assetEntryTypes, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.asset.list.model.AssetListEntry>
@@ -653,7 +653,7 @@ public class AssetListEntryServiceHttp {
 				_getAssetListEntriesParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupIds, title, assetEntryTypes, start, end,
+				methodKey, groupIds, assetEntryTypes, start, end,
 				orderByComparator);
 
 			Object returnObj = null;
@@ -1210,12 +1210,12 @@ public class AssetListEntryServiceHttp {
 		};
 	private static final Class<?>[] _getAssetListEntriesParameterTypes14 =
 		new Class[] {
-			long[].class, String[].class, int.class, int.class,
+			long[].class, String.class, String[].class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getAssetListEntriesParameterTypes15 =
 		new Class[] {
-			long[].class, String.class, String[].class, int.class, int.class,
+			long[].class, String[].class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getAssetListEntriesCountParameterTypes16 =

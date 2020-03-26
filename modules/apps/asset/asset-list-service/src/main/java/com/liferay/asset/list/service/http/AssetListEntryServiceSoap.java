@@ -333,7 +333,8 @@ public class AssetListEntryServiceSoap {
 
 	public static com.liferay.asset.list.model.AssetListEntrySoap[]
 			getAssetListEntries(
-				long[] groupIds, String[] assetEntryTypes, int start, int end,
+				long[] groupIds, String title, String[] assetEntryTypes,
+				int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.asset.list.model.AssetListEntry>
 						orderByComparator)
@@ -342,7 +343,8 @@ public class AssetListEntryServiceSoap {
 		try {
 			java.util.List<com.liferay.asset.list.model.AssetListEntry>
 				returnValue = AssetListEntryServiceUtil.getAssetListEntries(
-					groupIds, assetEntryTypes, start, end, orderByComparator);
+					groupIds, title, assetEntryTypes, start, end,
+					orderByComparator);
 
 			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModels(
 				returnValue);
@@ -356,8 +358,7 @@ public class AssetListEntryServiceSoap {
 
 	public static com.liferay.asset.list.model.AssetListEntrySoap[]
 			getAssetListEntries(
-				long[] groupIds, String title, String[] assetEntryTypes,
-				int start, int end,
+				long[] groupIds, String[] assetEntryTypes, int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.asset.list.model.AssetListEntry>
 						orderByComparator)
@@ -366,8 +367,7 @@ public class AssetListEntryServiceSoap {
 		try {
 			java.util.List<com.liferay.asset.list.model.AssetListEntry>
 				returnValue = AssetListEntryServiceUtil.getAssetListEntries(
-					groupIds, title, assetEntryTypes, start, end,
-					orderByComparator);
+					groupIds, assetEntryTypes, start, end, orderByComparator);
 
 			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModels(
 				returnValue);

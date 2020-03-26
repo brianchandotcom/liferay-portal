@@ -142,7 +142,7 @@ public class RedirectDisplayContext {
 		).build();
 	}
 
-	public String getExpirationDateinputValue(RedirectEntry redirectEntry) {
+	public String getExpirationDateInputValue(RedirectEntry redirectEntry) {
 		if (redirectEntry == null) {
 			return null;
 		}

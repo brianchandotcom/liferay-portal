@@ -81,7 +81,7 @@ else {
 			</aui:option>
 		</aui:select>
 
-		<aui:input helpMessage="the-redirect-will-be-active-until-the-chosen-date.-leave-it-empty-to-avoid-expiration" name="expirationDate" type="date" value="<%= redirectDisplayContext.getExpirationDateinputValue(redirectEntry) %>" />
+		<aui:input helpMessage="the-redirect-will-be-active-until-the-chosen-date.-leave-it-empty-to-avoid-expiration" name="expirationDate" type="date" value="<%= redirectDisplayContext.getExpirationDateInputValue(redirectEntry) %>" />
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

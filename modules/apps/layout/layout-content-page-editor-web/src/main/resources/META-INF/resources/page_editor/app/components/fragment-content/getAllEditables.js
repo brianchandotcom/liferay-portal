@@ -29,6 +29,7 @@ export default function getAllEditables(element) {
 				processor:
 					Processors[element.getAttribute('type')] ||
 					Processors.fallback,
+				type: element.getAttribute('type'),
 			})
 		),
 
@@ -40,6 +41,7 @@ export default function getAllEditables(element) {
 				processor:
 					Processors[element.dataset.lfrEditableType] ||
 					Processors.fallback,
+				type: element.dataset.lfrEditableType,
 			})
 		),
 
@@ -50,6 +52,7 @@ export default function getAllEditables(element) {
 			editableValueNamespace: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 			element,
 			processor: Processors['background-image'],
+			type: 'background-image',
 		})),
 	];
 }

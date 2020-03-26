@@ -227,6 +227,26 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 	}
 
 	@Override
+	public List<AssetListEntry> getAssetListEntries(
+		long[] groupIds, String title, String[] assetEntryTypes, int start,
+		int end, OrderByComparator<AssetListEntry> orderByComparator) {
+
+		return assetListEntryPersistence.filterFindByG_LikeT_AET(
+			groupIds,
+			_customSQL.keywords(title, false, WildcardMode.SURROUND)[0],
+			assetEntryTypes, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<AssetListEntry> getAssetListEntries(
+		long[] groupIds, String[] assetEntryTypes, int start, int end,
+		OrderByComparator<AssetListEntry> orderByComparator) {
+
+		return assetListEntryPersistence.filterFindByG_AET(
+			groupIds, assetEntryTypes, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getAssetListEntriesCount(long groupId) {
 		return assetListEntryPersistence.filterCountByGroupId(groupId);
 	}
@@ -248,6 +268,24 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 		return assetListEntryPersistence.filterCountByG_LikeT(
 			groupIds,
 			_customSQL.keywords(title, false, WildcardMode.SURROUND)[0]);
+	}
+
+	@Override
+	public int getAssetListEntriesCount(
+		long[] groupIds, String title, String[] assetEntryTypes) {
+
+		return assetListEntryPersistence.filterCountByG_LikeT_AET(
+			groupIds,
+			_customSQL.keywords(title, false, WildcardMode.SURROUND)[0],
+			assetEntryTypes);
+	}
+
+	@Override
+	public int getAssetListEntriesCount(
+		long[] groupIds, String[] assetEntryTypes) {
+
+		return assetListEntryPersistence.filterCountByG_AET(
+			groupIds, assetEntryTypes);
 	}
 
 	@Override

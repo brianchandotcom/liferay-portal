@@ -65,7 +65,7 @@ export default function Keywords({currentPage, languageTag}) {
 										<span className="pr-2">
 											{keywordValueType.label}
 										</span>
-										<ClayIcon symbol="angle-down" />
+										<ClayIcon symbol="caret-bottom" />
 									</span>
 								</ClayButton>
 							}

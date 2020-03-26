@@ -70,6 +70,7 @@ definition {
 	@priority = "5"
 	test EditEntry {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		Microblogs.updateStatus(entryContent = "Microblog Entry Content");
 

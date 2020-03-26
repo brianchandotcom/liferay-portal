@@ -120,7 +120,7 @@ com.liferay.journal.internal.util.JournalHelperImpl#diffHtml(long,String,double,
 com.liferay.journal.internal.util.JournalUtil#addAllReservedEls(Element,Map<String, String>,JournalArticle,String,ThemeDisplay)
 com.liferay.journal.internal.util.JournalUtil#getTokens(long,PortletRequestModel,ThemeDisplay)
 com.liferay.journal.internal.util.JournalUtil#transform(ThemeDisplay,Map<String, String>,String,String,Document,PortletRequestModel,String,String)
-com.liferay.journal.internal.util.JournalUtil#transform(ThemeDisplay,Map<String, String>,String,String,Document,PortletRequestModel,String,String,boolean)
+com.liferay.journal.internal.util.JournalUtil#transform(ThemeDisplay,Map<String, String>,String,String,Document,PortletRequestModel,String,String,boolean,Map<String, Object>)
 com.liferay.journal.model.JournalArticleDisplay#getArticleDisplayImageURL(ThemeDisplay)
 com.liferay.journal.util.JournalContent#getContent(long,String,String,String,String,PortletRequestModel,ThemeDisplay)
 com.liferay.journal.util.JournalContent#getContent(long,String,String,String,String,ThemeDisplay)

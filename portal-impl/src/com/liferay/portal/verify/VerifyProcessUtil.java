@@ -55,12 +55,6 @@ public class VerifyProcessUtil {
 
 		boolean ranVerifyProcess = false;
 
-		if (ranUpgradeProcess && PropsValues.INDEX_ON_UPGRADE) {
-			PropsUtil.set(PropsKeys.INDEX_ON_STARTUP, Boolean.TRUE.toString());
-
-			PropsValues.INDEX_ON_STARTUP = true;
-		}
-
 		boolean tempIndexReadOnly = IndexWriterHelperUtil.isIndexReadOnly();
 
 		IndexWriterHelperUtil.setIndexReadOnly(true);

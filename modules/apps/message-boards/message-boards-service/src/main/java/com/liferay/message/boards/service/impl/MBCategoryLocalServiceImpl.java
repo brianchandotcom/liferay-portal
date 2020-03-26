@@ -46,13 +46,12 @@ import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.model.TrashVersion;
 import com.liferay.trash.service.TrashEntryLocalService;
 import com.liferay.trash.service.TrashVersionLocalService;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -692,6 +691,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		moveDependentsToTrash(
 			user, categoriesAndThreads, trashEntry.getEntryId());
 
+		_indexerReindex(MBCategory.class, category);
+
 		return category;
 	}
 
@@ -808,12 +809,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		category = mbCategoryPersistence.update(category);
 
-		// Indexer
-
-		Indexer<MBCategory> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			MBCategory.class);
-
-		indexer.reindex(category);
+		_indexerReindex(MBCategory.class, category);
 
 		// Mailing list
 
@@ -1014,12 +1010,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				_mbMessageLocalService.updateMBMessage(message);
 
-				// Indexer
-
-				Indexer<MBMessage> indexer =
-					IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
-
-				indexer.reindex(message);
+				_indexerReindex(MBMessage.class, message);
 			}
 		}
 
@@ -1070,12 +1061,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 				_mbThreadLocalService.moveDependentsToTrash(
 					thread.getGroupId(), thread.getThreadId(), trashEntryId);
 
-				// Indexer
-
-				Indexer<MBThread> indexer =
-					IndexerRegistryUtil.nullSafeGetIndexer(MBThread.class);
-
-				indexer.reindex(thread);
+				_indexerReindex(MBThread.class, thread);
 			}
 			else if (object instanceof MBCategory) {
 
@@ -1152,12 +1138,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 					_trashVersionLocalService.deleteTrashVersion(trashVersion);
 				}
 
-				// Indexer
-
-				Indexer<MBThread> indexer =
-					IndexerRegistryUtil.nullSafeGetIndexer(MBThread.class);
-
-				indexer.reindex(thread);
+				_indexerReindex(MBThread.class, thread);
 			}
 			else if (object instanceof MBCategory) {
 
@@ -1221,6 +1202,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		if (Validator.isNull(name)) {
 			throw new CategoryNameException("Name is null");
 		}
+	}
+
+	private <T> void _indexerReindex(Class<T> clazz, T object) throws PortalException {
+		Indexer<T> indexer = IndexerRegistryUtil.nullSafeGetIndexer(clazz);
+		indexer.reindex(object);
 	}
 
 	@Reference

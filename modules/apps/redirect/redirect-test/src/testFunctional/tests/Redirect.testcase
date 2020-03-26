@@ -157,6 +157,36 @@ definition {
 			sourceURL = "${portalURL}/web/test-site-name/new-source-page");
 	}
 
+	@description = "This ensures that an expired permanent redirect can be reset."
+	@priority = "5"
+	test ResetExpiredEntry {
+		property portal.upstream = "quarantine";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			expirationDate = "12/31/2013",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.editRedirect(
+			expirationDate = "12/31/2024",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			expirationDate = "12/31/24",
+			redirectType = "Permanent",
+			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
+	}
+
 	@description = "This ensures that the redirect can be set."
 	@priority = "5"
 	test Smoke {
@@ -187,6 +217,47 @@ definition {
 		AssertSelectedLabel(
 			locator1 = "Select#REDIRECT_TYPE",
 			value1 = "Permanent (301)");
+	}
+
+	@description = "This ensures that an expired temporary redirect can be actived."
+	@priority = "5"
+	test ViewExpiredAndActiveEntries {
+		property portal.upstream = "quarantine";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addRedirect(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			expirationDate = "12/31/2013",
+			redirectType = "Temporary (302)",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		AssertLocation(value1 = "${portalURL}web/test-site-name/test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.editRedirect(
+			expirationDate = "12/31/2024",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		AssertLocation(value1 = "${portalURL}web/test-site-name/test-destination-page");
 	}
 
 	@description = "This ensures that an expired permanent redirect can be viewed."

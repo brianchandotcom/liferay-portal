@@ -37,8 +37,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalServiceUtil;
 import com.liferay.redirect.web.internal.search.RedirectNotFoundEntrySearch;
-import com.liferay.redirect.web.internal.util.comparator.RedirectEntryModifiedDateComparator;
-import com.liferay.redirect.web.internal.util.comparator.RedirectNotFoundEntryHitsComparator;
+import com.liferay.redirect.web.internal.util.comparator.RedirectComparator;
+import com.liferay.redirect.web.internal.util.comparator.RedirectDateComparator;
 
 import java.util.List;
 import java.util.Objects;
@@ -99,10 +99,14 @@ public class RedirectNotFoundEntriesDisplayContext {
 				_redirectNotFoundEntrySearch.getOrderByCol(),
 				"modified-date")) {
 
-			return new RedirectEntryModifiedDateComparator(!orderByAsc);
+			return new RedirectDateComparator<>(
+				"RedirectNotFoundEntry", "modifiedDate",
+				RedirectNotFoundEntry::getModifiedDate, !orderByAsc);
 		}
 
-		return new RedirectNotFoundEntryHitsComparator(!orderByAsc);
+		return new RedirectComparator<>(
+			"RedirectNotFoundEntry", "hits", RedirectNotFoundEntry::getHits,
+			!orderByAsc);
 	}
 
 	private PortletURL _getPortletURL() {

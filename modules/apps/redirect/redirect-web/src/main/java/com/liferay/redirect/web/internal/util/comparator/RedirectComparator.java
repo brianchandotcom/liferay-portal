@@ -14,27 +14,33 @@
 
 package com.liferay.redirect.web.internal.util.comparator;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.redirect.model.RedirectNotFoundEntry;
+
+import java.util.function.Function;
 
 /**
  * @author Alejandro Tardín
  */
-public abstract class BaseRedirectNotFoundEntryComparator
-	<T extends Comparable<T>>
-		extends OrderByComparator<RedirectNotFoundEntry> {
+public class RedirectComparator<T extends BaseModel, V extends Comparable<V>>
+	extends OrderByComparator<T> {
 
-	public BaseRedirectNotFoundEntryComparator(boolean ascending) {
+	public RedirectComparator(
+		String modelName, String fieldName, Function<T, V> fieldValueFunction,
+		boolean ascending) {
+
+		_modelName = modelName;
+		_fieldName = fieldName;
+		_fieldValueFunction = fieldValueFunction;
 		_ascending = ascending;
 	}
 
 	@Override
-	public int compare(
-		RedirectNotFoundEntry redirectNotFoundEntry1,
-		RedirectNotFoundEntry redirectNotFoundEntry2) {
-
-		T fieldValue1 = getFieldValue(redirectNotFoundEntry1);
-		T fieldValue2 = getFieldValue(redirectNotFoundEntry1);
+	public int compare(T baseModel1, T baseModel2) {
+		V fieldValue1 = _fieldValueFunction.apply(baseModel1);
+		V fieldValue2 = _fieldValueFunction.apply(baseModel1);
 
 		int value = fieldValue1.compareTo(fieldValue2);
 
@@ -45,18 +51,20 @@ public abstract class BaseRedirectNotFoundEntryComparator
 		return -value;
 	}
 
+	public V getFieldValue(T baseModel) {
+		return _fieldValueFunction.apply(baseModel);
+	}
+
 	@Override
 	public String getOrderBy() {
-		if (_ascending) {
-			return "RedirectNotFoundEntry." + getFieldName() + " ASC";
-		}
-
-		return "RedirectNotFoundEntry." + getFieldName() + " DESC";
+		return StringBundler.concat(
+			_modelName, StringPool.PERIOD, _fieldName, StringPool.SPACE,
+			_ascending ? "DESC" : "ASC");
 	}
 
 	@Override
 	public String[] getOrderByFields() {
-		return new String[] {getFieldName()};
+		return new String[] {_fieldName};
 	}
 
 	@Override
@@ -64,11 +72,9 @@ public abstract class BaseRedirectNotFoundEntryComparator
 		return _ascending;
 	}
 
-	protected abstract String getFieldName();
-
-	protected abstract T getFieldValue(
-		RedirectNotFoundEntry redirectNotFoundEntry);
-
 	private final boolean _ascending;
+	private final String _fieldName;
+	private final Function<T, V> _fieldValueFunction;
+	private final String _modelName;
 
 }

@@ -14,27 +14,29 @@
 
 package com.liferay.redirect.web.internal.util.comparator;
 
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.redirect.model.RedirectEntry;
 
 import java.util.Date;
+import java.util.function.Function;
 
 /**
  * @author Alejandro Tardín
  */
-public abstract class BaseRedirectEntryDateComparator
-	extends BaseRedirectEntryComparator<Date> {
+public class RedirectDateComparator<T extends BaseModel>
+	extends RedirectComparator<T, Date> {
 
-	public BaseRedirectEntryDateComparator(boolean ascending) {
-		super(ascending);
+	public RedirectDateComparator(
+		String modelName, String fieldName,
+		Function<T, Date> fieldValueFunction, boolean ascending) {
+
+		super(modelName, fieldName, fieldValueFunction, ascending);
 	}
 
 	@Override
-	public int compare(
-		RedirectEntry redirectEntry1, RedirectEntry redirectEntry2) {
-
+	public int compare(T baseModel1, T baseModel2) {
 		int value = DateUtil.compareTo(
-			redirectEntry2.getCreateDate(), redirectEntry2.getCreateDate());
+			getFieldValue(baseModel1), getFieldValue(baseModel2));
 
 		if (isAscending()) {
 			return value;

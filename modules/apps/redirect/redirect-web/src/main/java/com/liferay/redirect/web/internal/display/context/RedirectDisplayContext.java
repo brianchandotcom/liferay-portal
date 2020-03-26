@@ -40,14 +40,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.redirect.model.RedirectEntry;
+import com.liferay.redirect.model.RedirectEntryModel;
 import com.liferay.redirect.service.RedirectEntryLocalServiceUtil;
 import com.liferay.redirect.service.RedirectEntryServiceUtil;
 import com.liferay.redirect.web.internal.search.RedirectEntrySearch;
 import com.liferay.redirect.web.internal.security.permission.resource.RedirectEntryPermission;
-import com.liferay.redirect.web.internal.util.comparator.RedirectEntryCreateDateComparator;
-import com.liferay.redirect.web.internal.util.comparator.RedirectEntryDestinationURLComparator;
-import com.liferay.redirect.web.internal.util.comparator.RedirectEntryModifiedDateComparator;
-import com.liferay.redirect.web.internal.util.comparator.RedirectEntrySourceURLComparator;
+import com.liferay.redirect.web.internal.util.comparator.RedirectComparator;
+import com.liferay.redirect.web.internal.util.comparator.RedirectDateComparator;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -191,22 +190,30 @@ public class RedirectDisplayContext {
 		if (Objects.equals(
 				_redirectEntrySearch.getOrderByCol(), "source-url")) {
 
-			return new RedirectEntrySourceURLComparator(!orderByAsc);
+			return new RedirectComparator<>(
+				"RedirectEntry", "sourceURL", RedirectEntryModel::getSourceURL,
+				!orderByAsc);
 		}
 
 		if (Objects.equals(
 				_redirectEntrySearch.getOrderByCol(), "destination-url")) {
 
-			return new RedirectEntryDestinationURLComparator(!orderByAsc);
+			return new RedirectComparator<>(
+				"RedirectEntry", "destinationURL",
+				RedirectEntryModel::getDestinationURL, !orderByAsc);
 		}
 
 		if (Objects.equals(
 				_redirectEntrySearch.getOrderByCol(), "modified-date")) {
 
-			return new RedirectEntryModifiedDateComparator(!orderByAsc);
+			return new RedirectDateComparator<>(
+				"RedirectEntry", "modifiedDate",
+				RedirectEntryModel::getModifiedDate, !orderByAsc);
 		}
 
-		return new RedirectEntryCreateDateComparator(!orderByAsc);
+		return new RedirectDateComparator<>(
+			"RedirectEntry", "createDate", RedirectEntryModel::getCreateDate,
+			!orderByAsc);
 	}
 
 	private PortletURL _getPortletURL() {

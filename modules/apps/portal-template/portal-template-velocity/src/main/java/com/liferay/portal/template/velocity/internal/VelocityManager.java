@@ -61,8 +61,8 @@ import org.osgi.service.component.annotations.Reference;
 public class VelocityManager extends BaseTemplateManager {
 
 	@Override
-	public void addTaglibTheme(
-		Map<String, Object> contextObjects, String themeName,
+	public void addTaglibSupport(
+		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
@@ -70,7 +70,7 @@ public class VelocityManager extends BaseTemplateManager {
 			httpServletRequest.getServletContext(), httpServletRequest,
 			httpServletResponse, contextObjects);
 
-		contextObjects.put(themeName, velocityTaglib);
+		contextObjects.put("taglibLiferay", velocityTaglib);
 
 		// Legacy support
 

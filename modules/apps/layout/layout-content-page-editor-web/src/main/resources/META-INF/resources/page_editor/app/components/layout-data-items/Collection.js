@@ -154,12 +154,12 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 		state => state.segmentsExperienceId
 	);
 
-	const [collection, setCollection] = useState('');
+	const [collection, setCollection] = useState([]);
 
 	useEffect(() => {
-		if (item.config.collection) {
+		if (collectionConfig.collection) {
 			CollectionService.getCollectionField({
-				layoutObjectReference: JSON.stringify(item.config.collection),
+				collection: collectionConfig.collection,
 				onNetworkStatus: dispatch,
 				segmentsExperienceId,
 				size: collectionConfig.numberOfItems,
@@ -168,25 +168,25 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 			});
 		}
 	}, [
+		collectionConfig.collection,
 		collectionConfig.numberOfItems,
 		dispatch,
-		item.config.collection,
-		store,
+		segmentsExperienceId,
 	]);
 
-	const [collectionFields, setCollectionFields] = useState('');
+	const [collectionFields, setCollectionFields] = useState([]);
 
 	useEffect(() => {
-		if (item.config.collection) {
+		if (collectionConfig.collection) {
 			InfoItemService.getAvailableStructureMappingFields({
-				classNameId: item.config.collection.itemType,
-				classTypeId: item.config.collection.itemSubtype,
+				classNameId: collectionConfig.collection.itemType,
+				classTypeId: collectionConfig.collection.itemSubtype,
 				onNetworkStatus: dispatch,
 			}).then(({infoDisplayFields}) => {
 				setCollectionFields(infoDisplayFields);
 			});
 		}
-	}, [dispatch, item.config.collection]);
+	}, [dispatch, collectionConfig.collection]);
 
 	return (
 		<div className="page-editor__collection" ref={ref}>

@@ -234,12 +234,18 @@ if (forcePost && (portletURL != null)) {
 										if (curDelta > SearchContainer.MAX_DELTA) {
 											continue;
 										}
+
+										String curDeltaURL = deltaURL + urlAnchor;
+
+										if (curDelta != PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA) {
+											curDeltaURL = deltaURL + "&" + namespace + deltaParam + "=" + curDelta + urlAnchor;
+										}
 									%>
 
 										<liferay-ui:icon
 											message="<%= String.valueOf(curDelta) %>"
 											onClick='<%= forcePost ? _getOnClick(namespace, deltaParam, curDelta) : "" %>'
-											url='<%= HtmlUtil.escapeJS(deltaURL + "&" + namespace + deltaParam + "=" + curDelta + urlAnchor) %>'
+											url="<%= HtmlUtil.escapeJS(curDeltaURL) %>"
 										/>
 
 									<%

@@ -98,7 +98,11 @@ if (forcePost && (portletURL != null)) {
 							continue;
 						}
 
-						String curDeltaURL = HttpUtil.addParameter(deltaURL + urlAnchor, namespace + deltaParam, curDelta);
+						String curDeltaURL = deltaURL + urlAnchor;
+
+						if (curDelta != PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA) {
+							curDeltaURL = HttpUtil.addParameter(deltaURL + urlAnchor, namespace + deltaParam, curDelta);
+						}
 					%>
 
 						<li>

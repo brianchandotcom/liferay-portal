@@ -176,25 +176,25 @@ $theme-colors-cp: map-deep-merge(
 	--alert-padding-y: #{$alert-padding-y};
 	--alert-padding-x: #{$alert-padding-x};
 
-	--alert-primary-color: inherit;
-	--alert-primary-bg: inherit;
-	--alert-primary-border-color: inherit;
+	--alert-primary-color: #{$alert-primary-color};
+	--alert-primary-bg: #{$alert-primary-bg};
+	--alert-primary-border-color: #{$alert-primary-border-color};
 
-	--alert-success-color: inherit;
-	--alert-success-bg: inherit;
-	--alert-success-border-color: inherit;
+	--alert-success-color: #{$alert-success-color};
+	--alert-success-bg: #{$alert-success-bg};
+	--alert-success-border-color: #{$alert-success-border-color};
 
-	--alert-info-color: inherit;
-	--alert-info-bg: inherit;
-	--alert-info-border-color: inherit;
+	--alert-info-color: #{$alert-info-color};
+	--alert-info-bg: #{$alert-info-bg};
+	--alert-info-border-color: #{$alert-info-border-color};
 
-	--alert-warning-color: inherit;
-	--alert-warning-bg: inherit;
-	--alert-warning-border-color: inherit;
+	--alert-warning-color: #{$alert-warning-color};
+	--alert-warning-bg: #{$alert-warning-bg};
+	--alert-warning-border-color: #{$alert-warning-border-color};
 
-	--alert-danger-color: inherit;
-	--alert-danger-bg: inherit;
-	--alert-danger-border-color: inherit;
+	--alert-danger-color: #{$alert-danger-color};
+	--alert-danger-bg: #{$alert-danger-bg};
+	--alert-danger-border-color: #{$alert-danger-border-color};
 
 	// Cards
 

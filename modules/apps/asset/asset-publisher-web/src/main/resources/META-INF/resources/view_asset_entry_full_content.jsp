@@ -117,9 +117,11 @@ fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-i
 			<div class="autofit-col autofit-col-expand">
 				<div class="autofit-row">
 					<div class="autofit-col autofit-col-expand">
-						<div class="text-truncate-inline">
-							<span class="text-truncate user-info"><strong><%= HtmlUtil.escape(AssetRendererUtil.getAssetRendererUserFullName(assetRenderer, request)) %></strong></span>
-						</div>
+						<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
+							<div class="text-truncate-inline">
+								<span class="text-truncate user-info"><strong><%= HtmlUtil.escape(AssetRendererUtil.getAssetRendererUserFullName(assetRenderer, request)) %></strong></span>
+							</div>
+						</c:if>
 
 						<%
 						StringBundler sb = new StringBundler(13);

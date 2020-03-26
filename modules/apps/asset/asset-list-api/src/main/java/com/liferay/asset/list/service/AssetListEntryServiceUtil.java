@@ -163,6 +163,29 @@ public class AssetListEntryServiceUtil {
 			groupIds, title, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.asset.list.model.AssetListEntry>
+		getAssetListEntries(
+			long[] groupIds, String title, String[] assetEntryTypes, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.asset.list.model.AssetListEntry>
+					orderByComparator) {
+
+		return getService().getAssetListEntries(
+			groupIds, title, assetEntryTypes, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.asset.list.model.AssetListEntry>
+		getAssetListEntries(
+			long[] groupIds, String[] assetEntryTypes, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.asset.list.model.AssetListEntry>
+					orderByComparator) {
+
+		return getService().getAssetListEntries(
+			groupIds, assetEntryTypes, start, end, orderByComparator);
+	}
+
 	public static int getAssetListEntriesCount(long groupId) {
 		return getService().getAssetListEntriesCount(groupId);
 	}
@@ -177,6 +200,19 @@ public class AssetListEntryServiceUtil {
 
 	public static int getAssetListEntriesCount(long[] groupIds, String title) {
 		return getService().getAssetListEntriesCount(groupIds, title);
+	}
+
+	public static int getAssetListEntriesCount(
+		long[] groupIds, String title, String[] assetEntryTypes) {
+
+		return getService().getAssetListEntriesCount(
+			groupIds, title, assetEntryTypes);
+	}
+
+	public static int getAssetListEntriesCount(
+		long[] groupIds, String[] assetEntryTypes) {
+
+		return getService().getAssetListEntriesCount(groupIds, assetEntryTypes);
 	}
 
 	public static com.liferay.asset.list.model.AssetListEntry getAssetListEntry(

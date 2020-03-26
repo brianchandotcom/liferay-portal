@@ -1,5 +1,7 @@
+create index IX_D604A2E on AssetListEntry (groupId, assetEntryType[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_366FAE09 on AssetListEntry (groupId, assetListEntryKey[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_E5ED21FE on AssetListEntry (groupId, ctCollectionId);
+create index IX_CBD041F6 on AssetListEntry (groupId, title[$COLUMN_LENGTH:75$], assetEntryType[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_5B95A9C6 on AssetListEntry (groupId, title[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_6A225693 on AssetListEntry (groupId, type_, ctCollectionId);
 create index IX_AF5D7A1C on AssetListEntry (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);

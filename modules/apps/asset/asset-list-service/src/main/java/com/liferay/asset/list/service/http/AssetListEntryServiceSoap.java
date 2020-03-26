@@ -331,6 +331,54 @@ public class AssetListEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.asset.list.model.AssetListEntrySoap[]
+			getAssetListEntries(
+				long[] groupIds, String[] assetEntryTypes, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.asset.list.model.AssetListEntry>
+						orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.asset.list.model.AssetListEntry>
+				returnValue = AssetListEntryServiceUtil.getAssetListEntries(
+					groupIds, assetEntryTypes, start, end, orderByComparator);
+
+			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntrySoap[]
+			getAssetListEntries(
+				long[] groupIds, String title, String[] assetEntryTypes,
+				int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.asset.list.model.AssetListEntry>
+						orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.asset.list.model.AssetListEntry>
+				returnValue = AssetListEntryServiceUtil.getAssetListEntries(
+					groupIds, title, assetEntryTypes, start, end,
+					orderByComparator);
+
+			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static int getAssetListEntriesCount(long groupId)
 		throws RemoteException {
 
@@ -387,6 +435,42 @@ public class AssetListEntryServiceSoap {
 			int returnValue =
 				AssetListEntryServiceUtil.getAssetListEntriesCount(
 					groupIds, title);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getAssetListEntriesCount(
+			long[] groupIds, String title, String[] assetEntryTypes)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				AssetListEntryServiceUtil.getAssetListEntriesCount(
+					groupIds, title, assetEntryTypes);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getAssetListEntriesCount(
+			long[] groupIds, String[] assetEntryTypes)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				AssetListEntryServiceUtil.getAssetListEntriesCount(
+					groupIds, assetEntryTypes);
 
 			return returnValue;
 		}

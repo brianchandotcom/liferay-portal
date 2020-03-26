@@ -15,6 +15,7 @@
 		<field name="assetListEntryKey" type="String" />
 		<field name="title" type="String" />
 		<field name="type" type="int" />
+		<field name="assetEntryType" type="String" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.asset.list.model.AssetListEntryAssetEntryRel">

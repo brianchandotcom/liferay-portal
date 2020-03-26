@@ -13,7 +13,7 @@
  */
 
 /**
- * @param {string} fragmentEntryLinkId
+ * @param {HTMLElement} editableElement
  */
 export default function getEditableElementId(editableElement) {
 	return (

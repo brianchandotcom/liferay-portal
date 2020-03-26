@@ -590,7 +590,7 @@ definition {
 	@priority = "5"
 	test AddListAndRecordWithToDoPredefinedDataDefinition {
 		property portal.upstream = "quarantine";
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPDynamicdatalists#AddListAndRecordWithToDoPredefinedDataDefinition";
 
 		Navigator.openURL();

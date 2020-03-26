@@ -46,6 +46,8 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntriesWithPortalScopeWorkflowAndAssertWorkflowScope {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
@@ -205,6 +207,8 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntriesWithSiteScopeWorkflowAndAssertWorkflowScope {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",

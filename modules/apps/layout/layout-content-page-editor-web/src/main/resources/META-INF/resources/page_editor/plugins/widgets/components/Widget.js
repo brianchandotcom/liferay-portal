@@ -14,9 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useEffect} from 'react';
-import {useDrag} from 'react-dnd';
-import {getEmptyImage} from 'react-dnd-html5-backend';
+import React from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useDispatch, useSelector} from '../../../app/store/index';

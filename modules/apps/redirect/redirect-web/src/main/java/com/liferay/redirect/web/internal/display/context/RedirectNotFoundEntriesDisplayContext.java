@@ -68,7 +68,7 @@ public class RedirectNotFoundEntriesDisplayContext {
 	}
 
 	public String getSearchContainerId() {
-		return "redirectEntries";
+		return "redirectNotFoundEntries";
 	}
 
 	public SearchContainer<RedirectNotFoundEntry> searchContainer()

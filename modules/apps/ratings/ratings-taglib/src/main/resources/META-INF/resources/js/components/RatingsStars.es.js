@@ -21,23 +21,6 @@ import React, {useCallback, useState} from 'react';
 
 import Lang from '../utils/lang.es';
 
-const STAR_SCORES = [
-	{label: 1, value: 0.2},
-	{label: 2, value: 0.4},
-	{label: 3, value: 0.6},
-	{label: 4, value: 0.8},
-	{label: 5, value: 1},
-];
-
-const getLabelScore = score => {
-	const startScore = STAR_SCORES.find(({value}) => score === value);
-
-	return (startScore && startScore.label) || 0;
-};
-
-const formatAverageScore = averageScore =>
-	(averageScore * STAR_SCORES.length).toFixed(1);
-
 const RATING_TYPE = 'stars';
 
 const RatingsStars = ({
@@ -47,10 +30,34 @@ const RatingsStars = ({
 	inTrash = false,
 	initialAverageScore = 0,
 	initialTotalEntries = 0,
+	numberOfStars,
 	signedIn,
 	url,
 	userScore,
 }) => {
+	const startScores = Array.from(Array(numberOfStars)).map((_, index) => {
+		const number = index + 1;
+
+		return {
+			label: number,
+			value: (1 / numberOfStars) * number,
+		};
+	});
+
+	const getLabelScore = useCallback(
+		score => {
+			const startScore = startScores.find(({value}) => score === value);
+
+			return (startScore && startScore.label) || 0;
+		},
+		[startScores]
+	);
+
+	const formatAverageScore = useCallback(
+		averageScore => (averageScore * numberOfStars).toFixed(1),
+		[numberOfStars]
+	);
+
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [score, setScore] = useState(getLabelScore(userScore));
 	const [averageScore, setAverageScore] = useState(
@@ -59,7 +66,7 @@ const RatingsStars = ({
 	const [totalEntries, setTotalEntries] = useState(initialTotalEntries);
 
 	const handleOnClick = index => {
-		const {label, value} = STAR_SCORES[index];
+		const {label, value} = startScores[index];
 
 		setScore(label);
 		sendVoteRequest(value);
@@ -94,7 +101,7 @@ const RatingsStars = ({
 					setScore(getLabelScore(response.score));
 				});
 		},
-		[className, classPK, url]
+		[className, classPK, formatAverageScore, getLabelScore, url]
 	);
 
 	const getTitle = useCallback(() => {
@@ -123,11 +130,11 @@ const RatingsStars = ({
 							'you-have-rated-this-x-stars-out-of-x'
 					  );
 
-			return Lang.sub(title, [score, STAR_SCORES.length]);
+			return Lang.sub(title, [score, numberOfStars]);
 		}
 
 		return '';
-	}, [signedIn, inTrash, enabled, score]);
+	}, [signedIn, inTrash, enabled, score, numberOfStars]);
 
 	return (
 		<div className="autofit-row autofit-row-center ratings ratings-stars">
@@ -155,7 +162,7 @@ const RatingsStars = ({
 					}
 				>
 					<ClayDropDown.ItemList>
-						{STAR_SCORES.map(({label}, index) => {
+						{startScores.map(({label}, index) => {
 							const srMessage =
 								index === 0
 									? Liferay.Language.get(
@@ -177,7 +184,7 @@ const RatingsStars = ({
 									<span className="sr-only">
 										{Lang.sub(srMessage, [
 											index + 1,
-											STAR_SCORES.length,
+											numberOfStars,
 										])}
 									</span>
 								</ClayDropDown.Item>
@@ -214,6 +221,7 @@ RatingsStars.propTypes = {
 	inTrash: PropTypes.bool,
 	initialAverageScore: PropTypes.number,
 	initialTotalEntries: PropTypes.number,
+	numberOfStars: PropTypes.number.isRequired,
 	round: PropTypes.bool,
 	signedIn: PropTypes.bool.isRequired,
 	url: PropTypes.string.isRequired,

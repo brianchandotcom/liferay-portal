@@ -1,0 +1,117 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.change.tracking.internal.reference.closure;
+
+import com.liferay.change.tracking.reference.closure.CTClosure;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Test;
+
+/**
+ * @author Preston Crary
+ */
+public class CTClosureImplTest {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
+
+	@Test
+	public void testCTClosureImpl() {
+		Node node1 = new Node(1, 1);
+		Node node2 = new Node(2, 2);
+		Node node3 = new Node(3, 3);
+		Node node4 = new Node(4, 4);
+		Node node5 = new Node(5, 5);
+
+		Set<Node> nodes = new HashSet<>(
+			Arrays.asList(node1, node2, node3, node4, node5));
+
+		Map<Node, Collection<Edge>> edgeMap =
+			HashMapBuilder.<Node, Collection<Edge>>put(
+				node1,
+				Arrays.asList(
+					new Edge(node1, node2), new Edge(node1, node3),
+					new Edge(node1, node4))
+			).put(
+				node2,
+				Arrays.asList(new Edge(node2, node3), new Edge(node2, node4))
+			).put(
+				node3, Collections.singleton(new Edge(node3, node4))
+			).build();
+
+		Map<Node, Collection<Node>> nodeMap = GraphUtil.getNodeMap(
+			nodes, edgeMap);
+
+		long ctCollectionId = 1;
+
+		CTClosure ctClosure = new CTClosureImpl(ctCollectionId, nodeMap);
+
+		Assert.assertEquals(ctCollectionId, ctClosure.getCTCollectionId());
+
+		Map<Long, List<Long>> roots = HashMapBuilder.<Long, List<Long>>put(
+			node1.getClassNameId(),
+			Collections.singletonList(node1.getPrimaryKey())
+		).put(
+			node5.getClassNameId(),
+			Collections.singletonList(node5.getPrimaryKey())
+		).build();
+
+		Assert.assertEquals(roots, ctClosure.getRoots());
+
+		Assert.assertEquals(
+			Collections.singletonMap(
+				node2.getClassNameId(),
+				Collections.singletonList(node2.getPrimaryKey())),
+			ctClosure.getChildren(
+				node1.getClassNameId(), node1.getPrimaryKey()));
+
+		Assert.assertEquals(
+			Collections.singletonMap(
+				node3.getClassNameId(),
+				Collections.singletonList(node3.getPrimaryKey())),
+			ctClosure.getChildren(
+				node2.getClassNameId(), node2.getPrimaryKey()));
+
+		Assert.assertEquals(
+			Collections.singletonMap(
+				node4.getClassNameId(),
+				Collections.singletonList(node4.getPrimaryKey())),
+			ctClosure.getChildren(
+				node3.getClassNameId(), node3.getPrimaryKey()));
+
+		Assert.assertSame(
+			Collections.emptyMap(),
+			ctClosure.getChildren(
+				node4.getClassNameId(), node4.getPrimaryKey()));
+
+		Assert.assertSame(
+			Collections.emptyMap(),
+			ctClosure.getChildren(
+				node5.getClassNameId(), node5.getPrimaryKey()));
+	}
+
+}

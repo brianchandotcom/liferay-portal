@@ -133,6 +133,7 @@ public class PublishTemplatesConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PublishTemplatesConfigurationIcon.class);
+
 	@Reference
 	private Portal _portal;
 

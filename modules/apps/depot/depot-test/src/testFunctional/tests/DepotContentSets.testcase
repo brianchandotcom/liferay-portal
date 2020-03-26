@@ -852,8 +852,6 @@ definition {
 	@description = "This ensures that multiple documents can be selected through Content Sets in a depot."
 	@priority = "5"
 	test SelectMultipleDocumentsManually {
-		property portal.upstream = "quarantine";
-
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(

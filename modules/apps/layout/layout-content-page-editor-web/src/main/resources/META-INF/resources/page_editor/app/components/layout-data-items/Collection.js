@@ -150,7 +150,9 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 
 	const dispatch = useDispatch();
 
-	const store = useSelector(state => state);
+	const segmentsExperienceId = useSelector(
+		state => state.segmentsExperienceId
+	);
 
 	const [collection, setCollection] = useState('');
 
@@ -159,8 +161,8 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 			CollectionService.getCollectionField({
 				layoutObjectReference: JSON.stringify(item.config.collection),
 				onNetworkStatus: dispatch,
+				segmentsExperienceId,
 				size: collectionConfig.numberOfItems,
-				store,
 			}).then(response => {
 				setCollection(response);
 			});

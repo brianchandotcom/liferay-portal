@@ -21,6 +21,8 @@ import {Align} from 'metal-position';
 import {Config} from 'metal-state';
 
 import {pageStructure} from '../../util/config.es';
+import {CSS_DDM_FIELDSET} from '../../util/cssClasses.es';
+import {getField, isFieldSet} from '../../util/fieldSupport.es';
 
 const getFieldContainer = fieldName => {
 	return document.querySelector(
@@ -29,10 +31,17 @@ const getFieldContainer = fieldName => {
 };
 
 class FieldActionsDropDown extends Component {
+	align() {
+		const {fieldName} = this.state;
+		const fieldContainer = getFieldContainer(fieldName);
+
+		if (this.element && fieldContainer) {
+			Align.align(this.element, fieldContainer, Align.TopLeft);
+		}
+	}
+
 	attached() {
-		this._eventHandler.add(
-			dom.on(window, 'resize', this._align.bind(this))
-		);
+		this._eventHandler.add(dom.on(window, 'resize', this.align.bind(this)));
 	}
 
 	close() {
@@ -49,21 +58,58 @@ class FieldActionsDropDown extends Component {
 		this._eventHandler.removeAllListeners();
 	}
 
+	getCssClasses() {
+		const cssClasses = ['ddm-field-actions-container'];
+		const {visible} = this.props;
+
+		if (!visible) {
+			cssClasses.push('hide');
+		}
+
+		if (this.isFieldSet()) {
+			cssClasses.push(CSS_DDM_FIELDSET);
+		}
+
+		return cssClasses.join(' ');
+	}
+
+	getLabel() {
+		const {fieldName} = this.state;
+		const {fieldTypes, pages} = this.props;
+		const field = FormSupport.findFieldByName(pages, fieldName);
+
+		return (
+			field &&
+			fieldTypes.find(fieldType => {
+				return fieldType.name === field.type;
+			}).label
+		);
+	}
+
+	isFieldSet() {
+		const {fieldName} = this.state;
+		const {pages} = this.props;
+
+		const field = getField(pages, fieldName);
+
+		return field && isFieldSet(field);
+	}
+
 	open() {
 		this.setState({expanded: true});
 	}
 
 	render() {
 		const {expanded} = this.state;
-		const {disabled, items, spritemap, visible} = this.props;
+		const {disabled, items, spritemap} = this.props;
 
 		return (
 			<div
-				class={`ddm-field-actions-container ${visible ? '' : 'hide'}`}
+				class={this.getCssClasses()}
 				onMouseDown={this._handleOnMouseDown.bind(this)}
 				onMouseLeave={this._handleOnMouseLeave.bind(this)}
 			>
-				<span class="actions-label">{this._getLabel()}</span>
+				<span class="actions-label">{this.getLabel()}</span>
 
 				<ClayActionsDropdown
 					disabled={disabled}
@@ -81,10 +127,10 @@ class FieldActionsDropDown extends Component {
 	}
 
 	rendered() {
-		this._align();
+		this.align();
 
 		requestAnimationFrame(() => {
-			this._align();
+			this.align();
 
 			this.refs.dropdown.refs.dropdown.refs.portal.emit('rendered');
 		});
@@ -97,28 +143,6 @@ class FieldActionsDropDown extends Component {
 		else {
 			this.element.classList.add('hide');
 		}
-	}
-
-	_align() {
-		const {fieldName} = this.state;
-		const fieldContainer = getFieldContainer(fieldName);
-
-		if (this.element && fieldContainer) {
-			Align.align(this.element, fieldContainer, Align.TopLeft);
-		}
-	}
-
-	_getLabel() {
-		const {fieldName} = this.state;
-		const {fieldTypes, pages} = this.props;
-		const field = FormSupport.findFieldByName(pages, fieldName);
-
-		return (
-			field &&
-			fieldTypes.find(fieldType => {
-				return fieldType.name === field.type;
-			}).label
-		);
 	}
 
 	_handleOnMouseDown(event) {

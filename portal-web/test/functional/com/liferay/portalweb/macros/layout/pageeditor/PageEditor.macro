@@ -604,7 +604,7 @@ definition {
 			locator1 = "Fragment#EDITABLE_HTML_FRAGMENT_FIELD",
 			value1 = "${content}");
 
-		Click(locator1 = "Button#SAVE");
+		Click.pauseClickAt(locator1 = "Button#SAVE");
 
 		PageEditor.waitForAutoSave();
 	}

@@ -35,9 +35,11 @@ definition {
 	macro runTest {
 		Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
 
-		Click(locator1 = "ABTest#RUN_TEST_BUTTON");
+		if (IsElementPresent(locator1 = "ABTest#RUN_TEST_BUTTON")) {
+			Click(locator1 = "ABTest#RUN_TEST_BUTTON");
 
-		Click(locator1 = "ABTest#OK_BUTTON");
+			Click(locator1 = "ABTest#OK_BUTTON");
+		}
 	}
 
 }

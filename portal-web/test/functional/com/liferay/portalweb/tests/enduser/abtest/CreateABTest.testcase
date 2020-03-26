@@ -24,22 +24,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		task ("Sync Site with Analytics Cloud") {
-			Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_BUTTON");
-
-			Click(locator1 = "AnalyticsCloudConnection#SYNCED_SITES_BUTTON");
-
-			Click(locator1 = "AnalyticsCloudConnection#ADD_NEW_PROPERTY_BUTTON");
-
-			Click(locator1 = "AnalyticsCloudConnection#INPUT_LIFERAY_DXP_CHECKBOX");
-
-			Click(locator1 = "AnalyticsCloudConnection#DONE_BUTTON");
-		}
+		AnalyticsCloud.syncAC();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/content-page");
 	}
@@ -79,7 +64,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ABTest#VARIANT_NEEDED_MESSAGE",
-			value1 = "Create at least one variant to run the test.");
+			value1 = "A variant needs to be created.");
 	}
 
 }

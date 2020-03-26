@@ -44,6 +44,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INSIDE_DONE_BUTTON</td>
+	<td>//*[contains(@id, '_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_svzz')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIFERAY_DXP_COMBINED_PROPERTY</td>
+	<td>//*[contains(@class, 'text-truncate') and contains(text(), 'Liferay DXP Combined Property')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROPERTY_BUTTON</td>
+	<td>//*[contains(@class, 'lfr-btn-label')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SYNCED_SITES_BUTTON</td>
 	<td>//*[contains(@class, 'nav-link') and text()='Synced Sites']</td>
 	<td></td>

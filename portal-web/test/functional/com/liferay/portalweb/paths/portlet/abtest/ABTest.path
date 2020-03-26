@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>VARIANT_NEEDED_MESSAGE</td>
-	<td>//*[contains(@class,'mb-2 text-secondary')]</td>
+	<td>//*[contains(@class,'font-weight-bold mb-3 text-danger')]</td>
 	<td></td>
 </tr>
 <tr>

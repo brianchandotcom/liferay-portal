@@ -18,4 +18,48 @@ definition {
 		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_LOGIN_BUTTON");
 	}
 
+    macro syncAC {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_BUTTON");
+
+		Click(locator1 = "AnalyticsCloudConnection#SYNCED_SITES_BUTTON");
+
+        if (IsElementNotPresent(locator1 = "AnalyticsCloudConnection#ADD_NEW_PROPERTY_BUTTON")) {
+            Click(locator1 = "AnalyticsCloudConnection#NEW_PROPERTY_BUTTON");
+
+            Click(locator1 = "AnalyticsCloudConnection#ADD_NEW_PROPERTY_BUTTON");
+
+            if (IsElementNotPresent(locator1 = "AnalyticsCloudConnection#INPUT_LIFERAY_DXP_CHECKBOX")) {
+		        Click(locator1 = "AnalyticsCloudConnection#LIFERAY_DXP_COMBINED_PROPERTY");
+            
+                Click(locator1 = "AnalyticsCloudConnection#INPUT_LIFERAY_DXP_CHECKBOX");
+
+		        Click(locator1 = "AnalyticsCloudConnection#INSIDE_DONE_BUTTON");
+            }
+            else {
+                Click(locator1 = "AnalyticsCloudConnection#INPUT_LIFERAY_DXP_CHECKBOX");
+
+		        Click(locator1 = "AnalyticsCloudConnection#DONE_BUTTON");                
+            }
+        }
+		else {
+            Click(locator1 = "AnalyticsCloudConnection#ADD_NEW_PROPERTY_BUTTON");
+                        if (IsElementNotPresent(locator1 = "AnalyticsCloudConnection#INPUT_LIFERAY_DXP_CHECKBOX")) {
+		        Click(locator1 = "AnalyticsCloudConnection#LIFERAY_DXP_COMBINED_PROPERTY");
+            
+                Click(locator1 = "AnalyticsCloudConnection#INPUT_LIFERAY_DXP_CHECKBOX");
+
+		        Click(locator1 = "AnalyticsCloudConnection#INSIDE_DONE_BUTTON");
+            }
+            else {
+                Click(locator1 = "AnalyticsCloudConnection#INPUT_LIFERAY_DXP_CHECKBOX");
+
+		        Click(locator1 = "AnalyticsCloudConnection#DONE_BUTTON");                
+            }
+	    }
+    }
 }

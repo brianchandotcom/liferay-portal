@@ -46,13 +46,11 @@ public class UserGroupFixture {
 		_userGroupLocalService = userGroupLocalService;
 	}
 
-	public UserGroup createUserGroup() throws Exception {
+	public UserGroup createUserGroup() {
 		return createUserGroup(Collections.emptyMap());
 	}
 
-	public UserGroup createUserGroup(Map<String, Serializable> expandoValues)
-		throws Exception {
-
+	public UserGroup createUserGroup(Map<String, Serializable> expandoValues) {
 		return createUserGroup(
 			RandomTestUtil.randomString(
 				NumericStringRandomizerBumper.INSTANCE,
@@ -60,22 +58,20 @@ public class UserGroupFixture {
 			RandomTestUtil.randomString(50), expandoValues);
 	}
 
-	public UserGroup createUserGroup(String name) throws Exception {
+	public UserGroup createUserGroup(String name) {
 		return createUserGroup(
 			name, RandomTestUtil.randomString(50), Collections.emptyMap());
 	}
 
 	public UserGroup createUserGroup(
-			String name, String description,
-			Map<String, Serializable> expandoValues)
-		throws PortalException {
+		String name, String description,
+		Map<String, Serializable> expandoValues) {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+		ServiceContext serviceContext = getServiceContext();
 
 		serviceContext.setExpandoBridgeAttributes(expandoValues);
 
-		UserGroup userGroup = _userGroupLocalService.addUserGroup(
+		UserGroup userGroup = addUserGroup(
 			serviceContext.getUserId(), serviceContext.getCompanyId(), name,
 			description, serviceContext);
 
@@ -93,6 +89,29 @@ public class UserGroupFixture {
 			_group.getGroupId(), null, locale);
 
 		_group.setModelAttributes(group.getModelAttributes());
+	}
+
+	protected UserGroup addUserGroup(
+		long userId, long companyId, String name, String description,
+		ServiceContext serviceContext) {
+
+		try {
+			return _userGroupLocalService.addUserGroup(
+				userId, companyId, name, description, serviceContext);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	protected ServiceContext getServiceContext() {
+		try {
+			return ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId());
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 	}
 
 	private final Group _group;

@@ -15,20 +15,29 @@
 package com.liferay.user.groups.admin.web.internal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.search.test.util.IndexerFixture;
+import com.liferay.portal.search.model.uid.UIDFactory;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.users.admin.test.util.search.UserSearchFixture;
+import com.liferay.users.admin.test.util.search.GroupBlueprint;
+import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -54,69 +63,104 @@ public class UserGroupIndexerReindexTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpUserSearchFixture();
+		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
-		setUpUserGroupIndexerFixture();
+		Group group = groupSearchFixture.addGroup(new GroupBlueprint());
 
-		setUpUserGroupFixture();
-	}
+		UserGroupFixture userGroupFixture = new UserGroupFixture(
+			group, userGroupLocalService);
 
-	@Test
-	public void testReindexingFolders() throws Exception {
-		UserGroup userGroup = userGroupFixture.createUserGroup();
+		_group = group;
 
-		String searchTerm = userGroup.getName();
+		_groups = groupSearchFixture.getGroups();
 
-		Document document = userGroupIndexerFixture.searchOnlyOne(searchTerm);
-
-		userGroupIndexerFixture.deleteDocument(document);
-
-		userGroupIndexerFixture.searchNoOne(searchTerm);
-
-		userGroupIndexerFixture.reindex(userGroup.getCompanyId());
-
-		userGroupIndexerFixture.searchOnlyOne(searchTerm);
-	}
-
-	protected void setUpUserGroupFixture() {
-		userGroupFixture = new UserGroupFixture(_group, userGroupLocalService);
-
+		_userGroupFixture = userGroupFixture;
 		_userGroups = userGroupFixture.getUserGroups();
 	}
 
-	protected void setUpUserGroupIndexerFixture() {
-		userGroupIndexerFixture = new IndexerFixture<>(UserGroup.class);
+	@Test
+	public void testReindexing() throws Exception {
+		UserGroup userGroup = _userGroupFixture.createUserGroup();
+
+		String searchTerm = userGroup.getName();
+
+		assertFieldValue(Field.NAME, searchTerm, searchTerm);
+
+		deleteDocument(userGroup.getCompanyId(), uidFactory.getUID(userGroup));
+
+		assertNoHits(searchTerm);
+
+		reindexAllIndexerModels();
+
+		assertFieldValue(Field.NAME, searchTerm, searchTerm);
 	}
 
-	protected void setUpUserSearchFixture() throws Exception {
-		userSearchFixture = new UserSearchFixture();
+	protected void assertFieldValue(
+		String fieldName, String fieldValue, String searchTerm) {
 
-		userSearchFixture.setUp();
-
-		_group = userSearchFixture.addGroup();
-
-		_groups = userSearchFixture.getGroups();
-
-		_users = userSearchFixture.getUsers();
+		FieldValuesAssert.assertFieldValue(
+			fieldName, fieldValue, search(searchTerm));
 	}
 
-	protected UserGroupFixture userGroupFixture;
-	protected IndexerFixture<UserGroup> userGroupIndexerFixture;
+	protected void assertNoHits(String searchTerm) {
+		FieldValuesAssert.assertFieldValues(
+			Collections.emptyMap(), search(searchTerm));
+	}
+
+	protected void deleteDocument(long companyId, String uid) throws Exception {
+		indexWriterHelper.deleteDocument(
+			indexer.getSearchEngineId(), companyId, uid, true);
+	}
+
+	protected void reindexAllIndexerModels() throws Exception {
+		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
+	}
+
+	protected SearchResponse search(String searchTerm) {
+		return searcher.search(
+			searchRequestBuilderFactory.builder(
+			).companyId(
+				_group.getCompanyId()
+			).fields(
+				StringPool.STAR
+			).modelIndexerClasses(
+				UserGroup.class
+			).queryString(
+				searchTerm
+			).build());
+	}
+
+	@Inject(
+		filter = "indexer.class.name=com.liferay.portal.kernel.model.UserGroup"
+	)
+	protected Indexer<UserGroup> indexer;
+
+	@Inject
+	protected IndexWriterHelper indexWriterHelper;
+
+	@Inject
+	protected SearchEngineHelper searchEngineHelper;
+
+	@Inject
+	protected Searcher searcher;
+
+	@Inject
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
+
+	@Inject
+	protected UIDFactory uidFactory;
 
 	@Inject
 	protected UserGroupLocalService userGroupLocalService;
-
-	protected UserSearchFixture userSearchFixture;
 
 	private Group _group;
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
 
-	@DeleteAfterTestRun
-	private List<UserGroup> _userGroups;
+	private UserGroupFixture _userGroupFixture;
 
 	@DeleteAfterTestRun
-	private List<User> _users;
+	private List<UserGroup> _userGroups;
 
 }

@@ -150,7 +150,10 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 		state => state.segmentsExperienceId
 	);
 
-	const [collection, setCollection] = useState([]);
+	const [collection, setCollection] = useState({
+		items: [],
+		length: 0,
+	});
 
 	useEffect(() => {
 		if (collectionConfig.collection) {
@@ -192,7 +195,7 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 					collection={collection.items}
 					collectionFields={collectionFields}
 					collectionId={item.itemId}
-					collectionLength={collection.length}
+					collectionLength={collection.items.length}
 					numberOfColumns={collectionConfig.numberOfColumns}
 					numberOfItems={collectionConfig.numberOfItems}
 				/>

@@ -42,10 +42,11 @@ definition {
 			portlet = "Message Boards");
 
 		Questions.createQuestion(
+			displayStyleOption = "Question",
 			menuItem = "Category",
-			nameField = "question AddQuestionCategory",
-			displayStyleOption = "Question");
+			nameField = "question AddQuestionCategory");
 
 		Alert.viewSuccessMessage();
 	}
+
 }

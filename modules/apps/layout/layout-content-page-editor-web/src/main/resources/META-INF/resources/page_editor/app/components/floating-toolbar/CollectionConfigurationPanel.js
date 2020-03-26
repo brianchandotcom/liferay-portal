@@ -126,6 +126,7 @@ export const CollectionConfigurationPanel = ({item}) => {
 						</label>
 						<ClayInput
 							id="collectionNumberOfItems"
+							min={1}
 							onChange={({target: {value}}) =>
 								handleConfigurationChanged({
 									numberOfItems: value,

@@ -56,6 +56,11 @@ public class SpiraTestSet extends PathSpiraArtifact {
 		return _parentSpiraTestSetFolder;
 	}
 
+	@Override
+	public String getType() {
+		return "testset";
+	}
+
 	protected static List<SpiraTestSet> getSpiraTestSets(
 		final SpiraProject spiraProject,
 		final SearchQuery.SearchParameter... searchParameters) {

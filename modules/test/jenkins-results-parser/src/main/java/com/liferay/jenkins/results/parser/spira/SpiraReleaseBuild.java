@@ -80,6 +80,11 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 		}
 	}
 
+	@Override
+	public String getType() {
+		return "build";
+	}
+
 	public static enum Status {
 
 		ABORTED(4), FAILED(1), SUCCEEDED(2), UNSTABLE(3);

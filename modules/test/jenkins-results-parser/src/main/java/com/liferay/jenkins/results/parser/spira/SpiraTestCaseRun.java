@@ -113,6 +113,11 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		}
 	}
 
+	@Override
+	public String getType() {
+		return "testrun";
+	}
+
 	public static class Result {
 
 		public Result(

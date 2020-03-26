@@ -190,6 +190,11 @@ public class SpiraRelease extends PathSpiraArtifact {
 		return spiraReleaseBuilds.get(0);
 	}
 
+	@Override
+	public String getType() {
+		return "release";
+	}
+
 	public static enum Status {
 
 		CANCELED(5), CLOSED(3), DEFERRED(4), IN_PROGRESS(2), PLANNED(1);

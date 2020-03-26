@@ -181,6 +181,11 @@ public class SpiraTestSetFolder extends PathSpiraArtifact {
 		return _parentSpiraTestSetFolder;
 	}
 
+	@Override
+	public String getType() {
+		return "testsetfolder";
+	}
+
 	protected static List<SpiraTestSetFolder> getSpiraTestSetFolders(
 		final SpiraProject spiraProject,
 		SearchQuery.SearchParameter... searchParameters) {

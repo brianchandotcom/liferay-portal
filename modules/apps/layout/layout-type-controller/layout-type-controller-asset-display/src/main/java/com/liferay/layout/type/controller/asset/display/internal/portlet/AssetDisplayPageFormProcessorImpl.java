@@ -82,7 +82,7 @@ public class AssetDisplayPageFormProcessorImpl
 
 		if (assetDisplayPageEntry == null) {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				className, portletRequest);
+				portletRequest);
 
 			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),

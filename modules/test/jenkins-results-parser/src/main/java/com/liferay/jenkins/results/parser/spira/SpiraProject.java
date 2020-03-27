@@ -267,10 +267,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 			this, new SearchQuery.SearchParameter("Path", testSetPath));
 	}
 
-	@Override
-	public String getType() {
-		return "build";
-	}
+	protected static final String ARTIFACT_TYPE_NAME = "project";
 
 	protected static final String ID_KEY = "ProjectId";
 

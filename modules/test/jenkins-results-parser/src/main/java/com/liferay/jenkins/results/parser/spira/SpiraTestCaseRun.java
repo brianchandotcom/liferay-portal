@@ -113,11 +113,6 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		}
 	}
 
-	@Override
-	public String getType() {
-		return "testrun";
-	}
-
 	public static class Result {
 
 		public Result(
@@ -252,6 +247,10 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			throw new RuntimeException(ioException);
 		}
 	}
+
+	protected static final Integer ARTIFACT_TYPE_ID = 5;
+
+	protected static final String ARTIFACT_TYPE_NAME = "testrun";
 
 	protected static final String ID_KEY = "TestRunId";
 

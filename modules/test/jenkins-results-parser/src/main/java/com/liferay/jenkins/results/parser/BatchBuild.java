@@ -20,17 +20,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.lang.StringUtils;
 
 import org.dom4j.Element;
 
@@ -49,7 +48,7 @@ public class BatchBuild extends BaseBuild {
 
 	@Override
 	public String getAppServer() {
-		return getEnvironment("app.server");
+		return getSpiraPropertyValue("app.server");
 	}
 
 	public String getBatchName() {
@@ -58,12 +57,12 @@ public class BatchBuild extends BaseBuild {
 
 	@Override
 	public String getBrowser() {
-		return getEnvironment("browser");
+		return getSpiraPropertyValue("browser");
 	}
 
 	@Override
 	public String getDatabase() {
-		return getEnvironment("database");
+		return getSpiraPropertyValue("database");
 	}
 
 	@Override
@@ -210,7 +209,7 @@ public class BatchBuild extends BaseBuild {
 
 	@Override
 	public String getJDK() {
-		return getEnvironment("java.jdk");
+		return getSpiraPropertyValue("java.jdk");
 	}
 
 	@Override
@@ -224,7 +223,15 @@ public class BatchBuild extends BaseBuild {
 
 	@Override
 	public String getOperatingSystem() {
-		return getEnvironment("operating.system");
+		return getSpiraPropertyValue("operating.system");
+	}
+
+	public String getSpiraPropertyValue(String propertyType) {
+		String propertyName = _getSpiraPropertyNameFromBatchName(propertyType);
+
+		return JenkinsResultsParserUtil.getProperty(
+			getJobProperties(), "test.batch.spira.property.value", propertyType,
+			propertyName);
 	}
 
 	@Override
@@ -428,78 +435,6 @@ public class BatchBuild extends BaseBuild {
 		return null;
 	}
 
-	protected String getBatchComponent(
-		String batchName, String environmentOption) {
-
-		int x = batchName.indexOf(environmentOption);
-
-		int y = batchName.indexOf("-", x);
-
-		if (y == -1) {
-			y = batchName.length();
-		}
-
-		return batchName.substring(x, y);
-	}
-
-	protected String getEnvironment(String environmentType) {
-		Properties buildProperties = null;
-
-		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to get build properties", ioException);
-		}
-
-		List<String> environmentOptions = new ArrayList<>(
-			Arrays.asList(
-				StringUtils.split(
-					buildProperties.getProperty(environmentType + ".types"),
-					",")));
-
-		String batchName = getJobVariant();
-
-		for (String environmentOption : environmentOptions) {
-			if (batchName.contains(environmentOption)) {
-				String batchComponent = getBatchComponent(
-					batchName, environmentOption);
-
-				return buildProperties.getProperty(
-					"env.option." + environmentType + "." + batchComponent);
-			}
-		}
-
-		String name = buildProperties.getProperty(environmentType + ".type");
-
-		String environmentVersion = (String)buildProperties.get(
-			environmentType + "." + name + ".version");
-
-		Matcher matcher = majorVersionPattern.matcher(
-			buildProperties.getProperty(
-				environmentType + "." + name + ".version"));
-
-		String environmentMajorVersion;
-
-		if (matcher.matches()) {
-			environmentMajorVersion = matcher.group(1);
-		}
-		else {
-			environmentMajorVersion = environmentVersion;
-		}
-
-		if (environmentType.equals("java.jdk")) {
-			return buildProperties.getProperty(
-				"env.option." + environmentType + "." + name + "." +
-					environmentMajorVersion.replace(".", ""));
-		}
-
-		return buildProperties.getProperty(
-			"env.option." + environmentType + "." + name +
-				environmentMajorVersion.replace(".", ""));
-	}
-
 	@Override
 	protected ExecutorService getExecutorService() {
 		return _executorService;
@@ -621,6 +556,69 @@ public class BatchBuild extends BaseBuild {
 	protected final String batchName;
 	protected final Pattern majorVersionPattern = Pattern.compile(
 		"((\\d+)\\.?(\\d+?)).*");
+
+	private String _getSpiraPropertyNameFromBatchName(String propertyType) {
+		String batchName = getBatchName();
+
+		if ((batchName == null) || batchName.isEmpty()) {
+			return null;
+		}
+
+		Properties jobProperties = getJobProperties();
+
+		String propertyNamePrefix = JenkinsResultsParserUtil.combine(
+			"test.batch.spira.property.name[", propertyType, "]");
+
+		Set<String> propertyNames = new HashSet<>();
+
+		for (Object jobPropertyNameObject : jobProperties.keySet()) {
+			if (!(jobPropertyNameObject instanceof String)) {
+				continue;
+			}
+
+			String jobPropertyName = (String)jobPropertyNameObject;
+
+			if (!jobPropertyName.startsWith(propertyNamePrefix)) {
+				continue;
+			}
+
+			String propertyName = jobPropertyName.replace(
+				propertyNamePrefix, "");
+
+			if (propertyName.startsWith("[")) {
+				propertyName = propertyName.substring(1);
+			}
+
+			if (propertyName.endsWith("]")) {
+				propertyName = propertyName.substring(
+					0, propertyName.length() - 1);
+			}
+
+			if (propertyName.isEmpty()) {
+				continue;
+			}
+
+			if (!batchName.contains(propertyName)) {
+				continue;
+			}
+
+			propertyNames.add(propertyName);
+		}
+
+		if (propertyNames.isEmpty()) {
+			return null;
+		}
+
+		String targetPropertyName = "";
+
+		for (String propertyName : propertyNames) {
+			if (propertyName.length() > targetPropertyName.length()) {
+				targetPropertyName = propertyName;
+			}
+		}
+
+		return targetPropertyName;
+	}
 
 	private static ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);

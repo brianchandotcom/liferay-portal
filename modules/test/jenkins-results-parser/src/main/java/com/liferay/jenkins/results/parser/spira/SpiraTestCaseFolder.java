@@ -184,11 +184,6 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 		return _parentSpiraTestCaseFolder;
 	}
 
-	@Override
-	public String getType() {
-		return "testcasefolder";
-	}
-
 	protected static List<SpiraTestCaseFolder> getSpiraTestCaseFolders(
 		final SpiraProject spiraProject,
 		SearchQuery.SearchParameter... searchParameters) {
@@ -218,6 +213,8 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 	protected PathSpiraArtifact getParentSpiraArtifact() {
 		return getParentSpiraTestCaseFolder();
 	}
+
+	protected static final String ARTIFACT_TYPE_NAME = "testcasefolder";
 
 	protected static final String ID_KEY = "TestCaseFolderId";
 

@@ -56,11 +56,6 @@ public class SpiraTestSet extends PathSpiraArtifact {
 		return _parentSpiraTestSetFolder;
 	}
 
-	@Override
-	public String getType() {
-		return "testset";
-	}
-
 	protected static List<SpiraTestSet> getSpiraTestSets(
 		final SpiraProject spiraProject,
 		final SearchQuery.SearchParameter... searchParameters) {
@@ -91,6 +86,8 @@ public class SpiraTestSet extends PathSpiraArtifact {
 	protected PathSpiraArtifact getParentSpiraArtifact() {
 		return getParentSpiraTestSetFolder();
 	}
+
+	protected static final String ARTIFACT_TYPE_NAME = "testset";
 
 	protected static final String ID_KEY = "TestSetId";
 

@@ -94,21 +94,44 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		return jsonObject.toString();
 	}
 
+	protected static void cachedSpiraArtifacts(
+		List<? extends SpiraArtifact> spiraArtifacts) {
+
+		for (SpiraArtifact spiraArtifact : spiraArtifacts) {
+			List<SpiraArtifact> cachedSpiraArtifacts = _spiraArtifactMap.get(
+				spiraArtifact.getClass());
+
+			if (cachedSpiraArtifacts == null) {
+				cachedSpiraArtifacts = new ArrayList<>();
+
+				_spiraArtifactMap.put(
+					spiraArtifact.getClass(), cachedSpiraArtifacts);
+			}
+
+			if (cachedSpiraArtifacts.contains(spiraArtifact)) {
+				continue;
+			}
+
+			cachedSpiraArtifacts.add(spiraArtifact);
+		}
+	}
+
+	protected static int getArtifactTypeID(
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
+
+		return (Integer)_getClassField(spiraArtifactClass, "ARTIFACT_TYPE_ID");
+	}
+
+	protected static String getArtifactTypeName(
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
+
+		return (String)_getClassField(spiraArtifactClass, "ARTIFACT_TYPE_NAME");
+	}
+
 	protected static String getIDKey(
 		Class<? extends SpiraArtifact> spiraArtifactClass) {
 
-		try {
-			Field field = spiraArtifactClass.getDeclaredField("ID_KEY");
-
-			return (String)field.get("ID_KEY");
-		}
-		catch (IllegalAccessException | IllegalArgumentException |
-			   NoSuchFieldException exception) {
-
-			throw new RuntimeException(
-				"Missing field ID_KEY in " + spiraArtifactClass.getName(),
-				exception);
-		}
+		return (String)_getClassField(spiraArtifactClass, "ID_KEY");
 	}
 
 	protected static <S extends SpiraArtifact> List<S> getSpiraArtifacts(
@@ -280,6 +303,24 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		}
 
 		return (List<S>)spiraArtifacts;
+	}
+
+	private static Object _getClassField(
+		Class<? extends SpiraArtifact> spiraArtifactClass, String fieldName) {
+
+		try {
+			Field field = spiraArtifactClass.getDeclaredField(fieldName);
+
+			return field.get(fieldName);
+		}
+		catch (IllegalAccessException | IllegalArgumentException |
+			   NoSuchFieldException exception) {
+
+			throw new RuntimeException(
+				"Missing field " + fieldName + " in " +
+					spiraArtifactClass.getName(),
+				exception);
+		}
 	}
 
 	private static final Map<Class<?>, List<SpiraArtifact>> _spiraArtifactMap =

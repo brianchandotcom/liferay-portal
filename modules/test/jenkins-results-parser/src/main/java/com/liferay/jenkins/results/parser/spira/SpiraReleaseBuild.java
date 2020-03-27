@@ -80,11 +80,6 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 		}
 	}
 
-	@Override
-	public String getType() {
-		return "build";
-	}
-
 	public static enum Status {
 
 		ABORTED(4), FAILED(1), SUCCEEDED(2), UNSTABLE(3);
@@ -126,6 +121,8 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 			},
 			searchParameters);
 	}
+
+	protected static final String ARTIFACT_TYPE_NAME = "build";
 
 	protected static final String ID_KEY = "BuildId";
 

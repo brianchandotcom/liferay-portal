@@ -190,11 +190,6 @@ public class SpiraRelease extends PathSpiraArtifact {
 		return spiraReleaseBuilds.get(0);
 	}
 
-	@Override
-	public String getType() {
-		return "release";
-	}
-
 	public static enum Status {
 
 		CANCELED(5), CLOSED(3), DEFERRED(4), IN_PROGRESS(2), PLANNED(1);
@@ -257,6 +252,10 @@ public class SpiraRelease extends PathSpiraArtifact {
 	protected PathSpiraArtifact getParentSpiraArtifact() {
 		return getParentSpiraRelease();
 	}
+
+	protected static final Integer ARTIFACT_TYPE_ID = 2;
+
+	protected static final String ARTIFACT_TYPE_NAME = "release";
 
 	protected static final String ID_KEY = "ReleaseId";
 

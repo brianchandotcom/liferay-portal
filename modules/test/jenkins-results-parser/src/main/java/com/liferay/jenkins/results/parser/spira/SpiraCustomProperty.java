@@ -34,11 +34,7 @@ import org.json.JSONObject;
 public class SpiraCustomProperty extends BaseSpiraArtifact {
 
 	public String getArtifactType() {
-		return jsonObject.getString("artifact_type_name");
-	}
-
-	public String getType() {
-		return "customproperty";
+		return jsonObject.getString("ArtifactTypeName");
 	}
 
 	protected static List<SpiraCustomProperty> getSpiraCustomProperties(
@@ -78,6 +74,8 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 			},
 			customSearchParameters);
 	}
+
+	protected static final String ARTIFACT_TYPE_NAME = "customproperty";
 
 	protected static final String ID_KEY = "CustomPropertyListId";
 
@@ -123,7 +121,7 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 
 		super(jsonObject);
 
-		jsonObject.put("artifact_type_name", spiraArtifact.getType());
+		jsonObject.put("ArtifactTypeName", spiraArtifact.getType());
 	}
 
 }

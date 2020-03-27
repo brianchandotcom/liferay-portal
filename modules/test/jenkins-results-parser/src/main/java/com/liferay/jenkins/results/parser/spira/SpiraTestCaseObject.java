@@ -184,11 +184,6 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		return SpiraTestCaseRun.getSpiraTestCaseRuns(getSpiraProject(), this);
 	}
 
-	@Override
-	public String getType() {
-		return "testcase";
-	}
-
 	public static enum Status {
 
 		APPROVED(4), DRAFT(1), OBSOLETE(9), READY_FOR_REVIEW(2),
@@ -236,6 +231,10 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 	protected PathSpiraArtifact getParentSpiraArtifact() {
 		return getParentSpiraTestCaseFolder();
 	}
+
+	protected static final Integer ARTIFACT_TYPE_ID = 2;
+
+	protected static final String ARTIFACT_TYPE_NAME = "testcase";
 
 	protected static final String ID_KEY = "TestCaseId";
 

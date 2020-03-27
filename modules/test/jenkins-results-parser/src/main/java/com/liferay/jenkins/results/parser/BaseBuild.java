@@ -2532,6 +2532,32 @@ public abstract class BaseBuild implements Build {
 		return parameterNames;
 	}
 
+	protected Properties getJobProperties() {
+		if (_jobProperties != null) {
+			return _jobProperties;
+		}
+
+		System.out.println("Reading job properties");
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		String topLevelJobName = topLevelBuild.getJobName();
+
+		String repositoryName = null;
+
+		if (topLevelJobName.contains("subrepository")) {
+			repositoryName = topLevelBuild.getBaseGitRepositoryName();
+		}
+
+		Job job = JobFactory.newJob(
+			topLevelJobName, topLevelBuild.getTestSuiteName(),
+			topLevelBuild.getBranchName(), repositoryName);
+
+		_jobProperties = job.getJobProperties();
+
+		return _jobProperties;
+	}
+
 	protected Map<String, String> getParameters(JSONArray jsonArray) {
 		Map<String, String> parameters = new HashMap<>(jsonArray.length());
 
@@ -3451,6 +3477,7 @@ public abstract class BaseBuild implements Build {
 	private JenkinsConsoleTextLoader _jenkinsConsoleTextLoader;
 	private JenkinsMaster _jenkinsMaster;
 	private JenkinsSlave _jenkinsSlave;
+	private Properties _jobProperties;
 	private Map<String, String> _parameters = new HashMap<>();
 	private final Build _parentBuild;
 	private String _previousStatus;

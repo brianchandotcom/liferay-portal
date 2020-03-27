@@ -27,8 +27,6 @@ public interface SpiraArtifact {
 
 	public SpiraProject getSpiraProject();
 
-	public String getType();
-
 	public JSONObject toJSONObject();
 
 }

@@ -40,17 +40,32 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		String customPropertyName) {
 
 		List<SpiraCustomProperty> spiraCustomProperties =
-			getSpiraCustomProperties(
-				spiraProject, spiraArtifactClass,
-				new SearchQuery.SearchParameter("Name", customPropertyName));
+			getSpiraCustomProperties(spiraProject, spiraArtifactClass);
 
-		if (!spiraCustomProperties.isEmpty()) {
-			return spiraCustomProperties.get(0);
+		SpiraCustomProperty targetSpiraCustomProperty = null;
+
+		for (SpiraCustomProperty spiraCustomProperty : spiraCustomProperties) {
+			if (!customPropertyName.equals(spiraCustomProperty.getName())) {
+				continue;
+			}
+
+			targetSpiraCustomProperty = spiraCustomProperty;
+
+			break;
+		}
+
+		if (targetSpiraCustomProperty != null) {
+			return targetSpiraCustomProperty;
 		}
 
 		SpiraCustomList spiraCustomList =
 			SpiraCustomList.createSpiraCustomListByName(
 				spiraProject, customPropertyName);
+
+		Map<String, String> urlParameters = new HashMap<>();
+
+		urlParameters.put(
+			"custom_list_id", String.valueOf(spiraCustomList.getID()));
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
@@ -67,10 +82,13 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		requestJSONObject.put("Name", customPropertyName);
 		requestJSONObject.put("ProjectTemplateId", projectTemplateID);
 
-		Map<String, String> urlParameters = new HashMap<>();
+		Integer positionNumber = _getNextPositionNumber(spiraCustomProperties);
 
-		urlParameters.put(
-			"custom_list_id", String.valueOf(spiraCustomList.getID()));
+		if (positionNumber == null) {
+			throw new RuntimeException("Could not find valid position number");
+		}
+
+		requestJSONObject.put("PropertyNumber", positionNumber);
 
 		try {
 			SpiraCustomProperty spiraCustomProperty = new SpiraCustomProperty(
@@ -78,16 +96,58 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 					"project-templates/{project_template_id}/custom-properties",
 					urlParameters, urlPathReplacements, HttpRequestMethod.POST,
 					requestJSONObject.toString()),
-				spiraArtifactClass);
+				spiraProject, spiraArtifactClass);
 
 			cachedSpiraArtifacts(
 				Collections.singletonList(spiraCustomProperty));
+
+			SearchQuery.clearSearchQueries(SpiraCustomProperty.class);
 
 			return spiraCustomProperty;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	public static void deleteSpiraCustomPropertyByName(
+		final SpiraProject spiraProject,
+		final Class<? extends SpiraArtifact> spiraArtifactClass,
+		String customPropertyName) {
+
+		List<SpiraCustomProperty> spiraCustomProperties =
+			getSpiraCustomProperties(
+				spiraProject, spiraArtifactClass,
+				new SearchQuery.SearchParameter("Name", customPropertyName));
+
+		if (spiraCustomProperties.isEmpty()) {
+			return;
+		}
+
+		for (SpiraCustomProperty spiraCustomProperty : spiraCustomProperties) {
+			Map<String, String> urlPathReplacements = new HashMap<>();
+
+			urlPathReplacements.put(
+				"custom_property_id",
+				String.valueOf(spiraCustomProperty.getID()));
+			urlPathReplacements.put(
+				"project_template_id",
+				String.valueOf(spiraProject.getProjectTemplateID()));
+
+			try {
+				SpiraRestAPIUtil.request(
+					"project-templates/{project_template_id}" +
+						"/custom-properties/{custom_property_id}",
+					null, urlPathReplacements, HttpRequestMethod.DELETE, null);
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+	}
+
+	public int getPropertyNumber() {
+		return jsonObject.getInt("PropertyNumber");
 	}
 
 	public static enum Type {
@@ -140,7 +200,7 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 				@Override
 				public SpiraCustomProperty apply(JSONObject jsonObject) {
 					return new SpiraCustomProperty(
-						jsonObject, spiraArtifactClass);
+						jsonObject, spiraProject, spiraArtifactClass);
 				}
 
 			},
@@ -150,6 +210,32 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 	protected static final String ARTIFACT_TYPE_NAME = "customproperty";
 
 	protected static final String ID_KEY = "CustomPropertyId";
+
+	private static Integer _getNextPositionNumber(
+		List<SpiraCustomProperty> spiraCustomProperties) {
+
+		for (int i = 1; i <= spiraCustomProperties.size(); i++) {
+			SpiraCustomProperty positionedSpiraCustomProperty = null;
+
+			for (SpiraCustomProperty spiraCustomProperty :
+					spiraCustomProperties) {
+
+				if (spiraCustomProperty.getPropertyNumber() != i) {
+					continue;
+				}
+
+				positionedSpiraCustomProperty = spiraCustomProperty;
+
+				break;
+			}
+
+			if (positionedSpiraCustomProperty == null) {
+				return i;
+			}
+		}
+
+		return spiraCustomProperties.size() + 1;
+	}
 
 	private static List<JSONObject> _requestSpiraCustomProperties(
 		SpiraProject spiraProject,
@@ -189,13 +275,14 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 	}
 
 	private SpiraCustomProperty(
-		JSONObject jsonObject,
+		JSONObject jsonObject, SpiraProject spiraProject,
 		Class<? extends SpiraArtifact> spiraArtifactClass) {
 
 		super(jsonObject);
 
 		jsonObject.put(
 			"ArtifactTypeName", getArtifactTypeName(spiraArtifactClass));
+		jsonObject.put("ProjectId", spiraProject.getID());
 	}
 
 }

@@ -64,7 +64,8 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 				SpiraRestAPIUtil.requestJSONObject(
 					"project-templates/{project_template_id}/custom-lists",
 					null, urlPathReplacements, HttpRequestMethod.POST,
-					requestJSONObject.toString()));
+					requestJSONObject.toString()),
+				spiraProject);
 
 			cachedSpiraArtifacts(Collections.singletonList(spiraCustomList));
 
@@ -103,7 +104,7 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 
 				@Override
 				public SpiraCustomList apply(JSONObject jsonObject) {
-					return new SpiraCustomList(jsonObject);
+					return new SpiraCustomList(jsonObject, spiraProject);
 				}
 
 			},
@@ -147,8 +148,10 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 		}
 	}
 
-	private SpiraCustomList(JSONObject jsonObject) {
+	private SpiraCustomList(JSONObject jsonObject, SpiraProject spiraProject) {
 		super(jsonObject);
+
+		jsonObject.put("ProjectId", spiraProject.getID());
 	}
 
 }

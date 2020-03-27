@@ -118,6 +118,21 @@ public class SearchQuery<T extends SpiraArtifact> {
 		cachedSearchQueries.add(searchQuery);
 	}
 
+	protected static void clearSearchQueries(
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
+
+		List<SearchQuery<?>> cachedSearchQueries = _searchQueriesMap.get(
+			spiraArtifactClass);
+
+		if (cachedSearchQueries == null) {
+			cachedSearchQueries = new ArrayList<>();
+
+			_searchQueriesMap.put(spiraArtifactClass, cachedSearchQueries);
+		}
+
+		cachedSearchQueries.clear();
+	}
+
 	protected static SearchQuery<?> getCachedSearchQuery(
 		Class<?> spiraArtifactClass, SearchParameter... searchParameters) {
 

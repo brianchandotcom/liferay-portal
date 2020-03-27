@@ -15,40 +15,24 @@
 package com.liferay.portal.kernel.nio.intraband.messaging;
 
 import com.liferay.petra.lang.ClassLoaderPool;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.messaging.BaseDestination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
-import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.test.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
-import com.liferay.portal.kernel.process.local.LocalProcessLauncher;
-import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
-import com.liferay.portal.kernel.resiliency.spi.MockSPI;
-import com.liferay.portal.kernel.resiliency.spi.MockSPIProvider;
-import com.liferay.portal.kernel.resiliency.spi.SPI;
-import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
-import java.io.IOException;
-
 import java.nio.ByteBuffer;
 
-import java.rmi.RemoteException;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -125,6 +109,16 @@ public class IntrabandBridgeDestinationTest {
 			_mockIntraband);
 
 		ClassLoaderPool.unregister(ClassLoaderPool.class.getClassLoader());
+	}
+
+	@Test
+	public void testMisc() throws Exception {
+		IntrabandBridgeDestination intrabandBridgeDestination =
+			new IntrabandBridgeDestination(null);
+
+		intrabandBridgeDestination.sendMessageRoutingBag(null, null);
+
+		intrabandBridgeDestination.toRoutingId(null);
 	}
 
 	@Test
@@ -248,190 +242,6 @@ public class IntrabandBridgeDestinationTest {
 		}
 	}
 
-	@Test
-	public void testSendMessageBag1() {
-
-		// Is not SPI, without child SPI
-
-		_intrabandBridgeDestination.sendMessageRoutingBag(null);
-
-		Assert.assertSame(
-			_baseDestination,
-			_messageBus.getDestination(_baseDestination.getName()));
-	}
-
-	@Test
-	public void testSendMessageBag2() throws Exception {
-
-		// Is not SPI, with child SPI, not visited, unable to send
-
-		MockSPI mockSPI = _createMockSPI("SPIProvider", "SPI1");
-
-		_installSPIs(mockSPI);
-
-		IOException ioException = new IOException();
-
-		_mockIntraband.setIOException(ioException);
-
-		try {
-			MessageRoutingBag messageRoutingBag = _createMessageRoutingBag();
-
-			_intrabandBridgeDestination.sendMessageRoutingBag(
-				messageRoutingBag);
-
-			Assert.fail();
-		}
-		catch (RuntimeException runtimeException) {
-			Throwable throwable = runtimeException.getCause();
-
-			Assert.assertEquals(RuntimeException.class, throwable.getClass());
-			Assert.assertSame(ioException, throwable.getCause());
-		}
-		finally {
-			_mockIntraband.setIOException(null);
-		}
-
-		// Is not SPI, with child SPI, not visited, able to send
-
-		MessageRoutingBag messageRoutingBag = _createMessageRoutingBag();
-
-		_intrabandBridgeDestination.sendMessageRoutingBag(messageRoutingBag);
-
-		Message message = messageRoutingBag.getMessage();
-
-		Assert.assertEquals(_RECEIVE_VALUE, message.get(_RECEIVE_KEY));
-
-		// Is not SPI, with child SPI, visited
-
-		messageRoutingBag = _createMessageRoutingBag();
-
-		messageRoutingBag.appendRoutingId(_toRoutingId(mockSPI));
-
-		_intrabandBridgeDestination.sendMessageRoutingBag(messageRoutingBag);
-
-		message = messageRoutingBag.getMessage();
-
-		Assert.assertNull(message.get(_RECEIVE_KEY));
-	}
-
-	@NewEnv(type = NewEnv.Type.CLASSLOADER)
-	@Test
-	public void testSendMessageBag3() throws Exception {
-
-		// Is SPI, without child SPI, downcast
-
-		ConcurrentMap<String, Object> attributes =
-			LocalProcessLauncher.ProcessContext.getAttributes();
-
-		MockSPI mockSPI1 = _createMockSPI("SPIProvider", "SPI1");
-
-		attributes.put(SPI.SPI_INSTANCE_PUBLICATION_KEY, mockSPI1);
-
-		MessageRoutingBag messageRoutingBag = _createMessageRoutingBag();
-
-		messageRoutingBag.setRoutingDowncast(true);
-
-		_intrabandBridgeDestination.sendMessageRoutingBag(messageRoutingBag);
-
-		Assert.assertTrue(messageRoutingBag.isVisited(_toRoutingId(mockSPI1)));
-
-		Message message = messageRoutingBag.getMessage();
-
-		Assert.assertNull(message.get(_RECEIVE_KEY));
-
-		// Is SPI, without child SPI, upcast, unable to send
-
-		IOException ioException = new IOException();
-
-		_mockIntraband.setIOException(ioException);
-
-		try {
-			messageRoutingBag = _createMessageRoutingBag();
-
-			_intrabandBridgeDestination.sendMessageRoutingBag(
-				messageRoutingBag);
-
-			Assert.fail();
-		}
-		catch (RuntimeException runtimeException) {
-			Throwable throwable = runtimeException.getCause();
-
-			Assert.assertEquals(RuntimeException.class, throwable.getClass());
-			Assert.assertSame(ioException, throwable.getCause());
-		}
-		finally {
-			_mockIntraband.setIOException(null);
-		}
-
-		Assert.assertTrue(messageRoutingBag.isVisited(_toRoutingId(mockSPI1)));
-
-		// Is SPI, without child SPI, upcast, able to send
-
-		messageRoutingBag = _createMessageRoutingBag();
-
-		_intrabandBridgeDestination.sendMessageRoutingBag(messageRoutingBag);
-
-		Assert.assertTrue(messageRoutingBag.isVisited(_toRoutingId(mockSPI1)));
-
-		message = messageRoutingBag.getMessage();
-
-		Assert.assertEquals(_RECEIVE_VALUE, message.get(_RECEIVE_KEY));
-
-		// Is SPI, with child SPI, not visited, downcast
-
-		MockSPI mockSPI2 = _createMockSPI("SPIProvider", "SPI2");
-
-		_installSPIs(mockSPI2);
-
-		messageRoutingBag = _createMessageRoutingBag();
-
-		messageRoutingBag.setRoutingDowncast(true);
-
-		_intrabandBridgeDestination.sendMessageRoutingBag(messageRoutingBag);
-
-		Assert.assertTrue(messageRoutingBag.isVisited(_toRoutingId(mockSPI1)));
-
-		message = messageRoutingBag.getMessage();
-
-		Assert.assertEquals(_RECEIVE_VALUE, message.get(_RECEIVE_KEY));
-
-		// Is SPI, with child SPI, visited, downcast
-
-		messageRoutingBag = _createMessageRoutingBag();
-
-		messageRoutingBag.appendRoutingId(_toRoutingId(mockSPI2));
-		messageRoutingBag.setRoutingDowncast(true);
-
-		_intrabandBridgeDestination.sendMessageRoutingBag(messageRoutingBag);
-
-		Assert.assertTrue(messageRoutingBag.isVisited(_toRoutingId(mockSPI1)));
-
-		message = messageRoutingBag.getMessage();
-
-		Assert.assertNull(message.get(_RECEIVE_KEY));
-	}
-
-	private static void _installSPIs(SPI... spis) throws RemoteException {
-		Map<String, Object> spiProviderContainers =
-			ReflectionTestUtil.getFieldValue(
-				MPIHelperUtil.class, "_spiProviderContainers");
-
-		for (SPI spi : spis) {
-			MPIHelperUtil.registerSPIProvider(
-				new MockSPIProvider(spi.getSPIProviderName()));
-
-			Object spiProviderContainer = spiProviderContainers.get(
-				spi.getSPIProviderName());
-
-			Map<String, SPI> spiMap = ReflectionTestUtil.getFieldValue(
-				spiProviderContainer, "_spis");
-
-			SPIConfiguration spiConfiguration = spi.getSPIConfiguration();
-
-			spiMap.put(spiConfiguration.getSPIId(), spi);
-		}
-	}
-
 	private MessageRoutingBag _createMessageRoutingBag() {
 		Message message = new Message();
 
@@ -439,37 +249,6 @@ public class IntrabandBridgeDestinationTest {
 			IntrabandBridgeMessageListenerTest.class.getName());
 
 		return new MessageRoutingBag(message, true);
-	}
-
-	private MockSPI _createMockSPI(String spiProviderName, String spiId) {
-		MockSPI mockSPI = new MockSPI() {
-
-			@Override
-			public RegistrationReference getRegistrationReference() {
-				return _mockRegistrationReference;
-			}
-
-		};
-
-		mockSPI.spiConfiguration = new SPIConfiguration(
-			spiId, null, -1, null, null, null, null);
-		mockSPI.spiProviderName = spiProviderName;
-
-		return mockSPI;
-	}
-
-	private String _toRoutingId(SPI spi) throws RemoteException {
-		String spiProviderName = spi.getSPIProviderName();
-
-		SPIConfiguration spiConfiguration = spi.getSPIConfiguration();
-
-		String spiId = spiConfiguration.getSPIId();
-
-		return spiProviderName.concat(
-			StringPool.POUND
-		).concat(
-			spiId
-		);
 	}
 
 	private static final String _RECEIVE_KEY = "RECEIVE_KEY";

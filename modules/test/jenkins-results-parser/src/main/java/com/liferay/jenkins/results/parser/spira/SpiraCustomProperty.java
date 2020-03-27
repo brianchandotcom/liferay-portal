@@ -19,6 +19,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,12 +34,9 @@ import org.json.JSONObject;
  */
 public class SpiraCustomProperty extends BaseSpiraArtifact {
 
-	public String getArtifactType() {
-		return jsonObject.getString("ArtifactTypeName");
-	}
-
 	protected static List<SpiraCustomProperty> getSpiraCustomProperties(
-		final SpiraProject spiraProject, final SpiraArtifact spiraArtifact,
+		final SpiraProject spiraProject,
+		final Class<? extends SpiraArtifact> spiraArtifactClass,
 		SearchQuery.SearchParameter... searchParameters) {
 
 		SearchQuery.SearchParameter[] customSearchParameters =
@@ -47,7 +45,7 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		customSearchParameters[0] = new SearchQuery.SearchParameter(
 			SpiraProject.ID_KEY, spiraProject.getID());
 		customSearchParameters[1] = new SearchQuery.SearchParameter(
-			"artifact_type_name", spiraArtifact.getType());
+			"ArtifactTypeName", getArtifactTypeName(spiraArtifactClass));
 
 		for (int i = 0; i < searchParameters.length; i++) {
 			customSearchParameters[i + 2] = searchParameters[i];
@@ -59,8 +57,8 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 
 				@Override
 				public List<JSONObject> get() {
-					return _requestSpiraSpiraCustomProperties(
-						spiraProject, spiraArtifact);
+					return _requestSpiraCustomProperties(
+						spiraProject, spiraArtifactClass);
 				}
 
 			},
@@ -68,7 +66,8 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 
 				@Override
 				public SpiraCustomProperty apply(JSONObject jsonObject) {
-					return new SpiraCustomProperty(jsonObject, spiraArtifact);
+					return new SpiraCustomProperty(
+						jsonObject, spiraArtifactClass);
 				}
 
 			},
@@ -77,18 +76,18 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 
 	protected static final String ARTIFACT_TYPE_NAME = "customproperty";
 
-	protected static final String ID_KEY = "CustomPropertyListId";
+	protected static final String ID_KEY = "CustomPropertyId";
 
-	private static List<JSONObject> _requestSpiraSpiraCustomProperties(
-		SpiraProject spiraProject, SpiraArtifact spiraArtifact) {
+	private static List<JSONObject> _requestSpiraCustomProperties(
+		SpiraProject spiraProject,
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
 
-		System.out.println("This");
-
-		List<JSONObject> spiraCustomLists = new ArrayList<>();
+		List<JSONObject> spiraCustomProperties = new ArrayList<>();
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
-		urlPathReplacements.put("artifact_type_name", spiraArtifact.getType());
+		urlPathReplacements.put(
+			"artifact_type_name", getArtifactTypeName(spiraArtifactClass));
 		urlPathReplacements.put(
 			"project_template_id",
 			String.valueOf(spiraProject.getProjectTemplateID()));
@@ -106,10 +105,10 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 				responseJSONObject.put(
 					SpiraProject.ID_KEY, spiraProject.getID());
 
-				spiraCustomLists.add(responseJSONObject);
+				spiraCustomProperties.add(responseJSONObject);
 			}
 
-			return spiraCustomLists;
+			return spiraCustomProperties;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -117,11 +116,13 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 	}
 
 	private SpiraCustomProperty(
-		JSONObject jsonObject, SpiraArtifact spiraArtifact) {
+		JSONObject jsonObject,
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
 
 		super(jsonObject);
 
-		jsonObject.put("ArtifactTypeName", spiraArtifact.getType());
+		jsonObject.put(
+			"ArtifactTypeName", getArtifactTypeName(spiraArtifactClass));
 	}
 
 }

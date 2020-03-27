@@ -74,21 +74,18 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			return;
 		}
 
-		List<JournalArticle> journalArticles =
-			_journalArticleService.getArticlesByLayoutUuid(
-				layoutSet.getGroupId(), layoutUuid);
-
-		boolean headCheck = true;
-
-		if ((journalArticles != null) && journalArticles.isEmpty()) {
-			headCheck = false;
-
-			journalArticles = getDisplayPageTemplateArticles(
-				layoutUuid, layoutSet);
+		if (layout.isTypeAssetDisplay()) {
+			visitArticles(
+				element, layoutSet, themeDisplay,
+				getDisplayPageTemplateArticles(layout), false);
 		}
-
-		visitArticles(
-			element, layoutSet, themeDisplay, journalArticles, headCheck);
+		else {
+			visitArticles(
+				element, layoutSet, themeDisplay,
+				_journalArticleService.getArticlesByLayoutUuid(
+					layoutSet.getGroupId(), layoutUuid),
+				true);
+		}
 	}
 
 	@Override
@@ -103,12 +100,9 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	protected List<JournalArticle> getDisplayPageTemplateArticles(
-		String layoutUuid, LayoutSet layoutSet) {
+		Layout layout) {
 
 		List<JournalArticle> journalArticles = new ArrayList<>();
-
-		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			layoutUuid, layoutSet.getGroupId(), layoutSet.isPrivateLayout());
 
 		if (layout == null) {
 			return journalArticles;

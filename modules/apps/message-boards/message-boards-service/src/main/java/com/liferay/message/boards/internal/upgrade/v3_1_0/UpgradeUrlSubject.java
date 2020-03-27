@@ -26,9 +26,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Javier Gamarra
  */
@@ -69,29 +66,6 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 		}
 	}
 
-	private Map<Long, String> _getInitialUrlSubjects(Connection con)
-		throws SQLException {
-
-		try (PreparedStatement ps = con.prepareStatement(
-				"select messageId, subject from MBMessage where " +
-					"(urlSubject is null) or (urlSubject = '')")) {
-
-			try (ResultSet rs = ps.executeQuery()) {
-				Map<Long, String> urlSubjects = new HashMap<>();
-
-				while (rs.next()) {
-					long messageId = rs.getLong(1);
-					String subject = rs.getString(2);
-
-					urlSubjects.put(
-						messageId, _getUrlSubject(messageId, subject));
-				}
-
-				return urlSubjects;
-			}
-		}
-	}
-
 	private String _getUrlSubject(long id, String subject) {
 		if (subject == null) {
 			return String.valueOf(id);
@@ -113,27 +87,30 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 	}
 
 	private void _populateUrlSubject() throws SQLException {
-		Map<Long, String> urlSubjects = _getInitialUrlSubjects(connection);
+		try (PreparedStatement ps1 = connection.prepareStatement(
+				"select messageId, subject from MBMessage where (urlSubject " +
+					"is null) or (urlSubject = '')");
+			ResultSet rs = ps1.executeQuery()) {
 
-		for (Map.Entry<Long, String> entry : urlSubjects.entrySet()) {
-			String uniqueUrlSubject = _findUniqueUrlSubject(
-				connection, entry.getValue());
+			while (rs.next()) {
+				long messageId = rs.getLong(1);
+				String subject = rs.getString(2);
 
-			_updateMBMessage(connection, entry.getKey(), uniqueUrlSubject);
-		}
-	}
+				String urlSubject = _getUrlSubject(messageId, subject);
 
-	private void _updateMBMessage(
-			Connection con, long messageId, String urlSubject)
-		throws SQLException {
+				String uniqueUrlSubject = _findUniqueUrlSubject(
+					connection, urlSubject);
 
-		try (PreparedStatement ps = con.prepareStatement(
-				"update MBMessage set urlSubject = ? where messageId = ?")) {
+				try (PreparedStatement ps2 = connection.prepareStatement(
+						"update MBMessage set urlSubject = ? where messageId " +
+							"= ?")) {
 
-			ps.setString(1, urlSubject);
-			ps.setLong(2, messageId);
+					ps2.setString(1, uniqueUrlSubject);
+					ps2.setLong(2, messageId);
 
-			ps.execute();
+					ps2.execute();
+				}
+			}
 		}
 	}
 

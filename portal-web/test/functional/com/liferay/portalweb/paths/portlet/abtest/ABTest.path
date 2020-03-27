@@ -69,13 +69,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VARIANT_NAME_FIELD</td>
-	<td>//input[@class='form-control mt-1']</td>
+	<td>VARIANT_DROPDOWN</td>
+	<td>//div[@class='autofit-col']//*[contains(@class, 'dropdown-toggle btn-monospaced btn btn-outline-borderless btn-outline-secondary')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>VARIANT_DROPDOWN</td>
-	<td>//div[@class='autofit-col']//*[contains(@class, 'dropdown-toggle btn-monospaced btn btn-outline-borderless btn-outline-secondary')]</td>
+	<td>VARIANT_NAME_FIELD</td>
+	<td>//input[@class='form-control mt-1']</td>
 	<td></td>
 </tr>
 <tr>

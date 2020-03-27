@@ -182,7 +182,6 @@ const DropdownItem = ({
 	<>
 		<ClayDropDown.Item
 			active={expand && currentValue === option.label}
-			className="ddm-btn-full ddm-select-dropdown"
 			data-testid={`dropdownItem-${index}`}
 			label={option.label}
 			onClick={event =>

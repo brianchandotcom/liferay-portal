@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -273,12 +272,8 @@ public class FragmentEntryProcessorHelperImpl
 			TemplateConstants.LANG_TYPE_FTL,
 			new StringTemplateResource("template_id", "[#ftl] " + html), true);
 
-		TemplateManager templateManager =
-			TemplateManagerUtil.getTemplateManager(
-				TemplateConstants.LANG_TYPE_FTL);
-
-		templateManager.addTaglibSupport(
-			template, fragmentEntryProcessorContext.getHttpServletRequest(),
+		template.prepareTaglib(
+			fragmentEntryProcessorContext.getHttpServletRequest(),
 			fragmentEntryProcessorContext.getHttpServletResponse());
 
 		template.put(TemplateConstants.WRITER, unsyncStringWriter);

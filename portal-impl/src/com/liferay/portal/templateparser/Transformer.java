@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
@@ -142,11 +141,7 @@ public class Transformer {
 			template.put("siteGroupId", siteGroupId);
 			template.put("templatesPath", templatesPath);
 
-			TemplateManager templateManager =
-				TemplateManagerUtil.getTemplateManager(langType);
-
-			templateManager.addTaglibSupport(
-				template, httpServletRequest, httpServletResponse);
+			template.prepareTaglib(httpServletRequest, httpServletResponse);
 
 			// Deprecated variables
 

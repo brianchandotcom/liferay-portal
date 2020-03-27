@@ -210,7 +210,7 @@ public class InfoListProviderItemSelectorView
 			SearchContainer searchContainer = new SearchContainer<>(
 				portletRequest, _portletURL, null,
 				_language.get(
-					resourceBundle, "there-are-no-info-list-providers"));
+					resourceBundle, "there-are-no-content-set-providers"));
 
 			List<InfoListProvider> infoListProviders = null;
 

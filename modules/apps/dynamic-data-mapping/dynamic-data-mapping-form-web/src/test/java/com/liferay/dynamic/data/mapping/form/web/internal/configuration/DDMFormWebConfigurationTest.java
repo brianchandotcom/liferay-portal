@@ -35,7 +35,7 @@ public class DDMFormWebConfigurationTest {
 		Assert.assertEquals(
 			"enabled-with-warning", ddmFormWebConfiguration.csvExport());
 		Assert.assertEquals(
-			"descriptive", ddmFormWebConfiguration.defaultDisplayView());
+			"list", ddmFormWebConfiguration.defaultDisplayView());
 	}
 
 }

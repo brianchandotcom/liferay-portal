@@ -128,8 +128,7 @@ public class PullRequest {
 			"issues/" + getNumber() + "/labels");
 
 		try {
-			JenkinsResultsParserUtil.toString(
-				gitHubApiUrl, jsonArray.toString());
+			_toString(gitHubApiUrl, jsonArray.toString());
 		}
 		catch (IOException ioException) {
 			System.out.println("Unable to add label " + label.getName());
@@ -148,7 +147,7 @@ public class PullRequest {
 
 			postContentJSONObject.put("state", "closed");
 
-			JenkinsResultsParserUtil.toString(
+			_toString(
 				_jsonObject.getString("url"), postContentJSONObject.toString());
 		}
 
@@ -400,10 +399,10 @@ public class PullRequest {
 		editCommentURL = editCommentURL.replaceFirst("issues/\\d+", "issues");
 
 		try {
-			JenkinsResultsParserUtil.toString(
+			_toString(
 				JenkinsResultsParserUtil.combine(
 					editCommentURL, "/comments/", id),
-				false, HttpRequestMethod.DELETE);
+				HttpRequestMethod.DELETE);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
@@ -424,8 +423,7 @@ public class PullRequest {
 			getGitHubRemoteGitRepositoryName(), getOwnerUsername(), path);
 
 		try {
-			JenkinsResultsParserUtil.toString(
-				gitHubApiUrl, HttpRequestMethod.DELETE);
+			_toString(gitHubApiUrl, HttpRequestMethod.DELETE);
 
 			refresh();
 		}
@@ -669,6 +667,20 @@ public class PullRequest {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	private static String _toString(String url, HttpRequestMethod method)
+		throws IOException {
+
+		return JenkinsResultsParserUtil.toString(
+			url, true, 10, method, null, 30, 5000, null);
+	}
+
+	private static String _toString(String gitHubApiUrl, String postContent)
+		throws IOException {
+
+		return JenkinsResultsParserUtil.toString(
+			gitHubApiUrl, false, 10, null, postContent, 30, 5000, null);
 	}
 
 	private static final String _NAME_TEST_SUITE_DEFAULT = "default";

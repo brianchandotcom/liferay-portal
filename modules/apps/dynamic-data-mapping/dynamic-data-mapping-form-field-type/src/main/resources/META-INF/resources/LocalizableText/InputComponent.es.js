@@ -49,6 +49,7 @@ const InputComponent = ({
 		<ClayInput.GroupItem append>
 			<input
 				className="ddm-field-text form-control"
+				data-testid="visibleChangeInput"
 				disabled={readOnly}
 				id={`${name}inputValue`}
 				onBlur={onFieldBlurred}

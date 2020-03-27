@@ -31,8 +31,9 @@ public interface FFRedirectConfiguration {
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "30", name = "not-found-entries-threshold", required = false
+		deflt = "30", name = "redirect-not-found-entry-max-age",
+		required = false
 	)
-	public int notFoundEntriesThreshold();
+	public int redirectNotFoundEntryMaxAge();
 
 }

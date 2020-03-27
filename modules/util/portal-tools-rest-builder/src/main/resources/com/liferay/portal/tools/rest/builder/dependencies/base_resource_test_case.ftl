@@ -1694,6 +1694,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		<#if properties?keys?seq_contains("siteId")>
+			graphQLFields.add(new GraphQLField("siteId"));
+		</#if>
+
 		for (Field field : ReflectionUtil.getDeclaredFields(
 				${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName}.class)) {
 

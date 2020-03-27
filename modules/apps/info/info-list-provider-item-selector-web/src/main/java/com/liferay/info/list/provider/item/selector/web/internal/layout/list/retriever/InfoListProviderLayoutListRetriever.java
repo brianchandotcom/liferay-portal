@@ -19,9 +19,11 @@ import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderContext;
 import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
+import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.list.retriever.KeyListObjectReference;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverContext;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,7 +72,14 @@ public class InfoListProviderLayoutListRetriever
 		InfoListProviderContext infoListProviderContext =
 			new DefaultInfoListProviderContext(group, user);
 
-		return infoListProvider.getInfoList(infoListProviderContext);
+		Optional<Pagination> paginationOptional =
+			layoutListRetrieverContext.getPaginationOptional();
+
+		Pagination pagination = paginationOptional.orElse(
+			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+
+		return infoListProvider.getInfoList(
+			infoListProviderContext, pagination, null);
 	}
 
 	@Override

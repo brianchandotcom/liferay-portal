@@ -146,7 +146,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 			testGroup.getCompanyId(), instance);
 
 		for (AssigneeUser assigneeUser : instance.getAssigneeUsers()) {
-			_workflowMetricsRESTTestHelper.addToken(
+			_workflowMetricsRESTTestHelper.addTask(
 				assigneeUser.getId(), testGroup.getCompanyId(), instance);
 		}
 

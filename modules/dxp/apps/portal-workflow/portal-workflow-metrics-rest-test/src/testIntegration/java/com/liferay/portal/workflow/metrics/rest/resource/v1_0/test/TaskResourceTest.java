@@ -26,7 +26,6 @@ import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -382,16 +381,12 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		User adminUser = UserTestUtil.getAdminUser(testGroup.getCompanyId());
 
-		task = _workflowMetricsRESTTestHelper.addTask(
+		return _workflowMetricsRESTTestHelper.addTask(
 			adminUser.getUserId(), testGroup.getCompanyId(),
 			() -> _workflowMetricsRESTTestHelper.addInstance(
 				testGroup.getCompanyId(), Objects.equals(status, "COMPLETED"),
 				processId),
 			processId, status, task, version);
-
-		_tasks.add(task);
-
-		return task;
 	}
 
 	@Override
@@ -415,14 +410,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	}
 
 	private void _deleteTasks() throws Exception {
-		for (Task task : _tasks) {
-			_workflowMetricsRESTTestHelper.deleteTask(
-				testGroup.getCompanyId(), _process.getId(), task);
-		}
+		_workflowMetricsRESTTestHelper.deleteTasks(
+			testGroup.getCompanyId(), _process.getId());
 	}
 
 	private Process _process;
-	private final List<Task> _tasks = new ArrayList<>();
 
 	@Inject
 	private WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;

@@ -57,15 +57,16 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 
 	}
 
-	protected static SpiraCustomList createSpiraCustomListByName(
-		final SpiraProject spiraProject, String spiraCustomListName) {
+	public static SpiraCustomList createSpiraCustomListByName(
+		SpiraProject spiraProject,
+		Class<? extends SpiraArtifact> spiraArtifactClass,
+		String spiraCustomListName) {
 
-		List<SpiraCustomList> spiraCustomLists = getSpiraCustomLists(
-			spiraProject,
-			new SearchQuery.SearchParameter("Name", spiraCustomListName));
+		SpiraCustomList cachedSpiraCustomList = getSpiraCustomListByName(
+			spiraProject, spiraArtifactClass, spiraCustomListName);
 
-		if (!spiraCustomLists.isEmpty()) {
-			return spiraCustomLists.get(0);
+		if (cachedSpiraCustomList != null) {
+			return cachedSpiraCustomList;
 		}
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
@@ -88,7 +89,7 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 					"project-templates/{project_template_id}/custom-lists",
 					null, urlPathReplacements, HttpRequestMethod.POST,
 					requestJSONObject.toString()),
-				spiraProject);
+				spiraProject, spiraArtifactClass);
 
 			cachedSpiraArtifacts(Collections.singletonList(spiraCustomList));
 
@@ -99,8 +100,25 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 		}
 	}
 
+	protected static SpiraCustomList getSpiraCustomListByName(
+		SpiraProject spiraProject,
+		Class<? extends SpiraArtifact> spiraArtifactClass,
+		String spiraCustomListName) {
+
+		List<SpiraCustomList> spiraCustomLists = getSpiraCustomLists(
+			spiraProject, spiraArtifactClass,
+			new SearchQuery.SearchParameter("Name", spiraCustomListName));
+
+		if (!spiraCustomLists.isEmpty()) {
+			return spiraCustomLists.get(0);
+		}
+
+		return null;
+	}
+
 	protected static List<SpiraCustomList> getSpiraCustomLists(
 		final SpiraProject spiraProject,
+		final Class<? extends SpiraArtifact> spiraArtifactClass,
 		SearchQuery.SearchParameter... searchParameters) {
 
 		SearchQuery.SearchParameter[] customSearchParameters =
@@ -127,7 +145,8 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 
 				@Override
 				public SpiraCustomList apply(JSONObject jsonObject) {
-					return new SpiraCustomList(jsonObject, spiraProject);
+					return new SpiraCustomList(
+						jsonObject, spiraProject, spiraArtifactClass);
 				}
 
 			},
@@ -171,10 +190,17 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 		}
 	}
 
-	private SpiraCustomList(JSONObject jsonObject, SpiraProject spiraProject) {
+	private SpiraCustomList(
+		JSONObject jsonObject, SpiraProject spiraProject,
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
+
 		super(jsonObject);
 
 		jsonObject.put("ProjectId", spiraProject.getID());
+
+		_spiraArtifactClass = spiraArtifactClass;
 	}
+
+	private final Class<? extends SpiraArtifact> _spiraArtifactClass;
 
 }

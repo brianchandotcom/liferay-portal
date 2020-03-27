@@ -34,7 +34,7 @@ import org.json.JSONObject;
  */
 public class SpiraCustomProperty extends BaseSpiraArtifact {
 
-	public static SpiraCustomProperty createSpiraCustomPropertyByName(
+	public static SpiraCustomProperty createSpiraCustomProperty(
 		final SpiraProject spiraProject,
 		final Class<? extends SpiraArtifact> spiraArtifactClass,
 		String customPropertyName) {
@@ -60,7 +60,7 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 
 		SpiraCustomList spiraCustomList =
 			SpiraCustomList.createSpiraCustomListByName(
-				spiraProject, customPropertyName);
+				spiraProject, spiraArtifactClass, customPropertyName);
 
 		Map<String, String> urlParameters = new HashMap<>();
 

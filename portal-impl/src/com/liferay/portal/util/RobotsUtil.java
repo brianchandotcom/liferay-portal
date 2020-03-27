@@ -62,7 +62,14 @@ public class RobotsUtil {
 			return getDefaultRobots(null, secure, portalServerPort);
 		}
 
-		String virtualHostname = _getVirtualHostName(layoutSet);
+		TreeMap<String, String> virtualHostnames =
+			PortalUtil.getVirtualHostnames(layoutSet);
+
+		String virtualHostname = StringPool.BLANK;
+
+		if (!virtualHostnames.isEmpty()) {
+			virtualHostname = virtualHostnames.firstKey();
+		}
 
 		String robotsTxt = GetterUtil.getString(
 			layoutSet.getSettingsProperty(
@@ -105,19 +112,6 @@ public class RobotsUtil {
 		}
 
 		return strictRobots;
-	}
-
-	private static String _getVirtualHostName(LayoutSet layoutSet) {
-		TreeMap<String, String> virtualHostnames =
-			PortalUtil.getVirtualHostnames(layoutSet);
-
-		String virtualHostname = StringPool.BLANK;
-
-		if (!virtualHostnames.isEmpty()) {
-			virtualHostname = virtualHostnames.firstKey();
-		}
-
-		return virtualHostname;
 	}
 
 	private static String _replaceWildcards(

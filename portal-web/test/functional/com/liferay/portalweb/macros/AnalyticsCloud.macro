@@ -1,24 +1,24 @@
 definition {
 
-	macro loginAC {
+	macro loginAnalyticsCloud {
 		SelectWindow(locator1 = "title=Analytics Cloud");
 
 		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD");
 
 		Type(
 			locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD",
-			value1 = "${EmailAddress}");
+			value1 = "${emailAddress}");
 
 		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_PASSWORD_LOGIN_FIELD");
 
 		Type(
 			locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_PASSWORD_LOGIN_FIELD",
-			value1 = "${Password}");
+			value1 = "${password}");
 
 		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_LOGIN_BUTTON");
 	}
 
-	macro syncAC {
+	macro syncAnalyticsCloud {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

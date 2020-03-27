@@ -1,13 +1,13 @@
 @component-name = "portal-ab-test"
 definition {
 
-	// Ignore test until AC connection is fully automated
+	// Ignore test until Analytics Cloud connection is fully automated
 
 	property portal.release = "true";
 	property portal.upstream = "quarantine";
 	property testray.main.component.name = "A/B Test";
 
-	// User has to be connected to AC and logged in AC
+	// User has to be connected to Analytics Cloud
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -24,7 +24,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		AnalyticsCloud.syncAC();
+		AnalyticsCloud.syncAnalyticsCloud();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/content-page");
 	}
@@ -40,17 +40,17 @@ definition {
 	@description = "Validate if the user can create an A/B Test"
 	@priority = "5"
 	test CreateABTestByBounceRate {
-		ABTest.createABtestByBounceRate(TestTitle = "AB test title");
+		ABTest.createABTestByBounceRate(testTitle = "AB test title");
 
-		ABTest.createVariant(VariantName = "Variant name");
+		ABTest.createVariant(variantName = "Variant name");
 
 		ABTest.runTest();
 
-		ABTest.checkAC();
+		ABTest.checkAnalyticsCloud();
 
-		AnalyticsCloud.loginAC(
-			EmailAddress = "test@liferay.com",
-			Password = "test");
+		AnalyticsCloud.loginAnalyticsCloud(
+			emailAddress = "test@liferay.com",
+			password = "test");
 
 		AssertTextEquals(
 			locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE",
@@ -60,9 +60,9 @@ definition {
 	@description = "Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control if the user add variants and remove all variants"
 	@priority = "5"
 	test CreateABTestRunWithDeletedVariants {
-		ABTest.createABtestByBounceRate(TestTitle = "AB test title");
+		ABTest.createABtestByBounceRate(testTitle = "AB test title");
 
-		ABTest.createVariant(VariantName = "Variant name");
+		ABTest.createVariant(variantName = "Variant name");
 
 		ABTest.deleteVariant();
 
@@ -76,7 +76,7 @@ definition {
 	@description = "Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control"
 	@priority = "5"
 	test CreateABTestRunWithNoVariants {
-		ABTest.createABtestByBounceRate(TestTitle = "AB test title");
+		ABTest.createABtestByBounceRate(testTitle = "AB test title");
 
 		ABTest.runTest();
 

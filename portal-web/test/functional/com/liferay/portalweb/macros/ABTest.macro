@@ -1,6 +1,6 @@
 definition {
 
-	macro checkAC {
+	macro checkAnalyticsCloudInfo {
 		Click(locator1 = "ABTest#CONTROL_VARIANT");
 
 		Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
@@ -15,7 +15,7 @@ definition {
 
 		Type(
 			locator1 = "ABTest#AB_TEST_TITLE_FIELD",
-			value1 = "${TestTitle}");
+			value1 = "${testTitle}");
 
 		Click(locator1 = "ABTest#SAVE_AB_TEST_BUTTON");
 	}
@@ -27,7 +27,7 @@ definition {
 
 		Type(
 			locator1 = "ABTest#VARIANT_NAME_FIELD",
-			value1 = "${VariantName}");
+			value1 = "${variantName}");
 
 		Click(locator1 = "ABTest#SAVE_VARIANT_NAME_BUTTON");
 	}

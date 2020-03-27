@@ -34,6 +34,29 @@ import org.json.JSONObject;
  */
 public class SpiraCustomList extends BaseSpiraArtifact {
 
+	public static class Value extends BaseSpiraArtifact {
+
+		public SpiraCustomList getSpiraCustomList() {
+			return _spiraCustomList;
+		}
+
+		protected Value(
+			JSONObject jsonObject, SpiraProject spiraProject,
+			SpiraCustomList spiraCustomList) {
+
+			super(jsonObject);
+
+			jsonObject.put("ProjectId", spiraProject.getID());
+
+			_spiraCustomList = spiraCustomList;
+		}
+
+		protected static final String ID_KEY = "CustomPropertyValueId";
+
+		private final SpiraCustomList _spiraCustomList;
+
+	}
+
 	protected static SpiraCustomList createSpiraCustomListByName(
 		final SpiraProject spiraProject, String spiraCustomListName) {
 

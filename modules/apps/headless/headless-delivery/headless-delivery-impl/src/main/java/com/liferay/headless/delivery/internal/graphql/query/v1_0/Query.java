@@ -69,6 +69,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.Date;
 import java.util.Map;
 import java.util.function.BiFunction;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.Generated;
 
@@ -1964,26 +1966,36 @@ public class Query {
 			description = "Retrieves the parent knowledge base article's child knowledge base articles. Results can be paginated, filtered, searched, and sorted."
 		)
 		public KnowledgeBaseArticlePage knowledgeBaseArticles(
-				@GraphQLName("flatten") Boolean flatten,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("flatten") Boolean flatten,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_knowledgeBaseArticleResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				knowledgeBaseArticleResource -> new KnowledgeBaseArticlePage(
-					knowledgeBaseArticleResource.
-						getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-							_knowledgeBaseArticle.getId(), flatten, search,
-							_filterBiFunction.apply(
-								knowledgeBaseArticleResource, filterString),
-							Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								knowledgeBaseArticleResource, sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_knowledgeBaseArticleResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					knowledgeBaseArticleResource ->
+						new KnowledgeBaseArticlePage(
+							knowledgeBaseArticleResource.
+								getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+									_knowledgeBaseArticle.getId(), flatten,
+									search,
+									_filterBiFunction.apply(
+										knowledgeBaseArticleResource,
+										filterString),
+									Pagination.of(page, pageSize),
+									_sortsBiFunction.apply(
+										knowledgeBaseArticleResource,
+										sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private KnowledgeBaseArticle _knowledgeBaseArticle;
@@ -1998,13 +2010,20 @@ public class Query {
 		}
 
 		@GraphQLField(description = "Retrieves the document folder.")
-		public DocumentFolder folder() throws Exception {
-			return _applyComponentServiceObjects(
-				_documentFolderResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				documentFolderResource ->
-					documentFolderResource.getDocumentFolder(
-						_document.getDocumentFolderId()));
+		public DocumentFolder folder() {
+			try {
+				return _applyComponentServiceObjects(
+					_documentFolderResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					documentFolderResource ->
+						documentFolderResource.getDocumentFolder(
+							_document.getDocumentFolderId()));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private Document _document;
@@ -2021,13 +2040,20 @@ public class Query {
 		}
 
 		@GraphQLField(description = "Retrieves the message board section.")
-		public MessageBoardSection messageBoardSection() throws Exception {
-			return _applyComponentServiceObjects(
-				_messageBoardSectionResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				messageBoardSectionResource ->
-					messageBoardSectionResource.getMessageBoardSection(
-						_messageBoardThread.getMessageBoardSectionId()));
+		public MessageBoardSection messageBoardSection() {
+			try {
+				return _applyComponentServiceObjects(
+					_messageBoardSectionResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					messageBoardSectionResource ->
+						messageBoardSectionResource.getMessageBoardSection(
+							_messageBoardThread.getMessageBoardSectionId()));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private MessageBoardThread _messageBoardThread;
@@ -2046,17 +2072,22 @@ public class Query {
 		@GraphQLField(
 			description = "Retrieves the message board thread's attachments."
 		)
-		public MessageBoardAttachmentPage messageBoardAttachments()
-			throws Exception {
+		public MessageBoardAttachmentPage messageBoardAttachments() {
+			try {
+				return _applyComponentServiceObjects(
+					_messageBoardAttachmentResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					messageBoardAttachmentResource ->
+						new MessageBoardAttachmentPage(
+							messageBoardAttachmentResource.
+								getMessageBoardThreadMessageBoardAttachmentsPage(
+									_messageBoardThread.getId())));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
 
-			return _applyComponentServiceObjects(
-				_messageBoardAttachmentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				messageBoardAttachmentResource ->
-					new MessageBoardAttachmentPage(
-						messageBoardAttachmentResource.
-							getMessageBoardThreadMessageBoardAttachmentsPage(
-								_messageBoardThread.getId())));
+				return null;
+			}
 		}
 
 		private MessageBoardThread _messageBoardThread;
@@ -2076,16 +2107,22 @@ public class Query {
 			description = "Retrieves the structured content's rendered template (the result of applying the structure's values to a template)."
 		)
 		public String renderedContentTemplate(
-				@GraphQLName("templateId") Long templateId)
-			throws Exception {
+			@GraphQLName("templateId") Long templateId) {
 
-			return _applyComponentServiceObjects(
-				_structuredContentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				structuredContentResource ->
-					structuredContentResource.
-						getStructuredContentRenderedContentTemplate(
-							_structuredContent.getId(), templateId));
+			try {
+				return _applyComponentServiceObjects(
+					_structuredContentResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					structuredContentResource ->
+						structuredContentResource.
+							getStructuredContentRenderedContentTemplate(
+								_structuredContent.getId(), templateId));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private StructuredContent _structuredContent;
@@ -2105,18 +2142,24 @@ public class Query {
 			description = "Retrieves the knowledge base folder's subfolders."
 		)
 		public KnowledgeBaseFolderPage knowledgeBaseFolders(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page) {
 
-			return _applyComponentServiceObjects(
-				_knowledgeBaseFolderResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				knowledgeBaseFolderResource -> new KnowledgeBaseFolderPage(
-					knowledgeBaseFolderResource.
-						getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-							_knowledgeBaseFolder.getId(),
-							Pagination.of(page, pageSize))));
+			try {
+				return _applyComponentServiceObjects(
+					_knowledgeBaseFolderResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					knowledgeBaseFolderResource -> new KnowledgeBaseFolderPage(
+						knowledgeBaseFolderResource.
+							getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+								_knowledgeBaseFolder.getId(),
+								Pagination.of(page, pageSize))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private KnowledgeBaseFolder _knowledgeBaseFolder;
@@ -2131,12 +2174,19 @@ public class Query {
 		}
 
 		@GraphQLField(description = "Retrieves the document's rating.")
-		public Rating myRating() throws Exception {
-			return _applyComponentServiceObjects(
-				_documentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				documentResource -> documentResource.getDocumentMyRating(
-					_document.getId()));
+		public Rating myRating() {
+			try {
+				return _applyComponentServiceObjects(
+					_documentResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					documentResource -> documentResource.getDocumentMyRating(
+						_document.getId()));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private Document _document;
@@ -2156,25 +2206,31 @@ public class Query {
 			description = "Retrieves a list of the content structure's structured content. Results can be paginated, filtered, searched, and sorted."
 		)
 		public StructuredContentPage structuredContents(
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_structuredContentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				structuredContentResource -> new StructuredContentPage(
-					structuredContentResource.
-						getContentStructureStructuredContentsPage(
-							_contentStructure.getId(), search,
-							_filterBiFunction.apply(
-								structuredContentResource, filterString),
-							Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								structuredContentResource, sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_structuredContentResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					structuredContentResource -> new StructuredContentPage(
+						structuredContentResource.
+							getContentStructureStructuredContentsPage(
+								_contentStructure.getId(), search,
+								_filterBiFunction.apply(
+									structuredContentResource, filterString),
+								Pagination.of(page, pageSize),
+								_sortsBiFunction.apply(
+									structuredContentResource, sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private ContentStructure _contentStructure;
@@ -2194,17 +2250,22 @@ public class Query {
 		@GraphQLField(
 			description = "Retrieves the message board message's attachments."
 		)
-		public MessageBoardAttachmentPage messageBoardAttachments()
-			throws Exception {
+		public MessageBoardAttachmentPage messageBoardAttachments() {
+			try {
+				return _applyComponentServiceObjects(
+					_messageBoardAttachmentResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					messageBoardAttachmentResource ->
+						new MessageBoardAttachmentPage(
+							messageBoardAttachmentResource.
+								getMessageBoardMessageMessageBoardAttachmentsPage(
+									_messageBoardMessage.getId())));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
 
-			return _applyComponentServiceObjects(
-				_messageBoardAttachmentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				messageBoardAttachmentResource ->
-					new MessageBoardAttachmentPage(
-						messageBoardAttachmentResource.
-							getMessageBoardMessageMessageBoardAttachmentsPage(
-								_messageBoardMessage.getId())));
+				return null;
+			}
 		}
 
 		private MessageBoardMessage _messageBoardMessage;
@@ -2224,22 +2285,30 @@ public class Query {
 			description = "Retrieves the blog post's comments in a list. Results can be paginated, filtered, searched, and sorted."
 		)
 		public CommentPage comments(
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_commentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				commentResource -> new CommentPage(
-					commentResource.getBlogPostingCommentsPage(
-						_blogPosting.getId(), search,
-						_filterBiFunction.apply(commentResource, filterString),
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(commentResource, sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_commentResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					commentResource -> new CommentPage(
+						commentResource.getBlogPostingCommentsPage(
+							_blogPosting.getId(), search,
+							_filterBiFunction.apply(
+								commentResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								commentResource, sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private BlogPosting _blogPosting;
@@ -2259,24 +2328,31 @@ public class Query {
 			description = "Retrieves the folder's documents. Results can be paginated, filtered, searched, and sorted."
 		)
 		public DocumentPage documents(
-				@GraphQLName("flatten") Boolean flatten,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("flatten") Boolean flatten,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_documentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				documentResource -> new DocumentPage(
-					documentResource.getDocumentFolderDocumentsPage(
-						_documentFolder.getId(), flatten, search,
-						_filterBiFunction.apply(documentResource, filterString),
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(
-							documentResource, sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_documentResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					documentResource -> new DocumentPage(
+						documentResource.getDocumentFolderDocumentsPage(
+							_documentFolder.getId(), flatten, search,
+							_filterBiFunction.apply(
+								documentResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								documentResource, sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private DocumentFolder _documentFolder;
@@ -2293,13 +2369,21 @@ public class Query {
 		}
 
 		@GraphQLField(description = "Retrieves the wiki page's attachments.")
-		public WikiPageAttachmentPage wikiPageAttachments() throws Exception {
-			return _applyComponentServiceObjects(
-				_wikiPageAttachmentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				wikiPageAttachmentResource -> new WikiPageAttachmentPage(
-					wikiPageAttachmentResource.
-						getWikiPageWikiPageAttachmentsPage(_wikiPage.getId())));
+		public WikiPageAttachmentPage wikiPageAttachments() {
+			try {
+				return _applyComponentServiceObjects(
+					_wikiPageAttachmentResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					wikiPageAttachmentResource -> new WikiPageAttachmentPage(
+						wikiPageAttachmentResource.
+							getWikiPageWikiPageAttachmentsPage(
+								_wikiPage.getId())));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private WikiPage _wikiPage;
@@ -2316,13 +2400,20 @@ public class Query {
 		@GraphQLField(
 			description = "Retrieves the child wiki page's of a wiki page."
 		)
-		public WikiPagePage wikiPages() throws Exception {
-			return _applyComponentServiceObjects(
-				_wikiPageResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				wikiPageResource -> new WikiPagePage(
-					wikiPageResource.getWikiPageWikiPagesPage(
-						_wikiPage.getId())));
+		public WikiPagePage wikiPages() {
+			try {
+				return _applyComponentServiceObjects(
+					_wikiPageResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					wikiPageResource -> new WikiPagePage(
+						wikiPageResource.getWikiPageWikiPagesPage(
+							_wikiPage.getId())));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private WikiPage _wikiPage;
@@ -2342,22 +2433,30 @@ public class Query {
 			description = "Retrieves the structured content's comments. Results can be paginated, filtered, searched, and sorted."
 		)
 		public CommentPage comments(
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_commentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				commentResource -> new CommentPage(
-					commentResource.getStructuredContentCommentsPage(
-						_structuredContent.getId(), search,
-						_filterBiFunction.apply(commentResource, filterString),
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(commentResource, sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_commentResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					commentResource -> new CommentPage(
+						commentResource.getStructuredContentCommentsPage(
+							_structuredContent.getId(), search,
+							_filterBiFunction.apply(
+								commentResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								commentResource, sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private StructuredContent _structuredContent;
@@ -2375,23 +2474,30 @@ public class Query {
 			description = "Retrieves the wiki page's of a node. Results can be paginated, filtered, searched, and sorted."
 		)
 		public WikiPagePage wikiPages(
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_wikiPageResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				wikiPageResource -> new WikiPagePage(
-					wikiPageResource.getWikiNodeWikiPagesPage(
-						_wikiNode.getId(), search,
-						_filterBiFunction.apply(wikiPageResource, filterString),
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(
-							wikiPageResource, sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_wikiPageResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					wikiPageResource -> new WikiPagePage(
+						wikiPageResource.getWikiNodeWikiPagesPage(
+							_wikiNode.getId(), search,
+							_filterBiFunction.apply(
+								wikiPageResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								wikiPageResource, sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private WikiNode _wikiNode;
@@ -2410,14 +2516,21 @@ public class Query {
 		@GraphQLField(
 			description = "Retrieves the knowledge base article's rating."
 		)
-		public Rating myRating() throws Exception {
-			return _applyComponentServiceObjects(
-				_knowledgeBaseArticleResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				knowledgeBaseArticleResource ->
-					knowledgeBaseArticleResource.
-						getKnowledgeBaseArticleMyRating(
-							_knowledgeBaseArticle.getId()));
+		public Rating myRating() {
+			try {
+				return _applyComponentServiceObjects(
+					_knowledgeBaseArticleResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					knowledgeBaseArticleResource ->
+						knowledgeBaseArticleResource.
+							getKnowledgeBaseArticleMyRating(
+								_knowledgeBaseArticle.getId()));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private KnowledgeBaseArticle _knowledgeBaseArticle;
@@ -2434,13 +2547,20 @@ public class Query {
 		}
 
 		@GraphQLField(description = "Retrieves the message board thread.")
-		public MessageBoardThread messageBoardThread() throws Exception {
-			return _applyComponentServiceObjects(
-				_messageBoardThreadResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				messageBoardThreadResource ->
-					messageBoardThreadResource.getMessageBoardThread(
-						_messageBoardMessage.getMessageBoardThreadId()));
+		public MessageBoardThread messageBoardThread() {
+			try {
+				return _applyComponentServiceObjects(
+					_messageBoardThreadResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					messageBoardThreadResource ->
+						messageBoardThreadResource.getMessageBoardThread(
+							_messageBoardMessage.getMessageBoardThreadId()));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private MessageBoardMessage _messageBoardMessage;
@@ -2460,25 +2580,32 @@ public class Query {
 			description = "Retrieves the folder's subfolders. Results can be paginated, filtered, searched, and sorted."
 		)
 		public DocumentFolderPage documentFolders(
-				@GraphQLName("flatten") Boolean flatten,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("flatten") Boolean flatten,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_documentFolderResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				documentFolderResource -> new DocumentFolderPage(
-					documentFolderResource.getDocumentFolderDocumentFoldersPage(
-						_documentFolder.getId(), flatten, search,
-						_filterBiFunction.apply(
-							documentFolderResource, filterString),
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(
-							documentFolderResource, sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_documentFolderResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					documentFolderResource -> new DocumentFolderPage(
+						documentFolderResource.
+							getDocumentFolderDocumentFoldersPage(
+								_documentFolder.getId(), flatten, search,
+								_filterBiFunction.apply(
+									documentFolderResource, filterString),
+								Pagination.of(page, pageSize),
+								_sortsBiFunction.apply(
+									documentFolderResource, sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private DocumentFolder _documentFolder;
@@ -2498,26 +2625,36 @@ public class Query {
 			description = "Retrieves the folder's knowledge base articles. Results can be paginated, filtered, searched, flattened, and sorted."
 		)
 		public KnowledgeBaseArticlePage knowledgeBaseArticles(
-				@GraphQLName("flatten") Boolean flatten,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("flatten") Boolean flatten,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_knowledgeBaseArticleResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				knowledgeBaseArticleResource -> new KnowledgeBaseArticlePage(
-					knowledgeBaseArticleResource.
-						getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-							_knowledgeBaseFolder.getId(), flatten, search,
-							_filterBiFunction.apply(
-								knowledgeBaseArticleResource, filterString),
-							Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								knowledgeBaseArticleResource, sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_knowledgeBaseArticleResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					knowledgeBaseArticleResource ->
+						new KnowledgeBaseArticlePage(
+							knowledgeBaseArticleResource.
+								getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+									_knowledgeBaseFolder.getId(), flatten,
+									search,
+									_filterBiFunction.apply(
+										knowledgeBaseArticleResource,
+										filterString),
+									Pagination.of(page, pageSize),
+									_sortsBiFunction.apply(
+										knowledgeBaseArticleResource,
+										sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private KnowledgeBaseFolder _knowledgeBaseFolder;
@@ -2536,13 +2673,20 @@ public class Query {
 		@GraphQLField(
 			description = "Retrieves the structured content's rating."
 		)
-		public Rating myRating() throws Exception {
-			return _applyComponentServiceObjects(
-				_structuredContentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				structuredContentResource ->
-					structuredContentResource.getStructuredContentMyRating(
-						_structuredContent.getId()));
+		public Rating myRating() {
+			try {
+				return _applyComponentServiceObjects(
+					_structuredContentResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					structuredContentResource ->
+						structuredContentResource.getStructuredContentMyRating(
+							_structuredContent.getId()));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private StructuredContent _structuredContent;
@@ -2559,13 +2703,20 @@ public class Query {
 		@GraphQLField(
 			description = "Retrieves the blog post rating of the user who authenticated the request."
 		)
-		public Rating myRating() throws Exception {
-			return _applyComponentServiceObjects(
-				_blogPostingResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				blogPostingResource ->
-					blogPostingResource.getBlogPostingMyRating(
-						_blogPosting.getId()));
+		public Rating myRating() {
+			try {
+				return _applyComponentServiceObjects(
+					_blogPostingResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					blogPostingResource ->
+						blogPostingResource.getBlogPostingMyRating(
+							_blogPosting.getId()));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private BlogPosting _blogPosting;
@@ -2583,22 +2734,30 @@ public class Query {
 			description = "Retrieves the document's comments. Results can be paginated, filtered, searched, and sorted."
 		)
 		public CommentPage comments(
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_commentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				commentResource -> new CommentPage(
-					commentResource.getDocumentCommentsPage(
-						_document.getId(), search,
-						_filterBiFunction.apply(commentResource, filterString),
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(commentResource, sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_commentResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					commentResource -> new CommentPage(
+						commentResource.getDocumentCommentsPage(
+							_document.getId(), search,
+							_filterBiFunction.apply(
+								commentResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								commentResource, sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private Document _document;
@@ -2618,17 +2777,22 @@ public class Query {
 		@GraphQLField(
 			description = "Retrieves the knowledge base article's attachments."
 		)
-		public KnowledgeBaseAttachmentPage knowledgeBaseAttachments()
-			throws Exception {
+		public KnowledgeBaseAttachmentPage knowledgeBaseAttachments() {
+			try {
+				return _applyComponentServiceObjects(
+					_knowledgeBaseAttachmentResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					knowledgeBaseAttachmentResource ->
+						new KnowledgeBaseAttachmentPage(
+							knowledgeBaseAttachmentResource.
+								getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
+									_knowledgeBaseArticle.getId())));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
 
-			return _applyComponentServiceObjects(
-				_knowledgeBaseAttachmentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				knowledgeBaseAttachmentResource ->
-					new KnowledgeBaseAttachmentPage(
-						knowledgeBaseAttachmentResource.
-							getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
-								_knowledgeBaseArticle.getId())));
+				return null;
+			}
 		}
 
 		private KnowledgeBaseArticle _knowledgeBaseArticle;
@@ -2648,26 +2812,33 @@ public class Query {
 			description = "Retrieves the folder's structured content. Results can be paginated, filtered, searched, and sorted."
 		)
 		public StructuredContentPage structuredContents(
-				@GraphQLName("flatten") Boolean flatten,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("flatten") Boolean flatten,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_structuredContentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				structuredContentResource -> new StructuredContentPage(
-					structuredContentResource.
-						getStructuredContentFolderStructuredContentsPage(
-							_structuredContentFolder.getId(), flatten, search,
-							_filterBiFunction.apply(
-								structuredContentResource, filterString),
-							Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								structuredContentResource, sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_structuredContentResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					structuredContentResource -> new StructuredContentPage(
+						structuredContentResource.
+							getStructuredContentFolderStructuredContentsPage(
+								_structuredContentFolder.getId(), flatten,
+								search,
+								_filterBiFunction.apply(
+									structuredContentResource, filterString),
+								Pagination.of(page, pageSize),
+								_sortsBiFunction.apply(
+									structuredContentResource, sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private StructuredContentFolder _structuredContentFolder;
@@ -2688,28 +2859,34 @@ public class Query {
 			description = "Retrieves the parent structured content folder's subfolders. Results can be paginated, filtered, searched, and sorted."
 		)
 		public StructuredContentFolderPage structuredContentFolders(
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_structuredContentFolderResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				structuredContentFolderResource ->
-					new StructuredContentFolderPage(
-						structuredContentFolderResource.
-							getStructuredContentFolderStructuredContentFoldersPage(
-								_structuredContentFolder.getId(), search,
-								_filterBiFunction.apply(
-									structuredContentFolderResource,
-									filterString),
-								Pagination.of(page, pageSize),
-								_sortsBiFunction.apply(
-									structuredContentFolderResource,
-									sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_structuredContentFolderResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					structuredContentFolderResource ->
+						new StructuredContentFolderPage(
+							structuredContentFolderResource.
+								getStructuredContentFolderStructuredContentFoldersPage(
+									_structuredContentFolder.getId(), search,
+									_filterBiFunction.apply(
+										structuredContentFolderResource,
+										filterString),
+									Pagination.of(page, pageSize),
+									_sortsBiFunction.apply(
+										structuredContentFolderResource,
+										sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private StructuredContentFolder _structuredContentFolder;
@@ -2728,13 +2905,21 @@ public class Query {
 		@GraphQLField(
 			description = "Retrieves the message board message's rating."
 		)
-		public Rating myRating() throws Exception {
-			return _applyComponentServiceObjects(
-				_messageBoardMessageResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				messageBoardMessageResource ->
-					messageBoardMessageResource.getMessageBoardMessageMyRating(
-						_messageBoardMessage.getId()));
+		public Rating myRating() {
+			try {
+				return _applyComponentServiceObjects(
+					_messageBoardMessageResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					messageBoardMessageResource ->
+						messageBoardMessageResource.
+							getMessageBoardMessageMyRating(
+								_messageBoardMessage.getId()));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private MessageBoardMessage _messageBoardMessage;
@@ -2754,26 +2939,33 @@ public class Query {
 			description = "Retrieves the parent message board message's child messages. Results can be paginated, filtered, searched, and sorted."
 		)
 		public MessageBoardMessagePage messageBoardMessages(
-				@GraphQLName("flatten") Boolean flatten,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("flatten") Boolean flatten,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_messageBoardMessageResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				messageBoardMessageResource -> new MessageBoardMessagePage(
-					messageBoardMessageResource.
-						getMessageBoardMessageMessageBoardMessagesPage(
-							_messageBoardMessage.getId(), flatten, search,
-							_filterBiFunction.apply(
-								messageBoardMessageResource, filterString),
-							Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								messageBoardMessageResource, sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_messageBoardMessageResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					messageBoardMessageResource -> new MessageBoardMessagePage(
+						messageBoardMessageResource.
+							getMessageBoardMessageMessageBoardMessagesPage(
+								_messageBoardMessage.getId(), flatten, search,
+								_filterBiFunction.apply(
+									messageBoardMessageResource, filterString),
+								Pagination.of(page, pageSize),
+								_sortsBiFunction.apply(
+									messageBoardMessageResource,
+									sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private MessageBoardMessage _messageBoardMessage;
@@ -2791,22 +2983,30 @@ public class Query {
 			description = "Retrieves the parent comment's child comments. Results can be paginated, filtered, searched, and sorted."
 		)
 		public CommentPage comments(
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_commentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				commentResource -> new CommentPage(
-					commentResource.getCommentCommentsPage(
-						_comment.getId(), search,
-						_filterBiFunction.apply(commentResource, filterString),
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(commentResource, sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_commentResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					commentResource -> new CommentPage(
+						commentResource.getCommentCommentsPage(
+							_comment.getId(), search,
+							_filterBiFunction.apply(
+								commentResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								commentResource, sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private Comment _comment;
@@ -2826,25 +3026,32 @@ public class Query {
 			description = "Retrieves the parent message board section's subsections. Results can be paginated, filtered, searched, and sorted."
 		)
 		public MessageBoardSectionPage messageBoardSections(
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_messageBoardSectionResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				messageBoardSectionResource -> new MessageBoardSectionPage(
-					messageBoardSectionResource.
-						getMessageBoardSectionMessageBoardSectionsPage(
-							_messageBoardSection.getId(), search,
-							_filterBiFunction.apply(
-								messageBoardSectionResource, filterString),
-							Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								messageBoardSectionResource, sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_messageBoardSectionResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					messageBoardSectionResource -> new MessageBoardSectionPage(
+						messageBoardSectionResource.
+							getMessageBoardSectionMessageBoardSectionsPage(
+								_messageBoardSection.getId(), search,
+								_filterBiFunction.apply(
+									messageBoardSectionResource, filterString),
+								Pagination.of(page, pageSize),
+								_sortsBiFunction.apply(
+									messageBoardSectionResource,
+									sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private MessageBoardSection _messageBoardSection;
@@ -2861,13 +3068,20 @@ public class Query {
 		}
 
 		@GraphQLField(description = "Retrieves the content structure.")
-		public ContentStructure contentStructure() throws Exception {
-			return _applyComponentServiceObjects(
-				_contentStructureResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				contentStructureResource ->
-					contentStructureResource.getContentStructure(
-						_structuredContent.getContentStructureId()));
+		public ContentStructure contentStructure() {
+			try {
+				return _applyComponentServiceObjects(
+					_contentStructureResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					contentStructureResource ->
+						contentStructureResource.getContentStructure(
+							_structuredContent.getContentStructureId()));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private StructuredContent _structuredContent;
@@ -2885,16 +3099,22 @@ public class Query {
 
 		@GraphQLField
 		public StructuredContentPage permissions(
-				@GraphQLName("roleNames") String roleNames)
-			throws Exception {
+			@GraphQLName("roleNames") String roleNames) {
 
-			return _applyComponentServiceObjects(
-				_structuredContentResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				structuredContentResource -> new StructuredContentPage(
-					structuredContentResource.
-						getStructuredContentPermissionsPage(
-							_structuredContent.getId(), roleNames)));
+			try {
+				return _applyComponentServiceObjects(
+					_structuredContentResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					structuredContentResource -> new StructuredContentPage(
+						structuredContentResource.
+							getStructuredContentPermissionsPage(
+								_structuredContent.getId(), roleNames)));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private StructuredContent _structuredContent;
@@ -2914,25 +3134,31 @@ public class Query {
 			description = "Retrieves the message board section's threads. Results can be paginated, filtered, searched, and sorted."
 		)
 		public MessageBoardThreadPage messageBoardThreads(
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_messageBoardThreadResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				messageBoardThreadResource -> new MessageBoardThreadPage(
-					messageBoardThreadResource.
-						getMessageBoardSectionMessageBoardThreadsPage(
-							_messageBoardSection.getId(), search,
-							_filterBiFunction.apply(
-								messageBoardThreadResource, filterString),
-							Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								messageBoardThreadResource, sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_messageBoardThreadResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					messageBoardThreadResource -> new MessageBoardThreadPage(
+						messageBoardThreadResource.
+							getMessageBoardSectionMessageBoardThreadsPage(
+								_messageBoardSection.getId(), search,
+								_filterBiFunction.apply(
+									messageBoardThreadResource, filterString),
+								Pagination.of(page, pageSize),
+								_sortsBiFunction.apply(
+									messageBoardThreadResource, sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private MessageBoardSection _messageBoardSection;
@@ -2951,13 +3177,21 @@ public class Query {
 		@GraphQLField(
 			description = "Retrieves the message board thread's rating."
 		)
-		public Rating myRating() throws Exception {
-			return _applyComponentServiceObjects(
-				_messageBoardThreadResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				messageBoardThreadResource ->
-					messageBoardThreadResource.getMessageBoardThreadMyRating(
-						_messageBoardThread.getId()));
+		public Rating myRating() {
+			try {
+				return _applyComponentServiceObjects(
+					_messageBoardThreadResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					messageBoardThreadResource ->
+						messageBoardThreadResource.
+							getMessageBoardThreadMyRating(
+								_messageBoardThread.getId()));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private MessageBoardThread _messageBoardThread;
@@ -2977,25 +3211,32 @@ public class Query {
 			description = "Retrieves the message board thread's messages. Results can be paginated, filtered, searched, and sorted."
 		)
 		public MessageBoardMessagePage messageBoardMessages(
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString) {
 
-			return _applyComponentServiceObjects(
-				_messageBoardMessageResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				messageBoardMessageResource -> new MessageBoardMessagePage(
-					messageBoardMessageResource.
-						getMessageBoardThreadMessageBoardMessagesPage(
-							_messageBoardThread.getId(), search,
-							_filterBiFunction.apply(
-								messageBoardMessageResource, filterString),
-							Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								messageBoardMessageResource, sortsString))));
+			try {
+				return _applyComponentServiceObjects(
+					_messageBoardMessageResourceComponentServiceObjects,
+					Query.this::_populateResourceContext,
+					messageBoardMessageResource -> new MessageBoardMessagePage(
+						messageBoardMessageResource.
+							getMessageBoardThreadMessageBoardMessagesPage(
+								_messageBoardThread.getId(), search,
+								_filterBiFunction.apply(
+									messageBoardMessageResource, filterString),
+								Pagination.of(page, pageSize),
+								_sortsBiFunction.apply(
+									messageBoardMessageResource,
+									sortsString))));
+			}
+			catch (Exception e) {
+				_logger.log(Level.WARNING, "Unable to get GraphQL Relation", e);
+
+				return null;
+			}
 		}
 
 		private MessageBoardThread _messageBoardThread;
@@ -3970,14 +4211,16 @@ public class Query {
 		_wikiPageResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WikiPageAttachmentResource>
 		_wikiPageAttachmentResourceComponentServiceObjects;
+	private static final Logger _logger = Logger.getLogger(
+		Query.class.getName());
 
 	private AcceptLanguage _acceptLanguage;
-	private BiFunction<Object, String, Filter> _filterBiFunction;
-	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
-	private com.liferay.portal.kernel.model.User _user;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
+	private com.liferay.portal.kernel.model.User _user;
 
 }

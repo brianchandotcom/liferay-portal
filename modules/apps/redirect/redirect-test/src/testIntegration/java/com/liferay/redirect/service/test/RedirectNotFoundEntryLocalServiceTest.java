@@ -99,6 +99,19 @@ public class RedirectNotFoundEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddOrUpdateRedirectNotFoundEntryWithNullURL()
+		throws Exception {
+
+		RedirectTestUtil.withRedirectEnabled(
+			() -> {
+				RedirectNotFoundEntry redirectNotFoundEntry =
+					_addOrUpdateRedirectNotFoundEntry(null);
+
+				Assert.assertEquals(1, redirectNotFoundEntry.getHits());
+			});
+	}
+
+	@Test
 	public void testAddOrUpdateRedirectNotFoundEntryWithRedirectDisabled()
 		throws Exception {
 

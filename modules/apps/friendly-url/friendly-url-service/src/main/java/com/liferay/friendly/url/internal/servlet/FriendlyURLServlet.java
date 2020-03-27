@@ -286,11 +286,8 @@ public class FriendlyURLServlet extends HttpServlet {
 				}
 			}
 
-			if (Validator.isNotNull(friendlyURL)) {
-				redirectNotFoundEntryLocalService.
-					addOrUpdateRedirectNotFoundEntry(
-						group, _normalizeFriendlyURL(friendlyURL));
-			}
+			redirectNotFoundEntryLocalService.addOrUpdateRedirectNotFoundEntry(
+				group, _normalizeFriendlyURL(friendlyURL));
 
 			throw noSuchLayoutException;
 		}
@@ -672,7 +669,9 @@ public class FriendlyURLServlet extends HttpServlet {
 	}
 
 	private String _normalizeFriendlyURL(String friendlyURL) {
-		if (friendlyURL.startsWith(StringPool.SLASH)) {
+		if (Validator.isNotNull(friendlyURL) &&
+			friendlyURL.startsWith(StringPool.SLASH)) {
+
 			return friendlyURL.substring(1);
 		}
 

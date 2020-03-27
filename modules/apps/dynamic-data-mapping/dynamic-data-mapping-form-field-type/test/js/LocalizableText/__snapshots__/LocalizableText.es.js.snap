@@ -56,54 +56,16 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
 `;
 
 exports[`Field LocalizableText emits field edit event on field change 1`] = `
-<div class="form-group" data-field-name="localizableTextField">
-  <fieldset>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US">
     <div class="input-group">
-      <div class="input-group-append input-group-item"><input class="ddm-field-text form-control" id="localizableTextFieldinputValue" type="text" value="Test 2 EUA"></div><input name="localizableTextField" type="hidden" value="{&quot;ca_ES&quot;:&quot;Teste ES&quot;,&quot;en_US&quot;:&quot;Test 2 EUA&quot;,&quot;pt_BR&quot;:&quot;Teste BR&quot;}">
-      <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-              <use href="icons.svg#en-us"></use>
-            </svg></span><span class="btn-section">en-us</span></button>
-        <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-                      <use href="icons.svg#en-us"></use>
-                    </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ar_SA" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ar-sa" focusable="false" role="presentation">
-                      <use href="icons.svg#ar-sa"></use>
-                    </svg></span>العربية (السعودية)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ca_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ca-es" focusable="false" role="presentation">
-                      <use href="icons.svg#ca-es"></use>
-                    </svg></span>català (Espanya)</span></span><span class="autofit-col"><span class="label label-success"><span class="label-item label-item-expand">translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="zh_CN" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-zh-cn" focusable="false" role="presentation">
-                      <use href="icons.svg#zh-cn"></use>
-                    </svg></span>中文 (中国)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="nl_NL" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-nl-nl" focusable="false" role="presentation">
-                      <use href="icons.svg#nl-nl"></use>
-                    </svg></span>Nederlands (Nederland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fi_FI" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fi-fi" focusable="false" role="presentation">
-                      <use href="icons.svg#fi-fi"></use>
-                    </svg></span>suomi (Suomi)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fr_FR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fr-fr" focusable="false" role="presentation">
-                      <use href="icons.svg#fr-fr"></use>
-                    </svg></span>français (France)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="de_DE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-de-de" focusable="false" role="presentation">
-                      <use href="icons.svg#de-de"></use>
-                    </svg></span>Deutsch (Deutschland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="hu_HU" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-hu-hu" focusable="false" role="presentation">
-                      <use href="icons.svg#hu-hu"></use>
-                    </svg></span>magyar (Magyarország)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ja_JP" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ja-jp" focusable="false" role="presentation">
-                      <use href="icons.svg#ja-jp"></use>
-                    </svg></span>日本語 (日本)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="pt_BR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-pt-br" focusable="false" role="presentation">
-                      <use href="icons.svg#pt-br"></use>
-                    </svg></span>português (Brasil)</span></span><span class="autofit-col"><span class="label label-success"><span class="label-item label-item-expand">translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="es_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-es-es" focusable="false" role="presentation">
-                      <use href="icons.svg#es-es"></use>
-                    </svg></span>español (España)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="sv_SE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-sv-se" focusable="false" role="presentation">
-                      <use href="icons.svg#sv-se"></use>
-                    </svg></span>svenska (Sverige)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-        </ul>
+      <div class="input-group-item input-group-append"><input class="ddm-field-text form-control" data-testid="visibleChangeInput" id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue" placeholder="" type="text" value="Test 2 EUA"></div><input name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US" type="hidden" value="{&quot;ca_ES&quot;:&quot;Teste ES&quot;,&quot;en_US&quot;:&quot;Test 2 EUA&quot;,&quot;pt_BR&quot;:&quot;Teste BR&quot;}">
+      <div class="input-group-item liferay-ddm-form-field-localizable-text input-group-item-shrink">
+        <div>
+          <div class="dropdown"><button class="dropdown-toggle btn btn-monospaced btn-secondary" type="button" aria-expanded="false" aria-haspopup="true" data-testid="triggerButton" style=""><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" role="presentation">
+                  <use xlink:href="/lexicon/icons.svg#en-us"></use>
+                </svg></span><span class="btn-section" data-testid="triggerText">en-us</span></button></div>
+        </div>
       </div>
     </div>
   </fieldset>
@@ -221,57 +183,17 @@ exports[`Field LocalizableText fills with the selected language value when the s
 `;
 
 exports[`Field LocalizableText has a label 1`] = `
-<div class="form-group" data-field-name="localizableTextField">
-  <fieldset>
-    <legend>
-      <p class="ddm-label">label </p>
-    </legend>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US">
+    <p class="ddm-label">label</p>
     <div class="input-group">
-      <div class="input-group-append input-group-item"><input class="ddm-field-text form-control" id="localizableTextFieldinputValue" type="text" value=""></div><input name="localizableTextField" type="hidden" value="{}">
-      <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-              <use href="icons.svg#en-us"></use>
-            </svg></span><span class="btn-section">en-us</span></button>
-        <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-                      <use href="icons.svg#en-us"></use>
-                    </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ar_SA" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ar-sa" focusable="false" role="presentation">
-                      <use href="icons.svg#ar-sa"></use>
-                    </svg></span>العربية (السعودية)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ca_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ca-es" focusable="false" role="presentation">
-                      <use href="icons.svg#ca-es"></use>
-                    </svg></span>català (Espanya)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="zh_CN" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-zh-cn" focusable="false" role="presentation">
-                      <use href="icons.svg#zh-cn"></use>
-                    </svg></span>中文 (中国)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="nl_NL" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-nl-nl" focusable="false" role="presentation">
-                      <use href="icons.svg#nl-nl"></use>
-                    </svg></span>Nederlands (Nederland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fi_FI" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fi-fi" focusable="false" role="presentation">
-                      <use href="icons.svg#fi-fi"></use>
-                    </svg></span>suomi (Suomi)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fr_FR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fr-fr" focusable="false" role="presentation">
-                      <use href="icons.svg#fr-fr"></use>
-                    </svg></span>français (France)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="de_DE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-de-de" focusable="false" role="presentation">
-                      <use href="icons.svg#de-de"></use>
-                    </svg></span>Deutsch (Deutschland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="hu_HU" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-hu-hu" focusable="false" role="presentation">
-                      <use href="icons.svg#hu-hu"></use>
-                    </svg></span>magyar (Magyarország)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ja_JP" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ja-jp" focusable="false" role="presentation">
-                      <use href="icons.svg#ja-jp"></use>
-                    </svg></span>日本語 (日本)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="pt_BR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-pt-br" focusable="false" role="presentation">
-                      <use href="icons.svg#pt-br"></use>
-                    </svg></span>português (Brasil)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="es_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-es-es" focusable="false" role="presentation">
-                      <use href="icons.svg#es-es"></use>
-                    </svg></span>español (España)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="sv_SE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-sv-se" focusable="false" role="presentation">
-                      <use href="icons.svg#sv-se"></use>
-                    </svg></span>svenska (Sverige)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-        </ul>
+      <div class="input-group-item input-group-append"><input class="ddm-field-text form-control" data-testid="visibleChangeInput" id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue" placeholder="" type="text" value="Test EUA"></div><input name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US" type="hidden" value="{&quot;ca_ES&quot;:&quot;Teste ES&quot;,&quot;en_US&quot;:&quot;Test EUA&quot;,&quot;pt_BR&quot;:&quot;Teste BR&quot;}">
+      <div class="input-group-item liferay-ddm-form-field-localizable-text input-group-item-shrink">
+        <div>
+          <div class="dropdown"><button class="dropdown-toggle btn btn-monospaced btn-secondary" type="button" aria-expanded="false" aria-haspopup="true" data-testid="triggerButton" style=""><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" role="presentation">
+                  <use xlink:href="/lexicon/icons.svg#en-us"></use>
+                </svg></span><span class="btn-section" data-testid="triggerText">en-us</span></button></div>
+        </div>
       </div>
     </div>
   </fieldset>
@@ -279,54 +201,16 @@ exports[`Field LocalizableText has a label 1`] = `
 `;
 
 exports[`Field LocalizableText has a placeholder 1`] = `
-<div class="form-group" data-field-name="localizableTextField">
-  <fieldset>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US">
     <div class="input-group">
-      <div class="input-group-append input-group-item"><input class="ddm-field-text form-control" id="localizableTextFieldinputValue" type="text" placeholder="Placeholder" value=""></div><input name="localizableTextField" type="hidden" value="{}">
-      <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-              <use href="icons.svg#en-us"></use>
-            </svg></span><span class="btn-section">en-us</span></button>
-        <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-                      <use href="icons.svg#en-us"></use>
-                    </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ar_SA" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ar-sa" focusable="false" role="presentation">
-                      <use href="icons.svg#ar-sa"></use>
-                    </svg></span>العربية (السعودية)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ca_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ca-es" focusable="false" role="presentation">
-                      <use href="icons.svg#ca-es"></use>
-                    </svg></span>català (Espanya)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="zh_CN" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-zh-cn" focusable="false" role="presentation">
-                      <use href="icons.svg#zh-cn"></use>
-                    </svg></span>中文 (中国)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="nl_NL" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-nl-nl" focusable="false" role="presentation">
-                      <use href="icons.svg#nl-nl"></use>
-                    </svg></span>Nederlands (Nederland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fi_FI" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fi-fi" focusable="false" role="presentation">
-                      <use href="icons.svg#fi-fi"></use>
-                    </svg></span>suomi (Suomi)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fr_FR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fr-fr" focusable="false" role="presentation">
-                      <use href="icons.svg#fr-fr"></use>
-                    </svg></span>français (France)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="de_DE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-de-de" focusable="false" role="presentation">
-                      <use href="icons.svg#de-de"></use>
-                    </svg></span>Deutsch (Deutschland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="hu_HU" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-hu-hu" focusable="false" role="presentation">
-                      <use href="icons.svg#hu-hu"></use>
-                    </svg></span>magyar (Magyarország)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ja_JP" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ja-jp" focusable="false" role="presentation">
-                      <use href="icons.svg#ja-jp"></use>
-                    </svg></span>日本語 (日本)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="pt_BR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-pt-br" focusable="false" role="presentation">
-                      <use href="icons.svg#pt-br"></use>
-                    </svg></span>português (Brasil)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="es_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-es-es" focusable="false" role="presentation">
-                      <use href="icons.svg#es-es"></use>
-                    </svg></span>español (España)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="sv_SE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-sv-se" focusable="false" role="presentation">
-                      <use href="icons.svg#sv-se"></use>
-                    </svg></span>svenska (Sverige)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-        </ul>
+      <div class="input-group-item input-group-append"><input class="ddm-field-text form-control" data-testid="visibleChangeInput" id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue" placeholder="Placeholder" type="text" value="Test EUA"></div><input name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US" type="hidden" value="{&quot;ca_ES&quot;:&quot;Teste ES&quot;,&quot;en_US&quot;:&quot;Test EUA&quot;,&quot;pt_BR&quot;:&quot;Teste BR&quot;}">
+      <div class="input-group-item liferay-ddm-form-field-localizable-text input-group-item-shrink">
+        <div>
+          <div class="dropdown"><button class="dropdown-toggle btn btn-monospaced btn-secondary" type="button" aria-expanded="false" aria-haspopup="true" data-testid="triggerButton" style=""><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" role="presentation">
+                  <use xlink:href="/lexicon/icons.svg#en-us"></use>
+                </svg></span><span class="btn-section" data-testid="triggerText">en-us</span></button></div>
+        </div>
       </div>
     </div>
   </fieldset>
@@ -334,54 +218,16 @@ exports[`Field LocalizableText has a placeholder 1`] = `
 `;
 
 exports[`Field LocalizableText is not readOnly 1`] = `
-<div class="form-group" data-field-name="localizableTextField">
-  <fieldset>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US">
     <div class="input-group">
-      <div class="input-group-append input-group-item"><input class="ddm-field-text form-control" id="localizableTextFieldinputValue" type="text" value=""></div><input name="localizableTextField" type="hidden" value="{}">
-      <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-              <use href="icons.svg#en-us"></use>
-            </svg></span><span class="btn-section">en-us</span></button>
-        <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-                      <use href="icons.svg#en-us"></use>
-                    </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ar_SA" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ar-sa" focusable="false" role="presentation">
-                      <use href="icons.svg#ar-sa"></use>
-                    </svg></span>العربية (السعودية)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ca_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ca-es" focusable="false" role="presentation">
-                      <use href="icons.svg#ca-es"></use>
-                    </svg></span>català (Espanya)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="zh_CN" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-zh-cn" focusable="false" role="presentation">
-                      <use href="icons.svg#zh-cn"></use>
-                    </svg></span>中文 (中国)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="nl_NL" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-nl-nl" focusable="false" role="presentation">
-                      <use href="icons.svg#nl-nl"></use>
-                    </svg></span>Nederlands (Nederland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fi_FI" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fi-fi" focusable="false" role="presentation">
-                      <use href="icons.svg#fi-fi"></use>
-                    </svg></span>suomi (Suomi)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fr_FR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fr-fr" focusable="false" role="presentation">
-                      <use href="icons.svg#fr-fr"></use>
-                    </svg></span>français (France)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="de_DE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-de-de" focusable="false" role="presentation">
-                      <use href="icons.svg#de-de"></use>
-                    </svg></span>Deutsch (Deutschland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="hu_HU" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-hu-hu" focusable="false" role="presentation">
-                      <use href="icons.svg#hu-hu"></use>
-                    </svg></span>magyar (Magyarország)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ja_JP" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ja-jp" focusable="false" role="presentation">
-                      <use href="icons.svg#ja-jp"></use>
-                    </svg></span>日本語 (日本)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="pt_BR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-pt-br" focusable="false" role="presentation">
-                      <use href="icons.svg#pt-br"></use>
-                    </svg></span>português (Brasil)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="es_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-es-es" focusable="false" role="presentation">
-                      <use href="icons.svg#es-es"></use>
-                    </svg></span>español (España)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="sv_SE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-sv-se" focusable="false" role="presentation">
-                      <use href="icons.svg#sv-se"></use>
-                    </svg></span>svenska (Sverige)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-        </ul>
+      <div class="input-group-item input-group-append"><input class="ddm-field-text form-control" data-testid="visibleChangeInput" id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue" placeholder="" type="text" value="Test EUA"></div><input name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US" type="hidden" value="{&quot;ca_ES&quot;:&quot;Teste ES&quot;,&quot;en_US&quot;:&quot;Test EUA&quot;,&quot;pt_BR&quot;:&quot;Teste BR&quot;}">
+      <div class="input-group-item liferay-ddm-form-field-localizable-text input-group-item-shrink">
+        <div>
+          <div class="dropdown"><button class="dropdown-toggle btn btn-monospaced btn-secondary" type="button" aria-expanded="false" aria-haspopup="true" data-testid="triggerButton" style=""><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" role="presentation">
+                  <use xlink:href="/lexicon/icons.svg#en-us"></use>
+                </svg></span><span class="btn-section" data-testid="triggerText">en-us</span></button></div>
+        </div>
       </div>
     </div>
   </fieldset>
@@ -389,54 +235,16 @@ exports[`Field LocalizableText is not readOnly 1`] = `
 `;
 
 exports[`Field LocalizableText is not required 1`] = `
-<div class="form-group" data-field-name="localizableTextField">
-  <fieldset>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US">
     <div class="input-group">
-      <div class="input-group-append input-group-item"><input class="ddm-field-text form-control" id="localizableTextFieldinputValue" type="text" value=""></div><input name="localizableTextField" type="hidden" value="{}">
-      <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-              <use href="icons.svg#en-us"></use>
-            </svg></span><span class="btn-section">en-us</span></button>
-        <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-                      <use href="icons.svg#en-us"></use>
-                    </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ar_SA" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ar-sa" focusable="false" role="presentation">
-                      <use href="icons.svg#ar-sa"></use>
-                    </svg></span>العربية (السعودية)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ca_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ca-es" focusable="false" role="presentation">
-                      <use href="icons.svg#ca-es"></use>
-                    </svg></span>català (Espanya)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="zh_CN" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-zh-cn" focusable="false" role="presentation">
-                      <use href="icons.svg#zh-cn"></use>
-                    </svg></span>中文 (中国)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="nl_NL" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-nl-nl" focusable="false" role="presentation">
-                      <use href="icons.svg#nl-nl"></use>
-                    </svg></span>Nederlands (Nederland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fi_FI" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fi-fi" focusable="false" role="presentation">
-                      <use href="icons.svg#fi-fi"></use>
-                    </svg></span>suomi (Suomi)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fr_FR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fr-fr" focusable="false" role="presentation">
-                      <use href="icons.svg#fr-fr"></use>
-                    </svg></span>français (France)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="de_DE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-de-de" focusable="false" role="presentation">
-                      <use href="icons.svg#de-de"></use>
-                    </svg></span>Deutsch (Deutschland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="hu_HU" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-hu-hu" focusable="false" role="presentation">
-                      <use href="icons.svg#hu-hu"></use>
-                    </svg></span>magyar (Magyarország)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ja_JP" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ja-jp" focusable="false" role="presentation">
-                      <use href="icons.svg#ja-jp"></use>
-                    </svg></span>日本語 (日本)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="pt_BR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-pt-br" focusable="false" role="presentation">
-                      <use href="icons.svg#pt-br"></use>
-                    </svg></span>português (Brasil)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="es_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-es-es" focusable="false" role="presentation">
-                      <use href="icons.svg#es-es"></use>
-                    </svg></span>español (España)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="sv_SE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-sv-se" focusable="false" role="presentation">
-                      <use href="icons.svg#sv-se"></use>
-                    </svg></span>svenska (Sverige)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-        </ul>
+      <div class="input-group-item input-group-append"><input class="ddm-field-text form-control" data-testid="visibleChangeInput" id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue" placeholder="" type="text" value="Test EUA"></div><input name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US" type="hidden" value="{&quot;ca_ES&quot;:&quot;Teste ES&quot;,&quot;en_US&quot;:&quot;Test EUA&quot;,&quot;pt_BR&quot;:&quot;Teste BR&quot;}">
+      <div class="input-group-item liferay-ddm-form-field-localizable-text input-group-item-shrink">
+        <div>
+          <div class="dropdown"><button class="dropdown-toggle btn btn-monospaced btn-secondary" type="button" aria-expanded="false" aria-haspopup="true" data-testid="triggerButton" style=""><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" role="presentation">
+                  <use xlink:href="/lexicon/icons.svg#en-us"></use>
+                </svg></span><span class="btn-section" data-testid="triggerText">en-us</span></button></div>
+        </div>
       </div>
     </div>
   </fieldset>
@@ -499,54 +307,16 @@ exports[`Field LocalizableText removes the translation of an item already transl
 `;
 
 exports[`Field LocalizableText renders no values when values come empty 1`] = `
-<div class="form-group" data-field-name="localizableTextField">
-  <fieldset>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US">
     <div class="input-group">
-      <div class="input-group-append input-group-item"><input class="ddm-field-text form-control" id="localizableTextFieldinputValue" type="text" value=""></div><input name="localizableTextField" type="hidden" value="{}">
-      <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-              <use href="icons.svg#en-us"></use>
-            </svg></span><span class="btn-section">en-us</span></button>
-        <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-                      <use href="icons.svg#en-us"></use>
-                    </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ar_SA" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ar-sa" focusable="false" role="presentation">
-                      <use href="icons.svg#ar-sa"></use>
-                    </svg></span>العربية (السعودية)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ca_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ca-es" focusable="false" role="presentation">
-                      <use href="icons.svg#ca-es"></use>
-                    </svg></span>català (Espanya)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="zh_CN" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-zh-cn" focusable="false" role="presentation">
-                      <use href="icons.svg#zh-cn"></use>
-                    </svg></span>中文 (中国)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="nl_NL" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-nl-nl" focusable="false" role="presentation">
-                      <use href="icons.svg#nl-nl"></use>
-                    </svg></span>Nederlands (Nederland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fi_FI" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fi-fi" focusable="false" role="presentation">
-                      <use href="icons.svg#fi-fi"></use>
-                    </svg></span>suomi (Suomi)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fr_FR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fr-fr" focusable="false" role="presentation">
-                      <use href="icons.svg#fr-fr"></use>
-                    </svg></span>français (France)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="de_DE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-de-de" focusable="false" role="presentation">
-                      <use href="icons.svg#de-de"></use>
-                    </svg></span>Deutsch (Deutschland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="hu_HU" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-hu-hu" focusable="false" role="presentation">
-                      <use href="icons.svg#hu-hu"></use>
-                    </svg></span>magyar (Magyarország)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ja_JP" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ja-jp" focusable="false" role="presentation">
-                      <use href="icons.svg#ja-jp"></use>
-                    </svg></span>日本語 (日本)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="pt_BR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-pt-br" focusable="false" role="presentation">
-                      <use href="icons.svg#pt-br"></use>
-                    </svg></span>português (Brasil)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="es_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-es-es" focusable="false" role="presentation">
-                      <use href="icons.svg#es-es"></use>
-                    </svg></span>español (España)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="sv_SE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-sv-se" focusable="false" role="presentation">
-                      <use href="icons.svg#sv-se"></use>
-                    </svg></span>svenska (Sverige)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-        </ul>
+      <div class="input-group-item input-group-append"><input class="ddm-field-text form-control" data-testid="visibleChangeInput" id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue" placeholder="" type="text" value=""></div><input name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US" type="hidden" value="{}">
+      <div class="input-group-item liferay-ddm-form-field-localizable-text input-group-item-shrink">
+        <div>
+          <div class="dropdown"><button class="dropdown-toggle btn btn-monospaced btn-secondary" type="button" aria-expanded="false" aria-haspopup="true" data-testid="triggerButton" style=""><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" role="presentation">
+                  <use xlink:href="/lexicon/icons.svg#en-us"></use>
+                </svg></span><span class="btn-section" data-testid="triggerText">en-us</span></button></div>
+        </div>
       </div>
     </div>
   </fieldset>
@@ -554,54 +324,16 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
 `;
 
 exports[`Field LocalizableText renders values 1`] = `
-<div class="form-group" data-field-name="localizableTextField">
-  <fieldset>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US">
     <div class="input-group">
-      <div class="input-group-append input-group-item"><input class="ddm-field-text form-control" id="localizableTextFieldinputValue" type="text" value="Test EUA"></div><input name="localizableTextField" type="hidden" value="{&quot;ca_ES&quot;:&quot;Teste ES&quot;,&quot;en_US&quot;:&quot;Test EUA&quot;,&quot;pt_BR&quot;:&quot;Teste BR&quot;}">
-      <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-              <use href="icons.svg#en-us"></use>
-            </svg></span><span class="btn-section">en-us</span></button>
-        <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-                      <use href="icons.svg#en-us"></use>
-                    </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ar_SA" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ar-sa" focusable="false" role="presentation">
-                      <use href="icons.svg#ar-sa"></use>
-                    </svg></span>العربية (السعودية)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ca_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ca-es" focusable="false" role="presentation">
-                      <use href="icons.svg#ca-es"></use>
-                    </svg></span>català (Espanya)</span></span><span class="autofit-col"><span class="label label-success"><span class="label-item label-item-expand">translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="zh_CN" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-zh-cn" focusable="false" role="presentation">
-                      <use href="icons.svg#zh-cn"></use>
-                    </svg></span>中文 (中国)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="nl_NL" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-nl-nl" focusable="false" role="presentation">
-                      <use href="icons.svg#nl-nl"></use>
-                    </svg></span>Nederlands (Nederland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fi_FI" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fi-fi" focusable="false" role="presentation">
-                      <use href="icons.svg#fi-fi"></use>
-                    </svg></span>suomi (Suomi)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fr_FR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fr-fr" focusable="false" role="presentation">
-                      <use href="icons.svg#fr-fr"></use>
-                    </svg></span>français (France)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="de_DE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-de-de" focusable="false" role="presentation">
-                      <use href="icons.svg#de-de"></use>
-                    </svg></span>Deutsch (Deutschland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="hu_HU" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-hu-hu" focusable="false" role="presentation">
-                      <use href="icons.svg#hu-hu"></use>
-                    </svg></span>magyar (Magyarország)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ja_JP" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ja-jp" focusable="false" role="presentation">
-                      <use href="icons.svg#ja-jp"></use>
-                    </svg></span>日本語 (日本)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="pt_BR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-pt-br" focusable="false" role="presentation">
-                      <use href="icons.svg#pt-br"></use>
-                    </svg></span>português (Brasil)</span></span><span class="autofit-col"><span class="label label-success"><span class="label-item label-item-expand">translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="es_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-es-es" focusable="false" role="presentation">
-                      <use href="icons.svg#es-es"></use>
-                    </svg></span>español (España)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="sv_SE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-sv-se" focusable="false" role="presentation">
-                      <use href="icons.svg#sv-se"></use>
-                    </svg></span>svenska (Sverige)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-        </ul>
+      <div class="input-group-item input-group-append"><input class="ddm-field-text form-control" data-testid="visibleChangeInput" id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue" placeholder="" type="text" value="Test EUA"></div><input name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US" type="hidden" value="{&quot;ca_ES&quot;:&quot;Teste ES&quot;,&quot;en_US&quot;:&quot;Test EUA&quot;,&quot;pt_BR&quot;:&quot;Teste BR&quot;}">
+      <div class="input-group-item liferay-ddm-form-field-localizable-text input-group-item-shrink">
+        <div>
+          <div class="dropdown"><button class="dropdown-toggle btn btn-monospaced btn-secondary" type="button" aria-expanded="false" aria-haspopup="true" data-testid="triggerButton" style=""><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" role="presentation">
+                  <use xlink:href="/lexicon/icons.svg#en-us"></use>
+                </svg></span><span class="btn-section" data-testid="triggerText">en-us</span></button></div>
+        </div>
       </div>
     </div>
   </fieldset>
@@ -609,54 +341,16 @@ exports[`Field LocalizableText renders values 1`] = `
 `;
 
 exports[`Field LocalizableText shows default language value when no other language is selected 1`] = `
-<div class="form-group" data-field-name="localizableTextField">
-  <fieldset>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US">
     <div class="input-group">
-      <div class="input-group-append input-group-item"><input class="ddm-field-text form-control" id="localizableTextFieldinputValue" type="text" value="Test EUA"></div><input name="localizableTextField" type="hidden" value="{&quot;ca_ES&quot;:&quot;Teste ES&quot;,&quot;en_US&quot;:&quot;Test EUA&quot;,&quot;pt_BR&quot;:&quot;Teste BR&quot;}">
-      <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-              <use href="icons.svg#en-us"></use>
-            </svg></span><span class="btn-section">en-us</span></button>
-        <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
-                      <use href="icons.svg#en-us"></use>
-                    </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ar_SA" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ar-sa" focusable="false" role="presentation">
-                      <use href="icons.svg#ar-sa"></use>
-                    </svg></span>العربية (السعودية)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ca_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ca-es" focusable="false" role="presentation">
-                      <use href="icons.svg#ca-es"></use>
-                    </svg></span>català (Espanya)</span></span><span class="autofit-col"><span class="label label-success"><span class="label-item label-item-expand">translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="zh_CN" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-zh-cn" focusable="false" role="presentation">
-                      <use href="icons.svg#zh-cn"></use>
-                    </svg></span>中文 (中国)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="nl_NL" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-nl-nl" focusable="false" role="presentation">
-                      <use href="icons.svg#nl-nl"></use>
-                    </svg></span>Nederlands (Nederland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fi_FI" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fi-fi" focusable="false" role="presentation">
-                      <use href="icons.svg#fi-fi"></use>
-                    </svg></span>suomi (Suomi)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="fr_FR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-fr-fr" focusable="false" role="presentation">
-                      <use href="icons.svg#fr-fr"></use>
-                    </svg></span>français (France)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="de_DE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-de-de" focusable="false" role="presentation">
-                      <use href="icons.svg#de-de"></use>
-                    </svg></span>Deutsch (Deutschland)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="hu_HU" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-hu-hu" focusable="false" role="presentation">
-                      <use href="icons.svg#hu-hu"></use>
-                    </svg></span>magyar (Magyarország)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="ja_JP" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-ja-jp" focusable="false" role="presentation">
-                      <use href="icons.svg#ja-jp"></use>
-                    </svg></span>日本語 (日本)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="pt_BR" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-pt-br" focusable="false" role="presentation">
-                      <use href="icons.svg#pt-br"></use>
-                    </svg></span>português (Brasil)</span></span><span class="autofit-col"><span class="label label-success"><span class="label-item label-item-expand">translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="es_ES" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-es-es" focusable="false" role="presentation">
-                      <use href="icons.svg#es-es"></use>
-                    </svg></span>español (España)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-          <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="sv_SE" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-sv-se" focusable="false" role="presentation">
-                      <use href="icons.svg#sv-se"></use>
-                    </svg></span>svenska (Sverige)</span></span><span class="autofit-col"><span class="label label-warning"><span class="label-item label-item-expand">not-translated</span></span></span></a></li>
-        </ul>
+      <div class="input-group-item input-group-append"><input class="ddm-field-text form-control" data-testid="visibleChangeInput" id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue" placeholder="" type="text" value="Test EUA"></div><input name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US" type="hidden" value="{&quot;ca_ES&quot;:&quot;Teste ES&quot;,&quot;en_US&quot;:&quot;Test EUA&quot;,&quot;pt_BR&quot;:&quot;Teste BR&quot;}">
+      <div class="input-group-item liferay-ddm-form-field-localizable-text input-group-item-shrink">
+        <div>
+          <div class="dropdown"><button class="dropdown-toggle btn btn-monospaced btn-secondary" type="button" aria-expanded="false" aria-haspopup="true" data-testid="triggerButton" style=""><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" role="presentation">
+                  <use xlink:href="/lexicon/icons.svg#en-us"></use>
+                </svg></span><span class="btn-section" data-testid="triggerText">en-us</span></button></div>
+        </div>
       </div>
     </div>
   </fieldset>

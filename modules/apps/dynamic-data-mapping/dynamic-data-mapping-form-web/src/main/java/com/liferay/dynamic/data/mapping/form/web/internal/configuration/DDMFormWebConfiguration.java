@@ -45,7 +45,7 @@ public interface DDMFormWebConfiguration {
 	public String csvExport();
 
 	@Meta.AD(
-		deflt = "descriptive", name = "default-display-view",
+		deflt = "list", name = "default-display-view",
 		optionLabels = {"%list", "%table"},
 		optionValues = {"descriptive", "list"}, required = false
 	)

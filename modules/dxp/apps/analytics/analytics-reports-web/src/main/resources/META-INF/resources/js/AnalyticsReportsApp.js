@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
 import React, {useState} from 'react';
 
 import Detail from './components/Detail';
@@ -68,17 +67,8 @@ function Navigation({
 
 	const {getHistoricalReads, getHistoricalViews, getTrafficSources} = api;
 
-	function handleTrafficSourceClick(trafficSourceName) {
-		setTrafficSourceName(trafficSourceName);
-
-		api.getTrafficSourceDetails(trafficSourceName).then(
-			trafficSourceData => {
-				setCurrentPage({
-					data: trafficSourceData,
-					view: 'traffic-source-detail',
-				});
-			}
-		);
+	function handleCurrentPage(currentPage) {
+		setCurrentPage({view: currentPage.view});
 	}
 
 	function handleTotalReads() {
@@ -105,6 +95,23 @@ function Navigation({
 			.then(response => {
 				return response.share;
 			});
+	}
+
+	function handleTrafficSourceClick(trafficSourceName) {
+		setTrafficSourceName(trafficSourceName);
+
+		api.getTrafficSourceDetails(trafficSourceName).then(
+			trafficSourceData => {
+				setCurrentPage({
+					data: trafficSourceData,
+					view: 'traffic-source-detail',
+				});
+			}
+		);
+	}
+
+	function handleTrafficSourceName(trafficSourceName) {
+		setTrafficSourceName(trafficSourceName);
 	}
 
 	function handleTrafficVolume() {
@@ -139,32 +146,14 @@ function Navigation({
 			)}
 
 			{currentPage.view === 'traffic-source-detail' && (
-				<>
-					<div className="d-flex p-2">
-						<ClayButtonWithIcon
-							className="text-secondary"
-							displayType="unstyled"
-							onClick={() => {
-								setCurrentPage({view: 'main'});
-								setTrafficSourceName('');
-							}}
-							small="true"
-							symbol="angle-left"
-						/>
-						<div className="align-self-center flex-grow-1 mx-2">
-							{currentPage.data.title}
-						</div>
-					</div>
-
-					<hr className="my-0" />
-
-					<Detail
-						currentPage={currentPage}
-						languageTag={languageTag}
-						trafficShareDataProvider={handleTrafficShare}
-						trafficVolumeDataProvider={handleTrafficVolume}
-					/>
-				</>
+				<Detail
+					currentPage={currentPage}
+					languageTag={languageTag}
+					onCurrentPageChange={handleCurrentPage}
+					onTrafficSourceNameChange={handleTrafficSourceName}
+					trafficShareDataProvider={handleTrafficShare}
+					trafficVolumeDataProvider={handleTrafficVolume}
+				/>
 			)}
 		</>
 	);

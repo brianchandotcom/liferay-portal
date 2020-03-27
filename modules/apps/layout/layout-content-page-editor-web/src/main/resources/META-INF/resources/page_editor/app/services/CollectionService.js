@@ -40,4 +40,22 @@ export default {
 			onNetworkStatus
 		);
 	},
+
+	/**
+	 * Get available collection mapping fields
+	 * @param {object} options
+	 * @param {string} options.itemType Collection itemType
+	 * @param {function} options.onNetworkStatus
+	 */
+	getCollectionMappingFields({itemType, onNetworkStatus}) {
+		return serviceFetch(
+			config.getCollectionMappingFieldsURL,
+			{
+				body: {
+					itemType,
+				},
+			},
+			onNetworkStatus
+		);
+	},
 };

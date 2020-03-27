@@ -30,6 +30,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class BaseTemplateManager implements TemplateManager {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void addContextObjects(
 		Map<String, Object> contextObjects,
@@ -54,24 +58,40 @@ public abstract class BaseTemplateManager implements TemplateManager {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void addStaticClassSupport(
 		Map<String, Object> contextObjects, String variableName,
 		Class<?> variableClass) {
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void addTaglibApplication(
 		Map<String, Object> contextObjects, String applicationName,
 		ServletContext servletContext) {
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void addTaglibFactory(
 		Map<String, Object> contextObjects, String taglibLiferayHash,
 		ServletContext servletContext) {
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void addTaglibRequest(
 		Map<String, Object> contextObjects, String applicationName,
@@ -79,6 +99,10 @@ public abstract class BaseTemplateManager implements TemplateManager {
 		HttpServletResponse httpServletResponse) {
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void addTaglibSupport(
 		Map<String, Object> contextObjects,
@@ -86,6 +110,10 @@ public abstract class BaseTemplateManager implements TemplateManager {
 		HttpServletResponse httpServletResponse) {
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void addTaglibTheme(
 		Map<String, Object> contextObjects, String themeName,

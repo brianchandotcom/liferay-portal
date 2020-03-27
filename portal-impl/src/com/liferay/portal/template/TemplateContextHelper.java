@@ -864,6 +864,11 @@ public class TemplateContextHelper {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#populateExtraHelperUtilities(Map, boolean)}
+	 */
+	@Deprecated
 	protected void populateExtraHelperUtilities(Map<String, Object> variables) {
 	}
 

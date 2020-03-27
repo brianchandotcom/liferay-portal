@@ -87,7 +87,7 @@ public class DDMValueUtil {
 				return _getLocalizedValue(
 					locale, contentFieldValue, i18nValues,
 					(loc, value) -> _toLocalizedDocument(
-						dlAppService, contentFieldValue));
+						contentFieldValue, dlAppService));
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.IMAGE, ddmFormField.getType())) {
@@ -95,7 +95,7 @@ public class DDMValueUtil {
 				return _getLocalizedValue(
 					locale, contentFieldValue, i18nValues,
 					(loc, value) -> _toLocalizedImage(
-						dlAppService, contentFieldValue));
+						contentFieldValue, dlAppService));
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.JOURNAL_ARTICLE,
@@ -104,7 +104,7 @@ public class DDMValueUtil {
 				return _getLocalizedValue(
 					locale, contentFieldValue, i18nValues,
 					(loc, value) -> _toLocalizedJournalArticle(
-						journalArticleService, contentFieldValue));
+						contentFieldValue, journalArticleService));
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.LINK_TO_PAGE,
@@ -113,7 +113,7 @@ public class DDMValueUtil {
 				return _getLocalizedValue(
 					locale, contentFieldValue, i18nValues,
 					(loc, value) -> _toLocalizedLinkToPage(
-						groupId, layoutLocalService, contentFieldValue));
+						contentFieldValue, groupId, layoutLocalService));
 			}
 			else {
 				return _getLocalizedValue(
@@ -178,13 +178,13 @@ public class DDMValueUtil {
 	private static LocalizedValue _getLocalizedValue(
 		Locale defaultLocale, ContentFieldValue defaultValue,
 		Map<String, ContentFieldValue> i18nValues,
-		BiFunction<Locale, ContentFieldValue, String> localizedValueFunction) {
+		BiFunction<ContentFieldValue, Locale, String> localizedValueFunction) {
 
 		LocalizedValue localizedValue = new LocalizedValue(defaultLocale);
 
 		localizedValue.addString(
 			defaultLocale,
-			localizedValueFunction.apply(defaultLocale, defaultValue));
+			localizedValueFunction.apply(defaultValue, defaultLocale));
 
 		Optional.ofNullable(
 			i18nValues
@@ -198,7 +198,7 @@ public class DDMValueUtil {
 				if (locale != null) {
 					localizedValue.addString(
 						locale,
-						localizedValueFunction.apply(locale, languageValue));
+						localizedValueFunction.apply(languageValue, locale));
 				}
 			}
 		);
@@ -207,7 +207,7 @@ public class DDMValueUtil {
 	}
 
 	private static String _toJSON(
-		DLAppService dlAppService, String description, long fileEntryId) {
+		String description, DLAppService dlAppService, long fileEntryId) {
 
 		FileEntry fileEntry = null;
 
@@ -241,7 +241,7 @@ public class DDMValueUtil {
 	}
 
 	private static String _toLocalizedDateString(
-		Locale locale, ContentFieldValue contentFieldValue) {
+		ContentFieldValue contentFieldValue, Locale locale) {
 
 		if (Validator.isNull(contentFieldValue.getData())) {
 			return StringPool.BLANK;
@@ -262,7 +262,7 @@ public class DDMValueUtil {
 	}
 
 	private static String _toLocalizedDocument(
-		DLAppService dlAppService, ContentFieldValue contentFieldValue) {
+		ContentFieldValue contentFieldValue, DLAppService dlAppService) {
 
 		String valueString = StringPool.BLANK;
 
@@ -270,14 +270,14 @@ public class DDMValueUtil {
 
 		if ((contentDocument != null) && (contentDocument.getId() != null)) {
 			valueString = _toJSON(
-				dlAppService, StringPool.BLANK, contentDocument.getId());
+				StringPool.BLANK, dlAppService, contentDocument.getId());
 		}
 
 		return valueString;
 	}
 
 	private static String _toLocalizedImage(
-		DLAppService dlAppService, ContentFieldValue contentFieldValue) {
+		ContentFieldValue contentFieldValue, DLAppService dlAppService) {
 
 		String valueString = StringPool.BLANK;
 
@@ -285,7 +285,7 @@ public class DDMValueUtil {
 
 		if ((contentDocument != null) && (contentDocument.getId() != null)) {
 			valueString = _toJSON(
-				dlAppService, contentDocument.getDescription(),
+				contentDocument.getDescription(), dlAppService,
 				contentDocument.getId());
 		}
 
@@ -293,8 +293,8 @@ public class DDMValueUtil {
 	}
 
 	private static String _toLocalizedJournalArticle(
-		JournalArticleService journalArticleService,
-		ContentFieldValue contentFieldValue) {
+		ContentFieldValue contentFieldValue,
+		JournalArticleService journalArticleService) {
 
 		String valueString = StringPool.BLANK;
 
@@ -330,8 +330,8 @@ public class DDMValueUtil {
 	}
 
 	private static String _toLocalizedLinkToPage(
-		long groupId, LayoutLocalService layoutLocalService,
-		ContentFieldValue contentFieldValue) {
+		ContentFieldValue contentFieldValue, long groupId,
+		LayoutLocalService layoutLocalService) {
 
 		String valueString = StringPool.BLANK;
 

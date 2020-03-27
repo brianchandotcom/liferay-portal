@@ -118,8 +118,8 @@ public class StructuredContentDTOConverter
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					journalArticle.getAvailableLanguageIds());
 				contentFields = _toContentFields(
-					dtoConverterContext, journalArticle, _dlAppService,
-					_dlURLHelper, _fieldsToDDMFormValuesConverter,
+					_dlAppService, _dlURLHelper, dtoConverterContext,
+					_fieldsToDDMFormValuesConverter, journalArticle,
 					_journalArticleService, _journalConverter,
 					_layoutLocalService);
 				contentStructureId = ddmStructure.getStructureId();
@@ -337,9 +337,10 @@ public class StructuredContentDTOConverter
 		return new ContentField() {
 			{
 				contentFieldValue = _toContentFieldValue(
-					ddmFormField, ddmFormFieldValue.getValue(), dlAppService,
-					dlURLHelper, journalArticleService, layoutLocalService,
-					dtoConverterContext.getLocale());
+					ddmFormField, dlAppService, dlURLHelper,
+					journalArticleService, layoutLocalService,
+					dtoConverterContext.getLocale(),
+					ddmFormFieldValue.getValue());
 				dataType = ContentStructureUtil.toDataType(ddmFormField);
 				inputControl = ContentStructureUtil.toInputControl(
 					ddmFormField);
@@ -396,10 +397,10 @@ public class StructuredContentDTOConverter
 	}
 
 	private ContentField[] _toContentFields(
+			DLAppService dlAppService, DLURLHelper dlURLHelper,
 			DTOConverterContext dtoConverterContext,
-			JournalArticle journalArticle, DLAppService dlAppService,
-			DLURLHelper dlURLHelper,
 			FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter,
+			JournalArticle journalArticle,
 			JournalArticleService journalArticleService,
 			JournalConverter journalConverter,
 			LayoutLocalService layoutLocalService)
@@ -422,10 +423,10 @@ public class StructuredContentDTOConverter
 	}
 
 	private ContentFieldValue _toContentFieldValue(
-			DDMFormField ddmFormField, Value value, DLAppService dlAppService,
+			DDMFormField ddmFormField, DLAppService dlAppService,
 			DLURLHelper dlURLHelper,
 			JournalArticleService journalArticleService,
-			LayoutLocalService layoutLocalService, Locale locale)
+			LayoutLocalService layoutLocalService, Locale locale, Value value)
 		throws Exception {
 
 		if (value == null) {

@@ -94,7 +94,7 @@ public class AccountEntryDisplaySearchContainerFactory {
 				WebKeys.THEME_DISPLAY);
 
 		String keywords = ParamUtil.getString(
-			liferayPortletRequest, "keywords", null);
+			liferayPortletRequest, "keywords");
 
 		String navigation = ParamUtil.getString(
 			liferayPortletRequest, "navigation", "active");

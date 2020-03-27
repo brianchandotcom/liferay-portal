@@ -15,6 +15,7 @@
 package com.liferay.asset.list.item.selector.web.internal.layout.list.retriever;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
@@ -25,8 +26,10 @@ import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverContext;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,7 +44,7 @@ public class AssetEntryListLayoutListRetriever
 		<InfoListItemSelectorReturnType, ClassedModelListObjectReference> {
 
 	@Override
-	public List<AssetEntry> getList(
+	public List getList(
 		ClassedModelListObjectReference classedModelListObjectReference,
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 
@@ -65,9 +68,19 @@ public class AssetEntryListLayoutListRetriever
 		Pagination pagination = paginationOptional.orElse(
 			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
-		return _assetListAssetEntryProvider.getAssetEntries(
-			assetListEntry, segmentsExperienceIds[0], pagination.getStart(),
-			pagination.getEnd());
+		List<AssetEntry> assetEntries =
+			_assetListAssetEntryProvider.getAssetEntries(
+				assetListEntry, segmentsExperienceIds[0], pagination.getStart(),
+				pagination.getEnd());
+
+		if (Objects.equals(
+				AssetEntry.class.getName(),
+				assetListEntry.getAssetEntryType())) {
+
+			return assetEntries;
+		}
+
+		return _toAssetObjects(assetEntries);
 	}
 
 	@Override
@@ -91,6 +104,18 @@ public class AssetEntryListLayoutListRetriever
 
 		return _assetListAssetEntryProvider.getAssetEntriesCount(
 			assetListEntry, segmentsExperienceIds[0]);
+	}
+
+	private List _toAssetObjects(List<AssetEntry> assetEntries) {
+		List list = new ArrayList(assetEntries.size());
+
+		for (AssetEntry assetEntry : assetEntries) {
+			AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
+
+			list.add(assetRenderer.getAssetObject());
+		}
+
+		return list;
 	}
 
 	@Reference

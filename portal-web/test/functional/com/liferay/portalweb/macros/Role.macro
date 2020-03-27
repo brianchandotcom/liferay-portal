@@ -110,6 +110,7 @@ definition {
 			permissionNavigationValue = "${permissionNavigationValue}",
 			remove = "${remove}",
 			roleTitle = "${roleTitle}",
+			roleTitleEdit = "${roleTitleEdit}",
 			roleType = "${roleType}",
 			roleUser = "${roleUser}",
 			siteNameScope = "${siteNameScope}");
@@ -120,6 +121,7 @@ definition {
 			assetLibrariesScope = "${assetLibrariesScope}",
 			permissionDefinitionKey = "${permissionDefinitionKey}",
 			roleTitle = "${roleTitle}",
+			roleTitleEdit = "${roleTitleEdit}",
 			roleType = "${roleType}",
 			roleUser = "${roleUser}",
 			siteNameScope = "${siteNameScope}");
@@ -197,6 +199,14 @@ definition {
 			AssertClick(
 				locator1 = "ListGroupItem#ITEM_NAME_LINK",
 				value1 = "${roleTitle}");
+		}
+
+		if (isSet(roleTitleEdit)) {
+			PortletEntry.inputTitle(title = "${roleTitleEdit}");
+
+			AssertClick(
+				locator1 = "Button#SUBMIT",
+				value1 = "Save");
 		}
 
 		Navigator.gotoNavItem(navItem = "Define Permissions");

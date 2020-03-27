@@ -116,7 +116,6 @@ public class SearchEngineInitializer implements Runnable {
 			long backgroundTaskId =
 				BackgroundTaskThreadLocal.getBackgroundTaskId();
 			List<FutureTask<Void>> futureTasks = new ArrayList<>();
-			Set<String> searchEngineIds = new HashSet<>();
 
 			if (_companyId == CompanyConstants.SYSTEM) {
 				_indexers = ServiceTrackerListFactory.open(
@@ -128,14 +127,6 @@ public class SearchEngineInitializer implements Runnable {
 			}
 
 			for (Indexer<?> indexer : _indexers) {
-				String searchEngineId = indexer.getSearchEngineId();
-
-				if (searchEngineIds.add(searchEngineId)) {
-					IndexWriterHelperUtil.deleteEntityDocuments(
-						searchEngineId, _companyId, indexer.getClassName(),
-						true);
-				}
-
 				FutureTask<Void> futureTask = new FutureTask<>(
 					new Callable<Void>() {
 

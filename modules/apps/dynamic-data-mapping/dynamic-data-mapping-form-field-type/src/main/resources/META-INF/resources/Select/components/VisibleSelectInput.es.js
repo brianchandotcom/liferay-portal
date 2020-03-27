@@ -20,7 +20,7 @@ import React, {forwardRef, useMemo} from 'react';
 const LabelOptionListItem = ({onCloseButtonClicked, option}) => (
 	<li>
 		<ClayLabel
-			className="ddm-select-option-label text-truncate"
+			className="ddm-select-option-label"
 			closeButtonProps={{
 				onClick: event => {
 					event.preventDefault();

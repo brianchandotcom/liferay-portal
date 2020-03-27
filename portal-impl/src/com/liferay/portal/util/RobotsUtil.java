@@ -56,11 +56,13 @@ public class RobotsUtil {
 	public static String getRobots(LayoutSet layoutSet, boolean secure)
 		throws PortalException {
 
-		int portalServerPort = PortalUtil.getPortalServerPort(secure);
-
 		if (layoutSet == null) {
-			return getDefaultRobots(null, secure, portalServerPort);
+			return ContentUtil.get(
+				RobotsUtil.class.getClassLoader(),
+				PropsValues.ROBOTS_TXT_WITH_SITEMAP);
 		}
+
+		int portalServerPort = PortalUtil.getPortalServerPort(secure);
 
 		TreeMap<String, String> virtualHostnames =
 			PortalUtil.getVirtualHostnames(layoutSet);
@@ -77,8 +79,9 @@ public class RobotsUtil {
 			null);
 
 		if (robotsTxt == null) {
-			robotsTxt = getDefaultRobots(
-				virtualHostname, secure, portalServerPort);
+			robotsTxt = ContentUtil.get(
+				RobotsUtil.class.getClassLoader(),
+				PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
 		}
 
 		robotsTxt = _replaceWildcards(
@@ -104,9 +107,9 @@ public class RobotsUtil {
 		}
 
 		if (strictRobots == null) {
-			return getDefaultRobots(
-				StringPool.BLANK, secure,
-				PortalUtil.getPortalServerPort(secure));
+			return ContentUtil.get(
+				RobotsUtil.class.getClassLoader(),
+				PropsValues.ROBOTS_TXT_WITH_SITEMAP);
 		}
 
 		return strictRobots;

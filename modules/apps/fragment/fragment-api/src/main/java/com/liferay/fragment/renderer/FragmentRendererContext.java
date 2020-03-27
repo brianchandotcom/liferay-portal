@@ -28,6 +28,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FragmentRendererContext {
 
+	public Optional<Object> getDisplayObjectOptional();
+
 	public Optional<Map<String, Object>> getFieldValuesOptional();
 
 	public FragmentEntryLink getFragmentEntryLink();

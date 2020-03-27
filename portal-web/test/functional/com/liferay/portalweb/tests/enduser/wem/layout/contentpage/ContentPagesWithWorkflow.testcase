@@ -1,0 +1,466 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		JSONGroup.assignUserToGroup(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		task ("Add the Page Author as a new Site Role and define permissions") {
+			JSONRole.addSiteRole(roleTitle = "Page Author");
+
+			for (var resourceAction : list "UPDATE,UPDATE_LAYOUT_CONTENT,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceAction}",
+					resourceName = "com.liferay.portal.kernel.model.Layout",
+					roleTitle = "Page Author",
+					roleType = "site");
+			}
+
+			for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceAction}",
+					resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+					roleTitle = "Page Author",
+					roleType = "site");
+			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.layout.seo",
+				roleTitle = "Page Author",
+				roleType = "site");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Page Author",
+				roleType = "site");
+		}
+
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "Test Site Name",
+			roleTitle = "Page Author",
+			userEmailAddress = "userea@liferay.com");
+
+		task ("Add a content page with Heading fragment") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert enable Single Approver for Content Page") {
+			Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Content Page");
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		task ("Edit the Heading fragment's editable text.") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ContentPages.clickPencil();
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "text",
+				text = "New editable fragment text");
+
+			AssertClick(
+				locator1 = "Button#SUBMIT_FOR_PUBLICATION",
+				value1 = "Submit for Publication");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert content page is in pending status") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			AssertTextEquals(
+				key_itemName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
+				value1 = "Pending");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "Page Author");
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is for LPS-98384. Assert the modification won't be shown in content page for guests until approve."
+	@priority = "3"
+	test GuestCannotViewModificationUntilApprove {
+		task ("Assert guests can not view modification before approve") {
+			User.logoutPG();
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextNotEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "New editable fragment text");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
+		}
+
+		task ("Assert guests can view modification after approve") {
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Test Page Name",
+				workflowAssetType = "Content Page",
+				workflowTask = "Review");
+
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Test Page Name",
+				workflowAssetType = "Content Page",
+				workflowTask = "Review");
+
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			AssertTextNotPresent(
+				key_itemName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
+				value1 = "Pending");
+
+			User.logoutPG();
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "New editable fragment text");
+		}
+	}
+
+	@description = "This is for LPS-98384. The page author can edit content page after reject or approve."
+	@priority = "3"
+	test PageAuthorCanEditAfterRejectOrApprove {
+		task ("Reviewer rejects the request of modification") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Test Page Name",
+				workflowAssetType = "Content Page",
+				workflowTask = "Review");
+
+			Workflow.rejectTaskByActions(
+				workflowAssetTitle = "Test Page Name",
+				workflowAssetType = "Content Page",
+				workflowTask = "Review");
+		}
+
+		task ("Assert page author can edit after reject") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextNotEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "New editable fragment text");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
+
+			AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			AssertTextEquals(
+				key_itemName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
+				value1 = "Pending");
+
+			Click.waitForMenuToggleJSClick(
+				key_pageName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.viewVisible(menuItem = "Edit");
+
+			MenuItem.click(menuItem = "Edit");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "text",
+				text = "Modified text");
+		}
+
+		task ("Resubmit the request after modification") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			AssertTextEquals(
+				key_itemName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
+				value1 = "Pending");
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.resubmitTaskByActions(
+				workflowAssetTitle = "Test Page Name",
+				workflowAssetType = "Content Page",
+				workflowTask = "Update");
+		}
+
+		task ("Reviewer approve the request of modification") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Test Page Name",
+				workflowAssetType = "Content Page",
+				workflowTask = "Review");
+
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Test Page Name",
+				workflowAssetType = "Content Page",
+				workflowTask = "Review");
+		}
+
+		task ("Assert page author can edit after approve") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			AssertTextNotPresent(
+				key_itemName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
+				value1 = "Pending");
+
+			Click.waitForMenuToggleJSClick(
+				key_pageName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.viewNotPresent(menuItem = "Preview");
+
+			MenuItem.viewVisible(menuItem = "Edit");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+
+			ContentPages.clickPencil();
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Modified text");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "text",
+				text = "New modified text");
+
+			AssertClick(
+				locator1 = "Button#SUBMIT_FOR_PUBLICATION",
+				value1 = "Submit for Publication");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	@description = "This is for LPS-98384. The page author can not edit again after submit but can preview the modification."
+	@priority = "5"
+	test PageAuthorCanPreviewModificationButCannotEditAfterSubmit {
+		task ("Assert the Heading fragment still displays original text for public") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextNotEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "New editable fragment text");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
+		}
+
+		task ("Assert page author can not edit again after submit") {
+			AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
+
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			AssertTextEquals(
+				key_itemName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
+				value1 = "Pending");
+
+			Click.waitForMenuToggleJSClick(
+				key_pageName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.viewNotPresent(menuItem = "Edit");
+		}
+
+		task ("Assert page author can preview modification of content page") {
+			MenuItem.viewVisible(menuItem = "Preview");
+
+			MenuItem.click(menuItem = "Preview");
+
+			AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "New editable fragment text");
+		}
+	}
+
+	@description = "This is for LPS-98384. The reviewer can edit the content page and preview the modification after submit."
+	@priority = "5"
+	test ReviewerCanPreviewModificationAndEditAfterSubmit {
+		task ("Assert reviewer can preview modification of content page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			AssertTextEquals(
+				key_itemName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
+				value1 = "Pending");
+
+			Click.waitForMenuToggleJSClick(
+				key_pageName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.viewVisible(menuItem = "Preview");
+
+			MenuItem.click(menuItem = "Preview");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "New editable fragment text");
+		}
+
+		task ("Assert reviewer can edit after submit") {
+			AssertVisible(locator1 = "Icon#EDIT_PENCIL");
+
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			Click.waitForMenuToggleJSClick(
+				key_pageName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.viewVisible(menuItem = "Edit");
+
+			MenuItem.click(menuItem = "Edit");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "text",
+				text = "Modified text");
+
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			AssertTextEquals(
+				key_itemName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
+				value1 = "Pending");
+
+			Click.waitForMenuToggleJSClick(
+				key_pageName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.click(menuItem = "Preview");
+
+			AssertTextNotEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "New editable fragment text");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Modified text");
+		}
+	}
+
+}

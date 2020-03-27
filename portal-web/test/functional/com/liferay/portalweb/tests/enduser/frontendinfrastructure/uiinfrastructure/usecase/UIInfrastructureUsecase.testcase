@@ -283,7 +283,7 @@ definition {
 	test ViewSignInSignOutUI {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property environment.acceptance = "true";
+		property environment.acceptance = "quarantine";
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "UIInfrastructureUsecase#ViewSignInSignOutUI";
 

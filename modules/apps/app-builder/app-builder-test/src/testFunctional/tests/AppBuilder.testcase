@@ -1006,7 +1006,7 @@ definition {
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Widget"
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfWidgetApp {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";

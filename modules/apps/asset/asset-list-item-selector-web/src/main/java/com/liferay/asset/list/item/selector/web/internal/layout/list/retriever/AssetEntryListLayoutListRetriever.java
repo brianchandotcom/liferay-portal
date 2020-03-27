@@ -18,10 +18,12 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.info.pagination.Pagination;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverContext;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -57,8 +59,15 @@ public class AssetEntryListLayoutListRetriever
 		long[] segmentsExperienceIds = segmentsExperienceIdsOptional.orElse(
 			new long[] {0});
 
+		Optional<Pagination> paginationOptional =
+			layoutListRetrieverContext.getPaginationOptional();
+
+		Pagination pagination = paginationOptional.orElse(
+			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+
 		return _assetListAssetEntryProvider.getAssetEntries(
-			assetListEntry, segmentsExperienceIds[0]);
+			assetListEntry, segmentsExperienceIds[0], pagination.getStart(),
+			pagination.getEnd());
 	}
 
 	@Override

@@ -14,6 +14,8 @@
 
 package com.liferay.layout.list.retriever;
 
+import com.liferay.info.pagination.Pagination;
+
 import java.util.Optional;
 
 /**
@@ -23,8 +25,17 @@ public class DefaultLayoutListRetrieverContext
 	implements LayoutListRetrieverContext {
 
 	@Override
+	public Optional<Pagination> getPaginationOptional() {
+		return Optional.of(_pagination);
+	}
+
+	@Override
 	public Optional<long[]> getSegmentsExperienceIdsOptional() {
 		return Optional.of(_segmentsExperienceIds);
+	}
+
+	public void setPagination(Pagination pagination) {
+		_pagination = pagination;
 	}
 
 	public void setSegmentsExperienceIdsOptional(
@@ -33,6 +44,7 @@ public class DefaultLayoutListRetrieverContext
 		_segmentsExperienceIds = segmentsExperienceIdsOptional;
 	}
 
+	private Pagination _pagination;
 	private long[] _segmentsExperienceIds;
 
 }

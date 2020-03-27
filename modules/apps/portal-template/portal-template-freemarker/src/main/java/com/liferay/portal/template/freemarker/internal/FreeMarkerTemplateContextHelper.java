@@ -128,6 +128,14 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 		}
 	}
 
+	public void setDefaultBeansWrapper(BeansWrapper defaultBeansWrapper) {
+		_defaultBeansWrapper = defaultBeansWrapper;
+	}
+
+	public void setRestrictedBeansWrapper(BeansWrapper restrictedBeansWrapper) {
+		_restrictedBeansWrapper = restrictedBeansWrapper;
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -140,17 +148,22 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 
 	@Override
 	protected void populateExtraHelperUtilities(
-		Map<String, Object> helperUtilities) {
+		Map<String, Object> helperUtilities, boolean restricted) {
+
+		BeansWrapper beansWrapper = _defaultBeansWrapper;
+
+		if (restricted) {
+			beansWrapper = _restrictedBeansWrapper;
+		}
 
 		// Enum util
-
-		BeansWrapper beansWrapper = FreeMarkerManager.getBeansWrapper();
 
 		helperUtilities.put("enumUtil", beansWrapper.getEnumModels());
 
 		// Object util
 
-		helperUtilities.put("objectUtil", new LiferayObjectConstructor());
+		helperUtilities.put(
+			"objectUtil", new LiferayObjectConstructor(beansWrapper));
 
 		// Portlet preferences
 
@@ -180,8 +193,10 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 		_templateContextContributors.remove(templateContextContributor);
 	}
 
+	private BeansWrapper _defaultBeansWrapper;
 	private volatile FreeMarkerEngineConfiguration
 		_freeMarkerEngineConfiguration;
+	private BeansWrapper _restrictedBeansWrapper;
 	private Set<String> _restrictedVariables;
 	private final List<TemplateContextContributor>
 		_templateContextContributors = new CopyOnWriteArrayList<>();

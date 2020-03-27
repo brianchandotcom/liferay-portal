@@ -65,6 +65,15 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+			layoutUuid, layoutSet.getGroupId(), layoutSet.isPrivateLayout());
+
+		if ((layout == null) ||
+			(layout.isSystem() && !layout.isTypeAssetDisplay())) {
+
+			return;
+		}
+
 		List<JournalArticle> journalArticles =
 			_journalArticleService.getArticlesByLayoutUuid(
 				layoutSet.getGroupId(), layoutUuid);

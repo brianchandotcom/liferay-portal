@@ -980,7 +980,7 @@ public class StructuredContentResourceImpl
 						JournalArticle.class.getName(),
 						journalArticle.getGroupId())
 				).put(
-					"get-template",
+					"get-rendered-content",
 					addAction(
 						"VIEW", journalArticle.getResourcePrimKey(),
 						"getStructuredContentRenderedContentTemplate",

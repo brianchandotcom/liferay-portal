@@ -2181,6 +2181,18 @@ public class JournalArticleFinderImpl
 		return StringUtil.replace(sql, "[$STRUCTURE_TEMPLATE$]", sb.toString());
 	}
 
+	private static boolean _isOrderByTitle(
+		OrderByComparator orderByComparator) {
+
+		if ((orderByComparator != null) &&
+			StringUtil.containsIgnoreCase(
+				orderByComparator.getOrderBy(), _TITLE_FIELD,
+				StringPool.COMMA)) {
+		}
+
+		return false;
+	}
+
 	private static final String _AND_OR_CONNECTOR = "[$AND_OR_CONNECTOR$] ";
 
 	private static final String _DDM_STRUCTURE_KEY_SQL =

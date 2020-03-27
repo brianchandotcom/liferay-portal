@@ -150,6 +150,29 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		return jsonObject.getInt("PropertyNumber");
 	}
 
+	public SpiraCustomList getSpiraCustomList() {
+		return _spiraCustomList;
+	}
+
+	public List<SpiraCustomList.Value> getSpiraCustomListValues() {
+		List<SpiraCustomList.Value> spiraCustomListValues = new ArrayList<>();
+
+		JSONObject customListJSONObject = jsonObject.getJSONObject(
+			"CustomList");
+
+		JSONArray valuesJSONArray = customListJSONObject.getJSONArray("Values");
+
+		for (int i = 0; i < valuesJSONArray.length(); i++) {
+			JSONObject valueJSONObject = valuesJSONArray.getJSONObject(i);
+
+			spiraCustomListValues.add(
+				new SpiraCustomList.Value(
+					valueJSONObject, getSpiraProject(), getSpiraCustomList()));
+		}
+
+		return spiraCustomListValues;
+	}
+
 	public static enum Type {
 
 		BOOLEAN(4), DATE(5), DECIMAL(3), INTEGER(2), LIST(6), MULTILIST(7),
@@ -205,6 +228,17 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 
 			},
 			customSearchParameters);
+	}
+
+	protected void addSpiraCustomListValue(
+		SpiraCustomList.Value spiraCustomListValue) {
+
+		JSONObject customListJSONObject = jsonObject.getJSONObject(
+			"CustomList");
+
+		JSONArray valuesJSONArray = customListJSONObject.getJSONArray("Values");
+
+		valuesJSONArray.put(spiraCustomListValue.toJSONObject());
 	}
 
 	protected static final String ARTIFACT_TYPE_NAME = "customproperty";
@@ -283,6 +317,11 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		jsonObject.put(
 			"ArtifactTypeName", getArtifactTypeName(spiraArtifactClass));
 		jsonObject.put("ProjectId", spiraProject.getID());
+
+		_spiraCustomList = SpiraCustomList.createSpiraCustomListByName(
+			spiraProject, spiraArtifactClass, getName());
 	}
+
+	private final SpiraCustomList _spiraCustomList;
 
 }

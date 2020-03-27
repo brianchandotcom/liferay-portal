@@ -34,29 +34,6 @@ import org.json.JSONObject;
  */
 public class SpiraCustomList extends BaseSpiraArtifact {
 
-	public static class Value extends BaseSpiraArtifact {
-
-		public SpiraCustomList getSpiraCustomList() {
-			return _spiraCustomList;
-		}
-
-		protected Value(
-			JSONObject jsonObject, SpiraProject spiraProject,
-			SpiraCustomList spiraCustomList) {
-
-			super(jsonObject);
-
-			jsonObject.put("ProjectId", spiraProject.getID());
-
-			_spiraCustomList = spiraCustomList;
-		}
-
-		protected static final String ID_KEY = "CustomPropertyValueId";
-
-		private final SpiraCustomList _spiraCustomList;
-
-	}
-
 	public static SpiraCustomList createSpiraCustomListByName(
 		SpiraProject spiraProject,
 		Class<? extends SpiraArtifact> spiraArtifactClass,
@@ -98,6 +75,46 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	public List<SpiraCustomList.Value> getSpiraCustomListValues() {
+		SpiraCustomProperty spiraCustomProperty = getSpiraCustomProperty();
+
+		return spiraCustomProperty.getSpiraCustomListValues();
+	}
+
+	public SpiraCustomProperty getSpiraCustomProperty() {
+		if (_spiraCustomProperty != null) {
+			return _spiraCustomProperty;
+		}
+
+		_spiraCustomProperty = SpiraCustomProperty.createSpiraCustomProperty(
+			getSpiraProject(), _spiraArtifactClass, getName());
+
+		return _spiraCustomProperty;
+	}
+
+	public static class Value extends BaseSpiraArtifact {
+
+		public SpiraCustomList getSpiraCustomList() {
+			return _spiraCustomList;
+		}
+
+		protected Value(
+			JSONObject jsonObject, SpiraProject spiraProject,
+			SpiraCustomList spiraCustomList) {
+
+			super(jsonObject);
+
+			jsonObject.put("ProjectId", spiraProject.getID());
+
+			_spiraCustomList = spiraCustomList;
+		}
+
+		protected static final String ID_KEY = "CustomPropertyValueId";
+
+		private final SpiraCustomList _spiraCustomList;
+
 	}
 
 	protected static SpiraCustomList getSpiraCustomListByName(
@@ -153,6 +170,14 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 			customSearchParameters);
 	}
 
+	protected void addSpiraCustomListValue(
+		SpiraCustomList.Value spiraCustomListValue) {
+
+		SpiraCustomProperty spiraCustomProperty = getSpiraCustomProperty();
+
+		spiraCustomProperty.addSpiraCustomListValue(spiraCustomListValue);
+	}
+
 	protected static final String ARTIFACT_TYPE_NAME = "custompropertylist";
 
 	protected static final String ID_KEY = "CustomPropertyListId";
@@ -202,5 +227,6 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 	}
 
 	private final Class<? extends SpiraArtifact> _spiraArtifactClass;
+	private SpiraCustomProperty _spiraCustomProperty;
 
 }

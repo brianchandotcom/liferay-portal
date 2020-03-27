@@ -34,6 +34,12 @@ export default function(
 			collectionFieldId: editableValue.collectionFieldId,
 			fieldId: editableValue.fieldId,
 			languageId,
+		}).catch(() => {
+			return selectEditableValueContent(
+				editableValue,
+				languageId,
+				prefixedSegmentsExperienceId
+			);
 		});
 	}
 	else {
@@ -55,9 +61,13 @@ export default function(
 			collectionFieldId: editableValue.config.collectionFieldId,
 			fieldId: editableValue.config.fieldId,
 			languageId,
-		}).then(href => {
-			return {...editableValue.config, href};
-		});
+		})
+			.then(href => {
+				return {...editableValue.config, href};
+			})
+			.catch(() => {
+				return {...editableValue.config};
+			});
 	}
 	else {
 		configPromise = Promise.resolve(editableValue.config);

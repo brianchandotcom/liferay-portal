@@ -151,6 +151,21 @@ AUI.add(
 
 					var clonedRow;
 
+					if (inputsLocalized) {
+						var trigger = clone.one('button');
+
+						var id = '#' + trigger.attr('id').replace(instance.namespace, "").replace("Menu","PaletteBoundingBox");
+						
+						if (!node.one(id) && A.one(id)) {
+							var palette = A.one(id);
+
+							var list = A.Node.create('<ul class="dropdown-menu dropdown-menu-left-side"></ul>');
+							
+							trigger.placeAfter(list);
+							list.append(palette.clone());
+						}
+
+					}
 					if (instance.url) {
 						clonedRow = instance._createCloneFromURL(clone, guid);
 					}

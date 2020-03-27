@@ -16,6 +16,7 @@ package com.liferay.message.boards.internal.upgrade.v3_1_0;
 
 import com.liferay.message.boards.internal.upgrade.v3_1_0.util.MBMessageTable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -91,8 +92,10 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 				"select messageId, subject from MBMessage where (urlSubject " +
 					"is null) or (urlSubject = '')");
 			ResultSet rs = ps1.executeQuery();
-			PreparedStatement ps2 = connection.prepareStatement(
-				"update MBMessage set urlSubject = ? where messageId = ?")) {
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"update MBMessage set urlSubject = ? where messageId = " +
+						"?"))) {
 
 			while (rs.next()) {
 				long messageId = rs.getLong(1);
@@ -107,8 +110,10 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 
 				ps2.setLong(2, messageId);
 
-				ps2.execute();
+				ps2.addBatch();
 			}
+
+			ps2.executeBatch();
 		}
 	}
 

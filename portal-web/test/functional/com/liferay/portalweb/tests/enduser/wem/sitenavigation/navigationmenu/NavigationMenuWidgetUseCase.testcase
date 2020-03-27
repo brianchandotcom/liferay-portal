@@ -261,9 +261,9 @@ definition {
 				panel = "Control Panel",
 				portlet = "Roles");
 
-			Role.assignRegRoleCP(
+			JSONRole.assignRoleToUser(
 				roleTitle = "Power User",
-				userScreenName = "usersn");
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Sign in as the created user") {

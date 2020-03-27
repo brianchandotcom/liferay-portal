@@ -262,9 +262,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Power User",
-			userScreenName = "usersn");
+			userEmailAddress = "userea@liferay.com");
 
 		User.firstLoginPG(
 			password = "test",
@@ -475,9 +475,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userScreenName = "usersn1");
+			userEmailAddress = PropsUtil.get("email.address.2"));
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -663,9 +663,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userScreenName = "usersn1");
+			userEmailAddress = PropsUtil.get("email.address.2"));
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -877,9 +877,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userScreenName = "usersn1");
+			userEmailAddress = PropsUtil.get("email.address.2"));
 
 		ProductMenu.gotoPortlet(
 			category = "Users",

@@ -2923,9 +2923,9 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.assignRegRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Web Content Subscriber Role",
-			userScreenName = "usersn");
+			userEmailAddress = "userea@liferay.com");
 
 		SitePages.openPagesAdmin(siteURLKey = "Test Site");
 

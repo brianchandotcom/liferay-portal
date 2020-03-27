@@ -292,7 +292,12 @@ class JournalPortlet extends PortletBase {
 				inputComponent.selectFlag(selectedLanguageId);
 				inputComponent.updateInput(inputDefaultValue);
 
-				eventHandler.detach();
+				// setInterval declared in ckeditor.jsp is triggering
+				// the updateInputLanguage function, so with this
+				// we guarantee that this function is not called
+				setTimeout(() => {
+					eventHandler.detach();
+				}, 400);
 			}
 		}
 	}

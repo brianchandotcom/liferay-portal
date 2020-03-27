@@ -168,8 +168,8 @@ public class RestrictedLiferayObjectWrapper extends LiferayObjectWrapper {
 
 		String className = clazz.getName();
 
-		if (!_allowAllClasses) {
-			_checkClassIsRestricted(clazz);
+		if (!_allowAllClasses && _isRestricted(clazz)) {
+			return _LIFERAY_FREEMARKER_BEAN_MODEL_FACTORY.create(object, this);
 		}
 
 		if (_restrictedMethodNames.containsKey(className)) {
@@ -186,58 +186,42 @@ public class RestrictedLiferayObjectWrapper extends LiferayObjectWrapper {
 		return super.wrap(object);
 	}
 
-	private void _checkClassIsRestricted(Class<?> clazz)
-		throws TemplateModelException {
+	private boolean _isRestricted(Class<?> clazz) {
+		return _restrictedClassMap.computeIfAbsent(
+			clazz.getName(),
+			className -> {
+				if (_allowedClassNames.contains(className)) {
+					return false;
+				}
 
-		ClassRestrictionInformation classRestrictionInformation =
-			_classRestrictionInformations.computeIfAbsent(
-				clazz.getName(),
-				className -> {
-					if (_allowedClassNames.contains(className)) {
-						return _nullInstance;
+				for (Class<?> restrictedClass : _restrictedClasses) {
+					if (!restrictedClass.isAssignableFrom(clazz)) {
+						continue;
 					}
 
-					for (Class<?> restrictedClass : _restrictedClasses) {
-						if (!restrictedClass.isAssignableFrom(clazz)) {
-							continue;
-						}
+					return true;
+				}
 
-						return new ClassRestrictionInformation(
-							StringBundler.concat(
-								"Denied resolving class ", className, " by ",
-								restrictedClass.getName()));
+				int index = className.lastIndexOf(StringPool.PERIOD);
+
+				if (index == -1) {
+					return false;
+				}
+
+				String packageName = className.substring(0, index);
+
+				packageName = packageName.concat(StringPool.PERIOD);
+
+				for (String restrictedPackageName : _restrictedPackageNames) {
+					if (!packageName.startsWith(restrictedPackageName)) {
+						continue;
 					}
 
-					int index = className.lastIndexOf(StringPool.PERIOD);
+					return true;
+				}
 
-					if (index == -1) {
-						return _nullInstance;
-					}
-
-					String packageName = className.substring(0, index);
-
-					packageName = packageName.concat(StringPool.PERIOD);
-
-					for (String restrictedPackageName :
-							_restrictedPackageNames) {
-
-						if (!packageName.startsWith(restrictedPackageName)) {
-							continue;
-						}
-
-						return new ClassRestrictionInformation(
-							StringBundler.concat(
-								"Denied resolving class ", className, " by ",
-								restrictedPackageName));
-					}
-
-					return _nullInstance;
-				});
-
-		if (classRestrictionInformation.isRestricted()) {
-			throw new TemplateModelException(
-				classRestrictionInformation.getDescription());
-		}
+				return false;
+			});
 	}
 
 	private static final ModelFactory _LIFERAY_FREEMARKER_BEAN_MODEL_FACTORY =
@@ -256,37 +240,12 @@ public class RestrictedLiferayObjectWrapper extends LiferayObjectWrapper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RestrictedLiferayObjectWrapper.class);
 
-	private static final ClassRestrictionInformation _nullInstance =
-		new ClassRestrictionInformation(null);
-
 	private final boolean _allowAllClasses;
 	private final List<String> _allowedClassNames;
-	private final Map<String, ClassRestrictionInformation>
-		_classRestrictionInformations = new ConcurrentHashMap<>();
 	private final List<Class<?>> _restrictedClasses;
+	private final Map<String, Boolean> _restrictedClassMap =
+		new ConcurrentHashMap<>();
 	private final Map<String, Set<String>> _restrictedMethodNames;
 	private final List<String> _restrictedPackageNames;
-
-	private static class ClassRestrictionInformation {
-
-		public String getDescription() {
-			return _description;
-		}
-
-		public boolean isRestricted() {
-			if (_description == null) {
-				return false;
-			}
-
-			return true;
-		}
-
-		private ClassRestrictionInformation(String description) {
-			_description = description;
-		}
-
-		private final String _description;
-
-	}
 
 }

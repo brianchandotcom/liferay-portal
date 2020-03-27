@@ -17,9 +17,9 @@ package com.liferay.portal.template.freemarker.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import freemarker.ext.beans.BeanModel;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.beans.InvalidPropertyException;
+import freemarker.ext.beans.StringModel;
 
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
@@ -29,7 +29,7 @@ import java.util.Set;
 /**
  * @author Marta Medio
  */
-public class LiferayFreeMarkerBeanModel extends BeanModel {
+public class LiferayFreeMarkerBeanModel extends StringModel {
 
 	public LiferayFreeMarkerBeanModel(Object object, BeansWrapper wrapper) {
 		super(object, wrapper);
@@ -37,6 +37,13 @@ public class LiferayFreeMarkerBeanModel extends BeanModel {
 
 	@Override
 	public TemplateModel get(String key) throws TemplateModelException {
+		if (_restrictedMethodNames == null) {
+			throw new InvalidPropertyException(
+				StringBundler.concat(
+					"Denied access to method or field ", key, " of ",
+					object.getClass()));
+		}
+
 		String methodOrFieldName = StringUtil.toLowerCase(key);
 
 		for (String restrictedMethodName : _restrictedMethodNames) {

@@ -15,9 +15,7 @@
 package com.liferay.portal.poller;
 
 import com.liferay.portal.kernel.poller.PollerProcessor;
-import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.resiliency.spi.SPIRegistryImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -37,10 +35,6 @@ public class PollerProcessorUtilTest {
 	public void testGetPollerProcessor() {
 		PollerProcessor pollerProcessor = ProxyFactory.newDummyInstance(
 			PollerProcessor.class);
-
-		SPIRegistryUtil spiRegistryUtil = new SPIRegistryUtil();
-
-		spiRegistryUtil.setSPIRegistry(new SPIRegistryImpl());
 
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 

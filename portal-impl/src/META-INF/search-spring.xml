@@ -54,5 +54,4 @@
 			</util:map>
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.resiliency.spi.search.SPISearchEngineConfigurator" id="com.liferay.portal.resiliency.spi.search.SPISearchEngineConfigurator" />
 </beans>

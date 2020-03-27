@@ -23,7 +23,6 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
 import {switchSidebarPanel} from '../actions/index';
-import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {config} from '../config/index';
 import selectCanUpdateLayoutContent from '../selectors/selectCanUpdateLayoutContent';
@@ -38,6 +37,7 @@ import {
 	useIsSelected,
 	useSelectItem,
 } from './Controls';
+import getLabelName from './layout-data-items/getLabelName';
 import hasDropZoneChild from './layout-data-items/hasDropZoneChild';
 import useDragAndDrop, {
 	DragDropManagerImpl,
@@ -79,7 +79,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 	const selectItem = useSelectItem();
 
 	const {
-		store: {dropTargetItemId, targetPosition},
+		store: {dropItem, dropTargetItemId, droppable, targetPosition},
 	} = useContext(DragDropManagerImpl);
 
 	const {canDrop, drag, drop, isDragging, isOver} = useDragAndDrop({
@@ -110,31 +110,6 @@ export default function Topper({children, item, itemRef, layoutData}) {
 
 	const [isInset, setIsInset] = useState(false);
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
-
-	const getName = (item, fragmentEntryLinks) => {
-		let name;
-
-		if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
-			name = fragmentEntryLinks[item.config.fragmentEntryLinkId].name;
-		}
-		else if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
-			name = LAYOUT_DATA_ITEM_TYPE_LABELS.collection;
-		}
-		else if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
-			name = LAYOUT_DATA_ITEM_TYPE_LABELS.container;
-		}
-		else if (item.type === LAYOUT_DATA_ITEM_TYPES.column) {
-			name = LAYOUT_DATA_ITEM_TYPE_LABELS.column;
-		}
-		else if (item.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
-			name = LAYOUT_DATA_ITEM_TYPE_LABELS.dropZone;
-		}
-		else if (item.type === LAYOUT_DATA_ITEM_TYPES.row) {
-			name = LAYOUT_DATA_ITEM_TYPE_LABELS.row;
-		}
-
-		return name;
-	};
 
 	const fragmentShouldBeHovered = () => {
 		const [activeItemfragmentEntryLinkId] = activeItemId
@@ -189,23 +164,38 @@ export default function Topper({children, item, itemRef, layoutData}) {
 		}
 	}, [itemRef, layoutData, windowScrollPosition]);
 
+	const isDraggableInPosition = position =>
+		targetPosition === position && dropTargetItemId === item.itemId;
+
+	const dataAdvice =
+		!droppable && isDraggableInPosition(TARGET_POSITION.MIDDLE)
+			? Liferay.Util.sub(
+					Liferay.Language.get('a-x-can-not-be-dropped-inside-a-x'),
+					[
+						getLabelName(dropItem, fragmentEntryLinks),
+						getLabelName(item, fragmentEntryLinks),
+					]
+			  )
+			: null;
+
 	return (
 		<div
 			className={classNames({
 				active: isSelected(item.itemId),
-				'drag-over-bottom':
-					targetPosition === TARGET_POSITION.BOTTOM &&
-					dropTargetItemId === item.itemId,
-				'drag-over-middle':
-					targetPosition === TARGET_POSITION.MIDDLE &&
-					dropTargetItemId === item.itemId,
-				'drag-over-top':
-					targetPosition === TARGET_POSITION.TOP &&
-					dropTargetItemId === item.itemId,
+				'drag-over-bottom': isDraggableInPosition(
+					TARGET_POSITION.BOTTOM
+				),
+				'drag-over-middle': isDraggableInPosition(
+					TARGET_POSITION.MIDDLE
+				),
+				'drag-over-top': isDraggableInPosition(TARGET_POSITION.TOP),
 				dragged: isDragging,
 				hovered: isHovered(item.itemId) || fragmentShouldBeHovered(),
+				'not-droppable':
+					!droppable && isDraggableInPosition(TARGET_POSITION.MIDDLE),
 				'page-editor__topper': true,
 			})}
+			data-advice={dataAdvice}
 			onClick={event => {
 				event.stopPropagation();
 
@@ -258,7 +248,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 						className="page-editor__topper__title"
 						expand
 					>
-						{getName(item, fragmentEntryLinks) ||
+						{getLabelName(item, fragmentEntryLinks) ||
 							Liferay.Language.get('element')}
 					</TopperListItem>
 					{item.type === LAYOUT_DATA_ITEM_TYPES.fragment && (

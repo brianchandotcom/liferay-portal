@@ -18,6 +18,7 @@ import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {useActiveItemId, useSelectItem} from './Controls';
 
 const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
 	[LAYOUT_DATA_ITEM_TYPES.root]: [
@@ -71,16 +72,12 @@ const RULES = {
 const initialDragDrop = {
 	dispatch: null,
 	store: {
+		dropItem: null,
 		dropTargetItemId: null,
+		droppable: true,
 		targetPosition: null,
 	},
 };
-
-const getAncestorId = parent =>
-	parent.type === LAYOUT_DATA_ITEM_TYPES.column ||
-	parent.type === LAYOUT_DATA_ITEM_TYPES.collectionItem
-		? parent.parentId
-		: parent.itemId;
 
 const isAncestor = (item, layoutData, childId) => {
 	const child = layoutData.items[childId];
@@ -127,13 +124,22 @@ export default function useDragAndDrop({
 }) {
 	const {
 		dispatch,
-		store: {dropTargetItemId, targetPosition},
+		store: {dropTargetItemId, droppable, targetPosition},
 	} = useContext(DragDropManagerImpl);
 
+	const activeItemId = useActiveItemId();
+	const selectItem = useSelectItem();
+
 	const [dragOptions, drag, preview] = useDrag({
-		collect: _monitor => ({
-			isDragging: _monitor.isDragging(),
-		}),
+		collect: _monitor => {
+			if (activeItemId) {
+				selectItem(null);
+			}
+
+			return {
+				isDragging: _monitor.isDragging(),
+			};
+		},
 		end(_item, _monitor) {
 			const result = _monitor.getDropResult();
 			if (!result) {
@@ -161,6 +167,10 @@ export default function useDragAndDrop({
 			};
 		},
 		drop(_item, _monitor) {
+			if (!droppable) {
+				return;
+			}
+
 			if (!_monitor.didDrop() && dropTargetItemId) {
 				const {parentId, position} = getParentItemIdAndPositon({
 					item: _item,
@@ -188,6 +198,7 @@ export default function useDragAndDrop({
 			if (rootVoid(item)) {
 				dispatch({
 					dropTargetItemId: item.itemId,
+					droppable: true,
 					targetPosition: TARGET_POSITION.MIDDLE,
 				});
 
@@ -228,23 +239,38 @@ export default function useDragAndDrop({
 			});
 
 			switch (result) {
+				case null:
+					dispatch({
+						dropItem: _item,
+						dropTargetItemId:
+							item.itemId !== _item.parentId && item.itemId,
+						droppable:
+							item.type !== LAYOUT_DATA_ITEM_TYPES.column &&
+							item.type !== LAYOUT_DATA_ITEM_TYPES.container,
+						targetPosition: TARGET_POSITION.MIDDLE,
+					});
+					break;
 				case RULES_TYPE.MIDDLE:
 					dispatch({
+						dropItem: _item,
 						dropTargetItemId: item.itemId,
+						droppable: true,
 						targetPosition: TARGET_POSITION.MIDDLE,
 					});
 					break;
 				case RULES_TYPE.ELEVATE:
 					dispatch({
-						dropTargetItemId:
-							getAncestorId(layoutData.items[item.parentId]) ||
-							item.itemId,
+						dropItem: _item,
+						dropTargetItemId: item.parentId || item.itemId,
+						droppable: true,
 						targetPosition: newTargetPosition,
 					});
 					break;
 				case RULES_TYPE.VALID_MOVE:
 					dispatch({
+						dropItem: _item,
 						dropTargetItemId: item.itemId,
+						droppable: true,
 						targetPosition: newTargetPosition,
 					});
 					break;

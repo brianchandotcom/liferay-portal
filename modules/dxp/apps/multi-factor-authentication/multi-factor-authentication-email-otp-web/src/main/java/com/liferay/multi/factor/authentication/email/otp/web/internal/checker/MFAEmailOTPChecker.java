@@ -348,8 +348,7 @@ public class MFAEmailOTPChecker {
 		}
 
 		long time =
-			(mfaEmailOTPConfiguration.validationExpirationTime() *
-				Time.SECOND);
+			mfaEmailOTPConfiguration.validationExpirationTime() * Time.SECOND;
 
 		time += (long)httpSession.getAttribute(
 			MFAEmailOTPWebKeys.MFA_EMAIL_OTP_VALIDATED_AT_TIME);

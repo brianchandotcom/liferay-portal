@@ -269,6 +269,10 @@ public class SitemapImpl implements Sitemap {
 				entry.getKey());
 
 			for (Layout layout : layouts) {
+				if (layout.isSystem()) {
+					continue;
+				}
+
 				UnicodeProperties typeSettingsUnicodeProperties =
 					layout.getTypeSettingsProperties();
 

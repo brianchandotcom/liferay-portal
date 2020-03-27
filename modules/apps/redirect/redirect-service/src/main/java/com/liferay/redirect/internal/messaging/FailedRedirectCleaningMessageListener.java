@@ -81,17 +81,14 @@ public class FailedRedirectCleaningMessageListener extends BaseMessageListener {
 			ActionableDynamicQuery actionableDynamicQuery =
 				_redirectNotFoundEntryLocalService.getActionableDynamicQuery();
 
-			int redirectNotFoundEntryMaxAge =
-				_ffRedirectConfiguration.redirectNotFoundEntryMaxAge();
-
-			Date thresholdDateAgo = new Date(
+			Date thresholdDate = new Date(
 				System.currentTimeMillis() -
-					(redirectNotFoundEntryMaxAge * Time.DAY));
+					(_ffRedirectConfiguration.redirectNotFoundEntryMaxAge() *
+						Time.DAY));
 
 			actionableDynamicQuery.setAddCriteriaMethod(
 				dynamicQuery -> dynamicQuery.add(
-					RestrictionsFactoryUtil.lt(
-						"modifiedDate", thresholdDateAgo)));
+					RestrictionsFactoryUtil.lt("modifiedDate", thresholdDate)));
 
 			actionableDynamicQuery.setPerformActionMethod(
 				(RedirectNotFoundEntry redirectNotFoundEntry) ->

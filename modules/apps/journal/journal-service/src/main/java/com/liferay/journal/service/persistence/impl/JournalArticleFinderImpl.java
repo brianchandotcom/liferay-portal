@@ -1327,11 +1327,7 @@ public class JournalArticleFinderImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			if ((orderByComparator != null) &&
-				StringUtil.containsIgnoreCase(
-					orderByComparator.getOrderBy(), _TITLE_FIELD,
-					StringPool.COMMA)) {
-
+			if (_isOrderByTitle(orderByComparator)) {
 				queryPos.add(1);
 			}
 			else {
@@ -1432,11 +1428,7 @@ public class JournalArticleFinderImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			if ((orderByComparator != null) &&
-				StringUtil.containsIgnoreCase(
-					orderByComparator.getOrderBy(), _TITLE_FIELD,
-					StringPool.COMMA)) {
-
+			if (_isOrderByTitle(orderByComparator)) {
 				queryPos.add(1);
 			}
 			else {
@@ -1496,11 +1488,7 @@ public class JournalArticleFinderImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			if ((orderByComparator != null) &&
-				StringUtil.containsIgnoreCase(
-					orderByComparator.getOrderBy(), _TITLE_FIELD,
-					StringPool.COMMA)) {
-
+			if (_isOrderByTitle(orderByComparator)) {
 				queryPos.add(1);
 			}
 			else {
@@ -1571,11 +1559,7 @@ public class JournalArticleFinderImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			if ((orderByComparator != null) &&
-				StringUtil.containsIgnoreCase(
-					orderByComparator.getOrderBy(), _TITLE_FIELD,
-					StringPool.COMMA)) {
-
+			if (_isOrderByTitle(orderByComparator)) {
 				queryPos.add(1);
 			}
 			else {
@@ -1644,11 +1628,7 @@ public class JournalArticleFinderImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			if ((orderByComparator != null) &&
-				StringUtil.containsIgnoreCase(
-					orderByComparator.getOrderBy(), _TITLE_FIELD,
-					StringPool.COMMA)) {
-
+			if (_isOrderByTitle(orderByComparator)) {
 				queryPos.add(1);
 			}
 			else {
@@ -1727,11 +1707,7 @@ public class JournalArticleFinderImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			if ((orderByComparator != null) &&
-				StringUtil.containsIgnoreCase(
-					orderByComparator.getOrderBy(), _TITLE_FIELD,
-					StringPool.COMMA)) {
-
+			if (_isOrderByTitle(orderByComparator)) {
 				queryPos.add(1);
 			}
 			else {
@@ -1803,11 +1779,7 @@ public class JournalArticleFinderImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			if ((orderByComparator != null) &&
-				StringUtil.containsIgnoreCase(
-					orderByComparator.getOrderBy(), _TITLE_FIELD,
-					StringPool.COMMA)) {
-
+			if (_isOrderByTitle(orderByComparator)) {
 				queryPos.add(1);
 			}
 			else {

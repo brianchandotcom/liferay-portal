@@ -108,10 +108,6 @@ public class RobotsUtil {
 	}
 
 	private static String _getVirtualHostName(LayoutSet layoutSet) {
-		if (layoutSet == null) {
-			return null;
-		}
-
 		TreeMap<String, String> virtualHostnames =
 			PortalUtil.getVirtualHostnames(layoutSet);
 

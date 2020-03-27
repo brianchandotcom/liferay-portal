@@ -2198,14 +2198,26 @@ public class PropsValues {
 	public static final String PORTAL_PROXY_PATH = PropsUtil.get(
 		PropsKeys.PORTAL_PROXY_PATH);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final boolean PORTAL_RESILIENCY_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.PORTAL_RESILIENCY_ENABLED));
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final boolean PORTAL_RESILIENCY_PORTLET_SHOW_FOOTER =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.PORTAL_RESILIENCY_PORTLET_SHOW_FOOTER));
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final int PORTAL_RESILIENCY_SPI_AGENT_CLIENT_POOL_MAX_SIZE =
 		GetterUtil.getInteger(
 			PropsUtil.get(

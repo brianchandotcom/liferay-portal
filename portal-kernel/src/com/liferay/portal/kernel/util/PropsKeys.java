@@ -2488,12 +2488,24 @@ public interface PropsKeys {
 
 	public static final String PORTAL_PROXY_PATH = "portal.proxy.path";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String PORTAL_RESILIENCY_ENABLED =
 		"portal.resiliency.enabled";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String PORTAL_RESILIENCY_PORTLET_SHOW_FOOTER =
 		"portal.resiliency.portlet.show.footer";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String
 		PORTAL_RESILIENCY_SPI_AGENT_CLIENT_POOL_MAX_SIZE =
 			"portal.resiliency.spi.agent.client.pool.max.size";

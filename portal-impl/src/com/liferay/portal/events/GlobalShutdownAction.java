@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.log.Jdk14LogFactoryImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
@@ -157,10 +156,6 @@ public class GlobalShutdownAction extends SimpleAction {
 				_log.error(exception, exception);
 			}
 		}
-
-		// Portal Resiliency
-
-		MPIHelperUtil.shutdown();
 	}
 
 	protected void shutdownLevel5() {

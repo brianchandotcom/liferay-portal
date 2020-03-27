@@ -24,6 +24,9 @@ definition {
 		}
 	}
 
+	// Ignored because of the ticket LRQA-57208
+
+	@ignore = "true"
 	@priority = "5"
 	test AddTemplateWithStructure {
 		property portal.acceptance = "true";

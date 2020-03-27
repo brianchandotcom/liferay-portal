@@ -122,6 +122,9 @@ definition {
 			value1 = "Space Program 大学生涯教育 地球から、宇宙の果てへ");
 	}
 
+	// Ignored because of the ticket LRQA-57208
+
+	@ignore = "true"
 	@priority = "5"
 	test AddWCWithTranslation {
 		property portal.acceptance = "true";

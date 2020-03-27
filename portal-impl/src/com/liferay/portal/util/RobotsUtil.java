@@ -84,10 +84,8 @@ public class RobotsUtil {
 				PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
 		}
 
-		robotsTxt = _replaceWildcards(
+		return _replaceWildcards(
 			robotsTxt, virtualHostname, secure, portalServerPort);
-
-		return robotsTxt;
 	}
 
 	private static String _replaceWildcards(

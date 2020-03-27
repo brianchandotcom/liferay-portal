@@ -136,13 +136,10 @@ public class RobotsUtil {
 			robotsTxt, "[$PORT$]", String.valueOf(port));
 
 		if (secure) {
-			robotsTxt = StringUtil.replace(robotsTxt, "[$PROTOCOL$]", "https");
-		}
-		else {
-			robotsTxt = StringUtil.replace(robotsTxt, "[$PROTOCOL$]", "http");
+			return StringUtil.replace(robotsTxt, "[$PROTOCOL$]", "https");
 		}
 
-		return robotsTxt;
+		return StringUtil.replace(robotsTxt, "[$PROTOCOL$]", "http");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(RobotsUtil.class);

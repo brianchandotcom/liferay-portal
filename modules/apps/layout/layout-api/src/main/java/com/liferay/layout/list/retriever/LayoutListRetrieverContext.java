@@ -14,12 +14,16 @@
 
 package com.liferay.layout.list.retriever;
 
+import com.liferay.info.pagination.Pagination;
+
 import java.util.Optional;
 
 /**
  * @author Eudaldo Alonso
  */
 public interface LayoutListRetrieverContext {
+
+	public Optional<Pagination> getPaginationOptional();
 
 	public Optional<long[]> getSegmentsExperienceIdsOptional();
 

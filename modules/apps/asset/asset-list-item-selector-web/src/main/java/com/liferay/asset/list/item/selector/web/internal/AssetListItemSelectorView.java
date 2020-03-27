@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -176,11 +177,8 @@ public class AssetListItemSelectorView
 
 				@Override
 				public String getSubtitle(Locale locale) {
-					ResourceBundle resourceBundle =
-						_resourceBundleLoader.loadResourceBundle(locale);
-
-					return _language.get(
-						resourceBundle, assetListEntry.getTypeLabel());
+					return ResourceActionsUtil.getModelResource(
+						locale, assetListEntry.getAssetEntryType());
 				}
 
 				@Override

@@ -15,10 +15,10 @@
 package com.liferay.segments.context.vocabulary.internal.portal.settings.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration;
 import com.liferay.segments.context.vocabulary.internal.constants.SegmentsContextVocabularyWebKeys;
 

@@ -16,6 +16,7 @@ package com.liferay.segments.context.vocabulary.internal.field.customizer;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
@@ -105,8 +105,7 @@ public class SegmentsContextVocabularySegmentsFieldCustomizer
 					_log.warn(
 						StringBundler.concat(
 							"No vocabulary was found with name ",
-							assetVocabulary, " in company ",
-							String.valueOf(companyId)));
+							assetVocabulary, " in company ", companyId));
 				}
 
 				return Collections.emptyList();

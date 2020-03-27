@@ -96,6 +96,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 						</c:if>
 
+						<aui:input name="currentURL" type="hidden" value="<%= currentURL %>" />
 						<aui:input name="groupId" type="hidden" value="<%= formInstance.getGroupId() %>" />
 						<aui:input name="formInstanceId" type="hidden" value="<%= formInstance.getFormInstanceId() %>" />
 						<aui:input name="languageId" type="hidden" value="<%= languageId %>" />

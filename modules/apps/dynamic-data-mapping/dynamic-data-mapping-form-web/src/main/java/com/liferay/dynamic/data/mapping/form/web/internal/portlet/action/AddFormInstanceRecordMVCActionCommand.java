@@ -16,8 +16,10 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.exception.FormInstanceNotPublishedException;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
+import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
@@ -42,6 +44,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -92,6 +96,8 @@ public class AddFormInstanceRecordMVCActionCommand
 
 		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceService.getFormInstance(formInstanceId);
+
+		_validateFormInstance(actionRequest, ddmFormInstance);
 
 		validateCaptcha(actionRequest, ddmFormInstance);
 
@@ -204,6 +210,44 @@ public class AddFormInstanceRecordMVCActionCommand
 			CaptchaUtil.check(actionRequest);
 		}
 	}
+
+	private void _validateFormInstance(
+			ActionRequest actionRequest, DDMFormInstance ddmFormInstance)
+		throws FormInstanceNotPublishedException, PortalException {
+
+		String currentURL = ParamUtil.getString(actionRequest, "currentURL");
+
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			ddmFormInstance.getSettingsModel();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String formPublishedBaseURL =
+			_addDefaultSharedFormLayoutPortalInstanceLifecycleListener.
+				getFormLayoutURL(
+					themeDisplay,
+					ddmFormInstanceSettings.requireAuthentication());
+
+		if (!StringUtil.startsWith(currentURL, formPublishedBaseURL)) {
+			return;
+		}
+
+		if (!ddmFormInstanceSettings.published()) {
+			StringBundler sb = new StringBundler();
+
+			throw new FormInstanceNotPublishedException(
+				sb.concat(
+					"Form instance record could not be created because ",
+					"form instance ",
+					String.valueOf(ddmFormInstance.getFormInstanceId()),
+					" is not published"));
+		}
+	}
+
+	@Reference
+	private AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
+		_addDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 
 	@Reference
 	private AddFormInstanceRecordMVCCommandHelper

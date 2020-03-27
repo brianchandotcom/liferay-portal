@@ -17,6 +17,9 @@ package com.liferay.dynamic.data.mapping.exportimport.data.handler.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.helper.DDMFormInstanceRecordTestHelper;
 import com.liferay.dynamic.data.mapping.helper.DDMFormInstanceTestHelper;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -33,11 +36,13 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.LinkedHashMap;
@@ -47,7 +52,6 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,7 +69,6 @@ public class DDMFormInstanceRecordStagedModelDataHandlerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Ignore
 	@Override
 	@Test
 	public void testCleanStagedModelDataHandler() throws Exception {
@@ -205,6 +208,18 @@ public class DDMFormInstanceRecordStagedModelDataHandlerTest
 		return DDMFormInstanceRecord.class;
 	}
 
+	protected String serialize(DDMFormValues ddmFormValues) {
+		DDMFormValuesSerializerSerializeRequest.Builder builder =
+			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormValues);
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+				_ddmFormValuesSerializer.serialize(builder.build());
+
+		return ddmFormValuesSerializerSerializeResponse.getContent();
+	}
+
 	@Override
 	protected void validateImport(
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
@@ -247,12 +262,24 @@ public class DDMFormInstanceRecordStagedModelDataHandlerTest
 
 		DDMFormInstanceRecord ddmFormInstanceRecord =
 			(DDMFormInstanceRecord)stagedModel;
+
+		String ddmFormValuesPath = ExportImportPathUtil.getModelPath(
+			ddmFormInstanceRecord, "ddm-form-values.json");
+
+		String serializedDDMFormValues = portletDataContext.getZipEntryAsString(
+			ddmFormValuesPath);
+
 		DDMFormInstanceRecord importedDDMFormInstanceRecord =
 			(DDMFormInstanceRecord)importedStagedModel;
 
-		Assert.assertEquals(
-			ddmFormInstanceRecord.getDDMFormValues(),
+		String serializedImportedDDMFormValues = serialize(
 			importedDDMFormInstanceRecord.getDDMFormValues());
+
+		Assert.assertEquals(
+			serializedDDMFormValues, serializedImportedDDMFormValues);
 	}
+
+	@Inject(filter = "ddm.form.values.serializer.type=json")
+	private DDMFormValuesSerializer _ddmFormValuesSerializer;
 
 }

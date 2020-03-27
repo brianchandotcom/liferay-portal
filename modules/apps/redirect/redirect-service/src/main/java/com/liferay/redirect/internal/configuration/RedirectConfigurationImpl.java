@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.redirect.web.internal.configuration;
+package com.liferay.redirect.internal.configuration;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.redirect.configuration.RedirectConfiguration;
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Alejandro Tardín
  */
 @Component(
-	configurationPid = "com.liferay.redirect.web.internal.configuration.FFRedirectConfiguration",
+	configurationPid = "com.liferay.redirect.internal.configuration.FFRedirectConfiguration",
 	service = RedirectConfiguration.class
 )
 public class RedirectConfigurationImpl implements RedirectConfiguration {

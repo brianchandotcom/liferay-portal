@@ -515,7 +515,7 @@ public class FriendlyURLServletTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					"com.liferay.redirect.web.internal.configuration." +
+					"com.liferay.redirect.internal.configuration." +
 						"FFRedirectConfiguration",
 					dictionary)) {
 

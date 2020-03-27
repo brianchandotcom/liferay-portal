@@ -77,6 +77,52 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 		}
 	}
 
+	public static SpiraCustomList.Value createSpiraCustomListValue(
+		SpiraProject spiraProject, SpiraCustomList spiraCustomList,
+		String value) {
+
+		for (Value spiraCustomListValue :
+				spiraCustomList.getSpiraCustomListValues()) {
+
+			if (value.equals(spiraCustomListValue.getName())) {
+				return spiraCustomListValue;
+			}
+		}
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"custom_list_id", String.valueOf(spiraCustomList.getID()));
+		urlPathReplacements.put(
+			"project_template_id",
+			String.valueOf(spiraProject.getProjectTemplateID()));
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("Active", true);
+		requestJSONObject.put("CustomPropertyListId", spiraCustomList.getID());
+		requestJSONObject.put("Name", value);
+		requestJSONObject.put("ProjectId", spiraProject.getID());
+
+		try {
+			SpiraCustomList.Value spiraCustomListValue =
+				new SpiraCustomList.Value(
+					SpiraRestAPIUtil.requestJSONObject(
+						"project-templates/{project_template_id}/custom-lists" +
+							"/{custom_list_id}/values",
+						null, urlPathReplacements, HttpRequestMethod.POST,
+						requestJSONObject.toString()),
+					spiraProject, spiraCustomList);
+
+			spiraCustomList.addSpiraCustomListValue(spiraCustomListValue);
+
+			return spiraCustomListValue;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	public List<SpiraCustomList.Value> getSpiraCustomListValues() {
 		SpiraCustomProperty spiraCustomProperty = getSpiraCustomProperty();
 

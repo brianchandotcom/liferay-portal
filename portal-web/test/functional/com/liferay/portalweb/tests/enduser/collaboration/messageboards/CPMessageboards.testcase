@@ -113,9 +113,9 @@ definition {
 			MessageboardsCategory.addCP(categoryName = "${categoryName}");
 		}
 
-		Navigator.openURL();
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
-		MessageboardsCategory.tearDownCP(assetType = "3 items");
+		MessageboardsCategory.deleteCP();
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 

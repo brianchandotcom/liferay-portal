@@ -109,6 +109,15 @@ public class JournalArticleInfoDisplayContributor
 				locale, AssetEntry.class.getName(),
 				JournalArticle.class.getName());
 
+		infoDisplayFields.addAll(
+			expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFields(
+					JournalArticle.class.getName(), locale));
+
+		if (classTypeId <= 0) {
+			return infoDisplayFields;
+		}
+
 		BaseDDMStructureClassTypeReader baseDDMStructureClassTypeReader =
 			new BaseDDMStructureClassTypeReader(JournalArticle.class.getName());
 
@@ -120,11 +129,6 @@ public class JournalArticleInfoDisplayContributor
 				classTypesInfoDisplayFieldProvider.
 					getClassTypeInfoDisplayFields(classType, locale));
 		}
-
-		infoDisplayFields.addAll(
-			expandoInfoDisplayFieldProvider.
-				getContributorExpandoInfoDisplayFields(
-					JournalArticle.class.getName(), locale));
 
 		infoDisplayFields.addAll(
 			_getDDMTemplateInfoDisplayFields(classTypeId, locale));

@@ -90,7 +90,9 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				"select messageId, subject from MBMessage where (urlSubject " +
 					"is null) or (urlSubject = '')");
-			ResultSet rs = ps1.executeQuery()) {
+			ResultSet rs = ps1.executeQuery();
+			PreparedStatement ps2 = connection.prepareStatement(
+				"update MBMessage set urlSubject = ? where messageId = ?")) {
 
 			while (rs.next()) {
 				long messageId = rs.getLong(1);
@@ -101,15 +103,11 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 				String uniqueUrlSubject = _findUniqueUrlSubject(
 					connection, urlSubject);
 
-				try (PreparedStatement ps2 = connection.prepareStatement(
-						"update MBMessage set urlSubject = ? where messageId " +
-							"= ?")) {
+				ps2.setString(1, uniqueUrlSubject);
 
-					ps2.setString(1, uniqueUrlSubject);
-					ps2.setLong(2, messageId);
+				ps2.setLong(2, messageId);
 
-					ps2.execute();
-				}
+				ps2.execute();
 			}
 		}
 	}

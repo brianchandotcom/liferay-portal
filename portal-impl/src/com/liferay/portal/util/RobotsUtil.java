@@ -33,12 +33,20 @@ import java.util.TreeMap;
  */
 public class RobotsUtil {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String getDefaultRobots() {
 		int portalServerPort = PortalUtil.getPortalServerPort(false);
 
 		return getDefaultRobots(null, false, portalServerPort);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String getDefaultRobots(
 		String virtualHostname, boolean secure, int port) {
 

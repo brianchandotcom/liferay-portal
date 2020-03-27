@@ -72,7 +72,7 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 			jspWriter.write(productMenuState);
 
 			jspWriter.write(
-				" hidden-print lfr-product-menu-panel sidenav-fixed " +
+				" d-print-none lfr-product-menu-panel sidenav-fixed " +
 					"sidenav-menu-slider\" id=\"");
 
 			String portletNamespace = _portal.getPortletNamespace(

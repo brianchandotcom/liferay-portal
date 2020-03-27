@@ -301,7 +301,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 			jspWriter.write(
 				StringBundler.concat(
-					"hidden-print lfr-admin-panel lfr-product-menu-panel ",
+					"d-print-none lfr-admin-panel lfr-product-menu-panel ",
 					"lfr-analytics-reports-panel sidenav-fixed ",
 					"sidenav-menu-slider sidenav-right\" id=\""));
 

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -159,8 +158,7 @@ public class InfoListProviderItemSelectorView
 							WebKeys.THEME_DISPLAY);
 
 					return JSONUtil.put(
-						"itemType",
-						_portal.getClassNameId(_getClassName(infoListProvider))
+						"itemType", _getClassName(infoListProvider)
 					).put(
 						"key", infoListProvider.getKey()
 					).put(
@@ -261,10 +259,6 @@ public class InfoListProviderItemSelectorView
 		private final HttpServletRequest _httpServletRequest;
 		private final InfoListProviderItemSelectorCriterion
 			_infoListProviderItemSelectorCriterion;
-
-		@Reference
-		private Portal _portal;
-
 		private final PortletURL _portletURL;
 
 	}

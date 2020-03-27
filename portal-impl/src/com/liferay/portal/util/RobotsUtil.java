@@ -96,25 +96,6 @@ public class RobotsUtil {
 		return robotsTxt;
 	}
 
-	public static String getStrictRobots(LayoutSet layoutSet, boolean secure) {
-		String strictRobots = null;
-
-		if (layoutSet != null) {
-			strictRobots = GetterUtil.getString(
-				layoutSet.getSettingsProperty(
-					layoutSet.isPrivateLayout() + "-robots.txt"),
-				null);
-		}
-
-		if (strictRobots == null) {
-			return ContentUtil.get(
-				RobotsUtil.class.getClassLoader(),
-				PropsValues.ROBOTS_TXT_WITH_SITEMAP);
-		}
-
-		return strictRobots;
-	}
-
 	private static String _replaceWildcards(
 		String robotsTxt, String virtualHostname, boolean secure, int port) {
 

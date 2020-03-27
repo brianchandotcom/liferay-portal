@@ -82,6 +82,12 @@ const initialDragDrop = {
 	},
 };
 
+const getAncestorId = parent =>
+	parent.type === LAYOUT_DATA_ITEM_TYPES.column ||
+	parent.type === LAYOUT_DATA_ITEM_TYPES.collectionItem
+		? parent.parentId
+		: parent.itemId;
+
 const dropTargetIsAncestor = (dropItem, layoutData, dropTargetId) => {
 	const dropTarget = layoutData.items[dropTargetId];
 
@@ -270,7 +276,9 @@ export default function useDragAndDrop({
 					dispatch({
 						dropItem,
 						dropTargetItemId:
-							dropTargetItem.parentId || dropTargetItem.itemId,
+							getAncestorId(
+								layoutData.items[dropTargetItem.parentId]
+							) || dropTargetItem.itemId,
 						droppable: true,
 						targetPositionWithMiddle: newTargetPositionWithMiddle,
 						targetPositionWithoutMiddle: newTargetPositionWithoutMiddle,

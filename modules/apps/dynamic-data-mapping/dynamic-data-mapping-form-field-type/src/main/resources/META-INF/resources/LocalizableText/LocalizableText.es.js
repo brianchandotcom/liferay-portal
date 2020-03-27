@@ -31,11 +31,15 @@ import templates from './LocalizableTextAdapter.soy';
 function getEditingValue({defaultLocale, editingLocale, value}) {
 	const valueJSON = convertValueToJSON(value);
 
-	return (
-		valueJSON[editingLocale.localeId] ||
-		valueJSON[defaultLocale.localeId] ||
-		''
-	);
+	if (valueJSON) {
+		return (
+			valueJSON[editingLocale.localeId] ||
+			valueJSON[defaultLocale.localeId] ||
+			''
+		);
+	}
+
+	return editingLocale;
 }
 
 function convertValueToString(value) {
@@ -66,7 +70,11 @@ function isDefaultLocale({defaultLocale, localeId}) {
 function isTranslated({localeId, value}) {
 	const valueJSON = convertValueToJSON(value);
 
-	return !!valueJSON[localeId];
+	if (valueJSON) {
+		return !!valueJSON[localeId];
+	}
+
+	return false;
 }
 
 function getInitialInternalValue({editingLocale, value}) {
@@ -122,6 +130,7 @@ const DropdownTrigger = forwardRef(
 				aria-expanded="false"
 				aria-haspopup="true"
 				className="dropdown-toggle"
+				data-testid="triggerButton"
 				displayType="secondary"
 				monospaced
 				ref={ref}
@@ -133,7 +142,9 @@ const DropdownTrigger = forwardRef(
 						symbol={editingLocale.icon}
 					/>
 				</span>
-				<span className="btn-section">{editingLocale.icon}</span>
+				<span className="btn-section" data-testid="triggerText">
+					{editingLocale.icon}
+				</span>
 			</ClayButton>
 		);
 	}
@@ -193,6 +204,7 @@ const LocalesDropdown = ({
 						}) => (
 							<ClayDropDown.Item
 								className="autofit-row custom-dropdown-item-row"
+								data-testid={`availableLocalesDropdown${localeId}`}
 								key={localeId}
 								onClick={event => {
 									onLanguageClicked({event, localeId});
@@ -334,7 +346,7 @@ const LocalizableTextWithFieldBase = props => {
 		placeholder,
 		predefinedValue,
 		readOnly,
-		value,
+		value = {},
 		...otherProps
 	} = transformDataFromServer(props);
 

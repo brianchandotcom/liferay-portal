@@ -744,6 +744,7 @@
 		<exception>DataProviderInstanceURL</exception>
 		<exception>DuplicateDataProviderInstanceInputParameterName</exception>
 		<exception>FormInstanceName</exception>
+		<exception>FormInstanceNotPublished</exception>
 		<exception>FormInstanceRecordExporter</exception>
 		<exception>FormInstanceRecordGroupId</exception>
 		<exception>FormInstanceSettingsRedirectURL</exception>

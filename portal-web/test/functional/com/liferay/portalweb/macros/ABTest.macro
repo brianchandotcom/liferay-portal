@@ -6,7 +6,7 @@ definition {
 		Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
 	}
 
-	macro createABtestByBounceRate {
+	macro createABTestByBounceRate {
 		Click(locator1 = "ABTest#AB_TEST_BUTTON");
 
 		Click(locator1 = "ABTest#CREATE_TEST_BUTTON");

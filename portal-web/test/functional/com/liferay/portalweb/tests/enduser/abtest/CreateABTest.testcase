@@ -46,7 +46,7 @@ definition {
 
 		ABTest.runTest();
 
-		ABTest.checkAnalyticsCloud();
+		ABTest.checkAnalyticsCloudInfo();
 
 		AnalyticsCloud.loginAnalyticsCloud(
 			emailAddress = "test@liferay.com",
@@ -60,7 +60,7 @@ definition {
 	@description = "Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control if the user add variants and remove all variants"
 	@priority = "5"
 	test CreateABTestRunWithDeletedVariants {
-		ABTest.createABtestByBounceRate(testTitle = "AB test title");
+		ABTest.createABTestByBounceRate(testTitle = "AB test title");
 
 		ABTest.createVariant(variantName = "Variant name");
 
@@ -76,7 +76,7 @@ definition {
 	@description = "Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control"
 	@priority = "5"
 	test CreateABTestRunWithNoVariants {
-		ABTest.createABtestByBounceRate(testTitle = "AB test title");
+		ABTest.createABTestByBounceRate(testTitle = "AB test title");
 
 		ABTest.runTest();
 

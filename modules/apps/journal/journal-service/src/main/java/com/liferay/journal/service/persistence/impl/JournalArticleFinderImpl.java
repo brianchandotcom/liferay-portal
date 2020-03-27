@@ -2157,9 +2157,15 @@ public class JournalArticleFinderImpl
 		OrderByComparator orderByComparator) {
 
 		if ((orderByComparator != null) &&
-			StringUtil.containsIgnoreCase(
+			(StringUtil.containsIgnoreCase(
 				orderByComparator.getOrderBy(), _TITLE_FIELD,
-				StringPool.COMMA)) {
+				StringPool.COMMA) ||
+			 StringUtil.containsIgnoreCase(
+				 orderByComparator.getOrderBy(), _TITLE_FIELD + " ASC",
+				 StringPool.COMMA) ||
+			 StringUtil.containsIgnoreCase(
+				 orderByComparator.getOrderBy(), _TITLE_FIELD + " DESC",
+				 StringPool.COMMA))) {
 		}
 
 		return false;
@@ -2173,7 +2179,8 @@ public class JournalArticleFinderImpl
 	private static final String _DDM_TEMPLATE_KEY_SQL =
 		"(JournalArticle.DDMTemplateKey LIKE ? [$AND_OR_NULL_CHECK$]) ";
 
-	private static final String _TITLE_FIELD = "title";
+	private static final String _TITLE_FIELD =
+		"JournalArticleLocalization.title";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleFinderImpl.class);

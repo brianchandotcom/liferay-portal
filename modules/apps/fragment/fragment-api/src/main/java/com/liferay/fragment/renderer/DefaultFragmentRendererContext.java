@@ -31,6 +31,11 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		_fragmentEntryLink = fragmentEntryLink;
 	}
 
+	@Override
+	public Optional<Object> getDisplayObjectOptional() {
+		return Optional.ofNullable(_displayObject);
+	}
+
 	public Optional<Map<String, Object>> getFieldValuesOptional() {
 		return Optional.ofNullable(_fieldValues);
 	}
@@ -70,6 +75,10 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		return _segmentsExperienceIds;
 	}
 
+	public void setDisplayObject(Object object) {
+		_displayObject = object;
+	}
+
 	public void setFieldValues(Map<String, Object> fieldValues) {
 		_fieldValues = fieldValues;
 	}
@@ -98,6 +107,7 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		_segmentsExperienceIds = segmentsExperienceIds;
 	}
 
+	private Object _displayObject;
 	private Map<String, Object> _fieldValues;
 	private final FragmentEntryLink _fragmentEntryLink;
 	private Locale _locale = LocaleUtil.getMostRelevantLocale();

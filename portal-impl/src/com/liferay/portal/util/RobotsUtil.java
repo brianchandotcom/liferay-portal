@@ -76,13 +76,9 @@ public class RobotsUtil {
 		String robotsTxt = GetterUtil.getString(
 			layoutSet.getSettingsProperty(
 				layoutSet.isPrivateLayout() + "-robots.txt"),
-			null);
-
-		if (robotsTxt == null) {
-			robotsTxt = ContentUtil.get(
+			ContentUtil.get(
 				RobotsUtil.class.getClassLoader(),
-				PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
-		}
+				PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP));
 
 		return _replaceWildcards(
 			robotsTxt, virtualHostname, secure, portalServerPort);

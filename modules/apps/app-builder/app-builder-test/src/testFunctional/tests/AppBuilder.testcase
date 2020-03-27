@@ -1003,7 +1003,10 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1");
 	}
 
+	// Ignored because of the ticket LRQA-57209
+
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Widget"
+	@ignore = "true"
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfWidgetApp {
 		property portal.acceptance = "true";

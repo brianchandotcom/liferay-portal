@@ -14,8 +14,14 @@
 
 package com.liferay.layout.list.retriever;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Eudaldo Alonso
  */
+@ProviderType
 public interface ListObjectReference {
+
+	public String getItemType();
+
 }

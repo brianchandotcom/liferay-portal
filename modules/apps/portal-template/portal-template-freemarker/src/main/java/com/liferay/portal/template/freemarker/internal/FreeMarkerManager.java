@@ -52,6 +52,7 @@ import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
 
 import freemarker.template.Configuration;
+import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
@@ -158,7 +159,9 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		ServletContext servletContext) {
 
 		contextObjects.put(
-			applicationName, getServletContextHashModel(servletContext));
+			applicationName,
+			getServletContextHashModel(
+				servletContext, _configuration.getObjectWrapper()));
 	}
 
 	@Override
@@ -167,7 +170,8 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		ServletContext servletContext) {
 
 		contextObjects.put(
-			taglibFactoryName, new TaglibFactoryWrapper(servletContext));
+			taglibFactoryName,
+			new TaglibFactoryWrapper(servletContext, getBeansWrapper()));
 	}
 
 	@Override
@@ -189,39 +193,9 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		ServletContext servletContext = httpServletRequest.getServletContext();
-
-		contextObjects.put(
-			"Application", getServletContextHashModel(servletContext));
-
-		contextObjects.put(
-			"Request",
-			new HttpRequestHashModel(
-				httpServletRequest, httpServletResponse,
-				_configuration.getObjectWrapper()));
-
-		// Legacy
-
-		TaglibFactoryWrapper taglibFactoryWrapper = new TaglibFactoryWrapper(
-			servletContext);
-
-		contextObjects.put("PortalJspTagLibs", taglibFactoryWrapper);
-		contextObjects.put("PortletJspTagLibs", taglibFactoryWrapper);
-		contextObjects.put("taglibLiferayHash", taglibFactoryWrapper);
-
-		// Contributed
-
-		for (Map.Entry<String, String> entry : _taglibMappings.entrySet()) {
-			try {
-				contextObjects.put(
-					entry.getKey(), taglibFactoryWrapper.get(entry.getValue()));
-			}
-			catch (TemplateModelException templateModelException) {
-				_log.error(
-					"Unable to add taglib " + entry.getKey() + " to context",
-					templateModelException);
-			}
-		}
+		addTaglibSupport(
+			contextObjects, httpServletRequest, httpServletResponse,
+			getBeansWrapper());
 	}
 
 	@Override
@@ -370,6 +344,46 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		WriterFactoryUtil.setWriterFactory(new UnsyncStringWriterFactory());
 	}
 
+	protected void addTaglibSupport(
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, ObjectWrapper objectWrapper) {
+
+		ServletContext servletContext = httpServletRequest.getServletContext();
+
+		contextObjects.put(
+			"Application",
+			getServletContextHashModel(servletContext, objectWrapper));
+
+		contextObjects.put(
+			"Request",
+			new HttpRequestHashModel(
+				httpServletRequest, httpServletResponse, objectWrapper));
+
+		// Legacy
+
+		TaglibFactoryWrapper taglibFactoryWrapper = new TaglibFactoryWrapper(
+			servletContext, objectWrapper);
+
+		contextObjects.put("PortalJspTagLibs", taglibFactoryWrapper);
+		contextObjects.put("PortletJspTagLibs", taglibFactoryWrapper);
+		contextObjects.put("taglibLiferayHash", taglibFactoryWrapper);
+
+		// Contributed
+
+		for (Map.Entry<String, String> entry : _taglibMappings.entrySet()) {
+			try {
+				contextObjects.put(
+					entry.getKey(), taglibFactoryWrapper.get(entry.getValue()));
+			}
+			catch (TemplateModelException templateModelException) {
+				_log.error(
+					"Unable to add taglib " + entry.getKey() + " to context",
+					templateModelException);
+			}
+		}
+	}
+
 	@Deactivate
 	protected void deactivate() {
 		_bundleTracker.close();
@@ -389,7 +403,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		return new FreeMarkerTemplate(
 			templateResource, helperUtilities, _configuration,
 			templateContextHelper, _freeMarkerTemplateResourceCache, restricted,
-			beansWrapper);
+			beansWrapper, this);
 	}
 
 	protected FreeMarkerBundleClassloader getFreeMarkerBundleClassloader() {
@@ -426,12 +440,11 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	}
 
 	protected ServletContextHashModel getServletContextHashModel(
-		ServletContext servletContext) {
+		ServletContext servletContext, ObjectWrapper objectWrapper) {
 
 		GenericServlet genericServlet = new JSPSupportServlet(servletContext);
 
-		return new ServletContextHashModel(
-			genericServlet, _configuration.getObjectWrapper());
+		return new ServletContextHashModel(genericServlet, objectWrapper);
 	}
 
 	protected ServletContext getServletContextWrapper(
@@ -707,14 +720,16 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 	private class TaglibFactoryWrapper implements TemplateHashModel {
 
-		public TaglibFactoryWrapper(ServletContext servletContext) {
+		public TaglibFactoryWrapper(
+			ServletContext servletContext, ObjectWrapper objectWrapper) {
+
 			_freeMarkerBundleClassloader = getFreeMarkerBundleClassloader();
 
 			_taglibFactory = new TaglibFactory(
 				getServletContextWrapper(
 					servletContext, _freeMarkerBundleClassloader));
 
-			_taglibFactory.setObjectWrapper(getBeansWrapper());
+			_taglibFactory.setObjectWrapper(objectWrapper);
 		}
 
 		@Override

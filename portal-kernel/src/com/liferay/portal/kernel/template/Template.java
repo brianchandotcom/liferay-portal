@@ -20,13 +20,21 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Tina Tian
  */
+@ProviderType
 public interface Template extends Map<String, Object> {
 
 	public void prepare(HttpServletRequest httpServletRequest);
+
+	public void prepareTaglib(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 	public void processTemplate(Writer writer) throws TemplateException;
 

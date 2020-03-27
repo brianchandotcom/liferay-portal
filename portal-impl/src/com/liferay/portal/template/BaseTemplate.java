@@ -32,6 +32,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Tina Tian
@@ -120,6 +121,12 @@ public abstract class BaseTemplate implements Template {
 	@Override
 	public void prepare(HttpServletRequest httpServletRequest) {
 		_templateContextHelper.prepare(this, httpServletRequest);
+	}
+
+	@Override
+	public void prepareTaglib(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 	}
 
 	@Override

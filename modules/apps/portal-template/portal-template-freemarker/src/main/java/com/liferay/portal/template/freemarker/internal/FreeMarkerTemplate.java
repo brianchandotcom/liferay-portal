@@ -50,6 +50,9 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Mika Koivisto
  * @author Tina Tian
@@ -61,17 +64,27 @@ public class FreeMarkerTemplate extends BaseTemplate {
 		Configuration configuration,
 		TemplateContextHelper templateContextHelper,
 		TemplateResourceCache templateResourceCache, boolean restricted,
-		BeansWrapper beansWrapper) {
+		BeansWrapper beansWrapper, FreeMarkerManager freeMarkerManager) {
 
 		super(templateResource, context, templateContextHelper, restricted);
 
 		_configuration = configuration;
 		_templateResourceCache = templateResourceCache;
 		_beansWrapper = beansWrapper;
+		_freeMarkerManager = freeMarkerManager;
 
 		if (templateResourceCache.isEnabled()) {
 			cacheTemplateResource(templateResourceCache, templateResource);
 		}
+	}
+
+	@Override
+	public void prepareTaglib(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		_freeMarkerManager.addTaglibSupport(
+			context, httpServletRequest, httpServletResponse, _beansWrapper);
 	}
 
 	@Override
@@ -175,6 +188,7 @@ public class FreeMarkerTemplate extends BaseTemplate {
 
 	private final BeansWrapper _beansWrapper;
 	private final Configuration _configuration;
+	private final FreeMarkerManager _freeMarkerManager;
 	private final TemplateResourceCache _templateResourceCache;
 
 	private class CachableDefaultMapAdapter

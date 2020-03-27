@@ -100,7 +100,7 @@ public class RobotsUtil {
 
 		if (strictRobots == null) {
 			return getDefaultRobots(
-				_getVirtualHostName(layoutSet), secure,
+				StringPool.BLANK, secure,
 				PortalUtil.getPortalServerPort(secure));
 		}
 

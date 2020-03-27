@@ -278,7 +278,10 @@ definition {
 		takeScreenshot();
 	}
 
+	// Ignored because of the ticket LRQA-57204
+
 	@description = "This test validates sign in and sign out UI"
+	@ignore = "true"
 	@priority = "5"
 	test ViewSignInSignOutUI {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";

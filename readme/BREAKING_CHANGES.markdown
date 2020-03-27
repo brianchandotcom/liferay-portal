@@ -500,3 +500,32 @@ Remove those properties from your properties file.
 This feature has been deprecated.
 
 ---------------------------------------
+
+### TinyMCE editor is no longer bundled by default
+- **Date:** 2020-Mar-27
+- **JIRA Ticket:** [LPS-110733](https://issues.liferay.com/browse/LPS-110733)
+
+### What changed?
+
+As of 7.3, CKEditor is the default and only supported WYSIWYG editor.
+
+### Who is affected
+
+This affects anyone who uses TinyMCE.
+
+### How should I update my code?
+
+If you have configured liferay-portal to use TinyMCE, you can remove these configurations.
+
+It's still possible to use TinyMCE. For that you need to:
+
+- Keep your configurations.
+- Open https://repository.liferay.com/nexus/index.html in your browser.
+- Search for `com.liferay.frontend.editor.tinymce.web`.
+- Download a .jar file for the `com.liferay.frontend.editor.tinymce.web` module.
+- Deploy the .jar file you downloaded in your liferay-portal instalation.
+
+#### Why was this change made?
+
+To consolidate all our UX for writing Rich Text Content
+around a single Editor to provide a more cohesive and comprehensive experience.

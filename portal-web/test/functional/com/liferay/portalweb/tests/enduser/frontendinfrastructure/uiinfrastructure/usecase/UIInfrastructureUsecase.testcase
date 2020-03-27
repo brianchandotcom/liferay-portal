@@ -285,6 +285,7 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
 		property portal.acceptance = "false";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "UIInfrastructureUsecase#ViewSignInSignOutUI";
 
 		UserBar.signOut();

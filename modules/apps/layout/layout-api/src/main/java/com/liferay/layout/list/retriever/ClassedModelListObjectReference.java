@@ -24,6 +24,7 @@ public class ClassedModelListObjectReference implements ListObjectReference {
 	public ClassedModelListObjectReference(JSONObject jsonObject) {
 		_classPK = jsonObject.getLong("classPK");
 		_className = jsonObject.getString("className");
+		_itemType = jsonObject.getString("itemType");
 		_title = jsonObject.getString("title");
 	}
 
@@ -35,12 +36,18 @@ public class ClassedModelListObjectReference implements ListObjectReference {
 		return _classPK;
 	}
 
+	@Override
+	public String getItemType() {
+		return _itemType;
+	}
+
 	public String getTitle() {
 		return _title;
 	}
 
 	private final String _className;
 	private final long _classPK;
+	private final String _itemType;
 	private final String _title;
 
 }

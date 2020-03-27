@@ -49,8 +49,7 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 		throws SQLException {
 
 		try (PreparedStatement ps = con.prepareStatement(
-				"select count(*) from MBMessage where MBMessage.urlSubject " +
-					"like ?")) {
+				"select count(*) from MBMessage where urlSubject like ?")) {
 
 			ps.setString(1, urlSubject + "%");
 
@@ -75,8 +74,7 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 
 		try (PreparedStatement ps = con.prepareStatement(
 				"select messageId, subject from MBMessage where " +
-					"(MBMessage.urlSubject is null) or (MBMessage.urlSubject " +
-						"= '')")) {
+					"(urlSubject is null) or (urlSubject = '')")) {
 
 			try (ResultSet rs = ps.executeQuery()) {
 				Map<Long, String> urlSubjects = new HashMap<>();
@@ -130,8 +128,7 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 		throws SQLException {
 
 		try (PreparedStatement ps = con.prepareStatement(
-				"update MBMessage set MBMessage.urlSubject = ? where " +
-					"MBMessage.messageId = ?")) {
+				"update MBMessage set urlSubject = ? where messageId = ?")) {
 
 			ps.setString(1, urlSubject);
 			ps.setLong(2, messageId);

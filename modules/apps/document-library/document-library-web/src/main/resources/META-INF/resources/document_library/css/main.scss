@@ -318,21 +318,6 @@ $productMenuWidth: 320px;
 		color: $secondary;
 	}
 
-	img.locked-icon,
-	img.shortcut-icon {
-		bottom: 10px;
-		position: absolute;
-		z-index: 10;
-	}
-
-	img.locked-icon {
-		right: -10px;
-	}
-
-	img.shortcut-icon {
-		left: -5px;
-	}
-
 	.button-holder.toolbar {
 		display: inline;
 		margin: 0;

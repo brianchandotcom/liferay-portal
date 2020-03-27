@@ -180,23 +180,18 @@ public class ${schemaName}SerDes {
 				<#assign capitalizedPropertyName = properties[propertyName] />
 			</#if>
 
-			<#if allSchemas[properties[propertyName]]??>
-				if (${schemaVarName}.get${capitalizedPropertyName}() == null) {
-					map.put("${propertyName}", null);
-				}
-				else {
+			if (${schemaVarName}.get${capitalizedPropertyName}() == null) {
+				map.put("${propertyName}", null);
+			}
+			else {
+				<#if allSchemas[properties[propertyName]]??>
 					map.put("${propertyName}", String.valueOf(${schemaVarName}.get${capitalizedPropertyName}()));
-				}
-			<#elseif stringUtil.equals(properties[propertyName], "Date")>
-				map.put("${propertyName}", liferayToJSONDateFormat.format(${schemaVarName}.get${capitalizedPropertyName}()));
-			<#else>
-				if (${schemaVarName}.get${capitalizedPropertyName}() == null) {
-					map.put("${propertyName}", null);
-				}
-				else {
+				<#elseif stringUtil.equals(properties[propertyName], "Date")>
+					map.put("${propertyName}", liferayToJSONDateFormat.format(${schemaVarName}.get${capitalizedPropertyName}()));
+				<#else>
 					map.put("${propertyName}", String.valueOf(${schemaVarName}.get${capitalizedPropertyName}()));
-				}
-			</#if>
+				</#if>
+			}
 		</#list>
 
 		return map;

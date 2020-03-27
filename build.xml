@@ -175,7 +175,7 @@ message.
 		<gradle-stop-daemon />
 
 		<if>
-			<available file="${project.dir}/.git" type="dir" />
+			<available file="${project.dir}/.git" />
 			<then>
 				<execute>
 					${build.git.clean.command}

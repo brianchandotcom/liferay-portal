@@ -374,7 +374,7 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "${mbThreadAttachment}");
 
-			Pause(locator1 = "3000");
+			Pause(locator1 = "5000");
 
 			AssertTextEquals(
 				key_attachmentName = "${mbThreadAttachment}",

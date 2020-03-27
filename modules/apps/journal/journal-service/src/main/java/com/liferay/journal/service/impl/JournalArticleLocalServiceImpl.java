@@ -7631,51 +7631,9 @@ public class JournalArticleLocalServiceImpl
 				cacheable = _journalDefaultTemplateProvider.isCacheable();
 			}
 
-			InfoDisplayContributor infoDisplayContributor =
-				_infoDisplayContributorTracker.getInfoDisplayContributor(
-					JournalArticle.class.getName());
-
-			InfoDisplayObjectProvider infoDisplayObjectProvider =
-				infoDisplayContributor.getInfoDisplayObjectProvider(
-					article.getResourcePrimKey());
-
-			Map<String, String> friendlyURLs = new HashMap<>();
-
-			if ((infoDisplayObjectProvider != null) &&
-				(themeDisplay.getSiteGroup() != null)) {
-
-				StringBundler sb = new StringBundler(2);
-
-				Group group = groupLocalService.getGroup(
-					infoDisplayObjectProvider.getGroupId());
-
-				sb.append(
-					_portal.getGroupFriendlyURL(
-						group.getPublicLayoutSet(), themeDisplay));
-
-				sb.append(infoDisplayContributor.getInfoURLSeparator());
-
-				if (AssetDisplayPageUtil.hasAssetDisplayPage(
-						themeDisplay.getScopeGroupId(),
-						infoDisplayObjectProvider.getClassNameId(),
-						infoDisplayObjectProvider.getClassPK(),
-						infoDisplayObjectProvider.getClassTypeId())) {
-
-					for (String availableLanguageId :
-							article.getAvailableLanguageIds()) {
-
-						String urlTitle = infoDisplayObjectProvider.getURLTitle(
-							LocaleUtil.fromLanguageId(availableLanguageId));
-
-						friendlyURLs.put(
-							availableLanguageId, sb.toString() + urlTitle);
-					}
-				}
-			}
-
 			Map<String, Object> contextObjects =
 				HashMapBuilder.<String, Object>put(
-					"friendlyURLs", friendlyURLs
+					"friendlyURLs", _getFriendlyURLMap(article, themeDisplay)
 				).build();
 
 			content = JournalUtil.transform(
@@ -8860,6 +8818,56 @@ public class JournalArticleLocalServiceImpl
 		finally {
 			serviceContext.setIndexingEnabled(indexingEnabled);
 		}
+	}
+
+	private Map<String, String> _getFriendlyURLMap(
+			JournalArticle article, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		Map<String, String> friendlyURLMap = new HashMap<>();
+
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
+				JournalArticle.class.getName());
+
+		if (infoDisplayContributor == null) {
+			return friendlyURLMap;
+		}
+
+		InfoDisplayObjectProvider infoDisplayObjectProvider =
+			infoDisplayContributor.getInfoDisplayObjectProvider(
+				article.getResourcePrimKey());
+
+		if ((infoDisplayObjectProvider == null) ||
+			(themeDisplay.getSiteGroup() == null) ||
+			!AssetDisplayPageUtil.hasAssetDisplayPage(
+				themeDisplay.getScopeGroupId(),
+				infoDisplayObjectProvider.getClassNameId(),
+				infoDisplayObjectProvider.getClassPK(),
+				infoDisplayObjectProvider.getClassTypeId())) {
+
+			return friendlyURLMap;
+		}
+
+		StringBundler sb = new StringBundler(2);
+
+		Group group = groupLocalService.getGroup(
+			infoDisplayObjectProvider.getGroupId());
+
+		sb.append(
+			_portal.getGroupFriendlyURL(
+				group.getPublicLayoutSet(), themeDisplay));
+
+		sb.append(infoDisplayContributor.getInfoURLSeparator());
+
+		for (String availableLanguageId : article.getAvailableLanguageIds()) {
+			String urlTitle = infoDisplayObjectProvider.getURLTitle(
+				LocaleUtil.fromLanguageId(availableLanguageId));
+
+			friendlyURLMap.put(availableLanguageId, sb.toString() + urlTitle);
+		}
+
+		return friendlyURLMap;
 	}
 
 	private JournalArticleModelValidator _getModelValidator() {

@@ -12,10 +12,33 @@
  * details.
  */
 
-Liferay.DDM = {
-	FormSettings: {
-		restrictedFormURL: 'http://localhost:8080/group/forms/shared/-/form/',
-		sharedFormURL: 'http://localhost:8080/web/forms/shared/-/form/',
-		spritemap: '/lexicon/icons.svg',
-	},
-};
+class FormURL {
+	constructor(
+		formInstanceId,
+		published = false,
+		requireAuthentication = false
+	) {
+		this.formInstanceId = formInstanceId;
+		this.published = published;
+		this.requireAuthentication = requireAuthentication;
+	}
+
+	create() {
+		if (!this.published) {
+			return '';
+		}
+
+		let formURL;
+
+		if (this.requireAuthentication) {
+			formURL = Liferay.DDM.FormSettings.restrictedFormURL;
+		}
+		else {
+			formURL = Liferay.DDM.FormSettings.sharedFormURL;
+		}
+
+		return formURL + this.formInstanceId;
+	}
+}
+
+export default FormURL;

@@ -39,6 +39,7 @@ import PreviewButton from './components/PreviewButton/PreviewButton.es';
 import PublishButton from './components/PublishButton/PublishButton.es';
 import ShareFormPopover from './components/ShareFormPopover/ShareFormPopover.es';
 import AutoSave from './util/AutoSave.es';
+import FormURL from './util/FormURL.es';
 import Notifications from './util/Notifications.es';
 import StateSyncronizer from './util/StateSyncronizer.es';
 
@@ -680,8 +681,6 @@ class Form extends Component {
 	}
 
 	_createFormURL() {
-		let formURL;
-
 		const settingsDDMForm = Liferay.component('settingsDDMForm');
 
 		let requireAuthentication = false;
@@ -696,14 +695,13 @@ class Form extends Component {
 			});
 		}
 
-		if (requireAuthentication) {
-			formURL = Liferay.DDM.FormSettings.restrictedFormURL;
-		}
-		else {
-			formURL = Liferay.DDM.FormSettings.sharedFormURL;
-		}
+		const formURL = new FormURL(
+			this._getFormInstanceId(),
+			this.props.published,
+			requireAuthentication
+		);
 
-		return formURL + this._getFormInstanceId();
+		return formURL.create();
 	}
 
 	_getFormInstanceId() {

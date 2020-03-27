@@ -48,7 +48,8 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.redirect.internal.configuration.FFRedirectConfiguration",
 	immediate = true, service = MessageListener.class
 )
-public class FailedRedirectCleaningMessageListener extends BaseMessageListener {
+public class RedirectNotFoundEntriesMessageListener
+	extends BaseMessageListener {
 
 	@Activate
 	@Modified

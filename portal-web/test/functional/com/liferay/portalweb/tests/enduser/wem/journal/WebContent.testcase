@@ -857,9 +857,9 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.assignRegRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Web Content Administrator Role",
-			userScreenName = "usersn");
+			userEmailAddress = "userea@liferay.com");
 
 		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
 

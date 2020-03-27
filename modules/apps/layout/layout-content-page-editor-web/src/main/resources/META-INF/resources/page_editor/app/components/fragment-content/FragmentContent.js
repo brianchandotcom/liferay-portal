@@ -112,8 +112,6 @@ const FragmentContent = React.forwardRef(
 
 			if (!editableProcessorUniqueId) {
 				editables.forEach(editable => {
-					editable.element.classList.add('page-editor__editable');
-
 					resolveEditableValue(
 						editableValues,
 						editable.editableId,

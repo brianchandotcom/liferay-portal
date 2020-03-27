@@ -103,11 +103,6 @@
 		height: 10em;
 	}
 
-	&__editable {
-		cursor: pointer;
-		display: block;
-	}
-
 	&__row.no-gutters > .page-editor__col:after {
 		left: 0;
 		width: 100%;
@@ -145,5 +140,13 @@
 				padding-right: $sidebarButtonWidth + $sidebarContentWidth;
 			}
 		}
+	}
+
+	// LPS-103745
+	// Keep legacy lfr-editable tags
+	// stylelint-disable-next-line selector-type-no-unknown
+	lfr-editable {
+		cursor: pointer;
+		display: block;
 	}
 }

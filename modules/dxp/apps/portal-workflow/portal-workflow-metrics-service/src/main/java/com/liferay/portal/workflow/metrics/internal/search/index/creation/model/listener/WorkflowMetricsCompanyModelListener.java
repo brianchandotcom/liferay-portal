@@ -22,13 +22,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.workflow.metrics.internal.search.index.InstanceWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.internal.search.index.NodeWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.internal.search.index.ProcessWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.internal.search.index.SLAInstanceResultWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.internal.search.index.TokenWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.internal.search.index.TransitionWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
 
 import java.util.Objects;
 
@@ -52,16 +46,15 @@ public class WorkflowMetricsCompanyModelListener
 		}
 
 		try {
-			_instanceWorkflowMetricsIndexer.createIndex(company.getCompanyId());
-			_nodeWorkflowMetricsIndexer.createIndex(company.getCompanyId());
-			_processWorkflowMetricsIndexer.createIndex(company.getCompanyId());
-			_slaInstanceResultWorkflowMetricsIndexer.createIndex(
+			_instanceWorkflowMetricsIndex.createIndex(company.getCompanyId());
+			_nodeWorkflowMetricsIndex.createIndex(company.getCompanyId());
+			_processWorkflowMetricsIndex.createIndex(company.getCompanyId());
+			_slaInstanceResultWorkflowMetricsIndex.createIndex(
 				company.getCompanyId());
-			_slaTaskResultWorkflowMetricsIndexer.createIndex(
+			_slaTaskResultWorkflowMetricsIndex.createIndex(
 				company.getCompanyId());
-			_tokenWorkflowMetricsIndexer.createIndex(company.getCompanyId());
-			_transitionWorkflowMetricsIndexer.createIndex(
-				company.getCompanyId());
+			_taskWorkflowMetricsIndex.createIndex(company.getCompanyId());
+			_transitionWorkflowMetricsIndex.createIndex(company.getCompanyId());
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
@@ -71,14 +64,14 @@ public class WorkflowMetricsCompanyModelListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowMetricsCompanyModelListener.class);
 
-	@Reference
-	private InstanceWorkflowMetricsIndexer _instanceWorkflowMetricsIndexer;
+	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
+	private WorkflowMetricsIndex _instanceWorkflowMetricsIndex;
 
-	@Reference
-	private NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;
+	@Reference(target = "(workflow.metrics.index.entity.name=node)")
+	private WorkflowMetricsIndex _nodeWorkflowMetricsIndex;
 
-	@Reference
-	private ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;
+	@Reference(target = "(workflow.metrics.index.entity.name=process)")
+	private WorkflowMetricsIndex _processWorkflowMetricsIndex;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
@@ -88,18 +81,18 @@ public class WorkflowMetricsCompanyModelListener
 	)
 	private volatile SearchEngineAdapter _searchEngineAdapter;
 
-	@Reference
-	private SLAInstanceResultWorkflowMetricsIndexer
-		_slaInstanceResultWorkflowMetricsIndexer;
+	@Reference(
+		target = "(workflow.metrics.index.entity.name=sla-instance-result)"
+	)
+	private WorkflowMetricsIndex _slaInstanceResultWorkflowMetricsIndex;
 
-	@Reference
-	private SLATaskResultWorkflowMetricsIndexer
-		_slaTaskResultWorkflowMetricsIndexer;
+	@Reference(target = "(workflow.metrics.index.entity.name=sla-task-result)")
+	private WorkflowMetricsIndex _slaTaskResultWorkflowMetricsIndex;
 
-	@Reference
-	private TokenWorkflowMetricsIndexer _tokenWorkflowMetricsIndexer;
+	@Reference(target = "(workflow.metrics.index.entity.name=task)")
+	private WorkflowMetricsIndex _taskWorkflowMetricsIndex;
 
-	@Reference
-	private TransitionWorkflowMetricsIndexer _transitionWorkflowMetricsIndexer;
+	@Reference(target = "(workflow.metrics.index.entity.name=transition)")
+	private WorkflowMetricsIndex _transitionWorkflowMetricsIndex;
 
 }

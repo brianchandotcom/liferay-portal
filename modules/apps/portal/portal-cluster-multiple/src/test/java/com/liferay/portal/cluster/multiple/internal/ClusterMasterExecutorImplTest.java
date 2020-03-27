@@ -579,7 +579,6 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		Assert.assertFalse(clusterMasterExecutorImpl.isMaster());
 	}
 
-	@AdviseWith(adviceClasses = SPIUtilAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testMisc() {
@@ -693,21 +692,6 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		private static final Exchanger<String> _clusterNodeIdExchanger =
 			new Exchanger<>();
 		private static volatile Semaphore _semaphore;
-
-	}
-
-	@Aspect
-	public static class SPIUtilAdvice {
-
-		@Around(
-			"execution(public static boolean com.liferay.portal.kernel." +
-				"resiliency.spi.SPIUtil.isSPI())"
-		)
-		public boolean isSPI(ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
-
-			return true;
-		}
 
 	}
 

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.concurrent.NoticeableFutureConverter;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -138,7 +137,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 
 	@Activate
 	protected synchronized void activate() {
-		if (!_clusterExecutorImpl.isEnabled() || SPIUtil.isSPI()) {
+		if (!_clusterExecutorImpl.isEnabled()) {
 			return;
 		}
 

@@ -32,12 +32,29 @@ const Modal = ({id, size, title, url}) => {
 		},
 	});
 
+	const getIframeUrl = () => {
+		if (!url) {
+			return null;
+		}
+
+		const iframeURL = new URL(url);
+
+		const namespace = iframeURL.searchParams.get('p_p_id');
+
+		iframeURL.searchParams.set(
+			`_${namespace}_bodyCssClass`,
+			'dialog-iframe-popup'
+		);
+
+		return iframeURL.toString();
+	};
+
 	return (
 		<>
 			{visible && (
 				<ClayModal id={id} observer={observer} size={size}>
 					<ClayModal.Header>{title}</ClayModal.Header>
-					<ClayModal.Body url={url} />
+					<ClayModal.Body url={getIframeUrl()} />
 				</ClayModal>
 			)}
 		</>

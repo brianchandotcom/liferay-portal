@@ -286,8 +286,11 @@ public class FriendlyURLServlet extends HttpServlet {
 				}
 			}
 
-			redirectNotFoundEntryLocalService.addOrUpdateRedirectNotFoundEntry(
-				group, _normalizeFriendlyURL(friendlyURL));
+			if (Validator.isNotNull(friendlyURL)) {
+				redirectNotFoundEntryLocalService.
+					addOrUpdateRedirectNotFoundEntry(
+						group, _normalizeFriendlyURL(friendlyURL));
+			}
 
 			throw noSuchLayoutException;
 		}

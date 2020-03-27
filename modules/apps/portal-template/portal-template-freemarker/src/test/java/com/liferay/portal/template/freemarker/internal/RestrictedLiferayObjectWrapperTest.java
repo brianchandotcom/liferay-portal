@@ -171,15 +171,15 @@ public class RestrictedLiferayObjectWrapperTest
 
 		Assert.assertThat(
 			templateModel,
-			CoreMatchers.instanceOf(LiferayFreeMarkerBeanModel.class));
+			CoreMatchers.instanceOf(LiferayFreeMarkerStringModel.class));
 
-		LiferayFreeMarkerBeanModel liferayFreeMarkerBeanModel =
-			(LiferayFreeMarkerBeanModel)templateModel;
+		LiferayFreeMarkerStringModel liferayFreeMarkerStringModel =
+			(LiferayFreeMarkerStringModel)templateModel;
 
-		_testRestrictedMethodNames(liferayFreeMarkerBeanModel, "name");
-		_testRestrictedMethodNames(liferayFreeMarkerBeanModel, "Name");
-		_testRestrictedMethodNames(liferayFreeMarkerBeanModel, "getName");
-		_testRestrictedMethodNames(liferayFreeMarkerBeanModel, "getname");
+		_testRestrictedMethodNames(liferayFreeMarkerStringModel, "name");
+		_testRestrictedMethodNames(liferayFreeMarkerStringModel, "Name");
+		_testRestrictedMethodNames(liferayFreeMarkerStringModel, "getName");
+		_testRestrictedMethodNames(liferayFreeMarkerStringModel, "getname");
 	}
 
 	@Test
@@ -270,10 +270,10 @@ public class RestrictedLiferayObjectWrapperTest
 	}
 
 	private void _testRestrictedMethodNames(
-		LiferayFreeMarkerBeanModel liferayFreeMarkerBeanModel, String key) {
+		LiferayFreeMarkerStringModel liferayFreeMarkerStringModel, String key) {
 
 		try {
-			liferayFreeMarkerBeanModel.get(key);
+			liferayFreeMarkerStringModel.get(key);
 
 			Assert.assertNull("Should throw TemplateModelException for " + key);
 		}

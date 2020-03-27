@@ -29,9 +29,9 @@ import java.util.Set;
 /**
  * @author Marta Medio
  */
-public class LiferayFreeMarkerBeanModel extends StringModel {
+public class LiferayFreeMarkerStringModel extends StringModel {
 
-	public LiferayFreeMarkerBeanModel(Object object, BeansWrapper wrapper) {
+	public LiferayFreeMarkerStringModel(Object object, BeansWrapper wrapper) {
 		super(object, wrapper);
 	}
 

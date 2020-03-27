@@ -278,6 +278,7 @@ class SegmentEdit extends Component {
 
 		openModal({
 			id: 'segment-members-dialog',
+			size: 'full-screen',
 			title: sub(Liferay.Language.get('x-members'), [
 				Liferay.Util.escape(segmentLocalizedName),
 			]),

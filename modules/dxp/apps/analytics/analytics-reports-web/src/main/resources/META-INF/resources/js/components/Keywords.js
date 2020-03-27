@@ -35,7 +35,7 @@ export default function Keywords({currentPage, languageTag}) {
 	);
 
 	return (
-		<table className="table-keywords">
+		<table className="table-autofit table-keywords">
 			<thead>
 				<tr>
 					<th>
@@ -49,7 +49,7 @@ export default function Keywords({currentPage, languageTag}) {
 							/>
 						</span>
 					</th>
-					<th>
+					<th className="text-right">
 						<ClayDropDown
 							active={isDropdownOpen}
 							onActiveChange={isActive =>
@@ -104,13 +104,16 @@ export default function Keywords({currentPage, languageTag}) {
 				{currentPage.data.keywords.map(keyword => {
 					return (
 						<tr key={keyword.title}>
-							<td>
+							<td className="table-cell-expand">
 								<ClayTooltipProvider>
 									<span
+										className="text-truncate-inline"
 										data-tooltip-align="top"
 										title={keyword.title}
 									>
-										{keyword.title}
+										<span className="text-truncate">
+											{keyword.title}
+										</span>
 									</span>
 								</ClayTooltipProvider>
 							</td>

@@ -24,6 +24,12 @@ public class KeyListObjectReference implements ListObjectReference {
 	public KeyListObjectReference(JSONObject jsonObject) {
 		_key = jsonObject.getString("key");
 		_title = jsonObject.getString("title");
+		_itemType = jsonObject.getString("itemType");
+	}
+
+	@Override
+	public String getItemType() {
+		return _itemType;
 	}
 
 	public String getKey() {
@@ -34,6 +40,7 @@ public class KeyListObjectReference implements ListObjectReference {
 		return _title;
 	}
 
+	private final String _itemType;
 	private final String _key;
 	private final String _title;
 

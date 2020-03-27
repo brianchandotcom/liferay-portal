@@ -346,6 +346,9 @@ definition {
 		FormPortlet.submitWithValidationError();
 	}
 
+	// Ignored because of the ticket LRQA-57207
+
+	@ignore = "true"
 	@priority = "5"
 	test ConfigureShowRuleUsingAndCondition {
 		property portal.acceptance = "true";

@@ -162,7 +162,7 @@ definition {
 	@description = "This is a use case for LPS-71592."
 	@priority = "5"
 	test ConfigureCalculateRule {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "FormRules#ConfigureCalculateRule";
 		var portalURL = PropsUtil.get("portal.url");
 

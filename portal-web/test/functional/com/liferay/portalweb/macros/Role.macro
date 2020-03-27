@@ -175,7 +175,7 @@ definition {
 	macro editPermissionCmdCP {
 		var key_roleTitle = "${roleTitle}";
 
-		if (contains("Organization,Site", "${roleType}")) {
+		if (contains("Asset Library,Organization,Site", "${roleType}")) {
 			Navigator.gotoNavItem(navItem = "${roleType} Roles");
 		}
 		else {
@@ -507,7 +507,7 @@ definition {
 	}
 
 	macro viewCP {
-		if (contains("Organization,Site", "${roleType}")) {
+		if (contains("Asset Library,Organization,Site", "${roleType}")) {
 			Navigator.gotoNavItem(navItem = "${roleType} Roles");
 		}
 		else {

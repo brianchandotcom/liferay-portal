@@ -67,6 +67,9 @@ definition {
 			value1 = "There are no microblog entries.");
 	}
 
+	// Ignored because of the ticket LRQA-57210
+
+	@ignore = "true"
 	@priority = "5"
 	test EditEntry {
 		property portal.acceptance = "true";

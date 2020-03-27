@@ -195,6 +195,10 @@ public abstract class BaseTemplate implements Template {
 			}
 		}
 
+		if (value instanceof Class) {
+			return putClass(key, (Class<?>)value);
+		}
+
 		return context.put(key, value);
 	}
 
@@ -253,6 +257,10 @@ public abstract class BaseTemplate implements Template {
 	protected abstract void processTemplate(
 			TemplateResource templateResource, Writer writer)
 		throws Exception;
+
+	protected Object putClass(String key, Class<?> clazz) {
+		return context.put(key, clazz);
+	}
 
 	protected Map<String, Object> context;
 

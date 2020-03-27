@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.redirect.web.internal.messaging;
+package com.liferay.redirect.internal.messaging;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.redirect.internal.configuration.FFRedirectConfiguration;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
-import com.liferay.redirect.web.internal.configuration.FFRedirectConfiguration;
 
 import java.util.Date;
 import java.util.Map;
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alicia García
  */
 @Component(
-	configurationPid = "com.liferay.redirect.web.internal.configuration.FFRedirectConfiguration",
+	configurationPid = "com.liferay.redirect.internal.configuration.FFRedirectConfiguration",
 	immediate = true, service = MessageListener.class
 )
 public class FailedRedirectCleaningMessageListener extends BaseMessageListener {

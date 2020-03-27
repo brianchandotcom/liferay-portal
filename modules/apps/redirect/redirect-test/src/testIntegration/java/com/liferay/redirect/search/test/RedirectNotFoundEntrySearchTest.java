@@ -25,6 +25,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
+import com.liferay.redirect.test.util.RedirectTestUtil;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -120,9 +123,16 @@ public class RedirectNotFoundEntrySearchTest extends BaseSearchTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		return _redirectNotFoundEntryLocalService.
-			addOrUpdateRedirectNotFoundEntry(
-				serviceContext.getScopeGroup(), keywords);
+		AtomicReference<RedirectNotFoundEntry>
+			redirectNotFoundEntryAtomicReference = new AtomicReference<>();
+
+		RedirectTestUtil.withRedirectEnabled(
+			() -> redirectNotFoundEntryAtomicReference.set(
+				_redirectNotFoundEntryLocalService.
+					addOrUpdateRedirectNotFoundEntry(
+						serviceContext.getScopeGroup(), keywords)));
+
+		return redirectNotFoundEntryAtomicReference.get();
 	}
 
 	@Override

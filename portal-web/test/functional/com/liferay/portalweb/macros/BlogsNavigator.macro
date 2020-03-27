@@ -169,7 +169,11 @@ definition {
 	}
 
 	macro gotoShare {
-		Click(
+		AssertElementPresent.pauseAssertVisible(
+			key_listEntry = "${entryTitle}",
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
+
+		Click.pauseClickAt(
 			key_listEntry = "${entryTitle}",
 			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
 

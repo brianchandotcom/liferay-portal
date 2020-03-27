@@ -108,19 +108,19 @@ rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 	<c:choose>
 		<c:when test="<%= fileShortcut != null %>">
-			<span class="file-icon-color-0 inline-item inline-item-after">
+			<span class="inline-item inline-item-after state-icon">
 				<aui:icon image="shortcut" markupView="lexicon" message="shortcut" />
 			</span>
 		</c:when>
 		<c:when test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
-			<span class="file-icon-color-0 inline-item inline-item-after">
+			<span class="inline-item inline-item-after state-icon">
 				<aui:icon image="lock" markupView="lexicon" message="locked" />
 			</span>
 		</c:when>
 	</c:choose>
 
 	<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
-		<span class="file-icon-color-0 inline-item inline-item-after lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "shared") %>">
+		<span class="inline-item inline-item-after lfr-portal-tooltip state-icon" title="<%= LanguageUtil.get(request, "shared") %>">
 			<aui:icon image="users" markupView="lexicon" message="shared" />
 		</span>
 	</c:if>

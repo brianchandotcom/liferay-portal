@@ -314,6 +314,10 @@ $productMenuWidth: 320px;
 		margin: 0 0 0.5em 0.5em;
 	}
 
+	.state-icon {
+		color: $secondary;
+	}
+
 	img.locked-icon,
 	img.shortcut-icon {
 		bottom: 10px;

@@ -137,7 +137,11 @@ export default function TrafficSources({
 						innerRadius={PIE_CHART_SIZES.innerRadius}
 						nameKey={'name'}
 						outerRadius={PIE_CHART_SIZES.radius}
-						paddingAngle={PIE_CHART_SIZES.paddingAngle}
+						paddingAngle={
+							trafficSources.length > 1
+								? PIE_CHART_SIZES.paddingAngle
+								: 0
+						}
 					>
 						{trafficSources.map((entry, i) => {
 							const fillColor = getColorByName(entry.name);

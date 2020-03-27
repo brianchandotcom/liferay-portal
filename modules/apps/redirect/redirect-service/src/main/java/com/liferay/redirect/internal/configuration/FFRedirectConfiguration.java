@@ -23,8 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.redirect.internal.configuration.FFRedirectConfiguration",
-	localization = "content/Language", name = "redirect-configuration-name"
+	id = "com.liferay.redirect.internal.configuration.FFRedirectConfiguration"
 )
 public interface FFRedirectConfiguration {
 

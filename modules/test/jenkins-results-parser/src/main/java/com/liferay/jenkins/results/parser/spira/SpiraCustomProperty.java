@@ -34,6 +34,79 @@ import org.json.JSONObject;
  */
 public class SpiraCustomProperty extends BaseSpiraArtifact {
 
+	public static SpiraCustomProperty createSpiraCustomPropertyByName(
+		final SpiraProject spiraProject,
+		final Class<? extends SpiraArtifact> spiraArtifactClass,
+		String customPropertyName) {
+
+		List<SpiraCustomProperty> spiraCustomProperties =
+			getSpiraCustomProperties(
+				spiraProject, spiraArtifactClass,
+				new SearchQuery.SearchParameter("Name", customPropertyName));
+
+		if (!spiraCustomProperties.isEmpty()) {
+			return spiraCustomProperties.get(0);
+		}
+
+		SpiraCustomList spiraCustomList =
+			SpiraCustomList.createSpiraCustomListByName(
+				spiraProject, customPropertyName);
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		Integer projectTemplateID = spiraProject.getProjectTemplateID();
+
+		urlPathReplacements.put(
+			"project_template_id", String.valueOf(projectTemplateID));
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put(
+			"ArtifactTypeId", getArtifactTypeID(spiraArtifactClass));
+		requestJSONObject.put("CustomPropertyTypeId", Type.MULTILIST.getID());
+		requestJSONObject.put("Name", customPropertyName);
+		requestJSONObject.put("ProjectTemplateId", projectTemplateID);
+
+		Map<String, String> urlParameters = new HashMap<>();
+
+		urlParameters.put(
+			"custom_list_id", String.valueOf(spiraCustomList.getID()));
+
+		try {
+			SpiraCustomProperty spiraCustomProperty = new SpiraCustomProperty(
+				SpiraRestAPIUtil.requestJSONObject(
+					"project-templates/{project_template_id}/custom-properties",
+					urlParameters, urlPathReplacements, HttpRequestMethod.POST,
+					requestJSONObject.toString()),
+				spiraArtifactClass);
+
+			cachedSpiraArtifacts(
+				Collections.singletonList(spiraCustomProperty));
+
+			return spiraCustomProperty;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	public static enum Type {
+
+		BOOLEAN(4), DATE(5), DECIMAL(3), INTEGER(2), LIST(6), MULTILIST(7),
+		TEXT(1), USER(8);
+
+		public Integer getID() {
+			return _id;
+		}
+
+		private Type(Integer id) {
+			_id = id;
+		}
+
+		private final Integer _id;
+
+	}
+
 	protected static List<SpiraCustomProperty> getSpiraCustomProperties(
 		final SpiraProject spiraProject,
 		final Class<? extends SpiraArtifact> spiraArtifactClass,

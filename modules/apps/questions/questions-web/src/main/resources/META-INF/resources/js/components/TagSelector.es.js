@@ -29,14 +29,18 @@ export default ({tagsChange, tags = [], ...props}) => {
 
 	useEffect(() => {
 		getAllTags(context.siteKey).then(data => {
-			setSourceItems(
-				data.items
-					.flatMap(vocabulary => vocabulary.taxonomyCategories.items)
-					.map(({id, name}) => ({
-						label: name,
-						value: +id,
-					}))
-			);
+			let vocabulariesOfQuestions = data.items.filter(vocabulary =>
+				vocabulary.assetTypes.filter(assetType =>
+					assetType.type === "AllAssetTypes").length > 0
+				);
+				setSourceItems(
+					vocabulariesOfQuestions
+						.flatMap(vocabulary => vocabulary.taxonomyCategories.items)
+						.map(({id, name}) =>({
+							label: name,
+							value: +id
+						}))
+				);
 		});
 	}, [context.siteKey]);
 

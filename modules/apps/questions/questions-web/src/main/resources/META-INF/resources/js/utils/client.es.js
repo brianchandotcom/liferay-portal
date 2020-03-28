@@ -176,6 +176,9 @@ export const getAllTags = siteKey =>
 							name
 						}
 					}
+					assetTypes {
+						type
+					}
 				}
 			}
 		}`);

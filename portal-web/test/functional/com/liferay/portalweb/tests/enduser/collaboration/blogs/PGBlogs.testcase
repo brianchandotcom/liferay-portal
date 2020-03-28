@@ -1583,6 +1583,8 @@ definition {
 
 	@priority = "3"
 	test ViewBlogsEntryWithUploadedCoverImage {
+		property portal.upstream = "quarantine";
+
 		Blogs.addEntryWithUploadedCoverImage(
 			coverImageName = "Document_1",
 			entryContent = "Blogs Entry Content",

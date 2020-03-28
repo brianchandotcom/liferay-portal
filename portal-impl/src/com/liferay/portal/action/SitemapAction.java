@@ -23,9 +23,11 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.VirtualHost;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -91,6 +93,14 @@ public class SitemapAction implements Action {
 
 					layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 						virtualHost.getLayoutSetId());
+
+					Group group = layoutSet.getGroup();
+
+					if (group.isStagingGroup()) {
+						GroupPermissionUtil.check(
+							themeDisplay.getPermissionChecker(),
+							group.getGroupId(), ActionKeys.VIEW_STAGING);
+					}
 				}
 				else {
 					String groupName =

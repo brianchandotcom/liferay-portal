@@ -345,7 +345,7 @@ export default withRouter(
 
 								{question &&
 									question.actions &&
-									question.actions['reply-to-message'] && (
+									question.actions['reply-to-thread'] && (
 										<div className="c-mt-5">
 											<ClayForm>
 												<ClayForm.Group className="form-group-sm">

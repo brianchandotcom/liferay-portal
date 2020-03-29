@@ -635,11 +635,9 @@ definition {
 			checkboxName = "Cacheable",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		Pause(locator1 = "5000");
-
 		AssertChecked.assertCheckedNotVisible(
 			checkboxName = "Cacheable",
-			locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+			locator1 = "Checkbox#ANY_CHECKBOX");
 
 		PortletEntry.publish();
 	}
@@ -673,11 +671,9 @@ definition {
 			checkboxName = "Cacheable",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		Pause(locator1 = "5000");
-
 		AssertChecked.assertCheckedNotVisible(
 			checkboxName = "Cacheable",
-			locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+			locator1 = "Checkbox#ANY_CHECKBOX");
 
 		PortletEntry.publish();
 	}

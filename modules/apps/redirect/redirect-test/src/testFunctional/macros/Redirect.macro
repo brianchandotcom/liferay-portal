@@ -34,6 +34,13 @@ definition {
 		if ("${redirectURLVariation}" == "Null") {
 			Alert.viewRequiredField();
 		}
+
+		else if ("${sourceURLVariation}" == "Duplicate") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "Error:There is already a redirect set for the same source URL.");
+		}
+
 		else {
 			Alert.viewSuccessMessage();
 		}

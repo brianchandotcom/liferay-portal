@@ -34,6 +34,29 @@ definition {
 		}
 	}
 
+	@description = "This ensures that a user cannot create more than one redirection with the same sourceURL."
+	@priority = "5"
+	test AddDuplicateSourceURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Temporary (302)",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Temporary (302)",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page",
+			sourceURLVariation = "Duplicate");
+	}
+
 	@description = "This ensures that a permanent redirect can be added."
 	@priority = "5"
 	test AddPermanentEntry {

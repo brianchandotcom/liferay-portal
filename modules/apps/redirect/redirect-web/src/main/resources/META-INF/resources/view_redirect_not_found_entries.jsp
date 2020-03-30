@@ -72,7 +72,7 @@ RedirectNotFountEntriesManagementToolbarDisplayContext redirectNotFoundEntriesMa
 			<liferay-frontend:empty-result-message
 				animationType="<%= EmptyResultMessageKeys.AnimationType.SEARCH %>"
 				description="<%= LanguageUtil.get(request, redirectNotFoundEntriesSearchContainer.getEmptyResultsMessage()) %>"
-				title='<%= LanguageUtil.get(request, "great-job") %>'
+				title='<%= LanguageUtil.get(request, "all-in-order") %>'
 			/>
 		</c:otherwise>
 	</c:choose>

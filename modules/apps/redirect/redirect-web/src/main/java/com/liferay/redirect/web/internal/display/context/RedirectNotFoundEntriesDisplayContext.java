@@ -28,8 +28,10 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -40,7 +42,12 @@ import com.liferay.redirect.web.internal.search.RedirectNotFoundEntrySearch;
 import com.liferay.redirect.web.internal.util.comparator.RedirectComparator;
 import com.liferay.redirect.web.internal.util.comparator.RedirectDateComparator;
 
+import java.time.Duration;
+import java.time.Instant;
+
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -91,6 +98,19 @@ public class RedirectNotFoundEntriesDisplayContext {
 		return _redirectNotFoundEntrySearch;
 	}
 
+	private Date _getMinModifiedDate() {
+		int days = _maxAgeDaysMap.getOrDefault(
+			ParamUtil.getString(_httpServletRequest, "filter"), 0);
+
+		if (days == 0) {
+			return null;
+		}
+
+		Instant instant = Instant.now();
+
+		return Date.from(instant.minus(Duration.ofDays(days)));
+	}
+
 	private OrderByComparator _getOrderByComparator() {
 		boolean orderByAsc = StringUtil.equals(
 			_redirectNotFoundEntrySearch.getOrderByType(), "asc");
@@ -139,11 +159,11 @@ public class RedirectNotFoundEntriesDisplayContext {
 		redirectNotFoundEntrySearch.setTotal(
 			RedirectNotFoundEntryLocalServiceUtil.
 				getRedirectNotFoundEntriesCount(
-					themeDisplay.getScopeGroupId()));
+					themeDisplay.getScopeGroupId(), _getMinModifiedDate()));
 
 		redirectNotFoundEntrySearch.setResults(
 			RedirectNotFoundEntryLocalServiceUtil.getRedirectNotFoundEntries(
-				themeDisplay.getScopeGroupId(),
+				themeDisplay.getScopeGroupId(), _getMinModifiedDate(),
 				_redirectNotFoundEntrySearch.getStart(),
 				_redirectNotFoundEntrySearch.getEnd(),
 				_getOrderByComparator()));
@@ -187,6 +207,13 @@ public class RedirectNotFoundEntriesDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private Map<String, Integer> _maxAgeDaysMap = HashMapBuilder.put(
+		"day", 1
+	).put(
+		"month", 30
+	).put(
+		"week", 7
+	).build();
 	private RedirectNotFoundEntrySearch _redirectNotFoundEntrySearch;
 	private final ThemeDisplay _themeDisplay;
 

@@ -13,6 +13,14 @@
 		padding: 16px;
 	}
 
+	&.criterion-row-root-warning {
+		background: #fff4ec;
+		border: 1px solid #ff8f38;
+		border-left: 3px solid #ff8f38;
+		border-radius: 4px;
+		padding: 16px;
+	}
+
 	.edit-container {
 		align-items: center;
 		display: flex;

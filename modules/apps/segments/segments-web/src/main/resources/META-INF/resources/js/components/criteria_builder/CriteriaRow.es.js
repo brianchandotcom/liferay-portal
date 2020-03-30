@@ -397,6 +397,31 @@ class CriteriaRow extends Component {
 		});
 	}
 
+	_renderWarningMessages() {
+		const {editing} = this.props;
+		const warnings = [];
+		const message = editing
+			? Liferay.Language.get('criteria-warning-message-edit')
+			: Liferay.Language.get('criteria-warning-message-view');
+
+		warnings.push({
+			message,
+		});
+
+		return warnings.map((warning, index) => {
+			return (
+				<ClayAlert
+					className="bg-transparent border-0 mt-1 p-1"
+					displayType="warning"
+					key={index}
+					title={Liferay.Language.get('warning')}
+				>
+					{warning.message}
+				</ClayAlert>
+			);
+		});
+	}
+
 	_renderEditContainer({
 		error,
 		propertyLabel,
@@ -505,15 +530,44 @@ class CriteriaRow extends Component {
 			criterion.propertyName
 		);
 
+		const value = criterion ? criterion.value : '';
 		const errorOnProperty = selectedProperty.notFound;
+		const error = errorOnProperty || unknownEntity;
+		const warningOnProperty =
+			selectedProperty.options === undefined
+				? false
+				: selectedProperty.options.length === 0
+				? false
+				: selectedProperty.options.find(option => {
+						return (
+							option.value === value &&
+							option.disabled === undefined
+						);
+				  });
+		const warning =
+			warningOnProperty || warningOnProperty === false ? false : true;
+
+		if (
+			selectedProperty.options !== undefined &&
+			selectedProperty.options.length > 0 &&
+			selectedProperty.options.find(option => {
+				return option.value === value;
+			}) === undefined &&
+			warning
+		) {
+			selectedProperty.options.unshift({
+				disabled: true,
+				label: value,
+				value,
+			});
+		}
+
 		const operatorLabel = selectedOperator ? selectedOperator.label : '';
 		const propertyLabel = selectedProperty ? selectedProperty.label : '';
 
-		const error = errorOnProperty || unknownEntity;
-		const value = criterion ? criterion.value : '';
-
 		const classes = getCN('criterion-row-root', {
 			'criterion-row-root-error': error,
+			'criterion-row-root-warning': warning,
 			'dnd-drag': dragging,
 			'dnd-hover': hover && canDrop,
 		});
@@ -550,6 +604,7 @@ class CriteriaRow extends Component {
 						errorOnProperty,
 						unknownEntityError: unknownEntity,
 					})}
+				{warning && this._renderWarningMessages()}
 			</>
 		);
 	}

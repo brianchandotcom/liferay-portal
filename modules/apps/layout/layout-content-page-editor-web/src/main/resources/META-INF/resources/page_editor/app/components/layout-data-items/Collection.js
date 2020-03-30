@@ -87,11 +87,15 @@ const Grid = ({
 									collectionFields,
 									collectionItem:
 										collection[i * numberOfColumns + j],
-									fromControlsId,
-									toControlsId: getToControlsId(
-										collectionId,
-										index
-									),
+									fromControlsId:
+										itemCount === 0 ? null : fromControlsId,
+									toControlsId:
+										itemCount === 0
+											? null
+											: getToControlsId(
+													collectionId,
+													index
+											  ),
 								}}
 							>
 								{React.cloneElement(child)}
@@ -126,8 +130,9 @@ const Stack = ({
 			value={{
 				collectionFields,
 				collectionItem: collection[idx],
-				fromControlsId,
-				toControlsId: getToControlsId(collectionId, idx),
+				fromControlsId: idx === 0 ? null : fromControlsId,
+				toControlsId:
+					idx === 0 ? null : getToControlsId(collectionId, idx),
 			}}
 		>
 			{React.cloneElement(child)}

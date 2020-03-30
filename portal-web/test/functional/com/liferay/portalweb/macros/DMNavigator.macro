@@ -7,6 +7,8 @@ definition {
 			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
 		}
 
+		AssertElementPresent.assertVisible(locator1 = "Icon#EDIT_CATEGORIES");
+
 		Click(locator1 = "Icon#EDIT_CATEGORIES");
 	}
 

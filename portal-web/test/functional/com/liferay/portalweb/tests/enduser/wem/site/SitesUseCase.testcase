@@ -130,6 +130,7 @@ definition {
 
 	@priority = "5"
 	test AddOrganizationSitesAndDeactivate {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SitesUsecase#AddOrganizationSitesAndDeactivate";
 		property testray.component.names = "Site Administration,Training,Users and Organizations";
 

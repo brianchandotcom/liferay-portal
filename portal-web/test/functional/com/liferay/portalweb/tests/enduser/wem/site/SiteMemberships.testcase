@@ -374,13 +374,10 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test OrganizationsView {
-
-		// Ignore test until LRQA-56204 is resolved
-
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SiteMemberships#OrganizationsView";
 		property testray.component.names = "Site Administration,Users and Organizations";
 

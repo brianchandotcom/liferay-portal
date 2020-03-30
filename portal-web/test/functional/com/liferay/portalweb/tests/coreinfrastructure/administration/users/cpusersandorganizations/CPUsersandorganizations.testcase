@@ -355,6 +355,7 @@ definition {
 	@priority = "5"
 	test AddOrganizationTeam {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPUsersandorganizations#AddOrganizationTeam";
 		property testray.component.names = "Training";
 

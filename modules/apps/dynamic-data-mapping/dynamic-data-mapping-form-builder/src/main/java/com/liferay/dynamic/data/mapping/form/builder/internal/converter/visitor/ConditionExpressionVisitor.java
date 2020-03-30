@@ -111,8 +111,16 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 		List<SPIDDMFormRuleCondition.Operand> operands = new ArrayList<>();
 
 		for (Expression parameterExpression : parameterExpressions) {
-			operands.add(
-				(SPIDDMFormRuleCondition.Operand)doVisit(parameterExpression));
+			if (functionCallExpression.hasNestedFunctions()) {
+				operands.add(
+					new SPIDDMFormRuleCondition.Operand(
+						"condition", parameterExpression.toString()));
+			}
+			else {
+				operands.add(
+					(SPIDDMFormRuleCondition.Operand)doVisit(
+						parameterExpression));
+			}
 		}
 
 		_spiDDMFormRuleConditions.push(

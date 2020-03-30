@@ -25,14 +25,16 @@ import java.util.stream.Stream;
  * @author Leonardo Barros
  */
 public class MaxFunction
-	implements DDMExpressionFunction.Function1<BigDecimal[], BigDecimal> {
+	implements DDMExpressionFunction.Function1<Object[], BigDecimal> {
 
 	public static final String NAME = "MAX";
 
 	@Override
-	public BigDecimal apply(BigDecimal[] values) {
+	public BigDecimal apply(Object[] values) {
 		return Stream.of(
 			values
+		).map(
+			value -> new BigDecimal(value.toString())
 		).collect(
 			Collectors.maxBy((num1, num2) -> num1.compareTo(num2))
 		).orElse(

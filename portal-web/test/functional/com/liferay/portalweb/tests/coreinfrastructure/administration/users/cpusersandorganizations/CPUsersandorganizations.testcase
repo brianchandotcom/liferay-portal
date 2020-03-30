@@ -383,16 +383,9 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.manageMembershipOptionsInSites(
-			allowManualMembershipManagement = "true",
-			orgName = "Organization Name");
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -1376,16 +1369,9 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.manageMembershipOptionsInSites(
-			allowManualMembershipManagement = "true",
-			orgName = "Organization Name");
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",

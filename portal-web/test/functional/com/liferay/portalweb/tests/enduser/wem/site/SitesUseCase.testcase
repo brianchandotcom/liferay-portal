@@ -167,17 +167,11 @@ definition {
 			organizationSite = "Community Site",
 			orgName = "Organization Name 1");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-1");
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.manageMembershipOptionsInSites(
+		Site.manageMembershipOptions(
 			allowManualMembershipManagement = "true",
 			membershipType = "Open",
-			orgName = "Organization Name 1",
 			selectMembershipType = "true");
 
 		ProductMenu.gotoPortlet(
@@ -209,17 +203,11 @@ definition {
 			organizationSite = "Intranet Site",
 			orgName = "Organization Name 2");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-2");
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.manageMembershipOptionsInSites(
+		Site.manageMembershipOptions(
 			allowManualMembershipManagement = "true",
 			membershipType = "Open",
-			orgName = "Organization Name 2",
 			selectMembershipType = "true");
 
 		ProductMenu.gotoPortlet(

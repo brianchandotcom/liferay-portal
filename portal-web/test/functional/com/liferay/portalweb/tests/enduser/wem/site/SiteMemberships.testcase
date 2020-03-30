@@ -458,16 +458,9 @@ definition {
 			userName = "Test Test",
 			userScreenName = "test");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-1");
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.manageMembershipOptionsInSites(
-			allowManualMembershipManagement = "true",
-			orgName = "Organization Name 1");
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		SitePages.openPagesAdmin(siteURLKey = "Organization Name 1");
 

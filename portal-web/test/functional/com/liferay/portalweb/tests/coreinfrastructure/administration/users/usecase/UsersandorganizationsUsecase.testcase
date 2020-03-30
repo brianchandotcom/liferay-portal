@@ -176,11 +176,12 @@ definition {
 				orgName = "${suborgName}",
 				orgType = "Organization");
 
-			Navigator.gotoBack();
+			var suborgName = StringUtil.replace("${suborgName}", " ", "-");
+			var suborgName = StringUtil.lowerCase("${suborgName}");
 
-			Organization.manageMembershipOptionsInSites(
-				allowManualMembershipManagement = "true",
-				orgName = "${suborgName}");
+			Site.openSiteSettingsAdmin(siteURLKey = "${suborgName}");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 		}
 
 		Navigator.openSiteURL(siteName = "College of Agricultural Science");

@@ -49,6 +49,8 @@ definition {
 
 	@priority = "5"
 	test AddDocuments {
+		property portal.acceptance = "true";
+
 		property testray.component.names = "Training";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");

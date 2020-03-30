@@ -99,6 +99,8 @@ definition {
 	@description = "This test ensures that a user can check in a document as a major version."
 	@priority = "5"
 	test CheckInDocumentAsMajorVersion {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -131,6 +133,8 @@ definition {
 	@description = "This test ensures that a user can check in a document as a minor version."
 	@priority = "5"
 	test CheckInDocumentAsMinorVersion {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -486,6 +490,8 @@ definition {
 	@description = "This case covers the folder name of a document can be viewed in the info panel and navigate to it."
 	@priority = "5"
 	test MoveDocumentToFolder {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -642,6 +648,8 @@ definition {
 	@description = "This test covers LPS-104957. It ensures that the JPG file can be previewed."
 	@priority = "5"
 	test PreviewJPG {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -661,6 +669,8 @@ definition {
 	@description = "This is a use case for LPS-88785."
 	@priority = "5"
 	test PreviewPDF {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -794,7 +804,6 @@ definition {
 	@priority = "5"
 	test ViewImageEditorControls {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

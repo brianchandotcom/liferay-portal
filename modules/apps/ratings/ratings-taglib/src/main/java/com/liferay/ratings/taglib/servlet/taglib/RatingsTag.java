@@ -157,13 +157,13 @@ public class RatingsTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:data",
 				HashMapBuilder.<String, Object>put(
-					"initialAverageScore", _getInitialAverageScore(ratingsStats)
-				).put(
 					"className", _className
 				).put(
 					"classPK", _classPK
 				).put(
 					"enabled", _isEnabled(themeDisplay)
+				).put(
+					"initialAverageScore", _getInitialAverageScore(ratingsStats)
 				).put(
 					"initialLiked", _isThumbUp(_getUserScore(ratingsEntry))
 				).put(
@@ -188,7 +188,7 @@ public class RatingsTag extends IncludeTag {
 				).put(
 					"url", _getURL(themeDisplay)
 				).put(
-					"userScore", (ratingsEntry != null) ? _getUserScore(ratingsEntry) : -1
+					"userScore", _getUserScore(ratingsEntry)
 				).build());
 
 			httpServletRequest.setAttribute(

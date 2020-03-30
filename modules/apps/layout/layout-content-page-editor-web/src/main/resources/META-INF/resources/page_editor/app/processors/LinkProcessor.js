@@ -25,7 +25,10 @@ export default getAlloyEditorProcessor(
 				: element.querySelector('a');
 
 		if (anchor) {
-			anchor.href = config.href;
+			if (config.href) {
+				anchor.href = config.href;
+			}
+
 			anchor.innerHTML = value;
 			anchor.target = config.target || '';
 		}

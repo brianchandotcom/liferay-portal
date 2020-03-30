@@ -140,7 +140,7 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	private JSONObject _collectionJSONObject;
-	private String _listFormat;
+	private String _listFormat = LIST_FORMAT_STACKED;
 	private int _numberOfColumns = 3;
 	private int _numberOfItems = 3;
 

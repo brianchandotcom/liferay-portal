@@ -17,6 +17,8 @@ package com.liferay.portal.workflow.metrics.rest.client.dto.v1_0;
 import com.liferay.portal.workflow.metrics.rest.client.function.UnsafeSupplier;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.ProcessSerDes;
 
+import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -27,6 +29,90 @@ import javax.annotation.Generated;
  */
 @Generated("")
 public class Process implements Cloneable {
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public void setActive(
+		UnsafeSupplier<Boolean, Exception> activeUnsafeSupplier) {
+
+		try {
+			active = activeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean active;
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public void setDateCreated(
+		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
+
+		try {
+			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateCreated;
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
+	}
+
+	public void setDateModified(
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateModified;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+
+		try {
+			description = descriptionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String description;
 
 	public Long getId() {
 		return id;
@@ -47,68 +133,24 @@ public class Process implements Cloneable {
 
 	protected Long id;
 
-	public Long getInstanceCount() {
-		return instanceCount;
+	public String getName() {
+		return name;
 	}
 
-	public void setInstanceCount(Long instanceCount) {
-		this.instanceCount = instanceCount;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setInstanceCount(
-		UnsafeSupplier<Long, Exception> instanceCountUnsafeSupplier) {
-
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
-			instanceCount = instanceCountUnsafeSupplier.get();
+			name = nameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long instanceCount;
-
-	public Long getOnTimeInstanceCount() {
-		return onTimeInstanceCount;
-	}
-
-	public void setOnTimeInstanceCount(Long onTimeInstanceCount) {
-		this.onTimeInstanceCount = onTimeInstanceCount;
-	}
-
-	public void setOnTimeInstanceCount(
-		UnsafeSupplier<Long, Exception> onTimeInstanceCountUnsafeSupplier) {
-
-		try {
-			onTimeInstanceCount = onTimeInstanceCountUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long onTimeInstanceCount;
-
-	public Long getOverdueInstanceCount() {
-		return overdueInstanceCount;
-	}
-
-	public void setOverdueInstanceCount(Long overdueInstanceCount) {
-		this.overdueInstanceCount = overdueInstanceCount;
-	}
-
-	public void setOverdueInstanceCount(
-		UnsafeSupplier<Long, Exception> overdueInstanceCountUnsafeSupplier) {
-
-		try {
-			overdueInstanceCount = overdueInstanceCountUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long overdueInstanceCount;
+	protected String name;
 
 	public String getTitle() {
 		return title;
@@ -131,26 +173,48 @@ public class Process implements Cloneable {
 
 	protected String title;
 
-	public Long getUntrackedInstanceCount() {
-		return untrackedInstanceCount;
+	public Map<String, String> getTitle_i18n() {
+		return title_i18n;
 	}
 
-	public void setUntrackedInstanceCount(Long untrackedInstanceCount) {
-		this.untrackedInstanceCount = untrackedInstanceCount;
+	public void setTitle_i18n(Map<String, String> title_i18n) {
+		this.title_i18n = title_i18n;
 	}
 
-	public void setUntrackedInstanceCount(
-		UnsafeSupplier<Long, Exception> untrackedInstanceCountUnsafeSupplier) {
+	public void setTitle_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			title_i18nUnsafeSupplier) {
 
 		try {
-			untrackedInstanceCount = untrackedInstanceCountUnsafeSupplier.get();
+			title_i18n = title_i18nUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long untrackedInstanceCount;
+	protected Map<String, String> title_i18n;
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public void setVersion(
+		UnsafeSupplier<String, Exception> versionUnsafeSupplier) {
+
+		try {
+			version = versionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String version;
 
 	@Override
 	public Process clone() throws CloneNotSupportedException {

@@ -200,29 +200,8 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 		}
 	};
 
-	var importEntries = function() {
-		Liferay.Util.openWindow({
-			dialog: {
-				after: {
-					destroy: function(event) {
-						window.location.reload();
-					},
-				},
-				destroyOnHide: true,
-			},
-			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer',
-			},
-			id: '<portlet:namespace />importEntries',
-			title: '<liferay-ui:message key="import" />',
-			uri:
-				'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/layout_page_template/view_import_layout_page_template_entry" /></portlet:renderURL>',
-		});
-	};
-
 	var ACTIONS = {
 		deleteCollections: deleteCollections,
-		importEntries: importEntries,
 	};
 
 	Liferay.componentReady('actionsComponent').then(function(actionsComponent) {

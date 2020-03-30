@@ -612,7 +612,7 @@ public class LayoutsAdminDisplayContext {
 		layoutsSearchContainer.setRowChecker(emptyOnClickRowChecker);
 
 		int layoutsCount = LayoutServiceUtil.getLayoutsCount(
-			getSelGroup(), isPrivateLayout(), getKeywords(),
+			getSelGroupId(), isPrivateLayout(), getKeywords(),
 			new String[] {
 				LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
 				LayoutConstants.TYPE_LINK_TO_LAYOUT,

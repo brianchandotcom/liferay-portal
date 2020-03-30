@@ -625,6 +625,7 @@ definition {
 		MessageboardsPortlet.viewBannedUserCP(userScreenName = "userfn2 userln2");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewMessageBoardsRSS {
 		property portal.upstream = "quarantine";

@@ -479,6 +479,7 @@ definition {
 		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 1");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewPageRSS {
 		property portal.upstream = "quarantine";

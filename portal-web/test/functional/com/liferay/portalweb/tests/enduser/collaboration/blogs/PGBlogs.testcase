@@ -1341,6 +1341,7 @@ definition {
 		Navigator.gotoPage(pageName = "Blogs Page");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewBlogsEntryRSS {
 		property portal.upstream = "quarantine";

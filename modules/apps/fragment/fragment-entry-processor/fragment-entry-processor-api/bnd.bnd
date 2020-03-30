@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Fragment Entry Processor API
 Bundle-SymbolicName: com.liferay.fragment.entry.processor.api
-Bundle-Version: 2.0.3
+Bundle-Version: 2.1.0
 Export-Package:\
 	com.liferay.fragment.entry.processor.helper,\
 	com.liferay.fragment.entry.processor.util

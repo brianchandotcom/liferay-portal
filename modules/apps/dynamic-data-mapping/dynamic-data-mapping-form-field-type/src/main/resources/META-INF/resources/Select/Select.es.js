@@ -26,6 +26,19 @@ import HiddenSelectInput from './components/HiddenSelectInput.es';
 import VisibleSelectInput from './components/VisibleSelectInput.es';
 
 /**
+ * Mapping to be used to match keyCodes
+ * returned from keydown events.
+ */
+const KEYCODES = {
+	ARROW_DOWN: 40,
+	ARROW_UP: 38,
+	ENTER: 13,
+	SHIFT: 16,
+	SPACE: 32,
+	TAB: 9,
+};
+
+/**
  * Appends a new value on the current value state
  * @param options {Object}
  * @param options.value {Array|String}
@@ -184,15 +197,17 @@ const DropdownItem = ({
 			active={expand && currentValue === option.label}
 			data-testid={`dropdownItem-${index}`}
 			label={option.label}
-			onClick={event =>
-				!multiple &&
+			onClick={event => {
+				event.preventDefault();
+				event.stopPropagation();
+
 				onSelect({
 					currentValue,
 					event,
 					multiple,
 					option,
-				})
-			}
+				});
+			}}
 			value={options.value}
 		>
 			{multiple ? (
@@ -200,14 +215,14 @@ const DropdownItem = ({
 					aria-label={option.label}
 					checked={currentValue.includes(option.value)}
 					label={option.label}
-					onChange={event =>
+					onChange={event => {
 						onSelect({
 							currentValue,
 							event,
 							multiple,
 							option,
-						})
-					}
+						});
+					}}
 				/>
 			) : (
 				option.label
@@ -334,7 +349,8 @@ const Select = ({
 				}}
 				onTriggerKeyDown={event => {
 					if (
-						(event.key === 'Tab' || event.key === 'ArrowDown') &&
+						(event.keyCode === KEYCODES.TAB ||
+							event.keyCode === KEYCODES.ARROW_DOWN) &&
 						!event.shiftKey &&
 						expand
 					) {
@@ -344,7 +360,20 @@ const Select = ({
 						const firstElement = menuElementRef.current.querySelector(
 							'button'
 						);
+
 						firstElement.focus();
+					}
+
+					if (
+						event.keyCode === KEYCODES.ENTER ||
+						(event.keyCode === KEYCODES.SPACE && !event.shiftKey)
+					) {
+						event.preventDefault();
+						event.stopPropagation();
+
+						setExpand(!expand);
+
+						onExpand({event, expand: !expand});
 					}
 				}}
 				options={options}
@@ -359,14 +388,14 @@ const Select = ({
 				alignElementRef={triggerElementRef}
 				className="ddm-btn-full ddm-select-dropdown"
 				onKeyDown={event => {
-					switch (event.key) {
-						case 'ArrowDown':
+					switch (event.keyCode) {
+						case KEYCODES.ARROW_DOWN:
 							handleFocus(event, false);
 							break;
-						case 'ArrowUp':
+						case KEYCODES.ARROW_UP:
 							handleFocus(event, true);
 							break;
-						case 'Tab':
+						case KEYCODES.TAB:
 							handleFocus(event, event.shiftKey);
 							break;
 						default:

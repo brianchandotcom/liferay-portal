@@ -79,7 +79,10 @@ const Grid = ({
 				const itemCount = i * numberOfColumns + j;
 
 				columns.push(
-					<div className={`col col-${12 / numberOfColumns}`}>
+					<div
+						className={`col col-${12 / numberOfColumns}`}
+						key={index}
+					>
 						{itemCount < maxNumberOfItems && (
 							<CollectionItemContextProvider
 								key={index}
@@ -105,7 +108,11 @@ const Grid = ({
 				);
 			}
 
-			rows.push(<div className="row">{columns}</div>);
+			rows.push(
+				<div className="row" key={i}>
+					{columns}
+				</div>
+			);
 		}
 
 		return rows;

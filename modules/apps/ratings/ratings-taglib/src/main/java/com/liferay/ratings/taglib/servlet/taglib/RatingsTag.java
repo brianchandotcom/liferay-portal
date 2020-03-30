@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.ratings.kernel.RatingsType;
@@ -80,6 +83,10 @@ public class RatingsTag extends IncludeTag {
 		_inTrash = inTrash;
 	}
 
+	public void setNumberOfStars(int numberOfStars) {
+		_numberOfStars = numberOfStars;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -114,6 +121,7 @@ public class RatingsTag extends IncludeTag {
 		_className = null;
 		_classPK = 0;
 		_inTrash = null;
+		_numberOfStars = _DEFAULT_NUMBER_OF_STARS;
 		_ratingsEntry = null;
 		_ratingsStats = null;
 		_setRatingsEntry = false;
@@ -149,9 +157,7 @@ public class RatingsTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:data",
 				HashMapBuilder.<String, Object>put(
-					// TODO: get the score in this way
-					// https://github.com/liferay/liferay-portal/blob/61fd998a73fcdbbdee2d9ecf62d047ef28431434/portal-web/docroot/html/taglib/ui/ratings/page.jsp#L59
-					"initialAverageScore", 0.6
+					"initialAverageScore", _getInitialAverageScore(ratingsStats)
 				).put(
 					"className", _className
 				).put(
@@ -199,6 +205,14 @@ public class RatingsTag extends IncludeTag {
 		catch (Exception exception) {
 			_log.error(exception, exception);
 		}
+	}
+
+	private double _getInitialAverageScore(RatingsStats ratingsStats) {
+		if (ratingsStats != null) {
+			return ratingsStats.getAverageScore() * _getNumberOfStars();
+		}
+
+		return 0;
 	}
 
 	private int _getNumberOfStars() {
@@ -340,18 +354,17 @@ public class RatingsTag extends IncludeTag {
 		return false;
 	}
 
-	//private static final int _DEFAULT_NUMBER_OF_STARS = GetterUtil.getInteger(PropsUtil.get(PropsKeys.RATINGS_DEFAULT_NUMBER_OF_STARS));
-	private static final int _DEFAULT_NUMBER_OF_STARS = 5;
+	private static final int _DEFAULT_NUMBER_OF_STARS = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.RATINGS_DEFAULT_NUMBER_OF_STARS));
 
 	private static final String _PAGE = "/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(RatingsTag.class);
 
-	private static final int _numberOfStars = _DEFAULT_NUMBER_OF_STARS;
-
 	private String _className;
 	private long _classPK;
 	private Boolean _inTrash;
+	private int _numberOfStars = _DEFAULT_NUMBER_OF_STARS;
 	private RatingsEntry _ratingsEntry;
 	private RatingsStats _ratingsStats;
 	private boolean _setRatingsEntry;

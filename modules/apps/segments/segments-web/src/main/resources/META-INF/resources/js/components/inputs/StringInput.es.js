@@ -51,6 +51,7 @@ class StringInput extends React.Component {
 				disabled={disabled}
 				onChange={this._handleChange}
 				options={options.map(o => ({
+					disabled: o.disabled,
 					label: o.label,
 					value: o.value,
 				}))}

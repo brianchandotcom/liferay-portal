@@ -105,6 +105,8 @@ definition {
 			if (!(contains("${typeSettings}","${layoutTemplateId}"))) {
 				fail("${layoutTemplateId} is not in 'typeSettings'");
 			}
+
+			Pause(locator1 = "3000");
 		}
 	}
 

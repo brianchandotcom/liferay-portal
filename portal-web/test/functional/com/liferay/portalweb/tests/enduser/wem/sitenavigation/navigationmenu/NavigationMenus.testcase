@@ -338,6 +338,8 @@ definition {
 	@description = "This is a test for LPS-87134. We assert that the option to automatically add new pages to a navigation menu works as expected."
 	@priority = "5"
 	test ToggleAutomaticallyAddNewPagesToNavigationMenu {
+		property portal.upstream = "quarantine";
+
 		task ("Add a navigation menu with option to offer new pages flagged") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 

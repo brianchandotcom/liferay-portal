@@ -57,10 +57,6 @@ public class Baseline {
 		_headerPrinted = false;
 		_printWriter = null;
 
-		if (_logFile.exists()) {
-			_logFile.delete();
-		}
-
 		File logDir = _logFile.getParentFile();
 
 		logDir.mkdirs();

@@ -692,7 +692,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		moveDependentsToTrash(
 			user, categoriesAndThreads, trashEntry.getEntryId());
 
-		_indexerReindex(MBCategory.class, category);
+		_reindex(MBCategory.class, category);
 
 		return category;
 	}
@@ -810,7 +810,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		category = mbCategoryPersistence.update(category);
 
-		_indexerReindex(MBCategory.class, category);
+		_reindex(MBCategory.class, category);
 
 		// Mailing list
 
@@ -1011,7 +1011,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				_mbMessageLocalService.updateMBMessage(message);
 
-				_indexerReindex(MBMessage.class, message);
+				_reindex(MBMessage.class, message);
 			}
 		}
 
@@ -1062,7 +1062,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 				_mbThreadLocalService.moveDependentsToTrash(
 					thread.getGroupId(), thread.getThreadId(), trashEntryId);
 
-				_indexerReindex(MBThread.class, thread);
+				_reindex(MBThread.class, thread);
 			}
 			else if (object instanceof MBCategory) {
 
@@ -1139,7 +1139,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 					_trashVersionLocalService.deleteTrashVersion(trashVersion);
 				}
 
-				_indexerReindex(MBThread.class, thread);
+				_reindex(MBThread.class, thread);
 			}
 			else if (object instanceof MBCategory) {
 
@@ -1205,12 +1205,10 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		}
 	}
 
-	private <T> void _indexerReindex(Class<T> clazz, T object)
-		throws PortalException {
-
+	private <T> void _reindex(Class<T> clazz, T model) throws PortalException {
 		Indexer<T> indexer = IndexerRegistryUtil.nullSafeGetIndexer(clazz);
 
-		indexer.reindex(object);
+		indexer.reindex(model);
 	}
 
 	@Reference

@@ -828,6 +828,12 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 		}
 
+		if (IsNotVisible(key_fragmentName = "${fragmentName}", locator1 = "Fragment#FRAGMENT_HEADER")) {
+			Click(
+				key_fragmentName = "${fragmentName}",
+				locator1 = "Fragment#FRAGMENT_BODY");
+		}
+
 		Click(
 			key_elementType = "Fragment",
 			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");

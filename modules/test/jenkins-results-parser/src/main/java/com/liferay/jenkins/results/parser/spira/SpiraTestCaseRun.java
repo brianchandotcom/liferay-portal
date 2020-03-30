@@ -61,6 +61,8 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 			requestJSONObject.put(
 				SpiraTestCaseObject.ID_KEY, spiraTestCase.getID());
+			requestJSONObject.put(
+				"CustomProperties", result.getCustomListValuesJSONArray());
 			requestJSONObject.put("ExecutionStatusId", result.getStatusID());
 			requestJSONObject.put("RunnerMessage", spiraTestCase.getPath());
 			requestJSONObject.put("RunnerName", "Liferay CI");
@@ -117,12 +119,44 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 		public Result(
 			SpiraTestCaseObject spiraTestCase, RunnerFormat runnerFormat,
-			String runnerStackTrace, Status status) {
+			String runnerStackTrace, Status status,
+			List<SpiraCustomList.Value> spiraCustomListValues) {
 
 			_spiraTestCase = spiraTestCase;
 			_runnerFormat = runnerFormat;
 			_description = runnerStackTrace;
 			_status = status;
+			_spiraCustomListValues = spiraCustomListValues;
+		}
+
+		public JSONArray getCustomListValuesJSONArray() {
+			JSONArray customListValuesJSONArray = new JSONArray();
+
+			if (_spiraCustomListValues == null) {
+				return customListValuesJSONArray;
+			}
+
+			for (SpiraCustomList.Value spiraCustomListValue :
+					_spiraCustomListValues) {
+
+				SpiraCustomProperty spiraCustomProperty =
+					spiraCustomListValue.getSpiraCustomProperty();
+
+				JSONArray integerListValueJSONArray = new JSONArray();
+
+				integerListValueJSONArray.put(spiraCustomListValue.getID());
+
+				JSONObject customListValuesJSONObject = new JSONObject();
+
+				customListValuesJSONObject.put(
+					"IntegerListValue", integerListValueJSONArray);
+				customListValuesJSONObject.put(
+					"PropertyNumber", spiraCustomProperty.getPropertyNumber());
+
+				customListValuesJSONArray.put(customListValuesJSONObject);
+			}
+
+			return customListValuesJSONArray;
 		}
 
 		public String getDescription() {
@@ -143,6 +177,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 		private final String _description;
 		private final RunnerFormat _runnerFormat;
+		private final List<SpiraCustomList.Value> _spiraCustomListValues;
 		private final SpiraTestCaseObject _spiraTestCase;
 		private final Status _status;
 

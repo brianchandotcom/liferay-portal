@@ -18,6 +18,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.taglib.internal.display.context.RenderFragmentLayoutDisplayContext;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -37,6 +38,7 @@ import com.liferay.taglib.util.IncludeTag;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -128,6 +130,12 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:previewType",
 			_getPreviewType());
+		httpServletRequest.setAttribute(
+			"liferay-layout:render-fragment-layout:" +
+				"renderFragmentLayoutDisplayContext",
+			new RenderFragmentLayoutDisplayContext(
+				httpServletRequest,
+				(HttpServletResponse)pageContext.getResponse()));
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:segmentsExperienceIds",
 			_getSegmentsExperienceIds());

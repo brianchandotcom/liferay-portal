@@ -23,9 +23,8 @@ String mode = (String)request.getAttribute("liferay-layout:render-fragment-layou
 long previewClassNameId = (long)request.getAttribute("liferay-layout:render-fragment-layout:previewClassNameId");
 long previewClassPK = (long)request.getAttribute("liferay-layout:render-fragment-layout:previewClassPK");
 int previewType = (int)request.getAttribute("liferay-layout:render-fragment-layout:previewType");
+RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderFragmentLayoutDisplayContext)request.getAttribute("liferay-layout:render-fragment-layout:renderFragmentLayoutDisplayContext");
 long[] segmentsExperienceIds = (long[])request.getAttribute("liferay-layout:render-fragment-layout:segmentsExperienceIds");
-
-RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderFragmentLayoutDisplayContext)request.getAttribute("render_layout_structure.jsp-renderFragmentLayoutDisplayContext");
 
 List<String> childrenItemIds = (List<String>)request.getAttribute("render_layout_structure.jsp-childrenItemIds");
 

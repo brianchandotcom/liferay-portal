@@ -68,14 +68,14 @@ public class KBContentCKEditorConfigContributor
 			super.toJSONArray("['Link', 'Unlink']"),
 			super.toJSONArray("['Table','ImageSelector','HorizontalRule']"));
 
-		if (isShowSource(inputEditorTaglibAttributes)) {
+		if (_isShowSource(inputEditorTaglibAttributes)) {
 			jsonArray.put(toJSONArray("['Source']"));
 		}
 
 		return jsonArray;
 	}
 
-	private boolean isShowSource(
+	private boolean _isShowSource(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
 		return GetterUtil.getBoolean(

@@ -154,6 +154,7 @@ definition {
 	@description = "This test ensures that when autotagging is disabled while adding a site, Blog entries will not be autotagged."
 	@priority = "5"
 	test DisableAutoTaggingForSite {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BlogsAutoTagging#DisableAutoTaggingForSite";
 
 		JSONGroup.addGroup(groupName = "Site AutoTag Disabled");

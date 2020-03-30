@@ -51,6 +51,10 @@ public class RatingsTag extends IncludeTag {
 		return _classPK;
 	}
 
+	public int getNumberOfStars() {
+		return _numberOfStars;
+	}
+
 	public RatingsEntry getRatingsEntry() {
 		return _ratingsEntry;
 	}
@@ -176,7 +180,7 @@ public class RatingsTag extends IncludeTag {
 				).put(
 					"inTrash", _isInTrash()
 				).put(
-					"numberOfStars", _getNumberOfStars()
+					"numberOfStars", getNumberOfStars()
 				).put(
 					"positiveVotes", positiveVotes
 				).put(
@@ -209,14 +213,10 @@ public class RatingsTag extends IncludeTag {
 
 	private double _getInitialAverageScore(RatingsStats ratingsStats) {
 		if (ratingsStats != null) {
-			return ratingsStats.getAverageScore() * _getNumberOfStars();
+			return ratingsStats.getAverageScore() * getNumberOfStars();
 		}
 
 		return 0;
-	}
-
-	private int _getNumberOfStars() {
-		return _numberOfStars;
 	}
 
 	private RatingsEntry _getRatingsEntry(

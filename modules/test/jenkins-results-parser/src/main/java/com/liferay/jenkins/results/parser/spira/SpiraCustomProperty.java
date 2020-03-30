@@ -157,8 +157,12 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 	public List<SpiraCustomList.Value> getSpiraCustomListValues() {
 		List<SpiraCustomList.Value> spiraCustomListValues = new ArrayList<>();
 
-		JSONObject customListJSONObject = jsonObject.getJSONObject(
+		JSONObject customListJSONObject = jsonObject.optJSONObject(
 			"CustomList");
+
+		if (customListJSONObject == null) {
+			return spiraCustomListValues;
+		}
 
 		JSONArray valuesJSONArray = customListJSONObject.getJSONArray("Values");
 

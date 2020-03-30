@@ -23,6 +23,7 @@
 		"metal-soy": "2.16.8",
 		"moment": "^2.22.2",
 		"text-mask-addons": "^3.7.1",
+		"text-mask-core": "^5.1.2",
 		"vanilla-text-mask": "^5.0.1"
 	},
 	"jest": {

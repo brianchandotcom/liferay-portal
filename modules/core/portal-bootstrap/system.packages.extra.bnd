@@ -262,7 +262,7 @@ Export-Package:\
 	\
 	org.aspectj.*,\
 	\
-	org.dom4j.*;version='1.6.1',\
+	org.dom4j.*;version='2.1.1',\
 	\
 	org.hibernate.*;version='3.6.10',\
 	\

@@ -379,6 +379,8 @@ AUI.add(
 						itemsError: inputLocalized.get('itemsError'),
 						name: inputLocalizedId,
 						namespace: inputLocalized.get('namespace'),
+						selected: inputLocalized.get('items')
+							.indexOf(inputLocalized.getSelectedLanguageId()),
 						toggleSelection: inputLocalized.get('toggleSelection'),
 						translatedLanguages: inputLocalized.get(
 							'translatedLanguages'

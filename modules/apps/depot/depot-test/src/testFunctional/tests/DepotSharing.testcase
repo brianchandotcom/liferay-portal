@@ -69,6 +69,12 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Documents and Media");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
+
+		AssertVisible(
+			key_dmDocumentTitle = "Document_1.doc",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_SHARED");
+
 		DepotNavigator.gotoShare(dmDocumentTitle = "Document_1.png");
 
 		Asset.share(
@@ -82,12 +88,30 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Documents and Media");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertVisible(
+			key_dmDocumentTitle = "Document_1.png",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_SHARED");
+
 		DepotNavigator.gotoShare(dmDocumentTitle = "Document_1.odt");
 
 		Asset.share(
 			sharingPermissions = "Comment",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		AssertVisible(
+			key_dmDocumentTitle = "Document_1.odt",
+			locator1 = "DocumentsAndMedia#TABLE_DOCUMENT_SHARED");
 
 		User.logoutPG();
 
@@ -358,6 +382,8 @@ definition {
 			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.doc");
+
+		DMDocumentSharing.viewSharedFlag(detailsView = "true");
 
 		DMDocumentSharing.viewCollaborators(collaboratorList = "userfn,userfn2");
 

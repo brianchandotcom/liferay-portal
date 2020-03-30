@@ -177,6 +177,10 @@
 	&:not(.btn-lg):not(.btn-sm) {
 		:not(.input-group-sm):not(.input-group-lg) {
 			font-size: var(--btn-font-size);
+
+			&.btn-section {
+				font-size: var(--btn-section-font-size);
+			}
 		}
 
 		:not(.btn-group) > & {
@@ -215,6 +219,10 @@
 	&.btn-lg {
 		:not(.input-group-sm) {
 			font-size: var(--btn-font-size-lg);
+
+			&.btn-section {
+				font-size: var(--btn-section-font-size-lg);
+			}
 		}
 
 		:not(.btn-group) > & {
@@ -253,6 +261,10 @@
 	&.btn-sm {
 		:not(.input-group-sm):not(.input-group-lg) {
 			font-size: var(--btn-font-size-sm);
+
+			&.btn-section {
+				font-size: var(--btn-section-font-size-sm);
+			}
 		}
 
 		:not(.btn-group) > & {

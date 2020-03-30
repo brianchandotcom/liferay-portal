@@ -171,6 +171,10 @@ $theme-colors-cp: map-deep-merge(
 	--btn-monospaced-padding-x-lg: #{$btn-monospaced-padding-x-lg};
 	--btn-monospaced-size-lg: #{$btn-monospaced-size-lg};
 
+	--btn-section-font-size: #{$btn-section-font-size};
+	--btn-section-font-size-lg: #{$btn-section-font-size-lg};
+	--btn-section-font-size-sm: #{$btn-section-font-size-sm};
+
 	// Alerts
 
 	--alert-padding-y: #{$alert-padding-y};

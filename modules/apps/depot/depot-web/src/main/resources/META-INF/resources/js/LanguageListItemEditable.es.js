@@ -18,6 +18,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 
@@ -213,6 +214,17 @@ const LanguageListItem = ({
 			</ClayTable.Cell>
 		</ClayTable.Row>
 	);
+};
+
+LanguageListItem.propTypes = {
+	index: PropTypes.number.isRequired,
+	isDefault: PropTypes.bool.isRequired,
+	isFirst: PropTypes.bool,
+	isLast: PropTypes.bool,
+	onItemDrop: PropTypes.func,
+	onMakeDefault: PropTypes.func,
+	onMoveDown: PropTypes.func,
+	onMoveUp: PropTypes.func,
 };
 
 export default LanguageListItem;

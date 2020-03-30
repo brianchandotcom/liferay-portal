@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayTable from '@clayui/table';
+import PropTypes from 'prop-types';
 import React, {useRef} from 'react';
 import {DndProvider, createDndContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -84,6 +85,14 @@ const LanguagesList = ({
 			</ClayTable.Body>
 		</ClayTable>
 	);
+};
+
+LanguagesList.prototypes = {
+	isEditable: PropTypes.bool,
+	moveItem: PropTypes.func,
+	onEditBtnClick: PropTypes.func,
+	onItemDrop: PropTypes.func,
+	onMakeDefault: PropTypes.func,
 };
 
 export default LanguagesList;

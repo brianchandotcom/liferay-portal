@@ -14,6 +14,7 @@
 
 import ClayLabel from '@clayui/label';
 import ClayTable from '@clayui/table';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 const LanguageListItem = ({displayName, isDefault}) => (
@@ -28,5 +29,9 @@ const LanguageListItem = ({displayName, isDefault}) => (
 		</ClayTable.Cell>
 	</ClayTable.Row>
 );
+
+LanguageListItem.propTypes = {
+	isDefault: PropTypes.bool.isRequired,
+};
 
 export default LanguageListItem;

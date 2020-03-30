@@ -987,20 +987,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	@Override
-	public int getLayoutsCount(
-			Group group, boolean privateLayout, String keywords, String[] types)
-		throws PortalException {
-
-		if (Validator.isNull(keywords)) {
-			return layoutPersistence.filterCountByG_P(
-				group.getGroupId(), privateLayout);
-		}
-
-		return layoutLocalService.getLayoutsCount(
-			group, getUserId(), privateLayout, keywords, types);
-	}
-
-	@Override
 	public int getLayoutsCount(long groupId, boolean privateLayout) {
 		return layoutPersistence.filterCountByG_P(groupId, privateLayout);
 	}
@@ -1020,6 +1006,20 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		return layoutPersistence.filterCountByG_P_P_LtP(
 			groupId, privateLayout, parentLayoutId, priority);
+	}
+
+	@Override
+	public int getLayoutsCount(
+			long groupId, boolean privateLayout, String keywords,
+			String[] types)
+		throws PortalException {
+
+		if (Validator.isNull(keywords)) {
+			return layoutPersistence.filterCountByG_P(groupId, privateLayout);
+		}
+
+		return layoutLocalService.getLayoutsCount(
+			groupId, getUserId(), privateLayout, keywords, types);
 	}
 
 	@Override

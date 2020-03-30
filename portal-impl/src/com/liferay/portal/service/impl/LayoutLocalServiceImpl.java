@@ -2053,6 +2053,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
+	public int getLayoutsCount(long groupId, boolean privateLayout) {
+		return layoutPersistence.countByG_P(groupId, privateLayout);
+	}
+
+	@Override
 	public int getLayoutsCount(long groupId, long masterLayoutPlid) {
 		return layoutPersistence.countByG_MLP(groupId, masterLayoutPlid);
 	}

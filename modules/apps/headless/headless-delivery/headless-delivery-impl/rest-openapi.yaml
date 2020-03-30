@@ -1049,9 +1049,6 @@ components:
                 target:
                     enum: [Blank, Parent, Self, Top]
                     type: string
-                value:
-                    oneOf:
-                        - $ref: "#/components/schemas/InlineLink"
         FragmentSettingsAllowed:
             properties:
                 allowedFragments:

@@ -147,6 +147,8 @@ definition {
 	@description = "This ensures that an MB thread can be searched via category."
 	@priority = "5"
 	test SearchMBThreadCategory {
+		property portal.acceptance = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

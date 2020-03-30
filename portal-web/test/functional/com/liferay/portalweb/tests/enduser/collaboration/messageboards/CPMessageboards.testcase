@@ -28,6 +28,8 @@ definition {
 
 	@priority = "5"
 	test AddMBCategory {
+		property portal.acceptance = "true";
+
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsCategory.addCP(categoryName = "MB Category Name");
@@ -60,6 +62,7 @@ definition {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
+		property portal.acceptance = "true";
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
@@ -158,6 +161,8 @@ definition {
 
 	@priority = "5"
 	test EditMBThreadSubjectAndBody {
+		property portal.acceptance = "true";
+
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
 			threadBody = "MB Thread Message Body",

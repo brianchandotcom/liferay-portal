@@ -14,13 +14,10 @@
 
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0;
 
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 
-import java.util.Date;
 import java.util.Locale;
 
 import javax.annotation.Generated;
@@ -28,6 +25,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -48,9 +46,22 @@ public interface TaskResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<Task> getProcessTasksPage(
-			Long processId, Boolean completed, Date dateEnd, Date dateStart,
-			String key, Pagination pagination, Sort[] sorts)
+	public Page<Task> getProcessTasksPage(Long processId) throws Exception;
+
+	public Task postProcessTask(Long processId, Task task) throws Exception;
+
+	public Response postProcessTaskBatch(
+			Long processId, String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteProcessTask(Long processId, Long taskId) throws Exception;
+
+	public Task getProcessTask(Long processId, Long taskId) throws Exception;
+
+	public void patchProcessTask(Long processId, Long taskId, Task task)
+		throws Exception;
+
+	public void patchProcessTaskComplete(Long processId, Long taskId, Task task)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

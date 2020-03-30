@@ -32,7 +32,8 @@ export default ({tagsChange, tags = [], ...props}) => {
 			const vocabulariesOfQuestions = data.items.filter(
 				vocabulary =>
 					vocabulary.assetTypes.filter(
-						assetType => assetType.type === context.defaultVocabulary
+						assetType =>
+							assetType.type === context.defaultVocabulary
 					).length > 0
 			);
 			setSourceItems(
@@ -44,7 +45,7 @@ export default ({tagsChange, tags = [], ...props}) => {
 					}))
 			);
 		});
-	}, [context.siteKey]);
+	}, [context.defaultVocabulary, context.siteKey]);
 
 	useEffect(() => {
 		if (tags.length) {

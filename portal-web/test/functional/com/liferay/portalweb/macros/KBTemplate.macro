@@ -65,6 +65,8 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "${kbTemplateTitle}");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		AssertTextEquals(
 			key_editor = "content",
 			locator1 = "CKEditor#BODY",

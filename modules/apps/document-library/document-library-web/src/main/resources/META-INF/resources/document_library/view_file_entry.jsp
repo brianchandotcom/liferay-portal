@@ -184,7 +184,7 @@ if (portletTitleBasedNavigation) {
 		<c:if test="<%= (lock != null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
 			<c:choose>
 				<c:when test="<%= fileEntry.hasLock() %>">
-					<div class="alert alert-success">
+					<div class="alert alert-info">
 						<c:choose>
 							<c:when test="<%= lock.isNeverExpires() %>">
 								<liferay-ui:message key="you-now-have-an-indefinite-lock-on-this-document" />

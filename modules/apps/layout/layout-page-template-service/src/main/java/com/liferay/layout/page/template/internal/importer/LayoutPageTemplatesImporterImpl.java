@@ -117,8 +117,7 @@ public class LayoutPageTemplatesImporterImpl
 
 		try (ZipFile zipFile = new ZipFile(file)) {
 			_processMasterLayoutPageTemplateEntries(
-				groupId, _getMasterPageEntries(groupId, zipFile), overwrite,
-				zipFile);
+				groupId, overwrite, zipFile);
 
 			_processBasicLayoutPageTemplateEntries(
 				groupId, layoutPageTemplateCollectionId, overwrite, zipFile);
@@ -640,9 +639,11 @@ public class LayoutPageTemplatesImporterImpl
 	}
 
 	private void _processMasterLayoutPageTemplateEntries(
-			long groupId, List<MasterPageEntry> masterPageEntries,
-			boolean overwrite, ZipFile zipFile)
+			long groupId, boolean overwrite, ZipFile zipFile)
 		throws Exception {
+
+		List<MasterPageEntry> masterPageEntries = _getMasterPageEntries(
+			groupId, zipFile);
 
 		for (MasterPageEntry masterPageEntry : masterPageEntries) {
 			MasterPage masterPage = masterPageEntry.getMasterPage();

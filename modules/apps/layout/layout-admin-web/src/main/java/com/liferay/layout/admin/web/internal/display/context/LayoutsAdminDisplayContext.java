@@ -1969,24 +1969,20 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private String _getStrictRobots() {
-		String strictRobots = null;
-
 		LayoutSet layoutSet = getSelLayoutSet();
 
 		if (layoutSet != null) {
-			strictRobots = GetterUtil.getString(
+			return GetterUtil.getString(
 				layoutSet.getSettingsProperty(
 					layoutSet.isPrivateLayout() + "-robots.txt"),
-				null);
+				ContentUtil.get(
+					RobotsUtil.class.getClassLoader(),
+					PropsValues.ROBOTS_TXT_WITH_SITEMAP));
 		}
 
-		if (strictRobots == null) {
-			return ContentUtil.get(
-				RobotsUtil.class.getClassLoader(),
-				PropsValues.ROBOTS_TXT_WITH_SITEMAP);
-		}
-
-		return strictRobots;
+		return ContentUtil.get(
+			RobotsUtil.class.getClassLoader(),
+			PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
 	}
 
 	private boolean _isLiveGroup() {

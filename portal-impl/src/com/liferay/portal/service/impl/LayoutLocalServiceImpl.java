@@ -2033,7 +2033,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(keywords)) {
-			return getLayoutsCount(group, privateLayout);
+			return getLayoutsCount(group.getGroupId(), privateLayout);
 		}
 
 		Indexer<Layout> indexer = IndexerRegistryUtil.getIndexer(

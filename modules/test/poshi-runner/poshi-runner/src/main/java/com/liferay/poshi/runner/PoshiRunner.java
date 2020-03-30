@@ -18,17 +18,29 @@ import com.liferay.poshi.runner.logger.PoshiLogger;
 import com.liferay.poshi.runner.logger.SummaryLogger;
 import com.liferay.poshi.runner.selenium.LiferaySeleniumUtil;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
+import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.PropsValues;
+import com.liferay.poshi.runner.util.Validator;
+
+import java.io.IOException;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.dom4j.Element;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -268,11 +280,10 @@ public class PoshiRunner {
 		_runNamespacedClassCommandName(_testNamespacedClassName + "#tear-down");
 	}
 
-	private static final int _MAX_RETRY_COUNT = 2;
+	private static int _jvmRetryCount;
 
 	private final PoshiLogger _poshiLogger;
 	private final PoshiRunnerExecutor _poshiRunnerExecutor;
-	private int _retryCount;
 	private final String _testNamespacedClassCommandName;
 	private final String _testNamespacedClassName;
 
@@ -290,18 +301,23 @@ public class PoshiRunner {
 
 			@Override
 			public void evaluate() throws Throwable {
-				while (_retryCount <= _MAX_RETRY_COUNT) {
+				while (true) {
 					try {
 						_statement.evaluate();
 
 						return;
 					}
 					catch (Throwable t) {
-						_retryCount++;
-
 						if (!_isRetryable(t)) {
 							throw t;
 						}
+
+						_jvmRetryCount++;
+						_testcaseRetryCount++;
+
+						System.out.println(
+							"Retrying test attempt " + _testcaseRetryCount +
+								" of " + PropsValues.TEST_TESTCASE_MAX_RETRIES);
 					}
 				}
 			}
@@ -360,10 +376,38 @@ public class PoshiRunner {
 			}
 
 			private boolean _isRetryable(Throwable throwable) {
-				return _isKnownFlakyIssue(throwable);
+				if (_jvmRetryCount >= PropsValues.TEST_JVM_MAX_RETRIES) {
+					System.out.println(
+						"Test retry attempts exceeded in Poshi Runner JVM");
+
+					return false;
+				}
+
+				if (_isKnownFlakyIssue(throwable) || _isTestcaseRetryable()) {
+					return true;
+				}
+
+				return false;
+			}
+
+			private boolean _isTestcaseRetryable() {
+				if (_testcaseRetryCount >=
+						PropsValues.TEST_TESTCASE_MAX_RETRIES) {
+
+					return false;
+				}
+
+				if (PropsValues.TEST_SKIP_TEAR_DOWN ||
+					Validator.isNull(System.getenv("JENKINS_HOME"))) {
+
+					return false;
+				}
+
+				return true;
 			}
 
 			private final Statement _statement;
+			private int _testcaseRetryCount;
 			private final Throwable[] _validRetryThrowables = {
 				new TimeoutException(), new UnreachableBrowserException(null),
 				new WebDriverException(

@@ -26,7 +26,7 @@ definition {
 
 	@priority = "5"
 	test AddOrganizationRole {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(

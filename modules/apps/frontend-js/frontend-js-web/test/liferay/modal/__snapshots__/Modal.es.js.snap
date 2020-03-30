@@ -51,8 +51,8 @@ exports[`Modal renders markup based on given configuration 1`] = `
               class="modal-body modal-body-iframe"
             >
               <iframe
-                src="https://www.sample.url"
-                title="https://www.sample.url"
+                src="https://www.sample.url/?p_p_id=com_liferay_MyPortlet&_com_liferay_MyPortlet_bodyCssClass=dialog-iframe-popup"
+                title="https://www.sample.url/?p_p_id=com_liferay_MyPortlet&_com_liferay_MyPortlet_bodyCssClass=dialog-iframe-popup"
               />
             </div>
           </div>

@@ -29,7 +29,7 @@ describe('Modal', () => {
 				id="abcd"
 				size="lg"
 				title="My Modal"
-				url="https://www.sample.url"
+				url="https://www.sample.url?p_p_id=com_liferay_MyPortlet"
 			/>
 		);
 

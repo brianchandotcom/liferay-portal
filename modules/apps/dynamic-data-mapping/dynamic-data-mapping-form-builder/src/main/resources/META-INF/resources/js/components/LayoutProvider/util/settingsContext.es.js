@@ -17,6 +17,7 @@ import {
 	normalizeFieldName,
 } from 'dynamic-data-mapping-form-renderer';
 
+import {FIELD_TYPE_FIELDSET} from '../../../util/constants.es';
 import {updateFieldValidationProperty} from './fields.es';
 
 export const getSettingsContextProperty = (settingsContext, propertyName) => {
@@ -255,7 +256,7 @@ export const updateField = (
 			...updateFieldOptions(editingLanguageId, field, propertyValue),
 		};
 	}
-	else if (field.type === 'section' && propertyName === 'rows') {
+	else if (field.type === FIELD_TYPE_FIELDSET && propertyName === 'rows') {
 		field = {
 			...field,
 			...updateFieldProperty(

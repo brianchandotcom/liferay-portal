@@ -15,6 +15,7 @@
 import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
+import {FIELD_TYPE_FIELDSET} from '../../../util/constants.es';
 import {createField} from '../../../util/fieldSupport.es';
 import {updateField} from '../util/settingsContext.es';
 

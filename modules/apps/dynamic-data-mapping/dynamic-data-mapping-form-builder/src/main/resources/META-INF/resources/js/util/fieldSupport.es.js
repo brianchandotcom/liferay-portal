@@ -14,6 +14,8 @@
 
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
+import {FIELD_TYPE_FIELDSET} from './constants.es';
+
 export const createField = (props, event) => {
 	const {
 		defaultLanguageId,
@@ -162,7 +164,7 @@ export const getParentFieldSet = (pages, fieldName) => {
 };
 
 export const isFieldSet = field =>
-	field.type === 'section' && field.dataDefinitionId;
+	field.type === FIELD_TYPE_FIELDSET && field.dataDefinitionId;
 
 export const isFieldSetChild = (pages, fieldName) => {
 	return !!getParentFieldSet(pages, fieldName);

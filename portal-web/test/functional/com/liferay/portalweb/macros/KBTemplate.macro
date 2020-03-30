@@ -9,7 +9,7 @@ definition {
 			locator1 = "KnowledgeBaseTemplate#TEMPLATE_TITLE_INPUT",
 			value1 = "${kbTemplateTitle}");
 
-		CKEditor.addContent(content = "${kbTemplateTitle}");
+		CKEditor.addContent(content = "${kbTemplateContent}");
 
 		PortletEntry.publish();
 	}
@@ -68,7 +68,7 @@ definition {
 		AssertTextEquals(
 			key_editor = "content",
 			locator1 = "CKEditor#BODY",
-			value1 = "${kbTemplateTitle}");
+			value1 = "${kbTemplateContent}");
 	}
 
 }

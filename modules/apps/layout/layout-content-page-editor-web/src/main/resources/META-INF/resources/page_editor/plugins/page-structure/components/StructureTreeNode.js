@@ -18,37 +18,46 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {useToControlsId} from '../../../app/components/CollectionItemContext';
 import {
+	useActiveItemId,
 	useHoverItem,
-	useIsHovered,
-	useIsSelected,
+	useHoveredItemId,
 	useSelectItem,
 } from '../../../app/components/Controls';
+import {fromControlsId} from '../../../app/components/layout-data-items/Collection';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivationOrigins';
 import selectCanUpdateLayoutContent from '../../../app/selectors/selectCanUpdateLayoutContent';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
 
+const nodeIsHovered = (nodeId, hoveredItemId) =>
+	nodeId === fromControlsId(hoveredItemId);
+const nodeIsSelected = (nodeId, activeItemId) =>
+	nodeId === fromControlsId(activeItemId);
+
 export default function StructureTreeNode({node}) {
 	const hoverItem = useHoverItem();
-	const isHovered = useIsHovered();
-	const isSelected = useIsSelected();
+	const activeItemId = useActiveItemId();
+	const hoveredItemId = useHoveredItemId();
 	const selectItem = useSelectItem();
+	const toControlsId = useToControlsId();
 	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
 
 	return (
 		<div
 			className={classNames('page-editor__page-structure__tree-node', {
 				'page-editor__page-structure__tree-node--active':
-					node.activable && isSelected(node.id),
-				'page-editor__page-structure__tree-node--hovered': isHovered(
-					node.id
+					node.activable && nodeIsSelected(node.id, activeItemId),
+				'page-editor__page-structure__tree-node--hovered': nodeIsHovered(
+					node.id,
+					hoveredItemId
 				),
 			})}
 			onMouseLeave={event => {
 				event.stopPropagation();
 
-				if (isHovered(node.id)) {
+				if (nodeIsHovered(node.id, hoveredItemId)) {
 					hoverItem(null);
 				}
 			}}
@@ -68,7 +77,7 @@ export default function StructureTreeNode({node}) {
 					event.stopPropagation();
 					event.target.focus();
 
-					selectItem(node.id, {
+					selectItem(toControlsId(node.id), {
 						itemType: node.type,
 						multiSelect: event.shiftKey,
 						origin: ITEM_ACTIVATION_ORIGINS.structureTree,
@@ -87,7 +96,10 @@ export default function StructureTreeNode({node}) {
 			{canUpdateLayoutContent && node.removable && (
 				<RemoveButton
 					node={node}
-					visible={isHovered(node.id) || isSelected(node.id)}
+					visible={
+						nodeIsHovered(node.id, hoveredItemId) ||
+						nodeIsSelected(node.id, activeItemId)
+					}
 				/>
 			)}
 		</div>
@@ -103,7 +115,7 @@ StructureTreeNode.propTypes = {
 };
 
 const NameLabel = ({activable, disabled, id, name}) => {
-	const isSelected = useIsSelected();
+	const activeItemId = useActiveItemId();
 
 	return (
 		<div
@@ -111,7 +123,7 @@ const NameLabel = ({activable, disabled, id, name}) => {
 				'page-editor__page-structure__tree-node__name',
 				{
 					'page-editor__page-structure__tree-node__name--active':
-						activable && isSelected(id),
+						activable && nodeIsSelected(id, activeItemId),
 					'page-editor__page-structure__tree-node__name--disabled': disabled,
 				}
 			)}

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.verify;
 
+import com.liferay.dynamic.data.mapping.exception.NoSuchStorageLinkException;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
@@ -159,9 +160,21 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyContent(DDMContent ddmContent) throws PortalException {
-		DDMStorageLink ddmStorageLink =
-			_ddmStorageLinkLocalService.getClassStorageLink(
+		DDMStorageLink ddmStorageLink;
+
+		try {
+			ddmStorageLink = _ddmStorageLinkLocalService.getClassStorageLink(
 				ddmContent.getContentId());
+		}
+		catch (NoSuchStorageLinkException noSuchStorageLinkException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Skip verification for orphaned DDM content with id " +
+						ddmContent.getContentId());
+			}
+
+			return;
+		}
 
 		DDMStructureVersion ddmStructureVersion =
 			_ddmStructureVersionLocalService.getStructureVersion(

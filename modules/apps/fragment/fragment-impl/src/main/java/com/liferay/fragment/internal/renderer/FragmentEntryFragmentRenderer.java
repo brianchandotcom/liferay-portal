@@ -255,6 +255,12 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 					fragmentRendererContext.getMode(),
 					fragmentRendererContext.getLocale());
 
+		Optional<Object> displayObjectOptional =
+			fragmentRendererContext.getDisplayObjectOptional();
+
+		defaultFragmentEntryProcessorContext.setDisplayObject(
+			displayObjectOptional.orElse(null));
+
 		Optional<Map<String, Object>> fieldValuesOptional =
 			fragmentRendererContext.getFieldValuesOptional();
 

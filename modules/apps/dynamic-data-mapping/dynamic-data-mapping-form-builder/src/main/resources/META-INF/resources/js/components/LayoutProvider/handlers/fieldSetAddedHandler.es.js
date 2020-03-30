@@ -2,7 +2,7 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 import {updateField} from '../util/settingsContext.es';
 import {addField} from './fieldAddedHandler.es';
-import {createSection} from './sectionAddedHandler.es';
+import {createFieldSet} from './sectionAddedHandler.es';
 
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -29,22 +29,22 @@ const handleFieldSetAdded = (props, state, event) => {
 		nestedFields.push(nestedField);
 	});
 
-	let sectionField = createSection(
+	let fieldSetField = createFieldSet(
 		props,
 		{skipFieldNameGeneration: false},
 		nestedFields
 	);
 
-	sectionField = updateField(
+	fieldSetField = updateField(
 		props,
-		sectionField,
+		fieldSetField,
 		'dataDefinitionId',
 		fieldSet.id
 	);
 
 	return addField(props, {
 		indexes,
-		newField: updateField(props, sectionField, 'label', fieldSet.title),
+		newField: updateField(props, fieldSetField, 'label', fieldSet.title),
 		pages,
 		parentFieldName,
 	});

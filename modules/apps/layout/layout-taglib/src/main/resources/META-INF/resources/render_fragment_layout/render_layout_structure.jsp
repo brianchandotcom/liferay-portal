@@ -97,6 +97,67 @@ for (String childrenItemId : childrenItemIds) {
 
 			<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
 		</c:when>
+		<c:when test="<%= layoutStructureItem instanceof CollectionLayoutStructureItem %>">
+
+			<%
+			CollectionLayoutStructureItem collectionLayoutStructureItem = (CollectionLayoutStructureItem)layoutStructureItem;
+
+			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+			%>
+
+			<c:choose>
+				<c:when test="<%= Objects.equals(collectionLayoutStructureItem.getListFormat(), CollectionLayoutStructureItem.LIST_FORMAT_GRID) %>">
+					<div class="row">
+
+						<%
+						for (Object collectionObject : renderFragmentLayoutDisplayContext.getCollection(collectionLayoutStructureItem, segmentsExperienceIds)) {
+							try {
+								request.setAttribute("render_layout_structure.jsp-collectionObject", collectionObject);
+						%>
+
+								<div class="col-md-<%= 12 / collectionLayoutStructureItem.getNumberOfColumns() %>">
+									<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
+								</div>
+
+						<%
+							}
+							finally {
+								request.removeAttribute("render_layout_structure.jsp-collectionObject");
+							}
+						}
+						%>
+
+					</div>
+				</c:when>
+				<c:when test="<%= Objects.equals(collectionLayoutStructureItem.getListFormat(), CollectionLayoutStructureItem.LIST_FORMAT_STACKED) %>">
+
+					<%
+					for (Object collectionObject : renderFragmentLayoutDisplayContext.getCollection(collectionLayoutStructureItem, segmentsExperienceIds)) {
+						try {
+							request.setAttribute("render_layout_structure.jsp-collectionObject", collectionObject);
+					%>
+
+							<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
+
+					<%
+						}
+						finally {
+							request.removeAttribute("render_layout_structure.jsp-collectionObject");
+						}
+					}
+					%>
+
+				</c:when>
+			</c:choose>
+		</c:when>
+		<c:when test="<%= layoutStructureItem instanceof CollectionItemLayoutStructureItem %>">
+
+			<%
+			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+			%>
+
+			<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
+		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof FragmentLayoutStructureItem %>">
 
 			<%

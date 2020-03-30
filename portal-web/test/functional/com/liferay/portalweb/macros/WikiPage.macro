@@ -52,6 +52,12 @@ definition {
 			locator1 = "TextInput#FILE",
 			value1 = "${attachmentFileName}");
 
+		Pause(locator1 = "2000");
+
+		AssertElementPresent(
+			key_fileName = "${attachmentFileName}",
+			locator1 = "Checkbox#UPLOAD_FILE_ENTRY_CHECKED");
+
 		PortletEntry.publish();
 	}
 

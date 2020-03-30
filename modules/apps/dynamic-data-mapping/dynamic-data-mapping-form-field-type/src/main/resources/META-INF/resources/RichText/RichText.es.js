@@ -14,7 +14,6 @@
 
 import './RichTextRegister.soy';
 
-import {ClayInput} from '@clayui/form';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -102,11 +101,11 @@ const useSyncValue = newValue => {
 };
 
 const RichText = ({data, id, name, onEditorChange, readOnly}) => {
-	const [value, setValue] = useSyncValue(data);
+	const [currentValue, setCurrentValue] = useSyncValue(data);
 
 	const editorProps = {
 		config: CKEDITOR_CONFIG,
-		data: value,
+		data: currentValue,
 	};
 
 	if (readOnly) {
@@ -117,7 +116,7 @@ const RichText = ({data, id, name, onEditorChange, readOnly}) => {
 		editorProps.onChange = event => {
 			const newValue = event.editor.getData();
 
-			setValue(newValue);
+			setCurrentValue(newValue);
 
 			onEditorChange({data: newValue, event});
 		};
@@ -130,17 +129,17 @@ const RichText = ({data, id, name, onEditorChange, readOnly}) => {
 
 	return (
 		<>
-			{readOnly && data && (
+			{readOnly && currentValue && (
 				<div
 					dangerouslySetInnerHTML={{
-						__html: data,
+						__html: currentValue,
 					}}
 					name={`html_text_${name}`}
 					style={style}
 				></div>
 			)}
 
-			{readOnly && !data && (
+			{readOnly && !currentValue && (
 				<div
 					name={`html_text_${name}`}
 					style={{...style, color: '#A7A9BC', padding: '16px'}}
@@ -151,23 +150,29 @@ const RichText = ({data, id, name, onEditorChange, readOnly}) => {
 
 			{!readOnly && <Editor {...editorProps} />}
 
-			<ClayInput id={id} name={name} type="hidden" value={data} />
+			<input
+				defaultValue={currentValue}
+				id={id || name}
+				name={name}
+				type="hidden"
+			/>
 		</>
 	);
 };
 
 const RichTextWithFieldBase = ({
-	data,
 	emit,
 	id,
 	name,
+	predefinedValue,
 	readOnly,
+	value,
 	...otherProps
 }) => {
 	return (
 		<FieldBaseProxy {...otherProps} id={id} name={name} readOnly={readOnly}>
 			<RichText
-				data={data}
+				data={value || predefinedValue}
 				id={id}
 				name={name}
 				onEditorChange={({data, event}) =>
@@ -180,14 +185,15 @@ const RichTextWithFieldBase = ({
 };
 
 const RichTextProxy = connectStore(
-	({emit, id, name, readOnly, localizedValue = {}, ...otherProps}) => (
+	({emit, id, name, predefinedValue, readOnly, value, ...otherProps}) => (
 		<RichTextWithFieldBase
 			{...otherProps}
 			emit={emit}
 			id={id}
-			localizedValue={localizedValue}
 			name={name}
+			predefinedValue={predefinedValue}
 			readOnly={readOnly}
+			value={value}
 		/>
 	)
 );

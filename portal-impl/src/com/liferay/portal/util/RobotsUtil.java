@@ -67,7 +67,7 @@ public class RobotsUtil {
 		if (layoutSet == null) {
 			return ContentUtil.get(
 				RobotsUtil.class.getClassLoader(),
-				PropsValues.ROBOTS_TXT_WITH_SITEMAP);
+				PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
 		}
 
 		int portalServerPort = PortalUtil.getPortalServerPort(secure);
@@ -86,7 +86,7 @@ public class RobotsUtil {
 				layoutSet.isPrivateLayout() + "-robots.txt"),
 			ContentUtil.get(
 				RobotsUtil.class.getClassLoader(),
-				PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP));
+				PropsValues.ROBOTS_TXT_WITH_SITEMAP));
 
 		return _replaceWildcards(
 			robotsTxt, virtualHostname, secure, portalServerPort);

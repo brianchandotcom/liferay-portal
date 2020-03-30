@@ -59,6 +59,8 @@ definition {
 			locator1 = "TextArea#FIELD_INPUT",
 			value1 = "${entryContent}");
 
+		AssertElementPresent(locator1 = "Button#POST");
+
 		AssertClick(
 			locator1 = "Button#POST",
 			value1 = "Post");

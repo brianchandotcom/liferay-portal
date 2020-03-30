@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -212,10 +213,10 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			sb.append("delete from ");
 			sb.append(tableName);
 			sb.append(_getWhereClause(columnName, name[1], wildcardMode));
-
-			if (name.length == 3) {
-				sb.append(_getNotLikeClause(columnName, name[2], wildcardMode));
-			}
+			sb.append(
+				_getNotLikeClause(
+					columnName, (String)ArrayUtil.getValue(name, 2),
+					wildcardMode));
 
 			runSQL(sb.toString());
 		}
@@ -260,6 +261,10 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 
 	private String _getNotLikeClause(
 		String columnName, String value, WildcardMode wildcardMode) {
+
+		if (value == null) {
+			return StringPool.BLANK;
+		}
 
 		StringBundler sb = new StringBundler(8);
 

@@ -16,7 +16,10 @@ package com.liferay.layout.page.template.importer;
 
 /**
  * @author Rubén Pulido
+ * @deprecated As of Athanasius (7.3.x), in favour of {@link
+ *             #LayoutPageTemplatesImporterResultEntry}
  */
+@Deprecated
 public class MasterLayoutsImporterResultEntry {
 
 	public MasterLayoutsImporterResultEntry(String name, Status status) {

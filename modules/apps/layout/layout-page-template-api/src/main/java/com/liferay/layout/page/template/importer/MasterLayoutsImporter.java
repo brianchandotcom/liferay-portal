@@ -22,7 +22,10 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Rubén Pulido
+ * @deprecated As of Athanasius (7.3.x), in favour of {@link
+ *             #LayoutPageTemplatesImporter}
  */
+@Deprecated
 @ProviderType
 public interface MasterLayoutsImporter {
 

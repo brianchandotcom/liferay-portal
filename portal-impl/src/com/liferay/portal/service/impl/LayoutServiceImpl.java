@@ -965,9 +965,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(keywords)) {
-			return filterLayouts(
-				layoutLocalService.getLayouts(
-					groupId, privateLayout, start, end, obc));
+			return layoutPersistence.filterFindByG_P(
+				groupId, privateLayout, start, end, obc);
 		}
 
 		return layoutLocalService.getLayouts(
@@ -993,7 +992,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(keywords)) {
-			return layoutLocalService.getLayoutsCount(group, privateLayout);
+			return layoutPersistence.filterCountByG_P(
+				group.getGroupId(), privateLayout);
 		}
 
 		return layoutLocalService.getLayoutsCount(

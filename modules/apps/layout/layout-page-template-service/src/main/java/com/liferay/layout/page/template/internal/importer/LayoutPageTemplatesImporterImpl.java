@@ -33,7 +33,6 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImport
 import com.liferay.layout.page.template.exception.PageDefinitionValidatorException;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
-import com.liferay.layout.page.template.importer.MasterLayoutsImporterResultEntry;
 import com.liferay.layout.page.template.internal.importer.helper.LayoutStructureItemHelper;
 import com.liferay.layout.page.template.internal.importer.helper.LayoutStructureItemHelperFactory;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -314,10 +313,10 @@ public class LayoutPageTemplatesImporterImpl
 						"Invalid page definition for: " + masterPage.getName());
 				}
 
-				_masterLayoutsImporterResultEntries.add(
-					new MasterLayoutsImporterResultEntry(
+				_layoutPageTemplatesImporterResultEntries.add(
+					new LayoutPageTemplatesImporterResultEntry(
 						masterPage.getName(),
-						MasterLayoutsImporterResultEntry.Status.INVALID,
+						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
 							"x-could-not-be-imported-because-its-page-" +
@@ -694,16 +693,18 @@ public class LayoutPageTemplatesImporterImpl
 								getLayoutPageTemplateEntryId(),
 							previewFileEntryId);
 
-					_masterLayoutsImporterResultEntries.add(
-						new MasterLayoutsImporterResultEntry(
+					_layoutPageTemplatesImporterResultEntries.add(
+						new LayoutPageTemplatesImporterResultEntry(
 							masterPage.getName(),
-							MasterLayoutsImporterResultEntry.Status.IMPORTED));
+							LayoutPageTemplatesImporterResultEntry.Status.
+								IMPORTED));
 				}
 				else {
-					_masterLayoutsImporterResultEntries.add(
-						new MasterLayoutsImporterResultEntry(
+					_layoutPageTemplatesImporterResultEntries.add(
+						new LayoutPageTemplatesImporterResultEntry(
 							masterPage.getName(),
-							MasterLayoutsImporterResultEntry.Status.IGNORED,
+							LayoutPageTemplatesImporterResultEntry.Status.
+								IGNORED,
 							_getErrorMessage(
 								groupId,
 								"x-was-ignored-because-a-master-page-with-" +
@@ -716,10 +717,10 @@ public class LayoutPageTemplatesImporterImpl
 					_log.warn(portalException, portalException);
 				}
 
-				_masterLayoutsImporterResultEntries.add(
-					new MasterLayoutsImporterResultEntry(
+				_layoutPageTemplatesImporterResultEntries.add(
+					new LayoutPageTemplatesImporterResultEntry(
 						masterPage.getName(),
-						MasterLayoutsImporterResultEntry.Status.INVALID,
+						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
 							"x-could-not-be-imported-because-a-master-page-" +
@@ -1060,9 +1061,6 @@ public class LayoutPageTemplatesImporterImpl
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	private List<MasterLayoutsImporterResultEntry>
-		_masterLayoutsImporterResultEntries;
 
 	@Reference
 	private Portal _portal;

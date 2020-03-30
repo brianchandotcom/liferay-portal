@@ -34,6 +34,24 @@ import org.json.JSONObject;
  */
 public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
+	public static int getArtifactTypeID(
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
+
+		return (Integer)_getClassField(spiraArtifactClass, "ARTIFACT_TYPE_ID");
+	}
+
+	public static String getArtifactTypeName(
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
+
+		return (String)_getClassField(spiraArtifactClass, "ARTIFACT_TYPE_NAME");
+	}
+
+	public static String getIDKey(
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
+
+		return (String)_getClassField(spiraArtifactClass, "ID_KEY");
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (!Objects.equals(getClass(), o.getClass())) {
@@ -114,24 +132,6 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 			cachedSpiraArtifacts.add(spiraArtifact);
 		}
-	}
-
-	protected static int getArtifactTypeID(
-		Class<? extends SpiraArtifact> spiraArtifactClass) {
-
-		return (Integer)_getClassField(spiraArtifactClass, "ARTIFACT_TYPE_ID");
-	}
-
-	protected static String getArtifactTypeName(
-		Class<? extends SpiraArtifact> spiraArtifactClass) {
-
-		return (String)_getClassField(spiraArtifactClass, "ARTIFACT_TYPE_NAME");
-	}
-
-	protected static String getIDKey(
-		Class<? extends SpiraArtifact> spiraArtifactClass) {
-
-		return (String)_getClassField(spiraArtifactClass, "ID_KEY");
 	}
 
 	protected static <S extends SpiraArtifact> List<S> getSpiraArtifacts(

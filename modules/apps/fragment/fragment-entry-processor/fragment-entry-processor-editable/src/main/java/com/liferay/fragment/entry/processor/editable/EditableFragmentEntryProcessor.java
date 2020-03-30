@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -204,6 +205,14 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 					value = _fragmentEntryProcessorHelper.processTemplate(
 						value, fragmentEntryProcessorContext);
 				}
+			}
+			else if (_fragmentEntryProcessorHelper.isMappedCollection(
+						editableValueJSONObject)) {
+
+				value = GetterUtil.getString(
+					_fragmentEntryProcessorHelper.getMappedCollectionValue(
+						editableValueJSONObject,
+						fragmentEntryProcessorContext));
 			}
 			else {
 				value = _fragmentEntryProcessorHelper.getEditableValue(

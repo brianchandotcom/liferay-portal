@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -71,6 +72,53 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return _getEditableValueByLocale(jsonObject, locale);
+	}
+
+	@Override
+	public Object getMappedCollectionValue(
+			JSONObject jsonObject,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		if (!isMappedCollection(jsonObject)) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		Optional<Object> displayObjectOptional =
+			fragmentEntryProcessorContext.getDisplayObjectOptional();
+
+		if (!displayObjectOptional.isPresent()) {
+			return null;
+		}
+
+		Object displayObject = displayObjectOptional.get();
+
+		if (!(displayObject instanceof ClassedModel)) {
+			return null;
+		}
+
+		ClassedModel classedModel = (ClassedModel)displayObject;
+
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
+				classedModel.getModelClassName());
+
+		Object fieldValue = infoDisplayContributor.getInfoDisplayFieldValue(
+			displayObjectOptional.get(),
+			jsonObject.getString("collectionFieldId"),
+			fragmentEntryProcessorContext.getLocale());
+
+		if (fieldValue == null) {
+			return null;
+		}
+
+		if (fieldValue instanceof ContentAccessor) {
+			ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
+
+			fieldValue = contentAccessor.getContent();
+		}
+
+		return fieldValue;
 	}
 
 	@Override
@@ -198,6 +246,15 @@ public class FragmentEntryProcessorHelperImpl
 		if ((classNameId > 0) && (classPK > 0) &&
 			Validator.isNotNull(fieldId)) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isMappedCollection(JSONObject jsonObject) {
+		if (jsonObject.has("collectionFieldId")) {
 			return true;
 		}
 

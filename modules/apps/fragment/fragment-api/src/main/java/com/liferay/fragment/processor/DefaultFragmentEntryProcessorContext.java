@@ -39,6 +39,11 @@ public class DefaultFragmentEntryProcessorContext
 		_locale = locale;
 	}
 
+	@Override
+	public Optional<Object> getDisplayObjectOptional() {
+		return Optional.ofNullable(_displayObject);
+	}
+
 	public Optional<Map<String, Object>> getFieldValuesOptional() {
 		return Optional.ofNullable(_fieldValues);
 	}
@@ -81,6 +86,10 @@ public class DefaultFragmentEntryProcessorContext
 		return _segmentsExperienceIds;
 	}
 
+	public void setDisplayObject(Object object) {
+		_displayObject = object;
+	}
+
 	public void setFieldValues(Map<String, Object> fieldValues) {
 		_fieldValues = fieldValues;
 	}
@@ -101,6 +110,7 @@ public class DefaultFragmentEntryProcessorContext
 		_segmentsExperienceIds = segmentsExperienceIds;
 	}
 
+	private Object _displayObject;
 	private Map<String, Object> _fieldValues;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;

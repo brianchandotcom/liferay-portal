@@ -32,6 +32,11 @@ public interface FragmentEntryProcessorHelper {
 	public String getEditableValue(
 		JSONObject jsonObject, Locale locale, long[] segmentsExperienceIds);
 
+	public Object getMappedCollectionValue(
+			JSONObject jsonObject,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException;
+
 	public Object getMappedValue(
 			JSONObject jsonObject,
 			Map<Long, Map<String, Object>> infoDisplaysFieldValues,
@@ -59,6 +64,8 @@ public interface FragmentEntryProcessorHelper {
 	public boolean isAssetDisplayPage(String mode);
 
 	public boolean isMapped(JSONObject jsonObject);
+
+	public boolean isMappedCollection(JSONObject jsonObject);
 
 	public String processTemplate(
 			String html,

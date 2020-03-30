@@ -41,7 +41,7 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "${mbAttachmentFile}");
 
-			if (IsElementNotPresent(key_fileName = "${mbAttachmentFile}", locator1 = "Checkbox#UPLOAD_FILE_ENTRY_CHECKED")) {
+			if (IsNotChecked.isNotCheckedNotVisible(key_fileName = "${mbAttachmentFile}", locator1 = "Checkbox#UPLOAD_FILE_ENTRY")) {
 				Check.checkNotVisible(
 					key_fileName = "${mbAttachmentFile}",
 					locator1 = "Checkbox#UPLOAD_FILE_ENTRY");

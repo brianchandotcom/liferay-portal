@@ -254,7 +254,7 @@ public class FileInstallDeployTest {
 	@Test
 	public void testDeployAndDeleteFragmentHost() throws Exception {
 		String testFragmentSymbolicName =
-			"com.liferay.portal.file.install.deploy.test.fragment";
+			_TEST_JAR_SYMBOLIC_NAME.concat(".fragment");
 
 		String testFragmentJarName = testFragmentSymbolicName.concat(".jar");
 

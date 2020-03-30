@@ -75,7 +75,6 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 					getFilterNavigationDropdownItemsLabel());
 			}
 		).addGroup(
-			() -> !searchContainer.isSearch(),
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					_getFilterDateDropdownItems());

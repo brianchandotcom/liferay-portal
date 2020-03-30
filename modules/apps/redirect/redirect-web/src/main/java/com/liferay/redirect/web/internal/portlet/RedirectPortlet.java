@@ -15,11 +15,18 @@
 package com.liferay.redirect.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.search.filter.FilterBuilders;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -42,4 +49,19 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class RedirectPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			FilterBuilders.class.getName(), _filterBuilders);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private FilterBuilders _filterBuilders;
+
 }

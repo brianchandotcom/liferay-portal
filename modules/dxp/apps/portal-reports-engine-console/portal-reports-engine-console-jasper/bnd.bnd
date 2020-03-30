@@ -15,10 +15,6 @@ Import-Package:\
 	\
 	!com.lowagie.toolbox.*,\
 	\
-	!com.microsoft.schemas.office.*,\
-	\
-	!com.sun.*,\
-	\
 	!com.thoughtworks.*,\
 	\
 	!groovyjarjarasm.asm.tree.analysis.*,\
@@ -39,19 +35,14 @@ Import-Package:\
 	\
 	!mondrian.*,\
 	\
-	!net.sf.cglib.proxy.*,\
-	!net.sf.saxon.*,\
-	\
 	!net.sourceforge.barbecue.*,\
 	\
-	!org.apache.batik.*,\
 	!org.apache.bcel.*,\
 	!org.apache.bsf.*,\
 	!org.apache.commons.cli.*,\
 	!org.apache.commons.javaflow.*,\
 	!org.apache.commons.jci.*,\
 	!org.apache.ivy.*,\
-	!org.apache.jcp.xml.dsig.internal.dom.*,\
 	!org.apache.log.*,\
 	!org.apache.oro.*,\
 	!org.apache.poi.hdgf.*,\
@@ -70,13 +61,9 @@ Import-Package:\
 	!org.apache.xml.resolver.*,\
 	!org.apache.xmlbeans.*,\
 	\
-	!org.bouncycastle.*,\
-	\
 	!org.dom4j.*,\
 	\
 	!org.eclipse.*,\
-	\
-	!org.etsi.uri.x01903.*,\
 	\
 	!org.exolab.castor.*,\
 	\
@@ -90,9 +77,6 @@ Import-Package:\
 	\
 	!org.mozilla.*,\
 	\
-	!org.openxmlformats.schemas.officeDocument.x2006.math,\
-	!org.openxmlformats.schemas.schemaLibrary.x2006.main,\
-	\
 	!org.osgi.service.prefs.*,\
 	\
 	!org.w3c.dom.svg.*,\
@@ -102,6 +86,31 @@ Import-Package:\
 	!schemasMicrosoftComOfficeWord,\
 	\
 	!sun.*,\
+	\
+	com.github.*;resolution:=optional,\
+	\
+	com.graphbuilder.*;resolution:=optional,\
+	\
+	com.microsoft.schemas.office.powerpoint.*;resolution:=optional,\
+	com.microsoft.schemas.office.word.*;resolution:=optional,\
+	\
+	com.sun.*;resolution:=optional,\
+	\
+	net.sf.*;resolution:=optional,\
+	\
+	org.apache.batik.*;resolution:=optional,\
+	org.apache.commons.math3.*;resolution:=optional,\
+	org.apache.jcp.*;resolution:=optional,\
+	\
+	org.bouncycastle.*;resolution:=optional,\
+	\
+	org.brotli.*;resolution:=optional,\
+	\
+	org.etsi.*;resolution:=optional,\
+	\
+	org.openxmlformats.schemas.*;resolution:=optional,\
+	\
+	org.tukaani.*;resolution:=optional,\
 	\
 	*
 Liferay-Releng-Module-Group-Title: Liferay JasperReports

@@ -32,6 +32,12 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		Click(locator1 = "ABTest#AB_TEST_BUTTON");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		SitePages.deletePage(pageName = "Content Page");
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -55,6 +61,10 @@ definition {
 		AssertTextEquals(
 			locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE",
 			value1 = "Create A/B Test Title");
+
+		SelectWindow(locator1 = "title=Content Page - Liferay DXP");
+
+		ABTest.terminateTest();
 	}
 
 	@description = "Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control if the user add variants and remove all variants"
@@ -83,6 +93,5 @@ definition {
 		AssertTextEquals(
 			locator1 = "ABTest#VARIANT_NEEDED_MESSAGE",
 			value1 = "A variant needs to be created.");
-	}
-
+	}		
 }

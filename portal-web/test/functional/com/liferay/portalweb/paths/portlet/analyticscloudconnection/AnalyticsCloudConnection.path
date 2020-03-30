@@ -45,17 +45,22 @@
 </tr>
 <tr>
 	<td>INSIDE_DONE_BUTTON</td>
-	<td>//*[contains(@id, '_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_svzz')]</td>
+	<td>//*[contains(@class, 'lfr-btn-label') and text()='Done']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIFERAY_DXP_COMBINED_PROPERTY</td>
-	<td>//*[contains(@class, 'text-truncate') and contains(text(), 'Liferay DXP Combined Property')]</td>
+	<td>//*[contains(@class, 'table-cell-expand table-cell-content lfr-available-properties-column')]//span[@title='Liferay DXP Combined Property']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEW_PROPERTY_BUTTON</td>
-	<td>//*[contains(@class, 'lfr-btn-label')]</td>
+	<td>//*[contains(@class, 'btn btn-primary nav-btn nav-btn-monospaced')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROPERTY_CANCEL_BUTTON</td>
+	<td>//*[contains(@class, 'lfr-btn-label') and text()='Cancel']</td>
 	<td></td>
 </tr>
 <tr>

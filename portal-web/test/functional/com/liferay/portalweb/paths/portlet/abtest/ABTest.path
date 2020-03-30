@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TERMINATE_TEST_BUTTON</td>
+	<td>//*[contains(@class,'w-100 btn btn-secondary') and contains(text(),'Terminate Test')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VARIANT_DROPDOWN</td>
 	<td>//div[@class='autofit-col']//*[contains(@class, 'dropdown-toggle btn-monospaced btn btn-outline-borderless btn-outline-secondary')]</td>
 	<td></td>

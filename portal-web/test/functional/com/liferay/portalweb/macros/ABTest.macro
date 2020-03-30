@@ -52,4 +52,11 @@ definition {
 		}
 	}
 
+	macro terminateTest {
+		ClickNoError(locator1 = "ABTest#TERMINATE_TEST_BUTTON");
+
+		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to terminate this test?");
+
+		Alert.viewSuccessMessage();
+	}
 }

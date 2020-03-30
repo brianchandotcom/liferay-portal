@@ -32,7 +32,7 @@ export default ({tagsChange, tags = [], ...props}) => {
 			const vocabulariesOfQuestions = data.items.filter(
 				vocabulary =>
 					vocabulary.assetTypes.filter(
-						assetType => assetType.type === 'AllAssetTypes'
+						assetType => assetType.type === context.defaultVocabulary
 					).length > 0
 			);
 			setSourceItems(

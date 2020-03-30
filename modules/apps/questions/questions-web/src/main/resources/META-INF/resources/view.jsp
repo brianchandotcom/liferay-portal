@@ -30,6 +30,7 @@ String questionsRootElementId = renderResponse.getNamespace() + "-questions-root
 	data.put("isOmniAdmin", permissionChecker.isOmniadmin());
 	data.put("siteKey", String.valueOf(themeDisplay.getScopeGroupId()));
 	data.put("userId", String.valueOf(themeDisplay.getUserId()));
+	data.put("defaultVocabulary", "AllAssetTypes");
 	%>
 
 	<react:component

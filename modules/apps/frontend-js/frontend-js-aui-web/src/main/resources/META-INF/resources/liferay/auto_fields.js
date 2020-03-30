@@ -149,22 +149,27 @@ AUI.add(
 
 					var inputsLocalized = node.all('.language-value');
 
+					var currentInputLocalized = clone.one('.language-value');
+
 					var clonedRow;
 
-					if (inputsLocalized) {
+					if (currentInputLocalized) {
 						var trigger = clone.one('button');
 
-						var id = '#' + trigger.attr('id').replace(instance.namespace, "").replace("Menu","PaletteBoundingBox");
-						
+						var id = `#${currentInputLocalized.get(
+							'id'
+						)}PaletteBoundingBox`;
+
 						if (!node.one(id) && A.one(id)) {
 							var palette = A.one(id);
 
-							var list = A.Node.create('<ul class="dropdown-menu dropdown-menu-left-side"></ul>');
-							
+							var list = A.Node.create(
+								'<ul class="dropdown-menu dropdown-menu-left-side"></ul>'
+							);
+
 							trigger.placeAfter(list);
 							list.append(palette.clone());
 						}
-
 					}
 					if (instance.url) {
 						clonedRow = instance._createCloneFromURL(clone, guid);
@@ -379,7 +384,8 @@ AUI.add(
 						itemsError: inputLocalized.get('itemsError'),
 						name: inputLocalizedId,
 						namespace: inputLocalized.get('namespace'),
-						selected: inputLocalized.get('items')
+						selected: inputLocalized
+							.get('items')
 							.indexOf(inputLocalized.getSelectedLanguageId()),
 						toggleSelection: inputLocalized.get('toggleSelection'),
 						translatedLanguages: inputLocalized.get(

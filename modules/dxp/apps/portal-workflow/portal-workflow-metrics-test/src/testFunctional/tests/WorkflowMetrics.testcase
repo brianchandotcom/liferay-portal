@@ -661,7 +661,7 @@ definition {
 		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",
 			key_status = "ONTIME",
-			timesToRun = "12");
+			timesToRun = "24");
 
 		WorkflowMetrics.checkWorkflowReports(
 			key_onTimeValue = "1",
@@ -674,7 +674,7 @@ definition {
 		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",
 			key_status = "OVERDUE",
-			timesToRun = "12");
+			timesToRun = "24");
 
 		WorkflowMetrics.checkWorkflowReports(
 			key_onTimeValue = "0",
@@ -895,7 +895,7 @@ definition {
 		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",
 			key_status = "OVERDUE",
-			timesToRun = "12");
+			timesToRun = "24");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -916,7 +916,7 @@ definition {
 		WorkflowMetrics.waitForCompletedSLA(
 			key_expectedValue = "0",
 			key_status = "OVERDUE",
-			timesToRun = "12");
+			timesToRun = "24");
 
 		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
 			rowName = "Review",
@@ -993,7 +993,7 @@ definition {
 		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",
 			key_status = "ONTIME",
-			timesToRun = "12");
+			timesToRun = "24");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
 			key_ontime = "1",
@@ -1011,7 +1011,7 @@ definition {
 		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",
 			key_status = "OVERDUE",
-			timesToRun = "12");
+			timesToRun = "24");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
 			key_ontime = "0",
@@ -1231,7 +1231,7 @@ definition {
 		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",
 			key_status = "OVERDUE",
-			timesToRun = "12");
+			timesToRun = "24");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -1259,7 +1259,7 @@ definition {
 		WorkflowMetrics.waitForCompletedSLA(
 			key_expectedValue = "0",
 			key_status = "OVERDUE",
-			timesToRun = "12");
+			timesToRun = "24");
 
 		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
 			rowName = "Review",

@@ -318,9 +318,12 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		DMDocument.addMultiplePG(
-			dmDocumentFileList = "Document_1.jpeg,Document_2.docx",
-			viewableBy = "Owner");
+		for (var dmDocumentFile : list "Document_1.jpeg,Document_2.docx") {
+			DMDocument.addPG(
+				dmDocumentFile = "${dmDocumentFile}",
+				dmDocumentTitle = "${dmDocumentFile}",
+				viewableBy = "Owner");
+		}
 
 		DMNavigator.gotoShare(dmDocumentTitle = "Document_1.jpeg");
 

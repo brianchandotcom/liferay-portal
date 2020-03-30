@@ -125,6 +125,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.DocumentType;
 import org.dom4j.Element;
+import org.dom4j.Node;
 import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
@@ -2156,10 +2157,10 @@ public class ServiceBuilder {
 
 		XPath xPath = document.createXPath("//model-resource/model-name");
 
-		List<Element> elements = xPath.selectNodes(rootElement);
+		List<Node> nodes = xPath.selectNodes(rootElement);
 
-		for (Element element : elements) {
-			resourceActionModels.add(StringUtil.trim(element.getText()));
+		for (Node node : nodes) {
+			resourceActionModels.add(StringUtil.trim(node.getText()));
 		}
 	}
 

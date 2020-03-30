@@ -138,9 +138,9 @@ public class FileInstallDeployTest {
 
 		String propertyOriginal = System.getProperty(systemTestProperty);
 
-		try {
-			System.setProperty(systemTestProperty, systemTestPropertyValue);
+		System.setProperty(systemTestProperty, systemTestPropertyValue);
 
+		try {
 			_updateConfiguration(
 				() -> {
 					String content = StringBundler.concat(
@@ -306,10 +306,10 @@ public class FileInstallDeployTest {
 
 		_bundleContext.addBundleListener(bundleListener);
 
-		Version baseVersion = new Version(1, 0, 0);
+		Version version = new Version(1, 0, 0);
 
 		try {
-			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, baseVersion, null);
+			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, version, null);
 
 			installCountDownLatch.await();
 
@@ -318,7 +318,7 @@ public class FileInstallDeployTest {
 			Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
 
 			_createJAR(
-				fragmentPath, testFragmentSymbolicName, baseVersion,
+				fragmentPath, testFragmentSymbolicName, version,
 				_TEST_JAR_SYMBOLIC_NAME);
 
 			fragmentInstallCountDownLatch.await();

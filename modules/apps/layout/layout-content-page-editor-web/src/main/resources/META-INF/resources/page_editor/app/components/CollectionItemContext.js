@@ -16,11 +16,14 @@ import React, {useCallback, useContext} from 'react';
 
 import InfoItemService from '../services/InfoItemService';
 
+const defaultFromControlsId = itemId => itemId;
+const defaultToControlsId = controlId => controlId;
+
 const INITIAL_STATE = {
 	collectionFields: null,
 	collectionItem: null,
-	fromControlsId: itemId => itemId,
-	toControlsId: controlId => controlId,
+	fromControlsId: defaultFromControlsId,
+	toControlsId: defaultToControlsId,
 };
 
 const CollectionItemContext = React.createContext(INITIAL_STATE);
@@ -30,13 +33,13 @@ const CollectionItemContextProvider = CollectionItemContext.Provider;
 const useFromControlsId = () => {
 	const context = useContext(CollectionItemContext);
 
-	return context.fromControlsId;
+	return context.fromControlsId || defaultFromControlsId;
 };
 
 const useToControlsId = () => {
 	const context = useContext(CollectionItemContext);
 
-	return context.toControlsId;
+	return context.toControlsId || defaultToControlsId;
 };
 
 const useCollectionFields = () => {

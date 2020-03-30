@@ -5,6 +5,7 @@
 		<suppress checks="BuilderCheck" files="poshi-runner/.*" />
 	</checkstyle>
 	<source-check>
+		<suppress checks="GradleDependencyArtifactsCheck" files=".*" />
 		<suppress checks="JavaHelperUtilCheck" files="poshi-runner/src/main/java/com/liferay/poshi/runner/util/JSONCurlUtil\.java" />
 		<suppress checks="JavaModuleTestCheck" files="poshi-runner/src/main/java/com/liferay/poshi/runner/PoshiRunner\.java" />
 		<suppress checks="JavaModuleTestCheck" files="poshi-runner/src/main/java/com/liferay/poshi/runner/PoshiRunnerTestCase\.java" />

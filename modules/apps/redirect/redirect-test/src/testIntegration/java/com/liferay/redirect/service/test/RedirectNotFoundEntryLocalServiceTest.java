@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
@@ -55,7 +55,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test
@@ -204,6 +204,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 			redirectNotFoundEntry);
 	}
 
+	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject

@@ -531,30 +531,6 @@ definition {
 		LexiconEntry.openEntryMenu(rowEntry = "${memberName}");
 	}
 
-	macro manageMembershipOptionsInSites {
-		Organization.gotoActionsCmd(orgName = "${orgName}");
-
-		var key_orgName = "${orgName}";
-
-		MenuItem.click(menuItem = "Manage Site");
-
-		if ("${selectMembershipType}" == "true") {
-			AssertTextEquals(
-				locator1 = "SitesEditSite#MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE_LABEL",
-				value1 = "Membership Type");
-
-			Select(
-				locator1 = "SitesEditSite#MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE",
-				value1 = "${membershipType}");
-		}
-
-		if ("${allowManualMembershipManagement}" == "true") {
-			Check.checkToggleSwitch(locator1 = "Checkbox#ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT");
-		}
-
-		PortletEntry.save();
-	}
-
 	macro removeMemberCP {
 		Organization.gotoMemberActionsCmd(
 			memberName = "${userFullName}",

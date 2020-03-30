@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ICON_DOCUMENT_SHARED</td>
+	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-users')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ICON_DOCUMENT_TITLE</td>
 	<td>//span[contains(@class,'lfr-card-title-text') and contains(.,'${key_dmDocumentTitle}')]</td>
 	<td></td>
@@ -155,6 +160,11 @@
 <tr>
 	<td>DESCRIPTIVE_LIST_DOCUMENT_ICON</td>
 	<td>//li[contains(@data-title,'${key_dmDocumentTitle}')]//div//div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTIVE_LIST_DOCUMENT_SHARED</td>
+	<td>//li[contains(@data-title,'${key_dmDocumentTitle}')]//*[*[name()='svg'][contains(@class,'lexicon-icon-users')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -222,6 +232,17 @@
 <tr>
 	<td>FILTER_REPOSITORY_ACTIONS_GENERIC</td>
 	<td>xpath=(//div[contains(@id,'folderContainer')]/ul/li/a/../span[contains(@class,'entry-action')]/div/a)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TABLE_DOCUMENT-->
+<tr>
+	<td>TABLE_DOCUMENT_SHARED</td>
+	<td>//tr[contains(.,'${key_dmDocumentTitle}')]//*[*[name()='svg'][contains(@class,'lexicon-icon-users')]]</td>
 	<td></td>
 </tr>
 <tr>

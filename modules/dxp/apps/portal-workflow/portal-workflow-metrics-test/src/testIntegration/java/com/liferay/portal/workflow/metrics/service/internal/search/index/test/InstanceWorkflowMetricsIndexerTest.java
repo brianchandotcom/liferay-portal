@@ -133,7 +133,7 @@ public class InstanceWorkflowMetricsIndexerTest
 	}
 
 	@Inject(filter = "workflow.metrics.index.entity.name=instance")
-	private static WorkflowMetricsIndexNameBuilder
+	private WorkflowMetricsIndexNameBuilder
 		_instanceWorkflowMetricsIndexNameBuilder;
 
 }

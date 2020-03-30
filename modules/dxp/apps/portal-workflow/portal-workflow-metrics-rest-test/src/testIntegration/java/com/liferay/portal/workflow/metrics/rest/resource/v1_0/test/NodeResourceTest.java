@@ -98,7 +98,12 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"id", "name"};
+		return new String[] {"name"};
+	}
+
+	@Override
+	protected Node testDeleteProcessNode_addNode() throws Exception {
+		return testGetProcessNodesPage_addNode(_process.getId(), randomNode());
 	}
 
 	@Override

@@ -17,9 +17,10 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Histogram;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.HistogramMetric;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Metric;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.ProcessMetric;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
 import java.time.DayOfWeek;
@@ -47,18 +48,22 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Inácio Nery
+ * @author Rafael Praxedes
  */
 @RunWith(Arquillian.class)
-public class MetricResourceTest extends BaseMetricResourceTestCase {
+public class HistogramMetricResourceTest
+	extends BaseHistogramMetricResourceTestCase {
 
 	@Before
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_process = _workflowMetricsRESTTestHelper.addProcess(
-			testGroup.getCompanyId());
+		ProcessMetric processMetric =
+			_workflowMetricsRESTTestHelper.addProcessMetric(
+				testGroup.getCompanyId());
+
+		_process = processMetric.getProcess();
 	}
 
 	@After
@@ -76,7 +81,7 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 
 	@Override
 	@Test
-	public void testGetProcessMetric() throws Exception {
+	public void testGetProcessHistogramMetric() throws Exception {
 		LocalDate localDate = LocalDate.now(ZoneId.of("GMT"));
 
 		LocalDateTime nowLocalDateTime = _createLocalDateTime();
@@ -112,7 +117,7 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testGraphQLGetProcessMetric() throws Exception {
+	public void testGraphQLGetProcessHistogramMetric() throws Exception {
 	}
 
 	@Override
@@ -127,17 +132,23 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 
 		_deleteInstances();
 
-		_instances.add(
-			_workflowMetricsRESTTestHelper.addInstance(
-				testGroup.getCompanyId(), _toDate(startLocalDateTime),
-				_process.getId()));
+		Instance instance = _workflowMetricsRESTTestHelper.addInstance(
+			testGroup.getCompanyId(), _process.getId());
+
+		instance.setCompleted(true);
+		instance.setDateCompletion(_toDate(startLocalDateTime));
+
+		_workflowMetricsRESTTestHelper.completeInstance(
+			testGroup.getCompanyId(), instance);
+
+		_instances.add(instance);
 
 		assertEquals(
-			_createMetric(
+			_createHistogramMetric(
 				histograms,
 				ChronoUnit.DAYS.between(startLocalDateTime, endLocalDateTime),
 				unit),
-			metricResource.getProcessMetric(
+			histogramMetricResource.getProcessHistogramMetric(
 				_process.getId(), _toDate(endLocalDateTime),
 				_toDate(startLocalDateTime), unit));
 	}
@@ -151,6 +162,18 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 		return histogram;
 	}
 
+	private HistogramMetric _createHistogramMetric(
+			Set<Histogram> histograms, long timeRange, String unit)
+		throws Exception {
+
+		HistogramMetric histogramMetric = new HistogramMetric();
+
+		histogramMetric.setHistograms(histograms.toArray(new Histogram[0]));
+		histogramMetric.setValue(_getMetricValue(histograms, timeRange, unit));
+
+		return histogramMetric;
+	}
+
 	private LocalDateTime _createLocalDateTime() {
 		LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("GMT"));
 
@@ -158,18 +181,6 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 		localDateTime = localDateTime.withNano(0);
 
 		return localDateTime.withSecond(0);
-	}
-
-	private Metric _createMetric(
-			Set<Histogram> histograms, long timeRange, String unit)
-		throws Exception {
-
-		Metric metric = new Metric();
-
-		metric.setHistograms(histograms.toArray(new Histogram[0]));
-		metric.setValue(_getMetricValue(histograms, timeRange, unit));
-
-		return metric;
 	}
 
 	private void _deleteInstances() throws Exception {
@@ -184,13 +195,13 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 
 		double timeAmount = histograms.size();
 
-		if (Objects.equals(unit, Metric.Unit.MONTHS.getValue())) {
+		if (Objects.equals(unit, HistogramMetric.Unit.MONTHS.getValue())) {
 			timeAmount = timeRange / 30.0;
 		}
-		else if (Objects.equals(unit, Metric.Unit.WEEKS.getValue())) {
-			timeAmount = timeRange / 7.0;
+		else if (Objects.equals(unit, HistogramMetric.Unit.WEEKS.getValue())) {
+			timeAmount = timeRange / 7.;
 		}
-		else if (Objects.equals(unit, Metric.Unit.YEARS.getValue())) {
+		else if (Objects.equals(unit, HistogramMetric.Unit.YEARS.getValue())) {
 			timeAmount = timeRange / 365.0;
 		}
 

@@ -15,14 +15,18 @@
 package com.liferay.redirect.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.redirect.configuration.RedirectConfiguration;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.base.RedirectNotFoundEntryLocalServiceBaseImpl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -71,6 +75,16 @@ public class RedirectNotFoundEntryLocalServiceImpl
 
 	@Override
 	public List<RedirectNotFoundEntry> getRedirectNotFoundEntries(
+		long groupId, Date minModifiedDate, int start, int end,
+		OrderByComparator<RedirectNotFoundEntry> obc) {
+
+		return redirectNotFoundEntryLocalService.dynamicQuery(
+			_getRedirectNotFoundEntriesDynamicQuery(groupId, minModifiedDate),
+			start, end, obc);
+	}
+
+	@Override
+	public List<RedirectNotFoundEntry> getRedirectNotFoundEntries(
 		long groupId, int start, int end,
 		OrderByComparator<RedirectNotFoundEntry> obc) {
 
@@ -81,6 +95,33 @@ public class RedirectNotFoundEntryLocalServiceImpl
 	@Override
 	public int getRedirectNotFoundEntriesCount(long groupId) {
 		return redirectNotFoundEntryPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public int getRedirectNotFoundEntriesCount(
+		long groupId, Date minModifiedDate) {
+
+		return GetterUtil.getInteger(
+			redirectNotFoundEntryLocalService.dynamicQueryCount(
+				_getRedirectNotFoundEntriesDynamicQuery(
+					groupId, minModifiedDate)));
+	}
+
+	private DynamicQuery _getRedirectNotFoundEntriesDynamicQuery(
+		long groupId, Date minModifiedDate) {
+
+		DynamicQuery redirectNotFoundEntriesDynamicQuery =
+			redirectNotFoundEntryLocalService.dynamicQuery();
+
+		redirectNotFoundEntriesDynamicQuery.add(
+			RestrictionsFactoryUtil.eq("groupId", groupId));
+
+		if (minModifiedDate != null) {
+			redirectNotFoundEntriesDynamicQuery.add(
+				RestrictionsFactoryUtil.gt("modifiedDate", minModifiedDate));
+		}
+
+		return redirectNotFoundEntriesDynamicQuery;
 	}
 
 	@Reference

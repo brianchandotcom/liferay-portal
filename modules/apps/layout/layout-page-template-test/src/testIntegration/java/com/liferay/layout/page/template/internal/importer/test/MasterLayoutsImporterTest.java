@@ -16,11 +16,10 @@ package com.liferay.layout.page.template.internal.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
-import com.liferay.layout.page.template.importer.MasterLayoutsImporter;
-import com.liferay.layout.page.template.importer.MasterLayoutsImporterResultEntry;
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
@@ -206,8 +205,8 @@ public class MasterLayoutsImporterTest {
 
 		File file = _generateZipFile(testCaseName);
 
-		List<MasterLayoutsImporterResultEntry>
-			masterLayoutsImporterResultEntries = null;
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries = null;
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -215,29 +214,30 @@ public class MasterLayoutsImporterTest {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
-			masterLayoutsImporterResultEntries =
-				_masterLayoutsImporter.importFile(
-					_user.getUserId(), _group.getGroupId(), file, false);
+			layoutPageTemplatesImporterResultEntries =
+				_layoutPageTemplatesImporter.importFile(
+					_user.getUserId(), _group.getGroupId(), 0, file, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 
-		Assert.assertNotNull(masterLayoutsImporterResultEntries);
+		Assert.assertNotNull(layoutPageTemplatesImporterResultEntries);
 
 		Assert.assertEquals(
-			masterLayoutsImporterResultEntries.toString(), 1,
-			masterLayoutsImporterResultEntries.size());
+			layoutPageTemplatesImporterResultEntries.toString(), 1,
+			layoutPageTemplatesImporterResultEntries.size());
 
-		MasterLayoutsImporterResultEntry masterLayoutsImporterResultEntry =
-			masterLayoutsImporterResultEntries.get(0);
+		LayoutPageTemplatesImporterResultEntry
+			layoutPageTemplatesImporterResultEntry =
+				layoutPageTemplatesImporterResultEntries.get(0);
 
 		Assert.assertEquals(
-			MasterLayoutsImporterResultEntry.Status.IMPORTED,
-			masterLayoutsImporterResultEntry.getStatus());
+			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED,
+			layoutPageTemplatesImporterResultEntry.getStatus());
 
 		String layoutPageTemplateEntryKey = StringUtil.toLowerCase(
-			masterLayoutsImporterResultEntry.getName());
+			layoutPageTemplatesImporterResultEntry.getName());
 
 		layoutPageTemplateEntryKey = StringUtil.replace(
 			layoutPageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);
@@ -334,19 +334,15 @@ public class MasterLayoutsImporterTest {
 	private Group _group;
 
 	@Inject
-	private LayoutPageTemplateCollectionLocalService
-		_layoutPageTemplateCollectionLocalService;
-
-	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 
 	@Inject
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
+	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
 
 	@Inject
-	private MasterLayoutsImporter _masterLayoutsImporter;
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Inject
 	private Portal _portal;

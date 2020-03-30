@@ -35,9 +35,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -310,14 +312,16 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 		private JoinStepASTNodeListener() {
 		}
 
-		private Set<Table<?>> _columnTables = new HashSet<>();
+		private Set<Table<?>> _columnTables = Collections.newSetFromMap(
+			new IdentityHashMap<>());
 		private Table<?> _fromTable;
 		private boolean _hasRequiredTable;
 		private Join _invalidJoin;
 		private JoinType _invalidJoinType;
 		private Operand _invalidOperand;
 		private boolean _parentJoinFunction;
-		private Set<Table<?>> _tables = new HashSet<>();
+		private Set<Table<?>> _tables = Collections.newSetFromMap(
+			new IdentityHashMap<>());
 
 	}
 

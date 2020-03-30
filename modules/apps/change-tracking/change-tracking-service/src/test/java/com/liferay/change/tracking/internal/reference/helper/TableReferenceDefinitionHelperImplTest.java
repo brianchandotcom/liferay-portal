@@ -347,9 +347,9 @@ public class TableReferenceDefinitionHelperImplTest {
 						StringBundler.concat(
 							"Predicate column tables [MainExample, ",
 							"ReferenceExample] do not match join tables ",
-							"[MainExample] for joinStep \"... from ",
-							"MainExample inner join MainExample ",
-							"aliasMainExample on ",
+							"[MainExample, MainExample aliasMainExample] for ",
+							"joinStep \"... from MainExample inner join ",
+							"MainExample aliasMainExample on ",
 							"ReferenceExample.mainExampleId = ",
 							"MainExample.mainExampleId\""),
 						illegalArgumentException.getMessage());

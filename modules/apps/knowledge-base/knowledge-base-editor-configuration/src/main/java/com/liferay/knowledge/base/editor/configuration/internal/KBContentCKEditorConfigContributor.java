@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
 
@@ -67,10 +68,19 @@ public class KBContentCKEditorConfigContributor
 			super.toJSONArray("['Link', 'Unlink']"),
 			super.toJSONArray("['Table','ImageSelector','HorizontalRule']"));
 
-		//TODO see CKEditorConfigContributor L:205
-		jsonArray.put(toJSONArray("['Source']"));
+		if (isShowSource(inputEditorTaglibAttributes)) {
+			jsonArray.put(toJSONArray("['Source']"));
+		}
 
 		return jsonArray;
+	}
+
+	private boolean isShowSource(
+		Map<String, Object> inputEditorTaglibAttributes) {
+
+		return GetterUtil.getBoolean(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:showSource"));
 	}
 
 }

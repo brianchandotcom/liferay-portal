@@ -115,7 +115,11 @@ public class MBUtil {
 	}
 
 	public static String getEditorName(String messageFormat) {
-		return "ckeditor_bbcode";
+		if (messageFormat.equals("bbcode")) {
+			return "ckeditor_bbcode";
+		}
+
+		return "ckeditor";
 	}
 
 	public static String getHtmlQuoteBody(

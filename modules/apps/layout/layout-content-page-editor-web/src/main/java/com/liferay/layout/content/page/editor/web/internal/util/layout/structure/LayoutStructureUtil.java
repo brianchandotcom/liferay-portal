@@ -162,9 +162,9 @@ public class LayoutStructureUtil {
 			setDateFormat(new ISO8601DateFormat());
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 			setVisibility(
-				PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			setVisibility(
 				PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+			setVisibility(
+				PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 		}
 	};
 

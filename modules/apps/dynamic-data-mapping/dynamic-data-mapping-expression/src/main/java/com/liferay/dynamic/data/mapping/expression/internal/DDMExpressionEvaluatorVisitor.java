@@ -60,11 +60,13 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -201,11 +203,8 @@ public class DDMExpressionEvaluatorVisitor
 				_ddmExpressionFieldAccessor);
 		}
 
-		Optional<Method> methodOptional = Stream.of(
-			_getHierarchicalMethods(ddmExpressionFunction.getClass())
-		).filter(
-			method -> StringUtil.equals("apply", method.getName())
-		).findFirst();
+		Optional<Method> methodOptional = _getExpressionFunctionApplyMethod(
+			ddmExpressionFunction);
 
 		if (!methodOptional.isPresent()) {
 			return null;
@@ -540,6 +539,33 @@ public class DDMExpressionEvaluatorVisitor
 		ParseTree parseTree = parserRuleContext.getChild(childIndex);
 
 		return (T)parseTree.accept(this);
+	}
+
+	private Optional<Method> _getExpressionFunctionApplyMethod(
+		DDMExpressionFunction ddmExpressionFunction) {
+
+		List<Method> methodList = Stream.of(
+			_getHierarchicalMethods(ddmExpressionFunction.getClass())
+		).filter(
+			method -> StringUtil.equals("apply", method.getName())
+		).collect(
+			Collectors.toList()
+		);
+
+		Iterator<Method> iterator = methodList.iterator();
+
+		Method method = iterator.next();
+
+		Class<?>[] parameterTypes = method.getParameterTypes();
+
+		if ((parameterTypes.length == 1) &&
+			(parameterTypes[0] == new Object().getClass()) &&
+			iterator.hasNext()) {
+
+			return Optional.ofNullable(iterator.next());
+		}
+
+		return Optional.ofNullable(method);
 	}
 
 	private Method[] _getHierarchicalMethods(Class<?> clazz) {

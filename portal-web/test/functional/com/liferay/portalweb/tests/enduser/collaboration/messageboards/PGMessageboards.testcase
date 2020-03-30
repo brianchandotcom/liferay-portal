@@ -381,6 +381,12 @@ definition {
 				locator1 = "MessageBoardsEditMessage#ATTACHMENTS_SELECTED_FILE",
 				value1 = "${mbThreadAttachment}");
 
+			if (IsElementPresent(locator1 = "Header#H4_TITLE", key_title = "Uploading")) {
+				Refresh();
+
+				Click(locator1 = "Checkbox#SELECT_ALL");
+			}
+
 			AssertChecked.assertCheckedNotVisible(
 				checkboxName = "${mbThreadAttachment}",
 				locator1 = "Checkbox#ANY_CHECKBOX");

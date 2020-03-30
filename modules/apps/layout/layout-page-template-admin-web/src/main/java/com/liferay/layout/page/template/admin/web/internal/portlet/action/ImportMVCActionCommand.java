@@ -15,8 +15,8 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
-import com.liferay.layout.page.template.importer.MasterLayoutsImporter;
-import com.liferay.layout.page.template.importer.MasterLayoutsImporterResultEntry;
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -48,11 +48,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-		"mvc.command.name=/layout_page_template/import_master_layout"
+		"mvc.command.name=/layout_page_template/import"
 	},
 	service = MVCActionCommand.class
 )
-public class ImportMasterLayoutsMVCActionCommand extends BaseMVCActionCommand {
+public class ImportMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void addSuccessMessage(
@@ -73,6 +73,9 @@ public class ImportMasterLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long layoutPageTemplateCollectionId = ParamUtil.getLong(
+			actionRequest, "layoutPageTemplateCollectionId");
+
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(actionRequest);
 
@@ -82,35 +85,38 @@ public class ImportMasterLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "overwrite", true);
 
 		try {
-			List<MasterLayoutsImporterResultEntry>
-				masterLayoutsImporterResultEntries =
-					_masterLayoutsImporter.importFile(
+			List<LayoutPageTemplatesImporterResultEntry>
+				layoutPageTemplateImporterResultEntries =
+					_layoutPageTemplatesImporter.importFile(
 						themeDisplay.getUserId(),
-						themeDisplay.getScopeGroupId(), file, overwrite);
+						themeDisplay.getScopeGroupId(),
+						layoutPageTemplateCollectionId, file, overwrite);
 
-			if (ListUtil.isEmpty(masterLayoutsImporterResultEntries)) {
+			if (ListUtil.isEmpty(layoutPageTemplateImporterResultEntries)) {
 				return;
 			}
 
-			Stream<MasterLayoutsImporterResultEntry> stream =
-				masterLayoutsImporterResultEntries.stream();
+			Stream<LayoutPageTemplatesImporterResultEntry> stream =
+				layoutPageTemplateImporterResultEntries.stream();
 
-			List<MasterLayoutsImporterResultEntry>
-				notImportedMasterLayoutsImporterResultEntries = stream.filter(
-					masterLayoutsImporterResultEntry ->
-						masterLayoutsImporterResultEntry.getStatus() !=
-							MasterLayoutsImporterResultEntry.Status.IMPORTED
-				).collect(
-					Collectors.toList()
-				);
+			List<LayoutPageTemplatesImporterResultEntry>
+				notImportedLayoutPageTemplateImporterResultEntries =
+					stream.filter(
+						layoutPageTemplateImportEntry ->
+							layoutPageTemplateImportEntry.getStatus() !=
+								LayoutPageTemplatesImporterResultEntry.Status.
+									IMPORTED
+					).collect(
+						Collectors.toList()
+					);
 
 			if (ListUtil.isNotEmpty(
-					notImportedMasterLayoutsImporterResultEntries)) {
+					notImportedLayoutPageTemplateImporterResultEntries)) {
 
 				SessionMessages.add(
 					actionRequest,
-					"notImportedMasterLayoutsImporterResultEntries",
-					notImportedMasterLayoutsImporterResultEntries);
+					"notImportedLayoutPageTemplateImporterResultEntries",
+					notImportedLayoutPageTemplateImporterResultEntries);
 			}
 			else {
 				SessionMessages.add(actionRequest, "success");
@@ -124,7 +130,7 @@ public class ImportMasterLayoutsMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private MasterLayoutsImporter _masterLayoutsImporter;
+	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
 
 	@Reference
 	private Portal _portal;

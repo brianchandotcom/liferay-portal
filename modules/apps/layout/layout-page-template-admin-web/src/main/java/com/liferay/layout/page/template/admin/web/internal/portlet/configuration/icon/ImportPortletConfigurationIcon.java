@@ -18,6 +18,7 @@ import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminP
 import com.liferay.layout.page.template.admin.web.internal.configuration.util.ExportImportMasterLayoutConfigurationUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -28,12 +29,8 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -61,7 +58,7 @@ public class ImportPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL(
+	public String getOnClick(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
@@ -70,20 +67,36 @@ public class ImportPortletConfigurationIcon
 				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
 				PortletRequest.RENDER_PHASE);
 
-			portletURL.setParameter(
-				"mvcPath", "/view_import_master_layouts.jsp");
-
+			portletURL.setParameter("mvcPath", "/view_import.jsp");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-			return portletURL.toString();
+			StringBundler sb = new StringBundler(8);
+
+			sb.append("Liferay.Util.openWindow({dialog: {after: { destroy: ");
+			sb.append("function(event) { window.location.reload(); }, },");
+			sb.append("destroyOnHide:true}, dialogIframe: {bodyCssClass: ");
+			sb.append("'dialog-with-footer'}, title: '");
+			sb.append(getMessage(portletRequest));
+			sb.append("', uri: '");
+			sb.append(portletURL.toString());
+			sb.append("'});");
+
+			return sb.toString();
 		}
 		catch (WindowStateException windowStateException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(windowStateException, windowStateException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(windowStateException, windowStateException);
 			}
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		return "javascript:;";
 	}
 
 	@Override
@@ -94,14 +107,6 @@ public class ImportPortletConfigurationIcon
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		if (!ExportImportMasterLayoutConfigurationUtil.enabled()) {
-			return false;
-		}
-
-		if (Validator.isNotNull(ParamUtil.getString(portletRequest, "tabs1")) &&
-			!Objects.equals(
-				ParamUtil.getString(portletRequest, "tabs1"),
-				"master-layouts")) {
-
 			return false;
 		}
 
@@ -118,11 +123,6 @@ public class ImportPortletConfigurationIcon
 		}
 
 		return false;
-	}
-
-	@Override
-	public boolean isUseDialog() {
-		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

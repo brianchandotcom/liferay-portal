@@ -29,18 +29,17 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-		"mvc.command.name=/layout_page_template/view_import_master_layout"
+		"mvc.command.name=/layout_page_template/view_import"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewImportMasterLayoutsMVCRenderCommand
-	implements MVCRenderCommand {
+public class ViewImportMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/view_import_master_layouts.jsp";
+		return "/view_import.jsp";
 	}
 
 }

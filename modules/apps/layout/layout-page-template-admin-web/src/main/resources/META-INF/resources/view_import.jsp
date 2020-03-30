@@ -16,20 +16,20 @@
 
 <%@ include file="/init.jsp" %>
 
-<portlet:actionURL name="/layout_page_template/import_master_layout" var="importMasterLayoutURL">
+<portlet:actionURL name="/layout_page_template/import" var="importURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form
-	action="<%= importMasterLayoutURL %>"
+	action="<%= importURL %>"
 	enctype="multipart/form-data"
 	name="fm"
 >
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<aui:input helpMessage='<%= LanguageUtil.format(request, "import-master-pages-help", "https://portal.liferay.dev/docs", false) %>' label="select-file" name="file" type="file">
+				<aui:input helpMessage='<%= LanguageUtil.format(request, "import-help", "https://portal.liferay.dev/docs", false) %>' label="select-file" name="file" type="file">
 					<aui:validator name="required" />
 
 					<aui:validator name="acceptFiles">
@@ -42,13 +42,13 @@
 		</liferay-frontend:fieldset-group>
 
 		<%
-		List<MasterLayoutsImporterResultEntry> notImportedMasterLayoutsImporterResultEntries = (List<MasterLayoutsImporterResultEntry>)SessionMessages.get(renderRequest, "notImportedMasterLayoutsImporterResultEntries");
+		List<LayoutPageTemplatesImporterResultEntry> notImportedLayoutPageTemplatesImporterResultEntries = (List<LayoutPageTemplatesImporterResultEntry>)SessionMessages.get(renderRequest, "notImportedLayoutPageTemplatesImporterResultEntries");
 		%>
 
-		<c:if test="<%= ListUtil.isNotEmpty(notImportedMasterLayoutsImporterResultEntries) %>">
+		<c:if test="<%= ListUtil.isNotEmpty(notImportedLayoutPageTemplatesImporterResultEntries) %>">
 
 			<%
-			int total = notImportedMasterLayoutsImporterResultEntries.size();
+			int total = notImportedLayoutPageTemplatesImporterResultEntries.size();
 			int viewTotal = (total > 10) ? 10 : total;
 			%>
 
@@ -59,11 +59,11 @@
 
 					<%
 					for (int i = 0; i < viewTotal; i++) {
-						MasterLayoutsImporterResultEntry masterLayoutsImporterResultEntry = notImportedMasterLayoutsImporterResultEntries.get(i);
+						LayoutPageTemplatesImporterResultEntry layoutPageTemplatesImporterResultEntry = notImportedLayoutPageTemplatesImporterResultEntries.get(i);
 					%>
 
 						<li>
-							<span class="error-info"><%= HtmlUtil.escape(masterLayoutsImporterResultEntry.getErrorMessage()) %></span>
+							<span class="error-info"><%= HtmlUtil.escape(layoutPageTemplatesImporterResultEntry.getErrorMessage()) %></span>
 						</li>
 
 					<%

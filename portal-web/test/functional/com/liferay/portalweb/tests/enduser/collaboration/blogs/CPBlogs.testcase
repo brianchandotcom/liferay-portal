@@ -270,6 +270,8 @@ definition {
 
 	@priority = "5"
 	test DeleteBlogsEntries {
+		property portal.acceptance = "true";
+
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");

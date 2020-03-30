@@ -773,6 +773,7 @@ definition {
 	@description = "This is a usecase for LPS-75241"
 	@priority = "5"
 	test EmbedVideo {
+		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
 
 		Blogs.addEntry(
@@ -820,6 +821,7 @@ definition {
 	@description = "This is a usecase for LPS-83229. This is the only small image test for blogs."
 	@priority = "5"
 	test RemoveSmallImage {
+		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
 
 		BlogsNavigator.gotoAddEntry();
@@ -1318,6 +1320,7 @@ definition {
 	@description = "Basic test that ensures reading time displays when enabled."
 	@priority = "5"
 	test ViewBlogsEntryReadingTime {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PGBlogs#ViewBlogsEntryReadingTime";
 
 		BlogsConfiguration.enableReadingTime();

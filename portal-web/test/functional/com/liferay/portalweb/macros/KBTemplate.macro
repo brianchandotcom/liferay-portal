@@ -6,7 +6,7 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		Type(
-			locator1 = "TextInput#TITLE",
+			locator1 = "KnowledgeBaseTemplate#TEMPLATE_TITLE_INPUT",
 			value1 = "${kbTemplateTitle}");
 
 		CKEditor.addContent(content = "${kbTemplateTitle}");

@@ -254,7 +254,7 @@
 
 <tr>
 	<td>VALIDATE_LIST_TITLE_NAME_AT_ROW</td>
-	<td>//tr[@data-testid='item'][${key_RowNumber}]//a</td>
+	<td>//tr[${key_RowNumber}]//a</td>
 	<td></td>
 </tr>
 

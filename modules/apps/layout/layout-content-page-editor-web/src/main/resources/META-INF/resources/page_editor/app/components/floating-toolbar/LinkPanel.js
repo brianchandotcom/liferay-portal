@@ -112,6 +112,7 @@ export default function LinkPanel({item}) {
 			const config = Object.keys(newConfig).length
 				? {
 						...newConfig,
+						mapperType: 'link',
 				  }
 				: {};
 

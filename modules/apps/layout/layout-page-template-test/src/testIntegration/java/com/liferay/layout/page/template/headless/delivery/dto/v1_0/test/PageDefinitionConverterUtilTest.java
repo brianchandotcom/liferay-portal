@@ -36,7 +36,6 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentFieldText;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
-import com.liferay.headless.delivery.dto.v1_0.InlineLink;
 import com.liferay.headless.delivery.dto.v1_0.InlineValue;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
@@ -676,15 +675,16 @@ public class PageDefinitionConverterUtilTest {
 		Assert.assertEquals(
 			FragmentLink.Target.BLANK, fragmentLink.getTarget());
 
-		InlineLink inlineLink = (InlineLink)fragmentLink.getValue();
+		InlineValue hrefInlineValue = (InlineValue)fragmentLink.getHref();
 
-		Assert.assertEquals("http://www.myexample.com", inlineLink.getHref());
+		Assert.assertEquals(
+			"http://www.myexample.com", hrefInlineValue.getValue());
 
-		InlineValue inlineValue = (InlineValue)fragmentFieldText.getText();
+		InlineValue textInlineValue = (InlineValue)fragmentFieldText.getText();
 
-		Assert.assertNull(inlineValue.getValue());
+		Assert.assertNull(textInlineValue.getValue());
 
-		Map<String, String> i18nMap = inlineValue.getValue_i18n();
+		Map<String, String> i18nMap = textInlineValue.getValue_i18n();
 
 		Assert.assertEquals("My example", i18nMap.get("en_US"));
 		Assert.assertEquals("Mi ejemplo", i18nMap.get("es_ES"));

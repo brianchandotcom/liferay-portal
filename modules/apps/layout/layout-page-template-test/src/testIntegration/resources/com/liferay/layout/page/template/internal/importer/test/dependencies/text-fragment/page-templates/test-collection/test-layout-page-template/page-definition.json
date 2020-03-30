@@ -19,10 +19,10 @@
 							"id" : "element-text",
 							"value" : {
 								"fragmentLink" : {
-									"target" : "Blank",
-									"value" : {
-										"href" : "www.test.com"
-									}
+									"href" : {
+										"value" : "www.test.com"
+									},
+									"target" : "Blank"
 								},
 								"text" : {
 									"value_i18n" : {

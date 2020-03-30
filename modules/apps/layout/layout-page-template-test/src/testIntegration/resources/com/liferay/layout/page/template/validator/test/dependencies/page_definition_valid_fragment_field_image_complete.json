@@ -31,10 +31,10 @@
 									}
 								},
 								"fragmentLink": {
-									"target": "Blank",
-									"value": {
-										"href": "http://www.liferay.com"
-									}
+									"href": {
+										"value": "http://www.liferay.com"
+									},
+									"target": "Blank"
 								}
 							}
 						}

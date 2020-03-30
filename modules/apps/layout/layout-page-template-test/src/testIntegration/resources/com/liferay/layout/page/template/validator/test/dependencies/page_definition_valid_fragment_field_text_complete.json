@@ -11,10 +11,10 @@
 							"id" : "element-text",
 							"value": {
 								"fragmentLink": {
-									"target": "Blank",
-									"value": {
-										"href": "http://www.liferay.com"
-									}
+									"href": {
+										"value": "http://www.liferay.com"
+									},
+									"target": "Blank"
 								},
 								"text": {
 									"value_i18n": {

@@ -13,8 +13,8 @@
 							"id" : "element-link",
 							"value" : {
 								"fragmentLink" : {
-									"value" : {
-										"href" : "http://www.test.com"
+									"href" : {
+										"value" : "http://www.test.com"
 									}
 								},
 								"text" : {

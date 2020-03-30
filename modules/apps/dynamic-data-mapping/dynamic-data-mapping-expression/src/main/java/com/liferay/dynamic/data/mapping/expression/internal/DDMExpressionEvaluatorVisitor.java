@@ -215,21 +215,28 @@ public class DDMExpressionEvaluatorVisitor
 		method.setAccessible(true);
 
 		try {
+			Object[] functionParameters = getFunctionParameters(
+				context.functionParameters());
+
 			Class<?>[] parameterTypes = method.getParameterTypes();
 
 			if ((parameterTypes.length == 1) &&
 				(parameterTypes[0] == new Object[0].getClass())) {
 
+				Class<? extends Object> functionParameterClass =
+					functionParameters[0].getClass();
+
+				if ((functionParameters.length == 1) &&
+					functionParameterClass.isArray()) {
+
+					functionParameters = (Object[])functionParameters[0];
+				}
+
 				return method.invoke(
-					ddmExpressionFunction,
-					new Object[] {
-						getFunctionParameters(context.functionParameters())
-					});
+					ddmExpressionFunction, new Object[] {functionParameters});
 			}
 
-			return method.invoke(
-				ddmExpressionFunction,
-				getFunctionParameters(context.functionParameters()));
+			return method.invoke(ddmExpressionFunction, functionParameters);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

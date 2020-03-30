@@ -202,9 +202,31 @@ public class DDMFormEvaluatorHelper {
 
 			evaluateDDMFormRuleAction(
 				stream.collect(Collectors.joining(" AND ")));
+
+			_actionsAlreadyEvaluated = actions;
 		}
 		else {
-			_ddmFormRuleHelper.checkFieldAffectedByAction(ddmFormRule);
+			DDMFormRule ddmFormRuleClone = ddmFormRule;
+
+			if (_actionsAlreadyEvaluated != null) {
+				List<String> ddmFormRuleActions = ddmFormRule.getActions();
+
+				Stream<String> ddmFormRuleActionsStream =
+					ddmFormRuleActions.stream();
+
+				Stream<String> ddmFormRuleActionsFilteredStream =
+					ddmFormRuleActionsStream.filter(
+						action -> !_actionsAlreadyEvaluated.contains(action));
+
+				List<String> ddmFormRuleActionsFiltered =
+					ddmFormRuleActionsFilteredStream.collect(
+						Collectors.toList());
+
+				ddmFormRuleClone = new DDMFormRule(
+					ddmFormRule.getCondition(), ddmFormRuleActionsFiltered);
+			}
+
+			_ddmFormRuleHelper.checkFieldAffectedByAction(ddmFormRuleClone);
 		}
 	}
 
@@ -696,6 +718,7 @@ public class DDMFormEvaluatorHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormEvaluatorHelper.class);
 
+	private List<String> _actionsAlreadyEvaluated;
 	private final DDMExpressionFactory _ddmExpressionFactory;
 	private final DDMForm _ddmForm;
 	private final DDMFormEvaluatorEvaluateRequest

@@ -75,34 +75,35 @@
 				class="ddm-label"
 			{/if}
 		{/let}
+		<fieldset>
+			{if $label and $showLabel or $required or $tooltip or $repeatable}
+				<legend>
+					<p {$attributes}>
+						{if $label and $showLabel}
+							{$label}{sp}
+						{/if}
 
-		{if $label and $showLabel or $required or $tooltip or $repeatable}
-			<p {$attributes}>
-				{if $label and $showLabel}
-					{$label}{sp}
-				{/if}
+						{if $required and $spritemap}
+							<span class="reference-mark">
+								{call ClayIcon.render}
+									{param spritemap: $spritemap /}
+									{param symbol: 'asterisk' /}
+								{/call}
+							</span>
+						{/if}
+						{if $tooltip}
+							{call Tooltip.render}
+								{param icon: 'question-circle-full' /}
+								{param spritemap: $spritemap /}
+								{param text: $tooltip /}
+							{/call}
+						{/if}
+					</p>
+				</legend>
+			{/if}
 
-				{if $required and $spritemap}
-					<span class="reference-mark">
-						{call ClayIcon.render}
-							{param spritemap: $spritemap /}
-							{param symbol: 'asterisk' /}
-						{/call}
-					</span>
-				{/if}
-
-				{if $tooltip}
-					{call Tooltip.render}
-						{param icon: 'question-circle-full' /}
-						{param spritemap: $spritemap /}
-						{param text: $tooltip /}
-					{/call}
-				{/if}
-			</p>
-		{/if}
-
-		{$contentRenderer}
-
+			{$contentRenderer}
+		</fieldset>
 		{if $_localizedValue and length($_localizedValue) > 0}
 			{foreach $language in $_localizedValue}
 				{if $language.value != ''}

@@ -34,7 +34,6 @@ import java.nio.file.Paths;
 import java.util.Dictionary;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
@@ -302,7 +301,7 @@ public class FileInstallDeployTest {
 		try {
 			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, baseVersion, null);
 
-			installCountDownLatch.await(30, TimeUnit.SECONDS);
+			installCountDownLatch.await();
 
 			bundle = _getBundle(_TEST_JAR_SYMBOLIC_NAME);
 
@@ -312,7 +311,7 @@ public class FileInstallDeployTest {
 				fragmentPath, testFragmentSymbolicName, baseVersion,
 				_TEST_JAR_SYMBOLIC_NAME);
 
-			fragmentInstallCountDownLatch.await(30, TimeUnit.SECONDS);
+			fragmentInstallCountDownLatch.await();
 
 			bundle = _getBundle(testFragmentSymbolicName);
 

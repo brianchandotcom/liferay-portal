@@ -1306,8 +1306,8 @@ definition {
 			ContentPages.addPage(pageName = "Test Content Page Name");
 		}
 
-		task ("Add Image, Card and HTML fragments to page") {
-			for (var fragmentName : list "Image,Card,HTML") {
+		task ("Add Image, Slider, Card and HTML fragments to page") {
+			for (var fragmentName : list "Image,Slider,Card,HTML") {
 				PageEditor.addFragment(
 					collectionName = "Basic Components",
 					fragmentName = "${fragmentName}");

@@ -281,6 +281,8 @@ public class PoshiRunner {
 	}
 
 	private static int _jvmRetryCount;
+	private static final Map<String, List<String>> _testResults =
+		new HashMap<>();
 
 	private final PoshiLogger _poshiLogger;
 	private final PoshiRunnerExecutor _poshiRunnerExecutor;
@@ -305,10 +307,22 @@ public class PoshiRunner {
 					try {
 						_statement.evaluate();
 
+						_testResultMessages.add("PASS");
+
+						_testResults.put(
+							_testNamespacedClassCommandName,
+							_testResultMessages);
+
 						return;
 					}
 					catch (Throwable t) {
+						_testResultMessages.add(t.getMessage());
+
 						if (!_isRetryable(t)) {
+							_testResults.put(
+								_testNamespacedClassCommandName,
+								_testResultMessages);
+
 							throw t;
 						}
 
@@ -408,6 +422,7 @@ public class PoshiRunner {
 
 			private final Statement _statement;
 			private int _testcaseRetryCount;
+			private final List<String> _testResultMessages = new ArrayList<>();
 			private final Throwable[] _validRetryThrowables = {
 				new TimeoutException(), new UnreachableBrowserException(null),
 				new WebDriverException(

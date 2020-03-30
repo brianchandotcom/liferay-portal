@@ -117,4 +117,14 @@ definition {
 			value1 = "${dmDocumentTitle}");
 	}
 
+	macro viewSharedFlag {
+		if (isSet(detailsView)) {
+			AssertVisible(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_SHARED");
+		}
+
+		else {
+			AssertElementNotPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_SHARED");
+		}
+	}
+
 }

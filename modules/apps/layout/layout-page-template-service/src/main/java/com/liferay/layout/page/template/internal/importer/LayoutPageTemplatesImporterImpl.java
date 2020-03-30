@@ -116,26 +116,8 @@ public class LayoutPageTemplatesImporterImpl
 		_layoutPageTemplatesImporterResultEntries = new ArrayList<>();
 
 		try (ZipFile zipFile = new ZipFile(file)) {
-			Map<String, PageTemplateCollectionEntry>
-				pageTemplateCollectionEntryMap =
-					_getPageTemplateCollectionEntryMap(groupId, zipFile);
-
-			for (Map.Entry<String, PageTemplateCollectionEntry> entry :
-					pageTemplateCollectionEntryMap.entrySet()) {
-
-				PageTemplateCollectionEntry pageTemplateCollectionEntry =
-					entry.getValue();
-
-				LayoutPageTemplateCollection layoutPageTemplateCollection =
-					_getLayoutPageTemplateCollection(
-						groupId, layoutPageTemplateCollectionId,
-						pageTemplateCollectionEntry, overwrite);
-
-				_processPageTemplateEntries(
-					groupId, layoutPageTemplateCollection,
-					pageTemplateCollectionEntry.getPageTemplatesEntries(),
-					overwrite, zipFile);
-			}
+			_processBasicLayoutPageTemplateEntries(
+				groupId, layoutPageTemplateCollectionId, overwrite, zipFile);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -551,6 +533,33 @@ public class LayoutPageTemplatesImporterImpl
 		}
 
 		return false;
+	}
+
+	private void _processBasicLayoutPageTemplateEntries(
+			long groupId, long layoutPageTemplateCollectionId,
+			boolean overwrite, ZipFile zipFile)
+		throws Exception {
+
+		Map<String, PageTemplateCollectionEntry>
+			pageTemplateCollectionEntryMap = _getPageTemplateCollectionEntryMap(
+				groupId, zipFile);
+
+		for (Map.Entry<String, PageTemplateCollectionEntry> entry :
+				pageTemplateCollectionEntryMap.entrySet()) {
+
+			PageTemplateCollectionEntry pageTemplateCollectionEntry =
+				entry.getValue();
+
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				_getLayoutPageTemplateCollection(
+					groupId, layoutPageTemplateCollectionId,
+					pageTemplateCollectionEntry, overwrite);
+
+			_processPageTemplateEntries(
+				groupId, layoutPageTemplateCollection,
+				pageTemplateCollectionEntry.getPageTemplatesEntries(),
+				overwrite, zipFile);
+		}
 	}
 
 	private void _processPageDefinition(

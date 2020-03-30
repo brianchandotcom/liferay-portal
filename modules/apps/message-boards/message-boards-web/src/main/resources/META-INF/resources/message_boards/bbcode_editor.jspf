@@ -25,28 +25,17 @@ if (Validator.isNull(body)) {
 }
 
 Editor editor = InputEditorTag.getEditor(request, "ckeditor_bbcode");
-
-String bbcodeEditorName = editor.getName();
-
-if (bbcodeEditorName.equals("bbcode")) {
-	bbcodeEditorName = "ckeditor_bbcode";
-
-	if (_log.isWarnEnabled()) {
-		_log.warn("Replacing unsupported BBCode editor with CKEditor BBCode");
-	}
-}
-
-Map<String, String> fileBrowserParams = HashMapBuilder.put(
-	"categoryId", String.valueOf(categoryId)
-).build();
 %>
 
 <liferay-ui:input-editor
 	allowBrowseDocuments="<%= false %>"
 	contents="<%= body %>"
-	cssClass='<%= bbcodeEditorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>'
-	editorName="<%= bbcodeEditorName %>"
-	fileBrowserParams="<%= fileBrowserParams %>"
+	editorName="<%= editor.getName() %>"
+	fileBrowserParams='<%=
+		HashMapBuilder.put(
+			"categoryId", String.valueOf(categoryId)
+		).build()
+	%>'
 	name="bodyEditor"
 />
 
@@ -55,7 +44,3 @@ Map<String, String> fileBrowserParams = HashMapBuilder.put(
 		return window.<portlet:namespace />bodyEditor.getHTML();
 	}
 </aui:script>
-
-<%!
-private static Log _log = LogFactoryUtil.getLog("com_liferay_message_boards_web.message_boards.bbcode_editor_jspf");
-%>

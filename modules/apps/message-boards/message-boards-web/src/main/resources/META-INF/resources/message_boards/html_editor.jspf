@@ -25,20 +25,17 @@ if (Validator.isNull(body)) {
 }
 
 Editor editor = InputEditorTag.getEditor(request, "ckeditor");
-
-String editorName = editor.getName();
-
-Map<String, String> fileBrowserParams = HashMapBuilder.put(
-	"categoryId", String.valueOf(categoryId)
-).build();
 %>
 
 <liferay-ui:input-editor
 	allowBrowseDocuments="<%= false %>"
 	contents="<%= body %>"
-	cssClass='<%= editorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>'
-	editorName="<%= editorName %>"
-	fileBrowserParams="<%= fileBrowserParams %>"
+	editorName="<%= editor.getName() %>"
+	fileBrowserParams='<%=
+		HashMapBuilder.put(
+			"categoryId", String.valueOf(categoryId)
+		).build()
+	%>'
 	name="bodyEditor"
 />
 

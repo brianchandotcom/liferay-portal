@@ -71,10 +71,12 @@ export default function Main({
 			/>
 
 			<h5 className="mt-3 sheet-subtitle text-secondary">
-				{Liferay.Language.get('traffic-sources')}
+				{Liferay.Language.get('search-engines-traffic')}
 				<Hint
-					message={Liferay.Language.get('traffic-sources-help')}
-					title={Liferay.Language.get('traffic-sources')}
+					message={Liferay.Language.get(
+						'search-engines-traffic-help'
+					)}
+					title={Liferay.Language.get('search-engines-traffic')}
 				/>
 			</h5>
 

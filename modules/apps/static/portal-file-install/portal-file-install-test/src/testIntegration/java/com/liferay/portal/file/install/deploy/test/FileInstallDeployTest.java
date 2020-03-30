@@ -252,8 +252,8 @@ public class FileInstallDeployTest {
 
 	@Test
 	public void testDeployAndDeleteFragmentHost() throws Exception {
-		String testFragmentSymbolicName =
-			_TEST_JAR_SYMBOLIC_NAME.concat(".fragment");
+		String testFragmentSymbolicName = _TEST_JAR_SYMBOLIC_NAME.concat(
+			".fragment");
 
 		String testFragmentJarName = testFragmentSymbolicName.concat(".jar");
 
@@ -267,6 +267,10 @@ public class FileInstallDeployTest {
 
 		CountDownLatch fragmentInstallCountDownLatch = new CountDownLatch(1);
 
+		CountDownLatch deleteCountDownLatch = new CountDownLatch(1);
+
+		CountDownLatch fragmentDeleteCountDownLatch = new CountDownLatch(1);
+
 		BundleListener bundleListener = new BundleListener() {
 
 			@Override
@@ -276,17 +280,25 @@ public class FileInstallDeployTest {
 				int type = bundleEvent.getType();
 
 				if (Objects.equals(
-						bundle.getSymbolicName(), testFragmentSymbolicName) &&
-					(type == BundleEvent.RESOLVED)) {
+						bundle.getSymbolicName(), testFragmentSymbolicName)) {
 
-					fragmentInstallCountDownLatch.countDown();
+					if (type == BundleEvent.RESOLVED) {
+						fragmentInstallCountDownLatch.countDown();
+					}
+					else if (type == BundleEvent.UNINSTALLED) {
+						fragmentDeleteCountDownLatch.countDown();
+					}
 				}
 
 				if (Objects.equals(
-						bundle.getSymbolicName(), _TEST_JAR_SYMBOLIC_NAME) &&
-					(type == BundleEvent.STARTED)) {
+						bundle.getSymbolicName(), _TEST_JAR_SYMBOLIC_NAME)) {
 
-					installCountDownLatch.countDown();
+					if (type == BundleEvent.STARTED) {
+						installCountDownLatch.countDown();
+					}
+					else if (type == BundleEvent.UNINSTALLED) {
+						deleteCountDownLatch.countDown();
+					}
 				}
 			}
 
@@ -296,14 +308,12 @@ public class FileInstallDeployTest {
 
 		Version baseVersion = new Version(1, 0, 0);
 
-		Bundle bundle = null;
-
 		try {
 			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, baseVersion, null);
 
 			installCountDownLatch.await();
 
-			bundle = _getBundle(_TEST_JAR_SYMBOLIC_NAME);
+			Bundle bundle = _getBundle(_TEST_JAR_SYMBOLIC_NAME);
 
 			Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
 
@@ -313,9 +323,21 @@ public class FileInstallDeployTest {
 
 			fragmentInstallCountDownLatch.await();
 
-			bundle = _getBundle(testFragmentSymbolicName);
+			Bundle fragmentBundle = _getBundle(testFragmentSymbolicName);
 
-			Assert.assertEquals(Bundle.RESOLVED, bundle.getState());
+			Assert.assertEquals(Bundle.RESOLVED, fragmentBundle.getState());
+
+			Files.delete(path);
+
+			deleteCountDownLatch.await();
+
+			Assert.assertEquals(Bundle.UNINSTALLED, bundle.getState());
+
+			Files.delete(fragmentPath);
+
+			fragmentDeleteCountDownLatch.await();
+
+			Assert.assertEquals(Bundle.UNINSTALLED, fragmentBundle.getState());
 		}
 		finally {
 			_bundleContext.removeBundleListener(bundleListener);

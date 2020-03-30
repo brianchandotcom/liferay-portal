@@ -115,7 +115,7 @@ export default ({
 		<section className="questions-section questions-section-list">
 			<div className="questions-container">
 				<div className="row">
-					<div className="c-mt-3 col">
+					<div className="c-mt-3 col col-xl-12">
 						<QuestionsNavigationBar
 							filterChange={filterChange}
 							searchChange={search => setSearch(search)}

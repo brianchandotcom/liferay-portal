@@ -736,16 +736,6 @@ public class LayoutServiceWrapper
 	}
 
 	@Override
-	public int getLayoutsCount(
-			com.liferay.portal.kernel.model.Group group, boolean privateLayout,
-			String keywords, String[] types)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutService.getLayoutsCount(
-			group, privateLayout, keywords, types);
-	}
-
-	@Override
 	public int getLayoutsCount(long groupId, boolean privateLayout) {
 		return _layoutService.getLayoutsCount(groupId, privateLayout);
 	}
@@ -765,6 +755,16 @@ public class LayoutServiceWrapper
 
 		return _layoutService.getLayoutsCount(
 			groupId, privateLayout, parentLayoutId, priority);
+	}
+
+	@Override
+	public int getLayoutsCount(
+			long groupId, boolean privateLayout, String keywords,
+			String[] types)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutService.getLayoutsCount(
+			groupId, privateLayout, keywords, types);
 	}
 
 	@Override

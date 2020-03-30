@@ -1131,25 +1131,6 @@ public class LayoutServiceSoap {
 		}
 	}
 
-	public static int getLayoutsCount(
-			com.liferay.portal.kernel.model.GroupSoap group,
-			boolean privateLayout, String keywords, String[] types)
-		throws RemoteException {
-
-		try {
-			int returnValue = LayoutServiceUtil.getLayoutsCount(
-				com.liferay.portal.model.impl.GroupModelImpl.toModel(group),
-				privateLayout, keywords, types);
-
-			return returnValue;
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
 	public static int getLayoutsCount(long groupId, boolean privateLayout)
 		throws RemoteException {
 
@@ -1191,6 +1172,24 @@ public class LayoutServiceSoap {
 		try {
 			int returnValue = LayoutServiceUtil.getLayoutsCount(
 				groupId, privateLayout, parentLayoutId, priority);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getLayoutsCount(
+			long groupId, boolean privateLayout, String keywords,
+			String[] types)
+		throws RemoteException {
+
+		try {
+			int returnValue = LayoutServiceUtil.getLayoutsCount(
+				groupId, privateLayout, keywords, types);
 
 			return returnValue;
 		}

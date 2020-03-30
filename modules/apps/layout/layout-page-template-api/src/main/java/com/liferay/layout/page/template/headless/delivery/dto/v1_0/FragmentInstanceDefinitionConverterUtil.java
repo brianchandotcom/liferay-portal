@@ -35,7 +35,6 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentFieldText;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
-import com.liferay.headless.delivery.dto.v1_0.InlineLink;
 import com.liferay.headless.delivery.dto.v1_0.InlineValue;
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
@@ -542,9 +541,9 @@ public class FragmentInstanceDefinitionConverterUtil {
 
 		return new FragmentLink() {
 			{
-				value = new InlineLink() {
+				href = new InlineValue() {
 					{
-						href = configJSONObject.getString("href");
+						value = configJSONObject.getString("href");
 					}
 				};
 

@@ -121,8 +121,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 				kaleoDefinition.getKaleoDefinitionId(),
 				kaleoDefinitionVersion.getKaleoDefinitionVersionId(),
 				kaleoDefinitionVersion.getName(), kaleoDefinition.getVersion(),
-				_createWorkflowContext(),
-				ServiceContextTestUtil.getServiceContext());
+				workflowContext, ServiceContextTestUtil.getServiceContext());
 
 		_kaleoInstances.add(kaleoInstance);
 

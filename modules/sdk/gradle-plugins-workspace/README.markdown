@@ -54,7 +54,10 @@ Property Name | Type | Default Value | Description
 
 ##### Additional Details
 
-There is an issue with the usage of gradle daemon's and the prompting for the user's password. In order to hide the user's password from plain text when running `createTokenTask`, the user must run the task with `--no-daemon`. For more information please refer to:
+There is an issue with the usage of gradle daemon's and the prompting for the
+user's password. In order to hide the user's password from plain text when
+running `createTokenTask`, the user must run the task with `--no-daemon`. For
+more information please refer to:
 [`GRADLE-2357`](https://issues.gradle.org/browse/GRADLE-2357)
 [`GRADLE-2386`](https://issues.gradle.org/browse/GRADLE-2386)
 
@@ -75,4 +78,3 @@ Property Name | Default Value
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `configEnvironment` | `String` | `local` | The configuration environment of the workspace, `dev`, `prod`, `uat` are the other options.
-

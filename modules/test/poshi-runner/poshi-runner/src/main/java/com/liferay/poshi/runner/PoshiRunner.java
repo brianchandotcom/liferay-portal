@@ -20,7 +20,6 @@ import com.liferay.poshi.runner.selenium.LiferaySeleniumUtil;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.PropsValues;
-import com.liferay.poshi.runner.util.Validator;
 
 import java.io.IOException;
 
@@ -438,7 +437,7 @@ public class PoshiRunner {
 				}
 
 				if (PropsValues.TEST_SKIP_TEAR_DOWN ||
-					Validator.isNull(System.getenv("JENKINS_HOME"))) {
+					(PropsValues.TEST_TESTCASE_MAX_RETRIES == 0)) {
 
 					return false;
 				}

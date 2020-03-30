@@ -146,6 +146,10 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 			return _spiraCustomList;
 		}
 
+		public SpiraCustomProperty getSpiraCustomProperty() {
+			return _spiraCustomList.getSpiraCustomProperty();
+		}
+
 		protected Value(
 			JSONObject jsonObject, SpiraProject spiraProject,
 			SpiraCustomList spiraCustomList) {

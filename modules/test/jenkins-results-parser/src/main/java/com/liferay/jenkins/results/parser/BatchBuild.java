@@ -576,27 +576,17 @@ public class BatchBuild extends BaseBuild {
 				continue;
 			}
 
-			String jobPropertyName = (String)jobPropertyNameObject;
+			String jobPropertyNameRegex = JenkinsResultsParserUtil.combine(
+				Pattern.quote(propertyNamePrefix), "\\[([^\\]+)\\]");
 
-			if (!jobPropertyName.startsWith(propertyNamePrefix)) {
+			String jobPropertyName = jobPropertyNameObject.toString();
+
+			if (!jobPropertyName.matches(jobPropertyNameRegex)) {
 				continue;
 			}
 
-			String propertyName = jobPropertyName.replace(
-				propertyNamePrefix, "");
-
-			if (propertyName.startsWith("[")) {
-				propertyName = propertyName.substring(1);
-			}
-
-			if (propertyName.endsWith("]")) {
-				propertyName = propertyName.substring(
-					0, propertyName.length() - 1);
-			}
-
-			if (propertyName.isEmpty()) {
-				continue;
-			}
+			String propertyName = jobPropertyName.replaceAll(
+				jobPropertyNameRegex, "$1");
 
 			if (!batchName.contains(propertyName)) {
 				continue;

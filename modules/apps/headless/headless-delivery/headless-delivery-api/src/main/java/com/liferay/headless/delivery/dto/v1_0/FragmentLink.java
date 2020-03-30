@@ -84,6 +84,33 @@ public class FragmentLink {
 
 	@Schema
 	@Valid
+	public Object getHref() {
+		return href;
+	}
+
+	public void setHref(Object href) {
+		this.href = href;
+	}
+
+	@JsonIgnore
+	public void setHref(UnsafeSupplier<Object, Exception> hrefUnsafeSupplier) {
+		try {
+			href = hrefUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Object href;
+
+	@Schema
+	@Valid
 	public Target getTarget() {
 		return target;
 	}
@@ -120,35 +147,6 @@ public class FragmentLink {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Target target;
 
-	@Schema
-	@Valid
-	public Object getValue() {
-		return value;
-	}
-
-	public void setValue(Object value) {
-		this.value = value;
-	}
-
-	@JsonIgnore
-	public void setValue(
-		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
-
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object value;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -176,6 +174,16 @@ public class FragmentLink {
 
 		sb.append("{");
 
+		if (href != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"href\": ");
+
+			sb.append(String.valueOf(href));
+		}
+
 		if (target != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -188,16 +196,6 @@ public class FragmentLink {
 			sb.append(target);
 
 			sb.append("\"");
-		}
-
-		if (value != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"value\": ");
-
-			sb.append(String.valueOf(value));
 		}
 
 		sb.append("}");

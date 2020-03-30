@@ -55,6 +55,20 @@ public class FragmentLinkSerDes {
 
 		sb.append("{");
 
+		if (fragmentLink.getHref() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"href\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fragmentLink.getHref()));
+
+			sb.append("\"");
+		}
+
 		if (fragmentLink.getTarget() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -65,20 +79,6 @@ public class FragmentLinkSerDes {
 			sb.append("\"");
 
 			sb.append(fragmentLink.getTarget());
-
-			sb.append("\"");
-		}
-
-		if (fragmentLink.getValue() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"value\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(fragmentLink.getValue()));
 
 			sb.append("\"");
 		}
@@ -102,18 +102,18 @@ public class FragmentLinkSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (fragmentLink.getHref() == null) {
+			map.put("href", null);
+		}
+		else {
+			map.put("href", String.valueOf(fragmentLink.getHref()));
+		}
+
 		if (fragmentLink.getTarget() == null) {
 			map.put("target", null);
 		}
 		else {
 			map.put("target", String.valueOf(fragmentLink.getTarget()));
-		}
-
-		if (fragmentLink.getValue() == null) {
-			map.put("value", null);
-		}
-		else {
-			map.put("value", String.valueOf(fragmentLink.getValue()));
 		}
 
 		return map;
@@ -137,16 +137,16 @@ public class FragmentLinkSerDes {
 			FragmentLink fragmentLink, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "target")) {
+			if (Objects.equals(jsonParserFieldName, "href")) {
+				if (jsonParserFieldValue != null) {
+					fragmentLink.setHref((Object)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "target")) {
 				if (jsonParserFieldValue != null) {
 					fragmentLink.setTarget(
 						FragmentLink.Target.create(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "value")) {
-				if (jsonParserFieldValue != null) {
-					fragmentLink.setValue((Object)jsonParserFieldValue);
 				}
 			}
 			else {

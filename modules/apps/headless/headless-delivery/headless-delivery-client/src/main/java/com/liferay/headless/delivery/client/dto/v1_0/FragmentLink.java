@@ -59,6 +59,25 @@ public class FragmentLink implements Cloneable {
 
 	}
 
+	public Object getHref() {
+		return href;
+	}
+
+	public void setHref(Object href) {
+		this.href = href;
+	}
+
+	public void setHref(UnsafeSupplier<Object, Exception> hrefUnsafeSupplier) {
+		try {
+			href = hrefUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Object href;
+
 	public Target getTarget() {
 		return target;
 	}
@@ -87,27 +106,6 @@ public class FragmentLink implements Cloneable {
 	}
 
 	protected Target target;
-
-	public Object getValue() {
-		return value;
-	}
-
-	public void setValue(Object value) {
-		this.value = value;
-	}
-
-	public void setValue(
-		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
-
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Object value;
 
 	@Override
 	public FragmentLink clone() throws CloneNotSupportedException {

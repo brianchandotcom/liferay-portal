@@ -1387,7 +1387,14 @@ war.path=${app.server.portal.dir}/</echo>
 
 	<macrodef name="prepare-additional-bundles">
 		<sequential>
-			<get-testcase-property property.name="app.server.bundles.size" />
+			<if>
+				<not>
+					<isset property="app.server.bundles.size" />
+				</not>
+				<then>
+					<get-testcase-property property.name="app.server.bundles.size" />
+				</then>
+			</if>
 
 			<if>
 				<isset property="app.server.bundles.size" />
@@ -7784,7 +7791,14 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			</then>
 		</if>
 
-		<get-testcase-property property.name="cluster.enabled" />
+		<if>
+			<not>
+				<isset property="cluster.enabled" />
+			</not>
+			<then>
+				<get-testcase-property property.name="cluster.enabled" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${cluster.enabled}" arg2="true" />
@@ -11580,6 +11594,29 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<antcall target="clean-up-mobile-device" />
 
 		<antcall target="clean-up-selenium-driver" />
+	</target>
+
+	<target name="setup-portal-cluster">
+		<property name="cluster.enabled" value="true" />
+
+		<antcall target="prepare-portal-ext-properties" />
+
+		<ant antfile="build-test-elasticsearch6.xml" target="start-elasticsearch" />
+
+		<get-testcase-property property.name="app.server.bundles.size" />
+
+		<if>
+			<not>
+				<isset property="app.server.bundles.size" />
+			</not>
+			<then>
+				<property name="app.server.bundles.size" value="1" />
+			</then>
+		</if>
+
+		<prepare-additional-bundles />
+
+		<prepare-test-cluster-properties />
 	</target>
 
 	<target name="run-simple-server">

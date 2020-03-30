@@ -1043,6 +1043,9 @@ components:
             type: object
         FragmentLink:
             properties:
+                href:
+                    oneOf:
+                        - $ref: "#/components/schemas/InlineValue"
                 target:
                     enum: [Blank, Parent, Self, Top]
                     type: string

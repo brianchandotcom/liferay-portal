@@ -84,6 +84,7 @@ const VisibleSelectInput = forwardRef(
 				onClick={onClick}
 				onKeyDown={onKeyDown}
 				ref={ref}
+				tabIndex="0"
 			>
 				<ul
 					className={classNames(

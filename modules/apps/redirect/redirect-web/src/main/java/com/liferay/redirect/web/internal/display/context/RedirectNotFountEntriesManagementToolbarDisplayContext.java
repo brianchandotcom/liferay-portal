@@ -15,10 +15,18 @@
 package com.liferay.redirect.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -53,6 +61,43 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public List<DropdownItem> getFilterDropdownItems() {
+		List<DropdownItem> filterNavigationDropdownItems =
+			getFilterNavigationDropdownItems();
+		List<DropdownItem> orderByDropdownItems = getOrderByDropdownItems();
+
+		DropdownItemList filterDropdownItems = DropdownItemListBuilder.addGroup(
+			() -> filterNavigationDropdownItems != null,
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					filterNavigationDropdownItems);
+				dropdownGroupItem.setLabel(
+					getFilterNavigationDropdownItemsLabel());
+			}
+		).addGroup(
+			() -> !searchContainer.isSearch(),
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					_getFilterDateDropdownItems());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(request, "filter-by-date"));
+			}
+		).addGroup(
+			() -> orderByDropdownItems != null,
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(orderByDropdownItems);
+				dropdownGroupItem.setLabel(getOrderByDropdownItemsLabel());
+			}
+		).build();
+
+		if (filterDropdownItems.isEmpty()) {
+			return null;
+		}
+
+		return filterDropdownItems;
+	}
+
+	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
 
@@ -68,8 +113,50 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getFilterNavigationDropdownItemsLabel() {
+		return LanguageUtil.get(request, "filter-by-type");
+	}
+
+	@Override
+	protected String[] getNavigationKeys() {
+		return new String[] {"all"};
+	}
+
+	@Override
+	protected String getNavigationParam() {
+		return "filter";
+	}
+
+	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"modified-date", "requests"};
+	}
+
+	private List<DropdownItem> _getFilterDateDropdownItems() {
+		return DropdownItemListBuilder.add(
+			_getNavigationDropdownItemUnsafeConsumer("day")
+		).add(
+			_getNavigationDropdownItemUnsafeConsumer("week")
+		).add(
+			_getNavigationDropdownItemUnsafeConsumer("month")
+		).build();
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getNavigationDropdownItemUnsafeConsumer(String key) {
+
+		return dropdownItem -> {
+			dropdownItem.setActive(key.equals(getNavigation()));
+
+			PortletURL portletURL = PortletURLUtil.clone(
+				currentURLObj, liferayPortletResponse);
+
+			portletURL.setParameter(getNavigationParam(), key);
+
+			dropdownItem.setHref(portletURL);
+
+			dropdownItem.setLabel(LanguageUtil.get(request, key));
+		};
 	}
 
 }

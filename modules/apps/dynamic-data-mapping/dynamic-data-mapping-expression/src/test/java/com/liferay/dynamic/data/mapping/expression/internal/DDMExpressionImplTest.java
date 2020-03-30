@@ -409,6 +409,47 @@ public class DDMExpressionImplTest extends PowerMockito {
 	}
 
 	@Test
+	public void testNestedFunctions() throws Exception {
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl =
+			new DDMExpressionImpl<>("add(2, multiply(2,3,2))");
+
+		ddmExpressionImpl.setDDMExpressionFunctionTracker(
+			new DDMExpressionFunctionTracker() {
+
+				@Override
+				public Map<String, DDMExpressionFunctionFactory>
+					getDDMExpressionFunctionFactories(
+						Set<String> functionNames) {
+
+					return _createDDMExpressionFunctionFactory(
+						new AddFunction(), new MultiplyFunction());
+				}
+
+				@Override
+				public Map<String, DDMExpressionFunction>
+					getDDMExpressionFunctions(Set<String> functionNames) {
+
+					return HashMapBuilder.<String, DDMExpressionFunction>put(
+						"add", new AddFunction()
+					).put(
+						"multiply", new MultiplyFunction()
+					).build();
+				}
+
+				@Override
+				public void ungetDDMExpressionFunctions(
+					Map<String, DDMExpressionFunction>
+						ddmExpressionFunctionsMap) {
+				}
+
+			});
+
+		BigDecimal bigDecimal = ddmExpressionImpl.evaluate();
+
+		Assert.assertEquals(0, bigDecimal.compareTo(new BigDecimal("14")));
+	}
+
+	@Test
 	public void testNot() throws Exception {
 		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"not(-1 != 1.0)");

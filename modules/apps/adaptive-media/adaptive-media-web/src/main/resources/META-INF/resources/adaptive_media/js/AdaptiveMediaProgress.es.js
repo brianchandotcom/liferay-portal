@@ -144,10 +144,7 @@ const AdaptiveMediaProgress = ({
 				<span>
 					<strong>{Liferay.Language.get('error')}: </strong>
 					{imagesFailed === 1
-						? Liferay.Util.sub(
-								Liferay.Language.get('x-image-failed-process'),
-								imagesFailed
-						  )
+						? Liferay.Language.get('one-image-failed-process')
 						: Liferay.Util.sub(
 								Liferay.Language.get('x-images-failed-process'),
 								imagesFailed

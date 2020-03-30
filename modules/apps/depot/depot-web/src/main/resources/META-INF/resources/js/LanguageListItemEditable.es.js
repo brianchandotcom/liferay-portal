@@ -69,8 +69,12 @@ const LanguageListItem = ({
 	isDefault,
 	localeId,
 	onMakeDefault,
+	isFirst = false,
+	isLast = false,
 	index,
 	onItemDrop = noop,
+	onMoveUp = noop,
+	onMoveDown = noop,
 }) => {
 	const [active, setActive] = useState(false);
 	const [dropZone, setDropZone] = useState();
@@ -135,6 +139,16 @@ const LanguageListItem = ({
 		});
 	};
 
+	const moveUp = () => {
+		setActive(false);
+		onMoveUp();
+	};
+
+	const moveDown = () => {
+		setActive(false);
+		onMoveDown();
+	};
+
 	return (
 		<ClayTable.Row
 			className={classNames('language-list-item', {
@@ -177,6 +191,11 @@ const LanguageListItem = ({
 					}
 				>
 					<ClayDropDown.ItemList>
+						{!isFirst && (
+							<ClayDropDown.Item onClick={moveUp}>
+								{Liferay.Language.get('move-up')}
+							</ClayDropDown.Item>
+						)}
 						<ClayDropDown.Item
 							data-value={localeId}
 							key={localeId}
@@ -184,6 +203,11 @@ const LanguageListItem = ({
 						>
 							{Liferay.Language.get('make-default')}
 						</ClayDropDown.Item>
+						{!isLast && (
+							<ClayDropDown.Item onClick={moveDown}>
+								{Liferay.Language.get('move-down')}
+							</ClayDropDown.Item>
+						)}
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
 			</ClayTable.Cell>

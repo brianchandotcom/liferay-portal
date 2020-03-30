@@ -30,6 +30,7 @@ const LanguagesList = ({
 	onMakeDefault = noop,
 	onEditBtnClick = noop,
 	onItemDrop = noop,
+	moveItem = noop,
 }) => {
 	const manager = useRef(createDndContext(HTML5Backend));
 
@@ -68,8 +69,12 @@ const LanguagesList = ({
 						return isEditable ? (
 							<LanguageListItemEditable
 								{...baseProps}
+								isFirst={index === 0}
+								isLast={index === locales.length - 1}
 								onItemDrop={onItemDrop}
 								onMakeDefault={onMakeDefault}
+								onMoveDown={() => moveItem(index, index + 1)}
+								onMoveUp={() => moveItem(index, index - 1)}
 							/>
 						) : (
 							<LanguageListItem {...baseProps} />

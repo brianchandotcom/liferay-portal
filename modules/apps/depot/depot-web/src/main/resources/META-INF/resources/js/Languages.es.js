@@ -90,6 +90,10 @@ const Languages = ({
 	};
 
 	const handleOnItemDrop = (currentIndex, newIndex) => {
+		moveItem(currentIndex, newIndex);
+	};
+
+	const moveItem = (currentIndex, newIndex) => {
 		setCustomLocales(languages => move(languages, currentIndex, newIndex));
 	};
 
@@ -144,6 +148,7 @@ const Languages = ({
 						defaultLocaleId={customDefaultLocaleId}
 						isEditable
 						locales={customLocales}
+						moveItem={moveItem}
 						onEditBtnClick={handleOnModalOpen}
 						onItemDrop={handleOnItemDrop}
 						onMakeDefault={handleOnMakeDefault}

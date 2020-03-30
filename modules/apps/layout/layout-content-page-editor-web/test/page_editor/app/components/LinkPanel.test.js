@@ -236,6 +236,9 @@ describe('LinkPanel', () => {
 
 		expect(updateEditableValues).toHaveBeenCalled();
 
-		expect(editableConfig).toEqual({href: 'http://google.com'});
+		expect(editableConfig).toEqual({
+			href: 'http://google.com',
+			mapperType: 'link',
+		});
 	});
 });

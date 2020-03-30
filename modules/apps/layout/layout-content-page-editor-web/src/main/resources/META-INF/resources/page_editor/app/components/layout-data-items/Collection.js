@@ -40,7 +40,7 @@ function getToControlsId(collectionId, index) {
 	};
 }
 
-function fromControlsId(controlsItemId) {
+export function fromControlsId(controlsItemId) {
 	if (!controlsItemId) {
 		return null;
 	}

@@ -638,6 +638,77 @@ public class LayoutPageTemplatesImporterImpl
 		}
 	}
 
+	private void _processLayoutPageTemplateEntry(
+			long groupId, long layoutPageTemplateCollectionId,
+			String ignoredMessage, String invalidMessage,
+			LayoutPageTemplateEntry layoutPageTemplateEntry, String name,
+			PageDefinition pageDefinition, int layoutPageTemplateEntryType,
+			boolean overwrite, ZipEntry thumbnailZipEntry, String zipPath,
+			ZipFile zipFile)
+		throws Exception {
+
+		try {
+			boolean added = false;
+
+			if (layoutPageTemplateEntry == null) {
+				layoutPageTemplateEntry =
+					_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+						groupId, layoutPageTemplateCollectionId, name,
+						layoutPageTemplateEntryType, 0,
+						WorkflowConstants.STATUS_APPROVED,
+						ServiceContextThreadLocal.getServiceContext());
+
+				added = true;
+			}
+			else if (overwrite) {
+				layoutPageTemplateEntry =
+					_layoutPageTemplateEntryService.
+						updateLayoutPageTemplateEntry(
+							layoutPageTemplateEntry.
+								getLayoutPageTemplateEntryId(),
+							name);
+
+				added = true;
+			}
+
+			if (added) {
+				_processPageDefinition(layoutPageTemplateEntry, pageDefinition);
+
+				long previewFileEntryId = _getPreviewFileEntryId(
+					groupId,
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					thumbnailZipEntry, zipFile);
+
+				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					previewFileEntryId);
+
+				_layoutPageTemplatesImporterResultEntries.add(
+					new LayoutPageTemplatesImporterResultEntry(
+						name,
+						LayoutPageTemplatesImporterResultEntry.Status.
+							IMPORTED));
+			}
+			else {
+				_layoutPageTemplatesImporterResultEntries.add(
+					new LayoutPageTemplatesImporterResultEntry(
+						name,
+						LayoutPageTemplatesImporterResultEntry.Status.IGNORED,
+						_getErrorMessage(groupId, ignoredMessage, zipPath)));
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException, portalException);
+			}
+
+			_layoutPageTemplatesImporterResultEntries.add(
+				new LayoutPageTemplatesImporterResultEntry(
+					name, LayoutPageTemplatesImporterResultEntry.Status.INVALID,
+					_getErrorMessage(groupId, invalidMessage, zipPath)));
+		}
+	}
+
 	private void _processMasterLayoutPageTemplateEntries(
 			long groupId, boolean overwrite, ZipFile zipFile)
 		throws Exception {
@@ -652,82 +723,13 @@ public class LayoutPageTemplatesImporterImpl
 				_layoutPageTemplateEntryLocalService.
 					fetchLayoutPageTemplateEntry(groupId, masterPage.getKey());
 
-			try {
-				boolean added = false;
-
-				if (layoutPageTemplateEntry == null) {
-					layoutPageTemplateEntry =
-						_layoutPageTemplateEntryService.
-							addLayoutPageTemplateEntry(
-								groupId, 0, masterPage.getName(),
-								LayoutPageTemplateEntryTypeConstants.
-									TYPE_MASTER_LAYOUT,
-								0, WorkflowConstants.STATUS_APPROVED,
-								ServiceContextThreadLocal.getServiceContext());
-
-					added = true;
-				}
-				else if (overwrite) {
-					layoutPageTemplateEntry =
-						_layoutPageTemplateEntryService.
-							updateLayoutPageTemplateEntry(
-								layoutPageTemplateEntry.
-									getLayoutPageTemplateEntryId(),
-								masterPage.getName());
-
-					added = true;
-				}
-
-				if (added) {
-					_processPageDefinition(
-						layoutPageTemplateEntry,
-						masterPageEntry.getPageDefinition());
-
-					long previewFileEntryId = _getPreviewFileEntryId(
-						groupId,
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-						masterPageEntry.getThumbnailZipEntry(), zipFile);
-
-					_layoutPageTemplateEntryService.
-						updateLayoutPageTemplateEntry(
-							layoutPageTemplateEntry.
-								getLayoutPageTemplateEntryId(),
-							previewFileEntryId);
-
-					_layoutPageTemplatesImporterResultEntries.add(
-						new LayoutPageTemplatesImporterResultEntry(
-							masterPage.getName(),
-							LayoutPageTemplatesImporterResultEntry.Status.
-								IMPORTED));
-				}
-				else {
-					_layoutPageTemplatesImporterResultEntries.add(
-						new LayoutPageTemplatesImporterResultEntry(
-							masterPage.getName(),
-							LayoutPageTemplatesImporterResultEntry.Status.
-								IGNORED,
-							_getErrorMessage(
-								groupId,
-								"x-was-ignored-because-a-master-page-with-" +
-									"the-same-key-already-exists",
-								masterPageEntry.getZipPath())));
-				}
-			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(portalException, portalException);
-				}
-
-				_layoutPageTemplatesImporterResultEntries.add(
-					new LayoutPageTemplatesImporterResultEntry(
-						masterPage.getName(),
-						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
-						_getErrorMessage(
-							groupId,
-							"x-could-not-be-imported-because-a-master-page-" +
-								"with-the-same-name-already-exists",
-							masterPageEntry.getZipPath())));
-			}
+			_processLayoutPageTemplateEntry(
+				groupId, 0, _MASTER_PAGE_IGNORED_MESSAGE_KEY,
+				_MASTER_PAGE_INVALID_MESSAGE_KEY, layoutPageTemplateEntry,
+				masterPage.getName(), masterPageEntry.getPageDefinition(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+				overwrite, masterPageEntry.getThumbnailZipEntry(),
+				masterPageEntry.getZipPath(), zipFile);
 		}
 	}
 
@@ -832,84 +834,16 @@ public class LayoutPageTemplatesImporterImpl
 				_layoutPageTemplateEntryLocalService.
 					fetchLayoutPageTemplateEntry(groupId, entry.getKey());
 
-			try {
-				boolean added = false;
-
-				if (layoutPageTemplateEntry == null) {
-					layoutPageTemplateEntry =
-						_layoutPageTemplateEntryService.
-							addLayoutPageTemplateEntry(
-								groupId,
-								layoutPageTemplateCollection.
-									getLayoutPageTemplateCollectionId(),
-								pageTemplate.getName(),
-								LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-								0, WorkflowConstants.STATUS_APPROVED,
-								ServiceContextThreadLocal.getServiceContext());
-
-					added = true;
-				}
-				else if (overwrite) {
-					layoutPageTemplateEntry =
-						_layoutPageTemplateEntryService.
-							updateLayoutPageTemplateEntry(
-								layoutPageTemplateEntry.
-									getLayoutPageTemplateEntryId(),
-								pageTemplate.getName());
-
-					added = true;
-				}
-
-				if (added) {
-					_processPageDefinition(
-						layoutPageTemplateEntry,
-						pageTemplateEntry.getPageDefinition());
-
-					long previewFileEntryId = _getPreviewFileEntryId(
-						groupId,
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-						pageTemplateEntry.getThumbnailZipEntry(), zipFile);
-
-					_layoutPageTemplateEntryService.
-						updateLayoutPageTemplateEntry(
-							layoutPageTemplateEntry.
-								getLayoutPageTemplateEntryId(),
-							previewFileEntryId);
-
-					_layoutPageTemplatesImporterResultEntries.add(
-						new LayoutPageTemplatesImporterResultEntry(
-							pageTemplate.getName(),
-							LayoutPageTemplatesImporterResultEntry.Status.
-								IMPORTED));
-				}
-				else {
-					_layoutPageTemplatesImporterResultEntries.add(
-						new LayoutPageTemplatesImporterResultEntry(
-							pageTemplate.getName(),
-							LayoutPageTemplatesImporterResultEntry.Status.
-								IGNORED,
-							_getErrorMessage(
-								groupId,
-								"x-was-ignored-because-a-page-template-with-" +
-									"the-same-key-already-exists",
-								pageTemplateEntry.getZipPath())));
-				}
-			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(portalException, portalException);
-				}
-
-				_layoutPageTemplatesImporterResultEntries.add(
-					new LayoutPageTemplatesImporterResultEntry(
-						pageTemplate.getName(),
-						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
-						_getErrorMessage(
-							groupId,
-							"x-could-not-be-imported-because-a-page-template-" +
-								"with-the-same-name-already-exists",
-							pageTemplateEntry.getZipPath())));
-			}
+			_processLayoutPageTemplateEntry(
+				groupId,
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				_PAGE_TEMPLATE_IGNORED_MESSAGE_KEY,
+				_PAGE_TEMPLATE_INVALID_MESSAGE_KEY, layoutPageTemplateEntry,
+				pageTemplate.getName(), pageTemplate.getPageDefinition(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, overwrite,
+				pageTemplateEntry.getThumbnailZipEntry(),
+				pageTemplateEntry.getZipPath(), zipFile);
 		}
 	}
 
@@ -1009,6 +943,20 @@ public class LayoutPageTemplatesImporterImpl
 	private static final String _DEFAULT_PAGE_TEMPLATE_ENTRY_KEY = "imported";
 
 	private static final String _FILE_NAME_THUMBNAIL = "thumbnail";
+
+	private static final String _MASTER_PAGE_IGNORED_MESSAGE_KEY =
+		"x-was-ignored-because-a-master-page-with-the-same-key-already-exists";
+
+	private static final String _MASTER_PAGE_INVALID_MESSAGE_KEY =
+		"x-was-ignored-because-a-master-page-with-the-same-key-already-exists";
+
+	private static final String _PAGE_TEMPLATE_IGNORED_MESSAGE_KEY =
+		"x-was-ignored-because-a-page-template-with-the-same-key-already-" +
+			"exists";
+
+	private static final String _PAGE_TEMPLATE_INVALID_MESSAGE_KEY =
+		"x-could-not-be-imported-because-a-master-page-with-the-same-name-" +
+			"already-exists";
 
 	private static final String[] _VALID_THUMBNAIL_EXTENSIONS = {
 		".bmp", ".gif", ".jpeg", ".jpg", ".png", ".svg", ".tiff"

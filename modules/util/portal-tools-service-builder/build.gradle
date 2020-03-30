@@ -19,10 +19,10 @@ dependencies {
 	compile group: "com.puppycrawl.tools", name: "checkstyle", version: "8.11"
 	compile group: "com.thoughtworks.qdox", name: "qdox", version: "2.0-M5"
 	compile group: "commons-io", name: "commons-io", version: "2.5"
-	compile group: "dom4j", name: "dom4j", transitive: false, version: "1.6.1"
 	compile group: "jalopy", name: "jalopy", transitive: false, version: "1.5rc3"
 	compile group: "jaxen", name: "jaxen", transitive: false, version: "1.1.1"
 	compile group: "log4j", name: "log4j", version: "1.2.17"
+	compile group: "org.dom4j", name: "dom4j", transitive: false, version: "2.1.1"
 	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.23"
 
 	compileOnly group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.1.0"

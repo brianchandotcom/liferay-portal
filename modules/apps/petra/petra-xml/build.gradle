@@ -1,5 +1,5 @@
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly group: "dom4j", name: "dom4j", version: "1.6.1"
+	compileOnly group: "org.dom4j", name: "dom4j", version: "2.1.1"
 	compileOnly project(":core:petra:petra-string")
 }

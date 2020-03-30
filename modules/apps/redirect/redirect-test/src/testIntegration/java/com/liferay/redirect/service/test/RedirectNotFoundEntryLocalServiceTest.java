@@ -15,6 +15,7 @@
 package com.liferay.redirect.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -26,7 +27,12 @@ import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 import com.liferay.redirect.test.util.RedirectTestUtil;
 
+import java.time.Duration;
+import java.time.Instant;
+
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -119,6 +125,59 @@ public class RedirectNotFoundEntryLocalServiceTest {
 			() -> Assert.assertNull(_addOrUpdateRedirectNotFoundEntry("url")));
 	}
 
+	@Test
+	public void testGetRedirectNotFoundEntries() throws Exception {
+		RedirectTestUtil.withRedirectEnabled(
+			() -> {
+				_addOrUpdateRedirectNotFoundEntry("url1");
+				_addOrUpdateRedirectNotFoundEntry("url2");
+				_addOrUpdateRedirectNotFoundEntry("url3");
+
+				List<RedirectNotFoundEntry> redirectNotFoundEntries =
+					_redirectNotFoundEntryLocalService.
+						getRedirectNotFoundEntries(
+							_group.getGroupId(), null, QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS, null);
+
+				Assert.assertEquals(
+					redirectNotFoundEntries.toString(), 3,
+					redirectNotFoundEntries.size());
+			});
+	}
+
+	@Test
+	public void testGetRedirectNotFoundEntriesWithMinimumModifiedDate()
+		throws Exception {
+
+		RedirectTestUtil.withRedirectEnabled(
+			() -> {
+				Instant instant = Instant.now();
+
+				Date minModifiedDate = Date.from(
+					instant.minus(Duration.ofDays(5)));
+
+				RedirectNotFoundEntry redirectNotFoundEntry =
+					_addOrUpdateRedirectNotFoundEntry("url1", new Date());
+				_addOrUpdateRedirectNotFoundEntry(
+					"url2", Date.from(instant.minus(Duration.ofDays(6))));
+				_addOrUpdateRedirectNotFoundEntry(
+					"url3", Date.from(instant.minus(Duration.ofDays(7))));
+
+				List<RedirectNotFoundEntry> redirectNotFoundEntries =
+					_redirectNotFoundEntryLocalService.
+						getRedirectNotFoundEntries(
+							_group.getGroupId(), minModifiedDate,
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+				Assert.assertEquals(
+					redirectNotFoundEntries.toString(), 1,
+					redirectNotFoundEntries.size());
+
+				Assert.assertEquals(
+					redirectNotFoundEntry, redirectNotFoundEntries.get(0));
+			});
+	}
+
 	private RedirectNotFoundEntry _addOrUpdateRedirectNotFoundEntry(
 		String url) {
 
@@ -131,6 +190,18 @@ public class RedirectNotFoundEntryLocalServiceTest {
 		}
 
 		return redirectNotFoundEntry;
+	}
+
+	private RedirectNotFoundEntry _addOrUpdateRedirectNotFoundEntry(
+		String url, Date date) {
+
+		RedirectNotFoundEntry redirectNotFoundEntry =
+			_addOrUpdateRedirectNotFoundEntry(url);
+
+		redirectNotFoundEntry.setModifiedDate(date);
+
+		return _redirectNotFoundEntryLocalService.updateRedirectNotFoundEntry(
+			redirectNotFoundEntry);
 	}
 
 	private Group _group;

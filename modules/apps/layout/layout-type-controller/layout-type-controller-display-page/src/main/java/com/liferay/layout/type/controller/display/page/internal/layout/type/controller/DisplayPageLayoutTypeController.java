@@ -18,11 +18,7 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvide
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.renderer.FragmentRendererController;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
-import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -186,13 +182,6 @@ public class DisplayPageLayoutTypeController
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 			}
 
-			httpServletRequest.setAttribute(
-				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER,
-				_fragmentRendererTracker);
-			httpServletRequest.setAttribute(
-				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER,
-				_infoDisplayContributorTracker);
-
 			addAttributes(httpServletRequest);
 
 			requestDispatcher.include(httpServletRequest, servletResponse);
@@ -345,17 +334,8 @@ public class DisplayPageLayoutTypeController
 	private FragmentRendererController _fragmentRendererController;
 
 	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
-
-	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
-
-	@Reference
 	private volatile List<InfoDisplayRequestAttributesContributor>
 		_infoDisplayRequestAttributesContributors;
-
-	@Reference
-	private InfoItemRendererTracker _infoItemRendererTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

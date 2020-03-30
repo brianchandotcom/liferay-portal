@@ -198,15 +198,15 @@ public class NodeWorkflowMetricsIndexerTest
 	}
 
 	@Inject(filter = "workflow.metrics.index.entity.name=node")
-	private static WorkflowMetricsIndexNameBuilder
+	private WorkflowMetricsIndexNameBuilder
 		_nodeWorkflowMetricsIndexNameBuilder;
 
 	@Inject(filter = "workflow.metrics.index.entity.name=sla-task-result")
-	private static WorkflowMetricsIndexNameBuilder
+	private WorkflowMetricsIndexNameBuilder
 		_slaTaskResultWorkflowMetricsIndexNameBuilder;
 
 	@Inject(filter = "workflow.metrics.index.entity.name=task")
-	private static WorkflowMetricsIndexNameBuilder
+	private WorkflowMetricsIndexNameBuilder
 		_taskWorkflowMetricsIndexNameBuilder;
 
 }

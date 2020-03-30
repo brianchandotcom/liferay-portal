@@ -120,15 +120,15 @@ public class ProcessWorkflowMetricsIndexerTest
 	}
 
 	@Inject(filter = "workflow.metrics.index.entity.name=instance")
-	private static WorkflowMetricsIndexNameBuilder
+	private WorkflowMetricsIndexNameBuilder
 		_instanceWorkflowMetricsIndexNameBuilder;
 
 	@Inject(filter = "workflow.metrics.index.entity.name=process")
-	private static WorkflowMetricsIndexNameBuilder
+	private WorkflowMetricsIndexNameBuilder
 		_processWorkflowMetricsIndexNameBuilder;
 
 	@Inject(filter = "workflow.metrics.index.entity.name=sla-instance-result")
-	private static WorkflowMetricsIndexNameBuilder
+	private WorkflowMetricsIndexNameBuilder
 		_slaInstanceResultWorkflowMetricsIndexNameBuilder;
 
 }

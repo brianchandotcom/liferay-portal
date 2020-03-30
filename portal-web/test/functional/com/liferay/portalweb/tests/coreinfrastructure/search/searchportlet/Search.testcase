@@ -249,9 +249,7 @@ definition {
 
 		Pagination.changePagination(itemsPerPage = "8");
 
-		//Workaround LPS-98391
-
-		/*var currentURL = selenium.getCurrentUrl();
+		var currentURL = selenium.getCurrentUrl();
 
 		echo("Current URL: ${currentURL} ");
 
@@ -281,7 +279,7 @@ definition {
 
 		if ((!(contains("${currentURL}", "delta"))) && (contains("${currentURL}", "start=1"))) {
 			fail("URL should preserve abscence of delta and modify start.");
-		}*/
+		}
 	}
 
 	@description = "This is a use case for LPS-95670."

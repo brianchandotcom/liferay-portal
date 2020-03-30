@@ -163,11 +163,6 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		return null;
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private BooleanQuery _createBooleanQuery(
 		long companyId, Date endDate, long processId, long slaDefinitionId,
 		Date startDate) {
@@ -620,6 +615,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
 	private WorkflowMetricsIndexNameBuilder
 		_instanceWorkflowMetricsIndexNameBuilder;
+
+	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference(target = "(workflow.metrics.index.entity.name=node)")
 	private WorkflowMetricsIndexNameBuilder

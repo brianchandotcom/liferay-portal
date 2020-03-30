@@ -43,6 +43,7 @@ import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsInde
 
 import java.time.Duration;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -324,6 +325,26 @@ public class InstanceWorkflowMetricsIndexerImpl
 					assetEntry.getTitleMap(), assetEntry.getDefaultLanguageId(),
 					assetEntry.getGroupId());
 			}
+
+			WorkflowHandler<?> workflowHandler =
+				WorkflowHandlerRegistryUtil.getWorkflowHandler(
+					kaleoInstance.getClassName());
+
+			if (workflowHandler != null) {
+				Map<Locale, String> localizationMap = new HashMap<>();
+
+				for (Locale availableLocale :
+						LanguageUtil.getAvailableLocales(
+							kaleoInstance.getGroupId())) {
+
+					localizationMap.put(
+						availableLocale,
+						workflowHandler.getTitle(
+							kaleoInstance.getClassPK(), availableLocale));
+				}
+
+				return localizationMap;
+			}
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -331,22 +352,7 @@ public class InstanceWorkflowMetricsIndexerImpl
 			}
 		}
 
-		WorkflowHandler<?> workflowHandler =
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(
-				kaleoInstance.getClassName());
-
-		Map<Locale, String> localizationMap = new HashMap<>();
-
-		for (Locale availableLocale :
-				LanguageUtil.getAvailableLocales(kaleoInstance.getGroupId())) {
-
-			localizationMap.put(
-				availableLocale,
-				workflowHandler.getTitle(
-					kaleoInstance.getClassPK(), availableLocale));
-		}
-
-		return localizationMap;
+		return Collections.emptyMap();
 	}
 
 	private Map<Locale, String> _createAssetTypeLocalizationMap(

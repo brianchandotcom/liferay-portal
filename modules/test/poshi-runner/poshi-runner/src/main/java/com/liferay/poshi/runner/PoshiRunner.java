@@ -24,10 +24,6 @@ import com.liferay.poshi.runner.util.Validator;
 
 import java.io.IOException;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -63,6 +59,36 @@ import org.openqa.selenium.remote.UnreachableBrowserException;
  */
 @RunWith(Parameterized.class)
 public class PoshiRunner {
+
+	@AfterClass
+	public static void evaluateResults() throws IOException {
+		StringBuilder sb = new StringBuilder();
+
+		for (Map.Entry<String, List<String>> testResult :
+				_testResults.entrySet()) {
+
+			List<String> testResultMessages = testResult.getValue();
+
+			if (testResultMessages.size() == 1) {
+				continue;
+			}
+
+			int passes = Collections.frequency(testResultMessages, "PASS");
+
+			int failures = testResultMessages.size() - passes;
+
+			if ((passes > 0) && (failures > 0)) {
+				sb.append("\n");
+				sb.append(testResult.getKey());
+			}
+		}
+
+		if (sb.length() != 0) {
+			FileUtil.write(
+				FileUtil.getCanonicalPath(".") + "/test-results/flaky-tests",
+				sb.toString());
+		}
+	}
 
 	@Parameterized.Parameters(name = "{0}")
 	public static List<String> getList() throws Exception {

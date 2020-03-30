@@ -90,6 +90,7 @@ definition {
 	@description = "This ensures that OG tags will not appear when Open Graph is disabled."
 	@priority = "5"
 	test DisableConfiguration {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenGraph#DisableConfiguration";
 		var portalURL = PropsUtil.get("portal.url");
 

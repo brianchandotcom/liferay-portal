@@ -64,6 +64,8 @@ definition {
 	@description = "This makes sure that the user can change the default image for OpenGraph at the site level."
 	@priority = "5"
 	test ChangeSiteImage {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		for (var imageNumber : list "1,2") {
@@ -436,7 +438,6 @@ definition {
 	@priority = "5"
 	test ViewImageWithMetaTags {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "OpenGraphImages#ViewImageWithMetaTags";
 
 		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name");

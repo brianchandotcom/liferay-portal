@@ -204,6 +204,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 					value = _fragmentEntryProcessorHelper.processTemplate(
 						value, fragmentEntryProcessorContext);
 				}
+				else {
+					value = editableValueJSONObject.getString("defaultValue");
+				}
 			}
 			else {
 				value = _fragmentEntryProcessorHelper.getEditableValue(

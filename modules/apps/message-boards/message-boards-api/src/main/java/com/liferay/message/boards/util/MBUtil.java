@@ -63,15 +63,7 @@ public class MBUtil {
 	}
 
 	public static boolean isValidMessageFormat(String messageFormat) {
-		if (messageFormat.equals("bbcode")) {
-			return false;
-		}
-
-		if (!ArrayUtil.contains(MBMessageConstants.FORMATS, messageFormat)) {
-			return false;
-		}
-
-		return true;
+		return ArrayUtil.contains(MBMessageConstants.FORMATS, messageFormat);
 	}
 
 }

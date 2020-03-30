@@ -197,6 +197,13 @@
 		"FragmentLink": {
 			"additionalProperties": false,
 			"properties": {
+				"href": {
+					"oneOf": [
+						{
+							"$ref": "#/definitions/InlineValue"
+						}
+					]
+				},
 				"target": {
 					"enum": [
 						"Blank",
@@ -206,13 +213,6 @@
 					],
 					"title": "The target Schema",
 					"type": "string"
-				},
-				"value": {
-					"oneOf": [
-						{
-							"$ref": "#/definitions/InlineLink"
-						}
-					]
 				}
 			},
 			"title": "The FragmentLink Schema",
@@ -250,17 +250,6 @@
 				"unallowedFragments"
 			],
 			"title": "The FragmentSettingsUnallowed Schema",
-			"type": "object"
-		},
-		"InlineLink": {
-			"additionalProperties": false,
-			"properties": {
-				"href": {
-					"title": "The href Schema",
-					"type": "string"
-				}
-			},
-			"title": "The InlineLink Schema",
 			"type": "object"
 		},
 		"InlineValue": {

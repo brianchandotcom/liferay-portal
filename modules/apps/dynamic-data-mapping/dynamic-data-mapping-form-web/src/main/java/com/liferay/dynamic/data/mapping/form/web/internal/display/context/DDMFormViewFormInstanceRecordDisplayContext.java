@@ -93,7 +93,7 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 		DDMFormRenderingContext formRenderingContext =
 			createDDMFormRenderingContext(
 				structureVersion.getDDMForm(),
-				ParamUtil.get(renderRequest, "readOnly", true));
+				ParamUtil.getBoolean(renderRequest, "readOnly", true));
 
 		DDMFormValues formValues = getDDMFormValues(
 			renderRequest, formInstanceRecord, structureVersion);

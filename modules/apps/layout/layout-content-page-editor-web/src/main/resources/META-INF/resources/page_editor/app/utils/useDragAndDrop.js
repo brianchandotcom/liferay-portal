@@ -315,9 +315,9 @@ export default function useDragAndDrop({
 						dropTargetItemId:
 							dropTargetItem.type ===
 							LAYOUT_DATA_ITEM_TYPES.fragment
-								? dropTargetItem.parentId
+								? toControlsId(dropTargetItem.parentId)
 								: dropTargetItem.itemId !== dropItem.parentId &&
-								  dropTargetItem.itemId,
+								  toControlsId(dropTargetItem.itemId),
 						droppable: isNestingSupported(
 							dropItem.type,
 							dropTargetItem.type

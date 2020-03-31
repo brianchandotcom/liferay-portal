@@ -11600,6 +11600,12 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<if>
 			<isset property="node.count" />
 			<then>
+				<condition property="non.numeric">
+					<matches pattern="[^0-9]" string="${node.count}" />
+				</condition>
+
+				<fail if="non.numeric" message="node.count property must be a number" />
+
 				<math
 					datatype="int"
 					operand1="${node.count}"

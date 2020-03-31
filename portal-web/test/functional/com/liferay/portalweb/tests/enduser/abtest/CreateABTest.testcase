@@ -46,7 +46,7 @@ definition {
 	@description = "Validate if the user can create an A/B Test"
 	@priority = "5"
 	test CreateABTestByBounceRate {
-		ABTest.createABTestByBounceRate(testTitle = "AB test title");
+		ABTest.createABTestByBounceRate(testTitle = "Create A/B Test Title");
 
 		ABTest.createVariant(variantName = "Variant name");
 

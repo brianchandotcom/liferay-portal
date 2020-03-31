@@ -14,7 +14,10 @@
 
 package com.liferay.redirect.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -30,6 +33,7 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -47,6 +51,7 @@ import com.liferay.portal.search.filter.FilterBuilders;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalServiceUtil;
 import com.liferay.redirect.web.internal.search.RedirectNotFoundEntrySearch;
+import com.liferay.redirect.web.internal.security.permission.resource.RedirectPermission;
 import com.liferay.redirect.web.internal.util.comparator.RedirectComparator;
 import com.liferay.redirect.web.internal.util.comparator.RedirectDateComparator;
 
@@ -63,6 +68,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -82,6 +88,34 @@ public class RedirectNotFoundEntriesDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public DropdownItemList getActionDropdownItems(
+		RedirectNotFoundEntry redirectNotFoundEntry) {
+
+		return DropdownItemListBuilder.add(
+			() -> RedirectPermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY),
+			dropdownItem -> {
+				RenderURL editRedirectEntryURL =
+					_liferayPortletResponse.createRenderURL();
+
+				editRedirectEntryURL.setParameter(
+					"mvcRenderCommandName", "/redirect/edit_redirect_entry");
+
+				editRedirectEntryURL.setParameter(
+					"redirect", _themeDisplay.getURLCurrent());
+
+				editRedirectEntryURL.setParameter(
+					"sourceURL", redirectNotFoundEntry.getUrl());
+
+				dropdownItem.setHref(editRedirectEntryURL);
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "create-redirect"));
+			}
+		).build();
 	}
 
 	public String getSearchContainerId() {

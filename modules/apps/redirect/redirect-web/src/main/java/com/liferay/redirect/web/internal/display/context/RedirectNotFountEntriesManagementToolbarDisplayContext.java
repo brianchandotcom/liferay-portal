@@ -25,7 +25,10 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.redirect.service.RedirectNotFoundEntryLocalServiceUtil;
 
 import java.util.List;
 
@@ -105,6 +108,19 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 		searchActionURL.setParameter("orderByType", getOrderByType());
 
 		return searchActionURL.toString();
+	}
+
+	@Override
+	public Boolean isDisabled() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		int redirectNotFoundEntriesCount =
+			RedirectNotFoundEntryLocalServiceUtil.
+				getRedirectNotFoundEntriesCount(
+					themeDisplay.getScopeGroupId(), null, null);
+
+		return redirectNotFoundEntriesCount == 0;
 	}
 
 	@Override

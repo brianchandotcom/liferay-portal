@@ -33,12 +33,6 @@ import org.json.JSONObject;
  */
 public class SpiraTestCaseType extends BaseSpiraArtifact {
 
-	public static void main(String[] args) {
-		SpiraProject spiraProject = SpiraProject.getSpiraProjectByID(12);
-
-		System.out.println(spiraProject.getSpiraTestCaseTypeByName("Poshi"));
-	}
-
 	protected static List<SpiraTestCaseType> getSpiraTestCaseTypes(
 		final SpiraProject spiraProject,
 		SearchQuery.SearchParameter... searchParameters) {

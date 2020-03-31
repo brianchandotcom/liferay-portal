@@ -31,6 +31,10 @@ public interface FragmentEntryProcessorRegistry {
 		return null;
 	}
 
+	public default JSONArray getDataAttributesJSONArray() {
+		return null;
+	}
+
 	public JSONObject getDefaultEditableValuesJSONObject(
 		String html, String configuration);
 

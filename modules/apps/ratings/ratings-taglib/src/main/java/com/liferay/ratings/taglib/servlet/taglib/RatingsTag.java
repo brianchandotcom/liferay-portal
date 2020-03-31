@@ -213,7 +213,7 @@ public class RatingsTag extends IncludeTag {
 
 	private double _getInitialAverageScore(RatingsStats ratingsStats) {
 		if (ratingsStats != null) {
-			return ratingsStats.getAverageScore() * getNumberOfStars();
+			return ratingsStats.getAverageScore();
 		}
 
 		return 0;

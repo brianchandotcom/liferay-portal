@@ -41,6 +41,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -88,6 +89,9 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 				hasManageFragmentEntriesPermission &&
 				(_fragmentComposition.getPreviewFileEntryId() > 0),
 			_getDeleteFragmentCompositionPreviewActionUnsafeConsumer()
+		).add(
+			() -> hasManageFragmentEntriesPermission,
+			_getExportFragmentCompositionActionUnsafeConsumer()
 		).add(
 			() -> hasManageFragmentEntriesPermission,
 			_getDeleteFragmentCompositionActionUnsafeConsumer()
@@ -143,6 +147,25 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 					_fragmentComposition.getFragmentCompositionId()));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "remove-thumbnail"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getExportFragmentCompositionActionUnsafeConsumer() {
+
+		ResourceURL exportFragmentEntryURL =
+			_renderResponse.createResourceURL();
+
+		exportFragmentEntryURL.setParameter(
+			"fragmentCompositionId",
+			String.valueOf(_fragmentComposition.getFragmentCompositionId()));
+		exportFragmentEntryURL.setResourceID(
+			"/fragment/export_fragment_compositions_and_fragment_entries");
+
+		return dropdownItem -> {
+			dropdownItem.setHref(exportFragmentEntryURL);
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "export"));
 		};
 	}
 

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -302,6 +303,115 @@ public class CTCollectionLocalServiceTest {
 	}
 
 	@Test
+	public void testDeletePreDeletedLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		Assert.assertEquals(
+			layout, _layoutLocalService.fetchLayout(layout.getPlid()));
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			_layoutLocalService.deleteLayout(layout);
+
+			Assert.assertNull(
+				_layoutLocalService.fetchLayout(layout.getPlid()));
+		}
+
+		_layoutLocalService.deleteLayout(layout);
+
+		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+
+		_ctCollection2 = _ctCollectionLocalService.undoCTCollection(
+			_ctCollection.getCtCollectionId(), _ctCollection.getUserId(),
+			_ctCollection.getName() + " (undo)", StringPool.BLANK);
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection2.getUserId(), _ctCollection2.getCtCollectionId());
+
+		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
+	}
+
+	@Test
+	public void testDeletePreDeletedLayoutWithTwoCollections()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		Assert.assertEquals(
+			layout, _layoutLocalService.fetchLayout(layout.getPlid()));
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			_layoutLocalService.deleteLayout(layout);
+
+			Assert.assertNull(
+				_layoutLocalService.fetchLayout(layout.getPlid()));
+		}
+
+		_ctCollection2 = _ctCollectionLocalService.addCTCollection(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			StringUtil.randomString(), StringUtil.randomString());
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection2.getCtCollectionId())) {
+
+			_layoutLocalService.deleteLayout(layout);
+
+			Assert.assertNull(
+				_layoutLocalService.fetchLayout(layout.getPlid()));
+		}
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+
+		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection2.getUserId(), _ctCollection2.getCtCollectionId());
+
+		_ctCollection3 = _ctCollectionLocalService.undoCTCollection(
+			_ctCollection.getCtCollectionId(), _ctCollection.getUserId(),
+			_ctCollection.getName() + " (undo)", StringPool.BLANK);
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection3.getCtCollectionId())) {
+
+			Assert.assertEquals(
+				layout, _layoutLocalService.fetchLayout(layout.getPlid()));
+		}
+
+		_ctCollection4 = _ctCollectionLocalService.undoCTCollection(
+			_ctCollection2.getCtCollectionId(), _ctCollection2.getUserId(),
+			_ctCollection2.getName() + " (undo)", StringPool.BLANK);
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection4.getCtCollectionId())) {
+
+			Assert.assertNull(
+				_layoutLocalService.fetchLayout(layout.getPlid()));
+		}
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection3.getUserId(), _ctCollection3.getCtCollectionId());
+
+		Assert.assertEquals(
+			layout, _layoutLocalService.fetchLayout(layout.getPlid()));
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection4.getUserId(), _ctCollection4.getCtCollectionId());
+	}
+
+	@Test
 	public void testUndoCTCollection() throws Exception {
 		Layout addedLayout = null;
 
@@ -452,6 +562,12 @@ public class CTCollectionLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection2;
+
+	@DeleteAfterTestRun
+	private CTCollection _ctCollection3;
+
+	@DeleteAfterTestRun
+	private CTCollection _ctCollection4;
 
 	@DeleteAfterTestRun
 	private Group _group;

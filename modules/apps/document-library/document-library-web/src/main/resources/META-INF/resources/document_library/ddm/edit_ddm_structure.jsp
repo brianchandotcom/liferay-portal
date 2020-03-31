@@ -56,6 +56,7 @@ renderResponse.setTitle(title);
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 		<aui:input name="dataDefinition" type="hidden" />
 		<aui:input name="dataLayout" type="hidden" />
+		<aui:input name="definition" type="hidden" />
 		<aui:input name="status" type="hidden" />
 
 		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />

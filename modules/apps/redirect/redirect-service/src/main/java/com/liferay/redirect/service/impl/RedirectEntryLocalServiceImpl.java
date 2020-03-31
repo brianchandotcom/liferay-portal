@@ -28,6 +28,8 @@ import com.liferay.redirect.exception.DuplicateRedirectEntrySourceURLException;
 import com.liferay.redirect.exception.RequiredRedirectEntryDestinationURLException;
 import com.liferay.redirect.exception.RequiredRedirectEntrySourceURLException;
 import com.liferay.redirect.model.RedirectEntry;
+import com.liferay.redirect.model.RedirectNotFoundEntry;
+import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 import com.liferay.redirect.service.base.RedirectEntryLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -108,6 +110,15 @@ public class RedirectEntryLocalServiceImpl
 		else {
 			addEntryResources(
 				redirectEntry, serviceContext.getModelPermissions());
+		}
+
+		RedirectNotFoundEntry redirectNotFoundEntry =
+			_redirectNotFoundEntryLocalService.fetchRedirectNotFoundEntry(
+				groupId, sourceURL);
+
+		if (redirectNotFoundEntry != null) {
+			_redirectNotFoundEntryLocalService.deleteRedirectNotFoundEntry(
+				redirectNotFoundEntry);
 		}
 
 		return redirectEntry;
@@ -191,5 +202,9 @@ public class RedirectEntryLocalServiceImpl
 
 	@Reference
 	private RedirectConfiguration _redirectConfiguration;
+
+	@Reference
+	private RedirectNotFoundEntryLocalService
+		_redirectNotFoundEntryLocalService;
 
 }

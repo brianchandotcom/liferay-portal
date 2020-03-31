@@ -21,7 +21,7 @@ import Hint from './Hint';
 
 const KEYWORD_VALUE_TYPE = [
 	{label: Liferay.Language.get('traffic'), name: 'traffic'},
-	{label: Liferay.Language.get('volume'), name: 'volume'},
+	{label: Liferay.Language.get('search-volume'), name: 'volume'},
 	{label: Liferay.Language.get('position'), name: 'position'},
 ];
 

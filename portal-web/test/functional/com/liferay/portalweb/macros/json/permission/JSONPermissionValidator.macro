@@ -4,8 +4,8 @@ definition {
 	macro validateRoleType {
 		Variables.assertDefined(parameterList = "${roleType}");
 
-		if (!(contains("regular,site,organization", "${roleType}"))) {
-			fail("Invalid 'roleType', '${roleType}' must be 'regular/site/organization'.");
+		if (!(contains("asset library,regular,site,organization", "${roleType}"))) {
+			fail("Invalid 'roleType', '${roleType}' must be 'asset library/regular/site/organization'.");
 		}
 	}
 

@@ -3,9 +3,16 @@ definition {
 	macro addOrganization {
 		Variables.assertDefined(parameterList = "${organizationName}");
 
+		if (isSet(parentOrganizationName)) {
+			var parentOrganizationId = JSONOrganization.getOrganizationIdByName(
+				organizationName = "${parentOrganizationName}"
+			);
+		}
+
 		JSONOrganizationAPI._addOrganization(
 			organizationName = "${organizationName}",
-			organizationSite = "${organizationSite}");
+			organizationSite = "${organizationSite}",
+			parentOrganizationId = "${parentOrganizationId}");
 	}
 
 	macro assignUserToOrganization {

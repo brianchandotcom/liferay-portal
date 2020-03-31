@@ -9,12 +9,19 @@ definition {
 			var organizationSite = "false";
 		}
 
+		if (isSet(parentOrganizationId)) {
+			var parentOrganizationId = "${parentOrganizationId}";
+		}
+		else {
+			var parentOrganizationId = "0";
+		}
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/api/jsonws/organization/add-organization \
 				-u test@liferay.com:test \
-				-d parentOrganizationId=0 \
+				-d parentOrganizationId=${parentOrganizationId} \
 				-d name=${organizationNameEncoded} \
 				-d type=organization \
 				-d regionId=0 \

@@ -974,18 +974,28 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			</else>
 		</if>
 
-		<condition else="${git.working.branch.name}-private" property="to.branch.name" value="${git.working.branch.name}">
-			<antelope:endswith string="${git.working.branch.name}" with="-private" />
-		</condition>
+		<local name="public.branch.name" />
+
+		<propertyregex
+			input="${git.working.branch.name}"
+			property="public.branch.name"
+			regexp="(.*)(-private)?$"
+			select="\1"
+		/>
+
+		<local name="private.branch.name" />
+
+		<property name="private.branch.name" value="${public.branch.name}-private" />
 
 		<ant antfile="build-working-dir.xml" inheritAll="false" target="prepare-profile-dxp-properties">
-			<property name="from.branch.name" value="${git.working.branch.name}" />
 			<property name="git.working.branch.name" value="${git.working.branch.name}" />
-			<property name="to.branch.name" value="${to.branch.name}" />
+			<property name="private.branch.name" value="${private.branch.name}" />
+			<property name="public.branch.name" value="${public.branch.name}" />
 		</ant>
 
 		<ant antfile="build-working-dir.xml" inheritAll="false" target="checkout-private-projects">
-			<property file="working.dir.properties" />
+			<property name="private.branch.name" value="${private.branch.name}" />
+			<property name="public.branch.name" value="${public.branch.name}" />
 		</ant>
 
 		<gradle-execute setupbinariescache="false" task="removeDXPScript">

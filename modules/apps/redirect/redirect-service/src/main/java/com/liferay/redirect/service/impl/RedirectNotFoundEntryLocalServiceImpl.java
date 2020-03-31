@@ -74,6 +74,13 @@ public class RedirectNotFoundEntryLocalServiceImpl
 	}
 
 	@Override
+	public RedirectNotFoundEntry fetchRedirectNotFoundEntry(
+		long groupId, String url) {
+
+		return redirectNotFoundEntryPersistence.fetchByG_U(groupId, url);
+	}
+
+	@Override
 	public List<RedirectNotFoundEntry> getRedirectNotFoundEntries(
 		long groupId, Date minModifiedDate, int start, int end,
 		OrderByComparator<RedirectNotFoundEntry> obc) {

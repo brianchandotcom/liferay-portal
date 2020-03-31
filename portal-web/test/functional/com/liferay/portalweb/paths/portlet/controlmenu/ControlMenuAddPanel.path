@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>CONTENT_TITLE</td>
-	<td>//div[contains(@class,'list-group-item-content')]//*[contains(.,'${key_assetTitle}')]</td>
+	<td>//div[contains(@class,'drag-content-item')]//*[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

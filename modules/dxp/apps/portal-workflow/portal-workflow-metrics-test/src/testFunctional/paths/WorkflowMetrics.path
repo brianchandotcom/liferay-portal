@@ -184,13 +184,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_PERFORMANCE_BY_STEP_AVG_COMPLETION_TIME_VALUE</td>
+	<td>//tr[contains(*, '${rowName}')]//td[@data-testid='avgCompletionTime'] | //tr[contains(*, '${rowName}')]//td[@data-testid='durationTaskAvg']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_PERFORMANCE_BY_STEP_RANGE_DROPDOWN</td>
 	<td>xpath=(//button[contains(@class, 'dropdown-toggle')]//span[contains(@class, 'navbar-text-truncate')])[4]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>METRICS_SLA_BREACHED_VALUE</td>
-	<td>//tr[contains(*, '${rowName}')]//td[@data-testid='slaBreached']</td>
+	<td>METRICS_PERFORMANCE_BY_STEP_SLA_BREACHED_VALUE</td>
+	<td>//tr[contains(*, '${rowName}')]//td[@data-testid='slaBreached'] | //tr[contains(*, '${rowName}')]//td[@data-testid='stepSla']</td>
 	<td></td>
 </tr>
 <tr>
@@ -247,11 +252,6 @@
 <tr>
 	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_TABLE_POSITION</td>
 	<td>xpath=(//td[contains(@class, 'assignee-name')])[${key_rowNumber}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>METRICS_PERFORMANCE_BY_STEP_ROW_CHECK</td>
-	<td>//tr[${rowNumber}]//td[contains(text(), '${key_avgTime}')]</td>
 	<td></td>
 </tr>
 <tr>

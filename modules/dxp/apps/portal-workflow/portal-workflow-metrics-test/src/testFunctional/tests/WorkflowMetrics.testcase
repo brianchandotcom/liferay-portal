@@ -201,7 +201,7 @@ definition {
 	@description = "Apply filter for workload distribution for all assignees(LRQA-53632)"
 	@priority = "5"
 	test ApplyFilterForWorkloadDistribution {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 
 		property test.name.skip.portal.instance = "WorkflowMetrics#ApplyFilterForWorkloadDistribution";
 
@@ -219,7 +219,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Metrics");
 
-		WorkflowMetrics.createUsersAndAssignInstances(
+		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
 			numberOfBlogInstances = "5",
 			numberOfUsers = "5");
 
@@ -543,11 +543,11 @@ definition {
 	@description = "LRQA-53638 Automate LPS-100677: [Performance] Search for a step in all steps performance list and LRQA-53637 Automate LPS-100678: [Performance] Filter all step performance by completion period"
 	@priority = "5"
 	test SearchAndFilterOnPerformanceByStepPage {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 
 		property test.name.skip.portal.instance = "WorkflowMetrics#SearchAndFilterOnPerformanceByStepPage";
 
-		WorkflowMetrics.createUsersAndAssignInstances(
+		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
 			numberOfBlogInstances = "4",
 			numberOfUsers = "3");
 
@@ -610,6 +610,103 @@ definition {
 			isNotPresent = "",
 			slaBreachedValue = "0 (0%)",
 			stepName = "Update");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		WorkflowMetrics.selectDateRangePerformanceByStep(
+			completionVelocityDateRange = "Custom Range",
+			endDateRange = "11/11/2018",
+			startDateRange = "09/22/2018");
+
+		Click(
+			key_stepsNumber = "2",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN",
+			value1 = "Sep 22, 2018 - Nov 11, 2018");
+
+		WorkflowMetricsPerformanceByStep.viewPerformanceByStepValues(
+			avgCompletionTimeValue = "1min",
+			isNotPresent = "",
+			slaBreachedValue = "0 (0%)",
+			stepName = "Review");
+	}
+
+	@description = "LRQA-55450 [Performance] Search assignees in the performance of all assignees screen"
+	test SearchPerformanceOfAllAssignees {
+		property portal.upstream = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
+			numberOfBlogInstances = "3",
+			numberOfUsers = "3");
+
+		WorkflowMetrics.executeWorkflowScript(scriptName = "CompleteTasksAssignedToUsers.groovy");
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		Click(
+			key_assigneesNumber = "3",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
+
+		WorkflowMetrics.searchForAssigneeName(assigneeName = "1user");
+
+		WorkflowMetrics.viewPerformanceByAssignee(
+			assignee = "1user user1",
+			avgCompletionTime = "1min",
+			isNotPresent = "2user user2,3user user3",
+			taskCount = "1");
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "1Role");
+
+		WorkflowMetrics.viewPerformanceByAssignee(
+			assignee = "1user user1",
+			avgCompletionTime = "1min",
+			isNotPresent = "2user user2,3user user3",
+			taskCount = "1");
+
+		WorkflowMetrics.clearAllFilter();
+
+		WorkflowMetrics.searchForAssigneeName(assigneeName = "1user");
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "2Role");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No results were found.");
+
+		WorkflowMetrics.searchForAssigneeName(assigneeName = "something else");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No results were found.");
+
+		WorkflowMetrics.clearAllFilter();
+
+		WorkflowMetrics.viewPerformanceByAssignee(
+			assignee = "1user user1",
+			avgCompletionTime = "1min",
+			taskCount = "1");
+
+		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_ASSIGNEE_NAME");
 	}
 
 	@description = "LRQA-53647 Automate LPS-86638: [Reports] See a list of reports available for all running processes"
@@ -687,7 +784,7 @@ definition {
 	@priority = "5"
 	test VerifyAllItemsFilterFromMetrics {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#VerifyAllItemsFilterFromMetrics";
 
 		var key_workflowInstanceName = "Blog Entry Title";
@@ -936,7 +1033,6 @@ definition {
 	@description = "LRQA-53654 Automate LPS-88968: [Reports] View the summary of all pending items and what's their SLA status"
 	test ViewPendingItems {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewPendingItems";
 
 		var key_testSLADefinitionDays = "0";
@@ -1264,28 +1360,18 @@ definition {
 			timesToRun = "24");
 
 		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
+			avgCompletionTime = "1min",
 			rowName = "Review",
 			slaBreachedValue = "1 (50%)");
 
 		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
+			avgCompletionTime = "0min",
 			rowName = "Update",
 			slaBreachedValue = "0 (0%)");
-
-		AssertElementPresent(
-			key_avgTime = "0min",
-			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_CHECK",
-			rowNumber = "2");
-
-		AssertElementPresent(
-			key_avgTime = "1min",
-			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_CHECK",
-			rowNumber = "1");
 	}
 
 	@description = "LRQA-53631 Automate LPS-97666: [Performance] View top assignee performance"
 	test ViewTopAsigneePerformance {
-		property portal.upstream = "quarantine";
-
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewTopAsigneePerformance";
 
@@ -1384,14 +1470,19 @@ definition {
 	@description = "LRQA-53641 Automate LPS-97669 [Dashboard] View overloaded assignees"
 	@priority = "5"
 	test ViewWorkloadByAssigneeCard {
-		property portal.upstream = "quarantine";
-
+		property portal.upstream = "true";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneeCard";
 
 		WorkflowMetrics.createUsersAndAssignInstances(
-			numberOfBlogInstances = "4",
+			numberOfBlogInstances = "3",
 			numberOfUsers = "3");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry 4 Content",
+			entryTitle = "Blogs Entry Title 4");
+
+		WorkflowMetrics.executeWorkflowScript(scriptName = "assignOpenTasksToUsers.groovy");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 

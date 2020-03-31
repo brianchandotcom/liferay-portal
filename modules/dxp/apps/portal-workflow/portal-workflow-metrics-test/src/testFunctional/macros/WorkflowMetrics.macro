@@ -67,13 +67,19 @@ definition {
 	}
 
 	macro assertChartTotalValuePerformanceByStep {
+		var key_avgCompletionTime = "${avgCompletionTime}";
 		var key_SLABreachedValue = "${slaBreachedValue}";
 		var key_rowName = "${rowName}";
 
 		AssertTextEquals(
-			locator1 = "WorkflowMetrics#METRICS_SLA_BREACHED_VALUE",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_SLA_BREACHED_VALUE",
 			rowName = "${key_rowName}",
 			value1 = "${key_SLABreachedValue}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_AVG_COMPLETION_TIME_VALUE",
+			rowName = "${key_rowName}",
+			value1 = "${key_avgCompletionTime}");
 	}
 
 	macro assertDefaultChartRangesAndUnits {

@@ -275,6 +275,7 @@ public class DataLayoutUtil {
 				).toArray(
 					Map[]::new
 				));
+
 			dataRule.setLogicalOperator(spiDDMFormRule.getLogicalOperator());
 
 			dataRules = ArrayUtil.append(dataRules, dataRule);

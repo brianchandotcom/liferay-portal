@@ -1135,7 +1135,7 @@ private String _downloadFile(File destinationDir, String... urls) {
 			return url
 		}
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 5; i++) {
 			try {
 				FileUtil.get(project, url, project.properties['systemProp.repository.private.username'], project.properties['systemProp.repository.private.password'], file, false, true)
 

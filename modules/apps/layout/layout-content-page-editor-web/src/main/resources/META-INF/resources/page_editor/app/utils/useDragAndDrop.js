@@ -274,6 +274,7 @@ export default function useDragAndDrop({
 				items: layoutData.items,
 				targetPositionWithMiddle: newTargetPositionWithMiddle,
 				targetPositionWithoutMiddle: newTargetPositionWithoutMiddle,
+				toControlsId,
 			});
 
 			switch (result) {
@@ -391,6 +392,7 @@ function checkElevate({
 	dropTargetItem,
 	hoverBoundingRect,
 	items,
+	toControlsId,
 }) {
 	const parent = items[dropTargetItem.parentId];
 
@@ -428,11 +430,13 @@ function checkElevate({
 	}
 
 	if (dropItem.type === LAYOUT_DATA_ITEM_TYPES.container) {
+		const ancestor = items[getAncestorId(parent, toControlsId)] || parent;
+
 		return (
 			isElevate &&
-			(parent.type === LAYOUT_DATA_ITEM_TYPES.root ||
-				(items[parent.parentId] &&
-					items[parent.parentId].type ===
+			(ancestor.type === LAYOUT_DATA_ITEM_TYPES.root ||
+				(items[ancestor.parentId] &&
+					items[ancestor.parentId].type ===
 						LAYOUT_DATA_ITEM_TYPES.root))
 		);
 	}
@@ -453,6 +457,7 @@ function isValidMoveToTargetPosition({
 	dropTargetItem,
 	items,
 	targetPositionWithMiddle,
+	toControlsId,
 }) {
 	const {children} = items[
 		dropTargetItem.parentId !== ''
@@ -478,7 +483,9 @@ function isValidMoveToTargetPosition({
 	if (dropItem.type === LAYOUT_DATA_ITEM_TYPES.container) {
 		const parent = items[dropTargetItem.parentId];
 
-		if (!parent || parent.type !== LAYOUT_DATA_ITEM_TYPES.root) {
+		const ancestor = items[getAncestorId(parent, toControlsId)] || parent;
+
+		if (!ancestor || ancestor.type !== LAYOUT_DATA_ITEM_TYPES.root) {
 			return false;
 		}
 	}

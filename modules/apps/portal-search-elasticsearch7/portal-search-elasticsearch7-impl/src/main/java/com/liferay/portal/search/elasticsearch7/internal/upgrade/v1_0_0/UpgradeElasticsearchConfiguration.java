@@ -16,7 +16,9 @@ package com.liferay.portal.search.elasticsearch7.internal.upgrade.v1_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration;
@@ -47,33 +49,21 @@ public class UpgradeElasticsearchConfiguration extends UpgradeProcess {
 		Configuration elasticsearchConfiguration = _getConfiguration(
 			ElasticsearchConfiguration.class.getName());
 
-		if (elasticsearchConfiguration == null) {
-			return;
-		}
-
 		Dictionary<String, Object> elasticsearchConfigurationProperties =
-			elasticsearchConfiguration.getProperties();
+			new HashMapDictionary<>();
+
+		if (elasticsearchConfiguration != null) {
+			elasticsearchConfigurationProperties =
+				elasticsearchConfiguration.getProperties();
+		}
 
 		String operationMode = GetterUtil.getString(
 			elasticsearchConfigurationProperties.get("operationMode"));
 
-		if (!operationMode.equals("REMOTE")) {
-			Configuration elasticsearchConnectionConfiguration =
-				_getDefaultConfiguration(
-					ElasticsearchConnectionConfiguration.class.getName());
+		if ((elasticsearchConfiguration == null) ||
+			!operationMode.equals("REMOTE")) {
 
-			if (elasticsearchConnectionConfiguration == null) {
-				return;
-			}
-
-			Dictionary<String, Object>
-				elasticsearchConnectionConfigurationProperties =
-					elasticsearchConnectionConfiguration.getProperties();
-
-			elasticsearchConnectionConfigurationProperties.put("active", false);
-
-			elasticsearchConnectionConfiguration.update(
-				elasticsearchConnectionConfigurationProperties);
+			_setDefaultConfigurationActivePropertyToFalse();
 
 			return;
 		}
@@ -88,6 +78,9 @@ public class UpgradeElasticsearchConfiguration extends UpgradeProcess {
 
 			elasticsearchConfiguration.update(
 				elasticsearchConfigurationProperties);
+		}
+		else if (!remoteClusterConnectionId.equals("remote")) {
+			_setDefaultConfigurationActivePropertyToFalse();
 		}
 	}
 
@@ -114,6 +107,10 @@ public class UpgradeElasticsearchConfiguration extends UpgradeProcess {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			filterString);
 
+		if (ArrayUtil.isEmpty(configurations)) {
+			return null;
+		}
+
 		for (Configuration configuration : configurations) {
 			Dictionary<String, Object> properties =
 				configuration.getProperties();
@@ -127,6 +124,27 @@ public class UpgradeElasticsearchConfiguration extends UpgradeProcess {
 		}
 
 		return null;
+	}
+
+	private void _setDefaultConfigurationActivePropertyToFalse()
+		throws Exception {
+
+		Configuration elasticsearchConnectionConfiguration =
+			_getDefaultConfiguration(
+				ElasticsearchConnectionConfiguration.class.getName());
+
+		if (elasticsearchConnectionConfiguration == null) {
+			return;
+		}
+
+		Dictionary<String, Object>
+			elasticsearchConnectionConfigurationProperties =
+				elasticsearchConnectionConfiguration.getProperties();
+
+		elasticsearchConnectionConfigurationProperties.put("active", false);
+
+		elasticsearchConnectionConfiguration.update(
+			elasticsearchConnectionConfigurationProperties);
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;

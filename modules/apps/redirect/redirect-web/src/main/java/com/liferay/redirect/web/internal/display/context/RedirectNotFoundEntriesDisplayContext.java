@@ -67,6 +67,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionURL;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderURL;
 
@@ -94,6 +96,38 @@ public class RedirectNotFoundEntriesDisplayContext {
 		RedirectNotFoundEntry redirectNotFoundEntry) {
 
 		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				ActionURL editRedirectNotFoundEntryURL =
+					_liferayPortletResponse.createActionURL();
+
+				editRedirectNotFoundEntryURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/redirect/edit_redirect_not_found_entry");
+
+				editRedirectNotFoundEntryURL.setParameter(
+					"ignored",
+					String.valueOf(!redirectNotFoundEntry.isIgnored()));
+
+				editRedirectNotFoundEntryURL.setParameter(
+					"redirect", _themeDisplay.getURLCurrent());
+
+				editRedirectNotFoundEntryURL.setParameter(
+					"redirectNotFoundEntryId",
+					String.valueOf(
+						redirectNotFoundEntry.getRedirectNotFoundEntryId()));
+
+				dropdownItem.setHref(editRedirectNotFoundEntryURL);
+
+				String label = "ignore";
+
+				if (redirectNotFoundEntry.isIgnored()) {
+					label = "unignore";
+				}
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, label));
+			}
+		).add(
 			() -> RedirectPermission.contains(
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY),

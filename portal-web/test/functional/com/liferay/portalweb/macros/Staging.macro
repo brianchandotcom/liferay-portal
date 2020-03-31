@@ -1164,6 +1164,14 @@ definition {
 			locator1 = "Select#DATE_RANGE_END_DATE_VALUE");
 	}
 
+	macro viewDefaultConfiguration {
+		for (var configurationName : list "${configurationNameList}") {
+			var key_checkboxName = "${configurationName}";
+
+			AssertChecked(locator1 = "StagingPublishToLive#STAGING_CONFIGURATION_CHECKBOX");
+		}
+	}
+
 	macro viewEditedSitePagesVariationPG {
 		var key_sitePagesVariationName = "${sitePagesVariationName}";
 

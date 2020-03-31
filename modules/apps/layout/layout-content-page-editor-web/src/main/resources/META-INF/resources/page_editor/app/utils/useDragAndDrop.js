@@ -318,10 +318,16 @@ export default function useDragAndDrop({
 								? toControlsId(dropTargetItem.parentId)
 								: dropTargetItem.itemId !== dropItem.parentId &&
 								  toControlsId(dropTargetItem.itemId),
-						droppable: isNestingSupported(
-							dropItem.type,
-							dropTargetItem.type
-						),
+						droppable:
+							isNestingSupported(
+								dropItem.type,
+								dropTargetItem.type
+							) &&
+							!draggingCollectionInCollection(
+								dropItem,
+								dropTargetItem,
+								layoutData.items
+							),
 						targetPositionWithMiddle: TARGET_POSITION.MIDDLE,
 						targetPositionWithoutMiddle: newTargetPositionWithoutMiddle,
 					});

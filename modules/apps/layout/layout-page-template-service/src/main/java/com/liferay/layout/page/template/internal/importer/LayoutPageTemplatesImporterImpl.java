@@ -161,7 +161,7 @@ public class LayoutPageTemplatesImporterImpl
 	}
 
 	private String _getErrorMessage(
-			long groupId, String languageKey, String resourceName)
+			long groupId, String languageKey, String[] arguments)
 		throws PortalException {
 
 		Locale locale = null;
@@ -179,7 +179,7 @@ public class LayoutPageTemplatesImporterImpl
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return _language.format(resourceBundle, languageKey, resourceName);
+		return _language.format(resourceBundle, languageKey, arguments);
 	}
 
 	private List<FragmentEntryLink> _getFragmentEntryLinks(
@@ -320,7 +320,7 @@ public class LayoutPageTemplatesImporterImpl
 							groupId,
 							"x-could-not-be-imported-because-its-page-" +
 								"definition-is-invalid",
-							zipEntry.getName())));
+							new String[] {zipEntry.getName()})));
 			}
 		}
 
@@ -444,7 +444,7 @@ public class LayoutPageTemplatesImporterImpl
 							groupId,
 							"x-could-not-be-imported-because-its-page-" +
 								"definition-is-invalid",
-							zipEntry.getName())));
+							new String[] {zipEntry.getName()})));
 			}
 		}
 
@@ -640,7 +640,6 @@ public class LayoutPageTemplatesImporterImpl
 
 	private void _processLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId,
-			String ignoredMessage, String invalidMessage,
 			LayoutPageTemplateEntry layoutPageTemplateEntry, String name,
 			PageDefinition pageDefinition, int layoutPageTemplateEntryType,
 			boolean overwrite, ZipEntry thumbnailZipEntry, String zipPath,
@@ -694,7 +693,12 @@ public class LayoutPageTemplatesImporterImpl
 					new LayoutPageTemplatesImporterResultEntry(
 						name,
 						LayoutPageTemplatesImporterResultEntry.Status.IGNORED,
-						_getErrorMessage(groupId, ignoredMessage, zipPath)));
+						_getErrorMessage(
+							groupId, _IGNORED_MESSAGE_KEY,
+							new String[] {
+								zipPath,
+								_toTypeName(layoutPageTemplateEntryType)
+							})));
 			}
 		}
 		catch (PortalException portalException) {
@@ -705,7 +709,11 @@ public class LayoutPageTemplatesImporterImpl
 			_layoutPageTemplatesImporterResultEntries.add(
 				new LayoutPageTemplatesImporterResultEntry(
 					name, LayoutPageTemplatesImporterResultEntry.Status.INVALID,
-					_getErrorMessage(groupId, invalidMessage, zipPath)));
+					_getErrorMessage(
+						groupId, _INVALID_MESSAGE_KEY,
+						new String[] {
+							zipPath, _toTypeName(layoutPageTemplateEntryType)
+						})));
 		}
 	}
 
@@ -724,9 +732,8 @@ public class LayoutPageTemplatesImporterImpl
 					fetchLayoutPageTemplateEntry(groupId, masterPage.getKey());
 
 			_processLayoutPageTemplateEntry(
-				groupId, 0, _MASTER_PAGE_IGNORED_MESSAGE_KEY,
-				_MASTER_PAGE_INVALID_MESSAGE_KEY, layoutPageTemplateEntry,
-				masterPage.getName(), masterPageEntry.getPageDefinition(),
+				groupId, 0, layoutPageTemplateEntry, masterPage.getName(),
+				masterPageEntry.getPageDefinition(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
 				overwrite, masterPageEntry.getThumbnailZipEntry(),
 				masterPageEntry.getZipPath(), zipFile);
@@ -838,13 +845,28 @@ public class LayoutPageTemplatesImporterImpl
 				groupId,
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				_PAGE_TEMPLATE_IGNORED_MESSAGE_KEY,
-				_PAGE_TEMPLATE_INVALID_MESSAGE_KEY, layoutPageTemplateEntry,
-				pageTemplate.getName(), pageTemplate.getPageDefinition(),
+				layoutPageTemplateEntry, pageTemplate.getName(),
+				pageTemplate.getPageDefinition(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, overwrite,
 				pageTemplateEntry.getThumbnailZipEntry(),
 				pageTemplateEntry.getZipPath(), zipFile);
 		}
+	}
+
+	private String _toTypeName(int layoutPageTemplateEntryType) {
+		if (layoutPageTemplateEntryType ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) {
+
+			return "master page";
+		}
+
+		if (layoutPageTemplateEntryType ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
+
+			return "page template";
+		}
+
+		return null;
 	}
 
 	private void _updateLayoutPageTemplateStructure(
@@ -944,19 +966,11 @@ public class LayoutPageTemplatesImporterImpl
 
 	private static final String _FILE_NAME_THUMBNAIL = "thumbnail";
 
-	private static final String _MASTER_PAGE_IGNORED_MESSAGE_KEY =
-		"x-was-ignored-because-a-master-page-with-the-same-key-already-exists";
+	private static final String _IGNORED_MESSAGE_KEY =
+		"x-was-ignored-because-a-x-with-the-same-key-already-exists";
 
-	private static final String _MASTER_PAGE_INVALID_MESSAGE_KEY =
-		"x-was-ignored-because-a-master-page-with-the-same-key-already-exists";
-
-	private static final String _PAGE_TEMPLATE_IGNORED_MESSAGE_KEY =
-		"x-was-ignored-because-a-page-template-with-the-same-key-already-" +
-			"exists";
-
-	private static final String _PAGE_TEMPLATE_INVALID_MESSAGE_KEY =
-		"x-could-not-be-imported-because-a-master-page-with-the-same-name-" +
-			"already-exists";
+	private static final String _INVALID_MESSAGE_KEY =
+		"x-could-not-be-imported-because-a-x-with-the-same-name-already-exists";
 
 	private static final String[] _VALID_THUMBNAIL_EXTENSIONS = {
 		".bmp", ".gif", ".jpeg", ".jpg", ".png", ".svg", ".tiff"

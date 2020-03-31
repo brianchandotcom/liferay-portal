@@ -28,13 +28,15 @@ public class UpgradeTaskItemDelegateName extends UpgradeProcess {
 		if (!hasColumn("BatchEngineExportTask", "taskItemDelegateName")) {
 			alter(
 				BatchEngineExportTaskTable.class,
-				new AlterTableAddColumn("taskItemDelegateName"));
+				new AlterTableAddColumn(
+					"taskItemDelegateName VARCHAR(75) null"));
 		}
 
 		if (!hasColumn("BatchEngineImportTask", "taskItemDelegateName")) {
 			alter(
 				BatchEngineImportTaskTable.class,
-				new AlterTableAddColumn("taskItemDelegateName"));
+				new AlterTableAddColumn(
+					"taskItemDelegateName VARCHAR(75) null"));
 		}
 	}
 

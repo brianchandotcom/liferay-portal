@@ -27,19 +27,19 @@ public class UpgradeDEDataDefinitionFieldLink extends UpgradeProcess {
 		if (!hasColumn("DEDataDefinitionFieldLink", "createDate")) {
 			alter(
 				DEDataDefinitionFieldLinkTable.class,
-				new AlterTableAddColumn("createDate"));
+				new AlterTableAddColumn("createDate DATE null"));
 		}
 
 		if (!hasColumn("DEDataDefinitionFieldLink", "modifiedDate")) {
 			alter(
 				DEDataDefinitionFieldLinkTable.class,
-				new AlterTableAddColumn("modifiedDate"));
+				new AlterTableAddColumn("modifiedDate DATE null"));
 		}
 
 		if (!hasColumn("DEDataDefinitionFieldLink", "lastPublishDate")) {
 			alter(
 				DEDataDefinitionFieldLinkTable.class,
-				new AlterTableAddColumn("lastPublishDate"));
+				new AlterTableAddColumn("lastPublishDate DATE null"));
 		}
 	}
 

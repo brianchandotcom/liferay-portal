@@ -35,7 +35,7 @@ public class UpgradeAssetCategory extends UpgradeProcess {
 				AssetCategoryTable.class,
 				new AlterTableDropColumn("leftCategoryId"),
 				new AlterTableDropColumn("rightCategoryId"),
-				new AlterTableAddColumn("treePath"));
+				new AlterTableAddColumn("treePath STRING null"));
 		}
 
 		try (PreparedStatement ps = connection.prepareStatement(

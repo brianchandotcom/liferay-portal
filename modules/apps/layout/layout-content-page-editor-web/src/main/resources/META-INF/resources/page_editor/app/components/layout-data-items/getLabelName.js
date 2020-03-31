@@ -21,6 +21,9 @@ export default function getLabelName(item, fragmentEntryLinks) {
 	if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 		name = fragmentEntryLinks[item.config.fragmentEntryLinkId].name;
 	}
+	else if (item.type === LAYOUT_DATA_ITEM_TYPES.collectionItem) {
+		name = LAYOUT_DATA_ITEM_TYPE_LABELS.collectionItem;
+	}
 	else if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
 		name = LAYOUT_DATA_ITEM_TYPE_LABELS.collection;
 	}

@@ -97,6 +97,13 @@
 		}
 	}
 
+	&__collection-item {
+		&:after {
+			left: 0;
+			width: 100%;
+		}
+	}
+
 	&__container.empty > .container,
 	&__container.empty > .container-fluid,
 	&__row.empty {

@@ -14,9 +14,12 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index.name;
 
+import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.workflow.metrics.internal.search.index.name.util.WorkflowMetricsIndexNameBuilderUtil;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -26,14 +29,19 @@ import org.osgi.service.component.annotations.Component;
 	service = WorkflowMetricsIndexNameBuilder.class
 )
 public class InstanceWorkflowMetricsIndexNameBuilder
-	extends BaseWorkfllowMetricsIndexNameBuilder {
+	implements WorkflowMetricsIndexNameBuilder {
 
 	@Override
-	public String getIndexNamePrefix() {
-		return _INDEX_NAME_PREFIX;
+	public String getIndexName(long companyId) {
+		return WorkflowMetricsIndexNameBuilderUtil.getIndexName(
+			companyId, indexNameBuilder.getIndexName(companyId),
+			_INDEX_NAME_PREFIX);
 	}
 
+	@Reference
+	protected IndexNameBuilder indexNameBuilder;
+
 	private static final String _INDEX_NAME_PREFIX =
-		"workflow-metrics-instances-";
+		"workflow-metrics-instances";
 
 }

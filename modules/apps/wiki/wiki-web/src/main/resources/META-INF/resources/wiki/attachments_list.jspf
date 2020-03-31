@@ -32,14 +32,9 @@
 		modelVar="fileEntry"
 		rowVar="row"
 	>
-
-		<%
-		String rowURL = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + status);
-		%>
-
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand table-cell-minw-200 table-title"
-			href="<%= rowURL %>"
+			href='<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + status) %>'
 			name="file-name"
 			value="<%= fileEntry.isInTrash() ? trashHelper.getOriginalTitle(fileEntry.getTitle()) : fileEntry.getTitle() %>"
 		/>

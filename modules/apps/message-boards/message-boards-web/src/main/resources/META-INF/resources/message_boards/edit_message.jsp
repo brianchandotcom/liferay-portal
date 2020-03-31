@@ -248,13 +248,8 @@ if (portletTitleBasedNavigation) {
 								keyProperty="fileEntryId"
 								modelVar="fileEntry"
 							>
-
-								<%
-								String rowURL = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED);
-								%>
-
 								<liferay-ui:search-container-column-text
-									href="<%= rowURL %>"
+									href='<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED) %>'
 									name="file-name"
 									value="<%= fileEntry.getTitle() %>"
 								/>

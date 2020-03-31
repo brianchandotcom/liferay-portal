@@ -32,11 +32,9 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 
 			<%
 			String casLoginURLResult = _testURL(casLoginURL);
-
-			String casLoginURLCssClass = _getCssClass(casLoginURLResult);
 			%>
 
-			<span class="<%= casLoginURLCssClass %>"><liferay-ui:message key="<%= casLoginURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casLoginURL) %></span>
+			<span class="<%= _getCssClass(casLoginURLResult) %>"><liferay-ui:message key="<%= casLoginURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casLoginURL) %></span>
 		</td>
 	</tr>
 	<tr>
@@ -47,11 +45,9 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 
 			<%
 			String casLogoutURLResult = _testURL(casLogoutURL);
-
-			String casLogoutURLCssClass = _getCssClass(casLogoutURLResult);
 			%>
 
-			<span class="<%= casLogoutURLCssClass %>"><liferay-ui:message key="<%= casLogoutURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casLogoutURL) %></span>
+			<span class="<%= _getCssClass(casLogoutURLResult) %>"><liferay-ui:message key="<%= casLogoutURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casLogoutURL) %></span>
 		</td>
 	</tr>
 
@@ -64,11 +60,9 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 
 				<%
 				String casServerURLResult = _testURL(casServerURL);
-
-				String casServerURLCssClass = _getCssClass(casServerURLResult);
 				%>
 
-				<span class="<%= casServerURLCssClass %>"><liferay-ui:message key="<%= casServerURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casServerURL) %></span>
+				<span class="<%= _getCssClass(casServerURLResult) %>"><liferay-ui:message key="<%= casServerURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casServerURL) %></span>
 			</td>
 		</tr>
 	</c:if>
@@ -82,11 +76,9 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 
 				<%
 				String casServiceURLResult = _testURL(casServiceURL);
-
-				String casServiceURLCssClass = _getCssClass(casServiceURLResult);
 				%>
 
-				<span class="<%= casServiceURLCssClass %>"><liferay-ui:message key="<%= casServiceURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casServiceURL) %></span>
+				<span class="<%= _getCssClass(casServiceURLResult) %>"><liferay-ui:message key="<%= casServiceURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casServiceURL) %></span>
 			</td>
 		</tr>
 	</c:if>

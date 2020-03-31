@@ -33,15 +33,10 @@ String groupId = String.valueOf(group.getGroupId());
 >
 	<c:choose>
 		<c:when test='<%= GetterUtil.getBoolean(group.getTypeSettingsProperty("syncEnabled"), !group.isCompany()) %>'>
-
-			<%
-			String editDefaultFilePermissionsDialogURL = "javascript:" + renderResponse.getNamespace() + "editDefaultFilePermissions(" + groupId + ");";
-			%>
-
 			<liferay-ui:icon
 				label="<%= true %>"
 				message="default-file-permissions"
-				url="<%= editDefaultFilePermissionsDialogURL %>"
+				url='<%= "javascript:" + renderResponse.getNamespace() + "editDefaultFilePermissions(" + groupId + ");" %>'
 			/>
 
 			<portlet:actionURL name="updateSites" var="disableSiteURL">

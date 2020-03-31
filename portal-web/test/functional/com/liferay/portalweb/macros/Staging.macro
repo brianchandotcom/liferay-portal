@@ -758,7 +758,9 @@ definition {
 			Staging.viewValidationError(validateErrorMessage = "${validateErrorMessage}");
 		}
 
-		IFrame.closeFrame();
+		if (IsElementPresent(locator1 = "IFrame#DIALOG")) {
+			IFrame.closeFrame();
+		}
 	}
 
 	macro publishToLiveNowViaPortletCP {

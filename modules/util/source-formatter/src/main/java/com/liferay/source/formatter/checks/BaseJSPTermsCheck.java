@@ -14,13 +14,19 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.IOException;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -34,6 +40,20 @@ public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 
 	protected Map<String, String> getContentsMap() {
 		return _contentsMap;
+	}
+
+	protected boolean hasUnusedJSPTerm(
+		String fileName, String regex, String type,
+		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames,
+		Map<String, String> contentsMap) {
+
+		includeFileNames.add(fileName);
+
+		Set<String> checkedForUnusedJSPTerm = new HashSet<>();
+
+		return !_isJSPTermRequired(
+			fileName, regex, type, checkedForUnusedJSPTerm,
+			checkedForIncludesFileNames, includeFileNames, contentsMap);
 	}
 
 	protected synchronized void populateContentsMap(
@@ -63,6 +83,75 @@ public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 
 	protected void put(String fileName, String content) {
 		_contentsMap.put(fileName, content);
+	}
+
+	private boolean _isJSPTermRequired(
+		String fileName, String regex, String type,
+		Set<String> checkedForUnusedJSPTerm,
+		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames,
+		Map<String, String> contentsMap) {
+
+		if (checkedForUnusedJSPTerm.contains(fileName)) {
+			return false;
+		}
+
+		checkedForUnusedJSPTerm.add(fileName);
+
+		String content = contentsMap.get(fileName);
+
+		if (Validator.isNull(content)) {
+			return false;
+		}
+
+		int count = 0;
+
+		Pattern pattern = Pattern.compile(regex);
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			if (!JSPSourceUtil.isJavaSource(content, matcher.start()) ||
+				!ToolsUtil.isInsideQuotes(content, matcher.start() + 1)) {
+
+				count++;
+			}
+		}
+
+		if ((count > 1) ||
+			((count == 1) &&
+			 (!type.equals("variable") ||
+			  (checkedForUnusedJSPTerm.size() > 1)))) {
+
+			return true;
+		}
+
+		if (!checkedForIncludesFileNames.contains(fileName)) {
+			includeFileNames.addAll(
+				JSPSourceUtil.getJSPIncludeFileNames(
+					fileName, includeFileNames, contentsMap, false));
+			includeFileNames.addAll(
+				JSPSourceUtil.getJSPReferenceFileNames(
+					fileName, includeFileNames, contentsMap,
+					".*init(-ext)?\\.(jsp|jspf|tag)"));
+		}
+
+		checkedForIncludesFileNames.add(fileName);
+
+		String[] includeFileNamesArray = includeFileNames.toArray(
+			new String[0]);
+
+		for (String includeFileName : includeFileNamesArray) {
+			if (!checkedForUnusedJSPTerm.contains(includeFileName) &&
+				_isJSPTermRequired(
+					includeFileName, regex, type, checkedForUnusedJSPTerm,
+					checkedForIncludesFileNames, includeFileNames,
+					contentsMap)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private List<String> _allFileNames;

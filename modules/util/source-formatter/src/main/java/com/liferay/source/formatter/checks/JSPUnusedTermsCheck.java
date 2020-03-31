@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
 import java.io.IOException;
@@ -92,7 +91,7 @@ public class JSPUnusedTermsCheck extends BaseJSPTermsCheck {
 			className = className.substring(
 				className.lastIndexOf(CharPool.PERIOD) + 1);
 
-			if (_hasUnusedJSPTerm(
+			if (hasUnusedJSPTerm(
 					fileName, "\\W" + className + "[^\\w\"]", "class",
 					checkedFileNames, includeFileNames, getContentsMap())) {
 
@@ -123,7 +122,7 @@ public class JSPUnusedTermsCheck extends BaseJSPTermsCheck {
 				StringPool.LESS_THAN, prefix, StringPool.COLON, StringPool.PIPE,
 				"\\$\\{", prefix, StringPool.COLON);
 
-			if (_hasUnusedJSPTerm(
+			if (hasUnusedJSPTerm(
 					fileName, regex, "taglib", checkedFileNames,
 					includeFileNames, getContentsMap())) {
 
@@ -221,25 +220,11 @@ public class JSPUnusedTermsCheck extends BaseJSPTermsCheck {
 		return null;
 	}
 
-	private boolean _hasUnusedJSPTerm(
-		String fileName, String regex, String type,
-		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames,
-		Map<String, String> contentsMap) {
-
-		includeFileNames.add(fileName);
-
-		Set<String> checkedForUnusedJSPTerm = new HashSet<>();
-
-		return !_isJSPTermRequired(
-			fileName, regex, type, checkedForUnusedJSPTerm,
-			checkedForIncludesFileNames, includeFileNames, contentsMap);
-	}
-
 	private boolean _hasUnusedPortletDefineObjectsProperty(
 		String fileName, String portletDefineObjectProperty,
 		Set<String> checkedFileNames, Set<String> includeFileNames) {
 
-		return _hasUnusedJSPTerm(
+		return hasUnusedJSPTerm(
 			fileName, "\\W" + portletDefineObjectProperty + "\\W",
 			"portletDefineObjectProperty", checkedFileNames, includeFileNames,
 			getContentsMap());
@@ -261,7 +246,7 @@ public class JSPUnusedTermsCheck extends BaseJSPTermsCheck {
 			return false;
 		}
 
-		return _hasUnusedJSPTerm(
+		return hasUnusedJSPTerm(
 			fileName, "\\W" + variableName + "\\W", "variable",
 			checkedFileNames, includeFileNames, getContentsMap());
 	}
@@ -404,75 +389,6 @@ public class JSPUnusedTermsCheck extends BaseJSPTermsCheck {
 			fileName, includeFileName, getContentsMap());
 
 		return _isJSPDuplicateTaglib(includeFileName, taglibLine, true);
-	}
-
-	private boolean _isJSPTermRequired(
-		String fileName, String regex, String type,
-		Set<String> checkedForUnusedJSPTerm,
-		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames,
-		Map<String, String> contentsMap) {
-
-		if (checkedForUnusedJSPTerm.contains(fileName)) {
-			return false;
-		}
-
-		checkedForUnusedJSPTerm.add(fileName);
-
-		String content = contentsMap.get(fileName);
-
-		if (Validator.isNull(content)) {
-			return false;
-		}
-
-		int count = 0;
-
-		Pattern pattern = Pattern.compile(regex);
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			if (!JSPSourceUtil.isJavaSource(content, matcher.start()) ||
-				!ToolsUtil.isInsideQuotes(content, matcher.start() + 1)) {
-
-				count++;
-			}
-		}
-
-		if ((count > 1) ||
-			((count == 1) &&
-			 (!type.equals("variable") ||
-			  (checkedForUnusedJSPTerm.size() > 1)))) {
-
-			return true;
-		}
-
-		if (!checkedForIncludesFileNames.contains(fileName)) {
-			includeFileNames.addAll(
-				JSPSourceUtil.getJSPIncludeFileNames(
-					fileName, includeFileNames, contentsMap, false));
-			includeFileNames.addAll(
-				JSPSourceUtil.getJSPReferenceFileNames(
-					fileName, includeFileNames, contentsMap,
-					".*init(-ext)?\\.(jsp|jspf|tag)"));
-		}
-
-		checkedForIncludesFileNames.add(fileName);
-
-		String[] includeFileNamesArray = includeFileNames.toArray(
-			new String[0]);
-
-		for (String includeFileName : includeFileNamesArray) {
-			if (!checkedForUnusedJSPTerm.contains(includeFileName) &&
-				_isJSPTermRequired(
-					includeFileName, regex, type, checkedForUnusedJSPTerm,
-					checkedForIncludesFileNames, includeFileNames,
-					contentsMap)) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private String _removeDuplicateDefineObjects(

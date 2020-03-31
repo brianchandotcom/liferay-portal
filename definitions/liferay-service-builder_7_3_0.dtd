@@ -116,6 +116,17 @@ the name of the entity.
 >
 
 <!--
+If the resources value is true, the service populates the -LocalBaseImpl class with 
+calls to the resource service so they are added to Liferay's resource tables at the 
+same time as the entity. It also generates ModelResourcePermissionRegistrar 
+class so that permission checks may be run on this entity. The default value 
+is false. 
+-->
+<!ATTLIST entity
+	resources CDATA #IMPLIED
+>
+
+<!--
 If the uuid value is true, then the service will generate a UUID column for the
 service. This column will automatically be populated with a UUID. Developers
 will also be able to find and remove based on that UUID. The default value is

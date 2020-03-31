@@ -140,7 +140,7 @@ boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-mes
 
 			<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
 
-			<liferay-ui:input-editor
+			<liferay-editor:editor
 				allowBrowseDocuments="<%= false %>"
 				autoCreate="<%= true %>"
 				configKey="replyMBEditor"

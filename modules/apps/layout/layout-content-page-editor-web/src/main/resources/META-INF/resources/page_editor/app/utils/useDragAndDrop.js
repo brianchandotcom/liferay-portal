@@ -577,7 +577,8 @@ function getParentItemIdAndPositon({
 	const siblingOrParent = items[dropTargetItemId];
 
 	if (
-		siblingOrParent.type === LAYOUT_DATA_ITEM_TYPES.column &&
+		(siblingOrParent.type === LAYOUT_DATA_ITEM_TYPES.column ||
+			siblingOrParent.type === LAYOUT_DATA_ITEM_TYPES.collectionItem) &&
 		targetPositionWithMiddle !== TARGET_POSITION.MIDDLE
 	) {
 		targetPositionWithMiddle = TARGET_POSITION.MIDDLE;

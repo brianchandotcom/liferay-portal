@@ -2023,7 +2023,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Group group, boolean privateLayout, String keywords, String[] types)
 		throws PortalException {
 
-		return getLayoutsCount(group, 0, privateLayout, keywords, types);
+		return getLayoutsCount(
+			group.getGroupId(), 0, privateLayout, keywords, types);
 	}
 
 	@Override

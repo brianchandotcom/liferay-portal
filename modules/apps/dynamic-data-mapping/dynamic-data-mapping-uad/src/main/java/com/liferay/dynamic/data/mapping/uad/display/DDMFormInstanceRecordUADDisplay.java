@@ -75,38 +75,38 @@ public class DDMFormInstanceRecordUADDisplay
 		HttpServletRequest httpServletRequest =
 			liferayPortletRequest.getHttpServletRequest();
 
-		Map<String, String[]> params = HashMapBuilder.put(
-			portletNamespace.concat("mvcPath"),
-			new String[] {"/admin/edit_form_instance_record.jsp"}
-		).put(
-			portletNamespace.concat("formInstanceRecordId"),
-			new String[] {
-				String.valueOf(ddmFormInstanceRecord.getFormInstanceRecordId())
-			}
-		).put(
-			portletNamespace.concat("formInstanceId"),
-			new String[] {
-				String.valueOf(ddmFormInstanceRecord.getFormInstanceId())
-			}
-		).put(
-			portletNamespace.concat("readOnly"),
-			new String[] {Boolean.FALSE.toString()}
-		).put(
-			portletNamespace.concat("redirect"),
-			new String[] {_portal.getCurrentURL(httpServletRequest)}
-		).put(
-			portletNamespace.concat("title"),
-			new String[] {
-				StringBundler.concat(
-					ddmFormInstanceRecord.getUserName(), " - ",
-					LanguageUtil.get(
-						httpServletRequest, "personal-data-erasure"))
-			}
-		).build();
-
 		return _portal.getSiteAdminURL(
 			getThemeDisplay(httpServletRequest),
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN, params);
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+			HashMapBuilder.put(
+				portletNamespace.concat("mvcPath"),
+				new String[] {"/admin/edit_form_instance_record.jsp"}
+			).put(
+				portletNamespace.concat("formInstanceRecordId"),
+				new String[] {
+					String.valueOf(
+						ddmFormInstanceRecord.getFormInstanceRecordId())
+				}
+			).put(
+				portletNamespace.concat("formInstanceId"),
+				new String[] {
+					String.valueOf(ddmFormInstanceRecord.getFormInstanceId())
+				}
+			).put(
+				portletNamespace.concat("readOnly"),
+				new String[] {Boolean.FALSE.toString()}
+			).put(
+				portletNamespace.concat("redirect"),
+				new String[] {_portal.getCurrentURL(httpServletRequest)}
+			).put(
+				portletNamespace.concat("title"),
+				new String[] {
+					StringBundler.concat(
+						ddmFormInstanceRecord.getUserName(), " - ",
+						LanguageUtil.get(
+							httpServletRequest, "personal-data-erasure"))
+				}
+			).build());
 	}
 
 	@Override

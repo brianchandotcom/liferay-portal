@@ -184,6 +184,106 @@ describe('CriteriaRow', () => {
 		expect(getByText('1234')).toBeInTheDocument();
 	});
 
+	it('informs user of warning on a context entity in view mode', async () => {
+		const OriginalCriteriaRow = CriteriaRow.DecoratedComponent;
+
+		global.fetch = jest.fn(() =>
+			Promise.resolve({
+				json: () => Promise.resolve({}),
+			})
+		);
+
+		const {getByText} = render(
+			<OriginalCriteriaRow
+				connectDragPreview={connectDnd}
+				connectDragSource={connectDnd}
+				connectDropTarget={connectDnd}
+				criterion={{
+					operatorName: PROPERTY_TYPES.STRING,
+					propertyName: 'warning_prop',
+					value: 'value1',
+				}}
+				editing={false}
+				groupId="group_01"
+				index={0}
+				onAdd={jest.fn()}
+				onChange={jest.fn()}
+				onDelete={jest.fn()}
+				onMove={jest.fn()}
+				propertyKey="context"
+				supportedProperties={[
+					{
+						label: 'Test Property',
+						name: 'warning_prop',
+						options: [
+							{disabled: true, label: 'value1', value: 'value1'},
+							{label: 'value2', value: 'value2'},
+						],
+						type: PROPERTY_TYPES.STRING,
+					},
+				]}
+			/>
+		);
+
+		await wait(() =>
+			expect(
+				getByText('criteria-warning-message-view')
+			).toBeInTheDocument()
+		);
+
+		expect(getByText('value1')).toBeInTheDocument();
+	});
+
+	it('informs user of warning on a context entity in edit mode', async () => {
+		const OriginalCriteriaRow = CriteriaRow.DecoratedComponent;
+
+		global.fetch = jest.fn(() =>
+			Promise.resolve({
+				json: () => Promise.resolve({}),
+			})
+		);
+
+		const {getByText} = render(
+			<OriginalCriteriaRow
+				connectDragPreview={connectDnd}
+				connectDragSource={connectDnd}
+				connectDropTarget={connectDnd}
+				criterion={{
+					operatorName: PROPERTY_TYPES.STRING,
+					propertyName: 'warning_prop',
+					value: 'value1',
+				}}
+				editing={true}
+				groupId="group_01"
+				index={0}
+				onAdd={jest.fn()}
+				onChange={jest.fn()}
+				onDelete={jest.fn()}
+				onMove={jest.fn()}
+				propertyKey="context"
+				supportedProperties={[
+					{
+						label: 'Test Property',
+						name: 'warning_prop',
+						options: [
+							{disabled: true, label: 'value1', value: 'value1'},
+							{label: 'value2', value: 'value2'},
+						],
+						type: PROPERTY_TYPES.STRING,
+					},
+				]}
+			/>
+		);
+
+		await wait(() =>
+			expect(
+				getByText('criteria-warning-message-edit')
+			).toBeInTheDocument()
+		);
+
+		expect(getByText('value1')).toBeInTheDocument();
+	});
+
 	it('reports change when it finds the name of an entity', async () => {
 		const OriginalCriteriaRow = CriteriaRow.DecoratedComponent;
 

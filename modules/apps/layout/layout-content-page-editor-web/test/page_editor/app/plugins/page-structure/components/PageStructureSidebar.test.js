@@ -14,6 +14,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {ControlsProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/components/Controls';
@@ -107,6 +108,15 @@ const renderComponent = ({
 									fragmentEntryLinkId: '001',
 								},
 								itemId: '04-fragment',
+								parentId: '03-column',
+								type: LAYOUT_DATA_ITEM_TYPES.fragment,
+							},
+							'05-row': {
+								children: [],
+								config: {
+									fragmentEntryLinkId: '001',
+								},
+								itemId: '05-row',
 								parentId: '03-column',
 								type: LAYOUT_DATA_ITEM_TYPES.fragment,
 							},
@@ -242,5 +252,38 @@ describe('PageStructureSidebar', () => {
 
 		expect(queryByLabelText('select-x-05-editable')).toBeInTheDocument();
 		expect(queryByLabelText('remove-x-05-editable')).toBe(null);
+	});
+
+	it('sets element as active item', () => {
+		const {getByLabelText} = renderComponent({
+			activeItemId: '03-column',
+		});
+		const button = getByLabelText('select-x-row');
+
+		userEvent.click(button);
+
+		expect(button.parentElement).toHaveAttribute('aria-selected', 'true');
+	});
+
+	it('sets element as active item when it is a fragment', () => {
+		const {getByLabelText} = renderComponent({
+			activeItemId: '03-column',
+		});
+		const button = getByLabelText('select-x-Fragment 1');
+
+		userEvent.click(button);
+
+		expect(button.parentElement).toHaveAttribute('aria-selected', 'true');
+	});
+
+	it('sets element as active item when it is a column', () => {
+		const {getByLabelText} = renderComponent({
+			activeItemId: '02-row',
+		});
+		const button = getByLabelText('select-x-column');
+
+		userEvent.click(button);
+
+		expect(button.parentElement).toHaveAttribute('aria-selected', 'false');
 	});
 });

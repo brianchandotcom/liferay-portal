@@ -132,7 +132,7 @@
 
 <tr>
 	<td>OPTIONS_OPTION_VALUE_FIELD</td>
-	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//input</td>
+	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//input[contains(@name,'keyValueLabeloption')]</td>
 	<td></td>
 </tr>
 

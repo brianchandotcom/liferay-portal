@@ -6,6 +6,10 @@ definition {
 
 		DoubleClick(locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL");
 
+		if (IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB")) {
+			DoubleClick(locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL");
+		}
+
 		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");
 	}
 
@@ -165,7 +169,7 @@ definition {
 
 		var key_rowNumber = "${rowNumber}";
 
-		Type(
+		Type.typeNotVisibleNoMouseOver(
 			locator1 = "FormViewBuilder#OPTIONS_OPTION_VALUE_FIELD",
 			value1 = "${optionValue}");
 

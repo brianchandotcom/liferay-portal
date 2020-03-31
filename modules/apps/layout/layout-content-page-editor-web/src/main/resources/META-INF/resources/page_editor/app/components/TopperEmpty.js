@@ -19,6 +19,7 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
+import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {useSelector} from '../store/index';
 import useDragAndDrop, {TARGET_POSITION} from '../utils/useDragAndDrop';
 import {useToControlsId} from './CollectionItemContext';
@@ -41,12 +42,19 @@ export default function TopperEmpty({children, item, layoutData}) {
 			dropTargetItemId,
 			droppable,
 			targetPositionWithMiddle,
+			targetPositionWithoutMiddle,
 		},
 	} = useDragAndDrop({
 		containerRef,
 		dropTargetItem: item,
 		layoutData,
 	});
+
+	const targetPosition =
+		item.type === LAYOUT_DATA_ITEM_TYPES.fragment ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.collection
+			? targetPositionWithoutMiddle
+			: targetPositionWithMiddle;
 
 	const childrenElement = children({canDrop, isOver});
 
@@ -56,7 +64,7 @@ export default function TopperEmpty({children, item, layoutData}) {
 		: childrenElement;
 
 	const isDraggableInPosition = position =>
-		targetPositionWithMiddle === position &&
+		targetPosition === position &&
 		dropTargetItemId === toControlsId(item.itemId);
 
 	const dataAdvice =

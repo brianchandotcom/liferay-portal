@@ -88,6 +88,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 			dropTargetItemId,
 			droppable,
 			targetPositionWithMiddle,
+			targetPositionWithoutMiddle,
 		},
 	} = useDragAndDrop({
 		containerRef,
@@ -101,6 +102,12 @@ export default function Topper({children, item, itemRef, layoutData}) {
 				})
 			),
 	});
+
+	const targetPosition =
+		item.type === LAYOUT_DATA_ITEM_TYPES.fragment ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.collection
+			? targetPositionWithoutMiddle
+			: targetPositionWithMiddle;
 
 	const itemIsRemovable = useMemo(() => isRemovable(item, layoutData), [
 		item,
@@ -172,7 +179,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 	}, [itemRef, layoutData, windowScrollPosition]);
 
 	const isDraggableInPosition = position =>
-		targetPositionWithMiddle === position &&
+		targetPosition === position &&
 		dropTargetItemId === toControlsId(item.itemId);
 
 	const dataAdvice =

@@ -960,7 +960,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 						<gradle-execute setupbinariescache="false" task="checkoutDXPScript">
 							<arg value="--build-file=${project.dir}/modules/profile-dxp.gradle" />
 							<arg value="-Dprofile.dxp.branch.name=${build.setup.profile.dxp.branch.name}" />
-							<arg value="-Dprofile.dxp.repository.url=git@github-dev.liferay.com:liferay/liferay-portal-ee.git" />
+							<arg value="-Dprofile.dxp.repository.url=git@github.com:petershin/liferay-portal-ee.git" />
 						</gradle-execute>
 					</sequential>
 				</retry>

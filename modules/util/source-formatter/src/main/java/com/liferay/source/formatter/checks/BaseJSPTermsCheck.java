@@ -47,12 +47,22 @@ public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames,
 		Map<String, String> contentsMap) {
 
+		return hasUnusedJSPTerm(
+			fileName, null, regex, type, checkedForIncludesFileNames,
+			includeFileNames, contentsMap);
+	}
+
+	protected boolean hasUnusedJSPTerm(
+		String fileName, String content, String regex, String type,
+		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames,
+		Map<String, String> contentsMap) {
+
 		includeFileNames.add(fileName);
 
 		Set<String> checkedForUnusedJSPTerm = new HashSet<>();
 
 		return !_isJSPTermRequired(
-			fileName, regex, type, checkedForUnusedJSPTerm,
+			fileName, content, regex, type, checkedForUnusedJSPTerm,
 			checkedForIncludesFileNames, includeFileNames, contentsMap);
 	}
 
@@ -86,7 +96,7 @@ public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 	}
 
 	private boolean _isJSPTermRequired(
-		String fileName, String regex, String type,
+		String fileName, String content, String regex, String type,
 		Set<String> checkedForUnusedJSPTerm,
 		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames,
 		Map<String, String> contentsMap) {
@@ -97,7 +107,9 @@ public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 
 		checkedForUnusedJSPTerm.add(fileName);
 
-		String content = contentsMap.get(fileName);
+		if (content == null) {
+			content = contentsMap.get(fileName);
+		}
 
 		if (Validator.isNull(content)) {
 			return false;
@@ -143,7 +155,7 @@ public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 		for (String includeFileName : includeFileNamesArray) {
 			if (!checkedForUnusedJSPTerm.contains(includeFileName) &&
 				_isJSPTermRequired(
-					includeFileName, regex, type, checkedForUnusedJSPTerm,
+					includeFileName, null, regex, type, checkedForUnusedJSPTerm,
 					checkedForIncludesFileNames, includeFileNames,
 					contentsMap)) {
 

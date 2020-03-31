@@ -17,6 +17,7 @@ package com.liferay.redirect.service.impl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -112,6 +113,21 @@ public class RedirectNotFoundEntryLocalServiceImpl
 			redirectNotFoundEntryLocalService.dynamicQueryCount(
 				_getRedirectNotFoundEntriesDynamicQuery(
 					groupId, minModifiedDate)));
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public RedirectNotFoundEntry updateRedirectNotFoundEntry(
+			long redirectNotFoundEntryId, boolean ignored)
+		throws PortalException {
+
+		RedirectNotFoundEntry redirectNotFoundEntry =
+			redirectNotFoundEntryLocalService.getRedirectNotFoundEntry(
+				redirectNotFoundEntryId);
+
+		redirectNotFoundEntry.setIgnored(ignored);
+
+		return redirectNotFoundEntryPersistence.update(redirectNotFoundEntry);
 	}
 
 	private DynamicQuery _getRedirectNotFoundEntriesDynamicQuery(

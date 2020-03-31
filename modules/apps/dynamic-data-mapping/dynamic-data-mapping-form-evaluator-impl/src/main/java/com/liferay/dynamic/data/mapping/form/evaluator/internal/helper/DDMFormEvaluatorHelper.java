@@ -84,6 +84,8 @@ public class DDMFormEvaluatorHelper {
 
 		createResourceBundle(_ddmFormEvaluatorEvaluateRequest.getLocale());
 
+		_ddmForm = ddmFormEvaluatorEvaluateRequest.getDDMForm();
+
 		_ddmFormEvaluatorFormValuesHelper =
 			new DDMFormEvaluatorFormValuesHelper(
 				_ddmFormEvaluatorEvaluateRequest.getDDMFormValues());
@@ -93,14 +95,12 @@ public class DDMFormEvaluatorHelper {
 				_ddmFormEvaluatorFormValuesHelper,
 				_ddmFormFieldsPropertyChanges);
 
-		ddmFormEvaluatorExpressionActionHandler =
-			new DDMFormEvaluatorExpressionActionHandler(_pageFlow);
-
-		_ddmForm = ddmFormEvaluatorEvaluateRequest.getDDMForm();
+		_ddmFormFieldsMap = _ddmForm.getDDMFormFieldsMap(true);
 
 		_ddmFormLayout = ddmFormEvaluatorEvaluateRequest.getDDMFormLayout();
 
-		_ddmFormFieldsMap = _ddmForm.getDDMFormFieldsMap(true);
+		_ddmFormRuleHelper = new DDMFormEvaluatorRuleHelper(
+			_ddmFormFieldsMap, ddmFormEvaluatorExpressionObserver);
 
 		ddmFormEvaluatorDDMExpressionFieldAccessor =
 			new DDMFormEvaluatorExpressionFieldAccessor(
@@ -108,12 +108,12 @@ public class DDMFormEvaluatorHelper {
 				_ddmFormFieldsPropertyChanges, _ddmFormFieldTypeServicesTracker,
 				ddmFormEvaluatorEvaluateRequest.getLocale());
 
+		ddmFormEvaluatorExpressionActionHandler =
+			new DDMFormEvaluatorExpressionActionHandler(_pageFlow);
+
 		ddmFormEvaluatorExpressionParameterAccessor =
 			new DDMFormEvaluatorExpressionParameterAccessor(
 				_ddmFormEvaluatorEvaluateRequest);
-
-		_ddmFormRuleHelper = new DDMFormEvaluatorRuleHelper(
-			_ddmFormFieldsMap, ddmFormEvaluatorExpressionObserver);
 	}
 
 	public DDMFormEvaluatorEvaluateResponse evaluate() {

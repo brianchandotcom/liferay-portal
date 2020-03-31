@@ -67,7 +67,7 @@ public class ProcessWorkflowMetricsIndexerTest
 	public void testDeleteProcess() throws Exception {
 		KaleoDefinition kaleoDefinition = getKaleoDefinition();
 
-		deleteKaleoDefinition(kaleoDefinition);
+		undeployWorkflowDefinition();
 
 		retryAssertCount(
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(
@@ -109,7 +109,7 @@ public class ProcessWorkflowMetricsIndexerTest
 			kaleoDefinition.getCompanyId(), "deleted", false, "processId",
 			kaleoDefinition.getKaleoDefinitionId(), "version", "1.0");
 
-		updateKaleoDefinition(kaleoDefinition);
+		updateKaleoDefinition();
 
 		retryAssertCount(
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(

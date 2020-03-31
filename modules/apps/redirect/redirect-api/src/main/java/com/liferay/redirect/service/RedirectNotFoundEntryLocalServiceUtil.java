@@ -212,6 +212,12 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 		return getService().fetchRedirectNotFoundEntry(redirectNotFoundEntryId);
 	}
 
+	public static com.liferay.redirect.model.RedirectNotFoundEntry
+		fetchRedirectNotFoundEntry(long groupId, String url) {
+
+		return getService().fetchRedirectNotFoundEntry(groupId, url);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

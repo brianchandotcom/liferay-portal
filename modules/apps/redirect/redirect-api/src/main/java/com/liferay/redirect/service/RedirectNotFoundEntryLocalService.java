@@ -192,6 +192,10 @@ public interface RedirectNotFoundEntryLocalService
 		long redirectNotFoundEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public RedirectNotFoundEntry fetchRedirectNotFoundEntry(
+		long groupId, String url);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

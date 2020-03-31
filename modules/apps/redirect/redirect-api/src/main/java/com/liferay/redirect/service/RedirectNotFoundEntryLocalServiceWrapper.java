@@ -229,6 +229,14 @@ public class RedirectNotFoundEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.redirect.model.RedirectNotFoundEntry
+		fetchRedirectNotFoundEntry(long groupId, String url) {
+
+		return _redirectNotFoundEntryLocalService.fetchRedirectNotFoundEntry(
+			groupId, url);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

@@ -163,6 +163,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	private void _reindexLayout(Layout layout) {
 		Indexer indexer = IndexerRegistryUtil.getIndexer(Layout.class);
 
+		if (indexer == null) {
+			return;
+		}
+
 		try {
 			indexer.reindex(layout);
 		}

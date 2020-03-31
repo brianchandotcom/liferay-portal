@@ -41,6 +41,8 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "${mbAttachmentFile}");
 
+			Pause(locator1 = "3000");
+
 			if (IsNotChecked.isNotCheckedNotVisible(key_fileName = "${mbAttachmentFile}", locator1 = "Checkbox#UPLOAD_FILE_ENTRY")) {
 				Check.checkNotVisible(
 					key_fileName = "${mbAttachmentFile}",

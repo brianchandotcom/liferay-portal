@@ -69,14 +69,14 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand-smallest"
 				name="type"
 			>
 				<liferay-ui:message key='<%= redirectEntry.isPermanent() ? "permanent" : "temporary" %>' />
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand-smallest"
 				name="expiration"
 			>
 				<c:choose>

@@ -120,7 +120,7 @@ public class AddFormInstanceRecordMVCActionCommand
 
 		serviceContext.setRequest(_portal.getHttpServletRequest(actionRequest));
 
-		_saveFormInstanceRecord(
+		_updateFormInstanceRecord(
 			actionRequest, ddmFormInstance, ddmFormValues, groupId,
 			serviceContext, themeDisplay.getUserId());
 
@@ -199,7 +199,7 @@ public class AddFormInstanceRecordMVCActionCommand
 		}
 	}
 
-	private void _saveFormInstanceRecord(
+	private void _updateFormInstanceRecord(
 			ActionRequest actionRequest, DDMFormInstance ddmFormInstance,
 			DDMFormValues ddmFormValues, long groupId,
 			ServiceContext serviceContext, long userId)

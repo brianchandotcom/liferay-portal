@@ -574,40 +574,41 @@ function getParentItemIdAndPositon({
 	items,
 	targetPositionWithMiddle,
 }) {
-	const siblingOrParent = items[dropTargetItemId];
+	const dropTargetItem = items[dropTargetItemId];
 
 	if (
-		(siblingOrParent.type === LAYOUT_DATA_ITEM_TYPES.column ||
-			siblingOrParent.type === LAYOUT_DATA_ITEM_TYPES.collectionItem) &&
+		(dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.column ||
+			dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.collectionItem) &&
 		targetPositionWithMiddle !== TARGET_POSITION.MIDDLE
 	) {
 		targetPositionWithMiddle = TARGET_POSITION.MIDDLE;
 	}
 
 	if (
-		(siblingOrParent.type === LAYOUT_DATA_ITEM_TYPES.root ||
+		(dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.root ||
 			targetPositionWithMiddle === TARGET_POSITION.MIDDLE) &&
-		isNestingSupported(dropItem.type, siblingOrParent.type)
+		isNestingSupported(dropItem.type, dropTargetItem.type)
 	) {
 		return {
-			parentId: siblingOrParent.itemId,
+			parentId: dropTargetItem.itemId,
 			position:
 				targetPositionWithMiddle !== TARGET_POSITION.TOP
-					? siblingOrParent.children.length
+					? dropTargetItem.children.length
 					: 0,
 		};
 	}
 
-	const parent = items[siblingOrParent.parentId];
-	const sibling = siblingOrParent;
+	const parent = items[dropTargetItem.parentId];
 
 	if (parent) {
-		const siblingIndex = parent.children.indexOf(sibling.itemId);
+		const dropTargetItemIndex = parent.children.indexOf(
+			dropTargetItem.itemId
+		);
 
 		let position =
 			targetPositionWithMiddle === TARGET_POSITION.TOP
-				? siblingIndex
-				: siblingIndex + 1;
+				? dropTargetItemIndex
+				: dropTargetItemIndex + 1;
 
 		// Moving an item in the same parent
 		if (parent.children.includes(dropItem.itemId)) {
@@ -617,7 +618,8 @@ function getParentItemIdAndPositon({
 				position = 0;
 			}
 			else {
-				position = itemIndex < siblingIndex ? position - 1 : position;
+				position =
+					itemIndex < dropTargetItemIndex ? position - 1 : position;
 			}
 		}
 
@@ -632,10 +634,10 @@ function isNestingSupported(itemType, parentType) {
 	return LAYOUT_DATA_ALLOWED_CHILDREN_TYPES[parentType].includes(itemType);
 }
 
-function draggingCollectionInCollection(item, siblingOrParent, items) {
+function draggingCollectionInCollection(item, dropTargetItem, items) {
 	return (
 		item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
-		hasCollectionItemAncestor(siblingOrParent, items)
+		hasCollectionItemAncestor(dropTargetItem, items)
 	);
 }
 

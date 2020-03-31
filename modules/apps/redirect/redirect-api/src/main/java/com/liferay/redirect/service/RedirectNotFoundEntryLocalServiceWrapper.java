@@ -355,6 +355,16 @@ public class RedirectNotFoundEntryLocalServiceWrapper
 			redirectNotFoundEntryId);
 	}
 
+	@Override
+	public com.liferay.redirect.model.RedirectNotFoundEntry
+			updateRedirectNotFoundEntry(
+				long redirectNotFoundEntryId, boolean ignored)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _redirectNotFoundEntryLocalService.updateRedirectNotFoundEntry(
+			redirectNotFoundEntryId, ignored);
+	}
+
 	/**
 	 * Updates the redirect not found entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

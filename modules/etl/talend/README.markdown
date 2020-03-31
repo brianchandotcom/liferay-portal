@@ -14,6 +14,59 @@ Open Talend 7.1.1
 
 Download Talend Open Studio: https://www.talend.com/products/talend-open-studio/
 * Direct link: https://download-mirror2.talend.com/esb/release/V7.1.1/TOS_ESB-20181026_1147-V7.1.1.zip
+* All releases link: https://www.talend.com/products/data-integration-manuals-release-notes/
+
+## Talend Open Studio Settings
+
+### Eclipse `TOS_*.ini` Settings
+
+Adjust memory settings if necessary in `TOS_HOME/studio/TOS_*.ini` file by
+providing `-X` jvm arguments after line with `-vmargs`. If necessary other jvm
+arguments may be configured here as well. Here is configuration sample:
+
+```sh
+-vm
+/Library/Java/JavaVirtualMachines/jdk1.8.0_202.jdk/Contents/MacOS/libjli.dylib
+-vmargs
+-Xms512m
+-Xmx1536m
+-Dfile.encoding=UTF-8
+-Dosgi.requiredJavaVersion=1.8
+-XX:+UseG1GC
+-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
+-Dos.version=10.14
+-Declipse.log.level=ALL
+```
+Mac OSX users must make sure they set `-Dos.version` to current OSX version.
+
+### config.ini Settings
+
+After successful installation one should make sure that
+`TOS_HOME/studio/configuration/config.ini` does not set
+`maven.repository=global`.
+Delete the line or comment that setting `# maven.repository=global`.
+
+### Maven Central Repository Setting
+
+Update `TOS_HOME/studio/configuration/maven_user_settings.xml` file to include
+workaround for recent Maven deprecation of insecure repository connections. To
+make sure m2m plugin can reach repository with secure connection include
+repository mirror location:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+  <localRepository>DO_NOT_CHANGE_THIS</localRepository>
+  <mirrors>
+    <mirror>
+      <id>secure-central-mirror</id>
+      <name>Secure Central Mirror Repository</name>
+      <url>https://repo.maven.apache.org/maven2</url>
+      <mirrorOf>central</mirrorOf>
+    </mirror>
+  </mirrors>
+</settings>
+```
 
 ## Build
 
@@ -25,13 +78,19 @@ $ mvn clean install
 ```
 
 This gives you a definition OSGi bundle of the component in
-`talend-definition/target/com.liferay.talend.definition-0.3.0-SNAPSHOT.jar`
+`talend-definition/target/com.liferay.talend.definition-x.y.z-SNAPSHOT.jar`
 and additional:
-`talend-common/target/com.liferay.talend.common-0.3.0-SNAPSHOT.jar`
-`talend-runtime/target/com.liferay.talend.runtime-0.3.0-SNAPSHOT.jar`
+`talend-common/target/com.liferay.talend.common-x.y.z-SNAPSHOT.jar`
+`talend-runtime/target/com.liferay.talend.runtime-x.y.z-SNAPSHOT.jar`
 
-Maven install task will succeed only if all tests pass. JAR files will be published
-to current user's local maven repository `USER_HOME/.m2`.
+Current unpublished version is `0.3.0-SNAPSHOT`.
+
+Maven install task will succeed only if all tests pass. JAR files will be
+published to current user's local maven repository `USER_HOME/.m2`:
+* `USER_HOME/.m2/repository/com/liferay/com.liferay.talend`
+* `USER_HOME/.m2/repository/com/liferay/com.liferay.common`
+* `USER_HOME/.m2/repository/com/liferay/com.liferay.talend.definition`
+* `USER_HOME/.m2/repository/com/liferay/com.liferay.talend.runtime`
 
 ## Registering components in Talend Studio
 
@@ -53,10 +112,11 @@ Here is a brief summary:
 	$ STUDIO_ROOT=$HOME/tmp/TOS_ESB-Version
 	```
 
-3. Now copy the component definition bundle into `$STUDIO_ROOT/plugins`
+3. Now copy the component definition bundle latest version into
+`$STUDIO_ROOT/plugins`
 
 	```sh
-	$ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-0.3.0-SNAPSHOT.jar \
+	$ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-x.y.z-SNAPSHOT.jar \
 		 $STUDIO_ROOT/plugins
 	```
 
@@ -71,7 +131,7 @@ Here is a brief summary:
 	 #The following osgi.framework key is required for the p2 update feature not to override the osgi.bundles values.
 	 osgi.framework=file\:plugins/org.eclipse.osgi_3.10.100.v20150521-1310.jar
 	-osgi.bundles=org.eclipse.equinox.common@2:start,org.eclipse.update.configurator@3:start,org.eclipse.equinox.ds@2:start,org.eclipse.core.runtime@start,org.talend.maven.resolver@start,org.ops4j.pax.url.mvn@start,org.talend.components.api.service.osgi@start
-	+osgi.bundles=org.eclipse.equinox.common@2:start,org.eclipse.update.configurator@3:start,org.eclipse.equinox.ds@2:start,org.eclipse.core.runtime@start,org.talend.maven.resolver@start,org.ops4j.pax.url.mvn@start,org.talend.components.api.service.osgi@start,com.liferay.talend.definition-0.3.0-SNAPSHOT.jar@start
+	+osgi.bundles=org.eclipse.equinox.common@2:start,org.eclipse.update.configurator@3:start,org.eclipse.equinox.ds@2:start,org.eclipse.core.runtime@start,org.talend.maven.resolver@start,org.ops4j.pax.url.mvn@start,org.talend.components.api.service.osgi@start,com.liferay.talend.definition-x.y.z-SNAPSHOT.jar@start
 	 osgi.bundles.defaultStartLevel=4
 	 osgi.bundlefile.limit=200
 	 osgi.framework.extensions=org.talend.osgi.lib.loader
@@ -80,16 +140,15 @@ Here is a brief summary:
 5. In the `configuration` folder, remove any folders which start their names
     with `org.eclipse`.
 
-6. Copy the `com.liferay.talend.common` and `com.liferay.talend.runtime` folders from your local
- `$USER_HOME/.m2/repository/com/liferay/` to
- `$STUDIO_ROOT/configuration/.m2/repository/com/liferay/`
+6. Copy the `com.liferay.talend`, `com.liferay.talend.common` and
+`com.liferay.talend.runtime` folders from your local
 
-	Tip: you can alternatively add `maven.repository=global` to the
-	studio_installation/configuration/config.ini file to make the Studio use
-	your local `ÙSER_HOME/.m2` repository and thus you can skip this task.
+	`$USER_HOME/.m2/repository/com/liferay/` to
 
-* Now start the Studio, and you should be able to see new components on palette
-under `Business/Liferay` category.
+	`$STUDIO_ROOT/configuration/.m2/repository/com/liferay/`
+
+	Now start the Studio, and you should be able to see new components on palette
+	under `Business/Liferay` category.
 
 7. There is a bug in Talend Open Studio which requires you to manually add
 	the component dependency and runtime artifacts to the job's classpath in
@@ -107,30 +166,34 @@ under `Business/Liferay` category.
 
 ## Reloading components in Talend Studio after codebase changed
 
-When ever component codebase is changed user should reload generated JARs to Talend Studio.
+If component codebase is changed and user wants latest version, user should
+reload generated JARs to Talend Studio. It is similar to initial component
+registration:
 
 1. Shutdown Talend Studio
 
-2. From the root folder of the project, `liferay-portal/modules/etl/talend/`, execute
+2. In the `configuration` folder, remove any folders which start their names
+    with `org.eclipse`.
+
+3. From the root folder of the project, `liferay-portal/modules/etl/talend/`, execute
     `mvn clean install` to rebuild and publish the components to Maven repo.
 
-3. Now copy the component definition bundle into `$STUDIO_ROOT/plugins`
+4. Now copy the new version of component definition bundle into `$STUDIO_ROOT/plugins`
 
 	```sh
-	$ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-0.3.0-SNAPSHOT.jar \
+	$ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-x.y.z-SNAPSHOT.jar \
 		 $STUDIO_ROOT/plugins
 	```
+    TIP: Please make sure you remove old jar version.
 
-4. Copy the `com.liferay.talend.common` and `com.liferay.talend.runtime` folders from your local
+5. Copy the `com.liferay.talend`, `com.liferay.talend.common` and
+`com.liferay.talend.runtime` folders from your local
 `$USER_HOME/.m2/repository/com/liferay/` to
 `$STUDIO_ROOT/configuration/.m2/repository/com/liferay/`
 
-	Tip: if you configured Talend Studio to use local `ÙSER_HOME/.m2` repository with `maven.repository=global`
-	setting in the studio_installation/configuration/config.ini file you can skip this task.
+6. Start Talend Studio
 
-5. Start Talend Studio
-
-6. Update existing Talend jobs to use latest component version
+7. Update existing Talend jobs to use latest component version
  This has to be done manually. In Talend Studio workspace open job that uses Liferay components.
  Remove components. Pick back components from Palette view and configure them as before.
 
@@ -153,3 +216,45 @@ XOS users OS can be easily forced to use particular Java version by renaming
 Use `/usr/libexec/java_home -V` command to locate and disable unwanted JREs.
 
 	Tip: User can still use newer JREs by manipulating `JAVA_HOME` environment variable.
+
+## Basic guidelines for Liferay Component Configuration
+All I/O components require Open API Module Path setting. Path must always start
+with `/headless-` as it is pattern for all headless modules generated by REST
+Builder and it requires proper version sub path.
+
+Valid path examples:
+``
+/headless-delivery-api
+/headless-commerce-admin-catalog/v1.0
+/headless-commerce-delivery-catalog/v1.0
+``
+
+All components support re-using Liferay Connection Component. It saves user from
+repetitive connection configuration steps required by all I/O components.
+
+### List of components
+
+* Connection Component
+
+  Liferay Host URL should be set to root domain like `"http://localhost:8080"`
+  or `"https://liferay.com"`
+
+* Liferay Input Component
+
+  Submits GET requests to configured endpoint, receives data, converts it to
+  schema described by Open API Spec and passes it further to Talend flow.  
+
+* Liferay Output Component
+
+  Receives data, converts it to schema described by Open API Spec schema and
+  submits POST/PUT requests with data to configured endpoint.
+
+* Liferay Batch File
+
+  Formats received records into proper format described by Open API Spec schema
+  and aggregates it into JSON line batch file.
+
+* Liferay Batch Output File
+
+  Submits batch file to `headless-batch-engine` endpoint. This component may
+  refer to Liferay Batch File component if that component produces batch file

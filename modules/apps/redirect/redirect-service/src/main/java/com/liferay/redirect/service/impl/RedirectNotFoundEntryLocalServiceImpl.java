@@ -83,11 +83,23 @@ public class RedirectNotFoundEntryLocalServiceImpl
 
 	@Override
 	public List<RedirectNotFoundEntry> getRedirectNotFoundEntries(
+		long groupId, Boolean ignored, Date minModifiedDate, int start, int end,
+		OrderByComparator<RedirectNotFoundEntry> obc) {
+
+		return redirectNotFoundEntryLocalService.dynamicQuery(
+			_getRedirectNotFoundEntriesDynamicQuery(
+				groupId, ignored, minModifiedDate),
+			start, end, obc);
+	}
+
+	@Override
+	public List<RedirectNotFoundEntry> getRedirectNotFoundEntries(
 		long groupId, Date minModifiedDate, int start, int end,
 		OrderByComparator<RedirectNotFoundEntry> obc) {
 
 		return redirectNotFoundEntryLocalService.dynamicQuery(
-			_getRedirectNotFoundEntriesDynamicQuery(groupId, minModifiedDate),
+			_getRedirectNotFoundEntriesDynamicQuery(
+				groupId, null, minModifiedDate),
 			start, end, obc);
 	}
 
@@ -107,12 +119,22 @@ public class RedirectNotFoundEntryLocalServiceImpl
 
 	@Override
 	public int getRedirectNotFoundEntriesCount(
+		long groupId, Boolean ignored, Date minModifiedDate) {
+
+		return GetterUtil.getInteger(
+			redirectNotFoundEntryLocalService.dynamicQueryCount(
+				_getRedirectNotFoundEntriesDynamicQuery(
+					groupId, ignored, minModifiedDate)));
+	}
+
+	@Override
+	public int getRedirectNotFoundEntriesCount(
 		long groupId, Date minModifiedDate) {
 
 		return GetterUtil.getInteger(
 			redirectNotFoundEntryLocalService.dynamicQueryCount(
 				_getRedirectNotFoundEntriesDynamicQuery(
-					groupId, minModifiedDate)));
+					groupId, null, minModifiedDate)));
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -131,13 +153,18 @@ public class RedirectNotFoundEntryLocalServiceImpl
 	}
 
 	private DynamicQuery _getRedirectNotFoundEntriesDynamicQuery(
-		long groupId, Date minModifiedDate) {
+		long groupId, Boolean ignored, Date minModifiedDate) {
 
 		DynamicQuery redirectNotFoundEntriesDynamicQuery =
 			redirectNotFoundEntryLocalService.dynamicQuery();
 
 		redirectNotFoundEntriesDynamicQuery.add(
 			RestrictionsFactoryUtil.eq("groupId", groupId));
+
+		if (ignored != null) {
+			redirectNotFoundEntriesDynamicQuery.add(
+				RestrictionsFactoryUtil.eq("ignored", ignored));
+		}
 
 		if (minModifiedDate != null) {
 			redirectNotFoundEntriesDynamicQuery.add(

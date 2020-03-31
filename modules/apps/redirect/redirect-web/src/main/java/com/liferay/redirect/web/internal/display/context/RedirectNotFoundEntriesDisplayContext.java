@@ -195,9 +195,20 @@ public class RedirectNotFoundEntriesDisplayContext {
 			dateRangeFilterBuilder.build(), BooleanClauseOccur.MUST);
 	}
 
+	private Boolean _getIgnored() {
+		String filterType = ParamUtil.getString(
+			_httpServletRequest, "filterType", "active-urls");
+
+		if (filterType.equals("all")) {
+			return null;
+		}
+
+		return filterType.equals("ignored-urls");
+	}
+
 	private Date _getMinModifiedDate() {
 		int days = _maxAgeDaysMap.getOrDefault(
-			ParamUtil.getString(_httpServletRequest, "filter"), 0);
+			ParamUtil.getString(_httpServletRequest, "filterDate"), 0);
 
 		if (days == 0) {
 			return null;
@@ -256,12 +267,13 @@ public class RedirectNotFoundEntriesDisplayContext {
 		redirectNotFoundEntrySearch.setTotal(
 			RedirectNotFoundEntryLocalServiceUtil.
 				getRedirectNotFoundEntriesCount(
-					themeDisplay.getScopeGroupId(), _getMinModifiedDate()));
+					themeDisplay.getScopeGroupId(), _getIgnored(),
+					_getMinModifiedDate()));
 
 		redirectNotFoundEntrySearch.setResults(
 			RedirectNotFoundEntryLocalServiceUtil.getRedirectNotFoundEntries(
-				themeDisplay.getScopeGroupId(), _getMinModifiedDate(),
-				_redirectNotFoundEntrySearch.getStart(),
+				themeDisplay.getScopeGroupId(), _getIgnored(),
+				_getMinModifiedDate(), _redirectNotFoundEntrySearch.getStart(),
 				_redirectNotFoundEntrySearch.getEnd(),
 				_getOrderByComparator()));
 	}

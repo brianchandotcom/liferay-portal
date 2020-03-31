@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
 
@@ -116,14 +117,19 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 		return LanguageUtil.get(request, "filter-by-type");
 	}
 
+	protected String getNavigation() {
+		return ParamUtil.getString(
+			liferayPortletRequest, getNavigationParam(), "active-urls");
+	}
+
 	@Override
 	protected String[] getNavigationKeys() {
-		return new String[] {"all"};
+		return new String[] {"all", "active-urls", "ignored-urls"};
 	}
 
 	@Override
 	protected String getNavigationParam() {
-		return "filter";
+		return "filterType";
 	}
 
 	@Override
@@ -145,12 +151,13 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 		_getNavigationDropdownItemUnsafeConsumer(String key) {
 
 		return dropdownItem -> {
-			dropdownItem.setActive(key.equals(getNavigation()));
+			dropdownItem.setActive(
+				key.equals(ParamUtil.getString(request, "filterDate")));
 
 			PortletURL portletURL = PortletURLUtil.clone(
 				currentURLObj, liferayPortletResponse);
 
-			portletURL.setParameter(getNavigationParam(), key);
+			portletURL.setParameter("filterDate", key);
 
 			dropdownItem.setHref(portletURL);
 

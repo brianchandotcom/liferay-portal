@@ -346,36 +346,15 @@ definition {
 	}
 
 	macro addUserAndSuborganization {
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONOrganization.addOrganization(organizationName = "Organization2");
 
-		Organization.addCP(
-			orgName = "Organization2",
-			orgType = "Organization");
+		JSONOrganization.addOrganization(
+			organizationName = "Sub-organization2",
+			parentOrganizationName = "Organization2");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Suborganization.addCP(
-			orgName = "Organization2",
-			suborgName = "Sub-organization2");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Suborganization.addCP(
-			orgName = "Organization1",
-			suborgName = "Sub-organization1");
+		JSONOrganization.addOrganization(
+			organizationName = "Sub-organization1",
+			parentOrganizationName = "Organization1");
 
 		JSONUser.addUser(
 			userEmailAddress = "user2@liferay.com",
@@ -383,19 +362,16 @@ definition {
 			userLastName = "user2",
 			userScreenName = "user2");
 
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Organization1",
+			userEmailAddress = "user2@liferay.com");
+
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.addMemberCP(
-			orgName = "Organization1",
-			userFirstName = "user2",
-			userLastName = "user2",
-			userName = "user2 user2",
-			userScreenName = "user2");
 
 		Organization.addMemberCP(
 			orgName = "Sub-organization1",

@@ -17,6 +17,8 @@ package com.liferay.fragment.entry.processor.drop.zone;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -41,6 +43,16 @@ import org.osgi.service.component.annotations.Component;
 	service = FragmentEntryProcessor.class
 )
 public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
+
+	@Override
+	public JSONArray getAvailableTagsJSONArray() {
+		return JSONUtil.put(
+			JSONUtil.put(
+				"content", "<lfr-drop-zone id=\"\"></lfr-drop-zone>"
+			).put(
+				"name", "lfr-drop-zone"
+			));
+	}
 
 	@Override
 	public void validateFragmentEntryHTML(String html, String configuration)

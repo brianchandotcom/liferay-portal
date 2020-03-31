@@ -846,7 +846,7 @@ public class LayoutPageTemplatesImporterImpl
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				layoutPageTemplateEntry, pageTemplate.getName(),
-				pageTemplate.getPageDefinition(),
+				pageTemplateEntry.getPageDefinition(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, overwrite,
 				pageTemplateEntry.getThumbnailZipEntry(),
 				pageTemplateEntry.getZipPath(), zipFile);

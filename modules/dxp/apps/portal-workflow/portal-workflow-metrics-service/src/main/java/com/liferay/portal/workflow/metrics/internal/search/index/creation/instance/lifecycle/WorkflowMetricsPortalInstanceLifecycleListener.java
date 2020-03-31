@@ -58,6 +58,23 @@ public class WorkflowMetricsPortalInstanceLifecycleListener
 		_transitionWorkflowMetricsIndexer.createIndex(company.getCompanyId());
 	}
 
+	@Override
+	public void portalInstanceUnregistered(Company company) throws Exception {
+		if (Objects.isNull(_searchEngineAdapter)) {
+			return;
+		}
+
+		_instanceWorkflowMetricsIndexer.removeIndex(company.getCompanyId());
+		_nodeWorkflowMetricsIndexer.removeIndex(company.getCompanyId());
+		_processWorkflowMetricsIndexer.removeIndex(company.getCompanyId());
+		_slaInstanceResultWorkflowMetricsIndexer.removeIndex(
+			company.getCompanyId());
+		_slaTaskResultWorkflowMetricsIndexer.removeIndex(
+			company.getCompanyId());
+		_tokenWorkflowMetricsIndexer.removeIndex(company.getCompanyId());
+		_transitionWorkflowMetricsIndexer.removeIndex(company.getCompanyId());
+	}
+
 	@Reference
 	private InstanceWorkflowMetricsIndexer _instanceWorkflowMetricsIndexer;
 

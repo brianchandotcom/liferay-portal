@@ -42,6 +42,7 @@ import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRe
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -199,6 +200,19 @@ public abstract class BaseWorkflowMetricsIndexer {
 	public abstract String getIndexType();
 
 	public abstract void reindex(long companyId) throws PortalException;
+
+	public void removeIndex(long companyId) throws PortalException {
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
+		if (!hasIndex(getIndexName(companyId))) {
+			return;
+		}
+
+		searchEngineAdapter.execute(
+			new DeleteIndexRequest(getIndexName(companyId)));
+	}
 
 	public void updateDocument(Document document) {
 		_updateDocument(document);

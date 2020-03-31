@@ -23,6 +23,13 @@ Import-Package:\
 	\
 	!net.sf.saxon.*,\
 	\
+	!org.apache.batik.anim.dom.*,\
+	!org.apache.batik.bridge.*,\
+	!org.apache.batik.ext.awt.*,\
+	!org.apache.batik.gvt.*,\
+	!org.apache.batik.util.*,\
+	!org.apache.commons.compress.*,\
+	!org.apache.commons.math3.*,\
 	!org.apache.http.*,\
 	!org.apache.jcp.xml.dsig.internal.dom.*,\
 	!org.apache.poi.hsmf.*,\

@@ -27,7 +27,7 @@ if (Validator.isNull(body)) {
 Editor editor = InputEditorTag.getEditor(request, "ckeditor");
 %>
 
-<liferay-ui:input-editor
+<liferay-editor:editor
 	allowBrowseDocuments="<%= false %>"
 	contents="<%= body %>"
 	editorName="<%= editor.getName() %>"

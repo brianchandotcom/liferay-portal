@@ -17,10 +17,12 @@ package com.liferay.friendly.url.internal.upgrade.v3_0_1;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.sql.PreparedStatement;
@@ -29,6 +31,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -94,6 +98,9 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 						resourcePrimKey);
 
 					if (friendlyURLEntryId != -1) {
+						urlTitleMap = _sortUrlTitleMapByGroupLocaleSettings(
+							groupId, urlTitleMap);
+
 						for (Map.Entry<String, String> entry :
 								urlTitleMap.entrySet()) {
 
@@ -267,6 +274,26 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 		}
 
 		return encodedString;
+	}
+
+	private Map<String, String> _sortUrlTitleMapByGroupLocaleSettings(
+		long groupId, Map<String, String> urlTitleMap) {
+
+		Map<String, String> sortedUrlTitleMap = new LinkedHashMap<>();
+
+		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			String value = urlTitleMap.get(languageId);
+
+			if (value == null) {
+				continue;
+			}
+
+			sortedUrlTitleMap.put(languageId, value);
+		}
+
+		return sortedUrlTitleMap;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

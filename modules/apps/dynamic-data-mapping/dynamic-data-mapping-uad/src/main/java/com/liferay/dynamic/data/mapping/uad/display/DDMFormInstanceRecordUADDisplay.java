@@ -127,9 +127,7 @@ public class DDMFormInstanceRecordUADDisplay
 		DDMFormInstanceRecord ddmFormInstanceRecord, Locale locale) {
 
 		try {
-			int ddmFormInstanceRecordIndex =
-				_ddmFormInstanceRecordUADCacheHelper.
-					getDDMFormInstanceRecordIndex(ddmFormInstanceRecord);
+			StringBundler sb = new StringBundler(6);
 
 			DDMFormInstance ddmFormInstance =
 				ddmFormInstanceRecord.getFormInstance();
@@ -137,21 +135,20 @@ public class DDMFormInstanceRecordUADDisplay
 			String ddmFormInstanceName =
 				_ddmUADHelper.getDDMFormInstanceFormattedName(ddmFormInstance);
 
-			StringBundler sb = new StringBundler(6);
-
 			sb.append(ddmFormInstanceName);
 
 			sb.append(StringPool.SPACE);
-
 			sb.append(
 				LanguageUtil.get(
 					ResourceBundleUtil.getBundle(
 						locale, DDMFormInstanceRecordUADDisplay.class),
 					"record"));
-
 			sb.append(StringPool.SPACE);
-
 			sb.append(StringPool.POUND);
+
+			int ddmFormInstanceRecordIndex =
+				_ddmFormInstanceRecordUADCacheHelper.
+					getDDMFormInstanceRecordIndex(ddmFormInstanceRecord);
 
 			sb.append(ddmFormInstanceRecordIndex + 1);
 

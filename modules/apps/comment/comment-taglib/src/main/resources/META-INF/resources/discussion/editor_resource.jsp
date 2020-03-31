@@ -23,7 +23,7 @@ String onChangeMethod = GetterUtil.getString(request.getAttribute("liferay-comme
 String placeholder = GetterUtil.getString(request.getAttribute("liferay-comment:editor:placeholder"));
 %>
 
-<liferay-ui:input-editor
+<liferay-editor:editor
 	autoCreate="<%= true %>"
 	configKey="commentEditor"
 	contents="<%= contents %>"

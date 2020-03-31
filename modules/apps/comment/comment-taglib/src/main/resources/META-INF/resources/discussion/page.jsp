@@ -128,7 +128,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 											</div>
 
 											<div class="autofit-col autofit-col-expand lfr-discussion-editor">
-												<liferay-ui:input-editor
+												<liferay-editor:editor
 													configKey="commentEditor"
 													contents=""
 													editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>'

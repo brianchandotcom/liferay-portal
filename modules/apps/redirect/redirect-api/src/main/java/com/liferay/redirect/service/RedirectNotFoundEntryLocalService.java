@@ -233,6 +233,11 @@ public interface RedirectNotFoundEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<RedirectNotFoundEntry> getRedirectNotFoundEntries(
+		long groupId, Boolean ignored, Date minModifiedDate, int start, int end,
+		OrderByComparator<RedirectNotFoundEntry> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<RedirectNotFoundEntry> getRedirectNotFoundEntries(
 		long groupId, Date minModifiedDate, int start, int end,
 		OrderByComparator<RedirectNotFoundEntry> obc);
 
@@ -251,6 +256,10 @@ public interface RedirectNotFoundEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRedirectNotFoundEntriesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRedirectNotFoundEntriesCount(
+		long groupId, Boolean ignored, Date minModifiedDate);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRedirectNotFoundEntriesCount(

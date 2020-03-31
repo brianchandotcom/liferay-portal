@@ -295,6 +295,18 @@ public class RedirectNotFoundEntryLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.redirect.model.RedirectNotFoundEntry>
 		getRedirectNotFoundEntries(
+			long groupId, Boolean ignored, java.util.Date minModifiedDate,
+			int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.redirect.model.RedirectNotFoundEntry> obc) {
+
+		return _redirectNotFoundEntryLocalService.getRedirectNotFoundEntries(
+			groupId, ignored, minModifiedDate, start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.redirect.model.RedirectNotFoundEntry>
+		getRedirectNotFoundEntries(
 			long groupId, java.util.Date minModifiedDate, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.redirect.model.RedirectNotFoundEntry> obc) {
@@ -329,6 +341,14 @@ public class RedirectNotFoundEntryLocalServiceWrapper
 	public int getRedirectNotFoundEntriesCount(long groupId) {
 		return _redirectNotFoundEntryLocalService.
 			getRedirectNotFoundEntriesCount(groupId);
+	}
+
+	@Override
+	public int getRedirectNotFoundEntriesCount(
+		long groupId, Boolean ignored, java.util.Date minModifiedDate) {
+
+		return _redirectNotFoundEntryLocalService.
+			getRedirectNotFoundEntriesCount(groupId, ignored, minModifiedDate);
 	}
 
 	@Override

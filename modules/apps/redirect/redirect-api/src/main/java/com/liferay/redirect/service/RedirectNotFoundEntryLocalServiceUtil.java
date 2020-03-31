@@ -271,6 +271,18 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	public static java.util.List
 		<com.liferay.redirect.model.RedirectNotFoundEntry>
 			getRedirectNotFoundEntries(
+				long groupId, Boolean ignored, java.util.Date minModifiedDate,
+				int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.redirect.model.RedirectNotFoundEntry> obc) {
+
+		return getService().getRedirectNotFoundEntries(
+			groupId, ignored, minModifiedDate, start, end, obc);
+	}
+
+	public static java.util.List
+		<com.liferay.redirect.model.RedirectNotFoundEntry>
+			getRedirectNotFoundEntries(
 				long groupId, java.util.Date minModifiedDate, int start,
 				int end,
 				com.liferay.portal.kernel.util.OrderByComparator
@@ -302,6 +314,13 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 
 	public static int getRedirectNotFoundEntriesCount(long groupId) {
 		return getService().getRedirectNotFoundEntriesCount(groupId);
+	}
+
+	public static int getRedirectNotFoundEntriesCount(
+		long groupId, Boolean ignored, java.util.Date minModifiedDate) {
+
+		return getService().getRedirectNotFoundEntriesCount(
+			groupId, ignored, minModifiedDate);
 	}
 
 	public static int getRedirectNotFoundEntriesCount(

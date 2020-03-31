@@ -1486,6 +1486,12 @@ war.path=${app.server.portal.dir}/</echo>
 
 						<replace
 							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+							token="channel-logic-name"
+							value="channel-logic-name-${app.server.bundle.index}"
+						/>
+
+						<replace
+							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
 							token="liferay.home=${liferay.home}"
 							value="liferay.home=${test.app.server.parent.dir}"
 						/>
@@ -7805,6 +7811,9 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 cluster.link.autodetect.address=
+
+cluster.link.channel.logic.name.control=control-channel-logic-name
+cluster.link.channel.logic.name.transport.0=transport-channel-logic-name
 
 cluster.link.enabled=true
 

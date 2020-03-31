@@ -35,6 +35,7 @@ page import="com.liferay.portal.kernel.util.DateUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.redirect.exception.DuplicateRedirectEntrySourceURLException" %><%@
 page import="com.liferay.redirect.exception.RequiredRedirectEntryDestinationURLException" %><%@

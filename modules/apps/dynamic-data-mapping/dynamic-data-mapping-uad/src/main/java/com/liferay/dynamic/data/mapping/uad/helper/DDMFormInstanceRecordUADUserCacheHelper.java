@@ -60,20 +60,25 @@ public class DDMFormInstanceRecordUADUserCacheHelper {
 	private List<DDMFormInstanceRecord> _getDDMFormInstanceRecords(
 		long formInstanceId, long userId) {
 
-		DDMFormInstanceRecordUADUserCache cache = null;
+		DDMFormInstanceRecordUADUserCache ddmFormInstanceRecordUADUserCache =
+			null;
 
 		if (_ddmFormInstanceRecordMap.get(formInstanceId) == null) {
-			cache = new DDMFormInstanceRecordUADUserCache(
-				_ddmFormInstanceRecordLocalService, formInstanceId);
+			ddmFormInstanceRecordUADUserCache =
+				new DDMFormInstanceRecordUADUserCache(
+					_ddmFormInstanceRecordLocalService, formInstanceId);
 
-			cache.putDDMFormInstanceRecords(userId);
+			ddmFormInstanceRecordUADUserCache.putDDMFormInstanceRecords(userId);
 
-			_ddmFormInstanceRecordMap.put(formInstanceId, cache);
+			_ddmFormInstanceRecordMap.put(
+				formInstanceId, ddmFormInstanceRecordUADUserCache);
 		}
 
-		cache = _ddmFormInstanceRecordMap.get(formInstanceId);
+		ddmFormInstanceRecordUADUserCache = _ddmFormInstanceRecordMap.get(
+			formInstanceId);
 
-		return cache.getDDMFormInstanceRecords(userId);
+		return ddmFormInstanceRecordUADUserCache.getDDMFormInstanceRecords(
+			userId);
 	}
 
 	@Reference

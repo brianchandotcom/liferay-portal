@@ -27,7 +27,7 @@ definition {
 
 	@priority = "5"
 	test CreateNewUserAccount {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		Navigator.openURL();
 

@@ -156,7 +156,7 @@ const FragmentContent = React.forwardRef(
 		});
 
 		const getPortals = element =>
-			Array.from(element.querySelectorAll('lfr-dropzone')).map(
+			Array.from(element.querySelectorAll('lfr-drop-zone')).map(
 				dropZoneElement => {
 					const mainItemId =
 						dropZones[dropZoneElement.getAttribute('id')];

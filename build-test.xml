@@ -8577,6 +8577,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<isset property="test.jvm.max.retries" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.jvm.max.retries=${test.jvm.max.retries}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${test.save.screenshot}" arg2="true" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -8590,6 +8599,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					save.web.page=true
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="test.testcase.max.retries" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.testcase.max.retries=${test.testcase.max.retries}
 				</echo>
 			</then>
 		</if>

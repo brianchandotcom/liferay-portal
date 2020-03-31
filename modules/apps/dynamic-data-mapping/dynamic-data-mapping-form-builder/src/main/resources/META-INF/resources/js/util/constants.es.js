@@ -12,4 +12,4 @@
  * details.
  */
 
-export const FIELD_TYPE_FIELDSET = 'section';
+export const FIELD_TYPE_FIELDSET = 'fieldset';

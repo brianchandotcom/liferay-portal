@@ -14,16 +14,16 @@
 
 import '../FieldBase/FieldBase.es';
 
-import './SectionRegister.soy';
+import './FieldSetRegister.soy';
 
 import 'dynamic-data-mapping-form-renderer/js/components/PageRenderer/PageRenderer.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import templates from './Section.soy';
+import templates from './FieldSet.soy';
 
-class Section extends Component {
+class FieldSet extends Component {
 	prepareNestedRows({nestedFields, rows}) {
 		return rows.map(row => ({
 			...row,
@@ -77,11 +77,11 @@ class Section extends Component {
 	}
 }
 
-Section.STATE = {
+FieldSet.STATE = {
 	/**
 	 * @default undefined
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?(string|undefined)}
 	 */
 
@@ -90,7 +90,7 @@ Section.STATE = {
 	/**
 	 * @default false
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?bool}
 	 */
 
@@ -99,7 +99,7 @@ Section.STATE = {
 	/**
 	 * @default undefined
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?(string|undefined)}
 	 */
 
@@ -108,7 +108,7 @@ Section.STATE = {
 	/**
 	 * @default undefined
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?(string|undefined)}
 	 */
 
@@ -117,7 +117,7 @@ Section.STATE = {
 	/**
 	 * @default undefined
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?(string|undefined)}
 	 */
 
@@ -126,7 +126,7 @@ Section.STATE = {
 	/**
 	 * @default []
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?(Array)}
 	 */
 
@@ -135,7 +135,7 @@ Section.STATE = {
 	/**
 	 * @default []
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?(Array)}
 	 */
 
@@ -146,7 +146,7 @@ Section.STATE = {
 	/**
 	 * @default '000000'
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?(string|undefined)}
 	 */
 
@@ -155,7 +155,7 @@ Section.STATE = {
 	/**
 	 * @default false
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?bool}
 	 */
 
@@ -164,7 +164,7 @@ Section.STATE = {
 	/**
 	 * @default undefined
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?(bool|undefined)}
 	 */
 
@@ -173,7 +173,7 @@ Section.STATE = {
 	/**
 	 * @default false
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?(bool|undefined)}
 	 */
 
@@ -182,7 +182,7 @@ Section.STATE = {
 	/**
 	 * @default []
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?(Array|string)}
 	 */
 
@@ -193,7 +193,7 @@ Section.STATE = {
 	/**
 	 * @default true
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?(bool|undefined)}
 	 */
 
@@ -202,7 +202,7 @@ Section.STATE = {
 	/**
 	 * @default undefined
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?(string|undefined)}
 	 */
 
@@ -211,7 +211,7 @@ Section.STATE = {
 	/**
 	 * @default undefined
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?(string|undefined)}
 	 */
 
@@ -220,14 +220,14 @@ Section.STATE = {
 	/**
 	 * @default undefined
 	 * @instance
-	 * @memberof Section
+	 * @memberof FieldSet
 	 * @type {?(string|undefined)}
 	 */
 
 	value: Config.string(),
 };
 
-Soy.register(Section, templates);
+Soy.register(FieldSet, templates);
 
-export {Section};
-export default Section;
+export {FieldSet};
+export default FieldSet;

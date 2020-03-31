@@ -33,6 +33,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="hits" type="long" />
+		<field name="ignored" type="boolean" />
 		<field name="url" type="String">
 			<hint-collection name="URL" />
 			<sanitize content-type="text/plain" modes="ALL" />

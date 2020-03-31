@@ -144,6 +144,8 @@ public class RedirectNotFoundEntryPersistenceTest {
 
 		newRedirectNotFoundEntry.setHits(RandomTestUtil.nextLong());
 
+		newRedirectNotFoundEntry.setIgnored(RandomTestUtil.randomBoolean());
+
 		newRedirectNotFoundEntry.setUrl(RandomTestUtil.randomString());
 
 		_redirectNotFoundEntries.add(
@@ -182,6 +184,9 @@ public class RedirectNotFoundEntryPersistenceTest {
 		Assert.assertEquals(
 			existingRedirectNotFoundEntry.getHits(),
 			newRedirectNotFoundEntry.getHits());
+		Assert.assertEquals(
+			existingRedirectNotFoundEntry.isIgnored(),
+			newRedirectNotFoundEntry.isIgnored());
 		Assert.assertEquals(
 			existingRedirectNotFoundEntry.getUrl(),
 			newRedirectNotFoundEntry.getUrl());
@@ -234,7 +239,7 @@ public class RedirectNotFoundEntryPersistenceTest {
 			"RedirectNotFoundEntry", "mvccVersion", true,
 			"redirectNotFoundEntryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "hits", true, "url", true);
+			"modifiedDate", true, "hits", true, "ignored", true, "url", true);
 	}
 
 	@Test
@@ -519,6 +524,8 @@ public class RedirectNotFoundEntryPersistenceTest {
 		redirectNotFoundEntry.setModifiedDate(RandomTestUtil.nextDate());
 
 		redirectNotFoundEntry.setHits(RandomTestUtil.nextLong());
+
+		redirectNotFoundEntry.setIgnored(RandomTestUtil.randomBoolean());
 
 		redirectNotFoundEntry.setUrl(RandomTestUtil.randomString());
 

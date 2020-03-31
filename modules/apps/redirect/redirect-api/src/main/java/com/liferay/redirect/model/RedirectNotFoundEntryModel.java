@@ -218,6 +218,27 @@ public interface RedirectNotFoundEntryModel
 	public void setHits(long hits);
 
 	/**
+	 * Returns the ignored of this redirect not found entry.
+	 *
+	 * @return the ignored of this redirect not found entry
+	 */
+	public boolean getIgnored();
+
+	/**
+	 * Returns <code>true</code> if this redirect not found entry is ignored.
+	 *
+	 * @return <code>true</code> if this redirect not found entry is ignored; <code>false</code> otherwise
+	 */
+	public boolean isIgnored();
+
+	/**
+	 * Sets whether this redirect not found entry is ignored.
+	 *
+	 * @param ignored the ignored of this redirect not found entry
+	 */
+	public void setIgnored(boolean ignored);
+
+	/**
 	 * Returns the url of this redirect not found entry.
 	 *
 	 * @return the url of this redirect not found entry

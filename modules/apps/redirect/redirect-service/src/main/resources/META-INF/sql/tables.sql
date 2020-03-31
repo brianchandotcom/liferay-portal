@@ -25,5 +25,6 @@ create table RedirectNotFoundEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	hits LONG,
+	ignored BOOLEAN,
 	url STRING null
 );

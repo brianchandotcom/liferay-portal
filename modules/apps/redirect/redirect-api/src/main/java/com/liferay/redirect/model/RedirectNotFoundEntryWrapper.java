@@ -53,6 +53,7 @@ public class RedirectNotFoundEntryWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("hits", getHits());
+		attributes.put("ignored", isIgnored());
 		attributes.put("url", getUrl());
 
 		return attributes;
@@ -115,6 +116,12 @@ public class RedirectNotFoundEntryWrapper
 			setHits(hits);
 		}
 
+		Boolean ignored = (Boolean)attributes.get("ignored");
+
+		if (ignored != null) {
+			setIgnored(ignored);
+		}
+
 		String url = (String)attributes.get("url");
 
 		if (url != null) {
@@ -160,6 +167,16 @@ public class RedirectNotFoundEntryWrapper
 	@Override
 	public long getHits() {
 		return model.getHits();
+	}
+
+	/**
+	 * Returns the ignored of this redirect not found entry.
+	 *
+	 * @return the ignored of this redirect not found entry
+	 */
+	@Override
+	public boolean getIgnored() {
+		return model.getIgnored();
 	}
 
 	/**
@@ -242,6 +259,16 @@ public class RedirectNotFoundEntryWrapper
 		return model.getUserUuid();
 	}
 
+	/**
+	 * Returns <code>true</code> if this redirect not found entry is ignored.
+	 *
+	 * @return <code>true</code> if this redirect not found entry is ignored; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIgnored() {
+		return model.isIgnored();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -285,6 +312,16 @@ public class RedirectNotFoundEntryWrapper
 	@Override
 	public void setHits(long hits) {
 		model.setHits(hits);
+	}
+
+	/**
+	 * Sets whether this redirect not found entry is ignored.
+	 *
+	 * @param ignored the ignored of this redirect not found entry
+	 */
+	@Override
+	public void setIgnored(boolean ignored) {
+		model.setIgnored(ignored);
 	}
 
 	/**

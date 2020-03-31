@@ -43,6 +43,7 @@ public class RedirectNotFoundEntrySoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setHits(model.getHits());
+		soapModel.setIgnored(model.isIgnored());
 		soapModel.setUrl(model.getUrl());
 
 		return soapModel;
@@ -178,6 +179,18 @@ public class RedirectNotFoundEntrySoap implements Serializable {
 		_hits = hits;
 	}
 
+	public boolean getIgnored() {
+		return _ignored;
+	}
+
+	public boolean isIgnored() {
+		return _ignored;
+	}
+
+	public void setIgnored(boolean ignored) {
+		_ignored = ignored;
+	}
+
 	public String getUrl() {
 		return _url;
 	}
@@ -195,6 +208,7 @@ public class RedirectNotFoundEntrySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _hits;
+	private boolean _ignored;
 	private String _url;
 
 }

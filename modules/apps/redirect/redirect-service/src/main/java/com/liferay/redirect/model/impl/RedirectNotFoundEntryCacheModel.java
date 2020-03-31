@@ -78,7 +78,7 @@ public class RedirectNotFoundEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,6 +98,8 @@ public class RedirectNotFoundEntryCacheModel
 		sb.append(modifiedDate);
 		sb.append(", hits=");
 		sb.append(hits);
+		sb.append(", ignored=");
+		sb.append(ignored);
 		sb.append(", url=");
 		sb.append(url);
 		sb.append("}");
@@ -139,6 +141,7 @@ public class RedirectNotFoundEntryCacheModel
 		}
 
 		redirectNotFoundEntryImpl.setHits(hits);
+		redirectNotFoundEntryImpl.setIgnored(ignored);
 
 		if (url == null) {
 			redirectNotFoundEntryImpl.setUrl("");
@@ -168,6 +171,8 @@ public class RedirectNotFoundEntryCacheModel
 		modifiedDate = objectInput.readLong();
 
 		hits = objectInput.readLong();
+
+		ignored = objectInput.readBoolean();
 		url = objectInput.readUTF();
 	}
 
@@ -195,6 +200,8 @@ public class RedirectNotFoundEntryCacheModel
 
 		objectOutput.writeLong(hits);
 
+		objectOutput.writeBoolean(ignored);
+
 		if (url == null) {
 			objectOutput.writeUTF("");
 		}
@@ -212,6 +219,7 @@ public class RedirectNotFoundEntryCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long hits;
+	public boolean ignored;
 	public String url;
 
 }

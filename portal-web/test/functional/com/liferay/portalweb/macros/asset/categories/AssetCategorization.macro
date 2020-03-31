@@ -66,6 +66,8 @@ definition {
 			IFrame.selectCategoryFrame();
 		}
 
+		Pause(locator1 = "3000");
+
 		Portlet.expandTree();
 	}
 

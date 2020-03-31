@@ -14,11 +14,10 @@
 
 package com.liferay.portal.workflow.metrics.search.index.name;
 
+import com.liferay.portal.search.index.IndexNameBuilder;
+
 /**
  * @author Rafael Praxedes
  */
-public interface WorkflowMetricsIndexNameBuilder {
-
-	public String getIndexName(long companyId);
-
+public interface WorkflowMetricsIndexNameBuilder extends IndexNameBuilder {
 }

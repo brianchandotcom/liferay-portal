@@ -391,6 +391,10 @@ function checkElevate({
 	let isElevate = false;
 
 	if (parent) {
+		if (parent.type === LAYOUT_DATA_ITEM_TYPES.root) {
+			return false;
+		}
+
 		if (draggingCollectionInCollection(dropItem, dropTargetItem, items)) {
 			return false;
 		}

@@ -833,6 +833,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			ZipEntry zipEntry = enumeration.nextElement();
 
 			if (_isFragmentCollection(zipEntry.getName()) ||
+				_isFragmentComposition(zipEntry.getName()) ||
 				_isFragmentEntry(zipEntry.getName())) {
 
 				return;

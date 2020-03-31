@@ -71,15 +71,23 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		Navigator.gotoNavItem(navItem = "My Sites");
+		if (isSet(depotName)) {
+			Navigator.gotoNavItem(navItem = "Asset Libraries");
 
-		SiteSelector.selectSite(site = "${site}");
+			LexiconCard.clickCard(card = "${depotName}");
+		}
+		else {
 
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+			Navigator.gotoNavItem(navItem = "My Sites");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
-			value1 = "${site}");
+			SiteSelector.selectSite(site = "${site}");
+
+			ProductMenuHelper.expandPanel(panel = "Site Administration");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
+				value1 = "${site}");
+		}
 	}
 
 	@summary = "Navigate to ${site} via the 'Go to Site' link"

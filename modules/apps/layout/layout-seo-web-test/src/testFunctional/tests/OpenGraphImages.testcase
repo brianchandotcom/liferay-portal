@@ -65,6 +65,7 @@ definition {
 	@priority = "5"
 	test ChangeSiteImage {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		var portalURL = PropsUtil.get("portal.url");
 

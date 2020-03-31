@@ -62,10 +62,16 @@ public class ExportFragmentCompositionsAndFragmentEntriesMVCResourceCommand
 		long[] exportFragmentCompositionIds = null;
 		long[] exportFragmentEntryIds = null;
 
+		long fragmentCompositionId = ParamUtil.getLong(
+			resourceRequest, "fragmentCompositionId");
+
 		long fragmentEntryId = ParamUtil.getLong(
 			resourceRequest, "fragmentEntryId");
 
-		if (fragmentEntryId > 0) {
+		if (fragmentCompositionId > 0) {
+			exportFragmentCompositionIds = new long[] {fragmentCompositionId};
+		}
+		else if (fragmentEntryId > 0) {
 			exportFragmentEntryIds = new long[] {fragmentEntryId};
 		}
 		else {

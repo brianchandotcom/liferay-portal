@@ -286,7 +286,7 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 				}
 
 				if (column.isPrimaryKey() &&
-					Objects.equals(_fromTable, column.getTable())) {
+					(_fromTable == column.getTable())) {
 
 					_parentJoinFunction = true;
 				}

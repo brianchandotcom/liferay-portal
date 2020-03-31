@@ -153,19 +153,25 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				MapUtil.isNotEmpty(orphanFragmentEntries)) {
 
 				FragmentCollection fragmentCollection =
-					_fragmentCollectionLocalService.fetchFragmentCollection(
-						groupId, _DEFAULT_FRAGMENT_COLLECTION_KEY);
+					_fragmentCollectionService.fetchFragmentCollection(
+						fragmentCollectionId);
 
 				if (fragmentCollection == null) {
-					Locale locale = _portal.getSiteDefaultLocale(groupId);
-
 					fragmentCollection =
-						_fragmentCollectionService.addFragmentCollection(
-							groupId, _DEFAULT_FRAGMENT_COLLECTION_KEY,
-							LanguageUtil.get(
-								locale, _DEFAULT_FRAGMENT_COLLECTION_KEY),
-							StringPool.BLANK,
-							ServiceContextThreadLocal.getServiceContext());
+						_fragmentCollectionLocalService.fetchFragmentCollection(
+							groupId, _DEFAULT_FRAGMENT_COLLECTION_KEY);
+
+					if (fragmentCollection == null) {
+						Locale locale = _portal.getSiteDefaultLocale(groupId);
+
+						fragmentCollection =
+							_fragmentCollectionService.addFragmentCollection(
+								groupId, _DEFAULT_FRAGMENT_COLLECTION_KEY,
+								LanguageUtil.get(
+									locale, _DEFAULT_FRAGMENT_COLLECTION_KEY),
+								StringPool.BLANK,
+								ServiceContextThreadLocal.getServiceContext());
+					}
 
 					fragmentCollectionId =
 						fragmentCollection.getFragmentCollectionId();

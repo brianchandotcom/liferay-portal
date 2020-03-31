@@ -261,7 +261,7 @@ definition {
 				text = "Modified text");
 		}
 
-		task ("Resubmit the request after modification") {
+		task ("Assert page author can preview the modification") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			AssertTextEquals(
@@ -269,6 +269,26 @@ definition {
 				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 				value1 = "Pending");
 
+			Click.waitForMenuToggleJSClick(
+				key_pageName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.viewVisible(menuItem = "Preview");
+
+			MenuItem.click(menuItem = "Preview");
+
+			AssertTextNotEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "New editable fragment text");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Modified text");
+		}
+
+		task ("Resubmit the request after modification") {
 			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 			Workflow.resubmitTaskByActions(
@@ -277,11 +297,38 @@ definition {
 				workflowTask = "Update");
 		}
 
-		task ("Reviewer approve the request of modification") {
+		task ("Assert reviewer can preview the modification") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			AssertTextEquals(
+				key_itemName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
+				value1 = "Pending");
+
+			Click.waitForMenuToggleJSClick(
+				key_pageName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.viewVisible(menuItem = "Preview");
+
+			MenuItem.click(menuItem = "Preview");
+
+			AssertTextNotEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "New editable fragment text");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Modified text");
+		}
+
+		task ("Reviewer approve the request of modification") {
 			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 			Workflow.assignToMeTaskByActions(

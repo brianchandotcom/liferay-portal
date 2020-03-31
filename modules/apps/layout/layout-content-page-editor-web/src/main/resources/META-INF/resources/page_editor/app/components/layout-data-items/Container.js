@@ -79,7 +79,6 @@ const Container = React.forwardRef(
 						[`px-${paddingHorizontal}`]: paddingHorizontal !== 3,
 					}
 				)}
-				data="aaa"
 				ref={ref}
 				style={
 					backgroundImageValue

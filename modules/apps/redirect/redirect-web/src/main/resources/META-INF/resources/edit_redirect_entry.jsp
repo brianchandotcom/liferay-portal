@@ -77,11 +77,11 @@ else {
 		<aui:input autoFocus="<%= Validator.isNotNull(sourceURL) && Validator.isNull(destinationURL) %>" name="destinationURL" required="<%= true %>" value="<%= destinationURL %>" />
 
 		<aui:select label="type" name="permanent">
-			<aui:option selected="<%= (redirectEntry != null) ? redirectEntry.isPermanent() : true %>" value="<%= true %>">
+			<aui:option selected="<%= (redirectEntry != null) ? redirectEntry.isPermanent() : false %>" value="<%= true %>">
 				<liferay-ui:message arguments="<%= HttpServletResponse.SC_MOVED_PERMANENTLY %>" key="permanent-x" />
 			</aui:option>
 
-			<aui:option selected="<%= (redirectEntry != null) ? !redirectEntry.isPermanent() : false %>" value="<%= false %>">
+			<aui:option selected="<%= (redirectEntry != null) ? !redirectEntry.isPermanent() : true %>" value="<%= false %>">
 				<liferay-ui:message arguments="<%= HttpServletResponse.SC_FOUND %>" key="temporary-x" />
 			</aui:option>
 		</aui:select>

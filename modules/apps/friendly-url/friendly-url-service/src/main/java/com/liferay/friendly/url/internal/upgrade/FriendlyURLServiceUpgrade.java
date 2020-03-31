@@ -16,6 +16,7 @@ package com.liferay.friendly.url.internal.upgrade;
 
 import com.liferay.friendly.url.internal.upgrade.v2_0_0.util.FriendlyURLEntryTable;
 import com.liferay.friendly.url.internal.upgrade.v3_0_0.UpgradeCompanyId;
+import com.liferay.friendly.url.internal.upgrade.v3_0_1.UpgradeFriendlyURLEntryLocalizations;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -42,6 +43,9 @@ public class FriendlyURLServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeCTModel(
 				"FriendlyURLEntry", "FriendlyURLEntryLocalization",
 				"FriendlyURLEntryMapping"));
+
+		registry.register(
+			"3.1.0", "3.1.1", new UpgradeFriendlyURLEntryLocalizations());
 	}
 
 }

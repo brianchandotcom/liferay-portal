@@ -8593,15 +8593,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				</echo>
 			</then>
 		</if>
-
-		<if>
-			<equals arg1="${test.selenium.implementation}" arg2="selenium" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					selenium.implementation=com.thoughtworks.selenium.Selenium
-				</echo>
-			</then>
-		</if>
 	</target>
 
 	<target name="prepare-selenium-analytics-cloud-properties">
@@ -9301,7 +9292,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<echo append="true" file="${test.ext.properties.file}">
 			portal.url=${test.url}
 			selenium.executable.dir=${basedir.unix}/tools/selenium/
-			selenium.logger.enabled=${test.selenium.logger.enabled}
 			test.class.command.name=${test.class}
 		</echo>
 	</target>

@@ -1142,6 +1142,7 @@ private String _downloadFile(File destinationDir, String... urls) {
 				return url
 			}
 			catch (Exception e) {
+				sleep(5000)
 			}
 		}
 	}

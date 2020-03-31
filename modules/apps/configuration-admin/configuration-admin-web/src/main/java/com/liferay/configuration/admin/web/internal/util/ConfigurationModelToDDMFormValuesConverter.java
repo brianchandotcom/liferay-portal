@@ -21,6 +21,11 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.settings.LocationVariableResolver;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -42,10 +47,19 @@ public class ConfigurationModelToDDMFormValuesConverter {
 		ConfigurationModel configurationModel, DDMForm ddmForm, Locale locale,
 		ResourceBundle resourceBundle) {
 
+		this(configurationModel, ddmForm, locale, resourceBundle, null);
+	}
+
+	public ConfigurationModelToDDMFormValuesConverter(
+		ConfigurationModel configurationModel, DDMForm ddmForm, Locale locale,
+		ResourceBundle resourceBundle,
+		LocationVariableResolver locationVariableResolver) {
+
 		_configurationModel = configurationModel;
 		_ddmForm = ddmForm;
 		_locale = locale;
 		_resourceBundle = resourceBundle;
+		_locationVariableResolver = locationVariableResolver;
 
 		_ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(false);
 	}
@@ -159,9 +173,30 @@ public class ConfigurationModelToDDMFormValuesConverter {
 	protected void setDDMFormFieldValueLocalizedValue(
 		String value, DDMFormFieldValue ddmFormFieldValue) {
 
+		// If it's a location type variable, resolve it
+
+		try {
+			if ((_locationVariableResolver != null) &&
+				_locationVariableResolver.isLocationVariable(value)) {
+
+				value = _locationVariableResolver.resolve(value);
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to resolve the location variable", exception);
+			}
+		}
+
 		String type = getDDMFormFieldType(ddmFormFieldValue.getName());
 
-		if (type.equals(DDMFormFieldType.SELECT)) {
+		if (type.equals(DDMFormFieldType.LOCALIZABLE_TEXT) &&
+			!JSONUtil.isValid(value)) {
+
+			value = String.valueOf(
+				JSONUtil.put(LocaleUtil.toLanguageId(_locale), value));
+		}
+		else if (type.equals(DDMFormFieldType.SELECT)) {
 			value = "[\"" + value + "\"]";
 		}
 
@@ -176,10 +211,14 @@ public class ConfigurationModelToDDMFormValuesConverter {
 		Portal.TEMP_OBFUSCATION_VALUE
 	};
 
+	private static Log _log = LogFactoryUtil.getLog(
+		ConfigurationModelToDDMFormValuesConverter.class);
+
 	private final ConfigurationModel _configurationModel;
 	private final DDMForm _ddmForm;
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private final Locale _locale;
+	private final LocationVariableResolver _locationVariableResolver;
 	private final ResourceBundle _resourceBundle;
 
 }

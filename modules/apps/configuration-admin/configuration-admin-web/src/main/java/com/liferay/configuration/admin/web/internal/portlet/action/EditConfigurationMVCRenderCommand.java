@@ -32,7 +32,10 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.settings.LocationVariableResolver;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -107,7 +110,8 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 				configurationModel.getExtendedObjectClassDefinition(),
 				configuration, configurationModel.getBundleSymbolicName(),
 				configurationModel.getBundleLocation(),
-				configurationModel.isFactory());
+				configurationModel.isFactory(),
+				configurationModel.getClassLoader());
 		}
 
 		if (configurationModel != null) {
@@ -156,10 +160,17 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 				ConfigurationAdminWebKeys.CONFIGURATION_MODEL,
 				configurationModel);
 
+			LocationVariableResolver locationVariableResolver =
+				new LocationVariableResolver(
+					new ClassLoaderResourceManager(
+						configurationModel.getClassLoader()),
+					_settingsLocatorHelper);
+
 			DDMFormRendererHelper ddmFormRendererHelper =
 				new DDMFormRendererHelper(
 					renderRequest, renderResponse, configurationModel,
-					_ddmFormRenderer, _resourceBundleLoaderProvider);
+					_ddmFormRenderer, _resourceBundleLoaderProvider,
+					locationVariableResolver);
 
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_FORM_HTML,
@@ -210,5 +221,8 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
+
+	@Reference
+	private SettingsLocatorHelper _settingsLocatorHelper;
 
 }

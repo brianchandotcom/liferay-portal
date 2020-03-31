@@ -45,6 +45,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
@@ -211,7 +212,8 @@ public class ConfigurationModelRetrieverImpl
 			ConfigurationModel curConfigurationModel = new ConfigurationModel(
 				factoryConfigurationModel, configuration,
 				factoryConfigurationModel.getBundleSymbolicName(),
-				configuration.getBundleLocation(), false);
+				configuration.getBundleLocation(), false,
+				factoryConfigurationModel.getClassLoader());
 
 			factoryInstances.add(curConfigurationModel);
 		}
@@ -314,10 +316,12 @@ public class ConfigurationModelRetrieverImpl
 		String pid, boolean factory, String locale,
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
 		ConfigurationModel configurationModel = new ConfigurationModel(
 			extendedMetaTypeInformation.getObjectClassDefinition(pid, locale),
 			getConfiguration(pid, scope, scopePK), bundle.getSymbolicName(),
-			StringPool.QUESTION, factory);
+			StringPool.QUESTION, factory, bundleWiring.getClassLoader());
 
 		ConfigurationVisibilityController configurationVisibilityController =
 			_configurationVisibilityControllerServiceTrackerMap.getService(pid);
@@ -346,7 +350,8 @@ public class ConfigurationModelRetrieverImpl
 			configurationModel = new ConfigurationModel(
 				configurationModel.getExtendedObjectClassDefinition(),
 				configuration, bundle.getSymbolicName(), StringPool.QUESTION,
-				configurationModel.isFactory());
+				configurationModel.isFactory(),
+				configurationModel.getClassLoader());
 		}
 
 		return configurationModel;

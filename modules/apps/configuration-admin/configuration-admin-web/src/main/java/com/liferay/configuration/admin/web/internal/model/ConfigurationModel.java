@@ -52,11 +52,22 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		Configuration configuration, String bundleSymbolicName,
 		String bundleLocation, boolean factory) {
 
+		this(
+			extendedObjectClassDefinition, configuration, bundleSymbolicName,
+			bundleLocation, factory, ConfigurationModel.class.getClassLoader());
+	}
+
+	public ConfigurationModel(
+		ExtendedObjectClassDefinition extendedObjectClassDefinition,
+		Configuration configuration, String bundleSymbolicName,
+		String bundleLocation, boolean factory, ClassLoader classLoader) {
+
 		_extendedObjectClassDefinition = extendedObjectClassDefinition;
 		_configuration = configuration;
 		_bundleSymbolicName = bundleSymbolicName;
 		_bundleLocation = bundleLocation;
 		_factory = factory;
+		_classLoader = classLoader;
 	}
 
 	@Override
@@ -91,6 +102,10 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 
 		return GetterUtil.get(
 			extensionAttributes.get("category"), "third-party");
+	}
+
+	public ClassLoader getClassLoader() {
+		return _classLoader;
 	}
 
 	public Configuration getConfiguration() {
@@ -360,6 +375,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 
 	private final String _bundleLocation;
 	private final String _bundleSymbolicName;
+	private final ClassLoader _classLoader;
 	private final Configuration _configuration;
 	private final ExtendedObjectClassDefinition _extendedObjectClassDefinition;
 	private final boolean _factory;

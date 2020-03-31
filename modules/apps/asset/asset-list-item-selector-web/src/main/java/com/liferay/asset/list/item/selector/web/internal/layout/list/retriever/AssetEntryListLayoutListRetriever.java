@@ -44,7 +44,7 @@ public class AssetEntryListLayoutListRetriever
 		<InfoListItemSelectorReturnType, ClassedModelListObjectReference> {
 
 	@Override
-	public List getList(
+	public List<Object> getList(
 		ClassedModelListObjectReference classedModelListObjectReference,
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 
@@ -77,7 +77,7 @@ public class AssetEntryListLayoutListRetriever
 				AssetEntry.class.getName(),
 				assetListEntry.getAssetEntryType())) {
 
-			return assetEntries;
+			return Collections.singletonList(assetEntries);
 		}
 
 		return _toAssetObjects(assetEntries);
@@ -106,8 +106,8 @@ public class AssetEntryListLayoutListRetriever
 			assetListEntry, segmentsExperienceIds[0]);
 	}
 
-	private List _toAssetObjects(List<AssetEntry> assetEntries) {
-		List list = new ArrayList(assetEntries.size());
+	private List<Object> _toAssetObjects(List<AssetEntry> assetEntries) {
+		List<Object> list = new ArrayList<>(assetEntries.size());
 
 		for (AssetEntry assetEntry : assetEntries) {
 			AssetRenderer assetRenderer = assetEntry.getAssetRenderer();

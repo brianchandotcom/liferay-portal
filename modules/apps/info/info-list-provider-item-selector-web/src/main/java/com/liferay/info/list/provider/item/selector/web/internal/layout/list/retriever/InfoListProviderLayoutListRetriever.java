@@ -48,7 +48,7 @@ public class InfoListProviderLayoutListRetriever
 		<InfoListProviderItemSelectorReturnType, KeyListObjectReference> {
 
 	@Override
-	public List getList(
+	public List<Object> getList(
 		KeyListObjectReference keyListObjectReference,
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 

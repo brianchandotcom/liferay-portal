@@ -40,6 +40,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,21 +98,32 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 
 		Map<String, String> attributesMap = tag.getAttributesMap();
 
-		for (Map.Entry<String, String> entry : attributesMap.entrySet()) {
-			String attributeValue = entry.getValue();
+		Set<Map.Entry<String, String>> entrySet = attributesMap.entrySet();
+
+		Iterator<Map.Entry<String, String>> iterator = entrySet.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, String> entry = iterator.next();
 
 			String attributeName = entry.getKey();
+			String attributeValue = entry.getValue();
 
-			if (attributeName.equals("style")) {
-				String tagName = tag.getName();
+			String tagName = tag.getName();
 
-				if (!tagName.contains(StringPool.COLON) ||
-					tagName.startsWith("aui:")) {
+			if (tagName.equals("aui:button") && attributeName.equals("type") &&
+				attributeValue.equals("button")) {
 
-					tag.putAttribute(
-						attributeName,
-						_formatStyleAttributeValue(attributeValue));
-				}
+				iterator.remove();
+
+				continue;
+			}
+
+			if (attributeName.equals("style") &&
+				(!tagName.contains(StringPool.COLON) ||
+				 tagName.startsWith("aui:"))) {
+
+				tag.putAttribute(
+					attributeName, _formatStyleAttributeValue(attributeValue));
 			}
 
 			if (attributeValue.matches("<%= Boolean\\.(FALSE|TRUE) %>")) {

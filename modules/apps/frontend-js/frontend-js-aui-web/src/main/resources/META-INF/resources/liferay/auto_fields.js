@@ -149,27 +149,22 @@ AUI.add(
 
 					var inputsLocalized = node.all('.language-value');
 
-					var currentInputLocalized = clone.one('.language-value');
+					var palette = document.querySelector(
+						"[id$='PaletteBoundingBox']"
+					);
 
 					var clonedRow;
 
-					if (currentInputLocalized) {
+					if (inputsLocalized && palette) {
 						var trigger = clone.one('button');
 
-						var id = `#${currentInputLocalized.get(
-							'id'
-						)}PaletteBoundingBox`;
+						var list = A.Node.create(
+							'<ul class="dropdown-menu dropdown-menu-left-side"></ul>'
+						);
 
-						if (!node.one(id) && A.one(id)) {
-							var palette = A.one(id);
+						trigger.placeAfter(list);
 
-							var list = A.Node.create(
-								'<ul class="dropdown-menu dropdown-menu-left-side"></ul>'
-							);
-
-							trigger.placeAfter(list);
-							list.append(palette.clone());
-						}
+						list.append(palette);
 					}
 					if (instance.url) {
 						clonedRow = instance._createCloneFromURL(clone, guid);

@@ -47,6 +47,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test AddDocuments {
 		property portal.acceptance = "true";

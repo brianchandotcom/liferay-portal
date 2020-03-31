@@ -140,6 +140,12 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException: java.lang.NullPointerException");
 	}
 
+	macro addCustomPublication {
+		Pause(locator1 = "3000");
+
+		LexiconEntry.gotoAdd();
+	}
+
 	macro addEventRepeatDaily {
 		Click(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
 
@@ -697,9 +703,7 @@ definition {
 	}
 
 	macro publishCustomPublication {
-		Pause(locator1 = "3000");
-
-		LexiconEntry.gotoAdd();
+		Staging.addCustomPublication();
 
 		if ("${rangeAll}" == "true") {
 			Click(locator1 = "Radio#CHOOSE_CONTENT_ALL_CHANGE");

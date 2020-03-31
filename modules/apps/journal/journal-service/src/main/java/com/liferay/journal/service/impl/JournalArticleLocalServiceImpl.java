@@ -7122,47 +7122,38 @@ public class JournalArticleLocalServiceImpl
 					"between ", _previousCheckDate, " and ", reviewDate));
 		}
 
-		Set<Long> latestArticleIds = new HashSet<>();
-
 		List<JournalArticle> articles = journalArticleFinder.findByReviewDate(
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, reviewDate,
 			_previousCheckDate);
 
 		for (JournalArticle article : articles) {
-			if (article.isInTrash()) {
-				continue;
-			}
-
 			long groupId = article.getGroupId();
 			String articleId = article.getArticleId();
 
-			if (!journalArticleLocalService.isLatestVersion(
+			if (article.isInTrash() ||
+				!journalArticleLocalService.isLatestVersion(
 					groupId, articleId, article.getVersion())) {
 
-				article = journalArticleLocalService.getLatestArticle(
-					groupId, articleId);
+				continue;
 			}
 
-			if (latestArticleIds.add(article.getPrimaryKey())) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Sending review notification for article " +
-							article.getId());
-				}
-
-				String portletId = PortletProviderUtil.getPortletId(
-					JournalArticle.class.getName(),
-					PortletProvider.Action.EDIT);
-
-				String articleURL = _portal.getControlPanelFullURL(
-					article.getGroupId(), portletId, null);
-
-				articleURL = buildArticleURL(
-					articleURL, article.getGroupId(), article.getFolderId(),
-					article.getArticleId());
-
-				sendEmail(article, articleURL, "review", new ServiceContext());
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Sending review notification for article " +
+						article.getId());
 			}
+
+			String portletId = PortletProviderUtil.getPortletId(
+				JournalArticle.class.getName(), PortletProvider.Action.EDIT);
+
+			String articleURL = _portal.getControlPanelFullURL(
+				article.getGroupId(), portletId, null);
+
+			articleURL = buildArticleURL(
+				articleURL, article.getGroupId(), article.getFolderId(),
+				article.getArticleId());
+
+			sendEmail(article, articleURL, "review", new ServiceContext());
 		}
 	}
 

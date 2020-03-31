@@ -1922,6 +1922,7 @@ definition {
 	test StagingMultipleDM {
 		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
+		property test.name.skip.portal.instance = "Staging#StagingMultipleDM";
 		property testray.component.names = "Training";
 
 		JSONLayout.addWidgetToPublicLayout(

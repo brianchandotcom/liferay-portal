@@ -28,22 +28,15 @@ public class JSPModuleIllegalImportsCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		// LPS-62989
-
 		if (content.contains("import=\"com.liferay.registry.Registry")) {
 			addMessage(
 				fileName,
-				"Do not use com.liferay.registry.Registry in modules, see " +
-					"LPS-62989");
+				"Do not use com.liferay.registry.Registry in modules");
 		}
-
-		// LPS-64335
 
 		if (content.contains("import=\"com.liferay.util.ContentUtil")) {
 			addMessage(
-				fileName,
-				"Do not use com.liferay.util.ContentUtil in modules, see " +
-					"LPS-64335");
+				fileName, "Do not use com.liferay.util.ContentUtil in modules");
 		}
 
 		return content;

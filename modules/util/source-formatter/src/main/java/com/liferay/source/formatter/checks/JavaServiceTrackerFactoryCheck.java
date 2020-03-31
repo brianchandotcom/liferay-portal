@@ -48,8 +48,8 @@ public class JavaServiceTrackerFactoryCheck extends BaseFileCheck {
 			if (parameterList.size() == 1) {
 				addMessage(
 					fileName,
-					"ServiceTrackerFactory.open(Class clazz) is deprecated " +
-						"since it leaks ServiceTrackers, see LPS-95067",
+					"ServiceTrackerFactory.open(java.lang.Class) is " +
+						"deprecated, because it leaks ServiceTrackers",
 					getLineNumber(content, matcher.start()));
 			}
 		}

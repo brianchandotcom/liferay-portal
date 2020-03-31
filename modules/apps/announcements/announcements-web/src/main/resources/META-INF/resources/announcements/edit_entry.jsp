@@ -84,7 +84,7 @@ if (portletTitleBasedNavigation) {
 
 				<aui:input name="title" type="hidden" />
 
-				<liferay-ui:input-editor
+				<liferay-editor:editor
 					contents="<%= content %>"
 					editorName="ckeditor"
 					name="contentEditor"

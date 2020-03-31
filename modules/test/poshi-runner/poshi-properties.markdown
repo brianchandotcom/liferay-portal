@@ -227,6 +227,11 @@ tests.
 Sets a comma-delimited list of directory paths to include in the Poshi project
 files. This does not include `*.testcase` files.
 
+### test.jvm.max.retries
+
+Sets the maximum cumulative amount of attempts that failing tests in the test
+group may be re-executed.
+
 ### test.name
 
 Sets the test case(s) to run. The tests can be specified by the test case
@@ -266,6 +271,11 @@ Sets a boolean for whether the tear down is skipped.
 
 Sets a comma-delimited list of subrepository directory paths to include in the
 Poshi project files. This includes all Poshi file types.
+
+### test.testcase.max.retries
+
+Sets the maximum amount of attempts that an individual failing testcase may be
+re-executed.
 
 ### timeout.explicit.wait
 

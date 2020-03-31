@@ -128,7 +128,9 @@ public class ImageEditableElementParser implements EditableElementParser {
 			}
 		}
 
-		replaceableElement.attr("src", _html.unescape(value));
+		if (Validator.isNotNull(value)) {
+			replaceableElement.attr("src", _html.unescape(value));
+		}
 
 		if (configJSONObject == null) {
 			return;

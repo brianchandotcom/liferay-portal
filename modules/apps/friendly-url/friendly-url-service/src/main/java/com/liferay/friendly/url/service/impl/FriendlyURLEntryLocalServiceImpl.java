@@ -378,9 +378,22 @@ public class FriendlyURLEntryLocalServiceImpl
 			friendlyURLEntryMapping.getFriendlyURLEntryId());
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getUniqueUrlTitle(long, long, long, String, String)}
+	 */
+	@Deprecated
 	@Override
 	public String getUniqueUrlTitle(
 		long groupId, long classNameId, long classPK, String urlTitle) {
+
+		return getUniqueUrlTitle(groupId, classNameId, classPK, null, urlTitle);
+	}
+
+	@Override
+	public String getUniqueUrlTitle(
+		long groupId, long classNameId, long classPK, String languageId,
+		String urlTitle) {
 
 		String normalizedUrlTitle =
 			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
@@ -398,10 +411,21 @@ public class FriendlyURLEntryLocalServiceImpl
 				friendlyURLEntryLocalizationPersistence.fetchByG_C_U(
 					groupId, classNameId, curUrlTitle);
 
-			if ((friendlyURLEntryLocalization == null) ||
-				(friendlyURLEntryLocalization.getClassPK() == classPK)) {
+			if (Validator.isNull(languageId)) {
+				if ((friendlyURLEntryLocalization == null) ||
+					(friendlyURLEntryLocalization.getClassPK() == classPK)) {
 
-				break;
+					break;
+				}
+			}
+			else {
+				if ((friendlyURLEntryLocalization == null) ||
+					((friendlyURLEntryLocalization.getClassPK() == classPK) &&
+					 languageId.equals(
+						 friendlyURLEntryLocalization.getLanguageId()))) {
+
+					break;
+				}
 			}
 
 			String suffix = StringPool.DASH + i;
@@ -557,46 +581,6 @@ public class FriendlyURLEntryLocalServiceImpl
 		return true;
 	}
 
-	private String _getUniqueUrlTitle(
-		long groupId, long classNameId, long classPK, String languageId,
-		String urlTitle) {
-
-		String normalizedUrlTitle =
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
-
-		int maxLength = ModelHintsUtil.getMaxLength(
-			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
-
-		String curUrlTitle = _getURLEncodedSubstring(
-			urlTitle, normalizedUrlTitle, maxLength);
-
-		String prefix = curUrlTitle;
-
-		for (int i = 1;; i++) {
-			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-				friendlyURLEntryLocalizationPersistence.fetchByG_C_U(
-					groupId, classNameId, curUrlTitle);
-
-			if ((friendlyURLEntryLocalization == null) ||
-				((friendlyURLEntryLocalization.getClassPK() == classPK) &&
-				 languageId.equals(
-					 friendlyURLEntryLocalization.getLanguageId()))) {
-
-				break;
-			}
-
-			String suffix = StringPool.DASH + i;
-
-			prefix = _getURLEncodedSubstring(
-				urlTitle, prefix, maxLength - suffix.length());
-
-			curUrlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(
-				prefix + suffix);
-		}
-
-		return curUrlTitle;
-	}
-
 	private String _getURLEncodedSubstring(
 		String decodedString, String encodedString, int maxLength) {
 
@@ -712,7 +696,7 @@ public class FriendlyURLEntryLocalServiceImpl
 					}
 				}
 				else {
-					normalizedUrlTitle = _getUniqueUrlTitle(
+					normalizedUrlTitle = getUniqueUrlTitle(
 						friendlyURLEntry.getGroupId(), classNameId, classPK,
 						entry.getKey(), normalizedUrlTitle);
 				}

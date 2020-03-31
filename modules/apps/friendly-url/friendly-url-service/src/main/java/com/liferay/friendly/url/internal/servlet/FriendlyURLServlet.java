@@ -44,7 +44,9 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
 import com.liferay.portal.kernel.servlet.PortalMessages;
+import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -93,8 +95,9 @@ import org.osgi.service.component.annotations.Reference;
 public class FriendlyURLServlet extends HttpServlet {
 
 	public Redirect getRedirect(
-			HttpServletRequest httpServletRequest, String path)
-		throws PortalException {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String path)
+		throws IOException, PortalException, ServletException {
 
 		if (path.length() <= 1) {
 			return new Redirect();
@@ -284,6 +287,8 @@ public class FriendlyURLServlet extends HttpServlet {
 			}
 		}
 		catch (NoSuchLayoutException noSuchLayoutException) {
+			friendlyURL = null;
+
 			List<Layout> layouts = layoutLocalService.getLayouts(
 				group.getGroupId(), _private,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
@@ -300,7 +305,35 @@ public class FriendlyURLServlet extends HttpServlet {
 			redirectNotFoundEntryLocalService.addOrUpdateRedirectNotFoundEntry(
 				group, _normalizeFriendlyURL(friendlyURL));
 
-			throw noSuchLayoutException;
+			if (Validator.isNotNull(
+					PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
+
+				throw noSuchLayoutException;
+			}
+
+			LayoutFriendlyURLSeparatorComposite
+				layoutFriendlyURLSeparatorComposite =
+					portal.getLayoutFriendlyURLSeparatorComposite(
+						group.getGroupId(), _private, null, params,
+						requestContext);
+
+			if (Validator.isNull(
+					layoutFriendlyURLSeparatorComposite.getLayout())) {
+
+				throw noSuchLayoutException;
+			}
+
+			HttpSession session = PortalSessionThreadLocal.getHttpSession();
+
+			if (session == null) {
+				session = httpServletRequest.getSession();
+			}
+
+			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+			SessionErrors.add(
+				session, noSuchLayoutException.getClass(),
+				noSuchLayoutException);
 		}
 
 		String actualURL = portal.getActualURL(
@@ -381,7 +414,8 @@ public class FriendlyURLServlet extends HttpServlet {
 		Redirect redirect = null;
 
 		try {
-			redirect = getRedirect(httpServletRequest, pathInfo);
+			redirect = getRedirect(
+				httpServletRequest, httpServletResponse, pathInfo);
 
 			if (httpServletRequest.getAttribute(WebKeys.LAST_PATH) == null) {
 				httpServletRequest.setAttribute(

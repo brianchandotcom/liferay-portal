@@ -67,10 +67,10 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 						%>
 
 						<liferay-ui:icon
-							icon="<%= roleTypeContributor.getIcon() %>"
+							icon='<%= (roleTypeContributor != null) ? roleTypeContributor.getIcon() : "users" %>'
 							label="<%= false %>"
 							markupView="lexicon"
-							message="<%= LanguageUtil.get(request, roleTypeContributor.getTitle(locale)) %>"
+							message='<%= LanguageUtil.get(request, (roleTypeContributor != null) ? roleTypeContributor.getTitle(locale) : "team") %>'
 						/>
 
 						<%= role.getTitle(locale) %>

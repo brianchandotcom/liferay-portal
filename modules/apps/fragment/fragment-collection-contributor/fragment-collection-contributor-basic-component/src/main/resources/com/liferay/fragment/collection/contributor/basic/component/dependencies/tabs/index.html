@@ -20,15 +20,15 @@
 						[#list 0..configuration.numberOfTabs-1 as i]
 							<li class="nav-item" role="presentation">
 								<button
-									aria-controls="${i+1}-tab-panel"
+									aria-controls="tabPanel${i+1}"
 									aria-selected="false"
 									class="nav-link"
-									id="${i+1}-tab"
+									id="tab${i+1}"
 									role="tab"
 								>
 									<span
 										class="navbar-text-truncate"
-										data-lfr-editable-id="${i+1}-title"
+										data-lfr-editable-id="title${i+1}"
 										data-lfr-editable-type="text"
 										tabindex="-1"
 									>
@@ -45,8 +45,8 @@
 
 	<div class="tab-panel">
 		[#list 0..configuration.numberOfTabs-1 as i]
-			<div aria-labelledby="${i+1}-tab" class="tab-panel-item d-none" id="${i+1}-tab-panel" role="tabpanel" tabindex="0">
-				<lfr-drop-zone id="${i+1}-drop-zone"></lfr-drop-zone>
+			<div aria-labelledby="tab${i+1}" class="tab-panel-item d-none" id="tabPanel${i+1}" role="tabpanel" tabindex="0">
+				<lfr-drop-zone id="dropZone${i+1}"></lfr-drop-zone>
 			</div>
 		[/#list]
 	</div>

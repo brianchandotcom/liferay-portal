@@ -14,13 +14,18 @@
 
 package com.liferay.friendly.url.internal.upgrade.v3_0_1;
 
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.HashMap;
@@ -77,6 +82,33 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 
 						urlTitleMap.put(languageId, title);
 					}
+
+					if (urlTitleMap.isEmpty()) {
+						continue;
+					}
+
+					long groupId = rs1.getLong(3);
+					long companyId = rs1.getLong(4);
+
+					long friendlyURLEntryId = _getFriendlyURLEntryId(
+						resourcePrimKey);
+
+					if (friendlyURLEntryId != -1) {
+						for (Map.Entry<String, String> entry :
+								urlTitleMap.entrySet()) {
+
+							_addMissingFriendlyURLEntryLocalization(
+								companyId, friendlyURLEntryId, entry.getKey(),
+								entry.getValue(), groupId, resourcePrimKey);
+						}
+					}
+					else {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Journal Article with id " + id +
+									" has no associated FriendlyURLEntry.");
+						}
+					}
 				}
 			}
 		}
@@ -94,6 +126,147 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 	protected void setUpClassNameIds() {
 		_classNameIdJournalArticle = PortalUtil.getClassNameId(
 			"com.liferay.journal.model.JournalArticle");
+	}
+
+	private void _addMissingFriendlyURLEntryLocalization(
+			long companyId, long friendlyURLEntryId, String languageId,
+			String urlTitle, long groupId, long classPK)
+		throws Exception {
+
+		long friendlyURLEntryLocalizationId = increment(
+			FriendlyURLEntryLocalization.class.getName());
+
+		String uniqueURLTitle = _getUniqueURLTitle(urlTitle, groupId);
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("insert into FriendlyURLEntryLocalization (mvccVersion, ");
+		sb.append("friendlyURLEntryLocalizationId, companyId, ");
+		sb.append("friendlyURLEntryId, languageId, urlTitle, groupId, ");
+		sb.append("classNameId, classPK) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
+
+			ps.setLong(1, 0);
+			ps.setLong(2, friendlyURLEntryLocalizationId);
+			ps.setLong(3, companyId);
+			ps.setLong(4, friendlyURLEntryId);
+			ps.setString(5, languageId);
+			ps.setString(6, uniqueURLTitle);
+			ps.setLong(7, groupId);
+			ps.setLong(8, _classNameIdJournalArticle);
+			ps.setLong(9, classPK);
+
+			ps.executeUpdate();
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to add friendly url entry localization", exception);
+			}
+		}
+	}
+
+	private int _countLocalizations(String urlTitle, long groupId)
+		throws Exception {
+
+		int count = 0;
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("select count(*) from FriendlyURLEntryLocalization where ");
+		sb.append("urlTitle = '");
+		sb.append(urlTitle);
+		sb.append("' and groupId = ");
+		sb.append(groupId);
+		sb.append(" and classNameId = ");
+		sb.append(_classNameIdJournalArticle);
+
+		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
+
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+		}
+
+		return count;
+	}
+
+	private long _getFriendlyURLEntryId(long resourcePrimKey)
+		throws SQLException {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("select friendlyURLEntryId from FriendlyURLEntryMapping ");
+		sb.append("where classnameId = ");
+		sb.append(_classNameIdJournalArticle);
+		sb.append(" and classPK = ");
+		sb.append(resourcePrimKey);
+
+		try (Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(sb.toString())) {
+
+			if (rs.next()) {
+				return rs.getLong(1);
+			}
+		}
+
+		return -1;
+	}
+
+	private String _getUniqueURLTitle(String urlTitle, long groupId)
+		throws Exception {
+
+		String normalizedUrlTitle =
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
+
+		int maxLength = 255;
+
+		String curUrlTitle = _getURLEncodedSubstring(
+			urlTitle, normalizedUrlTitle, maxLength);
+
+		String prefix = curUrlTitle;
+
+		for (int i = 1;; i++) {
+			int count = _countLocalizations(curUrlTitle, groupId);
+
+			if (count == 0) {
+				break;
+			}
+
+			String suffix = StringPool.DASH + i;
+
+			prefix = _getURLEncodedSubstring(
+				urlTitle, prefix, maxLength - suffix.length());
+
+			curUrlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(
+				prefix + suffix);
+		}
+
+		return curUrlTitle;
+	}
+
+	private String _getURLEncodedSubstring(
+		String decodedString, String encodedString, int maxLength) {
+
+		int endPos = decodedString.length();
+
+		while (encodedString.length() > maxLength) {
+			endPos--;
+
+			if ((endPos > 0) &&
+				Character.isHighSurrogate(decodedString.charAt(endPos - 1))) {
+
+				endPos--;
+			}
+
+			encodedString = FriendlyURLNormalizerUtil.normalizeWithEncoding(
+				decodedString.substring(0, endPos));
+		}
+
+		return encodedString;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -125,7 +125,7 @@ public class RatingsTag extends IncludeTag {
 		_className = null;
 		_classPK = 0;
 		_inTrash = null;
-		_numberOfStars = _DEFAULT_NUMBER_OF_STARS;
+		_numberOfStars = _NUMBER_OF_STARS;
 		_ratingsEntry = null;
 		_ratingsStats = null;
 		_setRatingsEntry = false;

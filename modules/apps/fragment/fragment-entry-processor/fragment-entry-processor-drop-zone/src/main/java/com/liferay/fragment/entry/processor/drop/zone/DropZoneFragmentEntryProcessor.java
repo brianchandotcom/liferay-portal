@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.Map;
@@ -61,6 +62,17 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 		Document document = _getDocument(html);
 
 		Elements elements = document.select("lfr-drop-zone");
+
+		for (Element element : elements) {
+			if (Validator.isNull(element.attr("id"))) {
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+					"content.Language", getClass());
+
+				throw new FragmentEntryContentException(
+					LanguageUtil.get(
+						resourceBundle, "drop-zone-id-must-not-be-empty"));
+			}
+		}
 
 		Stream<Element> uniqueElementsStream = elements.stream();
 

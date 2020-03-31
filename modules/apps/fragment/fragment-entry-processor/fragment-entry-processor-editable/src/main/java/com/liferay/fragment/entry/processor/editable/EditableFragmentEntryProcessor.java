@@ -105,6 +105,20 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	@Override
+	public JSONArray getDataAttributesJSONArray() {
+		JSONArray jsonArray = JSONUtil.put("lfr-editable-id");
+
+		for (Map.Entry<String, EditableElementParser> editableElementParser :
+				_editableElementParsers.entrySet()) {
+
+			jsonArray.put(
+				"lfr-editable-type:" + editableElementParser.getKey());
+		}
+
+		return jsonArray;
+	}
+
+	@Override
 	public JSONObject getDefaultEditableValuesJSONObject(
 		String html, String configuration) {
 

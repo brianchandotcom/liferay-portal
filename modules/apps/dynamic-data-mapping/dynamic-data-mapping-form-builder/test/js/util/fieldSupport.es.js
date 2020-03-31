@@ -12,6 +12,7 @@
  * details.
  */
 
+import {FIELD_TYPE_FIELDSET} from '../../../src/main/resources/META-INF/resources/js/util/constants.es';
 import {isFieldSetChild} from '../../../src/main/resources/META-INF/resources/js/util/fieldSupport.es';
 
 describe('Field Support Utilities', () => {
@@ -32,7 +33,7 @@ describe('Field Support Utilities', () => {
 													fieldName: 'fieldSetChild',
 												},
 											],
-											type: 'section',
+											type: FIELD_TYPE_FIELDSET,
 										},
 										{
 											fieldName: 'notAFieldSet',
@@ -44,7 +45,7 @@ describe('Field Support Utilities', () => {
 													fieldName: 'sectionChild',
 												},
 											],
-											type: 'section',
+											type: FIELD_TYPE_FIELDSET,
 										},
 									],
 								},

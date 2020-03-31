@@ -17,12 +17,15 @@ package com.liferay.portal.dao.orm.hibernate;
 import com.liferay.portal.kernel.dao.orm.Dialect;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionCustomizer;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.sql.Connection;
 
@@ -45,6 +48,10 @@ public class SessionFactoryImpl implements SessionFactory {
 			session.flush();
 			session.close();
 		}
+	}
+
+	public void destroy() {
+		_sessionCustomizers.close();
 	}
 
 	@Override
@@ -127,7 +134,14 @@ public class SessionFactoryImpl implements SessionFactory {
 	}
 
 	protected Session wrapSession(org.hibernate.Session session) {
-		return new SessionImpl(session, _sessionFactoryClassLoader);
+		Session liferaySession = new SessionImpl(
+			session, _sessionFactoryClassLoader);
+
+		for (SessionCustomizer sessionCustomizer : _sessionCustomizers) {
+			liferaySession = sessionCustomizer.customize(liferaySession);
+		}
+
+		return liferaySession;
 	}
 
 	private static final String[] _PRELOAD_CLASS_NAMES =
@@ -137,6 +151,8 @@ public class SessionFactoryImpl implements SessionFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SessionFactoryImpl.class);
 
+	private final ServiceTrackerList<SessionCustomizer> _sessionCustomizers =
+		ServiceTrackerCollections.openList(SessionCustomizer.class);
 	private ClassLoader _sessionFactoryClassLoader;
 	private SessionFactoryImplementor _sessionFactoryImplementor;
 

@@ -191,6 +191,9 @@ public class AopConfigurableApplicationContextConfigurator
 
 			SessionFactoryImplementor liferayHibernateSessionFactory = null;
 
+			DefaultSingletonBeanRegistry defaultSingletonBeanRegistry =
+				(DefaultSingletonBeanRegistry)configurableListableBeanFactory;
+
 			if (PortalClassLoaderUtil.isPortalClassLoader(_classLoader)) {
 				liferayHibernateSessionFactory =
 					configurableListableBeanFactory.getBean(
@@ -211,10 +214,6 @@ public class AopConfigurableApplicationContextConfigurator
 					return ReflectionUtil.throwException(exception);
 				}
 
-				DefaultSingletonBeanRegistry defaultSingletonBeanRegistry =
-					(DefaultSingletonBeanRegistry)
-						configurableListableBeanFactory;
-
 				defaultSingletonBeanRegistry.registerDisposableBean(
 					"liferayHibernateSessionFactoryDestroyer",
 					liferayHibernateSessionFactory::close);
@@ -225,6 +224,9 @@ public class AopConfigurableApplicationContextConfigurator
 			sessionFactoryImpl.setSessionFactoryClassLoader(_classLoader);
 			sessionFactoryImpl.setSessionFactoryImplementor(
 				liferayHibernateSessionFactory);
+
+			defaultSingletonBeanRegistry.registerDisposableBean(
+				"liferaySessionFactoryDestroyer", sessionFactoryImpl::destroy);
 
 			SessionFactory sessionFactory =
 				VerifySessionFactoryWrapper.createVerifySessionFactoryWrapper(

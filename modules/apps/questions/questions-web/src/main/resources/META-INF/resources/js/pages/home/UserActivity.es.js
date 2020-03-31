@@ -100,7 +100,10 @@ export default withRouter(
 							</div>
 						</div>
 						<div>
-							<ClayButton displayType="secondary">
+							<ClayButton
+								className="d-none"
+								displayType="secondary"
+							>
 								Manage Subscriptions
 							</ClayButton>
 						</div>

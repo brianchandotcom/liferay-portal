@@ -185,6 +185,27 @@ public class SpiraProject extends BaseSpiraArtifact {
 			this, new SearchQuery.SearchParameter("Path", testCasePath));
 	}
 
+	public SpiraTestCaseType getSpiraTestCaseTypeByName(
+		String testCaseTypeName) {
+
+		List<SpiraTestCaseType> spiraTestCaseTypes =
+			SpiraTestCaseType.getSpiraTestCaseTypes(
+				this,
+				new SearchQuery.SearchParameter("Name", testCaseTypeName));
+
+		if (spiraTestCaseTypes.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate test case type name " + testCaseTypeName);
+		}
+
+		if (spiraTestCaseTypes.isEmpty()) {
+			throw new RuntimeException(
+				"Missing test case type name " + testCaseTypeName);
+		}
+
+		return spiraTestCaseTypes.get(0);
+	}
+
 	public SpiraTestSet getSpiraTestSetByID(int testSetID) {
 		List<SpiraTestSet> spiraTestSets = SpiraTestSet.getSpiraTestSets(
 			this,

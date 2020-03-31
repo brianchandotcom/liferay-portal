@@ -142,8 +142,12 @@ definition {
 		DMDocument.viewCategories(categoryNameList = "category");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test AddDocumentTypeAndMetadata {
+
+		// Ignore test until LPS-111207 is resolved
+
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 

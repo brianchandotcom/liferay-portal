@@ -47,8 +47,12 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test AddDocuments {
+
+		// Ignore test until LRQA-57418 is resolved
+
 		property portal.acceptance = "true";
 
 		property testray.component.names = "Training";

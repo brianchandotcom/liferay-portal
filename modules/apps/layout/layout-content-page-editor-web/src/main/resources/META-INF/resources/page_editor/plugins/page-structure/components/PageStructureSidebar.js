@@ -180,7 +180,9 @@ function visit(item, items, {activeItemId, isMasterPage, state}) {
 		activable:
 			layoutData.items[item.itemId] &&
 			layoutData.items[item.itemId].type !==
-				LAYOUT_DATA_ITEM_TYPES.column,
+				LAYOUT_DATA_ITEM_TYPES.column &&
+			layoutData.items[item.itemId].type !==
+				LAYOUT_DATA_ITEM_TYPES.collectionItem,
 		children,
 		disabled: !isMasterPage && itemInMasterLayout,
 		expanded: item.itemId === activeItemId,

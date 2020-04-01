@@ -122,10 +122,9 @@ definition {
 			value1 = "Space Program 大学生涯教育 地球から、宇宙の果てへ");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test AddWCWithTranslation {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "LocalizationWithWebContent#AddWCWithTranslation";
 		property testray.component.names = "Localization,Web Content Administration";
 

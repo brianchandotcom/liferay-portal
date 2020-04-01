@@ -37,6 +37,92 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-108998."
+	@priority = "4"
+	test AssertEmailVerificationIsRequiredByDefault {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "company.security.strangers.verify=true";
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property test.smtp.server.enabled = "true";
+		property test.name.skip.portal.instance = "CPPortalSettings#AssertEmailVerificationIsRequiredByDefault";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewCheckboxChecked(fieldName = "strangers-verify");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Email",
+			configurationName = "Email Sender",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureEmailSender(
+			emailAddress = "test@liferay.com",
+			emailSenderName = "Joe Bloggs");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		for (var userNum : list "1,2") {
+			JSONUser.addUser(
+				userEmailAddress = "userea${userNum}@liferay.com",
+				userFirstName = "userfn${userNum}",
+				userLastName = "userln${userNum}",
+				userScreenName = "usersn${userNum}");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea${userNum}@liferay.com");
+		}
+
+		SignOut.signOut();
+
+		SignIn.signIn(userEmailAddress = "userea2@liferay.com");
+
+		User.verifyEmail(
+			portalURL = "${portalURL}",
+			recipient = "userfn2 userln2");
+
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		SignOut.signOut();
+
+		SignIn.signIn();
+
+		User.editEmailViaMyAccount(userEmailAddress = "edit@liferay.com");
+
+		MockMock.openBodyLink(
+			asset = "${portalURL}: Email Address Verification",
+			content = "Please verify your email address for ${portalURL}",
+			portalURL = "${portalURL}",
+			subject = "${portalURL}: Email Address Verification");
+
+		Button.clickVerifyButton();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.viewCP(
+			userEmailAddress = "edit@liferay.com",
+			userFirstName = "Test",
+			userLastName = "Test",
+			userScreenName = "test");
+	}
+
 	@priority = "5"
 	test EditDefaultUserAssociationsOrganizationSites {
 		property test.name.skip.portal.instance = "CPPortalSettings#EditDefaultUserAssociationsOrganizationSites";
@@ -441,92 +527,6 @@ definition {
 		Navigator.openURL();
 
 		PortalSettings.viewEmailNotificationsSenderCP();
-	}
-
-	@description = "This is a use case for LPS-108998."
-	@priority = "4"
-	test ViewStrangersisRequirsVerifyEmailAddress {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property custom.properties = "company.security.strangers.verify=true";
-		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
-		property test.smtp.server.enabled = "true";
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewStrangersisRequirsVerifyEmailAddress";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.viewCheckboxChecked(fieldName = "strangers-verify");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Email",
-			configurationName = "Email Sender",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.configureEmailSender(
-			emailAddress = "test@liferay.com",
-			emailSenderName = "Joe Bloggs");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		for (var userNum : list "1,2") {
-			JSONUser.addUser(
-				userEmailAddress = "userea${userNum}@liferay.com",
-				userFirstName = "userfn${userNum}",
-				userLastName = "userln${userNum}",
-				userScreenName = "usersn${userNum}");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea${userNum}@liferay.com");
-		}
-
-		SignOut.signOut();
-
-		SignIn.signIn(userEmailAddress = "userea2@liferay.com");
-
-		User.verifyEmail(
-			portalURL = "${portalURL}",
-			recipient = "userfn2 userln2");
-
-		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
-
-		SignOut.signOut();
-
-		SignIn.signIn();
-
-		User.editEmailViaMyAccount(userEmailAddress = "edit@liferay.com");
-
-		MockMock.openBodyLink(
-			asset = "${portalURL}: Email Address Verification",
-			content = "Please verify your email address for ${portalURL}",
-			portalURL = "${portalURL}",
-			subject = "${portalURL}: Email Address Verification");
-
-		Button.clickVerifyButton();
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.viewCP(
-			userEmailAddress = "edit@liferay.com",
-			userFirstName = "Test",
-			userLastName = "Test",
-			userScreenName = "test");
 	}
 
 	@description = "This is a use case for LPS-97907."

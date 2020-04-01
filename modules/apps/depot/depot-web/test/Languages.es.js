@@ -76,9 +76,7 @@ describe('Languages', () => {
 
 		const firstLanguageElement = container.querySelectorAll('tr')[1];
 
-		expect(
-			firstLanguageElement.querySelector('.label-info')
-		).not.toBeNull();
+		expect(firstLanguageElement.querySelector('.label-info')).toBeTruthy();
 	});
 
 	it('renders a "edit" button if custom option is checked', () => {
@@ -98,8 +96,8 @@ describe('Languages', () => {
 
 		expect(
 			getByDisplayValue(defaultProps.siteDefaultLocaleId)
-		).not.toBeNull();
-		expect(getByDisplayValue('b')).not.toBeNull();
+		).toBeTruthy();
+		expect(getByDisplayValue('b')).toBeTruthy();
 	});
 
 	it('changes the default language', () => {
@@ -120,8 +118,8 @@ describe('Languages', () => {
 
 		const firstElement = container.querySelectorAll('tbody > tr')[0];
 
-		expect(firstElement.querySelector('.label-info')).not.toBeNull();
-		expect(getByDisplayValue(availableLocales[0].localeId)).not.toBeNull();
+		expect(firstElement.querySelector('.label-info')).toBeTruthy();
+		expect(getByDisplayValue(availableLocales[0].localeId)).toBeTruthy();
 	});
 
 	it('fires default locale changed event', () => {
@@ -280,7 +278,7 @@ describe('Languages', () => {
 			);
 
 			expect(languagesList).toHaveLength(1);
-			expect(result.getAllByDisplayValue('b')).not.toBeNull();
+			expect(result.getAllByDisplayValue('b')).toBeTruthy();
 		});
 
 		it('add custom locale and save', async () => {
@@ -297,7 +295,7 @@ describe('Languages', () => {
 			);
 
 			expect(languagesList).toHaveLength(3);
-			expect(result.getByDisplayValue('a,b,c')).not.toBeNull();
+			expect(result.getByDisplayValue('a,b,c')).toBeTruthy();
 		});
 	});
 });

@@ -132,6 +132,7 @@ definition {
 	@priority = "3"
 	test DeleteMBThreadWithAttachment {
 		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
+		property portal.upstream = "quarantine";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 

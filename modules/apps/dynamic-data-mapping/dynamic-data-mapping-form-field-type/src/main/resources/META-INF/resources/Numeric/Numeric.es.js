@@ -113,46 +113,49 @@ const Numeric = ({
 	);
 };
 
-const NumericProxy = connectStore(
-	({
-		dataType,
-		emit,
-		id,
-		name,
-		placeholder,
-		predefinedValue = '',
-		readOnly,
-		symbols,
-		value,
-		...otherProps
-	}) => (
-		<FieldBaseProxy {...otherProps} id={id} name={name} readOnly={readOnly}>
-			<Numeric
-				dataType={dataType}
-				disabled={readOnly}
-				id={id}
-				name={name}
-				onBlur={event =>
-					emit('fieldBlurred', event, event.target.value)
-				}
-				onChange={event =>
-					emit('fieldEdited', event, event.target.value)
-				}
-				onFocus={event =>
-					emit('fieldFocused', event, event.target.value)
-				}
-				placeholder={placeholder}
-				symbols={symbols}
-				value={value ? value : predefinedValue}
-			/>
-		</FieldBaseProxy>
-	)
+const Main = ({
+	dataType,
+	id,
+	name,
+	onBlur,
+	onChange,
+	onFocus,
+	placeholder,
+	predefinedValue = '',
+	readOnly,
+	symbols,
+	value,
+	...otherProps
+}) => (
+	<FieldBaseProxy {...otherProps} id={id} name={name} readOnly={readOnly}>
+		<Numeric
+			dataType={dataType}
+			disabled={readOnly}
+			id={id}
+			name={name}
+			onBlur={onBlur}
+			onChange={onChange}
+			onFocus={onFocus}
+			placeholder={placeholder}
+			symbols={symbols}
+			value={value ? value : predefinedValue}
+		/>
+	</FieldBaseProxy>
 );
+
+const NumericProxy = connectStore(({emit, ...otherProps}) => (
+	<Main
+		{...otherProps}
+		onBlur={event => emit('fieldBlurred', event, event.target.value)}
+		onChange={event => emit('fieldEdited', event, event.target.value)}
+		onFocus={event => emit('fieldFocused', event, event.target.value)}
+	/>
+));
 
 const ReactNumericAdapter = getConnectedReactComponentAdapter(
 	NumericProxy,
 	templates
 );
 
-export {ReactNumericAdapter};
+export {Main};
 export default ReactNumericAdapter;

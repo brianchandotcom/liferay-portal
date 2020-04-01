@@ -428,86 +428,88 @@ const Select = ({
 	);
 };
 
-const SelectProxy = connectStore(
-	({
-		emit,
-		fixedOptions = [],
-		label,
-		localizedValue = {},
-		multiple,
-		name,
-		options = [],
-		predefinedValue = [],
-		readOnly,
-		value = [],
-		...otherProps
-	}) => {
-		const predefinedValueArray = toArray(predefinedValue);
-		const valueArray = toArray(value);
+const Main = ({
+	fixedOptions = [],
+	label,
+	localizedValue = {},
+	multiple,
+	name,
+	onChange,
+	onExpand = () => {},
+	options = [],
+	predefinedValue = [],
+	readOnly,
+	value = [],
+	...otherProps
+}) => {
+	const predefinedValueArray = toArray(predefinedValue);
+	const valueArray = toArray(value);
 
-		const normalizedOptions = useMemo(
-			() =>
-				normalizeOptions({
-					fixedOptions,
-					multiple,
-					options,
-					valueArray,
-				}),
-			[fixedOptions, multiple, options, valueArray]
-		);
+	const normalizedOptions = useMemo(
+		() =>
+			normalizeOptions({
+				fixedOptions,
+				multiple,
+				options,
+				valueArray,
+			}),
+		[fixedOptions, multiple, options, valueArray]
+	);
 
-		value = useMemo(
-			() =>
-				normalizeValue({
-					multiple,
-					normalizedOptions,
-					predefinedValueArray,
-					valueArray,
-				}),
-			[multiple, normalizedOptions, predefinedValueArray, valueArray]
-		);
+	value = useMemo(
+		() =>
+			normalizeValue({
+				multiple,
+				normalizedOptions,
+				predefinedValueArray,
+				valueArray,
+			}),
+		[multiple, normalizedOptions, predefinedValueArray, valueArray]
+	);
 
-		return (
-			<FieldBaseProxy
-				label={label}
-				localizedValue={localizedValue}
+	return (
+		<FieldBaseProxy
+			label={label}
+			localizedValue={localizedValue}
+			name={name}
+			readOnly={readOnly}
+			{...otherProps}
+		>
+			<Select
+				multiple={multiple}
 				name={name}
+				onCloseButtonClicked={onChange}
+				onDropdownItemClicked={onChange}
+				onExpand={onExpand}
+				options={normalizedOptions}
+				predefinedValue={predefinedValueArray}
 				readOnly={readOnly}
+				value={value}
 				{...otherProps}
-			>
-				<Select
-					multiple={multiple}
-					name={name}
-					onCloseButtonClicked={({event, value}) =>
-						emit('fieldEdited', event, value)
-					}
-					onDropdownItemClicked={({event, value}) =>
-						emit('fieldEdited', event, value)
-					}
-					onExpand={({event, expand}) => {
-						if (expand) {
-							emit('fieldFocused', event, event.target.value);
-						}
-						else {
-							emit('fieldBlurred', event, event.target.value);
-						}
-					}}
-					options={normalizedOptions}
-					predefinedValue={predefinedValueArray}
-					readOnly={readOnly}
-					value={value}
-					{...otherProps}
-				/>
-			</FieldBaseProxy>
-		);
-	}
-);
+			/>
+		</FieldBaseProxy>
+	);
+};
+
+const SelectProxy = connectStore(({emit, ...otherProps}) => (
+	<Main
+		{...otherProps}
+		onChange={({event, value}) => emit('fieldEdited', event, value)}
+		onExpand={({event, expand}) => {
+			if (expand) {
+				emit('fieldFocused', event, event.target.value);
+			}
+			else {
+				emit('fieldBlurred', event, event.target.value);
+			}
+		}}
+	/>
+));
 
 const ReactSelectAdapter = getConnectedReactComponentAdapter(
 	SelectProxy,
 	templates
 );
 
-export {ReactSelectAdapter};
-
+export {ReactSelectAdapter, Main};
 export default ReactSelectAdapter;

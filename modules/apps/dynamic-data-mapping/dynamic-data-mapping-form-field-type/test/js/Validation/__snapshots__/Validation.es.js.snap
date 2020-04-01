@@ -1,43 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Validation should enable validation after click on toogle 1`] = `
-Object {
-  "enableValidation": true,
-  "errorMessage": "",
-  "expression": "NOT(contains(textfield, \\"\\"))",
-}
-`;
-
-exports[`Validation should render checkbox to enable Validation 1`] = `
-<div class="form-group lfr-ddm-form-field-validation">
-  <div class="form-group"><label class="ddm-toggle-switch toggle-switch"><input class="toggle-switch-check" type="checkbox"><span aria-hidden="true" class="toggle-switch-bar"><span class="toggle-switch-handle"></span><span class="toggle-switch-text toggle-switch-text-right">Validator</span></span></label></div>
-  <div class="form-group" style="display: none;"><label>if-input </label>
-    <div class="dropdown ddm-btn-full ddm-select-dropdown"><button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle btn btn-unstyled" ref="triggerButton" type="button">
-        <div class="form-builder-select-field input-group-container">
-          <div class="form-control select-field-trigger">
-            <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
-                <use xlink:href="icons.svg#caret-double"></use>
-              </svg></a>
-          </div>
-        </div>
-      </button></div>
+exports[`Validation renders checkbox to enable Validation 1`] = `
+<div class="react-component-adapter">
+  <div class="form-group lfr-ddm-form-field-validation">
+    <div class="form-group" data-field-name="enableValidation"><label class="ddm-toggle-switch toggle-switch"><input class="toggle-switch-check" name="enableValidation" type="checkbox" value="true"><span aria-hidden="true" class="toggle-switch-bar"><span class="toggle-switch-handle"></span><span class="toggle-switch-text toggle-switch-text-right">Validator</span></span></label></div>
   </div>
-  <div class="form-group" style="display: none;"><label>show-error-message </label><input class="ddm-field-text form-control" name="validation_errorMessage" type="text" placeholder="show-error-message" value=""></div>
-</div>
-<div class="dropdown-menu" ref="menu">
-  <ul class="list-unstyled">
-    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="choose-an-option" type="button">choose-an-option</button></li>
-    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="contains" type="button">contains</button></li>
-    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="does-not-contain" type="button">does-not-contain</button></li>
-    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="is-not-url" type="button">is-not-url</button></li>
-    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="is-not-email" type="button">is-not-email</button></li>
-    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="does-not-match" type="button">does-not-match</button></li>
-  </ul>
 </div>
 `;
-
-exports[`Validation should render parameter field with Numeric element 1`] = `"numericfield<"`;
-
-exports[`Validation should render parameter field with Text element and then with Numeric after update dataType 1`] = `"NOT(contains(, \\"\\"))"`;
-
-exports[`Validation should render parameter field with TextField element 1`] = `"NOT(contains(textfield, \\"\\"))"`;

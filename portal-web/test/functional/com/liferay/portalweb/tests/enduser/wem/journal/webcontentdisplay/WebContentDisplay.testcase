@@ -574,6 +574,13 @@ definition {
 	test ChangeTemplate {
 		property testray.component.names = "Web Content Display";
 
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
 		WebContentTemplates.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
 
 		WebContentTemplates.addCP(

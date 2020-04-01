@@ -163,7 +163,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME",
-			value1 = "Regular Role Site Team Name");
+			value1 = "Team Site Team Name");
 
 		User.logoutPG();
 
@@ -179,7 +179,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME",
-			value1 = "Regular Role Site Team Name");
+			value1 = "Team Site Team Name");
 
 		Navigator.openURL();
 

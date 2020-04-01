@@ -830,6 +830,8 @@ definition {
 			panel = "Site Administration",
 			portlet = "Settings");
 
+		Pause(locator1 = "5000");
+
 		if ("${selectMembershipType}" == "true") {
 			AssertTextEquals(
 				locator1 = "SitesEditSite#MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE_LABEL",

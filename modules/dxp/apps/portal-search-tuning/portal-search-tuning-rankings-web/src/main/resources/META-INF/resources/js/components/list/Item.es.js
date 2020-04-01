@@ -258,7 +258,7 @@ class Item extends PureComponent {
 		selected: PropTypes.bool,
 		title: PropTypes.string,
 		type: PropTypes.string,
-		url: PropTypes.string,
+		viewURL: PropTypes.string,
 	};
 
 	static defaultProps = {
@@ -399,7 +399,7 @@ class Item extends PureComponent {
 			style,
 			title,
 			type,
-			url,
+			viewURL,
 		} = this.props;
 
 		const {hoverPosition} = this.state;
@@ -469,7 +469,18 @@ class Item extends PureComponent {
 					<section className="autofit-section">
 						<div className="list-group-title">
 							<span className="text-truncate-inline">
-								{url ? <a href={url}>{title}</a> : title}
+								{viewURL ? (
+									<a
+										href={viewURL}
+										rel="noopener noreferrer"
+										target="_blank"
+									>
+										{`${title} `}
+										<ClayIcon symbol="shortcut" />
+									</a>
+								) : (
+									title
+								)}
 							</span>
 						</div>
 

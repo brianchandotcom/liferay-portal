@@ -72,9 +72,9 @@ const withSheet = storyFn => (
 storiesOf('Pages|ResultRankingsForm', module).add('default', () => (
 	<ResultRankingsForm
 		cancelUrl=""
-		fetchDocumentsHiddenUrl="http://www.mocky.io/v2/5db38001300000620057b690"
-		fetchDocumentsSearchUrl="http://www.mocky.io/v2/5db37f913000005f0057b68e"
-		fetchDocumentsVisibleUrl="http://www.mocky.io/v2/5db37f913000005f0057b68e"
+		fetchDocumentsHiddenUrl="http://www.mocky.io/v2/5e8366a4300000580fcf3df1"
+		fetchDocumentsSearchUrl="http://www.mocky.io/v2/5e83720e3000007612cf3e32"
+		fetchDocumentsVisibleUrl="http://www.mocky.io/v2/5e83720e3000007612cf3e32"
 		formName="testFm"
 		initialAliases={['one', 'two', 'three']}
 		saveActionUrl="#"

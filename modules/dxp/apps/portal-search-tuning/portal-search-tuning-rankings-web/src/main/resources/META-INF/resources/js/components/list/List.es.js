@@ -210,6 +210,7 @@ class List extends PureComponent {
 				selected={selectedIds.includes(item.id)}
 				title={item.title}
 				type={item.type}
+				viewURL={item.viewURL}
 			/>
 		) : null;
 	};

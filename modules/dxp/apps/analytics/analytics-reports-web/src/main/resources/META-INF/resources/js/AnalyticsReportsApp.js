@@ -93,11 +93,11 @@ function Navigation({
 	}
 
 	function handleTrafficShare() {
-		return api
-			.getTrafficSourcesDetails(trafficSourceName)
-			.then(response => {
-				return response.share;
-			});
+		const trafficSource = trafficSources.find(trafficSource => {
+			return trafficSource['name'] === trafficSourceName;
+		});
+
+		return Promise.resolve(trafficSource ? trafficSource.share : '-');
 	}
 
 	function handleTrafficSourceClick(trafficSourceName) {
@@ -118,11 +118,11 @@ function Navigation({
 	}
 
 	function handleTrafficVolume() {
-		return api
-			.getTrafficSourcesDetails(trafficSourceName)
-			.then(response => {
-				return numberFormat(languageTag, response.value);
-			});
+		const trafficSource = trafficSources.find(trafficSource => {
+			return trafficSource['name'] === trafficSourceName;
+		});
+
+		return Promise.resolve(trafficSource ? trafficSource.value : '-');
 	}
 
 	return (

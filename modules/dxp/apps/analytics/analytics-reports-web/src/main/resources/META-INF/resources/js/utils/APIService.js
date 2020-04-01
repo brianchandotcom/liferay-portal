@@ -11,18 +11,6 @@
 
 import {fetch} from 'frontend-js-web';
 
-const MOCK_TRAFFIC_SOURCES = [
-	{
-		helpMessage: Liferay.Language.get(
-			'this-number-refers-to-the-volume-of-people-that-find-your-page-through-a-search-engine'
-		),
-		name: 'organic',
-		share: 100,
-		title: Liferay.Language.get('organic'),
-		value: 0,
-	},
-];
-
 const MOCK_TRAFFIC_SOURCES_DETAILS = {
 	organic: {
 		keywords: [
@@ -154,26 +142,12 @@ function APIService({endpoints, namespace, page}) {
 		);
 	}
 
-	function getTrafficSourcesDetails(name) {
-		// TODO remove frontend mock
-		return new Promise(resolve =>
-			setTimeout(() => {
-				resolve(
-					MOCK_TRAFFIC_SOURCES.find(trafficSource => {
-						return trafficSource['name'] === name;
-					})
-				);
-			}, 900)
-		);
-	}
-
 	return {
 		getHistoricalReads,
 		getHistoricalViews,
 		getTotalReads,
 		getTotalViews,
 		getTrafficSourceDetails,
-		getTrafficSourcesDetails,
 	};
 }
 

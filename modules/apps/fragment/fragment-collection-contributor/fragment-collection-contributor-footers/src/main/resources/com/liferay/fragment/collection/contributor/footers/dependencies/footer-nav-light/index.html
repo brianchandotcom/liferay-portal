@@ -1,22 +1,34 @@
-<footer class="section-footer navbar navbar-light bg-white border-top border-light pt-6 pb-8">
+<footer
+	class="section-footer navbar navbar-light bg-white border-top border-light pt-6 pb-8"
+>
 	<div class="container justify-content-between flex-column flex-lg-row text-break">
 		<div class="d-flex align-items-center">
-			<lfr-editable id="01-logo" type="image">
-				<img alt="Logo Image" class="section-footer-logo mr-3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=" />
-			</lfr-editable>
+			<img
+				alt="Logo Image"
+				class="section-footer-logo mr-3"
+				data-lfr-editable-id="01-logo"
+				data-lfr-editable-type="image"
+				src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII="
+			/>
 
-			<lfr-editable id="02-copy" type="text">
+			<div data-lfr-editable-id="02-copy" data-lfr-editable-type="text">
 				© 2019 Sitebrand
-			</lfr-editable>
+			</div>
 		</div>
 
 		<div class="d-flex align-items-center flex-column flex-lg-row mt-3 mt-lg-0">
 			<lfr-widget-nav></lfr-widget-nav>
 
 			<span class="mt-4 mt-lg-0 ml-lg-3">
-				<lfr-editable id="03-link" type="link">
-					<a class="btn btn-sm btn-outline-dark" href="#" id="fragment-${fragmentEntryLinkNamespace}-03-link">Sign In</a>
-				</lfr-editable>
+				<a
+					class="btn btn-sm btn-outline-dark"
+					data-lfr-editable-id="03-link"
+					data-lfr-editable-type="link"
+					href="#"
+					id="fragment-${fragmentEntryLinkNamespace}-03-link"
+				>
+					Sign In
+				</a>
 			</span>
 		</div>
 	</div>

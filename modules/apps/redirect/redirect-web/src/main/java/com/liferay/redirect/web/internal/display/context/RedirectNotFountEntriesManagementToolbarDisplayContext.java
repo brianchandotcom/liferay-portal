@@ -158,18 +158,18 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 
 	private List<DropdownItem> _getFilterDateDropdownItems() {
 		return DropdownItemListBuilder.add(
-			_getNavigationDropdownItemUnsafeConsumer("all")
+			_getFilterDateDropdownItemUnsafeConsumer("all")
 		).add(
-			_getNavigationDropdownItemUnsafeConsumer("day")
+			_getFilterDateDropdownItemUnsafeConsumer("day")
 		).add(
-			_getNavigationDropdownItemUnsafeConsumer("week")
+			_getFilterDateDropdownItemUnsafeConsumer("week")
 		).add(
-			_getNavigationDropdownItemUnsafeConsumer("month")
+			_getFilterDateDropdownItemUnsafeConsumer("month")
 		).build();
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getNavigationDropdownItemUnsafeConsumer(String key) {
+		_getFilterDateDropdownItemUnsafeConsumer(String key) {
 
 		return dropdownItem -> {
 			dropdownItem.setActive(

@@ -59,7 +59,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddOrUpdateRedirectNotFoundEntry() throws Exception {
+	public void testAddOrUpdateRedirectNotFoundEntry() {
 		RedirectNotFoundEntry redirectNotFoundEntry =
 			_addOrUpdateRedirectNotFoundEntry("url");
 
@@ -67,9 +67,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddOrUpdateRedirectNotFoundEntryWithDifferentURL()
-		throws Exception {
-
+	public void testAddOrUpdateRedirectNotFoundEntryWithDifferentURL() {
 		RedirectNotFoundEntry redirectNotFoundEntry1 =
 			_addOrUpdateRedirectNotFoundEntry("url1");
 		RedirectNotFoundEntry redirectNotFoundEntry2 =
@@ -81,9 +79,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddOrUpdateRedirectNotFoundEntryWithExistingEntry()
-		throws Exception {
-
+	public void testAddOrUpdateRedirectNotFoundEntryWithExistingEntry() {
 		RedirectNotFoundEntry redirectNotFoundEntry1 =
 			_addOrUpdateRedirectNotFoundEntry("url");
 		RedirectNotFoundEntry redirectNotFoundEntry2 =
@@ -94,9 +90,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddOrUpdateRedirectNotFoundEntryWithNullURL()
-		throws Exception {
-
+	public void testAddOrUpdateRedirectNotFoundEntryWithNullURL() {
 		RedirectNotFoundEntry redirectNotFoundEntry =
 			_addOrUpdateRedirectNotFoundEntry(null);
 
@@ -112,7 +106,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetRedirectNotFoundEntries() throws Exception {
+	public void testGetRedirectNotFoundEntries() {
 		_addOrUpdateRedirectNotFoundEntry("url1");
 		_addOrUpdateRedirectNotFoundEntry("url2");
 		_addOrUpdateRedirectNotFoundEntry("url3");
@@ -128,9 +122,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetRedirectNotFoundEntriesWithMinimumModifiedDate()
-		throws Exception {
-
+	public void testGetRedirectNotFoundEntriesWithMinimumModifiedDate() {
 		Instant instant = Instant.now();
 
 		Date minModifiedDate = Date.from(instant.minus(Duration.ofDays(5)));

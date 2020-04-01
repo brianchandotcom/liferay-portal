@@ -147,10 +147,10 @@ describe('MappingSelector', () => {
 			{}
 		);
 
-		const sourceTypeInput = getByLabelText('source');
+		const sourceTypeSelect = getByLabelText('source');
 
 		await act(async () => {
-			fireEvent.change(sourceTypeInput, {
+			fireEvent.change(sourceTypeSelect, {
 				target: {value: 'structure'},
 			});
 		});
@@ -199,10 +199,10 @@ describe('MappingSelector', () => {
 			});
 		});
 
-		const sourceTypeInput = getByLabelText(document.body, 'source');
+		const sourceTypeSelect = getByLabelText(document.body, 'source');
 
 		await act(async () => {
-			fireEvent.change(sourceTypeInput, {
+			fireEvent.change(sourceTypeSelect, {
 				target: {value: 'structure'},
 			});
 		});

@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.filter.DateRangeFilterBuilder;
 import com.liferay.portal.search.filter.FilterBuilders;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
-import com.liferay.redirect.service.RedirectNotFoundEntryLocalServiceUtil;
+import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 import com.liferay.redirect.web.internal.search.RedirectNotFoundEntrySearch;
 import com.liferay.redirect.web.internal.security.permission.resource.RedirectPermission;
 import com.liferay.redirect.web.internal.util.comparator.RedirectComparator;
@@ -88,6 +88,9 @@ public class RedirectNotFoundEntriesDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
+		_redirectNotFoundEntryLocalService =
+			(RedirectNotFoundEntryLocalService)_httpServletRequest.getAttribute(
+				RedirectNotFoundEntryLocalService.class.getName());
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -265,13 +268,12 @@ public class RedirectNotFoundEntriesDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		redirectNotFoundEntrySearch.setTotal(
-			RedirectNotFoundEntryLocalServiceUtil.
-				getRedirectNotFoundEntriesCount(
-					themeDisplay.getScopeGroupId(), _getIgnored(),
-					_getMinModifiedDate()));
+			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntriesCount(
+				themeDisplay.getScopeGroupId(), _getIgnored(),
+				_getMinModifiedDate()));
 
 		redirectNotFoundEntrySearch.setResults(
-			RedirectNotFoundEntryLocalServiceUtil.getRedirectNotFoundEntries(
+			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntries(
 				themeDisplay.getScopeGroupId(), _getIgnored(),
 				_getMinModifiedDate(), _redirectNotFoundEntrySearch.getStart(),
 				_redirectNotFoundEntrySearch.getEnd(),
@@ -312,8 +314,7 @@ public class RedirectNotFoundEntriesDisplayContext {
 			stream.map(
 				SearchResult::getClassPK
 			).map(
-				RedirectNotFoundEntryLocalServiceUtil::
-					fetchRedirectNotFoundEntry
+				_redirectNotFoundEntryLocalService::fetchRedirectNotFoundEntry
 			).collect(
 				Collectors.toList()
 			));
@@ -334,6 +335,8 @@ public class RedirectNotFoundEntriesDisplayContext {
 	).put(
 		"week", 7
 	).build();
+	private final RedirectNotFoundEntryLocalService
+		_redirectNotFoundEntryLocalService;
 	private RedirectNotFoundEntrySearch _redirectNotFoundEntrySearch;
 	private final ThemeDisplay _themeDisplay;
 

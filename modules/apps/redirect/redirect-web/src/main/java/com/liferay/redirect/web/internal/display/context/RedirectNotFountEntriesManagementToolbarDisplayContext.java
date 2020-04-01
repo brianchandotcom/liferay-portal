@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.redirect.service.RedirectNotFoundEntryLocalServiceUtil;
+import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 
 import java.util.List;
 
@@ -51,6 +51,10 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
+
+		_redirectNotFoundEntryLocalService =
+			(RedirectNotFoundEntryLocalService)httpServletRequest.getAttribute(
+				RedirectNotFoundEntryLocalService.class.getName());
 	}
 
 	@Override
@@ -116,9 +120,8 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 			WebKeys.THEME_DISPLAY);
 
 		int redirectNotFoundEntriesCount =
-			RedirectNotFoundEntryLocalServiceUtil.
-				getRedirectNotFoundEntriesCount(
-					themeDisplay.getScopeGroupId(), null, null);
+			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntriesCount(
+				themeDisplay.getScopeGroupId(), null, null);
 
 		return redirectNotFoundEntriesCount == 0;
 	}
@@ -180,5 +183,8 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 			dropdownItem.setLabel(LanguageUtil.get(request, key));
 		};
 	}
+
+	private final RedirectNotFoundEntryLocalService
+		_redirectNotFoundEntryLocalService;
 
 }

@@ -55,8 +55,8 @@ public enum ViewportSize {
 		int minWidth, int order) {
 
 		_viewportSizeId = viewportSizeId;
-		_label = label;
 		_icon = icon;
+		_label = label;
 		_maxWidth = maxWidth;
 		_minWidth = minWidth;
 		_order = order;

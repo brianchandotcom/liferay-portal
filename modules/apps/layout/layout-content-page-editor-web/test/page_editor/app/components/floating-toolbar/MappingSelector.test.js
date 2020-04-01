@@ -136,7 +136,6 @@ describe('MappingSelector', () => {
 			renderMappingSelector({});
 		});
 
-		expect(getByText(document.body, 'content')).toBeInTheDocument();
 		expect(getByText(document.body, 'field')).toBeInTheDocument();
 		expect(getByText(document.body, 'source')).toBeInTheDocument();
 	});
@@ -163,6 +162,8 @@ describe('MappingSelector', () => {
 	});
 
 	it('calls onMappingSelect with correct params when mapping to content', async () => {
+		config.pageType = PAGE_TYPES.content;
+
 		const onMappingSelect = jest.fn();
 
 		await act(async () => {

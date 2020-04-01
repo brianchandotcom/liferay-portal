@@ -332,10 +332,6 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.portal.kernel.resiliency">
-		<priority value="INFO" />
-	</category>
-
 	<category name="com.liferay.portal.kernel.search.HitsOpenSearchImpl">
 		<priority value="WARN" />
 	</category>
@@ -929,10 +925,6 @@
 	</category>
 
 	<category name="com.liferay.util.dao.orm.CustomSQLUtil">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.util.resiliency">
 		<priority value="INFO" />
 	</category>
 

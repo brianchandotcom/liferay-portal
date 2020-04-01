@@ -37,7 +37,7 @@
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
-		"test": "liferay-npm-scripts test"
+		"test_DISABLED": "liferay-npm-scripts test"
 	},
 	"version": "3.0.14"
 }

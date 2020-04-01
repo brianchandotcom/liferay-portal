@@ -11,28 +11,17 @@
 
 import {fetch} from 'frontend-js-web';
 
-const MOCK_TRAFFIC_SOURCES = {
-	analyticsReportsTrafficSources: [
-		{
-			helpMessage: Liferay.Language.get(
-				'this-number-refers-to-the-volume-of-people-that-find-your-page-through-a-search-engine'
-			),
-			name: 'organic',
-			share: 0.1,
-			title: Liferay.Language.get('organic'),
-			value: 32178,
-		},
-		{
-			helpMessage: Liferay.Language.get(
-				'this-number-refers-to-the-volume-of-people-that-find-your-page-through-paid-keywords'
-			),
-			name: 'paid',
-			share: 0.9,
-			title: Liferay.Language.get('paid'),
-			value: 278256,
-		},
-	],
-};
+const MOCK_TRAFFIC_SOURCES = [
+	{
+		helpMessage: Liferay.Language.get(
+			'this-number-refers-to-the-volume-of-people-that-find-your-page-through-a-search-engine'
+		),
+		name: 'organic',
+		share: 100,
+		title: Liferay.Language.get('organic'),
+		value: 0,
+	},
+];
 
 const MOCK_TRAFFIC_SOURCES_DETAILS = {
 	organic: {
@@ -170,11 +159,9 @@ function APIService({endpoints, namespace, page}) {
 		return new Promise(resolve =>
 			setTimeout(() => {
 				resolve(
-					MOCK_TRAFFIC_SOURCES.analyticsReportsTrafficSources.find(
-						trafficSource => {
-							return trafficSource['name'] === name;
-						}
-					)
+					MOCK_TRAFFIC_SOURCES.find(trafficSource => {
+						return trafficSource['name'] === name;
+					})
 				);
 			}, 900)
 		);

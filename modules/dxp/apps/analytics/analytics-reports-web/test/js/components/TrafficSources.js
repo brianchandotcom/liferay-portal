@@ -18,7 +18,7 @@ import TrafficSources from '../../../src/main/resources/META-INF/resources/js/co
 describe('TrafficSources', () => {
 	afterEach(cleanup);
 
-	it('displays the sources accosding to API', async () => {
+	it('displays the sources according to API', async () => {
 		const mockedAPI = jest.fn(() =>
 			Promise.resolve({
 				analyticsReportsTrafficSources: [

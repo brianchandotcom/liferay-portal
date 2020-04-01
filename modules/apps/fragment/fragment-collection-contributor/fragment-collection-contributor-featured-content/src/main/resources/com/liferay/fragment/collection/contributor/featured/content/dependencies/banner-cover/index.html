@@ -2,23 +2,30 @@
 	<div class="container py-6 py-md-8">
 		<div class="row">
 			<div class="col-12 col-md-8 col-xl-6">
-				<h1>
-					<lfr-editable id="01-title" type="rich-text">
-						Cover Banner Title Example
-					</lfr-editable>
+				<h1
+					data-lfr-editable-id="01-title"
+					data-lfr-editable-type="rich-text"
+				>
+					Cover Banner Title Example
 				</h1>
 
-				<div class="mb-4 lead">
+				<div class="mb-4 lead" data-lfr-editable-id="02-subtitle" data-lfr-editable-type="rich-text">
 					<p>
-						<lfr-editable id="02-subtitle" type="rich-text">
-							This is a cover banner component that you can use when you need extra attention to featured content or information.
-						</lfr-editable>
+						This is a cover banner component that you can use when
+						you need extra attention to featured content or
+						information.
 					</p>
 				</div>
 
-				<lfr-editable id="03-link" type="link">
-					<a class="btn btn-primary" href="" id="fragment-${fragmentEntryLinkNamespace}-03-link">Go Somewhere</a>
-				</lfr-editable>
+				<a
+					class="btn btn-primary"
+					data-lfr-editable-id="03-link"
+					data-lfr-editable-type="link"
+					href=""
+					id="fragment-${fragmentEntryLinkNamespace}-03-link"
+				>
+					Go Somewhere
+				</a>
 			</div>
 		</div>
 	</div>

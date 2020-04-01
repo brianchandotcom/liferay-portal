@@ -758,6 +758,8 @@ definition {
 			Staging.viewValidationError(validateErrorMessage = "${validateErrorMessage}");
 		}
 
+		SelectFrameTop();
+
 		if (IsElementPresent(locator1 = "IFrame#DIALOG")) {
 			IFrame.closeFrame();
 		}

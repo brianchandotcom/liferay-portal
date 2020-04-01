@@ -32,7 +32,7 @@ else {
 	groupTypeSettings = new UnicodeProperties();
 }
 
-List<Role> defaultSiteRoles = new ArrayList();
+List<Role> defaultSiteRoles = new ArrayList<>();
 
 long[] defaultSiteRoleIds = StringUtil.split(groupTypeSettings.getProperty("defaultSiteRoleIds"), 0L);
 
@@ -42,7 +42,7 @@ for (long defaultSiteRoleId : defaultSiteRoleIds) {
 	defaultSiteRoles.add(role);
 }
 
-List<Team> defaultTeams = new ArrayList();
+List<Team> defaultTeams = new ArrayList<>();
 
 long[] defaultTeamIds = StringUtil.split(groupTypeSettings.getProperty("defaultTeamIds"), 0L);
 

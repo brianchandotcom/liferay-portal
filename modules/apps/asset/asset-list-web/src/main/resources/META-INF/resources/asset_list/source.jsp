@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList();
+List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>();
 %>
 
 <liferay-frontend:fieldset-group>

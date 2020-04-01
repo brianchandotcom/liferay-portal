@@ -16,6 +16,8 @@ package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.io.IOException;
 
@@ -36,10 +38,14 @@ public class JSPCheckstyleUtil {
 			return _getAlloyMVCJavaContent(content);
 		}
 
+		if (StringUtil.startsWith(StringUtil.trim(content), "<%\n")) {
+			return null;
+		}
+
 		Matcher matcher = _javaSourceTag.matcher(content);
 
-		if (!matcher.find()) {
-			return _getJavaContent(content);
+		if (matcher.find()) {
+			return _getJavaContent(absolutePath, content);
 		}
 
 		return null;
@@ -60,42 +66,60 @@ public class JSPCheckstyleUtil {
 		return StringUtil.replaceLast(javaContent, "\n%>", "");
 	}
 
-	private static String _getJavaContent(String content) throws IOException {
+	private static String _getJavaContent(String fileName, String content)
+		throws IOException {
+
 		StringBundler sb = new StringBundler();
 
 		List<String> lines = CheckstyleUtil.getLines(content);
 
 		boolean javaSource = false;
 
-		for (int i = 0; i < lines.size(); i++) {
+		sb.append("public class ");
+		sb.append(JavaSourceUtil.getClassName(fileName));
+		sb.append(" {\n");
+
+		for (int i = 1; i < lines.size(); i++) {
 			String line = lines.get(i);
 
 			String trimmedLine = StringUtil.trimLeading(line);
 
 			if (javaSource) {
-				if (!trimmedLine.matches("%>")) {
-					sb.append(line);
-				}
-				else {
+				if (trimmedLine.matches("%>")) {
+					sb.append("\t\t// PLACEHOLDER");
+
 					javaSource = false;
 				}
-			}
-			else if (trimmedLine.matches("<%")) {
-				javaSource = true;
+				else if (Validator.isNotNull(trimmedLine)) {
+					sb.append("\t\t");
+					sb.append(line);
+				}
+
+				sb.append("\n");
+
+				continue;
 			}
 
-			if (i == 0) {
-				sb.append("public class Test { public void method() {");
+			if (i == 1) {
+				sb.append("\tpublic void method() {");
+			}
+			else {
+				sb.append("\t\t// PLACEHOLDER");
 			}
 
 			sb.append("\n");
+
+			if (trimmedLine.matches("<%")) {
+				javaSource = true;
+			}
 		}
 
-		sb.append("} }\n");
+		sb.append("\t}\n");
+		sb.append("}\n");
 
 		return sb.toString();
 	}
 
-	private static final Pattern _javaSourceTag = Pattern.compile("\n\t<%\n");
+	private static final Pattern _javaSourceTag = Pattern.compile("\n\t*<%\n");
 
 }

@@ -44,6 +44,10 @@ import hasDropZoneChild from './layout-data-items/hasDropZoneChild';
 
 const TOPPER_BAR_HEIGHT = 24;
 
+const itemIsMappedCollection = item =>
+	item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
+	'collection' in item.config;
+
 const TopperListItem = React.forwardRef(
 	({children, className, expand, ...props}, ref) => (
 		<li
@@ -195,7 +199,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 
 	return (
 		<div
-			className={classNames({
+			className={classNames('page-editor__topper', {
 				active: isSelected(item.itemId),
 				'drag-over-bottom': isDraggableInPosition(
 					TARGET_POSITION.BOTTOM
@@ -208,7 +212,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 				hovered: isHovered(item.itemId) || fragmentShouldBeHovered(),
 				'not-droppable':
 					!droppable && isDraggableInPosition(TARGET_POSITION.MIDDLE),
-				'page-editor__topper': true,
+				'page-editor__topper--mapped': itemIsMappedCollection(item),
 			})}
 			onClick={event => {
 				event.stopPropagation();
@@ -246,6 +250,9 @@ export default function Topper({children, item, itemRef, layoutData}) {
 			<div
 				className={classNames('page-editor__topper__bar', 'tbar', {
 					'page-editor__topper__bar--inset': isInset,
+					'page-editor__topper__bar--mapped': itemIsMappedCollection(
+						item
+					),
 				})}
 			>
 				<ul className="tbar-nav">

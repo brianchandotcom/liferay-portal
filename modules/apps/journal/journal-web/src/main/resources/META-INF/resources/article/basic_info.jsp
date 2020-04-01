@@ -95,7 +95,6 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 		formName="fm"
 		ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"
 		name="descriptionMapAsXML"
-		placeholder="description"
 		selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>"
 		type="editor"
 		xml="<%= (article != null) ? article.getDescriptionMapAsXML() : StringPool.BLANK %>"

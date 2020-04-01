@@ -319,6 +319,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
@@ -439,7 +440,9 @@ definition {
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
 			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
 
-		AssertLocation(value1 = "${portalURL}web/test-site-name/test-source-page");
+		SelectWindow(locator1 = "title=Test Source Page - Test Site Name - ${siteName}");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
@@ -454,7 +457,9 @@ definition {
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
 			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
 
-		AssertLocation(value1 = "${portalURL}web/test-site-name/test-destination-page");
+		SelectWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-page");
 	}
 
 	@description = "This ensures that an expired permanent redirect can be viewed."

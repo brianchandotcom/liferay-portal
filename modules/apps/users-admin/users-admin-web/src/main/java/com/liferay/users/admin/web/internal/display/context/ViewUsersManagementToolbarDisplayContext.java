@@ -166,19 +166,19 @@ public class ViewUsersManagementToolbarDisplayContext {
 
 	public List<LabelItem> getFilterLabelItems() {
 		return LabelItemListBuilder.add(
-			() -> !_navigation.equals("active"),
+			() -> _domain.equals("account-users"),
 			labelItem -> {
 				PortletURL removeLabelURL = getPortletURL();
 
-				removeLabelURL.setParameter("navigation", (String)null);
+				removeLabelURL.setParameter("domain", (String)null);
 
 				labelItem.putData("removeLabelURL", removeLabelURL.toString());
 
 				labelItem.setCloseable(true);
 
 				String label = String.format(
-					"%s: %s", LanguageUtil.get(_httpServletRequest, "status"),
-					LanguageUtil.get(_httpServletRequest, _navigation));
+					"%s: %s", LanguageUtil.get(_httpServletRequest, "domain"),
+					LanguageUtil.get(_httpServletRequest, _domain));
 
 				labelItem.setLabel(label);
 			}
@@ -200,19 +200,19 @@ public class ViewUsersManagementToolbarDisplayContext {
 				labelItem.setLabel(label);
 			}
 		).add(
-			() -> _domain.equals("account-users"),
+			() -> !_navigation.equals("active"),
 			labelItem -> {
 				PortletURL removeLabelURL = getPortletURL();
 
-				removeLabelURL.setParameter("domain", (String)null);
+				removeLabelURL.setParameter("navigation", (String)null);
 
 				labelItem.putData("removeLabelURL", removeLabelURL.toString());
 
 				labelItem.setCloseable(true);
 
 				String label = String.format(
-					"%s: %s", LanguageUtil.get(_httpServletRequest, "domain"),
-					LanguageUtil.get(_httpServletRequest, _domain));
+					"%s: %s", LanguageUtil.get(_httpServletRequest, "status"),
+					LanguageUtil.get(_httpServletRequest, _navigation));
 
 				labelItem.setLabel(label);
 			}

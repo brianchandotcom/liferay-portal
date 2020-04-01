@@ -65,6 +65,16 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
+		Pause(locator1 = "5000");
+
+		if (IsElementNotPresent(locator1 = "Button#ANY", key_text = "Save and Return to ${siteName}")) {
+			Refresh();
+
+			Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Edit in ${dmDocumentTypeName}");
+		}
+
 		AssertElementPresent(
 			key_text = "Save and Return to ${siteName}",
 			locator1 = "Button#ANY");

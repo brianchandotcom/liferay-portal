@@ -27,42 +27,35 @@ import java.util.function.Function;
 public class TableJoinHolder {
 
 	public TableJoinHolder(
-		Column<?, Long> fromTablePrimaryKey,
-		Column<?, Long> joinTablePrimaryKey,
+		Column<?, Long> fromPKColumn, Column<?, Long> joinPKColumn,
 		Function<FromStep, JoinStep> joinFunction) {
 
-		_fromTablePrimaryKey = fromTablePrimaryKey;
-		_joinTablePrimaryKey = joinTablePrimaryKey;
+		_fromPKColumn = fromPKColumn;
+		_joinPKColumn = joinPKColumn;
 		_joinFunction = joinFunction;
 	}
 
-	public Column<?, Long> getFromTablePrimaryKeyColumn() {
-		return _fromTablePrimaryKey;
+	public Column<?, Long> getFromPKColumn() {
+		return _fromPKColumn;
 	}
 
 	public Function<FromStep, JoinStep> getJoinFunction() {
 		return _joinFunction;
 	}
 
-	public Column<?, Long> getJoinTablePrimaryKeyColumn() {
-		return _joinTablePrimaryKey;
-	}
-
-	public TableJoinHolder reverse() {
-		return new TableJoinHolder(
-			_joinTablePrimaryKey, _fromTablePrimaryKey, _joinFunction);
+	public Column<?, Long> getJoinPKColumn() {
+		return _joinPKColumn;
 	}
 
 	@Override
 	public String toString() {
 		return StringBundler.concat(
-			"{fromTablePrimaryKey=", _fromTablePrimaryKey,
-			", joinTablePrimaryKey=", _joinTablePrimaryKey, ", joinFunction=",
-			_joinFunction, "}");
+			"{fromTablePrimaryKey=", _fromPKColumn, ", joinTablePrimaryKey=",
+			_joinPKColumn, ", joinFunction=", _joinFunction, "}");
 	}
 
-	private final Column<?, Long> _fromTablePrimaryKey;
+	private final Column<?, Long> _fromPKColumn;
 	private final Function<FromStep, JoinStep> _joinFunction;
-	private final Column<?, Long> _joinTablePrimaryKey;
+	private final Column<?, Long> _joinPKColumn;
 
 }

@@ -146,7 +146,10 @@ public class TableReferenceDefinitionManager implements CTClosureFactory {
 						currentParentJoinHolders) {
 
 					combinedChildJoinHolders.add(
-						currentParentJoinHolder.reverse());
+						new TableJoinHolder(
+							currentParentJoinHolder.getJoinPKColumn(),
+							currentParentJoinHolder.getFromPKColumn(),
+							currentParentJoinHolder.getJoinFunction()));
 				}
 			}
 
@@ -166,7 +169,10 @@ public class TableReferenceDefinitionManager implements CTClosureFactory {
 						currentChildJoinHolders) {
 
 					combinedParentJoinHolders.add(
-						currentChildJoinHolder.reverse());
+						new TableJoinHolder(
+							currentChildJoinHolder.getJoinPKColumn(),
+							currentChildJoinHolder.getFromPKColumn(),
+							currentChildJoinHolder.getJoinFunction()));
 				}
 			}
 		}

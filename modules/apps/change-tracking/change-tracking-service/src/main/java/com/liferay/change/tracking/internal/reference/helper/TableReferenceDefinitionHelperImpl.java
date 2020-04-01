@@ -144,10 +144,10 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 					" for joinStep \"", joinStep, "\""));
 		}
 
-		Column<?, Long> fromTablePrimaryKey = TableUtil.getPrimaryKeyColumn(
+		Column<?, Long> fromPKColumn = TableUtil.getPrimaryKeyColumn(
 			joinStepASTNodeListener._fromTable);
 
-		if (fromTablePrimaryKey == null) {
+		if (fromPKColumn == null) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
 					"No long type primary key column found for table \"",
@@ -155,11 +155,11 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 					joinStep, "\""));
 		}
 
-		Column<T, Long> joinTablePrimaryKey =
+		Column<T, Long> joinPKColumn =
 			joinStepASTNodeListener._aliasPrimaryKeyColumn;
 
-		if (joinTablePrimaryKey == null) {
-			joinTablePrimaryKey = _primaryKeyColumn;
+		if (joinPKColumn == null) {
+			joinPKColumn = _primaryKeyColumn;
 		}
 
 		if (fromPKColumn == joinPKColumn) {
@@ -171,7 +171,7 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 		}
 
 		TableJoinHolder tableJoinHolder = new TableJoinHolder(
-			fromTablePrimaryKey, joinTablePrimaryKey, joinFunction);
+			fromPKColumn, joinPKColumn, joinFunction);
 
 		List<TableJoinHolder> tableJoinHolders = null;
 

@@ -30,8 +30,8 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 	<%
 	Map<String, Map<String, RatingsType>> companyRatingsTypeMaps = companyPortletRatingsDefinitionDisplayContext.getCompanyRatingsTypeMaps();
 
-	for (String portletId : companyRatingsTypeMaps.keySet()) {
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+	for (Map.Entry<String, Map<String, RatingsType>> entry : companyRatingsTypeMaps.entrySet()) {
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(entry.getKey());
 	%>
 
 		<p>
@@ -39,7 +39,7 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 		</p>
 
 		<%
-		Map<String, RatingsType> ratingsTypeMap = companyRatingsTypeMaps.get(portletId);
+		Map<String, RatingsType> ratingsTypeMap = companyRatingsTypeMaps.get(entry.getKey());
 
 		Set<String> classNames = ratingsTypeMap.keySet();
 

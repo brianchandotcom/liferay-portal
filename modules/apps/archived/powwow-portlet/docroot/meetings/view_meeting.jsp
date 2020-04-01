@@ -249,13 +249,13 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 		Map<String, List<String>> internationalNumbers = PowwowServiceProviderUtil.getJoinByPhoneInternationalNumbers(powwowMeeting.getProviderType());
 
 		if ((internationalNumbers != null) && !internationalNumbers.isEmpty()) {
-			for (String country : internationalNumbers.keySet()) {
-				for (String number : internationalNumbers.get(country)) {
+			for (Map.Entry<String, List<String>> entry : internationalNumbers.entrySet()) {
+				for (String number : internationalNumbers.get(entry.getValue())) {
 		%>
 
 					interationalNumbersDisplay.push(
 						{
-							country: '<%= country %>',
+							country: '<%= entry.getKey() %>',
 							number: '<%= number %>'
 						}
 					);

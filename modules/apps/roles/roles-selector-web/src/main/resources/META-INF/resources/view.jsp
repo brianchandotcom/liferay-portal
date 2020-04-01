@@ -124,15 +124,15 @@ if (role == null) {
 	stripeMessage = LanguageUtil.format(request, "step-x-of-x", new String[] {"1", "2"}, false) + StringPool.SPACE + LanguageUtil.get(request, "choose-a-role");
 }
 else {
-	stripeMessage =
-		LanguageUtil.format(request, "step-x-of-x", new String[] {"2", "2"}, false) + StringPool.SPACE +
-		LanguageUtil.format(
-			request, "current-signifies-current-users-associated-with-the-x-role.-available-signifies-all-users-associated-with-the-x-x",
-			new String[] {
-				HtmlUtil.escape(role.getTitle(locale)),
-				HtmlUtil.escape(groupDescriptiveName),
-				LanguageUtil.get(request, group.isOrganization() ? "organization" : "site")
-			});
+	String s = LanguageUtil.format(
+		request, "current-signifies-current-users-associated-with-the-x-role.-available-signifies-all-users-associated-with-the-x-x",
+		new String[] {
+			HtmlUtil.escape(role.getTitle(locale)),
+			HtmlUtil.escape(groupDescriptiveName),
+			LanguageUtil.get(request, group.isOrganization() ? "organization" : "site")
+		});
+
+	stripeMessage = LanguageUtil.format(request, "step-x-of-x", new String[] {"2", "2"}, false) + StringPool.SPACE + s;
 }
 %>
 

@@ -19,7 +19,7 @@ describe('TrafficSources', () => {
 	afterEach(cleanup);
 
 	it('displays the sources according to API', async () => {
-		const mockedAPI = jest.fn(() =>
+		const mockDataProvider = jest.fn(() =>
 			Promise.resolve({
 				analyticsReportsTrafficSources: [
 					{
@@ -38,15 +38,20 @@ describe('TrafficSources', () => {
 			})
 		);
 
+		const testProps = {
+			dataProvider: mockDataProvider,
+			languageTag: 'en-US',
+		};
+
 		const {getByText} = render(
 			<TrafficSources
-				dataProvider={mockedAPI}
-				languageTag="en-EN"
+				dataProvider={testProps.dataProvider}
+				languageTag={testProps.languageTag}
 				onTrafficSourceClick={() => {}}
 			/>
 		);
 
-		await wait(() => expect(mockedAPI).toHaveBeenCalled());
+		await wait(() => expect(mockDataProvider).toHaveBeenCalled());
 
 		expect(getByText('Testing')).toBeInTheDocument();
 		expect(getByText('32,178')).toBeInTheDocument();
@@ -54,6 +59,6 @@ describe('TrafficSources', () => {
 		expect(getByText('Second Testing')).toBeInTheDocument();
 		expect(getByText('278,256')).toBeInTheDocument();
 
-		expect(mockedAPI).toHaveBeenCalledTimes(1);
+		expect(mockDataProvider).toHaveBeenCalledTimes(1);
 	});
 });

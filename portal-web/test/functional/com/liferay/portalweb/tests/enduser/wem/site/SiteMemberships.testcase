@@ -1013,6 +1013,7 @@ definition {
 
 	@priority = "3"
 	test ViewNoManualMembershipManagement {
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Site Administration";
 
 		Site.manageMembershipOptions(allowManualMembershipManagement = "true");

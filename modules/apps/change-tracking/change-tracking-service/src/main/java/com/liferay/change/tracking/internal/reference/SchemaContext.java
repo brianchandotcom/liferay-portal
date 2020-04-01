@@ -139,13 +139,11 @@ public class SchemaContext {
 		DSLQuery dslQuery = null;
 
 		for (TableJoinHolder parentJoinHolder : parentJoinHolders) {
-			Column<?, Long> parentPrimaryKeyColumn =
-				parentJoinHolder.getFromTablePrimaryKeyColumn();
-			Column<?, Long> childPrimaryKeyColumn =
-				parentJoinHolder.getJoinTablePrimaryKeyColumn();
+			Column<?, Long> parentPKColumn = parentJoinHolder.getFromPKColumn();
+			Column<?, Long> childPKColumn = parentJoinHolder.getJoinPKColumn();
 
 			FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(
-				parentPrimaryKeyColumn, childPrimaryKeyColumn);
+				parentPKColumn, childPKColumn);
 
 			Function<FromStep, JoinStep> joinFunction =
 				parentJoinHolder.getJoinFunction();
@@ -154,10 +152,9 @@ public class SchemaContext {
 
 			GroupByStep groupByStep = joinStep.where(
 				() -> {
-					Predicate predicate = childPrimaryKeyColumn.in(
-						childPrimaryKeys);
+					Predicate predicate = childPKColumn.in(childPrimaryKeys);
 
-					Table<?> parentTable = parentPrimaryKeyColumn.getTable();
+					Table<?> parentTable = parentPKColumn.getTable();
 
 					Column<?, Long> ctCollectionIdColumn =
 						parentTable.getColumn("ctCollectionId", Long.class);

@@ -216,11 +216,11 @@ public class TableReferenceDefinitionHelperImplTest {
 
 		Assert.assertSame(
 			aliasReferenceExampleTable.referenceExampleId,
-			childJoinHolder.getFromTablePrimaryKeyColumn());
+			childJoinHolder.getFromPKColumn());
 
 		Assert.assertSame(
 			ReferenceExampleTable.INSTANCE.referenceExampleId,
-			childJoinHolder.getJoinTablePrimaryKeyColumn());
+			childJoinHolder.getJoinPKColumn());
 
 		childJoinHolder = childTableJoinHolders.get(1);
 
@@ -228,11 +228,11 @@ public class TableReferenceDefinitionHelperImplTest {
 
 		Assert.assertSame(
 			ReferenceExampleTable.INSTANCE.referenceExampleId,
-			childJoinHolder.getFromTablePrimaryKeyColumn());
+			childJoinHolder.getFromPKColumn());
 
 		Assert.assertSame(
 			aliasReferenceExampleTable.referenceExampleId,
-			childJoinHolder.getJoinTablePrimaryKeyColumn());
+			childJoinHolder.getJoinPKColumn());
 
 		Map<Table<?>, List<TableJoinHolder>> parentJoinHoldersMap =
 			tableReferenceInfo.getParentJoinHoldersMap();
@@ -254,11 +254,11 @@ public class TableReferenceDefinitionHelperImplTest {
 
 		Assert.assertSame(
 			MainExampleTable.INSTANCE.mainExampleId,
-			parentJoinHolder.getFromTablePrimaryKeyColumn());
+			parentJoinHolder.getFromPKColumn());
 
 		Assert.assertSame(
 			ReferenceExampleTable.INSTANCE.referenceExampleId,
-			parentJoinHolder.getJoinTablePrimaryKeyColumn());
+			parentJoinHolder.getJoinPKColumn());
 
 		parentTableJoinHolders = parentJoinHoldersMap.get(
 			ReferenceExampleTable.INSTANCE);
@@ -273,11 +273,11 @@ public class TableReferenceDefinitionHelperImplTest {
 
 		Assert.assertSame(
 			aliasReferenceExampleTable.referenceExampleId,
-			childJoinHolder.getFromTablePrimaryKeyColumn());
+			childJoinHolder.getFromPKColumn());
 
 		Assert.assertSame(
 			ReferenceExampleTable.INSTANCE.referenceExampleId,
-			childJoinHolder.getJoinTablePrimaryKeyColumn());
+			childJoinHolder.getJoinPKColumn());
 
 		parentJoinHolder = parentTableJoinHolders.get(1);
 
@@ -286,11 +286,11 @@ public class TableReferenceDefinitionHelperImplTest {
 
 		Assert.assertSame(
 			ReferenceExampleTable.INSTANCE.referenceExampleId,
-			parentJoinHolder.getFromTablePrimaryKeyColumn());
+			parentJoinHolder.getFromPKColumn());
 
 		Assert.assertSame(
 			aliasReferenceExampleTable.referenceExampleId,
-			parentJoinHolder.getJoinTablePrimaryKeyColumn());
+			parentJoinHolder.getJoinPKColumn());
 	}
 
 	@Test

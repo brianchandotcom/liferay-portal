@@ -49,9 +49,8 @@ page import="com.liferay.redirect.web.internal.display.context.RedirectNotFoundE
 page import="com.liferay.redirect.web.internal.display.context.RedirectNotFountEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.redirect.web.internal.util.RedirectUtil" %>
 
-<%@ page import="java.util.List" %>
-
-<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
 

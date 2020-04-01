@@ -60,61 +60,47 @@ public class RedirectNotFoundEntryLocalServiceTest {
 
 	@Test
 	public void testAddOrUpdateRedirectNotFoundEntry() throws Exception {
-		RedirectTestUtil.withRedirectEnabled(
-			() -> {
-				RedirectNotFoundEntry redirectNotFoundEntry =
-					_addOrUpdateRedirectNotFoundEntry("url");
+		RedirectNotFoundEntry redirectNotFoundEntry =
+			_addOrUpdateRedirectNotFoundEntry("url");
 
-				Assert.assertEquals(1, redirectNotFoundEntry.getHits());
-			});
+		Assert.assertEquals(1, redirectNotFoundEntry.getHits());
 	}
 
 	@Test
 	public void testAddOrUpdateRedirectNotFoundEntryWithDifferentURL()
 		throws Exception {
 
-		RedirectTestUtil.withRedirectEnabled(
-			() -> {
-				RedirectNotFoundEntry redirectNotFoundEntry1 =
-					_addOrUpdateRedirectNotFoundEntry("url1");
-				RedirectNotFoundEntry redirectNotFoundEntry2 =
-					_addOrUpdateRedirectNotFoundEntry("url2");
+		RedirectNotFoundEntry redirectNotFoundEntry1 =
+			_addOrUpdateRedirectNotFoundEntry("url1");
+		RedirectNotFoundEntry redirectNotFoundEntry2 =
+			_addOrUpdateRedirectNotFoundEntry("url2");
 
-				Assert.assertNotEquals(
-					redirectNotFoundEntry1, redirectNotFoundEntry2);
-				Assert.assertEquals(1, redirectNotFoundEntry1.getHits());
-				Assert.assertEquals(1, redirectNotFoundEntry2.getHits());
-			});
+		Assert.assertNotEquals(redirectNotFoundEntry1, redirectNotFoundEntry2);
+		Assert.assertEquals(1, redirectNotFoundEntry1.getHits());
+		Assert.assertEquals(1, redirectNotFoundEntry2.getHits());
 	}
 
 	@Test
 	public void testAddOrUpdateRedirectNotFoundEntryWithExistingEntry()
 		throws Exception {
 
-		RedirectTestUtil.withRedirectEnabled(
-			() -> {
-				RedirectNotFoundEntry redirectNotFoundEntry1 =
-					_addOrUpdateRedirectNotFoundEntry("url");
-				RedirectNotFoundEntry redirectNotFoundEntry2 =
-					_addOrUpdateRedirectNotFoundEntry("url");
+		RedirectNotFoundEntry redirectNotFoundEntry1 =
+			_addOrUpdateRedirectNotFoundEntry("url");
+		RedirectNotFoundEntry redirectNotFoundEntry2 =
+			_addOrUpdateRedirectNotFoundEntry("url");
 
-				Assert.assertEquals(
-					redirectNotFoundEntry1, redirectNotFoundEntry2);
-				Assert.assertEquals(2, redirectNotFoundEntry2.getHits());
-			});
+		Assert.assertEquals(redirectNotFoundEntry1, redirectNotFoundEntry2);
+		Assert.assertEquals(2, redirectNotFoundEntry2.getHits());
 	}
 
 	@Test
 	public void testAddOrUpdateRedirectNotFoundEntryWithNullURL()
 		throws Exception {
 
-		RedirectTestUtil.withRedirectEnabled(
-			() -> {
-				RedirectNotFoundEntry redirectNotFoundEntry =
-					_addOrUpdateRedirectNotFoundEntry(null);
+		RedirectNotFoundEntry redirectNotFoundEntry =
+			_addOrUpdateRedirectNotFoundEntry(null);
 
-				Assert.assertEquals(1, redirectNotFoundEntry.getHits());
-			});
+		Assert.assertEquals(1, redirectNotFoundEntry.getHits());
 	}
 
 	@Test
@@ -127,55 +113,46 @@ public class RedirectNotFoundEntryLocalServiceTest {
 
 	@Test
 	public void testGetRedirectNotFoundEntries() throws Exception {
-		RedirectTestUtil.withRedirectEnabled(
-			() -> {
-				_addOrUpdateRedirectNotFoundEntry("url1");
-				_addOrUpdateRedirectNotFoundEntry("url2");
-				_addOrUpdateRedirectNotFoundEntry("url3");
+		_addOrUpdateRedirectNotFoundEntry("url1");
+		_addOrUpdateRedirectNotFoundEntry("url2");
+		_addOrUpdateRedirectNotFoundEntry("url3");
 
-				List<RedirectNotFoundEntry> redirectNotFoundEntries =
-					_redirectNotFoundEntryLocalService.
-						getRedirectNotFoundEntries(
-							_group.getGroupId(), null, QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS, null);
+		List<RedirectNotFoundEntry> redirectNotFoundEntries =
+			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntries(
+				_group.getGroupId(), null, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
 
-				Assert.assertEquals(
-					redirectNotFoundEntries.toString(), 3,
-					redirectNotFoundEntries.size());
-			});
+		Assert.assertEquals(
+			redirectNotFoundEntries.toString(), 3,
+			redirectNotFoundEntries.size());
 	}
 
 	@Test
 	public void testGetRedirectNotFoundEntriesWithMinimumModifiedDate()
 		throws Exception {
 
-		RedirectTestUtil.withRedirectEnabled(
-			() -> {
-				Instant instant = Instant.now();
+		Instant instant = Instant.now();
 
-				Date minModifiedDate = Date.from(
-					instant.minus(Duration.ofDays(5)));
+		Date minModifiedDate = Date.from(instant.minus(Duration.ofDays(5)));
 
-				RedirectNotFoundEntry redirectNotFoundEntry =
-					_addOrUpdateRedirectNotFoundEntry("url1", new Date());
-				_addOrUpdateRedirectNotFoundEntry(
-					"url2", Date.from(instant.minus(Duration.ofDays(6))));
-				_addOrUpdateRedirectNotFoundEntry(
-					"url3", Date.from(instant.minus(Duration.ofDays(7))));
+		RedirectNotFoundEntry redirectNotFoundEntry =
+			_addOrUpdateRedirectNotFoundEntry("url1", new Date());
+		_addOrUpdateRedirectNotFoundEntry(
+			"url2", Date.from(instant.minus(Duration.ofDays(6))));
+		_addOrUpdateRedirectNotFoundEntry(
+			"url3", Date.from(instant.minus(Duration.ofDays(7))));
 
-				List<RedirectNotFoundEntry> redirectNotFoundEntries =
-					_redirectNotFoundEntryLocalService.
-						getRedirectNotFoundEntries(
-							_group.getGroupId(), minModifiedDate,
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<RedirectNotFoundEntry> redirectNotFoundEntries =
+			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntries(
+				_group.getGroupId(), minModifiedDate, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 
-				Assert.assertEquals(
-					redirectNotFoundEntries.toString(), 1,
-					redirectNotFoundEntries.size());
+		Assert.assertEquals(
+			redirectNotFoundEntries.toString(), 1,
+			redirectNotFoundEntries.size());
 
-				Assert.assertEquals(
-					redirectNotFoundEntry, redirectNotFoundEntries.get(0));
-			});
+		Assert.assertEquals(
+			redirectNotFoundEntry, redirectNotFoundEntries.get(0));
 	}
 
 	private RedirectNotFoundEntry _addOrUpdateRedirectNotFoundEntry(

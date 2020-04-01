@@ -32,13 +32,6 @@ public class RedirectTestUtil {
 		_withRedirect(false, unsafeRunnable);
 	}
 
-	public static void withRedirectEnabled(
-			UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		_withRedirect(true, unsafeRunnable);
-	}
-
 	private static void _withRedirect(
 			boolean enabled, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {

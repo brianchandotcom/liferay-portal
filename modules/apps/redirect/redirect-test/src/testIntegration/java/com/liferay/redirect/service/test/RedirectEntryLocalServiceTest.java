@@ -28,7 +28,6 @@ import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
-import com.liferay.redirect.test.util.RedirectTestUtil;
 
 import java.time.Instant;
 
@@ -61,121 +60,97 @@ public class RedirectEntryLocalServiceTest {
 	public void testAddRedirectEntryDeletesRedirectNotFoundEntry()
 		throws Exception {
 
-		RedirectTestUtil.withRedirectEnabled(
-			() -> {
-				_redirectNotFoundEntry =
-					_redirectNotFoundEntryLocalService.
-						addOrUpdateRedirectNotFoundEntry(
-							_groupLocalService.getGroup(_group.getGroupId()),
-							"sourceURL");
+		_redirectNotFoundEntry =
+			_redirectNotFoundEntryLocalService.addOrUpdateRedirectNotFoundEntry(
+				_groupLocalService.getGroup(_group.getGroupId()), "sourceURL");
 
-				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
-					_group.getGroupId(), "destinationURL", null, false,
-					"sourceURL", ServiceContextTestUtil.getServiceContext());
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, false, "sourceURL",
+			ServiceContextTestUtil.getServiceContext());
 
-				Assert.assertNull(
-					_redirectNotFoundEntryLocalService.
-						fetchRedirectNotFoundEntry(
-							_group.getGroupId(), "sourceURL"));
-			});
+		Assert.assertNull(
+			_redirectNotFoundEntryLocalService.fetchRedirectNotFoundEntry(
+				_group.getGroupId(), "sourceURL"));
 	}
 
 	@Test(expected = DuplicateRedirectEntrySourceURLException.class)
 	public void testAddRedirectEntryFailsWhenDuplicateSourceURL()
 		throws Exception {
 
-		RedirectTestUtil.withRedirectEnabled(
-			() -> {
-				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
-					_group.getGroupId(), "destinationURL", null, false,
-					"sourceURL", ServiceContextTestUtil.getServiceContext());
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, false, "sourceURL",
+			ServiceContextTestUtil.getServiceContext());
 
-				_redirectEntryLocalService.addRedirectEntry(
-					_group.getGroupId(), "destinationURL", null, false,
-					"sourceURL", ServiceContextTestUtil.getServiceContext());
-			});
+		_redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, false, "sourceURL",
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Test(expected = DuplicateRedirectEntrySourceURLException.class)
 	public void testAddRedirectEntryFailsWhenDuplicateSourceURLAndDifferentType()
 		throws Exception {
 
-		RedirectTestUtil.withRedirectEnabled(
-			() -> {
-				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
-					_group.getGroupId(), "destinationURL", null, true,
-					"sourceURL", ServiceContextTestUtil.getServiceContext());
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, true, "sourceURL",
+			ServiceContextTestUtil.getServiceContext());
 
-				_redirectEntryLocalService.addRedirectEntry(
-					_group.getGroupId(), "destinationURL", null, false,
-					"sourceURL", ServiceContextTestUtil.getServiceContext());
-			});
+		_redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, false, "sourceURL",
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Test(expected = DuplicateRedirectEntrySourceURLException.class)
 	public void testAddRedirectEntryFailsWhenDuplicateSourceURLAndExpirationDate()
 		throws Exception {
 
-		RedirectTestUtil.withRedirectEnabled(
-			() -> {
-				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
-					_group.getGroupId(), "destinationURL", new Date(), true,
-					"sourceURL", ServiceContextTestUtil.getServiceContext());
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", new Date(), true,
+			"sourceURL", ServiceContextTestUtil.getServiceContext());
 
-				_redirectEntryLocalService.addRedirectEntry(
-					_group.getGroupId(), "destinationURL", new Date(), false,
-					"sourceURL", ServiceContextTestUtil.getServiceContext());
-			});
+		_redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", new Date(), false,
+			"sourceURL", ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Test
 	public void testFetchExpiredRedirectEntry() throws Exception {
-		RedirectTestUtil.withRedirectEnabled(
-			() -> {
-				Instant instant = Instant.now();
+		Instant instant = Instant.now();
 
-				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
-					_group.getGroupId(), "destinationURL",
-					Date.from(instant.minusSeconds(3600)), false, "sourceURL",
-					ServiceContextTestUtil.getServiceContext());
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL",
+			Date.from(instant.minusSeconds(3600)), false, "sourceURL",
+			ServiceContextTestUtil.getServiceContext());
 
-				Assert.assertNull(
-					_redirectEntryLocalService.fetchRedirectEntry(
-						_group.getGroupId(), "sourceURL"));
-			});
+		Assert.assertNull(
+			_redirectEntryLocalService.fetchRedirectEntry(
+				_group.getGroupId(), "sourceURL"));
 	}
 
 	@Test
 	public void testFetchNotExpiredRedirectEntry() throws Exception {
-		RedirectTestUtil.withRedirectEnabled(
-			() -> {
-				Instant instant = Instant.now();
+		Instant instant = Instant.now();
 
-				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
-					_group.getGroupId(), "destinationURL",
-					Date.from(instant.plusSeconds(3600)), false, "sourceURL",
-					ServiceContextTestUtil.getServiceContext());
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL",
+			Date.from(instant.plusSeconds(3600)), false, "sourceURL",
+			ServiceContextTestUtil.getServiceContext());
 
-				Assert.assertEquals(
-					_redirectEntry,
-					_redirectEntryLocalService.fetchRedirectEntry(
-						_group.getGroupId(), "sourceURL"));
-			});
+		Assert.assertEquals(
+			_redirectEntry,
+			_redirectEntryLocalService.fetchRedirectEntry(
+				_group.getGroupId(), "sourceURL"));
 	}
 
 	@Test
 	public void testFetchRedirectEntry() throws Exception {
-		RedirectTestUtil.withRedirectEnabled(
-			() -> {
-				_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
-					_group.getGroupId(), "destinationURL", null, false,
-					"sourceURL", ServiceContextTestUtil.getServiceContext());
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, false, "sourceURL",
+			ServiceContextTestUtil.getServiceContext());
 
-				Assert.assertEquals(
-					_redirectEntry,
-					_redirectEntryLocalService.fetchRedirectEntry(
-						_group.getGroupId(), "sourceURL"));
-			});
+		Assert.assertEquals(
+			_redirectEntry,
+			_redirectEntryLocalService.fetchRedirectEntry(
+				_group.getGroupId(), "sourceURL"));
 	}
 
 	@DeleteAfterTestRun

@@ -165,13 +165,6 @@ function APIService({endpoints, namespace, page}) {
 		);
 	}
 
-	function getTrafficSources() {
-		// TODO remove frontend mock
-		return new Promise(resolve =>
-			setTimeout(() => resolve(MOCK_TRAFFIC_SOURCES), 300)
-		);
-	}
-
 	function getTrafficSourcesDetails(name) {
 		// TODO remove frontend mock
 		return new Promise(resolve =>
@@ -193,7 +186,6 @@ function APIService({endpoints, namespace, page}) {
 		getTotalReads,
 		getTotalViews,
 		getTrafficSourceDetails,
-		getTrafficSources,
 		getTrafficSourcesDetails,
 	};
 }

@@ -20,6 +20,7 @@ export default function({context, props}) {
 	const {languageTag, namespace, page} = context;
 	const {defaultTimeSpanKey, timeSpans} = context;
 	const {authorName, publishDate, title} = props;
+	const {trafficSources} = props;
 
 	const {
 		getAnalyticsReportsHistoricalReadsURL,
@@ -48,6 +49,7 @@ export default function({context, props}) {
 			pagePublishDate={publishDate}
 			pageTitle={title}
 			timeSpanOptions={timeSpans}
+			trafficSources={trafficSources}
 		/>
 	);
 }
@@ -60,12 +62,13 @@ function Navigation({
 	pagePublishDate,
 	pageTitle,
 	timeSpanOptions,
+	trafficSources,
 }) {
 	const [currentPage, setCurrentPage] = useState({view: 'main'});
 
 	const [trafficSourceName, setTrafficSourceName] = useState('');
 
-	const {getHistoricalReads, getHistoricalViews, getTrafficSources} = api;
+	const {getHistoricalReads, getHistoricalViews} = api;
 
 	function handleCurrentPage(currentPage) {
 		setCurrentPage({view: currentPage.view});
@@ -140,7 +143,7 @@ function Navigation({
 						timeSpanOptions={timeSpanOptions}
 						totalReadsDataProvider={handleTotalReads}
 						totalViewsDataProvider={handleTotalViews}
-						trafficSourcesDataProvider={getTrafficSources}
+						trafficSources={trafficSources}
 					/>
 				</div>
 			)}

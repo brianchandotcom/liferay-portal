@@ -10,7 +10,6 @@
  */
 
 import ClayButton from '@clayui/button';
-import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Cell, Pie, PieChart, Tooltip} from 'recharts';
@@ -18,7 +17,7 @@ import {Cell, Pie, PieChart, Tooltip} from 'recharts';
 import {numberFormat} from '../utils/numberFormat';
 import Hint from './Hint';
 
-const {useEffect, useState} = React;
+const {useState} = React;
 
 const COLORS_MAP = {
 	organic: '#7785FF',
@@ -41,22 +40,11 @@ const FALLBACK_COLOR = '#e92563';
 const getColorByName = name => COLORS_MAP[name] || FALLBACK_COLOR;
 
 export default function TrafficSources({
-	dataProvider,
 	languageTag,
 	onTrafficSourceClick,
+	trafficSources,
 }) {
-	const isMounted = useIsMounted();
-	const [trafficSources, setTrafficSources] = useState([]);
 	const [highlighted, setHighlighted] = useState(null);
-
-	useEffect(() => {
-		dataProvider().then(response => {
-			if (isMounted()) {
-				setTrafficSources(response.analyticsReportsTrafficSources);
-			}
-		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	function handleLegendMouseEnter(name) {
 		setHighlighted(name);
@@ -224,7 +212,7 @@ function TrafficSourcesCustomTooltip(props) {
 }
 
 TrafficSources.propTypes = {
-	dataProvider: PropTypes.func.isRequired,
 	languageTag: PropTypes.string.isRequired,
 	onTrafficSourceClick: PropTypes.func.isRequired,
+	trafficSources: PropTypes.array.isRequired,
 };

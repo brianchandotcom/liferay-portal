@@ -50,6 +50,8 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -251,14 +253,24 @@ public class StructuredContentDTOConverter
 				return new Value();
 			}
 
-			return new Value() {
-				{
-					image = ContentDocumentUtil.toContentDocument(
-						dlURLHelper, dlAppService.getFileEntry(fileEntryId));
+			try {
+				return new Value() {
+					{
+						image = ContentDocumentUtil.toContentDocument(
+							dlURLHelper,
+							dlAppService.getFileEntry(fileEntryId));
 
-					image.setDescription(jsonObject.getString("alt"));
+						image.setDescription(jsonObject.getString("alt"));
+					}
+				};
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception, exception);
 				}
-			};
+
+				return new Value();
+			}
 		}
 
 		if (Objects.equals(
@@ -478,6 +490,9 @@ public class StructuredContentDTOConverter
 			ddmFormField, dlAppService, dlURLHelper, journalArticleService,
 			layoutLocalService, locale, valueString);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StructuredContentDTOConverter.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

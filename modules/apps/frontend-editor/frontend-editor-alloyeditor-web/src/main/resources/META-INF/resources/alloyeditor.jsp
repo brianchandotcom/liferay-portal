@@ -131,7 +131,7 @@ String uploadURL = StringPool.BLANK;
 if (editorOptions != null) {
 	uploadURL = editorOptions.getUploadURL();
 
-	if (Validator.isNotNull(data) && Validator.isNotNull(uploadURL)) {
+	if (data != null && Validator.isNotNull(uploadURL)) {
 		modules += ",liferay-editor-image-uploader";
 	}
 }

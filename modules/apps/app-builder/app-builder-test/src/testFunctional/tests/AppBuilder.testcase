@@ -3839,7 +3839,7 @@ definition {
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
-		var myAppName = "My Registration app";
+		var myAppName = "My Reg app";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",

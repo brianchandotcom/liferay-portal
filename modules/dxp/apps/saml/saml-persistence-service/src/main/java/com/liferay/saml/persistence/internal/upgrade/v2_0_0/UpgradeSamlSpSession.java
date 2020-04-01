@@ -30,7 +30,8 @@ public class UpgradeSamlSpSession extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			alter(
 				SamlSpSessionTable.class,
-				new AlterTableAddColumn("samlIdpEntityId VARCHAR(1024) null"));
+				new AlterTableAddColumn(
+					"samlIdpEntityId", "VARCHAR(1024) null"));
 		}
 		catch (SQLException sqlException) {
 			upgradeTable(

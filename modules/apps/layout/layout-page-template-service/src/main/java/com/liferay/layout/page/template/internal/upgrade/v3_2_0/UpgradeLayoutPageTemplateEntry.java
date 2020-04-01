@@ -67,7 +67,8 @@ public class UpgradeLayoutPageTemplateEntry extends UpgradeProcess {
 	protected void upgradeSchema() throws Exception {
 		alter(
 			LayoutPageTemplateEntryTable.class,
-			new AlterTableAddColumn("layoutPageTemplateEntryKey VARCHAR(75)"));
+			new AlterTableAddColumn(
+				"layoutPageTemplateEntryKey", "VARCHAR(75)"));
 	}
 
 	private String _generateLayoutPageTemplateEntryKey(String name) {

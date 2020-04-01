@@ -30,7 +30,7 @@ public class UpgradeSamlIdpSpConnection extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			alter(
 				SamlIdpSpConnectionTable.class,
-				new AlterTableAddColumn("encryptionForced BOOLEAN"));
+				new AlterTableAddColumn("encryptionForced", "BOOLEAN"));
 		}
 		catch (SQLException sqlException) {
 			upgradeTable(

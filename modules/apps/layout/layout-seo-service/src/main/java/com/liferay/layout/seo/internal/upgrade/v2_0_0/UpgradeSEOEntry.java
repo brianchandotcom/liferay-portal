@@ -27,11 +27,11 @@ public class UpgradeSEOEntry extends UpgradeProcess {
 		alter(
 			LayoutSEOEntryTable.class,
 			new AlterColumnName("enabled", "canonicalURLEnabled BOOLEAN"),
-			new AlterTableAddColumn("openGraphTitleEnabled BOOLEAN"),
-			new AlterTableAddColumn("openGraphTitle STRING null"),
-			new AlterTableAddColumn("openGraphDescriptionEnabled BOOLEAN"),
-			new AlterTableAddColumn("openGraphDescription STRING null"),
-			new AlterTableAddColumn("openGraphImageFileEntryId LONG"));
+			new AlterTableAddColumn("openGraphTitleEnabled", "BOOLEAN"),
+			new AlterTableAddColumn("openGraphTitle", "STRING null"),
+			new AlterTableAddColumn("openGraphDescriptionEnabled", "BOOLEAN"),
+			new AlterTableAddColumn("openGraphDescription", "STRING null"),
+			new AlterTableAddColumn("openGraphImageFileEntryId", "LONG"));
 	}
 
 }

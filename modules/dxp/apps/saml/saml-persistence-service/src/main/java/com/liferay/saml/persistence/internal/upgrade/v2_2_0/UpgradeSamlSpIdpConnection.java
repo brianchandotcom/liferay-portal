@@ -30,7 +30,7 @@ public class UpgradeSamlSpIdpConnection extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			alter(
 				SamlSpIdpConnectionTable.class,
-				new AlterTableAddColumn("unknownUsersAreStrangers BOOLEAN"));
+				new AlterTableAddColumn("unknownUsersAreStrangers", "BOOLEAN"));
 		}
 		catch (SQLException sqlException) {
 			upgradeTable(

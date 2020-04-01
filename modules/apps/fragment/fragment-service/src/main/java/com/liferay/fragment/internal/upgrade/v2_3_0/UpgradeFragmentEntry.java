@@ -27,7 +27,7 @@ public class UpgradeFragmentEntry extends UpgradeProcess {
 		if (!hasColumn("FragmentEntry", "cacheable")) {
 			alter(
 				FragmentEntryTable.class,
-				new AlterTableAddColumn("cacheable BOOLEAN"));
+				new AlterTableAddColumn("cacheable", "BOOLEAN"));
 		}
 	}
 

@@ -69,7 +69,7 @@ public class UpgradeLayoutPageTemplateCollection extends UpgradeProcess {
 	protected void upgradeSchema() throws Exception {
 		alter(
 			LayoutPageTemplateCollectionTable.class,
-			new AlterTableAddColumn("lptCollectionKey VARCHAR(75)"));
+			new AlterTableAddColumn("lptCollectionKey", "VARCHAR(75)"));
 	}
 
 	private String _generateLayoutPageTemplateCollectionKey(String name) {

@@ -32,7 +32,7 @@ public class UpgradeDDMStorageLink extends UpgradeProcess {
 		if (!hasColumn("DDMStorageLink", "structureVersionId")) {
 			alter(
 				DDMStorageLinkTable.class,
-				new AlterTableAddColumn("structureVersionId LONG"));
+				new AlterTableAddColumn("structureVersionId", "LONG"));
 		}
 
 		try (PreparedStatement ps1 = connection.prepareStatement(

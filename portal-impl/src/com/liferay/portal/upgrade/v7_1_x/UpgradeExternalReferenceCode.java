@@ -32,7 +32,7 @@ public class UpgradeExternalReferenceCode extends UpgradeProcess {
 			alter(
 				tableClass,
 				new AlterTableAddColumn(
-					"externalReferenceCode VARCHAR(75) null"));
+					"externalReferenceCode", "VARCHAR(75) null"));
 		}
 	}
 

@@ -15,6 +15,7 @@
 import {
 	cleanup,
 	fireEvent,
+	queryAllByText,
 	render,
 	waitForElement,
 } from '@testing-library/react';
@@ -151,6 +152,76 @@ describe('Languages', () => {
 				'this-change-will-only-affect-the-newly-created-localized-content'
 			)
 		);
+	});
+
+	it('renders a list with move up actions in all elements except the first one', () => {
+		const result = renderLanguagesComponent({
+			...defaultProps,
+			inheritLocales: false,
+			siteAvailableLocales: availableLocales,
+		});
+
+		const dropdownTriggers = result.container.querySelectorAll('.dropdown');
+		const moveDownButtons = result.getAllByText('move-up');
+		const dropdownMenus = result.baseElement.querySelectorAll(
+			'.dropdown-menu'
+		);
+		const dropdownMenuFirst = dropdownMenus[0];
+
+		expect(dropdownTriggers).toHaveLength(4);
+		expect(moveDownButtons).toHaveLength(3);
+		expect(queryAllByText(dropdownMenuFirst, 'move-up')).toHaveLength(0);
+	});
+
+	it('renders a list with move down actions in all elements except the last one', () => {
+		const result = renderLanguagesComponent({
+			...defaultProps,
+			inheritLocales: false,
+			siteAvailableLocales: availableLocales,
+		});
+
+		const dropdownTriggers = result.container.querySelectorAll('.dropdown');
+		const moveDownButtons = result.getAllByText('move-down');
+		const dropdownMenus = result.baseElement.querySelectorAll(
+			'.dropdown-menu'
+		);
+		const dropdownMenuLast = dropdownMenus[dropdownMenus.length - 1];
+
+		expect(dropdownTriggers).toHaveLength(4);
+		expect(moveDownButtons).toHaveLength(3);
+		expect(queryAllByText(dropdownMenuLast, 'move-down')).toHaveLength(0);
+	});
+
+	it('move up the second element', () => {
+		const result = renderLanguagesComponent({
+			...defaultProps,
+			inheritLocales: false,
+			siteAvailableLocales: availableLocales,
+		});
+
+		expect(
+			result.container.querySelectorAll('tbody > tr')[1].textContent
+		).toBe('bdefault');
+		fireEvent.click(result.getAllByText('move-up')[0]);
+		expect(
+			result.container.querySelectorAll('tbody > tr')[0].textContent
+		).toBe('bdefault');
+	});
+
+	it('move up the first element', () => {
+		const result = renderLanguagesComponent({
+			...defaultProps,
+			inheritLocales: false,
+			siteAvailableLocales: availableLocales,
+		});
+
+		expect(
+			result.container.querySelectorAll('tbody > tr')[0].textContent
+		).toBe('a');
+		fireEvent.click(result.getAllByText('move-down')[0]);
+		expect(
+			result.container.querySelectorAll('tbody > tr')[1].textContent
+		).toBe('a');
 	});
 
 	describe('ManageLanguages', () => {

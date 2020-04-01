@@ -18,9 +18,9 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
-import com.liferay.dynamic.data.mapping.uad.helper.DDMFormInstanceRecordUADUserCacheHelper;
 import com.liferay.dynamic.data.mapping.uad.helper.DDMUADHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -41,6 +41,8 @@ import com.liferay.user.associated.data.display.UADDisplay;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -146,9 +148,8 @@ public class DDMFormInstanceRecordUADDisplay
 			sb.append(StringPool.SPACE);
 			sb.append(StringPool.POUND);
 
-			int ddmFormInstanceRecordIndex =
-				_ddmFormInstanceRecordUADCacheHelper.
-					getDDMFormInstanceRecordIndex(ddmFormInstanceRecord);
+			int ddmFormInstanceRecordIndex = _getDDMFormInstanceRecordIndex(
+				ddmFormInstanceRecord);
 
 			sb.append(ddmFormInstanceRecordIndex + 1);
 
@@ -227,15 +228,62 @@ public class DDMFormInstanceRecordUADDisplay
 			WebKeys.THEME_DISPLAY);
 	}
 
+	private int _getDDMFormInstanceRecordIndex(
+		DDMFormInstanceRecord ddmFormInstanceRecord) {
+
+		List<DDMFormInstanceRecord> ddmFormInstanceRecords =
+			_getDDMFormInstanceRecords(
+				ddmFormInstanceRecord.getFormInstanceId(),
+				ddmFormInstanceRecord.getUserId());
+
+		int index = 0;
+
+		for (DDMFormInstanceRecord currentDDMFormInstanceRecord :
+				ddmFormInstanceRecords) {
+
+			if (currentDDMFormInstanceRecord.getFormInstanceRecordId() ==
+					ddmFormInstanceRecord.getFormInstanceRecordId()) {
+
+				return index;
+			}
+
+			index++;
+		}
+
+		return -1;
+	}
+
+	private List<DDMFormInstanceRecord> _getDDMFormInstanceRecords(
+		long formInstanceId, long userId) {
+
+		DDMFormInstanceRecordUADUserCache ddmFormInstanceRecordUADUserCache =
+			null;
+
+		if (_ddmFormInstanceRecordUADUserCacheMap.get(formInstanceId) == null) {
+			ddmFormInstanceRecordUADUserCache =
+				new DDMFormInstanceRecordUADUserCache(formInstanceId);
+
+			ddmFormInstanceRecordUADUserCache.putDDMFormInstanceRecords(userId);
+
+			_ddmFormInstanceRecordUADUserCacheMap.put(
+				formInstanceId, ddmFormInstanceRecordUADUserCache);
+		}
+
+		ddmFormInstanceRecordUADUserCache =
+			_ddmFormInstanceRecordUADUserCacheMap.get(formInstanceId);
+
+		return ddmFormInstanceRecordUADUserCache.getDDMFormInstanceRecords(
+			userId);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceRecordUADDisplay.class);
 
 	@Reference
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
-	@Reference
-	private DDMFormInstanceRecordUADUserCacheHelper
-		_ddmFormInstanceRecordUADCacheHelper;
+	private final Map<Long, DDMFormInstanceRecordUADUserCache>
+		_ddmFormInstanceRecordUADUserCacheMap = new HashMap<>();
 
 	@Reference
 	private DDMFormInstanceUADDisplay _ddmFormInstanceUADDisplay;
@@ -244,5 +292,44 @@ public class DDMFormInstanceRecordUADDisplay
 
 	@Reference
 	private Portal _portal;
+
+	private class DDMFormInstanceRecordUADUserCache {
+
+		public DDMFormInstanceRecordUADUserCache(long formInstanceId) {
+			_ddmFormInstanceRecordUADUserMap = new HashMap<>();
+			_formInstanceId = formInstanceId;
+		}
+
+		public List<DDMFormInstanceRecord> getDDMFormInstanceRecords(
+			long userId) {
+
+			if (_ddmFormInstanceRecordUADUserMap.get(userId) == null) {
+				putDDMFormInstanceRecords(userId);
+			}
+
+			return _ddmFormInstanceRecordUADUserMap.get(userId);
+		}
+
+		public void putDDMFormInstanceRecords(long userId) {
+			List<DDMFormInstanceRecord> ddmFormInstanceRecords =
+				new ArrayList<>();
+
+			ddmFormInstanceRecords.addAll(
+				ddmFormInstanceRecordLocalService.getFormInstanceRecords(
+					_formInstanceId, userId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null));
+
+			ddmFormInstanceRecords.sort(
+				Comparator.comparing(DDMFormInstanceRecord::getCreateDate));
+
+			_ddmFormInstanceRecordUADUserMap.put(
+				userId, ddmFormInstanceRecords);
+		}
+
+		private final Map<Long, List<DDMFormInstanceRecord>>
+			_ddmFormInstanceRecordUADUserMap;
+		private final long _formInstanceId;
+
+	}
 
 }

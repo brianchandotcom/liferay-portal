@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Frontend Theme Westeros Bank Site Initializer
-Bundle-SymbolicName: com.liferay.frontend.theme.westeros.bank.site.initializer
-Bundle-Version: 3.0.5
-Web-ContextPath: /frontend-theme-westeros-bank-site-initializer

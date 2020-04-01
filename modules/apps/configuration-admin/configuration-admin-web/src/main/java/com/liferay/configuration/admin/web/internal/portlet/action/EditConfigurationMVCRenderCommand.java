@@ -169,8 +169,8 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 			DDMFormRendererHelper ddmFormRendererHelper =
 				new DDMFormRendererHelper(
 					renderRequest, renderResponse, configurationModel,
-					_ddmFormRenderer, _resourceBundleLoaderProvider,
-					locationVariableResolver);
+					_ddmFormRenderer, locationVariableResolver,
+					_resourceBundleLoaderProvider);
 
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_FORM_HTML,

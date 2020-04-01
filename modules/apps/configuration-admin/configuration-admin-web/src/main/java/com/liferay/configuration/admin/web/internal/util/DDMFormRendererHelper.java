@@ -46,15 +46,15 @@ public class DDMFormRendererHelper {
 	public DDMFormRendererHelper(
 		PortletRequest portletRequest, PortletResponse portletResponse,
 		ConfigurationModel configurationModel, DDMFormRenderer ddmFormRenderer,
-		ResourceBundleLoaderProvider resourceBundleLoaderProvider,
-		LocationVariableResolver locationVariableResolver) {
+		LocationVariableResolver locationVariableResolver,
+		ResourceBundleLoaderProvider resourceBundleLoaderProvider) {
 
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_configurationModel = configurationModel;
 		_ddmFormRenderer = ddmFormRenderer;
-		_resourceBundleLoaderProvider = resourceBundleLoaderProvider;
 		_locationVariableResolver = locationVariableResolver;
+		_resourceBundleLoaderProvider = resourceBundleLoaderProvider;
 	}
 
 	public String getDDMFormHTML() throws PortletException {

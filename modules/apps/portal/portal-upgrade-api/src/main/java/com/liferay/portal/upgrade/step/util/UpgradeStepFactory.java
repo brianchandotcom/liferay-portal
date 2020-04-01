@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.step.util;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
@@ -36,7 +37,7 @@ public class UpgradeStepFactory {
 			protected void doUpgrade() throws Exception {
 				alter(
 					tableClass,
-					_getAlterables(
+					_getAddColumnAlterables(
 						AlterTableAddColumn::new, columnDefinitions));
 			}
 
@@ -82,6 +83,26 @@ public class UpgradeStepFactory {
 			}
 
 		};
+	}
+
+	private static UpgradeProcess.Alterable[] _getAddColumnAlterables(
+		BiFunction<String, String, UpgradeProcess.Alterable>
+			alterableBiFunction,
+		String... columnDefinitions) {
+
+		Stream<String> stream = Arrays.stream(columnDefinitions);
+
+		return stream.map(
+			columnDefinition -> {
+				int index = columnDefinition.indexOf(CharPool.SPACE);
+
+				return alterableBiFunction.apply(
+					columnDefinition.substring(0, index),
+					columnDefinition.substring(index + 1));
+			}
+		).toArray(
+			UpgradeProcess.Alterable[]::new
+		);
 	}
 
 	private static UpgradeProcess.Alterable[] _getAlterables(

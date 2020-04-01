@@ -198,7 +198,7 @@ public class StartupAction extends SimpleAction {
 		}
 
 		ResourceActionLocalServiceUtil.checkResourceActions();
-		
+
 		if (PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP) {
 			StartupHelperUtil.updateIndexes(true);
 		}

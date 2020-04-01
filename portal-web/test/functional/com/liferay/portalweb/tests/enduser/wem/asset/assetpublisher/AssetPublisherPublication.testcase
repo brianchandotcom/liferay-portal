@@ -118,6 +118,8 @@ definition {
 	@description = "This is a use case for LPS-81196."
 	@priority = "3"
 	test StagingPublishAssetPublisherConfiguredCategoriesFilter {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",

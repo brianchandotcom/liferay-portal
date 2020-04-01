@@ -888,6 +888,8 @@ definition {
 
 	@priority = "4"
 	test DisplayAssetsFilterByTagsOrCategoryViaAssetPublisher {
+		property portal.upstream = "quarantine";
+
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");

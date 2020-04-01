@@ -64,6 +64,7 @@ export const TARGET_POSITION = {
 
 const RULES_TYPE = {
 	ELEVATE: 3,
+	INVALID_MOVE_WITH_FEEDBACK: 5,
 	MIDDLE: 1,
 	VALID_MOVE: 4,
 };
@@ -73,6 +74,7 @@ const RULES = {
 		isValidMoveToMiddle(args) && isMiddle(hoverClientY, hoverMiddleY),
 	[RULES_TYPE.ELEVATE]: checkElevate,
 	[RULES_TYPE.VALID_MOVE]: isValidMoveToTargetPosition,
+	[RULES_TYPE.INVALID_MOVE_WITH_FEEDBACK]: isInvalidMoveWithFeedback,
 };
 
 const initialDragDrop = {
@@ -310,7 +312,7 @@ export default function useDragAndDrop({
 						targetPositionWithoutMiddle: newTargetPositionWithoutMiddle,
 					});
 					break;
-				default: {
+				case RULES_TYPE.INVALID_MOVE_WITH_FEEDBACK:
 					dispatch({
 						dropItem,
 						dropTargetItemId:
@@ -320,20 +322,25 @@ export default function useDragAndDrop({
 								: dropTargetItem.itemId !== dropItem.parentId &&
 								  toControlsId(dropTargetItem.itemId),
 						droppable:
-							isNestingSupported(
+							(dropItem.type !==
+								LAYOUT_DATA_ITEM_TYPES.container &&
+								dropItem.parentId ===
+									dropTargetItem.parentId) ||
+							(isNestingSupported(
 								dropItem.type,
 								dropTargetItem.type
 							) &&
-							!draggingCollectionInCollection(
-								dropItem,
-								dropTargetItem,
-								layoutData.items
-							),
+								!draggingCollectionInCollection(
+									dropItem,
+									dropTargetItem,
+									layoutData.items
+								)),
 						targetPositionWithMiddle: TARGET_POSITION.MIDDLE,
 						targetPositionWithoutMiddle: newTargetPositionWithoutMiddle,
 					});
 					break;
-				}
+				default:
+					break;
 			}
 		},
 	});
@@ -428,18 +435,19 @@ function checkElevate({
 		) {
 			isElevate = clientOffset.y > hoverBoundingRect.bottom - difference;
 		}
-	}
 
-	if (dropItem.type === LAYOUT_DATA_ITEM_TYPES.container) {
-		const ancestor = items[getAncestorId(parent, toControlsId)] || parent;
+		if (dropItem.type === LAYOUT_DATA_ITEM_TYPES.container) {
+			const ancestor =
+				items[getAncestorId(parent, toControlsId)] || parent;
 
-		return (
-			isElevate &&
-			(ancestor.type === LAYOUT_DATA_ITEM_TYPES.root ||
-				(items[ancestor.parentId] &&
-					items[ancestor.parentId].type ===
-						LAYOUT_DATA_ITEM_TYPES.root))
-		);
+			return (
+				isElevate &&
+				(ancestor.type === LAYOUT_DATA_ITEM_TYPES.root ||
+					(items[ancestor.parentId] &&
+						items[ancestor.parentId].type ===
+							LAYOUT_DATA_ITEM_TYPES.root))
+			);
+		}
 	}
 
 	return isElevate;
@@ -458,6 +466,7 @@ function isValidMoveToTargetPosition({
 	dropTargetItem,
 	items,
 	targetPositionWithMiddle,
+	targetPositionWithoutMiddle,
 	toControlsId,
 }) {
 	const {children} = items[
@@ -484,10 +493,13 @@ function isValidMoveToTargetPosition({
 	if (dropItem.type === LAYOUT_DATA_ITEM_TYPES.container) {
 		const parent = items[dropTargetItem.parentId];
 
-		const ancestor = items[getAncestorId(parent, toControlsId)] || parent;
+		if (parent) {
+			const ancestor =
+				items[getAncestorId(parent, toControlsId)] || parent;
 
-		if (!ancestor || ancestor.type !== LAYOUT_DATA_ITEM_TYPES.root) {
-			return false;
+			if (!ancestor || ancestor.type !== LAYOUT_DATA_ITEM_TYPES.root) {
+				return false;
+			}
 		}
 	}
 
@@ -496,18 +508,57 @@ function isValidMoveToTargetPosition({
 	}
 
 	if (children.includes(dropItem.itemId)) {
-		return !(
-			isSibling(
-				children,
-				dropItem,
-				targetPositionWithMiddle,
-				dropTargetItem.itemId
-			) ||
-			(isFirstItem(children, dropItem) &&
-				targetPositionWithMiddle === TARGET_POSITION.TOP) ||
-			(isLastItem(children, dropItem) &&
-				targetPositionWithMiddle === TARGET_POSITION.BOTTOM)
-		);
+		return !droppingInSamePosition({
+			children,
+			dropItem,
+			dropTargetItem,
+			targetPositionWithoutMiddle,
+		});
+	}
+
+	return true;
+}
+
+function droppingInSamePosition({
+	children,
+	dropItem,
+	dropTargetItem,
+	targetPositionWithoutMiddle,
+}) {
+	const itemIndex = children.findIndex(id => id === dropItem.itemId);
+	const hoverId = dropTargetItem.itemId;
+
+	return (
+		(children[itemIndex + 1] === hoverId &&
+			targetPositionWithoutMiddle === TARGET_POSITION.TOP) ||
+		(children[itemIndex - 1] === hoverId &&
+			targetPositionWithoutMiddle === TARGET_POSITION.BOTTOM) ||
+		(isFirstItem(children, dropItem) &&
+			targetPositionWithoutMiddle === TARGET_POSITION.TOP) ||
+		(isLastItem(children, dropItem) &&
+			targetPositionWithoutMiddle === TARGET_POSITION.BOTTOM)
+	);
+}
+
+function isInvalidMoveWithFeedback({
+	dropItem,
+	dropTargetItem,
+	items,
+	targetPositionWithoutMiddle,
+}) {
+	const {children} = items[
+		dropTargetItem.parentId !== ''
+			? dropTargetItem.parentId
+			: dropTargetItem.itemId
+	];
+
+	if (children.includes(dropItem.itemId)) {
+		return !droppingInSamePosition({
+			children,
+			dropItem,
+			dropTargetItem,
+			targetPositionWithoutMiddle,
+		});
 	}
 
 	return true;
@@ -542,17 +593,6 @@ function getTargetPosition(hoverClientY, hoverMiddleY) {
 		: targetPositionWithoutMiddle;
 
 	return [targetPositionWithMiddle, targetPositionWithoutMiddle];
-}
-
-function isSibling(children, item, targetPositionWithMiddle, hoverId) {
-	const itemIndex = children.findIndex(id => id === item.itemId);
-
-	return (
-		(children[itemIndex + 1] === hoverId &&
-			targetPositionWithMiddle === TARGET_POSITION.TOP) ||
-		(children[itemIndex - 1] === hoverId &&
-			targetPositionWithMiddle === TARGET_POSITION.BOTTOM)
-	);
 }
 
 function isLastItem(children, item) {

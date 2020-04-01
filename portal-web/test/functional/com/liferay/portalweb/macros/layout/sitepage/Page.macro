@@ -329,15 +329,11 @@ definition {
 	}
 
 	macro gotoChildPagePG {
-		MouseOver(
-			key_pageName = "${pageName}",
-			locator1 = "Home#PAGE");
+		var key_pageName = "${pageName}";
 
-		MouseOver(locator1 = "Home#SITE_NAME");
+		ClickNoError(locator1 = "Home#PAGE");
 
-		MouseOver(
-			key_pageName = "${pageName}",
-			locator1 = "Home#PAGE");
+		MouseOver(locator1 = "Home#PAGE");
 
 		AssertVisible(
 			key_childPageName = "${childPageName}",

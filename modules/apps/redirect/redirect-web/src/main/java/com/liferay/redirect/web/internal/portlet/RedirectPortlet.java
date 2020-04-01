@@ -16,6 +16,7 @@ package com.liferay.redirect.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.search.filter.FilterBuilders;
+import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
 import java.io.IOException;
@@ -63,5 +64,8 @@ public class RedirectPortlet extends MVCPortlet {
 
 	@Reference
 	private FilterBuilders _filterBuilders;
+
+	@Reference
+	private RedirectEntryLocalService _redirectEntryLocalService;
 
 }

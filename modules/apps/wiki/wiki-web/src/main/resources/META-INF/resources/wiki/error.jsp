@@ -54,10 +54,8 @@ if (portletTitleBasedNavigation) {
 	<%
 	long nodeId = ParamUtil.getLong(request, "nodeId");
 
-	if (nodeId == 0) {
-		if (node != null) {
-			nodeId = node.getNodeId();
-		}
+	if ((nodeId == 0) && (node != null)) {
+		nodeId = node.getNodeId();
 	}
 
 	PortletURL editPageURL = renderResponse.createRenderURL();

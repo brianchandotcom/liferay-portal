@@ -45,4 +45,24 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function keyPressCKEditorWaitForCKEditor {
+		WaitForSPARefresh();
+
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]"
+		);
+
+		selenium.pause("1000");
+
+		selenium.waitForEditable();
+
+		selenium.mouseOver();
+
+		selenium.keyPress();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 }

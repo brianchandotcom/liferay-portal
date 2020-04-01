@@ -4,12 +4,12 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		if (isSet(kbArticleContentEdit)) {
-			Type(
+			Type.typeCKEditorWaitForCKEditor(
 				locator1 = "CKEditor#BODY",
 				value1 = "${kbArticleContentEdit}");
 		}
 		else {
-			KeyPress(
+			KeyPress.keyPressCKEditorWaitForCKEditor(
 				locator1 = "CKEditor#BODY",
 				value1 = "${content}");
 		}

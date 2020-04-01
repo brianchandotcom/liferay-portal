@@ -97,7 +97,7 @@ public class AddFormInstanceRecordMVCActionCommand
 		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceService.getFormInstance(formInstanceId);
 
-		_validateFormInstance(actionRequest, ddmFormInstance);
+		_validatePublishStatus(actionRequest, ddmFormInstance);
 
 		validateCaptcha(actionRequest, ddmFormInstance);
 
@@ -211,35 +211,32 @@ public class AddFormInstanceRecordMVCActionCommand
 		}
 	}
 
-	private void _validateFormInstance(
+	private void _validatePublishStatus(
 			ActionRequest actionRequest, DDMFormInstance ddmFormInstance)
 		throws FormInstanceNotPublishedException, PortalException {
 
 		String currentURL = ParamUtil.getString(actionRequest, "currentURL");
 
-		DDMFormInstanceSettings ddmFormInstanceSettings =
-			ddmFormInstance.getSettingsModel();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String formPublishedBaseURL =
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			ddmFormInstance.getSettingsModel();
+
+		String formLayoutURL =
 			_addDefaultSharedFormLayoutPortalInstanceLifecycleListener.
 				getFormLayoutURL(
 					themeDisplay,
 					ddmFormInstanceSettings.requireAuthentication());
 
-		if (!StringUtil.startsWith(currentURL, formPublishedBaseURL)) {
-			return;
-		}
+		if (StringUtil.startsWith(currentURL, formLayoutURL) &&
+			!ddmFormInstanceSettings.published()) {
 
-		if (!ddmFormInstanceSettings.published()) {
 			StringBundler sb = new StringBundler();
 
 			throw new FormInstanceNotPublishedException(
 				sb.concat(
-					"Form instance record could not be created because ",
-					"form instance ",
+					"Unable to submit entry because form instance ID ",
 					String.valueOf(ddmFormInstance.getFormInstanceId()),
 					" is not published"));
 		}

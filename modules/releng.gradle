@@ -1557,7 +1557,13 @@ private List<File> _getPortalSourcesDependencies(List<File> relengPropertiesFile
 }
 
 private String _getReleaseInfoVersion() {
-	Properties releaseProperties = GUtil.loadProperties(file("../release.properties"))
+	File releasePropertiesFile = file("../release.profile-dxp.properties")
+
+	if (!releasePropertiesFile.exists()) {
+		releasePropertiesFile = file("../release.properties")
+	}
+
+	Properties releaseProperties = GUtil.loadProperties(releasePropertiesFile)
 
 	return releaseProperties.getProperty("release.info.version")
 }

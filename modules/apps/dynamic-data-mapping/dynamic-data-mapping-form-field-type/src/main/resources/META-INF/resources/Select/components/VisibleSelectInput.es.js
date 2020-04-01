@@ -84,7 +84,6 @@ const VisibleSelectInput = forwardRef(
 				onClick={onClick}
 				onKeyDown={onKeyDown}
 				ref={ref}
-				tabIndex="0"
 			>
 				<ul
 					className={classNames(
@@ -96,6 +95,7 @@ const VisibleSelectInput = forwardRef(
 					)}
 					disabled={readOnly}
 					id={id}
+					tabIndex="0"
 				>
 					{isValueEmpty || (value.length === 1 && !multiple) ? (
 						<OptionSelected

@@ -1,5 +1,37 @@
 # Poshi Runner Change Log
 
+## 1.0.261
+
+### Gradle
+
+* [POSHI-43](https://issues.liferay.com/browse/POSHI-43) - Match com-liferay-poshi-runner source formatting to master
+
+### Other
+
+* [LPS-105380](https://issues.liferay.com/browse/LPS-105380) - SourceFormatter Improvements
+* [LPS-109946](https://issues.liferay.com/browse/LPS-109946) - *Util class is static, *Helper class is not
+* [LRCI-1145](https://issues.liferay.com/browse/LRCI-1145) - Change relevant queries from portal.upstream to portal.acceptance
+
+### PQL
+
+* [POSHI-60](https://issues.liferay.com/browse/POSHI-60) - Add additional validation messaging to PQL query error logic
+
+### Release
+
+* [POSHI-59](https://issues.liferay.com/browse/POSHI-59) - Migrate changelog to repository
+
+### Runner
+
+* [POSHI-61](https://issues.liferay.com/browse/POSHI-61) - Catch and retry: "org.openqa.selenium.WebDriverException: unknown error: unable to discover open pages" 
+* [POSHI-63](https://issues.liferay.com/browse/POSHI-63) - As a test engineer / developer, it would be helpful to for Poshi to retry failures on CI to lower flaky results
+
+### WebDriver
+
+* [POSHI-30](https://issues.liferay.com/browse/POSHI-30) - Add type validation in the event that the full text is not typed correctly. 
+* [POSHI-35](https://issues.liferay.com/browse/POSHI-35) - Deal with large log files in poshi's assertConsoleErrors 
+* [POSHI-57](https://issues.liferay.com/browse/POSHI-57) - Add way to drag the second fragment to the first fragment's position in react editor
+* [POSHI-58](https://issues.liferay.com/browse/POSHI-58) - Add robotType and robotTypeShortcut methods
+
 ## 1.0.255
 
 ### PQL

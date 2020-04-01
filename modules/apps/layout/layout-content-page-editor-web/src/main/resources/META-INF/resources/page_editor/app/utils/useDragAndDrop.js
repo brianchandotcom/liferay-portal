@@ -19,6 +19,7 @@ import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {
+	useCanElevate,
 	useFromControlsId,
 	useToControlsId,
 } from './../components/CollectionItemContext';
@@ -156,6 +157,7 @@ export default function useDragAndDrop({
 		targetPositionWithoutMiddle,
 	} = state;
 
+	const collectionItemCanElevate = useCanElevate();
 	const fromControlsId = useFromControlsId();
 	const toControlsId = useToControlsId();
 
@@ -268,6 +270,7 @@ export default function useDragAndDrop({
 
 			const result = checkRules(RULES, {
 				clientOffset,
+				collectionItemCanElevate,
 				dropItem,
 				dropTargetItem,
 				hoverBoundingRect,
@@ -396,10 +399,12 @@ function checkRules(rules, args) {
  */
 function checkElevate({
 	clientOffset,
+	collectionItemCanElevate,
 	dropItem,
 	dropTargetItem,
 	hoverBoundingRect,
 	items,
+	targetPositionWithoutMiddle,
 	toControlsId,
 }) {
 	const parent = items[dropTargetItem.parentId];
@@ -408,6 +413,15 @@ function checkElevate({
 
 	if (parent) {
 		if (parent.type === LAYOUT_DATA_ITEM_TYPES.root) {
+			return false;
+		}
+
+		if (
+			!isValidCollectionItemElevate(
+				collectionItemCanElevate,
+				targetPositionWithoutMiddle
+			)
+		) {
 			return false;
 		}
 
@@ -451,6 +465,19 @@ function checkElevate({
 	}
 
 	return isElevate;
+}
+
+function isValidCollectionItemElevate(
+	collectionItemCanElevate,
+	targetPosition
+) {
+	return (
+		!collectionItemCanElevate ||
+		(collectionItemCanElevate.top &&
+			targetPosition === TARGET_POSITION.TOP) ||
+		(collectionItemCanElevate.bottom &&
+			targetPosition === TARGET_POSITION.BOTTOM)
+	);
 }
 
 function isValidMoveToMiddle({dropItem, dropTargetItem, items}) {

@@ -20,6 +20,7 @@ const defaultFromControlsId = itemId => itemId;
 const defaultToControlsId = controlId => controlId;
 
 const INITIAL_STATE = {
+	canElevate: null,
 	collectionFields: null,
 	collectionItem: null,
 	fromControlsId: defaultFromControlsId,
@@ -34,6 +35,12 @@ const useFromControlsId = () => {
 	const context = useContext(CollectionItemContext);
 
 	return context.fromControlsId || defaultFromControlsId;
+};
+
+const useCanElevate = () => {
+	const context = useContext(CollectionItemContext);
+
+	return context.canElevate;
 };
 
 const useToControlsId = () => {
@@ -84,6 +91,7 @@ const useGetFieldValue = () => {
 export {
 	CollectionItemContext,
 	CollectionItemContextProvider,
+	useCanElevate,
 	useCollectionFields,
 	useFromControlsId,
 	useToControlsId,

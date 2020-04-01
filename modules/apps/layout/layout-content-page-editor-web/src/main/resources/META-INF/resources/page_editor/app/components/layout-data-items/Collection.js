@@ -92,6 +92,10 @@ const Grid = ({
 							<CollectionItemContextProvider
 								key={index}
 								value={{
+									canElevate: {
+										bottom: i === numberOfRows - 1,
+										top: i === 0,
+									},
 									collectionFields,
 									collectionItem:
 										collection[i * numberOfColumns + j],
@@ -140,6 +144,10 @@ const Stack = ({
 		<CollectionItemContextProvider
 			key={idx}
 			value={{
+				canElevate: {
+					bottom: idx === maxNumberOfItems - 1,
+					top: idx === 0,
+				},
 				collectionFields,
 				collectionItem: collection[idx],
 				fromControlsId: idx === 0 ? null : fromControlsId,

@@ -40,10 +40,7 @@ definition {
 	@description = "This is a use case for LPS-108998."
 	@priority = "4"
 	test AssertEmailVerificationIsRequiredByDefault {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property custom.properties = "company.security.strangers.verify=true";
-		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
-		property test.smtp.server.enabled = "true";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=true${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.name.skip.portal.instance = "CPPortalSettings#AssertEmailVerificationIsRequiredByDefault";
 
 		var portalURL = PropsUtil.get("portal.url");

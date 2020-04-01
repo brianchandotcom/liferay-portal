@@ -82,7 +82,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			extendedAttributeDefinition, ExtendedAttributeDefinition.BOOLEAN);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, null, null, null, false);
+			null, null, null, extendedObjectClassDefinition, false);
 
 		ConfigurationModelToDDMFormConverter
 			configurationModelToDDMFormConverter = spy(
@@ -135,7 +135,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			extendedAttributeDefinition, ExtendedAttributeDefinition.INTEGER);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, null, null, null, false);
+			null, null, null, extendedObjectClassDefinition, false);
 
 		ConfigurationModelToDDMFormConverter
 			configurationModelToDDMFormConverter = spy(
@@ -191,7 +191,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			ExtendedAttributeDefinition.LOCALIZED_VALUES_MAP);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, null, null, null, false);
+			null, null, null, extendedObjectClassDefinition, false);
 
 		ConfigurationModelToDDMFormConverter
 			configurationModelToDDMFormConverter = spy(
@@ -241,7 +241,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			extendedAttributeDefinition, ExtendedAttributeDefinition.PASSWORD);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, null, null, null, false);
+			null, null, null, extendedObjectClassDefinition, false);
 
 		ConfigurationModelToDDMFormConverter
 			configurationModelToDDMFormConverter = spy(
@@ -294,7 +294,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			extendedAttributeDefinition, new String[] {"Value 1", "Value 2"});
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, null, null, null, false);
+			null, null, null, extendedObjectClassDefinition, false);
 
 		ConfigurationModelToDDMFormConverter
 			configurationModelToDDMFormConverter = spy(
@@ -367,7 +367,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			extendedAttributeDefinition, ExtendedAttributeDefinition.STRING);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, null, null, null, false);
+			null, null, null, extendedObjectClassDefinition, false);
 
 		ConfigurationModelToDDMFormConverter
 			configurationModelToDDMFormConverter = spy(
@@ -417,7 +417,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			extendedAttributeDefinition, ExtendedAttributeDefinition.STRING);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, null, null, null, false);
+			null, null, null, extendedObjectClassDefinition, false);
 
 		ConfigurationModelToDDMFormConverter
 			configurationModelToDDMFormConverter = spy(

@@ -87,7 +87,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		whenGetProperties(configuration, properties);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, configuration, null, null, false);
+			null, null, configuration, extendedObjectClassDefinition, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -128,7 +128,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		whenGetProperties(configuration, properties);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, configuration, null, null, false);
+			null, null, configuration, extendedObjectClassDefinition, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -168,7 +168,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		whenGetProperties(configuration, properties);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, configuration, null, null, false);
+			null, null, configuration, extendedObjectClassDefinition, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -204,7 +204,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		whenGetProperties(configuration, properties);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, configuration, null, null, false);
+			null, null, configuration, extendedObjectClassDefinition, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -251,7 +251,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 			extendedAttributeDefinition, new String[] {"false"});
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, null, null, null, false);
+			null, null, null, extendedObjectClassDefinition, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -288,7 +288,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 			new String[] {"COOKIE", "REQUEST_HEADER"});
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, null, null, null, false);
+			null, null, null, extendedObjectClassDefinition, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -321,7 +321,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		whenGetID(extendedAttributeDefinition, "Text");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, null, null, null, false);
+			null, null, null, extendedObjectClassDefinition, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -354,7 +354,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		whenGetID(extendedAttributeDefinition, "Text");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, null, null, null, false);
+			null, null, null, extendedObjectClassDefinition, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));

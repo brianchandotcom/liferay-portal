@@ -128,9 +128,9 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 		if (configuration != null) {
 			configurationModel = new ConfigurationModel(
-				configurationModel.getExtendedObjectClassDefinition(),
-				configuration, configurationModel.getBundleSymbolicName(),
 				configurationModel.getBundleLocation(),
+				configurationModel.getBundleSymbolicName(), configuration,
+				configurationModel.getExtendedObjectClassDefinition(),
 				configurationModel.isFactory());
 		}
 

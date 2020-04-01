@@ -48,26 +48,29 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	public static final String PROPERTY_VALUE_COMPANY_ID_DEFAULT = "0";
 
 	public ConfigurationModel(
+		String bundleLocation, String bundleSymbolicName,
+		ClassLoader classLoader, Configuration configuration,
 		ExtendedObjectClassDefinition extendedObjectClassDefinition,
-		Configuration configuration, String bundleSymbolicName,
-		String bundleLocation, boolean factory) {
+		boolean factory) {
 
-		this(
-			extendedObjectClassDefinition, configuration, bundleSymbolicName,
-			bundleLocation, factory, ConfigurationModel.class.getClassLoader());
+		_bundleLocation = bundleLocation;
+		_bundleSymbolicName = bundleSymbolicName;
+		_classLoader = classLoader;
+		_configuration = configuration;
+		_extendedObjectClassDefinition = extendedObjectClassDefinition;
+		_factory = factory;
 	}
 
 	public ConfigurationModel(
+		String bundleLocation, String bundleSymbolicName,
+		Configuration configuration,
 		ExtendedObjectClassDefinition extendedObjectClassDefinition,
-		Configuration configuration, String bundleSymbolicName,
-		String bundleLocation, boolean factory, ClassLoader classLoader) {
+		boolean factory) {
 
-		_extendedObjectClassDefinition = extendedObjectClassDefinition;
-		_configuration = configuration;
-		_bundleSymbolicName = bundleSymbolicName;
-		_bundleLocation = bundleLocation;
-		_factory = factory;
-		_classLoader = classLoader;
+		this(
+			bundleLocation, bundleSymbolicName,
+			ConfigurationModel.class.getClassLoader(), configuration,
+			extendedObjectClassDefinition, factory);
 	}
 
 	@Override

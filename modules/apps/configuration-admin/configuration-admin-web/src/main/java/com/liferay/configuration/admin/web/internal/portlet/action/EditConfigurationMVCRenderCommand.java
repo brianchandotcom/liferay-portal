@@ -107,11 +107,11 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 					configurationScopeDisplayContext.getScopePK());
 
 			configurationModel = new ConfigurationModel(
-				configurationModel.getExtendedObjectClassDefinition(),
-				configuration, configurationModel.getBundleSymbolicName(),
 				configurationModel.getBundleLocation(),
-				configurationModel.isFactory(),
-				configurationModel.getClassLoader());
+				configurationModel.getBundleSymbolicName(),
+				configurationModel.getClassLoader(), configuration,
+				configurationModel.getExtendedObjectClassDefinition(),
+				configurationModel.isFactory());
 		}
 
 		if (configurationModel != null) {

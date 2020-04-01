@@ -210,10 +210,10 @@ public class ConfigurationModelRetrieverImpl
 
 		for (Configuration configuration : configurations) {
 			ConfigurationModel curConfigurationModel = new ConfigurationModel(
-				factoryConfigurationModel, configuration,
+				configuration.getBundleLocation(),
 				factoryConfigurationModel.getBundleSymbolicName(),
-				configuration.getBundleLocation(), false,
-				factoryConfigurationModel.getClassLoader());
+				factoryConfigurationModel.getClassLoader(), configuration,
+				factoryConfigurationModel, false);
 
 			factoryInstances.add(curConfigurationModel);
 		}
@@ -319,9 +319,11 @@ public class ConfigurationModelRetrieverImpl
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
+			StringPool.QUESTION, bundle.getSymbolicName(),
+			bundleWiring.getClassLoader(),
+			getConfiguration(pid, scope, scopePK),
 			extendedMetaTypeInformation.getObjectClassDefinition(pid, locale),
-			getConfiguration(pid, scope, scopePK), bundle.getSymbolicName(),
-			StringPool.QUESTION, factory, bundleWiring.getClassLoader());
+			factory);
 
 		ConfigurationVisibilityController configurationVisibilityController =
 			_configurationVisibilityControllerServiceTrackerMap.getService(pid);
@@ -348,10 +350,10 @@ public class ConfigurationModelRetrieverImpl
 			Configuration configuration = getCompanyDefaultConfiguration(pid);
 
 			configurationModel = new ConfigurationModel(
+				StringPool.QUESTION, bundle.getSymbolicName(),
+				configurationModel.getClassLoader(), configuration,
 				configurationModel.getExtendedObjectClassDefinition(),
-				configuration, bundle.getSymbolicName(), StringPool.QUESTION,
-				configurationModel.isFactory(),
-				configurationModel.getClassLoader());
+				configurationModel.isFactory());
 		}
 
 		return configurationModel;

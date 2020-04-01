@@ -27,6 +27,7 @@
 			"metal-jest-serializer"
 		],
 		"testPathIgnorePatterns": [
+			"AutoSave",
 			"ShareFormPopover"
 		]
 	},

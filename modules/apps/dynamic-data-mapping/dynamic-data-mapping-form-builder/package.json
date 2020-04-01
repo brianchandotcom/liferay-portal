@@ -37,7 +37,8 @@
 			"LayoutProvider/util",
 			"PageRenderer",
 			"RuleBuilder",
-			"RuleEditor"
+			"RuleEditor",
+			"Sidebar"
 		]
 	},
 	"main": "js/index.es.js",

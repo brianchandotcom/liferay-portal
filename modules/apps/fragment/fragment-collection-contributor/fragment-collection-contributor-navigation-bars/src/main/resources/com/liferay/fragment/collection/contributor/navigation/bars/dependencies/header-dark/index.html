@@ -1,16 +1,26 @@
 <header class="section-header navbar navbar-dark bg-dark text-white py-4">
 	<div class="container justify-content-between flex-column flex-lg-row text-break">
-		<lfr-editable id="01-logo" type="image">
-			<img alt="Logo Image" class="section-header-logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=" />
-		</lfr-editable>
+		<img
+			alt="Logo Image"
+			class="section-header-logo"
+			data-lfr-editable-id="01-logo"
+			data-lfr-editable-type="image"
+			src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII="
+		/>
 
 		<div class="d-flex align-items-center flex-column flex-lg-row mt-3 mt-lg-0">
 			<lfr-widget-nav></lfr-widget-nav>
 
 			<span class="mt-4 mt-lg-0 ml-lg-3">
-				<lfr-editable id="03-link" type="link">
-					<a class="btn btn-sm btn-outline-light" href="#" id="fragment-${fragmentEntryLinkNamespace}-03-link">Sign In</a>
-				</lfr-editable>
+				<a
+					class="btn btn-sm btn-outline-light"
+					data-lfr-editable-id="03-link"
+					data-lfr-editable-type="link"
+					href="#"
+					id="fragment-${fragmentEntryLinkNamespace}-03-link"
+				>
+					Sign In
+				</a>
 			</span>
 		</div>
 	</div>

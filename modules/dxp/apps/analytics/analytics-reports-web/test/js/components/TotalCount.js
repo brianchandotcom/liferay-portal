@@ -24,6 +24,7 @@ describe('TotalCount', () => {
 		const mockDataProvider = jest.fn(() => {
 			return Promise.resolve(9999);
 		});
+
 		const testProps = {
 			dataProvider: mockDataProvider,
 			label: 'Total Views',
@@ -41,7 +42,9 @@ describe('TotalCount', () => {
 			/>
 		);
 
-		await wait(() => expect(getByText('9999')));
+		await wait(() => expect(mockDataProvider).toHaveBeenCalled());
+
+		expect(getByText('9999')).toBeInTheDocument();
 
 		const label = getByText(testProps.label);
 		expect(label).toBeInTheDocument();
@@ -53,12 +56,15 @@ describe('TotalCount', () => {
 		getByText(
 			'This number refers to the total number of views since the content was published.'
 		);
+
+		expect(mockDataProvider).toHaveBeenCalledTimes(1);
 	});
 
 	it('renders a dash instead of total count number when there is an error', async () => {
 		const mockDataProvider = jest.fn(() => {
 			return Promise.reject('-');
 		});
+
 		const testProps = {
 			dataProvider: mockDataProvider,
 			label: 'Total Views',
@@ -76,6 +82,10 @@ describe('TotalCount', () => {
 			/>
 		);
 
-		await wait(() => expect(getByText('-')));
+		await wait(() => expect(mockDataProvider).toHaveBeenCalled());
+
+		expect(getByText('-')).toBeInTheDocument();
+
+		expect(mockDataProvider).toHaveBeenCalledTimes(1);
 	});
 });

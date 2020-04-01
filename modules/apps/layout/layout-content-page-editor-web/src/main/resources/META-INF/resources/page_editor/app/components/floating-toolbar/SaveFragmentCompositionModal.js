@@ -108,7 +108,12 @@ const SaveFragmentCompositionModal = ({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<ClayForm autoComplete="off" className="mb-3" noValidate>
+				<ClayForm
+					autoComplete="off"
+					className="mb-3"
+					noValidate
+					onSubmit={event => event.preventDefault()}
+				>
 					<InvisibleFieldset disabled={loading}>
 						{errorMessage && (
 							<ClayAlert

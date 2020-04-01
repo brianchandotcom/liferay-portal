@@ -85,7 +85,7 @@ const VisibleSelectInput = forwardRef(
 				onKeyDown={onKeyDown}
 				ref={ref}
 			>
-				<ul
+				<div
 					className={classNames(
 						'form-control results-chosen select-field-trigger',
 						{
@@ -121,7 +121,7 @@ const VisibleSelectInput = forwardRef(
 					<a className="select-arrow-down-container">
 						<ClayIcon symbol="caret-double" />
 					</a>
-				</ul>
+				</div>
 			</div>
 		);
 	}

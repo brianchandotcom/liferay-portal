@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {updateFragmentEntryLinkContent} from '../../actions/index';
+import {DROP_ZONE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/dropZoneFragmentEntryProcessor';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
 import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
@@ -152,7 +153,12 @@ const FragmentContent = React.forwardRef(
 			const fragmentEntryLink =
 				state.fragmentEntryLinks[fragmentEntryLinkId] || {};
 
-			return fragmentEntryLink.dropZones || {};
+			const dropZoneValues =
+				fragmentEntryLink.editableValues[
+					DROP_ZONE_FRAGMENT_ENTRY_PROCESSOR
+				] || {};
+
+			return dropZoneValues.dropZones || {};
 		});
 
 		const getPortals = element =>

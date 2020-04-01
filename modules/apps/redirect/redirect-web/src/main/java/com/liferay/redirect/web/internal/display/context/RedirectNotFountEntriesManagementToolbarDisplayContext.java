@@ -158,6 +158,8 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 
 	private List<DropdownItem> _getFilterDateDropdownItems() {
 		return DropdownItemListBuilder.add(
+			_getNavigationDropdownItemUnsafeConsumer("all")
+		).add(
 			_getNavigationDropdownItemUnsafeConsumer("day")
 		).add(
 			_getNavigationDropdownItemUnsafeConsumer("week")
@@ -171,7 +173,7 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 
 		return dropdownItem -> {
 			dropdownItem.setActive(
-				key.equals(ParamUtil.getString(request, "filterDate")));
+				key.equals(ParamUtil.getString(request, "filterDate", "all")));
 
 			PortletURL portletURL = PortletURLUtil.clone(
 				currentURLObj, liferayPortletResponse);

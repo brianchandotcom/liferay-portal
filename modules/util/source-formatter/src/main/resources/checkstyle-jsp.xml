@@ -120,12 +120,6 @@
 			<property name="description" value="Checks that string literals are not used with == or !=." />
 			<property name="documentationLocation" value="config_coding.html#StringLiteralEquality" />
 		</module>
-		<module name="TypeNameCheck">
-			<property name="description" value="Checks that type names conform to a specified pattern." />
-			<property name="documentationLocation" value="config_naming.html#TypeName" />
-			<property name="format" value="^[A-Z][_a-zA-Z0-9]*" />
-			<message key="name.invalidPattern" value="Class, interface, enum or annotation ''{0}'' must match pattern ''{1}''" />
-		</module>
 		<module name="UnnecessaryParenthesesCheck">
 			<property name="description" value="Checks if unnecessary parentheses are used in a statement or expression." />
 			<property name="documentationLocation" value="config_coding.html#UnnecessaryParentheses" />

@@ -14,171 +14,139 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.fieldset;
 
+import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+
+import org.powermock.api.support.membermodification.MemberMatcher;
 
 /**
  * @author Leonardo Barros
  */
-public class FieldSetDDMFormFieldTemplateContextContributorTest {
+public class FieldSetDDMFormFieldTemplateContextContributorTest
+	extends BaseDDMFormFieldTypeSettingsTestCase {
 
-	@Test
-	public void testGetColumnSizeWithNestedFields() {
-		FieldSetDDMFormFieldTemplateContextContributor
-			fieldSetDDMFormFieldTemplateContextContributor =
-				new FieldSetDDMFormFieldTemplateContextContributor();
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
 
-		int columnSize =
-			fieldSetDDMFormFieldTemplateContextContributor.getColumnSize(
-				2, "horizontal");
-
-		Assert.assertEquals(6, columnSize);
+		setUpJSONFactory();
 	}
 
 	@Test
-	public void testGetColumnSizeWithoutNestedFields() {
-		FieldSetDDMFormFieldTemplateContextContributor
-			fieldSetDDMFormFieldTemplateContextContributor =
-				new FieldSetDDMFormFieldTemplateContextContributor();
+	public void testCreateRowJSONObject() {
+		List<Object> nestedFields = Arrays.<Object>asList(
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "field0"
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "field1"
+			).build());
 
-		int columnSize =
-			fieldSetDDMFormFieldTemplateContextContributor.getColumnSize(
-				0, "horizontal");
+		JSONObject rowJSONObject =
+			_fieldSetDDMFormFieldTemplateContextContributor.createRowJSONObject(
+				nestedFields);
 
-		Assert.assertEquals(0, columnSize);
+		Assert.assertTrue(rowJSONObject.has("columns"));
+
+		JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
+
+		Assert.assertEquals(2, columnsJSONArray.length());
+
+		JSONObject firstColumnJSONObject = columnsJSONArray.getJSONObject(0);
+
+		Assert.assertTrue(firstColumnJSONObject.has("fields"));
+
+		JSONArray firstColumnFieldsJSONArray =
+			firstColumnJSONObject.getJSONArray("fields");
+
+		Assert.assertEquals(1, firstColumnFieldsJSONArray.length());
+		Assert.assertEquals("field0", firstColumnFieldsJSONArray.getString(0));
+
+		Assert.assertTrue(firstColumnJSONObject.has("size"));
+		Assert.assertEquals(6, firstColumnJSONObject.getInt("size"));
+
+		JSONObject secondColumnJSONObject = columnsJSONArray.getJSONObject(1);
+
+		Assert.assertTrue(secondColumnJSONObject.has("fields"));
+
+		JSONArray secondColumnFieldsJSONArray =
+			secondColumnJSONObject.getJSONArray("fields");
+
+		Assert.assertEquals(1, secondColumnFieldsJSONArray.length());
+		Assert.assertEquals("field1", secondColumnFieldsJSONArray.getString(0));
+
+		Assert.assertTrue(secondColumnJSONObject.has("size"));
+		Assert.assertEquals(6, secondColumnJSONObject.getInt("size"));
 	}
 
 	@Test
-	public void testGetParametersWithHorizontalFieldSet() {
-		FieldSetDDMFormFieldTemplateContextContributor
-			fieldSetDDMFormFieldTemplateContextContributor =
-				new FieldSetDDMFormFieldTemplateContextContributor();
-
+	public void testGetRowsJSONArray() {
 		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
 			"field0", "Field 0", "text", "string", false, false, false);
 
 		Map<String, Object> ddmFormFieldProperties =
 			ddmFormField.getProperties();
 
-		ddmFormFieldProperties.put("orientation", "horizontal");
+		ddmFormFieldProperties.put("rows", "");
 
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
-			"nestedFields",
-			HashMapBuilder.<String, List<Object>>put(
-				"field0",
+		JSONArray rowsWithInvisibleFieldJSONArray =
+			_fieldSetDDMFormFieldTemplateContextContributor.getRowsJSONArray(
+				ddmFormField,
 				Arrays.<Object>asList(
 					HashMapBuilder.<String, Object>put(
-						"name", "field0"
+						"fieldName", "field0"
+					).build(),
+					HashMapBuilder.<String, Object>put(
+						"fieldName", "field1"
+					).build(),
+					HashMapBuilder.<String, Object>put(
+						"fieldName", "field2"
 					).put(
-						"type", "text"
-					).build())
-			).put(
-				"field1",
+						"visible", false
+					).build()));
+
+		Assert.assertEquals(2, rowsWithInvisibleFieldJSONArray.length());
+
+		JSONArray rowsWithoutInvisibleFieldJSONArray =
+			_fieldSetDDMFormFieldTemplateContextContributor.getRowsJSONArray(
+				ddmFormField,
 				Arrays.<Object>asList(
 					HashMapBuilder.<String, Object>put(
-						"name", "field1"
-					).put(
-						"type", "checkbox"
-					).build())
-			).build()
-		).build();
+						"fieldName", "field0"
+					).build(),
+					HashMapBuilder.<String, Object>put(
+						"fieldName", "field1"
+					).build()));
 
-		ddmFormFieldRenderingContext.setProperties(properties);
-
-		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
-
-		Map<String, Object> parameters =
-			fieldSetDDMFormFieldTemplateContextContributor.getParameters(
-				ddmFormField, ddmFormFieldRenderingContext);
-
-		Assert.assertTrue(parameters.containsKey("showLabel"));
-
-		Assert.assertEquals(true, parameters.get("showLabel"));
-
-		Assert.assertTrue(parameters.containsKey("columnSize"));
-
-		Assert.assertEquals(6, parameters.get("columnSize"));
-
-		Assert.assertTrue(parameters.containsKey("label"));
-
-		Assert.assertEquals("Field 0", parameters.get("label"));
+		Assert.assertEquals(1, rowsWithoutInvisibleFieldJSONArray.length());
 	}
 
-	@Test
-	public void testGetParametersWithVerticalFieldSet() {
-		FieldSetDDMFormFieldTemplateContextContributor
-			fieldSetDDMFormFieldTemplateContextContributor =
-				new FieldSetDDMFormFieldTemplateContextContributor();
-
-		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
-			"field0", "", "text", "string", false, false, false);
-
-		ddmFormField.setLabel(null);
-
-		Map<String, Object> ddmFormFieldProperties =
-			ddmFormField.getProperties();
-
-		ddmFormFieldProperties.put("orientation", "vertical");
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
-			"nestedFields",
-			HashMapBuilder.<String, List<Object>>put(
-				"field0",
-				Arrays.<Object>asList(
-					HashMapBuilder.<String, Object>put(
-						"name", "field0"
-					).put(
-						"type", "text"
-					).build())
-			).put(
-				"field1",
-				Arrays.<Object>asList(
-					HashMapBuilder.<String, Object>put(
-						"name", "field1"
-					).put(
-						"type", "checkbox"
-					).build())
-			).put(
-				"field2",
-				Arrays.<Object>asList(
-					HashMapBuilder.<String, Object>put(
-						"name", "field2"
-					).put(
-						"type", "select"
-					).build())
-			).build()
-		).build();
-
-		ddmFormFieldRenderingContext.setProperties(properties);
-
-		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
-
-		Map<String, Object> parameters =
-			fieldSetDDMFormFieldTemplateContextContributor.getParameters(
-				ddmFormField, ddmFormFieldRenderingContext);
-
-		Assert.assertFalse(parameters.containsKey("showLabel"));
-		Assert.assertTrue(parameters.containsKey("columnSize"));
-
-		Assert.assertEquals(12, parameters.get("columnSize"));
-
-		Assert.assertFalse(parameters.containsKey("label"));
+	protected void setUpJSONFactory() throws Exception {
+		MemberMatcher.field(
+			FieldSetDDMFormFieldTemplateContextContributor.class, "jsonFactory"
+		).set(
+			_fieldSetDDMFormFieldTemplateContextContributor, _jsonFactory
+		);
 	}
+
+	private final FieldSetDDMFormFieldTemplateContextContributor
+		_fieldSetDDMFormFieldTemplateContextContributor =
+			new FieldSetDDMFormFieldTemplateContextContributor();
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

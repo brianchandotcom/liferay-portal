@@ -174,7 +174,9 @@ public class LayoutStructure {
 
 		_updateLayoutStructure(rootLayoutStructureItem, 0);
 
-		_mainItemId = rootLayoutStructureItem.getItemId();
+		if (Validator.isNull(_mainItemId)) {
+			_mainItemId = rootLayoutStructureItem.getItemId();
+		}
 
 		return rootLayoutStructureItem;
 	}

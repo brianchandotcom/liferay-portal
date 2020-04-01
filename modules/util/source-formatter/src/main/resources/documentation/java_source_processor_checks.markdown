@@ -44,14 +44,14 @@ JavaAbstractMethodCheck | [Miscellaneous](miscellaneous_checks.markdown#miscella
 JavaAggregateTestRuleParameterOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaAnnotationDefaultAttributeCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaAnnotationsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-JavaAnonymousInnerClassCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[JavaAnonymousInnerClassCheck](checks/java_anonymous_inner_class_check.markdown#javaanonymousinnerclasscheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaAssertEqualsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaBooleanStatementCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaBooleanUsageCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaCleanUpMethodSuperCleanUpCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [JavaCleanUpMethodVariablesCheck](checks/java_clean_up_method_variables_check.markdown#javacleanupmethodvariablescheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that variables in `Tag` classes get cleaned up properly |
 [JavaCollatorUtilCheck](checks/java_collator_util_check.markdown#javacollatorutilcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks for correct use of `Collator` |
-JavaComponentActivateCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[JavaComponentActivateCheck](checks/java_component_activate_check.markdown#javacomponentactivatecheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaComponentAnnotationsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [JavaConfigurationAdminCheck](checks/java_configuration_admin_check.markdown#javaconfigurationadmincheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks for correct use of `location == ?` when calling `org.osgi.service.cm.ConfigurationAdmin#createFactoryConfiguration` |
 [JavaConfigurationCategoryCheck](checks/java_configuration_category_check.markdown#javaconfigurationcategorycheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that the value of `category` in `@ExtendedObjectClassDefinition` matches the `categoryKey` of the corresponding class in `configuration-admin-web` |
@@ -62,13 +62,14 @@ JavaDeprecatedJavadocCheck | [Miscellaneous](miscellaneous_checks.markdown#misce
 JavaDeprecatedKernelClassesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaDeserializationSecurityCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaDiamondOperatorCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-JavaElseStatementCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[JavaElseStatementCheck](checks/java_else_statement_check.markdown#javaelsestatementcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaEmptyLineAfterSuperCallCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaEmptyLinesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaExceptionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [JavaFinderCacheCheck](checks/java_finder_cache_check.markdown#javafindercachecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that the method `BasePersistenceImpl.fetchByPrimaryKey` is overridden, when using `FinderPath` |
 JavaFinderImplCustomSQLCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [JavaForLoopCheck](checks/java_for_loop_check.markdown#javaforloopcheck) | [Styling](styling_checks.markdown#styling-checks) | Checks if a Enhanced For Loop can be used instead of a Simple For Loop |
+[JavaHelperUtilCheck](checks/java_helper_util_check.markdown#javahelperutilcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaHibernateSQLCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaIOExceptionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaIllegalImportsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
@@ -80,7 +81,7 @@ JavaInternalPackageCheck | [Miscellaneous](miscellaneous_checks.markdown#miscell
 JavaJSPDynamicIncludeCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [JavaLocalSensitiveComparisonCheck](checks/java_local_sensitive_comparison_check.markdown#javalocalsensitivecomparisoncheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that `java.text.Collator` is used when comparing localized values |
 JavaLogClassNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-JavaLogLevelCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[JavaLogLevelCheck](checks/java_log_level_check.markdown#javaloglevelcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaLogParametersCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaLongLinesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaMapBuilderGenericsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
@@ -108,20 +109,20 @@ JavaReturnStatementCheck | [Miscellaneous](miscellaneous_checks.markdown#miscell
 [JavaSeeAnnotationCheck](checks/java_see_annotation_check.markdown#javaseeannotationcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks for nested annotations inside `@see` |
 JavaServiceImplCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaServiceObjectCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-JavaServiceTrackerFactoryCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[JavaServiceTrackerFactoryCheck](checks/java_service_tracker_factory_check.markdown#javaservicetrackerfactorycheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [JavaServiceUtilCheck](checks/java_service_util_check.markdown#javaserviceutilcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that there are no calls to `*ServiceImpl` from a `*ServiceUtil` class |
 JavaSessionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-JavaSignatureParametersCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[JavaSignatureParametersCheck](checks/java_signature_parameters_check.markdown#javasignatureparameterscheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaSourceFormatterDocumentationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaStagedModelDataHandlerCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaStaticBlockCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [JavaStaticImportsCheck](checks/java_static_imports_check.markdown#javastaticimportscheck) | [Styling](styling_checks.markdown#styling-checks) | Checks that there are no static imports |
 JavaStaticVariableDependencyCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [JavaStopWatchCheck](checks/java_stop_watch_check.markdown#javastopwatchcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks for potential NullPointerException when using `StopWatch` |
-JavaStringBundlerConcatCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[JavaStringBundlerConcatCheck](checks/java_string_bundler_concat_check.markdown#javastringbundlerconcatcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaStringBundlerInitialCapacityCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaStylingCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-JavaSwitchCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[JavaSwitchCheck](checks/java_switch_check.markdown#javaswitchcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaSystemEventAnnotationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaSystemExceptionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaTaglibMethodCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
@@ -209,6 +210,7 @@ TestClassCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-che
 ThreadLocalUtilCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 ThreadNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 TransactionalTestRuleCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+TryWithResourcesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [TypeNameCheck](https://checkstyle.sourceforge.io/config_naming.html#TypeName) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks that type names conform to a specified pattern. |
 UnnecessaryAssignCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [UnnecessaryParenthesesCheck](https://checkstyle.sourceforge.io/config_coding.html#UnnecessaryParentheses) | [Styling](styling_checks.markdown#styling-checks) | Checks if unnecessary parentheses are used in a statement or expression. |

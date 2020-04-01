@@ -342,6 +342,7 @@ export default function useDragAndDrop({
 		if (!dropOptions.isOver) {
 			dispatch({
 				dropTargetItemId: null,
+				droppable: true,
 				targetPositionWithMiddle: null,
 				targetPositionWithoutMiddle: null,
 			});

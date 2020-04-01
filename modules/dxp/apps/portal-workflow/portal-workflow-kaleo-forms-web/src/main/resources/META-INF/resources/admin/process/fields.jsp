@@ -35,8 +35,6 @@ if (ddmStructureId > 0) {
 		ddmStructureName = ddmStructure.getName(locale);
 	}
 }
-
-JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 %>
 
 <h3 class="kaleo-process-header"><liferay-ui:message key="fields" /></h3>
@@ -120,13 +118,15 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 			<%
 			JSONArray definitionFieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(structure, structure.getDefinition());
 
-			JSONObject definitionJSONObject = JSONFactoryUtil.createJSONObject();
+			JSONObject definitionJSONObject = JSONUtil.put(
+				"definitionFields", definitionFieldsJSONArray
+			).put(
+				"definitionId", structure.getStructureId()
+			).put(
+				"definitionName", structure.getName(locale)
+			);
 
-			definitionJSONObject.put("definitionFields", definitionFieldsJSONArray);
-			definitionJSONObject.put("definitionId", structure.getStructureId());
-			definitionJSONObject.put("definitionName", structure.getName(locale));
-
-			availableDefinitionsJSONArray.put(definitionJSONObject);
+			JSONArray availableDefinitionsJSONArray = JSONUtil.putAll(definitionJSONObject);
 			%>
 
 			(<aui:a cssClass="kaleo-process-preview-definition" data-definition-id="<%= structure.getStructureId() %>" href="javascript:;" label="view-fields" />)

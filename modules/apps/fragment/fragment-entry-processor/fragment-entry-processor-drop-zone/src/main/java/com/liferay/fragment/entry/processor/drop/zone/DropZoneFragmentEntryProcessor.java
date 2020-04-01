@@ -16,8 +16,11 @@ package com.liferay.fragment.entry.processor.drop.zone;
 
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -53,6 +56,28 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 			).put(
 				"name", "lfr-drop-zone"
 			));
+	}
+
+	@Override
+	public JSONObject getDefaultEditableValuesJSONObject(
+		String html, String configuration) {
+
+		Document document = _getDocument(html);
+
+		Elements elements = document.select("lfr-drop-zone");
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (Element element : elements) {
+			jsonArray.put(
+				JSONUtil.put(
+					"id", element.attr("id")
+				).put(
+					"uuid", StringPool.BLANK
+				));
+		}
+
+		return JSONUtil.put("dropZones", jsonArray);
 	}
 
 	@Override

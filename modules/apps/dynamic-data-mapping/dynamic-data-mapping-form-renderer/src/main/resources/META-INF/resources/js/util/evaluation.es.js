@@ -109,13 +109,14 @@ export const mergePages = (
 	newPages,
 	sourcePages
 ) => {
-	const visitor = new PagesVisitor(newPages);
+	const newPagesVisitor = new PagesVisitor(newPages);
+	const sourcePagesVisitor = new PagesVisitor(sourcePages);
 
-	return visitor.mapFields(
-		(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
-			const sourceField =
-				sourcePages[pageIndex].rows[rowIndex].columns[columnIndex]
-					.fields[fieldIndex];
+	return newPagesVisitor.mapFields(
+		field => {
+			const sourceField = sourcePagesVisitor.findField(
+				({name}) => name === field.name
+			);
 
 			const displayErrors =
 				sourceField.displayErrors || field.fieldName === fieldName;
@@ -128,20 +129,6 @@ export const mergePages = (
 				editingLanguageId,
 				valid: field.valid !== false,
 			};
-
-			if (sourceField.nestedFields && newField.nestedFields) {
-				newField = {
-					...newField,
-					nestedFields: sourceField.nestedFields.map(nestedField => {
-						return {
-							...nestedField,
-							...(newField.nestedFields.find(({fieldName}) => {
-								return fieldName === nestedField.fieldName;
-							}) || {}),
-						};
-					}),
-				};
-			}
 
 			if (newField.type === 'options') {
 				newField = {
@@ -160,6 +147,8 @@ export const mergePages = (
 			}
 
 			return newField;
-		}
+		},
+		false,
+		true
 	);
 };

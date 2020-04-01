@@ -171,8 +171,6 @@ public class DBUpgrader {
 			_log.debug("Disable cache registry");
 		}
 
-		CacheRegistryUtil.setActive(false);
-
 		// Check required build number
 
 		checkRequiredBuildNumber(ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER);
@@ -182,6 +180,8 @@ public class DBUpgrader {
 				return;
 			}
 		}
+
+		CacheRegistryUtil.setActive(false);
 
 		// Upgrade
 

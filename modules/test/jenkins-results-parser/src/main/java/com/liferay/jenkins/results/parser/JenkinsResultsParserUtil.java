@@ -733,6 +733,85 @@ public class JenkinsResultsParserUtil {
 		return new File(buildProperties.getProperty("base.repository.dir"));
 	}
 
+	public static String getBatchTestSuiteProperty(
+		Properties properties, String basePropertyName, String batchName,
+		String testSuiteName) {
+
+		if ((batchName != null) && !batchName.isEmpty() &&
+			(testSuiteName != null) && !testSuiteName.isEmpty()) {
+
+			String propertyValue = getProperty(
+				properties,
+				combine(
+					basePropertyName, "[", batchName, "]", "[", testSuiteName,
+					"]"));
+
+			if (propertyValue != null) {
+				return propertyValue;
+			}
+
+			String batchTestSuitePropertyNameRegex = combine(
+				basePropertyName, "\\[([^\\]]+)\\]\\[", testSuiteName + "\\]");
+
+			for (String propertyName : properties.stringPropertyNames()) {
+				if (!propertyName.matches(batchTestSuitePropertyNameRegex)) {
+					continue;
+				}
+
+				String batchNameRegex = propertyName.replaceAll(
+					batchTestSuitePropertyNameRegex, "$1");
+
+				batchNameRegex = batchNameRegex.replace("*", ".+");
+
+				if (!batchName.matches(batchNameRegex)) {
+					continue;
+				}
+
+				return getProperty(properties, propertyName);
+			}
+		}
+
+		if ((batchName != null) && !batchName.isEmpty()) {
+			String propertyValue = getProperty(
+				properties, combine(basePropertyName, "[", batchName, "]"));
+
+			if (propertyValue != null) {
+				return propertyValue;
+			}
+
+			String batchPropertyNameRegex =
+				basePropertyName + "\\[([^\\]]+)\\]";
+
+			for (String propertyName : properties.stringPropertyNames()) {
+				if (!propertyName.matches(batchPropertyNameRegex)) {
+					continue;
+				}
+
+				String batchNameRegex = propertyName.replaceAll(
+					batchPropertyNameRegex, "$1");
+
+				batchNameRegex = batchNameRegex.replace("*", ".+");
+
+				if (!batchName.matches(batchNameRegex)) {
+					continue;
+				}
+
+				return getProperty(properties, propertyName);
+			}
+		}
+
+		if ((testSuiteName != null) && !testSuiteName.isEmpty()) {
+			String propertyValue = getProperty(
+				properties, combine(basePropertyName, "[", testSuiteName, "]"));
+
+			if (propertyValue != null) {
+				return propertyValue;
+			}
+		}
+
+		return getProperty(properties, basePropertyName);
+	}
+
 	public static String getBuildParameter(String buildURL, String key) {
 		Map<String, String> buildParameters = getBuildParameters(buildURL);
 

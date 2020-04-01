@@ -132,7 +132,7 @@
 															<c:if test="<%= !firstLine %>">+ </c:if>
 
 															<%
-															firstLine = firstLine && applicationScopeDescription.length() == 0;
+															firstLine = firstLine && (applicationScopeDescription.length() == 0);
 															%>
 
 															<%= applicationScopeDescription %>

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 
@@ -158,31 +159,43 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 
 	private List<DropdownItem> _getFilterDateDropdownItems() {
 		return DropdownItemListBuilder.add(
-			_getFilterDateDropdownItemUnsafeConsumer("all")
+			_getFilterDateDropdownItemUnsafeConsumer(0)
 		).add(
-			_getFilterDateDropdownItemUnsafeConsumer("day")
+			_getFilterDateDropdownItemUnsafeConsumer(1)
 		).add(
-			_getFilterDateDropdownItemUnsafeConsumer("week")
+			_getFilterDateDropdownItemUnsafeConsumer(7)
 		).add(
-			_getFilterDateDropdownItemUnsafeConsumer("month")
+			_getFilterDateDropdownItemUnsafeConsumer(30)
 		).build();
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getFilterDateDropdownItemUnsafeConsumer(String key) {
+		_getFilterDateDropdownItemUnsafeConsumer(int days) {
 
 		return dropdownItem -> {
 			dropdownItem.setActive(
-				key.equals(ParamUtil.getString(request, "filterDate", "all")));
+				StringUtil.equals(
+					String.valueOf(days),
+					ParamUtil.getString(request, "filterDate", "0")));
 
 			PortletURL portletURL = PortletURLUtil.clone(
 				currentURLObj, liferayPortletResponse);
 
-			portletURL.setParameter("filterDate", key);
+			portletURL.setParameter("filterDate", String.valueOf(days));
 
 			dropdownItem.setHref(portletURL);
 
-			dropdownItem.setLabel(LanguageUtil.get(request, key));
+			if (days == 0) {
+				dropdownItem.setLabel(LanguageUtil.get(request, "all"));
+			}
+			else if (days == 1) {
+				dropdownItem.setLabel(
+					LanguageUtil.format(request, "x-day", days));
+			}
+			else {
+				dropdownItem.setLabel(
+					LanguageUtil.format(request, "x-days", days));
+			}
 		};
 	}
 

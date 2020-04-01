@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -51,7 +50,6 @@ import java.time.Instant;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -180,8 +178,8 @@ public class RedirectNotFoundEntriesDisplayContext {
 	}
 
 	private Date _getMinModifiedDate() {
-		int days = _maxAgeDaysMap.getOrDefault(
-			ParamUtil.getString(_httpServletRequest, "filterDate"), 0);
+		int days = Integer.valueOf(
+			ParamUtil.getString(_httpServletRequest, "filterDate", "0"));
 
 		if (days == 0) {
 			return null;
@@ -289,13 +287,6 @@ public class RedirectNotFoundEntriesDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private Map<String, Integer> _maxAgeDaysMap = HashMapBuilder.put(
-		"day", 1
-	).put(
-		"month", 30
-	).put(
-		"week", 7
-	).build();
 	private final RedirectNotFoundEntryLocalService
 		_redirectNotFoundEntryLocalService;
 	private RedirectNotFoundEntrySearch _redirectNotFoundEntrySearch;

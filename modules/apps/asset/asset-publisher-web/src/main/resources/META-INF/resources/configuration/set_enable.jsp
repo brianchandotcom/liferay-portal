@@ -120,7 +120,7 @@ String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x"
 		<aui:col width="<%= 50 %>">
 
 			<%
-			for (int i = (conversions.length / 2); i < conversions.length; i++) {
+			for (int i = conversions.length / 2; i < conversions.length; i++) {
 				String conversion = conversions[i];
 			%>
 

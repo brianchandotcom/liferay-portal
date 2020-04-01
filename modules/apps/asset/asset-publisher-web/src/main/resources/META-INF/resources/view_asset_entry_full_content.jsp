@@ -349,7 +349,7 @@ fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-i
 
 	<%
 	boolean showConversions = assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible() && !print;
-	boolean showLocalization = (assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable() && !print);
+	boolean showLocalization = assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable() && !print;
 	%>
 
 	<c:if test="<%= showConversions || showLocalization %>">

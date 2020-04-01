@@ -84,7 +84,7 @@ if (wikiPage != null) {
 	int attachmentsFileEntriesCount = attachmentsFileEntries.size();
 	String emptyResultsMessage = "this-page-does-not-have-file-attachments";
 	boolean paginate = false;
-	boolean showPageAttachmentAction = (templateNodeId == 0);
+	boolean showPageAttachmentAction = templateNodeId == 0;
 	int status = WorkflowConstants.STATUS_APPROVED;
 	%>
 

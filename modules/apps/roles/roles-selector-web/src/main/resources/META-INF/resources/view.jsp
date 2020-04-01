@@ -131,7 +131,7 @@ else {
 			new String[] {
 				HtmlUtil.escape(role.getTitle(locale)),
 				HtmlUtil.escape(groupDescriptiveName),
-				LanguageUtil.get(request, (group.isOrganization() ? "organization" : "site"))
+				LanguageUtil.get(request, group.isOrganization() ? "organization" : "site")
 			});
 }
 %>

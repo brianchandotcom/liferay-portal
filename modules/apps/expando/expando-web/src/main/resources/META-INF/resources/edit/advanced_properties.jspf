@@ -21,7 +21,7 @@
 >
 
 	<%
-	boolean numberInputType = ((type == ExpandoColumnConstants.DOUBLE) || (type == ExpandoColumnConstants.DOUBLE_ARRAY) || (type == ExpandoColumnConstants.FLOAT) || (type == ExpandoColumnConstants.FLOAT_ARRAY) || (type == ExpandoColumnConstants.INTEGER) || (type == ExpandoColumnConstants.INTEGER_ARRAY) || (type == ExpandoColumnConstants.LONG) || (type == ExpandoColumnConstants.LONG_ARRAY) || (type == ExpandoColumnConstants.SHORT) || (type == ExpandoColumnConstants.SHORT_ARRAY));
+	boolean numberInputType = (type == ExpandoColumnConstants.DOUBLE) || (type == ExpandoColumnConstants.DOUBLE_ARRAY) || (type == ExpandoColumnConstants.FLOAT) || (type == ExpandoColumnConstants.FLOAT_ARRAY) || (type == ExpandoColumnConstants.INTEGER) || (type == ExpandoColumnConstants.INTEGER_ARRAY) || (type == ExpandoColumnConstants.LONG) || (type == ExpandoColumnConstants.LONG_ARRAY) || (type == ExpandoColumnConstants.SHORT) || (type == ExpandoColumnConstants.SHORT_ARRAY);
 	%>
 
 	<div class="<%= numberInputType ? "" : "hide" %>" id="<portlet:namespace />precisionTypeAdvanced">

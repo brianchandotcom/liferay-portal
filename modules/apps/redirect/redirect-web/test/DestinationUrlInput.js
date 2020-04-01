@@ -15,16 +15,16 @@
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import DestinationURLInput from '../src/main/resources/META-INF/resources/js/DestinationURLInput';
+import DestinationUrlInput from '../src/main/resources/META-INF/resources/js/DestinationUrlInput';
 
 const defaultProps = {
 	namespace: '_portlet_namespace_',
 };
 
 const renderComponent = (props = defaultProps) =>
-	render(<DestinationURLInput {...props} />);
+	render(<DestinationUrlInput {...props} />);
 
-describe('DestinationURLInput', () => {
+describe('DestinationUrlInput', () => {
 	afterEach(cleanup);
 
 	it('renders an input element', () => {

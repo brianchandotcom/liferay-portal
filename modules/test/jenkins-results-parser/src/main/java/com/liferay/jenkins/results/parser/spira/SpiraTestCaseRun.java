@@ -64,7 +64,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			requestJSONObject.put(
 				"CustomProperties", result.getCustomListValuesJSONArray());
 			requestJSONObject.put("ExecutionStatusId", result.getStatusID());
-			requestJSONObject.put("RunnerMessage", spiraTestCase.getPath());
+			requestJSONObject.put("RunnerMessage", spiraTestCase.getName());
 			requestJSONObject.put("RunnerName", "Liferay CI");
 			requestJSONObject.put("RunnerStackTrace", result.getDescription());
 			requestJSONObject.put("RunnerTestName", spiraTestCase.getName());

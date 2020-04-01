@@ -88,6 +88,7 @@
 
 	&.drag-over-top:before {
 		border-top: 4px solid $primary-l1;
+		z-index: 1;
 	}
 
 	&.drag-over-middle .page-editor__container > .container:after,

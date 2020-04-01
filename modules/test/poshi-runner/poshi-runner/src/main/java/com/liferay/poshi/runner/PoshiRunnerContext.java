@@ -193,6 +193,13 @@ public class PoshiRunnerContext {
 		return _rootElements.get("macro#" + namespace + "." + className);
 	}
 
+	public static Properties getNamespacedClassCommandNameProperties(
+		String testCaseNamespacedClassCommandName) {
+
+		return _namespacedClassCommandNamePropertiesMap.get(
+			testCaseNamespacedClassCommandName);
+	}
+
 	public static String getNamespaceFromFilePath(String filePath) {
 		if (Validator.isNull(filePath)) {
 			return getDefaultNamespace();
@@ -358,13 +365,6 @@ public class PoshiRunnerContext {
 
 		_testCaseNamespacedClassCommandName =
 			testCaseNamespacedClassCommandName;
-	}
-
-	protected static Properties getNamespacedClassCommandNameProperties(
-		String testCaseNamespacedClassCommandName) {
-
-		return _namespacedClassCommandNamePropertiesMap.get(
-			testCaseNamespacedClassCommandName);
 	}
 
 	private static void _executePoshiFileCallables(

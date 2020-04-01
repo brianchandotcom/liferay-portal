@@ -50,9 +50,9 @@ export function fromControlsId(controlsItemId) {
 	return itemId || controlsItemId;
 }
 
-const NotMappedMessage = () => (
-	<div className="page-editor__collection__not-mapped-message">
-		{Liferay.Language.get('not-mapped')}
+const NotCollectionSelectedMessage = () => (
+	<div className="page-editor__collection__not-collection-selected-message">
+		{Liferay.Language.get('not-collection-selected-yet')}
 	</div>
 );
 
@@ -224,7 +224,7 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 					numberOfItems={collectionConfig.numberOfItems}
 				/>
 			) : (
-				<NotMappedMessage />
+				<NotCollectionSelectedMessage />
 			)}
 		</div>
 	);

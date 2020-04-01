@@ -15,7 +15,7 @@ import React from 'react';
 
 import Chart from '../../../src/main/resources/META-INF/resources/js/components/Chart';
 
-const readsDataProvider = jest.fn(() =>
+const mockReadsDataProvider = jest.fn(() =>
 	Promise.resolve({
 		analyticsReportsHistoricalReads: {
 			histogram: [
@@ -68,7 +68,7 @@ const readsDataProvider = jest.fn(() =>
 	})
 );
 
-const viewsDataProvider = jest.fn(() =>
+const mockViewsDataProvider = jest.fn(() =>
 	Promise.resolve({
 		analyticsReportsHistoricalViews: {
 			histogram: [
@@ -121,9 +121,9 @@ const viewsDataProvider = jest.fn(() =>
 	})
 );
 
-const mockedPublishDate = 1581957977840;
+const mockPublishDate = 1581957977840;
 
-const mockedTimeSpanOptions = [
+const mockTimeSpanOptions = [
 	{
 		key: 'last-30-days',
 		label: 'Last 30 Days',
@@ -145,19 +145,26 @@ describe('Chart', () => {
 	});
 
 	it('displays total views and date range title for default time span', async () => {
+		const testProps = {
+			defaultTimeSpanOption: 'last-7-days',
+			languageTag: 'en-US',
+		};
+
 		const {getByText} = render(
 			<Chart
-				dataProviders={[viewsDataProvider]}
-				defaultTimeSpanOption={'last-7-days'}
-				languageTag={'en-EN'}
-				publishDate={mockedPublishDate}
-				timeSpanOptions={mockedTimeSpanOptions}
+				dataProviders={[mockViewsDataProvider]}
+				defaultTimeSpanOption={testProps.defaultTimeSpanOption}
+				languageTag={testProps.languageTag}
+				publishDate={mockPublishDate}
+				timeSpanOptions={mockTimeSpanOptions}
 			/>
 		);
 
-		await wait(() => expect(viewsDataProvider).toHaveBeenCalledTimes(1));
+		await wait(() =>
+			expect(mockViewsDataProvider).toHaveBeenCalledTimes(1)
+		);
 
-		expect(viewsDataProvider).toHaveBeenCalledWith({
+		expect(mockViewsDataProvider).toHaveBeenCalledWith({
 			timeSpanKey: 'last-7-days',
 			timeSpanOffset: 0,
 		});
@@ -168,25 +175,34 @@ describe('Chart', () => {
 	});
 
 	it('displays total views and reads and date range title for default time span', async () => {
+		const testProps = {
+			defaultTimeSpanOption: 'last-7-days',
+			languageTag: 'en-US',
+		};
+
 		const {getByText} = render(
 			<Chart
-				dataProviders={[viewsDataProvider, readsDataProvider]}
-				defaultTimeSpanOption={'last-7-days'}
-				languageTag={'en-EN'}
-				publishDate={mockedPublishDate}
-				timeSpanOptions={mockedTimeSpanOptions}
+				dataProviders={[mockViewsDataProvider, mockReadsDataProvider]}
+				defaultTimeSpanOption={testProps.defaultTimeSpanOption}
+				languageTag={testProps.languageTag}
+				publishDate={mockPublishDate}
+				timeSpanOptions={mockTimeSpanOptions}
 			/>
 		);
 
-		await wait(() => expect(viewsDataProvider).toHaveBeenCalledTimes(1));
-		await wait(() => expect(readsDataProvider).toHaveBeenCalledTimes(1));
+		await wait(() =>
+			expect(mockViewsDataProvider).toHaveBeenCalledTimes(1)
+		);
+		await wait(() =>
+			expect(mockReadsDataProvider).toHaveBeenCalledTimes(1)
+		);
 
-		expect(viewsDataProvider).toHaveBeenCalledWith({
+		expect(mockViewsDataProvider).toHaveBeenCalledWith({
 			timeSpanKey: 'last-7-days',
 			timeSpanOffset: 0,
 		});
 
-		expect(readsDataProvider).toHaveBeenCalledWith({
+		expect(mockReadsDataProvider).toHaveBeenCalledWith({
 			timeSpanKey: 'last-7-days',
 			timeSpanOffset: 0,
 		});

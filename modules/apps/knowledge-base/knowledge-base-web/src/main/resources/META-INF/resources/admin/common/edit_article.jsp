@@ -158,7 +158,7 @@ if (portletTitleBasedNavigation) {
 						}
 						%>
 
-						<liferay-ui:input-editor
+						<liferay-editor:editor
 							contents="<%= content %>"
 							editorName="<%= kbGroupServiceConfiguration.getEditorName() %>"
 							fileBrowserParams="<%= fileBrowserParams %>"

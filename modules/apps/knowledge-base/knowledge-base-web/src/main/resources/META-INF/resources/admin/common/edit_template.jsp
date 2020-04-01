@@ -50,7 +50,7 @@ renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-te
 					<aui:input autocomplete="off" label='<%= LanguageUtil.get(request, "title") %>' name="title" required="<%= true %>" type="text" value="<%= HtmlUtil.escape(title) %>" />
 				</h1>
 
-				<liferay-ui:input-editor
+				<liferay-editor:editor
 					contents="<%= content %>"
 					editorName="ckeditor"
 					name="contentEditor"

@@ -670,9 +670,11 @@ AUI.add(
 		Liferay.on('destroyPortlet', event => {
 			var portletNamespace = '_' + event.portletId + '_';
 
-			A.Object.each(Liferay.InputLocalized._instances, item => {
+			A.Object.each(Liferay.InputLocalized._instances, (item, id) => {
 				if (item.get('namespace') === portletNamespace) {
 					item.destroy();
+
+					Liferay.destroyComponent(id);
 				}
 			});
 		});

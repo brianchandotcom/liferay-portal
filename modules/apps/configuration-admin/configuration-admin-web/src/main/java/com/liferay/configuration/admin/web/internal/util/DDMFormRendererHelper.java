@@ -126,19 +126,10 @@ public class DDMFormRendererHelper {
 	}
 
 	protected DDMFormValues getDDMFormValues(DDMForm ddmForm) {
-		ResourceBundleLoader resourceBundleLoader =
-			_resourceBundleLoaderProvider.getResourceBundleLoader(
-				_configurationModel.getBundleSymbolicName());
-
-		Locale locale = getLocale();
-
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			locale);
-
 		ConfigurationModelToDDMFormValuesConverter
 			configurationModelToDDMFormValuesConverter =
 				new ConfigurationModelToDDMFormValuesConverter(
-					_configurationModel, ddmForm, locale, resourceBundle,
+					_configurationModel, ddmForm, getLocale(),
 					_locationVariableResolver);
 
 		return configurationModelToDDMFormValuesConverter.getDDMFormValues();

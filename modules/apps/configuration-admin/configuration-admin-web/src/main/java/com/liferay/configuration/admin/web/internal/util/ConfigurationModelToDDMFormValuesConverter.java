@@ -33,7 +33,6 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.metatype.AttributeDefinition;
@@ -44,21 +43,18 @@ import org.osgi.service.metatype.AttributeDefinition;
 public class ConfigurationModelToDDMFormValuesConverter {
 
 	public ConfigurationModelToDDMFormValuesConverter(
-		ConfigurationModel configurationModel, DDMForm ddmForm, Locale locale,
-		ResourceBundle resourceBundle) {
+		ConfigurationModel configurationModel, DDMForm ddmForm, Locale locale) {
 
-		this(configurationModel, ddmForm, locale, resourceBundle, null);
+		this(configurationModel, ddmForm, locale, null);
 	}
 
 	public ConfigurationModelToDDMFormValuesConverter(
 		ConfigurationModel configurationModel, DDMForm ddmForm, Locale locale,
-		ResourceBundle resourceBundle,
 		LocationVariableResolver locationVariableResolver) {
 
 		_configurationModel = configurationModel;
 		_ddmForm = ddmForm;
 		_locale = locale;
-		_resourceBundle = resourceBundle;
 		_locationVariableResolver = locationVariableResolver;
 
 		_ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(false);
@@ -219,6 +215,5 @@ public class ConfigurationModelToDDMFormValuesConverter {
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private final Locale _locale;
 	private final LocationVariableResolver _locationVariableResolver;
-	private final ResourceBundle _resourceBundle;
 
 }

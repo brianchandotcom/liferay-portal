@@ -52,6 +52,14 @@ definition {
 			locator1 = "TextInput#FILE",
 			value1 = "${attachmentFileName}");
 
+		Pause(locator1 = "5000");
+
+		if (IsElementPresent(locator1 = "Header#H4_TITLE", key_title = "Uploading")) {
+			Refresh();
+
+			Click(locator1 = "Checkbox#SELECT_ALL");
+		}
+
 		PortletEntry.publish();
 	}
 

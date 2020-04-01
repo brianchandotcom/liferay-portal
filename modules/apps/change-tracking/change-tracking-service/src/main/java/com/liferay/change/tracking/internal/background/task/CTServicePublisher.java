@@ -88,23 +88,23 @@ public class CTServicePublisher<T extends CTModel<T>> {
 	}
 
 	private int _getPreDeletedRowCount(
-			Connection connection, String primaryKeyName, String tableName)
+			Connection connection, String tableName, String primaryKeyName)
 		throws SQLException {
 
-		String sql = StringBundler.concat(
-			"select count(*) from CTEntry left join ", tableName,
-			" on CTEntry.modelClassPK = ", tableName, ".", primaryKeyName,
-			" and ", tableName, ".ctCollectionId = ", _sourceCTCollectionId,
-			" where CTEntry.changeType = ", CTConstants.CT_CHANGE_TYPE_DELETION,
-			" and CTEntry.ctCollectionId = ", _sourceCTCollectionId,
-			" and CTEntry.modelClassNameId = ", _modelClassNameId, " and ",
-			tableName, ".", primaryKeyName, " is null");
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select count(*) from CTEntry left join ", tableName,
+					" on CTEntry.modelClassPK = ", tableName, ".",
+					primaryKeyName, " and ", tableName, ".ctCollectionId = ",
+					_sourceCTCollectionId, " where CTEntry.changeType = ",
+					CTConstants.CT_CHANGE_TYPE_DELETION,
+					" and CTEntry.ctCollectionId = ", _sourceCTCollectionId,
+					" and CTEntry.modelClassNameId = ", _modelClassNameId,
+					" and ", tableName, ".", primaryKeyName, " is null"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-		try (PreparedStatement ps = connection.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery()) {
-
-			if (rs.next()) {
-				return rs.getInt(1);
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
 			}
 		}
 
@@ -157,7 +157,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 			if (updatedRowCount != _deletionCTEntries.size()) {
 				int preDeletedRowCount = _getPreDeletedRowCount(
-					connection, primaryKeyName, tableName);
+					connection, tableName, primaryKeyName);
 
 				if ((updatedRowCount + preDeletedRowCount) !=
 						_deletionCTEntries.size()) {

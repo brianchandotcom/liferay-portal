@@ -77,7 +77,7 @@ definition {
 
 		WikiEntry.confirmHTML();
 
-		AlloyEditor.addContent(content = '''<!DOCTYPE html> <html lang="en"> <body> <h1>My First Heading</h1> <p>My first paragraph.</p> </body> </html>''');
+		CKEditor.addContent(content = '''<!DOCTYPE html> <html lang="en"> <body> <h1>My First Heading</h1> <p>My first paragraph.</p> </body> </html>''');
 
 		PortletEntry.publish();
 
@@ -110,7 +110,7 @@ definition {
 			locator1 = "Link#EDIT",
 			value1 = "Edit");
 
-		AlloyEditor.addContent(content = '''<!DOCTYPE html> <html lang="en"> <body> <h1>Edited My First Heading</h1> <p>Edited My first paragraph.</p> </body> </html>''');
+		CKEditor.addContent(content = '''<!DOCTYPE html> <html lang="en"> <body> <h1>Edited My First Heading</h1> <p>Edited My first paragraph.</p> </body> </html>''');
 
 		PortletEntry.publish();
 

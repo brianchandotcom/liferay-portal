@@ -150,6 +150,8 @@ public interface Build {
 
 	public List<TestResult> getTestResults(String testStatus);
 
+	public String getTestSuiteName();
+
 	public TopLevelBuild getTopLevelBuild();
 
 	public long getTotalDuration();

@@ -1124,6 +1124,17 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getTestSuiteName() {
+		Build parentBuild = getParentBuild();
+
+		if (parentBuild == null) {
+			return "default";
+		}
+
+		return parentBuild.getTestSuiteName();
+	}
+
+	@Override
 	public TopLevelBuild getTopLevelBuild() {
 		Build topLevelBuild = this;
 

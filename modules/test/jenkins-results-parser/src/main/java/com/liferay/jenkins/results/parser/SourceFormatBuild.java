@@ -51,6 +51,11 @@ public class SourceFormatBuild extends DefaultTopLevelBuild {
 	}
 
 	@Override
+	public String getTestSuiteName() {
+		return _NAME_TEST_SUITE;
+	}
+
+	@Override
 	public Element getTopGitHubMessageElement() {
 		update();
 
@@ -148,11 +153,6 @@ public class SourceFormatBuild extends DefaultTopLevelBuild {
 			Dom4JUtil.getNewAnchorElement(senderBranchURL, senderBranchName),
 			Dom4JUtil.getNewElement("br"), "Branch GIT ID: ",
 			Dom4JUtil.getNewAnchorElement(senderCommitURL, senderSHA));
-	}
-
-	@Override
-	protected String getTestSuiteName() {
-		return _NAME_TEST_SUITE;
 	}
 
 	private static final String _NAME_TEST_SUITE = "sf";

@@ -307,6 +307,17 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return null;
 	}
 
+	@Override
+	public String getTestSuiteName() {
+		String testSuiteName = getParameterValue("CI_TEST_SUITE");
+
+		if (testSuiteName == null) {
+			testSuiteName = "default";
+		}
+
+		return testSuiteName;
+	}
+
 	public BaseBuild.TimelineData getTimelineData() {
 		return new BaseBuild.TimelineData(500, this);
 	}
@@ -1366,16 +1377,6 @@ public abstract class TopLevelBuild extends BaseBuild {
 		}
 
 		return testCount;
-	}
-
-	protected String getTestSuiteName() {
-		String testSuiteName = getParameterValue("CI_TEST_SUITE");
-
-		if (testSuiteName == null) {
-			testSuiteName = "default";
-		}
-
-		return testSuiteName;
 	}
 
 	protected Element getTopGitHubMessageElement() {

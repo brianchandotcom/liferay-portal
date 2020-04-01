@@ -35,6 +35,8 @@ definition {
 			userFirstName = "testfUI",
 			userLastName = "testlUI");
 
+		Pause(locator1 = "3000");
+
 		AssertHTMLSourceTextPresent(
 			locator1 = "JSONWS#SECURITY_RESULT",
 			value1 = "Welcome testfUI testlUI!");

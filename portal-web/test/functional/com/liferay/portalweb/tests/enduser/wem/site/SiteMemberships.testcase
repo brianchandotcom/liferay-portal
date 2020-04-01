@@ -1015,26 +1015,29 @@ definition {
 	test ViewNoManualMembershipManagement {
 		property testray.component.names = "Site Administration";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
 		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Memberships");
+		ProductMenuHelper.expandPanel(panel = "Site Administration");
+
+		ProductMenuHelper.expandCategory(category = "People");
+
+		AssertVisible(
+			key_portlet = "Memberships",
+			locator1 = "ProductMenu#PORTLET");
 
 		Site.manageMembershipOptions(allowManualMembershipManagement = "false");
 
 		Navigator.openURL();
 
-		SitePages.openPagesAdmin(siteURLKey = "${siteName}");
+		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		AssertNotVisible(
-			locator1 = "ControlMenu#ADMIN_SITE_ADMINISTRATION_USERS",
-			value1 = "Users");
+		ProductMenuHelper.expandCategory(category = "People");
+
+		AssertElementNotPresent(
+			key_portlet = "Memberships",
+			locator1 = "ProductMenu#PORTLET");
 	}
 
 }

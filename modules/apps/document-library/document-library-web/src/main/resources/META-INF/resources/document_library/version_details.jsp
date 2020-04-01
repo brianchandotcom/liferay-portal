@@ -19,11 +19,19 @@
 <div>
 
 	<%
-	Map<String, Object> data = HashMapBuilder.<String, Object>put(
-		"dlVersionNumberIncreaseValues", HashMapBuilder.<String, Object>put("MAJOR", DLVersionNumberIncrease.MAJOR)
-		.put("MINOR", DLVersionNumberIncrease.MINOR)
-		.put("NONE", DLVersionNumberIncrease.NONE).build()
-	).put("checkedOut", GetterUtil.getBoolean(request.getAttribute("edit_file_entry.jsp-checkedOut"))).build();
+	Map<String, Object> data =
+		HashMapBuilder.<String, Object>put(
+			"dlVersionNumberIncreaseValues",
+			HashMapBuilder.<String, Object>put(
+				"MAJOR", DLVersionNumberIncrease.MAJOR
+				).put(
+					"MINOR", DLVersionNumberIncrease.MINOR
+				).put(
+					"NONE", DLVersionNumberIncrease.NONE
+				).build()
+		).put(
+			"checkedOut", GetterUtil.getBoolean(request.getAttribute("edit_file_entry.jsp-checkedOut"))
+		).build();
 	%>
 
 	<react:component

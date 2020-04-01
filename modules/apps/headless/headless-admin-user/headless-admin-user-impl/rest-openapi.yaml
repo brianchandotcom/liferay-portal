@@ -1696,6 +1696,29 @@ paths:
                     description:
                         ""
             tags: ["UserAccount"]
+        post:
+            description:
+                Creates a new user account
+            operationId: postUserAccount
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UserAccount"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/UserAccount"
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                    description:
+                        ""
     "/user-accounts/{userAccountId}":
         get:
             description:

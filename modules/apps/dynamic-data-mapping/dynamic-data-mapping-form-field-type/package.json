@@ -39,7 +39,6 @@
 			"FieldBase",
 			"Select",
 			"Tooltip",
-			"Validation",
 			"withContextMock"
 		]
 	},

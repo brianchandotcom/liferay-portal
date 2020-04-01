@@ -105,53 +105,56 @@ const Checkbox = ({
 	);
 };
 
-const CheckboxProxy = connectStore(
-	({
-		disabled,
-		dispatch,
-		emit,
-		label,
-		name,
-		required,
-		showAsSwitcher = true,
-		showLabel = true,
-		spritemap,
-		value = true,
-		...otherProps
-	}) => {
-		const Toggle = showAsSwitcher ? Switcher : Checkbox;
+const Main = ({
+	disabled,
+	dispatch,
+	label,
+	name,
+	onChange,
+	required,
+	showAsSwitcher = true,
+	showLabel = true,
+	spritemap,
+	value = true,
+	...otherProps
+}) => {
+	const Toggle = showAsSwitcher ? Switcher : Checkbox;
 
-		return (
-			<FieldBaseProxy
-				dispatch={dispatch}
+	return (
+		<FieldBaseProxy
+			dispatch={dispatch}
+			label={label}
+			name={name}
+			required={required}
+			showLabel={false}
+			spritemap={spritemap}
+			{...otherProps}
+		>
+			<Toggle
+				checked={value}
+				disabled={disabled}
 				label={label}
 				name={name}
+				onChange={onChange}
 				required={required}
-				showLabel={false}
+				showLabel={showLabel}
 				spritemap={spritemap}
-				{...otherProps}
-			>
-				<Toggle
-					checked={value}
-					disabled={disabled}
-					label={label}
-					name={name}
-					onChange={(event, value) =>
-						emit('fieldEdited', event, value)
-					}
-					required={required}
-					showLabel={showLabel}
-					spritemap={spritemap}
-				/>
-			</FieldBaseProxy>
-		);
-	}
-);
+			/>
+		</FieldBaseProxy>
+	);
+};
+
+const CheckboxProxy = connectStore(({emit, ...otherProps}) => (
+	<Main
+		{...otherProps}
+		onChange={(event, value) => emit('fieldEdited', event, value)}
+	/>
+));
 
 const ReactCheckboxAdapter = getConnectedReactComponentAdapter(
 	CheckboxProxy,
 	templates
 );
 
-export {ReactCheckboxAdapter};
+export {ReactCheckboxAdapter, Main};
 export default ReactCheckboxAdapter;

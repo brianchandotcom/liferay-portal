@@ -12,10 +12,20 @@
  * details.
  */
 
+import {act, fireEvent} from '@testing-library/react';
+
 import Validation from '../../../src/main/resources/META-INF/resources/Validation/Validation.es';
+import withContextMock from '../__mocks__/withContextMock.es';
 
 let component;
 const spritemap = 'icons.svg';
+const defaultValue = {
+	errorMessage: {},
+	expression: {},
+	parameter: {},
+};
+
+const ValidationWithContextMock = withContextMock(Validation);
 
 describe('Validation', () => {
 	afterEach(() => {
@@ -25,11 +35,12 @@ describe('Validation', () => {
 	});
 
 	it('renders checkbox to enable Validation', () => {
-		component = new Validation({
+		component = new ValidationWithContextMock({
 			dataType: 'string',
 			label: 'Validator',
 			name: 'validation',
 			spritemap,
+			value: defaultValue,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -38,7 +49,30 @@ describe('Validation', () => {
 	it('enables validation after click on toogle', done => {
 		jest.useFakeTimers();
 
-		component = new Validation({
+		const handleFieldEdited = data => {
+			expect(data.value).toEqual({
+				enableValidation: true,
+				errorMessage: {
+					en_US: undefined,
+				},
+				expression: {
+					name: 'notContains',
+					value: 'NOT(contains(textfield, "{parameter}"))',
+				},
+				parameter: {
+					en_US: undefined,
+				},
+			});
+			done();
+		};
+
+		const events = {fieldEdited: handleFieldEdited};
+
+		component = new ValidationWithContextMock({
+			defaultLanguageId: 'en_US',
+			editingLanguageId: 'en_US',
+			events,
+			expression: {},
 			label: 'Validator',
 			name: 'validation',
 			spritemap,
@@ -46,53 +80,48 @@ describe('Validation', () => {
 				dataType: 'string',
 				fieldName: 'textfield',
 			},
+			value: defaultValue,
 		});
 
-		jest.runAllTimers();
+		const inputCheckbox = component.element.querySelector(
+			'input[type="checkbox"]'
+		);
 
-		component.once('stateSynced', () => {
-			expect(component.value).toMatchSnapshot();
-			done();
+		fireEvent.click(inputCheckbox);
+
+		act(() => {
+			jest.runAllTimers();
 		});
-
-		component.refs.enableValidation.value = true;
-		component.refs.enableValidation.emit('fieldEdited');
-
-		jest.runAllTimers();
-	});
-
-	it('renders parameter field with TextField element', done => {
-		jest.useFakeTimers();
-
-		component = new Validation({
-			enableValidation: true,
-			label: 'Validator',
-			name: 'validation',
-			spritemap,
-			validation: {
-				dataType: 'string',
-				fieldName: 'textfield',
-			},
-		});
-
-		component.once('stateSynced', () => {
-			expect(component.value.expression).toMatchSnapshot();
-			done();
-		});
-
-		component.refs.enableValidation.value = true;
-		component.refs.selectedValidation.value = 'notContains';
-		component.refs.selectedValidation.emit('fieldEdited');
-
-		jest.runAllTimers();
 	});
 
 	it('renders parameter field with Numeric element', done => {
 		jest.useFakeTimers();
 
-		component = new Validation({
+		const handleFieldEdited = data => {
+			expect(data.value).toEqual({
+				enableValidation: true,
+				errorMessage: {
+					en_US: undefined,
+				},
+				expression: {
+					name: 'lt',
+					value: 'numericfield<{parameter}',
+				},
+				parameter: {
+					en_US: undefined,
+				},
+			});
+			done();
+		};
+
+		const events = {fieldEdited: handleFieldEdited};
+
+		component = new ValidationWithContextMock({
 			dataType: 'numeric',
-			enableValidation: true,
+			defaultLanguageId: 'en_US',
+			editingLanguageId: 'en_US',
+			events,
+			expression: {},
 			label: 'Validator',
 			name: 'validation',
 			spritemap,
@@ -100,74 +129,17 @@ describe('Validation', () => {
 				dataType: 'integer',
 				fieldName: 'numericfield',
 			},
+			value: defaultValue,
 		});
 
-		component.once('stateSynced', () => {
-			expect(component.value.expression).toMatchSnapshot();
-			done();
-		});
+		const inputCheckbox = component.element.querySelector(
+			'input[type="checkbox"]'
+		);
 
-		component.refs.enableValidation.value = true;
-		component.refs.selectedValidation.value = 'lt';
-		component.refs.selectedValidation.emit('fieldEdited');
+		fireEvent.click(inputCheckbox);
 
-		jest.runAllTimers();
-	});
-
-	it('renders parameter field with Text element and then with Numeric after update dataType', done => {
-		jest.useFakeTimers();
-
-		component = new Validation({
-			enableValidation: true,
-			label: 'Validator',
-			name: 'validation',
-			spritemap,
-			validation: {
-				dataType: 'string',
-			},
-		});
-
-		component.once('stateSynced', () => {
-			expect(component.value.expression).toMatchSnapshot();
-			done();
-		});
-
-		component.refs.enableValidation.value = true;
-		component.refs.selectedValidation.value = 'notContains';
-		component.refs.selectedValidation.emit('fieldEdited');
-		component.validation = {
-			...component.validation,
-			dataType: 'integer',
-		};
-
-		jest.runAllTimers();
-	});
-
-	describe('Regression Tests', () => {
-		describe('LPS-88007', () => {
-			it('does not render "Show Error Message" and "The Value" as required fields', () => {
-				jest.useFakeTimers();
-
-				component = new Validation({
-					enableValidation: true,
-					label: 'Validator',
-					name: 'validation',
-					spritemap,
-					validation: {
-						dataType: 'string',
-						fieldName: 'textfield',
-					},
-					value: {
-						errorMessage: 'An error message',
-						expression: 'NOT(contains(textfield, ""))',
-					},
-				});
-
-				jest.runAllTimers();
-
-				expect(component.refs.errorMessage.required).toBe(false);
-				expect(component.refs.parameterMessage.required).toBe(false);
-			});
+		act(() => {
+			jest.runAllTimers();
 		});
 	});
 });

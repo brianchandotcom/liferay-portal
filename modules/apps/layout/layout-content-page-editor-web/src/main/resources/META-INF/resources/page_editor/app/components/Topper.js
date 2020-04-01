@@ -323,13 +323,9 @@ export default function Topper({children, item, itemRef, layoutData}) {
 
 			<div className="page-editor__topper__content" ref={drop}>
 				{dataAdvice
-					? {
-							...childrenElement,
-							props: {
-								...childrenElement.props,
-								'data-advice': dataAdvice,
-							},
-					  }
+					? React.cloneElement(childrenElement, {
+							data: {'data-advice': dataAdvice},
+					  })
 					: childrenElement}
 			</div>
 		</div>

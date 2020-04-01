@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.redirect.internal.search.spi.model.index.contributor;
+package com.liferay.redirect.internal.search.spi.model.query.contributor;
 
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-import com.liferay.redirect.model.RedirectNotFoundEntry;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
+import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,18 +27,21 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = "indexer.class.name=com.liferay.redirect.model.RedirectNotFoundEntry",
-	service = ModelDocumentContributor.class
+	service = ModelPreFilterContributor.class
 )
-public class RedirectNotFoundEntryModelDocumentContributor
-	implements ModelDocumentContributor<RedirectNotFoundEntry> {
+public class RedirectNotFoundEntryModelPreFilterContributor
+	implements ModelPreFilterContributor {
 
 	@Override
 	public void contribute(
-		Document document, RedirectNotFoundEntry redirectNotFoundEntry) {
+		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
+		SearchContext searchContext) {
 
-		document.addText(Field.URL, redirectNotFoundEntry.getUrl());
-		document.addNumber("hits", redirectNotFoundEntry.getHits());
-		document.addKeyword("ignored", redirectNotFoundEntry.isIgnored());
+		Boolean ignored = (Boolean)searchContext.getAttribute("ignored");
+
+		if (ignored != null) {
+			booleanFilter.addRequiredTerm("ignored", ignored);
+		}
 	}
 
 }

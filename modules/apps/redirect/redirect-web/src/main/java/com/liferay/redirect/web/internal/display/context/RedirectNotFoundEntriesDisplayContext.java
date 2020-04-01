@@ -291,6 +291,7 @@ public class RedirectNotFoundEntriesDisplayContext {
 			PortalUtil.getHttpServletRequest(_liferayPortletRequest));
 
 		searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
+		searchContext.setAttribute("ignored", _getIgnored());
 		searchContext.setEnd(redirectNotFoundEntrySearch.getEnd());
 		searchContext.setSorts(_getSorts());
 		searchContext.setStart(redirectNotFoundEntrySearch.getStart());

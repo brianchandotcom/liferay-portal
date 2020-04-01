@@ -147,15 +147,18 @@ AUI.add(
 
 					var formValidator = instance._getFormValidator(node);
 
-					var inputsLocalized = node.all('.language-value');
+					var paletteIsCloned =
+						clone.one("[id$='PaletteBoundingBox']") != null;
 
-					var palette = document.querySelector(
-						"[id$='PaletteBoundingBox']"
-					);
+					var inputsLocalized = node.all('.language-value');
 
 					var clonedRow;
 
-					if (inputsLocalized && palette) {
+					if (inputsLocalized && !paletteIsCloned) {
+						var palette = document.querySelector(
+							"[id$='PaletteBoundingBox']"
+						);
+
 						var trigger = clone.one('button');
 
 						var list = A.Node.create(
@@ -166,6 +169,7 @@ AUI.add(
 
 						list.append(palette);
 					}
+
 					if (instance.url) {
 						clonedRow = instance._createCloneFromURL(clone, guid);
 					}

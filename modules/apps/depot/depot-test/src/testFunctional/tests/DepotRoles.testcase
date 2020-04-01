@@ -223,6 +223,8 @@ definition {
 
 		ProductMenu.gotoSite(depotName = "Test Depot Name");
 
+		AssertElementNotPresent(locator1 = "Button#PLUS");
+
 		DMDocument.editCP(
 			dmDocumentDescription = "DM Document Description1",
 			dmDocumentDescriptionEdit = "DM Document Description Edit",

@@ -20,11 +20,8 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -32,30 +29,22 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.search.filter.DateRangeFilterBuilder;
-import com.liferay.portal.search.filter.FilterBuilders;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 import com.liferay.redirect.web.internal.search.RedirectNotFoundEntrySearch;
 import com.liferay.redirect.web.internal.security.permission.resource.RedirectPermission;
 import com.liferay.redirect.web.internal.util.comparator.RedirectComparator;
 import com.liferay.redirect.web.internal.util.comparator.RedirectDateComparator;
-
-import java.text.Format;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -179,25 +168,6 @@ public class RedirectNotFoundEntriesDisplayContext {
 		return _redirectNotFoundEntrySearch;
 	}
 
-	private void _addFilterByMinModifiedDate(
-		BooleanQuery booleanQuery, Date minModifiedDate) {
-
-		BooleanFilter preBooleanFilter = booleanQuery.getPreBooleanFilter();
-
-		FilterBuilders filterBuilders =
-			(FilterBuilders)_httpServletRequest.getAttribute(
-				FilterBuilders.class.getName());
-
-		DateRangeFilterBuilder dateRangeFilterBuilder =
-			filterBuilders.dateRangeFilterBuilder();
-
-		dateRangeFilterBuilder.setFieldName(Field.MODIFIED_DATE);
-		dateRangeFilterBuilder.setFrom(_dateFormat.format(minModifiedDate));
-
-		preBooleanFilter.add(
-			dateRangeFilterBuilder.build(), BooleanClauseOccur.MUST);
-	}
-
 	private Boolean _getIgnored() {
 		String filterType = ParamUtil.getString(
 			_httpServletRequest, "filterType", "active-urls");
@@ -292,19 +262,12 @@ public class RedirectNotFoundEntriesDisplayContext {
 
 		searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
 		searchContext.setAttribute("ignored", _getIgnored());
+		searchContext.setAttribute("minModifiedDate", _getMinModifiedDate());
 		searchContext.setEnd(redirectNotFoundEntrySearch.getEnd());
 		searchContext.setSorts(_getSorts());
 		searchContext.setStart(redirectNotFoundEntrySearch.getStart());
 
-		BooleanQuery booleanQuery = indexer.getFullQuery(searchContext);
-
-		Date minModifiedDate = _getMinModifiedDate();
-
-		if (minModifiedDate != null) {
-			_addFilterByMinModifiedDate(booleanQuery, minModifiedDate);
-		}
-
-		Hits hits = IndexSearcherHelperUtil.search(searchContext, booleanQuery);
+		Hits hits = indexer.search(searchContext);
 
 		List<SearchResult> searchResults = SearchResultUtil.getSearchResults(
 			hits, LocaleUtil.getDefault());
@@ -323,9 +286,6 @@ public class RedirectNotFoundEntriesDisplayContext {
 		redirectNotFoundEntrySearch.setTotal(hits.getLength());
 	}
 
-	private final Format _dateFormat =
-		FastDateFormatFactoryUtil.getSimpleDateFormat(
-			PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN));
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

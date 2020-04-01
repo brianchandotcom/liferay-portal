@@ -15,7 +15,6 @@
 package com.liferay.redirect.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.search.filter.FilterBuilders;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.redirect.service.RedirectEntryService;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
@@ -59,8 +58,6 @@ public class RedirectPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			FilterBuilders.class.getName(), _filterBuilders);
-		renderRequest.setAttribute(
 			RedirectEntryLocalService.class.getName(),
 			_redirectEntryLocalService);
 		renderRequest.setAttribute(
@@ -71,9 +68,6 @@ public class RedirectPortlet extends MVCPortlet {
 
 		super.render(renderRequest, renderResponse);
 	}
-
-	@Reference
-	private FilterBuilders _filterBuilders;
 
 	@Reference
 	private RedirectEntryLocalService _redirectEntryLocalService;

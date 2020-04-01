@@ -46,7 +46,9 @@ export default function StructureTreeNode({node}) {
 
 	return (
 		<div
-			aria-selected={node.activable && isSelected(node.id)}
+			aria-selected={
+				node.activable && nodeIsSelected(node.id, activeItemId)
+			}
 			className={classNames('page-editor__page-structure__tree-node', {
 				'page-editor__page-structure__tree-node--active':
 					node.activable && nodeIsSelected(node.id, activeItemId),

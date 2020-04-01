@@ -34,6 +34,180 @@ definition {
 		}
 	}
 
+	@description = "This ensures that a user will be redirected to the target URL of a permanent redirection."
+	@priority = "5"
+	test AccessPermanentEntry {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Permanent (301)",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		SelectWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-page");
+
+		var curl = '''
+			${portalURL}/web/test-site-name/test-source-page \
+				-w %{http_code}
+		''';
+
+		var output = JSONCurlUtil.post("${curl}");
+
+		if (contains("${output}", "301")) {
+			echo("This is a permanent redirect.");
+		}
+		else {
+			fail("FAIL! This redirect should be permanent.");
+		}
+	}
+
+	@description = "This ensures that the user will be redirected to the cached target URL of a permanent redirection after it is updated."
+	@priority = "5"
+	test AccessPermanentEntryAfterEdit {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "New Test Destination Page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Permanent (301)",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		SelectWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
+
+		Close.closeWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.editEntry(
+			destinationURLEdit = "${portalURL}/web/test-site-name/new-test-destination-page",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		SelectWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-page");
+	}
+
+	@description = "This ensures that a user will be redirected to the target URL of a temporary redirection."
+	@priority = "5"
+	test AccessTemporaryEntry {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Temporary (302)",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		SelectWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-page");
+
+		var curl = '''
+			${portalURL}/web/test-site-name/test-source-page \
+				-w %{http_code}
+		''';
+
+		var output = JSONCurlUtil.post("${curl}");
+
+		if (contains("${output}", "302")) {
+			echo("This is a temporary redirect.");
+		}
+		else {
+			fail("FAIL! This redirect should be temporary.");
+		}
+	}
+
+	@description = "This ensures that the user will be redirected to the latest target URL of a temporary redirection after it is updated."
+	@priority = "5"
+	test AccessTemporaryEntryAfterEdit {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "New Test Destination Page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Temporary (302)",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		SelectWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
+
+		Close.closeWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.editEntry(
+			destinationURLEdit = "${portalURL}/web/test-site-name/new-test-destination-page",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		SelectWindow(locator1 = "title=New Test Destination Page - Test Site Name - ${siteName}");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/new-test-destination-page");
+	}
+
 	@description = "This ensures that a user cannot create more than one redirection with the same sourceURL."
 	@priority = "5"
 	test AddDuplicateSourceURL {

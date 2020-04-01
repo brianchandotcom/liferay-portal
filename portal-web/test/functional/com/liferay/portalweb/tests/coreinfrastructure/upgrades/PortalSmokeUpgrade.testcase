@@ -100,6 +100,7 @@ definition {
 	test ViewPortalSmokeArchive70106 {
 		property data.archive.type = "data-archive-portal";
 		property portal.upgrades = "true";
+		property portal.upstream = "quarantine";
 		property portal.version = "7.0.10.6";
 		property test.assert.warning.exceptions = "true";
 

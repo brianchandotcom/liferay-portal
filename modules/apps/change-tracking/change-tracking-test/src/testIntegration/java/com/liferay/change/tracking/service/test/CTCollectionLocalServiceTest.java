@@ -306,9 +306,6 @@ public class CTCollectionLocalServiceTest {
 	public void testDeletePreDeletedLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(_group);
 
-		Assert.assertEquals(
-			layout, _layoutLocalService.fetchLayout(layout.getPlid()));
-
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(
 					_ctCollection.getCtCollectionId())) {
@@ -319,7 +316,7 @@ public class CTCollectionLocalServiceTest {
 				_layoutLocalService.fetchLayout(layout.getPlid()));
 		}
 
-		_layoutLocalService.deleteLayout(layout);
+		_layoutLocalService.deleteLayout(layout.getPlid());
 
 		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
 
@@ -342,9 +339,6 @@ public class CTCollectionLocalServiceTest {
 
 		Layout layout = LayoutTestUtil.addLayout(_group);
 
-		Assert.assertEquals(
-			layout, _layoutLocalService.fetchLayout(layout.getPlid()));
-
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(
 					_ctCollection.getCtCollectionId())) {
@@ -354,6 +348,9 @@ public class CTCollectionLocalServiceTest {
 			Assert.assertNull(
 				_layoutLocalService.fetchLayout(layout.getPlid()));
 		}
+
+		Assert.assertEquals(
+			layout, _layoutLocalService.getLayout(layout.getPlid()));
 
 		_ctCollection2 = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
@@ -368,6 +365,9 @@ public class CTCollectionLocalServiceTest {
 			Assert.assertNull(
 				_layoutLocalService.fetchLayout(layout.getPlid()));
 		}
+
+		Assert.assertEquals(
+			layout, _layoutLocalService.getLayout(layout.getPlid()));
 
 		_ctProcessLocalService.addCTProcess(
 			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
@@ -386,7 +386,7 @@ public class CTCollectionLocalServiceTest {
 					_ctCollection3.getCtCollectionId())) {
 
 			Assert.assertEquals(
-				layout, _layoutLocalService.fetchLayout(layout.getPlid()));
+				layout, _layoutLocalService.getLayout(layout.getPlid()));
 		}
 
 		_ctCollection4 = _ctCollectionLocalService.undoCTCollection(
@@ -405,10 +405,13 @@ public class CTCollectionLocalServiceTest {
 			_ctCollection3.getUserId(), _ctCollection3.getCtCollectionId());
 
 		Assert.assertEquals(
-			layout, _layoutLocalService.fetchLayout(layout.getPlid()));
+			layout, _layoutLocalService.getLayout(layout.getPlid()));
 
 		_ctProcessLocalService.addCTProcess(
 			_ctCollection4.getUserId(), _ctCollection4.getCtCollectionId());
+
+		Assert.assertEquals(
+			layout, _layoutLocalService.getLayout(layout.getPlid()));
 	}
 
 	@Test

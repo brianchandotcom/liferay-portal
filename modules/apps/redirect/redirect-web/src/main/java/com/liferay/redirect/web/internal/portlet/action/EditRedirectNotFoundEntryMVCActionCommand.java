@@ -17,7 +17,11 @@ package com.liferay.redirect.web.internal.portlet.action;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
@@ -44,6 +48,14 @@ public class EditRedirectNotFoundEntryMVCActionCommand
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletPermissionUtil.check(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			0, RedirectPortletKeys.REDIRECT, ActionKeys.ACCESS_IN_CONTROL_PANEL,
+			true);
 
 		_redirectNotFoundEntryLocalService.updateRedirectNotFoundEntry(
 			ParamUtil.getLong(actionRequest, "redirectNotFoundEntryId"),

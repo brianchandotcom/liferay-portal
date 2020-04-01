@@ -3,9 +3,15 @@
 		"*": true
 	},
 	"ignore": [
-		"**/*.js",
-		"!**/*.es.js",
-		"!**/*.scss.js",
-		"!**/*.soy.js"
+		"**/global.bundle.js",
+		"**/liferay/dom_task_runner.js",
+		"**/liferay/events.js",
+		"**/liferay/lazy_load.js",
+		"**/liferay/liferay.js",
+		"**/liferay/portlet.js",
+		"**/liferay/workflow.js",
+		"**/loader/config.js",
+		"**/misc/swfobject.js",
+		"**/misc/xp_progress.js"
 	]
 }

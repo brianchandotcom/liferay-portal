@@ -14,9 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
-import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Distributed;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -55,7 +52,6 @@ public interface WebKeys {
 
 	public static final String ASSET_VOCABULARY = "ASSET_VOCABULARY";
 
-	@Distributed(direction = Direction.RESPONSE)
 	public static final String AUI_SCRIPT_DATA =
 		"LIFERAY_SHARED_AUI_SCRIPT_DATA";
 
@@ -120,7 +116,6 @@ public interface WebKeys {
 
 	public static final String CURRENT_PORTLET_URL = "CURRENT_PORTLET_URL";
 
-	@Distributed(direction = Direction.REQUEST)
 	public static final String CURRENT_URL = "CURRENT_URL";
 
 	public static final String DEVICE = "DEVICE";
@@ -309,7 +304,6 @@ public interface WebKeys {
 
 	public static final String LAYOUT = "LAYOUT";
 
-	@Distributed
 	public static final String LAYOUT_ASSET_ENTRY =
 		"LIFERAY_SHARED_LAYOUT_ASSET_ENTRY";
 
@@ -417,7 +411,6 @@ public interface WebKeys {
 
 	public static final String OUTER_PORTLET_ID = "OUTER_PORTLET_ID";
 
-	@Distributed(direction = Direction.RESPONSE)
 	public static final String OUTPUT_DATA = "LIFERAY_SHARED_OUTPUT_DATA";
 
 	public static final String PAGE_BODY_BOTTOM = "PAGE_BODY_BOTTOM";
@@ -426,17 +419,13 @@ public interface WebKeys {
 
 	public static final String PAGE_BOTTOM = "PAGE_BOTTOM";
 
-	@Distributed(direction = Direction.RESPONSE)
 	public static final String PAGE_DESCRIPTION =
 		"LIFERAY_SHARED_PAGE_DESCRIPTION";
 
-	@Distributed(direction = Direction.RESPONSE)
 	public static final String PAGE_KEYWORDS = "LIFERAY_SHARED_PAGE_KEYWORDS";
 
-	@Distributed(direction = Direction.RESPONSE)
 	public static final String PAGE_SUBTITLE = "LIFERAY_SHARED_PAGE_SUBTITLE";
 
-	@Distributed(direction = Direction.RESPONSE)
 	public static final String PAGE_TITLE = "LIFERAY_SHARED_PAGE_TITLE";
 
 	public static final String PAGE_TOP = "PAGE_TOP";
@@ -660,7 +649,6 @@ public interface WebKeys {
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	@Distributed(direction = Direction.RESPONSE)
 	public static final String SPI_AGENT_ACTION_RESULT =
 		"SPI_AGENT_ACTION_RESULT";
 
@@ -668,14 +656,12 @@ public interface WebKeys {
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	@Distributed(direction = Direction.REQUEST)
 	public static final String SPI_AGENT_EVENT = "SPI_AGENT_EVENT";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	@Distributed(direction = Direction.RESPONSE)
 	public static final String SPI_AGENT_EVENT_RESULT =
 		"SPI_AGENT_EVENT_RESULT";
 
@@ -683,14 +669,12 @@ public interface WebKeys {
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	@Distributed(direction = Direction.REQUEST)
 	public static final String SPI_AGENT_LAYOUT = "SPI_AGENT_LAYOUT";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	@Distributed(direction = Direction.RESPONSE)
 	public static final String SPI_AGENT_LAYOUT_TYPE_SETTINGS =
 		"SPI_AGENT_LAYOUT_TYPE_SETTINGS";
 
@@ -698,7 +682,6 @@ public interface WebKeys {
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	@Distributed(direction = Direction.REQUEST)
 	public static final String SPI_AGENT_LIFECYCLE = "SPI_AGENT_LIFECYCLE";
 
 	/**
@@ -712,7 +695,6 @@ public interface WebKeys {
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	@Distributed(direction = Direction.REQUEST)
 	public static final String SPI_AGENT_PORTLET = "SPI_AGENT_PORTLET";
 
 	/**
@@ -784,12 +766,10 @@ public interface WebKeys {
 
 	public static final String UPLOAD_EXCEPTION = "UPLOAD_EXCEPTION";
 
-	@Distributed(direction = Direction.REQUEST)
 	public static final String USER = "USER";
 
 	public static final String USER_GROUP = "USER_GROUP";
 
-	@Distributed(direction = Direction.REQUEST)
 	public static final String USER_ID = "USER_ID";
 
 	public static final String USER_PASSWORD = "USER_PASSWORD";

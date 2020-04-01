@@ -43,7 +43,10 @@ export const disableFieldSetDropTargets = (element, pages) => {
 
 			const parentField = getField(pages, fieldName);
 
-			if (isFieldSet(parentField) || isFieldSetChild(pages, fieldName)) {
+			if (
+				(parentField && isFieldSet(parentField)) ||
+				isFieldSetChild(pages, fieldName)
+			) {
 				target.setAttribute('data-drop-disabled', true);
 			}
 		}

@@ -283,7 +283,12 @@ public class FragmentLayoutStructureItemHelper
 			}
 		}
 
-		jsonObject.put("target", fragmentLinkMap.get("target"));
+		String target = (String)fragmentLinkMap.get("target");
+
+		if (target != null) {
+			jsonObject.put(
+				"target", "_" + StringUtil.lowerCaseFirstLetter(target));
+		}
 
 		return jsonObject;
 	}

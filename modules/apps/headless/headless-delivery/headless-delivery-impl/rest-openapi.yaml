@@ -1058,6 +1058,20 @@ components:
                 target:
                     enum: [Blank, Parent, Self, Top]
                     type: string
+        FragmentMappedValue:
+            description:
+                ""
+            properties:
+                defaultValue:
+                    $ref: "#/components/schemas/FragmentInlineValue"
+                mapping:
+                    properties:
+                        fieldKey:
+                            type: string
+                        itemKey:
+                            type: string
+                    type: object
+            type: object
         FragmentSettingsAllowed:
             properties:
                 allowedFragments:

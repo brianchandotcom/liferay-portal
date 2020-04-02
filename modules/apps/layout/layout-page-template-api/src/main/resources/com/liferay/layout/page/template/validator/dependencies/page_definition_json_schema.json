@@ -91,7 +91,7 @@
 				"html": {
 					"oneOf": [
 						{
-							"$ref": "#/definitions/InlineValue"
+							"$ref": "#/definitions/FragmentInlineValue"
 						}
 					],
 					"type": "object"
@@ -122,7 +122,7 @@
 				"text": {
 					"oneOf": [
 						{
-							"$ref": "#/definitions/InlineValue"
+							"$ref": "#/definitions/FragmentInlineValue"
 						}
 					],
 					"type": "object"
@@ -137,26 +137,44 @@
 				"description": {
 					"oneOf": [
 						{
-							"$ref": "#/definitions/InlineValue"
+							"$ref": "#/definitions/FragmentInlineValue"
 						}
 					]
 				},
 				"title": {
 					"oneOf": [
 						{
-							"$ref": "#/definitions/InlineValue"
+							"$ref": "#/definitions/FragmentInlineValue"
 						}
 					]
 				},
 				"url": {
 					"oneOf": [
 						{
-							"$ref": "#/definitions/InlineValue"
+							"$ref": "#/definitions/FragmentInlineValue"
 						}
 					]
 				}
 			},
 			"title": "The FragmentImage Schema",
+			"type": "object"
+		},
+		"FragmentInlineValue": {
+			"additionalProperties": false,
+			"properties": {
+				"value": {
+					"title": "The value Schema",
+					"type": "string"
+				},
+				"value_i18n": {
+					"additionalProperties": {
+						"type": "string"
+					},
+					"title": "The value_i18n Schema",
+					"type": "object"
+				}
+			},
+			"title": "The FragmentInlineValue Schema",
 			"type": "object"
 		},
 		"FragmentInstanceDefinition": {
@@ -200,7 +218,7 @@
 				"href": {
 					"oneOf": [
 						{
-							"$ref": "#/definitions/InlineValue"
+							"$ref": "#/definitions/FragmentInlineValue"
 						}
 					]
 				},
@@ -250,24 +268,6 @@
 				"unallowedFragments"
 			],
 			"title": "The FragmentSettingsUnallowed Schema",
-			"type": "object"
-		},
-		"InlineValue": {
-			"additionalProperties": false,
-			"properties": {
-				"value": {
-					"title": "The value Schema",
-					"type": "string"
-				},
-				"value_i18n": {
-					"additionalProperties": {
-						"type": "string"
-					},
-					"title": "The value_i18n Schema",
-					"type": "object"
-				}
-			},
-			"title": "The InlineValue Schema",
 			"type": "object"
 		},
 		"PageElement": {

@@ -194,10 +194,15 @@ public class StartupAction extends SimpleAction {
 
 			StartupHelperUtil.initResourceActions();
 
+			ResourceActionLocalServiceUtil.checkResourceActions();
+
+			DBUpgrader.verify();
+
 			DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
 		}
-
-		ResourceActionLocalServiceUtil.checkResourceActions();
+		else {
+			ResourceActionLocalServiceUtil.checkResourceActions();
+		}
 
 		if (PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP) {
 			StartupHelperUtil.updateIndexes(true);

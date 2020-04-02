@@ -162,6 +162,14 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 			joinTablePrimaryKey = _primaryKeyColumn;
 		}
 
+		if (fromPKColumn == joinPKColumn) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"From table should be a different table than \"",
+					_tableReferenceDefinition.getTable(), "\" for joinStep \"",
+					joinStep, "\""));
+		}
+
 		TableJoinHolder tableJoinHolder = new TableJoinHolder(
 			fromTablePrimaryKey, joinTablePrimaryKey, joinFunction);
 

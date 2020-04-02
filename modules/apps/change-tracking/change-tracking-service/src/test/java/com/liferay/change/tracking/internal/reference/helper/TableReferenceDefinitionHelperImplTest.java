@@ -490,6 +490,27 @@ public class TableReferenceDefinitionHelperImplTest {
 
 				try {
 					tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+						fromStep -> fromStep.from(
+							MainExampleTable.INSTANCE
+						).innerJoinON(
+							ReferenceExampleTable.INSTANCE,
+							ReferenceExampleTable.INSTANCE.mainExampleId.eq(
+								MainExampleTable.INSTANCE.mainExampleId)
+						));
+				}
+				catch (IllegalArgumentException illegalArgumentException) {
+					Assert.assertEquals(
+						StringBundler.concat(
+							"From table should be a different table than ",
+							"\"MainExample\" for joinStep \"... from ",
+							"MainExample inner join ReferenceExample on ",
+							"ReferenceExample.mainExampleId = ",
+							"MainExample.mainExampleId\""),
+						illegalArgumentException.getMessage());
+				}
+
+				try {
+					tableReferenceDefinitionHelper.defineReferenceInnerJoin(
 						fromStep -> {
 							fromStep.as("test");
 

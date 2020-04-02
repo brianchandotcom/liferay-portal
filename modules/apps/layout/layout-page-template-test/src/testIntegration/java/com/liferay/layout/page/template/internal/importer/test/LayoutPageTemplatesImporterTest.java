@@ -534,7 +534,7 @@ public class LayoutPageTemplatesImporterTest {
 		Assert.assertEquals(
 			"Test image description", configJSONObject.getString("alt"));
 		Assert.assertEquals("www.test.com", configJSONObject.getString("href"));
-		Assert.assertEquals("Blank", configJSONObject.getString("target"));
+		Assert.assertEquals("_blank", configJSONObject.getString("target"));
 
 		JSONObject freeMarkerFragmentEntryProcessorJSONObject =
 			jsonObject.getJSONObject(
@@ -612,7 +612,7 @@ public class LayoutPageTemplatesImporterTest {
 
 		Assert.assertEquals("www.test.com", configJSONObject.getString("href"));
 
-		Assert.assertEquals("Blank", configJSONObject.getString("target"));
+		Assert.assertEquals("_blank", configJSONObject.getString("target"));
 
 		Assert.assertEquals(
 			"Edited Text", elementJSONObject.getString("en_US"));

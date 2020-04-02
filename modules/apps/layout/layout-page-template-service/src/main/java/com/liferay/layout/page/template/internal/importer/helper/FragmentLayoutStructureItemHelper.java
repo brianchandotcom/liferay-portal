@@ -227,6 +227,13 @@ public class FragmentLayoutStructureItemHelper
 			return jsonObject;
 		}
 
+		String target = (String)fragmentLinkMap.get("target");
+
+		if (target != null) {
+			jsonObject.put(
+				"target", "_" + StringUtil.lowerCaseFirstLetter(target));
+		}
+
 		Object value = hrefMap.get("value");
 
 		if (value != null) {
@@ -237,13 +244,6 @@ public class FragmentLayoutStructureItemHelper
 
 		_processMapping(
 			jsonObject, (Map<String, String>)hrefMap.get("mapping"));
-
-		String target = (String)fragmentLinkMap.get("target");
-
-		if (target != null) {
-			jsonObject.put(
-				"target", "_" + StringUtil.lowerCaseFirstLetter(target));
-		}
 
 		return jsonObject;
 	}

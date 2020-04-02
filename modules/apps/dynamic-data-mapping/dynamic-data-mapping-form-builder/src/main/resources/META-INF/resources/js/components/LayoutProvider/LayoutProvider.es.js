@@ -257,34 +257,30 @@ class LayoutProvider extends Component {
 			fieldActions,
 			spritemap,
 		} = this.props;
-		const {
-			activePage,
-			rules,
-			successPageSettings,
-		} = this.state;
+		const {activePage, rules, successPageSettings} = this.state;
 
-		if (children.length) {
-			for (let index = 0; index < children.length; index++) {
-				const child = children[index];
-
-				Object.assign(child.props, {
-					...this.otherProps(),
-					activePage,
-					allowSuccessPage,
-					defaultLanguageId,
-					editingLanguageId,
-					fieldActions,
-					focusedField: this.getFocusedField(),
-					pages: this.getPages(),
-					paginationMode: this.getPaginationMode(),
-					rules,
-					spritemap,
-					successPageSettings,
-				});
-			}
-		}
-
-		return <span>{children}</span>;
+		return (
+			<span>
+				{(children || []).map(child => ({
+					...child,
+					props: {
+						...child.props,
+						...this.otherProps(),
+						activePage,
+						allowSuccessPage,
+						defaultLanguageId,
+						editingLanguageId,
+						fieldActions,
+						focusedField: this.getFocusedField(),
+						pages: this.getPages(),
+						paginationMode: this.getPaginationMode(),
+						rules,
+						spritemap,
+						successPageSettings,
+					},
+				}))}
+			</span>
+		);
 	}
 
 	_fieldActionsValueFn() {

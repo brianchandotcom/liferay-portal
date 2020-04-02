@@ -1120,6 +1120,9 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.StringIndexOutOfBoundsException");
 	}
 
+	// Ignored because of the ticket LRQA-57518
+
+	@ignore = "true"
 	@priority = "4"
 	test ExportImportThemeSettings {
 		property osgi.app.includes = "frontend-theme-porygon";

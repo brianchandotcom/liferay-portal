@@ -95,7 +95,10 @@ definition {
 		Portlet.viewPG(portletName = "Hello World");
 	}
 
+	// Ignored because of the ticket LRQA-57518
+
 	@description = "This is a use case for LPS-74307."
+	@ignore = "true"
 	@priority = "5"
 	test AddSiteTemplateChangeCurrentTheme {
 		property osgi.app.includes = "frontend-theme-fjord";

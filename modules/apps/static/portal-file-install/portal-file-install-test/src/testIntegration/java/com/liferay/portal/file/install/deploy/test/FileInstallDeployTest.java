@@ -255,13 +255,12 @@ public class FileInstallDeployTest {
 		String testFragmentSymbolicName = _TEST_JAR_SYMBOLIC_NAME.concat(
 			".fragment");
 
-		String testFragmentJarName = testFragmentSymbolicName.concat(".jar");
-
 		Path path = Paths.get(
 			PropsValues.MODULE_FRAMEWORK_MODULES_DIR, _TEST_JAR_NAME);
 
 		Path fragmentPath = Paths.get(
-			PropsValues.MODULE_FRAMEWORK_MODULES_DIR, testFragmentJarName);
+			PropsValues.MODULE_FRAMEWORK_MODULES_DIR,
+			testFragmentSymbolicName.concat(".jar"));
 
 		CountDownLatch installCountDownLatch = new CountDownLatch(1);
 

@@ -95,12 +95,6 @@ public class AssetListEntryLocalServiceImpl
 			throw new PortalException();
 		}
 
-		assetListEntry.setModifiedDate(new Date());
-		assetListEntry.setAssetEntryType(
-			_getManualAssetEntryType(assetListEntryId));
-
-		assetListEntryPersistence.update(assetListEntry);
-
 		// Asset list entry segments entry rel
 
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
@@ -122,6 +116,12 @@ public class AssetListEntryLocalServiceImpl
 					assetListEntryId, assetEntryId, segmentsEntryId,
 					serviceContext);
 		}
+
+		assetListEntry.setModifiedDate(new Date());
+		assetListEntry.setAssetEntryType(
+			_getManualAssetEntryType(assetListEntryId));
+
+		assetListEntryPersistence.update(assetListEntry);
 	}
 
 	@Override
@@ -236,17 +236,17 @@ public class AssetListEntryLocalServiceImpl
 			throw new PortalException();
 		}
 
-		assetListEntry.setModifiedDate(new Date());
-		assetListEntry.setAssetEntryType(
-			_getManualAssetEntryType(assetListEntryId));
-
-		assetListEntryPersistence.update(assetListEntry);
-
 		// Asset list entry segments entry rel
 
 		_assetListEntryAssetEntryRelLocalService.
 			deleteAssetListEntryAssetEntryRel(
 				assetListEntryId, segmentsEntryId, position);
+
+		assetListEntry.setModifiedDate(new Date());
+		assetListEntry.setAssetEntryType(
+			_getManualAssetEntryType(assetListEntryId));
+
+		assetListEntryPersistence.update(assetListEntry);
 	}
 
 	@Override

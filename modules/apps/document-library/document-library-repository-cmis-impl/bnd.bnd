@@ -26,4 +26,7 @@ Import-Package:\
 	\
 	!org.relaxng.datatype.*,\
 	\
+	!org.springframework.osgi.io.*,\
+	!org.springframework.osgi.util.*,\
+	\
 	*

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -108,8 +107,7 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 		return LabelItemListBuilder.add(
 			() -> !StringUtil.equals(getNavigation(), "active-urls"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLUtil.clone(
-					currentURLObj, liferayPortletResponse);
+				PortletURL removeLabelURL = getPortletURL();
 
 				removeLabelURL.setParameter(getNavigationParam(), (String)null);
 
@@ -126,8 +124,7 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 		).add(
 			() -> _getFilterDate() != 0,
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLUtil.clone(
-					currentURLObj, liferayPortletResponse);
+				PortletURL removeLabelURL = getPortletURL();
 
 				removeLabelURL.setParameter("filterDate", (String)null);
 
@@ -218,8 +215,7 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 		return dropdownItem -> {
 			dropdownItem.setActive(days == _getFilterDate());
 
-			PortletURL portletURL = PortletURLUtil.clone(
-				currentURLObj, liferayPortletResponse);
+			PortletURL portletURL = getPortletURL();
 
 			portletURL.setParameter("filterDate", String.valueOf(days));
 

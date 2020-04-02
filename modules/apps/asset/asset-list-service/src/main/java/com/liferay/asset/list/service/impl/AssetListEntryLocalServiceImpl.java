@@ -15,10 +15,12 @@
 package com.liferay.asset.list.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -93,6 +96,8 @@ public class AssetListEntryLocalServiceImpl
 		}
 
 		assetListEntry.setModifiedDate(new Date());
+		assetListEntry.setAssetEntryType(
+			_getManualAssetEntryType(assetListEntryId));
 
 		assetListEntryPersistence.update(assetListEntry);
 
@@ -232,6 +237,8 @@ public class AssetListEntryLocalServiceImpl
 		}
 
 		assetListEntry.setModifiedDate(new Date());
+		assetListEntry.setAssetEntryType(
+			_getManualAssetEntryType(assetListEntryId));
 
 		assetListEntryPersistence.update(assetListEntry);
 
@@ -486,6 +493,37 @@ public class AssetListEntryLocalServiceImpl
 		return AssetEntry.class.getName();
 	}
 
+	private String _getManualAssetEntryType(long assetListEntryId) {
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRels(
+					assetListEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		if (ListUtil.isEmpty(assetListEntryAssetEntryRels)) {
+			return AssetEntry.class.getName();
+		}
+
+		String assetEntryType = StringPool.BLANK;
+
+		for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
+				assetListEntryAssetEntryRels) {
+
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				assetListEntryAssetEntryRel.getAssetEntryId());
+
+			if (Validator.isNull(assetEntryType)) {
+				assetEntryType = assetEntry.getClassName();
+			}
+			else if (!Objects.equals(
+						assetEntryType, assetEntry.getClassName())) {
+
+				return AssetEntry.class.getName();
+			}
+		}
+
+		return assetEntryType;
+	}
+
 	private String _getSegmentsAssetEntryType(
 		long assetListEntryId, long segmentsEntryId, String typeSettings) {
 
@@ -540,6 +578,9 @@ public class AssetListEntryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetListEntryLocalServiceImpl.class);
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private AssetListEntryAssetEntryRelLocalService

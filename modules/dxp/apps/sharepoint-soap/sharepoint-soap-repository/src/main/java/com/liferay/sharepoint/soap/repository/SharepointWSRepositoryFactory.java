@@ -58,7 +58,7 @@ public class SharepointWSRepositoryFactory implements RepositoryFactory {
 		SharepointWSRepository sharepointWSRepository =
 			new SharepointWSRepository();
 
-		setupRepository(
+		_setupRepository(
 			_repositoryLocalService.getRepository(repositoryId),
 			sharepointWSRepository);
 
@@ -74,7 +74,7 @@ public class SharepointWSRepositoryFactory implements RepositoryFactory {
 		return sharepointWSRepository;
 	}
 
-	protected void setupRepository(
+	private void _setupRepository(
 		com.liferay.portal.kernel.model.Repository repository,
 		BaseRepository baseRepository) {
 

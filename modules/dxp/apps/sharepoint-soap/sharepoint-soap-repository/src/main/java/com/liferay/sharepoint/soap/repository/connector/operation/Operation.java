@@ -33,7 +33,8 @@ public interface Operation {
 
 	public void setListsSoap12Stub(ListsSoap12Stub listsSoap12Stub);
 
-	public void setOperations(Map<Class<?>, Operation> operations);
+	public void setOperations(
+		Map<Class<? extends Operation>, Operation> operations);
 
 	public void setSharepointConnectionInfo(
 		SharepointConnectionInfo sharepointConnectionInfo);

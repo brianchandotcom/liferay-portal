@@ -59,37 +59,35 @@ public final class CopySharepointObjectOperation extends BaseOperation {
 		}
 
 		if (sharepointObject.isFile()) {
-			copyFile(path, newPath);
+			_copyFile(path, newPath);
 		}
 		else {
-			copyFolder(path, newPath);
+			_copyFolder(path, newPath);
 		}
 	}
 
-	protected void copyFile(String path, String newPath)
+	private void _copyFile(String path, String newPath)
 		throws SharepointException {
 
-		CopyIntoItemsLocalResponseDocument copyIntoItemsLocalResponseDocument =
-			null;
-
 		try {
-			copyIntoItemsLocalResponseDocument =
-				copySoap12Stub.copyIntoItemsLocal(
-					getCopyIntoItemsLocalDocument(path, newPath));
+			CopyIntoItemsLocalResponseDocument
+				copyIntoItemsLocalResponseDocument =
+					copySoap12Stub.copyIntoItemsLocal(
+						_getCopyIntoItemsLocalDocument(path, newPath));
+
+			_processCopyIntoItemsLocalResponseDocument(
+				copyIntoItemsLocalResponseDocument);
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(
 				remoteException, sharepointConnectionInfo);
 		}
-
-		processCopyIntoItemsLocalResponseDocument(
-			copyIntoItemsLocalResponseDocument);
 	}
 
-	protected void copyFolder(String path, String newPath)
+	private void _copyFolder(String path, String newPath)
 		throws SharepointException {
 
-		createFolder(newPath);
+		_createFolder(newPath);
 
 		List<SharepointObject> sharepointObjects =
 			_getSharepointObjectsByFolderOperation.execute(
@@ -103,15 +101,15 @@ public final class CopySharepointObjectOperation extends BaseOperation {
 				newPath, sharepointObject.getName());
 
 			if (sharepointObject.isFile()) {
-				copyFile(sharepointObjectPath, newSharepointObjectPath);
+				_copyFile(sharepointObjectPath, newSharepointObjectPath);
 			}
 			else {
-				copyFolder(sharepointObjectPath, newSharepointObjectPath);
+				_copyFolder(sharepointObjectPath, newSharepointObjectPath);
 			}
 		}
 	}
 
-	protected void createFolder(String folderPath) {
+	private void _createFolder(String folderPath) {
 		try {
 			String parentFolderPath = PathUtil.getParentFolderPath(folderPath);
 
@@ -128,7 +126,7 @@ public final class CopySharepointObjectOperation extends BaseOperation {
 		}
 	}
 
-	protected CopyIntoItemsLocalDocument getCopyIntoItemsLocalDocument(
+	private CopyIntoItemsLocalDocument _getCopyIntoItemsLocalDocument(
 		String path, String newPath) {
 
 		CopyIntoItemsLocalDocument copyIntoItemsLocalDocument =
@@ -149,7 +147,7 @@ public final class CopySharepointObjectOperation extends BaseOperation {
 		return copyIntoItemsLocalDocument;
 	}
 
-	protected Void processCopyIntoItemsLocalResponseDocument(
+	private void _processCopyIntoItemsLocalResponseDocument(
 			CopyIntoItemsLocalResponseDocument
 				copyIntoItemsLocalResponseDocument)
 		throws SharepointException {
@@ -168,8 +166,6 @@ public final class CopySharepointObjectOperation extends BaseOperation {
 				String.valueOf(copyResult.getErrorCode()),
 				copyResult.getErrorMessage());
 		}
-
-		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

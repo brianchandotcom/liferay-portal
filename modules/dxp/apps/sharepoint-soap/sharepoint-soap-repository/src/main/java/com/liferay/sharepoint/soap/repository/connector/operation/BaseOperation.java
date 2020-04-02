@@ -48,7 +48,9 @@ public abstract class BaseOperation implements Operation {
 	}
 
 	@Override
-	public void setOperations(Map<Class<?>, Operation> operations) {
+	public void setOperations(
+		Map<Class<? extends Operation>, Operation> operations) {
+
 		_operations = operations;
 	}
 
@@ -109,6 +111,6 @@ public abstract class BaseOperation implements Operation {
 	protected SharepointConnectionInfo sharepointConnectionInfo;
 	protected VersionsSoap12Stub versionsSoap12Stub;
 
-	private Map<Class<?>, Operation> _operations;
+	private Map<Class<? extends Operation>, Operation> _operations;
 
 }

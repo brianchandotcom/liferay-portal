@@ -30,7 +30,7 @@ public class BatchMethod extends BaseNode {
 		_batchFields = batchFields;
 	}
 
-	public static enum Command {
+	public enum Command {
 
 		DELETE("Delete"), NEW("New"), UPDATE("Update");
 

@@ -31,7 +31,7 @@ public class QueryValue extends BaseNode {
 		_value = value;
 	}
 
-	public static enum Type {
+	public enum Type {
 
 		INTEGER, LOOKUP, TEXT
 

@@ -52,6 +52,4 @@ public class SharepointConstants {
 
 	public static final String VIEW_DEFAULT = StringPool.BLANK;
 
-	public static final String WEB_ID_DEFAULT = StringPool.BLANK;
-
 }

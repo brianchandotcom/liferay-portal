@@ -81,12 +81,12 @@ public class SharepointConnectionImpl implements SharepointConnection {
 			serverVersion, serverProtocol, serverAddress, serverPort, sitePath,
 			libraryName, libraryPath, username, password);
 
-		initCopyStub();
-		initListsStub();
+		_initCopyStub();
+		_initListsStub();
 		initSharepointRootFolder();
-		initVersionsStub();
+		_initVersionsStub();
 
-		buildOperations();
+		_buildOperations();
 	}
 
 	@Override
@@ -280,7 +280,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 		_addOrUpdateFileOperation.execute(filePath, null, inputStream);
 	}
 
-	protected <O extends Operation> O buildOperation(Class<O> clazz) {
+	private <O extends Operation> O _buildOperation(Class<O> clazz) {
 		try {
 			O operation = clazz.newInstance();
 
@@ -300,42 +300,45 @@ public class SharepointConnectionImpl implements SharepointConnection {
 		}
 	}
 
-	protected void buildOperations() {
-		_addFolderOperation = buildOperation(AddFolderOperation.class);
-		_addOrUpdateFileOperation = buildOperation(
+	private void _buildOperations() {
+		_addFolderOperation = _buildOperation(AddFolderOperation.class);
+		_addOrUpdateFileOperation = _buildOperation(
 			AddOrUpdateFileOperation.class);
-		_batchOperation = buildOperation(BatchOperation.class);
-		_cancelCheckOutFileOperation = buildOperation(
+		_batchOperation = _buildOperation(BatchOperation.class);
+		_cancelCheckOutFileOperation = _buildOperation(
 			CancelCheckOutFileOperation.class);
-		_checkInFileOperation = buildOperation(CheckInFileOperation.class);
-		_checkOutFileOperation = buildOperation(CheckOutFileOperation.class);
-		_copySharepointObjectOperation = buildOperation(
+		_checkInFileOperation = _buildOperation(CheckInFileOperation.class);
+		_checkOutFileOperation = _buildOperation(CheckOutFileOperation.class);
+		_copySharepointObjectOperation = _buildOperation(
 			CopySharepointObjectOperation.class);
-		_deleteSharepointObjectOperation = buildOperation(
+		_deleteSharepointObjectOperation = _buildOperation(
 			DeleteSharepointObjectOperation.class);
-		_getInputStreamOperation = buildOperation(
+		_getInputStreamOperation = _buildOperation(
 			GetInputStreamOperation.class);
-		_getSharepointObjectByIdOperation = buildOperation(
+		_getSharepointObjectByIdOperation = _buildOperation(
 			GetSharepointObjectByIdOperation.class);
-		_getSharepointObjectByPathOperation = buildOperation(
+		_getSharepointObjectByPathOperation = _buildOperation(
 			GetSharepointObjectByPathOperation.class);
-		_getSharepointObjectsByFolderOperation = buildOperation(
+		_getSharepointObjectsByFolderOperation = _buildOperation(
 			GetSharepointObjectsByFolderOperation.class);
-		_getSharepointObjectsByNameOperation = buildOperation(
+		_getSharepointObjectsByNameOperation = _buildOperation(
 			GetSharepointObjectsByNameOperation.class);
-		_getSharepointObjectsByQueryOperation = buildOperation(
+		_getSharepointObjectsByQueryOperation = _buildOperation(
 			GetSharepointObjectsByQueryOperation.class);
-		_getSharepointVersionsOperation = buildOperation(
+		_getSharepointVersionsOperation = _buildOperation(
 			GetSharepointVersionsOperation.class);
-		_moveSharepointObjectOperation = buildOperation(
+		_moveSharepointObjectOperation = _buildOperation(
 			MoveSharepointObjectOperation.class);
 
-		Set<Map.Entry<Class<?>, Operation>> set = _operations.entrySet();
+		Set<Map.Entry<Class<? extends Operation>, Operation>> set =
+			_operations.entrySet();
 
-		Iterator<Map.Entry<Class<?>, Operation>> iterator = set.iterator();
+		Iterator<Map.Entry<Class<? extends Operation>, Operation>> iterator =
+			set.iterator();
 
 		while (iterator.hasNext()) {
-			Map.Entry<Class<?>, Operation> entry = iterator.next();
+			Map.Entry<Class<? extends Operation>, Operation> entry =
+				iterator.next();
 
 			Operation operation = entry.getValue();
 
@@ -343,7 +346,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 		}
 	}
 
-	protected void configureStub(Stub stub, URL url) throws Exception {
+	private void _configureStub(Stub stub, URL url) {
 		ServiceClient serviceClient = stub._getServiceClient();
 
 		Options options = serviceClient.getOptions();
@@ -362,20 +365,20 @@ public class SharepointConnectionImpl implements SharepointConnection {
 		options.setProperty(HTTPConstants.AUTHENTICATE, authenticator);
 	}
 
-	protected URL getServiceURL(String serviceName) {
+	private URL _getServiceURL(String serviceName) {
 		URL url = _sharepointConnectionInfo.getServiceURL();
 
 		return URLUtil.toURL(
 			StringBundler.concat(url, "_vti_bin/", serviceName, ".asmx"));
 	}
 
-	protected void initCopyStub() {
-		URL serviceURL = getServiceURL("copy");
+	private void _initCopyStub() {
+		URL serviceURL = _getServiceURL("copy");
 
 		try {
 			_copySoap12Stub = new CopySoap12Stub(null, serviceURL.toString());
 
-			configureStub(_copySoap12Stub, serviceURL);
+			_configureStub(_copySoap12Stub, serviceURL);
 		}
 		catch (Exception exception) {
 			throw new SharepointRuntimeException(
@@ -383,14 +386,14 @@ public class SharepointConnectionImpl implements SharepointConnection {
 		}
 	}
 
-	protected void initListsStub() {
-		URL serviceURL = getServiceURL("lists");
+	private void _initListsStub() {
+		URL serviceURL = _getServiceURL("lists");
 
 		try {
 			_listsSoap12Stub = new ListsSoap12Stub(
 				null, serviceURL.toExternalForm());
 
-			configureStub(_listsSoap12Stub, serviceURL);
+			_configureStub(_listsSoap12Stub, serviceURL);
 		}
 		catch (Exception exception) {
 			throw new SharepointRuntimeException(
@@ -398,14 +401,14 @@ public class SharepointConnectionImpl implements SharepointConnection {
 		}
 	}
 
-	protected void initVersionsStub() {
-		URL serviceURL = getServiceURL("versions");
+	private void _initVersionsStub() {
+		URL serviceURL = _getServiceURL("versions");
 
 		try {
 			_versionsSoap12Stub = new VersionsSoap12Stub(
 				null, serviceURL.toExternalForm());
 
-			configureStub(_versionsSoap12Stub, serviceURL);
+			_configureStub(_versionsSoap12Stub, serviceURL);
 		}
 		catch (Exception exception) {
 			throw new SharepointRuntimeException(
@@ -435,7 +438,8 @@ public class SharepointConnectionImpl implements SharepointConnection {
 	private GetSharepointVersionsOperation _getSharepointVersionsOperation;
 	private ListsSoap12Stub _listsSoap12Stub;
 	private MoveSharepointObjectOperation _moveSharepointObjectOperation;
-	private final Map<Class<?>, Operation> _operations = new HashMap<>();
+	private final Map<Class<? extends Operation>, Operation> _operations =
+		new HashMap<>();
 	private final SharepointConnectionInfo _sharepointConnectionInfo;
 	private SharepointObject _sharepointRootFolder;
 	private VersionsSoap12Stub _versionsSoap12Stub;

@@ -42,42 +42,45 @@ public final class GetSharepointObjectsByFolderOperation extends BaseOperation {
 			SharepointConnection.ObjectTypeFilter objectTypeFilter)
 		throws SharepointException {
 
-		Query query = null;
+		return _getSharepointObjectsByQueryOperation.execute(
+			_getQuery(objectTypeFilter),
+			new QueryOptionsList(
+				new FolderQueryOption(toFullPath(folderPath))));
+	}
+
+	private Query _getQuery(
+		SharepointConnection.ObjectTypeFilter objectTypeFilter) {
 
 		if (objectTypeFilter.equals(
 				SharepointConnection.ObjectTypeFilter.ALL)) {
 
-			query = new Query(null);
+			return new Query(null);
 		}
-		else if (objectTypeFilter.equals(
+
+		if (objectTypeFilter.equals(
 					SharepointConnection.ObjectTypeFilter.FILES)) {
 
-			query = new Query(
+			return new Query(
 				new EqOperator(
 					new QueryField("FSObjType"),
 					new QueryValue(
 						QueryValue.Type.LOOKUP,
 						SharepointConstants.FS_OBJ_TYPE_FILE)));
 		}
-		else if (objectTypeFilter.equals(
+
+		if (objectTypeFilter.equals(
 					SharepointConnection.ObjectTypeFilter.FOLDERS)) {
 
-			query = new Query(
+			return new Query(
 				new EqOperator(
 					new QueryField("FSObjType"),
 					new QueryValue(
 						QueryValue.Type.LOOKUP,
 						SharepointConstants.FS_OBJ_TYPE_FOLDER)));
 		}
-		else {
-			throw new UnsupportedOperationException(
-				"Unsupported object type filter " + objectTypeFilter);
-		}
 
-		return _getSharepointObjectsByQueryOperation.execute(
-			query,
-			new QueryOptionsList(
-				new FolderQueryOption(toFullPath(folderPath))));
+		throw new UnsupportedOperationException(
+			"Unsupported object type filter " + objectTypeFilter);
 	}
 
 	private GetSharepointObjectsByQueryOperation

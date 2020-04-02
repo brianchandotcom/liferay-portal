@@ -103,9 +103,7 @@ public class SharepointConnectionInfo {
 				"Site path must start with a forward slash");
 		}
 
-		if (!sitePath.equals(StringPool.SLASH) &&
-			sitePath.endsWith(StringPool.SLASH)) {
-
+		if (sitePath.endsWith(StringPool.SLASH)) {
 			throw new IllegalArgumentException(
 				"Site path must not end with a forward slash");
 		}

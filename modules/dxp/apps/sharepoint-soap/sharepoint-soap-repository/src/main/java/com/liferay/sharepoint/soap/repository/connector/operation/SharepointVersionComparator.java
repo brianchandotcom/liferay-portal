@@ -39,13 +39,16 @@ public class SharepointVersionComparator
 		if (versionParts1[0] > versionParts2[0]) {
 			return -1;
 		}
-		else if (versionParts1[0] < versionParts2[0]) {
+
+		if (versionParts1[0] < versionParts2[0]) {
 			return 1;
 		}
-		else if (versionParts1[1] > versionParts2[1]) {
+
+		if (versionParts1[1] > versionParts2[1]) {
 			return -1;
 		}
-		else if (versionParts1[1] < versionParts2[1]) {
+
+		if (versionParts1[1] < versionParts2[1]) {
 			return 1;
 		}
 

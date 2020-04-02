@@ -52,16 +52,16 @@ public final class GetInputStreamOperation extends BaseOperation {
 	public InputStream execute(SharepointObject sharepointObject)
 		throws SharepointException {
 
-		return execute(sharepointObject.getURL());
+		return _execute(sharepointObject.getURL());
 	}
 
 	public InputStream execute(SharepointVersion sharepointVersion)
 		throws SharepointException {
 
-		return execute(sharepointVersion.getURL());
+		return _execute(sharepointVersion.getURL());
 	}
 
-	protected InputStream execute(URL url) throws SharepointException {
+	private InputStream _execute(URL url) throws SharepointException {
 		url = URLUtil.escapeURL(url);
 
 		HttpGet httpGet = new HttpGet(url.toString());

@@ -30,7 +30,7 @@ public class Batch extends BaseNode {
 		_batchMethods = batchMethods;
 	}
 
-	public static enum OnError {
+	public enum OnError {
 
 		CONTINUE, RETURN
 

@@ -52,18 +52,16 @@ public final class GetObjectsByQueryPacketOperation extends BaseOperation {
 	public List<SharepointObject> execute(String queryPacket)
 		throws SharepointException {
 
-		QueryResponseDocument queryResponseDocument = null;
-
 		try {
-			queryResponseDocument = _queryServiceSoap12Stub.query(
-				getQueryDocument(queryPacket));
+			QueryResponseDocument queryResponseDocument =
+				_queryServiceSoap12Stub.query(_getQueryDocument(queryPacket));
+
+			return _getSharepointObjects(queryResponseDocument);
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(
 				remoteException, sharepointConnectionInfo);
 		}
-
-		return getSharepointObjects(queryResponseDocument);
 	}
 
 	public void setQueryServiceSoap12Stub(
@@ -72,7 +70,7 @@ public final class GetObjectsByQueryPacketOperation extends BaseOperation {
 		_queryServiceSoap12Stub = queryServiceSoap12Stub;
 	}
 
-	protected QueryDocument getQueryDocument(String queryPacket) {
+	private QueryDocument _getQueryDocument(String queryPacket) {
 		QueryDocument queryDocument = QueryDocument.Factory.newInstance();
 
 		QueryDocument.Query query = queryDocument.addNewQuery();
@@ -82,7 +80,7 @@ public final class GetObjectsByQueryPacketOperation extends BaseOperation {
 		return queryDocument;
 	}
 
-	protected List<SharepointObject> getSharepointObjects(
+	private List<SharepointObject> _getSharepointObjects(
 			QueryResponseDocument queryResponseDocument)
 		throws SharepointException {
 

@@ -29,21 +29,20 @@ import java.rmi.RemoteException;
 public final class CheckOutFileOperation extends BaseOperation {
 
 	public boolean execute(String filePath) throws SharepointException {
-		CheckOutFileResponseDocument checkOutFileResponseDocument = null;
-
 		try {
-			checkOutFileResponseDocument = listsSoap12Stub.checkOutFile(
-				getCheckOutFileDocument(filePath));
+			CheckOutFileResponseDocument checkOutFileResponseDocument =
+				listsSoap12Stub.checkOutFile(
+					_getCheckOutFileDocument(filePath));
+
+			return _getResponse(checkOutFileResponseDocument);
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(
 				remoteException, sharepointConnectionInfo);
 		}
-
-		return getResponse(checkOutFileResponseDocument);
 	}
 
-	protected CheckOutFileDocument getCheckOutFileDocument(String filePath) {
+	private CheckOutFileDocument _getCheckOutFileDocument(String filePath) {
 		CheckOutFileDocument checkOutFileDocument =
 			CheckOutFileDocument.Factory.newInstance();
 
@@ -57,7 +56,7 @@ public final class CheckOutFileOperation extends BaseOperation {
 		return checkOutFileDocument;
 	}
 
-	protected boolean getResponse(
+	private boolean _getResponse(
 		CheckOutFileResponseDocument checkOutFileResponseDocument) {
 
 		CheckOutFileResponseDocument.CheckOutFileResponse checkOutFileResponse =

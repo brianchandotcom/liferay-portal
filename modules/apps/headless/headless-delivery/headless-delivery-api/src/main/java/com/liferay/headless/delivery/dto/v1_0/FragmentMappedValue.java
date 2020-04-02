@@ -41,56 +41,28 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("InlineValue")
+@GraphQLName("FragmentMappedValue")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "InlineValue")
-public class InlineValue {
-
-	@Schema
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	@JsonIgnore
-	public void setValue(
-		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
-
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String value;
+@XmlRootElement(name = "FragmentMappedValue")
+public class FragmentMappedValue {
 
 	@Schema
 	@Valid
-	public Map<String, String> getValue_i18n() {
-		return value_i18n;
+	public FragmentInlineValue getDefaultValue() {
+		return defaultValue;
 	}
 
-	public void setValue_i18n(Map<String, String> value_i18n) {
-		this.value_i18n = value_i18n;
+	public void setDefaultValue(FragmentInlineValue defaultValue) {
+		this.defaultValue = defaultValue;
 	}
 
 	@JsonIgnore
-	public void setValue_i18n(
-		UnsafeSupplier<Map<String, String>, Exception>
-			value_i18nUnsafeSupplier) {
+	public void setDefaultValue(
+		UnsafeSupplier<FragmentInlineValue, Exception>
+			defaultValueUnsafeSupplier) {
 
 		try {
-			value_i18n = value_i18nUnsafeSupplier.get();
+			defaultValue = defaultValueUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -102,7 +74,36 @@ public class InlineValue {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, String> value_i18n;
+	protected FragmentInlineValue defaultValue;
+
+	@Schema
+	@Valid
+	public Mapping getMapping() {
+		return mapping;
+	}
+
+	public void setMapping(Mapping mapping) {
+		this.mapping = mapping;
+	}
+
+	@JsonIgnore
+	public void setMapping(
+		UnsafeSupplier<Mapping, Exception> mappingUnsafeSupplier) {
+
+		try {
+			mapping = mappingUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Mapping mapping;
 
 	@Override
 	public boolean equals(Object object) {
@@ -110,13 +111,13 @@ public class InlineValue {
 			return true;
 		}
 
-		if (!(object instanceof InlineValue)) {
+		if (!(object instanceof FragmentMappedValue)) {
 			return false;
 		}
 
-		InlineValue inlineValue = (InlineValue)object;
+		FragmentMappedValue fragmentMappedValue = (FragmentMappedValue)object;
 
-		return Objects.equals(toString(), inlineValue.toString());
+		return Objects.equals(toString(), fragmentMappedValue.toString());
 	}
 
 	@Override
@@ -131,28 +132,24 @@ public class InlineValue {
 
 		sb.append("{");
 
-		if (value != null) {
+		if (defaultValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"value\": ");
+			sb.append("\"defaultValue\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(value));
-
-			sb.append("\"");
+			sb.append(String.valueOf(defaultValue));
 		}
 
-		if (value_i18n != null) {
+		if (mapping != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"value_i18n\": ");
+			sb.append("\"mapping\": ");
 
-			sb.append(_toJSON(value_i18n));
+			sb.append(String.valueOf(mapping));
 		}
 
 		sb.append("}");
@@ -161,7 +158,7 @@ public class InlineValue {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.InlineValue",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentMappedValue",
 		name = "x-class-name"
 	)
 	public String xClassName;

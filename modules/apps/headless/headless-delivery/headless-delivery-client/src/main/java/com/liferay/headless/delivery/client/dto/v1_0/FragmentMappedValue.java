@@ -15,9 +15,8 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.InlineValueSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.FragmentMappedValueSerDes;
 
-import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -27,54 +26,54 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class InlineValue implements Cloneable {
+public class FragmentMappedValue implements Cloneable {
 
-	public String getValue() {
-		return value;
+	public FragmentInlineValue getDefaultValue() {
+		return defaultValue;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public void setDefaultValue(FragmentInlineValue defaultValue) {
+		this.defaultValue = defaultValue;
 	}
 
-	public void setValue(
-		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
+	public void setDefaultValue(
+		UnsafeSupplier<FragmentInlineValue, Exception>
+			defaultValueUnsafeSupplier) {
 
 		try {
-			value = valueUnsafeSupplier.get();
+			defaultValue = defaultValueUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String value;
+	protected FragmentInlineValue defaultValue;
 
-	public Map<String, String> getValue_i18n() {
-		return value_i18n;
+	public Mapping getMapping() {
+		return mapping;
 	}
 
-	public void setValue_i18n(Map<String, String> value_i18n) {
-		this.value_i18n = value_i18n;
+	public void setMapping(Mapping mapping) {
+		this.mapping = mapping;
 	}
 
-	public void setValue_i18n(
-		UnsafeSupplier<Map<String, String>, Exception>
-			value_i18nUnsafeSupplier) {
+	public void setMapping(
+		UnsafeSupplier<Mapping, Exception> mappingUnsafeSupplier) {
 
 		try {
-			value_i18n = value_i18nUnsafeSupplier.get();
+			mapping = mappingUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Map<String, String> value_i18n;
+	protected Mapping mapping;
 
 	@Override
-	public InlineValue clone() throws CloneNotSupportedException {
-		return (InlineValue)super.clone();
+	public FragmentMappedValue clone() throws CloneNotSupportedException {
+		return (FragmentMappedValue)super.clone();
 	}
 
 	@Override
@@ -83,13 +82,13 @@ public class InlineValue implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof InlineValue)) {
+		if (!(object instanceof FragmentMappedValue)) {
 			return false;
 		}
 
-		InlineValue inlineValue = (InlineValue)object;
+		FragmentMappedValue fragmentMappedValue = (FragmentMappedValue)object;
 
-		return Objects.equals(toString(), inlineValue.toString());
+		return Objects.equals(toString(), fragmentMappedValue.toString());
 	}
 
 	@Override
@@ -100,7 +99,7 @@ public class InlineValue implements Cloneable {
 	}
 
 	public String toString() {
-		return InlineValueSerDes.toJSON(this);
+		return FragmentMappedValueSerDes.toJSON(this);
 	}
 
 }

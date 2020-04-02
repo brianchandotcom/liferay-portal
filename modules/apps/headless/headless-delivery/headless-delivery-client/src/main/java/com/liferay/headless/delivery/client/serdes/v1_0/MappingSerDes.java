@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.InlineValue;
+import com.liferay.headless.delivery.client.dto.v1_0.Mapping;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class InlineValueSerDes {
+public class MappingSerDes {
 
-	public static InlineValue toDTO(String json) {
-		InlineValueJSONParser inlineValueJSONParser =
-			new InlineValueJSONParser();
+	public static Mapping toDTO(String json) {
+		MappingJSONParser mappingJSONParser = new MappingJSONParser();
 
-		return inlineValueJSONParser.parseToDTO(json);
+		return mappingJSONParser.parseToDTO(json);
 	}
 
-	public static InlineValue[] toDTOs(String json) {
-		InlineValueJSONParser inlineValueJSONParser =
-			new InlineValueJSONParser();
+	public static Mapping[] toDTOs(String json) {
+		MappingJSONParser mappingJSONParser = new MappingJSONParser();
 
-		return inlineValueJSONParser.parseToDTOs(json);
+		return mappingJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(InlineValue inlineValue) {
-		if (inlineValue == null) {
+	public static String toJSON(Mapping mapping) {
+		if (mapping == null) {
 			return "null";
 		}
 
@@ -55,28 +53,32 @@ public class InlineValueSerDes {
 
 		sb.append("{");
 
-		if (inlineValue.getValue() != null) {
+		if (mapping.getFieldKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"value\": ");
+			sb.append("\"fieldKey\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(inlineValue.getValue()));
+			sb.append(_escape(mapping.getFieldKey()));
 
 			sb.append("\"");
 		}
 
-		if (inlineValue.getValue_i18n() != null) {
+		if (mapping.getItemKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"value_i18n\": ");
+			sb.append("\"itemKey\": ");
 
-			sb.append(_toJSON(inlineValue.getValue_i18n()));
+			sb.append("\"");
+
+			sb.append(_escape(mapping.getItemKey()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -85,64 +87,60 @@ public class InlineValueSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		InlineValueJSONParser inlineValueJSONParser =
-			new InlineValueJSONParser();
+		MappingJSONParser mappingJSONParser = new MappingJSONParser();
 
-		return inlineValueJSONParser.parseToMap(json);
+		return mappingJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(InlineValue inlineValue) {
-		if (inlineValue == null) {
+	public static Map<String, String> toMap(Mapping mapping) {
+		if (mapping == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (inlineValue.getValue() == null) {
-			map.put("value", null);
+		if (mapping.getFieldKey() == null) {
+			map.put("fieldKey", null);
 		}
 		else {
-			map.put("value", String.valueOf(inlineValue.getValue()));
+			map.put("fieldKey", String.valueOf(mapping.getFieldKey()));
 		}
 
-		if (inlineValue.getValue_i18n() == null) {
-			map.put("value_i18n", null);
+		if (mapping.getItemKey() == null) {
+			map.put("itemKey", null);
 		}
 		else {
-			map.put("value_i18n", String.valueOf(inlineValue.getValue_i18n()));
+			map.put("itemKey", String.valueOf(mapping.getItemKey()));
 		}
 
 		return map;
 	}
 
-	public static class InlineValueJSONParser
-		extends BaseJSONParser<InlineValue> {
+	public static class MappingJSONParser extends BaseJSONParser<Mapping> {
 
 		@Override
-		protected InlineValue createDTO() {
-			return new InlineValue();
+		protected Mapping createDTO() {
+			return new Mapping();
 		}
 
 		@Override
-		protected InlineValue[] createDTOArray(int size) {
-			return new InlineValue[size];
+		protected Mapping[] createDTOArray(int size) {
+			return new Mapping[size];
 		}
 
 		@Override
 		protected void setField(
-			InlineValue inlineValue, String jsonParserFieldName,
+			Mapping mapping, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "value")) {
+			if (Objects.equals(jsonParserFieldName, "fieldKey")) {
 				if (jsonParserFieldValue != null) {
-					inlineValue.setValue((String)jsonParserFieldValue);
+					mapping.setFieldKey((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "value_i18n")) {
+			else if (Objects.equals(jsonParserFieldName, "itemKey")) {
 				if (jsonParserFieldValue != null) {
-					inlineValue.setValue_i18n(
-						(Map)InlineValueSerDes.toMap(
-							(String)jsonParserFieldValue));
+					mapping.setItemKey((String)jsonParserFieldValue);
 				}
 			}
 			else {

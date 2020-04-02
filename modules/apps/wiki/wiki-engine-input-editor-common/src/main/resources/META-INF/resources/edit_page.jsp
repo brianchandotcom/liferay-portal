@@ -34,6 +34,7 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 		editorName="<%= baseWikiEngine.getEditorName() %>"
 		fileBrowserParams="<%= fileBrowserParams %>"
 		name="contentEditor"
+		placeholder="content"
 		toolbarSet="<%= baseWikiEngine.getToolbarSet() %>"
 	/>
 

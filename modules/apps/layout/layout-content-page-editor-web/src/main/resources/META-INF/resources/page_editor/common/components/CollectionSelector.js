@@ -20,6 +20,7 @@ import ItemSelector from './ItemSelector';
 
 export default function CollectionSelector({
 	collectionTitle,
+	itemSelectorURL,
 	label,
 	onCollectionSelect,
 }) {
@@ -28,7 +29,7 @@ export default function CollectionSelector({
 	return (
 		<ItemSelector
 			eventName={eventName}
-			itemSelectorURL={config.infoListSelectorURL}
+			itemSelectorURL={itemSelectorURL || config.infoListSelectorURL}
 			label={label}
 			onItemSelect={onCollectionSelect}
 			selectedItemTitle={collectionTitle}

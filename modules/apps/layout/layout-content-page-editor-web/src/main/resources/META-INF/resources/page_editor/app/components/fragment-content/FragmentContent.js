@@ -173,14 +173,18 @@ const FragmentContent = React.forwardRef(
 						) || {}
 					).uuid;
 
+					const Component = () =>
+						mainItemId && (
+							<PageEditor
+								mainItemId={mainItemId}
+								withinMasterPage
+							/>
+						);
+
+					Component.displayName = 'DropZoneComponent';
+
 					return {
-						Component: () =>
-							mainItemId && (
-								<PageEditor
-									mainItemId={mainItemId}
-									withinMasterPage
-								/>
-							),
+						Component,
 						element: dropZoneElement,
 					};
 				}
@@ -238,6 +242,8 @@ const FragmentContent = React.forwardRef(
 		);
 	}
 );
+
+FragmentContent.displayName = 'FragmentContent';
 
 FragmentContent.propTypes = {
 	fragmentEntryLinkId: PropTypes.string.isRequired,

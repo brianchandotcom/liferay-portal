@@ -65,6 +65,8 @@ const TopperListItem = React.forwardRef(
 	)
 );
 
+TopperListItem.displayName = 'TopperListItem';
+
 TopperListItem.propTypes = {
 	expand: PropTypes.bool,
 };

@@ -4,7 +4,7 @@ dependencies {
 	compileInclude group: "net.minidev", name: "accessors-smart", version: "1.1"
 	compileInclude group: "net.minidev", name: "json-smart", version: "2.2.1"
 
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.10"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"

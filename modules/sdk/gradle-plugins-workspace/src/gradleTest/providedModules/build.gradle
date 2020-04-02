@@ -1,7 +1,7 @@
 task runGradleTest
 
 dependencies {
-	providedModules group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.10"
+	providedModules group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
 	providedModules group: "com.google.guava", name: "guava", version: "23.0"
 }
 

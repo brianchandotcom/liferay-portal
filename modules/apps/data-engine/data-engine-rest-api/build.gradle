@@ -2,7 +2,7 @@ dependencies {
 	compileInclude group: "org.jodd", name: "jodd-bean", version: "3.6.4"
 	compileInclude group: "org.jodd", name: "jodd-core", version: "3.6.4"
 
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.10"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "io.swagger.core.v3", name: "swagger-annotations", version: "2.0.5"
 	compileOnly group: "javax.validation", name: "validation-api", version: "2.0.1.Final"

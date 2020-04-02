@@ -99,6 +99,22 @@ public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 							"addedItemId", layoutStructureItem.getItemId());
 					});
 		}
+		else if (Objects.equals(
+					itemType, LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
+
+			layoutDataJSONObject =
+				LayoutStructureUtil.updateLayoutPageTemplateData(
+					themeDisplay.getScopeGroupId(), segmentsExperienceId,
+					themeDisplay.getPlid(),
+					layoutStructure -> {
+						LayoutStructureItem layoutStructureItem =
+							layoutStructure.addCollectionLayoutStructureItem(
+								parentItemId, position);
+
+						jsonObject.put(
+							"addedItemId", layoutStructureItem.getItemId());
+					});
+		}
 		else {
 			layoutDataJSONObject =
 				LayoutStructureUtil.updateLayoutPageTemplateData(

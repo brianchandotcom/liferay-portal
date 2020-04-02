@@ -1096,6 +1096,74 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-106778. Add a content page with fragments. Can reorganize them."
+	@priority = "5"
+	test ReorganizeFragmentsInContentPage {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a Button fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Add a Heading fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		}
+
+		task ("Navigate to the content page's 'Edit Mode'") {
+			ContentPages.clickPencil();
+		}
+
+		task ("View Rich Text frgament is on top of Title fragment") {
+			PageEditor.viewFragmentOrder(
+				fragmentName = "Heading",
+				position = "1");
+
+			PageEditor.viewFragmentOrder(
+				fragmentName = "Button",
+				position = "2");
+		}
+
+		task ("Move the fragment") {
+			PageEditor.clickConfigurableField(fragmentName = "Button");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				id = "element-text",
+				key_dragFragmentName = "Button",
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#FRAGMENT_HEADER_DRAG_HANDLER",
+				locator2 = "Fragment#EDITABLE_FIELD",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Assert the Title fragment is on top of Rich Text frgament") {
+			PageEditor.viewFragmentOrder(
+				fragmentName = "Button",
+				position = "1");
+
+			PageEditor.viewFragmentOrder(
+				fragmentName = "Heading",
+				position = "2");
+		}
+	}
+
 	@description = "This is a test for LPS-107285. When the Section fragment is duplicated, the configuration of it and its components should also be duplicated."
 	@priority = "4"
 	test ViewConfigurationDuplicatedWhenDuplicateSectionWithHeading {

@@ -190,7 +190,7 @@ describe('Languages', () => {
 		expect(queryAllByText(dropdownMenuLast, 'move-down')).toHaveLength(0);
 	});
 
-	it('move up the second element', () => {
+	it('move up the third element', () => {
 		const result = renderLanguagesComponent({
 			...defaultProps,
 			inheritLocales: false,
@@ -198,12 +198,12 @@ describe('Languages', () => {
 		});
 
 		expect(
-			result.container.querySelectorAll('tbody > tr')[1].textContent
-		).toBe('bdefault');
-		fireEvent.click(result.getAllByText('move-up')[0]);
+			result.container.querySelectorAll('tbody > tr')[2].textContent
+		).toBe('c');
+		fireEvent.click(result.getAllByText('move-up')[1]);
 		expect(
-			result.container.querySelectorAll('tbody > tr')[0].textContent
-		).toBe('bdefault');
+			result.container.querySelectorAll('tbody > tr')[1].textContent
+		).toBe('c');
 	});
 
 	it('move down the first element', () => {

@@ -122,6 +122,68 @@ public class RedirectNotFoundEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetRedirectNotFoundEntriesReturnsActiveEntries() {
+		RedirectNotFoundEntry activeRedirectNotFoundEntry =
+			_addOrUpdateRedirectNotFoundEntry("url1", false);
+		_addOrUpdateRedirectNotFoundEntry("url2", true);
+
+		List<RedirectNotFoundEntry> activeRedirectNotFoundEntries =
+			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntries(
+				_group.getGroupId(), false, null, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			activeRedirectNotFoundEntries.toString(), 1,
+			activeRedirectNotFoundEntries.size());
+
+		Assert.assertEquals(
+			activeRedirectNotFoundEntry, activeRedirectNotFoundEntries.get(0));
+	}
+
+	@Test
+	public void testGetRedirectNotFoundEntriesReturnsAllEntries() {
+		RedirectNotFoundEntry activeRedirectNotFoundEntry =
+			_addOrUpdateRedirectNotFoundEntry("url1", false);
+		RedirectNotFoundEntry ignoredRedirectNotFoundEntry =
+			_addOrUpdateRedirectNotFoundEntry("url2", true);
+
+		List<RedirectNotFoundEntry> allRedirectNotFoundEntries =
+			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntries(
+				_group.getGroupId(), null, null, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			allRedirectNotFoundEntries.toString(), 2,
+			allRedirectNotFoundEntries.size());
+
+		Assert.assertEquals(
+			activeRedirectNotFoundEntry, allRedirectNotFoundEntries.get(0));
+
+		Assert.assertEquals(
+			ignoredRedirectNotFoundEntry, allRedirectNotFoundEntries.get(1));
+	}
+
+	@Test
+	public void testGetRedirectNotFoundEntriesReturnsIgnoredEntries() {
+		_addOrUpdateRedirectNotFoundEntry("url1", false);
+		RedirectNotFoundEntry ignoredRedirectNotFoundEntry =
+			_addOrUpdateRedirectNotFoundEntry("url2", true);
+
+		List<RedirectNotFoundEntry> ignoredRedirectNotFoundEntries =
+			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntries(
+				_group.getGroupId(), true, null, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			ignoredRedirectNotFoundEntries.toString(), 1,
+			ignoredRedirectNotFoundEntries.size());
+
+		Assert.assertEquals(
+			ignoredRedirectNotFoundEntry,
+			ignoredRedirectNotFoundEntries.get(0));
+	}
+
+	@Test
 	public void testGetRedirectNotFoundEntriesWithMinimumModifiedDate() {
 		Instant instant = Instant.now();
 
@@ -147,6 +209,41 @@ public class RedirectNotFoundEntryLocalServiceTest {
 			redirectNotFoundEntry, redirectNotFoundEntries.get(0));
 	}
 
+	@Test
+	public void testUpdateRedirectNotFoundEntryChangesTheIgnoredFlag()
+		throws Exception {
+
+		RedirectNotFoundEntry redirectNotFoundEntry =
+			_addOrUpdateRedirectNotFoundEntry("url", false);
+
+		List<RedirectNotFoundEntry> redirectNotFoundEntries =
+			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntries(
+				_group.getGroupId(), false, null, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			redirectNotFoundEntries.toString(), 1,
+			redirectNotFoundEntries.size());
+
+		Assert.assertEquals(
+			redirectNotFoundEntry, redirectNotFoundEntries.get(0));
+
+		_redirectNotFoundEntryLocalService.updateRedirectNotFoundEntry(
+			redirectNotFoundEntry.getRedirectNotFoundEntryId(), true);
+
+		redirectNotFoundEntries =
+			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntries(
+				_group.getGroupId(), true, null, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			redirectNotFoundEntries.toString(), 1,
+			redirectNotFoundEntries.size());
+
+		Assert.assertEquals(
+			redirectNotFoundEntry, redirectNotFoundEntries.get(0));
+	}
+
 	private RedirectNotFoundEntry _addOrUpdateRedirectNotFoundEntry(
 		String url) {
 
@@ -159,6 +256,18 @@ public class RedirectNotFoundEntryLocalServiceTest {
 		}
 
 		return redirectNotFoundEntry;
+	}
+
+	private RedirectNotFoundEntry _addOrUpdateRedirectNotFoundEntry(
+		String url, Boolean ignored) {
+
+		RedirectNotFoundEntry redirectNotFoundEntry =
+			_addOrUpdateRedirectNotFoundEntry(url);
+
+		redirectNotFoundEntry.setIgnored(ignored);
+
+		return _redirectNotFoundEntryLocalService.updateRedirectNotFoundEntry(
+			redirectNotFoundEntry);
 	}
 
 	private RedirectNotFoundEntry _addOrUpdateRedirectNotFoundEntry(

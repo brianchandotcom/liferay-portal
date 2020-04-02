@@ -55,7 +55,7 @@ definition {
 		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
 
 		AssertTextEquals(
-			locator1 = "//h1[contains(@class,'fragment-heading-text-colored')]/div",
+			locator1 = "HelloWorld#PORTLET_TITLE",
 			value1 = "Hello World");
 	}
 

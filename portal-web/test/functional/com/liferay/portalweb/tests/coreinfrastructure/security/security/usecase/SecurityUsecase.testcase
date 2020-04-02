@@ -198,7 +198,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 			locator1 = "Home#PAGE");
 
 		AssertTextEquals(
-			locator1 = "//h1[contains(@class,'fragment-heading-text-colored')]/div",
+			locator1 = "HelloWorld#PORTLET_TITLE",
 			value1 = "Hello World");
 
 		ProductMenu.gotoPortlet(

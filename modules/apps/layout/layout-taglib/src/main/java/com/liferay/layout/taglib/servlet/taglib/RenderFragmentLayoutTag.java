@@ -136,7 +136,9 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			new RenderFragmentLayoutDisplayContext(
 				httpServletRequest,
 				(HttpServletResponse)pageContext.getResponse(),
-				ServletContextUtil.getInfoDisplayContributorTracker()));
+				ServletContextUtil.getInfoDisplayContributorTracker(),
+				ServletContextUtil.getLayoutListRetrieverTracker(),
+				ServletContextUtil.getListObjectReferenceFactoryTracker()));
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:segmentsExperienceIds",
 			_getSegmentsExperienceIds());

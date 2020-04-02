@@ -14,7 +14,6 @@
 
 package com.liferay.layout.type.controller.portlet.internal.display.context;
 
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
@@ -43,12 +42,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PortletLayoutDisplayContext {
 
-	public PortletLayoutDisplayContext(HttpServletRequest httpServletRequest) {
-		_httpServletRequest = httpServletRequest;
+	public PortletLayoutDisplayContext(
+		HttpServletRequest httpServletRequest,
+		InfoDisplayContributorTracker infoDisplayContributorTracker) {
 
-		_infoDisplayContributorTracker =
-			(InfoDisplayContributorTracker)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
+		_httpServletRequest = httpServletRequest;
+		_infoDisplayContributorTracker = infoDisplayContributorTracker;
 	}
 
 	public String getBackgroundImage(JSONObject rowConfigJSONObject)

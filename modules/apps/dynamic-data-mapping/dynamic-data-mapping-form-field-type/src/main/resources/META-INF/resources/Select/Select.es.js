@@ -322,7 +322,9 @@ const Select = ({
 
 		onDropdownItemClicked({event, value: newValue});
 
-		setExpand(false);
+		if (!multiple) {
+			setExpand(false);
+		}
 	};
 
 	return (

@@ -92,6 +92,9 @@
 					"oneOf": [
 						{
 							"$ref": "#/definitions/FragmentInlineValue"
+						},
+						{
+							"$ref": "#/definitions/FragmentMappedValue"
 						}
 					],
 					"type": "object"
@@ -123,6 +126,9 @@
 					"oneOf": [
 						{
 							"$ref": "#/definitions/FragmentInlineValue"
+						},
+						{
+							"$ref": "#/definitions/FragmentMappedValue"
 						}
 					],
 					"type": "object"
@@ -152,6 +158,9 @@
 					"oneOf": [
 						{
 							"$ref": "#/definitions/FragmentInlineValue"
+						},
+						{
+							"$ref": "#/definitions/FragmentMappedValue"
 						}
 					]
 				}
@@ -219,6 +228,9 @@
 					"oneOf": [
 						{
 							"$ref": "#/definitions/FragmentInlineValue"
+						},
+						{
+							"$ref": "#/definitions/FragmentMappedValue"
 						}
 					]
 				},

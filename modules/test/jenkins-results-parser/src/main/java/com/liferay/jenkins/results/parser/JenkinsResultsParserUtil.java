@@ -751,7 +751,8 @@ public class JenkinsResultsParserUtil {
 			}
 
 			String batchTestSuitePropertyNameRegex = combine(
-				basePropertyName, "\\[([^\\]]+)\\]\\[", testSuiteName + "\\]");
+				Pattern.quote(basePropertyName), "\\[([^\\]]+)\\]\\[",
+				Pattern.quote(testSuiteName), "\\]");
 
 			for (String propertyName : properties.stringPropertyNames()) {
 				if (!propertyName.matches(batchTestSuitePropertyNameRegex)) {
@@ -760,6 +761,8 @@ public class JenkinsResultsParserUtil {
 
 				String batchNameRegex = propertyName.replaceAll(
 					batchTestSuitePropertyNameRegex, "$1");
+
+				batchNameRegex.replaceAll("[^\\*]+", "\\Q$0\\E");
 
 				batchNameRegex = batchNameRegex.replace("*", ".+");
 
@@ -780,7 +783,7 @@ public class JenkinsResultsParserUtil {
 			}
 
 			String batchPropertyNameRegex =
-				basePropertyName + "\\[([^\\]]+)\\]";
+				Pattern.quote(basePropertyName) + "\\[([^\\]]+)\\]";
 
 			for (String propertyName : properties.stringPropertyNames()) {
 				if (!propertyName.matches(batchPropertyNameRegex)) {
@@ -789,6 +792,8 @@ public class JenkinsResultsParserUtil {
 
 				String batchNameRegex = propertyName.replaceAll(
 					batchPropertyNameRegex, "$1");
+
+				batchNameRegex.replaceAll("[^\\*]+", "\\Q$0\\E");
 
 				batchNameRegex = batchNameRegex.replace("*", ".+");
 

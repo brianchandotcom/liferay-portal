@@ -150,8 +150,9 @@ const FragmentContent = React.forwardRef(
 		]);
 
 		const dropZones = useSelector(state => {
-			const fragmentEntryLink =
-				state.fragmentEntryLinks[fragmentEntryLinkId] || {};
+			const fragmentEntryLink = state.fragmentEntryLinks[
+				fragmentEntryLinkId
+			] || {editableValues: {}};
 
 			const dropZoneValues =
 				fragmentEntryLink.editableValues[
@@ -164,8 +165,13 @@ const FragmentContent = React.forwardRef(
 		const getPortals = element =>
 			Array.from(element.querySelectorAll('lfr-drop-zone')).map(
 				dropZoneElement => {
-					const mainItemId =
-						dropZones[dropZoneElement.getAttribute('id')];
+					const mainItemId = (
+						dropZones.find(
+							dropZone =>
+								dropZone.id ===
+								dropZoneElement.getAttribute('id')
+						) || {}
+					).uuid;
 
 					return {
 						Component: () =>

@@ -206,7 +206,7 @@ describe('Languages', () => {
 		).toBe('bdefault');
 	});
 
-	it('move up the first element', () => {
+	it('move down the first element', () => {
 		const result = renderLanguagesComponent({
 			...defaultProps,
 			inheritLocales: false,

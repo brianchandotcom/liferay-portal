@@ -32,7 +32,7 @@
 
 <tr>
 	<td>CLEAR_SEARCH</td>
-	<td>//button[@class='btn btn-monospaced btn-unstyled']//*[@class='lexicon-icon lexicon-icon-times']</td>
+	<td>//button[contains(@class,'btn')]//*[contains(@class,'lexicon-icon-times')]</td>
 	<td></td>
 </tr>
 

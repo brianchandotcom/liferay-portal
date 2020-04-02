@@ -51,7 +51,7 @@ public class CKEditorCreoleConfigContributor
 
 		jsonObject.put(
 			"allowedContent",
-			"b strong i hr h1 h2 h3 h4 h5 h6 em ul ol li pre table tr th; " +
+			"b strong i u hr h1 h2 h3 h4 h5 h6 em ul ol li pre table tr th; " +
 				"img a[*]");
 
 		Map<String, String> fileBrowserParams =
@@ -105,18 +105,12 @@ public class CKEditorCreoleConfigContributor
 		Map<String, Object> inputEditorTaglibAttributes) {
 
 		JSONArray jsonArray = JSONUtil.putAll(
-			toJSONArray("['Bold', 'Italic', '-' ,'RemoveFormat']"),
+			toJSONArray("['Bold', 'Italic', 'Underline', '-' ,'RemoveFormat']"),
 			toJSONArray(
-				"['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent']"),
+				"['NumberedList', 'BulletedList', '-']"),
 			toJSONArray("['Format']"), toJSONArray("['Link', 'Unlink']"),
 			toJSONArray(
-				"['Table', '-','ImageSelector', '-', 'HorizontalRule', '-', " +
-					"'SpecialChar']"),
-			"/",
-			toJSONArray(
-				"['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', " +
-					"'-', 'SelectAll', '-', 'Undo', 'Redo']"),
-			toJSONArray("['Find','Replace']"));
+				"['Table', '-','ImageSelector', '-', 'HorizontalRule']"));
 
 		if (isShowSource(inputEditorTaglibAttributes)) {
 			jsonArray.put(toJSONArray("['Source']"));

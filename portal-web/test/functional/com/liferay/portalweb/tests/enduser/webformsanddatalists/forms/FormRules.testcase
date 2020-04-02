@@ -150,6 +150,8 @@ definition {
 			fieldName = "Countries",
 			selectOption = "Option");
 
+		Refresh();
+
 		FormFields.editText(
 			fieldName = "TextField",
 			fieldValue = "country");

@@ -137,7 +137,6 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="editTitle" type="hidden" value="<%= editTitle %>" />
 		<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
-		<aui:input name="title" type="hidden" value="<%= title %>" />
 		<aui:input name="parentTitle" type="hidden" value="<%= parentTitle %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 
@@ -201,7 +200,7 @@ if (portletTitleBasedNavigation) {
 							<c:when test="<%= editTitle %>">
 								<aui:field-wrapper required="<%= true %>">
 									<div class="entry-title">
-										<aui:input label="" name="titleEditor" placeholder='<%= LanguageUtil.get(request, "title") %>' type="text" value="<%= HtmlUtil.escape(title) %>" />
+										<aui:input label="" name="title" placeholder='<%= LanguageUtil.get(request, "title") %>' type="text" value="<%= HtmlUtil.escape(title) %>" />
 									</div>
 								</aui:field-wrapper>
 							</c:when>

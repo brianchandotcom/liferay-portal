@@ -191,12 +191,6 @@ class WikiPortlet extends PortletBase {
 		if (this.removeTempImages_()) {
 			this.one('#' + this.constants.CMD).value = this.currentAction;
 
-			const titleEditor = window[this.ns('titleEditor')];
-
-			if (titleEditor) {
-				this.one('#title').value = titleEditor.value;
-			}
-
 			const contentEditor = window[this.ns('contentEditor')];
 
 			if (contentEditor) {

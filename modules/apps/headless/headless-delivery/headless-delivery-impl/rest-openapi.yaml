@@ -1000,6 +1000,7 @@ components:
                 html:
                     oneOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
+                        - $ref: "#/components/schemas/FragmentMappedValue"
             type: object
         FragmentFieldImage:
             properties:
@@ -1015,6 +1016,7 @@ components:
                 text:
                     oneOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
+                        - $ref: "#/components/schemas/FragmentMappedValue"
             type: object
         FragmentImage:
             properties:
@@ -1027,6 +1029,7 @@ components:
                 url:
                     oneOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
+                        - $ref: "#/components/schemas/FragmentMappedValue"
             type: object
         FragmentInlineValue:
             properties:
@@ -1055,6 +1058,7 @@ components:
                 href:
                     oneOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
+                        - $ref: "#/components/schemas/FragmentMappedValue"
                 target:
                     enum: [Blank, Parent, Self, Top]
                     type: string

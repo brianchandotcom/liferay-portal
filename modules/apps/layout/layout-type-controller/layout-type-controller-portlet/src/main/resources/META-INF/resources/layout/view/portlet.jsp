@@ -57,9 +57,7 @@ HttpServletRequest originalServletRequest = (HttpServletRequest)request.getAttri
 		</style>
 
 		<%
-		PortletLayoutDisplayContext portletLayoutDisplayContext = new PortletLayoutDisplayContext(request);
-
-		request.setAttribute("render_layout_structure.jsp-portletLayoutDisplayContext", portletLayoutDisplayContext);
+		PortletLayoutDisplayContext portletLayoutDisplayContext = (PortletLayoutDisplayContext)request.getAttribute(PortletLayoutDisplayContext.class.getName());
 
 		LayoutStructure layoutStructure = portletLayoutDisplayContext.getLayoutStructure();
 

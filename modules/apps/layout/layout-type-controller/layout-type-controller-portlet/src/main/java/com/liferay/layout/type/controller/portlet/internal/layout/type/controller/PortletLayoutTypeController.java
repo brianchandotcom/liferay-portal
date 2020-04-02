@@ -19,6 +19,7 @@ import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.type.controller.portlet.internal.constants.PortletLayoutTypeControllerWebKeys;
+import com.liferay.layout.type.controller.portlet.internal.display.context.PortletLayoutDisplayContext;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -93,6 +94,9 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER,
 			_infoDisplayContributorTracker);
+		httpServletRequest.setAttribute(
+			PortletLayoutDisplayContext.class.getName(),
+			new PortletLayoutDisplayContext(httpServletRequest));
 
 		RequestDispatcher requestDispatcher =
 			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(

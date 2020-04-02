@@ -1,6 +1,8 @@
 definition {
 
 	macro addComment {
+		Pause(locator1 = "10000");
+
 		PageEditor.gotoTab(tabName = "Comments");
 
 		Pause(locator1 = "3000");
@@ -170,6 +172,8 @@ definition {
 	}
 
 	macro addLayoutRow {
+		Pause(locator1 = "10000");
+
 		PageEditor.gotoTab(tabName = "Fragments");
 
 		PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
@@ -207,6 +211,8 @@ definition {
 	}
 
 	macro addLayoutSection {
+		Pause(locator1 = "10000");
+
 		PageEditor.gotoTab(tabName = "Fragments");
 
 		PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
@@ -236,6 +242,8 @@ definition {
 	}
 
 	macro addWidget {
+		Pause(locator1 = "10000");
+
 		PageEditor.gotoTab(tabName = "Widgets");
 
 		Type.sendKeysApplicationSearch(

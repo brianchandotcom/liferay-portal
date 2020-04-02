@@ -75,6 +75,31 @@ public class LayoutStructure {
 		_mainItemId = StringPool.BLANK;
 	}
 
+	public LayoutStructureItem addCollectionItemLayoutStructureItem(
+		String parentItemId, int position) {
+
+		CollectionItemLayoutStructureItem collectionItemLayoutStructureItem =
+			new CollectionItemLayoutStructureItem(parentItemId);
+
+		_updateLayoutStructure(collectionItemLayoutStructureItem, position);
+
+		return collectionItemLayoutStructureItem;
+	}
+
+	public LayoutStructureItem addCollectionLayoutStructureItem(
+		String parentItemId, int position) {
+
+		CollectionLayoutStructureItem collectionLayoutStructureItem =
+			new CollectionLayoutStructureItem(parentItemId);
+
+		_updateLayoutStructure(collectionLayoutStructureItem, position);
+
+		addCollectionItemLayoutStructureItem(
+			collectionLayoutStructureItem.getParentItemId(), 0);
+
+		return collectionLayoutStructureItem;
+	}
+
 	public LayoutStructureItem addColumnLayoutStructureItem(
 		String parentItemId, int position) {
 

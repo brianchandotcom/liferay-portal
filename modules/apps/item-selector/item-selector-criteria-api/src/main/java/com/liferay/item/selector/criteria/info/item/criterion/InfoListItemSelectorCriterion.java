@@ -15,6 +15,10 @@
 package com.liferay.item.selector.criteria.info.item.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eudaldo Alonso
@@ -26,7 +30,15 @@ public class InfoListItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	public String getItemType() {
-		return _itemType;
+		if (ListUtil.isEmpty(_itemTypes)) {
+			return null;
+		}
+
+		return _itemTypes.get(0);
+	}
+
+	public List<String> getItemTypes() {
+		return _itemTypes;
 	}
 
 	public void setItemSubtype(String itemSubtype) {
@@ -34,10 +46,14 @@ public class InfoListItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	public void setItemType(String itemType) {
-		_itemType = itemType;
+		_itemTypes.add(itemType);
+	}
+
+	public void setItemTypes(List<String> itemTypes) {
+		_itemTypes = itemTypes;
 	}
 
 	private String _itemSubtype;
-	private String _itemType;
+	private List<String> _itemTypes = new ArrayList<>();
 
 }

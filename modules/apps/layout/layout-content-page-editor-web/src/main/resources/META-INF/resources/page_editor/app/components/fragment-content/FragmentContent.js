@@ -63,7 +63,9 @@ const FragmentContent = React.forwardRef(
 		);
 
 		const updateEditables = (parent = element) => {
-			setEditables(parent ? getAllEditables(parent) : []);
+			if (isMounted()) {
+				setEditables(parent ? getAllEditables(parent) : []);
+			}
 		};
 
 		const languageId = useSelector(state => state.languageId);

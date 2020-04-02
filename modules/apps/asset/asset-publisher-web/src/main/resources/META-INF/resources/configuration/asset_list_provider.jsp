@@ -41,6 +41,6 @@ List<InfoListProvider> infoListProviders = assetPublisherDisplayContext.getAsset
 		</aui:select>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:message key="you-do-not-have-any-content-set-providers" />
+		<liferay-ui:message key="you-do-not-have-any-collection-providers" />
 	</c:otherwise>
 </c:choose>

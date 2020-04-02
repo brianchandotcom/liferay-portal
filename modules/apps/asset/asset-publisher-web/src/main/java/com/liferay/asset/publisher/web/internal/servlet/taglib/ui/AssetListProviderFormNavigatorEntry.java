@@ -42,7 +42,7 @@ public class AssetListProviderFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "select-content-set-provider";
+		return "select-collection-provider";
 	}
 
 	@Override

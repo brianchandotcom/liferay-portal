@@ -40,7 +40,7 @@ public class AssetListFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "select-content-set";
+		return "select-collection";
 	}
 
 	@Override

@@ -21,8 +21,8 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 %>
 
 <div class="mb-2">
-	<aui:a cssClass="create-content-set-link" href="javascript:;">
-		<liferay-ui:message key="create-a-content-set-from-this-configuration" />
+	<aui:a cssClass="create-collection-link" href="javascript:;">
+		<liferay-ui:message key="create-a-collection-from-this-configuration" />
 	</aui:a>
 </div>
 
@@ -31,7 +31,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 		event.preventDefault();
 
 		openSimpleInputModal.default({
-			dialogTitle: '<liferay-ui:message key="content-set-title" />',
+			dialogTitle: '<liferay-ui:message key="collection-title" />',
 			formSubmitURL:
 				'<liferay-portlet:actionURL name="/asset_publisher/add_asset_list" portletName="<%= portletResource %>"><portlet:param name="portletResource" value="<%= portletResource %>" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>',
 			mainFieldLabel: '<liferay-ui:message key="title" />',
@@ -46,7 +46,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 	var createAssetListLinkClickHandler = dom.delegate(
 		document.body,
 		'click',
-		'a.create-content-set-link',
+		'a.create-collection-link',
 		handleCreateAssetListLinkClick
 	);
 

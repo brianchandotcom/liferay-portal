@@ -171,7 +171,7 @@ public class AssetListEntryUsagesDisplayContext {
 		SearchContainer assetListEntryUsagesSearchContainer =
 			new SearchContainer(
 				_renderRequest, _renderResponse.createRenderURL(), null,
-				"there-are-no-content-set-usages");
+				"there-are-no-collection-usages");
 
 		boolean orderByAsc = false;
 

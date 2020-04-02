@@ -51,7 +51,7 @@ public class AssetListExceptionRequestHandler {
 		else if (portalException instanceof
 					DuplicateAssetListEntryTitleException) {
 
-			errorMessage = "a-content-set-with-that-title-already-exists";
+			errorMessage = "a-collection-with-that-title-already-exists";
 		}
 
 		JSONObject jsonObject = JSONUtil.put(

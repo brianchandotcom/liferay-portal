@@ -113,7 +113,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 				componentId="emptyResultMessageComponent"
 				defaultEventHandler="emptyResultMessageComponentDefaultEventHandler"
 				description="<%= assetListDisplayContext.getEmptyResultMessageDescription() %>"
-				elementType='<%= LanguageUtil.get(request, "content-sets") %>'
+				elementType='<%= LanguageUtil.get(request, "collections") %>'
 			/>
 		</c:otherwise>
 	</c:choose>

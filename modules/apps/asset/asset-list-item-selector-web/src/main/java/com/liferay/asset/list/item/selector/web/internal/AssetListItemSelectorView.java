@@ -85,7 +85,7 @@ public class AssetListItemSelectorView
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 
-		return _language.get(resourceBundle, "content-sets");
+		return _language.get(resourceBundle, "collections");
 	}
 
 	@Override
@@ -230,7 +230,7 @@ public class AssetListItemSelectorView
 			SearchContainer<AssetListEntry> searchContainer =
 				new SearchContainer<>(
 					portletRequest, _portletURL, null,
-					_language.get(resourceBundle, "there-are-no-content-sets"));
+					_language.get(resourceBundle, "there-are-no-collections"));
 
 			String orderByCol = ParamUtil.getString(
 				_httpServletRequest, "orderByCol", "create-date");

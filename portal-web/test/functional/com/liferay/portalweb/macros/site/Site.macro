@@ -1084,6 +1084,8 @@ definition {
 	macro viewCannotAdd {
 		LexiconEntry.gotoAdd();
 
+		MetalComponent.waitForCard(card = "Blank Site");
+
 		LexiconEntry.gotoEntry(rowEntry = "Blank Site");
 
 		PortletEntry.inputName(name = "${siteName}");

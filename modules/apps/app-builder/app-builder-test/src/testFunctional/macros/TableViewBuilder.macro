@@ -126,16 +126,4 @@ definition {
 			value1 = "${columnLabel}");
 	}
 
-	macro validatePortletFieldTypeInTV {
-		AssertElementPresent(
-			key_fieldType = "${fieldType}",
-			locator1 = "TableViewBuilder#VALIDATE_PORTLET_FIELD_TYPE_IN_TV");
-	}
-
-	macro validateNoColumnLabelAtSidebar {
-		AssertElementNotPresent(
-			locator1 = "TableViewBuilder#COLUMN_LABEL_AT_SIDEBAR",
-			value1 = "${columnLabel}");
-	}
-
 }

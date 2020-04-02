@@ -206,33 +206,31 @@ public class FragmentLayoutStructureItemHelper
 			return jsonObject;
 		}
 
-		Map<String, Object> mappingMap = (Map<String, Object>)map.get(
+		Map<String, String> mappingMap = (Map<String, String>)map.get(
 			"mapping");
 
 		if (mappingMap != null) {
-			String itemKey = (String)mappingMap.get("itemKey");
+			String fieldKey = mappingMap.get("fieldKey");
 
-			String[] itemKeyParts = itemKey.split(StringPool.POUND);
+			String itemKey = mappingMap.get("itemKey");
 
-			String classNameId = itemKeyParts[0];
-			String classPK = itemKeyParts[1];
+			String[] itemKeyParts = new String[0];
 
-			String fieldKey = (String)mappingMap.get("fieldKey");
+			if (itemKey != null) {
+				itemKeyParts = itemKey.split(StringPool.POUND);
+			}
 
-			if (Validator.isNotNull(classNameId) &&
-				Validator.isNotNull(classPK) && Validator.isNotNull(fieldKey)) {
-
+			if ((fieldKey != null) && (itemKeyParts.length == 2)) {
 				jsonObject.put(
-					"classNameId", classNameId
+					"classNameId", itemKeyParts[0]
 				).put(
-					"classPK", classPK
+					"classPK", itemKeyParts[1]
 				).put(
 					"fieldId", fieldKey
 				);
 			}
 
-			jsonObject.put(
-				"defaultValue", (String)mappingMap.get("defaultValue"));
+			jsonObject.put("defaultValue", mappingMap.get("defaultValue"));
 		}
 
 		return jsonObject;
@@ -270,7 +268,11 @@ public class FragmentLayoutStructureItemHelper
 
 			String itemKey = mappingMap.get("itemKey");
 
-			String[] itemKeyParts = itemKey.split(StringPool.POUND);
+			String[] itemKeyParts = new String[0];
+
+			if (itemKey != null) {
+				itemKeyParts = itemKey.split(StringPool.POUND);
+			}
 
 			if ((fieldKey != null) && (itemKeyParts.length == 2)) {
 				jsonObject.put(
@@ -281,6 +283,8 @@ public class FragmentLayoutStructureItemHelper
 					"fieldId", fieldKey
 				);
 			}
+
+			jsonObject.put("defaultValue", mappingMap.get("defaultValue"));
 		}
 
 		String target = (String)fragmentLinkMap.get("target");

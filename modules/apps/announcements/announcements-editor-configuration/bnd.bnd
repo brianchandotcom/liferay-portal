@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Announcements Editor Configuration
-Bundle-SymbolicName: com.liferay.announcements.editor.configuration
-Bundle-Version: 3.0.2
--dsannotations-options: inherit

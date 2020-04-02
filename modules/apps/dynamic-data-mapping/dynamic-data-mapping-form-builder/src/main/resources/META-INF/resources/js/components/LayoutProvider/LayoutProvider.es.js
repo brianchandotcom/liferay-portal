@@ -205,6 +205,17 @@ class LayoutProvider extends Component {
 		});
 	}
 
+	getPaginationMode() {
+		const {allowMultiplePages} = this.props;
+		const {paginationMode} = this.state;
+
+		if (allowMultiplePages) {
+			return paginationMode;
+		}
+
+		return 'single-page';
+	}
+
 	getRules() {
 		let {rules} = this.state;
 
@@ -248,7 +259,6 @@ class LayoutProvider extends Component {
 		} = this.props;
 		const {
 			activePage,
-			paginationMode,
 			rules,
 			successPageSettings,
 		} = this.state;
@@ -266,7 +276,7 @@ class LayoutProvider extends Component {
 					fieldActions,
 					focusedField: this.getFocusedField(),
 					pages: this.getPages(),
-					paginationMode,
+					paginationMode: this.getPaginationMode(),
 					rules,
 					spritemap,
 					successPageSettings,
@@ -611,6 +621,14 @@ class LayoutProvider extends Component {
 }
 
 LayoutProvider.PROPS = {
+	/**
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {boolean}
+	 */
+
+	allowMultiplePages: Config.bool().value(true),
+
 	/**
 	 * @instance
 	 * @memberof LayoutProvider

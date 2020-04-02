@@ -28,6 +28,10 @@ public interface DataLayoutBuilderDefinition {
 		return false;
 	}
 
+	public default boolean allowMultiplePages() {
+		return false;
+	}
+
 	public default boolean allowRules() {
 		return false;
 	}
@@ -44,6 +48,10 @@ public interface DataLayoutBuilderDefinition {
 		return new String[0];
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public default String getPaginationMode() {
 		return DDMFormLayout.WIZARD_MODE;
 	}

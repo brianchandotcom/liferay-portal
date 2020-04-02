@@ -42,7 +42,7 @@ class FormBuilderWithLayoutProvider extends Component {
 			withResizeableColumns,
 		];
 
-		if (formBuilderProps.paginationMode !== 'single-page') {
+		if (layoutProviderProps.allowMultiplePages) {
 			composeList.push(withMultiplePages);
 			composeList.push(withEditablePageHeader);
 		}

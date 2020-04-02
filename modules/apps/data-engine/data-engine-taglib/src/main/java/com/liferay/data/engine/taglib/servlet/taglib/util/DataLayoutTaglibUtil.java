@@ -133,6 +133,9 @@ public class DataLayoutTaglibUtil {
 		JSONObject dataLayoutConfigJSONObject = JSONUtil.put(
 			"allowFieldSets", dataLayoutBuilderDefinition.allowFieldSets()
 		).put(
+			"allowMultiplePages",
+			dataLayoutBuilderDefinition.allowMultiplePages()
+		).put(
 			"allowRules", dataLayoutBuilderDefinition.allowRules()
 		).put(
 			"allowSuccessPage", dataLayoutBuilderDefinition.allowSuccessPage()
@@ -141,8 +144,6 @@ public class DataLayoutTaglibUtil {
 			dataLayoutBuilderDefinition.getDisabledProperties()
 		).put(
 			"disabledTabs", dataLayoutBuilderDefinition.getDisabledTabs()
-		).put(
-			"paginationMode", dataLayoutBuilderDefinition.getPaginationMode()
 		);
 
 		if (dataLayoutBuilderDefinition.allowRules()) {

@@ -45,9 +45,6 @@ class DataLayoutBuilder extends React.Component {
 
 		const context = this._setContext(this.props.context);
 
-		const paginationMode =
-			context.paginationMode || config.paginationMode || 'wizard';
-
 		this.formBuilderWithLayoutProvider = new FormBuilderWithLayoutProvider(
 			{
 				events: {
@@ -59,18 +56,17 @@ class DataLayoutBuilder extends React.Component {
 				},
 				formBuilderProps: {
 					fieldTypes,
-					paginationMode,
 					portletNamespace,
 					ref: 'builder',
 				},
 				layoutProviderProps: {
 					...this.props,
+					allowMultiplePages: config.allowMultiplePages,
 					allowSuccessPage: config.allowSuccessPage,
 					context,
 					defaultLanguageId: themeDisplay.getDefaultLanguageId(),
 					editingLanguageId: themeDisplay.getDefaultLanguageId(),
 					initialPages: context.pages,
-					initialPaginationMode: paginationMode,
 					ref: 'layoutProvider',
 					rules: context.rules,
 				},

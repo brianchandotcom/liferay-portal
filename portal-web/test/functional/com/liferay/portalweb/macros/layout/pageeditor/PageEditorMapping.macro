@@ -72,10 +72,14 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${source}");
 
+		Pause(locator1 = "3000");
+
 		Select(
 			key_fieldLabel = "Field",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${field}");
+
+		Pause(locator1 = "3000");
 
 		PageEditor.waitForAutoSave();
 	}

@@ -41,7 +41,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 				String largeSrc = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
 			%>
 
-				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="slide-show" />" name="<portlet:namespace />slideShow" src="<%= largeSrc %>" />
+				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="slide-show" />" name="<portlet:namespace />slideShow" src="<%= StringUtil.trim(largeSrc) %>" />
 
 			<%
 			}

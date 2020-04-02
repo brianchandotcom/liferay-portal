@@ -20,7 +20,7 @@ definition {
 		selenium.clickAt("//div[@id='navigationCollapse']", "");
 
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/frontend-js-web/liferay/sign_in_modal.js')]"
+			"//script[contains(@src,'/frontend-js-aui-web/liferay/sign_in_modal.js')]"
 		);
 
 		MouseOver.mouseOver();

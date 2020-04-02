@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fireEvent} from '@testing-library/react';
+import {act, fireEvent} from '@testing-library/react';
 
 import ColorPicker from '../../../src/main/resources/META-INF/resources/ColorPicker/ColorPicker.es';
 import withContextMock from '../__mocks__/withContextMock.es';
@@ -24,10 +24,6 @@ const spritemap = 'icons.svg';
 const ColorPickerWithContextMock = withContextMock(ColorPicker);
 
 describe('Field Color Picker', () => {
-	beforeEach(() => {
-		jest.useFakeTimers();
-	});
-
 	afterEach(() => {
 		if (component) {
 			component.dispose();
@@ -64,8 +60,25 @@ describe('Field Color Picker', () => {
 		expect(component).toMatchSnapshot();
 	});
 
-	it.skip('emits field edit event on field change', () => {
-		const handleFieldEdited = jest.fn();
+	it('renders with basic color', () => {
+		const color = '#FF67AA';
+
+		component = new ColorPickerWithContextMock({
+			name,
+			readOnly: true,
+			spritemap,
+			value: color,
+		});
+
+		expect(component.element.querySelector('input').value).toBe(color);
+	});
+
+	it.skip('emits field edit event on field change', done => {
+		const handleFieldEdited = data => {
+			const inputEl = component.element.querySelector('input');
+			expect(inputEl.value).toBe('ffffff');
+			done();
+		};
 
 		const events = {fieldEdited: handleFieldEdited};
 
@@ -75,15 +88,8 @@ describe('Field Color Picker', () => {
 			spritemap,
 		});
 
-		const {fieldBase} = component.refs;
+		const inputEl = component.element.querySelector('input');
 
-		const inputEl = fieldBase.element.querySelector('input');
-
-		jest.runAllTimers();
-
-		fireEvent.change(inputEl, {target: {value: 'ffffff'}});
-
-		expect(handleFieldEdited).toBeCalledTimes(1);
-		expect(handleFieldEdited.mock.calls[0][0][0]).toBe('ffffff');
+		fireEvent.input(inputEl, {target: {value: 'ffffff'}});
 	});
 });

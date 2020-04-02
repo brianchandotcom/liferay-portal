@@ -59,7 +59,7 @@ const mockOnCurrentPageChange = jest.fn(() => Promise.resolve({view: 'main'}));
 
 const mockOnTrafficSourceNameChange = jest.fn(() => Promise.resolve(''));
 
-const mockTrafficShareDataProvider = jest.fn(() => Promise.resolve(0.9));
+const mockTrafficShareDataProvider = jest.fn(() => Promise.resolve(90));
 
 const mockTrafficVolumeDataProvider = jest.fn(() => Promise.resolve('278,256'));
 

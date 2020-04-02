@@ -241,7 +241,7 @@ definition {
 
 		selenium.type();
 
-		selenium.pause("1000");
+		selenium.pause("5000");
 
 		selenium.assertJavaScriptErrors();
 

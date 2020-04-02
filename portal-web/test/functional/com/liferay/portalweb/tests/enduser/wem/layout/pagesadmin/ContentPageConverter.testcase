@@ -47,6 +47,8 @@ definition {
 
 		Pause(locator1 = "3000");
 
+		PageEditor.assertFragmentSidebarLoaded();
+
 		Button.clickPublish();
 
 		AssertElementPresent(

@@ -101,7 +101,6 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test SearchPermissions {
 		property testray.component.names = "Training";
@@ -255,7 +254,6 @@ definition {
 		Site.viewSiteAdminPermissionsCP(siteName = "Child SiteName");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewSiteManageChildSiteSiteRole {
 		Permissions.setUpSiteRoleLoginUserCP(

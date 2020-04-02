@@ -132,7 +132,6 @@ definition {
 		Upgrade.resetTestUserPassword(administratorEmail = "test@liferay.com");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewAndEditUserAfterUpgrade625 {
 		property data.archive.type = "data-archive-user";
@@ -151,7 +150,6 @@ definition {
 		Upgrade.viewAndEditUser();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewAndEditUserAfterUpgrade704 {
 		property data.archive.type = "data-archive-user";
@@ -170,7 +168,6 @@ definition {
 		Upgrade.viewAndEditUser();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewAndEditUserAfterUpgrade713 {
 		property data.archive.type = "data-archive-user";
@@ -189,7 +186,6 @@ definition {
 		Upgrade.viewAndEditUser();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewAndEditUserAfterUpgrade7110 {
 		property data.archive.type = "data-archive-user";
@@ -208,7 +204,6 @@ definition {
 		Upgrade.viewAndEditUser();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewAndEditUserAfterUpgrade70106 {
 		property data.archive.type = "data-archive-user";
@@ -227,7 +222,6 @@ definition {
 		Upgrade.viewAndEditUser();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewAndEditUserAfterUpgrade621015 {
 		property data.archive.type = "data-archive-user";
@@ -246,7 +240,6 @@ definition {
 		Upgrade.viewAndEditUser();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewAndEditUserAfterUpgrade621021 {
 		property data.archive.type = "data-archive-user";

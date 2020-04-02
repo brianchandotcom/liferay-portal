@@ -26,8 +26,6 @@ definition {
 
 	@priority = "5"
 	test AddMember {
-		property portal.upstream = "quarantine";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

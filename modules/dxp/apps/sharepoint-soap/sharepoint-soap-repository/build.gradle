@@ -12,9 +12,7 @@ buildWSDL {
 
 dependencies {
 	compileInclude group: "commons-cli", name: "commons-cli", version: "1.3.1"
-	compileInclude group: "commons-codec", name: "commons-codec", version: "1.2"
 	compileInclude group: "commons-discovery", name: "commons-discovery", version: "0.2"
-	compileInclude group: "commons-httpclient", name: "commons-httpclient", version: "3.1"
 	compileInclude group: "org.apache.axis2", name: "axis2", version: "1.7.9"
 	compileInclude group: "org.apache.axis2", name: "axis2-adb", version: "1.7.9"
 	compileInclude group: "org.apache.axis2", name: "axis2-adb-codegen", version: "1.7.9"
@@ -30,7 +28,7 @@ dependencies {
 	compileInclude group: "org.apache.woden", name: "woden-api", version: "1.0M9"
 	compileInclude group: "org.apache.ws.commons.axiom", name: "axiom-api", version: "1.2.22"
 	compileInclude group: "org.apache.ws.commons.axiom", name: "axiom-impl", version: "1.2.22"
-	compileInclude group: "org.apache.ws.commons.schema", name: "XmlSchema", version: "1.4.7"
+	compileInclude group: "org.apache.ws.xmlschema", name: "xmlschema-core", version: "2.2.1"
 	compileInclude group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.1.0"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

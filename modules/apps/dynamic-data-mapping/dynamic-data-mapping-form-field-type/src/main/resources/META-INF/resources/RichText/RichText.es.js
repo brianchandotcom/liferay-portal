@@ -15,9 +15,10 @@
 import './RichTextRegister.soy';
 
 import {Editor} from 'frontend-editor-ckeditor-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import {useSyncValue} from '../Text/Text.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import templates from './RichTextAdapter.soy';
@@ -71,36 +72,7 @@ const CKEDITOR_CONFIG = {
 	],
 };
 
-/**
- * Use Sync Value to synchronize the initial value with the current internal
- * value, only update the internal value with the new initial value if the
- * values are different and when the value is not changed for more than ms.
- */
-const useSyncValue = newValue => {
-	// Maintains the reference of the last value to check in later renderings if the
-	// value is new or keeps the same, it covers cases where the value typed by
-	// the user is sent to LayoutProvider but it does not descend with the new changes.
-	const previousValueRef = useRef(newValue);
-
-	const [value, setValue] = useState(newValue);
-
-	useEffect(() => {
-		const handler = setTimeout(() => {
-			if (value !== newValue && previousValueRef.current !== newValue) {
-				previousValueRef.current = newValue;
-				setValue(newValue);
-			}
-		}, 300);
-
-		return () => {
-			clearTimeout(handler);
-		};
-	}, [newValue, value]);
-
-	return [value, setValue];
-};
-
-const RichText = ({data, id, name, onEditorChange, readOnly}) => {
+const RichText = ({data, id, name, onChange, readOnly}) => {
 	const [currentValue, setCurrentValue] = useSyncValue(data);
 
 	const editorProps = {
@@ -118,7 +90,7 @@ const RichText = ({data, id, name, onEditorChange, readOnly}) => {
 
 			setCurrentValue(newValue);
 
-			onEditorChange({data: newValue, event});
+			onChange({data: newValue, event});
 		};
 	}
 
@@ -160,10 +132,10 @@ const RichText = ({data, id, name, onEditorChange, readOnly}) => {
 	);
 };
 
-const RichTextWithFieldBase = ({
-	emit,
+const Main = ({
 	id,
 	name,
+	onChange,
 	predefinedValue,
 	readOnly,
 	value,
@@ -175,33 +147,24 @@ const RichTextWithFieldBase = ({
 				data={value || predefinedValue}
 				id={id}
 				name={name}
-				onEditorChange={({data, event}) =>
-					emit('fieldEdited', event, data)
-				}
+				onChange={onChange}
 				readOnly={readOnly}
 			/>
 		</FieldBaseProxy>
 	);
 };
 
-const RichTextProxy = connectStore(
-	({emit, id, name, predefinedValue, readOnly, value, ...otherProps}) => (
-		<RichTextWithFieldBase
-			{...otherProps}
-			emit={emit}
-			id={id}
-			name={name}
-			predefinedValue={predefinedValue}
-			readOnly={readOnly}
-			value={value}
-		/>
-	)
-);
+const RichTextProxy = connectStore(({emit, ...otherProps}) => (
+	<Main
+		{...otherProps}
+		onChange={({data, event}) => emit('fieldEdited', event, data)}
+	/>
+));
 
 const ReactRichTextAdapter = getConnectedReactComponentAdapter(
 	RichTextProxy,
 	templates
 );
 
-export {ReactRichTextAdapter, RichTextWithFieldBase};
-export default RichText;
+export {ReactRichTextAdapter};
+export default ReactRichTextAdapter;

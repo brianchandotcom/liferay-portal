@@ -999,7 +999,7 @@ components:
             properties:
                 html:
                     oneOf:
-                        - $ref: "#/components/schemas/InlineValue"
+                        - $ref: "#/components/schemas/FragmentInlineValue"
             type: object
         FragmentFieldImage:
             properties:
@@ -1014,19 +1014,28 @@ components:
                     $ref: "#/components/schemas/FragmentLink"
                 text:
                     oneOf:
-                        - $ref: "#/components/schemas/InlineValue"
+                        - $ref: "#/components/schemas/FragmentInlineValue"
             type: object
         FragmentImage:
             properties:
                 description:
                     oneOf:
-                        - $ref: "#/components/schemas/InlineValue"
+                        - $ref: "#/components/schemas/FragmentInlineValue"
                 title:
                     oneOf:
-                        - $ref: "#/components/schemas/InlineValue"
+                        - $ref: "#/components/schemas/FragmentInlineValue"
                 url:
                     oneOf:
-                        - $ref: "#/components/schemas/InlineValue"
+                        - $ref: "#/components/schemas/FragmentInlineValue"
+            type: object
+        FragmentInlineValue:
+            properties:
+                value:
+                    type: string
+                value_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
             type: object
         FragmentInstanceDefinition:
             properties:
@@ -1045,7 +1054,7 @@ components:
             properties:
                 href:
                     oneOf:
-                        - $ref: "#/components/schemas/InlineValue"
+                        - $ref: "#/components/schemas/FragmentInlineValue"
                 target:
                     enum: [Blank, Parent, Self, Top]
                     type: string
@@ -1062,15 +1071,6 @@ components:
                     items:
                         $ref: "#/components/schemas/Fragment"
                     type: array
-            type: object
-        InlineValue:
-            properties:
-                value:
-                    type: string
-                value_i18n:
-                    additionalProperties:
-                        type: string
-                    type: object
             type: object
         KnowledgeBaseArticle:
             description:

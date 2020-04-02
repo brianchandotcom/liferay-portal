@@ -293,10 +293,9 @@ export default function FloatingToolbar({
 				{PanelComponent &&
 					createPortal(
 						<div
-							className={classNames(
-								EDITABLE_FLOATING_TOOLBAR_CLASSNAMES.panel,
-								'p-2 position-fixed'
-							)}
+							className={
+								EDITABLE_FLOATING_TOOLBAR_CLASSNAMES.panel
+							}
 							ref={panelRef}
 						>
 							<div

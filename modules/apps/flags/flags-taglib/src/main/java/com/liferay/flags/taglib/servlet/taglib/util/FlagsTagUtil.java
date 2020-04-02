@@ -18,6 +18,7 @@ import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -39,6 +40,17 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alejandro Tardín
  */
 public class FlagsTagUtil {
+
+	public static String getCaptchaURI(HttpServletRequest httpServletRequest) {
+		LiferayPortletURL captchaResourceURL = PortletURLFactoryUtil.create(
+			httpServletRequest, PortletKeys.FLAGS,
+			PortletRequest.RESOURCE_PHASE);
+
+		captchaResourceURL.setCopyCurrentRenderParameters(false);
+		captchaResourceURL.setResourceID("/flags/captcha");
+
+		return captchaResourceURL.toString();
+	}
 
 	public static String getCurrentURL(HttpServletRequest httpServletRequest) {
 		PortletRequest portletRequest =

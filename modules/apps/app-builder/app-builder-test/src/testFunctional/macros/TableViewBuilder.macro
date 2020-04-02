@@ -22,6 +22,10 @@ definition {
 		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "${fieldType}");
 	}
 
+	macro clearSearch {
+		Click(locator1 = "TableViewBuilder#CLEAR_SEARCH");
+	}
+
 	macro clickOnClearFilters {
 		TableViewBuilder.openFilterDropdown(columnLabel = "${columnLabel}");
 		Click(locator1 = "TableViewBuilder#FILTER_CLEAR");
@@ -32,10 +36,6 @@ definition {
 		TableViewBuilder.openFilterDropdown(columnLabel = "${columnLabel}");
 		Click(locator1 = "TableViewBuilder#FILTER_SELECT_ALL");
 		TableViewBuilder.selectTab(tabName = "Filters");
-	}
-
-	macro clearSearch {
-		Click(locator1 = "TableViewBuilder#CLEAR_SEARCH");
 	}
 
 	macro closeColumnSidebar {
@@ -62,6 +62,12 @@ definition {
 		AppBuilderAdmin.save();
 	}
 
+	macro searchByItem {
+		Type(
+			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+			value1 = "${itemName}");
+	}
+
 	macro selectFilterDropdownItem {
 		TableViewBuilder.openFilterDropdown(columnLabel = "${columnLabel}");
 
@@ -77,12 +83,6 @@ definition {
 		Click(
 			key_tabName = "${tabName}",
 			locator1 = "TableViewBuilder#TAB_LABEL");
-	}
-
-	macro searchByItem {
-		Type(
-			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
-			value1 = "${itemName}");
 	}
 
 	macro setName {
@@ -101,6 +101,12 @@ definition {
 			value1 = "${columnLabel}");
 	}
 
+	macro validateDisabledField {
+		AssertElementPresent(
+			locator1 = "TableViewBuilder#DISABLED_COLUMN",
+			value1 = "${fieldType}");
+	}
+
 	macro validateFilterDropdownList {
 		AssertTextEquals(
 			key_columnLabel = "${columnLabel}",
@@ -112,12 +118,6 @@ definition {
 		AssertElementNotPresent(
 			locator1 = "TableViewBuilder#COLUMN_LABEL",
 			value1 = "${columnLabel}");
-	}
-	
-	macro validateDisabledField {
-		AssertElementPresent(
-			locator1 = "TableViewBuilder#DISABLED_COLUMN",
-			value1 = "${fieldType}");
 	}
 
 	macro validateNoColumnLabelAtSidebar {

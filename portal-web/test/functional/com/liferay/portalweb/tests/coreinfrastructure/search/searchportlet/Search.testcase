@@ -350,6 +350,15 @@ definition {
 		property portal.acceptance = "true";
 		property environment.acceptance = "true";
 
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Search Page");
+
+		Navigator.gotoPage(pageName = "Search Page");
+
 		Portlet.addPG(portletName = "Search Results");
 
 		Portlet.gotoPortletOptions(

@@ -17,40 +17,51 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editable
 import Processors from '../../processors/index';
 
 /**
+ * @param {HTMLElement} fragmentElement
  * @return {Array<{editableId: string, editableValueNamespace: string, element: HTMLElement, processor: object }>}
  */
-export default function getAllEditables(element) {
-	return [
-		...Array.from(element.querySelectorAll('lfr-editable')).map(
-			element => ({
-				editableId: element.getAttribute('id'),
-				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-				element,
-				processor:
-					Processors[element.getAttribute('type')] ||
-					Processors.fallback,
-				type: element.getAttribute('type'),
-			})
-		),
+export default function getAllEditables(fragmentElement) {
+	const cleanedFragmentElement = fragmentElement.cloneNode(true);
 
-		...Array.from(element.querySelectorAll('[data-lfr-editable-id]')).map(
-			element => ({
-				editableId: element.dataset.lfrEditableId,
-				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-				element,
-				processor:
-					Processors[element.dataset.lfrEditableType] ||
-					Processors.fallback,
-				type: element.dataset.lfrEditableType,
-			})
-		),
+	Array.from(
+		cleanedFragmentElement.querySelectorAll('lfr-drop-zone')
+	).forEach(dropZoneElement => {
+		dropZoneElement.parentElement.removeChild(dropZoneElement);
+	});
+
+	return [
+		...Array.from(
+			cleanedFragmentElement.querySelectorAll('lfr-editable')
+		).map(editableElement => ({
+			editableId: editableElement.getAttribute('id'),
+			editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+			element: editableElement,
+			processor:
+				Processors[editableElement.getAttribute('type')] ||
+				Processors.fallback,
+			type: editableElement.getAttribute('type'),
+		})),
 
 		...Array.from(
-			element.querySelectorAll('[data-lfr-background-image-id]')
-		).map(element => ({
-			editableId: element.dataset.lfrBackgroundImageId,
+			cleanedFragmentElement.querySelectorAll('[data-lfr-editable-id]')
+		).map(editableElement => ({
+			editableId: editableElement.dataset.lfrEditableId,
+			editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+			element: editableElement,
+			processor:
+				Processors[editableElement.dataset.lfrEditableType] ||
+				Processors.fallback,
+			type: editableElement.dataset.lfrEditableType,
+		})),
+
+		...Array.from(
+			cleanedFragmentElement.querySelectorAll(
+				'[data-lfr-background-image-id]'
+			)
+		).map(editableElement => ({
+			editableId: editableElement.dataset.lfrBackgroundImageId,
 			editableValueNamespace: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
-			element,
+			element: editableElement,
 			processor: Processors['background-image'],
 			type: 'background-image',
 		})),

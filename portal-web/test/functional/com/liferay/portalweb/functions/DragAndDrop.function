@@ -36,6 +36,8 @@ definition {
 
 		selenium.mouseMove("${locator2}");
 
+		selenium.pause("3000");
+
 		selenium.mouseRelease("${locator2}");
 
 		selenium.assertJavaScriptErrors();

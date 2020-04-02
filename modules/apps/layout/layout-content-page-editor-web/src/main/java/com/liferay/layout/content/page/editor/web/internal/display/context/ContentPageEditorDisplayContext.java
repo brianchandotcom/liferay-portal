@@ -31,6 +31,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorCriterion;
@@ -224,6 +225,8 @@ public class ContentPageEditorDisplayContext {
 				"availableLanguages", _getAvailableLanguages()
 			).put(
 				"availableViewportSizes", _getAvailableViewportSizes()
+			).put(
+				"collectionSelectorURL", _getCollectionSelectorURL()
 			).put(
 				"defaultEditorConfigurations", _getDefaultConfigurations()
 			).put(
@@ -619,6 +622,39 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return availableViewportSizesMap;
+	}
+
+	private String _getCollectionSelectorURL() {
+		InfoListItemSelectorCriterion infoListItemSelectorCriterion =
+			new InfoListItemSelectorCriterion();
+
+		infoListItemSelectorCriterion.setItemTypes(
+			_getInfoDisplayContributorsClassNames());
+
+		infoListItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoListItemSelectorReturnType());
+
+		InfoListProviderItemSelectorCriterion
+			infoListProviderItemSelectorCriterion =
+				new InfoListProviderItemSelectorCriterion();
+
+		infoListProviderItemSelectorCriterion.setItemTypes(
+			_getInfoDisplayContributorsClassNames());
+
+		infoListProviderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoListProviderItemSelectorReturnType());
+
+		PortletURL infoListSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			_renderResponse.getNamespace() + "selectInfoList",
+			infoListItemSelectorCriterion,
+			infoListProviderItemSelectorCriterion);
+
+		if (infoListSelectorURL == null) {
+			return StringPool.BLANK;
+		}
+
+		return infoListSelectorURL.toString();
 	}
 
 	private Map<String, Object> _getContributedFragmentEntry(
@@ -1255,6 +1291,19 @@ public class ContentPageEditorDisplayContext {
 		_imageItemSelectorCriterion = itemSelectorCriterion;
 
 		return _imageItemSelectorCriterion;
+	}
+
+	private List<String> _getInfoDisplayContributorsClassNames() {
+		List<String> infoDisplayContributorsClassNames = new ArrayList<>();
+
+		for (InfoDisplayContributor infoDisplayContributor :
+				infoDisplayContributorTracker.getInfoDisplayContributors()) {
+
+			infoDisplayContributorsClassNames.add(
+				infoDisplayContributor.getClassName());
+		}
+
+		return infoDisplayContributorsClassNames;
 	}
 
 	private String _getInfoItemSelectorURL() {

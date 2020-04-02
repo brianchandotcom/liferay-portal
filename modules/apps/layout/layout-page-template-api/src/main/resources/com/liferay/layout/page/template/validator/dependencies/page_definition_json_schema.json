@@ -236,6 +236,38 @@
 			"title": "The FragmentLink Schema",
 			"type": "object"
 		},
+		"FragmentMappedValue": {
+			"additionalProperties": false,
+			"properties": {
+				"defaultValue": {
+					"$ref": "#/definitions/FragmentInlineValue"
+				},
+				"mapping": {
+					"additionalProperties": false,
+					"properties": {
+						"fieldKey": {
+							"title": "The fieldKey Schema",
+							"type": "string"
+						},
+						"itemKey": {
+							"title": "The itemKey Schema",
+							"type": "string"
+						}
+					},
+					"required": [
+						"fieldKey",
+						"itemKey"
+					],
+					"title": "The mapping Schema",
+					"type": "object"
+				}
+			},
+			"required": [
+				"mapping"
+			],
+			"title": "The FragmentMappedValue Schema",
+			"type": "object"
+		},
 		"FragmentSettingsAllowed": {
 			"additionalProperties": false,
 			"properties": {

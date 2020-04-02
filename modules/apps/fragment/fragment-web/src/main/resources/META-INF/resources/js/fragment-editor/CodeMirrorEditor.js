@@ -84,6 +84,7 @@ const MODES = {
 	html: {
 		hint: (cm, options) => {
 			const {
+				customDataAttributes,
 				customEntities,
 				customEntitiesSymbolsRegex,
 				customTags,
@@ -103,17 +104,51 @@ const MODES = {
 
 				const resultSet = new Set(htmlCompletion.list);
 
-				customTags.forEach(item => {
-					if (
-						item.name.startsWith(content) &&
-						!resultSet.has(item.content)
-					) {
-						resultSet.add({
-							displayText: item.name,
-							text: item.content,
-						});
-					}
-				});
+				if (
+					token.type === 'attribute' &&
+					token.string.startsWith('data')
+				) {
+					customDataAttributes.forEach(item => {
+						let attributeName = `data-${item}`;
+						let attributeValue = '';
+
+						if (attributeName.indexOf(':') !== -1) {
+							attributeValue = attributeName.substring(
+								attributeName.indexOf(':') + 1
+							);
+
+							attributeName = attributeName.substring(
+								0,
+								attributeName.indexOf(':')
+							);
+						}
+
+						if (
+							attributeName.startsWith(content) &&
+							!resultSet.has(attributeName)
+						) {
+							resultSet.add({
+								displayText: `${attributeName}${
+									attributeValue ? ':' + attributeValue : ''
+								}`,
+								text: `${attributeName}="${attributeValue}"`,
+							});
+						}
+					});
+				}
+				else {
+					customTags.forEach(item => {
+						if (
+							item.name.startsWith(content) &&
+							!resultSet.has(item.content)
+						) {
+							resultSet.add({
+								displayText: item.name,
+								text: item.content,
+							});
+						}
+					});
+				}
 
 				return {
 					...htmlCompletion,
@@ -189,6 +224,7 @@ const FixedText = ({helpText, text = ''}) => {
 };
 
 const CodeMirrorEditor = ({
+	customDataAttributes,
 	customEntities,
 	customTags,
 	onChange = noop,
@@ -229,6 +265,7 @@ const CodeMirrorEditor = ({
 				gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
 				hintOptions: {
 					completeSingle: false,
+					customDataAttributes,
 					customEntities,
 					customEntitiesSymbolsRegex,
 					customTags,

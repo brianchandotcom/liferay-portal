@@ -30,6 +30,7 @@ const FragmentEditor = ({
 		},
 		autocompleteTags,
 		cacheable,
+		dataAttributes,
 		fragmentCollectionId,
 		fragmentEntryId,
 		htmlEditorCustomEntities,
@@ -245,6 +246,7 @@ const FragmentEditor = ({
 						<div className="html source-editor">
 							<CodeMirrorEditor
 								content={initialHTML}
+								customDataAttributes={dataAttributes}
 								customEntities={htmlEditorCustomEntities}
 								customTags={autocompleteTags}
 								mode="html"

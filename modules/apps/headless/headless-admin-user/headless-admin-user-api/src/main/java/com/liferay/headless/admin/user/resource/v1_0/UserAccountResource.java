@@ -28,6 +28,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -62,6 +63,12 @@ public interface UserAccountResource {
 
 	public Page<UserAccount> getUserAccountsPage(
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public UserAccount postUserAccount(UserAccount userAccount)
+		throws Exception;
+
+	public Response postUserAccountBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public UserAccount getUserAccount(Long userAccountId) throws Exception;

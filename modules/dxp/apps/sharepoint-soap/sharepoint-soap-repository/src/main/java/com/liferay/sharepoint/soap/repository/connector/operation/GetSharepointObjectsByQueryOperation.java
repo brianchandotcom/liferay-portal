@@ -39,6 +39,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
@@ -193,7 +194,15 @@ public final class GetSharepointObjectsByQueryOperation extends BaseOperation {
 		Node dataElement = XMLUtil.getNode(
 			"Data", getListItemsResultNode.getFirstChild());
 
+		if (dataElement == null) {
+			return Collections.emptyList();
+		}
+
 		NodeList nodeList = dataElement.getChildNodes();
+
+		if (nodeList == null) {
+			return Collections.emptyList();
+		}
 
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node node = nodeList.item(i);
@@ -311,9 +320,7 @@ public final class GetSharepointObjectsByQueryOperation extends BaseOperation {
 		QueryField[] queryFields = new QueryField[queryFieldNames.length];
 
 		for (int i = 0; i < queryFieldNames.length; i++) {
-			String queryFieldName = queryFieldNames[i];
-
-			queryFields[i++] = new QueryField(queryFieldName);
+			queryFields[i] = new QueryField(queryFieldNames[i]);
 		}
 
 		return queryFields;

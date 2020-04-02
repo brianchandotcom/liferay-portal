@@ -15,7 +15,6 @@
 package com.liferay.journal.web.internal.servlet.taglib.definition;
 
 import com.liferay.data.engine.taglib.servlet.taglib.definition.DataLayoutBuilderDefinition;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,6 +34,11 @@ public class JournalDataLayoutBuilderDefinition
 	}
 
 	@Override
+	public boolean allowMultiplePages() {
+		return false;
+	}
+
+	@Override
 	public String[] getDisabledProperties() {
 		return new String[] {"predefinedValue"};
 	}
@@ -42,11 +46,6 @@ public class JournalDataLayoutBuilderDefinition
 	@Override
 	public String[] getDisabledTabs() {
 		return new String[] {"Autocomplete"};
-	}
-
-	@Override
-	public String getPaginationMode() {
-		return DDMFormLayout.SINGLE_PAGE_MODE;
 	}
 
 }

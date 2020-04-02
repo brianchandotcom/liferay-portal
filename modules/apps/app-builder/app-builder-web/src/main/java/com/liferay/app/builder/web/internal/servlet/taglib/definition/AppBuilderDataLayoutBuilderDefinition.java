@@ -29,6 +29,11 @@ public class AppBuilderDataLayoutBuilderDefinition
 	implements DataLayoutBuilderDefinition {
 
 	@Override
+	public boolean allowMultiplePages() {
+		return false;
+	}
+
+	@Override
 	public boolean allowSuccessPage() {
 		return false;
 	}

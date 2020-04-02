@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.internal.servlet.taglib.definition;
 
 import com.liferay.data.engine.taglib.servlet.taglib.definition.DataLayoutBuilderDefinition;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,13 +29,13 @@ public class DocumentLibraryDataLayoutBuilderDefinition
 	implements DataLayoutBuilderDefinition {
 
 	@Override
-	public String[] getDisabledTabs() {
-		return new String[] {"Autocomplete"};
+	public boolean allowMultiplePages() {
+		return false;
 	}
 
 	@Override
-	public String getPaginationMode() {
-		return DDMFormLayout.SINGLE_PAGE_MODE;
+	public String[] getDisabledTabs() {
+		return new String[] {"Autocomplete"};
 	}
 
 }

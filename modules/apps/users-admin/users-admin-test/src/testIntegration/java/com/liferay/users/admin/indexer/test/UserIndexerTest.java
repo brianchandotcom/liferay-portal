@@ -278,15 +278,12 @@ public class UserIndexerTest {
 
 	@Test
 	public void testNoDefaultUser() throws Exception {
-		_expectedUser = UserTestUtil.addUser();
-
-		_expectedUser.setDefaultUser(true);
-
-		_userLocalService.updateUser(_expectedUser);
+		User defaultUser = _userLocalService.getDefaultUser(
+			TestPropsValues.getCompanyId());
 
 		List<User> users = getUsers(search((String)null));
 
-		Assert.assertFalse(users.contains(_expectedUser));
+		Assert.assertFalse(users.contains(defaultUser));
 	}
 
 	@Test

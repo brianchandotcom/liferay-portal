@@ -61,40 +61,17 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Inácio Nery
  */
+@Component(immediate = true, service = WorkflowMetricsRESTTestHelper.class)
 public class WorkflowMetricsRESTTestHelper {
-
-	public WorkflowMetricsRESTTestHelper(
-		DocumentBuilderFactory documentBuilderFactory,
-		WorkflowMetricsIndexNameBuilder instanceWorkflowMetricsIndexNameBuilder,
-		WorkflowMetricsIndexNameBuilder nodeWorkflowMetricsIndexNameBuilder,
-		WorkflowMetricsIndexNameBuilder processWorkflowMetricsIndexNameBuilder,
-		Queries queries, SearchEngineAdapter searchEngineAdapter,
-		WorkflowMetricsIndexNameBuilder
-			slaInstanceResultWorkflowMetricsIndexNameBuilder,
-		WorkflowMetricsIndexNameBuilder
-			slaTaskResultWorkflowMetricsIndexNameBuilder,
-		WorkflowMetricsIndexNameBuilder tokenWorkflowMetricsIndexNameBuilder) {
-
-		_documentBuilderFactory = documentBuilderFactory;
-		_instanceWorkflowMetricsIndexNameBuilder =
-			instanceWorkflowMetricsIndexNameBuilder;
-		_nodeWorkflowMetricsIndexNameBuilder =
-			nodeWorkflowMetricsIndexNameBuilder;
-		_processWorkflowMetricsIndexNameBuilder =
-			processWorkflowMetricsIndexNameBuilder;
-		_queries = queries;
-		_searchEngineAdapter = searchEngineAdapter;
-		_slaInstanceResultWorkflowMetricsIndexNameBuilder =
-			slaInstanceResultWorkflowMetricsIndexNameBuilder;
-		_slaTaskResultWorkflowMetricsIndexNameBuilder =
-			slaTaskResultWorkflowMetricsIndexNameBuilder;
-		_tokenWorkflowMetricsIndexNameBuilder =
-			tokenWorkflowMetricsIndexNameBuilder;
-	}
 
 	public Instance addInstance(
 			long companyId, boolean completed, long processId)
@@ -957,22 +934,46 @@ public class WorkflowMetricsRESTTestHelper {
 		"com.liferay.portal.workflow.metrics.internal.search.index." +
 			"TokenWorkflowMetricsIndexer";
 
-	private static Map<String, Object> _indexers = new HashMap<>();
+	@Reference
+	private DocumentBuilderFactory _documentBuilderFactory;
 
-	private final DocumentBuilderFactory _documentBuilderFactory;
-	private final WorkflowMetricsIndexNameBuilder
+	private final Map<String, Object> _indexers = new HashMap<>();
+
+	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
+	private WorkflowMetricsIndexNameBuilder
 		_instanceWorkflowMetricsIndexNameBuilder;
-	private final WorkflowMetricsIndexNameBuilder
+
+	@Reference(target = "(workflow.metrics.index.entity.name=node)")
+	private WorkflowMetricsIndexNameBuilder
 		_nodeWorkflowMetricsIndexNameBuilder;
-	private final WorkflowMetricsIndexNameBuilder
+
+	@Reference(target = "(workflow.metrics.index.entity.name=process)")
+	private WorkflowMetricsIndexNameBuilder
 		_processWorkflowMetricsIndexNameBuilder;
-	private final Queries _queries;
-	private final SearchEngineAdapter _searchEngineAdapter;
-	private final WorkflowMetricsIndexNameBuilder
+
+	@Reference
+	private Queries _queries;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(search.engine.impl=Elasticsearch)"
+	)
+	private volatile SearchEngineAdapter _searchEngineAdapter;
+
+	@Reference(
+		target = "(workflow.metrics.index.entity.name=sla-instance-result)"
+	)
+	private WorkflowMetricsIndexNameBuilder
 		_slaInstanceResultWorkflowMetricsIndexNameBuilder;
-	private final WorkflowMetricsIndexNameBuilder
+
+	@Reference(target = "(workflow.metrics.index.entity.name=sla-task-result)")
+	private WorkflowMetricsIndexNameBuilder
 		_slaTaskResultWorkflowMetricsIndexNameBuilder;
-	private final WorkflowMetricsIndexNameBuilder
+
+	@Reference(target = "(workflow.metrics.index.entity.name=token)")
+	private WorkflowMetricsIndexNameBuilder
 		_tokenWorkflowMetricsIndexNameBuilder;
 
 }

@@ -15,15 +15,11 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
-import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
-import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +27,6 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,20 +35,6 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class NodeResourceTest extends BaseNodeResourceTestCase {
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		BaseNodeResourceTestCase.setUpClass();
-
-		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
-			_documentBuilderFactory, _instanceWorkflowMetricsIndexNameBuilder,
-			_nodeWorkflowMetricsIndexNameBuilder,
-			_processWorkflowMetricsIndexNameBuilder, _queries,
-			_searchEngineAdapter,
-			_slaInstanceResultWorkflowMetricsIndexNameBuilder,
-			_slaTaskResultWorkflowMetricsIndexNameBuilder,
-			_tokenWorkflowMetricsIndexNameBuilder);
-	}
 
 	@Before
 	@Override
@@ -150,42 +131,10 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 		}
 	}
 
-	@Inject
-	private static DocumentBuilderFactory _documentBuilderFactory;
-
-	@Inject(filter = "workflow.metrics.index.entity.name=instance")
-	private static WorkflowMetricsIndexNameBuilder
-		_instanceWorkflowMetricsIndexNameBuilder;
-
-	@Inject(filter = "workflow.metrics.index.entity.name=node")
-	private static WorkflowMetricsIndexNameBuilder
-		_nodeWorkflowMetricsIndexNameBuilder;
-
-	@Inject(filter = "workflow.metrics.index.entity.name=process")
-	private static WorkflowMetricsIndexNameBuilder
-		_processWorkflowMetricsIndexNameBuilder;
-
-	@Inject
-	private static Queries _queries;
-
-	@Inject(blocking = false, filter = "search.engine.impl=Elasticsearch")
-	private static SearchEngineAdapter _searchEngineAdapter;
-
-	@Inject(filter = "workflow.metrics.index.entity.name=sla-instance-result")
-	private static WorkflowMetricsIndexNameBuilder
-		_slaInstanceResultWorkflowMetricsIndexNameBuilder;
-
-	@Inject(filter = "workflow.metrics.index.entity.name=sla-task-result")
-	private static WorkflowMetricsIndexNameBuilder
-		_slaTaskResultWorkflowMetricsIndexNameBuilder;
-
-	@Inject(filter = "workflow.metrics.index.entity.name=token")
-	private static WorkflowMetricsIndexNameBuilder
-		_tokenWorkflowMetricsIndexNameBuilder;
-
-	private static WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;
-
 	private final List<Node> _nodes = new ArrayList<>();
 	private Process _process;
+
+	@Inject
+	private WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;
 
 }

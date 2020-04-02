@@ -884,8 +884,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		Map<Locale, String> titleMap = Collections.singletonMap(
 			LocaleUtil.getSiteDefault(), name);
 
-		String typeSettings = StringPool.BLANK;
-
 		UnicodeProperties typeSettingsUnicodeProperties =
 			new UnicodeProperties();
 
@@ -906,7 +904,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				Boolean.FALSE.toString());
 		}
 
-		typeSettings = typeSettingsUnicodeProperties.toString();
+		String typeSettings = typeSettingsUnicodeProperties.toString();
 
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);

@@ -325,11 +325,9 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
-		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
-
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
-		workflowedModel = getWorkflowedModel(
+		WorkflowedModel workflowedModel = getWorkflowedModel(
 			getBaseModel((Long)baseModel.getPrimaryKeyObj()));
 
 		Assert.assertEquals(

@@ -202,8 +202,6 @@ public class TensorflowProcessHolder {
 	private ProcessChannel<String> _startProcess(
 		ProcessExecutor processExecutor, int maxRelaunch, long timeout) {
 
-		ProcessChannel<String> processChannel;
-
 		if (_processChannel == null) {
 			try {
 				if ((System.currentTimeMillis() - _lastLaunchTime) > timeout) {
@@ -235,9 +233,7 @@ public class TensorflowProcessHolder {
 			}
 		}
 
-		processChannel = _processChannel;
-
-		return processChannel;
+		return _processChannel;
 	}
 
 	private synchronized void _stop() {

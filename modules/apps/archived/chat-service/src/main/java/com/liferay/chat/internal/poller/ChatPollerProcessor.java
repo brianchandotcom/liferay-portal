@@ -123,7 +123,6 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 		JSONArray buddiesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (Object[] buddy : buddies) {
-			boolean awake = (Boolean)buddy[0];
 			String firstName = (String)buddy[1];
 			long groupId = (Long)buddy[2];
 			String lastName = (String)buddy[3];
@@ -136,7 +135,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 
 			Status buddyStatus = StatusLocalServiceUtil.getUserStatus(userId);
 
-			awake = buddyStatus.isAwake();
+			boolean awake = buddyStatus.isAwake();
 
 			JSONObject curUserJSONObject = JSONUtil.put("awake", awake);
 

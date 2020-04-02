@@ -134,12 +134,12 @@ public class ServiceComponentLocalServiceImpl
 
 		long previousBuildNumber = 0;
 		ServiceComponent previousServiceComponent = null;
-		ServiceComponent serviceComponent = null;
 
 		Map<String, ServiceComponent> serviceComponents =
 			_getServiceComponents();
 
-		serviceComponent = serviceComponents.get(buildNamespace);
+		ServiceComponent serviceComponent = serviceComponents.get(
+			buildNamespace);
 
 		if (serviceComponent == null) {
 			long serviceComponentId = counterLocalService.increment();

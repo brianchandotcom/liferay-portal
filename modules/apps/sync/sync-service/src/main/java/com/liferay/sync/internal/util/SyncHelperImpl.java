@@ -344,8 +344,6 @@ public class SyncHelperImpl implements SyncHelper {
 	public File getFileDelta(File sourceFile, File targetFile)
 		throws PortalException {
 
-		File deltaFile = null;
-
 		File checksumsFile = FileUtil.createTempFile();
 
 		try (FileInputStream sourceFileInputStream = new FileInputStream(
@@ -367,7 +365,7 @@ public class SyncHelperImpl implements SyncHelper {
 			throw new PortalException(exception);
 		}
 
-		deltaFile = FileUtil.createTempFile();
+		File deltaFile = FileUtil.createTempFile();
 
 		try (FileInputStream targetFileInputStream = new FileInputStream(
 				targetFile);

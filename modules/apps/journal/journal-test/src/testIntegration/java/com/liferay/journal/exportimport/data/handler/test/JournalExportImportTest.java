@@ -370,10 +370,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	protected void exportImportJournalArticle(boolean companyScopeDependencies)
 		throws Exception {
 
-		JournalArticle article = null;
-		DDMStructure ddmStructure = null;
-		DDMTemplate ddmTemplate = null;
-
 		long groupId = group.getGroupId();
 
 		Company company = CompanyLocalServiceUtil.fetchCompany(
@@ -385,16 +381,16 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			groupId = companyGroup.getGroupId();
 		}
 
-		ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			groupId, JournalArticle.class.getName());
 
-		ddmTemplate = DDMTemplateTestUtil.addTemplate(
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			groupId, ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class));
 
 		String content = DDMStructureTestUtil.getSampleStructuredContent();
 
-		article = JournalTestUtil.addArticleWithXMLContent(
+		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
 			group.getGroupId(), content, ddmStructure.getStructureKey(),
 			ddmTemplate.getTemplateKey());
 

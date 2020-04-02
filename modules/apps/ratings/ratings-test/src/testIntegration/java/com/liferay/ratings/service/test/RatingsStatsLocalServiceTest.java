@@ -121,13 +121,10 @@ public class RatingsStatsLocalServiceTest {
 		RatingsEntryLocalServiceUtil.updateEntry(
 			_user1.getUserId(), className, classPK, 1, serviceContext);
 
-		RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.getStats(
-			className, classPK);
-
 		RatingsEntryLocalServiceUtil.deleteEntry(
 			_user1.getUserId(), className, classPK);
 
-		ratingsStats = RatingsStatsLocalServiceUtil.fetchStats(
+		RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.fetchStats(
 			className, classPK);
 
 		Assert.assertNull(ratingsStats);

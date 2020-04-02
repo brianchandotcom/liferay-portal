@@ -236,8 +236,6 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 	@Test
 	public void testMSOffice2Open() throws Exception {
-		Tuple tuple = null;
-
 		assertCode(
 			WebDAVUtil.SC_MULTI_STATUS, servicePropFind(_TEST_FILE_NAME));
 		assertCode(
@@ -245,7 +243,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 		lock(HttpServletResponse.SC_OK, _TEST_FILE_NAME);
 
-		tuple = serviceGet(_TEST_FILE_NAME);
+		Tuple tuple = serviceGet(_TEST_FILE_NAME);
 
 		assertCode(HttpServletResponse.SC_OK, tuple);
 		Assert.assertArrayEquals(_testFileBytes, getResponseBody(tuple));
@@ -261,8 +259,6 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 	@Test
 	public void testMSOffice3Modify() throws Exception {
-		Tuple tuple = null;
-
 		assertCode(
 			HttpServletResponse.SC_NOT_FOUND,
 			servicePropFind(_TEMP_FILE_NAME_1));
@@ -310,7 +306,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		unlock(_TEST_FILE_NAME);
 		lock(HttpServletResponse.SC_OK, _TEST_FILE_NAME);
 
-		tuple = serviceGet(_TEST_FILE_NAME);
+		Tuple tuple = serviceGet(_TEST_FILE_NAME);
 
 		assertCode(HttpServletResponse.SC_OK, tuple);
 		Assert.assertArrayEquals(_testFileBytes, getResponseBody(tuple));

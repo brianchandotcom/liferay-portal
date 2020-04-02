@@ -226,14 +226,12 @@ public class DiffImplTest {
 		List<DiffResult> expectedSource = new ArrayList<>();
 		List<DiffResult> expectedTarget = new ArrayList<>();
 
-		List<String> changedLines = new ArrayList<>();
-
 		expectedSource.add(
 			new DiffResult(0, Diff.OPEN_DEL + "ccc" + Diff.CLOSE_DEL));
 
 		expectedTarget.add(new DiffResult(0, Diff.CONTEXT_LINE));
 
-		changedLines = new ArrayList<>();
+		List<String> changedLines = new ArrayList<>();
 
 		changedLines.add(
 			StringBundler.concat("bb", Diff.OPEN_DEL, "e", Diff.CLOSE_DEL));

@@ -128,11 +128,9 @@ public class ViewModulesManagementToolbarDisplayContext
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByType(getOrderByType());
 
-		List<Bundle> bundles = null;
-
 		AppDisplay appDisplay = getAppDisplay();
 
-		bundles = appDisplay.getBundles();
+		List<Bundle> bundles = appDisplay.getBundles();
 
 		BundleUtil.filterBundles(
 			bundles, BundleStateConstants.getState(getState()));

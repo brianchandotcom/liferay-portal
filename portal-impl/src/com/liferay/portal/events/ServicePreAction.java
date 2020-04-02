@@ -657,12 +657,11 @@ public class ServicePreAction extends Action {
 		throws PortalException {
 
 		Layout layout = null;
-		List<Layout> layouts = null;
 
 		Group guestGroup = GroupLocalServiceUtil.getGroup(
 			user.getCompanyId(), GroupConstants.GUEST);
 
-		layouts = LayoutLocalServiceUtil.getLayouts(
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			guestGroup.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 

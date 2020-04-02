@@ -290,9 +290,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			matcher2 = pattern.matcher(path);
 
 			while (matcher2.find()) {
-				String inPaths = null;
-
-				inPaths = matcher2.group();
+				String inPaths = matcher2.group();
 
 				pattern = Pattern.compile(" *-\n( +)in: path(\n\\1.+)*\n");
 

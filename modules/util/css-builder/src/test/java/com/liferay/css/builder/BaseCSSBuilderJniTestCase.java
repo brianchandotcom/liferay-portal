@@ -93,15 +93,13 @@ public abstract class BaseCSSBuilderJniTestCase extends BaseCSSBuilderTestCase {
 		Path cssPath = baseDirPath.resolve(
 			"css/.sass-cache/test_import_change.css");
 
-		String css = FileTestUtil.read(cssPath);
-
 		FileTestUtil.changeContentInPath(fragmentChangePath, "khaki", "brown");
 
 		executeCSSBuilder(
 			baseDirPath, "/css", EXCLUDES, false, importDirPath, ".sass-cache/",
 			6, new String[0], "jni");
 
-		css = FileTestUtil.read(cssPath);
+		String css = FileTestUtil.read(cssPath);
 
 		Assert.assertTrue(css, css.contains("brown"));
 	}

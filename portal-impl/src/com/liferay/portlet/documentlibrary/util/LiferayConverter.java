@@ -279,8 +279,6 @@ public abstract class LiferayConverter {
 			}
 
 			if (thumbnailFile != null) {
-				BufferedImage bufferedImage = null;
-
 				if (_converterFactoryType == null) {
 					_converterFactoryType =
 						ConverterFactory.findRegisteredConverter(
@@ -299,7 +297,8 @@ public abstract class LiferayConverter {
 						inputIVideoPicture);
 				}
 
-				bufferedImage = _videoIConverter.toImage(inputIVideoPicture);
+				BufferedImage bufferedImage = _videoIConverter.toImage(
+					inputIVideoPicture);
 
 				thumbnailFile.createNewFile();
 

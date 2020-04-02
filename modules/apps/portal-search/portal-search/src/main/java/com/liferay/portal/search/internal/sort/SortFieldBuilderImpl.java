@@ -97,17 +97,13 @@ public class SortFieldBuilderImpl implements SortFieldBuilder {
 		SortFieldNameTranslator sortFieldNameTranslator =
 			_sortFieldNameTranslators.get(entityClassName);
 
-		String sortFieldName = orderByCol;
-
 		if (sortFieldNameTranslator == null) {
 			Indexer<?> indexer = indexerRegistry.getIndexer(entityClassName);
 
 			return indexer.getSortField(orderByCol);
 		}
 
-		sortFieldName = sortFieldNameTranslator.getSortFieldName(orderByCol);
-
-		return sortFieldName;
+		return sortFieldNameTranslator.getSortFieldName(orderByCol);
 	}
 
 	protected void removeSortFieldNameTranslator(

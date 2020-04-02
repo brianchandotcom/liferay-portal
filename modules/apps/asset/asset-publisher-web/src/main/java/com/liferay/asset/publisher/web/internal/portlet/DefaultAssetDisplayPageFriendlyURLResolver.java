@@ -343,13 +343,11 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 	private JournalArticle _getJournalArticle(long groupId, String friendlyURL)
 		throws PortalException {
 
-		JournalArticle journalArticle = null;
-
 		String normalizedUrlTitle =
 			FriendlyURLNormalizerUtil.normalizeWithEncoding(
 				_getFullURLTitle(friendlyURL));
 
-		journalArticle =
+		JournalArticle journalArticle =
 			_journalArticleLocalService.fetchLatestArticleByUrlTitle(
 				groupId, normalizedUrlTitle, WorkflowConstants.STATUS_APPROVED);
 

@@ -247,8 +247,6 @@ public class AssetCategoriesDisplayContext {
 		long scopeGroupId = themeDisplay.getScopeGroupId();
 
 		if (Validator.isNotNull(_getKeywords())) {
-			AssetCategoryDisplay assetCategoryDisplay = null;
-
 			Sort sort = null;
 
 			if (isFlattenedNavigationAllowed()) {
@@ -258,7 +256,7 @@ public class AssetCategoriesDisplayContext {
 				sort = new Sort("createDate", Sort.LONG_TYPE, !orderByAsc);
 			}
 
-			assetCategoryDisplay =
+			AssetCategoryDisplay assetCategoryDisplay =
 				AssetCategoryServiceUtil.searchCategoriesDisplay(
 					new long[] {scopeGroupId}, _getKeywords(),
 					new long[] {getVocabularyId()}, new long[0],

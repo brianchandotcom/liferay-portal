@@ -154,8 +154,6 @@ public class HttpUtil {
 			StreamLogger streamLogger)
 		throws Exception {
 
-		Path path;
-
 		HttpHead httpHead = new HttpHead(uri);
 
 		HttpContext httpContext = new BasicHttpContext();
@@ -214,7 +212,7 @@ public class HttpUtil {
 			cacheDirPath = Files.createTempDirectory(null);
 		}
 
-		path = cacheDirPath.resolve(fileName);
+		Path path = cacheDirPath.resolve(fileName);
 
 		if (Files.exists(path)) {
 			FileTime fileTime = Files.getLastModifiedTime(path);

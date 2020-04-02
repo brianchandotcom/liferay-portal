@@ -40,9 +40,8 @@ public class SearchResultContentDisplayBuilder {
 		SearchResultContentDisplayContext searchResultContentDisplayContext =
 			new SearchResultContentDisplayContext();
 
-		AssetRendererFactory<?> assetRendererFactory;
-
-		assetRendererFactory = getAssetRendererFactoryByType(_type);
+		AssetRendererFactory<?> assetRendererFactory =
+			getAssetRendererFactoryByType(_type);
 
 		searchResultContentDisplayContext.setAssetRendererFactory(
 			assetRendererFactory);

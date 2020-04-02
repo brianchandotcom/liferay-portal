@@ -76,9 +76,7 @@ public abstract class PoshiNodeFactory {
 			PoshiNode<?, ?> parentPoshiNode, String poshiScript)
 		throws PoshiScriptParserException {
 
-		PoshiNode<?, ?> newPoshiNode = null;
-
-		newPoshiNode = _newPoshiComment(poshiScript);
+		PoshiNode<?, ?> newPoshiNode = _newPoshiComment(poshiScript);
 
 		if (newPoshiNode != null) {
 			return newPoshiNode;

@@ -414,8 +414,6 @@ public class AssetPublisherDisplayContext {
 			return Collections.emptyList();
 		}
 
-		List<AssetEntryResult> assetEntryResults = null;
-
 		SearchContainer searchContainer = getSearchContainer();
 
 		searchContainer.setTotal(assetEntries.size());
@@ -425,7 +423,7 @@ public class AssetPublisherDisplayContext {
 
 		searchContainer.setResults(assetEntries);
 
-		assetEntryResults = new ArrayList<>();
+		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
 
 		assetEntryResults.add(new AssetEntryResult(assetEntries));
 

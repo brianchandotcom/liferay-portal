@@ -56,14 +56,11 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest {
 	public void testGetWorkflowMetricsSLADefinitionVersions1()
 		throws Exception {
 
-		WorkflowMetricsSLADefinitionVersion
-			workflowMetricsSLADefinitionVersion =
-				_addWorkflowMetricsSLADefinitionVersion(
-					"Abc", 1, WorkflowConstants.STATUS_APPROVED, 1);
+		_addWorkflowMetricsSLADefinitionVersion(
+			"Abc", 1, WorkflowConstants.STATUS_APPROVED, 1);
 
-		workflowMetricsSLADefinitionVersion =
-			_addWorkflowMetricsSLADefinitionVersion(
-				"Cdf", 1, WorkflowConstants.STATUS_APPROVED, 1);
+		_addWorkflowMetricsSLADefinitionVersion(
+			"Cdf", 1, WorkflowConstants.STATUS_APPROVED, 1);
 
 		List<WorkflowMetricsSLADefinitionVersion>
 			workflowMetricsSLADefinitionVersions =
@@ -76,8 +73,9 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest {
 			workflowMetricsSLADefinitionVersions.toString(), 1,
 			workflowMetricsSLADefinitionVersions.size());
 
-		workflowMetricsSLADefinitionVersion =
-			workflowMetricsSLADefinitionVersions.get(0);
+		WorkflowMetricsSLADefinitionVersion
+			workflowMetricsSLADefinitionVersion =
+				workflowMetricsSLADefinitionVersions.get(0);
 
 		Assert.assertEquals(
 			"Cdf", workflowMetricsSLADefinitionVersion.getName());
@@ -87,14 +85,11 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest {
 	public void testGetWorkflowMetricsSLADefinitionVersions2()
 		throws Exception {
 
-		WorkflowMetricsSLADefinitionVersion
-			workflowMetricsSLADefinitionVersion =
-				_addWorkflowMetricsSLADefinitionVersion(
-					"Abc", 1, WorkflowConstants.STATUS_APPROVED, 1);
+		_addWorkflowMetricsSLADefinitionVersion(
+			"Abc", 1, WorkflowConstants.STATUS_APPROVED, 1);
 
-		workflowMetricsSLADefinitionVersion =
-			_addWorkflowMetricsSLADefinitionVersion(
-				"Cdf", 1, WorkflowConstants.STATUS_DRAFT, 1);
+		_addWorkflowMetricsSLADefinitionVersion(
+			"Cdf", 1, WorkflowConstants.STATUS_DRAFT, 1);
 
 		List<WorkflowMetricsSLADefinitionVersion>
 			workflowMetricsSLADefinitionVersions =
@@ -107,8 +102,9 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest {
 			workflowMetricsSLADefinitionVersions.toString(), 1,
 			workflowMetricsSLADefinitionVersions.size());
 
-		workflowMetricsSLADefinitionVersion =
-			workflowMetricsSLADefinitionVersions.get(0);
+		WorkflowMetricsSLADefinitionVersion
+			workflowMetricsSLADefinitionVersion =
+				workflowMetricsSLADefinitionVersions.get(0);
 
 		Assert.assertEquals(
 			"Abc", workflowMetricsSLADefinitionVersion.getName());

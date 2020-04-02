@@ -64,6 +64,8 @@ public interface Sites {
 
 	public static final String LAST_MERGE_TIME = "last-merge-time";
 
+	public static final String LAST_MERGE_VERSION = "last-merge-version";
+
 	public static final String LAST_RESET_TIME = "last-reset-time";
 
 	public static final String LAYOUT_UPDATEABLE = "layoutUpdateable";

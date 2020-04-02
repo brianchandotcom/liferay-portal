@@ -311,16 +311,22 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
+		SitePages.addPublicPage(
+			columnName = "1 Column",
+			pageName = "Test Page");
+
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
-			pageName = "Home");
+			pageName = "Test Page");
 
-		Page.editName(pageNameEdit = "Home Edit");
+		Page.viewSelectedLayoutColumn(columnName = "1 Column");
 
-		Navigator.gotoPage(pageName = "Home Edit");
+		Page.editName(pageNameEdit = "Test Page Edit");
+
+		Navigator.gotoPage(pageName = "Test Page Edit");
 
 		Page.view(
-			pageName = "Home Edit",
+			pageName = "Test Page Edit",
 			privacy = "Public Pages");
 	}
 

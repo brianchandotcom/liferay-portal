@@ -15,6 +15,7 @@
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import React from 'react';
 
+import {config} from '../../../app/config/index';
 import CollectionSelector from '../../../common/components/CollectionSelector';
 import {COLLECTION_LIST_FORMATS} from '../../config/constants/collectionListFormats';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
@@ -57,6 +58,7 @@ export const CollectionConfigurationPanel = ({item}) => {
 			<ClayForm.Group small>
 				<CollectionSelector
 					collectionTitle={collectionConfig.collection.title}
+					itemSelectorURL={config.collectionSelectorURL}
 					label={Liferay.Language.get('collection')}
 					onCollectionSelect={collection =>
 						handleConfigurationChanged({

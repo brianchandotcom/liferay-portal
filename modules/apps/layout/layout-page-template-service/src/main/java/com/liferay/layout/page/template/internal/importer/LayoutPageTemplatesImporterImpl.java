@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -158,6 +159,20 @@ public class LayoutPageTemplatesImporterImpl
 		_updateLayoutPageTemplateStructure(layout, layoutStructure);
 
 		return fragmentEntryLinks;
+	}
+
+	private PageTemplateCollectionEntry
+		_getDefaultPageTemplateCollectionEntry() {
+
+		PageTemplateCollection pageTemplateCollection =
+			new PageTemplateCollection() {
+				{
+					name = _DEFAULT_PAGE_TEMPLATE_COLLECTION_KEY;
+				}
+			};
+
+		return new PageTemplateCollectionEntry(
+			_DEFAULT_PAGE_TEMPLATE_COLLECTION_KEY, pageTemplateCollection);
 	}
 
 	private String _getErrorMessage(
@@ -384,6 +399,12 @@ public class LayoutPageTemplatesImporterImpl
 		}
 
 		enumeration = zipFile.entries();
+
+		if (MapUtil.isEmpty(pageTemplateCollectionMap)) {
+			pageTemplateCollectionMap.put(
+				_DEFAULT_PAGE_TEMPLATE_COLLECTION_KEY,
+				_getDefaultPageTemplateCollectionEntry());
+		}
 
 		while (enumeration.hasMoreElements()) {
 			ZipEntry zipEntry = enumeration.nextElement();

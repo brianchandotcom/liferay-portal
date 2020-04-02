@@ -54,6 +54,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SecurityPortletContainerWrapper implements PortletContainer {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static PortletContainer createSecurityPortletContainerWrapper(
 		PortletContainer portletContainer) {
 

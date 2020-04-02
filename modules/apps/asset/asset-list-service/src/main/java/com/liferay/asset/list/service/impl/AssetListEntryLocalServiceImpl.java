@@ -83,8 +83,6 @@ public class AssetListEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		// Asset list entry
-
 		AssetListEntry assetListEntry =
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
 
@@ -116,6 +114,8 @@ public class AssetListEntryLocalServiceImpl
 					assetListEntryId, assetEntryId, segmentsEntryId,
 					serviceContext);
 		}
+
+		// Asset list entry
 
 		assetListEntry.setModifiedDate(new Date());
 		assetListEntry.setAssetEntryType(
@@ -224,8 +224,6 @@ public class AssetListEntryLocalServiceImpl
 			long assetListEntryId, long segmentsEntryId, int position)
 		throws PortalException {
 
-		// Asset list entry
-
 		AssetListEntry assetListEntry =
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
 
@@ -241,6 +239,8 @@ public class AssetListEntryLocalServiceImpl
 		_assetListEntryAssetEntryRelLocalService.
 			deleteAssetListEntryAssetEntryRel(
 				assetListEntryId, segmentsEntryId, position);
+
+		// Asset list entry
 
 		assetListEntry.setModifiedDate(new Date());
 		assetListEntry.setAssetEntryType(

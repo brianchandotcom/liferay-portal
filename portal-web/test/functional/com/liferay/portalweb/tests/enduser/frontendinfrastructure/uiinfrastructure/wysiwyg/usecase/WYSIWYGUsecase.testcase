@@ -75,6 +75,54 @@ definition {
 	}
 
 	@priority = "4"
+	test AddWebContentArticleCopyPasteContent {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+
+		Navigator.openSpecificURL(url = "http://www.standards-schmandards.com/exhibits/wysiwyg/sampledoc.htm");
+
+		SelectFieldText(locator1 = "//body");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + c");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		Click(
+			key_editor = "content",
+			locator1 = "AlloyEditor#EDITOR");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + v");
+
+		Pause(locator1 = "5000");
+
+		takeScreenshot();
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "Web Content Title");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "//div[@class='portlet-body']/div[contains(@class,'mt-2')]",
+			value1 = "Sample document for editor area test");
+
+		AssertElementPresent(locator1 = "//img[contains(@src,'redhead.JPG')]");
+
+		takeScreenshot();
+	}
+
+	@priority = "4"
 	test AddWebContentArticleWithImageViaURL {
 		Navigator.openURL();
 

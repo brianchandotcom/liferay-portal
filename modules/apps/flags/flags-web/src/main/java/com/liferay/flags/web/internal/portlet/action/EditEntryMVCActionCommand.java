@@ -14,6 +14,7 @@
 
 package com.liferay.flags.web.internal.portlet.action;
 
+import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.flags.service.FlagsEntryService;
 import com.liferay.flags.web.internal.constants.FlagsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -45,6 +46,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		CaptchaUtil.check(actionRequest);
 
 		String className = ParamUtil.getString(actionRequest, "className");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");

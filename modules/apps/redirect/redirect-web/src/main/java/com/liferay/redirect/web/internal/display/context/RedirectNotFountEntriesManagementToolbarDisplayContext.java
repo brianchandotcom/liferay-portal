@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 
@@ -108,6 +109,24 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 
 	public List<LabelItem> getFilterLabelItems() {
 		return LabelItemListBuilder.add(
+			() -> !StringUtil.equals(getNavigation(), "active-urls"),
+			labelItem -> {
+				PortletURL removeLabelURL = PortletURLUtil.clone(
+					currentURLObj, liferayPortletResponse);
+
+				removeLabelURL.setParameter(getNavigationParam(), (String)null);
+
+				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+
+				labelItem.setCloseable(true);
+
+				String label = String.format(
+					"%s: %s", LanguageUtil.get(request, "type"),
+					LanguageUtil.get(request, getNavigation()));
+
+				labelItem.setLabel(label);
+			}
+		).add(
 			() -> _getFilterDate() != 0,
 			labelItem -> {
 				PortletURL removeLabelURL = PortletURLUtil.clone(

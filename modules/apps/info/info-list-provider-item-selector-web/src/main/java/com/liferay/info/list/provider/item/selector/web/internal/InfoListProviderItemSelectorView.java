@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -210,14 +211,17 @@ public class InfoListProviderItemSelectorView
 				_language.get(
 					resourceBundle, "there-are-no-content-set-providers"));
 
-			List<InfoListProvider> infoListProviders = null;
+			List<InfoListProvider> infoListProviders = new ArrayList<>();
 
-			String itemType =
-				_infoListProviderItemSelectorCriterion.getItemType();
+			List<String> itemTypes =
+				_infoListProviderItemSelectorCriterion.getItemTypes();
 
-			if (Validator.isNotNull(itemType)) {
-				infoListProviders =
-					_infoListProviderTracker.getInfoListProviders(itemType);
+			if (ListUtil.isNotEmpty(itemTypes)) {
+				for (String itemType : itemTypes) {
+					infoListProviders.addAll(
+						_infoListProviderTracker.getInfoListProviders(
+							itemType));
+				}
 			}
 			else {
 				infoListProviders =

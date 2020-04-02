@@ -198,8 +198,37 @@ public class FragmentLayoutStructureItemHelper
 		Map<String, Object> hrefMap = (Map<String, Object>)fragmentLinkMap.get(
 			"href");
 
-		if (hrefMap != null) {
-			jsonObject.put("href", hrefMap.get("value"));
+		if (hrefMap == null) {
+			return jsonObject;
+		}
+
+		Object value = hrefMap.get("value");
+
+		if (value != null) {
+			jsonObject.put("href", value);
+
+			return jsonObject;
+		}
+
+		Map<String, String> mappingMap = (Map<String, String>)hrefMap.get(
+			"mapping");
+
+		if (mappingMap != null) {
+			String fieldKey = mappingMap.get("fieldKey");
+
+			String itemKey = mappingMap.get("itemKey");
+
+			String[] itemKeyParts = itemKey.split(StringPool.POUND);
+
+			if ((fieldKey != null) && (itemKeyParts.length == 2)) {
+				jsonObject.put(
+					"classNameId", itemKeyParts[0]
+				).put(
+					"classPK", itemKeyParts[1]
+				).put(
+					"fieldId", fieldKey
+				);
+			}
 		}
 
 		jsonObject.put("target", fragmentLinkMap.get("target"));
@@ -232,20 +261,20 @@ public class FragmentLayoutStructureItemHelper
 		return jsonObject;
 	}
 
-	private JSONObject _createImageLocalizationJSONObject(
+	private JSONObject _createImageJSONObject(
 		Map<String, Object> fragmentImageMap) {
 
-		JSONObject localizationJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
 
 		if (fragmentImageMap == null) {
-			return localizationJSONObject;
+			return imageJSONObject;
 		}
 
 		Map<String, Object> urlMap = (Map<String, Object>)fragmentImageMap.get(
 			"url");
 
 		if (urlMap == null) {
-			return localizationJSONObject;
+			return imageJSONObject;
 		}
 
 		Map<String, Object> valueI18nMap = (Map<String, Object>)urlMap.get(
@@ -253,20 +282,51 @@ public class FragmentLayoutStructureItemHelper
 
 		if (valueI18nMap != null) {
 			for (Map.Entry<String, Object> entry : valueI18nMap.entrySet()) {
-				localizationJSONObject.put(entry.getKey(), entry.getValue());
+				imageJSONObject.put(entry.getKey(), entry.getValue());
 			}
+
+			return imageJSONObject;
 		}
 
-		return localizationJSONObject;
+		Map<String, Object> mappingMap = (Map<String, Object>)urlMap.get(
+			"mapping");
+
+		if (mappingMap != null) {
+			String itemKey = (String)mappingMap.get("itemKey");
+
+			String[] itemKeyParts = itemKey.split(StringPool.POUND);
+
+			String classNameId = itemKeyParts[0];
+			String classPK = itemKeyParts[1];
+
+			String fieldKey = (String)mappingMap.get("fieldKey");
+
+			if (Validator.isNotNull(classNameId) &&
+				Validator.isNotNull(classPK) && Validator.isNotNull(fieldKey)) {
+
+				imageJSONObject.put(
+					"classNameId", classNameId
+				).put(
+					"classPK", classPK
+				).put(
+					"fieldId", fieldKey
+				);
+			}
+
+			imageJSONObject.put(
+				"defaultValue", (String)mappingMap.get("defaultValue"));
+
+			return imageJSONObject;
+		}
+
+		return imageJSONObject;
 	}
 
-	private JSONObject _createTextLocalizationJSONObject(
-		Map<String, Object> textMap) {
-
-		JSONObject localizationJSONObject = JSONFactoryUtil.createJSONObject();
+	private JSONObject _createTextJSONObject(Map<String, Object> textMap) {
+		JSONObject textJSONObject = JSONFactoryUtil.createJSONObject();
 
 		if (textMap == null) {
-			return localizationJSONObject;
+			return textJSONObject;
 		}
 
 		Map<String, Object> valueI18nMap = (Map<String, Object>)textMap.get(
@@ -274,11 +334,44 @@ public class FragmentLayoutStructureItemHelper
 
 		if (valueI18nMap != null) {
 			for (Map.Entry<String, Object> entry : valueI18nMap.entrySet()) {
-				localizationJSONObject.put(entry.getKey(), entry.getValue());
+				textJSONObject.put(entry.getKey(), entry.getValue());
 			}
+
+			return textJSONObject;
 		}
 
-		return localizationJSONObject;
+		Map<String, Object> mappingMap = (Map<String, Object>)textMap.get(
+			"mapping");
+
+		if (mappingMap != null) {
+			String itemKey = (String)mappingMap.get("itemKey");
+
+			String[] itemKeyParts = itemKey.split(StringPool.POUND);
+
+			String classNameId = itemKeyParts[0];
+			String classPK = itemKeyParts[1];
+
+			String fieldKey = (String)mappingMap.get("fieldKey");
+
+			if (Validator.isNotNull(classNameId) &&
+				Validator.isNotNull(classPK) && Validator.isNotNull(fieldKey)) {
+
+				textJSONObject.put(
+					"classNameId", classNameId
+				).put(
+					"classPK", classPK
+				).put(
+					"fieldId", fieldKey
+				);
+			}
+
+			textJSONObject.put(
+				"defaultValue", (String)mappingMap.get("defaultValue"));
+
+			return textJSONObject;
+		}
+
+		return textJSONObject;
 	}
 
 	private JSONObject _deepMerge(
@@ -438,12 +531,11 @@ public class FragmentLayoutStructureItemHelper
 				_createFragmentLinkConfigJSONObject(
 					(Map<String, Object>)valueMap.get("fragmentLink"));
 
-			JSONObject localizationJSONObject =
-				_createTextLocalizationJSONObject(
-					(Map<String, Object>)valueMap.get("text"));
+			JSONObject localizationJSONObject = _createTextJSONObject(
+				(Map<String, Object>)valueMap.get("text"));
 
 			if (Objects.equals(editableTypes.get(fragmentFieldId), "html")) {
-				localizationJSONObject = _createTextLocalizationJSONObject(
+				localizationJSONObject = _createTextJSONObject(
 					(Map<String, Object>)valueMap.get("html"));
 			}
 
@@ -451,7 +543,7 @@ public class FragmentLayoutStructureItemHelper
 				Map<String, Object> fragmentImageMap =
 					(Map<String, Object>)valueMap.get("fragmentImage");
 
-				localizationJSONObject = _createImageLocalizationJSONObject(
+				localizationJSONObject = _createImageJSONObject(
 					fragmentImageMap);
 
 				try {

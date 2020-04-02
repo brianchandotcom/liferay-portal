@@ -28,7 +28,7 @@ import {config} from '../config/index';
 import {useSelector} from '../store/index';
 import {useGetFieldValue} from './CollectionItemContext';
 import {useSelectItem} from './Controls';
-import PageEditor from './PageEditor';
+import Layout from './Layout';
 import UnsafeHTML from './UnsafeHTML';
 import getAllEditables from './fragment-content/getAllEditables';
 import resolveEditableValue from './fragment-content/resolveEditableValue';
@@ -106,7 +106,7 @@ MasterLayoutDataItem.propTypes = {
 function DropZoneContainer() {
 	const mainItemId = useSelector(state => state.layoutData.rootItems.main);
 
-	return <PageEditor mainItemId={mainItemId} withinMasterPage />;
+	return <Layout mainItemId={mainItemId} withinMasterPage />;
 }
 
 function Root({children}) {

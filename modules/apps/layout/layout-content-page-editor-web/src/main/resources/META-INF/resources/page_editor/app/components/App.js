@@ -18,8 +18,8 @@ import {createPortal} from 'react-dom';
 import {config} from '../config/index';
 import {useSelector} from '../store/index';
 import DisabledArea from './DisabledArea';
+import Layout from './Layout';
 import MasterLayout from './MasterLayout';
-import PageEditor from './PageEditor';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 
@@ -45,7 +45,7 @@ export default function App() {
 			{masterLayoutData.items ? (
 				<MasterLayout />
 			) : (
-				<PageEditor mainItemId={mainItemId} />
+				<Layout mainItemId={mainItemId} />
 			)}
 			{createPortal(<Sidebar />, document.body)}
 		</>

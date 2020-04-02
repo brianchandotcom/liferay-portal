@@ -66,13 +66,13 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.row]: RowWithControls,
 };
 
-export default function PageEditor({mainItemId, withinMasterPage = false}) {
+export default function Layout({mainItemId, withinMasterPage = false}) {
 	const activeItemId = useActiveItemId();
 	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
 	const layoutData = useSelector(state => state.layoutData);
 	const mainItem = layoutData.items[mainItemId];
-	const pageEditorRef = useRef(null);
+	const layoutRef = useRef(null);
 	const selectItem = useSelectItem();
 	const sidebarOpen = useSelector(
 		state => state.sidebar.panelId && state.sidebar.open
@@ -152,7 +152,7 @@ export default function PageEditor({mainItemId, withinMasterPage = false}) {
 	);
 
 	useEffect(() => {
-		const pageEditor = pageEditorRef.current;
+		const layout = layoutRef.current;
 
 		const preventLinkClick = event => {
 			const closestElement = closest(event.target, '[href]');
@@ -165,16 +165,16 @@ export default function PageEditor({mainItemId, withinMasterPage = false}) {
 			}
 		};
 
-		if (pageEditor) {
-			pageEditor.addEventListener('click', preventLinkClick);
+		if (layout) {
+			layout.addEventListener('click', preventLinkClick);
 		}
 
 		return () => {
-			if (pageEditor) {
-				pageEditor.removeEventListener('click', preventLinkClick);
+			if (layout) {
+				layout.removeEventListener('click', preventLinkClick);
 			}
 		};
-	}, [pageEditorRef]);
+	}, [layoutRef]);
 
 	useEventListener('keyup', onKeyUp, false, document.body);
 
@@ -223,7 +223,7 @@ export default function PageEditor({mainItemId, withinMasterPage = false}) {
 				})}
 				id="page-editor"
 				onClick={onClick}
-				ref={pageEditorRef}
+				ref={layoutRef}
 			>
 				<DragPreview />
 
@@ -243,7 +243,7 @@ export default function PageEditor({mainItemId, withinMasterPage = false}) {
 	);
 }
 
-PageEditor.propTypes = {
+Layout.propTypes = {
 	mainItemId: PropTypes.string.isRequired,
 	withinMasterPage: PropTypes.bool,
 };

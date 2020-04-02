@@ -16,7 +16,11 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.manager;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -68,38 +72,65 @@ public class DefaultPortalKaleoManager
 	public void deployDefaultDefinitionLink(String assetClassName)
 		throws Exception {
 
-		List<Company> companies = companyLocalService.getCompanies();
+		ActionableDynamicQuery actionableDynamicQuery =
+			companyLocalService.getActionableDynamicQuery();
 
-		for (Company company : companies) {
-			long companyId = company.getCompanyId();
+		actionableDynamicQuery.setPerformActionMethod(
+			(Company company) -> {
+				try {
+					long companyId = company.getCompanyId();
 
-			User defaultUser = userLocalService.getDefaultUser(companyId);
+					User defaultUser = userLocalService.getDefaultUser(
+						companyId);
 
-			Group companyGroup = groupLocalService.getCompanyGroup(companyId);
+					Group companyGroup = groupLocalService.getCompanyGroup(
+						companyId);
 
-			String definitionName = _DEFINITION_NAME;
+					String definitionName = _DEFINITION_NAME;
 
-			if (_definitionAssets.containsKey(assetClassName)) {
-				definitionName = _definitionAssets.get(assetClassName);
-			}
+					if (_definitionAssets.containsKey(assetClassName)) {
+						definitionName = _definitionAssets.get(assetClassName);
+					}
 
-			ServiceContext serviceContext = new ServiceContext();
+					ServiceContext serviceContext = new ServiceContext();
 
-			serviceContext.setCompanyId(companyId);
+					serviceContext.setCompanyId(companyId);
 
-			deployDefaultDefinitionLink(
-				defaultUser, companyId, companyGroup, assetClassName,
-				definitionName);
-		}
+					deployDefaultDefinitionLink(
+						defaultUser, companyId, companyGroup, assetClassName,
+						definitionName);
+				}
+				catch (Exception exception) {
+					throw new SystemException(exception);
+				}
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override
 	public void deployDefaultDefinitionLinks() throws Exception {
-		List<Company> companies = companyLocalService.getCompanies(false);
+		ActionableDynamicQuery actionableDynamicQuery =
+			companyLocalService.getActionableDynamicQuery();
 
-		for (Company company : companies) {
-			deployDefaultDefinitionLinks(company.getCompanyId());
-		}
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property systemProperty = PropertyFactoryUtil.forName("system");
+
+				dynamicQuery.add(systemProperty.eq(Boolean.FALSE));
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(Company company) -> {
+				try {
+					deployDefaultDefinitionLinks(company.getCompanyId());
+				}
+				catch (Exception exception) {
+					throw new SystemException(exception);
+				}
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override
@@ -124,11 +155,20 @@ public class DefaultPortalKaleoManager
 
 	@Override
 	public void deployDefaultDefinitions() throws Exception {
-		List<Company> companies = companyLocalService.getCompanies();
+		ActionableDynamicQuery actionableDynamicQuery =
+			companyLocalService.getActionableDynamicQuery();
 
-		for (Company company : companies) {
-			deployDefaultDefinitions(company.getCompanyId());
-		}
+		actionableDynamicQuery.setPerformActionMethod(
+			(Company company) -> {
+				try {
+					deployDefaultDefinitions(company.getCompanyId());
+				}
+				catch (Exception exception) {
+					throw new SystemException(exception);
+				}
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override
@@ -180,11 +220,20 @@ public class DefaultPortalKaleoManager
 
 	@Override
 	public void deployDefaultRoles() throws Exception {
-		List<Company> companies = companyLocalService.getCompanies();
+		ActionableDynamicQuery actionableDynamicQuery =
+			companyLocalService.getActionableDynamicQuery();
 
-		for (Company company : companies) {
-			deployDefaultRoles(company.getCompanyId());
-		}
+		actionableDynamicQuery.setPerformActionMethod(
+			(Company company) -> {
+				try {
+					deployDefaultRoles(company.getCompanyId());
+				}
+				catch (Exception exception) {
+					throw new SystemException(exception);
+				}
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override

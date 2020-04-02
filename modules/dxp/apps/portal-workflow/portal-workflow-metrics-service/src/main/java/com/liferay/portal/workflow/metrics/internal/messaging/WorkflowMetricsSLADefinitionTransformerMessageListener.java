@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.messaging;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -96,49 +97,56 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 			return;
 		}
 
-		for (Company company : _companyLocalService.getCompanies()) {
-			if (!_hasIndex(company.getCompanyId())) {
-				continue;
-			}
+		ActionableDynamicQuery actionableDynamicQuery =
+			_companyLocalService.getActionableDynamicQuery();
 
-			SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-			searchSearchRequest.setIndexNames(
-				_processWorkflowMetricsIndexNameBuilder.getIndexName(
-					company.getCompanyId()));
-
-			BooleanQuery booleanQuery = _queries.booleanQuery();
-
-			searchSearchRequest.setQuery(
-				booleanQuery.addFilterQueryClauses(
-					_createBooleanQuery(company.getCompanyId())));
-
-			searchSearchRequest.setSize(10000);
-
-			Stream.of(
-				_searchEngineAdapter.execute(searchSearchRequest)
-			).map(
-				SearchSearchResponse::getSearchHits
-			).map(
-				SearchHits::getSearchHits
-			).flatMap(
-				List::stream
-			).map(
-				SearchHit::getDocument
-			).forEach(
-				document -> {
-					try {
-						_workflowMetricsSLADefinitionTransformer.transform(
-							document.getLong("companyId"),
-							document.getString("version"),
-							document.getLong("processId"));
-					}
-					catch (PortalException portalException) {
-						_log.error(portalException, portalException);
-					}
+		actionableDynamicQuery.setPerformActionMethod(
+			(Company company) -> {
+				if (!_hasIndex(company.getCompanyId())) {
+					return;
 				}
-			);
-		}
+
+				SearchSearchRequest searchSearchRequest =
+					new SearchSearchRequest();
+
+				searchSearchRequest.setIndexNames(
+					_processWorkflowMetricsIndexNameBuilder.getIndexName(
+						company.getCompanyId()));
+
+				BooleanQuery booleanQuery = _queries.booleanQuery();
+
+				searchSearchRequest.setQuery(
+					booleanQuery.addFilterQueryClauses(
+						_createBooleanQuery(company.getCompanyId())));
+
+				searchSearchRequest.setSize(10000);
+
+				Stream.of(
+					_searchEngineAdapter.execute(searchSearchRequest)
+				).map(
+					SearchSearchResponse::getSearchHits
+				).map(
+					SearchHits::getSearchHits
+				).flatMap(
+					List::stream
+				).map(
+					SearchHit::getDocument
+				).forEach(
+					document -> {
+						try {
+							_workflowMetricsSLADefinitionTransformer.transform(
+								document.getLong("companyId"),
+								document.getString("version"),
+								document.getLong("processId"));
+						}
+						catch (PortalException portalException) {
+							_log.error(portalException, portalException);
+						}
+					}
+				);
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

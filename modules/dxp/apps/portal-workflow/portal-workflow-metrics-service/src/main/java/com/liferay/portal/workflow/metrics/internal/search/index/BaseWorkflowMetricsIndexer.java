@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -220,15 +221,19 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 	@Activate
 	protected void activate() throws Exception {
-		for (Company company : companyLocalService.getCompanies()) {
-			createIndex(company.getCompanyId());
-		}
+		ActionableDynamicQuery actionableDynamicQuery =
+			companyLocalService.getActionableDynamicQuery();
 
-		if (!_INDEX_ON_STARTUP) {
-			for (Company company : companyLocalService.getCompanies()) {
-				reindex(company.getCompanyId());
-			}
-		}
+		actionableDynamicQuery.setPerformActionMethod(
+			(Company company) -> {
+				createIndex(company.getCompanyId());
+
+				if (!_INDEX_ON_STARTUP) {
+					reindex(company.getCompanyId());
+				}
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	protected String digest(Serializable... parts) {

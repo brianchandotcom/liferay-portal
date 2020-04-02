@@ -147,6 +147,7 @@ public abstract class BaseWorkflowMetricsIndexer
 		searchEngineAdapter.execute(deleteByQueryDocumentRequest);
 	}
 
+	@Override
 	public void createIndex(long companyId) throws PortalException {
 		if (searchEngineAdapter == null) {
 			return;
@@ -186,6 +187,7 @@ public abstract class BaseWorkflowMetricsIndexer
 		_updateDocument(documentBuilder.build());
 	}
 
+	@Override
 	public void removeIndex(long companyId) throws PortalException {
 		if (searchEngineAdapter == null) {
 			return;

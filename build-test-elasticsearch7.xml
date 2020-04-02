@@ -946,7 +946,7 @@ xpack.monitoring.collection.enabled: true</echo>
 		<property name="follower.workflow.metrics.instances.index">
 			<![CDATA[
 				{
-					"leader_index": "workflow-metrics-instances",
+					"leader_index": "liferay-workflow-metrics-instances-${companyId}",
 					"remote_cluster": "leader"
 				}
 			]]>
@@ -957,7 +957,7 @@ xpack.monitoring.collection.enabled: true</echo>
 			<arg value="Content-Type: application/json" />
 			<arg value="-X" />
 			<arg value="PUT" />
-			<arg value="localhost:9202/workflow-metrics-instances/_ccr/follow?wait_for_active_shards=1" />
+			<arg value="localhost:9202/liferay-workflow-metrics-instances-${companyId}/_ccr/follow?wait_for_active_shards=1" />
 			<arg value="-d" />
 			<arg value="${follower.workflow.metrics.instances.index}" />
 		</exec>
@@ -967,7 +967,7 @@ xpack.monitoring.collection.enabled: true</echo>
 		<property name="follower.workflow.metrics.nodes.index">
 			<![CDATA[
 				{
-					"leader_index": "workflow-metrics-nodes",
+					"leader_index": "liferay-workflow-metrics-nodes-${companyId}",
 					"remote_cluster": "leader"
 				}
 			]]>
@@ -978,7 +978,7 @@ xpack.monitoring.collection.enabled: true</echo>
 			<arg value="Content-Type: application/json" />
 			<arg value="-X" />
 			<arg value="PUT" />
-			<arg value="localhost:9202/workflow-metrics-nodes/_ccr/follow?wait_for_active_shards=1" />
+			<arg value="localhost:9202/liferay-workflow-metrics-nodes-${companyId}/_ccr/follow?wait_for_active_shards=1" />
 			<arg value="-d" />
 			<arg value="${follower.workflow.metrics.nodes.index}" />
 		</exec>
@@ -988,7 +988,7 @@ xpack.monitoring.collection.enabled: true</echo>
 		<property name="follower.workflow.metrics.processes.index">
 			<![CDATA[
 				{
-					"leader_index": "workflow-metrics-processes",
+					"leader_index": "liferay-workflow-metrics-processes-${companyId}",
 					"remote_cluster": "leader"
 				}
 			]]>
@@ -999,7 +999,7 @@ xpack.monitoring.collection.enabled: true</echo>
 			<arg value="Content-Type: application/json" />
 			<arg value="-X" />
 			<arg value="PUT" />
-			<arg value="localhost:9202/workflow-metrics-processes/_ccr/follow?wait_for_active_shards=1" />
+			<arg value="localhost:9202/liferay-workflow-metrics-processes-${companyId}/_ccr/follow?wait_for_active_shards=1" />
 			<arg value="-d" />
 			<arg value="${follower.workflow.metrics.processes.index}" />
 		</exec>
@@ -1009,7 +1009,7 @@ xpack.monitoring.collection.enabled: true</echo>
 		<property name="follower.workflow.metrics.sla.instance.results.index">
 			<![CDATA[
 				{
-					"leader_index": "workflow-metrics-sla-instance-results",
+					"leader_index": "liferay-workflow-metrics-sla-instance-results-${companyId}",
 					"remote_cluster": "leader"
 				}
 			]]>
@@ -1020,7 +1020,7 @@ xpack.monitoring.collection.enabled: true</echo>
 			<arg value="Content-Type: application/json" />
 			<arg value="-X" />
 			<arg value="PUT" />
-			<arg value="localhost:9202/workflow-metrics-sla-instance-results/_ccr/follow?wait_for_active_shards=1" />
+			<arg value="localhost:9202/liferay-workflow-metrics-sla-instance-results-${companyId}/_ccr/follow?wait_for_active_shards=1" />
 			<arg value="-d" />
 			<arg value="${follower.workflow.metrics.sla.instance.results.index}" />
 		</exec>
@@ -1030,7 +1030,7 @@ xpack.monitoring.collection.enabled: true</echo>
 		<property name="follower.workflow.metrics.sla.task.results.index">
 			<![CDATA[
 				{
-					"leader_index": "workflow-metrics-sla-task-results",
+					"leader_index": "liferay-workflow-metrics-sla-task-results-${companyId}",
 					"remote_cluster": "leader"
 				}
 			]]>
@@ -1041,7 +1041,7 @@ xpack.monitoring.collection.enabled: true</echo>
 			<arg value="Content-Type: application/json" />
 			<arg value="-X" />
 			<arg value="PUT" />
-			<arg value="localhost:9202/workflow-metrics-sla-task-results/_ccr/follow?wait_for_active_shards=1" />
+			<arg value="localhost:9202/liferay-workflow-metrics-sla-task-results-${companyId}/_ccr/follow?wait_for_active_shards=1" />
 			<arg value="-d" />
 			<arg value="${follower.workflow.metrics.sla.task.results.index}" />
 		</exec>
@@ -1051,7 +1051,7 @@ xpack.monitoring.collection.enabled: true</echo>
 		<property name="follower.workflow.metrics.tokens.index">
 			<![CDATA[
 				{
-					"leader_index": "workflow-metrics-tokens",
+					"leader_index": "liferay-workflow-metrics-tokens-${companyId}",
 					"remote_cluster": "leader"
 				}
 			]]>
@@ -1062,7 +1062,7 @@ xpack.monitoring.collection.enabled: true</echo>
 			<arg value="Content-Type: application/json" />
 			<arg value="-X" />
 			<arg value="PUT" />
-			<arg value="localhost:9202/workflow-metrics-tokens/_ccr/follow?wait_for_active_shards=1" />
+			<arg value="localhost:9202/liferay-workflow-metrics-tokens-${companyId}/_ccr/follow?wait_for_active_shards=1" />
 			<arg value="-d" />
 			<arg value="${follower.workflow.metrics.tokens.index}" />
 		</exec>
@@ -1082,12 +1082,12 @@ xpack.monitoring.collection.enabled: true</echo>
 				<contains string="${curl.output.follower.indices}" substring="liferay-0" />
 				<contains string="${curl.output.follower.indices}" substring="liferay-${companyId}" />
 				<contains string="${curl.output.follower.indices}" substring="liferay-search-tuning-synonyms-liferay-${companyId}" />
-				<contains string="${curl.output.follower.indices}" substring="workflow-metrics-instances" />
-				<contains string="${curl.output.follower.indices}" substring="workflow-metrics-nodes" />
-				<contains string="${curl.output.follower.indices}" substring="workflow-metrics-processes" />
-				<contains string="${curl.output.follower.indices}" substring="workflow-metrics-sla-instance-results" />
-				<contains string="${curl.output.follower.indices}" substring="workflow-metrics-sla-task-results" />
-				<contains string="${curl.output.follower.indices}" substring="workflow-metrics-tokens" />
+				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-instances-${companyId}" />
+				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-nodes-${companyId}" />
+				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-processes-${companyId}" />
+				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-sla-instance-results-${companyId}" />
+				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-sla-task-results-${companyId}" />
+				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-tokens-${companyId}" />
 			</and>
 			<then>
 				<echo>Created follower indices.</echo>

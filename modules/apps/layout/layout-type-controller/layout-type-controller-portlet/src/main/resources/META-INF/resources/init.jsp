@@ -28,6 +28,7 @@ page import="com.liferay.fragment.renderer.FragmentRendererController" %><%@
 page import="com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil" %><%@
 page import="com.liferay.layout.type.controller.portlet.internal.constants.PortletLayoutTypeControllerWebKeys" %><%@
 page import="com.liferay.layout.type.controller.portlet.internal.display.context.PortletLayoutDisplayContext" %><%@
+page import="com.liferay.layout.util.structure.CollectionLayoutStructureItem" %><%@
 page import="com.liferay.layout.util.structure.ColumnLayoutStructureItem" %><%@
 page import="com.liferay.layout.util.structure.ContainerLayoutStructureItem" %><%@
 page import="com.liferay.layout.util.structure.DropZoneLayoutStructureItem" %><%@

@@ -30,6 +30,59 @@ for (String childrenItemId : childrenItemIds) {
 %>
 
 	<c:choose>
+		<c:when test="<%= layoutStructureItem instanceof CollectionLayoutStructureItem %>">
+
+			<%
+			CollectionLayoutStructureItem collectionLayoutStructureItem = (CollectionLayoutStructureItem)layoutStructureItem;
+
+			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+			%>
+
+			<c:choose>
+				<c:when test="<%= Objects.equals(collectionLayoutStructureItem.getListFormat(), CollectionLayoutStructureItem.LIST_FORMAT_GRID) %>">
+					<div class="row">
+
+						<%
+						for (Object collectionObject : portletLayoutDisplayContext.getCollection(collectionLayoutStructureItem)) {
+							try {
+								request.setAttribute("render_layout_structure.jsp-collectionObject", collectionObject);
+						%>
+
+								<div class="col-md-<%= 12 / collectionLayoutStructureItem.getNumberOfColumns() %>">
+									<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
+								</div>
+
+						<%
+							}
+							finally {
+								request.removeAttribute("render_layout_structure.jsp-collectionObject");
+							}
+						}
+						%>
+
+					</div>
+				</c:when>
+				<c:when test="<%= Objects.equals(collectionLayoutStructureItem.getListFormat(), CollectionLayoutStructureItem.LIST_FORMAT_STACKED) %>">
+
+					<%
+					for (Object collectionObject : portletLayoutDisplayContext.getCollection(collectionLayoutStructureItem)) {
+						try {
+							request.setAttribute("render_layout_structure.jsp-collectionObject", collectionObject);
+					%>
+
+							<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
+
+					<%
+						}
+						finally {
+							request.removeAttribute("render_layout_structure.jsp-collectionObject");
+						}
+					}
+					%>
+
+				</c:when>
+			</c:choose>
+		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof ColumnLayoutStructureItem %>">
 
 			<%
@@ -133,6 +186,10 @@ for (String childrenItemId : childrenItemIds) {
 
 				DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
 
+				Object displayObject = request.getAttribute("render_layout_structure.jsp-collectionObject");
+
+				defaultFragmentRendererContext.setDisplayObject(displayObject);
+
 				defaultFragmentRendererContext.setLocale(locale);
 				%>
 
@@ -164,7 +221,7 @@ for (String childrenItemId : childrenItemIds) {
 							request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 							%>
 
-							<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
+							<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
 						</div>
 					</div>
 				</c:when>
@@ -175,7 +232,7 @@ for (String childrenItemId : childrenItemIds) {
 						request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 						%>
 
-						<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
+						<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
 					</div>
 				</c:otherwise>
 			</c:choose>

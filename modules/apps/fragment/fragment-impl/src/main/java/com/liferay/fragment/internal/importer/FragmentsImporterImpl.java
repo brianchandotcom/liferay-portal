@@ -21,7 +21,6 @@ import com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException;
 import com.liferay.fragment.exception.DuplicateFragmentCompositionKeyException;
 import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
-import com.liferay.fragment.exception.InvalidFileException;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
@@ -95,8 +94,6 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		_invalidFragmentEntriesNames = new ArrayList<>();
 
 		try (ZipFile zipFile = new ZipFile(file)) {
-			_isValidFile(zipFile);
-
 			Map<String, String> orphanFragmentCompositions = new HashMap<>();
 			Map<String, String> orphanFragmentEntries = new HashMap<>();
 
@@ -830,23 +827,6 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		}
 
 		return false;
-	}
-
-	private void _isValidFile(ZipFile zipFile) throws PortalException {
-		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
-
-		while (enumeration.hasMoreElements()) {
-			ZipEntry zipEntry = enumeration.nextElement();
-
-			if (_isFragmentCollection(zipEntry.getName()) ||
-				_isFragmentComposition(zipEntry.getName()) ||
-				_isFragmentEntry(zipEntry.getName())) {
-
-				return;
-			}
-		}
-
-		throw new InvalidFileException();
 	}
 
 	private static final String _FRAGMENT_COLLECTION_KEY_DEFAULT = "imported";

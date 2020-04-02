@@ -35,13 +35,10 @@ public class InstanceWorkflowMetricsIndexNameBuilder
 	public String getIndexName(long companyId) {
 		return WorkflowMetricsIndexNameBuilderUtil.getIndexName(
 			companyId, indexNameBuilder.getIndexName(companyId),
-			_INDEX_NAME_PREFIX);
+			"workflow-metrics-instances");
 	}
 
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;
-
-	private static final String _INDEX_NAME_PREFIX =
-		"workflow-metrics-instances";
 
 }

@@ -36,13 +36,10 @@ public class SLAInstanceResultWorkflowMetricsIndexNameBuilder
 	public String getIndexName(long companyId) {
 		return WorkflowMetricsIndexNameBuilderUtil.getIndexName(
 			companyId, indexNameBuilder.getIndexName(companyId),
-			_INDEX_NAME_PREFIX);
+			"workflow-metrics-sla-instance-results");
 	}
 
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;
-
-	private static final String _INDEX_NAME_PREFIX =
-		"workflow-metrics-sla-instance-results";
 
 }

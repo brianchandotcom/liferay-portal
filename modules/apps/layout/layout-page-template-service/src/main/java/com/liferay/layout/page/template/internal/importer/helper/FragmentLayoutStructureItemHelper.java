@@ -206,32 +206,7 @@ public class FragmentLayoutStructureItemHelper
 			return jsonObject;
 		}
 
-		Map<String, String> mappingMap = (Map<String, String>)map.get(
-			"mapping");
-
-		if (mappingMap != null) {
-			String fieldKey = mappingMap.get("fieldKey");
-
-			String itemKey = mappingMap.get("itemKey");
-
-			String[] itemKeyParts = new String[0];
-
-			if (itemKey != null) {
-				itemKeyParts = itemKey.split(StringPool.POUND);
-			}
-
-			if ((fieldKey != null) && (itemKeyParts.length == 2)) {
-				jsonObject.put(
-					"classNameId", itemKeyParts[0]
-				).put(
-					"classPK", itemKeyParts[1]
-				).put(
-					"fieldId", fieldKey
-				);
-			}
-
-			jsonObject.put("defaultValue", mappingMap.get("defaultValue"));
-		}
+		_processMapping(jsonObject, (Map<String, String>)map.get("mapping"));
 
 		return jsonObject;
 	}
@@ -260,32 +235,8 @@ public class FragmentLayoutStructureItemHelper
 			return jsonObject;
 		}
 
-		Map<String, String> mappingMap = (Map<String, String>)hrefMap.get(
-			"mapping");
-
-		if (mappingMap != null) {
-			String fieldKey = mappingMap.get("fieldKey");
-
-			String itemKey = mappingMap.get("itemKey");
-
-			String[] itemKeyParts = new String[0];
-
-			if (itemKey != null) {
-				itemKeyParts = itemKey.split(StringPool.POUND);
-			}
-
-			if ((fieldKey != null) && (itemKeyParts.length == 2)) {
-				jsonObject.put(
-					"classNameId", itemKeyParts[0]
-				).put(
-					"classPK", itemKeyParts[1]
-				).put(
-					"fieldId", fieldKey
-				);
-			}
-
-			jsonObject.put("defaultValue", mappingMap.get("defaultValue"));
-		}
+		_processMapping(
+			jsonObject, (Map<String, String>)hrefMap.get("mapping"));
 
 		String target = (String)fragmentLinkMap.get("target");
 
@@ -413,6 +364,34 @@ public class FragmentLayoutStructureItemHelper
 		}
 
 		return fragmentEntry;
+	}
+
+	private void _processMapping(
+		JSONObject jsonObject, Map<String, String> map) {
+
+		if (map != null) {
+			String fieldKey = map.get("fieldKey");
+
+			String itemKey = map.get("itemKey");
+
+			String[] itemKeyParts = new String[0];
+
+			if (itemKey != null) {
+				itemKeyParts = itemKey.split(StringPool.POUND);
+			}
+
+			if ((fieldKey != null) && (itemKeyParts.length == 2)) {
+				jsonObject.put(
+					"classNameId", itemKeyParts[0]
+				).put(
+					"classPK", itemKeyParts[1]
+				).put(
+					"fieldId", fieldKey
+				);
+			}
+
+			jsonObject.put("defaultValue", map.get("defaultValue"));
+		}
 	}
 
 	private String _replaceResources(

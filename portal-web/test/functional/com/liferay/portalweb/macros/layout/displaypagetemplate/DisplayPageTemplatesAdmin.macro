@@ -48,6 +48,8 @@ definition {
 
 	macro gotoDisplayPage {
 		LexiconCard.clickCardTitle(card = "${displayPageName}");
+
+		PageEditor.assertFragmentSidebarLoaded();
 	}
 
 	macro gotoDisplayPageEllipsisItem {

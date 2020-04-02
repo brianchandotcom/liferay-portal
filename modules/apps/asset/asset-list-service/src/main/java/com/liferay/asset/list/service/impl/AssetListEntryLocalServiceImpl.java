@@ -158,8 +158,10 @@ public class AssetListEntryLocalServiceImpl
 			_generateAssetListEntryKey(groupId, title));
 		assetListEntry.setTitle(title);
 		assetListEntry.setType(type);
-		assetListEntry.setAssetEntryType(
-			_getAssetEntryType(type, typeSettings));
+
+		if (type == AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+			assetListEntry.setAssetEntryType(_getAssetEntryType(typeSettings));
+		}
 
 		assetListEntry = assetListEntryPersistence.update(assetListEntry);
 
@@ -350,10 +352,14 @@ public class AssetListEntryLocalServiceImpl
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
 
 		assetListEntry.setModifiedDate(new Date());
-		assetListEntry.setAssetEntryType(
-			_getSegmentsAssetEntryType(
-				assetListEntryId, segmentsEntryId, assetListEntry.getType(),
-				typeSettings));
+
+		if (assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+
+			assetListEntry.setAssetEntryType(
+				_getSegmentsAssetEntryType(
+					assetListEntryId, segmentsEntryId, typeSettings));
+		}
 
 		assetListEntry = assetListEntryPersistence.update(assetListEntry);
 
@@ -411,10 +417,14 @@ public class AssetListEntryLocalServiceImpl
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
 
 		assetListEntry.setModifiedDate(new Date());
-		assetListEntry.setAssetEntryType(
-			_getSegmentsAssetEntryType(
-				assetListEntryId, segmentsEntryId, assetListEntry.getType(),
-				typeSettings));
+
+		if (assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+
+			assetListEntry.setAssetEntryType(
+				_getSegmentsAssetEntryType(
+					assetListEntryId, segmentsEntryId, typeSettings));
+		}
 
 		assetListEntryPersistence.update(assetListEntry);
 
@@ -448,10 +458,8 @@ public class AssetListEntryLocalServiceImpl
 		}
 	}
 
-	private String _getAssetEntryType(int type, String typeSettings) {
-		if ((type == AssetListEntryTypeConstants.TYPE_MANUAL) ||
-			Validator.isNull(typeSettings)) {
-
+	private String _getAssetEntryType(String typeSettings) {
+		if (Validator.isNull(typeSettings)) {
 			return AssetEntry.class.getName();
 		}
 
@@ -479,10 +487,9 @@ public class AssetListEntryLocalServiceImpl
 	}
 
 	private String _getSegmentsAssetEntryType(
-		long assetListEntryId, long segmentsEntryId, int type,
-		String typeSettings) {
+		long assetListEntryId, long segmentsEntryId, String typeSettings) {
 
-		String assetEntryType = _getAssetEntryType(type, typeSettings);
+		String assetEntryType = _getAssetEntryType(typeSettings);
 
 		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
 			_assetListEntrySegmentsEntryRelLocalService.
@@ -497,7 +504,6 @@ public class AssetListEntryLocalServiceImpl
 				Objects.equals(
 					assetEntryType,
 					_getAssetEntryType(
-						type,
 						assetListEntrySegmentsEntryRel.getTypeSettings()))) {
 
 				continue;

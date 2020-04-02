@@ -125,6 +125,7 @@ definition {
 	@priority = "5"
 	test AddWCWithTranslation {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "LocalizationWithWebContent#AddWCWithTranslation";
 		property testray.component.names = "Localization,Web Content Administration";
 

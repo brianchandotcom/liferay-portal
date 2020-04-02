@@ -25,18 +25,19 @@ definition {
 	}
 
 	tearDown {
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		AppBuilderAdmin.teardownAppBuilder();
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (("${testPortalInstance}" == "true") && (!(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}")))) {
 			PortalInstances.tearDownCP();
 		}
 		else {
-
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-
-			AppBuilderAdmin.teardownAppBuilder();
 
 			Page.tearDownCP();
 

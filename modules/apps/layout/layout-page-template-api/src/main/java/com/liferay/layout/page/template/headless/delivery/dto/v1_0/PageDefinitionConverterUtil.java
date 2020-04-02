@@ -24,7 +24,7 @@ import com.liferay.headless.delivery.dto.v1_0.ColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.DropZoneDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
-import com.liferay.headless.delivery.dto.v1_0.InlineValue;
+import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.delivery.dto.v1_0.Layout;
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
@@ -431,10 +431,10 @@ public class PageDefinitionConverterUtil {
 
 									return new FragmentImage() {
 										{
-											title = _toTitleInlineValue(
+											title = _toTitleFragmentInlineValue(
 												backgroundImageJSONObject,
 												urlValue);
-											url = new InlineValue() {
+											url = new FragmentInlineValue() {
 												{
 													value = urlValue;
 												}
@@ -620,7 +620,7 @@ public class PageDefinitionConverterUtil {
 		};
 	}
 
-	private static InlineValue _toTitleInlineValue(
+	private static FragmentInlineValue _toTitleFragmentInlineValue(
 		JSONObject jsonObject, String urlValue) {
 
 		String title = jsonObject.getString("title");
@@ -629,7 +629,7 @@ public class PageDefinitionConverterUtil {
 			return null;
 		}
 
-		return new InlineValue() {
+		return new FragmentInlineValue() {
 			{
 				value = title;
 			}

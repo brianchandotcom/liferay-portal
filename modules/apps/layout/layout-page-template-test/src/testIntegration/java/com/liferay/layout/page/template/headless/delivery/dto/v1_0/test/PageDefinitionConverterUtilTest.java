@@ -34,9 +34,9 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentFieldHTML;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldText;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
+import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
-import com.liferay.headless.delivery.dto.v1_0.InlineValue;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.RowDefinition;
@@ -473,15 +473,19 @@ public class PageDefinitionConverterUtilTest {
 
 		FragmentImage fragmentImage1 = sectionDefinition1.getBackgroundImage();
 
-		InlineValue titleInlineValue = (InlineValue)fragmentImage1.getTitle();
+		FragmentInlineValue titleFragmentInlineValue =
+			(FragmentInlineValue)fragmentImage1.getTitle();
 
 		Assert.assertEquals(
-			"My Example1 Background Image Title", titleInlineValue.getValue());
+			"My Example1 Background Image Title",
+			titleFragmentInlineValue.getValue());
 
-		InlineValue urlInlineValue1 = (InlineValue)fragmentImage1.getUrl();
+		FragmentInlineValue urlFragmentInlineValue1 =
+			(FragmentInlineValue)fragmentImage1.getUrl();
 
 		Assert.assertEquals(
-			"http://myexample1.com/myexample1.png", urlInlineValue1.getValue());
+			"http://myexample1.com/myexample1.png",
+			urlFragmentInlineValue1.getValue());
 
 		com.liferay.headless.delivery.dto.v1_0.Layout sectionLayout =
 			sectionDefinition1.getLayout();
@@ -505,10 +509,12 @@ public class PageDefinitionConverterUtilTest {
 
 		Assert.assertNull(fragmentImage2.getTitle());
 
-		InlineValue urlInlineValue2 = (InlineValue)fragmentImage2.getUrl();
+		FragmentInlineValue urlFragmentInlineValue2 =
+			(FragmentInlineValue)fragmentImage2.getUrl();
 
 		Assert.assertEquals(
-			"http://myexample2.com/myexample2.png", urlInlineValue2.getValue());
+			"http://myexample2.com/myexample2.png",
+			urlFragmentInlineValue2.getValue());
 	}
 
 	private void _addLayoutPageTemplateStructure(
@@ -621,11 +627,12 @@ public class PageDefinitionConverterUtilTest {
 		Assert.assertNull(fragmentImage.getDescription());
 		Assert.assertNull(fragmentImage.getTitle());
 
-		InlineValue urlInlineValue = (InlineValue)fragmentImage.getUrl();
+		FragmentInlineValue urlFragmentInlineValue =
+			(FragmentInlineValue)fragmentImage.getUrl();
 
-		Assert.assertNull(urlInlineValue.getValue());
+		Assert.assertNull(urlFragmentInlineValue.getValue());
 
-		Map<String, String> urlI18nMap = urlInlineValue.getValue_i18n();
+		Map<String, String> urlI18nMap = urlFragmentInlineValue.getValue_i18n();
 
 		Assert.assertEquals(
 			"http://myexample.com/myexample.png", urlI18nMap.get("en_US"));
@@ -638,15 +645,17 @@ public class PageDefinitionConverterUtilTest {
 
 		Assert.assertNull(fragmentImage.getDescription());
 
-		InlineValue titleInlineValue = (InlineValue)fragmentImage.getTitle();
+		FragmentInlineValue titleFragmentInlineValue =
+			(FragmentInlineValue)fragmentImage.getTitle();
 
-		Assert.assertEquals(title, titleInlineValue.getValue());
+		Assert.assertEquals(title, titleFragmentInlineValue.getValue());
 
-		InlineValue urlInlineValue = (InlineValue)fragmentImage.getUrl();
+		FragmentInlineValue urlFragmentInlineValue =
+			(FragmentInlineValue)fragmentImage.getUrl();
 
-		Assert.assertNull(urlInlineValue.getValue());
+		Assert.assertNull(urlFragmentInlineValue.getValue());
 
-		Map<String, String> urlI18nMap = urlInlineValue.getValue_i18n();
+		Map<String, String> urlI18nMap = urlFragmentInlineValue.getValue_i18n();
 
 		Assert.assertEquals(
 			"http://myexample.com/myexample.png", urlI18nMap.get("en_US"));
@@ -657,11 +666,12 @@ public class PageDefinitionConverterUtilTest {
 	private void _validateFragmentFieldHTML(
 		FragmentFieldHTML fragmentFieldHTML) {
 
-		InlineValue inlineValue = (InlineValue)fragmentFieldHTML.getHtml();
+		FragmentInlineValue fragmentInlineValue =
+			(FragmentInlineValue)fragmentFieldHTML.getHtml();
 
-		Assert.assertNull(inlineValue.getValue());
+		Assert.assertNull(fragmentInlineValue.getValue());
 
-		Map<String, String> i18nMap = inlineValue.getValue_i18n();
+		Map<String, String> i18nMap = fragmentInlineValue.getValue_i18n();
 
 		Assert.assertEquals("My example", i18nMap.get("en_US"));
 		Assert.assertEquals("Mi ejemplo", i18nMap.get("es_ES"));
@@ -675,16 +685,18 @@ public class PageDefinitionConverterUtilTest {
 		Assert.assertEquals(
 			FragmentLink.Target.BLANK, fragmentLink.getTarget());
 
-		InlineValue hrefInlineValue = (InlineValue)fragmentLink.getHref();
+		FragmentInlineValue hrefFragmentInlineValue =
+			(FragmentInlineValue)fragmentLink.getHref();
 
 		Assert.assertEquals(
-			"http://www.myexample.com", hrefInlineValue.getValue());
+			"http://www.myexample.com", hrefFragmentInlineValue.getValue());
 
-		InlineValue textInlineValue = (InlineValue)fragmentFieldText.getText();
+		FragmentInlineValue textFragmentInlineValue =
+			(FragmentInlineValue)fragmentFieldText.getText();
 
-		Assert.assertNull(textInlineValue.getValue());
+		Assert.assertNull(textFragmentInlineValue.getValue());
 
-		Map<String, String> i18nMap = textInlineValue.getValue_i18n();
+		Map<String, String> i18nMap = textFragmentInlineValue.getValue_i18n();
 
 		Assert.assertEquals("My example", i18nMap.get("en_US"));
 		Assert.assertEquals("Mi ejemplo", i18nMap.get("es_ES"));
@@ -693,17 +705,19 @@ public class PageDefinitionConverterUtilTest {
 	private void _validateFragmentImage(FragmentImage fragmentImage) {
 		Assert.assertNull(fragmentImage.getTitle());
 
-		InlineValue descriptionInlineValue =
-			(InlineValue)fragmentImage.getDescription();
+		FragmentInlineValue descriptionFragmentInlineValue =
+			(FragmentInlineValue)fragmentImage.getDescription();
 
 		Assert.assertEquals(
-			"My example description", descriptionInlineValue.getValue());
+			"My example description",
+			descriptionFragmentInlineValue.getValue());
 
-		InlineValue urlInlineValue = (InlineValue)fragmentImage.getUrl();
+		FragmentInlineValue urlFragmentInlineValue =
+			(FragmentInlineValue)fragmentImage.getUrl();
 
-		Assert.assertNull(urlInlineValue.getValue());
+		Assert.assertNull(urlFragmentInlineValue.getValue());
 
-		Map<String, String> urlI18nMap = urlInlineValue.getValue_i18n();
+		Map<String, String> urlI18nMap = urlFragmentInlineValue.getValue_i18n();
 
 		Assert.assertEquals(
 			"http://myexample.com/myexample.png", urlI18nMap.get("en_US"));
@@ -714,15 +728,17 @@ public class PageDefinitionConverterUtilTest {
 	private void _validateFragmentImageWithTitle(
 		FragmentImage fragmentImage, String title) {
 
-		InlineValue titleInlineValue = (InlineValue)fragmentImage.getTitle();
+		FragmentInlineValue titleFragmentInlineValue =
+			(FragmentInlineValue)fragmentImage.getTitle();
 
-		Assert.assertEquals(title, titleInlineValue.getValue());
+		Assert.assertEquals(title, titleFragmentInlineValue.getValue());
 
-		InlineValue urlInlineValue = (InlineValue)fragmentImage.getUrl();
+		FragmentInlineValue urlFragmentInlineValue =
+			(FragmentInlineValue)fragmentImage.getUrl();
 
-		Assert.assertNull(urlInlineValue.getValue());
+		Assert.assertNull(urlFragmentInlineValue.getValue());
 
-		Map<String, String> urlI18nMap = urlInlineValue.getValue_i18n();
+		Map<String, String> urlI18nMap = urlFragmentInlineValue.getValue_i18n();
 
 		Assert.assertEquals(
 			"http://myexample.com/myexample.png", urlI18nMap.get("en_US"));

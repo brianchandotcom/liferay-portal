@@ -133,12 +133,10 @@ public class FileInstallDeployTest {
 			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
 			_CONFIGURATION_PID.concat(".config"));
 
-		String systemTestProperty = "systemTestProp";
-		String systemTestPropertyValue = "systemTestPropValue";
+		String systemTestProperty = StringBundler.concat(
+			_CONFIGURATION_PID, StringPool.PERIOD, _TEST_KEY);
 
-		String propertyOriginal = System.getProperty(systemTestProperty);
-
-		System.setProperty(systemTestProperty, systemTestPropertyValue);
+		System.setProperty(systemTestProperty, _TEST_VALUE_1);
 
 		try {
 			_updateConfiguration(
@@ -156,16 +154,10 @@ public class FileInstallDeployTest {
 			Dictionary<String, Object> properties =
 				configuration.getProperties();
 
-			Assert.assertEquals(
-				systemTestPropertyValue, properties.get(_TEST_KEY));
+			Assert.assertEquals(_TEST_VALUE_1, properties.get(_TEST_KEY));
 		}
 		finally {
-			if (propertyOriginal == null) {
-				System.clearProperty(systemTestProperty);
-			}
-			else {
-				System.setProperty(systemTestProperty, propertyOriginal);
-			}
+			System.clearProperty(systemTestProperty);
 
 			Files.deleteIfExists(path);
 		}

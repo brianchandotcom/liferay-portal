@@ -9,6 +9,7 @@
 	{@param? _handleLabelClosed: any}
 	{@param? dataSourceType: string}
 	{@param? displayErrors: bool}
+	{@param? emptyOptionLabel: string}
 	{@param? errorMessage: string}
 	{@param? expanded: bool}
 	{@param? id: string}
@@ -35,6 +36,7 @@
 				{param _handleLabelClosed: $_handleLabelClosed /}
 				{param dataSourceType: $dataSourceType /}
 				{param displayValues: $displayValues /}
+				{param emptyOptionLabel: $emptyOptionLabel /}
 				{param expanded: $expanded /}
 				{param id: $id /}
 				{param multiple: $multiple /}
@@ -70,6 +72,7 @@
 	{@param? _handleExpandedChanged: any}
 	{@param? _handleItemClicked: any}
 	{@param? _handleLabelClosed: any}
+	{@param? emptyOptionLabel: string}
 	{@param? expanded: bool}
 	{@param? id: string}
 	{@param? multiple: bool}
@@ -138,10 +141,8 @@
 
 						{ifempty}
 							<div class="option-selected option-selected-placeholder">
-								{if $multiple}
-									{msg desc=""}choose-options{/msg}
-								{else}
-									{msg desc=""}choose-an-option{/msg}
+								{if $emptyOptionLabel != null}
+									{$emptyOptionLabel}
 								{/if}
 							</div>
 					{/foreach}

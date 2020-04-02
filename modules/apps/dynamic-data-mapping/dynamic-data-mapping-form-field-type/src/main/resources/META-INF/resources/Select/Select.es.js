@@ -108,6 +108,7 @@ class Select extends Component {
 
 		return {
 			...state,
+			emptyOptionLabel: Liferay.Language.get('choose-options'),
 			options: newOptions,
 			value: valueArray.filter(value =>
 				newOptions.some(option => value === option.value)

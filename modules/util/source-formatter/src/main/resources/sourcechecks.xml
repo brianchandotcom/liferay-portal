@@ -483,7 +483,6 @@
 			<category name="Bug Prevention" />
 			<description name="Checks that there are no array functions" />
 		</check>
-		<check name="JSPButtonTagCheck" />
 		<check name="JSPDefineObjectsCheck">
 			<category name="Performance" />
 			<description name="Checks for unnesecarry duplication of code that already exists in `defineObjects`" />

@@ -61,7 +61,7 @@ import org.apache.axis2.client.ServiceClient;
 import org.apache.axis2.client.Stub;
 import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.axis2.transport.http.impl.httpclient3.HttpTransportPropertiesImpl;
-import org.apache.commons.httpclient.auth.AuthPolicy;
+import org.apache.http.client.config.AuthSchemes;
 
 /**
  * @author Iván Zaera
@@ -352,7 +352,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 			new HttpTransportPropertiesImpl.Authenticator();
 
 		authenticator.setAuthSchemes(
-			Collections.singletonList(AuthPolicy.NTLM));
+			Collections.singletonList(AuthSchemes.NTLM));
 		authenticator.setHost(url.getHost());
 		authenticator.setPassword(_sharepointConnectionInfo.getPassword());
 		authenticator.setPort(url.getPort());

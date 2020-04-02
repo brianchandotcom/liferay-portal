@@ -26,13 +26,23 @@ import java.io.InputStream;
 
 import java.net.URL;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpState;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.params.HttpClientParams;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.AuthCache;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.AuthSchemes;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.BasicAuthCache;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.HttpClients;
 
 /**
  * @author Iván Zaera
@@ -51,46 +61,30 @@ public final class GetInputStreamOperation extends BaseOperation {
 		return execute(sharepointVersion.getURL());
 	}
 
-	protected void authenticate(HttpClient httpClient, URL url) {
-		HttpClientParams httpClientParams = httpClient.getParams();
-
-		httpClientParams.setAuthenticationPreemptive(true);
-
-		AuthScope authScope = new AuthScope(
-			url.getHost(), url.getPort(), url.getHost(), "BASIC");
-
-		UsernamePasswordCredentials usernamePasswordCredentials =
-			new UsernamePasswordCredentials(
-				sharepointConnectionInfo.getUsername(),
-				sharepointConnectionInfo.getPassword());
-
-		HttpState httpClientState = httpClient.getState();
-
-		httpClientState.setCredentials(authScope, usernamePasswordCredentials);
-	}
-
 	protected InputStream execute(URL url) throws SharepointException {
 		url = URLUtil.escapeURL(url);
 
-		HttpClient httpClient = new HttpClient();
-
-		authenticate(httpClient, url);
-
-		GetMethod getMethod = new GetMethod(url.toString());
-
-		getMethod.setDoAuthentication(true);
+		HttpGet httpGet = new HttpGet(url.toString());
 
 		try {
-			int status = httpClient.executeMethod(getMethod);
+			HttpClient httpClient = HttpClients.createDefault();
 
-			if (status == HttpStatus.SC_OK) {
+			HttpResponse httpResponse = httpClient.execute(
+				httpGet, _getHttpClientContext(url));
+
+			StatusLine statusLine = httpResponse.getStatusLine();
+
+			if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+
 				return new ByteArrayInputStream(
-					_getBytes(getMethod.getResponseBodyAsStream()));
+					_getBytes(httpEntity.getContent()));
 			}
 
 			throw new SharepointException(
 				StringBundler.concat(
-					"Downloading ", url, " failed with status ", status));
+					"Downloading ", url, " failed with status ",
+					statusLine.getStatusCode()));
 		}
 		catch (IOException ioException) {
 			throw new SharepointException(
@@ -98,7 +92,7 @@ public final class GetInputStreamOperation extends BaseOperation {
 				ioException);
 		}
 		finally {
-			getMethod.releaseConnection();
+			httpGet.releaseConnection();
 		}
 	}
 
@@ -112,6 +106,31 @@ public final class GetInputStreamOperation extends BaseOperation {
 			throw new SharepointException(
 				"Unable to read input stream", ioException);
 		}
+	}
+
+	private HttpClientContext _getHttpClientContext(URL url) {
+		HttpClientContext httpClientContext = HttpClientContext.create();
+
+		AuthCache authCache = new BasicAuthCache();
+
+		HttpHost httpHost = new HttpHost(
+			url.getHost(), url.getPort(), url.getProtocol());
+
+		authCache.put(httpHost, new BasicScheme());
+
+		CredentialsProvider credentialsProvider =
+			new BasicCredentialsProvider();
+
+		credentialsProvider.setCredentials(
+			new AuthScope(httpHost, url.getHost(), AuthSchemes.BASIC),
+			new UsernamePasswordCredentials(
+				sharepointConnectionInfo.getUsername(),
+				sharepointConnectionInfo.getPassword()));
+
+		httpClientContext.setAuthCache(authCache);
+		httpClientContext.setCredentialsProvider(credentialsProvider);
+
+		return httpClientContext;
 	}
 
 }

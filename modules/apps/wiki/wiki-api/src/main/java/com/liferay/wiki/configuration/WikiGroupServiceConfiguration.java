@@ -102,8 +102,7 @@ public interface WikiGroupServiceConfiguration {
 	public String frontPageName();
 
 	@Meta.AD(
-		deflt = "ckeditor_creole", name = "get-creole-editor",
-		required = false
+		deflt = "ckeditor_creole", name = "get-creole-editor", required = false
 	)
 	public String getCreoleEditor();
 

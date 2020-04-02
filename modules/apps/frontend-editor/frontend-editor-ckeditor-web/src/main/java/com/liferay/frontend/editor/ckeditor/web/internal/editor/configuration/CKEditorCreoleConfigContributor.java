@@ -106,8 +106,7 @@ public class CKEditorCreoleConfigContributor
 
 		JSONArray jsonArray = JSONUtil.putAll(
 			toJSONArray("['Bold', 'Italic', 'Underline', '-' ,'RemoveFormat']"),
-			toJSONArray(
-				"['NumberedList', 'BulletedList', '-']"),
+			toJSONArray("['NumberedList', 'BulletedList', '-']"),
 			toJSONArray("['Format']"), toJSONArray("['Link', 'Unlink']"),
 			toJSONArray(
 				"['Table', '-','ImageSelector', '-', 'HorizontalRule']"));

@@ -14,8 +14,6 @@
 
 package com.liferay.sharepoint.soap.repository.constants;
 
-import com.liferay.sharepoint.soap.repository.connector.SharepointConnection;
-
 /**
  * @author Cristina González
  */

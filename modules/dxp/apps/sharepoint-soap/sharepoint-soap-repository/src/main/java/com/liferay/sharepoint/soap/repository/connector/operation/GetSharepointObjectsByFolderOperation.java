@@ -58,7 +58,7 @@ public final class GetSharepointObjectsByFolderOperation extends BaseOperation {
 		}
 
 		if (objectTypeFilter.equals(
-					SharepointConnection.ObjectTypeFilter.FILES)) {
+				SharepointConnection.ObjectTypeFilter.FILES)) {
 
 			return new Query(
 				new EqOperator(
@@ -69,7 +69,7 @@ public final class GetSharepointObjectsByFolderOperation extends BaseOperation {
 		}
 
 		if (objectTypeFilter.equals(
-					SharepointConnection.ObjectTypeFilter.FOLDERS)) {
+				SharepointConnection.ObjectTypeFilter.FOLDERS)) {
 
 			return new Query(
 				new EqOperator(

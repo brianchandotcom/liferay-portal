@@ -821,28 +821,6 @@ public class SharepointWSRepository
 		}
 	}
 
-	private List<SharepointObject> _search(
-			SearchContext searchContext, Query query,
-			ExtRepositoryQueryMapper extRepositoryQueryMapper)
-		throws PortalException {
-
-		try {
-			SharepointQueryBuilder sharepointQueryBuilder =
-				new SharepointQueryBuilder(
-					this, searchContext, query, extRepositoryQueryMapper);
-
-			SharepointConnection sharepointConnection =
-				getSharepointConnection();
-
-			return sharepointConnection.getSharepointObjects(
-				sharepointQueryBuilder.getQuery(),
-				sharepointQueryBuilder.getQueryOptionsList());
-		}
-		catch (SharepointException sharepointException) {
-			throw new SystemException(sharepointException);
-		}
-	}
-
 	private List<SharepointObject> _filter(
 		SearchContext searchContext, List<SharepointObject> sharepointObjects) {
 
@@ -931,6 +909,28 @@ public class SharepointWSRepository
 
 			// The Sharepoint object does not exist
 
+		}
+	}
+
+	private List<SharepointObject> _search(
+			SearchContext searchContext, Query query,
+			ExtRepositoryQueryMapper extRepositoryQueryMapper)
+		throws PortalException {
+
+		try {
+			SharepointQueryBuilder sharepointQueryBuilder =
+				new SharepointQueryBuilder(
+					this, searchContext, query, extRepositoryQueryMapper);
+
+			SharepointConnection sharepointConnection =
+				getSharepointConnection();
+
+			return sharepointConnection.getSharepointObjects(
+				sharepointQueryBuilder.getQuery(),
+				sharepointQueryBuilder.getQueryOptionsList());
+		}
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
 	}
 

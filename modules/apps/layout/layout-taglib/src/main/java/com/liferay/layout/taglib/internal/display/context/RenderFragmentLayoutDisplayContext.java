@@ -15,7 +15,6 @@
 package com.liferay.layout.taglib.internal.display.context;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
@@ -51,14 +50,12 @@ public class RenderFragmentLayoutDisplayContext {
 
 	public RenderFragmentLayoutDisplayContext(
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
+		HttpServletResponse httpServletResponse,
+		InfoDisplayContributorTracker infoDisplayContributorTracker) {
 
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
-
-		_infoDisplayContributorTracker =
-			(InfoDisplayContributorTracker)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
+		_infoDisplayContributorTracker = infoDisplayContributorTracker;
 	}
 
 	public String getBackgroundImage(JSONObject rowConfigJSONObject)

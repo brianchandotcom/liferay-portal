@@ -134,7 +134,7 @@ public class DBUpgrader {
 
 			_checkClassNamesAndResourceActions();
 
-			_verify();
+			verify();
 
 			DependencyManagerSyncUtil.sync();
 
@@ -258,6 +258,17 @@ public class DBUpgrader {
 		// Register release service
 
 		_registerReleaseService();
+	}
+
+	public static void verify() throws Exception {
+		VerifyGroup verifyGroup = new VerifyGroup();
+
+		verifyGroup.verify();
+
+		VerifyResourcePermissions verifyResourcePermissions =
+			new VerifyResourcePermissions();
+
+		verifyResourcePermissions.verify();
 	}
 
 	private static void _checkClassNamesAndResourceActions() {
@@ -424,17 +435,6 @@ public class DBUpgrader {
 
 			ps.executeUpdate();
 		}
-	}
-
-	private static void _verify() throws Exception {
-		VerifyGroup verifyGroup = new VerifyGroup();
-
-		verifyGroup.verify();
-
-		VerifyResourcePermissions verifyResourcePermissions =
-			new VerifyResourcePermissions();
-
-		verifyResourcePermissions.verify();
 	}
 
 	private static final Version _VERSION_7010 = new Version(0, 0, 6);

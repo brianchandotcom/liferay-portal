@@ -120,10 +120,7 @@ definition {
 	@description = "Delete a page template."
 	@priority = "5"
 	test DeletePageTemplate {
-
-		// Ignore test from acceptance until LRQA-54483 resolved
-
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a content page template") {
 			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");

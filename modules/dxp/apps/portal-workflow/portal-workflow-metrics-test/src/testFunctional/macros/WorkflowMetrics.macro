@@ -76,10 +76,20 @@ definition {
 			rowName = "${key_rowName}",
 			value1 = "${key_SLABreachedValue}");
 
-		AssertTextEquals(
-			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_AVG_COMPLETION_TIME_VALUE",
-			rowName = "${key_rowName}",
-			value1 = "${key_avgCompletionTime}");
+		if ("${key_avgCompletionTime}" != "0min") {
+			AssertTextNotEquals(
+				locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_AVG_COMPLETION_TIME_VALUE",
+				rowName = "${key_rowName}",
+				value1 = "0min");
+		}
+
+		else {
+			AssertTextEquals(
+				locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_AVG_COMPLETION_TIME_VALUE",
+				rowName = "${key_rowName}",
+				value1 = "${key_avgCompletionTime}");
+
+		}
 	}
 
 	macro assertDefaultChartRangesAndUnits {

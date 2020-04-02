@@ -134,6 +134,8 @@ definition {
 
 		FormsAdminNavigator.gotoViewEntries();
 
+		Refresh();
+
 		WorkflowAsset.viewFormEntryTable(
 			fieldLabel = "Text Field",
 			fieldValue = "Text Field Value",

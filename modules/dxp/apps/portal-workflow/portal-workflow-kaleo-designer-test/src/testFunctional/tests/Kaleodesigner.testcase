@@ -75,6 +75,7 @@ definition {
 
 	@priority = "3"
 	test AddForkNodeEditNameAndDesciptionAndDeleteViaViewTab {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#AddForkNodeEditNameAndDesciptionAndDeleteViaViewTab";
 
 		ProductMenu.gotoPortlet(

@@ -448,7 +448,7 @@ definition {
 
 		DMDocument.viewCategories(categoryNameList = "legal,Other");
 
-		Button.clickSaveAsDraft();
+		Button.click(button = "Checkout");
 
 		Alert.viewSuccessMessage();
 
@@ -467,7 +467,9 @@ definition {
 
 		DMDocument.viewCategories(categoryNameList = "legal,Other");
 
-		Button.clickSubmitForPublication();
+		Button.click(button = "Save and Check In");
+
+		Button.click(button = "Save");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",

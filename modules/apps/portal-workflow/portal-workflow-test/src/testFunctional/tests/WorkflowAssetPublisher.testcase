@@ -71,6 +71,8 @@ definition {
 
 	@priority = "4"
 	test ApproveBlogsEntryPG {
+		property portal.upstream = "quarantine";
+
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
 		Blogs.addWithWorkflowViaAP(
@@ -115,6 +117,8 @@ definition {
 	@description = "This is a use case for LPS-72846."
 	@priority = "5"
 	test ApproveMessageBoardsThreadPG {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

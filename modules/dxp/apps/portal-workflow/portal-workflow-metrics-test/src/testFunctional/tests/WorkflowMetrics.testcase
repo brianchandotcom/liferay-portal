@@ -629,7 +629,7 @@ definition {
 			value1 = "Sep 22, 2018 - Nov 11, 2018");
 
 		WorkflowMetricsPerformanceByStep.viewPerformanceByStepValues(
-			avgCompletionTimeValue = "1min",
+			avgCompletionTimeValue = "0min",
 			isNotPresent = "",
 			slaBreachedValue = "0 (0%)",
 			stepName = "Review");
@@ -1017,6 +1017,7 @@ definition {
 			timesToRun = "24");
 
 		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
+			avgCompletionTime = "1min",
 			rowName = "Review",
 			slaBreachedValue = "1 (100%)");
 
@@ -1026,6 +1027,7 @@ definition {
 			startDateRange = "09/22/2018");
 
 		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
+			avgCompletionTime = "0min",
 			rowName = "Review",
 			slaBreachedValue = "0 (0%)");
 	}

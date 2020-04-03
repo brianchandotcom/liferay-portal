@@ -1415,6 +1415,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return groupFinder.findByActiveGroupIds(userId);
 	}
 
+	@Override
+	public List<Long> getActiveGroupIds(long companyId, boolean active) {
+		return groupFinder.findByActiveGroupIds(companyId, active);
+	}
+
 	/**
 	 * Returns all the active or inactive groups associated with the company.
 	 *

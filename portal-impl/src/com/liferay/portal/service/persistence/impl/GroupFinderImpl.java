@@ -73,6 +73,9 @@ public class GroupFinderImpl
 	public static final String FIND_BY_ACTIVE_GROUPS =
 		GroupFinder.class.getName() + ".findByActiveGroups";
 
+	public static final String FIND_BY_ACTIVE_GROUP_IDS =
+		GroupFinder.class.getName() + ".findByActiveGroupIds";
+
 	public static final String FIND_BY_COMPANY_ID =
 		GroupFinder.class.getName() + ".findByCompanyId";
 
@@ -354,6 +357,34 @@ public class GroupFinderImpl
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			queryPos.add(userId);
+
+			return sqlQuery.list(true);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<Long> findByActiveGroupIds(long companyId, boolean active) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_ACTIVE_GROUP_IDS);
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar("groupId", Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+			queryPos.add(active);
 
 			return sqlQuery.list(true);
 		}

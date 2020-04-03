@@ -63,6 +63,17 @@
 				(Group_.active_ = [$TRUE$])
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByActiveGroupIds">
+		<![CDATA[
+			SELECT
+				Group_.groupId
+			FROM
+				Group_
+			WHERE
+				(Group_.companyId = ?) AND
+				(Group_.active_ = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByCompanyId">
 		<![CDATA[
 			SELECT

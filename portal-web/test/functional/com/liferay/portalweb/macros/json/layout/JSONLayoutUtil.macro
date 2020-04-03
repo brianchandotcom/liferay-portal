@@ -180,9 +180,6 @@ definition {
 		else if ("${layoutTemplate}" == "3-2-3 Columns") {
 			layoutTemplateId = "3_2_3_columns";
 		}
-		else if ("${layoutTemplate}" == "Westeros 2 columns") {
-			layoutTemplateId = "westeros_2_width_limited";
-		}
 		else {
 			fail("'layoutTemplate' could not find a valid layoutTemplateId");
 		}

@@ -109,7 +109,7 @@ const Flags = ({
 		}
 
 		fetch(uri, {
-			body: objectToFormData(formDataObj),
+			body: objectToFormData(formDataObj, new FormData(event.target)),
 			method: 'post',
 		})
 			.then(res => res.json())

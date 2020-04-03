@@ -222,7 +222,7 @@ public class CASFilter extends BaseFilter {
 		if (Validator.isNull(serviceURL)) {
 			serviceURL = CommonUtils.constructServiceUrl(
 				httpServletRequest, httpServletResponse, serviceURL, serverName,
-				"ticket", false);
+				"ticket", true);
 		}
 
 		String ticket = ParamUtil.getString(httpServletRequest, "ticket");

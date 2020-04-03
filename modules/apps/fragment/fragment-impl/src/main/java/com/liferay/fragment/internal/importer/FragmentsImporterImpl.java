@@ -159,16 +159,16 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				if (fragmentCollection == null) {
 					fragmentCollection =
 						_fragmentCollectionLocalService.fetchFragmentCollection(
-							groupId, _DEFAULT_FRAGMENT_COLLECTION_KEY);
+							groupId, _FRAGMENT_COLLECTION_KEY_DEFAULT);
 
 					if (fragmentCollection == null) {
 						Locale locale = _portal.getSiteDefaultLocale(groupId);
 
 						fragmentCollection =
 							_fragmentCollectionService.addFragmentCollection(
-								groupId, _DEFAULT_FRAGMENT_COLLECTION_KEY,
+								groupId, _FRAGMENT_COLLECTION_KEY_DEFAULT,
 								LanguageUtil.get(
-									locale, _DEFAULT_FRAGMENT_COLLECTION_KEY),
+									locale, _FRAGMENT_COLLECTION_KEY_DEFAULT),
 								StringPool.BLANK,
 								ServiceContextThreadLocal.getServiceContext());
 					}
@@ -849,7 +849,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		throw new InvalidFileException();
 	}
 
-	private static final String _DEFAULT_FRAGMENT_COLLECTION_KEY = "imported";
+	private static final String _FRAGMENT_COLLECTION_KEY_DEFAULT = "imported";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentsImporterImpl.class);

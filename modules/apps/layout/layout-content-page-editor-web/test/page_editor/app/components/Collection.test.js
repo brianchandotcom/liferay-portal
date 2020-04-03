@@ -1,0 +1,106 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import '@testing-library/jest-dom/extend-expect';
+import {act, cleanup, getByText, render} from '@testing-library/react';
+import React from 'react';
+
+import Collection from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items/Collection';
+import CollectionService from '../../../../src/main/resources/META-INF/resources/page_editor/app/services/CollectionService';
+import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/CollectionService',
+	() => ({
+		getCollectionField: jest.fn(),
+		getCollectionMappingFields: jest.fn(() =>
+			Promise.resolve([
+				{key: 'field-1', label: 'Field 1', type: 'text'},
+				{key: 'field-2', label: 'Field 2', type: 'text'},
+			])
+		),
+	})
+);
+
+function renderCollection(itemConfig = {}) {
+	const state = {
+		segmentsExperienceId: 0,
+	};
+
+	const defaultConfig = {
+		numberOfColumns: 3,
+		numberOfItems: 3,
+	};
+
+	return render(
+		<StoreAPIContextProvider dispatch={() => {}} getState={() => state}>
+			<Collection
+				item={{
+					config: {...defaultConfig, ...itemConfig},
+					itemId: '',
+					parentId: '',
+					type: '',
+				}}
+			/>
+		</StoreAPIContextProvider>,
+		{
+			baseElement: document.body,
+		}
+	);
+}
+
+describe('Collection', () => {
+	afterEach(() => {
+		cleanup();
+	});
+
+	it('renders not collection message when no collection is selected', async () => {
+		CollectionService.getCollectionField.mockImplementation(() =>
+			Promise.resolve()
+		);
+
+		await act(async () => {
+			renderCollection();
+		});
+
+		expect(
+			getByText(document.body, 'no-collection-selected-yet')
+		).toBeInTheDocument();
+	});
+
+	it('renders no items message when a collection without items is selected', async () => {
+		CollectionService.getCollectionField.mockImplementation(() =>
+			Promise.resolve({
+				items: [],
+				length: 0,
+			})
+		);
+
+		await act(async () => {
+			renderCollection({
+				collection: {
+					itemSubtype: 'CollectionItemSubtype',
+					itemType: 'CollectionItemType',
+				},
+			});
+		});
+
+		expect(
+			getByText(
+				document.body,
+				'you-do-not-have-any-items-in-this-collection'
+			)
+		).toBeInTheDocument();
+	});
+});

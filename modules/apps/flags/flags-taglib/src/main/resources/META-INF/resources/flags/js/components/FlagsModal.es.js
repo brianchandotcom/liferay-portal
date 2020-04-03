@@ -27,7 +27,7 @@ import {
 	STATUS_SUCCESS,
 } from '../constants.es';
 import {sub} from '../utils.es';
-import Captcha from './Captcha';
+import Captcha from './Captcha.es';
 
 const ModalContentForm = ({
 	captchaUri,

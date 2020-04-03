@@ -1920,8 +1920,7 @@ definition {
 
 	@priority = "5"
 	test StagingMultipleDM {
-		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "Staging#StagingMultipleDM";
 		property testray.component.names = "Training";
 

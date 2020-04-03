@@ -169,15 +169,9 @@ definition {
 	}
 
 	macro gotoShare {
-		AssertElementPresent.pauseAssertVisible(
-			key_listEntry = "${entryTitle}",
-			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
-
-		Click.pauseClickAt(
-			key_listEntry = "${entryTitle}",
-			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Share");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Share",
+			rowEntry = "${entryTitle}");
 	}
 
 	macro moveToRecycleBinCP {

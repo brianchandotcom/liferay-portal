@@ -86,17 +86,20 @@ export default withRouter(
 
 		return (
 			<div className="d-flex flex-column flex-lg-row justify-content-between">
-				<div className="d-flex justify-content-between">
+				<div className="d-flex">
 					<ClayDropDown
+						className="questions-navigation-dropdown"
 						active={active}
 						onActiveChange={setActive}
 						trigger={
 							<div className="align-items-center d-flex h-100">
 								{section.parentSection && (
 									<ClayInput.Group>
-										<ClayInput.GroupItem shrink>
-											{section.parentSection.title}
-											{':'}
+										<ClayInput.GroupItem className="align-items-center" >
+											<div className="text-truncate questions-navigation-parent-section-title">
+												{section.parentSection.title}
+												{':'}
+											</div>
 										</ClayInput.GroupItem>
 
 										<ClayInput.GroupItem shrink>
@@ -152,7 +155,7 @@ export default withRouter(
 					<ClayInput.Group className="justify-content-lg-end">
 						<ClayInput.GroupItem shrink>
 							<label
-								className="align-items-center d-inline-flex text-secondary"
+								className="align-items-center d-inline-flex text-secondary m-0"
 								htmlFor="questionsFilter"
 							>
 								{Liferay.Language.get('filter-by')}

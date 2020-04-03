@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.servlet.taglib.aui;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.StringBundler;
 
 import java.util.Arrays;
 import java.util.HashSet;

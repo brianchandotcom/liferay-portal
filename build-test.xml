@@ -234,12 +234,6 @@ module.framework.properties.osgi.console=11312</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="delete-default-elasticsearch-connection-config">
-		<sequential>
-			<delete file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default.config" />
-		</sequential>
-	</macrodef>
-
 	<macrodef name="generate-gulp-user-config-json">
 		<attribute name="portlet.name" />
 
@@ -12080,19 +12074,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			<equals arg1="${blacklist.saml.algorithms}" arg2="true" />
 			<then>
 				<prepare-saml-algorithm-blacklists />
-			</then>
-		</if>
-
-		<get-testcase-property property.name="elastic.xpack.enabled" />
-		<get-testcase-property property.name="remote.elasticsearch.enabled" />
-
-		<if>
-			<and>
-				<equals arg1="${elastic.xpack.enabled}" arg2="true" />
-				<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
-			</and>
-			<then>
-				<delete-default-elasticsearch-connection-config />
 			</then>
 		</if>
 

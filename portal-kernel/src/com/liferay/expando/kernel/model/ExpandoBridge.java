@@ -46,6 +46,24 @@ public interface ExpandoBridge {
 			String name, int type, Serializable defaultValue, boolean secure)
 		throws PortalException;
 
+	public default void addAttribute(String name, String type)
+		throws PortalException {
+	}
+
+	public default void addAttribute(String name, String type, boolean secure)
+		throws PortalException {
+	}
+
+	public default void addAttribute(
+			String name, String type, Serializable defaultValue)
+		throws PortalException {
+	}
+
+	public default void addAttribute(
+			String name, String type, Serializable defaultValue, boolean secure)
+		throws PortalException {
+	}
+
 	public Serializable getAttribute(String name);
 
 	public Serializable getAttribute(String name, boolean secure);

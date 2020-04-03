@@ -145,9 +145,12 @@ public class AssetListEntryLocalServiceWrapper
 	 *
 	 * @param assetListEntry the asset list entry
 	 * @return the asset list entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
-	public AssetListEntry deleteAssetListEntry(AssetListEntry assetListEntry) {
+	public AssetListEntry deleteAssetListEntry(AssetListEntry assetListEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _assetListEntryLocalService.deleteAssetListEntry(assetListEntry);
 	}
 

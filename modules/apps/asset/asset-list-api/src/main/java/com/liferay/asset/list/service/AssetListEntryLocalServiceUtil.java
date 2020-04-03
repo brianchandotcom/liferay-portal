@@ -141,10 +141,12 @@ public class AssetListEntryLocalServiceUtil {
 	 *
 	 * @param assetListEntry the asset list entry
 	 * @return the asset list entry that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.asset.list.model.AssetListEntry
-		deleteAssetListEntry(
-			com.liferay.asset.list.model.AssetListEntry assetListEntry) {
+			deleteAssetListEntry(
+				com.liferay.asset.list.model.AssetListEntry assetListEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteAssetListEntry(assetListEntry);
 	}

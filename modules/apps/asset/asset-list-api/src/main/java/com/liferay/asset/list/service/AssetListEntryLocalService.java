@@ -132,10 +132,12 @@ public interface AssetListEntryLocalService
 	 *
 	 * @param assetListEntry the asset list entry
 	 * @return the asset list entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public AssetListEntry deleteAssetListEntry(AssetListEntry assetListEntry);
+	public AssetListEntry deleteAssetListEntry(AssetListEntry assetListEntry)
+		throws PortalException;
 
 	/**
 	 * Deletes the asset list entry with the primary key from the database. Also notifies the appropriate model listeners.

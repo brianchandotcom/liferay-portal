@@ -3041,6 +3041,22 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void typeCodeMirrorEditor(String locator, String value) {
+		WebElement webElement = getWebElement(locator);
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+		StringBuilder sb = new StringBuilder();
+		sb.append("codeMirror.edit(");
+		sb.append(getAttribute(locator + "@class"));
+		sb.append(").setValue(\"");
+		sb.append(HtmlUtil.escapeJS(StringUtil.replace(value, "\\", "\\\\")));
+		sb.append("\");");
+		javascriptExecutor.executeScript(sb.toString());
+	}
+
+	@Override
 	public void typeEditor(String locator, String value) {
 		WrapsDriver wrapsDriver = (WrapsDriver)getWebElement(locator);
 

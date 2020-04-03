@@ -240,7 +240,7 @@
 </tr>
 <tr>
 	<td>GENERIC_TEXT_INPUT</td>
-	<td>//div[label[contains(.,'${key_fieldLabel}')]]//input[@type='text'] | //div[p[contains(.,'${key_fieldLabel}')]]//input[@type='text']</td>
+	<td>//div[*[contains(.,'${key_fieldLabel}')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>

@@ -42,6 +42,7 @@ definition {
 
 	macro gotoEditableFieldMapping {
 		PageEditor.clickEditableField(
+			contributed = "${contributed}",
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 
@@ -64,6 +65,7 @@ definition {
 
 	macro mapEditableTextToField {
 		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "${contributed}",
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 

@@ -29,6 +29,7 @@ definition {
 
 	macro gotoEditableFieldLink {
 		PageEditor.clickEditableField(
+			contributed = "${contributed}",
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 

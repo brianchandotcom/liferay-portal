@@ -132,6 +132,35 @@ public class DataRule {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String logicalOperator;
 
+	@Schema
+	@Valid
+	public Map<String, Object> getName() {
+		return name;
+	}
+
+	public void setName(Map<String, Object> name) {
+		this.name = name;
+	}
+
+	@JsonIgnore
+	public void setName(
+		UnsafeSupplier<Map<String, Object>, Exception> nameUnsafeSupplier) {
+
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, Object> name;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -219,6 +248,16 @@ public class DataRule {
 			sb.append(_escape(logicalOperator));
 
 			sb.append("\"");
+		}
+
+		if (name != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append(_toJSON(name));
 		}
 
 		sb.append("}");

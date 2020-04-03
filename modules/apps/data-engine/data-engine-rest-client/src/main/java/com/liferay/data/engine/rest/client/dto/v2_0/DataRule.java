@@ -17,6 +17,7 @@ package com.liferay.data.engine.rest.client.dto.v2_0;
 import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataRuleSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -90,6 +91,27 @@ public class DataRule implements Cloneable {
 	}
 
 	protected String logicalOperator;
+
+	public Map<String, Object> getName() {
+		return name;
+	}
+
+	public void setName(Map<String, Object> name) {
+		this.name = name;
+	}
+
+	public void setName(
+		UnsafeSupplier<Map<String, Object>, Exception> nameUnsafeSupplier) {
+
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Object> name;
 
 	@Override
 	public DataRule clone() throws CloneNotSupportedException {

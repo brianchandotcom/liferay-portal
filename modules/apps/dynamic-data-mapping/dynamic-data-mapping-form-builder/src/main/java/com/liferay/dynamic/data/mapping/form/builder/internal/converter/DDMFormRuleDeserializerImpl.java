@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRule;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRuleAction;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRuleCondition;
 import com.liferay.dynamic.data.mapping.spi.converter.serializer.SPIDDMFormRuleSerializerContext;
+import com.liferay.dynamic.data.mapping.util.LocalizedValueUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -86,6 +87,13 @@ public class DDMFormRuleDeserializerImpl implements DDMFormRuleDeserializer {
 
 		SPIDDMFormRule spiDDMFormRule = new SPIDDMFormRule();
 
+		spiDDMFormRule.setLogicalOperator(
+			ruleJSONObject.getString("logical-operator"));
+
+		spiDDMFormRule.setName(
+			LocalizedValueUtil.toLocalizedValue(
+				ruleJSONObject.getJSONObject("name")));
+
 		List<SPIDDMFormRuleAction> spiDDMFormRuleActions =
 			deserializeSPIDDMFormRuleActions(
 				ruleJSONObject.getJSONArray("actions"));
@@ -97,9 +105,6 @@ public class DDMFormRuleDeserializerImpl implements DDMFormRuleDeserializer {
 				ruleJSONObject.getJSONArray("conditions"));
 
 		spiDDMFormRule.setSPIDDMFormRuleConditions(spiDDMFormRuleConditions);
-
-		spiDDMFormRule.setLogicalOperator(
-			ruleJSONObject.getString("logical-operator"));
 
 		return spiDDMFormRule;
 	}

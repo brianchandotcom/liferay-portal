@@ -5,7 +5,7 @@ exports[`Options shows the options 1`] = `
   <div class="form-group" data-field-name="options">
     <div class="ddm-field-options-container">
       <div class="ddm-options-target"></div>
-      <div class="ddm-field-options" draggable="true"><span class="ddm-options-drag"><svg class="lexicon-icon lexicon-icon-drag" role="presentation">
+      <div class="ddm-field-options"><span class="ddm-options-drag" draggable="true"><svg class="lexicon-icon lexicon-icon-drag" role="presentation">
             <use xlink:href="icons.svg#drag"></use>
           </svg></span>
         <div class="ddm-option-entry">
@@ -18,7 +18,7 @@ exports[`Options shows the options 1`] = `
         </div>
       </div>
       <div class="ddm-options-target"></div>
-      <div class="ddm-field-options" draggable="true"><span class="ddm-options-drag"><svg class="lexicon-icon lexicon-icon-drag" role="presentation">
+      <div class="ddm-field-options"><span class="ddm-options-drag" draggable="true"><svg class="lexicon-icon lexicon-icon-drag" role="presentation">
             <use xlink:href="icons.svg#drag"></use>
           </svg></span>
         <div class="ddm-option-entry">
@@ -31,7 +31,7 @@ exports[`Options shows the options 1`] = `
         </div>
       </div>
       <div class="ddm-options-target"></div>
-      <div class="ddm-field-options" draggable="true"><span class="ddm-options-drag"><svg class="lexicon-icon lexicon-icon-drag" role="presentation">
+      <div class="ddm-field-options"><span class="ddm-options-drag" draggable="true"><svg class="lexicon-icon lexicon-icon-drag" role="presentation">
             <use xlink:href="icons.svg#drag"></use>
           </svg></span>
         <div class="ddm-option-entry">

@@ -483,6 +483,7 @@ definition {
 	@priority = "5"
 	test ConvertWidgetPageWithNonStandardLayout {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",

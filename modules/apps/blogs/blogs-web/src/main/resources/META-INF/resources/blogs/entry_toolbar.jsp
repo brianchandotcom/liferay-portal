@@ -73,7 +73,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 	<c:if test="<%= blogsPortletInstanceConfiguration.enableRatings() %>">
 		<div class="autofit-col">
 			<div class="ratings">
-				<liferay-ui:ratings
+				<liferay-ratings:ratings
 					className="<%= BlogsEntry.class.getName() %>"
 					classPK="<%= entry.getEntryId() %>"
 					inTrash="<%= entry.isInTrash() %>"

@@ -42,6 +42,7 @@ dependencies {
 	compileOnly project(":apps:item-selector:item-selector-taglib")
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
+	compileOnly project(":apps:ratings:ratings-taglib")
 	compileOnly project(":apps:reading-time:reading-time-taglib")
 	compileOnly project(":apps:rss:rss-api")
 	compileOnly project(":apps:rss:rss-taglib")

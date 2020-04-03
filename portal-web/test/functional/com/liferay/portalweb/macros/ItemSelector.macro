@@ -255,7 +255,7 @@ definition {
 			locator1 = "TextInput#FILE",
 			value1 = "${uploadFileName}");
 
-		Pause(locator1 = "3000");
+		Pause(locator1 = "5000");
 
 		AssertElementPresent.pauseAssertVisible(
 			locator1 = "ItemSelector#ADD_BUTTON",

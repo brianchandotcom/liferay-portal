@@ -24,13 +24,13 @@ export const getEditingValue = ({defaultLocale, editingLocale, value}) => {
 	}
 
 	return editingLocale;
-}
+};
 
 export const getInitialInternalValue = ({editingLocale, value}) => {
 	const valueJSON = convertValueToJSON(value);
 
 	return valueJSON[editingLocale.localeId] || '';
-}
+};
 
 const convertValueToString = value => {
 	if (value && typeof value === 'object') {

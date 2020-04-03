@@ -632,6 +632,8 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "${kbArticleTitleEdit}");
 
+		var kbArticleContentEdit = "${kbArticleContentEdit}";
+
 		CKEditor.addContent(content = "${kbArticleContentEdit}");
 
 		if ("${cancel}" == "true") {
@@ -666,6 +668,8 @@ definition {
 		Type(
 			locator1 = "TextInput#TITLE",
 			value1 = "${kbArticleTitleEdit}");
+
+		var kbArticleContentEdit = "${kbArticleContentEdit}";
 
 		CKEditor.addContent(content = "${kbArticleContentEdit}");
 

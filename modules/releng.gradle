@@ -1351,15 +1351,6 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 
 		if (enforceVersionArtifacts != null) {
 			for (String artifact : enforceVersionArtifacts.split(",")) {
-				if (!artifact.startsWith("com.fasterxml") &&
-					!artifact.startsWith("io.swagger") &&
-					!artifact.startsWith("javax") &&
-					!artifact.startsWith("org.jsoup") &&
-					!artifact.startsWith("org.osgi")) {
-
-					continue
-				}
-
 				String[] array = artifact.split(":")
 
 				if (array.length != 3) {

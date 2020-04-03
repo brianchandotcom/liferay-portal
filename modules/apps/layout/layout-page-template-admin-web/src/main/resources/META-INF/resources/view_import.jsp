@@ -28,8 +28,16 @@
 >
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
+			<liferay-ui:message key="import-help" />
+
+			<a href="https://portal.liferay.dev/docs" target="_blank">
+				<liferay-ui:message key="read-more" />
+			</a>
+
+			<br /><br />
+
 			<liferay-frontend:fieldset>
-				<aui:input helpMessage='<%= LanguageUtil.format(request, "import-help", "https://portal.liferay.dev/docs", false) %>' label="select-file" name="file" type="file">
+				<aui:input label="file" name="file" type="file">
 					<aui:validator name="required" />
 
 					<aui:validator name="acceptFiles">

@@ -125,7 +125,7 @@ const ModalContentForm = ({
 						/>
 					</div>
 				)}
-				<Captcha uri={captchaUri} />
+				{captchaUri && <Captcha uri={captchaUri} />}
 			</ClayModal.Body>
 			<ClayModal.Footer
 				last={

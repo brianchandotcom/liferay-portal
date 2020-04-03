@@ -7,6 +7,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
+		Pause(locator1 = "5000");
+
 		WaitForElementPresent(locator1 = "Checkbox#SHOW_ACTIONS_CHECKBOX");
 
 		Check(locator1 = "Checkbox#SHOW_ACTIONS_CHECKBOX");

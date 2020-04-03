@@ -47,6 +47,7 @@ definition {
 			fragmentName = "Content");
 
 		PageEditor.editFragmentText(
+			contributed = "false",
 			fragmentName = "Content",
 			id = "content",
 			text = "New editable fragment text");
@@ -125,6 +126,7 @@ definition {
 			fragmentName = "Image");
 
 		PageEditor.editFragmentImage(
+			contributed = "false",
 			fileName = "Document_1.png",
 			fragmentName = "Image",
 			id = "image");
@@ -179,6 +181,7 @@ definition {
 
 		task ("Edit Rich Text text") {
 			PageEditor.editFragmentText(
+				contributed = "false",
 				fragmentName = "Rich Text",
 				id = "rich-text",
 				text = "New editable fragment en-US text");
@@ -188,6 +191,7 @@ definition {
 			MenuItem.click(menuItem = "ca-ES");
 
 			PageEditor.editFragmentText(
+				contributed = "false",
 				fragmentName = "Rich Text",
 				id = "rich-text",
 				text = "New editable fragment ca-ES text");

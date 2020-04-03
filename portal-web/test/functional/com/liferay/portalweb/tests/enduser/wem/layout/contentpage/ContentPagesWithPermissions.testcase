@@ -616,6 +616,7 @@ definition {
 		ContentPages.clickPencil();
 
 		PageEditor.editFragmentText(
+			contributed = "false",
 			fragmentName = "Rich Text",
 			id = "rich-text",
 			text = "New editable fragment text");
@@ -651,6 +652,7 @@ definition {
 			fragmentName = "Rich Text");
 
 		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "false",
 			fragmentName = "Rich Text",
 			id = "rich-text");
 
@@ -722,6 +724,7 @@ definition {
 		ContentPages.clickPencil();
 
 		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "false",
 			fragmentName = "rich-text",
 			id = "rich-text");
 

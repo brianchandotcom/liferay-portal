@@ -36,12 +36,14 @@ definition {
 				fragmentName = "Rich Text");
 
 			PageEditorMapping.mapEditableTextToField(
+				contributed = "false",
 				field = "Title",
 				fragmentName = "Title",
 				id = "title",
 				source = "Basic Web Content (Default)");
 
 			PageEditorMapping.mapEditableTextToField(
+				contributed = "false",
 				field = "Content",
 				fragmentName = "Rich Text",
 				id = "rich-text",
@@ -863,12 +865,14 @@ definition {
 				fragmentName = "Title");
 
 			PageEditorMapping.mapEditableTextToField(
+				contributed = "false",
 				field = "Content",
 				fragmentName = "Rich Text",
 				id = "rich-text",
 				source = "Basic Web Content (Default)");
 
 			PageEditorMapping.mapEditableTextToField(
+				contributed = "false",
 				field = "Title",
 				fragmentName = "Title",
 				id = "title",

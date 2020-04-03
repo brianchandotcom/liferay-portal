@@ -132,6 +132,7 @@ definition {
 
 		task ("Map the Title fragment to the Title field") {
 			PageEditorMapping.mapEditableTextToField(
+				contributed = "false",
 				field = "Title",
 				fragmentName = "Title",
 				id = "title",
@@ -140,6 +141,7 @@ definition {
 
 		task ("Map the Rich Text fragment to the Content field") {
 			PageEditorMapping.mapEditableTextToField(
+				contributed = "false",
 				field = "Content",
 				fragmentName = "Rich Text",
 				id = "rich-text",

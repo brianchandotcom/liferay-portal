@@ -191,11 +191,13 @@ definition {
 			fragmentName = "Content");
 
 		PageEditor.editFragmentText(
+			contributed = "false",
 			fragmentName = "Content",
 			id = "content",
 			text = "Editing Finished");
 
 		PageEditor.viewFragmentEditableText(
+			contributed = "false",
 			editableText = "Editing Finished",
 			fragmentName = "Content",
 			id = "content");
@@ -229,6 +231,7 @@ definition {
 			pageName = "Test Template Content Page");
 
 		PageEditor.viewFragmentEditableText(
+			contributed = "false",
 			editableText = "Editing Finished",
 			fragmentName = "Content",
 			id = "content");

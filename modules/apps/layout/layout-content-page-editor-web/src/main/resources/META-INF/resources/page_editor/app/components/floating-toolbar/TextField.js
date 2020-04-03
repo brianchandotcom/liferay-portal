@@ -29,7 +29,13 @@ export const TextField = ({field, onValueSelect, value}) => {
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
-		setCurrentValue(value || field.defaultValue || '');
+		setCurrentValue(currentValue => {
+			if (!currentValue || !value) {
+				return value || field.defaultValue || '';
+			}
+
+			return currentValue;
+		});
 	}, [field.defaultValue, value]);
 
 	const {additionalProps = {}, type = 'text'} = parseTypeOptions(

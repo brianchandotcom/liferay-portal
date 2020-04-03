@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import {render} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
@@ -23,12 +24,12 @@ const openModal = props => {
 	render(Modal, props, document.createElement('div'));
 };
 
-const Modal = ({id, size, title, url}) => {
+const Modal = ({buttons, id, onClose, size, title, url}) => {
 	const [visible, setVisible] = useState(true);
 
 	const {observer} = useModal({
 		onClose: () => {
-			setVisible(false);
+			processClose();
 		},
 	});
 
@@ -49,12 +50,74 @@ const Modal = ({id, size, title, url}) => {
 		return iframeURL.toString();
 	};
 
+	const onButtonClick = type => {
+		if (type === 'cancel') {
+			processClose();
+		}
+		else if (url && type === 'submit') {
+			const iframe = document.querySelector('.liferay-modal iframe');
+
+			if (iframe) {
+				const form = iframe.contentWindow.document.querySelector(
+					'form'
+				);
+
+				if (form) {
+					form.submit();
+				}
+			}
+		}
+	};
+
+	const processClose = () => {
+		setVisible(false);
+
+		if (onClose) {
+			onClose();
+		}
+	};
+
 	return (
 		<>
 			{visible && (
-				<ClayModal id={id} observer={observer} size={size}>
+				<ClayModal
+					className="liferay-modal"
+					id={id}
+					observer={observer}
+					size={url && !size ? 'full-screen' : size}
+				>
 					<ClayModal.Header>{title}</ClayModal.Header>
 					<ClayModal.Body url={getIframeUrl()} />
+					{buttons && (
+						<ClayModal.Footer
+							last={
+								<ClayButton.Group spaced>
+									{buttons.map(
+										(
+											{displayType, id, label, type},
+											index
+										) => (
+											<ClayButton
+												displayType={displayType}
+												id={id}
+												key={index}
+												onClick={() => {
+													onButtonClick(type);
+												}}
+												type={
+													type === 'cancel'
+														? 'button'
+														: type
+												}
+											>
+												{label}
+											</ClayButton>
+										)
+									)}
+								</ClayButton.Group>
+							}
+						/>
+					)}
 				</ClayModal>
 			)}
 		</>
@@ -62,7 +125,21 @@ const Modal = ({id, size, title, url}) => {
 };
 
 Modal.propTypes = {
+	buttons: PropTypes.arrayOf(
+		PropTypes.shape({
+			displayType: PropTypes.oneOf([
+				'link',
+				'primary',
+				'secondary',
+				'unstyled',
+			]),
+			id: PropTypes.string,
+			label: PropTypes.string,
+			type: PropTypes.oneOf(['cancel', 'submit']),
+		})
+	),
 	id: PropTypes.string,
+	onClose: PropTypes.func,
 	size: PropTypes.oneOf(['full-screen', 'lg', 'sm']),
 	title: PropTypes.string,
 	url: PropTypes.string,

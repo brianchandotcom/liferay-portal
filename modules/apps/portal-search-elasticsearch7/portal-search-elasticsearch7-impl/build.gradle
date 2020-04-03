@@ -201,6 +201,10 @@ deploySidecar {
 			from tarTree(file)
 		}
 	}
+
+	doLast {
+		logger.lifecycle "Deployed Elasticsearch Sidecar: {}", destinationDir
+	}
 }
 
 processResources {

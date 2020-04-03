@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.util.LocalizedValueUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -194,46 +194,6 @@ public class DDMFormLayoutJSONDeserializer
 		return ddmFormLayoutRows;
 	}
 
-	protected LocalizedValue getDescription(JSONObject jsonObject) {
-		if (jsonObject == null) {
-			return null;
-		}
-
-		LocalizedValue description = new LocalizedValue();
-
-		Iterator<String> itr = jsonObject.keys();
-
-		while (itr.hasNext()) {
-			String languageId = itr.next();
-
-			description.addString(
-				LocaleUtil.fromLanguageId(languageId),
-				jsonObject.getString(languageId));
-		}
-
-		return description;
-	}
-
-	protected LocalizedValue getTitle(JSONObject jsonObject) {
-		if (jsonObject == null) {
-			return null;
-		}
-
-		LocalizedValue title = new LocalizedValue();
-
-		Iterator<String> itr = jsonObject.keys();
-
-		while (itr.hasNext()) {
-			String languageId = itr.next();
-
-			title.addString(
-				LocaleUtil.fromLanguageId(languageId),
-				jsonObject.getString(languageId));
-		}
-
-		return title;
-	}
-
 	protected void setDDMFormLayouColumnFieldNames(
 		JSONArray jsonArray, DDMFormLayoutColumn ddmFormLayoutColumn) {
 
@@ -254,7 +214,8 @@ public class DDMFormLayoutJSONDeserializer
 	protected void setDDMFormLayoutPageDescription(
 		JSONObject jsonObject, DDMFormLayoutPage ddmFormLayoutPage) {
 
-		LocalizedValue description = getDescription(jsonObject);
+		LocalizedValue description = LocalizedValueUtil.toLocalizedValue(
+			jsonObject);
 
 		if (description == null) {
 			return;
@@ -278,7 +239,7 @@ public class DDMFormLayoutJSONDeserializer
 	protected void setDDMFormLayoutPageTitle(
 		JSONObject jsonObject, DDMFormLayoutPage ddmFormLayoutPage) {
 
-		LocalizedValue title = getTitle(jsonObject);
+		LocalizedValue title = LocalizedValueUtil.toLocalizedValue(jsonObject);
 
 		if (title == null) {
 			return;

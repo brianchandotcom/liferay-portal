@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.util.LocalizedValueUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -165,15 +166,7 @@ public class DDMFormLayoutJSONSerializer implements DDMFormLayoutSerializer {
 			return;
 		}
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		for (Locale availableLocale : title.getAvailableLocales()) {
-			jsonObject.put(
-				LocaleUtil.toLanguageId(availableLocale),
-				title.getString(availableLocale));
-		}
-
-		pageJSONObject.put("title", jsonObject);
+		pageJSONObject.put("title", LocalizedValueUtil.toJSONObject(title));
 	}
 
 	@Reference(unbind = "-")

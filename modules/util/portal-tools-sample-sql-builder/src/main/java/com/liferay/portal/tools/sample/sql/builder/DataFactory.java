@@ -2903,22 +2903,15 @@ public class DataFactory {
 	public List<ReleaseModel> newReleaseModels() throws IOException {
 		List<ReleaseModel> releases = new ArrayList<>();
 
-		Version lastVersion = PortalUpgradeProcess.getLatestSchemaVersion();
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(lastVersion.getMajor());
-		sb.append(CharPool.PERIOD);
-		sb.append(lastVersion.getMinor());
-		sb.append(CharPool.PERIOD);
-		sb.append(lastVersion.getMicro());
+		Version latestSchemaVersion =
+			PortalUpgradeProcess.getLatestSchemaVersion();
 
 		releases.add(
 			newReleaseModel(
 				ReleaseConstants.DEFAULT_ID,
-				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME, sb.toString(),
-				ReleaseInfo.getBuildNumber(), ReleaseConstants.TEST_STRING,
-				false));
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
+				latestSchemaVersion.toString(), ReleaseInfo.getBuildNumber(),
+				ReleaseConstants.TEST_STRING, false));
 
 		try (InputStream is = DataFactory.class.getResourceAsStream(
 				"dependencies/releases.txt");

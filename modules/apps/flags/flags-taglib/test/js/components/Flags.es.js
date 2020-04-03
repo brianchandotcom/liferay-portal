@@ -34,6 +34,7 @@ const formDataToObject = formData =>
 	);
 
 function _renderFlagsComponent({
+	captchaUri = '',
 	companyName = 'Liferay',
 	baseData = {},
 	onlyIcon = false,
@@ -45,6 +46,7 @@ function _renderFlagsComponent({
 	return render(
 		<Flags
 			baseData={baseData}
+			captchaUri={captchaUri}
 			companyName={companyName}
 			onlyIcon={onlyIcon}
 			pathTermsOfUse={pathTermsOfUse}
@@ -86,6 +88,10 @@ describe('Flags', () => {
 			fireEvent.click(getByRole('button'));
 
 			const form = await waitForElement(() => getByRole('form'));
+
+			[...form.elements].forEach(element => {
+				element.value = 'someValue';
+			});
 
 			fireEvent.submit(form);
 		});

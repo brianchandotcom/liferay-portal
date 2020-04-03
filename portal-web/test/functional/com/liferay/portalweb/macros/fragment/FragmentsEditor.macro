@@ -20,8 +20,8 @@ definition {
 
 		var htmlSnippet = '''<lfr-''';
 
-		Type.typeCodeMirrorEditorNoError(
-			locator1 = "FragmentEditor#HTML_EDITOR",
+		Type.sendKeys(
+			locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
 			value1 = "${htmlSnippet}");
 
 		Click(

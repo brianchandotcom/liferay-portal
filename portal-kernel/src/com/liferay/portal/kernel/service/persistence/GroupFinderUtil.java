@@ -53,6 +53,12 @@ public class GroupFinderUtil {
 		return getFinder().findByActiveGroupIds(userId);
 	}
 
+	public static java.util.List<Long> findByActiveGroupIds(
+		long companyId, boolean active) {
+
+		return getFinder().findByActiveGroupIds(companyId, active);
+	}
+
 	public static java.util.List<com.liferay.portal.kernel.model.Group>
 		findByCompanyId(
 			long companyId, java.util.LinkedHashMap<String, Object> params,

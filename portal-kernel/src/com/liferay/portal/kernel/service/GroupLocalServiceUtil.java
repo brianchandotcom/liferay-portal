@@ -566,6 +566,12 @@ public class GroupLocalServiceUtil {
 		return getService().getActiveGroupIds(userId);
 	}
 
+	public static java.util.List<Long> getActiveGroupIds(
+		long companyId, boolean active) {
+
+		return getService().getActiveGroupIds(companyId, active);
+	}
+
 	/**
 	 * Returns all the active or inactive groups associated with the company.
 	 *

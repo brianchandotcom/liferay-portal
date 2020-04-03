@@ -376,6 +376,9 @@ public interface GroupLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Long> getActiveGroupIds(long userId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getActiveGroupIds(long companyId, boolean active);
+
 	/**
 	 * Returns all the active or inactive groups associated with the company.
 	 *

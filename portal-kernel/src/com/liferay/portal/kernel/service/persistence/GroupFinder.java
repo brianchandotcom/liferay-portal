@@ -37,6 +37,9 @@ public interface GroupFinder {
 
 	public java.util.List<Long> findByActiveGroupIds(long userId);
 
+	public java.util.List<Long> findByActiveGroupIds(
+		long companyId, boolean active);
+
 	public java.util.List<com.liferay.portal.kernel.model.Group>
 		findByCompanyId(
 			long companyId, java.util.LinkedHashMap<String, Object> params,

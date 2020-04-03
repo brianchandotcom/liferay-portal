@@ -610,6 +610,13 @@ public class GroupLocalServiceWrapper
 		return _groupLocalService.getActiveGroupIds(userId);
 	}
 
+	@Override
+	public java.util.List<java.lang.Long> getActiveGroupIds(
+		long companyId, boolean active) {
+
+		return _groupLocalService.getActiveGroupIds(companyId, active);
+	}
+
 	/**
 	 * Returns all the active or inactive groups associated with the company.
 	 *

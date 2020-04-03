@@ -112,9 +112,10 @@ const Flags = ({
 			body: objectToFormData(formDataObj),
 			method: 'post',
 		})
-			.then(({status}) => {
+			.then(res => res.json())
+			.then(({error}) => {
 				if (isMounted()) {
-					if (status === Liferay.STATUS_CODE.OK) {
+					if (!error) {
 						setStatus(STATUS_SUCCESS);
 					}
 					else {

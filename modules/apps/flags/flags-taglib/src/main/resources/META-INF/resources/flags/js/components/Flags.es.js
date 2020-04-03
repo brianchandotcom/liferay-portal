@@ -48,6 +48,7 @@ const Flags = ({
 	const [status, setStatus] = useState(
 		forceLogin ? STATUS_LOGIN : STATUS_REPORT
 	);
+	const [error, setError] = useState(null);
 
 	const [otherReason, setOtherReason] = useState('');
 	const [reporterEmailAddress, setReporterEmailAddress] = useState('');
@@ -70,6 +71,7 @@ const Flags = ({
 	};
 
 	const handleClickClose = () => {
+		setError(false);
 		setReportDialogOpen(false);
 	};
 
@@ -115,11 +117,10 @@ const Flags = ({
 			.then(res => res.json())
 			.then(({error}) => {
 				if (isMounted()) {
+					setError(error);
+					setIsSending(false);
 					if (!error) {
 						setStatus(STATUS_SUCCESS);
-					}
-					else {
-						setStatus(STATUS_ERROR);
 					}
 				}
 			})
@@ -162,6 +163,7 @@ const Flags = ({
 				<FlagsModal
 					captchaUri={captchaUri}
 					companyName={companyName}
+					error={error}
 					handleClose={onClose}
 					handleInputChange={handleInputChange}
 					handleSubmit={handleSubmitReport}

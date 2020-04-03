@@ -1,0 +1,7 @@
+.liferay-modal .modal-dialog {
+	position: relative;
+
+	&.modal-full-screen {
+		position: absolute;
+	}
+}

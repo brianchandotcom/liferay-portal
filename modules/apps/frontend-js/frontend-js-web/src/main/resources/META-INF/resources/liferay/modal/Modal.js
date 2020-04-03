@@ -18,6 +18,8 @@ import {render} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import './Modal.scss';
+
 const openModal = props => {
 	// Mount in detached node; Clay will take care of appending to `document.body`.
 	// See: https://github.com/liferay/clay/blob/master/packages/clay-shared/src/Portal.tsx

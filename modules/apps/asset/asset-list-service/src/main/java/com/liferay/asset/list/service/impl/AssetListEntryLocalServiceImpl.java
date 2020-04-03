@@ -251,17 +251,12 @@ public class AssetListEntryLocalServiceImpl
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public AssetListEntry deleteAssetListEntry(AssetListEntry assetListEntry) {
-		return assetListEntryPersistence.remove(assetListEntry);
-	}
-
-	@Override
-	public AssetListEntry deleteAssetListEntry(long assetListEntryId)
+	public AssetListEntry deleteAssetListEntry(AssetListEntry assetListEntry)
 		throws PortalException {
 
 		// Asset list entry
 
-		AssetListEntry assetListEntry = getAssetListEntry(assetListEntryId);
+		assetListEntryPersistence.remove(assetListEntry);
 
 		// Resources
 
@@ -271,14 +266,21 @@ public class AssetListEntryLocalServiceImpl
 		// Asset list entry rels
 
 		assetListEntryAssetEntryRelPersistence.removeByAssetListEntryId(
-			assetListEntryId);
+			assetListEntry.getAssetListEntryId());
 
 		// Asset list segments entry rels
 
 		assetListEntrySegmentsEntryRelPersistence.removeByAssetListEntryId(
-			assetListEntryId);
+			assetListEntry.getAssetListEntryId());
 
-		return assetListEntryLocalService.deleteAssetListEntry(assetListEntry);
+		return assetListEntry;
+	}
+
+	@Override
+	public AssetListEntry deleteAssetListEntry(long assetListEntryId)
+		throws PortalException {
+
+		return deleteAssetListEntry(getAssetListEntry(assetListEntryId));
 	}
 
 	@Override

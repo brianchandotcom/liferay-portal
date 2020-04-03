@@ -94,33 +94,9 @@ const RichText = ({data, id, name, onChange, readOnly}) => {
 		};
 	}
 
-	const style = {
-		border: '1px solid #E7E7ED',
-		height: '148px',
-	};
-
 	return (
 		<>
-			{readOnly && currentValue && (
-				<div
-					dangerouslySetInnerHTML={{
-						__html: currentValue,
-					}}
-					name={`html_text_${name}`}
-					style={style}
-				></div>
-			)}
-
-			{readOnly && !currentValue && (
-				<div
-					name={`html_text_${name}`}
-					style={{...style, color: '#A7A9BC', padding: '16px'}}
-				>
-					{Liferay.Language.get('click-to-add-a-rich-text')}
-				</div>
-			)}
-
-			{!readOnly && <Editor {...editorProps} />}
+			<Editor {...editorProps} />
 
 			<input
 				defaultValue={currentValue}

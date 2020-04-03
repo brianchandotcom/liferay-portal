@@ -556,6 +556,9 @@ public interface GroupLocalService
 	public Group getGroupByUuidAndCompanyId(String uuid, long companyId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getGroupIds(long companyId, boolean active);
+
 	/**
 	 * Returns a range of all the groups.
 	 *

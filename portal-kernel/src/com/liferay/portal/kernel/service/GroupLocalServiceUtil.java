@@ -780,6 +780,12 @@ public class GroupLocalServiceUtil {
 		return getService().getGroupByUuidAndCompanyId(uuid, companyId);
 	}
 
+	public static java.util.List<Long> getGroupIds(
+		long companyId, boolean active) {
+
+		return getService().getGroupIds(companyId, active);
+	}
+
 	/**
 	 * Returns a range of all the groups.
 	 *

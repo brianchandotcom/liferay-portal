@@ -836,6 +836,13 @@ public class GroupLocalServiceWrapper
 		return _groupLocalService.getGroupByUuidAndCompanyId(uuid, companyId);
 	}
 
+	@Override
+	public java.util.List<java.lang.Long> getGroupIds(
+		long companyId, boolean active) {
+
+		return _groupLocalService.getGroupIds(companyId, active);
+	}
+
 	/**
 	 * Returns a range of all the groups.
 	 *

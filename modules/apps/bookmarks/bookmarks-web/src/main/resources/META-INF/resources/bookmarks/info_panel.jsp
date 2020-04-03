@@ -194,7 +194,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 				/>
 			</div>
 
-			<liferay-ui:ratings
+			<liferay-ratings:ratings
 				className="<%= BookmarksEntry.class.getName() %>"
 				classPK="<%= entry.getEntryId() %>"
 				inTrash="<%= entry.isInTrash() %>"

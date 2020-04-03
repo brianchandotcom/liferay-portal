@@ -464,7 +464,7 @@ definition {
 
 		if ("${dmRepositoryName}" == "true") {
 			AssertTextEquals.assertPartialText(
-				locator1 = "Message#CHECKOUT_SUCCESS",
+				locator1 = "Message#INFO",
 				value1 = "You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire.");
 
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Cancel Checkout");
@@ -1526,7 +1526,7 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_VERSION",
 			value1 = "VERSION ${dmDocumentVersionNumber}");
 
-		AssertElementNotPresent(locator1 = "Message#CHECKOUT_SUCCESS");
+		AssertElementNotPresent(locator1 = "Message#INFO");
 
 		if ("${dmRepositoryName}" == "true") {
 			AssertTextNotPresent(value1 = "You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire.");
@@ -1539,7 +1539,7 @@ definition {
 	macro viewCheckedoutCP {
 		if ("${dmRepositoryName}" == "true") {
 			AssertTextEquals.assertPartialText(
-				locator1 = "Message#CHECKOUT_SUCCESS",
+				locator1 = "Message#INFO",
 				value1 = "You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire.");
 		}
 		else {

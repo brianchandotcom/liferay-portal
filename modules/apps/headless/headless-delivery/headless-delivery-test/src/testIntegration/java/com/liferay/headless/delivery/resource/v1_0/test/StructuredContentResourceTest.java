@@ -251,7 +251,7 @@ public class StructuredContentResourceTest
 		return _journalFolder.getFolderId();
 	}
 
-	private DDMStructure _addDDMStructure(Group group, String filename)
+	private DDMStructure _addDDMStructure(Group group, String fileName)
 		throws Exception {
 
 		DDMStructureTestHelper ddmStructureTestHelper =
@@ -261,7 +261,7 @@ public class StructuredContentResourceTest
 		return ddmStructureTestHelper.addStructure(
 			PortalUtil.getClassNameId(JournalArticle.class),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_deserialize(_read(filename)), StorageType.JSON.getValue(),
+			_deserialize(_read(fileName)), StorageType.JSON.getValue(),
 			DDMStructureConstants.TYPE_DEFAULT);
 	}
 

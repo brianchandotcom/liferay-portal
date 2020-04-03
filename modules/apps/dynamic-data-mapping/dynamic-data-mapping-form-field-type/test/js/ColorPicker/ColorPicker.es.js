@@ -12,7 +12,7 @@
  * details.
  */
 
-import {act, fireEvent} from '@testing-library/react';
+import {fireEvent} from '@testing-library/react';
 
 import ColorPicker from '../../../src/main/resources/META-INF/resources/ColorPicker/ColorPicker.es';
 import withContextMock from '../__mocks__/withContextMock.es';
@@ -74,7 +74,7 @@ describe('Field Color Picker', () => {
 	});
 
 	it.skip('emits field edit event on field change', done => {
-		const handleFieldEdited = data => {
+		const handleFieldEdited = () => {
 			const inputEl = component.element.querySelector('input');
 			expect(inputEl.value).toBe('ffffff');
 			done();

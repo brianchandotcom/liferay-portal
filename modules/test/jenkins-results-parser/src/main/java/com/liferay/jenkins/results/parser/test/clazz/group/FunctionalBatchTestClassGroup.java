@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -76,6 +77,50 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			"test.batch.run.property.query", batchName, testSuiteName);
 	}
 
+	private List<File> _getFunctionalRequiredModuleDirs(List<File> moduleDirs) {
+		List<File> functionalRequiredModuleDirs = Lists.newArrayList(
+			moduleDirs);
+
+		File modulesBaseDir = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
+
+		for (File moduleDir : moduleDirs) {
+			Properties moduleDirTestProperties =
+				JenkinsResultsParserUtil.getProperties(
+					new File(moduleDir, "test.properties"));
+
+			String functionalRequiredModuleDirPaths =
+				moduleDirTestProperties.getProperty(
+					"modules.includes.required.functional[" + testSuiteName +
+						"]");
+
+			if (functionalRequiredModuleDirPaths == null) {
+				continue;
+			}
+
+			for (String functionalRequiredModuleDirPath :
+					functionalRequiredModuleDirPaths.split(",")) {
+
+				File functionalRequiredModuleDir = new File(
+					modulesBaseDir, functionalRequiredModuleDirPath);
+
+				if (!functionalRequiredModuleDir.exists()) {
+					continue;
+				}
+
+				if (functionalRequiredModuleDirs.contains(
+						functionalRequiredModuleDir)) {
+
+					continue;
+				}
+
+				functionalRequiredModuleDirs.add(functionalRequiredModuleDir);
+			}
+		}
+
+		return Lists.newArrayList(functionalRequiredModuleDirs);
+	}
+
 	private void _setRelevantTestBatchRunPropertyQuery() {
 		if (!testRelevantChanges) {
 			_relevantTestBatchRunPropertyQuery =
@@ -114,6 +159,10 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		modifiedDirsList.addAll(
 			getRequiredModuleDirs(Lists.newArrayList(modifiedDirsList)));
+
+		modifiedDirsList.addAll(
+			_getFunctionalRequiredModuleDirs(
+				Lists.newArrayList(modifiedDirsList)));
 
 		StringBuilder sb = new StringBuilder();
 

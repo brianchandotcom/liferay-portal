@@ -37,9 +37,20 @@ if (ddmStructure != null) {
 	ddmForm = ddmStructure.getDDMForm();
 	ddmStructureId = ddmStructure.getStructureId();
 }
+
+PortletURL editDDMStructureURL = renderResponse.createActionURL();
+
+if (ddmStructure == null) {
+	editDDMStructureURL.setParameter(ActionRequest.ACTION_NAME, "/journal/add_data_definition");
+}
+else {
+	editDDMStructureURL.setParameter(ActionRequest.ACTION_NAME, "/journal/update_ddm_structure");
+}
+
+editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 %>
 
-<aui:form cssClass="edit-article-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'>
+<aui:form action="<%= editDDMStructureURL.toString() %>" cssClass="edit-article-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="dataDefinition" type="hidden" />

@@ -42,14 +42,11 @@ export const TextField = ({field, onValueSelect, value}) => {
 		field.typeOptions
 	);
 
-	const selectValue = useCallback(
-		target => {
-			if (isMounted() && target.validity.valid) {
-				onValueSelect(field.name, target.value);
-			}
-		},
-		[field.name, isMounted, onValueSelect]
-	);
+	const selectValue = (target, name, isMounted, onValueSelect) => {
+		if (isMounted() && target.validity.valid) {
+			onValueSelect(name, target.value);
+		}
+	};
 
 	const [debouncedOnValueSelect] = useDebounceCallback(selectValue, 500);
 
@@ -80,7 +77,12 @@ export const TextField = ({field, onValueSelect, value}) => {
 						setErrorMessage(validationErrorMessage);
 					}
 
-					debouncedOnValueSelect(event.target);
+					debouncedOnValueSelect(
+						event.target,
+						field.name,
+						isMounted,
+						onValueSelect
+					);
 
 					setCurrentValue(event.target.value);
 				}}

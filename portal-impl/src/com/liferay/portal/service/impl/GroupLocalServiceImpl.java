@@ -1633,6 +1633,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return groupLocalService.loadGetGroup(companyId, groupKey);
 	}
 
+	@Override
+	public List<Long> getGroupIds(long companyId, boolean active) {
+		return groupFinder.findByC_A(companyId, active);
+	}
+
 	/**
 	 * Returns all the groups that are direct children of the parent group.
 	 *

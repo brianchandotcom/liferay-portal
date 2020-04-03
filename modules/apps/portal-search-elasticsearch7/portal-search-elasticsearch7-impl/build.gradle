@@ -1,5 +1,25 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.StringUtil
+
+task cleanSidecar
+task deploySidecar(type: Copy)
+
 String elasticsearchVersion = "7.3.0"
 String luceneVersion = "8.1.0"
+
+File sidecarDir = file("${project.'liferay.home'}/elasticsearch" + elasticsearchVersion.substring(0, 1))
+List<String> sidecarPluginURLs = [
+	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-${elasticsearchVersion}.zip",
+	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-kuromoji/analysis-kuromoji-${elasticsearchVersion}.zip",
+	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-smartcn/analysis-smartcn-${elasticsearchVersion}.zip",
+	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-stempel/analysis-stempel-${elasticsearchVersion}.zip"
+]
+
+cleanSidecar {
+	doLast {
+		delete file("${buildDir}/elasticsearch-" + elasticsearchVersion)
+	}
+}
 
 configurations {
 	elasticsearchPlugins {
@@ -130,6 +150,10 @@ dependencies {
 	testCompile project(":core:registry-api")
 }
 
+deploy {
+	finalizedBy deploySidecar
+}
+
 deployDependencies {
 	from configurations.compileOnly
 
@@ -140,8 +164,75 @@ deployDependencies {
 	rename(/woodstox-core-asl-(.+)\.jar/, "com.ctc.wstx" + renameSuffix)
 }
 
+deploySidecar {
+	dependsOn cleanSidecar
+
+	description = "Assembles the Elasticsearch sidecar and deploys it to Liferay."
+	group = "build"
+
+	destinationDir = sidecarDir
+
+	from {
+		file("${buildDir}/elasticsearch-" + elasticsearchVersion)
+	}
+
+	doFirst {
+		String url = "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-${elasticsearchVersion}-no-jdk-linux-x86_64.tar.gz"
+
+		File file = file("${buildDir}/${url.drop(url.lastIndexOf('/') + 1)}")
+
+		FileUtil.get(project, url, file, false, true)
+
+		project.copy {
+			fileMode = 0777
+			includeEmptyDirs = false
+
+			exclude "elasticsearch-${elasticsearchVersion}/modules/ingest-geoip/**"
+			include "elasticsearch-${elasticsearchVersion}/lib/**"
+			include "elasticsearch-${elasticsearchVersion}/modules/**"
+
+			into buildDir
+			from tarTree(file)
+		}
+	}
+}
+
 processResources {
 	into("plugins") {
 		from configurations.elasticsearchPlugins
+	}
+}
+
+_createPluginTasks(elasticsearchVersion, sidecarPluginURLs)
+
+private void _createPluginTasks(String elasticsearchVersion, List<String> sidecarPluginURLs) {
+	sidecarPluginURLs.each {
+		String url ->
+
+		String fileName = url.substring(url.lastIndexOf("/") + 1)
+
+		String suffix = fileName.replaceAll(/[\.-](\w)/) {
+			return it[1].toUpperCase()
+		}
+
+		Task installPluginTask = tasks.create(name: "installPlugin" + StringUtil.capitalize(suffix)) {
+			doLast {
+				FileUtil.get(project, url, new File(project.buildDir, fileName), false, true)
+
+				String dirName = fileName.take(fileName.lastIndexOf("-" + elasticsearchVersion))
+
+				project.copy {
+					fileMode = 0777
+					includeEmptyDirs = false
+
+					into new File(buildDir, "elasticsearch-${elasticsearchVersion}/plugins/${dirName}")
+					from zipTree(new File(project.buildDir, fileName))
+				}
+			}
+		}
+
+		deploySidecar.dependsOn installPluginTask
+
+		installPluginTask.mustRunAfter cleanSidecar
 	}
 }

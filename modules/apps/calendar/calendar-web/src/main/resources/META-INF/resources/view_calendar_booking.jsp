@@ -149,7 +149,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 
 			<c:if test="<%= calendar.isEnableRatings() %>">
 				<div class="entry-ratings">
-					<liferay-ui:ratings
+					<liferay-ratings:ratings
 						className="<%= CalendarBooking.class.getName() %>"
 						classPK="<%= calendarBooking.getCalendarBookingId() %>"
 						inTrash="<%= calendarBooking.isInTrash() %>"

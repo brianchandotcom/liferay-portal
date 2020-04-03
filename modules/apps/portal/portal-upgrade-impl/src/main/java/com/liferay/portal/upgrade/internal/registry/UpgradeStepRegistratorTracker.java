@@ -128,6 +128,26 @@ public class UpgradeStepRegistratorTracker {
 			List<UpgradeInfo> upgradeInfos =
 				upgradeStepRegistry.getUpgradeInfos();
 
+			if (PropsValues.UPGRADE_DATABASE_AUTO_RUN ||
+				(_releaseLocalService.fetchRelease(bundleSymbolicName) ==
+					null)) {
+
+				try {
+					_upgradeExecutor.execute(
+						bundleSymbolicName, upgradeInfos,
+						OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
+				}
+				catch (Throwable t) {
+					_swappedLogExecutor.execute(
+						bundleSymbolicName,
+						() -> _log.error(
+							"Failed upgrade process for module ".concat(
+								bundleSymbolicName),
+							t),
+						null);
+				}
+			}
+
 			List<ServiceRegistration<UpgradeStep>> serviceRegistrations =
 				new ArrayList<>(upgradeInfos.size());
 
@@ -162,26 +182,6 @@ public class UpgradeStepRegistratorTracker {
 			}
 			finally {
 				UpgradeStepRegistratorThreadLocal.setEnabled(enabled);
-			}
-
-			if (PropsValues.UPGRADE_DATABASE_AUTO_RUN ||
-				(_releaseLocalService.fetchRelease(bundleSymbolicName) ==
-					null)) {
-
-				try {
-					_upgradeExecutor.execute(
-						bundleSymbolicName, upgradeInfos,
-						OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
-				}
-				catch (Throwable t) {
-					_swappedLogExecutor.execute(
-						bundleSymbolicName,
-						() -> _log.error(
-							"Failed upgrade process for module ".concat(
-								bundleSymbolicName),
-							t),
-						null);
-				}
 			}
 
 			return serviceRegistrations;

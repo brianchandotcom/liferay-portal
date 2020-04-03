@@ -18,7 +18,6 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -623,11 +622,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID,
-			"WorkflowMetricsSLAInstanceResult" +
-				_digest(companyId, instanceId, processId, slaDefinitionId)
-		).setValue(
+		documentBuilder.setValue(
 			"companyId", companyId
 		).setValue(
 			"deleted", false
@@ -645,6 +640,11 @@ public class WorkflowMetricsRESTTestHelper {
 			"slaDefinitionId", slaDefinitionId
 		).setValue(
 			"status", "RUNNING"
+		).setString(
+			"uid",
+			_digest(
+				"WorkflowMetricsSLAInstanceResult", companyId, instanceId,
+				processId, slaDefinitionId)
 		);
 
 		return documentBuilder.build();
@@ -658,12 +658,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
 
-		String digest = _digest(
-			companyId, instanceId, processId, slaDefinitionId, taskId);
-
-		documentBuilder.setString(
-			Field.UID, "WorkflowMetricsSLATaskResult" + digest
-		).setValue(
+		documentBuilder.setValue(
 			"assigneeId", assigneeId
 		).setValue(
 			"breached", breached
@@ -688,6 +683,8 @@ public class WorkflowMetricsRESTTestHelper {
 		).setValue(
 			"instanceId", instanceId
 		).setValue(
+			"nodeId", nodeId
+		).setValue(
 			"onTime", onTime
 		).setValue(
 			"processId", processId
@@ -696,11 +693,14 @@ public class WorkflowMetricsRESTTestHelper {
 		).setValue(
 			"status", status
 		).setValue(
-			"nodeId", nodeId
+			"taskId", taskId
 		).setValue(
 			"taskName", taskName
-		).setValue(
-			"taskId", taskId
+		).setString(
+			"uid",
+			_digest(
+				"WorkflowMetricsSLATaskResult", companyId, instanceId,
+				processId, slaDefinitionId, taskId)
 		);
 
 		return documentBuilder.build();
@@ -771,14 +771,14 @@ public class WorkflowMetricsRESTTestHelper {
 			ArrayUtil.append(new Object[] {"deleted", true}, parameters));
 	}
 
-	private String _digest(Serializable... parts) {
+	private String _digest(String indexNamePrefix, Serializable... parts) {
 		StringBuilder sb = new StringBuilder();
 
 		for (Serializable part : parts) {
 			sb.append(part);
 		}
 
-		return DigestUtils.sha256Hex(sb.toString());
+		return indexNamePrefix + DigestUtils.sha256Hex(sb.toString());
 	}
 
 	private Object _getIndexer(String className) throws Exception {

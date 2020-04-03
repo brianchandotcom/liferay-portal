@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
@@ -59,9 +58,7 @@ public class NodeWorkflowMetricsIndexerImpl
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID, digest(companyId, nodeId)
-		).setLong(
+		documentBuilder.setLong(
 			"companyId", companyId
 		).setDate(
 			"createDate", formatDate(createDate)
@@ -82,6 +79,8 @@ public class NodeWorkflowMetricsIndexerImpl
 		).setString(
 			"type", type
 		).setString(
+			"uid", digest(companyId, nodeId)
+		).setString(
 			"version", processVersion
 		);
 
@@ -96,12 +95,12 @@ public class NodeWorkflowMetricsIndexerImpl
 	public void deleteNode(long companyId, long nodeId) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID, digest(companyId, nodeId)
-		).setLong(
+		documentBuilder.setLong(
 			"companyId", companyId
 		).setLong(
 			"nodeId", nodeId
+		).setString(
+			"uid", digest(companyId, nodeId)
 		);
 
 		workflowMetricsPortalExecutor.execute(
@@ -186,26 +185,26 @@ public class NodeWorkflowMetricsIndexerImpl
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID, digest(companyId, processId, processVersion, nodeId)
-		).setLong(
+		documentBuilder.setLong(
 			"companyId", companyId
 		).setValue(
 			"completed", false
 		).setValue(
 			"deleted", false
-		).setLong(
-			"instanceId", 0L
 		).setValue(
 			"instanceCompleted", false
 		).setLong(
-			"processId", processId
-		).setLong(
-			"nodeId", nodeId
+			"instanceId", 0L
 		).setString(
 			"name", name
 		).setLong(
+			"nodeId", nodeId
+		).setLong(
+			"processId", processId
+		).setLong(
 			"taskId", 0L
+		).setString(
+			"uid", digest(companyId, processId, processVersion, nodeId)
 		).setString(
 			"version", processVersion
 		);

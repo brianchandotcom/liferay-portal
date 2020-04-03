@@ -74,15 +74,11 @@ public class InstanceWorkflowMetricsIndexerImpl
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
 		documentBuilder.setString(
-			Field.UID, digest(companyId, instanceId)
-		).setLong(
-			"companyId", companyId
-		).setString(
 			"className", className
 		).setLong(
 			"classPK", classPK
-		).setString(
-			"className", className
+		).setLong(
+			"companyId", companyId
 		).setValue(
 			"completed", completionDate != null
 		);
@@ -118,16 +114,16 @@ public class InstanceWorkflowMetricsIndexerImpl
 			"instanceId", instanceId
 		).setDate(
 			"modifiedDate", formatDate(modifiedDate)
-		);
-
-		documentBuilder.setLong(
+		).setLong(
 			"processId", processId
 		).setString(
-			"version", processVersion
+			"uid", digest(companyId, instanceId)
 		).setLong(
 			"userId", userId
 		).setString(
 			"userName", userName
+		).setString(
+			"version", processVersion
 		);
 
 		setLocalizedField(documentBuilder, "assetTitle", assetTitleMap);
@@ -147,9 +143,7 @@ public class InstanceWorkflowMetricsIndexerImpl
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID, digest(companyId, instanceId)
-		).setLong(
+		documentBuilder.setLong(
 			"companyId", companyId
 		).setValue(
 			"completed", completionDate != null
@@ -161,11 +155,13 @@ public class InstanceWorkflowMetricsIndexerImpl
 					"completionDate", StringPool.UNDERLINE, "Number")),
 			completionDate.getTime()
 		).setLong(
+			"duration", duration
+		).setLong(
 			"instanceId", instanceId
 		).setDate(
 			"modifiedDate", formatDate(modifiedDate)
-		).setLong(
-			"duration", duration
+		).setString(
+			"uid", digest(companyId, instanceId)
 		);
 
 		Document document = documentBuilder.build();
@@ -225,12 +221,12 @@ public class InstanceWorkflowMetricsIndexerImpl
 	public void deleteInstance(long companyId, long instanceId) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID, digest(companyId, instanceId)
-		).setLong(
+		documentBuilder.setLong(
 			"companyId", companyId
 		).setLong(
 			"instanceId", instanceId
+		).setString(
+			"uid", digest(companyId, instanceId)
 		);
 
 		workflowMetricsPortalExecutor.execute(
@@ -292,12 +288,12 @@ public class InstanceWorkflowMetricsIndexerImpl
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID, digest(companyId, instanceId)
-		).setLong(
+		documentBuilder.setLong(
 			"companyId", companyId
 		).setDate(
 			"modifiedDate", formatDate(modifiedDate)
+		).setString(
+			"uid", digest(companyId, instanceId)
 		);
 
 		setLocalizedField(documentBuilder, "assetTitle", assetTitleMap);

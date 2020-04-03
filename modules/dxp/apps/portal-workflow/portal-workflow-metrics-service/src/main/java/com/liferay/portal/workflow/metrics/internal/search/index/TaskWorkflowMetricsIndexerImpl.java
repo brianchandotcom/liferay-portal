@@ -66,8 +66,6 @@ public class TaskWorkflowMetricsIndexerImpl
 		}
 
 		documentBuilder.setString(
-			Field.UID, digest(companyId, taskId)
-		).setString(
 			"className", className
 		).setLong(
 			"classPK", classPK
@@ -115,6 +113,8 @@ public class TaskWorkflowMetricsIndexerImpl
 			"processId", processId
 		).setLong(
 			"taskId", taskId
+		).setString(
+			"uid", digest(companyId, taskId)
 		).setLong(
 			"userId", userId
 		).setString(
@@ -135,9 +135,7 @@ public class TaskWorkflowMetricsIndexerImpl
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID, digest(companyId, taskId)
-		).setLong(
+		documentBuilder.setLong(
 			"companyId", companyId
 		).setValue(
 			"completed", true
@@ -151,6 +149,8 @@ public class TaskWorkflowMetricsIndexerImpl
 			"modifiedDate", formatDate(modifiedDate)
 		).setLong(
 			"taskId", taskId
+		).setString(
+			"uid", digest(companyId, taskId)
 		).setLong(
 			"userId", userId
 		);
@@ -184,12 +184,12 @@ public class TaskWorkflowMetricsIndexerImpl
 	public void deleteTask(long companyId, long taskId) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID, digest(companyId, taskId)
-		).setLong(
+		documentBuilder.setLong(
 			"companyId", companyId
 		).setLong(
 			"taskId", taskId
+		).setString(
+			"uid", digest(companyId, taskId)
 		);
 
 		workflowMetricsPortalExecutor.execute(
@@ -285,8 +285,6 @@ public class TaskWorkflowMetricsIndexerImpl
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(Field.UID, digest(companyId, taskId));
-
 		if (assigneeId != null) {
 			documentBuilder.setLong("assigneeId", assigneeId);
 		}
@@ -297,6 +295,8 @@ public class TaskWorkflowMetricsIndexerImpl
 			"modifiedDate", formatDate(modifiedDate)
 		).setLong(
 			"taskId", taskId
+		).setString(
+			"uid", digest(companyId, taskId)
 		).setLong(
 			"userId", userId
 		);

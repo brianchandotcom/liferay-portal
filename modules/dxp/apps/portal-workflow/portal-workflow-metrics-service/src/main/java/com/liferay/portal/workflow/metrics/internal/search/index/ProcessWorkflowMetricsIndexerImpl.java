@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
@@ -108,12 +107,10 @@ public class ProcessWorkflowMetricsIndexerImpl
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID, digest(companyId, processId)
+		documentBuilder.setValue(
+			"active", active
 		).setLong(
 			"companyId", companyId
-		).setValue(
-			"active", active
 		).setDate(
 			"createDate", formatDate(createDate)
 		).setValue(
@@ -128,6 +125,8 @@ public class ProcessWorkflowMetricsIndexerImpl
 			"processId", processId
 		).setString(
 			"title", title
+		).setString(
+			"uid", digest(companyId, processId)
 		).setString(
 			"version", version
 		);
@@ -145,12 +144,12 @@ public class ProcessWorkflowMetricsIndexerImpl
 	public void deleteProcess(long companyId, long processId) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID, digest(companyId, processId)
-		).setLong(
+		documentBuilder.setLong(
 			"companyId", companyId
 		).setLong(
 			"processId", processId
+		).setString(
+			"uid", digest(companyId, processId)
 		);
 
 		workflowMetricsPortalExecutor.execute(
@@ -209,15 +208,11 @@ public class ProcessWorkflowMetricsIndexerImpl
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID, digest(companyId, processId)
-		).setLong(
-			"companyId", companyId
-		);
-
 		if (active != null) {
 			documentBuilder.setValue("active", active);
 		}
+
+		documentBuilder.setLong("companyId", companyId);
 
 		if (description != null) {
 			documentBuilder.setValue("description", description);
@@ -233,11 +228,15 @@ public class ProcessWorkflowMetricsIndexerImpl
 			documentBuilder.setValue("title", title);
 		}
 
+		documentBuilder.setString(
+			"uid", digest(companyId, processId)
+		).setValue(
+			"version", version
+		);
+
 		if (MapUtil.isNotEmpty(titleMap)) {
 			setLocalizedField(documentBuilder, "title", titleMap);
 		}
-
-		documentBuilder.setValue("version", version);
 
 		Document document = documentBuilder.build();
 
@@ -251,14 +250,19 @@ public class ProcessWorkflowMetricsIndexerImpl
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID, digest(companyId, kaleoDefinitionId));
-
-		documentBuilder.setLong("companyId", companyId);
-		documentBuilder.setValue("completed", false);
-		documentBuilder.setValue("deleted", false);
-		documentBuilder.setLong("instanceId", 0L);
-		documentBuilder.setLong("processId", kaleoDefinitionId);
+		documentBuilder.setLong(
+			"companyId", companyId
+		).setValue(
+			"completed", false
+		).setValue(
+			"deleted", false
+		).setLong(
+			"instanceId", 0L
+		).setLong(
+			"processId", kaleoDefinitionId
+		).setString(
+			"uid", digest(companyId, kaleoDefinitionId)
+		);
 
 		return documentBuilder.build();
 	}

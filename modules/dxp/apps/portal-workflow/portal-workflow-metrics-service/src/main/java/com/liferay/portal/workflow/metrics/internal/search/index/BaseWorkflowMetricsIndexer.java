@@ -107,7 +107,7 @@ public abstract class BaseWorkflowMetricsIndexer
 			document -> bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
 					getIndexName(document.getLong("companyId")),
-					document.getString(Field.UID), document) {
+					document.getString("uid"), document) {
 
 					{
 						setType(getIndexType());
@@ -339,7 +339,7 @@ public abstract class BaseWorkflowMetricsIndexer
 		searchSearchRequest.setIndexNames(getIndexName(companyId));
 		searchSearchRequest.setQuery(query);
 		searchSearchRequest.setTypes(getIndexType());
-		searchSearchRequest.setSelectedFieldNames(Field.UID);
+		searchSearchRequest.setSelectedFieldNames("uid");
 		searchSearchRequest.setSize(10000);
 
 		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
@@ -364,14 +364,13 @@ public abstract class BaseWorkflowMetricsIndexer
 				DocumentBuilder documentBuilder =
 					documentBuilderFactory.builder();
 
-				documentBuilder.setString(
-					Field.UID, document.getString(Field.UID));
+				documentBuilder.setString("uid", document.getString("uid"));
 
 				fieldsMap.forEach(
 					(name, value) -> documentBuilder.setValue(name, value));
 
 				return new UpdateDocumentRequest(
-					getIndexName(companyId), document.getString(Field.UID),
+					getIndexName(companyId), document.getString("uid"),
 					documentBuilder.build()) {
 
 					{
@@ -452,7 +451,7 @@ public abstract class BaseWorkflowMetricsIndexer
 
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
 			getIndexName(document.getLong("companyId")),
-			document.getString(Field.UID), document);
+			document.getString("uid"), document);
 
 		if (PortalRunMode.isTestMode()) {
 			updateDocumentRequest.setRefresh(true);

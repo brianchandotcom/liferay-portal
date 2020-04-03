@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.document.Document;
@@ -63,16 +62,8 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID,
-			digest(
-				workflowMetricsSLAInstanceResult.getCompanyId(),
-				workflowMetricsSLAInstanceResult.getInstanceId(),
-				workflowMetricsSLAInstanceResult.getProcessId(),
-				workflowMetricsSLAInstanceResult.getSLADefinitionId())
-		).setLong(
-			"companyId", workflowMetricsSLAInstanceResult.getCompanyId()
-		);
+		documentBuilder.setLong(
+			"companyId", workflowMetricsSLAInstanceResult.getCompanyId());
 
 		if (workflowMetricsSLAInstanceResult.getCompletionLocalDateTime() !=
 				null) {
@@ -135,6 +126,14 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 			documentBuilder.setString(
 				"status", workflowMetricsSLAStatus.name());
 		}
+
+		documentBuilder.setString(
+			"uid",
+			digest(
+				workflowMetricsSLAInstanceResult.getCompanyId(),
+				workflowMetricsSLAInstanceResult.getInstanceId(),
+				workflowMetricsSLAInstanceResult.getProcessId(),
+				workflowMetricsSLAInstanceResult.getSLADefinitionId()));
 
 		return documentBuilder.build();
 	}

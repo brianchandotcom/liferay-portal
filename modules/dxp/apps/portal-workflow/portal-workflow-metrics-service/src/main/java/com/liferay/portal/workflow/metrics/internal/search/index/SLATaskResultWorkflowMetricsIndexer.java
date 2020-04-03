@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.document.Document;
@@ -53,16 +52,6 @@ public class SLATaskResultWorkflowMetricsIndexer
 		WorkflowMetricsSLATaskResult workflowMetricsSLATaskResult) {
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
-
-		documentBuilder.setString(
-			Field.UID,
-			digest(
-				workflowMetricsSLATaskResult.getCompanyId(),
-				workflowMetricsSLATaskResult.getInstanceId(),
-				workflowMetricsSLATaskResult.getNodeId(),
-				workflowMetricsSLATaskResult.getProcessId(),
-				workflowMetricsSLATaskResult.getSLADefinitionId(),
-				workflowMetricsSLATaskResult.getTaskId()));
 
 		if (workflowMetricsSLATaskResult.getAssigneeId() != null) {
 			documentBuilder.setLong(
@@ -104,7 +93,9 @@ public class SLATaskResultWorkflowMetricsIndexer
 					workflowMetricsSLATaskResult.getLastCheckLocalDateTime()));
 		}
 
-		documentBuilder.setValue(
+		documentBuilder.setLong(
+			"nodeId", workflowMetricsSLATaskResult.getNodeId()
+		).setValue(
 			"onTime", workflowMetricsSLATaskResult.isOnTime()
 		).setLong(
 			"processId", workflowMetricsSLATaskResult.getProcessId()
@@ -121,11 +112,18 @@ public class SLATaskResultWorkflowMetricsIndexer
 		}
 
 		documentBuilder.setLong(
-			"nodeId", workflowMetricsSLATaskResult.getNodeId()
+			"taskId", workflowMetricsSLATaskResult.getTaskId()
 		).setString(
 			"taskName", workflowMetricsSLATaskResult.getTaskName()
-		).setLong(
-			"taskId", workflowMetricsSLATaskResult.getTaskId()
+		).setString(
+			"uid",
+			digest(
+				workflowMetricsSLATaskResult.getCompanyId(),
+				workflowMetricsSLATaskResult.getInstanceId(),
+				workflowMetricsSLATaskResult.getNodeId(),
+				workflowMetricsSLATaskResult.getProcessId(),
+				workflowMetricsSLATaskResult.getSLADefinitionId(),
+				workflowMetricsSLATaskResult.getTaskId())
 		);
 
 		return documentBuilder.build();

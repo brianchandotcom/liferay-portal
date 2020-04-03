@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
@@ -62,9 +61,7 @@ public class TransitionWorkflowMetricsIndexerImpl
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID, digest(companyId, transitionId)
-		).setLong(
+		documentBuilder.setLong(
 			"companyId", companyId
 		).setDate(
 			"createDate", formatDate(createDate)
@@ -86,6 +83,8 @@ public class TransitionWorkflowMetricsIndexerImpl
 			"targetNodeId", targetNodeId
 		).setString(
 			"targetNodeName", targetNodeName
+		).setString(
+			"uid", digest(companyId, transitionId)
 		).setLong(
 			"userId", userId
 		).setString(
@@ -103,12 +102,12 @@ public class TransitionWorkflowMetricsIndexerImpl
 	public void deleteTransition(long companyId, long transitionId) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		documentBuilder.setString(
-			Field.UID, digest(companyId, transitionId)
-		).setLong(
+		documentBuilder.setLong(
 			"companyId", companyId
 		).setLong(
 			"transitionId", transitionId
+		).setString(
+			"uid", digest(companyId, transitionId)
 		);
 
 		workflowMetricsPortalExecutor.execute(

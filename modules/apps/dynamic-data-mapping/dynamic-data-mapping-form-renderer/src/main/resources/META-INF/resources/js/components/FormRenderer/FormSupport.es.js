@@ -294,24 +294,30 @@ export const getColumn = (pages, pageIndex, rowIndex, columnIndex) => {
 };
 
 export const getColumnPosition = (pages, pageIndex, rowIndex, columnIndex) => {
-	return columnIndex != -1
-		? pages[pageIndex].rows[rowIndex].columns.reduce(
-				(result, next, index) => {
-					if (index <= columnIndex) {
-						const column = getColumn(
-							pages,
-							pageIndex,
-							rowIndex,
-							index
-						);
+	const currentPage = pages[pageIndex];
 
-						result += column.size;
-					}
+	let currentRow = null;
 
-					return result;
-				},
-				0
-		  )
+	currentRow = currentPage.rows[rowIndex];
+
+	if (!currentPage) {
+		console.error(
+			`Row Index ${rowIndex} cannot be retrieved from ${currentPage}`
+		);
+
+		return;
+	}
+
+	return columnIndex != -1 && currentRow.columns
+		? currentRow.columns.reduce((result, _, index) => {
+				if (index <= columnIndex) {
+					const column = getColumn(pages, pageIndex, rowIndex, index);
+
+					result += column.size;
+				}
+
+				return result;
+		  }, 0)
 		: 0;
 };
 
@@ -328,7 +334,9 @@ export const getField = (context, pageIndex, rowIndex, columnIndex) => {
 };
 
 export const getRow = (pages, pageIndex, rowIndex) => {
-	return pages[Number(pageIndex)].rows[Number(rowIndex)];
+	const currentPage = pages[Number(pageIndex)];
+
+	return currentPage.rows[Number(rowIndex)];
 };
 
 export const rowHasFields = (pages, pageIndex, rowIndex) => {

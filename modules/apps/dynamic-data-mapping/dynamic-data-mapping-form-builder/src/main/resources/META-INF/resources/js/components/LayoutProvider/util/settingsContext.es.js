@@ -263,7 +263,7 @@ export const updateField = (
 				editingLanguageId,
 				field,
 				propertyName,
-				JSON.stringify(propertyValue)
+				propertyValue
 			),
 		};
 	}

@@ -26,6 +26,7 @@ dependencies {
 	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.23"
 
 	compileOnly group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.1.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.io", version: "4.0.2"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.reflect", version: "1.1.0"

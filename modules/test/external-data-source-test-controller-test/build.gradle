@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationCompile project(":apps:portal:portal-spring-extender-api")
 	testIntegrationCompile project(":apps:xstream:xstream-configurator-api")
+	testIntegrationCompile project(":core:petra:petra-io")
 	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 	testIntegrationCompile project(":test:external-data-source-test")

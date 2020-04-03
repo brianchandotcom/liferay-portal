@@ -17,6 +17,8 @@ package com.liferay.flags.web.internal.portlet.action;
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.flags.service.FlagsEntryService;
 import com.liferay.flags.web.internal.constants.FlagsPortletKeys;
+import com.liferay.portal.kernel.captcha.CaptchaException;
+import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -79,6 +81,16 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				className, classPK, reporterEmailAddress, reportedUserId,
 				contentTitle, contentURL, reason, serviceContext);
 		}
+		catch (CaptchaException captchaException) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					themeDisplay.getRequest(),
+					_getCaptchaExceptionErrorMessageKey(captchaException)));
+		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
 
@@ -98,6 +110,16 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	@Reference(unbind = "-")
 	protected void setFlagsEntryService(FlagsEntryService flagsEntryService) {
 		_flagsEntryService = flagsEntryService;
+	}
+
+	private String _getCaptchaExceptionErrorMessageKey(
+		CaptchaException captchaException) {
+
+		if (captchaException instanceof CaptchaTextException) {
+			return "text-verification-failed";
+		}
+
+		return "captcha-verification-failed";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

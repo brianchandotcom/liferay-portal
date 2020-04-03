@@ -80,10 +80,4 @@ long fragmentCollectionId = ParamUtil.getLong(request, "fragmentCollectionId");
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
-
-	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" value="import" />
-
-		<aui:button type="cancel" />
-	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ItemSelectorDialog, PortletBase} from 'frontend-js-web';
+import {ItemSelectorDialog, PortletBase, openModal} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 /**
@@ -159,21 +159,24 @@ class FragmentCollectionsView extends PortletBase {
 	 * @review
 	 */
 	_openImportView() {
-		Liferay.Util.openWindow({
-			dialog: {
-				after: {
-					destroy: () => {
-						window.location.reload();
-					},
+		openModal({
+			buttons: [
+				{
+					displayType: 'secondary',
+					label: Liferay.Language.get('cancel'),
+					type: 'cancel',
 				},
-				destroyOnHide: true,
-			},
-			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer',
-			},
+				{
+					label: Liferay.Language.get('import'),
+					type: 'submit',
+				},
+			],
 			id: this.ns('openImportView'),
+			onClose: () => {
+				window.location.reload();
+			},
 			title: Liferay.Language.get('import'),
-			uri: this.viewImportURL,
+			url: this.viewImportURL,
 		});
 	}
 }

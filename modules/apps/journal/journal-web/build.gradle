@@ -5,6 +5,8 @@ buildCSS {
 }
 
 dependencies {
+	compileInclude project(":apps:data-engine:data-engine-rest-client")
+
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -23,6 +25,7 @@ dependencies {
 	compileOnly project(":apps:asset:asset-taglib")
 	compileOnly project(":apps:change-tracking:change-tracking-api")
 	compileOnly project(":apps:data-engine:data-engine-api")
+	compileOnly project(":apps:data-engine:data-engine-rest-api")
 	compileOnly project(":apps:data-engine:data-engine-taglib")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:dynamic-data-lists:dynamic-data-lists-api")
@@ -48,6 +51,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:layout:layout-taglib")
 	compileOnly project(":apps:message-boards:message-boards-api")
+	compileOnly project(":apps:petra:petra-model-adapter")
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
 	compileOnly project(":apps:rss:rss-api")

@@ -95,9 +95,15 @@ public interface UserBlueprint {
 
 		public UserBlueprintBuilder firstName(String firstName);
 
+		public UserBlueprintBuilder groupIds(long... groupIds);
+
+		public UserBlueprintBuilder jobTitle(String jobTitle);
+
 		public UserBlueprintBuilder lastName(String lastName);
 
 		public UserBlueprintBuilder locale(Locale locale);
+
+		public UserBlueprintBuilder middleName(String middleName);
 
 		public UserBlueprintBuilder password1(String password1);
 

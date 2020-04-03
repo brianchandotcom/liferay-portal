@@ -216,6 +216,20 @@ public class UserBlueprintImpl implements UserBlueprint {
 		}
 
 		@Override
+		public UserBlueprintBuilder groupIds(long... groupIds) {
+			_userBlueprintImpl._groupIds = groupIds;
+
+			return this;
+		}
+
+		@Override
+		public UserBlueprintBuilder jobTitle(String jobTitle) {
+			_userBlueprintImpl._jobTitle = jobTitle;
+
+			return this;
+		}
+
+		@Override
 		public UserBlueprintBuilder lastName(String lastName) {
 			_userBlueprintImpl._lastName = lastName;
 
@@ -225,6 +239,13 @@ public class UserBlueprintImpl implements UserBlueprint {
 		@Override
 		public UserBlueprintBuilder locale(Locale locale) {
 			_userBlueprintImpl._locale = locale;
+
+			return this;
+		}
+
+		@Override
+		public UserBlueprintBuilder middleName(String middleName) {
+			_userBlueprintImpl._middleName = middleName;
 
 			return this;
 		}

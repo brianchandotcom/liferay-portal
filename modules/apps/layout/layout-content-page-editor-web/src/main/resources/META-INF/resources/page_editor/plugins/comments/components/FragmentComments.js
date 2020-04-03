@@ -48,7 +48,8 @@ export default function FragmentComments({fragmentEntryLink}) {
 			>
 				<ClayButton
 					borderless
-					className="text-dark"
+					className="mx-1 text-dark"
+					displayType="secondary"
 					onClick={() => selectItem(null)}
 					small
 				>

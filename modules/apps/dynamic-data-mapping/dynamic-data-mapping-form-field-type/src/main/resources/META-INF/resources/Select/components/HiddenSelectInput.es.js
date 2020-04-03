@@ -35,6 +35,7 @@ const HiddenSelectInput = ({multiple, name, options, value}) => (
 							defaultValue={isSelected}
 							key={`hiddenSelect${index}`}
 							label={option.label}
+							selected={isSelected}
 							value={option.value}
 						/>
 					);

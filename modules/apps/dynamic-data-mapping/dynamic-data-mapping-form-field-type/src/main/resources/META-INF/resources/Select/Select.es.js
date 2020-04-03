@@ -324,6 +324,8 @@ const Select = ({
 
 		if (!multiple) {
 			setExpand(false);
+
+			onExpand({event, expand: false});
 		}
 	};
 

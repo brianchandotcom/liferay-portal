@@ -41,6 +41,7 @@ import org.jasig.cas.client.authentication.AttributePrincipal;
 import org.jasig.cas.client.util.CommonUtils;
 import org.jasig.cas.client.validation.Assertion;
 import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
+import org.jasig.cas.client.validation.TicketValidationException;
 import org.jasig.cas.client.validation.TicketValidator;
 
 import org.osgi.service.component.annotations.Component;
@@ -238,7 +239,20 @@ public class CASFilter extends BaseFilter {
 
 		TicketValidator ticketValidator = getTicketValidator(companyId);
 
-		Assertion assertion = ticketValidator.validate(ticket, serviceURL);
+		Assertion assertion = null;
+
+		try {
+			assertion = ticketValidator.validate(ticket, serviceURL);
+		}
+		catch (TicketValidationException ticketValidationException) {
+			_log.error(ticketValidationException, ticketValidationException);
+
+			_portal.sendError(
+				ticketValidationException, httpServletRequest,
+				httpServletResponse);
+
+			return;
+		}
 
 		if (assertion != null) {
 			AttributePrincipal attributePrincipal = assertion.getPrincipal();

@@ -34,11 +34,11 @@ definition {
 	}
 
 	macro gotoCodeTab {
-		Navigator.gotoNavItem(navItem = "Code");
+		Button.click(button = "Code");
 	}
 
 	macro gotoConfigurationTab {
-		Navigator.gotoNavItem(navItem = "Configuration");
+		Button.click(button = "Configuration");
 	}
 
 	macro publish {

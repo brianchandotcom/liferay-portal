@@ -172,6 +172,10 @@ deploySidecar {
 
 	destinationDir = sidecarDir
 
+	ext {
+		autoClean = false
+	}
+
 	from {
 		file("${buildDir}/elasticsearch-" + elasticsearchVersion)
 	}

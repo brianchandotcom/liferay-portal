@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal.io;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.dynamic.data.mapping.util.LocalizedValueUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 
@@ -48,6 +49,10 @@ public class DDMFormRuleJSONDeserializer {
 		DDMFormRule ddmFormRule = new DDMFormRule(condition, actions);
 
 		ddmFormRule.setEnabled(jsonObject.getBoolean("enabled", true));
+
+		ddmFormRule.setName(
+			LocalizedValueUtil.toLocalizedValue(
+				jsonObject.getJSONObject("name")));
 
 		return ddmFormRule;
 	}

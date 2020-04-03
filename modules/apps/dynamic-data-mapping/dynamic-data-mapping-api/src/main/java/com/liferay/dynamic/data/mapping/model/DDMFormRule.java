@@ -35,11 +35,20 @@ public class DDMFormRule implements Serializable {
 		_condition = ddmFormRule._condition;
 		_actions = new ArrayList<>(ddmFormRule._actions);
 		_enabled = ddmFormRule._enabled;
+		_name = ddmFormRule._name;
 	}
 
 	public DDMFormRule(String condition, List<String> actions) {
 		_condition = condition;
 		_actions = actions;
+	}
+
+	public DDMFormRule(
+		String condition, List<String> actions, LocalizedValue name) {
+
+		_condition = condition;
+		_actions = actions;
+		_name = name;
 	}
 
 	public DDMFormRule(String condition, String... actions) {
@@ -60,7 +69,8 @@ public class DDMFormRule implements Serializable {
 
 		if (Objects.equals(_actions, ddmFormRule._actions) &&
 			Objects.equals(_condition, ddmFormRule._condition) &&
-			Objects.equals(_enabled, ddmFormRule._enabled)) {
+			Objects.equals(_enabled, ddmFormRule._enabled) &&
+			Objects.equals(_name, ddmFormRule._name)) {
 
 			return true;
 		}
@@ -76,13 +86,19 @@ public class DDMFormRule implements Serializable {
 		return _condition;
 	}
 
+	public LocalizedValue getName() {
+		return _name;
+	}
+
 	@Override
 	public int hashCode() {
 		int hash = HashUtil.hash(0, _actions);
 
 		hash = HashUtil.hash(hash, _condition);
 
-		return HashUtil.hash(hash, _enabled);
+		hash = HashUtil.hash(hash, _enabled);
+
+		return HashUtil.hash(hash, _name);
 	}
 
 	public boolean isEnabled() {
@@ -101,8 +117,13 @@ public class DDMFormRule implements Serializable {
 		_enabled = enabled;
 	}
 
+	public void setName(LocalizedValue name) {
+		_name = name;
+	}
+
 	private List<String> _actions = new ArrayList<>();
 	private String _condition;
 	private boolean _enabled = true;
+	private LocalizedValue _name;
 
 }

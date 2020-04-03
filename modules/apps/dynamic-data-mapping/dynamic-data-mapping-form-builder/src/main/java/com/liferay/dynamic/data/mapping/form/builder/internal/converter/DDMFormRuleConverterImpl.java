@@ -182,6 +182,8 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 	protected SPIDDMFormRule convertRule(DDMFormRule ddmFormRule) {
 		SPIDDMFormRule spiDDMFormRule = new SPIDDMFormRule();
 
+		spiDDMFormRule.setName(ddmFormRule.getName());
+
 		setSPIDDMFormRuleConditions(spiDDMFormRule, ddmFormRule.getCondition());
 		setSPIDDMFormRuleActions(spiDDMFormRule, ddmFormRule.getActions());
 
@@ -206,7 +208,7 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 					spiDDMFormRuleSerializerContext));
 		}
 
-		return new DDMFormRule(condition, actions);
+		return new DDMFormRule(condition, actions, spiDDMFormRule.getName());
 	}
 
 	protected String createCondition(

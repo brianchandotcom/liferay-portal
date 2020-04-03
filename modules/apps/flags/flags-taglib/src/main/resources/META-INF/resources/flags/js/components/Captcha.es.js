@@ -34,7 +34,7 @@ function Captcha({uri}) {
 		}
 	}, [html]);
 
-	return html ? <div className="captcha" ref={ref} /> : null;
+	return html ? <div className="captcha w-50" ref={ref} /> : null;
 }
 
 Captcha.propTypes = {

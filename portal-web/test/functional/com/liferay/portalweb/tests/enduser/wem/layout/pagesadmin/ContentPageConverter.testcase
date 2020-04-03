@@ -479,6 +479,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-105943. When convert a widget page with a non-standard layout, there will be a warning message shown in conversion preview"
+	@ignore = "true"
 	@priority = "5"
 	test ConvertWidgetPageWithNonStandardLayout {
 		property portal.acceptance = "true";
@@ -666,12 +667,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-105943. When convert a widget page with one Nested Applications widget containing widgets and a non-standard layout, there will be two warning messages shown in conversion preview"
+	@ignore = "true"
 	@priority = "3"
 	test ConvertWidgetPageWithNonStandardLayoutAndNestedApplicationsContainingWidgets {
 		property portal.upstream = "quarantine";
-
-		//Quarantine for LRQA-57150
-
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
 		ProductMenu.gotoPortlet(

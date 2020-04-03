@@ -68,7 +68,7 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 								position: 'right',
 								trigger: A.one('#<portlet:namespace />remoteLiveLink'),
 								visible: false,
-								zIndex: Liferay.zIndex.TOOLTIP
+								zIndex: Liferay.zIndex.TOOLTIP,
 							}).render();
 						</aui:script>
 

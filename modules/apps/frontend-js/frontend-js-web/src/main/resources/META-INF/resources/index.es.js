@@ -24,7 +24,7 @@ export {cancelDebounce, debounce} from './liferay/debounce/debounce.es';
 
 // Form API
 
-export {default as objectToFormData} from './liferay/util/form/object_to_form_data.es.js';
+export {default as objectToFormData} from './liferay/util/form/object_to_form_data.es';
 
 // Liferay API
 

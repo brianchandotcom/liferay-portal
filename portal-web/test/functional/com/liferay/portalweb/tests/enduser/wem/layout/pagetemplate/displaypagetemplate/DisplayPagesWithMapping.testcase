@@ -31,7 +31,8 @@ definition {
 	@description = "This is a test for LPS-98031."
 	@priority = "5"
 	test MapManualURLToLinkFragment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		PageEditor.addFragment(
 			collectionName = "Featured Content",

@@ -95,6 +95,10 @@ definition {
 
 		Button.clickAdd();
 
+		if (IsElementNotPresent(locator1 = "IFrame#SELECT_SITES")) {
+			Button.clickAdd();
+		}
+
 		SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
 		AssertVisible(

@@ -220,7 +220,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 				<div class="asset-details autofit-float autofit-row autofit-row-center">
 					<c:if test="<%= assetPublisherDisplayContext.isEnableRatings() && assetRenderer.isRatable() %>">
 						<div class="asset-ratings autofit-col mr-3">
-							<liferay-ui:ratings
+							<liferay-ratings:ratings
 								className="<%= assetEntry.getClassName() %>"
 								classPK="<%= assetEntry.getClassPK() %>"
 							/>

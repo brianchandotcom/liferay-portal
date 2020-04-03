@@ -248,7 +248,7 @@ fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-i
 
 			<c:if test="<%= showRatings %>">
 				<div class="asset-ratings autofit-col mr-3">
-					<liferay-ui:ratings
+					<liferay-ratings:ratings
 						className="<%= assetEntry.getClassName() %>"
 						classPK="<%= assetEntry.getClassPK() %>"
 					/>

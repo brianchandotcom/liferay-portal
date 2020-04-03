@@ -35,6 +35,7 @@ dependencies {
 	compileOnly project(":apps:petra:petra-content")
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
+	compileOnly project(":apps:ratings:ratings-taglib")
 	compileOnly project(":apps:rss:rss-api")
 	compileOnly project(":apps:rss:rss-taglib")
 	compileOnly project(":apps:segments:segments-api")

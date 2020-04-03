@@ -252,7 +252,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 					<c:if test="<%= commentTreeDisplayContext.isRatingsVisible() %>">
 						<div class="autofit-col">
-							<liferay-ui:ratings
+							<liferay-ratings:ratings
 								className="<%= CommentConstants.getDiscussionClassName() %>"
 								classPK="<%= discussionComment.getCommentId() %>"
 								inTrash="<%= false %>"

@@ -13,16 +13,10 @@
  */
 
 import {cancelDebounce, debounce} from 'frontend-js-web';
-import {useEffect, useRef} from 'react';
+import {useRef} from 'react';
 
 export function useDebounceCallback(callback, milliseconds) {
 	const callbackRef = useRef(debounce(callback, milliseconds));
-
-	useEffect(() => {
-		cancelDebounce(callbackRef.current);
-
-		callbackRef.current = debounce(callback, milliseconds);
-	}, [callback, milliseconds]);
 
 	return [callbackRef.current, () => cancelDebounce(callbackRef.current)];
 }

@@ -167,12 +167,12 @@ public class LayoutPageTemplatesImporterImpl
 		PageTemplateCollection pageTemplateCollection =
 			new PageTemplateCollection() {
 				{
-					name = _DEFAULT_PAGE_TEMPLATE_COLLECTION_KEY;
+					name = _PAGE_TEMPLATE_COLLECTION_KEY_DEFAULT;
 				}
 			};
 
 		return new PageTemplateCollectionEntry(
-			_DEFAULT_PAGE_TEMPLATE_COLLECTION_KEY, pageTemplateCollection);
+			_PAGE_TEMPLATE_COLLECTION_KEY_DEFAULT, pageTemplateCollection);
 	}
 
 	private String _getErrorMessage(
@@ -402,7 +402,7 @@ public class LayoutPageTemplatesImporterImpl
 
 		if (MapUtil.isEmpty(pageTemplateCollectionMap)) {
 			pageTemplateCollectionMap.put(
-				_DEFAULT_PAGE_TEMPLATE_COLLECTION_KEY,
+				_PAGE_TEMPLATE_COLLECTION_KEY_DEFAULT,
 				_getDefaultPageTemplateCollectionEntry());
 		}
 
@@ -499,7 +499,7 @@ public class LayoutPageTemplatesImporterImpl
 			return layoutPageTemplateCollectionKey;
 		}
 
-		return _DEFAULT_PAGE_TEMPLATE_COLLECTION_KEY;
+		return _PAGE_TEMPLATE_COLLECTION_KEY_DEFAULT;
 	}
 
 	private String _getPageTemplateEntryKey(
@@ -508,7 +508,7 @@ public class LayoutPageTemplatesImporterImpl
 		String[] pathParts = StringUtil.split(
 			zipEntry.getName(), CharPool.SLASH);
 
-		String pageTemplateEntryKey = _DEFAULT_PAGE_TEMPLATE_ENTRY_KEY;
+		String pageTemplateEntryKey = _PAGE_TEMPLATE_ENTRY_KEY_DEFAULT;
 
 		if (Validator.isNotNull(pageTemplate.getName())) {
 			pageTemplateEntryKey = pageTemplate.getName();
@@ -584,9 +584,9 @@ public class LayoutPageTemplatesImporterImpl
 		String path = fileName.substring(
 			0, fileName.lastIndexOf(StringPool.FORWARD_SLASH) + 1);
 
-		for (String thumbnailExtension : _VALID_THUMBNAIL_EXTENSIONS) {
+		for (String thumbnailExtension : _THUMBNAIL_VALID_EXTENSIONS) {
 			ZipEntry zipEntry = zipFile.getEntry(
-				path + _FILE_NAME_THUMBNAIL + thumbnailExtension);
+				path + _THUMBNAIL_FILE_NAME + thumbnailExtension);
 
 			if (zipEntry != null) {
 				return zipEntry;
@@ -715,7 +715,7 @@ public class LayoutPageTemplatesImporterImpl
 						name,
 						LayoutPageTemplatesImporterResultEntry.Status.IGNORED,
 						_getErrorMessage(
-							groupId, _IGNORED_MESSAGE_KEY,
+							groupId, _MESSAGE_KEY_IGNORED,
 							new String[] {
 								zipPath,
 								_toTypeName(layoutPageTemplateEntryType)
@@ -731,7 +731,7 @@ public class LayoutPageTemplatesImporterImpl
 				new LayoutPageTemplatesImporterResultEntry(
 					name, LayoutPageTemplatesImporterResultEntry.Status.INVALID,
 					_getErrorMessage(
-						groupId, _INVALID_MESSAGE_KEY,
+						groupId, _MESSAGE_KEY_INVALID,
 						new String[] {
 							zipPath, _toTypeName(layoutPageTemplateEntryType)
 						})));
@@ -978,20 +978,20 @@ public class LayoutPageTemplatesImporterImpl
 		_layoutLocalService.updateLayout(layout);
 	}
 
-	private static final String _DEFAULT_PAGE_TEMPLATE_COLLECTION_KEY =
-		"imported";
-
-	private static final String _DEFAULT_PAGE_TEMPLATE_ENTRY_KEY = "imported";
-
-	private static final String _FILE_NAME_THUMBNAIL = "thumbnail";
-
-	private static final String _IGNORED_MESSAGE_KEY =
+	private static final String _MESSAGE_KEY_IGNORED =
 		"x-was-ignored-because-a-x-with-the-same-key-already-exists";
 
-	private static final String _INVALID_MESSAGE_KEY =
+	private static final String _MESSAGE_KEY_INVALID =
 		"x-could-not-be-imported-because-a-x-with-the-same-name-already-exists";
 
-	private static final String[] _VALID_THUMBNAIL_EXTENSIONS = {
+	private static final String _PAGE_TEMPLATE_COLLECTION_KEY_DEFAULT =
+		"imported";
+
+	private static final String _PAGE_TEMPLATE_ENTRY_KEY_DEFAULT = "imported";
+
+	private static final String _THUMBNAIL_FILE_NAME = "thumbnail";
+
+	private static final String[] _THUMBNAIL_VALID_EXTENSIONS = {
 		".bmp", ".gif", ".jpeg", ".jpg", ".png", ".svg", ".tiff"
 	};
 

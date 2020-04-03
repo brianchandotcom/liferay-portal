@@ -106,9 +106,13 @@ if (Validator.isNotNull(redirect)) {
 			>
 
 				<%
-				PortletURL portletURL = layoutsAdminDisplayContext.getPortletURL();
+				PortletURL portletURL = null;
 
-				portletURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
+				if (layoutsAdminDisplayContext.isLayoutReachable(layout)) {
+					portletURL = layoutsAdminDisplayContext.getPortletURL();
+
+					portletURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
+				}
 				%>
 
 				<liferay-ui:search-container-column-text

@@ -1754,6 +1754,9 @@ public class ServiceBuilder {
 
 			return false;
 		}
+		else if (methodName.equals("getBasePersistence")) {
+			return true;
+		}
 		else if (methodName.equals("getPermissionChecker")) {
 			return false;
 		}

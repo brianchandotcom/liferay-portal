@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>CONFIGURATION_EDITOR</td>
-	<td>//div[@aria-labelledby='configuration']//div[contains(@class,'CodeMirror-code')]</td>
+	<td>//div[@aria-labelledby='configuration']//div[contains(@class,'CodeMirror')]</td>
 	<td></td>
 </tr>
 <tr>

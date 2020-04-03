@@ -300,7 +300,7 @@ public class ElasticsearchConnectionManagerTest {
 		Mockito.when(
 			_embeddedElasticsearchConnection.getConnectionId()
 		).thenReturn(
-			EmbeddedElasticsearchConnection.CONNECTION_ID
+			String.valueOf(OperationMode.EMBEDDED)
 		);
 		Mockito.when(
 			_embeddedElasticsearchConnection.getOperationMode()

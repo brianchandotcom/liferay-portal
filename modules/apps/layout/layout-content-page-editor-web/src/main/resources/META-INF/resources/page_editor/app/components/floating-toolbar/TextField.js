@@ -15,7 +15,7 @@
 import ClayForm, {ClayInput} from '@clayui/form';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {useDebounceCallback} from '../../../core/hooks/useDebounceCallback';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';

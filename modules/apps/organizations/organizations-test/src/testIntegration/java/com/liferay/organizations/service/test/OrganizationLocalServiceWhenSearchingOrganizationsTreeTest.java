@@ -16,7 +16,6 @@ package com.liferay.organizations.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -24,14 +23,15 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -41,12 +41,19 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.comparator.OrganizationIdComparator;
+import com.liferay.portal.search.test.util.AssertUtils;
+import com.liferay.portal.search.test.util.SearchStreamUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -95,7 +102,7 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
-		UserLocalServiceUtil.addOrganizationUsers(
+		userLocalService.addOrganizationUsers(
 			_organization.getOrganizationId(), new long[] {_user.getUserId()});
 	}
 
@@ -127,7 +134,7 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 			String.valueOf(_user.getCompanyId()),
 			ActionKeys.MANAGE_SUBORGANIZATIONS);
 
-		_userLocalService.addRoleUser(_role.getRoleId(), _user);
+		userLocalService.addRoleUser(_role.getRoleId(), _user);
 
 		_assertSearch(true);
 	}
@@ -139,8 +146,81 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 		_assertSearch(false);
 	}
 
+	protected BaseModelSearchResult<Organization> searchOrganizations(
+			LinkedHashMap<String, Object> organizationParams)
+		throws Exception {
+
+		Assert.assertNotNull(
+			"Indexer<Organization> must be resolved for " +
+				"OrganizationLocalServiceImpl.searchOrganizations",
+			indexer);
+		Assert.assertNotNull(
+			"IndexerRegistryUtil must be resolved for " +
+				"OrganizationLocalServiceImpl.searchOrganizations",
+			indexerRegistry);
+		Assert.assertNotNull(
+			"UsersAdminUtil must be resolved for " +
+				"OrganizationLocalServiceImpl.searchOrganizations",
+			usersAdmin);
+
+		return organizationLocalService.searchOrganizations(
+			_user.getCompanyId(),
+			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null,
+			organizationParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new Sort("organizationId", false));
+	}
+
+	protected String toString(Organization organization) {
+		Map<String, Function<Organization, Object>> map = new LinkedHashMap<>(
+			organization.getAttributeGetterFunctions());
+
+		map.remove("createDate");
+		map.remove("modifiedDate");
+
+		Stream<Map.Entry<String, Function<Organization, Object>>> stream =
+			SearchStreamUtil.stream(map.entrySet());
+
+		return String.valueOf(
+			stream.collect(
+				Collectors.toMap(
+					Map.Entry::getKey,
+					entry -> {
+						Function<Organization, Object> function =
+							entry.getValue();
+
+						return String.valueOf(function.apply(organization));
+					})));
+	}
+
+	protected List<String> toStringList(List<Organization> organizations) {
+		Stream<Organization> stream = organizations.stream();
+
+		return stream.map(
+			this::toString
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	@Inject(
+		filter = "indexer.class.name=com.liferay.portal.kernel.model.Organization"
+	)
+	protected Indexer<Organization> indexer;
+
+	@Inject
+	protected IndexerRegistry indexerRegistry;
+
+	@Inject
+	protected OrganizationLocalService organizationLocalService;
+
+	@Inject
+	protected UserLocalService userLocalService;
+
+	@Inject
+	protected UsersAdmin usersAdmin;
+
 	private void _assertSearch(boolean includeSuborganizations)
-		throws PortalException {
+		throws Exception {
 
 		LinkedHashMap<String, Object> organizationParams =
 			LinkedHashMapBuilder.<String, Object>put(
@@ -148,11 +228,7 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 			).build();
 
 		BaseModelSearchResult<Organization> baseModelSearchResult =
-			OrganizationLocalServiceUtil.searchOrganizations(
-				_user.getCompanyId(),
-				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null,
-				organizationParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new Sort("organizationId", false));
+			searchOrganizations(organizationParams);
 
 		List<Organization> expectedSearchResults = new ArrayList<>();
 
@@ -162,25 +238,27 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 			expectedSearchResults.addAll(_organization.getSuborganizations());
 		}
 
-		Assert.assertEquals(
-			expectedSearchResults.size(), baseModelSearchResult.getLength());
-
 		List<Organization> indexerSearchResults =
 			baseModelSearchResult.getBaseModels();
 
-		Assert.assertEquals(
-			ListUtil.sort(
-				expectedSearchResults, new OrganizationIdComparator(true)),
-			indexerSearchResults);
+		AssertUtils.assertEquals(
+			String.valueOf(organizationParams),
+			toStringList(
+				ListUtil.sort(
+					expectedSearchResults, new OrganizationIdComparator(true))),
+			toStringList(indexerSearchResults));
 
 		List<Organization> finderSearchResults =
-			OrganizationLocalServiceUtil.search(
+			organizationLocalService.search(
 				_user.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null,
 				null, null, organizationParams, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, new OrganizationIdComparator(true));
 
-		Assert.assertEquals(indexerSearchResults, finderSearchResults);
+		AssertUtils.assertEquals(
+			String.valueOf(organizationParams),
+			toStringList(indexerSearchResults),
+			toStringList(finderSearchResults));
 	}
 
 	private Organization _organization;
@@ -195,8 +273,5 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 
 	@DeleteAfterTestRun
 	private User _user;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

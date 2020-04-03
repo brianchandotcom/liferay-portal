@@ -15,24 +15,34 @@
 package com.liferay.organizations.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.search.test.util.IndexerFixture;
+import com.liferay.portal.search.model.uid.UIDFactory;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.users.admin.test.util.search.UserSearchFixture;
+import com.liferay.users.admin.test.util.search.GroupBlueprint;
+import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -58,64 +68,91 @@ public class OrganizationIndexerReindexTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpOrganizationIndexerFixture();
+		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
-		setUpUserSearchFixture();
+		Group group = groupSearchFixture.addGroup(new GroupBlueprint());
 
-		setUpOrganizationFixture();
-	}
-
-	@Test
-	public void testIndexedFields() throws Exception {
-		String organizationName = "abcd efgh";
-
-		Organization organization = organizationFixture.createOrganization(
-			organizationName);
-
-		Document document = organizationIndexerFixture.searchOnlyOne(
-			organizationName);
-
-		organizationIndexerFixture.deleteDocument(document);
-
-		organizationIndexerFixture.searchNoOne(organizationName);
-
-		organizationIndexerFixture.reindex(organization.getCompanyId());
-
-		organizationIndexerFixture.searchOnlyOne(organizationName);
-	}
-
-	protected void setUpOrganizationFixture() throws Exception {
-		organizationFixture = new OrganizationFixture(
-			organizationService, countryService, regionService);
+		OrganizationFixture organizationFixture = new OrganizationFixture(
+			organizationService, countryService, regionService, language);
 
 		organizationFixture.setUp();
 
 		organizationFixture.setGroup(group);
 
+		_group = group;
+		_groups = groupSearchFixture.getGroups();
+
+		_organizationFixture = organizationFixture;
 		_organizations = organizationFixture.getOrganizations();
 	}
 
-	protected void setUpOrganizationIndexerFixture() {
-		organizationIndexerFixture = new IndexerFixture<>(Organization.class);
+	@Test
+	public void testIndexedFields() throws Exception {
+		String searchTerm = "abcd efgh";
+
+		Organization organization = _organizationFixture.createOrganization(
+			searchTerm);
+
+		assertFieldValue(Field.NAME, searchTerm, searchTerm);
+
+		deleteDocument(
+			organization.getCompanyId(), uidFactory.getUID(organization));
+
+		assertNoHits(searchTerm);
+
+		reindexAllIndexerModels();
+
+		assertFieldValue(Field.NAME, searchTerm, searchTerm);
 	}
 
-	protected void setUpUserSearchFixture() throws Exception {
-		userSearchFixture = new UserSearchFixture();
+	protected void assertFieldValue(
+		String fieldName, String fieldValue, String searchTerm) {
 
-		userSearchFixture.setUp();
+		FieldValuesAssert.assertFieldValue(
+			fieldName, fieldValue, search(searchTerm));
+	}
 
-		_groups = userSearchFixture.getGroups();
-		_users = userSearchFixture.getUsers();
+	protected void assertNoHits(String searchTerm) {
+		FieldValuesAssert.assertFieldValues(
+			Collections.emptyMap(), search(searchTerm));
+	}
 
-		group = userSearchFixture.addGroup();
+	protected void deleteDocument(long companyId, String uid) throws Exception {
+		indexWriterHelper.deleteDocument(
+			indexer.getSearchEngineId(), companyId, uid, true);
+	}
+
+	protected void reindexAllIndexerModels() throws Exception {
+		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
+	}
+
+	protected SearchResponse search(String searchTerm) {
+		return searcher.search(
+			searchRequestBuilderFactory.builder(
+			).companyId(
+				_group.getCompanyId()
+			).fields(
+				StringPool.STAR
+			).modelIndexerClasses(
+				Organization.class
+			).queryString(
+				searchTerm
+			).build());
 	}
 
 	@Inject
 	protected CountryService countryService;
 
-	protected Group group;
-	protected OrganizationFixture organizationFixture;
-	protected IndexerFixture<Organization> organizationIndexerFixture;
+	@Inject(
+		filter = "indexer.class.name=com.liferay.portal.kernel.model.Organization"
+	)
+	protected Indexer<Organization> indexer;
+
+	@Inject
+	protected IndexWriterHelper indexWriterHelper;
+
+	@Inject
+	protected Language language;
 
 	@Inject
 	protected OrganizationService organizationService;
@@ -129,15 +166,26 @@ public class OrganizationIndexerReindexTest {
 	@Inject
 	protected SearchEngineHelper searchEngineHelper;
 
-	protected UserSearchFixture userSearchFixture;
+	@Inject
+	protected Searcher searcher;
+
+	@Inject
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
+
+	@Inject
+	protected UIDFactory uidFactory;
+
+	@Inject
+	protected UserLocalService userLocalService;
+
+	private Group _group;
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
 
-	@DeleteAfterTestRun
-	private List<Organization> _organizations;
+	private OrganizationFixture _organizationFixture;
 
 	@DeleteAfterTestRun
-	private List<User> _users;
+	private List<Organization> _organizations;
 
 }

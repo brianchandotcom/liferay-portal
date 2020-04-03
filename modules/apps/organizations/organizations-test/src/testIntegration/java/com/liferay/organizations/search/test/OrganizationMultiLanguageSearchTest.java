@@ -15,10 +15,11 @@
 package com.liferay.organizations.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.RegionService;
@@ -28,12 +29,14 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
-import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.users.admin.test.util.search.UserSearchFixture;
+import com.liferay.users.admin.test.util.search.GroupBlueprint;
+import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 
 import java.util.List;
 import java.util.Locale;
@@ -62,16 +65,30 @@ public class OrganizationMultiLanguageSearchTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpLocale();
-		setUpOrganizationIndexerFixture();
-		setUpUserSearchFixture();
+		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
-		setUpOrganizationFixture();
+		Group group = groupSearchFixture.addGroup(new GroupBlueprint());
+
+		OrganizationFixture organizationFixture = new OrganizationFixture(
+			organizationService, countryService, regionService, language);
+
+		organizationFixture.setUp();
+
+		organizationFixture.setGroup(group);
+
+		_defaultLocale = LocaleThreadLocal.getDefaultLocale();
+
+		_group = group;
+
+		_groups = groupSearchFixture.getGroups();
+
+		_organizationFixture = organizationFixture;
+		_organizations = organizationFixture.getOrganizations();
 	}
 
 	@After
 	public void tearDown() {
-		tearDownLocale();
+		LocaleThreadLocal.setDefaultLocale(_defaultLocale);
 	}
 
 	@Test
@@ -82,7 +99,7 @@ public class OrganizationMultiLanguageSearchTest {
 
 		String keywords = "你好";
 
-		organizationFixture.createOrganization(keywords);
+		_organizationFixture.createOrganization(keywords);
 
 		assertFieldValues(_PREFIX, locale, _getMapResult(keywords), keywords);
 	}
@@ -95,7 +112,7 @@ public class OrganizationMultiLanguageSearchTest {
 
 		String keywords = "organization";
 
-		organizationFixture.createOrganization(keywords);
+		_organizationFixture.createOrganization(keywords);
 
 		assertFieldValues(_PREFIX, locale, _getMapResult(keywords), keywords);
 	}
@@ -108,7 +125,7 @@ public class OrganizationMultiLanguageSearchTest {
 
 		String keywords = "東京";
 
-		organizationFixture.createOrganization(keywords);
+		_organizationFixture.createOrganization(keywords);
 
 		assertFieldValues(_PREFIX, locale, _getMapResult(keywords), keywords);
 	}
@@ -117,58 +134,39 @@ public class OrganizationMultiLanguageSearchTest {
 		String prefix, Locale locale, Map<String, String> map,
 		String searchTerm) {
 
-		Document document = organizationIndexerFixture.searchOnlyOne(
-			searchTerm, locale);
-
-		FieldValuesAssert.assertFieldValues(map, prefix, document, searchTerm);
+		FieldValuesAssert.assertFieldValues(
+			map, name -> name.startsWith(prefix),
+			searcher.search(
+				searchRequestBuilderFactory.builder(
+				).companyId(
+					_group.getCompanyId()
+				).fields(
+					StringPool.STAR
+				).locale(
+					locale
+				).modelIndexerClasses(
+					Organization.class
+				).queryString(
+					searchTerm
+				).build()));
 	}
 
 	protected void setLocale(Locale locale) throws Exception {
-		organizationFixture.updateDisplaySettings(locale);
+		_organizationFixture.updateDisplaySettings(locale);
 
 		LocaleThreadLocal.setDefaultLocale(locale);
-	}
-
-	protected void setUpLocale() {
-		_defaultLocale = LocaleThreadLocal.getDefaultLocale();
-	}
-
-	protected void setUpOrganizationFixture() throws Exception {
-		organizationFixture = new OrganizationFixture(
-			organizationService, countryService, regionService);
-
-		organizationFixture.setUp();
-
-		organizationFixture.setGroup(group);
-
-		_organizations = organizationFixture.getOrganizations();
-	}
-
-	protected void setUpOrganizationIndexerFixture() {
-		organizationIndexerFixture = new IndexerFixture<>(Organization.class);
-	}
-
-	protected void setUpUserSearchFixture() throws Exception {
-		userSearchFixture = new UserSearchFixture();
-
-		userSearchFixture.setUp();
-
-		_groups = userSearchFixture.getGroups();
-		_users = userSearchFixture.getUsers();
-
-		group = userSearchFixture.addGroup();
-	}
-
-	protected void tearDownLocale() {
-		LocaleThreadLocal.setDefaultLocale(_defaultLocale);
 	}
 
 	@Inject
 	protected CountryService countryService;
 
-	protected Group group;
-	protected OrganizationFixture organizationFixture;
-	protected IndexerFixture<Organization> organizationIndexerFixture;
+	@Inject(
+		filter = "indexer.class.name=com.liferay.portal.kernel.model.Organization"
+	)
+	protected Indexer<Organization> indexer;
+
+	@Inject
+	protected Language language;
 
 	@Inject
 	protected OrganizationService organizationService;
@@ -176,7 +174,11 @@ public class OrganizationMultiLanguageSearchTest {
 	@Inject
 	protected RegionService regionService;
 
-	protected UserSearchFixture userSearchFixture;
+	@Inject
+	protected Searcher searcher;
+
+	@Inject
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 	private Map<String, String> _getMapResult(String keywords) {
 		return HashMapBuilder.put(
@@ -193,14 +195,14 @@ public class OrganizationMultiLanguageSearchTest {
 	private static final String _PREFIX = "name";
 
 	private Locale _defaultLocale;
+	private Group _group;
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
 
-	@DeleteAfterTestRun
-	private List<Organization> _organizations;
+	private OrganizationFixture _organizationFixture;
 
 	@DeleteAfterTestRun
-	private List<User> _users;
+	private List<Organization> _organizations;
 
 }

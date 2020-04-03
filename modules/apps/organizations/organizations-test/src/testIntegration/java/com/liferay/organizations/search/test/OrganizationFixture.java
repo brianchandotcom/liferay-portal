@@ -15,7 +15,7 @@
 package com.liferay.organizations.search.test;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ListTypeConstants;
@@ -33,16 +33,16 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.test.util.SearchStreamUtil;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -53,11 +53,12 @@ public class OrganizationFixture {
 
 	public OrganizationFixture(
 		OrganizationService organizationService, CountryService countryService,
-		RegionService regionService) {
+		RegionService regionService, Language language) {
 
 		_organizationService = organizationService;
 		_countryService = countryService;
 		_regionService = regionService;
+		_language = language;
 	}
 
 	public Organization createOrganization(String organizationName)
@@ -100,7 +101,7 @@ public class OrganizationFixture {
 		}
 
 		Organization organization = _organizationService.addOrganization(
-			(long)OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			organizationName, OrganizationConstants.TYPE_ORGANIZATION,
 			region.getRegionId(), country.getCountryId(),
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
@@ -112,21 +113,19 @@ public class OrganizationFixture {
 		return organization;
 	}
 
-	public String getCountryNames(Organization organization) {
+	public List<String> getCountryNames(Organization organization) {
 		Country country = _countryService.fetchCountry(
 			organization.getCountryId());
 
-		Set<String> countryNames = new HashSet<>();
+		Stream<Locale> stream = SearchStreamUtil.stream(
+			_language.getAvailableLocales());
 
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			String countryName = country.getName(locale);
-
-			countryName = StringUtil.toLowerCase(countryName);
-
-			countryNames.add(countryName);
-		}
-
-		return _joinCountryNames(countryNames);
+		return stream.map(
+			locale -> StringUtil.toLowerCase(country.getName(locale))
+		).distinct(
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	public List<Organization> getOrganizations() {
@@ -167,22 +166,9 @@ public class OrganizationFixture {
 		return regionOptional.get();
 	}
 
-	private String _joinCountryNames(Set<String> countryNames) {
-		StringBuffer sb = new StringBuffer();
-
-		for (String countryName : countryNames) {
-			if (sb.length() != 0) {
-				sb.append(", ");
-			}
-
-			sb.append(countryName);
-		}
-
-		return "[" + sb.toString() + "]";
-	}
-
 	private final CountryService _countryService;
 	private Group _group;
+	private final Language _language;
 	private final OrganizationService _organizationService;
 	private final List<Organization> _organizatons = new ArrayList<>();
 	private final RegionService _regionService;

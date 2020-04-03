@@ -106,6 +106,8 @@ definition {
 				value1 = "${kbArticleTitle}");
 		}
 
+		Click.clickAt(locator1 = "TextInput#TITLE");
+
 		Panel.expandPanel(panel = "Configuration");
 
 		if (isSet(kbArticleFriendlyURL)) {

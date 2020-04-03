@@ -317,6 +317,14 @@ public class DDLRecordLocalServiceWrapper
 			uuid, groupId);
 	}
 
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecord
+		fetchFirstRecordByClassNameAndClassPK(String className, long classPK) {
+
+		return _ddlRecordLocalService.fetchFirstRecordByClassNameAndClassPK(
+			className, classPK);
+	}
+
 	/**
 	 * Returns the record with the ID.
 	 *

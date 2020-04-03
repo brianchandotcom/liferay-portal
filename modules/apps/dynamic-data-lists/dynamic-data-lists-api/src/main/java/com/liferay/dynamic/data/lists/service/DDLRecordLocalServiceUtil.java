@@ -305,6 +305,13 @@ public class DDLRecordLocalServiceUtil {
 		return getService().fetchDDLRecordByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.dynamic.data.lists.model.DDLRecord
+		fetchFirstRecordByClassNameAndClassPK(String className, long classPK) {
+
+		return getService().fetchFirstRecordByClassNameAndClassPK(
+			className, classPK);
+	}
+
 	/**
 	 * Returns the record with the ID.
 	 *

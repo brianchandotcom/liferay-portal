@@ -128,6 +128,17 @@
 			)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByC_A">
+		<![CDATA[
+			SELECT
+				Group_.groupId
+			FROM
+				Group_
+			WHERE
+				(Group_.companyId = ?) AND
+				(Group_.active_ = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByC_P">
 		<![CDATA[
 			SELECT

@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//*[contains(@data-lfr-editable-id,'${id}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDITABLE_FIELD</td>
 	<td>//div[contains(@class,'page-editor')]//div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${id}')]</td>
 	<td></td>
@@ -56,6 +61,11 @@
 <tr>
 	<td>EDITABLE_FIELD_CK_EDITOR</td>
 	<td>//div[contains(@class,'page-editor__topper')]//div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${id}')]//div[contains(@class,'cke_editable_inline')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_CK_EDITOR</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//*[contains(@data-lfr-editable-id,'${id}')]//div[contains(@class,'cke_editable_inline')]</td>
 	<td></td>
 </tr>
 <tr>

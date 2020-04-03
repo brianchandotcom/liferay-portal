@@ -10,27 +10,27 @@
 <tbody>
 <tr>
 	<td>AUTOCOMPLETE_FIELD</td>
-	<td>//ul[contains(@class,'ace-autocomplete-results')]//li[contains(.,'${autocompleteField}')]</td>
+	<td>//ul[contains(@class,'CodeMirror-hints')]//li[contains(.,'${autocompleteField}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HTML_EDITOR</td>
-	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][1]//textarea</td>
+	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][1]//div[contains(@class,'CodeMirror-code')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HTML_EDITOR_CONTENT</td>
-	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][1]//div[contains(@class,'ace_content')]</td>
+	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][1]//div[contains(@class,'CodeMirror-code')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CSS_EDITOR</td>
-	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][2]//textarea</td>
+	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][2]//div[contains(@class,'CodeMirror-code')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>JS_EDITOR</td>
-	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][3]//textarea</td>
+	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][3]//div[contains(@class,'CodeMirror-code')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>CONFIGURATION_EDITOR</td>
-	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor json')]//textarea</td>
+	<td>//div[@aria-labelledby='configuration']//div[contains(@class,'CodeMirror-code')]</td>
 	<td></td>
 </tr>
 <tr>

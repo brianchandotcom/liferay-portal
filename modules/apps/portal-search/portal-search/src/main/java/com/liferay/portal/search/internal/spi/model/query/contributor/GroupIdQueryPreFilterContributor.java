@@ -108,18 +108,17 @@ public class GroupIdQueryPreFilterContributor
 	private void _addInactiveGroupsBooleanFilter(
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
-		List<Group> inactiveGroups = groupLocalService.getActiveGroups(
+		List<Long> inactiveGroupIds = groupLocalService.getGroupIds(
 			searchContext.getCompanyId(), false);
 
-		if (ListUtil.isEmpty(inactiveGroups)) {
+		if (ListUtil.isEmpty(inactiveGroupIds)) {
 			return;
 		}
 
 		TermsFilter groupIdTermsFilter = new TermsFilter(Field.GROUP_ID);
 
 		groupIdTermsFilter.addValues(
-			ArrayUtil.toStringArray(
-				ListUtil.toArray(inactiveGroups, Group.GROUP_ID_ACCESSOR)));
+			ArrayUtil.toStringArray(inactiveGroupIds.toArray(new Long[0])));
 
 		booleanFilter.add(groupIdTermsFilter, BooleanClauseOccur.MUST_NOT);
 	}

@@ -15,6 +15,7 @@
 import {
 	cleanup,
 	fireEvent,
+	queryAllByRole,
 	queryAllByText,
 	render,
 	waitForElement,
@@ -150,6 +151,24 @@ describe('Languages', () => {
 				'this-change-will-only-affect-the-newly-created-localized-content'
 			)
 		);
+	});
+
+	// LPS-111488
+	it('render a dropdown menu with the correct order', () => {
+		const result = renderLanguagesComponent({
+			...defaultProps,
+			inheritLocales: false,
+			siteAvailableLocales: availableLocales,
+		});
+
+		const dropdownMenuSecond = result.baseElement.querySelectorAll(
+			'.dropdown-menu'
+		)[1];
+		const Buttons = queryAllByRole(dropdownMenuSecond, 'button');
+
+		expect(Buttons[0].textContent).toBe('make-default');
+		expect(Buttons[1].textContent).toBe('move-up');
+		expect(Buttons[2].textContent).toBe('move-down');
 	});
 
 	it('renders a list with move up actions in all elements except the first one', () => {

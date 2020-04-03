@@ -192,11 +192,6 @@ const LanguageListItem = ({
 					}
 				>
 					<ClayDropDown.ItemList>
-						{!isFirst && (
-							<ClayDropDown.Item onClick={moveUp}>
-								{Liferay.Language.get('move-up')}
-							</ClayDropDown.Item>
-						)}
 						<ClayDropDown.Item
 							data-value={localeId}
 							key={localeId}
@@ -204,6 +199,11 @@ const LanguageListItem = ({
 						>
 							{Liferay.Language.get('make-default')}
 						</ClayDropDown.Item>
+						{!isFirst && (
+							<ClayDropDown.Item onClick={moveUp}>
+								{Liferay.Language.get('move-up')}
+							</ClayDropDown.Item>
+						)}
 						{!isLast && (
 							<ClayDropDown.Item onClick={moveDown}>
 								{Liferay.Language.get('move-down')}

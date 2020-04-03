@@ -1351,35 +1351,33 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 
 		if (enforceVersionArtifacts != null) {
 			for (String artifact : enforceVersionArtifacts.split(",")) {
-				if (!artifact.startsWith("com.fasterxml") &&
-					!artifact.startsWith("io.swagger") &&
-					!artifact.startsWith("javax") &&
-					!artifact.startsWith("org.jsoup") &&
-					!artifact.startsWith("org.osgi")) {
+				if (artifact.startsWith("com.fasterxml") ||
+					artifact.startsWith("io.swagger") ||
+					artifact.startsWith("javax") ||
+					artifact.startsWith("org.jsoup") ||
+					artifact.startsWith("org.osgi")) {
 
-					continue
+					String[] array = artifact.split(":")
+
+					if (array.length != 3) {
+						continue;
+					}
+
+					String group = array[0]
+
+					String groupPath = group.replace('.' as char, '/' as char)
+
+					String name = array[1]
+					String version = array[2]
+
+					String[] urls = [
+						"https://repository-cdn.liferay.com/nexus/service/local/repositories/gradle-plugins/content/${groupPath}/${name}/${version}/${name}-${version}.jar",
+						"https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/${groupPath}/${name}/${version}/${name}-${version}.jar",
+						"https://repository-cdn.liferay.com/nexus/service/local/repositories/maven2/content/${groupPath}/${name}/${version}/${name}-${version}.jar"
+					]
+
+					artifactURLs.add(_downloadFile(cacheDir, urls))
 				}
-
-				String[] array = artifact.split(":")
-
-				if (array.length != 3) {
-					continue;
-				}
-
-				String group = array[0]
-
-				String groupPath = group.replace('.' as char, '/' as char)
-
-				String name = array[1]
-				String version = array[2]
-
-				String[] urls = [
-					"https://repository-cdn.liferay.com/nexus/service/local/repositories/gradle-plugins/content/${groupPath}/${name}/${version}/${name}-${version}.jar",
-					"https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/${groupPath}/${name}/${version}/${name}-${version}.jar",
-					"https://repository-cdn.liferay.com/nexus/service/local/repositories/maven2/content/${groupPath}/${name}/${version}/${name}-${version}.jar"
-				]
-
-				artifactURLs.add(_downloadFile(cacheDir, urls))
 			}
 		}
 	}

@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.internal.registry;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -151,10 +152,8 @@ public class UpgradeStepRegistratorTracker {
 			List<ServiceRegistration<UpgradeStep>> serviceRegistrations =
 				new ArrayList<>(upgradeInfos.size());
 
-			boolean enabled = UpgradeStepRegistratorThreadLocal.isEnabled();
-
-			try {
-				UpgradeStepRegistratorThreadLocal.setEnabled(false);
+			try (SafeClosable safeClosable =
+					UpgradeStepRegistratorThreadLocal.setEnabled(false)) {
 
 				for (UpgradeInfo upgradeInfo : upgradeInfos) {
 					Dictionary<String, Object> properties =
@@ -179,9 +178,6 @@ public class UpgradeStepRegistratorTracker {
 
 					serviceRegistrations.add(serviceRegistration);
 				}
-			}
-			finally {
-				UpgradeStepRegistratorThreadLocal.setEnabled(enabled);
 			}
 
 			return serviceRegistrations;

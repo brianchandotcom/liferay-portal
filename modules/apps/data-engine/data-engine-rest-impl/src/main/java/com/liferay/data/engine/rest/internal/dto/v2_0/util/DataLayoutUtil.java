@@ -35,6 +35,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRule;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -136,8 +137,12 @@ public class DataLayoutUtil {
 		return ddmFormLayout;
 	}
 
-	private static JSONObject _serializeRule(DataRule dataRule) {
+	private static JSONObject _serializeRule(DataRule dataRule)
+		throws JSONException {
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		Gson gson = new Gson();
 
 		return jsonObject.put(
 			"actions", dataRule.getActions()
@@ -145,6 +150,9 @@ public class DataLayoutUtil {
 			"conditions", dataRule.getConditions()
 		).put(
 			"logical-operator", dataRule.getLogicalOperator()
+		).put(
+			"name",
+			JSONFactoryUtil.createJSONObject(gson.toJson(dataRule.getName()))
 		);
 	}
 
@@ -277,6 +285,10 @@ public class DataLayoutUtil {
 				));
 
 			dataRule.setLogicalOperator(spiDDMFormRule.getLogicalOperator());
+
+			dataRule.setName(
+				LocalizedValueUtil.toLocalizedValuesMap(
+					spiDDMFormRule.getName()));
 
 			dataRules = ArrayUtil.append(dataRules, dataRule);
 		}

@@ -3041,19 +3041,28 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void typeCodeMirrorEditor(String locator, String value) {
+	public void typeCodeMirrorEditor(String locator, String value)
+		throws Exception {
+
 		WebElement webElement = getWebElement(locator);
+
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
 		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
 		JavascriptExecutor javascriptExecutor =
 			(JavascriptExecutor)wrappedWebDriver;
+
 		StringBuilder sb = new StringBuilder();
-		sb.append("codeMirror.edit(");
-		sb.append(getAttribute(locator + "@class"));
-		sb.append(").setValue(\"");
-		sb.append(HtmlUtil.escapeJS(StringUtil.replace(value, "\\", "\\\\")));
-		sb.append("\");");
-		javascriptExecutor.executeScript(sb.toString());
+
+		String simulateJSContent = ResourceUtil.read(
+			"com/liferay/poshi/runner/dependencies/type_code_mirror.js");
+
+		sb.append(simulateJSContent);
+
+		sb.append("\nType.codeMirror(arguments[0], arguments[1]);");
+
+		javascriptExecutor.executeScript(sb.toString(), webElement, value);
 	}
 
 	@Override

@@ -462,7 +462,8 @@ public interface LiferaySelenium {
 
 	public void typeCKEditor(String locator, String value);
 
-	public void typeCodeMirrorEditor(String locator, String value);
+	public void typeCodeMirrorEditor(String locator, String value)
+		throws Exception;
 
 	public void typeEditor(String locator, String value);
 

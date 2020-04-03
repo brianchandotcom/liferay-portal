@@ -1347,7 +1347,7 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 	if (sourceFormatterPropertiesFile.exists()) {
 		Properties sourceFormatterProperties = GUtil.loadProperties(sourceFormatterPropertiesFile)
 
-		String enforceVersionArtifacts = sourceFormatterProperties.getProperty("source.check.gradle.dependency.artifacts.check.enforceVersionArtifacts");
+		String enforceVersionArtifacts = sourceFormatterProperties.getProperty("source.check.GradleDependencyArtifactsCheck.enforceVersionArtifacts");
 
 		if (enforceVersionArtifacts != null) {
 			for (String artifact : enforceVersionArtifacts.split(",")) {

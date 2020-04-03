@@ -23,7 +23,7 @@ const spritemap = 'icons.svg';
 const OptionsWithContextMock = withContextMock(Options);
 
 const optionsValue = {
-	en_US: [
+	[themeDisplay.getLanguageId()]: [
 		{
 			label: 'Option 1',
 			value: 'Option1',

@@ -14,22 +14,12 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
-import com.liferay.portal.workflow.kaleo.definition.NodeType;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-import com.liferay.portal.workflow.kaleo.model.KaleoNode;
-import com.liferay.portal.workflow.kaleo.model.KaleoTask;
-import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.metrics.search.index.TransitionWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
 import java.util.Date;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -123,62 +113,6 @@ public class TransitionWorkflowMetricsIndexerImpl
 	@Override
 	public String getIndexType() {
 		return "WorkflowMetricsTransitionType";
-	}
-
-	@Override
-	public void reindex(long companyId) throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			kaleoTransitionLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property companyIdProperty = PropertyFactoryUtil.forName(
-					"companyId");
-
-				dynamicQuery.add(companyIdProperty.eq(companyId));
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoTransition kaleoTransition) -> {
-				KaleoDefinitionVersion kaleoDefinitionVersion =
-					getKaleoDefinitionVersion(
-						kaleoTransition.getKaleoDefinitionVersionId());
-
-				if (Objects.isNull(kaleoTransition)) {
-					return;
-				}
-
-				addTransition(
-					kaleoTransition.getCompanyId(),
-					kaleoTransition.getCreateDate(),
-					kaleoTransition.getModifiedDate(),
-					kaleoTransition.getName(),
-					_getNodeId(kaleoTransition.getKaleoNodeId()),
-					kaleoTransition.getKaleoDefinitionId(),
-					kaleoDefinitionVersion.getVersion(),
-					_getNodeId(kaleoTransition.getSourceKaleoNodeId()),
-					kaleoTransition.getSourceKaleoNodeName(),
-					_getNodeId(kaleoTransition.getTargetKaleoNodeId()),
-					kaleoTransition.getTargetKaleoNodeName(),
-					kaleoTransition.getKaleoTransitionId(),
-					kaleoTransition.getUserId());
-			});
-
-		actionableDynamicQuery.performActions();
-	}
-
-	private long _getNodeId(long kaleoNodeId) throws PortalException {
-		KaleoNode kaleoNode = kaleoNodeLocalService.fetchKaleoNode(kaleoNodeId);
-
-		if ((kaleoNode == null) ||
-			!Objects.equals(kaleoNode.getType(), NodeType.TASK.name())) {
-
-			return kaleoNodeId;
-		}
-
-		KaleoTask kaleoTask = kaleoTaskLocalService.getKaleoNodeKaleoTask(
-			kaleoNode.getKaleoNodeId());
-
-		return kaleoTask.getKaleoTaskId();
 	}
 
 	@Reference(target = "(workflow.metrics.index.entity.name=transition)")

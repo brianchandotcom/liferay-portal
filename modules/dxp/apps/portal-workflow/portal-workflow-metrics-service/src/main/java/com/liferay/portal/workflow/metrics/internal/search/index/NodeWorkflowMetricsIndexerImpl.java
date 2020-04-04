@@ -14,19 +14,11 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
-import com.liferay.portal.workflow.kaleo.definition.NodeType;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-import com.liferay.portal.workflow.kaleo.model.KaleoNode;
-import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
@@ -118,12 +110,6 @@ public class NodeWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public void reindex(long companyId) throws PortalException {
-		_reindexIndexWithKaleoNode(companyId);
-		_reindexIndexWithKaleoTask(companyId);
-	}
-
-	@Override
 	protected void addDocument(Document document) {
 		super.addDocument(document);
 
@@ -210,82 +196,6 @@ public class NodeWorkflowMetricsIndexerImpl
 		);
 
 		return documentBuilder.build();
-	}
-
-	private void _reindexIndexWithKaleoNode(long companyId)
-		throws PortalException {
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			kaleoNodeLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property companyIdProperty = PropertyFactoryUtil.forName(
-					"companyId");
-
-				dynamicQuery.add(companyIdProperty.eq(companyId));
-
-				Property typeProperty = PropertyFactoryUtil.forName("type");
-
-				dynamicQuery.add(typeProperty.eq(NodeType.STATE.name()));
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoNode kaleoNode) -> workflowMetricsPortalExecutor.execute(
-				() -> {
-					KaleoDefinitionVersion kaleoDefinitionVersion =
-						getKaleoDefinitionVersion(
-							kaleoNode.getKaleoDefinitionVersionId());
-
-					if (Objects.isNull(kaleoDefinitionVersion)) {
-						return;
-					}
-
-					addNode(
-						kaleoNode.getCompanyId(), kaleoNode.getCreateDate(),
-						kaleoNode.isInitial(), kaleoNode.getModifiedDate(),
-						kaleoNode.getName(), kaleoNode.getKaleoNodeId(),
-						kaleoNode.getKaleoDefinitionId(),
-						kaleoDefinitionVersion.getVersion(),
-						kaleoNode.isTerminal(), kaleoNode.getType());
-				}));
-
-		actionableDynamicQuery.performActions();
-	}
-
-	private void _reindexIndexWithKaleoTask(long companyId)
-		throws PortalException {
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			kaleoTaskLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property companyIdProperty = PropertyFactoryUtil.forName(
-					"companyId");
-
-				dynamicQuery.add(companyIdProperty.eq(companyId));
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoTask kaleoTask) -> workflowMetricsPortalExecutor.execute(
-				() -> {
-					KaleoDefinitionVersion kaleoDefinitionVersion =
-						getKaleoDefinitionVersion(
-							kaleoTask.getKaleoDefinitionVersionId());
-
-					if (Objects.isNull(kaleoDefinitionVersion)) {
-						return;
-					}
-
-					addNode(
-						kaleoTask.getCompanyId(), kaleoTask.getCreateDate(),
-						false, kaleoTask.getModifiedDate(), kaleoTask.getName(),
-						kaleoTask.getKaleoTaskId(),
-						kaleoTask.getKaleoDefinitionId(),
-						kaleoDefinitionVersion.getVersion(), false,
-						NodeType.TASK.name());
-				}));
-
-		actionableDynamicQuery.performActions();
 	}
 
 	@Reference(target = "(workflow.metrics.index.entity.name=node)")

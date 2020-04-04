@@ -14,41 +14,21 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.workflow.WorkflowHandler;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.metrics.search.index.InstanceWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
 import java.time.Duration;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -244,44 +224,6 @@ public class InstanceWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public void reindex(long companyId) throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			kaleoInstanceLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property companyIdProperty = PropertyFactoryUtil.forName(
-					"companyId");
-
-				dynamicQuery.add(companyIdProperty.eq(companyId));
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoInstance kaleoInstance) -> {
-				KaleoDefinitionVersion kaleoDefinitionVersion =
-					getKaleoDefinitionVersion(
-						kaleoInstance.getKaleoDefinitionVersionId());
-
-				if (Objects.isNull(kaleoDefinitionVersion)) {
-					return;
-				}
-
-				addInstance(
-					_createAssetTitleLocalizationMap(kaleoInstance),
-					_createAssetTypeLocalizationMap(kaleoInstance),
-					kaleoInstance.getClassName(), kaleoInstance.getClassPK(),
-					companyId, kaleoInstance.getCompletionDate(),
-					kaleoInstance.getCreateDate(),
-					kaleoInstance.getKaleoInstanceId(),
-					kaleoInstance.getModifiedDate(),
-					kaleoInstance.getKaleoDefinitionId(),
-					kaleoDefinitionVersion.getVersion(),
-					kaleoInstance.getUserId(), kaleoInstance.getUserName());
-			});
-
-		actionableDynamicQuery.performActions();
-	}
-
-	@Override
 	public Document updateInstance(
 		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
 		long companyId, long instanceId, Date modifiedDate) {
@@ -306,95 +248,12 @@ public class InstanceWorkflowMetricsIndexerImpl
 		return document;
 	}
 
-	private Map<Locale, String> _createAssetTitleLocalizationMap(
-		KaleoInstance kaleoInstance) {
-
-		try {
-			AssetRenderer<?> assetRenderer = _getAssetRenderer(
-				kaleoInstance.getClassName(), kaleoInstance.getClassPK());
-
-			if (assetRenderer != null) {
-				AssetEntry assetEntry = assetEntryLocalService.getEntry(
-					assetRenderer.getClassName(), assetRenderer.getClassPK());
-
-				return LocalizationUtil.populateLocalizationMap(
-					assetEntry.getTitleMap(), assetEntry.getDefaultLanguageId(),
-					assetEntry.getGroupId());
-			}
-
-			WorkflowHandler<?> workflowHandler =
-				WorkflowHandlerRegistryUtil.getWorkflowHandler(
-					kaleoInstance.getClassName());
-
-			if (workflowHandler != null) {
-				Map<Locale, String> localizationMap = new HashMap<>();
-
-				for (Locale availableLocale :
-						LanguageUtil.getAvailableLocales(
-							kaleoInstance.getGroupId())) {
-
-					localizationMap.put(
-						availableLocale,
-						workflowHandler.getTitle(
-							kaleoInstance.getClassPK(), availableLocale));
-				}
-
-				return localizationMap;
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-		}
-
-		return Collections.emptyMap();
-	}
-
-	private Map<Locale, String> _createAssetTypeLocalizationMap(
-		KaleoInstance kaleoInstance) {
-
-		Map<Locale, String> localizationMap = new HashMap<>();
-
-		for (Locale availableLocale :
-				LanguageUtil.getAvailableLocales(kaleoInstance.getGroupId())) {
-
-			localizationMap.put(
-				availableLocale,
-				ResourceActionsUtil.getModelResource(
-					availableLocale, kaleoInstance.getClassName()));
-		}
-
-		return localizationMap;
-	}
-
-	private AssetRenderer<?> _getAssetRenderer(String className, long classPK)
-		throws PortalException {
-
-		AssetRendererFactory<?> assetRendererFactory = _getAssetRendererFactory(
-			className);
-
-		if (assetRendererFactory != null) {
-			return assetRendererFactory.getAssetRenderer(classPK);
-		}
-
-		return null;
-	}
-
-	private AssetRendererFactory<?> _getAssetRendererFactory(String className) {
-		return AssetRendererFactoryRegistryUtil.
-			getAssetRendererFactoryByClassName(className);
-	}
-
 	private long _getDuration(Date completionDate, Date createDate) {
 		Duration duration = Duration.between(
 			createDate.toInstant(), completionDate.toInstant());
 
 		return duration.toMillis();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		InstanceWorkflowMetricsIndexerImpl.class);
 
 	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
 	private WorkflowMetricsIndexNameBuilder

@@ -14,20 +14,12 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
@@ -164,40 +156,6 @@ public class ProcessWorkflowMetricsIndexerImpl
 	@Override
 	public String getIndexType() {
 		return "WorkflowMetricsProcessType";
-	}
-
-	@Override
-	public void reindex(long companyId) throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			kaleoDefinitionLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property companyIdProperty = PropertyFactoryUtil.forName(
-					"companyId");
-
-				dynamicQuery.add(companyIdProperty.eq(companyId));
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoDefinition kaleoDefinition) -> {
-				String defaultLanguageId =
-					LocalizationUtil.getDefaultLanguageId(
-						kaleoDefinition.getTitle());
-
-				addProcess(
-					kaleoDefinition.isActive(), kaleoDefinition.getCompanyId(),
-					kaleoDefinition.getCreateDate(),
-					kaleoDefinition.getDescription(),
-					kaleoDefinition.getModifiedDate(),
-					kaleoDefinition.getName(),
-					kaleoDefinition.getKaleoDefinitionId(),
-					kaleoDefinition.getTitle(defaultLanguageId),
-					kaleoDefinition.getTitleMap(),
-					StringBundler.concat(
-						kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
-			});
-
-		actionableDynamicQuery.performActions();
 	}
 
 	@Override

@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>HTML_EDITOR</td>
-	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'html')]//div[contains(@class,'CodeMirror')]</td>
+	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'html')]//div[contains(@class,'CodeMirror cm-s-default')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>CSS_EDITOR</td>
-	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'css')]//div[contains(@class,'CodeMirror')]</td>
+	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'css')]//div[contains(@class,'CodeMirror cm-s-default')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>JS_EDITOR</td>
-	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'javascript')]//div[contains(@class,'CodeMirror')]</td>
+	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'javascript')]//div[contains(@class,'CodeMirror cm-s-default')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>CONFIGURATION_EDITOR</td>
-	<td>//div[@aria-labelledby='configuration']//div[contains(@class,'CodeMirror')]</td>
+	<td>//div[@aria-labelledby='configuration']//div[contains(@class,'CodeMirror cm-s-default')]</td>
 	<td></td>
 </tr>
 <tr>

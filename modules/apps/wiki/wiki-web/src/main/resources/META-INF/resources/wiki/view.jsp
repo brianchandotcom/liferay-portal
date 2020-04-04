@@ -355,7 +355,7 @@ if (portletTitleBasedNavigation) {
 
 								<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnablePageRatings() %>">
 									<div class="page-ratings">
-										<liferay-ui:ratings
+										<liferay-ratings:ratings
 											className="<%= WikiPage.class.getName() %>"
 											classPK="<%= wikiPage.getResourcePrimKey() %>"
 											inTrash="<%= wikiPage.isInTrash() %>"

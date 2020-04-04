@@ -28,7 +28,7 @@ if ((assetEntry != null) && layout.isTypeAssetDisplay()) {
 }
 %>
 
-<liferay-ui:ratings
+<liferay-ratings:ratings
 	className="<%= className %>"
 	classPK="<%= classPK %>"
 	inTrash="<%= false %>"

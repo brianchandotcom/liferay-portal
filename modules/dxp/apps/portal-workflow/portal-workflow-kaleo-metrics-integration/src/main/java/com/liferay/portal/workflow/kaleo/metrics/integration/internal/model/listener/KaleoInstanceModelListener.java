@@ -14,20 +14,9 @@
 
 package com.liferay.portal.workflow.kaleo.metrics.integration.internal.model.listener;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.workflow.WorkflowHandler;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.workflow.kaleo.metrics.integration.internal.util.InstanceIndexerHelper;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
@@ -36,9 +25,6 @@ import com.liferay.portal.workflow.metrics.search.index.InstanceWorkflowMetricsI
 import java.time.Duration;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -61,9 +47,13 @@ public class KaleoInstanceModelListener
 			return;
 		}
 
+		InstanceIndexerHelper instanceIndexerHelper = new InstanceIndexerHelper(
+			_assetEntryLocalService);
+
 		_instanceWorkflowMetricsIndexer.addInstance(
-			_createAssetTitleLocalizationMap(kaleoInstance),
-			_createAssetTypeLocalizationMap(kaleoInstance),
+			instanceIndexerHelper.createAssetTitleLocalizationMap(
+				kaleoInstance),
+			instanceIndexerHelper.createAssetTypeLocalizationMap(kaleoInstance),
 			kaleoInstance.getClassName(), kaleoInstance.getClassPK(),
 			kaleoInstance.getCompanyId(), null, kaleoInstance.getCreateDate(),
 			kaleoInstance.getKaleoInstanceId(), kaleoInstance.getModifiedDate(),
@@ -99,92 +89,19 @@ public class KaleoInstanceModelListener
 				kaleoInstance.getModifiedDate());
 		}
 		else {
+			InstanceIndexerHelper instanceIndexerHelper =
+				new InstanceIndexerHelper(_assetEntryLocalService);
+
 			_instanceWorkflowMetricsIndexer.updateInstance(
-				_createAssetTitleLocalizationMap(kaleoInstance),
-				_createAssetTypeLocalizationMap(kaleoInstance),
+				instanceIndexerHelper.createAssetTitleLocalizationMap(
+					kaleoInstance),
+				instanceIndexerHelper.createAssetTypeLocalizationMap(
+					kaleoInstance),
 				kaleoInstance.getCompanyId(),
 				kaleoInstance.getKaleoInstanceId(),
 				kaleoInstance.getModifiedDate());
 		}
 	}
-
-	private Map<Locale, String> _createAssetTitleLocalizationMap(
-		KaleoInstance kaleoInstance) {
-
-		try {
-			AssetRenderer<?> assetRenderer = _getAssetRenderer(
-				kaleoInstance.getClassName(), kaleoInstance.getClassPK());
-
-			if (assetRenderer != null) {
-				AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-					assetRenderer.getClassName(), assetRenderer.getClassPK());
-
-				return LocalizationUtil.populateLocalizationMap(
-					assetEntry.getTitleMap(), assetEntry.getDefaultLanguageId(),
-					assetEntry.getGroupId());
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-		}
-
-		WorkflowHandler<?> workflowHandler =
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(
-				kaleoInstance.getClassName());
-
-		Map<Locale, String> localizationMap = new HashMap<>();
-
-		for (Locale availableLocale :
-				LanguageUtil.getAvailableLocales(kaleoInstance.getGroupId())) {
-
-			localizationMap.put(
-				availableLocale,
-				workflowHandler.getTitle(
-					kaleoInstance.getClassPK(), availableLocale));
-		}
-
-		return localizationMap;
-	}
-
-	private Map<Locale, String> _createAssetTypeLocalizationMap(
-		KaleoInstance kaleoInstance) {
-
-		Map<Locale, String> localizationMap = new HashMap<>();
-
-		for (Locale availableLocale :
-				LanguageUtil.getAvailableLocales(kaleoInstance.getGroupId())) {
-
-			localizationMap.put(
-				availableLocale,
-				ResourceActionsUtil.getModelResource(
-					availableLocale, kaleoInstance.getClassName()));
-		}
-
-		return localizationMap;
-	}
-
-	private AssetRenderer<?> _getAssetRenderer(String className, long classPK)
-		throws PortalException {
-
-		AssetRendererFactory<?> assetRendererFactory = _getAssetRendererFactory(
-			className);
-
-		if (assetRendererFactory != null) {
-			return assetRendererFactory.getAssetRenderer(classPK);
-		}
-
-		return null;
-	}
-
-	private AssetRendererFactory<?> _getAssetRendererFactory(String className) {
-		return AssetRendererFactoryRegistryUtil.
-			getAssetRendererFactoryByClassName(className);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		KaleoInstanceModelListener.class);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

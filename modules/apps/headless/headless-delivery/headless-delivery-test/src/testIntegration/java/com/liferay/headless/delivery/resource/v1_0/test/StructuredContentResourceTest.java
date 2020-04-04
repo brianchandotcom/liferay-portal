@@ -74,7 +74,6 @@ public class StructuredContentResourceTest
 			testGroup, "test-localized-structured-content-structure.json");
 		_ddmStructure = _addDDMStructure(
 			testGroup, "test-structured-content-structure.json");
-
 		_irrelevantDDMStructure = _addDDMStructure(
 			irrelevantGroup, "test-structured-content-structure.json");
 
@@ -297,7 +296,6 @@ public class StructuredContentResourceTest
 					data = RandomTestUtil.randomString(10);
 				}
 			};
-
 		ContentFieldValue randomSpanishContentFieldValue =
 			new ContentFieldValue() {
 				{

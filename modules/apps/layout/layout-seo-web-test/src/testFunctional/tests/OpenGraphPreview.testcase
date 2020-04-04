@@ -181,6 +181,8 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
 
+		Pause(locator1 = "3000");
+
 		OpenGraph.configureOpenGraph(
 			customDescription = "Custom Description",
 			customImage = "true",

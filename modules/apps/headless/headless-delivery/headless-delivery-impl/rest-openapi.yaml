@@ -329,7 +329,7 @@ components:
         ContentField:
             description:
                 Represents the value of each field in structured content. Fields can contain different information types
-                (e.g., geolocation, documents, etc.).
+                (e.g., documents, geolocation, etc.).
             properties:
                 contentFieldValue:
                     $ref: "#/components/schemas/ContentFieldValue"

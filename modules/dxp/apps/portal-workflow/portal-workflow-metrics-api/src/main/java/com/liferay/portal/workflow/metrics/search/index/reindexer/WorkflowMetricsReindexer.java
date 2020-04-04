@@ -12,23 +12,15 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.internal.search.index;
+package com.liferay.portal.workflow.metrics.search.index.reindexer;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Rafael Praxedes
  */
-public interface WorkflowMetricsIndex {
+public interface WorkflowMetricsReindexer {
 
-	public void clearIndex(long companyId) throws PortalException;
-
-	public void createIndex(long companyId) throws PortalException;
-
-	public String getIndexName(long companyId);
-
-	public String getIndexType();
-
-	public void removeIndex(long companyId) throws PortalException;
+	public void reindex(long companyId) throws PortalException;
 
 }

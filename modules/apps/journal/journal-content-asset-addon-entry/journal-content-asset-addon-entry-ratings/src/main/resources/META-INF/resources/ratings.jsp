@@ -24,7 +24,7 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 
 <c:if test="<%= !viewMode.equals(Constants.PRINT) %>">
 	<div class="content-metadata-asset-addon-entry content-metadata-ratings">
-		<liferay-ui:ratings
+		<liferay-ratings:ratings
 			className="<%= JournalArticle.class.getName() %>"
 			classPK="<%= articleDisplay.getResourcePrimKey() %>"
 		/>

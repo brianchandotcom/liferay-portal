@@ -375,7 +375,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 						<liferay-ui:message key="ratings" />
 					</dt>
 					<dd class="sidebar-dd">
-						<liferay-ui:ratings
+						<liferay-ratings:ratings
 							className="<%= DLFileEntryConstants.getClassName() %>"
 							classPK="<%= fileEntry.getFileEntryId() %>"
 							inTrash="<%= fileEntry.isInTrash() %>"

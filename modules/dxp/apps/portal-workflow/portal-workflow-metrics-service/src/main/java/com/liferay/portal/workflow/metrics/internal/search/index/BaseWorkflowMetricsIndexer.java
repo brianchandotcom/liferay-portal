@@ -209,13 +209,7 @@ public abstract class BaseWorkflowMetricsIndexer
 			companyLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(Company company) -> {
-				createIndex(company.getCompanyId());
-
-				if (!_INDEX_ON_STARTUP) {
-					reindex(company.getCompanyId());
-				}
-			});
+			(Company company) -> createIndex(company.getCompanyId()));
 
 		actionableDynamicQuery.performActions();
 	}
@@ -414,9 +408,6 @@ public abstract class BaseWorkflowMetricsIndexer
 
 		searchEngineAdapter.execute(updateDocumentRequest);
 	}
-
-	private static final boolean _INDEX_ON_STARTUP = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.INDEX_ON_STARTUP));
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseWorkflowMetricsIndexer.class);

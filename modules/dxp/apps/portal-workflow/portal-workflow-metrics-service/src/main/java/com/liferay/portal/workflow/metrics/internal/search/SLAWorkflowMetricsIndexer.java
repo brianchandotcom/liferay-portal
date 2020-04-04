@@ -14,13 +14,16 @@
 
 package com.liferay.portal.workflow.metrics.internal.search;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.workflow.metrics.internal.search.index.SLAInstanceResultWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
+import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 
 import java.util.Locale;
 
@@ -62,6 +65,22 @@ public class SLAWorkflowMetricsIndexer extends BaseIndexer<Object> {
 		throw new UnsupportedOperationException();
 	}
 
+	protected void doReindex(long companyId) {
+		try {
+			_slaInstanceResultWorkflowMetricsIndex.clearIndex(companyId);
+			_slaTaskResultWorkflowMetricsIndex.clearIndex(companyId);
+
+			_slaInstanceResultWorkflowMetricsIndex.createIndex(companyId);
+			_slaTaskResultWorkflowMetricsIndex.createIndex(companyId);
+
+			_slaInstanceResultWorkflowMetricsReindexer.reindex(companyId);
+			_slaTaskResultWorkflowMetricsReindexer.reindex(companyId);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
+	}
+
 	@Override
 	protected final void doReindex(Object object) throws Exception {
 		throw new UnsupportedOperationException();
@@ -76,24 +95,26 @@ public class SLAWorkflowMetricsIndexer extends BaseIndexer<Object> {
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
-		long companyId = GetterUtil.getLong(ids[0]);
-
-		_slaInstanceResultWorkflowMetricsIndexer.clearIndex(companyId);
-		_slaTaskResultWorkflowMetricsIndexer.clearIndex(companyId);
-
-		_slaInstanceResultWorkflowMetricsIndexer.createIndex(companyId);
-		_slaTaskResultWorkflowMetricsIndexer.createIndex(companyId);
-
-		_slaInstanceResultWorkflowMetricsIndexer.reindex(companyId);
-		_slaTaskResultWorkflowMetricsIndexer.reindex(companyId);
+		doReindex(GetterUtil.getLong(ids[0]));
 	}
 
-	@Reference
-	private SLAInstanceResultWorkflowMetricsIndexer
-		_slaInstanceResultWorkflowMetricsIndexer;
+	private static final Log _log = LogFactoryUtil.getLog(
+		SLAWorkflowMetricsIndexer.class);
 
-	@Reference
-	private SLATaskResultWorkflowMetricsIndexer
-		_slaTaskResultWorkflowMetricsIndexer;
+	@Reference(
+		target = "(workflow.metrics.index.entity.name=sla-instance-result)"
+	)
+	private WorkflowMetricsIndex _slaInstanceResultWorkflowMetricsIndex;
+
+	@Reference(
+		target = "(workflow.metrics.index.entity.name=sla-instance-result)"
+	)
+	private WorkflowMetricsReindexer _slaInstanceResultWorkflowMetricsReindexer;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=sla-task-result)")
+	private WorkflowMetricsIndex _slaTaskResultWorkflowMetricsIndex;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=sla-task-result)")
+	private WorkflowMetricsReindexer _slaTaskResultWorkflowMetricsReindexer;
 
 }

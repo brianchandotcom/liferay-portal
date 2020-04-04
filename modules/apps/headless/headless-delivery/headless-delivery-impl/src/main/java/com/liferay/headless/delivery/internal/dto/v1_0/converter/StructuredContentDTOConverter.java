@@ -366,19 +366,18 @@ public class StructuredContentDTOConverter
 
 						Map<String, ContentFieldValue> map = new HashMap<>();
 
-						Value ddmValue = ddmFormFieldValue.getValue();
+						Value value = ddmFormFieldValue.getValue();
 
-						Map<Locale, String> ddmValueValues =
-							Optional.ofNullable(
-								ddmValue
-							).map(
-								Value::getValues
-							).orElse(
-								Collections.emptyMap()
-							);
+						Map<Locale, String> valueValues = Optional.ofNullable(
+							value
+						).map(
+							Value::getValues
+						).orElse(
+							Collections.emptyMap()
+						);
 
 						for (Map.Entry<Locale, String> entry :
-								ddmValueValues.entrySet()) {
+								valueValues.entrySet()) {
 
 							Locale locale = entry.getKey();
 

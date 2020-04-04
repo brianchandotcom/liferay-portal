@@ -77,49 +77,55 @@ public class DDMValueUtil {
 
 			if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType())) {
 				return _getLocalizedValue(
-					locale, contentFieldValue, localizedContentFieldValues,
-					DDMValueUtil::_toLocalizedDateString);
+					locale, contentFieldValue,
+					DDMValueUtil::_toLocalizedDateString,
+					localizedContentFieldValues);
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.DOCUMENT_LIBRARY,
 						ddmFormField.getType())) {
 
 				return _getLocalizedValue(
-					locale, contentFieldValue, localizedContentFieldValues,
+					locale, contentFieldValue,
 					(loc, value) -> _toLocalizedDocument(
-						contentFieldValue, dlAppService));
+						contentFieldValue, dlAppService),
+					localizedContentFieldValues);
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.IMAGE, ddmFormField.getType())) {
 
 				return _getLocalizedValue(
-					locale, contentFieldValue, localizedContentFieldValues,
+					locale, contentFieldValue,
 					(loc, value) -> _toLocalizedImage(
-						contentFieldValue, dlAppService));
+						contentFieldValue, dlAppService),
+					localizedContentFieldValues);
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.JOURNAL_ARTICLE,
 						ddmFormField.getType())) {
 
 				return _getLocalizedValue(
-					locale, contentFieldValue, localizedContentFieldValues,
+					locale, contentFieldValue,
 					(loc, value) -> _toLocalizedJournalArticle(
-						contentFieldValue, journalArticleService));
+						contentFieldValue, journalArticleService),
+					localizedContentFieldValues);
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.LINK_TO_PAGE,
 						ddmFormField.getType())) {
 
 				return _getLocalizedValue(
-					locale, contentFieldValue, localizedContentFieldValues,
+					locale, contentFieldValue,
 					(loc, value) -> _toLocalizedLinkToPage(
-						contentFieldValue, groupId, layoutLocalService));
+						contentFieldValue, groupId, layoutLocalService),
+					localizedContentFieldValues);
 			}
 			else {
 				return _getLocalizedValue(
-					locale, contentFieldValue, localizedContentFieldValues,
+					locale, contentFieldValue,
 					(loc, value) -> GetterUtil.getString(
-						contentFieldValue.getData()));
+						contentFieldValue.getData()),
+					localizedContentFieldValues);
 			}
 		}
 
@@ -177,9 +183,8 @@ public class DDMValueUtil {
 
 	private static LocalizedValue _getLocalizedValue(
 		Locale defaultLocale, ContentFieldValue defaultValue,
-		Map<String, ContentFieldValue> localizedContentFieldValues,
-		BiFunction<ContentFieldValue, Locale, String>
-			localizedValueBiFunction) {
+		BiFunction<ContentFieldValue, Locale, String> localizedValueBiFunction,
+		Map<String, ContentFieldValue> localizedContentFieldValues) {
 
 		LocalizedValue localizedValue = new LocalizedValue(defaultLocale);
 

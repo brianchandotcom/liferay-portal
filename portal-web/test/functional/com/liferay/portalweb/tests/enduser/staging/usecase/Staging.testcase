@@ -1978,7 +1978,7 @@ definition {
 
 	@priority = "5"
 	test StagingOnlyApprovedPublishToLive {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "Staging#StagingOnlyApprovedPublishToLive";
 		property testray.component.names = "Training";
 

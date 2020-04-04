@@ -14,34 +14,14 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
-import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.hits.SearchHit;
-import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.workflow.metrics.internal.messaging.WorkflowMetricsSLAProcessMessageListener;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAInstanceResult;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
-import java.util.List;
-import java.util.stream.Stream;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Rafael Praxedes
@@ -56,6 +36,16 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 )
 public class SLAInstanceResultWorkflowMetricsIndexer
 	extends BaseSLAWorkflowMetricsIndexer {
+
+	public Document creatDefaultDocument(long companyId, long processId) {
+		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult =
+			new WorkflowMetricsSLAInstanceResult();
+
+		workflowMetricsSLAInstanceResult.setCompanyId(companyId);
+		workflowMetricsSLAInstanceResult.setProcessId(processId);
+
+		return createDocument(workflowMetricsSLAInstanceResult);
+	}
 
 	public Document createDocument(
 		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult) {
@@ -148,117 +138,6 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 	public String getIndexType() {
 		return "WorkflowMetricsSLAInstanceResultType";
 	}
-
-	@Override
-	public void reindex(long companyId) throws PortalException {
-		_creatDefaultDocuments(companyId);
-
-		if (workflowMetricsSLAProcessMessageListener == null) {
-			return;
-		}
-
-		Message message = new Message();
-
-		JSONObject payloadJSONObject = _jsonFactory.createJSONObject();
-
-		payloadJSONObject.put("reindex", Boolean.TRUE);
-
-		message.setPayload(payloadJSONObject);
-
-		workflowMetricsSLAProcessMessageListener.receive(message);
-	}
-
-	protected Document creatDefaultDocument(long companyId, long processId) {
-		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult =
-			new WorkflowMetricsSLAInstanceResult();
-
-		workflowMetricsSLAInstanceResult.setCompanyId(companyId);
-		workflowMetricsSLAInstanceResult.setProcessId(processId);
-
-		return createDocument(workflowMetricsSLAInstanceResult);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile WorkflowMetricsSLAProcessMessageListener
-		workflowMetricsSLAProcessMessageListener;
-
-	private void _creatDefaultDocuments(long companyId) {
-		if ((searchEngineAdapter == null) ||
-			!hasIndex(
-				_processWorkflowMetricsIndexNameBuilder.getIndexName(
-					companyId))) {
-
-			return;
-		}
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames(
-			_processWorkflowMetricsIndexNameBuilder.getIndexName(companyId));
-
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		booleanQuery.addFilterQueryClauses(
-			queries.term("companyId", companyId),
-			queries.term("deleted", Boolean.FALSE));
-
-		searchSearchRequest.setQuery(booleanQuery);
-
-		searchSearchRequest.setSize(10000);
-
-		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
-			searchSearchRequest);
-
-		SearchHits searchHits = searchSearchResponse.getSearchHits();
-
-		if (searchHits.getTotalHits() == 0) {
-			return;
-		}
-
-		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
-
-		Stream.of(
-			searchHits.getSearchHits()
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).map(
-			document -> creatDefaultDocument(
-				companyId, document.getLong("processId"))
-		).map(
-			document -> new IndexDocumentRequest(
-				getIndexName(companyId), document) {
-
-				{
-					setType(getIndexType());
-				}
-			}
-		).forEach(
-			bulkDocumentRequest::addBulkableDocumentRequest
-		);
-
-		if (ListUtil.isNotEmpty(
-				bulkDocumentRequest.getBulkableDocumentRequests())) {
-
-			if (PortalRunMode.isTestMode()) {
-				bulkDocumentRequest.setRefresh(true);
-			}
-
-			searchEngineAdapter.execute(bulkDocumentRequest);
-		}
-	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=process)")
-	private WorkflowMetricsIndexNameBuilder
-		_processWorkflowMetricsIndexNameBuilder;
 
 	@Reference(
 		target = "(workflow.metrics.index.entity.name=sla-instance-result)"

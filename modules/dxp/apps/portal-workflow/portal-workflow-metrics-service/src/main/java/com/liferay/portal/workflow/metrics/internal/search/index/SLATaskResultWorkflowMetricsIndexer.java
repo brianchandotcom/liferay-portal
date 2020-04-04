@@ -14,23 +14,11 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
-import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.hits.SearchHit;
-import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLATaskResult;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
-
-import java.util.List;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,6 +35,20 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SLATaskResultWorkflowMetricsIndexer
 	extends BaseSLAWorkflowMetricsIndexer {
+
+	public Document creatDefaultDocument(
+		long companyId, long nodeId, long processId, String taskName) {
+
+		WorkflowMetricsSLATaskResult workflowMetricsSLATaskResult =
+			new WorkflowMetricsSLATaskResult();
+
+		workflowMetricsSLATaskResult.setCompanyId(companyId);
+		workflowMetricsSLATaskResult.setNodeId(nodeId);
+		workflowMetricsSLATaskResult.setProcessId(processId);
+		workflowMetricsSLATaskResult.setTaskName(taskName);
+
+		return createDocument(workflowMetricsSLATaskResult);
+	}
 
 	public Document createDocument(
 		WorkflowMetricsSLATaskResult workflowMetricsSLATaskResult) {
@@ -139,95 +141,6 @@ public class SLATaskResultWorkflowMetricsIndexer
 	public String getIndexType() {
 		return "WorkflowMetricsSLATaskResultType";
 	}
-
-	public void reindex(long companyId) {
-		_creatDefaultDocuments(companyId);
-	}
-
-	protected Document creatDefaultDocument(
-		long companyId, long nodeId, long processId, String taskName) {
-
-		WorkflowMetricsSLATaskResult workflowMetricsSLATaskResult =
-			new WorkflowMetricsSLATaskResult();
-
-		workflowMetricsSLATaskResult.setCompanyId(companyId);
-		workflowMetricsSLATaskResult.setNodeId(nodeId);
-		workflowMetricsSLATaskResult.setProcessId(processId);
-		workflowMetricsSLATaskResult.setTaskName(taskName);
-
-		return createDocument(workflowMetricsSLATaskResult);
-	}
-
-	private void _creatDefaultDocuments(long companyId) {
-		if ((searchEngineAdapter == null) ||
-			!hasIndex(
-				_nodeWorkflowMetricsIndexNameBuilder.getIndexName(companyId))) {
-
-			return;
-		}
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames(
-			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(companyId));
-
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		booleanQuery.addFilterQueryClauses(
-			queries.term("companyId", companyId),
-			queries.term("deleted", Boolean.FALSE));
-
-		searchSearchRequest.setQuery(booleanQuery);
-
-		searchSearchRequest.setSize(10000);
-
-		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
-			searchSearchRequest);
-
-		SearchHits searchHits = searchSearchResponse.getSearchHits();
-
-		if (searchHits.getTotalHits() == 0) {
-			return;
-		}
-
-		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
-
-		Stream.of(
-			searchHits.getSearchHits()
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).map(
-			document -> creatDefaultDocument(
-				companyId, document.getLong("nodeId"),
-				document.getLong("processId"), document.getString("name"))
-		).map(
-			document -> new IndexDocumentRequest(
-				getIndexName(companyId), document) {
-
-				{
-					setType(getIndexType());
-				}
-			}
-		).forEach(
-			bulkDocumentRequest::addBulkableDocumentRequest
-		);
-
-		if (ListUtil.isNotEmpty(
-				bulkDocumentRequest.getBulkableDocumentRequests())) {
-
-			if (PortalRunMode.isTestMode()) {
-				bulkDocumentRequest.setRefresh(true);
-			}
-
-			searchEngineAdapter.execute(bulkDocumentRequest);
-		}
-	}
-
-	@Reference(target = "(workflow.metrics.index.entity.name=node)")
-	private WorkflowMetricsIndexNameBuilder
-		_nodeWorkflowMetricsIndexNameBuilder;
 
 	@Reference(target = "(workflow.metrics.index.entity.name=sla-task-result)")
 	private WorkflowMetricsIndexNameBuilder

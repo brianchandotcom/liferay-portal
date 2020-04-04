@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -57,15 +55,6 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 
 import java.io.Serializable;
@@ -279,13 +268,6 @@ public abstract class BaseWorkflowMetricsIndexer
 		return _dateTimeFormatter.format(localDateTime);
 	}
 
-	protected KaleoDefinitionVersion getKaleoDefinitionVersion(
-		long kaleoDefinitionVersionId) {
-
-		return kaleoDefinitionVersionLocalService.fetchKaleoDefinitionVersion(
-			kaleoDefinitionVersionId);
-	}
-
 	protected boolean hasIndex(String indexName) {
 		if (searchEngineAdapter == null) {
 			return false;
@@ -395,40 +377,10 @@ public abstract class BaseWorkflowMetricsIndexer
 	}
 
 	@Reference
-	protected AssetEntryLocalService assetEntryLocalService;
-
-	@Reference
 	protected CompanyLocalService companyLocalService;
 
 	@Reference
 	protected DocumentBuilderFactory documentBuilderFactory;
-
-	@Reference
-	protected KaleoDefinitionLocalService kaleoDefinitionLocalService;
-
-	@Reference
-	protected KaleoDefinitionVersionLocalService
-		kaleoDefinitionVersionLocalService;
-
-	@Reference
-	protected KaleoInstanceLocalService kaleoInstanceLocalService;
-
-	@Reference
-	protected KaleoNodeLocalService kaleoNodeLocalService;
-
-	@Reference
-	protected KaleoTaskAssignmentInstanceLocalService
-		kaleoTaskAssignmentInstanceLocalService;
-
-	@Reference
-	protected KaleoTaskInstanceTokenLocalService
-		kaleoTaskInstanceTokenLocalService;
-
-	@Reference
-	protected KaleoTaskLocalService kaleoTaskLocalService;
-
-	@Reference
-	protected KaleoTransitionLocalService kaleoTransitionLocalService;
 
 	@Reference
 	protected Queries queries;

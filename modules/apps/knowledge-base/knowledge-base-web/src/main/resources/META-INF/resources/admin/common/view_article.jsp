@@ -121,7 +121,7 @@ if (portletTitleBasedNavigation) {
 
 				<c:if test="<%= enableKBArticleRatings %>">
 					<div class="kb-article-ratings">
-						<liferay-ui:ratings
+						<liferay-ratings:ratings
 							className="<%= KBArticle.class.getName() %>"
 							classPK="<%= kbArticle.getResourcePrimKey() %>"
 							inTrash="<%= false %>"

@@ -31,6 +31,7 @@ dependencies {
 	compileOnly project(":apps:knowledge-base:knowledge-base-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:portal:portal-upgrade-api")
+	compileOnly project(":apps:ratings:ratings-taglib")
 	compileOnly project(":apps:rss:rss-taglib")
 	compileOnly project(":apps:social:social-bookmarks-taglib")
 	compileOnly project(":apps:static:osgi:osgi-util")

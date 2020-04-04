@@ -159,7 +159,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 					<div class="social-interaction">
 						<c:if test="<%= enableRatings %>">
 							<div id="<portlet:namespace />mbRatings">
-								<liferay-ui:ratings
+								<liferay-ratings:ratings
 									className="<%= MBMessage.class.getName() %>"
 									classPK="<%= message.getMessageId() %>"
 									inTrash="<%= message.isInTrash() %>"

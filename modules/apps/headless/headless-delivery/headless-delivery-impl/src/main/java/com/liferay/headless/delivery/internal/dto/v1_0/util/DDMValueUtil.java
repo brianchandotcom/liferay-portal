@@ -178,13 +178,14 @@ public class DDMValueUtil {
 	private static LocalizedValue _getLocalizedValue(
 		Locale defaultLocale, ContentFieldValue defaultValue,
 		Map<String, ContentFieldValue> localizedContentFieldValues,
-		BiFunction<ContentFieldValue, Locale, String> localizedValueFunction) {
+		BiFunction<ContentFieldValue, Locale, String>
+			localizedValueBiFunction) {
 
 		LocalizedValue localizedValue = new LocalizedValue(defaultLocale);
 
 		localizedValue.addString(
 			defaultLocale,
-			localizedValueFunction.apply(defaultValue, defaultLocale));
+			localizedValueBiFunction.apply(defaultValue, defaultLocale));
 
 		Optional.ofNullable(
 			localizedContentFieldValues
@@ -198,7 +199,7 @@ public class DDMValueUtil {
 				if (locale != null) {
 					localizedValue.addString(
 						locale,
-						localizedValueFunction.apply(languageValue, locale));
+						localizedValueBiFunction.apply(languageValue, locale));
 				}
 			}
 		);

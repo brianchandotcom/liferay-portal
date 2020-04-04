@@ -598,6 +598,7 @@ public class StructuredContentResourceImpl
 		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
 			structuredContent.getTitle(), structuredContent.getTitle_i18n());
+
 		Map<Locale, String> friendlyUrlMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
 			structuredContent.getFriendlyUrlPath(),

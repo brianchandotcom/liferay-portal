@@ -3055,14 +3055,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		StringBuilder sb = new StringBuilder();
 
-		String simulateJSContent = ResourceUtil.read(
-			"com/liferay/poshi/runner/dependencies/type_code_mirror.js");
+		sb.append("const cm = arguments[0].CodeMirror;");
+		sb.append("const doc= cm.getDoc();");		
+		sb.append("doc.setValue(arguments[1]);");
 
-		sb.append(simulateJSContent);
-
-		sb.append("\nType.codeMirror(arguments[0], arguments[1]);");
-
-		javascriptExecutor.executeScript(sb.toString(), webElement, value);
+		javascriptExecutor.executeScript(sb.toString(),webElement,value);
 	}
 
 	@Override

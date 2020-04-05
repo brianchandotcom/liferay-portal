@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,8 +81,13 @@ public class SpiraRelease extends PathSpiraArtifact {
 				urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
 				requestJSONObject.toString());
 
-			return spiraProject.getSpiraReleaseByID(
+			SpiraRelease spiraRelease = spiraProject.getSpiraReleaseByID(
 				responseJSONObject.getInt(ID_KEY));
+
+			cacheSpiraArtifacts(
+				Collections.singletonList(spiraRelease), SpiraRelease.class);
+
+			return spiraRelease;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -137,7 +143,7 @@ public class SpiraRelease extends PathSpiraArtifact {
 			throw new RuntimeException(ioException);
 		}
 
-		removeCachedSpiraArtifacts(spiraReleases);
+		removeCachedSpiraArtifacts(spiraReleases, SpiraRelease.class);
 	}
 
 	public static void deleteSpiraReleasesByPath(

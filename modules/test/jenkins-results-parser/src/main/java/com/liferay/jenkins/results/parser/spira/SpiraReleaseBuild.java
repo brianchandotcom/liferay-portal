@@ -19,6 +19,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,8 +73,15 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 				urlPathReplacements, HttpRequestMethod.POST,
 				requestJSONObject.toString());
 
-			return spiraRelease.getSpiraReleaseBuildByID(
-				responseJSONObject.getInt(ID_KEY));
+			SpiraReleaseBuild spiraReleaseBuild =
+				spiraRelease.getSpiraReleaseBuildByID(
+					responseJSONObject.getInt(ID_KEY));
+
+			cacheSpiraArtifacts(
+				Collections.singletonList(spiraReleaseBuild),
+				SpiraReleaseBuild.class);
+
+			return spiraReleaseBuild;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

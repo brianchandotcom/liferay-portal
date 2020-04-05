@@ -19,6 +19,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,8 +85,15 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 				urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
 				requestJSONObject.toString());
 
-			return spiraProject.getSpiraTestCaseFolderByID(
-				responseJSONObject.getInt(ID_KEY));
+			SpiraTestCaseFolder spiraTestCaseFolder =
+				spiraProject.getSpiraTestCaseFolderByID(
+					responseJSONObject.getInt(ID_KEY));
+
+			cacheSpiraArtifacts(
+				Collections.singletonList(spiraTestCaseFolder),
+				SpiraTestCaseFolder.class);
+
+			return spiraTestCaseFolder;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -142,7 +150,8 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 				"projects/{project_id}/test-folders/{test_case_folder_id}",
 				null, urlPathReplacements, HttpRequestMethod.DELETE, null);
 
-			removeCachedSpiraArtifacts(spiraTestCaseFolders);
+			removeCachedSpiraArtifacts(
+				spiraTestCaseFolders, SpiraTestCaseFolder.class);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

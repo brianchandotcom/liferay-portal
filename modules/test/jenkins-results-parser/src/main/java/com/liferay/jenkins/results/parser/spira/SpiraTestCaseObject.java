@@ -19,6 +19,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,8 +92,15 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 				urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
 				requestJSONObject.toString());
 
-			return spiraProject.getSpiraTestCaseByID(
-				responseJSONObject.getInt(ID_KEY));
+			SpiraTestCaseObject spiraTestCase =
+				spiraProject.getSpiraTestCaseByID(
+					responseJSONObject.getInt(ID_KEY));
+
+			cacheSpiraArtifacts(
+				Collections.singletonList(spiraTestCase),
+				SpiraTestCaseObject.class);
+
+			return spiraTestCase;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -152,7 +160,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			throw new RuntimeException(ioException);
 		}
 
-		removeCachedSpiraArtifacts(spiraTestCases);
+		removeCachedSpiraArtifacts(spiraTestCases, SpiraTestCaseObject.class);
 	}
 
 	public static void deleteSpiraTestCasesByPath(

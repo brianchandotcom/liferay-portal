@@ -20,6 +20,7 @@ import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,20 +113,13 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		return jsonObject.toString();
 	}
 
-	protected static void cachedSpiraArtifacts(
-		List<? extends SpiraArtifact> spiraArtifacts) {
+	protected static <S extends SpiraArtifact> void cacheSpiraArtifacts(
+		List<S> spiraArtifacts, Class<S> spiraArtifactClass) {
 
-		for (SpiraArtifact spiraArtifact : spiraArtifacts) {
-			List<SpiraArtifact> cachedSpiraArtifacts = _spiraArtifactMap.get(
-				spiraArtifact.getClass());
+		List<S> cachedSpiraArtifacts = _getCachedSpiraArtifacts(
+			spiraArtifactClass);
 
-			if (cachedSpiraArtifacts == null) {
-				cachedSpiraArtifacts = new ArrayList<>();
-
-				_spiraArtifactMap.put(
-					spiraArtifact.getClass(), cachedSpiraArtifacts);
-			}
-
+		for (S spiraArtifact : spiraArtifacts) {
 			if (cachedSpiraArtifacts.contains(spiraArtifact)) {
 				continue;
 			}
@@ -185,9 +179,11 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 				return new ArrayList<>();
 			}
 
-			cachedSpiraArtifacts.add(distinctSpiraArtifact);
-
 			searchQuery.addSpiraArtifact(distinctSpiraArtifact);
+
+			cacheSpiraArtifacts(
+				Collections.singletonList(distinctSpiraArtifact),
+				spiraArtifactClass);
 
 			List<S> searchQuerySpiraArtifacts = searchQuery.getSpiraArtifacts();
 
@@ -205,7 +201,9 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 			if (spiraArtifact == null) {
 				spiraArtifact = spiraArtifactCreator.apply(jsonObject);
 
-				cachedSpiraArtifacts.add(spiraArtifact);
+				cacheSpiraArtifacts(
+					Collections.singletonList(spiraArtifact),
+					spiraArtifactClass);
 			}
 
 			if (searchQuery.matches(spiraArtifact)) {
@@ -219,23 +217,18 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 			SearchQuery.cacheSearchQuery(searchQuery);
 		}
 
+		cacheSpiraArtifacts(searchQuerySpiraArtifacts, spiraArtifactClass);
+
 		return searchQuerySpiraArtifacts;
 	}
 
-	protected static void removeCachedSpiraArtifacts(
-		List<? extends SpiraArtifact> spiraArtifacts) {
+	protected static <S extends SpiraArtifact> void removeCachedSpiraArtifacts(
+		List<S> spiraArtifacts, Class<S> spiraArtifactClass) {
+
+		List<S> cachedSpiraArtifacts = _getCachedSpiraArtifacts(
+			spiraArtifactClass);
 
 		for (SpiraArtifact spiraArtifact : spiraArtifacts) {
-			List<SpiraArtifact> cachedSpiraArtifacts = _spiraArtifactMap.get(
-				spiraArtifact.getClass());
-
-			if (cachedSpiraArtifacts == null) {
-				cachedSpiraArtifacts = new ArrayList<>();
-
-				_spiraArtifactMap.put(
-					spiraArtifact.getClass(), cachedSpiraArtifacts);
-			}
-
 			List<SpiraArtifact> foundSpiraArtifacts = new ArrayList<>();
 
 			for (SpiraArtifact cachedSpiraArtifact : cachedSpiraArtifacts) {

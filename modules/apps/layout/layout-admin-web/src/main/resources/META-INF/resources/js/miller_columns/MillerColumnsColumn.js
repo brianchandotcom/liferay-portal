@@ -76,7 +76,7 @@ const MillerColumnsColumn = ({
 				<MillerColumnsItem
 					actionHandlers={actionHandlers}
 					item={{...item, itemIndex: index}}
-					key={item.url}
+					key={item.key}
 					namespace={namespace}
 					onItemDrop={onItemDrop}
 					onItemStayHover={onItemStayHover}

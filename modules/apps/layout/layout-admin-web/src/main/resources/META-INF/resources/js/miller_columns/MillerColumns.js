@@ -22,34 +22,34 @@ import MillerColumnsColumn from './MillerColumnsColumn';
 const getItemsMap = columns => {
 	const map = new Map();
 
-	let parentId;
+	let parentKey;
 
 	columns.forEach((column, columnIndex) => {
 		let childrenCount = 0;
-		let newParentId;
+		let newParentKey;
 
 		column.forEach(item => {
 			childrenCount++;
 
-			map.set(item.id, {
+			map.set(item.key, {
 				...item,
 				columnIndex,
-				parentId,
+				parentKey,
 			});
 
 			if (item.active && item.hasChild) {
-				newParentId = item.id;
+				newParentKey = item.key;
 			}
 		});
 
-		if (parentId) {
-			map.set(parentId, {
-				...map.get(parentId),
+		if (parentKey) {
+			map.set(parentKey, {
+				...map.get(parentKey),
 				childrenCount,
 			});
 		}
 
-		parentId = newParentId;
+		parentKey = newParentKey;
 	});
 
 	return map;

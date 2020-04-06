@@ -29,7 +29,9 @@ import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  * @author Raymond Augé
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class VerifyProcessUtil {
 
 	public static boolean verifyProcess(

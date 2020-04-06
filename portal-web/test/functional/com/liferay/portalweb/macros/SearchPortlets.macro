@@ -452,13 +452,13 @@ definition {
 			column = "3",
 			groupName = "Test Site Name",
 			layoutName = "${layoutName}",
-			widgetName = "Low Level Search Options");
+			widgetName = "Search Options");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "3",
 			groupName = "Test Site Name",
 			layoutName = "${layoutName}",
-			widgetName = "Search Options");
+			widgetName = "Low Level Search Options");
 	}
 
 	macro setupSimilarResultsPage {

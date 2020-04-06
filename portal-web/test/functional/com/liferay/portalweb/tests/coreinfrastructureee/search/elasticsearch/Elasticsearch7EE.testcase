@@ -364,11 +364,11 @@ definition {
 
 		SearchResultPortlet.configureSearchResults(fieldsToDisplay = "demo");
 
+		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
+
 		SearchPortlets.configureLowLevelSearchOptions(
 			connectionId = "remote",
 			indexes = "federated_index");
-
-		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
 
 		Refresh();
 

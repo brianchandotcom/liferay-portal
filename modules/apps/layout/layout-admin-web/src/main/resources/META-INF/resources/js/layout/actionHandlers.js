@@ -13,9 +13,7 @@
  */
 
 const actionHandlers = {
-	copyLayout: event => {
-		event.preventDefault();
-
+	copyLayout: ({actionURL}) => {
 		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
@@ -28,11 +26,11 @@ const actionHandlers = {
 			},
 			id: 'addLayoutDialog',
 			title: Liferay.Language.get('copy-page'),
-			uri: event.target.href,
+			uri: actionURL,
 		});
 	},
 
-	delete: event => {
+	delete: ({event}) => {
 		const deleteMessage = Liferay.Language.get(
 			'are-you-sure-you-want-to-delete-this'
 		);
@@ -42,15 +40,17 @@ const actionHandlers = {
 		}
 	},
 
-	permissions: event => {
-		Liferay.Util.openInDialog(event, {
+	permissions: ({actionURL}) => {
+		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
+				modal: true,
 			},
 			dialogIframe: {
 				bodyCssClass: 'dialog-with-footer',
 			},
-			uri: event.target.href,
+			title: Liferay.Language.get('permissions'),
+			uri: actionURL,
 		});
 	},
 };

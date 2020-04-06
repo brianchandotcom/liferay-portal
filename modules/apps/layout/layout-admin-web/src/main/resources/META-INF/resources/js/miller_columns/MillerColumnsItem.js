@@ -119,10 +119,15 @@ const MillerColumnsItem = ({
 
 		actions.forEach(action => {
 			if (!action.quickAction) {
+				const onClick = action.handler || actionHandlers[action.id];
+
+				const isButton = onClick && action.id !== 'delete';
+
 				dropdownActions.push({
 					...action,
-					handler:
-						action.handler || actionHandlers[action.id] || noop,
+					handler: event =>
+						onClick && onClick({actionURL: action.url, event}),
+					href: isButton ? null : action.url,
 				});
 			}
 		});
@@ -316,7 +321,7 @@ const MillerColumnsItem = ({
 							{dropdownActions.map(action => (
 								<ClayDropDown.Item
 									disabled={!action.url}
-									href={action.url}
+									href={action.href}
 									id={action.id}
 									key={action.id}
 									onClick={action.handler}

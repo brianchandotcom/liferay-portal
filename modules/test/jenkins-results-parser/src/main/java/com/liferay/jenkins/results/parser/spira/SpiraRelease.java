@@ -85,7 +85,7 @@ public class SpiraRelease extends PathSpiraArtifact {
 				responseJSONObject.getInt(ID_KEY));
 
 			cacheSpiraArtifacts(
-				Collections.singletonList(spiraRelease), SpiraRelease.class);
+				SpiraRelease.class, Collections.singletonList(spiraRelease));
 
 			return spiraRelease;
 		}
@@ -143,7 +143,7 @@ public class SpiraRelease extends PathSpiraArtifact {
 			throw new RuntimeException(ioException);
 		}
 
-		removeCachedSpiraArtifacts(spiraReleases, SpiraRelease.class);
+		removeCachedSpiraArtifacts(SpiraRelease.class, spiraReleases);
 	}
 
 	public static void deleteSpiraReleasesByPath(

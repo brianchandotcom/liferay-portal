@@ -19,7 +19,6 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,9 +97,7 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 					requestJSONObject.toString()),
 				spiraProject, spiraArtifactClass);
 
-			cacheSpiraArtifacts(
-				Collections.singletonList(spiraCustomProperty),
-				SpiraCustomProperty.class);
+			cacheSpiraArtifact(SpiraCustomProperty.class, spiraCustomProperty);
 
 			SearchQuery.clearSearchQueries(SpiraCustomProperty.class);
 

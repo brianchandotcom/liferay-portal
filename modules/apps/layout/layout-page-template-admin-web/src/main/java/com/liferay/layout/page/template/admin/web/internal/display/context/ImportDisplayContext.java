@@ -144,14 +144,32 @@ public class ImportDisplayContext {
 			return null;
 		}
 
-		Stream<LayoutPageTemplatesImporterResultEntry> stream =
-			layoutPageTemplatesImporterResultEntries.stream();
+		_layoutPageTemplatesImporterResultEntryMap = new HashMap<>();
 
-		_layoutPageTemplatesImporterResultEntryMap = stream.collect(
-			Collectors.toMap(
-				LayoutPageTemplatesImporterResultEntry::getStatus,
-				layoutPageTemplatesImporterResultEntry ->
-					layoutPageTemplatesImporterResultEntries));
+		for (LayoutPageTemplatesImporterResultEntry
+				layoutPageTemplatesImporterResultEntry :
+					layoutPageTemplatesImporterResultEntries) {
+
+			List<LayoutPageTemplatesImporterResultEntry>
+				statusLayoutPageTemplatesImporterResultEntries =
+					new ArrayList<>();
+
+			LayoutPageTemplatesImporterResultEntry.Status status =
+				layoutPageTemplatesImporterResultEntry.getStatus();
+
+			if (_layoutPageTemplatesImporterResultEntryMap.get(status) !=
+					null) {
+
+				statusLayoutPageTemplatesImporterResultEntries =
+					_layoutPageTemplatesImporterResultEntryMap.get(status);
+			}
+
+			statusLayoutPageTemplatesImporterResultEntries.add(
+				layoutPageTemplatesImporterResultEntry);
+
+			_layoutPageTemplatesImporterResultEntryMap.put(
+				status, statusLayoutPageTemplatesImporterResultEntries);
+		}
 
 		return _layoutPageTemplatesImporterResultEntryMap;
 	}

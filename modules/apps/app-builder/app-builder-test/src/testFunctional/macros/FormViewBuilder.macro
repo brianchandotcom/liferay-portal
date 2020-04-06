@@ -102,9 +102,8 @@ definition {
 	}
 
 	macro deleteObjectSidebarField {
-		MouseOver(locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL");
 
-		Click(locator1 = "FormViewBuilder#DELETE_FROM_OBJECT_X_BUTTON");
+		FormViewBuilder.deleteFromObjectViaX(fieldName = "${fieldLabel}");
 
 		while (IsElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_OBJECT_MESSAGE")) {
 

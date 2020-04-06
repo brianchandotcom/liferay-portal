@@ -27,6 +27,7 @@ public class UpgradeAssetListEntry extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alter(
 			AssetListEntryTable.class,
+			new AlterTableAddColumn("assetEntrySubtype", "VARCHAR(255) null"),
 			new AlterTableAddColumn("assetEntryType", "VARCHAR(255) null"));
 
 		runSQL(

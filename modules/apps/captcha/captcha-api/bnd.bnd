@@ -6,3 +6,4 @@ Export-Package:\
 	com.liferay.captcha.recaptcha,\
 	com.liferay.captcha.simplecaptcha,\
 	com.liferay.captcha.util
+-dsannotations-options: inherit

@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.RandomUtil;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -52,6 +52,7 @@ import nl.captcha.text.renderer.WordRenderer;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -86,19 +87,7 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	@Override
 	public void check(PortletRequest portletRequest) throws CaptchaException {
-		if (!isEnabled(portletRequest)) {
-			return;
-		}
-
-		if (!validateChallenge(portletRequest)) {
-			throw new CaptchaTextException();
-		}
-
-		incrementCounter(portletRequest);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("CAPTCHA text is valid");
-		}
+		check(portal.getHttpServletRequest(portletRequest));
 	}
 
 	@Override
@@ -121,15 +110,7 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	@Override
 	public boolean isEnabled(PortletRequest portletRequest) {
-		if (isExceededMaxChallenges(portletRequest)) {
-			return false;
-		}
-
-		if (_captchaConfiguration.maxChallenges() >= 0) {
-			return true;
-		}
-
-		return false;
+		return isEnabled(portal.getHttpServletRequest(portletRequest));
 	}
 
 	@Override
@@ -138,11 +119,19 @@ public class SimpleCaptchaImpl implements Captcha {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		HttpSession session = httpServletRequest.getSession();
+		HttpSession session = _getSession(httpServletRequest);
 
 		nl.captcha.Captcha simpleCaptcha = getSimpleCaptcha();
 
-		session.setAttribute(WebKeys.CAPTCHA_TEXT, simpleCaptcha.getAnswer());
+		String key = WebKeys.CAPTCHA_TEXT;
+
+		String portletId = ParamUtil.getString(httpServletRequest, "portletId");
+
+		if (Validator.isNotNull(portletId)) {
+			key = portal.getPortletNamespace(portletId) + key;
+		}
+
+		session.setAttribute(key, simpleCaptcha.getAnswer());
 
 		httpServletResponse.setContentType(ContentTypes.IMAGE_PNG);
 
@@ -159,8 +148,15 @@ public class SimpleCaptchaImpl implements Captcha {
 
 		nl.captcha.Captcha simpleCaptcha = getSimpleCaptcha();
 
-		portletSession.setAttribute(
-			WebKeys.CAPTCHA_TEXT, simpleCaptcha.getAnswer());
+		String key = WebKeys.CAPTCHA_TEXT;
+
+		String portletId = portal.getPortletId(resourceRequest);
+
+		if (Validator.isNotNull(portletId)) {
+			key = portal.getPortletNamespace(portletId) + key;
+		}
+
+		portletSession.setAttribute(key, simpleCaptcha.getAnswer());
 
 		resourceResponse.setContentType(ContentTypes.IMAGE_PNG);
 
@@ -261,13 +257,14 @@ public class SimpleCaptchaImpl implements Captcha {
 		if ((_captchaConfiguration.maxChallenges() > 0) &&
 			Validator.isNotNull(httpServletRequest.getRemoteUser())) {
 
-			HttpSession session = httpServletRequest.getSession();
+			HttpSession session = _getSession(httpServletRequest);
 
 			Integer count = (Integer)session.getAttribute(
-				WebKeys.CAPTCHA_COUNT);
+				_getSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest));
 
 			session.setAttribute(
-				WebKeys.CAPTCHA_COUNT, incrementCounter(count));
+				_getSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest),
+				incrementCounter(count));
 		}
 	}
 
@@ -283,17 +280,7 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected void incrementCounter(PortletRequest portletRequest) {
-		if ((_captchaConfiguration.maxChallenges() > 0) &&
-			Validator.isNotNull(portletRequest.getRemoteUser())) {
-
-			PortletSession portletSession = portletRequest.getPortletSession();
-
-			Integer count = (Integer)portletSession.getAttribute(
-				WebKeys.CAPTCHA_COUNT);
-
-			portletSession.setAttribute(
-				WebKeys.CAPTCHA_COUNT, incrementCounter(count));
-		}
+		incrementCounter(portal.getHttpServletRequest(portletRequest));
 	}
 
 	protected void initBackgroundProducers() {
@@ -372,10 +359,10 @@ public class SimpleCaptchaImpl implements Captcha {
 		HttpServletRequest httpServletRequest) {
 
 		if (_captchaConfiguration.maxChallenges() > 0) {
-			HttpSession session = httpServletRequest.getSession();
+			HttpSession session = _getSession(httpServletRequest);
 
 			Integer count = (Integer)session.getAttribute(
-				WebKeys.CAPTCHA_COUNT);
+				_getSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest));
 
 			return isExceededMaxChallenges(count);
 		}
@@ -394,16 +381,8 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected boolean isExceededMaxChallenges(PortletRequest portletRequest) {
-		if (_captchaConfiguration.maxChallenges() > 0) {
-			PortletSession portletSession = portletRequest.getPortletSession();
-
-			Integer count = (Integer)portletSession.getAttribute(
-				WebKeys.CAPTCHA_COUNT);
-
-			return isExceededMaxChallenges(count);
-		}
-
-		return false;
+		return isExceededMaxChallenges(
+			portal.getHttpServletRequest(portletRequest));
 	}
 
 	protected void setCaptchaConfiguration(
@@ -415,22 +394,10 @@ public class SimpleCaptchaImpl implements Captcha {
 	protected boolean validateChallenge(HttpServletRequest httpServletRequest)
 		throws CaptchaException {
 
-		HttpSession session = httpServletRequest.getSession();
+		HttpSession session = _getSession(httpServletRequest);
 
-		String captchaText = (String)session.getAttribute(WebKeys.CAPTCHA_TEXT);
-
-		if (httpServletRequest instanceof UploadPortletRequest) {
-			UploadPortletRequest uploadPortletRequest =
-				(UploadPortletRequest)httpServletRequest;
-
-			PortletRequest portletRequest =
-				uploadPortletRequest.getPortletRequest();
-
-			PortletSession portletSession = portletRequest.getPortletSession();
-
-			captchaText = (String)portletSession.getAttribute(
-				WebKeys.CAPTCHA_TEXT);
-		}
+		String captchaText = (String)session.getAttribute(
+			_getSessionKey(WebKeys.CAPTCHA_TEXT, httpServletRequest));
 
 		if (captchaText == null) {
 			_log.error(
@@ -445,21 +412,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			ParamUtil.getString(httpServletRequest, "captchaText"));
 
 		if (valid) {
-			if (httpServletRequest instanceof UploadPortletRequest) {
-				UploadPortletRequest uploadPortletRequest =
-					(UploadPortletRequest)httpServletRequest;
-
-				PortletRequest portletRequest =
-					uploadPortletRequest.getPortletRequest();
-
-				PortletSession portletSession =
-					portletRequest.getPortletSession();
-
-				portletSession.removeAttribute(WebKeys.CAPTCHA_TEXT);
-			}
-			else {
-				session.removeAttribute(WebKeys.CAPTCHA_TEXT);
-			}
+			session.removeAttribute(WebKeys.CAPTCHA_TEXT);
 		}
 
 		return valid;
@@ -468,28 +421,11 @@ public class SimpleCaptchaImpl implements Captcha {
 	protected boolean validateChallenge(PortletRequest portletRequest)
 		throws CaptchaException {
 
-		PortletSession portletSession = portletRequest.getPortletSession();
-
-		String captchaText = (String)portletSession.getAttribute(
-			WebKeys.CAPTCHA_TEXT);
-
-		if (captchaText == null) {
-			_log.error(
-				"CAPTCHA text is null. User " + portletRequest.getRemoteUser() +
-					" may be trying to circumvent the CAPTCHA.");
-
-			throw new CaptchaTextException();
-		}
-
-		boolean valid = captchaText.equals(
-			ParamUtil.getString(portletRequest, "captchaText"));
-
-		if (valid) {
-			portletSession.removeAttribute(WebKeys.CAPTCHA_TEXT);
-		}
-
-		return valid;
+		return validateChallenge(portal.getHttpServletRequest(portletRequest));
 	}
+
+	@Reference
+	protected Portal portal;
 
 	private Object _getInstance(String className) {
 		className = className.trim();
@@ -512,6 +448,25 @@ public class SimpleCaptchaImpl implements Captcha {
 		}
 
 		return instance;
+	}
+
+	private HttpSession _getSession(HttpServletRequest httpServletRequest) {
+		HttpServletRequest originalHttpServletRequest =
+			portal.getOriginalServletRequest(httpServletRequest);
+
+		return originalHttpServletRequest.getSession();
+	}
+
+	private String _getSessionKey(
+		String key, HttpServletRequest httpServletRequest) {
+
+		String portletId = portal.getPortletId(httpServletRequest);
+
+		if (Validator.isNotNull(portletId)) {
+			return portal.getPortletNamespace(portletId) + key;
+		}
+
+		return key;
 	}
 
 	private Class<?> _loadClass(String className) throws Exception {

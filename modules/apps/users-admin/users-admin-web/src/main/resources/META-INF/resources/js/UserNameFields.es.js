@@ -82,6 +82,10 @@ class UserNameFields extends PortletBase {
 	_cacheData() {
 		const formData = new FormData(this.formNode);
 
+		if (!formData.forEach) {
+			return;
+		}
+
 		formData.forEach((value, name) => {
 			const field = this.userNameFieldsNode.querySelector('#' + name);
 
@@ -166,7 +170,7 @@ class UserNameFields extends PortletBase {
 	 * @protected
 	 */
 	_insertUserNameFields(markupText) {
-		const temp = document.implementation.createHTMLDocument();
+		const temp = document.implementation.createHTMLDocument('');
 
 		temp.body.innerHTML = markupText;
 

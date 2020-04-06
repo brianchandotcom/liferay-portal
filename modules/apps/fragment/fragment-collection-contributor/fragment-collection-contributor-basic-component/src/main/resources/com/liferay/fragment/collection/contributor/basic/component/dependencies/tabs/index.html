@@ -16,9 +16,9 @@
 
 			<div class="collapse navbar-collapse" id="navigationBarCollapse" style="z-index: 1;">
 				<div class="container-fluid container-fluid-max-xl">
-					<ul class="navbar-nav">
+					<ul class="navbar-nav" role="tablist">
 						[#list 0..configuration.numberOfTabs-1 as i]
-						<li class="nav-item">
+						<li class="nav-item" role="presentation">
 							<a
 								aria-controls="${i+1}-tab-panel"
 								aria-selected="false"

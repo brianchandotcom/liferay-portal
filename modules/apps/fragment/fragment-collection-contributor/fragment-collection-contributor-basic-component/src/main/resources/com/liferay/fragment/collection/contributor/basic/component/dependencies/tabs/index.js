@@ -52,18 +52,21 @@ function handleDropdownButtonName(item) {
 
 function openTabPanel(event, i) {
 	const {currentTarget, target} = event;
-	const isEditable =
-		target.classList.contains('page-editor__editable') ||
-		target.parentElement.classList.contains('page-editor__editable');
+	const isEditable = target.hasAttribute('data-lfr-editable-id') || target.hasAttribute('contenteditable');
+	const dropdownIsOpen = JSON.parse(dropdownButton.getAttribute('aria-expanded'));
 
-	if (!isEditable) {
-		handleDropdown({event, item: currentTarget});
+	event.preventDefault();
+
+	if (!isEditable) {	
+		if (dropdownIsOpen) {
+			handleDropdown({event, item: currentTarget});
+		}
+	
+		target.focus();
+		activeTab(currentTarget, i);
+		activeTabPanel(tabPanelItems[i]);
+		this.tabIndex = i;
 	}
-
-	activeTab(currentTarget, i);
-	activeTabPanel(tabPanelItems[i]);
-
-	this.tabIndex = i;
 }
 
 function main() {
@@ -75,8 +78,13 @@ function main() {
 			if (!i) {
 				activeTab(item);
 			}
-			item.addEventListener('click', function(event) {
+			item.addEventListener('mousedown', function(event) {
 				openTabPanel(event, i);
+			});
+			item.addEventListener('keyup', function (event) {
+				if (event.keyCode === 13) {
+					openTabPanel(event, i);
+				}
 			});
 		});
 		tabPanelItems.forEach(function(item, i) {
@@ -89,8 +97,13 @@ function main() {
 		tabItemSelected = tabItems[this.tabIndex];
 		tabItems.forEach(function(item, i) {
 			activeTab(tabItems[this.tabIndex]);
-			item.addEventListener('click', function(event) {
+			item.addEventListener('mousedown', function(event) {
 				openTabPanel(event, i);
+			});
+			item.addEventListener('keyup', function (event) {
+				if (event.keyCode === 13) {
+					openTabPanel(event, i);
+				}
 			});
 		});
 		tabPanelItems.forEach(function() {

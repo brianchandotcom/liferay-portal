@@ -13,6 +13,14 @@
     width: 0;
 }
 
+.component-tabs .navigation-bar-light .nav-link {
+    color: #6B6C7E;
+}
+
+.component-tabs .navigation-bar-light .nav-link.active {
+    color: #272833;
+}
+
 .component-tabs img {
     width: 100%;
 }

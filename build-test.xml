@@ -4888,9 +4888,13 @@ war.path=${app.server.portal.dir}/</echo>
 							public String getCatalinaLogFilesContent() {
 								Map catalinaLogFiles = new TreeMap();
 
+								File appServerDir = new File(project.getProperty("test.app.server.dir"));
+
+								String appServerCanonicalPath = appServerDir.getCanonicalPath();
+
 								DirectoryScanner directoryScanner = new DirectoryScanner();
 
-								directoryScanner.setIncludes(new String[] {project.getProperty("test.app.server.dir") + "/logs/catalina.*.log"});
+								directoryScanner.setIncludes(new String[] {appServerCanonicalPath + "/logs/catalina.*.log"});
 
 								directoryScanner.scan();
 

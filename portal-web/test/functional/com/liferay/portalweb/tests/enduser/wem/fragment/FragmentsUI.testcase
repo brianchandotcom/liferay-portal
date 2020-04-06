@@ -51,8 +51,12 @@ definition {
 	}
 
 	@description = "Add a fragment in the UI and then assert that it displays properly when added to a content page."
+	@ignore = "true"
 	@priority = "5"
 	test AddFragmentToContentPage {
+
+		// Ignore test until LPS-111437 is resolved
+
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
@@ -108,8 +112,12 @@ definition {
 	}
 
 	@description = "Edit a fragment and assert the edits persist."
+	@ignore = "true"
 	@priority = "5"
 	test EditFragment {
+
+		// Ignore test until LPS-111437 is resolved
+
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 

@@ -330,6 +330,7 @@ public class LayoutPageTemplatesImporterImpl
 				_layoutPageTemplatesImporterResultEntries.add(
 					new LayoutPageTemplatesImporterResultEntry(
 						masterPage.getName(),
+						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
 						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
@@ -460,6 +461,7 @@ public class LayoutPageTemplatesImporterImpl
 				_layoutPageTemplatesImporterResultEntries.add(
 					new LayoutPageTemplatesImporterResultEntry(
 						pageTemplate.getName(),
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
@@ -705,14 +707,14 @@ public class LayoutPageTemplatesImporterImpl
 
 				_layoutPageTemplatesImporterResultEntries.add(
 					new LayoutPageTemplatesImporterResultEntry(
-						name,
+						name, layoutPageTemplateEntryType,
 						LayoutPageTemplatesImporterResultEntry.Status.
 							IMPORTED));
 			}
 			else {
 				_layoutPageTemplatesImporterResultEntries.add(
 					new LayoutPageTemplatesImporterResultEntry(
-						name,
+						name, layoutPageTemplateEntryType,
 						LayoutPageTemplatesImporterResultEntry.Status.IGNORED,
 						_getErrorMessage(
 							groupId, _MESSAGE_KEY_IGNORED,
@@ -729,7 +731,8 @@ public class LayoutPageTemplatesImporterImpl
 
 			_layoutPageTemplatesImporterResultEntries.add(
 				new LayoutPageTemplatesImporterResultEntry(
-					name, LayoutPageTemplatesImporterResultEntry.Status.INVALID,
+					name, layoutPageTemplateEntryType,
+					LayoutPageTemplatesImporterResultEntry.Status.INVALID,
 					_getErrorMessage(
 						groupId, _MESSAGE_KEY_INVALID,
 						new String[] {

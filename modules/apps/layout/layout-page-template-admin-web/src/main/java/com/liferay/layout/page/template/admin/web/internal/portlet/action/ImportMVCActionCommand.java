@@ -115,7 +115,7 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionMessages.add(
 					actionRequest,
-					"notImportedLayoutPageTemplateImporterResultEntries",
+					"notImportedLayoutPageTemplatesImporterResultEntries",
 					notImportedLayoutPageTemplateImporterResultEntries);
 			}
 			else {

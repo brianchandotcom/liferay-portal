@@ -75,7 +75,7 @@ export default function LinkPanel({item}) {
 			EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 		][editableId];
 
-	const editableConfig = editableValue.config || {};
+	const editableConfig = editableValue ? editableValue.config : {};
 
 	const [sourceType, setSourceType] = useState(
 		isMapped(editableConfig)

@@ -60,6 +60,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
@@ -375,26 +377,18 @@ public abstract class UpgradeProcess
 
 					runSQL(alterable.getSQL(tableName));
 
-					List<ObjectValuePair<String, IndexMetadata>>
-						objectValuePairs = getIndexesSQL(
-							tableClass.getClassLoader(), tableName);
+					List<String> indexesSQL = getIndexesSQL(
+						tableClass, tableName);
 
-					if (objectValuePairs == null) {
+					if (ListUtil.isEmpty(indexesSQL)) {
 						continue;
 					}
 
-					for (ObjectValuePair<String, IndexMetadata>
-							objectValuePair : objectValuePairs) {
-
-						IndexMetadata indexMetadata =
-							objectValuePair.getValue();
-
+					for (String indexSQL : indexesSQL) {
 						if (alterable.shouldAddIndex(
-								Arrays.asList(
-									indexMetadata.getColumnNames()))) {
+								_getIndexColumns(indexSQL))) {
 
-							runSQLTemplateString(
-								objectValuePair.getKey(), true);
+							runSQLTemplateString(indexSQL, true);
 						}
 					}
 				}
@@ -673,6 +667,19 @@ public abstract class UpgradeProcess
 		}
 	}
 
+	private Collection<String> _getIndexColumns(String indexSQL) {
+		Matcher matcher = _sqlIndexRegexPattern.matcher(indexSQL);
+
+		if (matcher.find()) {
+			String indexColumns = matcher.group(1);
+
+			return ListUtil.fromArray(indexColumns.split(StringPool.COMMA));
+		}
+
+		throw new IllegalArgumentException(
+			"Not a valid SQL index: " + indexSQL);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeProcess.class);
 
 	private static final Set<String> _portal62TableNames = new HashSet<>(
@@ -724,5 +731,7 @@ public abstract class UpgradeProcess
 	private static final Map
 		<String, List<ObjectValuePair<String, IndexMetadata>>>
 			_portalIndexesSQL = new HashMap<>();
+	private static final Pattern _sqlIndexRegexPattern = Pattern.compile(
+		".+?\\((.*)\\)");
 
 }

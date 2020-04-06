@@ -30,14 +30,17 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadFileEntryHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -69,10 +72,12 @@ public class ImageBlogsUploadFileEntryHandler
 
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
 
-		_validateFile(fileName, uploadPortletRequest.getSize(_PARAMETER_NAME));
-
 		String contentType = uploadPortletRequest.getContentType(
 			_PARAMETER_NAME);
+
+		_validateFile(
+			contentType, fileName,
+			uploadPortletRequest.getSize(_PARAMETER_NAME));
 
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 				_PARAMETER_NAME)) {
@@ -116,7 +121,7 @@ public class ImageBlogsUploadFileEntryHandler
 	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
 	protected PortletResourcePermission portletResourcePermission;
 
-	private void _validateFile(String fileName, long size)
+	private void _validateFile(String contentType, String fileName, long size)
 		throws PortalException {
 
 		long blogsImageMaxSize = _blogsFileUploadsConfiguration.imageMaxSize();
@@ -125,16 +130,18 @@ public class ImageBlogsUploadFileEntryHandler
 			throw new EntryImageSizeException();
 		}
 
-		String extension = FileUtil.getExtension(fileName);
+		List<String> imageExtensions = Arrays.asList(
+			_blogsFileUploadsConfiguration.imageExtensions());
 
-		for (String imageExtension :
-				_blogsFileUploadsConfiguration.imageExtensions()) {
+		if (imageExtensions.contains(StringPool.STAR)) {
+			return;
+		}
 
-			if (StringPool.STAR.equals(imageExtension) ||
-				imageExtension.equals(StringPool.PERIOD + extension)) {
+		Set<String> supportedMimeTypes = MimeTypesUtil.getExtensionsMimeTypes(
+			_blogsFileUploadsConfiguration.imageExtensions());
 
-				return;
-			}
+		if (supportedMimeTypes.contains(contentType)) {
+			return;
 		}
 
 		throw new EntryImageNameException(

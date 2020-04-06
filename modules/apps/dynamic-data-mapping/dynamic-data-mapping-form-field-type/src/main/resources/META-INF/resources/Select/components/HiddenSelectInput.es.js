@@ -15,15 +15,19 @@
 import {ClaySelect} from '@clayui/form';
 import React from 'react';
 
+const noop = () => {};
+
 const HiddenSelectInput = ({multiple, name, options, value}) => (
 	<ClaySelect
 		aria-label="select"
 		className="form-control"
 		hidden
 		id={name}
-		multiple={multiple}
+		multiple
 		name={name}
+		onChange={noop}
 		size={multiple ? options.length : null}
+		value={value}
 	>
 		{value.length ? (
 			options.map((option, index) => {
@@ -32,10 +36,8 @@ const HiddenSelectInput = ({multiple, name, options, value}) => (
 				if (isSelected) {
 					return (
 						<ClaySelect.Option
-							defaultValue={isSelected}
 							key={`hiddenSelect${index}`}
 							label={option.label}
-							selected={isSelected}
 							value={option.value}
 						/>
 					);

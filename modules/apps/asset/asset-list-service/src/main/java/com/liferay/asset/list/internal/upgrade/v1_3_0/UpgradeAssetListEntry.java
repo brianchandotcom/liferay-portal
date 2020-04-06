@@ -31,12 +31,12 @@ public class UpgradeAssetListEntry extends UpgradeProcess {
 
 		runSQL(
 			"create index IX_D604A2E on AssetListEntry (groupId, " +
-				"assetEntryType[$COLUMN_LENGTH:75$], ctCollectionId)");
+				"assetEntryType[$COLUMN_LENGTH:255$], ctCollectionId)");
 
 		runSQL(
 			"create index IX_CBD041F6 on AssetListEntry (groupId, " +
 				"title[$COLUMN_LENGTH:75$], " +
-					"assetEntryType[$COLUMN_LENGTH:75$], ctCollectionId)");
+					"assetEntryType[$COLUMN_LENGTH:255$], ctCollectionId)");
 
 		runSQL(
 			"update AssetListEntry set assetEntryType = '" +

@@ -269,7 +269,7 @@ public class SitemapImpl implements Sitemap {
 				entry.getKey());
 
 			for (Layout layout : layouts) {
-				if (layout.isSystem()) {
+				if (layout.isSystem() && !layout.isTypeAssetDisplay()) {
 					continue;
 				}
 

@@ -63,7 +63,7 @@ const TARGET_OPTIONS = [
 ];
 
 export default function LinkPanel({item}) {
-	const {editableId, fragmentEntryLinkId} = item;
+	const {editableId, editableType, fragmentEntryLinkId} = item;
 
 	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
@@ -109,12 +109,14 @@ export default function LinkPanel({item}) {
 			const editableProcessorValues =
 				editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
 
-			const config = Object.keys(newConfig).length
-				? {
-						...newConfig,
-						mapperType: 'link',
-				  }
-				: {};
+			const config = {...newConfig};
+
+			if (
+				Object.keys(config).length > 0 &&
+				editableType !== EDITABLE_TYPES.link
+			) {
+				config.mapperType = 'link';
+			}
 
 			const nextEditableValues = {
 				...editableValues,
@@ -139,6 +141,7 @@ export default function LinkPanel({item}) {
 		[
 			dispatch,
 			editableId,
+			editableType,
 			fragmentEntryLinkId,
 			fragmentEntryLinks,
 			segmentsExperienceId,

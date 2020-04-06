@@ -79,7 +79,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 						</h6>
 
 						<h6 class="text-default">
-							<strong><liferay-ui:message key="<%= ResourceActionsUtil.getModelResource(locale, assetListEntry.getAssetEntryType()) %>" /></strong>
+							<strong><%= ResourceActionsUtil.getModelResource(locale, assetListEntry.getAssetEntryType()) %></strong>
 						</h6>
 
 						<%

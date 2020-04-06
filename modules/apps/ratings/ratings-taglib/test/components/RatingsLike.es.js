@@ -20,6 +20,13 @@ import RatingsLike from '../../src/main/resources/META-INF/resources/js/componen
 
 themeDisplay.getPlid = themeDisplay.getPlid || jest.fn(() => 'plid');
 
+const formDataToObj = formData =>
+	Array.from(formData.entries()).reduce((accumulator, [key, value]) => {
+		accumulator[key] = value;
+
+		return accumulator;
+	}, {});
+
 const defaultProps = {
 	className: 'com.liferay.model.RateableEntry',
 	classPK: 'classPK',
@@ -73,7 +80,6 @@ describe('RatingsLike', () => {
 			beforeEach(async () => {
 				getByRole = renderComponent({
 					...defaultProps,
-					initialLiked: false,
 					positiveVotes: 26,
 				}).getByRole;
 
@@ -85,6 +91,96 @@ describe('RatingsLike', () => {
 			});
 
 			it('increases the likes counter', async () => {
+				const LikeButton = getByRole('button');
+
+				expect(LikeButton.value).toBe('27');
+			});
+
+			describe('and the user unlike', () => {
+				it('decreases the like counter', async () => {
+					const LikeButton = getByRole('button');
+
+					await act(async () => {
+						fireEvent.click(LikeButton);
+					});
+
+					expect(LikeButton.value).toBe('26');
+				});
+			});
+		});
+
+		describe('and the user clicks unlike', () => {
+			let getByRole;
+
+			beforeEach(async () => {
+				getByRole = renderComponent({
+					...defaultProps,
+					initialLiked: true,
+					positiveVotes: 26,
+				}).getByRole;
+
+				const LikeButton = getByRole('button');
+
+				await act(async () => {
+					fireEvent.click(LikeButton);
+				});
+			});
+
+			it('decreases the likes counter', async () => {
+				const LikeButton = getByRole('button');
+
+				expect(LikeButton.value).toBe('25');
+			});
+
+			describe('and the user like', () => {
+				it('increases the like counter', async () => {
+					const LikeButton = getByRole('button');
+
+					await act(async () => {
+						fireEvent.click(LikeButton);
+					});
+
+					expect(LikeButton.value).toBe('26');
+				});
+			});
+		});
+	});
+
+	describe('when there is a valid server response', () => {
+		beforeEach(() => {
+			fetch.mockResponseOnce(JSON.stringify({totalScore: 27}));
+		});
+
+		afterEach(() => {
+			fetch.resetMocks();
+		});
+
+		describe('and the user like', () => {
+			let getByRole;
+
+			beforeEach(async () => {
+				getByRole = renderComponent({
+					...defaultProps,
+					positiveVotes: 26,
+				}).getByRole;
+
+				const LikeButton = getByRole('button');
+
+				await act(async () => {
+					fireEvent.click(LikeButton);
+				});
+			});
+
+			it('sends a POST request to the server', async () => {
+				const [url, {body}] = fetch.mock.calls[0];
+				const objFormData = formDataToObj(body);
+
+				expect(url).toBe(defaultProps.url);
+				expect(objFormData.className).toBe(defaultProps.className);
+				expect(objFormData.score).toBe('1');
+			});
+
+			it('updates the counters with the ones from the server', async () => {
 				const LikeButton = getByRole('button');
 
 				expect(LikeButton.value).toBe('27');

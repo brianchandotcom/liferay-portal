@@ -177,22 +177,20 @@ public class SearchQuery<T extends SpiraArtifact> {
 		return _spiraArtifacts;
 	}
 
-	protected boolean hasDistinctResult() {
+	protected boolean hasSearchParameter(String searchParameterName) {
 		for (SearchParameter searchParameter : _searchParameters) {
-			String searchParameterName = searchParameter.getName();
-
-			if (searchParameterName.equals(
-					BaseSpiraArtifact.getIDKey(_spiraArtifactClass))) {
-
-				return true;
-			}
-
-			if (searchParameterName.equals("IndentLevel")) {
+			if (searchParameterName.equals(searchParameter.getName())) {
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	protected boolean isEmpty() {
+		List<T> spiraArtifacts = getSpiraArtifacts();
+
+		return spiraArtifacts.isEmpty();
 	}
 
 	protected boolean matches(

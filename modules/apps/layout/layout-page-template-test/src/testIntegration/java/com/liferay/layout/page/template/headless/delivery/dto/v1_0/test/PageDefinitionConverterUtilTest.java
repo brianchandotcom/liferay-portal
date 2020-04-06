@@ -42,6 +42,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.RowDefinition;
 import com.liferay.headless.delivery.dto.v1_0.SectionDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -140,7 +141,7 @@ public class PageDefinitionConverterUtilTest {
 			PageDefinitionConverterUtil.toPageDefinition(
 				_fragmentCollectionContributorTracker,
 				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				layout);
+				_infoDisplayContributorTracker, layout);
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -192,7 +193,7 @@ public class PageDefinitionConverterUtilTest {
 			PageDefinitionConverterUtil.toPageDefinition(
 				_fragmentCollectionContributorTracker,
 				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				layout);
+				_infoDisplayContributorTracker, layout);
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -362,7 +363,7 @@ public class PageDefinitionConverterUtilTest {
 			PageDefinitionConverterUtil.toPageDefinition(
 				_fragmentCollectionContributorTracker,
 				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				layout);
+				_infoDisplayContributorTracker, layout);
 
 		Settings settings = pageDefinition.getSettings();
 
@@ -393,7 +394,7 @@ public class PageDefinitionConverterUtilTest {
 			PageDefinitionConverterUtil.toPageDefinition(
 				_fragmentCollectionContributorTracker,
 				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				layout);
+				_infoDisplayContributorTracker, layout);
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -450,7 +451,7 @@ public class PageDefinitionConverterUtilTest {
 			PageDefinitionConverterUtil.toPageDefinition(
 				_fragmentCollectionContributorTracker,
 				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				layout);
+				_infoDisplayContributorTracker, layout);
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -598,7 +599,7 @@ public class PageDefinitionConverterUtilTest {
 			PageDefinitionConverterUtil.toPageDefinition(
 				_fragmentCollectionContributorTracker,
 				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				layout);
+				_infoDisplayContributorTracker, layout);
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -769,6 +770,9 @@ public class PageDefinitionConverterUtilTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

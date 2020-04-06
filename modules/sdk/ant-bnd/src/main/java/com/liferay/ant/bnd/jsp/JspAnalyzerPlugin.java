@@ -321,9 +321,11 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			// Check to see if the JAR provides this TLD itself which would
 			// indicate that it already has access to the required classes
 
-			if (containsTLD(
+			if (containsTLD(analyzer, analyzer.getJar(), "META-INF", uri) ||
+				containsTLD(
 					analyzer, analyzer.getJar(), "META-INF/resources", uri) ||
 				containsTLD(analyzer, analyzer.getJar(), "WEB-INF/tld", uri) ||
+				containsTLDInBundleClassPath(analyzer, "META-INF", uri) ||
 				containsTLDInBundleClassPath(
 					analyzer, "META-INF/resources", uri)) {
 

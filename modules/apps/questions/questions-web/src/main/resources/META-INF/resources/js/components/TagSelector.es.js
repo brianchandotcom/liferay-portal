@@ -55,8 +55,13 @@ export default ({tagsChange, tagsLoaded, tags = [], ...props}) => {
 	}, [tags]);
 
 	useEffect(() => {
-		inputValue ? tagsLoaded(false) : tagsLoaded(true)
-	},[inputValue])
+		if (inputValue) {
+			tagsLoaded(false);
+		}
+		else {
+			tagsLoaded(true);
+		}
+	}, [inputValue, tagsLoaded]);
 
 	const maxTags = tags => tags.length > 5;
 	const duplicatedTags = tags =>

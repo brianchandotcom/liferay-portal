@@ -38,7 +38,7 @@ export default withRouter(
 		const [headline, setHeadline] = useState('');
 		const [id, setId] = useState('');
 		const [tags, setTags] = useState([]);
-		const [tagsLoaded, setTagsLoaded] = useState(true)
+		const [tagsLoaded, setTagsLoaded] = useState(true);
 
 		const loadThread = () =>
 			getThreadContent(questionId, context.siteKey).then(
@@ -157,7 +157,9 @@ export default withRouter(
 							<div className="c-mt-4 d-flex flex-column-reverse flex-sm-row">
 								<ClayButton
 									className="c-mt-4 c-mt-sm-0"
-									disabled={!articleBody || !headline || ! tagsLoaded}
+									disabled={
+										!articleBody || !headline || !tagsLoaded
+									}
 									displayType="primary"
 									onClick={submit}
 								>

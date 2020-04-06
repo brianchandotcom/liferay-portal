@@ -44,7 +44,7 @@ export default withRouter(
 		const [sectionId, setSectionId] = useState();
 		const [sections, setSections] = useState([]);
 		const [tags, setTags] = useState([]);
-		const [tagsLoaded, setTagsLoaded] = useState(true)
+		const [tagsLoaded, setTagsLoaded] = useState(true);
 
 		const context = useContext(AppContext);
 		const historyPushParser = historyPushWithSlug(history.push);
@@ -182,7 +182,9 @@ export default withRouter(
 							<div className="c-mt-4 d-flex flex-column-reverse flex-sm-row">
 								<ClayButton
 									className="c-mt-4 c-mt-sm-0"
-									disabled={!articleBody || !headline || !tagsLoaded}
+									disabled={
+										!articleBody || !headline || !tagsLoaded
+									}
 									displayType="primary"
 									onClick={submit}
 								>

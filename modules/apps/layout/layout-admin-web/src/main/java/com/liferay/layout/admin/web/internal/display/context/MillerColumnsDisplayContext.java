@@ -376,6 +376,86 @@ public class MillerColumnsDisplayContext {
 				));
 		}
 
+		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
+			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+
+		if (layout.isDenied() || layout.isPending()) {
+			jsonArray.put(
+				JSONUtil.put(
+					"id", "previewLayout"
+				).put(
+					"label", LanguageUtil.get(_httpServletRequest, "preview")
+				).put(
+					"url", _layoutsAdminDisplayContext.getViewLayoutURL(layout)
+				));
+		}
+		else {
+			boolean published = true;
+
+			if (draftLayout != null) {
+				published = GetterUtil.getBoolean(
+					draftLayout.getTypeSettingsProperty("published"));
+			}
+
+			if (!layout.isTypeContent() || published) {
+				jsonArray.put(
+					JSONUtil.put(
+						"id", "viewLayout"
+					).put(
+						"label", LanguageUtil.get(_httpServletRequest, "view")
+					).put(
+						"url",
+						_layoutsAdminDisplayContext.getViewLayoutURL(layout)
+					));
+			}
+			else {
+				jsonArray.put(
+					JSONUtil.put(
+						"id", "viewLayout"
+					).put(
+						"label", LanguageUtil.get(_httpServletRequest, "view")
+					));
+			}
+		}
+
+		if (_layoutsAdminDisplayContext.isConversionDraft(layout) &&
+			_layoutsAdminDisplayContext.isShowConfigureAction(layout)) {
+
+			jsonArray.put(
+				JSONUtil.put(
+					"id", "editConversionLayout"
+				).put(
+					"label",
+					LanguageUtil.get(
+						_httpServletRequest, "edit-conversion-draft")
+				).put(
+					"url", _layoutsAdminDisplayContext.getEditLayoutURL(layout)
+				));
+		}
+		else if (_layoutsAdminDisplayContext.isShowConfigureAction(layout)) {
+			String editLayoutURL = _layoutsAdminDisplayContext.getEditLayoutURL(
+				layout);
+
+			if (Validator.isNotNull(editLayoutURL)) {
+				jsonArray.put(
+					JSONUtil.put(
+						"id", "editLayout"
+					).put(
+						"label", LanguageUtil.get(_httpServletRequest, "edit")
+					).put(
+						"url", editLayoutURL
+					));
+			}
+			else {
+				jsonArray.put(
+					JSONUtil.put(
+						"id", "editLayout"
+					).put(
+						"label", LanguageUtil.get(_httpServletRequest, "edit")
+					));
+			}
+		}
+
 		if (_layoutsAdminDisplayContext.isShowConfigureAction(layout)) {
 			jsonArray.put(
 				JSONUtil.put(
@@ -389,9 +469,6 @@ public class MillerColumnsDisplayContext {
 					_layoutsAdminDisplayContext.getConfigureLayoutURL(layout)
 				));
 		}
-
-		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
 
 		if (_layoutsAdminDisplayContext.isShowConvertLayoutAction(layout)) {
 			if (draftLayout == null) {
@@ -444,56 +521,6 @@ public class MillerColumnsDisplayContext {
 				));
 		}
 
-		if (_layoutsAdminDisplayContext.isShowDeleteAction(layout)) {
-			jsonArray.put(
-				JSONUtil.put(
-					"id", "delete"
-				).put(
-					"label", LanguageUtil.get(_httpServletRequest, "delete")
-				).put(
-					"url",
-					_layoutsAdminDisplayContext.getDeleteLayoutURL(layout)
-				));
-		}
-
-		if (_layoutsAdminDisplayContext.isConversionDraft(layout) &&
-			_layoutsAdminDisplayContext.isShowConfigureAction(layout)) {
-
-			jsonArray.put(
-				JSONUtil.put(
-					"id", "editConversionLayout"
-				).put(
-					"label",
-					LanguageUtil.get(
-						_httpServletRequest, "edit-conversion-draft")
-				).put(
-					"url", _layoutsAdminDisplayContext.getEditLayoutURL(layout)
-				));
-		}
-		else if (_layoutsAdminDisplayContext.isShowConfigureAction(layout)) {
-			String editLayoutURL = _layoutsAdminDisplayContext.getEditLayoutURL(
-				layout);
-
-			if (Validator.isNotNull(editLayoutURL)) {
-				jsonArray.put(
-					JSONUtil.put(
-						"id", "editLayout"
-					).put(
-						"label", LanguageUtil.get(_httpServletRequest, "edit")
-					).put(
-						"url", editLayoutURL
-					));
-			}
-			else {
-				jsonArray.put(
-					JSONUtil.put(
-						"id", "editLayout"
-					).put(
-						"label", LanguageUtil.get(_httpServletRequest, "edit")
-					));
-			}
-		}
-
 		if (_layoutsAdminDisplayContext.isShowOrphanPortletsAction(layout)) {
 			jsonArray.put(
 				JSONUtil.put(
@@ -519,43 +546,16 @@ public class MillerColumnsDisplayContext {
 				));
 		}
 
-		if (layout.isDenied() || layout.isPending()) {
+		if (_layoutsAdminDisplayContext.isShowDeleteAction(layout)) {
 			jsonArray.put(
 				JSONUtil.put(
-					"id", "previewLayout"
+					"id", "delete"
 				).put(
-					"label", LanguageUtil.get(_httpServletRequest, "preview")
+					"label", LanguageUtil.get(_httpServletRequest, "delete")
 				).put(
-					"url", _layoutsAdminDisplayContext.getViewLayoutURL(layout)
+					"url",
+					_layoutsAdminDisplayContext.getDeleteLayoutURL(layout)
 				));
-		}
-		else {
-			boolean published = true;
-
-			if (draftLayout != null) {
-				published = GetterUtil.getBoolean(
-					draftLayout.getTypeSettingsProperty("published"));
-			}
-
-			if (!layout.isTypeContent() || published) {
-				jsonArray.put(
-					JSONUtil.put(
-						"id", "viewLayout"
-					).put(
-						"label", LanguageUtil.get(_httpServletRequest, "view")
-					).put(
-						"url",
-						_layoutsAdminDisplayContext.getViewLayoutURL(layout)
-					));
-			}
-			else {
-				jsonArray.put(
-					JSONUtil.put(
-						"id", "viewLayout"
-					).put(
-						"label", LanguageUtil.get(_httpServletRequest, "view")
-					));
-			}
 		}
 
 		return jsonArray;

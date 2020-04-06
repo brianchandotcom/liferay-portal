@@ -157,7 +157,9 @@ public class TeamStagedModelDataHandler
 
 			if ((user != null) &&
 				!_userLocalService.hasTeamUser(
-					importedTeam.getTeamId(), user.getUserId())) {
+					importedTeam.getTeamId(), user.getUserId()) &&
+				_userLocalService.hasGroupUser(
+					importedTeam.getGroupId(), user.getUserId())) {
 
 				_userLocalService.addTeamUser(importedTeam.getTeamId(), user);
 			}

@@ -30,13 +30,13 @@ const actionHandlers = {
 		});
 	},
 
-	delete: ({event}) => {
+	delete: ({actionURL}) => {
 		const deleteMessage = Liferay.Language.get(
 			'are-you-sure-you-want-to-delete-this'
 		);
 
-		if (!confirm(deleteMessage)) {
-			event.preventDefault();
+		if (confirm(deleteMessage)) {
+			Liferay.Util.navigate(actionURL);
 		}
 	},
 

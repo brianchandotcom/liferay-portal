@@ -121,14 +121,11 @@ const MillerColumnsItem = ({
 			if (!action.quickAction) {
 				const onClick = action.handler || actionHandlers[action.id];
 
-				const isButton = onClick && action.id !== 'delete';
-
 				dropdownActions.push({
 					...action,
-					handler: event =>
-						onClick &&
-						onClick({actionURL: action.url, event, namespace}),
-					href: isButton ? null : action.url,
+					handler: () =>
+						onClick && onClick({actionURL: action.url, namespace}),
+					href: onClick ? null : action.url,
 				});
 			}
 		});

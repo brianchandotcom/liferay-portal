@@ -62,6 +62,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Brian Wing Shun Chan
@@ -673,7 +675,15 @@ public abstract class UpgradeProcess
 		if (matcher.find()) {
 			String indexColumns = matcher.group(1);
 
-			return ListUtil.fromArray(indexColumns.split(StringPool.COMMA));
+			indexColumns = indexColumns.trim();
+
+			return Stream.of(
+				indexColumns.split(StringPool.COMMA)
+			).map(
+				column -> column.replaceFirst("\\[.*", StringPool.BLANK)
+			).collect(
+				Collectors.toList()
+			);
 		}
 
 		throw new IllegalArgumentException(

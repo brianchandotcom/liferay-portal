@@ -22,10 +22,9 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.RenderRequest;
 
@@ -57,22 +56,42 @@ public class ImportDisplayContext {
 		}
 
 		List<LayoutPageTemplatesImporterResultEntry>
-			importedLayoutPageTemplatesImporterResultEntries =
+			layoutPageTemplatesImporterResultEntries =
 				layoutPageTemplatesImporterResultEntryMap.get(
 					LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
 
-		if (importedLayoutPageTemplatesImporterResultEntries == null) {
+		if (layoutPageTemplatesImporterResultEntries == null) {
 			return null;
 		}
 
-		Stream<LayoutPageTemplatesImporterResultEntry> stream =
-			importedLayoutPageTemplatesImporterResultEntries.stream();
+		Map<Integer, List<LayoutPageTemplatesImporterResultEntry>>
+			typeLayoutPageTemplatesImporterResultEntryMap = new HashMap<>();
 
-		return stream.collect(
-			Collectors.toMap(
-				LayoutPageTemplatesImporterResultEntry::getType,
-				layoutPageTemplatesImporterResultEntry ->
-					importedLayoutPageTemplatesImporterResultEntries));
+		for (LayoutPageTemplatesImporterResultEntry
+				layoutPageTemplatesImporterResultEntry :
+					layoutPageTemplatesImporterResultEntries) {
+
+			List<LayoutPageTemplatesImporterResultEntry>
+				typeLayoutPageTemplatesImporterResultEntries =
+					new ArrayList<>();
+
+			int type = layoutPageTemplatesImporterResultEntry.getType();
+
+			if (typeLayoutPageTemplatesImporterResultEntryMap.get(type) !=
+					null) {
+
+				typeLayoutPageTemplatesImporterResultEntries =
+					typeLayoutPageTemplatesImporterResultEntryMap.get(type);
+			}
+
+			typeLayoutPageTemplatesImporterResultEntries.add(
+				layoutPageTemplatesImporterResultEntry);
+
+			typeLayoutPageTemplatesImporterResultEntryMap.put(
+				type, typeLayoutPageTemplatesImporterResultEntries);
+		}
+
+		return typeLayoutPageTemplatesImporterResultEntryMap;
 	}
 
 	public List<LayoutPageTemplatesImporterResultEntry>

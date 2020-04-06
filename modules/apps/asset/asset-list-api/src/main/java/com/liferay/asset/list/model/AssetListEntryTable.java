@@ -66,6 +66,10 @@ public class AssetListEntryTable extends BaseTable<AssetListEntryTable> {
 	public final Column<AssetListEntryTable, String> assetEntryType =
 		createColumn(
 			"assetEntryType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AssetListEntryTable, String> assetEntrySubtype =
+		createColumn(
+			"assetEntrySubtype", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<AssetListEntryTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

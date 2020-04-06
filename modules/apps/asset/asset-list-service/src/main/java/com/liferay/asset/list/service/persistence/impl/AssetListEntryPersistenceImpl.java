@@ -10759,6 +10759,7 @@ public class AssetListEntryPersistenceImpl
 		ctStrictColumnNames.add("title");
 		ctStrictColumnNames.add("type_");
 		ctStrictColumnNames.add("assetEntryType");
+		ctStrictColumnNames.add("assetEntrySubtype");
 		ctStrictColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(

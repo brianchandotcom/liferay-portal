@@ -45,6 +45,7 @@ public class AssetListEntrySoap implements Serializable {
 		soapModel.setTitle(model.getTitle());
 		soapModel.setType(model.getType());
 		soapModel.setAssetEntryType(model.getAssetEntryType());
+		soapModel.setAssetEntrySubtype(model.getAssetEntrySubtype());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
@@ -216,6 +217,14 @@ public class AssetListEntrySoap implements Serializable {
 		_assetEntryType = assetEntryType;
 	}
 
+	public String getAssetEntrySubtype() {
+		return _assetEntrySubtype;
+	}
+
+	public void setAssetEntrySubtype(String assetEntrySubtype) {
+		_assetEntrySubtype = assetEntrySubtype;
+	}
+
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -238,6 +247,7 @@ public class AssetListEntrySoap implements Serializable {
 	private String _title;
 	private int _type;
 	private String _assetEntryType;
+	private String _assetEntrySubtype;
 	private Date _lastPublishDate;
 
 }

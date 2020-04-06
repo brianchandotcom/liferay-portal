@@ -77,7 +77,7 @@ public class AssetListEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -107,6 +107,8 @@ public class AssetListEntryCacheModel
 		sb.append(type);
 		sb.append(", assetEntryType=");
 		sb.append(assetEntryType);
+		sb.append(", assetEntrySubtype=");
+		sb.append(assetEntrySubtype);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -177,6 +179,13 @@ public class AssetListEntryCacheModel
 			assetListEntryImpl.setAssetEntryType(assetEntryType);
 		}
 
+		if (assetEntrySubtype == null) {
+			assetListEntryImpl.setAssetEntrySubtype("");
+		}
+		else {
+			assetListEntryImpl.setAssetEntrySubtype(assetEntrySubtype);
+		}
+
 		if (lastPublishDate == Long.MIN_VALUE) {
 			assetListEntryImpl.setLastPublishDate(null);
 		}
@@ -211,6 +220,7 @@ public class AssetListEntryCacheModel
 
 		type = objectInput.readInt();
 		assetEntryType = objectInput.readUTF();
+		assetEntrySubtype = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -268,6 +278,13 @@ public class AssetListEntryCacheModel
 			objectOutput.writeUTF(assetEntryType);
 		}
 
+		if (assetEntrySubtype == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(assetEntrySubtype);
+		}
+
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -285,6 +302,7 @@ public class AssetListEntryCacheModel
 	public String title;
 	public int type;
 	public String assetEntryType;
+	public String assetEntrySubtype;
 	public long lastPublishDate;
 
 }

@@ -18,6 +18,7 @@
 		<field name="assetEntryType" type="String">
 			<hint name="max-length">255</hint>
 		</field>
+		<field name="assetEntrySubtype" type="String" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.asset.list.model.AssetListEntryAssetEntryRel">

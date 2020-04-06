@@ -59,6 +59,7 @@ public class AssetListEntryWrapper
 		attributes.put("title", getTitle());
 		attributes.put("type", getType());
 		attributes.put("assetEntryType", getAssetEntryType());
+		attributes.put("assetEntrySubtype", getAssetEntrySubtype());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -148,6 +149,12 @@ public class AssetListEntryWrapper
 
 		if (assetEntryType != null) {
 			setAssetEntryType(assetEntryType);
+		}
+
+		String assetEntrySubtype = (String)attributes.get("assetEntrySubtype");
+
+		if (assetEntrySubtype != null) {
+			setAssetEntrySubtype(assetEntrySubtype);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -255,6 +262,16 @@ public class AssetListEntryWrapper
 		getAssetEntryQuery(long[] segmentsEntryIds) {
 
 		return model.getAssetEntryQuery(segmentsEntryIds);
+	}
+
+	/**
+	 * Returns the asset entry subtype of this asset list entry.
+	 *
+	 * @return the asset entry subtype of this asset list entry
+	 */
+	@Override
+	public String getAssetEntrySubtype() {
+		return model.getAssetEntrySubtype();
 	}
 
 	/**
@@ -447,6 +464,16 @@ public class AssetListEntryWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	 * Sets the asset entry subtype of this asset list entry.
+	 *
+	 * @param assetEntrySubtype the asset entry subtype of this asset list entry
+	 */
+	@Override
+	public void setAssetEntrySubtype(String assetEntrySubtype) {
+		model.setAssetEntrySubtype(assetEntrySubtype);
 	}
 
 	/**

@@ -85,7 +85,11 @@ const RatingsLike = ({
 			method: 'POST',
 		})
 			.then(response => response.json())
-			.then(response => setTotalLikes(response.totalScore));
+			.then(({totalScore}) => {
+				if (totalScore) {
+					setTotalLikes(totalScore);
+				}
+			});
 	};
 
 	return (
@@ -97,6 +101,7 @@ const RatingsLike = ({
 				onClick={toggleLiked}
 				small
 				title={getTitle()}
+				value={totalLikes}
 			>
 				<ClayIcon className={liked ? 'liked' : ''} symbol="heart" />
 

@@ -135,6 +135,20 @@ public class DataRecordValuesUtil {
 
 		ddmFormFieldValue.setValue(ddmFormField.getPredefinedValue());
 
+		if (ListUtil.isNotEmpty(ddmFormField.getNestedDDMFormFields())) {
+			for (DDMFormField nestedDDMFormField :
+					ddmFormField.getNestedDDMFormFields()) {
+
+				List<DDMFormFieldValue> ddmFormFieldValues =
+					createDDMFormFieldValues(
+						dataRecordValues, nestedDDMFormField, locale);
+
+				Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
+
+				stream.forEach(ddmFormFieldValue::addNestedDDMFormFieldValue);
+			}
+		}
+
 		if ((dataRecordValues == null) || !dataRecordValues.containsKey(name)) {
 			return ListUtil.fromArray(ddmFormFieldValue);
 		}
@@ -184,21 +198,9 @@ public class DataRecordValuesUtil {
 			return ddmFormFieldValues;
 		}
 
-		ddmFormFieldValue.setValue(
-			createValue(ddmFormField, locale, dataRecordValues.get(name)));
-
-		if (ListUtil.isNotEmpty(ddmFormField.getNestedDDMFormFields())) {
-			for (DDMFormField nestedDDMFormField :
-					ddmFormField.getNestedDDMFormFields()) {
-
-				List<DDMFormFieldValue> ddmFormFieldValues =
-					createDDMFormFieldValues(
-						dataRecordValues, nestedDDMFormField, locale);
-
-				Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
-
-				stream.forEach(ddmFormFieldValue::addNestedDDMFormFieldValue);
-			}
+		if (dataRecordValues.get(name) != null) {
+			ddmFormFieldValue.setValue(
+				createValue(ddmFormField, locale, dataRecordValues.get(name)));
 		}
 
 		return ListUtil.fromArray(ddmFormFieldValue);

@@ -28,6 +28,9 @@ public class UpgradeAssetListEntry extends UpgradeProcess {
 		alter(
 			AssetListEntryTable.class,
 			new AlterTableAddColumn("assetEntryType VARCHAR(255) null"));
+		alter(
+			AssetListEntryTable.class,
+			new AlterTableAddColumn("assetEntrySubtype VARCHAR(255) null"));
 
 		runSQL(
 			"create index IX_D604A2E on AssetListEntry (groupId, " +

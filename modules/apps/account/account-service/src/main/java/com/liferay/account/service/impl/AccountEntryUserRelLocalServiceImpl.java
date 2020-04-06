@@ -24,6 +24,7 @@ import com.liferay.account.service.base.AccountEntryUserRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -83,10 +84,14 @@ public class AccountEntryUserRelLocalServiceImpl
 			String middleName, String lastName, long prefixId, long suffixId)
 		throws PortalException {
 
-		AccountEntry accountEntry = accountEntryLocalService.getAccountEntry(
-			accountEntryId);
+		long companyId = CompanyThreadLocal.getCompanyId();
 
-		long companyId = accountEntry.getCompanyId();
+		if (accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT) {
+			AccountEntry accountEntry =
+				accountEntryLocalService.getAccountEntry(accountEntryId);
+
+			companyId = accountEntry.getCompanyId();
+		}
 
 		boolean autoPassword = true;
 		String password1 = null;

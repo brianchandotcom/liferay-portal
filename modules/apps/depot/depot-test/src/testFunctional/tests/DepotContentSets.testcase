@@ -1126,7 +1126,8 @@ definition {
 	@description = "This ensures that Content Sets can be set in a depot."
 	@priority = "5"
 	test Smoke {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		DepotNavigator.openDepotAdmin();
 

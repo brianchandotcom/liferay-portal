@@ -1974,8 +1974,6 @@ definition {
 
 	@priority = "5"
 	test ViewMultipleFacetURLs {
-		property portal.upstream = "quarantine";
-
 		var searchPage = "Search Page";
 
 		JSONCategory.addVocabulary(

@@ -1123,6 +1123,8 @@ definition {
 		}
 	}
 
+	// Quarantined because of LRQA-57598
+
 	@description = "This ensures that Content Sets can be set in a depot."
 	@priority = "5"
 	test Smoke {

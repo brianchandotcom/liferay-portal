@@ -267,7 +267,8 @@ public class StructuredContentDTOConverter
 			}
 			catch (NoSuchFileEntryException noSuchFileEntryException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(noSuchFileEntryException, noSuchFileEntryException);
+					_log.warn(
+						noSuchFileEntryException, noSuchFileEntryException);
 				}
 
 				return new Value();

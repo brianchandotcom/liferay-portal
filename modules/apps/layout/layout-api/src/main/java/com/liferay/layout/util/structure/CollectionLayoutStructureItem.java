@@ -103,6 +103,22 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 		return HashUtil.hash(0, getItemId());
 	}
 
+	public boolean isListFormatGrid() {
+		if (Objects.equals(getListFormat(), LIST_FORMAT_GRID)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isListFormatStacked() {
+		if (Objects.equals(getListFormat(), LIST_FORMAT_STACKED)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public void setCollectionJSONObject(JSONObject collectionJSONObject) {
 		_collectionJSONObject = collectionJSONObject;
 	}

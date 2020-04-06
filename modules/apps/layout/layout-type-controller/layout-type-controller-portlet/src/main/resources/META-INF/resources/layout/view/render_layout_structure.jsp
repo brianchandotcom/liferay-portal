@@ -39,7 +39,7 @@ for (String childrenItemId : childrenItemIds) {
 			%>
 
 			<c:choose>
-				<c:when test="<%= Objects.equals(collectionLayoutStructureItem.getListFormat(), CollectionLayoutStructureItem.LIST_FORMAT_GRID) %>">
+				<c:when test="<%= collectionLayoutStructureItem.isListFormatGrid() %>">
 					<div class="row">
 
 						<%
@@ -62,7 +62,7 @@ for (String childrenItemId : childrenItemIds) {
 
 					</div>
 				</c:when>
-				<c:when test="<%= Objects.equals(collectionLayoutStructureItem.getListFormat(), CollectionLayoutStructureItem.LIST_FORMAT_STACKED) %>">
+				<c:when test="<%= collectionLayoutStructureItem.isListFormatStacked() %>">
 
 					<%
 					for (Object collectionObject : portletLayoutDisplayContext.getCollection(collectionLayoutStructureItem)) {

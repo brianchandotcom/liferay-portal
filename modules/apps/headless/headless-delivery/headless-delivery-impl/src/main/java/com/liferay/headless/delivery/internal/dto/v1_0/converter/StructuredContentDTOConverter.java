@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -264,9 +265,9 @@ public class StructuredContentDTOConverter
 					}
 				};
 			}
-			catch (Exception exception) {
+			catch (NoSuchFileEntryException noSuchFileEntryException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
+					_log.warn(noSuchFileEntryException, noSuchFileEntryException);
 				}
 
 				return new Value();

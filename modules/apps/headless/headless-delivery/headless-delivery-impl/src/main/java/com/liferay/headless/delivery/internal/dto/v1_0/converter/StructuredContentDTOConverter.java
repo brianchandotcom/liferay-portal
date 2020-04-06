@@ -380,10 +380,8 @@ public class StructuredContentDTOConverter
 
 						Map<String, ContentFieldValue> map = new HashMap<>();
 
-						Value value = ddmFormFieldValue.getValue();
-
 						Map<Locale, String> valueValues = Optional.ofNullable(
-							value
+							ddmFormFieldValue.getValue()
 						).map(
 							Value::getValues
 						).orElse(

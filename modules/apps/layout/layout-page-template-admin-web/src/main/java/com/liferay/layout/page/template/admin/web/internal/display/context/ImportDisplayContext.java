@@ -14,7 +14,10 @@
 
 package com.liferay.layout.page.template.admin.web.internal.display.context;
 
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -26,13 +29,50 @@ import java.util.stream.Stream;
 
 import javax.portlet.RenderRequest;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Jürgen Kappler
  */
 public class ImportDisplayContext {
 
-	public ImportDisplayContext(RenderRequest renderRequest) {
+	public ImportDisplayContext(
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest) {
+
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
+	}
+
+	public Map<Integer, List<LayoutPageTemplatesImporterResultEntry>>
+		getImportedLayoutPageTemplatesImporterResultEntries() {
+
+		Map
+			<LayoutPageTemplatesImporterResultEntry.Status,
+			 List<LayoutPageTemplatesImporterResultEntry>>
+				layoutPageTemplatesImporterResultEntryMap =
+					_getLayoutPageTemplatesImporterResultEntryMap();
+
+		if (MapUtil.isEmpty(layoutPageTemplatesImporterResultEntryMap)) {
+			return null;
+		}
+
+		List<LayoutPageTemplatesImporterResultEntry>
+			importedLayoutPageTemplatesImporterResultEntries =
+				layoutPageTemplatesImporterResultEntryMap.get(
+					LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
+
+		if (importedLayoutPageTemplatesImporterResultEntries == null) {
+			return null;
+		}
+
+		Stream<LayoutPageTemplatesImporterResultEntry> stream =
+			importedLayoutPageTemplatesImporterResultEntries.stream();
+
+		return stream.collect(
+			Collectors.toMap(
+				LayoutPageTemplatesImporterResultEntry::getType,
+				layoutPageTemplatesImporterResultEntry ->
+					importedLayoutPageTemplatesImporterResultEntries));
 	}
 
 	public List<LayoutPageTemplatesImporterResultEntry>
@@ -68,6 +108,22 @@ public class ImportDisplayContext {
 		return notImportedLayoutPageTemplatesImporterResultEntries;
 	}
 
+	public String getSuccessMessage(
+		Map.Entry<Integer, List<LayoutPageTemplatesImporterResultEntry>>
+			entrySet) {
+
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries = entrySet.getValue();
+
+		return LanguageUtil.format(
+			_httpServletRequest, "x-x-s-imported-correctly",
+			new Object[] {
+				layoutPageTemplatesImporterResultEntries.size(),
+				_getTypeLabelKey(entrySet.getKey())
+			},
+			true);
+	}
+
 	private Map
 		<LayoutPageTemplatesImporterResultEntry.Status,
 		 List<LayoutPageTemplatesImporterResultEntry>>
@@ -100,6 +156,20 @@ public class ImportDisplayContext {
 		return _layoutPageTemplatesImporterResultEntryMap;
 	}
 
+	private String _getTypeLabelKey(int type) {
+		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
+			return "page-template";
+		}
+		else if (type ==
+					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) {
+
+			return "master-page";
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private final HttpServletRequest _httpServletRequest;
 	private Map
 		<LayoutPageTemplatesImporterResultEntry.Status,
 		 List<LayoutPageTemplatesImporterResultEntry>>

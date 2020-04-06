@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ImportDisplayContext importDisplayContext = new ImportDisplayContext(renderRequest);
+ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, renderRequest);
 %>
 
 <portlet:actionURL name="/layout_page_template/import" var="importURL">
@@ -52,6 +52,33 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(renderReque
 				<aui:input checked="<%= true %>" label="overwrite-existing-entries" name="overwrite" type="checkbox" />
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
+
+		<%
+		Map<Integer, List<LayoutPageTemplatesImporterResultEntry>> importedLayoutPageTemplatesImporterResultEntriesMap = importDisplayContext.getImportedLayoutPageTemplatesImporterResultEntries();
+		%>
+
+		<c:if test="<%= MapUtil.isNotEmpty(importedLayoutPageTemplatesImporterResultEntriesMap) %>">
+			<div class="alert alert-success success-dialog">
+				<span class="success-message"><liferay-ui:message key="imported-entries" /></span>
+
+				<ul class="success-list-items">
+
+					<%
+					for (Map.Entry <Integer, List<LayoutPageTemplatesImporterResultEntry>> entrySet :
+						importedLayoutPageTemplatesImporterResultEntriesMap.entrySet()) {
+					%>
+
+						<li>
+							<span class="success-info"><%= HtmlUtil.escape(importDisplayContext.getSuccessMessage(entrySet)) %></span>
+						</li>
+
+					<%
+					}
+					%>
+
+				</ul>
+			</div>
+		</c:if>
 
 		<%
 		List<LayoutPageTemplatesImporterResultEntry> notImportedLayoutPageTemplatesImporterResultEntries = importDisplayContext.getNotImportedLayoutPageTemplatesImporterResultEntries();

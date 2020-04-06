@@ -1,4 +1,19 @@
 .portlet-layout-templates-admin {
+	.success-dialog {
+		.success-list-items li {
+			list-style: disc inside;
+		}
+
+		.success-list-items .success-info {
+			font-size: 0.8em;
+			font-style: italic;
+			margin-left: 0.5em;
+		}
+
+		.success-message {
+			font-weight: bold;
+		}
+	}
 	.warning-dialog {
 		.error-list-items li {
 			list-style: disc inside;

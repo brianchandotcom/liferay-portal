@@ -53,6 +53,8 @@ definition {
 
 	@priority = "4"
 	test ApproveWebContentViaWebContentDisplayPG {
+		property portal.upstream = "quarantine";
+
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
 		WebContent.addWithWorkflowPGViaWCD(

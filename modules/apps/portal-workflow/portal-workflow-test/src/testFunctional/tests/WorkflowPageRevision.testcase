@@ -160,6 +160,8 @@ definition {
 	@priority = "5"
 	test ViewApprovedPageAfterStagingDeactivated {
 		property portal.acceptance = "false";
+		property portal.upstream = "quarantine";
+
 		var pageName = "New Site Page Name";
 
 		Navigator.gotoStagedSitePage(

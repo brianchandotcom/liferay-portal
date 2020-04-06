@@ -179,33 +179,40 @@ public class SegmentsEntryRoleLocalServiceTest {
 
 	@Test
 	public void testSetSegmentsEntrySiteRoles() throws Exception {
-		for (int i = 0; i < 10; i++) {
+		List<Long> actualRoleIdsList = ListUtil.fromArray(
+			_segmentsEntry.getRoleIds());
+
+		Assert.assertEquals(
+			actualRoleIdsList.toString(), 0, actualRoleIdsList.size());
+
+		for (int i = 0; i < 5; i++) {
 			_roles.add(RoleTestUtil.addRole(RoleConstants.TYPE_SITE));
 		}
 
-		_testSetSegmentsEntrySiteRoles(_roles.subList(0, 4));
-		_testSetSegmentsEntrySiteRoles(_roles.subList(5, 9));
-		_testSetSegmentsEntrySiteRoles(_roles.subList(3, 7));
-	}
-
-	private void _testSetSegmentsEntrySiteRoles(List<Role> roles)
-		throws Exception {
-
-		long[] roleIds = ListUtil.toLongArray(roles, Role.ROLE_ID_ACCESSOR);
+		long[] expectedRoleIds = ListUtil.toLongArray(
+			_roles, Role.ROLE_ID_ACCESSOR);
 
 		_segmentsEntryRoleLocalService.setSegmentsEntrySiteRoles(
-			_segmentsEntry.getSegmentsEntryId(), roleIds, _serviceContext);
+			_segmentsEntry.getSegmentsEntryId(), expectedRoleIds,
+			_serviceContext);
 
-		List<Long> expectedRoleIdsList = ListUtil.fromArray(roleIds);
+		List<Long> expectedRoleIdsList = ListUtil.fromArray(expectedRoleIds);
 
-		List<Long> actualRoleIdsList = ListUtil.fromArray(
-			_segmentsEntry.getRoleIds());
+		actualRoleIdsList = ListUtil.fromArray(_segmentsEntry.getRoleIds());
 
 		Assert.assertEquals(
 			actualRoleIdsList.toString(), expectedRoleIdsList.size(),
 			actualRoleIdsList.size());
 
 		Assert.assertTrue(expectedRoleIdsList.containsAll(actualRoleIdsList));
+
+		_segmentsEntryRoleLocalService.setSegmentsEntrySiteRoles(
+			_segmentsEntry.getSegmentsEntryId(), new long[0], _serviceContext);
+
+		actualRoleIdsList = ListUtil.fromArray(_segmentsEntry.getRoleIds());
+
+		Assert.assertEquals(
+			actualRoleIdsList.toString(), 0, actualRoleIdsList.size());
 	}
 
 	@DeleteAfterTestRun

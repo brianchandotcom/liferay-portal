@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FlagsPortletKeys.FLAGS,
-		"mvc.command.name=/flags/captcha"
+		"mvc.command.name=/flags/get_captcha"
 	},
 	service = MVCResourceCommand.class
 )

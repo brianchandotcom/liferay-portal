@@ -47,7 +47,7 @@ public class FlagsTagUtil {
 			PortletRequest.RESOURCE_PHASE);
 
 		captchaResourceURL.setCopyCurrentRenderParameters(false);
-		captchaResourceURL.setResourceID("/flags/captcha");
+		captchaResourceURL.setResourceID("/flags/get_captcha");
 
 		return captchaResourceURL.toString();
 	}

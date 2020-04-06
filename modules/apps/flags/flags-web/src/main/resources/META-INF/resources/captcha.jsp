@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/flags/captcha_image" var="captchaURL" />
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/flags/captcha" var="captchaURL" />
 
 <liferay-captcha:captcha
 	url="<%= captchaURL %>"

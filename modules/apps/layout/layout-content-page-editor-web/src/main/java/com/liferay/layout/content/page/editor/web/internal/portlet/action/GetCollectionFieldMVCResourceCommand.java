@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.pagination.Pagination;
@@ -158,7 +159,15 @@ public class GetCollectionFieldMVCResourceCommand
 		for (Map.Entry<String, Object> entry :
 				infoDisplayFieldsValues.entrySet()) {
 
-			displayObjectJSONObject.put(entry.getKey(), entry.getValue());
+			Object fieldValue = entry.getValue();
+
+			if (fieldValue instanceof ContentAccessor) {
+				ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
+
+				fieldValue = contentAccessor.getContent();
+			}
+
+			displayObjectJSONObject.put(entry.getKey(), fieldValue);
 		}
 
 		return displayObjectJSONObject;

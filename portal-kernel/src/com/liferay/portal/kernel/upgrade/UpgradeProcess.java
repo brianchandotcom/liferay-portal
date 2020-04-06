@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -429,6 +430,21 @@ public abstract class UpgradeProcess
 
 	protected abstract void doUpgrade() throws Exception;
 
+	protected List<String> getIndexesSQL(Class<?> tableClass, String tableName)
+		throws Exception {
+
+		Field tableSQLAddIndexesField = tableClass.getField(
+			"TABLE_SQL_ADD_INDEXES");
+
+		String[] indexes = (String[])tableSQLAddIndexesField.get(null);
+
+		return ListUtil.fromArray(indexes);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getIndexesSQL(Class, String)}
+	 */
+	@Deprecated
 	protected List<ObjectValuePair<String, IndexMetadata>> getIndexesSQL(
 			ClassLoader classLoader, String tableName)
 		throws IOException {

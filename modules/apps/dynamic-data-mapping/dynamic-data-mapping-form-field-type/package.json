@@ -37,7 +37,6 @@
 			"Checkbox",
 			"DatePicker",
 			"FieldBase",
-			"Select",
 			"Tooltip",
 			"withContextMock"
 		]

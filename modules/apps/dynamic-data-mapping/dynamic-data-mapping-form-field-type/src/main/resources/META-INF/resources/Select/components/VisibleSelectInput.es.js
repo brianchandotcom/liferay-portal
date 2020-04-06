@@ -22,6 +22,7 @@ const LabelOptionListItem = ({onCloseButtonClicked, option}) => (
 		<ClayLabel
 			className="ddm-select-option-label"
 			closeButtonProps={{
+				'data-testid': `closeButton${option.value}`,
 				onClick: event => {
 					event.preventDefault();
 					event.stopPropagation();

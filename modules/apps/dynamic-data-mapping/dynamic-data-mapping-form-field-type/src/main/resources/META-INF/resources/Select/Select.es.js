@@ -214,6 +214,7 @@ const DropdownItem = ({
 				<ClayCheckbox
 					aria-label={option.label}
 					checked={currentValue.includes(option.value)}
+					data-testid={`labelItem-${option.value}`}
 					label={option.label}
 					onChange={event => {
 						onSelect({
@@ -415,7 +416,7 @@ const Select = ({
 							currentValue={currentValue}
 							expand={expand}
 							index={index}
-							key={option.value}
+							key={`${option.value}-${index}`}
 							multiple={multiple}
 							onSelect={handleSelect}
 							option={option}
@@ -438,7 +439,7 @@ const Main = ({
 	onExpand = () => {},
 	options = [],
 	predefinedValue = [],
-	readOnly,
+	readOnly = false,
 	value = [],
 	...otherProps
 }) => {

@@ -66,17 +66,6 @@ const reducer = (state, action) => {
 				selectedItemsIds: [itemId],
 			};
 		}
-		else if (
-			nextState.activeItemId ||
-			nextState.selectedItemsIds.length
-		) {
-			nextState = {
-				...nextState,
-				activeItemId: null,
-				activeItemType: null,
-				selectedItemsIds: [],
-			};
-		}
 	}
 
 	return nextState;

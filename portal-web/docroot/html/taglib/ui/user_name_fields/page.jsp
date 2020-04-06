@@ -37,7 +37,7 @@
 			{
 				baseURL: '<%= HtmlUtil.escapeJS(themeDisplay.getURLCurrent()) %>',
 				formNode: <portlet:namespace />fm,
-				languageIdSelectNode: <portlet:namespace />languageId,
+				languageIdSelectNode: '#<portlet:namespace />languageId',
 				portletNamespace: '<portlet:namespace />',
 				userNameFieldsNode: <portlet:namespace />userNameFields
 			}

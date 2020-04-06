@@ -146,25 +146,11 @@ export default withRouter(
 								</ClayForm.Group>
 
 								<ClayForm.Group className="c-mt-4">
-									<label htmlFor="basicInput">
-										{Liferay.Language.get('tags')}
-									</label>
-
 									<TagSelector
 										tags={tags}
 										tagsChange={tags => setTags(tags)}
 										tagsLoaded={setTagsLoaded}
 									/>
-
-									<ClayForm.FeedbackGroup>
-										<ClayForm.FeedbackItem>
-											<span className="small text-secondary">
-												{Liferay.Language.get(
-													'add-up-to-5-tags-to-describe-what-your-question-is-about'
-												)}
-											</span>
-										</ClayForm.FeedbackItem>
-									</ClayForm.FeedbackGroup>
 								</ClayForm.Group>
 							</ClayForm>
 

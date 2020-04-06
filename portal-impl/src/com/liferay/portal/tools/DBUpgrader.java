@@ -43,6 +43,7 @@ import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyGroup;
 import com.liferay.portal.verify.VerifyProperties;
 import com.liferay.portal.verify.VerifyResourcePermissions;
@@ -426,7 +427,7 @@ public class DBUpgrader {
 		}
 	}
 
-	public static void verify() throws Exception {
+	public static void verify() throws VerifyException {
 		VerifyGroup verifyGroup = new VerifyGroup();
 
 		verifyGroup.verify();

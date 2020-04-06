@@ -174,9 +174,9 @@ definition {
 	macro addViaAP {
 		AssetPublisherPortlet.addAsset(assetType = "Blogs Entry");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${entryContent}",
-			title = "${entryTitle}");
+		BlogsEntry.addTitle(title = "${entryTitle}");
+
+		AlloyEditor.addContent(content = "${entryContent}");
 
 		AssertClick(
 			locator1 = "Button#PUBLISH",
@@ -202,9 +202,9 @@ definition {
 			assetType = "Blogs Entry",
 			siteScope = "${siteScope}");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${entryContent}",
-			title = "${entryTitle}");
+		BlogsEntry.addTitle(title = "${entryTitle}");
+
+		AlloyEditor.addContent(content = "${entryContent}");
 
 		AssertClick(
 			locator1 = "Button#PUBLISH",
@@ -304,9 +304,9 @@ definition {
 	macro addWithWorkflowViaAP {
 		AssetPublisherPortlet.addAsset(assetType = "Blogs Entry");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${entryContent}",
-			title = "${entryTitle}");
+		BlogsEntry.addTitle(title = "${entryTitle}");
+
+		AlloyEditor.addContent(content = "${entryContent}");
 
 		AssertClick(
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",

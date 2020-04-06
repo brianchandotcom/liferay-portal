@@ -37,7 +37,7 @@ definition {
 			BlogsEntry.addSubtitle(entrySubtitle = "${entrySubtitle}");
 		}
 
-		BlogsEntry.addContent(entryContent = "${entryContent}");
+		AlloyEditor.addContent(content = "${entryContent}");
 
 		if (isSet(embedVideo)) {
 			AlloyEditor.clickContentField();
@@ -112,13 +112,17 @@ definition {
 	}
 
 	macro addSubtitle {
-		AlloyEditor.typeEditor(
-			content = "${entrySubtitle}",
-			editor = "subtitle");
+		Type(
+			key_text = "Subtitle",
+			locator1 = "TextArea#ANY",
+			value1 = "${entrySubtitle}");
 	}
 
 	macro addTitle {
-		AlloyEditor.addTitle(title = "${entryTitle}");
+		Type(
+			key_text = "Title",
+			locator1 = "TextArea#ANY",
+			value1 = "${entryTitle}");
 	}
 
 	macro addWithTrackbackURLPG {
@@ -273,22 +277,20 @@ definition {
 
 	macro editSubtitle {
 		AssertTextEquals(
-			key_editor = "subtitle",
-			locator1 = "AlloyEditor#EDITOR",
+			key_text = "Subtitle",
+			locator1 = "TextArea#ANY",
 			value1 = "${entrySubtitle}");
 
-		AlloyEditor.typeEditor(
-			content = "${entrySubtitleEdit}",
-			editor = "subtitle");
+		BlogsEntry.addSubtitle(entrySubtitle = "${entrySubtitleEdit}");
 	}
 
 	macro editTitle {
 		AssertTextEquals(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR",
+			key_text = "Title",
+			locator1 = "TextArea#ANY",
 			value1 = "${entryTitle}");
 
-		AlloyEditor.addTitle(title = "${entryTitleEdit}");
+		BlogsEntry.addTitle(entryTitle = "${entryTitleEdit}");
 	}
 
 	macro entryAddPermissions {
@@ -670,12 +672,14 @@ definition {
 		Pause(locator1 = "3000");
 
 		AssertTextEquals(
-			locator1 = "BlogsEntry#TITLE",
+			key_text = "Title",
+			locator1 = "TextArea#ANY",
 			value1 = "${entryTitle}");
 
 		if (isSet(entrySubtitle)) {
 			AssertTextEquals(
-				locator1 = "BlogsEntry#SUBTITLE",
+				key_text = "Subtitle",
+				locator1 = "TextArea#ANY",
 				value1 = "${entrySubtitle}");
 		}
 
@@ -1066,7 +1070,8 @@ definition {
 				value1 = "Entries with tag ${tagName}");
 
 			AssertTextEquals(
-				locator1 = "BlogsEntry#TITLE",
+				key_text = "Title",
+				locator1 = "TextArea#ANY",
 				value1 = "${entryTitle}");
 		}
 	}
@@ -1114,7 +1119,8 @@ definition {
 		var key_entryTitle = "${entryTitle}";
 
 		AssertTextEquals(
-			locator1 = "BlogsEntry#TITLE",
+			key_text = "Title",
+			locator1 = "TextArea#ANY",
 			value1 = "${entryTitle}");
 	}
 

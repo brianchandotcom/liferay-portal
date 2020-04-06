@@ -104,13 +104,24 @@ public class SegmentsEntryRoleContributorTest {
 
 		_segmentsEntry = _addSegmentsEntry(_user.getLastName());
 
-		_assertHasPermission(actionKey, false);
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
+
+		Assert.assertFalse(
+			permissionChecker.hasPermission(
+				TestPropsValues.getGroupId(), Organization.class.getName(),
+				_organization.getOrganizationId(), actionKey));
 
 		_segmentsEntryRoleLocalService.addSegmentsEntryRole(
 			_segmentsEntry.getSegmentsEntryId(), _role.getRoleId(),
 			ServiceContextTestUtil.getServiceContext());
 
-		_assertHasPermission(actionKey, true);
+		permissionChecker = PermissionCheckerFactoryUtil.create(_user);
+
+		Assert.assertTrue(
+			permissionChecker.hasPermission(
+				TestPropsValues.getGroupId(), Organization.class.getName(),
+				_organization.getOrganizationId(), actionKey));
 	}
 
 	@Test
@@ -160,32 +171,6 @@ public class SegmentsEntryRoleContributorTest {
 			User.class.getName());
 	}
 
-	private void _assertHasGroupPermission(boolean hasPermission)
-		throws Exception {
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_user);
-
-		Assert.assertEquals(
-			hasPermission,
-			permissionChecker.hasPermission(
-				TestPropsValues.getGroupId(), Group.class.getName(),
-				TestPropsValues.getGroupId(), _ACTION_KEY));
-	}
-
-	private void _assertHasPermission(String actionKey, boolean hasPermission)
-		throws Exception {
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_user);
-
-		Assert.assertEquals(
-			hasPermission,
-			permissionChecker.hasPermission(
-				TestPropsValues.getGroupId(), Organization.class.getName(),
-				_organization.getOrganizationId(), actionKey));
-	}
-
 	private void _provisionSiteRoles(long[] siteRoleIds) throws Exception {
 		_segmentsEntryRoleLocalService.setSegmentsEntrySiteRoles(
 			_segmentsEntry.getSegmentsEntryId(), siteRoleIds,
@@ -220,15 +205,31 @@ public class SegmentsEntryRoleContributorTest {
 		_segmentsEntry = _addSegmentsEntry(randomString);
 		_setUpUser(randomString);
 
-		_assertHasGroupPermission(false);
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
+
+		Assert.assertFalse(
+			permissionChecker.hasPermission(
+				TestPropsValues.getGroupId(), Group.class.getName(),
+				TestPropsValues.getGroupId(), _ACTION_KEY));
 
 		_provisionSiteRoles(new long[] {_role.getRoleId()});
 
-		_assertHasGroupPermission(true);
+		permissionChecker = PermissionCheckerFactoryUtil.create(_user);
+
+		Assert.assertTrue(
+			permissionChecker.hasPermission(
+				TestPropsValues.getGroupId(), Group.class.getName(),
+				TestPropsValues.getGroupId(), _ACTION_KEY));
 
 		unsafeRunnable.run();
 
-		_assertHasGroupPermission(false);
+		permissionChecker = PermissionCheckerFactoryUtil.create(_user);
+
+		Assert.assertFalse(
+			permissionChecker.hasPermission(
+				TestPropsValues.getGroupId(), Group.class.getName(),
+				TestPropsValues.getGroupId(), _ACTION_KEY));
 	}
 
 	private static final String _ACTION_KEY = ActionKeys.UPDATE;

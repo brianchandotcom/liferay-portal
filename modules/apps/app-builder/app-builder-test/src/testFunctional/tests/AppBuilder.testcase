@@ -2773,6 +2773,7 @@ definition {
 	@description = "Remove fields from the Form View through the 'Remove' option"
 	@priority = "5"
 	test RemoveFormViewFields {
+		property portal.upstream = "quarantine";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",

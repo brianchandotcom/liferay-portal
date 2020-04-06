@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+ImportDisplayContext importDisplayContext = new ImportDisplayContext(renderRequest);
+%>
+
 <portlet:actionURL name="/layout_page_template/import" var="importURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
@@ -50,7 +54,7 @@
 		</liferay-frontend:fieldset-group>
 
 		<%
-		List<LayoutPageTemplatesImporterResultEntry> notImportedLayoutPageTemplatesImporterResultEntries = (List<LayoutPageTemplatesImporterResultEntry>)SessionMessages.get(renderRequest, "notImportedLayoutPageTemplatesImporterResultEntries");
+		List<LayoutPageTemplatesImporterResultEntry> notImportedLayoutPageTemplatesImporterResultEntries = importDisplayContext.getNotImportedLayoutPageTemplatesImporterResultEntries();
 		%>
 
 		<c:if test="<%= ListUtil.isNotEmpty(notImportedLayoutPageTemplatesImporterResultEntries) %>">

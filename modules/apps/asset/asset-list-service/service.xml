@@ -26,6 +26,7 @@
 		<column name="assetListEntryKey" type="String" />
 		<column name="title" type="String" />
 		<column name="type" type="int" />
+		<column name="assetEntrySubtype" type="String" />
 		<column name="assetEntryType" type="String" />
 		<column name="lastPublishDate" type="Date" />
 

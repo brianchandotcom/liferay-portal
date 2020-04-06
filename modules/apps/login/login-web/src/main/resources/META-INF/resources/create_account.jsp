@@ -204,11 +204,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 			</c:if>
 
 			<c:if test="<%= captchaConfiguration.createAccountCaptchaEnabled() %>">
-				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/login/captcha" var="captchaURL" />
-
-				<liferay-captcha:captcha
-					url="<%= captchaURL %>"
-				/>
+				<liferay-captcha:captcha />
 			</c:if>
 		</aui:col>
 	</aui:fieldset>

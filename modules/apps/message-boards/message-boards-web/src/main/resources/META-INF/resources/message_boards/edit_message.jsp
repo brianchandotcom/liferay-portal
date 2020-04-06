@@ -400,11 +400,7 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 
 			<c:if test="<%= (message == null) && captchaConfiguration.messageBoardsEditMessageCaptchaEnabled() %>">
-				<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
-
-				<liferay-captcha:captcha
-					url="<%= captchaURL %>"
-				/>
+				<liferay-captcha:captcha />
 			</c:if>
 		</aui:fieldset-group>
 

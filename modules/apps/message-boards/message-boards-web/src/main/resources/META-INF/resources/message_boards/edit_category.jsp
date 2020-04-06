@@ -198,11 +198,7 @@ if (portletTitleBasedNavigation) {
 				</div>
 
 				<c:if test="<%= (category == null) && captchaConfiguration.messageBoardsEditCategoryCaptchaEnabled() %>">
-					<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
-
-					<liferay-captcha:captcha
-						url="<%= captchaURL %>"
-					/>
+					<liferay-captcha:captcha />
 				</c:if>
 			</aui:fieldset>
 

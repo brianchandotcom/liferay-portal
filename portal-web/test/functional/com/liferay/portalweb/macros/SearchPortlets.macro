@@ -172,7 +172,7 @@ definition {
 
 	macro configureSearchOptions {
 		Portlet.gotoPortletOptions(
-			portletName = "portlet_SearchOptionsPortlet",
+			portletName = "Search Options",
 			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");

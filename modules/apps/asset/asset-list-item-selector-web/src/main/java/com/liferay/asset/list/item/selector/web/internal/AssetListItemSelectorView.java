@@ -168,6 +168,8 @@ public class AssetListItemSelectorView
 					).put(
 						"classPK", assetListEntry.getAssetListEntryId()
 					).put(
+						"itemSubtype", assetListEntry.getAssetEntrySubtype()
+					).put(
 						"itemType", assetListEntry.getAssetEntryType()
 					).put(
 						"title", assetListEntry.getTitle()

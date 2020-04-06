@@ -119,7 +119,7 @@ const Layout = ({
 		formData.append(`${namespace}plid`, sourceItemId);
 		formData.append(`${namespace}parentPlid`, parentItemId);
 
-		if (position) {
+		if (Number.isInteger(position)) {
 			formData.append(`${namespace}priority`, position);
 		}
 

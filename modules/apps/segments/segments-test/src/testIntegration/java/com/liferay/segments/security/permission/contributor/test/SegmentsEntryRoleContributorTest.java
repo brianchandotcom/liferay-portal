@@ -78,7 +78,7 @@ public class SegmentsEntryRoleContributorTest {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
@@ -98,28 +98,11 @@ public class SegmentsEntryRoleContributorTest {
 
 		_user = UserTestUtil.addUser();
 
-		String criteriaString = RandomTestUtil.randomString();
-
-		_user.setLastName(criteriaString);
+		_user.setLastName(RandomTestUtil.randomString());
 
 		_user = _userLocalService.updateUser(_user);
 
-		_segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			TestPropsValues.getGroupId(),
-			JSONUtil.put(
-				"criteria",
-				JSONUtil.put(
-					"user",
-					JSONUtil.put(
-						"conjunction", "and"
-					).put(
-						"filterString",
-						String.format("(lastName eq '%s')", criteriaString)
-					).put(
-						"typeValue", "model"
-					))
-			).toString(),
-			User.class.getName());
+		_segmentsEntry = _addSegmentsEntry(_user.getLastName());
 
 		_assertHasPermission(actionKey, false);
 
@@ -156,6 +139,27 @@ public class SegmentsEntryRoleContributorTest {
 			});
 	}
 
+	private SegmentsEntry _addSegmentsEntry(String userLastName)
+		throws Exception {
+
+		return SegmentsTestUtil.addSegmentsEntry(
+			TestPropsValues.getGroupId(),
+			JSONUtil.put(
+				"criteria",
+				JSONUtil.put(
+					"user",
+					JSONUtil.put(
+						"conjunction", "and"
+					).put(
+						"filterString",
+						String.format("(lastName eq '%s')", userLastName)
+					).put(
+						"typeValue", "model"
+					))
+			).toString(),
+			User.class.getName());
+	}
+
 	private void _assertHasGroupPermission(boolean hasPermission)
 		throws Exception {
 
@@ -188,25 +192,6 @@ public class SegmentsEntryRoleContributorTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private void _setUpSegmentsEntry(String criteriaString) throws Exception {
-		_segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			TestPropsValues.getGroupId(),
-			JSONUtil.put(
-				"criteria",
-				JSONUtil.put(
-					"user",
-					JSONUtil.put(
-						"conjunction", "and"
-					).put(
-						"filterString",
-						String.format("(lastName eq '%s')", criteriaString)
-					).put(
-						"typeValue", "model"
-					))
-			).toString(),
-			User.class.getName());
-	}
-
 	private void _setUpSiteRole() throws Exception {
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
 
@@ -232,7 +217,7 @@ public class SegmentsEntryRoleContributorTest {
 
 		String randomString = RandomTestUtil.randomString();
 
-		_setUpSegmentsEntry(randomString);
+		_segmentsEntry = _addSegmentsEntry(randomString);
 		_setUpUser(randomString);
 
 		_assertHasGroupPermission(false);

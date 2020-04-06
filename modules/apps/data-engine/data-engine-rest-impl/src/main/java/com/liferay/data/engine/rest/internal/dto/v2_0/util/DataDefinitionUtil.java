@@ -31,8 +31,12 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -169,7 +173,7 @@ public class DataDefinitionUtil {
 	}
 
 	private static DDMFormFieldOptions _getDDMFormFieldOptions(
-		Map<String, List<Map<String, String>>> options) {
+		Map<String, ?> options) {
 
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
@@ -177,14 +181,41 @@ public class DataDefinitionUtil {
 			return ddmFormFieldOptions;
 		}
 
-		for (Map.Entry<String, List<Map<String, String>>> entry :
-				options.entrySet()) {
+		for (Map.Entry<String, ?> entry : options.entrySet()) {
+			Object value = entry.getValue();
 
-			for (Map<String, String> option : entry.getValue()) {
-				ddmFormFieldOptions.addOptionLabel(
-					MapUtil.getString(option, "value"),
-					LocaleUtil.fromLanguageId(entry.getKey()),
-					MapUtil.getString(option, "label"));
+			Class<?> clazz = value.getClass();
+
+			if (clazz.isArray()) {
+				Object[] values = (Object[])value;
+
+				for (int i = 0; i < values.length; i++) {
+					try {
+						JSONObject jsonObject =
+							JSONFactoryUtil.createJSONObject(
+								values[i].toString());
+
+						ddmFormFieldOptions.addOptionLabel(
+							jsonObject.getString("value"),
+							LocaleUtil.fromLanguageId(entry.getKey()),
+							jsonObject.getString("label"));
+					}
+					catch (JSONException jsonException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(jsonException, jsonException);
+						}
+					}
+				}
+			}
+			else {
+				for (Map<String, String> option :
+						(List<Map<String, String>>)value) {
+
+					ddmFormFieldOptions.addOptionLabel(
+						MapUtil.getString(option, "value"),
+						LocaleUtil.fromLanguageId(entry.getKey()),
+						MapUtil.getString(option, "label"));
+				}
 			}
 		}
 
@@ -392,8 +423,7 @@ public class DataDefinitionUtil {
 					ddmFormField.setProperty(
 						entry.getKey(),
 						_getDDMFormFieldOptions(
-							(Map<String, List<Map<String, String>>>)
-								entry.getValue()));
+							(Map<String, ?>)entry.getValue()));
 				}
 				else if (Objects.equals(
 							settingsDDMFormField.getType(), "validation")) {
@@ -539,5 +569,8 @@ public class DataDefinitionUtil {
 		"indexType", "label", "localizable", "name", "predefinedValue",
 		"readOnly", "repeatable", "required", "showLabel", "tip", "type"
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DataDefinitionUtil.class);
 
 }

@@ -15,8 +15,12 @@
 package com.liferay.fragment.web.internal.struts;
 
 import com.liferay.fragment.importer.FragmentsImporter;
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -79,6 +83,42 @@ public class ImportFragmentEntriesStrutsAction implements StrutsAction {
 
 			jsonObject.put(
 				"invalidFragmentEntryNames", invalidFragmentEntryNames);
+
+			List<LayoutPageTemplatesImporterResultEntry>
+				layoutPageTemplatesImporterResultEntries =
+					_layoutPageTemplatesImporter.importFile(
+						themeDisplay.getUserId(), groupId, 0L, file, true);
+
+			JSONArray invalidPageTemplatesJSONArray =
+				JSONFactoryUtil.createJSONArray();
+
+			for (LayoutPageTemplatesImporterResultEntry
+					layoutPageTemplatesImporterResultEntry :
+						layoutPageTemplatesImporterResultEntries) {
+
+				LayoutPageTemplatesImporterResultEntry.Status status =
+					layoutPageTemplatesImporterResultEntry.getStatus();
+
+				if (status ==
+						LayoutPageTemplatesImporterResultEntry.Status.
+							IMPORTED) {
+
+					continue;
+				}
+
+				invalidPageTemplatesJSONArray.put(
+					JSONUtil.put(
+						"errorMessage",
+						layoutPageTemplatesImporterResultEntry.getErrorMessage()
+					).put(
+						"name", layoutPageTemplatesImporterResultEntry.getName()
+					).put(
+						"status", status.getLabel()
+					));
+			}
+
+			jsonObject.put(
+				"invalidPageTemplates", invalidPageTemplatesJSONArray);
 		}
 
 		ServletResponseUtil.write(httpServletResponse, jsonObject.toString());
@@ -88,6 +128,9 @@ public class ImportFragmentEntriesStrutsAction implements StrutsAction {
 
 	@Reference
 	private FragmentsImporter _fragmentsImporter;
+
+	@Reference
+	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
 
 	@Reference
 	private Portal _portal;

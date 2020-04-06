@@ -14,7 +14,9 @@
 
 package com.liferay.asset.list.service.impl;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
@@ -25,6 +27,7 @@ import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.list.service.base.AssetListEntryLocalServiceBaseImpl;
+import com.liferay.asset.util.AssetRendererFactoryWrapper;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -167,7 +170,11 @@ public class AssetListEntryLocalServiceImpl
 		assetListEntry.setType(type);
 
 		if (type == AssetListEntryTypeConstants.TYPE_DYNAMIC) {
-			assetListEntry.setAssetEntryType(_getAssetEntryType(typeSettings));
+			String assetEntryType = _getAssetEntryType(typeSettings);
+
+			assetListEntry.setAssetEntrySubtype(
+				_getAssetEntrySubtype(assetEntryType, typeSettings));
+			assetListEntry.setAssetEntryType(assetEntryType);
 		}
 		else {
 			assetListEntry.setAssetEntryType(AssetEntry.class.getName());
@@ -372,9 +379,14 @@ public class AssetListEntryLocalServiceImpl
 		if (assetListEntry.getType() ==
 				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
 
-			assetListEntry.setAssetEntryType(
-				_getSegmentsAssetEntryType(
-					assetListEntryId, segmentsEntryId, typeSettings));
+			String assetEntryType = _getSegmentsAssetEntryType(
+				assetListEntryId, segmentsEntryId, typeSettings);
+
+			assetListEntry.setAssetEntrySubtype(
+				_getSegmentsAssetEntrySubtype(
+					assetEntryType, assetListEntryId, segmentsEntryId,
+					typeSettings));
+			assetListEntry.setAssetEntryType(assetEntryType);
 		}
 
 		assetListEntry = assetListEntryPersistence.update(assetListEntry);
@@ -437,9 +449,14 @@ public class AssetListEntryLocalServiceImpl
 		if (assetListEntry.getType() ==
 				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
 
-			assetListEntry.setAssetEntryType(
-				_getSegmentsAssetEntryType(
-					assetListEntryId, segmentsEntryId, typeSettings));
+			String assetEntryType = _getSegmentsAssetEntryType(
+				assetListEntryId, segmentsEntryId, typeSettings);
+
+			assetListEntry.setAssetEntrySubtype(
+				_getSegmentsAssetEntrySubtype(
+					assetEntryType, assetListEntryId, segmentsEntryId,
+					typeSettings));
+			assetListEntry.setAssetEntryType(assetEntryType);
 		}
 
 		assetListEntryPersistence.update(assetListEntry);
@@ -474,6 +491,49 @@ public class AssetListEntryLocalServiceImpl
 		}
 	}
 
+	private String _getAssetEntrySubtype(
+		String assetEntryType, String typeSettings) {
+
+		if (Validator.isNull(typeSettings) ||
+			Validator.isNull(assetEntryType) ||
+			!_isSupportsItemSubtypes(assetEntryType)) {
+
+			return StringPool.BLANK;
+		}
+
+		try {
+			UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+			unicodeProperties.load(typeSettings);
+
+			String anyAssetClassTypeString = unicodeProperties.getProperty(
+				"anyClassType" + _getAssetRendererFactoryName(assetEntryType));
+
+			boolean anyAssetClassType = GetterUtil.getBoolean(
+				anyAssetClassTypeString);
+
+			if (anyAssetClassType) {
+				return StringPool.BLANK;
+			}
+
+			long defaultAssetClassTypeId = GetterUtil.getLong(
+				anyAssetClassTypeString, -1);
+
+			if (defaultAssetClassTypeId > -1) {
+				return String.valueOf(defaultAssetClassTypeId);
+			}
+
+			return StringPool.BLANK;
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException, ioException);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private String _getAssetEntryType(String typeSettings) {
 		if (Validator.isNull(typeSettings)) {
 			return AssetEntry.class.getName();
@@ -500,6 +560,27 @@ public class AssetListEntryLocalServiceImpl
 		}
 
 		return AssetEntry.class.getName();
+	}
+
+	private String _getAssetRendererFactoryName(String assetEntryType) {
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				assetEntryType);
+
+		Class<?> clazz = assetRendererFactory.getClass();
+
+		if (assetRendererFactory instanceof AssetRendererFactoryWrapper) {
+			AssetRendererFactoryWrapper assetRendererFactoryWrapper =
+				(AssetRendererFactoryWrapper)assetRendererFactory;
+
+			clazz = assetRendererFactoryWrapper.getWrappedClass();
+		}
+
+		String className = clazz.getName();
+
+		int pos = className.lastIndexOf(StringPool.PERIOD);
+
+		return className.substring(pos + 1);
 	}
 
 	private String _getManualAssetEntryType(long assetListEntryId) {
@@ -533,6 +614,38 @@ public class AssetListEntryLocalServiceImpl
 		return assetEntryType;
 	}
 
+	private String _getSegmentsAssetEntrySubtype(
+		String assetEntryType, long assetListEntryId, long segmentsEntryId,
+		String typeSettings) {
+
+		String assetEntrySubtype = _getAssetEntrySubtype(
+			assetEntryType, typeSettings);
+
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
+			_assetListEntrySegmentsEntryRelLocalService.
+				getAssetListEntrySegmentsEntryRels(
+					assetListEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel :
+				assetListEntrySegmentsEntryRels) {
+
+			if ((assetListEntrySegmentsEntryRel.getSegmentsEntryId() ==
+					segmentsEntryId) ||
+				Objects.equals(
+					assetEntrySubtype,
+					_getAssetEntrySubtype(
+						assetEntryType,
+						assetListEntrySegmentsEntryRel.getTypeSettings()))) {
+
+				continue;
+			}
+
+			return StringPool.BLANK;
+		}
+
+		return assetEntrySubtype;
+	}
+
 	private String _getSegmentsAssetEntryType(
 		long assetListEntryId, long segmentsEntryId, String typeSettings) {
 
@@ -560,6 +673,20 @@ public class AssetListEntryLocalServiceImpl
 		}
 
 		return assetEntryType;
+	}
+
+	private boolean _isSupportsItemSubtypes(String assetEntryType) {
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				assetEntryType);
+
+		if ((assetRendererFactory != null) &&
+			assetRendererFactory.isSupportsClassTypes()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _validateTitle(long groupId, String title)

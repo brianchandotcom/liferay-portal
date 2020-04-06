@@ -178,17 +178,19 @@ public class SegmentsEntryRoleLocalServiceTest {
 	}
 
 	@Test
-	public void testSetSiteRoles() throws Exception {
+	public void testSetSegmentsEntrySiteRoles() throws Exception {
 		for (int i = 0; i < 10; i++) {
 			_roles.add(RoleTestUtil.addRole(RoleConstants.TYPE_SITE));
 		}
 
-		_testSetSiteRoles(_roles.subList(0, 4));
-		_testSetSiteRoles(_roles.subList(5, 9));
-		_testSetSiteRoles(_roles.subList(3, 7));
+		_testSetSegmentsEntrySiteRoles(_roles.subList(0, 4));
+		_testSetSegmentsEntrySiteRoles(_roles.subList(5, 9));
+		_testSetSegmentsEntrySiteRoles(_roles.subList(3, 7));
 	}
 
-	private void _testSetSiteRoles(List<Role> roles) throws Exception {
+	private void _testSetSegmentsEntrySiteRoles(List<Role> roles)
+		throws Exception {
+
 		long[] roleIds = ListUtil.toLongArray(roles, Role.ROLE_ID_ACCESSOR);
 
 		_segmentsEntryRoleLocalService.setSegmentsEntrySiteRoles(

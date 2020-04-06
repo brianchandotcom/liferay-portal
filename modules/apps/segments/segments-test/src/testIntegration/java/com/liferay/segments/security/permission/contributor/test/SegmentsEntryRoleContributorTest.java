@@ -15,7 +15,6 @@
 package com.liferay.segments.security.permission.contributor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -83,6 +82,58 @@ public class SegmentsEntryRoleContributorTest {
 	}
 
 	@Test
+	public void testHasGroupPermissionWhenDeletingSegmentsEntry()
+		throws Exception {
+
+		_setUpHasGroupPermissionTest();
+
+		_segmentsEntryLocalService.deleteSegmentsEntry(
+			_segmentsEntry.getSegmentsEntryId());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
+
+		Assert.assertFalse(
+			permissionChecker.hasPermission(
+				TestPropsValues.getGroupId(), Group.class.getName(),
+				TestPropsValues.getGroupId(), _ACTION_KEY));
+	}
+
+	@Test
+	public void testHasGroupPermissionWhenDeletingSegmentsEntryRole()
+		throws Exception {
+
+		_setUpHasGroupPermissionTest();
+
+		_segmentsEntryRoleLocalService.setSegmentsEntrySiteRoles(
+			_segmentsEntry.getSegmentsEntryId(), new long[0],
+			ServiceContextTestUtil.getServiceContext());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
+
+		Assert.assertFalse(
+			permissionChecker.hasPermission(
+				TestPropsValues.getGroupId(), Group.class.getName(),
+				TestPropsValues.getGroupId(), _ACTION_KEY));
+	}
+
+	@Test
+	public void testHasGroupPermissionWhenDeletingSiteRole() throws Exception {
+		_setUpHasGroupPermissionTest();
+
+		_roleLocalService.deleteRole(_role.getRoleId());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
+
+		Assert.assertFalse(
+			permissionChecker.hasPermission(
+				TestPropsValues.getGroupId(), Group.class.getName(),
+				TestPropsValues.getGroupId(), _ACTION_KEY));
+	}
+
+	@Test
 	public void testHasPermission() throws Exception {
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -124,32 +175,6 @@ public class SegmentsEntryRoleContributorTest {
 				_organization.getOrganizationId(), actionKey));
 	}
 
-	@Test
-	public void testHasGroupPermissionWhenDeletingSegmentsEntry() throws Exception {
-		_testDeprovisionUser(
-			() -> {
-				_segmentsEntryLocalService.deleteSegmentsEntry(
-					_segmentsEntry.getSegmentsEntryId());
-
-				_segmentsEntry = null;
-			});
-	}
-
-	@Test
-	public void testHasGroupPermissionWhenDeletingSegmentsEntryRole() throws Exception {
-		_testDeprovisionUser(() -> _provisionSiteRoles(new long[0]));
-	}
-
-	@Test
-	public void testHasGroupPermissionWhenDeletingSiteRole() throws Exception {
-		_testDeprovisionUser(
-			() -> {
-				_roleLocalService.deleteRole(_role.getRoleId());
-
-				_role = null;
-			});
-	}
-
 	private SegmentsEntry _addSegmentsEntry(String userLastName)
 		throws Exception {
 
@@ -171,13 +196,7 @@ public class SegmentsEntryRoleContributorTest {
 			User.class.getName());
 	}
 
-	private void _provisionSiteRoles(long[] siteRoleIds) throws Exception {
-		_segmentsEntryRoleLocalService.setSegmentsEntrySiteRoles(
-			_segmentsEntry.getSegmentsEntryId(), siteRoleIds,
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	private void _setUpSiteRole() throws Exception {
+	private void _setUpHasGroupPermissionTest() throws Exception {
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
 
 		_resourcePermissionLocalService.addResourcePermission(
@@ -185,25 +204,14 @@ public class SegmentsEntryRoleContributorTest {
 			ResourceConstants.SCOPE_GROUP,
 			String.valueOf(TestPropsValues.getGroupId()), _role.getRoleId(),
 			_ACTION_KEY);
-	}
 
-	private void _setUpUser(String lastName) throws Exception {
 		_user = UserTestUtil.addUser(TestPropsValues.getGroupId());
 
-		_user.setLastName(lastName);
+		_user.setLastName(RandomTestUtil.randomString());
 
 		_user = _userLocalService.updateUser(_user);
-	}
 
-	private void _testDeprovisionUser(UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		_setUpSiteRole();
-
-		String randomString = RandomTestUtil.randomString();
-
-		_segmentsEntry = _addSegmentsEntry(randomString);
-		_setUpUser(randomString);
+		_segmentsEntry = _addSegmentsEntry(_user.getLastName());
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_user);
@@ -213,20 +221,13 @@ public class SegmentsEntryRoleContributorTest {
 				TestPropsValues.getGroupId(), Group.class.getName(),
 				TestPropsValues.getGroupId(), _ACTION_KEY));
 
-		_provisionSiteRoles(new long[] {_role.getRoleId()});
+		_segmentsEntryRoleLocalService.setSegmentsEntrySiteRoles(
+			_segmentsEntry.getSegmentsEntryId(), new long[] {_role.getRoleId()},
+			ServiceContextTestUtil.getServiceContext());
 
 		permissionChecker = PermissionCheckerFactoryUtil.create(_user);
 
 		Assert.assertTrue(
-			permissionChecker.hasPermission(
-				TestPropsValues.getGroupId(), Group.class.getName(),
-				TestPropsValues.getGroupId(), _ACTION_KEY));
-
-		unsafeRunnable.run();
-
-		permissionChecker = PermissionCheckerFactoryUtil.create(_user);
-
-		Assert.assertFalse(
 			permissionChecker.hasPermission(
 				TestPropsValues.getGroupId(), Group.class.getName(),
 				TestPropsValues.getGroupId(), _ACTION_KEY));

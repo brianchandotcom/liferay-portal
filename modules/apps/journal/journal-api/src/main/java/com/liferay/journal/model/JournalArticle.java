@@ -115,8 +115,12 @@ public interface JournalArticle
 
 	public String getDescription(String languageId, boolean useDefault);
 
+	@com.liferay.portal.kernel.json.JSON
+	public String getDescriptionCurrentValue();
+
 	public java.util.Map<java.util.Locale, String> getDescriptionMap();
 
+	@com.liferay.portal.kernel.json.JSON
 	public String getDescriptionMapAsXML();
 
 	public com.liferay.portal.kernel.xml.Document getDocument();
@@ -196,6 +200,7 @@ public interface JournalArticle
 
 	public java.util.Map<java.util.Locale, String> getTitleMap();
 
+	@com.liferay.portal.kernel.json.JSON
 	public String getTitleMapAsXML();
 
 	public String getUrlTitle(java.util.Locale locale)

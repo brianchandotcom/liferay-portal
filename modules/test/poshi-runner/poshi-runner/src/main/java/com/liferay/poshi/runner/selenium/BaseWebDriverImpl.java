@@ -3056,10 +3056,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("const cm = arguments[0].CodeMirror;");
-		sb.append("const doc= cm.getDoc();");		
+		sb.append("const doc= cm.getDoc();");
 		sb.append("doc.setValue(arguments[1]);");
 
-		javascriptExecutor.executeScript(sb.toString(),webElement,value);
+		javascriptExecutor.executeScript(sb.toString(), webElement, value);
 	}
 
 	@Override

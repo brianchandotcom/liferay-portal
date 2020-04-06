@@ -125,7 +125,7 @@ public class SegmentsEntryRoleContributorTest {
 	}
 
 	@Test
-	public void testWhenDeleteSegmentsEntry() throws Exception {
+	public void testHasGroupPermissionWhenDeletingSegmentsEntry() throws Exception {
 		_testDeprovisionUser(
 			() -> {
 				_segmentsEntryLocalService.deleteSegmentsEntry(
@@ -136,12 +136,12 @@ public class SegmentsEntryRoleContributorTest {
 	}
 
 	@Test
-	public void testWhenDeleteSegmentsEntryRole() throws Exception {
+	public void testHasGroupPermissionWhenDeletingSegmentsEntryRole() throws Exception {
 		_testDeprovisionUser(() -> _provisionSiteRoles(new long[0]));
 	}
 
 	@Test
-	public void testWhenDeleteSiteRole() throws Exception {
+	public void testHasGroupPermissionWhenDeletingSiteRole() throws Exception {
 		_testDeprovisionUser(
 			() -> {
 				_roleLocalService.deleteRole(_role.getRoleId());

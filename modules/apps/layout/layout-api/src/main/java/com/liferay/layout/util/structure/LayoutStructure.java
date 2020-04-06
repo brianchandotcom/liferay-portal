@@ -95,7 +95,7 @@ public class LayoutStructure {
 		_updateLayoutStructure(collectionLayoutStructureItem, position);
 
 		addCollectionItemLayoutStructureItem(
-			collectionLayoutStructureItem.getParentItemId(), 0);
+			collectionLayoutStructureItem.getItemId(), 0);
 
 		return collectionLayoutStructureItem;
 	}

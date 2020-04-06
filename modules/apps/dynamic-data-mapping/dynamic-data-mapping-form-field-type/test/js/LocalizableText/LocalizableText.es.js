@@ -217,10 +217,7 @@ describe('Field LocalizableText', () => {
 		expect(component).toMatchSnapshot();
 	});
 
-	/**
-	 * Test skipped due to getRawListeners_ bug
-	 */
-	xit('fills with the selected language value when the selected language is translated', async () => {
+	it('fills with the selected language value when the selected language is translated', async () => {
 		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			value: {
@@ -248,15 +245,14 @@ describe('Field LocalizableText', () => {
 			getByTestId(component.element, 'visibleChangeInput')
 		);
 
-		expect(inputElement.textContent).toEqual('Teste ES');
+		expect(inputElement.value).toEqual('Teste ES');
 
-		expect(triggerButton.textContent).toEqual('ca_ES');
+		expect(triggerButton.textContent).toEqual('ca-es');
 
 		expect(component).toMatchSnapshot();
 	});
 
-	// TODO: Test is flaky
-	xit('fills with the default language value when the selected language is not translated', async () => {
+	it('fills with the default language value when the selected language is not translated', async () => {
 		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			value: {
@@ -289,13 +285,12 @@ describe('Field LocalizableText', () => {
 
 		expect(triggerElement.textContent).toEqual('ja-jp');
 
-		expect(inputComponent.textContent).toEqual('Test EUA');
+		expect(inputComponent.value).toEqual('Test EUA');
 
 		expect(component).toMatchSnapshot();
 	});
 
-	// TODO: Test is flaky
-	xit('adds a new translation for an untranslated item', async () => {
+	it('adds a new translation for an untranslated item', async () => {
 		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			value: {
@@ -336,13 +331,12 @@ describe('Field LocalizableText', () => {
 
 		jest.runAllTimers();
 
-		expect(inputComponent.textContent).toEqual('Test JP');
+		expect(inputComponent.value).toEqual('Test JP');
 
 		expect(component).toMatchSnapshot();
 	});
 
-	// TODO: Test is flaky
-	xit('removes the translation of an item already translated', async () => {
+	it('removes the translation of an item already translated', async () => {
 		component = new LocalizableTextWithContextMock({
 			...defaultLocalizableTextConfig,
 			value: {
@@ -371,7 +365,7 @@ describe('Field LocalizableText', () => {
 			'visibleChangeInput'
 		);
 
-		expect(inputComponent.textContent).toEqual('Teste BR');
+		expect(inputComponent.value).toEqual('Teste BR');
 
 		fireEvent.change(inputComponent, {
 			target: {
@@ -381,7 +375,7 @@ describe('Field LocalizableText', () => {
 
 		jest.runAllTimers();
 
-		expect(inputComponent.textContent).toEqual('');
+		expect(inputComponent.value).toEqual('');
 
 		expect(component).toMatchSnapshot();
 	});

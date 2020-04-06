@@ -19,6 +19,7 @@
 	<property file="${project.dir}/app.server.${env.HOSTNAME}.properties" />
 	<property file="${project.dir}/app.server.properties" />
 
+	<property file="${project.dir}/build.profile-private.properties" />
 	<property file="${project.dir}/build.profile-dxp.properties" />
 	<property file="${project.dir}/build.${user.name}.properties" />
 	<property file="${project.dir}/build.${env.COMPUTERNAME}.properties" />

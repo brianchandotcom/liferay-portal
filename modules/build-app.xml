@@ -15,6 +15,7 @@
 	<property file="../app.server.${env.HOSTNAME}.properties" />
 	<property file="../app.server.properties" />
 
+	<property file="../build.profile-private.properties" />
 	<property file="../build.profile-dxp.properties" />
 	<property file="../build.properties" />
 

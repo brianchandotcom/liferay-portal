@@ -126,14 +126,15 @@ const MillerColumnsItem = ({
 				dropdownActions.push({
 					...action,
 					handler: event =>
-						onClick && onClick({actionURL: action.url, event}),
+						onClick &&
+						onClick({actionURL: action.url, event, namespace}),
 					href: isButton ? null : action.url,
 				});
 			}
 		});
 
 		return dropdownActions;
-	}, [actions, actionHandlers]);
+	}, [actions, actionHandlers, namespace]);
 
 	const quickActions = useMemo(() => {
 		const quickActions = [];

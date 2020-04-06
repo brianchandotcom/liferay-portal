@@ -13,7 +13,7 @@
  */
 
 const actionHandlers = {
-	copyLayout: ({actionURL}) => {
+	copyLayout: ({actionURL, namespace}) => {
 		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
@@ -24,7 +24,7 @@ const actionHandlers = {
 			dialogIframe: {
 				bodyCssClass: 'dialog-with-footer',
 			},
-			id: 'addLayoutDialog',
+			id: `${namespace}addLayoutDialog`,
 			title: Liferay.Language.get('copy-page'),
 			uri: actionURL,
 		});

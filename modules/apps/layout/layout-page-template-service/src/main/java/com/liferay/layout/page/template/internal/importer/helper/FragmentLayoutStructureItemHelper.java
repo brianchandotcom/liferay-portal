@@ -206,6 +206,11 @@ public class FragmentLayoutStructureItemHelper
 			return jsonObject;
 		}
 
+		Map<String, Object> defaultValueMap = (Map<String, Object>)map.get(
+			"defaultValue");
+
+		jsonObject.put("defaultValue", defaultValueMap.get("value"));
+
 		_processMapping(jsonObject, (Map<String, String>)map.get("mapping"));
 
 		return jsonObject;
@@ -227,6 +232,9 @@ public class FragmentLayoutStructureItemHelper
 			return jsonObject;
 		}
 
+		Map<String, Object> defaultValueMap = (Map<String, Object>)hrefMap.get(
+			"defaultValue");
+
 		String target = (String)fragmentLinkMap.get("target");
 
 		if (target != null) {
@@ -240,6 +248,12 @@ public class FragmentLayoutStructureItemHelper
 			jsonObject.put("href", value);
 
 			return jsonObject;
+		}
+
+		value = defaultValueMap.get("value");
+
+		if (value != null) {
+			jsonObject.put("href", value);
 		}
 
 		_processMapping(
@@ -389,8 +403,6 @@ public class FragmentLayoutStructureItemHelper
 					"fieldId", fieldKey
 				);
 			}
-
-			jsonObject.put("defaultValue", map.get("defaultValue"));
 		}
 	}
 

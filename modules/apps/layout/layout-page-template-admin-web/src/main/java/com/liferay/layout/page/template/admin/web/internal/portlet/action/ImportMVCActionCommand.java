@@ -58,7 +58,7 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 
 		String successMessage = LanguageUtil.get(
 			_portal.getHttpServletRequest(actionRequest),
-			"the-files-were-imported-correctly");
+			"the-file-was-processed-correctly");
 
 		SessionMessages.add(actionRequest, "requestProcessed", successMessage);
 	}

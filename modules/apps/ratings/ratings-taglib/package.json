@@ -5,6 +5,15 @@
 		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},
+	"jest": {
+		"setupFilesAfterEnv": [
+			"<rootDir>/test/setup.js"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/setup.js",
+			"<rootDir>/test/utils.js"
+		]
+	},
 	"name": "ratings-taglib",
 	"private": true,
 	"scripts": {

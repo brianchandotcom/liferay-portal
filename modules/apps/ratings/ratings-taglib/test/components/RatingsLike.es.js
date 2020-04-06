@@ -17,15 +17,7 @@ import React from 'react';
 import {act} from 'react-dom/test-utils';
 
 import RatingsLike from '../../src/main/resources/META-INF/resources/js/components/RatingsLike.es';
-
-themeDisplay.getPlid = themeDisplay.getPlid || jest.fn(() => 'plid');
-
-const formDataToObj = formData =>
-	Array.from(formData.entries()).reduce((accumulator, [key, value]) => {
-		accumulator[key] = value;
-
-		return accumulator;
-	}, {});
+import {formDataToObj} from '../utils';
 
 const defaultProps = {
 	className: 'com.liferay.model.RateableEntry',

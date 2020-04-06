@@ -15,6 +15,9 @@
 package com.liferay.captcha.taglib.servlet.taglib;
 
 import com.liferay.captcha.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +57,20 @@ public class CaptchaTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		httpServletRequest.setAttribute("liferay-captcha:captcha:url", _url);
+		httpServletRequest.setAttribute(
+			"liferay-captcha:captcha:url", _getURL(httpServletRequest));
+	}
+
+	private String _getURL(HttpServletRequest httpServletRequest) {
+		if (Validator.isNotNull(_url)) {
+			return _url;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getPathMain() + "/portal/captcha/get_image";
 	}
 
 	private static final String _PAGE = "/captcha/page.jsp";

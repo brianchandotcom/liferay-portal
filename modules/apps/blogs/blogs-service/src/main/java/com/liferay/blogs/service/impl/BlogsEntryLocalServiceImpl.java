@@ -531,6 +531,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				entry.getUserId(), entry.getGroupId(), entryId, imageSelector);
 		}
 
+		_validate(smallImageFileEntryId);
+
 		entry.setSmallImage(smallImage);
 		entry.setSmallImageFileEntryId(smallImageFileEntryId);
 		entry.setSmallImageURL(smallImageURL);

@@ -26,10 +26,6 @@ import java.util.Objects;
  */
 public class CollectionLayoutStructureItem extends LayoutStructureItem {
 
-	public static final String LIST_FORMAT_GRID = "grid";
-
-	public static final String LIST_FORMAT_STACKED = "stacked";
-
 	public CollectionLayoutStructureItem(String parentItemId) {
 		super(parentItemId);
 	}
@@ -104,7 +100,7 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	public boolean isListFormatGrid() {
-		if (Objects.equals(getListFormat(), LIST_FORMAT_GRID)) {
+		if (Objects.equals(getListFormat(), _LIST_FORMAT_GRID)) {
 			return true;
 		}
 
@@ -112,7 +108,7 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	public boolean isListFormatStacked() {
-		if (Objects.equals(getListFormat(), LIST_FORMAT_STACKED)) {
+		if (Objects.equals(getListFormat(), _LIST_FORMAT_STACKED)) {
 			return true;
 		}
 
@@ -155,8 +151,12 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 		}
 	}
 
+	private static final String _LIST_FORMAT_GRID = "grid";
+
+	private static final String _LIST_FORMAT_STACKED = "stacked";
+
 	private JSONObject _collectionJSONObject;
-	private String _listFormat = LIST_FORMAT_STACKED;
+	private String _listFormat = _LIST_FORMAT_STACKED;
 	private int _numberOfColumns = 3;
 	private int _numberOfItems = 3;
 

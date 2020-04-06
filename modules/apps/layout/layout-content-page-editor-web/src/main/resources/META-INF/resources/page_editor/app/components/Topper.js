@@ -223,7 +223,9 @@ export default function Topper({children, item, itemRef, layoutData}) {
 
 				const multiSelect = event.shiftKey;
 
-				selectItem(item.itemId, {multiSelect});
+				if (activeItemId !== item.itemId) {
+					selectItem(item.itemId, {multiSelect});
+				}
 			}}
 			onMouseLeave={event => {
 				event.stopPropagation();

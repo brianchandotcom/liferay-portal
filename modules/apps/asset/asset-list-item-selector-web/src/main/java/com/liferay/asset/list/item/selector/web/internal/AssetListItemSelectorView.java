@@ -14,6 +14,10 @@
 
 package com.liferay.asset.list.item.selector.web.internal;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.list.util.AssetListPortletUtil;
@@ -29,8 +33,11 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -102,6 +109,9 @@ public class AssetListItemSelectorView
 				(HttpServletRequest)servletRequest,
 				infoListItemSelectorCriterion, portletURL));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetListItemSelectorView.class);
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
@@ -178,8 +188,22 @@ public class AssetListItemSelectorView
 
 				@Override
 				public String getSubtitle(Locale locale) {
-					return ResourceActionsUtil.getModelResource(
+					String subtitle = ResourceActionsUtil.getModelResource(
 						locale, assetListEntry.getAssetEntryType());
+
+					if (Validator.isNull(
+							assetListEntry.getAssetEntrySubtype())) {
+
+						return subtitle;
+					}
+
+					String subtypeLabel = _getAssetEntrySubtypeSubtypeLabel();
+
+					if (Validator.isNull(subtypeLabel)) {
+						return subtitle;
+					}
+
+					return subtitle + " - " + subtypeLabel;
 				}
 
 				@Override
@@ -200,6 +224,47 @@ public class AssetListItemSelectorView
 				@Override
 				public String getUserName() {
 					return assetListEntry.getUserName();
+				}
+
+				private String _getAssetEntrySubtypeSubtypeLabel() {
+					long classTypeId = GetterUtil.getLong(
+						assetListEntry.getAssetEntrySubtype());
+
+					if (classTypeId <= 0) {
+						return StringPool.BLANK;
+					}
+
+					AssetRendererFactory assetRendererFactory =
+						AssetRendererFactoryRegistryUtil.
+							getAssetRendererFactoryByClassName(
+								assetListEntry.getAssetEntryType());
+
+					if ((assetRendererFactory == null) ||
+						!assetRendererFactory.isSupportsClassTypes()) {
+
+						return StringPool.BLANK;
+					}
+
+					ClassTypeReader classTypeReader =
+						assetRendererFactory.getClassTypeReader();
+
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)_httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					try {
+						ClassType classType = classTypeReader.getClassType(
+							classTypeId, themeDisplay.getLocale());
+
+						return classType.getName();
+					}
+					catch (PortalException portalException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(portalException, portalException);
+						}
+					}
+
+					return StringPool.BLANK;
 				}
 
 			};

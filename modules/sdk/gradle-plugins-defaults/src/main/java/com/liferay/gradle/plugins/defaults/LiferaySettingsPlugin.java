@@ -172,6 +172,24 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		return Objects.equals(buildProfile, "dxp");
 	}
 
+	private boolean _includePrivateProjects(Path projectPathRootDirPath) {
+		File portalRootDir = GradleUtil.getRootDir(
+			projectPathRootDirPath.toFile(), "portal-impl");
+
+		if (portalRootDir == null) {
+			return true;
+		}
+
+		File buildProfilePrivatePropertiesFile = new File(
+			portalRootDir, "build.profile-private.properties");
+
+		if (buildProfilePrivatePropertiesFile.exists()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _includeProject(
 		Settings settings, Path projectDirPath, Path projectPathRootDirPath,
 		String projectPathPrefix) {
@@ -213,6 +231,8 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 
 		final boolean includeDXPProjects = _includeDXPProjects(
 			buildProfile, buildProfileFileNames, projectPathRootDirPath);
+		final boolean includePrivateProjects = _includePrivateProjects(
+			projectPathRootDirPath);
 
 		Files.walkFileTree(
 			projectPathRootDirPath, EnumSet.of(FileVisitOption.FOLLOW_LINKS),
@@ -235,6 +255,14 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 						Path dxpPath = projectPathRootDirPath.resolve("dxp");
 
 						if (dirPath.equals(dxpPath)) {
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+					}
+
+					if (!includePrivateProjects) {
+						Path path = projectPathRootDirPath.resolve("private");
+
+						if (dirPath.equals(path)) {
 							return FileVisitResult.SKIP_SUBTREE;
 						}
 					}

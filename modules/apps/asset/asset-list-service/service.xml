@@ -27,6 +27,7 @@
 		<column name="title" type="String" />
 		<column name="type" type="int" />
 		<column name="assetEntryType" type="String" />
+		<column name="assetEntrySubtype" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->

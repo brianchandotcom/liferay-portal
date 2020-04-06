@@ -36,17 +36,24 @@ public class LayoutPageTemplatesImporterResultEntry {
 		_errorMessage = errorMessage;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #LayoutPageTemplatesImporterResultEntry(String, int, Status)}
+	 */
+	@Deprecated
 	public LayoutPageTemplatesImporterResultEntry(String name, Status status) {
-		_name = name;
-		_status = status;
+		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #LayoutPageTemplatesImporterResultEntry(String, int, Status, String)}
+	 */
+	@Deprecated
 	public LayoutPageTemplatesImporterResultEntry(
 		String name, Status status, String errorMessage) {
 
-		_name = name;
-		_status = status;
-		_errorMessage = errorMessage;
+		throw new UnsupportedOperationException();
 	}
 
 	public String getErrorMessage() {

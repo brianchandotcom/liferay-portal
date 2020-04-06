@@ -11,13 +11,12 @@
 
 import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 import {Cell, Pie, PieChart, Tooltip} from 'recharts';
 
 import {numberFormat} from '../utils/numberFormat';
+import EmptyPieChart from './EmptyPieChart';
 import Hint from './Hint';
-
-const {useState} = React;
 
 const COLORS_MAP = {
 	organic: '#7785FF',
@@ -27,7 +26,7 @@ const COLORS_MAP = {
 const PIE_CHART_SIZES = {
 	height: 80,
 	innerRadius: 25,
-	paddingAngle: 5,
+	paddingAngle: 1,
 	radius: 40,
 	width: 100,
 };
@@ -46,6 +45,14 @@ export default function TrafficSources({
 }) {
 	const [highlighted, setHighlighted] = useState(null);
 
+	const fullPieChart = trafficSources.some(trafficSource => {
+		return trafficSource.value !== undefined && trafficSource.value !== 0;
+	});
+
+	const missingTrafficSourceValue = trafficSources.some(trafficSource => {
+		return trafficSource.value === undefined;
+	});
+
 	function handleLegendMouseEnter(name) {
 		setHighlighted(name);
 	}
@@ -55,119 +62,150 @@ export default function TrafficSources({
 	}
 
 	return (
-		<div className="pie-chart-wrapper">
-			<div className="pie-chart-wrapper--legend">
-				<table>
-					<tbody>
-						{trafficSources.map(entry => {
-							return (
-								<tr key={entry.name}>
-									<td
-										className="px-0"
-										onMouseOut={handleLegendMouseLeave}
-										onMouseOver={() =>
-											handleLegendMouseEnter(entry.name)
-										}
-									>
-										<span
-											className="pie-chart-wrapper--legend--dot"
-											style={{
-												backgroundColor: getColorByName(
+		<>
+			{!fullPieChart && !missingTrafficSourceValue && (
+				<div className="mb-2 text-secondary">
+					{Liferay.Language.get(
+						'your-page-has-no-incoming-traffic-from-search-engines-yet'
+					)}
+				</div>
+			)}
+			<div className="pie-chart-wrapper">
+				<div className="pie-chart-wrapper--legend">
+					<table>
+						<tbody>
+							{trafficSources.map(entry => {
+								return (
+									<tr key={entry.name}>
+										<td
+											className="px-0"
+											onMouseOut={handleLegendMouseLeave}
+											onMouseOver={() =>
+												handleLegendMouseEnter(
 													entry.name
-												),
-											}}
-										></span>
-									</td>
-									<td
-										className="pie-chart-wrapper--legend--title text-secondary"
-										onMouseOut={handleLegendMouseLeave}
-										onMouseOver={() =>
-											handleLegendMouseEnter(entry.name)
-										}
-									>
-										<ClayButton
-											className="font-weight-semi-bold px-0 py-1 text-secondary"
-											displayType="link"
-											onClick={() =>
-												onTrafficSourceClick(entry.name)
+												)
 											}
-											small
 										>
-											{entry.title}
-										</ClayButton>
-									</td>
-									<td className="text-secondary">
-										<Hint
-											message={entry.helpMessage}
-											title={entry.title}
-										/>
-									</td>
-									<td className="font-weight-bold">
-										{numberFormat(languageTag, entry.value)}
-									</td>
-								</tr>
-							);
-						})}
-					</tbody>
-				</table>
-			</div>
+											<span
+												className="pie-chart-wrapper--legend--dot"
+												style={{
+													backgroundColor: getColorByName(
+														entry.name
+													),
+												}}
+											></span>
+										</td>
+										<td
+											className="pie-chart-wrapper--legend--title text-secondary"
+											onMouseOut={handleLegendMouseLeave}
+											onMouseOver={() =>
+												handleLegendMouseEnter(
+													entry.name
+												)
+											}
+										>
+											<ClayButton
+												className="font-weight-semi-bold px-0 py-1 text-secondary"
+												displayType="link"
+												onClick={() =>
+													onTrafficSourceClick(
+														entry.name
+													)
+												}
+												small
+											>
+												{entry.title}
+											</ClayButton>
+										</td>
+										<td className="text-secondary">
+											<Hint
+												message={entry.helpMessage}
+												title={entry.title}
+											/>
+										</td>
+										<td className="font-weight-bold">
+											{entry.value !== undefined
+												? numberFormat(
+														languageTag,
+														entry.value
+												  )
+												: '-'}
+										</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
+				</div>
 
-			<div className="pie-chart-wrapper--chart">
-				<PieChart
-					height={PIE_CHART_SIZES.height}
-					width={PIE_CHART_SIZES.width}
-				>
-					<Pie
-						cx="50%"
-						cy="50%"
-						data={trafficSources}
-						dataKey="value"
+				{!fullPieChart && (
+					<EmptyPieChart
+						height={PIE_CHART_SIZES.height}
 						innerRadius={PIE_CHART_SIZES.innerRadius}
-						nameKey={'name'}
-						outerRadius={PIE_CHART_SIZES.radius}
-						paddingAngle={
-							trafficSources.length > 1
-								? PIE_CHART_SIZES.paddingAngle
-								: 0
-						}
-					>
-						{trafficSources.map((entry, i) => {
-							const fillColor = getColorByName(entry.name);
-
-							return (
-								<Cell
-									fill={fillColor}
-									key={i}
-									onMouseOut={handleLegendMouseLeave}
-									onMouseOver={() =>
-										handleLegendMouseEnter(entry.name)
-									}
-									style={{
-										opacity:
-											highlighted &&
-											entry.name !== highlighted
-												? '.4'
-												: '1',
-									}}
-								/>
-							);
-						})}
-					</Pie>
-
-					<Tooltip
-						content={<TrafficSourcesCustomTooltip />}
-						formatter={(value, name, iconType) => {
-							return [
-								numberFormat(languageTag, value),
-								name,
-								iconType,
-							];
-						}}
-						separator={': '}
+						radius={PIE_CHART_SIZES.radius}
+						width={PIE_CHART_SIZES.width}
 					/>
-				</PieChart>
+				)}
+
+				{fullPieChart && (
+					<div className="pie-chart-wrapper--chart">
+						<PieChart
+							height={PIE_CHART_SIZES.height}
+							width={PIE_CHART_SIZES.width}
+						>
+							<Pie
+								cx="50%"
+								cy="50%"
+								data={trafficSources}
+								dataKey="value"
+								innerRadius={PIE_CHART_SIZES.innerRadius}
+								nameKey={'name'}
+								outerRadius={PIE_CHART_SIZES.radius}
+								paddingAngle={PIE_CHART_SIZES.paddingAngle}
+							>
+								{trafficSources.map((entry, i) => {
+									const fillColor = getColorByName(
+										entry.name
+									);
+
+									return (
+										<Cell
+											fill={fillColor}
+											key={i}
+											onMouseOut={handleLegendMouseLeave}
+											onMouseOver={() =>
+												handleLegendMouseEnter(
+													entry.name
+												)
+											}
+											style={{
+												opacity:
+													highlighted &&
+													entry.name !== highlighted
+														? '.4'
+														: '1',
+											}}
+										/>
+									);
+								})}
+							</Pie>
+
+							<Tooltip
+								content={<TrafficSourcesCustomTooltip />}
+								formatter={(value, name, iconType) => {
+									return [
+										numberFormat(languageTag, value),
+										name,
+										iconType,
+									];
+								}}
+								separator={': '}
+							/>
+						</PieChart>
+					</div>
+				)}
 			</div>
-		</div>
+		</>
 	);
 }
 

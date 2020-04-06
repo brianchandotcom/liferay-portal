@@ -76,7 +76,6 @@ export default function TimeSpanSelector({
 }
 
 TimeSpanSelector.proptypes = {
-	chartState: PropTypes.object.isRequired,
 	disabledNextTimeSpan: PropTypes.bool.isRequired,
 	disabledPreviousPeriodButton: PropTypes.bool.isRequired,
 	onNextTimeSpanClick: PropTypes.func.isRequired,

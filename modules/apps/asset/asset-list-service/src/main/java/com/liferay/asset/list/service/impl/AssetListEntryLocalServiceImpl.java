@@ -169,6 +169,9 @@ public class AssetListEntryLocalServiceImpl
 		if (type == AssetListEntryTypeConstants.TYPE_DYNAMIC) {
 			assetListEntry.setAssetEntryType(_getAssetEntryType(typeSettings));
 		}
+		else {
+			assetListEntry.setAssetEntryType(AssetEntry.class.getName());
+		}
 
 		assetListEntry = assetListEntryPersistence.update(assetListEntry);
 

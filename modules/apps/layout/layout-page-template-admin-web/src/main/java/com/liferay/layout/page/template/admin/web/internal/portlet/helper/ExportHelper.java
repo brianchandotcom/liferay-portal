@@ -30,6 +30,7 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.MasterPageConverterUtil;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
@@ -190,7 +191,7 @@ public class ExportHelper {
 				PageDefinitionConverterUtil.toPageDefinition(
 					_fragmentCollectionContributorTracker,
 					_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-					layout);
+					_infoDisplayContributorTracker, layout);
 
 			zipWriter.addEntry(
 				masterLayoutPath + "/page-definition.json",
@@ -260,7 +261,7 @@ public class ExportHelper {
 				PageDefinitionConverterUtil.toPageDefinition(
 					_fragmentCollectionContributorTracker,
 					_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-					layout);
+					_infoDisplayContributorTracker, layout);
 
 			zipWriter.addEntry(
 				layoutPageTemplateEntryPath + "/page-definition.json",
@@ -303,6 +304,9 @@ public class ExportHelper {
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -23,6 +23,7 @@ import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
@@ -119,9 +120,9 @@ public class AddFragmentCompositionMVCActionCommand
 			LayoutStructureUtil.getLayoutStructureItemJSON(
 				_fragmentCollectionContributorTracker,
 				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				themeDisplay.getScopeGroupId(), itemId, themeDisplay.getPlid(),
-				saveInlineContent, saveMappingConfiguration,
-				segmentsExperienceId);
+				themeDisplay.getScopeGroupId(), _infoDisplayContributorTracker,
+				itemId, themeDisplay.getPlid(), saveInlineContent,
+				saveMappingConfiguration, segmentsExperienceId);
 
 		FragmentComposition fragmentComposition =
 			_fragmentCompositionService.addFragmentComposition(
@@ -242,6 +243,9 @@ public class AddFragmentCompositionMVCActionCommand
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private Portal _portal;

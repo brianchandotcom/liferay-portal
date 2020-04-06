@@ -30,6 +30,7 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
@@ -94,6 +95,7 @@ public class LayoutStructureUtil {
 				fragmentCollectionContributorTracker,
 			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 			FragmentRendererTracker fragmentRendererTracker, long groupId,
+			InfoDisplayContributorTracker infoDisplayContributorTracker,
 			String itemId, long plid, boolean saveInlineContent,
 			boolean saveMappingConfiguration, long segmentsExperienceId)
 		throws PortalException {
@@ -110,8 +112,9 @@ public class LayoutStructureUtil {
 		PageElement pageElement = PageDefinitionConverterUtil.toPageElement(
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker, groupId,
-			layoutStructure, layoutStructure.getLayoutStructureItem(itemId),
-			saveInlineContent, saveMappingConfiguration, segmentsExperienceId);
+			infoDisplayContributorTracker, layoutStructure,
+			layoutStructure.getLayoutStructureItem(itemId), saveInlineContent,
+			saveMappingConfiguration, segmentsExperienceId);
 
 		try {
 			SimpleFilterProvider simpleFilterProvider =

@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.File;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -96,31 +94,9 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 				return;
 			}
 
-			Stream<LayoutPageTemplatesImporterResultEntry> stream =
-				layoutPageTemplateImporterResultEntries.stream();
-
-			List<LayoutPageTemplatesImporterResultEntry>
-				notImportedLayoutPageTemplateImporterResultEntries =
-					stream.filter(
-						layoutPageTemplateImportEntry ->
-							layoutPageTemplateImportEntry.getStatus() !=
-								LayoutPageTemplatesImporterResultEntry.Status.
-									IMPORTED
-					).collect(
-						Collectors.toList()
-					);
-
-			if (ListUtil.isNotEmpty(
-					notImportedLayoutPageTemplateImporterResultEntries)) {
-
-				SessionMessages.add(
-					actionRequest,
-					"notImportedLayoutPageTemplatesImporterResultEntries",
-					notImportedLayoutPageTemplateImporterResultEntries);
-			}
-			else {
-				SessionMessages.add(actionRequest, "success");
-			}
+			SessionMessages.add(
+				actionRequest, "layoutPageTemplatesImporterResultEntries",
+				layoutPageTemplateImporterResultEntries);
 		}
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, exception.getClass(), exception);

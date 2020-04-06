@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import React, {useState} from 'react';
 
 import Detail from './components/Detail';
@@ -70,6 +71,10 @@ function Navigation({
 
 	const {getHistoricalReads, getHistoricalViews} = api;
 
+	const warning = trafficSources.some(
+		trafficSource => trafficSource.value === undefined
+	);
+
 	function handleCurrentPage(currentPage) {
 		setCurrentPage({view: currentPage.view});
 	}
@@ -127,6 +132,18 @@ function Navigation({
 
 	return (
 		<>
+			{warning && (
+				<ClayAlert
+					className="p-0"
+					displayType="warning"
+					variant="stripe"
+				>
+					{Liferay.Language.get(
+						'some-data-is-temporarily-unavailable'
+					)}
+				</ClayAlert>
+			)}
+
 			{currentPage.view === 'main' && (
 				<div className="p-3">
 					<Main

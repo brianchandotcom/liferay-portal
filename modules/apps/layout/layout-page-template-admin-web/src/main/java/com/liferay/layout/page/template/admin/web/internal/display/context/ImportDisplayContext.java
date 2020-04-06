@@ -43,7 +43,7 @@ public class ImportDisplayContext {
 	}
 
 	public Map<Integer, List<LayoutPageTemplatesImporterResultEntry>>
-		getImportedLayoutPageTemplatesImporterResultEntries() {
+		getImportedLayoutPageTemplatesImporterResultEntriesMap() {
 
 		Map
 			<LayoutPageTemplatesImporterResultEntry.Status,

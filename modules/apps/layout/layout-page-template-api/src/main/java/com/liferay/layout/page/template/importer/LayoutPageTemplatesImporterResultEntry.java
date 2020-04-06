@@ -19,6 +19,23 @@ package com.liferay.layout.page.template.importer;
  */
 public class LayoutPageTemplatesImporterResultEntry {
 
+	public LayoutPageTemplatesImporterResultEntry(
+		String name, int type, Status status) {
+
+		_name = name;
+		_type = type;
+		_status = status;
+	}
+
+	public LayoutPageTemplatesImporterResultEntry(
+		String name, int type, Status status, String errorMessage) {
+
+		_name = name;
+		_type = type;
+		_status = status;
+		_errorMessage = errorMessage;
+	}
+
 	public LayoutPageTemplatesImporterResultEntry(String name, Status status) {
 		_name = name;
 		_status = status;
@@ -44,6 +61,10 @@ public class LayoutPageTemplatesImporterResultEntry {
 		return _status;
 	}
 
+	public int getType() {
+		return _type;
+	}
+
 	public enum Status {
 
 		IGNORED("ignored"), IMPORTED("imported"), INVALID("invalid");
@@ -63,5 +84,6 @@ public class LayoutPageTemplatesImporterResultEntry {
 	private String _errorMessage;
 	private final String _name;
 	private final Status _status;
+	private int _type;
 
 }

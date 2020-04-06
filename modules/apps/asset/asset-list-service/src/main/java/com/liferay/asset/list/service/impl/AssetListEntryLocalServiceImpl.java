@@ -123,8 +123,12 @@ public class AssetListEntryLocalServiceImpl
 		// Asset list entry
 
 		assetListEntry.setModifiedDate(new Date());
-		assetListEntry.setAssetEntryType(
-			_getManualAssetEntryType(assetListEntryId));
+
+		String assetEntryType = _getManualAssetEntryType(assetListEntryId);
+
+		assetListEntry.setAssetEntrySubtype(
+			_getManualAssetEntrySubtype(assetEntryType, assetListEntryId));
+		assetListEntry.setAssetEntryType(assetEntryType);
 
 		assetListEntryPersistence.update(assetListEntry);
 	}
@@ -257,8 +261,12 @@ public class AssetListEntryLocalServiceImpl
 		// Asset list entry
 
 		assetListEntry.setModifiedDate(new Date());
-		assetListEntry.setAssetEntryType(
-			_getManualAssetEntryType(assetListEntryId));
+
+		String assetEntryType = _getManualAssetEntryType(assetListEntryId);
+
+		assetListEntry.setAssetEntrySubtype(
+			_getManualAssetEntrySubtype(assetEntryType, assetListEntryId));
+		assetListEntry.setAssetEntryType(assetEntryType);
 
 		assetListEntryPersistence.update(assetListEntry);
 	}
@@ -581,6 +589,46 @@ public class AssetListEntryLocalServiceImpl
 		int pos = className.lastIndexOf(StringPool.PERIOD);
 
 		return className.substring(pos + 1);
+	}
+
+	private String _getManualAssetEntrySubtype(
+		String assetEntryType, long assetListEntryId) {
+
+		if (Validator.isNull(assetEntryType) ||
+			!_isSupportsItemSubtypes(assetEntryType)) {
+
+			return StringPool.BLANK;
+		}
+
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRels(
+					assetListEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		if (ListUtil.isEmpty(assetListEntryAssetEntryRels)) {
+			return StringPool.BLANK;
+		}
+
+		String assetEntrySubtype = StringPool.BLANK;
+
+		for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
+				assetListEntryAssetEntryRels) {
+
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				assetListEntryAssetEntryRel.getAssetEntryId());
+
+			if (Validator.isNull(assetEntrySubtype)) {
+				assetEntrySubtype = String.valueOf(assetEntry.getClassTypeId());
+			}
+			else if (!Objects.equals(
+						assetEntrySubtype,
+						String.valueOf(assetEntry.getClassTypeId()))) {
+
+				return StringPool.BLANK;
+			}
+		}
+
+		return assetEntrySubtype;
 	}
 
 	private String _getManualAssetEntryType(long assetListEntryId) {

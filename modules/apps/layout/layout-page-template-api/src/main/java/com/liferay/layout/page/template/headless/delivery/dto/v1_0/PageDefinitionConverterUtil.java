@@ -20,6 +20,8 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.headless.delivery.dto.v1_0.CollectionDefinition;
+import com.liferay.headless.delivery.dto.v1_0.CollectionItemDefinition;
 import com.liferay.headless.delivery.dto.v1_0.ColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.DropZoneDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
@@ -38,6 +40,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.util.PaddingConverter;
+import com.liferay.layout.util.structure.CollectionItemLayoutStructureItem;
+import com.liferay.layout.util.structure.CollectionLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
@@ -60,8 +64,11 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Rubén Pulido
@@ -217,6 +224,26 @@ public class PageDefinitionConverterUtil {
 		return pageElement;
 	}
 
+	private static Map<String, Object> _getConfigAsMap(JSONObject jsonObject) {
+		if (jsonObject == null) {
+			return null;
+		}
+
+		return new HashMap<String, Object>() {
+			{
+				Set<String> keys = jsonObject.keySet();
+
+				Iterator<String> iterator = keys.iterator();
+
+				while (iterator.hasNext()) {
+					String key = iterator.next();
+
+					put(key, jsonObject.get(key));
+				}
+			}
+		};
+	}
+
 	private static boolean _isFragmentEntryKey(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
@@ -362,6 +389,51 @@ public class PageDefinitionConverterUtil {
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
 		boolean saveMappingConfiguration, long segmentsExperienceId) {
+
+		if (layoutStructureItem instanceof CollectionLayoutStructureItem) {
+			CollectionLayoutStructureItem collectionLayoutStructureItem =
+				(CollectionLayoutStructureItem)layoutStructureItem;
+
+			return new PageElement() {
+				{
+					definition = new CollectionDefinition() {
+						{
+							collectionConfig = _getConfigAsMap(
+								collectionLayoutStructureItem.
+									getCollectionJSONObject());
+							listFormat =
+								collectionLayoutStructureItem.getListFormat();
+							numberOfColumns =
+								collectionLayoutStructureItem.
+									getNumberOfColumns();
+							numberOfItems =
+								collectionLayoutStructureItem.
+									getNumberOfItems();
+						}
+					};
+					type = PageElement.Type.COLLECTION;
+				}
+			};
+		}
+
+		if (layoutStructureItem instanceof CollectionItemLayoutStructureItem) {
+			CollectionItemLayoutStructureItem
+				collectionItemLayoutStructureItem =
+					(CollectionItemLayoutStructureItem)layoutStructureItem;
+
+			return new PageElement() {
+				{
+					definition = new CollectionItemDefinition() {
+						{
+							collectionItemConfig = _getConfigAsMap(
+								collectionItemLayoutStructureItem.
+									getItemConfigJSONObject());
+						}
+					};
+					type = PageElement.Type.COLLECTION_ITEM;
+				}
+			};
+		}
 
 		if (layoutStructureItem instanceof ColumnLayoutStructureItem) {
 			ColumnLayoutStructureItem columnLayoutStructureItem =

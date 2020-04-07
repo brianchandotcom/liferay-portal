@@ -56,7 +56,6 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 	<aui:input name="dataDefinition" type="hidden" />
 	<aui:input name="dataLayout" type="hidden" />
 	<aui:input name="dataDefinitionId" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.getDDMStructureId() %>" />
-	<aui:input name="indexable" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.isStructureFieldIndexableEnable() %>" />
 
 	<aui:model-context bean="<%= ddmStructure %>" model="<%= DDMStructure.class %>" />
 

@@ -67,7 +67,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 			/>
 		</div>
 	</c:when>
-	<c:when test="<%= type.equals(RatingsType.STARS.getValue()) %>">
+	<c:when test="<%= type.equals(RatingsType.STARS.getValue()) || type.equals(RatingsType.STACKED_STARS.getValue()) %>">
 		<div>
 			<react:component
 				data="<%= data %>"

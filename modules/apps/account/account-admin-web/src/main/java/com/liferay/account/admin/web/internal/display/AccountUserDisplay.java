@@ -17,17 +17,22 @@ package com.liferay.account.admin.web.internal.display;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
+import com.liferay.account.service.AccountRoleLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,8 +80,23 @@ public class AccountUserDisplay {
 		return _accountNamesStyle;
 	}
 
-	public String getAccountRoles() {
-		return _accountRoles;
+	public String getAccountRoleNames(long accountEntryId, Locale locale)
+		throws PortalException {
+
+		List<AccountRole> accountRoles =
+			AccountRoleLocalServiceUtil.getAccountRoles(
+				accountEntryId, getUserId());
+
+		List<String> accountRoleNames = TransformUtil.transform(
+			accountRoles,
+			accountRole -> {
+				Role role = accountRole.getRole();
+
+				return role.getTitle(locale);
+			});
+
+		return StringUtil.merge(
+			ListUtil.sort(accountRoleNames), StringPool.COMMA_AND_SPACE);
 	}
 
 	public String getEmailAddress() {
@@ -109,7 +129,6 @@ public class AccountUserDisplay {
 
 	private AccountUserDisplay(User user) {
 		_accountNamesStyle = _getAccountNamesStyle(user.getUserId());
-		_accountRoles = StringPool.BLANK;
 		_emailAddress = user.getEmailAddress();
 		_jobTitle = user.getJobTitle();
 		_name = user.getFullName();
@@ -171,7 +190,6 @@ public class AccountUserDisplay {
 	}
 
 	private final String _accountNamesStyle;
-	private final String _accountRoles;
 	private final String _emailAddress;
 	private final String _jobTitle;
 	private final String _name;

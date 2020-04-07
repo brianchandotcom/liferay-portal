@@ -67,7 +67,7 @@ renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					name="account-roles"
-					property="accountRoles"
+					value="<%= accountUser.getAccountRoleNames(accountEntryDisplay.getAccountEntryId(), locale) %>"
 				/>
 
 				<liferay-ui:search-container-column-jsp

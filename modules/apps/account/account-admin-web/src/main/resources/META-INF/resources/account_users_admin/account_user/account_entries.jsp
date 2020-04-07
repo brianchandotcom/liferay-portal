@@ -83,6 +83,11 @@ portletDisplay.setURLBack(backURL);
 				headerNames="name,roles,null"
 				searchContainer="<%= accountEntryDisplaySearchContainer %>"
 			>
+
+				<%
+				AccountUserDisplay accountUserDisplay = AccountUserDisplay.of(selUser);
+				%>
+
 				<liferay-ui:search-container-row
 					className="com.liferay.account.admin.web.internal.display.AccountEntryDisplay"
 					keyProperty="accountEntryId"
@@ -97,7 +102,7 @@ portletDisplay.setURLBack(backURL);
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand"
 						name="roles"
-						value="<%= StringPool.BLANK %>"
+						value="<%= accountUserDisplay.getAccountRoleNames(accountEntryDisplay.getAccountEntryId(), locale) %>"
 					/>
 
 					<liferay-ui:search-container-column-text>

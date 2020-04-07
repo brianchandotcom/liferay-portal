@@ -388,7 +388,7 @@ public abstract class UpgradeProcess
 
 					for (String indexSQL : indexesSQL) {
 						if (alterable.shouldAddIndex(
-								_getIndexColumns(indexSQL))) {
+								_getIndexColumnNames(indexSQL))) {
 
 							runSQLTemplateString(indexSQL, true);
 						}
@@ -669,18 +669,18 @@ public abstract class UpgradeProcess
 		}
 	}
 
-	private Collection<String> _getIndexColumns(String indexSQL) {
+	private Collection<String> _getIndexColumnNames(String indexSQL) {
 		Matcher matcher = _sqlIndexRegexPattern.matcher(indexSQL);
 
 		if (matcher.find()) {
-			String indexColumns = matcher.group(1);
+			String indexColumnNames = matcher.group(1);
 
-			indexColumns = indexColumns.trim();
+			indexColumnNames = indexColumnNames.trim();
 
 			return Stream.of(
-				indexColumns.split(StringPool.COMMA)
+				indexColumnNames.split(StringPool.COMMA)
 			).map(
-				column -> column.replaceFirst("\\[.*", StringPool.BLANK)
+				columnName -> columnName.replaceFirst("\\[.*", StringPool.BLANK)
 			).collect(
 				Collectors.toList()
 			);

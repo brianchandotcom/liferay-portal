@@ -24,7 +24,8 @@ public class UpgradeLock extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(LockTable.class, new AlterColumnType("key_", "VARCHAR(255) null"));
+		alter(
+			LockTable.class, new AlterColumnType("key_", "VARCHAR(255) null"));
 	}
 
 }

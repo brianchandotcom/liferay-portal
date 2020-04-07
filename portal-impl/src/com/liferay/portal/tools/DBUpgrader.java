@@ -127,10 +127,6 @@ public class DBUpgrader {
 
 			StartupHelperUtil.printPatchLevel();
 
-			VerifyProperties verifyProperties = new VerifyProperties();
-
-			verifyProperties.verify();
-
 			upgrade();
 
 			_checkClassNamesAndResourceActions();
@@ -262,6 +258,10 @@ public class DBUpgrader {
 	}
 
 	public static void verify() throws VerifyException {
+		VerifyProperties verifyProperties = new VerifyProperties();
+
+		verifyProperties.verify();
+
 		VerifyGroup verifyGroup = new VerifyGroup();
 
 		verifyGroup.verify();

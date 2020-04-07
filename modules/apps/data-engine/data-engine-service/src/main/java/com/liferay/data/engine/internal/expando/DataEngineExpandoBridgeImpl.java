@@ -168,7 +168,8 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 
 	@Override
 	public void addAttribute(
-			String name, String type, Serializable defaultValue, boolean secure)
+			String name, String fieldType, Serializable defaultValue,
+			boolean secure)
 		throws PortalException {
 
 		DataDefinition dataDefinition = _getDataDefinition();
@@ -192,7 +193,7 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 		Collections.addAll(dataDefinitionFieldsList, dataDefinitionFields);
 
 		DataDefinitionField dataDefinitionField = createDataDefinitionField(
-			name, type, defaultValue);
+			defaultValue, fieldType, name);
 
 		dataDefinitionFieldsList.add(dataDefinitionField);
 
@@ -550,7 +551,7 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	protected DataDefinitionField createDataDefinitionField(
-		String name, String type, Serializable defaultValue) {
+		Serializable defaultValue, String fieldType, String name) {
 
 		DataDefinitionField dataDefinitionField = new DataDefinitionField();
 
@@ -558,7 +559,7 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 			HashMapBuilder.<String, Object>put(
 				"en_US", defaultValue
 			).build());
-		dataDefinitionField.setFieldType(type);
+		dataDefinitionField.setFieldType(fieldType);
 		dataDefinitionField.setName(name);
 
 		return dataDefinitionField;

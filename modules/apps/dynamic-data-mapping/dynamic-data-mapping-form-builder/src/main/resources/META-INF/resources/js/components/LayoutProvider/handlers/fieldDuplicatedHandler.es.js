@@ -25,7 +25,6 @@ export const createDuplicatedField = (originalField, props) => {
 	const {editingLanguageId, fieldNameGenerator} = props;
 	const label = getLabel(originalField, editingLanguageId);
 	const newFieldName = fieldNameGenerator(label);
-	const oldFieldName = originalField.fieldName;
 
 	let duplicatedField = updateField(
 		props,
@@ -40,7 +39,7 @@ export const createDuplicatedField = (originalField, props) => {
 		props,
 		duplicatedField,
 		'validation',
-		getValidation(duplicatedField, oldFieldName, newFieldName)
+		getValidation(duplicatedField)
 	);
 };
 
@@ -54,23 +53,11 @@ export const getLabel = (originalField, editingLanguageId) => {
 	]);
 };
 
-export const getValidation = (originalField, oldFieldName, newFieldName) => {
+export const getValidation = originalField => {
 	const validation = getSettingsContextProperty(
 		originalField.settingsContext,
 		'validation'
 	);
-
-	const expression = validation.expression;
-
-	if (expression && expression.value) {
-		return {
-			...validation,
-			expression: {
-				...validation.expression,
-				value: expression.value.replace(oldFieldName, newFieldName),
-			},
-		};
-	}
 
 	return validation;
 };
@@ -140,7 +127,9 @@ const handleFieldDuplicated = (props, state, event) => {
 	const {fieldName} = event;
 	const {pages} = state;
 
-	const originalField = FormSupport.findFieldByFieldName(pages, fieldName);
+	const originalField = JSON.parse(
+		JSON.stringify(FormSupport.findFieldByFieldName(pages, fieldName))
+	);
 
 	const duplicatedField = createDuplicatedField(originalField, props);
 

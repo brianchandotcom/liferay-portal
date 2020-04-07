@@ -664,6 +664,25 @@ definition {
 		AssertElementNotPresent(locator1 = "Blogs#ENTRY_TABLE_TITLE");
 	}
 
+	macro viewEntryAsWorkflowAsset {
+		SiteAdmin.viewPortletTitle(portletTitle = "${entryTitle}");
+
+		var key_entryContent = "${entryContent}";
+
+		AssertTextEquals(
+			locator1 = "BlogsEntry#CONTENT",
+			value1 = "${entryContent}");
+	}
+
+	macro viewEntryAuthorCP {
+		var entryAuthorFullName = "${entryAuthorFullName}";
+		var key_entryTitle = "${entryTitle}";
+
+		AssertTextEquals(
+			locator1 = "Blogs#ENTRY_TABLE_AUTHOR",
+			value1 = "${entryAuthorFullName}");
+	}
+
 	macro viewEntryCP {
 		var key_entryContent = "${entryContent}";
 		var key_entrySubtitle = "${entrySubtitle}";
@@ -726,6 +745,20 @@ definition {
 		}
 	}
 
+	macro viewEntryExternalURL {
+		BlogsNavigator.gotoEditCP(entryTitle = "${entryTitle}");
+
+		DoubleClick(
+			key_entryContent = "${entryContent}",
+			locator1 = "BlogsEntry#CONTENT_LINK_IN_EDIT");
+
+		Click(locator1 = "AlloyEditor#TEXT_FORMATTING_LINK");
+
+		AssertTextEquals(
+			locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT",
+			value1 = "${entryExternalURL}");
+	}
+
 	macro viewEntryPG {
 		var key_entryContent = "${entryContent}";
 		var key_entrySubtitle = "${entrySubtitle}";
@@ -784,39 +817,6 @@ definition {
 		if (isSet(entryInlineImage)) {
 			BlogsEntry.viewInlineImage(uploadFileName = "${entryInlineImage}");
 		}
-	}
-
-	macro viewEntryAsWorkflowAsset {
-		SiteAdmin.viewPortletTitle(portletTitle = "${entryTitle}");
-
-		var key_entryContent = "${entryContent}";
-
-		AssertTextEquals(
-			locator1 = "BlogsEntry#CONTENT",
-			value1 = "${entryContent}");
-	}
-
-	macro viewEntryAuthorCP {
-		var entryAuthorFullName = "${entryAuthorFullName}";
-		var key_entryTitle = "${entryTitle}";
-
-		AssertTextEquals(
-			locator1 = "Blogs#ENTRY_TABLE_AUTHOR",
-			value1 = "${entryAuthorFullName}");
-	}
-
-	macro viewEntryExternalURL {
-		BlogsNavigator.gotoEditCP(entryTitle = "${entryTitle}");
-
-		DoubleClick(
-			key_entryContent = "${entryContent}",
-			locator1 = "BlogsEntry#CONTENT_LINK_IN_EDIT");
-
-		Click(locator1 = "AlloyEditor#TEXT_FORMATTING_LINK");
-
-		AssertTextEquals(
-			locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT",
-			value1 = "${entryExternalURL}");
 	}
 
 	macro viewEntryTable {

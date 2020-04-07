@@ -38,16 +38,6 @@ if (ddmStructure != null) {
 
 <aui:input defaultLanguageId="<%= (ddmForm == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()) %>" name="description" />
 
-<aui:input name="parentDDMStructureId" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.getParentDDMStructureId() %>" />
-
-<aui:input disabled="<%= true %>" label="parent-structure" name="parentDDMStructureName" type="text" value="<%= journalEditDDMStructuresDisplayContext.getParentDDMStructureName() %>" wrapperCssClass="mb-2" />
-
-<div class="form-group">
-	<aui:button cssClass="mr-3" onClick='<%= renderResponse.getNamespace() + "openParentDDMStructureSelector();" %>' value="select" />
-
-	<aui:button disabled="<%= Validator.isNull(journalEditDDMStructuresDisplayContext.getParentDDMStructureName()) %>" name="removeParentDDMStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentDDMStructure();" %>' value="remove" />
-</div>
-
 <c:if test="<%= ddmStructure != null %>">
 	<portlet:resourceURL id="/journal/get_ddm_structure" var="getDDMStructureURL">
 		<portlet:param name="ddmStructureId" value="<%= String.valueOf(journalEditDDMStructuresDisplayContext.getDDMStructureId()) %>" />

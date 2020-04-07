@@ -23,7 +23,14 @@ import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSe
 import {useDispatch, useSelector} from '../../store/index';
 import updateItemConfig from '../../thunks/updateItemConfig';
 
-const NUMBER_OF_COLUMNS_OPTIONS = ['1', '2', '3', '4', '5', '6'];
+const LAYOUT_OPTIONS = [
+	{label: Liferay.Language.get('full-width'), value: '1'},
+	{label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 2), value: '2'},
+	{label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 3), value: '3'},
+	{label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 4), value: '4'},
+	{label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 5), value: '5'},
+	{label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 6), value: '6'},
+];
 
 function collectionIsMapped(collectionConfig) {
 	return collectionConfig.collection;
@@ -69,23 +76,18 @@ export const CollectionConfigurationPanel = ({item}) => {
 			{collectionIsMapped(item.config) && (
 				<>
 					<ClayForm.Group small>
-						<label htmlFor="collectionNumberOfColumns">
-							{Liferay.Language.get('number-of-columns')}
+						<label htmlFor="collectionLayout">
+							{Liferay.Language.get('layout')}
 						</label>
 						<ClaySelectWithOption
-							aria-label={Liferay.Language.get(
-								'number-of-columns'
-							)}
-							id="collectionNumberOfColumns"
+							aria-label={Liferay.Language.get('layout')}
+							id="collectionLayout"
 							onChange={({target: {value}}) =>
 								handleConfigurationChanged({
 									numberOfColumns: value,
 								})
 							}
-							options={NUMBER_OF_COLUMNS_OPTIONS.map(value => ({
-								label: value,
-								value,
-							}))}
+							options={LAYOUT_OPTIONS}
 							value={item.config.numberOfColumns}
 						/>
 					</ClayForm.Group>

@@ -312,14 +312,14 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
 		SitePages.addPublicPage(
-				pageName = "Test Page",
-				sitePageType = "Widget Page");
+			pageName = "Test Page",
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
-				columnName = "1 Column",
-				pageName = "Test Page",
-				privacy = "Public Pages",
-				sitePageType = "Widget Page");
+			columnName = "1 Column",
+			pageName = "Test Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 

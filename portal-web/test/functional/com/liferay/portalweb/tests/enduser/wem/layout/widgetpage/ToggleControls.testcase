@@ -15,6 +15,12 @@ definition {
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
+
+		JSONGroup.addGroup(groupName = "Secondary Test Site");
+
+		JSONLayout.addPublicLayout(
+				groupName = "Secondary Test Site",
+				layoutName =  "Secondary Widget Page");
 	}
 
 	tearDown {
@@ -24,6 +30,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			JSONGroup.deleteGroupByName(groupName = "Secondary Test Site");
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
@@ -87,8 +94,8 @@ definition {
 				locator1 = "ControlMenu#TOGGLE_CONTROLS");
 
 			Navigator.gotoSitePage(
-				pageName = "Home",
-				siteName = "Guest");
+				pageName = "Secondary Widget Page",
+				siteName = "Secondary Test Site");
 
 			AssertVisible(
 				key_status = "hidden",
@@ -291,8 +298,8 @@ definition {
 
 		task ("Switch Toggle Controls to hidden in current instance") {
 			Navigator.gotoSitePage(
-				pageName = "Home",
-				siteName = "Guest");
+				pageName = "Secondary Widget Page",
+				siteName = "Secondary Test Site");
 
 			Click(
 				key_status = "view",

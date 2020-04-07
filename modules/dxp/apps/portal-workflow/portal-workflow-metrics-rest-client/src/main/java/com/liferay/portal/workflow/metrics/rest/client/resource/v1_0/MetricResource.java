@@ -181,7 +181,7 @@ public interface MetricResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/metric",
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/metrics",
 				processId);
 
 			httpInvoker.userNameAndPassword(

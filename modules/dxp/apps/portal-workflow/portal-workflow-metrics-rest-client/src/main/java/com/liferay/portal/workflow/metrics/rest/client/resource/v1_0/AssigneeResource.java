@@ -14,12 +14,12 @@
 
 package com.liferay.portal.workflow.metrics.rest.client.resource.v1_0;
 
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeUser;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.client.problem.Problem;
-import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.AssigneeUserSerDes;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.AssigneeSerDes;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -34,22 +34,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface AssigneeUserResource {
+public interface AssigneeResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Page<AssigneeUser> postProcessAssigneeUsersPage(
+	public Page<Assignee> postProcessAssigneesPage(
 			Long processId, Pagination pagination, String sortString,
 			com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-				AssigneeUserBulkSelection assigneeUserBulkSelection)
+				AssigneeBulkSelection assigneeBulkSelection)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postProcessAssigneeUsersPageHttpResponse(
+	public HttpInvoker.HttpResponse postProcessAssigneesPageHttpResponse(
 			Long processId, Pagination pagination, String sortString,
 			com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-				AssigneeUserBulkSelection assigneeUserBulkSelection)
+				AssigneeBulkSelection assigneeBulkSelection)
 		throws Exception;
 
 	public static class Builder {
@@ -61,8 +61,8 @@ public interface AssigneeUserResource {
 			return this;
 		}
 
-		public AssigneeUserResource build() {
-			return new AssigneeUserResourceImpl(this);
+		public AssigneeResource build() {
+			return new AssigneeResourceImpl(this);
 		}
 
 		public Builder endpoint(String host, int port, String scheme) {
@@ -105,19 +105,17 @@ public interface AssigneeUserResource {
 
 	}
 
-	public static class AssigneeUserResourceImpl
-		implements AssigneeUserResource {
+	public static class AssigneeResourceImpl implements AssigneeResource {
 
-		public Page<AssigneeUser> postProcessAssigneeUsersPage(
+		public Page<Assignee> postProcessAssigneesPage(
 				Long processId, Pagination pagination, String sortString,
 				com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-					AssigneeUserBulkSelection assigneeUserBulkSelection)
+					AssigneeBulkSelection assigneeBulkSelection)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postProcessAssigneeUsersPageHttpResponse(
-					processId, pagination, sortString,
-					assigneeUserBulkSelection);
+				postProcessAssigneesPageHttpResponse(
+					processId, pagination, sortString, assigneeBulkSelection);
 
 			String content = httpResponse.getContent();
 
@@ -128,7 +126,7 @@ public interface AssigneeUserResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return Page.of(content, AssigneeUserSerDes::toDTO);
+				return Page.of(content, AssigneeSerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -139,17 +137,16 @@ public interface AssigneeUserResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				postProcessAssigneeUsersPageHttpResponse(
-					Long processId, Pagination pagination, String sortString,
-					com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-						AssigneeUserBulkSelection assigneeUserBulkSelection)
+		public HttpInvoker.HttpResponse postProcessAssigneesPageHttpResponse(
+				Long processId, Pagination pagination, String sortString,
+				com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
+					AssigneeBulkSelection assigneeBulkSelection)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				assigneeUserBulkSelection.toString(), "application/json");
+				assigneeBulkSelection.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -184,7 +181,7 @@ public interface AssigneeUserResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/assignee-users",
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/assignees",
 				processId);
 
 			httpInvoker.userNameAndPassword(
@@ -193,12 +190,12 @@ public interface AssigneeUserResource {
 			return httpInvoker.invoke();
 		}
 
-		private AssigneeUserResourceImpl(Builder builder) {
+		private AssigneeResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			AssigneeUserResource.class.getName());
+			AssigneeResource.class.getName());
 
 		private Builder _builder;
 

@@ -76,7 +76,7 @@ public abstract class BaseMetricResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/metric'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/metrics'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
@@ -88,7 +88,7 @@ public abstract class BaseMetricResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "unit")
 		}
 	)
-	@Path("/processes/{processId}/metric")
+	@Path("/processes/{processId}/metrics")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Metric")})
 	public Metric getProcessMetric(

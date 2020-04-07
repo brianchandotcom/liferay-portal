@@ -41,11 +41,11 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeUser;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
-import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.AssigneeUserResource;
-import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.AssigneeUserSerDes;
+import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.AssigneeResource;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.AssigneeSerDes;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -78,7 +78,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseAssigneeUserResourceTestCase {
+public abstract class BaseAssigneeResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -99,11 +99,11 @@ public abstract class BaseAssigneeUserResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_assigneeUserResource.setContextCompany(testCompany);
+		_assigneeResource.setContextCompany(testCompany);
 
-		AssigneeUserResource.Builder builder = AssigneeUserResource.builder();
+		AssigneeResource.Builder builder = AssigneeResource.builder();
 
-		assigneeUserResource = builder.locale(
+		assigneeResource = builder.locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -132,13 +132,13 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			}
 		};
 
-		AssigneeUser assigneeUser1 = randomAssigneeUser();
+		Assignee assignee1 = randomAssignee();
 
-		String json = objectMapper.writeValueAsString(assigneeUser1);
+		String json = objectMapper.writeValueAsString(assignee1);
 
-		AssigneeUser assigneeUser2 = AssigneeUserSerDes.toDTO(json);
+		Assignee assignee2 = AssigneeSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(assigneeUser1, assigneeUser2));
+		Assert.assertTrue(equals(assignee1, assignee2));
 	}
 
 	@Test
@@ -158,10 +158,10 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			}
 		};
 
-		AssigneeUser assigneeUser = randomAssigneeUser();
+		Assignee assignee = randomAssignee();
 
-		String json1 = objectMapper.writeValueAsString(assigneeUser);
-		String json2 = AssigneeUserSerDes.toJSON(assigneeUser);
+		String json1 = objectMapper.writeValueAsString(assignee);
+		String json2 = AssigneeSerDes.toJSON(assignee);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -171,29 +171,27 @@ public abstract class BaseAssigneeUserResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		AssigneeUser assigneeUser = randomAssigneeUser();
+		Assignee assignee = randomAssignee();
 
-		assigneeUser.setImage(regex);
-		assigneeUser.setName(regex);
+		assignee.setImage(regex);
+		assignee.setName(regex);
 
-		String json = AssigneeUserSerDes.toJSON(assigneeUser);
+		String json = AssigneeSerDes.toJSON(assignee);
 
 		Assert.assertFalse(json.contains(regex));
 
-		assigneeUser = AssigneeUserSerDes.toDTO(json);
+		assignee = AssigneeSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, assigneeUser.getImage());
-		Assert.assertEquals(regex, assigneeUser.getName());
+		Assert.assertEquals(regex, assignee.getImage());
+		Assert.assertEquals(regex, assignee.getName());
 	}
 
 	@Test
-	public void testPostProcessAssigneeUsersPage() throws Exception {
+	public void testPostProcessAssigneesPage() throws Exception {
 		Assert.assertTrue(false);
 	}
 
-	protected AssigneeUser testGraphQLAssigneeUser_addAssigneeUser()
-		throws Exception {
-
+	protected Assignee testGraphQLAssignee_addAssignee() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -206,37 +204,35 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(
-		AssigneeUser assigneeUser1, AssigneeUser assigneeUser2) {
-
+	protected void assertEquals(Assignee assignee1, Assignee assignee2) {
 		Assert.assertTrue(
-			assigneeUser1 + " does not equal " + assigneeUser2,
-			equals(assigneeUser1, assigneeUser2));
+			assignee1 + " does not equal " + assignee2,
+			equals(assignee1, assignee2));
 	}
 
 	protected void assertEquals(
-		List<AssigneeUser> assigneeUsers1, List<AssigneeUser> assigneeUsers2) {
+		List<Assignee> assignees1, List<Assignee> assignees2) {
 
-		Assert.assertEquals(assigneeUsers1.size(), assigneeUsers2.size());
+		Assert.assertEquals(assignees1.size(), assignees2.size());
 
-		for (int i = 0; i < assigneeUsers1.size(); i++) {
-			AssigneeUser assigneeUser1 = assigneeUsers1.get(i);
-			AssigneeUser assigneeUser2 = assigneeUsers2.get(i);
+		for (int i = 0; i < assignees1.size(); i++) {
+			Assignee assignee1 = assignees1.get(i);
+			Assignee assignee2 = assignees2.get(i);
 
-			assertEquals(assigneeUser1, assigneeUser2);
+			assertEquals(assignee1, assignee2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<AssigneeUser> assigneeUsers1, List<AssigneeUser> assigneeUsers2) {
+		List<Assignee> assignees1, List<Assignee> assignees2) {
 
-		Assert.assertEquals(assigneeUsers1.size(), assigneeUsers2.size());
+		Assert.assertEquals(assignees1.size(), assignees2.size());
 
-		for (AssigneeUser assigneeUser1 : assigneeUsers1) {
+		for (Assignee assignee1 : assignees1) {
 			boolean contains = false;
 
-			for (AssigneeUser assigneeUser2 : assigneeUsers2) {
-				if (equals(assigneeUser1, assigneeUser2)) {
+			for (Assignee assignee2 : assignees2) {
+				if (equals(assignee1, assignee2)) {
 					contains = true;
 
 					break;
@@ -244,19 +240,18 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				assigneeUsers2 + " does not contain " + assigneeUser1,
-				contains);
+				assignees2 + " does not contain " + assignee1, contains);
 		}
 	}
 
 	protected void assertEqualsJSONArray(
-		List<AssigneeUser> assigneeUsers, JSONArray jsonArray) {
+		List<Assignee> assignees, JSONArray jsonArray) {
 
-		for (AssigneeUser assigneeUser : assigneeUsers) {
+		for (Assignee assignee : assignees) {
 			boolean contains = false;
 
 			for (Object object : jsonArray) {
-				if (equalsJSONObject(assigneeUser, (JSONObject)object)) {
+				if (equalsJSONObject(assignee, (JSONObject)object)) {
 					contains = true;
 
 					break;
@@ -264,14 +259,14 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				jsonArray + " does not contain " + assigneeUser, contains);
+				jsonArray + " does not contain " + assignee, contains);
 		}
 	}
 
-	protected void assertValid(AssigneeUser assigneeUser) {
+	protected void assertValid(Assignee assignee) {
 		boolean valid = true;
 
-		if (assigneeUser.getId() == null) {
+		if (assignee.getId() == null) {
 			valid = false;
 		}
 
@@ -279,7 +274,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("durationTaskAvg", additionalAssertFieldName)) {
-				if (assigneeUser.getDurationTaskAvg() == null) {
+				if (assignee.getDurationTaskAvg() == null) {
 					valid = false;
 				}
 
@@ -287,7 +282,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			}
 
 			if (Objects.equals("image", additionalAssertFieldName)) {
-				if (assigneeUser.getImage() == null) {
+				if (assignee.getImage() == null) {
 					valid = false;
 				}
 
@@ -295,7 +290,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			}
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (assigneeUser.getName() == null) {
+				if (assignee.getName() == null) {
 					valid = false;
 				}
 
@@ -303,7 +298,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			}
 
 			if (Objects.equals("onTimeTaskCount", additionalAssertFieldName)) {
-				if (assigneeUser.getOnTimeTaskCount() == null) {
+				if (assignee.getOnTimeTaskCount() == null) {
 					valid = false;
 				}
 
@@ -311,7 +306,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			}
 
 			if (Objects.equals("overdueTaskCount", additionalAssertFieldName)) {
-				if (assigneeUser.getOverdueTaskCount() == null) {
+				if (assignee.getOverdueTaskCount() == null) {
 					valid = false;
 				}
 
@@ -319,7 +314,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			}
 
 			if (Objects.equals("taskCount", additionalAssertFieldName)) {
-				if (assigneeUser.getTaskCount() == null) {
+				if (assignee.getTaskCount() == null) {
 					valid = false;
 				}
 
@@ -334,12 +329,12 @@ public abstract class BaseAssigneeUserResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<AssigneeUser> page) {
+	protected void assertValid(Page<Assignee> page) {
 		boolean valid = false;
 
-		java.util.Collection<AssigneeUser> assigneeUsers = page.getItems();
+		java.util.Collection<Assignee> assignees = page.getItems();
 
-		int size = assigneeUsers.size();
+		int size = assignees.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -371,10 +366,8 @@ public abstract class BaseAssigneeUserResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(
-		AssigneeUser assigneeUser1, AssigneeUser assigneeUser2) {
-
-		if (assigneeUser1 == assigneeUser2) {
+	protected boolean equals(Assignee assignee1, Assignee assignee2) {
+		if (assignee1 == assignee2) {
 			return true;
 		}
 
@@ -383,8 +376,8 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 			if (Objects.equals("durationTaskAvg", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						assigneeUser1.getDurationTaskAvg(),
-						assigneeUser2.getDurationTaskAvg())) {
+						assignee1.getDurationTaskAvg(),
+						assignee2.getDurationTaskAvg())) {
 
 					return false;
 				}
@@ -393,9 +386,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			}
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						assigneeUser1.getId(), assigneeUser2.getId())) {
-
+				if (!Objects.deepEquals(assignee1.getId(), assignee2.getId())) {
 					return false;
 				}
 
@@ -404,7 +395,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 			if (Objects.equals("image", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						assigneeUser1.getImage(), assigneeUser2.getImage())) {
+						assignee1.getImage(), assignee2.getImage())) {
 
 					return false;
 				}
@@ -414,7 +405,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						assigneeUser1.getName(), assigneeUser2.getName())) {
+						assignee1.getName(), assignee2.getName())) {
 
 					return false;
 				}
@@ -424,8 +415,8 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 			if (Objects.equals("onTimeTaskCount", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						assigneeUser1.getOnTimeTaskCount(),
-						assigneeUser2.getOnTimeTaskCount())) {
+						assignee1.getOnTimeTaskCount(),
+						assignee2.getOnTimeTaskCount())) {
 
 					return false;
 				}
@@ -435,8 +426,8 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 			if (Objects.equals("overdueTaskCount", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						assigneeUser1.getOverdueTaskCount(),
-						assigneeUser2.getOverdueTaskCount())) {
+						assignee1.getOverdueTaskCount(),
+						assignee2.getOverdueTaskCount())) {
 
 					return false;
 				}
@@ -446,8 +437,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 			if (Objects.equals("taskCount", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						assigneeUser1.getTaskCount(),
-						assigneeUser2.getTaskCount())) {
+						assignee1.getTaskCount(), assignee2.getTaskCount())) {
 
 					return false;
 				}
@@ -464,12 +454,12 @@ public abstract class BaseAssigneeUserResourceTestCase {
 	}
 
 	protected boolean equalsJSONObject(
-		AssigneeUser assigneeUser, JSONObject jsonObject) {
+		Assignee assignee, JSONObject jsonObject) {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("durationTaskAvg", fieldName)) {
 				if (!Objects.deepEquals(
-						assigneeUser.getDurationTaskAvg(),
+						assignee.getDurationTaskAvg(),
 						jsonObject.getLong("durationTaskAvg"))) {
 
 					return false;
@@ -480,7 +470,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 			if (Objects.equals("id", fieldName)) {
 				if (!Objects.deepEquals(
-						assigneeUser.getId(), jsonObject.getLong("id"))) {
+						assignee.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -490,8 +480,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 			if (Objects.equals("image", fieldName)) {
 				if (!Objects.deepEquals(
-						assigneeUser.getImage(),
-						jsonObject.getString("image"))) {
+						assignee.getImage(), jsonObject.getString("image"))) {
 
 					return false;
 				}
@@ -501,7 +490,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 			if (Objects.equals("name", fieldName)) {
 				if (!Objects.deepEquals(
-						assigneeUser.getName(), jsonObject.getString("name"))) {
+						assignee.getName(), jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -511,7 +500,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 			if (Objects.equals("onTimeTaskCount", fieldName)) {
 				if (!Objects.deepEquals(
-						assigneeUser.getOnTimeTaskCount(),
+						assignee.getOnTimeTaskCount(),
 						jsonObject.getLong("onTimeTaskCount"))) {
 
 					return false;
@@ -522,7 +511,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 			if (Objects.equals("overdueTaskCount", fieldName)) {
 				if (!Objects.deepEquals(
-						assigneeUser.getOverdueTaskCount(),
+						assignee.getOverdueTaskCount(),
 						jsonObject.getLong("overdueTaskCount"))) {
 
 					return false;
@@ -533,7 +522,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 			if (Objects.equals("taskCount", fieldName)) {
 				if (!Objects.deepEquals(
-						assigneeUser.getTaskCount(),
+						assignee.getTaskCount(),
 						jsonObject.getLong("taskCount"))) {
 
 					return false;
@@ -552,13 +541,13 @@ public abstract class BaseAssigneeUserResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_assigneeUserResource instanceof EntityModelResource)) {
+		if (!(_assigneeResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_assigneeUserResource;
+			(EntityModelResource)_assigneeResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -587,7 +576,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, AssigneeUser assigneeUser) {
+		EntityField entityField, String operator, Assignee assignee) {
 
 		StringBundler sb = new StringBundler();
 
@@ -611,7 +600,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 		if (entityFieldName.equals("image")) {
 			sb.append("'");
-			sb.append(String.valueOf(assigneeUser.getImage()));
+			sb.append(String.valueOf(assignee.getImage()));
 			sb.append("'");
 
 			return sb.toString();
@@ -619,7 +608,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 		if (entityFieldName.equals("name")) {
 			sb.append("'");
-			sb.append(String.valueOf(assigneeUser.getName()));
+			sb.append(String.valueOf(assignee.getName()));
 			sb.append("'");
 
 			return sb.toString();
@@ -661,8 +650,8 @@ public abstract class BaseAssigneeUserResourceTestCase {
 		return httpResponse.getContent();
 	}
 
-	protected AssigneeUser randomAssigneeUser() throws Exception {
-		return new AssigneeUser() {
+	protected Assignee randomAssignee() throws Exception {
+		return new Assignee() {
 			{
 				durationTaskAvg = RandomTestUtil.randomLong();
 				id = RandomTestUtil.randomLong();
@@ -675,17 +664,17 @@ public abstract class BaseAssigneeUserResourceTestCase {
 		};
 	}
 
-	protected AssigneeUser randomIrrelevantAssigneeUser() throws Exception {
-		AssigneeUser randomIrrelevantAssigneeUser = randomAssigneeUser();
+	protected Assignee randomIrrelevantAssignee() throws Exception {
+		Assignee randomIrrelevantAssignee = randomAssignee();
 
-		return randomIrrelevantAssigneeUser;
+		return randomIrrelevantAssignee;
 	}
 
-	protected AssigneeUser randomPatchAssigneeUser() throws Exception {
-		return randomAssigneeUser();
+	protected Assignee randomPatchAssignee() throws Exception {
+		return randomAssignee();
 	}
 
-	protected AssigneeUserResource assigneeUserResource;
+	protected AssigneeResource assigneeResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -749,7 +738,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseAssigneeUserResourceTestCase.class);
+		BaseAssigneeResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -767,7 +756,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 	@Inject
 	private
-		com.liferay.portal.workflow.metrics.rest.resource.v1_0.
-			AssigneeUserResource _assigneeUserResource;
+		com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeResource
+			_assigneeResource;
 
 }

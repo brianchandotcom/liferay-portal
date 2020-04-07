@@ -439,16 +439,16 @@ public abstract class BaseInstanceResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("assigneeUsers", additionalAssertFieldName)) {
-				if (instance.getAssigneeUsers() == null) {
+			if (Objects.equals("assignees", additionalAssertFieldName)) {
+				if (instance.getAssignees() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("creatorUser", additionalAssertFieldName)) {
-				if (instance.getCreatorUser() == null) {
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (instance.getCreator() == null) {
 					valid = false;
 				}
 
@@ -584,10 +584,9 @@ public abstract class BaseInstanceResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("assigneeUsers", additionalAssertFieldName)) {
+			if (Objects.equals("assignees", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						instance1.getAssigneeUsers(),
-						instance2.getAssigneeUsers())) {
+						instance1.getAssignees(), instance2.getAssignees())) {
 
 					return false;
 				}
@@ -595,10 +594,9 @@ public abstract class BaseInstanceResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("creatorUser", additionalAssertFieldName)) {
+			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						instance1.getCreatorUser(),
-						instance2.getCreatorUser())) {
+						instance1.getCreator(), instance2.getCreator())) {
 
 					return false;
 				}
@@ -825,12 +823,12 @@ public abstract class BaseInstanceResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("assigneeUsers")) {
+		if (entityFieldName.equals("assignees")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("creatorUser")) {
+		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

@@ -178,20 +178,20 @@ public class Instance {
 
 	@Schema
 	@Valid
-	public AssigneeUser[] getAssigneeUsers() {
-		return assigneeUsers;
+	public Assignee[] getAssignees() {
+		return assignees;
 	}
 
-	public void setAssigneeUsers(AssigneeUser[] assigneeUsers) {
-		this.assigneeUsers = assigneeUsers;
+	public void setAssignees(Assignee[] assignees) {
+		this.assignees = assignees;
 	}
 
 	@JsonIgnore
-	public void setAssigneeUsers(
-		UnsafeSupplier<AssigneeUser[], Exception> assigneeUsersUnsafeSupplier) {
+	public void setAssignees(
+		UnsafeSupplier<Assignee[], Exception> assigneesUnsafeSupplier) {
 
 		try {
-			assigneeUsers = assigneeUsersUnsafeSupplier.get();
+			assignees = assigneesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -203,24 +203,24 @@ public class Instance {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected AssigneeUser[] assigneeUsers;
+	protected Assignee[] assignees;
 
 	@Schema
 	@Valid
-	public CreatorUser getCreatorUser() {
-		return creatorUser;
+	public Creator getCreator() {
+		return creator;
 	}
 
-	public void setCreatorUser(CreatorUser creatorUser) {
-		this.creatorUser = creatorUser;
+	public void setCreator(Creator creator) {
+		this.creator = creator;
 	}
 
 	@JsonIgnore
-	public void setCreatorUser(
-		UnsafeSupplier<CreatorUser, Exception> creatorUserUnsafeSupplier) {
+	public void setCreator(
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
 
 		try {
-			creatorUser = creatorUserUnsafeSupplier.get();
+			creator = creatorUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -232,7 +232,7 @@ public class Instance {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected CreatorUser creatorUser;
+	protected Creator creator;
 
 	@Schema
 	public Date getDateCompletion() {
@@ -564,19 +564,19 @@ public class Instance {
 			sb.append("\"");
 		}
 
-		if (assigneeUsers != null) {
+		if (assignees != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"assigneeUsers\": ");
+			sb.append("\"assignees\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < assigneeUsers.length; i++) {
-				sb.append(String.valueOf(assigneeUsers[i]));
+			for (int i = 0; i < assignees.length; i++) {
+				sb.append(String.valueOf(assignees[i]));
 
-				if ((i + 1) < assigneeUsers.length) {
+				if ((i + 1) < assignees.length) {
 					sb.append(", ");
 				}
 			}
@@ -584,14 +584,14 @@ public class Instance {
 			sb.append("]");
 		}
 
-		if (creatorUser != null) {
+		if (creator != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"creatorUser\": ");
+			sb.append("\"creator\": ");
 
-			sb.append(String.valueOf(creatorUser));
+			sb.append(String.valueOf(creator));
 		}
 
 		if (dateCompletion != null) {

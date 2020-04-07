@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.CreatorUser;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Creator;
 import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class CreatorUserSerDes {
+public class CreatorSerDes {
 
-	public static CreatorUser toDTO(String json) {
-		CreatorUserJSONParser creatorUserJSONParser =
-			new CreatorUserJSONParser();
+	public static Creator toDTO(String json) {
+		CreatorJSONParser creatorJSONParser = new CreatorJSONParser();
 
-		return creatorUserJSONParser.parseToDTO(json);
+		return creatorJSONParser.parseToDTO(json);
 	}
 
-	public static CreatorUser[] toDTOs(String json) {
-		CreatorUserJSONParser creatorUserJSONParser =
-			new CreatorUserJSONParser();
+	public static Creator[] toDTOs(String json) {
+		CreatorJSONParser creatorJSONParser = new CreatorJSONParser();
 
-		return creatorUserJSONParser.parseToDTOs(json);
+		return creatorJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(CreatorUser creatorUser) {
-		if (creatorUser == null) {
+	public static String toJSON(Creator creator) {
+		if (creator == null) {
 			return "null";
 		}
 
@@ -55,17 +53,17 @@ public class CreatorUserSerDes {
 
 		sb.append("{");
 
-		if (creatorUser.getId() != null) {
+		if (creator.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"id\": ");
 
-			sb.append(creatorUser.getId());
+			sb.append(creator.getId());
 		}
 
-		if (creatorUser.getName() != null) {
+		if (creator.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -74,7 +72,7 @@ public class CreatorUserSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(creatorUser.getName()));
+			sb.append(_escape(creator.getName()));
 
 			sb.append("\"");
 		}
@@ -85,63 +83,60 @@ public class CreatorUserSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		CreatorUserJSONParser creatorUserJSONParser =
-			new CreatorUserJSONParser();
+		CreatorJSONParser creatorJSONParser = new CreatorJSONParser();
 
-		return creatorUserJSONParser.parseToMap(json);
+		return creatorJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(CreatorUser creatorUser) {
-		if (creatorUser == null) {
+	public static Map<String, String> toMap(Creator creator) {
+		if (creator == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (creatorUser.getId() == null) {
+		if (creator.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(creatorUser.getId()));
+			map.put("id", String.valueOf(creator.getId()));
 		}
 
-		if (creatorUser.getName() == null) {
+		if (creator.getName() == null) {
 			map.put("name", null);
 		}
 		else {
-			map.put("name", String.valueOf(creatorUser.getName()));
+			map.put("name", String.valueOf(creator.getName()));
 		}
 
 		return map;
 	}
 
-	public static class CreatorUserJSONParser
-		extends BaseJSONParser<CreatorUser> {
+	public static class CreatorJSONParser extends BaseJSONParser<Creator> {
 
 		@Override
-		protected CreatorUser createDTO() {
-			return new CreatorUser();
+		protected Creator createDTO() {
+			return new Creator();
 		}
 
 		@Override
-		protected CreatorUser[] createDTOArray(int size) {
-			return new CreatorUser[size];
+		protected Creator[] createDTOArray(int size) {
+			return new Creator[size];
 		}
 
 		@Override
 		protected void setField(
-			CreatorUser creatorUser, String jsonParserFieldName,
+			Creator creator, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					creatorUser.setId(
-						Long.valueOf((String)jsonParserFieldValue));
+					creator.setId(Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					creatorUser.setName((String)jsonParserFieldValue);
+					creator.setName((String)jsonParserFieldValue);
 				}
 			}
 			else {

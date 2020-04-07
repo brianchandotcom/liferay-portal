@@ -148,7 +148,7 @@ describe('RatingsLike', () => {
 			beforeEach(() => {
 				LikeButton = renderComponent({
 					...defaultProps,
-					positiveVotes: 26,
+					positiveVotes: 3,
 				}).getByRole('button');
 
 				act(() => {

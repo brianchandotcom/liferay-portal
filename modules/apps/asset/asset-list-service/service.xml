@@ -60,6 +60,17 @@
 			<finder-column comparator="LIKE" name="title" />
 			<finder-column arrayable-operator="OR" name="assetEntryType" />
 		</finder>
+		<finder name="G_AES_AET" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column name="assetEntrySubtype" />
+			<finder-column name="assetEntryType" />
+		</finder>
+		<finder name="G_LikeT_AES_AET" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column comparator="LIKE" name="title" />
+			<finder-column name="assetEntrySubtype" />
+			<finder-column name="assetEntryType" />
+		</finder>
 
 		<!-- References -->
 

@@ -28,6 +28,14 @@ public class LayoutStructureItemHelperFactory {
 	public LayoutStructureItemHelper getLayoutStructureItemHelper(
 		PageElement.Type pageElementType) {
 
+		if (pageElementType == PageElement.Type.COLLECTION_ITEM) {
+			return new CollectionItemLayoutStructureItemHelper();
+		}
+
+		if (pageElementType == PageElement.Type.COLLECTION) {
+			return new CollectionLayoutStructureItemHelper();
+		}
+
 		if (pageElementType == PageElement.Type.COLUMN) {
 			return new ColumnLayoutStructureItemHelper();
 		}

@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>LIST_GROUP_ITEM_PAGE_INFO</td>
-	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_itemName}')]//span[contains(@class,'label-item')]</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_itemName}')]//*[contains(@class,'list-group-subtitle')]</td>
 	<td></td>
 </tr>
 <tr>

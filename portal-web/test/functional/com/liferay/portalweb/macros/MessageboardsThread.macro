@@ -18,9 +18,13 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type.typeCKEditorWaitForCKEditor(
 			locator1 = "CKEditor#BODY",
 			value1 = "${threadBody}");
+
+		SelectFrame(value1 = "relative=top");
 
 		if (isSet(categoryName)) {
 			Panel.expandPanel(panel = "Categorization");
@@ -101,15 +105,21 @@ definition {
 		if (isSet(source)) {
 			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 			Type(
 				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
 				value1 = "${threadBody}");
 		}
 		else {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 			Type.typeCKEditorWaitForCKEditor(
 				locator1 = "CKEditor#BODY",
 				value1 = "${threadBody}");
 		}
+
+		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.publish();
 	}
@@ -125,9 +135,13 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type.typeCKEditorWaitForCKEditor(
 			locator1 = "CKEditor#BODY",
 			value1 = "${threadBody}");
+
+		SelectFrame(value1 = "relative=top");
 
 		Panel.expandPanel(panel = "More Settings");
 
@@ -156,9 +170,13 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type.typeCKEditorWaitForCKEditor(
 			locator1 = "CKEditor#BODY",
 			value1 = "${threadBody}");
+
+		SelectFrame(value1 = "relative=top");
 
 		Panel.expandPanel(panel = "Attachments");
 
@@ -190,6 +208,8 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type.typeCKEditorWaitForCKEditor(
 			locator1 = "CKEditor#BODY",
 			value1 = "${threadBody}");
@@ -216,9 +236,13 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type.typeCKEditorWaitForCKEditor(
 			locator1 = "CKEditor#BODY",
 			value1 = "${threadBody}");
+
+		SelectFrameTop();
 
 		Click(locator1 = "Button#SUBMIT_FOR_PUBLICATION");
 
@@ -234,9 +258,13 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type.typeCKEditorWaitForCKEditor(
 			locator1 = "CKEditor#BODY",
 			value1 = "${threadBody}");
+
+		SelectFrameTop();
 
 		Click(locator1 = "Button#SUBMIT_FOR_PUBLICATION");
 
@@ -266,9 +294,13 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type.typeCKEditorWaitForCKEditor(
 			locator1 = "CKEditor#BODY",
 			value1 = "${threadBody}");
+
+		SelectFrameTop();
 
 		AssertClick(
 			locator1 = "Button#CANCEL",
@@ -286,9 +318,13 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubjectEdit}");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type.typeCKEditorWaitForCKEditor(
 			locator1 = "CKEditor#BODY",
 			value1 = "${threadBodyEdit}");
+
+		SelectFrameTop();
 
 		AssertClick(
 			locator1 = "Button#CANCEL",
@@ -345,11 +381,13 @@ definition {
 		}
 
 		if (isSet(threadBodyEdit)) {
-			Click(locator1 = "CKEditor#BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			Type.typeCKEditorWaitForCKEditor(
 				locator1 = "CKEditor#BODY",
 				value1 = "${threadBodyEdit}");
+
+			SelectFrameTop();
 		}
 
 		PortletEntry.publish();
@@ -369,9 +407,13 @@ definition {
 		}
 
 		if (isSet(threadBodyEdit)) {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 			Type.typeCKEditorWaitForCKEditor(
 				locator1 = "CKEditor#BODY",
 				value1 = "${threadBodyEdit}");
+
+			SelectFrameTop();
 		}
 
 		if ("${saveAsDraft}" == "true") {
@@ -560,6 +602,8 @@ definition {
 				locator1 = "TextInput#SUBJECT",
 				value1 = "${explanationSubject}");
 
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 			Type.typeCKEditorWaitForCKEditor(
 				locator1 = "CKEditor#BODY",
 				value1 = "${explanationBody}");
@@ -740,9 +784,13 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type.typeCKEditorWaitForCKEditor(
 			locator1 = "CKEditor#BODY",
 			value1 = "${threadBody}");
+
+		SelectFrameTop();
 
 		AssertClick(
 			locator1 = "Button#SAVE_AS_DRAFT",
@@ -787,9 +835,13 @@ definition {
 			locator1 = "MessageBoardsSplitThread#ADD_EXPLANATION_SUBJECT_FIELD",
 			value1 = "${threadSplitReplySubject}");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type.typeCKEditorWaitForCKEditor(
 			locator1 = "CKEditor#BODY",
 			value1 = "${threadSplitReplyBody}");
+
+		SelectFrameTop();
 
 		AssertClick(
 			locator1 = "Button#OK",

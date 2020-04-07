@@ -361,9 +361,13 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "MB Thread Message Subject");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type.typeCKEditorWaitForCKEditor(
 			locator1 = "CKEditor#BODY",
 			value1 = "MB Thread Message Body");
+
+		SelectFrame(value1 = "relative=top");
 
 		Panel.expandPanel(panel = "Attachments");
 

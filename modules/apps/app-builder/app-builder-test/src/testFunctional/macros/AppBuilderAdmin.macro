@@ -19,6 +19,8 @@ definition {
 
 	macro addCustomObject {
 
+		ProductMenuHelper.closeProductMenu();
+
 		if ("${isCreatingViaPlusIcon}" == "false") {
 			AppBuilderAdmin.gotoAddItemViaNewButton();
 		}

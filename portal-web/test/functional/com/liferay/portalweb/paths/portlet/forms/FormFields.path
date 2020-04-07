@@ -155,7 +155,7 @@
 </tr>
 <tr>
 	<td>GRID_RADIO_OPTIONS</td>
-	<td>//div[contains(@class,'field-grid')]//tr[contains(@name,'${key_optionRowName}')]//input[@value='${key_categoryColumnName}']</td>
+	<td>//div[contains(@data-field-name,'Grid')]//tr[contains(@name,'${key_optionRowName}')]//input[@value='${key_categoryColumnName}']</td>
 	<td></td>
 </tr>
 <tr>

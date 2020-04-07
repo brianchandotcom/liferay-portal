@@ -525,13 +525,13 @@ public class AssetListEntryLocalServiceImpl
 			}
 
 			long defaultAssetClassTypeId = GetterUtil.getLong(
-				anyAssetClassTypeString, -1);
+				anyAssetClassTypeString);
 
-			if (defaultAssetClassTypeId > -1) {
-				return String.valueOf(defaultAssetClassTypeId);
+			if (defaultAssetClassTypeId <= 0) {
+				return StringPool.BLANK;
 			}
 
-			return StringPool.BLANK;
+			return String.valueOf(defaultAssetClassTypeId);
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
@@ -552,14 +552,22 @@ public class AssetListEntryLocalServiceImpl
 
 			unicodeProperties.load(typeSettings);
 
-			long defaultClassNameId = GetterUtil.getLong(
-				unicodeProperties.getProperty("anyAssetType", null));
+			String anyAssetTypeString = unicodeProperties.getProperty(
+				"anyAssetType");
 
-			if (defaultClassNameId <= 0) {
+			boolean anyAssetType = GetterUtil.getBoolean(anyAssetTypeString);
+
+			if (anyAssetType) {
 				return AssetEntry.class.getName();
 			}
 
-			return _portal.getClassName(defaultClassNameId);
+			long defaultAssetType = GetterUtil.getLong(anyAssetTypeString);
+
+			if (defaultAssetType <= 0) {
+				return AssetEntry.class.getName();
+			}
+
+			return _portal.getClassName(defaultAssetType);
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {

@@ -16,25 +16,30 @@ package com.liferay.bookmarks.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
-import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.users.admin.test.util.search.GroupBlueprint;
+import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.util.List;
@@ -64,65 +69,67 @@ public class BookmarksFolderIndexerIndexedFieldsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpUserSearchFixture();
+		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
-		setUpBookmarksFolderFixture();
+		Group group = groupSearchFixture.addGroup(new GroupBlueprint());
 
-		setUpBookmarksFolderIndexerFixture();
+		UserSearchFixture userSearchFixture = new UserSearchFixture(
+			userLocalService, groupSearchFixture, null, null);
 
-		setUpIndexedFieldsFixture();
+		userSearchFixture.setUp();
+
+		User user = userSearchFixture.addUser(
+			RandomTestUtil.randomString(), group);
+
+		BookmarksFixture bookmarksFixture = new BookmarksFixture(group, user);
+
+		_bookmarksFixture = bookmarksFixture;
+		_bookmarksFolders = bookmarksFixture.getBookmarksFolders();
+
+		_group = group;
+
+		_groups = groupSearchFixture.getGroups();
+
+		_indexedFieldsFixture = new IndexedFieldsFixture(
+			resourcePermissionLocalService, searchEngineHelper);
+
+		_users = userSearchFixture.getUsers();
 	}
 
 	@Test
 	public void testIndexedFields() throws Exception {
 		BookmarksFolder bookmarksFolder =
-			bookmarksFixture.createBookmarksFolder();
+			_bookmarksFixture.createBookmarksFolder();
 
 		String searchTerm = bookmarksFolder.getUserName();
 
-		Document document = bookmarksFolderIndexerFixture.searchOnlyOne(
-			searchTerm);
+		assertFieldValues(_expectedFieldValues(bookmarksFolder), searchTerm);
+	}
 
-		indexedFieldsFixture.postProcessDocument(document);
+	protected void assertFieldValues(
+		Map<String, String> map, String searchTerm) {
 
 		FieldValuesAssert.assertFieldValues(
-			_expectedFieldValues(bookmarksFolder), document, searchTerm);
+			map, name -> !name.equals("score"),
+			searcher.search(
+				searchRequestBuilderFactory.builder(
+				).companyId(
+					_group.getCompanyId()
+				).groupIds(
+					_group.getGroupId()
+				).fields(
+					StringPool.STAR
+				).modelIndexerClasses(
+					BookmarksFolder.class
+				).queryString(
+					searchTerm
+				).build()));
 	}
 
-	protected void setUpBookmarksFolderFixture() throws Exception {
-		bookmarksFixture = new BookmarksFixture(_group, _user);
-
-		_bookmarksFolders = bookmarksFixture.getBookmarksFolders();
-	}
-
-	protected void setUpBookmarksFolderIndexerFixture() {
-		bookmarksFolderIndexerFixture = new IndexerFixture<>(
-			BookmarksFolder.class);
-	}
-
-	protected void setUpIndexedFieldsFixture() {
-		indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper);
-	}
-
-	protected void setUpUserSearchFixture() throws Exception {
-		userSearchFixture = new UserSearchFixture();
-
-		userSearchFixture.setUp();
-
-		_group = userSearchFixture.addGroup();
-
-		_groups = userSearchFixture.getGroups();
-
-		_user = userSearchFixture.addUser(
-			RandomTestUtil.randomString(), _group);
-
-		_users = userSearchFixture.getUsers();
-	}
-
-	protected BookmarksFixture bookmarksFixture;
-	protected IndexerFixture<BookmarksFolder> bookmarksFolderIndexerFixture;
-	protected IndexedFieldsFixture indexedFieldsFixture;
+	@Inject(
+		filter = "indexer.class.name=com.liferay.bookmarks.model.BookmarksFolder"
+	)
+	protected Indexer<BookmarksFolder> indexer;
 
 	@Inject
 	protected IndexerRegistry indexerRegistry;
@@ -133,7 +140,14 @@ public class BookmarksFolderIndexerIndexedFieldsTest {
 	@Inject
 	protected SearchEngineHelper searchEngineHelper;
 
-	protected UserSearchFixture userSearchFixture;
+	@Inject
+	protected Searcher searcher;
+
+	@Inject
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
+
+	@Inject
+	protected UserLocalService userLocalService;
 
 	private Map<String, String> _expectedFieldValues(
 			BookmarksFolder bookmarksFolder)
@@ -169,15 +183,15 @@ public class BookmarksFolderIndexerIndexedFieldsTest {
 			"visible", "true"
 		).build();
 
-		bookmarksFixture.populateLocalizedTitles(
+		_bookmarksFixture.populateLocalizedTitles(
 			bookmarksFolder.getName(), map);
-		bookmarksFixture.populateTreePath(bookmarksFolder.getTreePath(), map);
+		_bookmarksFixture.populateTreePath(bookmarksFolder.getTreePath(), map);
 
-		indexedFieldsFixture.populatePriority("0.0", map);
-		indexedFieldsFixture.populateUID(
+		_indexedFieldsFixture.populatePriority("0.0", map);
+		_indexedFieldsFixture.populateUID(
 			BookmarksFolder.class.getName(), bookmarksFolder.getFolderId(),
 			map);
-		indexedFieldsFixture.populateViewCount(
+		_indexedFieldsFixture.populateViewCount(
 			BookmarksFolder.class, bookmarksFolder.getFolderId(), map);
 
 		_populateDates(bookmarksFolder, map);
@@ -189,24 +203,26 @@ public class BookmarksFolderIndexerIndexedFieldsTest {
 	private void _populateDates(
 		BookmarksFolder bookmarksFolder, Map<String, String> map) {
 
-		indexedFieldsFixture.populateDate(
+		_indexedFieldsFixture.populateDate(
 			Field.CREATE_DATE, bookmarksFolder.getCreateDate(), map);
-		indexedFieldsFixture.populateDate(
+		_indexedFieldsFixture.populateDate(
 			Field.MODIFIED_DATE, bookmarksFolder.getModifiedDate(), map);
-		indexedFieldsFixture.populateDate(
+		_indexedFieldsFixture.populateDate(
 			Field.PUBLISH_DATE, bookmarksFolder.getCreateDate(), map);
-		indexedFieldsFixture.populateExpirationDateWithForever(map);
+		_indexedFieldsFixture.populateExpirationDateWithForever(map);
 	}
 
 	private void _populateRoles(
 			BookmarksFolder bookmarksFolder, Map<String, String> map)
 		throws Exception {
 
-		indexedFieldsFixture.populateRoleIdFields(
+		_indexedFieldsFixture.populateRoleIdFields(
 			bookmarksFolder.getCompanyId(), BookmarksFolder.class.getName(),
 			bookmarksFolder.getFolderId(), bookmarksFolder.getGroupId(), null,
 			map);
 	}
+
+	private BookmarksFixture _bookmarksFixture;
 
 	@DeleteAfterTestRun
 	private List<BookmarksFolder> _bookmarksFolders;
@@ -216,7 +232,7 @@ public class BookmarksFolderIndexerIndexedFieldsTest {
 	@DeleteAfterTestRun
 	private List<Group> _groups;
 
-	private User _user;
+	private IndexedFieldsFixture _indexedFieldsFixture;
 
 	@DeleteAfterTestRun
 	private List<User> _users;

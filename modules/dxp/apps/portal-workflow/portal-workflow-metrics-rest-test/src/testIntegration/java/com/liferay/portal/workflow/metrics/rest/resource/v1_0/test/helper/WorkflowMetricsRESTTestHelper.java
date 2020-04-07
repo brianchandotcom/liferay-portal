@@ -204,44 +204,6 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	public NodeMetric addNodeMetric(
-			long assigneeId, long companyId, long processId)
-		throws Exception {
-
-		String randomString = RandomTestUtil.randomString();
-
-		NodeMetric nodeMetric = new NodeMetric() {
-			{
-				durationAvg = 0L;
-				instanceCount = 1L;
-				node = new Node() {
-					{
-						id = RandomTestUtil.randomLong();
-						label = randomString;
-						name = randomString;
-					}
-				};
-
-				onTimeInstanceCount = 0L;
-				overdueInstanceCount = 0L;
-			}
-		};
-
-		return addNodeMetric(
-			assigneeId, companyId, processId, "RUNNING", nodeMetric, "1.0");
-	}
-
-	public NodeMetric addNodeMetric(
-			long assigneeId, long companyId, long processId, String status,
-			NodeMetric task, String version)
-		throws Exception {
-
-		return addNodeMetric(
-			assigneeId, companyId,
-			() -> addInstance(companyId, false, processId), processId, status,
-			task, version);
-	}
-
-	public NodeMetric addNodeMetric(
 			long assigneeId, long companyId,
 			UnsafeSupplier<Instance, Exception> instanceSuplier, long processId,
 			String status)
@@ -581,16 +543,6 @@ public class WorkflowMetricsRESTTestHelper {
 			instance.getProcessId());
 	}
 
-	public Map<String, String> createI18nMap(String value) {
-		Map<String, String> localizationMap = new HashMap<>();
-
-		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
-			localizationMap.put(availableLocale.toLanguageTag(), value);
-		}
-
-		return localizationMap;
-	}
-
 	public void deleteInstance(long companyId, Instance instance)
 		throws Exception {
 
@@ -635,17 +587,6 @@ public class WorkflowMetricsRESTTestHelper {
 			_slaTaskResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				companyId),
 			"WorkflowMetricsSLATaskResultType", "companyId", companyId,
-			"processId", processId);
-	}
-
-	public void deleteTask(long companyId, long processId, Task task)
-		throws Exception {
-
-		_nodeWorkflowMetricsIndexer.deleteNode(companyId, task.getNodeId());
-
-		_assertCount(
-			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
-			"companyId", companyId, "deleted", true, "name", task.getName(),
 			"processId", processId);
 	}
 

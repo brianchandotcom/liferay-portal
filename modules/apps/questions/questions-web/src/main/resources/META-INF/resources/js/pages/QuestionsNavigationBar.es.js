@@ -102,7 +102,10 @@ export default withRouter(
 											</div>
 										</ClayInput.GroupItem>
 
-										<ClayInput.GroupItem shrink>
+										<ClayInput.GroupItem
+											className="questions-navigation-section-title text-truncate"
+											shrink
+										>
 											{section.title ===
 											section.parentSection.title
 												? Liferay.Language.get('all')

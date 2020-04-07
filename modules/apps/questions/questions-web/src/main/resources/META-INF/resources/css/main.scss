@@ -123,7 +123,14 @@
 }
 
 .questions-navigation-dropdown {
-	max-width: 60%;
+	@include media-breakpoint-up(xl) {
+		max-width: 400px;
+	}
+	.questions-navigation-section-title {
+		@include media-breakpoint-up(xl) {
+			max-width: 200px;
+		}
+	}
 }
 
 .questions-disabled-link {

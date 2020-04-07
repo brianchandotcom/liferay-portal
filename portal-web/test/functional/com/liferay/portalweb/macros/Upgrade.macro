@@ -315,7 +315,9 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "${dmDocumentTypeName}");
 
-		OneDrive.AddDocument(dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade");
+		OneDrive.AddDocument(
+			dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade",
+			dmDocumentTypeName = "${dmDocumentTypeName}");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

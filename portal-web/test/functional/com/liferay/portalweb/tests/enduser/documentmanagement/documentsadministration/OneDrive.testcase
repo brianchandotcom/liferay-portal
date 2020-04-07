@@ -101,7 +101,9 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Excel");
 
-		OneDrive.AddDocument(dmDocumentTitle = "Add Excel Sheet Title");
+		OneDrive.AddDocument(
+			dmDocumentTitle = "Add Excel Sheet Title",
+			dmDocumentTypeName = "Excel");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -134,7 +136,9 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "PowerPoint");
 
-		OneDrive.AddDocument(dmDocumentTitle = "Add PowerPoint Presentation Title");
+		OneDrive.AddDocument(
+			dmDocumentTitle = "Add PowerPoint Presentation Title",
+			dmDocumentTypeName = "PowerPoint");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -167,7 +171,9 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
 
-		OneDrive.AddDocument(dmDocumentTitle = "Add Word Doc Title");
+		OneDrive.AddDocument(
+			dmDocumentTitle = "Add Word Doc Title",
+			dmDocumentTypeName = "Word");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -202,7 +208,9 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
 
-		OneDrive.AddDocument(dmDocumentTitle = "Auto Checkin Word Doc Title");
+		OneDrive.AddDocument(
+			dmDocumentTitle = "Auto Checkin Word Doc Title",
+			dmDocumentTypeName = "Word");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -234,7 +242,8 @@ definition {
 
 		OneDrive.AddDocument(
 			dmDocumentContent = "Alice's Adventures in Wonderland.docx",
-			dmDocumentTitle = "Auto Tagging Word Doc Title");
+			dmDocumentTitle = "Auto Tagging Word Doc Title",
+			dmDocumentTypeName = "Word");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -260,7 +269,9 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Excel");
 
-		OneDrive.AddDocument(dmDocumentTitle = "Cancel Checkout Excel Sheet Title");
+		OneDrive.AddDocument(
+			dmDocumentTitle = "Cancel Checkout Excel Sheet Title",
+			dmDocumentTypeName = "Excel");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -285,7 +296,9 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
 
-		OneDrive.AddDocument(dmDocumentTitle = "Cancel Checkout Word Doc Title");
+		OneDrive.AddDocument(
+			dmDocumentTitle = "Cancel Checkout Word Doc Title",
+			dmDocumentTypeName = "Word");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -309,7 +322,9 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Excel");
 
-		OneDrive.AddDocument(dmDocumentTitle = "Delete Excel Sheet Title");
+		OneDrive.AddDocument(
+			dmDocumentTitle = "Delete Excel Sheet Title",
+			dmDocumentTypeName = "Excel");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -333,7 +348,9 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "PowerPoint");
 
-		OneDrive.AddDocument(dmDocumentTitle = "Delete PowerPoint Presentation Title");
+		OneDrive.AddDocument(
+			dmDocumentTitle = "Delete PowerPoint Presentation Title",
+			dmDocumentTypeName = "PowerPoint");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -357,7 +374,9 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
 
-		OneDrive.AddDocument(dmDocumentTitle = "Delete Word Doc Title");
+		OneDrive.AddDocument(
+			dmDocumentTitle = "Delete Word Doc Title",
+			dmDocumentTypeName = "Word");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

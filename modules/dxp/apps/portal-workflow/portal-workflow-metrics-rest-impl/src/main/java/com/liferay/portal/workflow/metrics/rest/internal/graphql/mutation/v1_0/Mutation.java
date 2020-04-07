@@ -24,7 +24,10 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeBulkSelection;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetric;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetricBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeMetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 
@@ -55,6 +58,14 @@ public class Mutation {
 			assigneeResourceComponentServiceObjects;
 	}
 
+	public static void setAssigneeMetricResourceComponentServiceObjects(
+		ComponentServiceObjects<AssigneeMetricResource>
+			assigneeMetricResourceComponentServiceObjects) {
+
+		_assigneeMetricResourceComponentServiceObjects =
+			assigneeMetricResourceComponentServiceObjects;
+	}
+
 	public static void setSLAResourceComponentServiceObjects(
 		ComponentServiceObjects<SLAResource>
 			slaResourceComponentServiceObjects) {
@@ -66,9 +77,6 @@ public class Mutation {
 	@GraphQLField
 	public java.util.Collection<Assignee> createProcessAssigneesPage(
 			@GraphQLName("processId") Long processId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString,
 			@GraphQLName("assigneeBulkSelection") AssigneeBulkSelection
 				assigneeBulkSelection)
 		throws Exception {
@@ -78,9 +86,33 @@ public class Mutation {
 			this::_populateResourceContext,
 			assigneeResource -> {
 				Page paginationPage = assigneeResource.postProcessAssigneesPage(
-					processId, Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(assigneeResource, sortsString),
-					assigneeBulkSelection);
+					processId, assigneeBulkSelection);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	public java.util.Collection<AssigneeMetric>
+			createProcessAssigneeMetricsPage(
+				@GraphQLName("processId") Long processId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString,
+				@GraphQLName("assigneeMetricBulkSelection")
+					AssigneeMetricBulkSelection assigneeMetricBulkSelection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_assigneeMetricResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			assigneeMetricResource -> {
+				Page paginationPage =
+					assigneeMetricResource.postProcessAssigneeMetricsPage(
+						processId, Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							assigneeMetricResource, sortsString),
+						assigneeMetricBulkSelection);
 
 				return paginationPage.getItems();
 			});
@@ -207,6 +239,20 @@ public class Mutation {
 		assigneeResource.setContextUser(_user);
 	}
 
+	private void _populateResourceContext(
+			AssigneeMetricResource assigneeMetricResource)
+		throws Exception {
+
+		assigneeMetricResource.setContextAcceptLanguage(_acceptLanguage);
+		assigneeMetricResource.setContextCompany(_company);
+		assigneeMetricResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		assigneeMetricResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		assigneeMetricResource.setContextUriInfo(_uriInfo);
+		assigneeMetricResource.setContextUser(_user);
+	}
+
 	private void _populateResourceContext(SLAResource slaResource)
 		throws Exception {
 
@@ -220,6 +266,8 @@ public class Mutation {
 
 	private static ComponentServiceObjects<AssigneeResource>
 		_assigneeResourceComponentServiceObjects;
+	private static ComponentServiceObjects<AssigneeMetricResource>
+		_assigneeMetricResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SLAResource>
 		_slaResourceComponentServiceObjects;
 

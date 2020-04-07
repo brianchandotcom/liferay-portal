@@ -44,34 +44,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Assignee")
 public class Assignee {
 
-	@Schema
-	public Long getDurationTaskAvg() {
-		return durationTaskAvg;
-	}
-
-	public void setDurationTaskAvg(Long durationTaskAvg) {
-		this.durationTaskAvg = durationTaskAvg;
-	}
-
-	@JsonIgnore
-	public void setDurationTaskAvg(
-		UnsafeSupplier<Long, Exception> durationTaskAvgUnsafeSupplier) {
-
-		try {
-			durationTaskAvg = durationTaskAvgUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long durationTaskAvg;
-
 	@Schema(description = "The user's ID.")
 	public Long getId() {
 		return id;
@@ -152,90 +124,6 @@ public class Assignee {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
-	@Schema
-	public Long getOnTimeTaskCount() {
-		return onTimeTaskCount;
-	}
-
-	public void setOnTimeTaskCount(Long onTimeTaskCount) {
-		this.onTimeTaskCount = onTimeTaskCount;
-	}
-
-	@JsonIgnore
-	public void setOnTimeTaskCount(
-		UnsafeSupplier<Long, Exception> onTimeTaskCountUnsafeSupplier) {
-
-		try {
-			onTimeTaskCount = onTimeTaskCountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long onTimeTaskCount;
-
-	@Schema
-	public Long getOverdueTaskCount() {
-		return overdueTaskCount;
-	}
-
-	public void setOverdueTaskCount(Long overdueTaskCount) {
-		this.overdueTaskCount = overdueTaskCount;
-	}
-
-	@JsonIgnore
-	public void setOverdueTaskCount(
-		UnsafeSupplier<Long, Exception> overdueTaskCountUnsafeSupplier) {
-
-		try {
-			overdueTaskCount = overdueTaskCountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long overdueTaskCount;
-
-	@Schema
-	public Long getTaskCount() {
-		return taskCount;
-	}
-
-	public void setTaskCount(Long taskCount) {
-		this.taskCount = taskCount;
-	}
-
-	@JsonIgnore
-	public void setTaskCount(
-		UnsafeSupplier<Long, Exception> taskCountUnsafeSupplier) {
-
-		try {
-			taskCount = taskCountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long taskCount;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -262,16 +150,6 @@ public class Assignee {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		if (durationTaskAvg != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"durationTaskAvg\": ");
-
-			sb.append(durationTaskAvg);
-		}
 
 		if (id != null) {
 			if (sb.length() > 1) {
@@ -309,36 +187,6 @@ public class Assignee {
 			sb.append(_escape(name));
 
 			sb.append("\"");
-		}
-
-		if (onTimeTaskCount != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"onTimeTaskCount\": ");
-
-			sb.append(onTimeTaskCount);
-		}
-
-		if (overdueTaskCount != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"overdueTaskCount\": ");
-
-			sb.append(overdueTaskCount);
-		}
-
-		if (taskCount != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"taskCount\": ");
-
-			sb.append(taskCount);
 		}
 
 		sb.append("}");

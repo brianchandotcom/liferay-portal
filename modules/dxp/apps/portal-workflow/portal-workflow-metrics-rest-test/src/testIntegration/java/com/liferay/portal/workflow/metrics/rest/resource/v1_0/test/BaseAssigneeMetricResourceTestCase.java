@@ -41,11 +41,11 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeMetric;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
-import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.AssigneeResource;
-import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.AssigneeSerDes;
+import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.AssigneeMetricResource;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.AssigneeMetricSerDes;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -78,7 +78,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseAssigneeResourceTestCase {
+public abstract class BaseAssigneeMetricResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -99,11 +99,12 @@ public abstract class BaseAssigneeResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_assigneeResource.setContextCompany(testCompany);
+		_assigneeMetricResource.setContextCompany(testCompany);
 
-		AssigneeResource.Builder builder = AssigneeResource.builder();
+		AssigneeMetricResource.Builder builder =
+			AssigneeMetricResource.builder();
 
-		assigneeResource = builder.locale(
+		assigneeMetricResource = builder.locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -132,13 +133,13 @@ public abstract class BaseAssigneeResourceTestCase {
 			}
 		};
 
-		Assignee assignee1 = randomAssignee();
+		AssigneeMetric assigneeMetric1 = randomAssigneeMetric();
 
-		String json = objectMapper.writeValueAsString(assignee1);
+		String json = objectMapper.writeValueAsString(assigneeMetric1);
 
-		Assignee assignee2 = AssigneeSerDes.toDTO(json);
+		AssigneeMetric assigneeMetric2 = AssigneeMetricSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(assignee1, assignee2));
+		Assert.assertTrue(equals(assigneeMetric1, assigneeMetric2));
 	}
 
 	@Test
@@ -158,10 +159,10 @@ public abstract class BaseAssigneeResourceTestCase {
 			}
 		};
 
-		Assignee assignee = randomAssignee();
+		AssigneeMetric assigneeMetric = randomAssigneeMetric();
 
-		String json1 = objectMapper.writeValueAsString(assignee);
-		String json2 = AssigneeSerDes.toJSON(assignee);
+		String json1 = objectMapper.writeValueAsString(assigneeMetric);
+		String json2 = AssigneeMetricSerDes.toJSON(assigneeMetric);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -171,29 +172,18 @@ public abstract class BaseAssigneeResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		Assignee assignee = randomAssignee();
+		AssigneeMetric assigneeMetric = randomAssigneeMetric();
 
-		assignee.setImage(regex);
-		assignee.setName(regex);
-
-		String json = AssigneeSerDes.toJSON(assignee);
+		String json = AssigneeMetricSerDes.toJSON(assigneeMetric);
 
 		Assert.assertFalse(json.contains(regex));
 
-		assignee = AssigneeSerDes.toDTO(json);
-
-		Assert.assertEquals(regex, assignee.getImage());
-		Assert.assertEquals(regex, assignee.getName());
+		assigneeMetric = AssigneeMetricSerDes.toDTO(json);
 	}
 
 	@Test
-	public void testPostProcessAssigneesPage() throws Exception {
+	public void testPostProcessAssigneeMetricsPage() throws Exception {
 		Assert.assertTrue(false);
-	}
-
-	protected Assignee testGraphQLAssignee_addAssignee() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -204,35 +194,39 @@ public abstract class BaseAssigneeResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(Assignee assignee1, Assignee assignee2) {
+	protected void assertEquals(
+		AssigneeMetric assigneeMetric1, AssigneeMetric assigneeMetric2) {
+
 		Assert.assertTrue(
-			assignee1 + " does not equal " + assignee2,
-			equals(assignee1, assignee2));
+			assigneeMetric1 + " does not equal " + assigneeMetric2,
+			equals(assigneeMetric1, assigneeMetric2));
 	}
 
 	protected void assertEquals(
-		List<Assignee> assignees1, List<Assignee> assignees2) {
+		List<AssigneeMetric> assigneeMetrics1,
+		List<AssigneeMetric> assigneeMetrics2) {
 
-		Assert.assertEquals(assignees1.size(), assignees2.size());
+		Assert.assertEquals(assigneeMetrics1.size(), assigneeMetrics2.size());
 
-		for (int i = 0; i < assignees1.size(); i++) {
-			Assignee assignee1 = assignees1.get(i);
-			Assignee assignee2 = assignees2.get(i);
+		for (int i = 0; i < assigneeMetrics1.size(); i++) {
+			AssigneeMetric assigneeMetric1 = assigneeMetrics1.get(i);
+			AssigneeMetric assigneeMetric2 = assigneeMetrics2.get(i);
 
-			assertEquals(assignee1, assignee2);
+			assertEquals(assigneeMetric1, assigneeMetric2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Assignee> assignees1, List<Assignee> assignees2) {
+		List<AssigneeMetric> assigneeMetrics1,
+		List<AssigneeMetric> assigneeMetrics2) {
 
-		Assert.assertEquals(assignees1.size(), assignees2.size());
+		Assert.assertEquals(assigneeMetrics1.size(), assigneeMetrics2.size());
 
-		for (Assignee assignee1 : assignees1) {
+		for (AssigneeMetric assigneeMetric1 : assigneeMetrics1) {
 			boolean contains = false;
 
-			for (Assignee assignee2 : assignees2) {
-				if (equals(assignee1, assignee2)) {
+			for (AssigneeMetric assigneeMetric2 : assigneeMetrics2) {
+				if (equals(assigneeMetric1, assigneeMetric2)) {
 					contains = true;
 
 					break;
@@ -240,18 +234,19 @@ public abstract class BaseAssigneeResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				assignees2 + " does not contain " + assignee1, contains);
+				assigneeMetrics2 + " does not contain " + assigneeMetric1,
+				contains);
 		}
 	}
 
 	protected void assertEqualsJSONArray(
-		List<Assignee> assignees, JSONArray jsonArray) {
+		List<AssigneeMetric> assigneeMetrics, JSONArray jsonArray) {
 
-		for (Assignee assignee : assignees) {
+		for (AssigneeMetric assigneeMetric : assigneeMetrics) {
 			boolean contains = false;
 
 			for (Object object : jsonArray) {
-				if (equalsJSONObject(assignee, (JSONObject)object)) {
+				if (equalsJSONObject(assigneeMetric, (JSONObject)object)) {
 					contains = true;
 
 					break;
@@ -259,30 +254,50 @@ public abstract class BaseAssigneeResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				jsonArray + " does not contain " + assignee, contains);
+				jsonArray + " does not contain " + assigneeMetric, contains);
 		}
 	}
 
-	protected void assertValid(Assignee assignee) {
+	protected void assertValid(AssigneeMetric assigneeMetric) {
 		boolean valid = true;
-
-		if (assignee.getId() == null) {
-			valid = false;
-		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("image", additionalAssertFieldName)) {
-				if (assignee.getImage() == null) {
+			if (Objects.equals("assignee", additionalAssertFieldName)) {
+				if (assigneeMetric.getAssignee() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (assignee.getName() == null) {
+			if (Objects.equals("durationTaskAvg", additionalAssertFieldName)) {
+				if (assigneeMetric.getDurationTaskAvg() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("onTimeTaskCount", additionalAssertFieldName)) {
+				if (assigneeMetric.getOnTimeTaskCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("overdueTaskCount", additionalAssertFieldName)) {
+				if (assigneeMetric.getOverdueTaskCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("taskCount", additionalAssertFieldName)) {
+				if (assigneeMetric.getTaskCount() == null) {
 					valid = false;
 				}
 
@@ -297,12 +312,12 @@ public abstract class BaseAssigneeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Assignee> page) {
+	protected void assertValid(Page<AssigneeMetric> page) {
 		boolean valid = false;
 
-		java.util.Collection<Assignee> assignees = page.getItems();
+		java.util.Collection<AssigneeMetric> assigneeMetrics = page.getItems();
 
-		int size = assignees.size();
+		int size = assigneeMetrics.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -334,25 +349,20 @@ public abstract class BaseAssigneeResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(Assignee assignee1, Assignee assignee2) {
-		if (assignee1 == assignee2) {
+	protected boolean equals(
+		AssigneeMetric assigneeMetric1, AssigneeMetric assigneeMetric2) {
+
+		if (assigneeMetric1 == assigneeMetric2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(assignee1.getId(), assignee2.getId())) {
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("image", additionalAssertFieldName)) {
+			if (Objects.equals("assignee", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						assignee1.getImage(), assignee2.getImage())) {
+						assigneeMetric1.getAssignee(),
+						assigneeMetric2.getAssignee())) {
 
 					return false;
 				}
@@ -360,9 +370,43 @@ public abstract class BaseAssigneeResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("name", additionalAssertFieldName)) {
+			if (Objects.equals("durationTaskAvg", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						assignee1.getName(), assignee2.getName())) {
+						assigneeMetric1.getDurationTaskAvg(),
+						assigneeMetric2.getDurationTaskAvg())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("onTimeTaskCount", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assigneeMetric1.getOnTimeTaskCount(),
+						assigneeMetric2.getOnTimeTaskCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("overdueTaskCount", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assigneeMetric1.getOverdueTaskCount(),
+						assigneeMetric2.getOverdueTaskCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("taskCount", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assigneeMetric1.getTaskCount(),
+						assigneeMetric2.getTaskCount())) {
 
 					return false;
 				}
@@ -379,12 +423,13 @@ public abstract class BaseAssigneeResourceTestCase {
 	}
 
 	protected boolean equalsJSONObject(
-		Assignee assignee, JSONObject jsonObject) {
+		AssigneeMetric assigneeMetric, JSONObject jsonObject) {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("id", fieldName)) {
+			if (Objects.equals("durationTaskAvg", fieldName)) {
 				if (!Objects.deepEquals(
-						assignee.getId(), jsonObject.getLong("id"))) {
+						assigneeMetric.getDurationTaskAvg(),
+						jsonObject.getLong("durationTaskAvg"))) {
 
 					return false;
 				}
@@ -392,9 +437,10 @@ public abstract class BaseAssigneeResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("image", fieldName)) {
+			if (Objects.equals("onTimeTaskCount", fieldName)) {
 				if (!Objects.deepEquals(
-						assignee.getImage(), jsonObject.getString("image"))) {
+						assigneeMetric.getOnTimeTaskCount(),
+						jsonObject.getLong("onTimeTaskCount"))) {
 
 					return false;
 				}
@@ -402,9 +448,21 @@ public abstract class BaseAssigneeResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("name", fieldName)) {
+			if (Objects.equals("overdueTaskCount", fieldName)) {
 				if (!Objects.deepEquals(
-						assignee.getName(), jsonObject.getString("name"))) {
+						assigneeMetric.getOverdueTaskCount(),
+						jsonObject.getLong("overdueTaskCount"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("taskCount", fieldName)) {
+				if (!Objects.deepEquals(
+						assigneeMetric.getTaskCount(),
+						jsonObject.getLong("taskCount"))) {
 
 					return false;
 				}
@@ -422,13 +480,13 @@ public abstract class BaseAssigneeResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_assigneeResource instanceof EntityModelResource)) {
+		if (!(_assigneeMetricResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_assigneeResource;
+			(EntityModelResource)_assigneeMetricResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -457,7 +515,8 @@ public abstract class BaseAssigneeResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Assignee assignee) {
+		EntityField entityField, String operator,
+		AssigneeMetric assigneeMetric) {
 
 		StringBundler sb = new StringBundler();
 
@@ -469,25 +528,29 @@ public abstract class BaseAssigneeResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("id")) {
+		if (entityFieldName.equals("assignee")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("image")) {
-			sb.append("'");
-			sb.append(String.valueOf(assignee.getImage()));
-			sb.append("'");
-
-			return sb.toString();
+		if (entityFieldName.equals("durationTaskAvg")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("name")) {
-			sb.append("'");
-			sb.append(String.valueOf(assignee.getName()));
-			sb.append("'");
+		if (entityFieldName.equals("onTimeTaskCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
-			return sb.toString();
+		if (entityFieldName.equals("overdueTaskCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("taskCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
@@ -511,27 +574,28 @@ public abstract class BaseAssigneeResourceTestCase {
 		return httpResponse.getContent();
 	}
 
-	protected Assignee randomAssignee() throws Exception {
-		return new Assignee() {
+	protected AssigneeMetric randomAssigneeMetric() throws Exception {
+		return new AssigneeMetric() {
 			{
-				id = RandomTestUtil.randomLong();
-				image = RandomTestUtil.randomString();
-				name = RandomTestUtil.randomString();
+				durationTaskAvg = RandomTestUtil.randomLong();
+				onTimeTaskCount = RandomTestUtil.randomLong();
+				overdueTaskCount = RandomTestUtil.randomLong();
+				taskCount = RandomTestUtil.randomLong();
 			}
 		};
 	}
 
-	protected Assignee randomIrrelevantAssignee() throws Exception {
-		Assignee randomIrrelevantAssignee = randomAssignee();
+	protected AssigneeMetric randomIrrelevantAssigneeMetric() throws Exception {
+		AssigneeMetric randomIrrelevantAssigneeMetric = randomAssigneeMetric();
 
-		return randomIrrelevantAssignee;
+		return randomIrrelevantAssigneeMetric;
 	}
 
-	protected Assignee randomPatchAssignee() throws Exception {
-		return randomAssignee();
+	protected AssigneeMetric randomPatchAssigneeMetric() throws Exception {
+		return randomAssigneeMetric();
 	}
 
-	protected AssigneeResource assigneeResource;
+	protected AssigneeMetricResource assigneeMetricResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -595,7 +659,7 @@ public abstract class BaseAssigneeResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseAssigneeResourceTestCase.class);
+		BaseAssigneeMetricResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -612,8 +676,7 @@ public abstract class BaseAssigneeResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private
-		com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeResource
-			_assigneeResource;
+	private com.liferay.portal.workflow.metrics.rest.resource.v1_0.
+		AssigneeMetricResource _assigneeMetricResource;
 
 }

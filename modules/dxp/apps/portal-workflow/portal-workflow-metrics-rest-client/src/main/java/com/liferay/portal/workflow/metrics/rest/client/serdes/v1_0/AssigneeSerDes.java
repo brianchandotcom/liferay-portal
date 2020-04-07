@@ -53,16 +53,6 @@ public class AssigneeSerDes {
 
 		sb.append("{");
 
-		if (assignee.getDurationTaskAvg() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"durationTaskAvg\": ");
-
-			sb.append(assignee.getDurationTaskAvg());
-		}
-
 		if (assignee.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -101,36 +91,6 @@ public class AssigneeSerDes {
 			sb.append("\"");
 		}
 
-		if (assignee.getOnTimeTaskCount() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"onTimeTaskCount\": ");
-
-			sb.append(assignee.getOnTimeTaskCount());
-		}
-
-		if (assignee.getOverdueTaskCount() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"overdueTaskCount\": ");
-
-			sb.append(assignee.getOverdueTaskCount());
-		}
-
-		if (assignee.getTaskCount() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"taskCount\": ");
-
-			sb.append(assignee.getTaskCount());
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -148,15 +108,6 @@ public class AssigneeSerDes {
 		}
 
 		Map<String, String> map = new TreeMap<>();
-
-		if (assignee.getDurationTaskAvg() == null) {
-			map.put("durationTaskAvg", null);
-		}
-		else {
-			map.put(
-				"durationTaskAvg",
-				String.valueOf(assignee.getDurationTaskAvg()));
-		}
 
 		if (assignee.getId() == null) {
 			map.put("id", null);
@@ -179,31 +130,6 @@ public class AssigneeSerDes {
 			map.put("name", String.valueOf(assignee.getName()));
 		}
 
-		if (assignee.getOnTimeTaskCount() == null) {
-			map.put("onTimeTaskCount", null);
-		}
-		else {
-			map.put(
-				"onTimeTaskCount",
-				String.valueOf(assignee.getOnTimeTaskCount()));
-		}
-
-		if (assignee.getOverdueTaskCount() == null) {
-			map.put("overdueTaskCount", null);
-		}
-		else {
-			map.put(
-				"overdueTaskCount",
-				String.valueOf(assignee.getOverdueTaskCount()));
-		}
-
-		if (assignee.getTaskCount() == null) {
-			map.put("taskCount", null);
-		}
-		else {
-			map.put("taskCount", String.valueOf(assignee.getTaskCount()));
-		}
-
 		return map;
 	}
 
@@ -224,13 +150,7 @@ public class AssigneeSerDes {
 			Assignee assignee, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "durationTaskAvg")) {
-				if (jsonParserFieldValue != null) {
-					assignee.setDurationTaskAvg(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					assignee.setId(Long.valueOf((String)jsonParserFieldValue));
 				}
@@ -243,24 +163,6 @@ public class AssigneeSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					assignee.setName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "onTimeTaskCount")) {
-				if (jsonParserFieldValue != null) {
-					assignee.setOnTimeTaskCount(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "overdueTaskCount")) {
-				if (jsonParserFieldValue != null) {
-					assignee.setOverdueTaskCount(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "taskCount")) {
-				if (jsonParserFieldValue != null) {
-					assignee.setTaskCount(
-						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else {

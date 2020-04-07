@@ -32,9 +32,9 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeBulkSelection;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeResource;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetric;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetricBulkSelection;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeMetricResource;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -61,6 +61,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
@@ -71,26 +72,34 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseAssigneeResourceImpl
-	implements AssigneeResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<Assignee> {
+public abstract class BaseAssigneeMetricResourceImpl
+	implements AssigneeMetricResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<AssigneeMetric> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/assignees' -d $'{"instanceIds": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/assignees/metrics' -d $'{"completed": ___, "dateEnd": ___, "dateStart": ___, "instanceIds": ___, "keywords": ___, "roleIds": ___, "taskKeys": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@POST
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
-	@Path("/processes/{processId}/assignees")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "processId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
+		}
+	)
+	@Path("/processes/{processId}/assignees/metrics")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Assignee")})
-	public Page<Assignee> postProcessAssigneesPage(
+	@Tags(value = {@Tag(name = "AssigneeMetric")})
+	public Page<AssigneeMetric> postProcessAssigneeMetricsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
 				processId,
-			AssigneeBulkSelection assigneeBulkSelection)
+			@Context Pagination pagination, @Context Sort[] sorts,
+			AssigneeMetricBulkSelection assigneeMetricBulkSelection)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -99,14 +108,14 @@ public abstract class BaseAssigneeResourceImpl
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			java.util.Collection<Assignee> assignees,
+			java.util.Collection<AssigneeMetric> assigneeMetrics,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
 
 	@Override
 	public void delete(
-			java.util.Collection<Assignee> assignees,
+			java.util.Collection<AssigneeMetric> assigneeMetrics,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
@@ -127,7 +136,7 @@ public abstract class BaseAssigneeResourceImpl
 	}
 
 	@Override
-	public Page<Assignee> read(
+	public Page<AssigneeMetric> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
@@ -159,7 +168,7 @@ public abstract class BaseAssigneeResourceImpl
 
 	@Override
 	public void update(
-			java.util.Collection<Assignee> assignees,
+			java.util.Collection<AssigneeMetric> assigneeMetrics,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
@@ -221,7 +230,8 @@ public abstract class BaseAssigneeResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(Assignee assignee, Assignee existingAssignee) {
+	protected void preparePatch(
+		AssigneeMetric assigneeMetric, AssigneeMetric existingAssigneeMetric) {
 	}
 
 	protected <T, R> List<R> transform(

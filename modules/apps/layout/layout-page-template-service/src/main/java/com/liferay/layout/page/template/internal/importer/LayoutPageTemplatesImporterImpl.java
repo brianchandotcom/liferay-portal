@@ -32,6 +32,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.exception.MasterPageValidatorException;
 import com.liferay.layout.page.template.exception.PageDefinitionValidatorException;
+import com.liferay.layout.page.template.exception.PageTemplateValidatorException;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
 import com.liferay.layout.page.template.internal.importer.helper.LayoutStructureItemHelper;
@@ -46,6 +47,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.validator.MasterPageValidator;
 import com.liferay.layout.page.template.validator.PageDefinitionValidator;
+import com.liferay.layout.page.template.validator.PageTemplateValidator;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -441,16 +443,43 @@ public class LayoutPageTemplatesImporterImpl
 				continue;
 			}
 
+			String content = StringUtil.read(zipFile.getInputStream(zipEntry));
+
+			PageTemplate pageTemplate = null;
+
+			try {
+				PageTemplateValidator.validatePageTemplate(content);
+
+				pageTemplate = _objectMapper.readValue(
+					content, PageTemplate.class);
+			}
+			catch (PageTemplateValidatorException
+						pageTemplateValidatorException) {
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Invalid page template for: " + zipEntry.getName());
+				}
+
+				_layoutPageTemplatesImporterResultEntries.add(
+					new LayoutPageTemplatesImporterResultEntry(
+						zipEntry.getName(),
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
+						_getErrorMessage(
+							groupId,
+							"x-could-not-be-imported-because-its-page-" +
+								"template-is-invalid",
+							new String[] {zipEntry.getName()})));
+
+				continue;
+			}
+
 			String pageTemplateCollectionKey = _getPageTemplateCollectionKey(
 				zipEntry.getName(), zipFile);
 
 			PageTemplateCollectionEntry pageTemplateCollectionEntry =
 				pageTemplateCollectionMap.get(pageTemplateCollectionKey);
-
-			String content = StringUtil.read(zipFile.getInputStream(zipEntry));
-
-			PageTemplate pageTemplate = _objectMapper.readValue(
-				content, PageTemplate.class);
 
 			try {
 				String pageDefinitionJSON = _getPageDefinitionJSON(

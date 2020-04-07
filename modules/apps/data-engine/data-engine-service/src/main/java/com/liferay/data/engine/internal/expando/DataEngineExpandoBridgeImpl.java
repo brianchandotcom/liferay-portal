@@ -172,35 +172,37 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 			boolean secure)
 		throws PortalException {
 
-		DataDefinition dataDefinition = _getDataDefinition();
-
-		DataDefinitionField[] dataDefinitionFields =
-			dataDefinition.getDataDefinitionFields();
-
-		Optional<DataDefinitionField> dataDefinitionFieldOptional = Stream.of(
-			dataDefinitionFields
-		).filter(
-			dataDefinitionField -> StringUtil.equals(
-				dataDefinitionField.getName(), name)
-		).findAny();
-
-		if (dataDefinitionFieldOptional.isPresent()) {
-			return;
-		}
-
-		List<DataDefinitionField> dataDefinitionFieldsList = new ArrayList<>();
-
-		Collections.addAll(dataDefinitionFieldsList, dataDefinitionFields);
-
-		DataDefinitionField dataDefinitionField = createDataDefinitionField(
-			defaultValue, fieldType, name);
-
-		dataDefinitionFieldsList.add(dataDefinitionField);
-
-		dataDefinition.setDataDefinitionFields(
-			dataDefinitionFieldsList.toArray(new DataDefinitionField[0]));
-
 		try {
+			DataDefinition dataDefinition = _getDataDefinition();
+
+			DataDefinitionField[] dataDefinitionFields =
+				dataDefinition.getDataDefinitionFields();
+
+			Optional<DataDefinitionField> dataDefinitionFieldOptional =
+				Stream.of(
+					dataDefinitionFields
+				).filter(
+					dataDefinitionField -> StringUtil.equals(
+						dataDefinitionField.getName(), name)
+				).findAny();
+
+			if (dataDefinitionFieldOptional.isPresent()) {
+				return;
+			}
+
+			List<DataDefinitionField> dataDefinitionFieldsList =
+				new ArrayList<>();
+
+			Collections.addAll(dataDefinitionFieldsList, dataDefinitionFields);
+
+			DataDefinitionField dataDefinitionField = createDataDefinitionField(
+				defaultValue, fieldType, name);
+
+			dataDefinitionFieldsList.add(dataDefinitionField);
+
+			dataDefinition.setDataDefinitionFields(
+				dataDefinitionFieldsList.toArray(new DataDefinitionField[0]));
+
 			DataDefinitionResource dataDefinitionResource =
 				_getDataDefinitionResource();
 
@@ -294,21 +296,26 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 
 	@Override
 	public UnicodeProperties getAttributeProperties(String name) {
-		UnicodeProperties unicodeProperties = new UnicodeProperties();
+		try {
+			UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-		DataDefinition dataDefinition = _getDataDefinition();
+			DataDefinition dataDefinition = _getDataDefinition();
 
-		Stream.of(
-			dataDefinition.getDataDefinitionFields()
-		).filter(
-			dataDefinitionField -> StringUtil.equals(
-				name, dataDefinitionField.getName())
-		).forEach(
-			dataDefinitionField -> unicodeProperties.put(
-				"fieldType", dataDefinitionField.getFieldType())
-		);
+			Stream.of(
+				dataDefinition.getDataDefinitionFields()
+			).filter(
+				dataDefinitionField -> StringUtil.equals(
+					name, dataDefinitionField.getName())
+			).forEach(
+				dataDefinitionField -> unicodeProperties.put(
+					"fieldType", dataDefinitionField.getFieldType())
+			);
 
-		return unicodeProperties;
+			return unicodeProperties;
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	@Override
@@ -565,18 +572,13 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 		return dataDefinitionField;
 	}
 
-	private DataDefinition _getDataDefinition() {
-		try {
-			DataDefinitionResource dataDefinitionResource =
-				_getDataDefinitionResource();
+	private DataDefinition _getDataDefinition() throws Exception {
+		DataDefinitionResource dataDefinitionResource =
+			_getDataDefinitionResource();
 
-			return dataDefinitionResource.
-				getSiteDataDefinitionByContentTypeByDataDefinitionKey(
-					_companyGroupId, "native-object", _className);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		return dataDefinitionResource.
+			getSiteDataDefinitionByContentTypeByDataDefinitionKey(
+				_companyGroupId, "native-object", _className);
 	}
 
 	private DataDefinitionResource _getDataDefinitionResource()
@@ -609,17 +611,14 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 		return UserLocalServiceUtil.getDefaultUserId(_companyId);
 	}
 
-	private void _updateDataDefinition(DataDefinition dataDefinition) {
-		try {
-			DataDefinitionResource dataDefinitionResource =
-				_getDataDefinitionResource();
+	private void _updateDataDefinition(DataDefinition dataDefinition)
+		throws Exception {
 
-			dataDefinitionResource.putDataDefinition(
-				dataDefinition.getId(), dataDefinition);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		DataDefinitionResource dataDefinitionResource =
+			_getDataDefinitionResource();
+
+		dataDefinitionResource.putDataDefinition(
+			dataDefinition.getId(), dataDefinition);
 	}
 
 	private String _className;

@@ -101,7 +101,7 @@ describe('RatingsLike', () => {
 				expect(LikeButton.value).toBe('27');
 			});
 
-			describe('and the user unlike', () => {
+			describe('and the user clicks unlike', () => {
 				beforeEach(() =>
 					act(async () => {
 						fireEvent.click(getByRole('button'));
@@ -139,7 +139,7 @@ describe('RatingsLike', () => {
 				expect(LikeButton.value).toBe('25');
 			});
 
-			describe('and the user like', () => {
+			describe('and the user clicks like', () => {
 				beforeEach(() =>
 					act(async () => {
 						fireEvent.click(getByRole('button'));
@@ -164,7 +164,7 @@ describe('RatingsLike', () => {
 			fetch.resetMocks();
 		});
 
-		describe('and the user like', () => {
+		describe('and the user clicks like', () => {
 			let getByRole;
 
 			beforeEach(async () => {

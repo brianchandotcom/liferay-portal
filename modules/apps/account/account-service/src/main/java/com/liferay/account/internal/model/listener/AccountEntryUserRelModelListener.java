@@ -17,6 +17,7 @@ package com.liferay.account.internal.model.listener;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -59,6 +61,15 @@ public class AccountEntryUserRelModelListener
 				UserConstants.USER_ID_DEFAULT) {
 
 			return;
+		}
+
+		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
+			accountEntryUserRel.getAccountEntryId());
+
+		if (accountEntry != null) {
+			_userGroupRoleLocalService.deleteUserGroupRoles(
+				accountEntryUserRel.getAccountUserId(),
+				new long[] {accountEntry.getAccountEntryGroupId()});
 		}
 
 		_updateDefaultAccountEntry(accountEntryUserRel.getAccountUserId());
@@ -122,6 +133,12 @@ public class AccountEntryUserRelModelListener
 	}
 
 	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

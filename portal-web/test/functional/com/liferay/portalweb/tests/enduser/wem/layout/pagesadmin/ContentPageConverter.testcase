@@ -991,7 +991,7 @@ definition {
 
 		PageEditor.clickBack();
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_itemName = "Test Page Name",
 			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 			value1 = "Conversion Draft");

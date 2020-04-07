@@ -114,7 +114,7 @@ definition {
 		task ("Assert content page is in pending status") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				key_itemName = "Test Page Name",
 				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 				value1 = "Pending");
@@ -242,7 +242,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				key_itemName = "Test Page Name",
 				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 				value1 = "Pending");
@@ -264,7 +264,7 @@ definition {
 		task ("Assert page author can preview the modification") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				key_itemName = "Test Page Name",
 				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 				value1 = "Pending");
@@ -304,7 +304,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				key_itemName = "Test Page Name",
 				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 				value1 = "Pending");
@@ -412,7 +412,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				key_itemName = "Test Page Name",
 				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 				value1 = "Pending");
@@ -448,7 +448,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				key_itemName = "Test Page Name",
 				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 				value1 = "Pending");
@@ -487,7 +487,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				key_itemName = "Test Page Name",
 				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 				value1 = "Pending");

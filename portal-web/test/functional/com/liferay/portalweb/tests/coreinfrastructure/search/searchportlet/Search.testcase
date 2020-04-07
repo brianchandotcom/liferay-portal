@@ -1137,7 +1137,6 @@ definition {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "false";
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();

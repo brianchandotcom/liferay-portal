@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import React, {useState} from 'react';
 
 import Detail from './components/Detail';
@@ -19,6 +20,7 @@ import {numberFormat} from './utils/numberFormat';
 export default function({context, props}) {
 	const {languageTag, namespace, page} = context;
 	const {defaultTimeSpanKey, timeSpans} = context;
+	const {validAnalyticsCloudConnection} = context;
 	const {authorName, publishDate, title} = props;
 	const {trafficSources} = props;
 
@@ -50,6 +52,7 @@ export default function({context, props}) {
 			pageTitle={title}
 			timeSpanOptions={timeSpans}
 			trafficSources={trafficSources}
+			validAnalyticsCloudConnection={validAnalyticsCloudConnection}
 		/>
 	);
 }
@@ -63,6 +66,7 @@ function Navigation({
 	pageTitle,
 	timeSpanOptions,
 	trafficSources,
+	validAnalyticsCloudConnection,
 }) {
 	const [currentPage, setCurrentPage] = useState({view: 'main'});
 
@@ -127,6 +131,16 @@ function Navigation({
 
 	return (
 		<>
+			{!validAnalyticsCloudConnection && (
+				<ClayAlert
+					className="p-0"
+					displayType="danger"
+					variant="stripe"
+				>
+					{Liferay.Language.get('something-went-wrong')}
+				</ClayAlert>
+			)}
+
 			{currentPage.view === 'main' && (
 				<div className="p-3">
 					<Main

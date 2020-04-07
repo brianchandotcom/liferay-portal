@@ -292,7 +292,7 @@ definition {
 
 	@priority = "5"
 	test SitesPrivatePagesPermissions {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WidgetPagesUseCase#SitesPrivatePagesPermissions";
 		property testray.component.names = "Permissions,Roles,Site Pages Administration,Training";
 

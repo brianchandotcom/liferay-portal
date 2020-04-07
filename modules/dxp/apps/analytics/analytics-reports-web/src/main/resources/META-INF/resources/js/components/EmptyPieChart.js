@@ -15,8 +15,6 @@ import {Cell, Pie, PieChart} from 'recharts';
 
 const EMPTY_PIE_CHART_FILL_COLOR = '#f1f2f5';
 
-const EMPTY_TRAFFIC_SOURCES = [{value: 100}];
-
 export default function EmptyPieChart({height, innerRadius, radius, width}) {
 	return (
 		<div className="pie-chart-wrapper--chart">
@@ -24,16 +22,14 @@ export default function EmptyPieChart({height, innerRadius, radius, width}) {
 				<Pie
 					cx="50%"
 					cy="50%"
-					data={EMPTY_TRAFFIC_SOURCES}
+					data={[{value: 100}]}
 					dataKey="value"
 					innerRadius={innerRadius}
 					nameKey={'name'}
 					outerRadius={radius}
 					paddingAngle={1}
 				>
-					{EMPTY_TRAFFIC_SOURCES.map((_entry, i) => (
-						<Cell fill={EMPTY_PIE_CHART_FILL_COLOR} key={i} />
-					))}
+					<Cell fill={EMPTY_PIE_CHART_FILL_COLOR} />
 				</Pie>
 			</PieChart>
 		</div>

@@ -5,13 +5,13 @@ definition {
 			locator1 = "Button#ADD_ANNOUNCEMENT",
 			value1 = "Add Announcement");
 
-		AssertElementPresent(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
+		AssertElementPresent(locator1 = "TextInput#TITLE");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${entryContent}",
-			title = "${entryTitle}");
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${entryTitle}");
+
+		CKEditor.addContent(content = "${entryContent}");
 
 		Panel.expandPanel(panel = "Configuration");
 
@@ -59,13 +59,13 @@ definition {
 			locator1 = "Button#ADD_ANNOUNCEMENT",
 			value1 = "Add Announcement");
 
-		AssertElementPresent(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
+		AssertElementPresent(locator1 = "TextInput#TITLE");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${entryContent}",
-			title = "${entryTitle}");
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${entryTitle}");
+
+		CKEditor.addContent(content = "${entryContent}");
 
 		Panel.expandPanel(panel = "Configuration");
 
@@ -148,13 +148,16 @@ definition {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
 		AssertTextEquals(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR",
+			locator1 = "TextInput#TITLE",
 			value1 = "${entryTitle}");
 
-		AlloyEditor.addTitleAndContent(
-			content = "${entryContentEdit}",
-			title = "${entryTitleEdit}");
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${entryTitleEdit}");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "${entryContentEdit}");
 
 		Panel.expandPanel(panel = "Configuration");
 

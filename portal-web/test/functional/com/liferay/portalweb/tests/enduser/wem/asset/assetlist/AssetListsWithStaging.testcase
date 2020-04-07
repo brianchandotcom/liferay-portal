@@ -41,7 +41,7 @@ definition {
 			ProductMenuHelper.expandCategory(category = "Content &amp; Data");
 
 			AssertVisible(
-				key_portlet = "Content Sets",
+				key_portlet = "Collections",
 				locator1 = "ProductMenu#PORTLET");
 		}
 
@@ -53,7 +53,7 @@ definition {
 			ProductMenuHelper.expandCategory(category = "Content &amp; Data");
 
 			AssertElementNotPresent(
-				key_portlet = "Content Sets",
+				key_portlet = "Collections",
 				locator1 = "ProductMenu#PORTLET");
 		}
 	}

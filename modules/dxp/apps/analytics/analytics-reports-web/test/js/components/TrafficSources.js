@@ -107,7 +107,7 @@ describe('TrafficSources', () => {
 		expect(getByText('Second Testing')).toBeInTheDocument();
 
 		const zeroValues = getAllByText('0');
-		expect(zeroValues.length == 2);
+		expect(zeroValues.length).toBe(2);
 
 		expect(
 			getByText(

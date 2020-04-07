@@ -1375,7 +1375,7 @@ public class PortalImpl implements Portal {
 		String groupFriendlyURL = StringPool.BLANK;
 		String parametersURL = StringPool.BLANK;
 
-		Boolean includeParametersURL = false;
+		boolean includeParametersURL = false;
 
 		if (Validator.isNotNull(completeURL)) {
 			completeURL = removeRedirectParameter(completeURL);

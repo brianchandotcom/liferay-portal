@@ -8,4 +8,5 @@ dependencies {
 	compileOnly project(":dxp:apps:analytics:analytics-reports-api")
 
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testCompile project(":core:petra:petra-sql-dsl-api")
 }

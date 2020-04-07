@@ -98,7 +98,7 @@ definition {
 			pageName = "Staging Blogs Page",
 			siteName = "Site Name");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
@@ -174,7 +174,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Second Site");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
@@ -385,7 +385,7 @@ definition {
 			pageName = "Blogs Page",
 			siteName = "Second Site");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 

@@ -125,7 +125,7 @@ definition {
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title - Liferay");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content - Liferay",
 			entryTitle = "Blogs Entry Title - Liferay");
 
@@ -188,7 +188,7 @@ definition {
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title - Site Name");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content - Site Name",
 			entryTitle = "Blogs Entry Title - Site Name");
 

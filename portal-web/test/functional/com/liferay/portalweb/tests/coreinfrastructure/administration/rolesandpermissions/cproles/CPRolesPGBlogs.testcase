@@ -1349,7 +1349,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryContentEdit = "Blogs Entry Content Edit");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content Edit",
 			entryTitle = "Blogs Entry Title Edit");
 	}

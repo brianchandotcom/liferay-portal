@@ -430,7 +430,7 @@ definition {
 	macro publishDraftCP {
 		BlogsNavigator.gotoEditCP(entryTitle = "${entryTitle}");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryCP(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
 			entryTitle = "${entryTitle}");

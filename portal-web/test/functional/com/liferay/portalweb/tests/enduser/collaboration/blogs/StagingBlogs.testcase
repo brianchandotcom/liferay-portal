@@ -106,7 +106,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
@@ -595,7 +595,7 @@ definition {
 
 		Refresh();
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 	}
@@ -668,7 +668,7 @@ definition {
 			entryContent = "Blogs Entry Content Edit",
 			entryTitle = "Blogs Entry Title Edit");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content Edit",
 			entryTitle = "Blogs Entry Title Edit");
 	}
@@ -759,7 +759,7 @@ definition {
 			entryContent = "Blogs Entry Content 1",
 			entryTitle = "Blogs Entry Title 1");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 1",
 			entryTitle = "Blogs Entry Title 1",
 			uploadFileName = "Document_1.jpg");
@@ -772,7 +772,7 @@ definition {
 			entryContent = "Blogs Entry Content 2",
 			entryTitle = "Blogs Entry Title 2");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 2",
 			entryInlineImage = "Document_2.jpg",
 			entryTitle = "Blogs Entry Title 2");
@@ -785,7 +785,7 @@ definition {
 			entryContent = "Blogs Entry Content 3",
 			entryTitle = "Blogs Entry Title 3");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 3",
 			entryExternalURL = "https://www.liferay.com",
 			entryTitle = "Blogs Entry Title 3");
@@ -800,7 +800,7 @@ definition {
 			entryContent = "Blogs Entry Content 1",
 			entryTitle = "Blogs Entry Title 1");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 1",
 			entryTitle = "Blogs Entry Title 1",
 			uploadFileName = "Document_1.jpg");
@@ -813,7 +813,7 @@ definition {
 			entryContent = "Blogs Entry Content 2",
 			entryTitle = "Blogs Entry Title 2");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 2",
 			entryInlineImage = "Document_2.jpg",
 			entryTitle = "Blogs Entry Title 2");
@@ -826,7 +826,7 @@ definition {
 			entryContent = "Blogs Entry Content 3",
 			entryTitle = "Blogs Entry Title 3");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content 3",
 			entryExternalURL = "https://www.liferay.com",
 			entryTitle = "Blogs Entry Title 3");

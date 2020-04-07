@@ -57,7 +57,7 @@ definition {
 
 			BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry1 Title");
 
-			BlogsEntry.viewEntry(
+			BlogsEntry.viewEntryCP(
 				entryContent = "Blogs Entry1 Content",
 				entryTitle = "Blogs Entry1 Title");
 		}
@@ -67,7 +67,7 @@ definition {
 
 			BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry2 Title");
 
-			BlogsEntry.viewEntry(
+			BlogsEntry.viewEntryCP(
 				entryContent = "Blogs Entry2 Content",
 				entryTitle = "Blogs Entry2 Title");
 		}
@@ -77,7 +77,7 @@ definition {
 
 			BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry3 Title");
 
-			BlogsEntry.viewEntry(
+			BlogsEntry.viewEntryCP(
 				entryContent = "Blogs Entry3 Content",
 				entryTitle = "Blogs Entry3 Title");
 		}
@@ -100,7 +100,7 @@ definition {
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 	}
@@ -130,7 +130,7 @@ definition {
 
 		BlogsNavigator.gotoEntryCP(entryTitle = '''& < > " Escape Characters Entry''');
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content",
 			entryTitle = '''& < > " Escape Characters Entry''');
 	}
@@ -208,7 +208,7 @@ definition {
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
@@ -291,7 +291,7 @@ definition {
 				entryContent = "Blogs Entry${entryCount} Content",
 				entryTitle = "Blogs Entry${entryCount} Title");
 
-			BlogsEntry.viewEntry(
+			BlogsEntry.viewEntryCP(
 				entryContent = "Blogs Entry${entryCount} Content",
 				entryTitle = "Blogs Entry${entryCount} Title");
 		}
@@ -331,7 +331,7 @@ definition {
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
@@ -352,7 +352,7 @@ definition {
 			entryStatus = "Draft",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
@@ -373,7 +373,7 @@ definition {
 			entryStatus = "Draft",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
@@ -471,7 +471,7 @@ definition {
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
@@ -502,7 +502,7 @@ definition {
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
@@ -543,7 +543,7 @@ definition {
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
@@ -568,7 +568,7 @@ definition {
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
-		BlogsEntry.viewEntry(
+		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",

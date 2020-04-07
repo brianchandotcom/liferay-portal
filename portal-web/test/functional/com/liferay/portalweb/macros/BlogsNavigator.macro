@@ -71,8 +71,8 @@ definition {
 		AssertElementPresent(locator1 = "Icon#BACK");
 
 		AssertVisible(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
+			key_text = "Title",
+			locator1 = "TextArea#ANY");
 	}
 
 	macro gotoEditPG {

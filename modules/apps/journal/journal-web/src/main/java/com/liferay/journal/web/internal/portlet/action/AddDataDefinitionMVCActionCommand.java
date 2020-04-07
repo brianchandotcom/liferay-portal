@@ -54,6 +54,11 @@ public class AddDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		String dataDefinitionString = ParamUtil.getString(
+			actionRequest, "dataDefinition");
+		String dataLayout = ParamUtil.getString(actionRequest, "dataLayout");
+
 		DataDefinitionResource dataDefinitionResource =
 			DataDefinitionResource.builder(
 			).user(
@@ -61,14 +66,12 @@ public class AddDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			).build();
 
 		DataDefinition dataDefinition = DataDefinitionSerDes.toDTO(
-			ParamUtil.getString(actionRequest, "dataDefinition"));
+			dataDefinitionString);
 
-		dataDefinition.setDefaultDataLayout(
-			DataLayoutSerDes.toDTO(
-				ParamUtil.getString(actionRequest, "dataLayout")));
+		dataDefinition.setDefaultDataLayout(DataLayoutSerDes.toDTO(dataLayout));
 
 		dataDefinitionResource.postSiteDataDefinitionByContentType(
-			ParamUtil.getLong(actionRequest, "groupId"), "journal",
+			groupId, "journal",
 			DataEngineUtil.toDataDefinition(dataDefinition));
 	}
 

@@ -34,23 +34,36 @@ describe('RatingsLike', () => {
 	afterEach(cleanup);
 
 	describe('when rendered with the default props', () => {
-		it('is enabled and has default votes', () => {
-			const {getByRole} = renderComponent();
+		let getByRole;
 
+		beforeEach(() => {
+			getByRole = renderComponent().getByRole;
+		});
+
+		it('is enabled', () => {
+			const LikeButton = getByRole('button');
+
+			expect(LikeButton.disabled).toBe(false);
+		});
+
+		it('has default votes', () => {
 			const LikeButton = getByRole('button');
 
 			expect(LikeButton.textContent).toBe('0');
-			expect(LikeButton.disabled).toBe(false);
 		});
 	});
 
 	describe('when rendered with enabled = false', () => {
-		it('is disabled', () => {
-			const {getByRole} = renderComponent({
+		let getByRole;
+
+		beforeEach(() => {
+			getByRole = renderComponent({
 				...defaultProps,
 				enabled: false,
-			});
+			}).getByRole;
+		});
 
+		it('is disabled', () => {
 			const LikeButton = getByRole('button');
 
 			expect(LikeButton.disabled).toBe(true);
@@ -89,12 +102,14 @@ describe('RatingsLike', () => {
 			});
 
 			describe('and the user unlike', () => {
+				beforeEach(() =>
+					act(async () => {
+						fireEvent.click(getByRole('button'));
+					})
+				);
+
 				it('decreases the like counter', async () => {
 					const LikeButton = getByRole('button');
-
-					await act(async () => {
-						fireEvent.click(LikeButton);
-					});
 
 					expect(LikeButton.value).toBe('26');
 				});
@@ -118,19 +133,21 @@ describe('RatingsLike', () => {
 				});
 			});
 
-			it('decreases the likes counter', async () => {
+			it('decreases the likes counter', () => {
 				const LikeButton = getByRole('button');
 
 				expect(LikeButton.value).toBe('25');
 			});
 
 			describe('and the user like', () => {
-				it('increases the like counter', async () => {
-					const LikeButton = getByRole('button');
+				beforeEach(() =>
+					act(async () => {
+						fireEvent.click(getByRole('button'));
+					})
+				);
 
-					await act(async () => {
-						fireEvent.click(LikeButton);
-					});
+				it('increases the like counter', () => {
+					const LikeButton = getByRole('button');
 
 					expect(LikeButton.value).toBe('26');
 				});

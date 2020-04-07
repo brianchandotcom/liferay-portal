@@ -12,7 +12,7 @@ create table AssetListEntry (
 	assetListEntryKey VARCHAR(75) null,
 	title VARCHAR(75) null,
 	type_ INTEGER,
-	assetEntrySubtype VARCHAR(75) null,
+	assetEntrySubtype VARCHAR(255) null,
 	assetEntryType VARCHAR(255) null,
 	lastPublishDate DATE null,
 	primary key (assetListEntryId, ctCollectionId)

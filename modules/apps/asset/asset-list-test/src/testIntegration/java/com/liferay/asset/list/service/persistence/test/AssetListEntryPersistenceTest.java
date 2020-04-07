@@ -324,6 +324,41 @@ public class AssetListEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_AES_AET() throws Exception {
+		_persistence.countByG_AES_AET(RandomTestUtil.nextLong(), "", "");
+
+		_persistence.countByG_AES_AET(0L, "null", "null");
+
+		_persistence.countByG_AES_AET(0L, (String)null, (String)null);
+	}
+
+	@Test
+	public void testCountByG_AES_AETArrayable() throws Exception {
+		_persistence.countByG_AES_AET(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+	}
+
+	@Test
+	public void testCountByG_LikeT_AES_AET() throws Exception {
+		_persistence.countByG_LikeT_AES_AET(
+			RandomTestUtil.nextLong(), "", "", "");
+
+		_persistence.countByG_LikeT_AES_AET(0L, "null", "null", "null");
+
+		_persistence.countByG_LikeT_AES_AET(
+			0L, (String)null, (String)null, (String)null);
+	}
+
+	@Test
+	public void testCountByG_LikeT_AES_AETArrayable() throws Exception {
+		_persistence.countByG_LikeT_AES_AET(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AssetListEntry newAssetListEntry = addAssetListEntry();
 

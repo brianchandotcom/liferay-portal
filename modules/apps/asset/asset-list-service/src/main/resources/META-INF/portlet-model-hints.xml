@@ -15,9 +15,9 @@
 		<field name="assetListEntryKey" type="String" />
 		<field name="title" type="String" />
 		<field name="type" type="int" />
-        <field name="assetEntrySubtype" type="String">
-            <hint name="max-length">255</hint>
-        </field>
+		<field name="assetEntrySubtype" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="assetEntryType" type="String">
 			<hint name="max-length">255</hint>
 		</field>

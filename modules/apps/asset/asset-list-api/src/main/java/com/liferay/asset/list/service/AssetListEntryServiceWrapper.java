@@ -164,6 +164,30 @@ public class AssetListEntryServiceWrapper
 
 	@Override
 	public java.util.List<AssetListEntry> getAssetListEntries(
+		long[] groupIds, String assetEntrySubtype, String assetEntryType,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
+			orderByComparator) {
+
+		return _assetListEntryService.getAssetListEntries(
+			groupIds, assetEntrySubtype, assetEntryType, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<AssetListEntry> getAssetListEntries(
+		long[] groupIds, String title, String assetEntrySubtype,
+		String assetEntryType, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
+			orderByComparator) {
+
+		return _assetListEntryService.getAssetListEntries(
+			groupIds, title, assetEntrySubtype, assetEntryType, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<AssetListEntry> getAssetListEntries(
 		long[] groupIds, String title, String[] assetEntryTypes, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
@@ -201,6 +225,23 @@ public class AssetListEntryServiceWrapper
 	@Override
 	public int getAssetListEntriesCount(long[] groupIds, String title) {
 		return _assetListEntryService.getAssetListEntriesCount(groupIds, title);
+	}
+
+	@Override
+	public int getAssetListEntriesCount(
+		long[] groupIds, String assetEntrySubtype, String assetEntryType) {
+
+		return _assetListEntryService.getAssetListEntriesCount(
+			groupIds, assetEntrySubtype, assetEntryType);
+	}
+
+	@Override
+	public int getAssetListEntriesCount(
+		long[] groupIds, String title, String assetEntrySubtype,
+		String assetEntryType) {
+
+		return _assetListEntryService.getAssetListEntriesCount(
+			groupIds, title, assetEntrySubtype, assetEntryType);
 	}
 
 	@Override

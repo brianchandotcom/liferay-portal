@@ -14,11 +14,9 @@
 
 package com.liferay.headless.delivery.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -43,63 +41,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageElement")
+@GraphQLName("CollectionDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "PageElement")
-public class PageElement {
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		COLLECTION("Collection"), COLLECTION_ITEM("CollectionItem"),
-		COLUMN("Column"), DROP_ZONE("DropZone"), FRAGMENT("Fragment"),
-		ROOT("Root"), ROW("Row"), SECTION("Section");
-
-		@JsonCreator
-		public static Type create(String value) {
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			return null;
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
+@XmlRootElement(name = "CollectionDefinition")
+public class CollectionDefinition {
 
 	@Schema
 	@Valid
-	public Object getDefinition() {
-		return definition;
+	public Object getCollectionConfig() {
+		return collectionConfig;
 	}
 
-	public void setDefinition(Object definition) {
-		this.definition = definition;
+	public void setCollectionConfig(Object collectionConfig) {
+		this.collectionConfig = collectionConfig;
 	}
 
 	@JsonIgnore
-	public void setDefinition(
-		UnsafeSupplier<Object, Exception> definitionUnsafeSupplier) {
+	public void setCollectionConfig(
+		UnsafeSupplier<Object, Exception> collectionConfigUnsafeSupplier) {
 
 		try {
-			definition = definitionUnsafeSupplier.get();
+			collectionConfig = collectionConfigUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -111,24 +73,23 @@ public class PageElement {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object definition;
+	protected Object collectionConfig;
 
 	@Schema
-	@Valid
-	public PageElement[] getPageElements() {
-		return pageElements;
+	public String getListFormat() {
+		return listFormat;
 	}
 
-	public void setPageElements(PageElement[] pageElements) {
-		this.pageElements = pageElements;
+	public void setListFormat(String listFormat) {
+		this.listFormat = listFormat;
 	}
 
 	@JsonIgnore
-	public void setPageElements(
-		UnsafeSupplier<PageElement[], Exception> pageElementsUnsafeSupplier) {
+	public void setListFormat(
+		UnsafeSupplier<String, Exception> listFormatUnsafeSupplier) {
 
 		try {
-			pageElements = pageElementsUnsafeSupplier.get();
+			listFormat = listFormatUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -140,31 +101,23 @@ public class PageElement {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PageElement[] pageElements;
+	protected String listFormat;
 
 	@Schema
-	@Valid
-	public Type getType() {
-		return type;
+	public Integer getNumberOfColumns() {
+		return numberOfColumns;
+	}
+
+	public void setNumberOfColumns(Integer numberOfColumns) {
+		this.numberOfColumns = numberOfColumns;
 	}
 
 	@JsonIgnore
-	public String getTypeAsString() {
-		if (type == null) {
-			return null;
-		}
+	public void setNumberOfColumns(
+		UnsafeSupplier<Integer, Exception> numberOfColumnsUnsafeSupplier) {
 
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
 		try {
-			type = typeUnsafeSupplier.get();
+			numberOfColumns = numberOfColumnsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -176,7 +129,35 @@ public class PageElement {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	protected Integer numberOfColumns;
+
+	@Schema
+	public Integer getNumberOfItems() {
+		return numberOfItems;
+	}
+
+	public void setNumberOfItems(Integer numberOfItems) {
+		this.numberOfItems = numberOfItems;
+	}
+
+	@JsonIgnore
+	public void setNumberOfItems(
+		UnsafeSupplier<Integer, Exception> numberOfItemsUnsafeSupplier) {
+
+		try {
+			numberOfItems = numberOfItemsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer numberOfItems;
 
 	@Override
 	public boolean equals(Object object) {
@@ -184,13 +165,14 @@ public class PageElement {
 			return true;
 		}
 
-		if (!(object instanceof PageElement)) {
+		if (!(object instanceof CollectionDefinition)) {
 			return false;
 		}
 
-		PageElement pageElement = (PageElement)object;
+		CollectionDefinition collectionDefinition =
+			(CollectionDefinition)object;
 
-		return Objects.equals(toString(), pageElement.toString());
+		return Objects.equals(toString(), collectionDefinition.toString());
 	}
 
 	@Override
@@ -205,48 +187,48 @@ public class PageElement {
 
 		sb.append("{");
 
-		if (definition != null) {
+		if (collectionConfig != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"definition\": ");
+			sb.append("\"collectionConfig\": ");
 
-			sb.append(String.valueOf(definition));
+			sb.append(String.valueOf(collectionConfig));
 		}
 
-		if (pageElements != null) {
+		if (listFormat != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"pageElements\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < pageElements.length; i++) {
-				sb.append(String.valueOf(pageElements[i]));
-
-				if ((i + 1) < pageElements.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (type != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"type\": ");
+			sb.append("\"listFormat\": ");
 
 			sb.append("\"");
 
-			sb.append(type);
+			sb.append(_escape(listFormat));
 
 			sb.append("\"");
+		}
+
+		if (numberOfColumns != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"numberOfColumns\": ");
+
+			sb.append(numberOfColumns);
+		}
+
+		if (numberOfItems != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"numberOfItems\": ");
+
+			sb.append(numberOfItems);
 		}
 
 		sb.append("}");
@@ -255,7 +237,7 @@ public class PageElement {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageElement",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.CollectionDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

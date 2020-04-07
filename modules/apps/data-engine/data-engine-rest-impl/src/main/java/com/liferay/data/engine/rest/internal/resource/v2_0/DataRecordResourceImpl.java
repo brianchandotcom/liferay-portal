@@ -300,7 +300,7 @@ public class DataRecordResourceImpl
 			_ddlRecordLocalService.addRecord(
 				PrincipalThreadLocal.getUserId(), ddlRecordSet.getGroupId(),
 				ddmStorageId, dataRecord.getDataRecordCollectionId(),
-				new ServiceContext()));
+				StringPool.BLANK, 0, new ServiceContext()));
 	}
 
 	@Override

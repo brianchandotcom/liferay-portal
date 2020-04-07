@@ -24,7 +24,7 @@ import org.osgi.framework.FrameworkUtil;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class RevertSchemaVersionPersistenceConstants {
+public class RSVPersistenceConstants {
 
 	public static final String BUNDLE_SYMBOLIC_NAME =
 		"com.liferay.revert.schema.version.service";
@@ -36,8 +36,7 @@ public class RevertSchemaVersionPersistenceConstants {
 		"(&" + ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER + "(name=service))";
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			RevertSchemaVersionPersistenceConstants.class);
+		Bundle bundle = FrameworkUtil.getBundle(RSVPersistenceConstants.class);
 
 		if (!BUNDLE_SYMBOLIC_NAME.equals(bundle.getSymbolicName())) {
 			throw new IllegalStateException(

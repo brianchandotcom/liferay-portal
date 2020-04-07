@@ -25,20 +25,20 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class SchemaEntrySoap implements Serializable {
+public class RSVEntrySoap implements Serializable {
 
-	public static SchemaEntrySoap toSoapModel(SchemaEntry model) {
-		SchemaEntrySoap soapModel = new SchemaEntrySoap();
+	public static RSVEntrySoap toSoapModel(RSVEntry model) {
+		RSVEntrySoap soapModel = new RSVEntrySoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
-		soapModel.setEntryId(model.getEntryId());
+		soapModel.setRsvEntryId(model.getRsvEntryId());
 		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
 
-	public static SchemaEntrySoap[] toSoapModels(SchemaEntry[] models) {
-		SchemaEntrySoap[] soapModels = new SchemaEntrySoap[models.length];
+	public static RSVEntrySoap[] toSoapModels(RSVEntry[] models) {
+		RSVEntrySoap[] soapModels = new RSVEntrySoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -47,14 +47,14 @@ public class SchemaEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static SchemaEntrySoap[][] toSoapModels(SchemaEntry[][] models) {
-		SchemaEntrySoap[][] soapModels = null;
+	public static RSVEntrySoap[][] toSoapModels(RSVEntry[][] models) {
+		RSVEntrySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new SchemaEntrySoap[models.length][models[0].length];
+			soapModels = new RSVEntrySoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new SchemaEntrySoap[0][0];
+			soapModels = new RSVEntrySoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -64,26 +64,26 @@ public class SchemaEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static SchemaEntrySoap[] toSoapModels(List<SchemaEntry> models) {
-		List<SchemaEntrySoap> soapModels = new ArrayList<SchemaEntrySoap>(
+	public static RSVEntrySoap[] toSoapModels(List<RSVEntry> models) {
+		List<RSVEntrySoap> soapModels = new ArrayList<RSVEntrySoap>(
 			models.size());
 
-		for (SchemaEntry model : models) {
+		for (RSVEntry model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new SchemaEntrySoap[soapModels.size()]);
+		return soapModels.toArray(new RSVEntrySoap[soapModels.size()]);
 	}
 
-	public SchemaEntrySoap() {
+	public RSVEntrySoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _entryId;
+		return _rsvEntryId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setEntryId(pk);
+		setRsvEntryId(pk);
 	}
 
 	public long getMvccVersion() {
@@ -94,12 +94,12 @@ public class SchemaEntrySoap implements Serializable {
 		_mvccVersion = mvccVersion;
 	}
 
-	public long getEntryId() {
-		return _entryId;
+	public long getRsvEntryId() {
+		return _rsvEntryId;
 	}
 
-	public void setEntryId(long entryId) {
-		_entryId = entryId;
+	public void setRsvEntryId(long rsvEntryId) {
+		_rsvEntryId = rsvEntryId;
 	}
 
 	public long getCompanyId() {
@@ -111,7 +111,7 @@ public class SchemaEntrySoap implements Serializable {
 	}
 
 	private long _mvccVersion;
-	private long _entryId;
+	private long _rsvEntryId;
 	private long _companyId;
 
 }

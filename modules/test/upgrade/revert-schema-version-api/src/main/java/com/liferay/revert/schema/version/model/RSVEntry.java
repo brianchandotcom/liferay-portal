@@ -21,29 +21,29 @@ import com.liferay.portal.kernel.util.Accessor;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * The extended model interface for the SchemaEntry service. Represents a row in the &quot;SchemaEntry&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the RSVEntry service. Represents a row in the &quot;RSVEntry&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
- * @see SchemaEntryModel
+ * @see RSVEntryModel
  * @generated
  */
 @ImplementationClassName(
-	"com.liferay.revert.schema.version.model.impl.SchemaEntryImpl"
+	"com.liferay.revert.schema.version.model.impl.RSVEntryImpl"
 )
 @ProviderType
-public interface SchemaEntry extends PersistedModel, SchemaEntryModel {
+public interface RSVEntry extends PersistedModel, RSVEntryModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to <code>com.liferay.revert.schema.version.model.impl.SchemaEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.revert.schema.version.model.impl.RSVEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SchemaEntry, Long> ENTRY_ID_ACCESSOR =
-		new Accessor<SchemaEntry, Long>() {
+	public static final Accessor<RSVEntry, Long> RSV_ENTRY_ID_ACCESSOR =
+		new Accessor<RSVEntry, Long>() {
 
 			@Override
-			public Long get(SchemaEntry schemaEntry) {
-				return schemaEntry.getEntryId();
+			public Long get(RSVEntry rsvEntry) {
+				return rsvEntry.getRsvEntryId();
 			}
 
 			@Override
@@ -52,8 +52,8 @@ public interface SchemaEntry extends PersistedModel, SchemaEntryModel {
 			}
 
 			@Override
-			public Class<SchemaEntry> getTypeClass() {
-				return SchemaEntry.class;
+			public Class<RSVEntry> getTypeClass() {
+				return RSVEntry.class;
 			}
 
 		};

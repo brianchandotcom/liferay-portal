@@ -22,19 +22,19 @@ import java.util.Map;
 
 /**
  * <p>
- * This class is a wrapper for {@link SchemaEntry}.
+ * This class is a wrapper for {@link RSVEntry}.
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see SchemaEntry
+ * @see RSVEntry
  * @generated
  */
-public class SchemaEntryWrapper
-	extends BaseModelWrapper<SchemaEntry>
-	implements ModelWrapper<SchemaEntry>, SchemaEntry {
+public class RSVEntryWrapper
+	extends BaseModelWrapper<RSVEntry>
+	implements ModelWrapper<RSVEntry>, RSVEntry {
 
-	public SchemaEntryWrapper(SchemaEntry schemaEntry) {
-		super(schemaEntry);
+	public RSVEntryWrapper(RSVEntry rsvEntry) {
+		super(rsvEntry);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class SchemaEntryWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("entryId", getEntryId());
+		attributes.put("rsvEntryId", getRsvEntryId());
 		attributes.put("companyId", getCompanyId());
 
 		return attributes;
@@ -56,10 +56,10 @@ public class SchemaEntryWrapper
 			setMvccVersion(mvccVersion);
 		}
 
-		Long entryId = (Long)attributes.get("entryId");
+		Long rsvEntryId = (Long)attributes.get("rsvEntryId");
 
-		if (entryId != null) {
-			setEntryId(entryId);
+		if (rsvEntryId != null) {
+			setRsvEntryId(rsvEntryId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -70,9 +70,9 @@ public class SchemaEntryWrapper
 	}
 
 	/**
-	 * Returns the company ID of this schema entry.
+	 * Returns the company ID of this rsv entry.
 	 *
-	 * @return the company ID of this schema entry
+	 * @return the company ID of this rsv entry
 	 */
 	@Override
 	public long getCompanyId() {
@@ -80,19 +80,9 @@ public class SchemaEntryWrapper
 	}
 
 	/**
-	 * Returns the entry ID of this schema entry.
+	 * Returns the mvcc version of this rsv entry.
 	 *
-	 * @return the entry ID of this schema entry
-	 */
-	@Override
-	public long getEntryId() {
-		return model.getEntryId();
-	}
-
-	/**
-	 * Returns the mvcc version of this schema entry.
-	 *
-	 * @return the mvcc version of this schema entry
+	 * @return the mvcc version of this rsv entry
 	 */
 	@Override
 	public long getMvccVersion() {
@@ -100,13 +90,23 @@ public class SchemaEntryWrapper
 	}
 
 	/**
-	 * Returns the primary key of this schema entry.
+	 * Returns the primary key of this rsv entry.
 	 *
-	 * @return the primary key of this schema entry
+	 * @return the primary key of this rsv entry
 	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the rsv entry ID of this rsv entry.
+	 *
+	 * @return the rsv entry ID of this rsv entry
+	 */
+	@Override
+	public long getRsvEntryId() {
+		return model.getRsvEntryId();
 	}
 
 	@Override
@@ -115,9 +115,9 @@ public class SchemaEntryWrapper
 	}
 
 	/**
-	 * Sets the company ID of this schema entry.
+	 * Sets the company ID of this rsv entry.
 	 *
-	 * @param companyId the company ID of this schema entry
+	 * @param companyId the company ID of this rsv entry
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
@@ -125,19 +125,9 @@ public class SchemaEntryWrapper
 	}
 
 	/**
-	 * Sets the entry ID of this schema entry.
+	 * Sets the mvcc version of this rsv entry.
 	 *
-	 * @param entryId the entry ID of this schema entry
-	 */
-	@Override
-	public void setEntryId(long entryId) {
-		model.setEntryId(entryId);
-	}
-
-	/**
-	 * Sets the mvcc version of this schema entry.
-	 *
-	 * @param mvccVersion the mvcc version of this schema entry
+	 * @param mvccVersion the mvcc version of this rsv entry
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
@@ -145,18 +135,28 @@ public class SchemaEntryWrapper
 	}
 
 	/**
-	 * Sets the primary key of this schema entry.
+	 * Sets the primary key of this rsv entry.
 	 *
-	 * @param primaryKey the primary key of this schema entry
+	 * @param primaryKey the primary key of this rsv entry
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
+	/**
+	 * Sets the rsv entry ID of this rsv entry.
+	 *
+	 * @param rsvEntryId the rsv entry ID of this rsv entry
+	 */
 	@Override
-	protected SchemaEntryWrapper wrap(SchemaEntry schemaEntry) {
-		return new SchemaEntryWrapper(schemaEntry);
+	public void setRsvEntryId(long rsvEntryId) {
+		model.setRsvEntryId(rsvEntryId);
+	}
+
+	@Override
+	protected RSVEntryWrapper wrap(RSVEntry rsvEntry) {
+		return new RSVEntryWrapper(rsvEntry);
 	}
 
 }

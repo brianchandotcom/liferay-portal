@@ -18,7 +18,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
-import com.liferay.revert.schema.version.model.SchemaEntry;
+import com.liferay.revert.schema.version.model.RSVEntry;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -26,13 +26,13 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 /**
- * The cache model class for representing SchemaEntry in entity cache.
+ * The cache model class for representing RSVEntry in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class SchemaEntryCacheModel
-	implements CacheModel<SchemaEntry>, Externalizable, MVCCModel {
+public class RSVEntryCacheModel
+	implements CacheModel<RSVEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -40,15 +40,14 @@ public class SchemaEntryCacheModel
 			return true;
 		}
 
-		if (!(obj instanceof SchemaEntryCacheModel)) {
+		if (!(obj instanceof RSVEntryCacheModel)) {
 			return false;
 		}
 
-		SchemaEntryCacheModel schemaEntryCacheModel =
-			(SchemaEntryCacheModel)obj;
+		RSVEntryCacheModel rsvEntryCacheModel = (RSVEntryCacheModel)obj;
 
-		if ((entryId == schemaEntryCacheModel.entryId) &&
-			(mvccVersion == schemaEntryCacheModel.mvccVersion)) {
+		if ((rsvEntryId == rsvEntryCacheModel.rsvEntryId) &&
+			(mvccVersion == rsvEntryCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -58,7 +57,7 @@ public class SchemaEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, entryId);
+		int hashCode = HashUtil.hash(0, rsvEntryId);
 
 		return HashUtil.hash(hashCode, mvccVersion);
 	}
@@ -79,8 +78,8 @@ public class SchemaEntryCacheModel
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", entryId=");
-		sb.append(entryId);
+		sb.append(", rsvEntryId=");
+		sb.append(rsvEntryId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append("}");
@@ -89,23 +88,23 @@ public class SchemaEntryCacheModel
 	}
 
 	@Override
-	public SchemaEntry toEntityModel() {
-		SchemaEntryImpl schemaEntryImpl = new SchemaEntryImpl();
+	public RSVEntry toEntityModel() {
+		RSVEntryImpl rsvEntryImpl = new RSVEntryImpl();
 
-		schemaEntryImpl.setMvccVersion(mvccVersion);
-		schemaEntryImpl.setEntryId(entryId);
-		schemaEntryImpl.setCompanyId(companyId);
+		rsvEntryImpl.setMvccVersion(mvccVersion);
+		rsvEntryImpl.setRsvEntryId(rsvEntryId);
+		rsvEntryImpl.setCompanyId(companyId);
 
-		schemaEntryImpl.resetOriginalValues();
+		rsvEntryImpl.resetOriginalValues();
 
-		return schemaEntryImpl;
+		return rsvEntryImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
-		entryId = objectInput.readLong();
+		rsvEntryId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 	}
@@ -114,13 +113,13 @@ public class SchemaEntryCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
-		objectOutput.writeLong(entryId);
+		objectOutput.writeLong(rsvEntryId);
 
 		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
-	public long entryId;
+	public long rsvEntryId;
 	public long companyId;
 
 }

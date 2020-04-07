@@ -3,6 +3,42 @@
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"additionalProperties": false,
 	"definitions": {
+		"CollectionDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"collectionConfig": {
+					"title": "The collectionConfig Schema",
+					"type": "object"
+				},
+				"listFormat": {
+					"title": "The listFormat Schema",
+					"type": "string"
+				},
+				"numberOfColumns": {
+					"minimum" : 0,
+					"title": "The numberOfColumns Schema",
+					"type": "integer"
+				},
+				"numberOfItems": {
+					"minimum" : 0,
+					"title": "The numberOfItems Schema",
+					"type": "integer"
+				}
+			},
+			"title": "The CollectionDefinition Schema",
+			"type": "object"
+		},
+		"CollectionItemDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"collectionItemConfig": {
+					"title": "The collectionItemConfig Schema",
+					"type": "object"
+				}
+			},
+			"title": "The CollectionItemDefinition Schema",
+			"type": "object"
+		},
 		"ColumnDefinition": {
 			"additionalProperties": false,
 			"properties": {
@@ -321,6 +357,38 @@
 					"if": {
 						"properties": {
 							"type": {
+								"const": "Collection"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"definition": {
+								"$ref": "#/definitions/CollectionDefinition"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "CollectionItem"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"definition": {
+								"$ref": "#/definitions/CollectionItemDefinition"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
 								"const": "Column"
 							}
 						}
@@ -428,6 +496,8 @@
 				},
 				"type": {
 					"enum": [
+						"Collection",
+						"CollectionItem",
 						"Column",
 						"DropZone",
 						"Fragment",

@@ -238,7 +238,7 @@ function TrafficSourcesCustomTooltip(props) {
 								<li>
 									{Liferay.Language.get('traffic-share')}
 									{separator}
-									<b>{`${payload.share * 100}%`}</b>
+									<b>{`${payload.share}%`}</b>
 								</li>
 							</React.Fragment>
 						);

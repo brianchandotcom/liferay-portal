@@ -431,7 +431,7 @@ public class FragmentInstanceDefinitionConverterUtil {
 		for (String textId : textIds) {
 			fragmentFields.add(
 				_toFragmentField(
-					editableTypes, jsonObject, infoDisplayContributorTracker,
+					editableTypes, infoDisplayContributorTracker, jsonObject,
 					saveMapping, segmentsExperienceId, textId));
 		}
 
@@ -451,9 +451,8 @@ public class FragmentInstanceDefinitionConverterUtil {
 	}
 
 	private static FragmentInlineValue _toDefaultMappingValue(
-		JSONObject jsonObject,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		Function<Object, String> transformerFunction) {
+		JSONObject jsonObject, Function<Object, String> transformerFunction) {
 
 		long classNameId = jsonObject.getLong("classNameId");
 
@@ -519,9 +518,10 @@ public class FragmentInstanceDefinitionConverterUtil {
 	}
 
 	private static FragmentField _toFragmentField(
-		Map<String, String> editableTypes, JSONObject jsonObject,
+		Map<String, String> editableTypes,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		boolean saveMapping, long segmentsExperienceId, String textId) {
+		JSONObject jsonObject, boolean saveMapping, long segmentsExperienceId,
+		String textId) {
 
 		JSONObject textJSONObject = jsonObject.getJSONObject(textId);
 
@@ -536,18 +536,18 @@ public class FragmentInstanceDefinitionConverterUtil {
 
 						if (Objects.equals(type, "html")) {
 							return _toFragmentFieldHTML(
-								textJSONObject, infoDisplayContributorTracker,
+								infoDisplayContributorTracker, textJSONObject,
 								saveMapping, segmentsExperienceId);
 						}
 
 						if (Objects.equals(type, "image")) {
 							return _toFragmentFieldImage(
-								textJSONObject, infoDisplayContributorTracker,
+								infoDisplayContributorTracker, textJSONObject,
 								saveMapping, segmentsExperienceId);
 						}
 
 						return _toFragmentFieldText(
-							textJSONObject, infoDisplayContributorTracker,
+							infoDisplayContributorTracker, textJSONObject,
 							saveMapping, segmentsExperienceId);
 					});
 			}
@@ -555,9 +555,8 @@ public class FragmentInstanceDefinitionConverterUtil {
 	}
 
 	private static FragmentFieldHTML _toFragmentFieldHTML(
-		JSONObject jsonObject,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		boolean saveMapping, long segmentsExperienceId) {
+		JSONObject jsonObject, boolean saveMapping, long segmentsExperienceId) {
 
 		return new FragmentFieldHTML() {
 			{
@@ -567,10 +566,10 @@ public class FragmentInstanceDefinitionConverterUtil {
 								jsonObject, saveMapping)) {
 
 							return _toFragmentMappedValue(
-								jsonObject,
 								_toDefaultMappingValue(
-									jsonObject, infoDisplayContributorTracker,
-									null));
+									infoDisplayContributorTracker, jsonObject,
+									null),
+								jsonObject);
 						}
 
 						return new FragmentInlineValue() {
@@ -585,9 +584,8 @@ public class FragmentInstanceDefinitionConverterUtil {
 	}
 
 	private static FragmentFieldImage _toFragmentFieldImage(
-		JSONObject jsonObject,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		boolean saveMapping, long segmentsExperienceId) {
+		JSONObject jsonObject, boolean saveMapping, long segmentsExperienceId) {
 
 		Map<String, String> localeMap = _toLocaleMap(
 			jsonObject, segmentsExperienceId);
@@ -607,11 +605,11 @@ public class FragmentInstanceDefinitionConverterUtil {
 										jsonObject, saveMapping)) {
 
 									return _toFragmentMappedValue(
-										jsonObject,
 										_toDefaultMappingValue(
-											jsonObject,
 											infoDisplayContributorTracker,
-											_getImageURLTransformerFunction()));
+											jsonObject,
+											_getImageURLTransformerFunction()),
+										jsonObject);
 								}
 
 								return new FragmentInlineValue() {
@@ -623,20 +621,19 @@ public class FragmentInstanceDefinitionConverterUtil {
 					}
 				};
 				fragmentLink = _toFragmentLink(
-					jsonObject, infoDisplayContributorTracker, saveMapping);
+					infoDisplayContributorTracker, jsonObject, saveMapping);
 			}
 		};
 	}
 
 	private static FragmentFieldText _toFragmentFieldText(
-		JSONObject jsonObject,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		boolean saveMapping, long segmentsExperienceId) {
+		JSONObject jsonObject, boolean saveMapping, long segmentsExperienceId) {
 
 		return new FragmentFieldText() {
 			{
 				fragmentLink = _toFragmentLink(
-					jsonObject, infoDisplayContributorTracker, saveMapping);
+					infoDisplayContributorTracker, jsonObject, saveMapping);
 
 				setText(
 					() -> {
@@ -644,10 +641,10 @@ public class FragmentInstanceDefinitionConverterUtil {
 								jsonObject, saveMapping)) {
 
 							return _toFragmentMappedValue(
-								jsonObject,
 								_toDefaultMappingValue(
-									jsonObject, infoDisplayContributorTracker,
-									null));
+									infoDisplayContributorTracker, jsonObject,
+									null),
+								jsonObject);
 						}
 
 						return new FragmentInlineValue() {
@@ -662,9 +659,8 @@ public class FragmentInstanceDefinitionConverterUtil {
 	}
 
 	private static FragmentLink _toFragmentLink(
-		JSONObject jsonObject,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		boolean saveMapping) {
+		JSONObject jsonObject, boolean saveMapping) {
 
 		JSONObject configJSONObject = jsonObject.getJSONObject("config");
 
@@ -682,10 +678,10 @@ public class FragmentInstanceDefinitionConverterUtil {
 								configJSONObject, saveMapping)) {
 
 							return _toFragmentMappedValue(
-								configJSONObject,
 								_toDefaultMappingValue(
-									configJSONObject,
-									infoDisplayContributorTracker, null));
+									infoDisplayContributorTracker,
+									configJSONObject, null),
+								configJSONObject);
 						}
 
 						return new FragmentInlineValue() {
@@ -712,13 +708,13 @@ public class FragmentInstanceDefinitionConverterUtil {
 	}
 
 	private static FragmentMappedValue _toFragmentMappedValue(
-		JSONObject jsonObject, FragmentInlineValue defaultMappingValue) {
+		FragmentInlineValue fragmentInlineValue, JSONObject jsonObject) {
 
 		return new FragmentMappedValue() {
 			{
 				mapping = new Mapping() {
 					{
-						defaultValue = defaultMappingValue;
+						defaultValue = fragmentInlineValue;
 						fieldKey = jsonObject.getString("fieldId");
 						itemKey = StringBundler.concat(
 							jsonObject.getString("classNameId"),

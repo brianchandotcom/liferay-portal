@@ -241,34 +241,6 @@ definition {
 	}
 
 	@priority = "5"
-	test CKEditorSmoke {
-		property custom.properties = "editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp=ckeditor";
-		property testray.component.names = "WYSIWYG";
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoAddEntry();
-
-		AlloyEditor.addTitle(title = "CKEditor Entry Title");
-
-		CKEditor.assertEditorPresent();
-
-		CKEditor.addContent(content = "CKEditor Entry Content");
-
-		PortletEntry.publish();
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEntryCP(entryTitle = "CKEditor Entry Title");
-
-		BlogsEntry.viewTitle(entryTitle = "CKEditor Entry Title");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
-
-		CKEditor.viewEntryContent(content = "CKEditor Entry Content");
-	}
-
-	@priority = "5"
 	test DeleteBlogsEntries {
 		property portal.acceptance = "true";
 

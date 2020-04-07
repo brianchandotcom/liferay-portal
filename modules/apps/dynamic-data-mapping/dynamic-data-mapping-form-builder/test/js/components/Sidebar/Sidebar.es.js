@@ -467,7 +467,35 @@ describe('Sidebar', () => {
 
 			expect(component.context.dispatch).toHaveBeenCalledWith(
 				'focusedFieldEvaluationEnded',
-				changedFieldType
+				{
+					...changedFieldType,
+					settingsContext: {
+						...changedFieldType.settingsContext,
+						pages: [
+							{
+								rows: [
+									{
+										columns: [
+											{
+												fields: changedFieldType.settingsContext.pages[0].rows[0].columns[0].fields.map(
+													field => ({
+														...field,
+														instanceId: expect.any(
+															String
+														),
+														name: expect.any(
+															String
+														),
+													})
+												),
+											},
+										],
+									},
+								],
+							},
+						],
+					},
+				}
 			);
 		});
 
@@ -534,7 +562,35 @@ describe('Sidebar', () => {
 			).not.toEqual('a=b');
 			expect(component.context.dispatch).toHaveBeenCalledWith(
 				'focusedFieldEvaluationEnded',
-				changedFieldType
+				{
+					...changedFieldType,
+					settingsContext: {
+						...changedFieldType.settingsContext,
+						pages: [
+							{
+								rows: [
+									{
+										columns: [
+											{
+												fields: changedFieldType.settingsContext.pages[0].rows[0].columns[0].fields.map(
+													field => ({
+														...field,
+														instanceId: expect.any(
+															String
+														),
+														name: expect.any(
+															String
+														),
+													})
+												),
+											},
+										],
+									},
+								],
+							},
+						],
+					},
+				}
 			);
 		});
 

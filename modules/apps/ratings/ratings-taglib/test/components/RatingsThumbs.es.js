@@ -70,16 +70,15 @@ describe('RatingsThumbs', () => {
 		});
 
 		describe('and the user votes up', () => {
-			let getAllByRole;
+			let thumbUpButton;
+			let thumbDownButton;
 
 			beforeEach(() => {
-				getAllByRole = renderComponent({
+				[thumbUpButton, thumbDownButton] = renderComponent({
 					...defaultProps,
 					initialNegativeVotes: 10,
 					initialPositiveVotes: 26,
-				}).getAllByRole;
-
-				const [thumbUpButton] = getAllByRole('button');
+				}).getAllByRole('button');
 
 				act(() => {
 					fireEvent.click(thumbUpButton);
@@ -87,73 +86,56 @@ describe('RatingsThumbs', () => {
 			});
 
 			it('increases the up counter', () => {
-				const [thumbUpButton] = getAllByRole('button');
-
 				expect(thumbUpButton.value).toBe('27');
 			});
 
 			it('keeps the down counter', () => {
-				const thumbDownButton = getAllByRole('button')[1];
-
 				expect(thumbDownButton.value).toBe('10');
 			});
 
 			describe('and the user votes down', () => {
 				beforeEach(() => {
-					const thumbDownButton = getAllByRole('button')[1];
-
 					act(() => {
 						fireEvent.click(thumbDownButton);
 					});
 				});
 
 				it('decreases the up counter', () => {
-					const [thumbUpButton] = getAllByRole('button');
-
 					expect(thumbUpButton.value).toBe('26');
 				});
 
 				it('increases the down counter', () => {
-					const thumbDownButton = getAllByRole('button')[1];
-
 					expect(thumbDownButton.value).toBe('11');
 				});
 			});
 
 			describe('and the user votes up again', () => {
 				beforeEach(() => {
-					const [thumbUpButton] = getAllByRole('button');
-
 					act(() => {
 						fireEvent.click(thumbUpButton);
 					});
 				});
 
 				it('decreases the up counter', () => {
-					const [thumbUpButton] = getAllByRole('button');
-
 					expect(thumbUpButton.value).toBe('26');
 				});
 
 				it('keeps the down counter', () => {
-					const thumbDownButton = getAllByRole('button')[1];
-
 					expect(thumbDownButton.value).toBe('10');
 				});
 			});
 		});
 
 		describe('and the user votes down', () => {
-			let getAllByRole;
+			let thumbUpButton;
+			let thumbDownButton;
 
 			beforeEach(() => {
-				getAllByRole = renderComponent({
+				[thumbUpButton, thumbDownButton] = renderComponent({
 					...defaultProps,
 					initialNegativeVotes: 10,
 					initialPositiveVotes: 26,
-				}).getAllByRole;
-
-				const thumbDownButton = getAllByRole('button')[1];
+				}).getAllByRole('button');
 
 				act(() => {
 					fireEvent.click(thumbDownButton);
@@ -161,57 +143,41 @@ describe('RatingsThumbs', () => {
 			});
 
 			it('keeps the up counter', () => {
-				const [thumbUpButton] = getAllByRole('button');
-
 				expect(thumbUpButton.value).toBe('26');
 			});
 
 			it('increases the down counter', () => {
-				const thumbDownButton = getAllByRole('button')[1];
-
 				expect(thumbDownButton.value).toBe('11');
 			});
 
 			describe('and the user votes up', () => {
 				beforeEach(() => {
-					const [thumbUpButton] = getAllByRole('button');
-
 					act(() => {
 						fireEvent.click(thumbUpButton);
 					});
 				});
 
 				it('increases the up counter', () => {
-					const [thumbUpButton] = getAllByRole('button');
-
 					expect(thumbUpButton.value).toBe('27');
 				});
 
 				it('decreases the down counter', () => {
-					const thumbDownButton = getAllByRole('button')[1];
-
 					expect(thumbDownButton.value).toBe('10');
 				});
 			});
 
 			describe('and the user votes down again', () => {
 				beforeEach(() => {
-					const thumbDownButton = getAllByRole('button')[1];
-
 					act(() => {
 						fireEvent.click(thumbDownButton);
 					});
 				});
 
 				it('keeps the up counter', () => {
-					const [thumbUpButton] = getAllByRole('button');
-
 					expect(thumbUpButton.value).toBe('26');
 				});
 
 				it('decreases the down counter', () => {
-					const thumbDownButton = getAllByRole('button')[1];
-
 					expect(thumbDownButton.value).toBe('10');
 				});
 			});
@@ -230,12 +196,14 @@ describe('RatingsThumbs', () => {
 		});
 
 		describe('and the user votes up', () => {
-			let getAllByRole;
+			let thumbUpButton;
+			let thumbDownButton;
 
 			beforeEach(async () => {
-				getAllByRole = renderComponent().getAllByRole;
-
-				const [thumbUpButton] = getAllByRole('button');
+				[
+					thumbUpButton,
+					thumbDownButton,
+				] = renderComponent().getAllByRole('button');
 
 				await act(async () => {
 					fireEvent.click(thumbUpButton);
@@ -252,8 +220,6 @@ describe('RatingsThumbs', () => {
 			});
 
 			it('updates the counters with the ones from the server', () => {
-				const [thumbUpButton, thumbDownButton] = getAllByRole('button');
-
 				expect(thumbUpButton.value).toBe('59');
 				expect(thumbDownButton.value).toBe('27');
 			});

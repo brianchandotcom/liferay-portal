@@ -34,37 +34,27 @@ describe('RatingsLike', () => {
 	afterEach(cleanup);
 
 	describe('when rendered with the default props', () => {
-		let getByRole;
+		let LikeButton;
 
 		beforeEach(() => {
-			getByRole = renderComponent().getByRole;
+			LikeButton = renderComponent().getByRole('button');
 		});
 
 		it('is enabled', () => {
-			const LikeButton = getByRole('button');
-
 			expect(LikeButton.disabled).toBe(false);
 		});
 
 		it('has default votes', () => {
-			const LikeButton = getByRole('button');
-
-			expect(LikeButton.textContent).toBe('0');
+			expect(LikeButton.value).toBe('0');
 		});
 	});
 
 	describe('when rendered with enabled = false', () => {
-		let getByRole;
-
-		beforeEach(() => {
-			getByRole = renderComponent({
+		it('is disabled', () => {
+			const LikeButton = renderComponent({
 				...defaultProps,
 				enabled: false,
-			}).getByRole;
-		});
-
-		it('is disabled', () => {
-			const LikeButton = getByRole('button');
+			}).getByRole('button');
 
 			expect(LikeButton.disabled).toBe(true);
 		});
@@ -80,15 +70,13 @@ describe('RatingsLike', () => {
 		});
 
 		describe('and the user clicks like', () => {
-			let getByRole;
+			let LikeButton;
 
 			beforeEach(() => {
-				getByRole = renderComponent({
+				LikeButton = renderComponent({
 					...defaultProps,
 					positiveVotes: 26,
-				}).getByRole;
-
-				const LikeButton = getByRole('button');
+				}).getByRole('button');
 
 				act(() => {
 					fireEvent.click(LikeButton);
@@ -96,37 +84,31 @@ describe('RatingsLike', () => {
 			});
 
 			it('increases the likes counter', () => {
-				const LikeButton = getByRole('button');
-
 				expect(LikeButton.value).toBe('27');
 			});
 
 			describe('and the user clicks unlike', () => {
 				beforeEach(() => {
 					act(() => {
-						fireEvent.click(getByRole('button'));
+						fireEvent.click(LikeButton);
 					});
 				});
 
 				it('decreases the like counter', () => {
-					const LikeButton = getByRole('button');
-
 					expect(LikeButton.value).toBe('26');
 				});
 			});
 		});
 
 		describe('and the user clicks unlike', () => {
-			let getByRole;
+			let LikeButton;
 
 			beforeEach(() => {
-				getByRole = renderComponent({
+				LikeButton = renderComponent({
 					...defaultProps,
 					initialLiked: true,
 					positiveVotes: 26,
-				}).getByRole;
-
-				const LikeButton = getByRole('button');
+				}).getByRole('button');
 
 				act(() => {
 					fireEvent.click(LikeButton);
@@ -134,21 +116,17 @@ describe('RatingsLike', () => {
 			});
 
 			it('decreases the likes counter', () => {
-				const LikeButton = getByRole('button');
-
 				expect(LikeButton.value).toBe('25');
 			});
 
 			describe('and the user clicks like', () => {
 				beforeEach(() => {
 					act(() => {
-						fireEvent.click(getByRole('button'));
+						fireEvent.click(LikeButton);
 					});
 				});
 
 				it('increases the like counter', () => {
-					const LikeButton = getByRole('button');
-
 					expect(LikeButton.value).toBe('26');
 				});
 			});
@@ -165,15 +143,13 @@ describe('RatingsLike', () => {
 		});
 
 		describe('and the user clicks like', () => {
-			let getByRole;
+			let LikeButton;
 
 			beforeEach(() => {
-				getByRole = renderComponent({
+				LikeButton = renderComponent({
 					...defaultProps,
 					positiveVotes: 26,
-				}).getByRole;
-
-				const LikeButton = getByRole('button');
+				}).getByRole('button');
 
 				act(() => {
 					fireEvent.click(LikeButton);
@@ -190,8 +166,6 @@ describe('RatingsLike', () => {
 			});
 
 			it('updates the counters with the ones from the server', () => {
-				const LikeButton = getByRole('button');
-
 				expect(LikeButton.value).toBe('27');
 			});
 		});

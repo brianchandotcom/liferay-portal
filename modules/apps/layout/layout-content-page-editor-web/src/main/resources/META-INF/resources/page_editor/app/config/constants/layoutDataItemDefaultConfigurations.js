@@ -18,6 +18,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from './layoutDataItemTypes';
 export const LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS = {
 	[LAYOUT_DATA_ITEM_TYPES.collection]: {
 		collection: {},
+		numberOfColumns: 1,
 		numberOfItems: 3,
 	},
 

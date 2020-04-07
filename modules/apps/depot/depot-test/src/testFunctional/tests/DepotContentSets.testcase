@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the documents with document type can be selected through Content Sets in a depot."
+	@description = "This ensures that the documents with document type can be selected through Collections in a depot."
 	@priority = "5"
 	test AddDocTypeDocumentsManually {
 		property portal.upstream = "quarantine";
@@ -180,7 +180,7 @@ definition {
 			assetType = "Web Content Article");
 	}
 
-	@description = "This ensures that content sets from a site can select the basic web content stored in a depot."
+	@description = "This ensures that collections from a site can select the basic web content stored in a depot."
 	@priority = "5"
 	test CreateSetOnSiteUsingDepotWC {
 		property portal.upstream = "quarantine";
@@ -406,7 +406,7 @@ definition {
 			dynamicSelection = "true");
 	}
 
-	@description = "This ensures that the image is displayed by AP through Content Sets in a depot."
+	@description = "This ensures that the image is displayed by AP through Collections in a depot."
 	@priority = "5"
 	test DisplayImageInAP {
 		property portal.upstream = "quarantine";
@@ -634,7 +634,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the asset can be removed in Content Sets."
+	@description = "This ensures that the asset can be removed in Collections."
 	@priority = "4"
 	test RemoveAssetFromContentSet {
 		DepotNavigator.openDepotAdmin();
@@ -849,7 +849,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that multiple documents can be selected through Content Sets in a depot."
+	@description = "This ensures that multiple documents can be selected through Collections in a depot."
 	@priority = "5"
 	test SelectMultipleDocumentsManually {
 		DepotNavigator.openDepotAdmin();
@@ -905,7 +905,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that multiple web content can be selected through Content Sets in a depot."
+	@description = "This ensures that multiple web content can be selected through Collections in a depot."
 	@priority = "5"
 	test SelectMultipleWebContentManually {
 		property portal.upstream = "quarantine";
@@ -1123,7 +1123,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that Content Sets can be set in a depot."
+	@description = "This ensures that Collections can be set in a depot."
 	@priority = "5"
 	test Smoke {
 		property portal.acceptance = "true";

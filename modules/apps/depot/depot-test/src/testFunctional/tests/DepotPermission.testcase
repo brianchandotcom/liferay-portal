@@ -408,7 +408,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
-	@description = "This ensures that able to select specific asset libraries scope from Content Sets permissions."
+	@description = "This ensures that able to select specific asset libraries scope from Collections permissions."
 	@priority = "5"
 	test SelectDepotFromContentSetsPermissions {
 		Permissions.setUpRegRoleLoginUserCP(

@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that previous asset selections persist in content sets after DM and WC applications are disabled."
+	@description = "This ensures that previous asset selections persist in collections after DM and WC applications are disabled."
 	@priority = "5"
 	test SelectDisabledAssetsFromContentSets {
 		property portal.upstream = "quarantine";
@@ -161,7 +161,7 @@ definition {
 			depotName = "Test Depot Name");
 	}
 
-	@description = "This ensures that the Content Sets application can be viewed after reactivating in a depot."
+	@description = "This ensures that the Collections application can be viewed after reactivating in a depot."
 	@priority = "5"
 	test ViewContentSetsAfterReactivating {
 		DepotNavigator.openDepotAdmin();

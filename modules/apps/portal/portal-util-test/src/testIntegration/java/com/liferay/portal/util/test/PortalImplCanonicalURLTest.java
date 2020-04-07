@@ -162,13 +162,12 @@ public class PortalImplCanonicalURLTest {
 	public void testCanonicalURLWithFriendlyURL() throws Exception {
 		String portalDomain = "localhost";
 
-		String[] urlSeparators =
-			FriendlyURLResolverRegistryUtil.getURLSeparators();
-
 		ThemeDisplay themeDisplay = _createThemeDisplay(
 			portalDomain, _group, 8080, false);
 
-		for (String urlSeparator : urlSeparators) {
+		for (String urlSeparator :
+				FriendlyURLResolverRegistryUtil.getURLSeparators()) {
+
 			String completeURL = _generateURL(
 				portalDomain, "8080", StringPool.BLANK, _group.getFriendlyURL(),
 				urlSeparator + "content-name", false);

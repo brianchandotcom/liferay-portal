@@ -1380,12 +1380,11 @@ public class PortalImpl implements Portal {
 		if (Validator.isNotNull(completeURL)) {
 			completeURL = removeRedirectParameter(completeURL);
 
-			String[] urlSeparators =
-				FriendlyURLResolverRegistryUtil.getURLSeparators();
-
 			int pos = -1;
 
-			for (String urlSeparator : urlSeparators) {
+			for (String urlSeparator :
+					FriendlyURLResolverRegistryUtil.getURLSeparators()) {
+
 				pos = completeURL.indexOf(urlSeparator);
 
 				if (pos != -1) {

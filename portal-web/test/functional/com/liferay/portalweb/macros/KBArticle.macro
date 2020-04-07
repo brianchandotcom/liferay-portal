@@ -250,11 +250,7 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
-		AssertElementPresent(locator1 = "Message#ERROR");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR_ENTER_A_VALID_TITLE",
-			value1 = "Please enter a valid title.");
+		Alert.viewRequiredField();
 	}
 
 	macro addCPWithTextFieldCustomField {

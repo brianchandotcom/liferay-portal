@@ -78,14 +78,18 @@ public class DDMFormInstanceUADDisplay extends BaseDDMFormInstanceUADDisplay {
 		Class parentContainerClass, Serializable parentContainerId,
 		Object childObject) {
 
-		if (childObject instanceof DDMFormInstanceRecord) {
+		if ((childObject instanceof DDMFormInstanceRecord) &&
+			(parentContainerId instanceof Long)) {
+
 			try {
 				DDMFormInstanceRecord ddmFormInstanceRecord =
 					(DDMFormInstanceRecord)childObject;
 
-				if (parentContainerId.equals(
+				Long ddmFormInstanceParentId = (Long)parentContainerId;
+
+				if (ddmFormInstanceParentId.longValue() ==
 						DDMFormInstanceUADConstants.
-							DEFAULT_DDM_FORM_INSTANCE_PARENT_ID)) {
+							DEFAULT_DDM_FORM_INSTANCE_PARENT_ID) {
 
 					return ddmFormInstanceRecord.getFormInstance();
 				}

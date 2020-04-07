@@ -105,12 +105,6 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 		return addKaleoInstance(getKaleoDefinition(), _createWorkflowContext());
 	}
 
-	protected KaleoInstance addKaleoInstance(KaleoDefinition kaleoDefinition)
-		throws Exception {
-
-		return addKaleoInstance(kaleoDefinition, _createWorkflowContext());
-	}
-
 	protected KaleoInstance addKaleoInstance(
 			KaleoDefinition kaleoDefinition,
 			Map<String, Serializable> workflowContext)

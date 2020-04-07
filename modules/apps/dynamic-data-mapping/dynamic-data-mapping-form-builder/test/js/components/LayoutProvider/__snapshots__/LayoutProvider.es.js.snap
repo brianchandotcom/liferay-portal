@@ -477,7 +477,6 @@ Array [
                 "validation": Object {
                   "expression": undefined,
                 },
-                "value": undefined,
                 "visible": true,
               },
             ],

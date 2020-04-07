@@ -45,6 +45,10 @@ public class AssetEntryItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _showScheduled;
 	}
 
+	public boolean isSingleSelect() {
+		return _singleSelect;
+	}
+
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 	}
@@ -61,6 +65,10 @@ public class AssetEntryItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_showScheduled = showScheduled;
 	}
 
+	public void setSingleSelect(boolean singleSelect) {
+		_singleSelect = singleSelect;
+	}
+
 	public void setSubtypeSelectionId(long subtypeSelectionId) {
 		_subtypeSelectionId = subtypeSelectionId;
 	}
@@ -73,6 +81,7 @@ public class AssetEntryItemSelectorCriterion extends BaseItemSelectorCriterion {
 	private long[] _selectedGroupIds;
 	private boolean _showNonindexable;
 	private boolean _showScheduled;
+	private boolean _singleSelect;
 	private long _subtypeSelectionId;
 	private String _typeSelection;
 

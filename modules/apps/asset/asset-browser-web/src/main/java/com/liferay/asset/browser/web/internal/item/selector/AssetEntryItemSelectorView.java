@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -119,7 +118,7 @@ public class AssetEntryItemSelectorView
 			).put(
 				"multipleSelection",
 				_toStringArray(
-					!ParamUtil.getBoolean(httpServletRequest, "singleSelect"))
+					!assetEntryItemSelectorCriterion.isSingleSelect())
 			).put(
 				"selectedGroupIds",
 				_toStringArray(

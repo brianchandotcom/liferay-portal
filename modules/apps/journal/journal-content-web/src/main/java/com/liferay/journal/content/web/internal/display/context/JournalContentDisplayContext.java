@@ -532,17 +532,14 @@ public class JournalContentDisplayContext {
 				_themeDisplay.getScopeGroupId()));
 		assetEntryItemSelectorCriterion.setShowNonindexable(true);
 		assetEntryItemSelectorCriterion.setShowScheduled(true);
+		assetEntryItemSelectorCriterion.setSingleSelect(true);
 		assetEntryItemSelectorCriterion.setTypeSelection(
 			JournalArticle.class.getName());
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
+		return itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory,
 			liferayRenderResponse.getNamespace() + "selectedItem",
 			assetEntryItemSelectorCriterion);
-
-		itemSelectorURL.setParameter("singleSelect", Boolean.TRUE.toString());
-
-		return itemSelectorURL;
 	}
 
 	public JournalArticle getLatestArticle() throws PortalException {

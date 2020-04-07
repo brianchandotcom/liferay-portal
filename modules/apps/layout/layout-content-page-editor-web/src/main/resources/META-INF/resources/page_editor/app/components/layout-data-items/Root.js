@@ -38,18 +38,14 @@ import TopperEmpty from '../TopperEmpty';
 const Root = React.forwardRef(({children, item, layoutData}, ref) => {
 	return (
 		<TopperEmpty item={item} layoutData={layoutData}>
-			{({canDrop, isOver}) => (
+			{() => (
 				<div className={classNames('page-editor__root')} ref={ref}>
 					{React.Children.count(children) ? (
 						children
 					) : (
 						<div
 							className={classNames(
-								'page-editor__no-fragments-message',
-								{
-									'page-editor__no-fragments-message--active':
-										isOver && canDrop,
-								}
+								'page-editor__no-fragments-message'
 							)}
 						>
 							<div className="page-editor__no-fragments-message__title">

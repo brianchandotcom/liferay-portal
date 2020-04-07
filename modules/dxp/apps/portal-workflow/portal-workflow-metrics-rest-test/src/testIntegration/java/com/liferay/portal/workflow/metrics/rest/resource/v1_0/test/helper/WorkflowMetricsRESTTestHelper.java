@@ -298,26 +298,6 @@ public class WorkflowMetricsRESTTestHelper {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
 	}
 
-	public Task addTask(long assigneeId, long companyId, long processId)
-		throws Exception {
-
-		String randomString = RandomTestUtil.randomString();
-
-		Task task = new Task() {
-			{
-				durationAvg = 0L;
-				instanceCount = 1L;
-				key = randomString;
-				name = randomString;
-				onTimeInstanceCount = 0L;
-				overdueInstanceCount = 0L;
-			}
-		};
-
-		return addTask(
-			assigneeId, companyId, processId, "RUNNING", task, "1.0");
-	}
-
 	public void addTask(
 			long assigneeId, long companyId, long durationAvg,
 			Instance instance, String name, long nodeId, long taskId)

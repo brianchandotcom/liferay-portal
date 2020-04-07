@@ -296,7 +296,7 @@ definition {
 			}
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_CONTENT_SETS")) {
 				var permissionNavigationKey = "SITE_ADMIN_CONTENT_CONTENT_SETS";
-				var permissionNavigationValue = "Content Sets";
+				var permissionNavigationValue = "Collections";
 			}
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA")) {
 				var permissionNavigationKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA";
@@ -631,7 +631,7 @@ definition {
 		}
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_CONTENT_SETS")) {
 			var permissionNavigationKey = "SITE_ADMIN_CONTENT_CONTENT_SETS";
-			var permissionNavigationValue = "Content Sets";
+			var permissionNavigationValue = "Collections";
 		}
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA")) {
 			var permissionNavigationKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA";

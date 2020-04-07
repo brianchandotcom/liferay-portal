@@ -59,7 +59,30 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 
 		<c:if test="<%= MapUtil.isNotEmpty(importedLayoutPageTemplatesImporterResultEntriesMap) %>">
 			<div class="alert alert-success success-dialog">
-				<span class="success-message"><liferay-ui:message key="imported-entries" /></span>
+
+				<%
+				int importedLayoutPageTemplatesImporterResultEntriesSize = 0;
+
+				if (importedLayoutPageTemplatesImporterResultEntriesMap != null) {
+					for (List<LayoutPageTemplatesImporterResultEntry> layoutPageTemplatesImporterResultEntries :
+						importedLayoutPageTemplatesImporterResultEntriesMap.values()) {
+
+						if (ListUtil.isNotEmpty(layoutPageTemplatesImporterResultEntries)) {
+							importedLayoutPageTemplatesImporterResultEntriesSize =
+								importedLayoutPageTemplatesImporterResultEntriesSize +
+								layoutPageTemplatesImporterResultEntries.size();
+						}
+					}
+				}
+				%>
+
+				<c:if test="<%= importedLayoutPageTemplatesImporterResultEntriesSize == 1 %>">
+					<span class="success-message"><liferay-ui:message key="1-entry-was-imported-correctly" /></span>
+				</c:if>
+
+				<c:if test="<%= importedLayoutPageTemplatesImporterResultEntriesSize > 1 %>">
+					<span class="success-message"><liferay-ui:message arguments="<%= importedLayoutPageTemplatesImporterResultEntriesSize %>" key="x-entries-were-imported-correctly" /></span>
+				</c:if>
 
 				<ul class="success-list-items">
 

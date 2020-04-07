@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeUser;
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.CreatorUser;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Creator;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
@@ -112,12 +112,12 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	protected Instance randomInstance() throws Exception {
 		Instance instance = super.randomInstance();
 
-		instance.setAssigneeUsers(new AssigneeUser[0]);
+		instance.setAssignees(new Assignee[0]);
 
 		User adminUser = UserTestUtil.getAdminUser(testGroup.getCompanyId());
 
-		instance.setCreatorUser(
-			new CreatorUser() {
+		instance.setCreator(
+			new Creator() {
 				{
 					id = adminUser.getUserId();
 					name = adminUser.getFullName();
@@ -145,9 +145,9 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		instance = _workflowMetricsRESTTestHelper.addInstance(
 			testGroup.getCompanyId(), instance);
 
-		for (AssigneeUser assigneeUser : instance.getAssigneeUsers()) {
+		for (Assignee assignee : instance.getAssignees()) {
 			_workflowMetricsRESTTestHelper.addTask(
-				assigneeUser.getId(), testGroup.getCompanyId(), instance);
+				assignee.getId(), testGroup.getCompanyId(), instance);
 		}
 
 		_instances.add(instance);
@@ -173,7 +173,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	}
 
 	private void _testGetProcessInstancesPage(
-			Long[] assigneeUserIds, String[] statuses,
+			Long[] assigneeIds, String[] statuses,
 			UnsafeTriConsumer<Instance, Instance, Page<Instance>, Exception>
 				unsafeTriConsumer)
 		throws Exception {
@@ -188,9 +188,9 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		Instance instance2 = randomInstance();
 
-		instance2.setAssigneeUsers(
-			new AssigneeUser[] {
-				new AssigneeUser() {
+		instance2.setAssignees(
+			new Assignee[] {
+				new Assignee() {
 					{
 						id = _user.getUserId();
 					}
@@ -200,7 +200,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		testGetProcessInstancesPage_addInstance(_process.getId(), instance2);
 
 		Page<Instance> page = instanceResource.getProcessInstancesPage(
-			_process.getId(), assigneeUserIds, null, null, null, statuses, null,
+			_process.getId(), assigneeIds, null, null, null, statuses, null,
 			Pagination.of(1, 2));
 
 		unsafeTriConsumer.accept(instance1, instance2, page);

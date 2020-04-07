@@ -1054,26 +1054,47 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<echo>${curl.output.follower.workflow.metrics.sla.task.results.index}</echo>
 
-		<property name="follower.workflow.metrics.tokens.index">
+		<property name="follower.workflow.metrics.tasks.index">
 			<![CDATA[
 				{
-					"leader_index": "liferay-workflow-metrics-tokens-${companyId}",
+					"leader_index": "liferay-workflow-metrics-tasks-${companyId}",
 					"remote_cluster": "leader"
 				}
 			]]>
 		</property>
 
-		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.tokens.index">
+		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.tasks.index">
 			<arg value="-H" />
 			<arg value="Content-Type: application/json" />
 			<arg value="-X" />
 			<arg value="PUT" />
-			<arg value="localhost:9202/liferay-workflow-metrics-tokens-${companyId}/_ccr/follow?wait_for_active_shards=1" />
+			<arg value="localhost:9202/liferay-workflow-metrics-tasks-${companyId}/_ccr/follow?wait_for_active_shards=1" />
 			<arg value="-d" />
-			<arg value="${follower.workflow.metrics.tokens.index}" />
+			<arg value="${follower.workflow.metrics.tasks.index}" />
 		</exec>
 
-		<echo>${curl.output.follower.workflow.metrics.tokens.index}</echo>
+		<echo>${curl.output.follower.workflow.metrics.tasks.index}</echo>
+
+		<property name="follower.workflow.metrics.transitions.index">
+			<![CDATA[
+				{
+					"leader_index": "liferay-workflow-metrics-transitions-${companyId}",
+					"remote_cluster": "leader"
+				}
+			]]>
+		</property>
+
+		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.transitions.index">
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
+			<arg value="-X" />
+			<arg value="PUT" />
+			<arg value="localhost:9202/liferay-workflow-metrics-transitions-${companyId}/_ccr/follow?wait_for_active_shards=1" />
+			<arg value="-d" />
+			<arg value="${follower.workflow.metrics.transitions.index}" />
+		</exec>
+
+		<echo>${curl.output.follower.workflow.metrics.transitions.index}</echo>
 
 		<exec executable="curl" outputproperty="curl.output.follower.indices">
 			<arg value="-X" />
@@ -1093,7 +1114,8 @@ xpack.monitoring.collection.enabled: true</echo>
 				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-processes-${companyId}" />
 				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-sla-instance-results-${companyId}" />
 				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-sla-task-results-${companyId}" />
-				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-tokens-${companyId}" />
+				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-tasks-${companyId}" />
+				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-transitions-${companyId}" />
 			</and>
 			<then>
 				<echo>Created follower indices.</echo>

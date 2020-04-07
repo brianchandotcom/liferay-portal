@@ -104,6 +104,10 @@ public interface DDLRecordLocalService
 			DDMFormValues ddmFormValues, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	public DDLRecord addRecord(
 			long userId, long groupId, long ddmStorageId, long ddlRecordSetId,

@@ -572,6 +572,7 @@ definition {
 
 	@priority = "4"
 	test ChangeTemplate {
+		property test.name.skip.portal.instance = "WebContentDisplay#ChangeTemplate";
 		property testray.component.names = "Web Content Display";
 
 		ProductMenu.gotoPortlet(

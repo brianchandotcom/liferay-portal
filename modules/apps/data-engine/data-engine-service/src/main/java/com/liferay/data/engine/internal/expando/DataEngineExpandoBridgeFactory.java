@@ -60,7 +60,7 @@ public class DataEngineExpandoBridgeFactory implements ExpandoBridgeFactory {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	protected void setDataEngineNativeObject(
+	protected void addDataEngineNativeObject(
 		DataEngineNativeObject dataEngineNativeObject) {
 
 		_dataEngineNativeObjects.put(
@@ -68,7 +68,7 @@ public class DataEngineExpandoBridgeFactory implements ExpandoBridgeFactory {
 			dataEngineNativeObject.getClassName());
 	}
 
-	protected void unsetDataEngineNativeObject(
+	protected void removeDataEngineNativeObject(
 		DataEngineNativeObject dataEngineNativeObject) {
 
 		_dataEngineNativeObjects.remove(dataEngineNativeObject.getClassName());

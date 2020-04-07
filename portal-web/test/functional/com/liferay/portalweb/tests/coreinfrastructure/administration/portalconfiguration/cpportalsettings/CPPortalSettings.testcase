@@ -42,6 +42,7 @@ definition {
 	test AssertEmailVerificationIsRequiredByDefault {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=true${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.name.skip.portal.instance = "CPPortalSettings#AssertEmailVerificationIsRequiredByDefault";
+		property test.smtp.server.enabled = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
 

@@ -107,12 +107,6 @@ public interface DDLRecordLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DDLRecord addRecord(
 			long userId, long groupId, long ddmStorageId, long ddlRecordSetId,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public DDLRecord addRecord(
-			long userId, long groupId, long ddmStorageId, long ddlRecordSetId,
 			String className, long classPK, ServiceContext serviceContext)
 		throws PortalException;
 

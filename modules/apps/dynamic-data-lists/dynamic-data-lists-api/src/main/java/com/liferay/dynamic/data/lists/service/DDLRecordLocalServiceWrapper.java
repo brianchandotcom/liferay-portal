@@ -77,16 +77,6 @@ public class DDLRecordLocalServiceWrapper
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 			long userId, long groupId, long ddmStorageId, long ddlRecordSetId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddlRecordLocalService.addRecord(
-			userId, groupId, ddmStorageId, ddlRecordSetId, serviceContext);
-	}
-
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
-			long userId, long groupId, long ddmStorageId, long ddlRecordSetId,
 			String className, long classPK,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -458,6 +458,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		document.addKeywordSortable(Field.ARTICLE_ID, articleId);
 
 		document.addDate(Field.DISPLAY_DATE, journalArticle.getDisplayDate());
+		document.addDate(
+			Field.EXPIRATION_DATE, journalArticle.getExpirationDate());
 		document.addKeyword(Field.LAYOUT_UUID, journalArticle.getLayoutUuid());
 		document.addKeyword(
 			Field.TREE_PATH,

@@ -63,7 +63,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.addManualSelection(
 			assetListTitle = "Depot Manual Asset List",
@@ -73,7 +73,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewAssetTypeList(
 			assetListName = "Depot Manual Asset List",
@@ -85,7 +85,7 @@ definition {
 
 			DepotNavigator.gotoDepot(
 				depotName = "Test Depot Name",
-				portlet = "Content Sets");
+				portlet = "Collections");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Depot Manual Asset List",
@@ -98,7 +98,7 @@ definition {
 
 			DepotNavigator.gotoDepot(
 				depotName = "Test Depot Name",
-				portlet = "Content Sets");
+				portlet = "Collections");
 
 			AssetListsAdmin.viewContent(
 				assetListTitle = "Depot Manual Asset List",
@@ -265,7 +265,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewAssetTypeList(
 			allAssetsDisabled = "ture",
@@ -276,7 +276,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewAssetTypeList(
 			allAssetsDisabled = "true",
@@ -329,7 +329,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewAssetTypeList(
 			assetListName = "Depot Manual Asset List",
@@ -340,7 +340,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewAssetTypeList(
 			assetListName = "Depot Dynamic Asset List",
@@ -387,7 +387,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewAssetTypeList(
 			assetListName = "Depot Manual Asset List",
@@ -398,7 +398,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewAssetTypeList(
 			assetListName = "Depot Dynamic Asset List",
@@ -426,7 +426,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.addManualSelection(
 			assetListTitle = "Depot Manual Asset List",
@@ -436,7 +436,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Manual Asset List",
@@ -446,7 +446,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.selectAsset(
 			assetListName = "Depot Manual Asset List",
@@ -522,7 +522,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.addDynamicSelection(
 			assetListTitle = "Depot Dynamic Asset List",
@@ -532,7 +532,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Dynamic Asset List",
@@ -542,7 +542,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
 
@@ -657,7 +657,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.addManualSelection(
 			assetListTitle = "Depot Manual Asset List",
@@ -667,7 +667,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Manual Asset List",
@@ -678,7 +678,7 @@ definition {
 
 			DepotNavigator.gotoDepot(
 				depotName = "Test Depot Name",
-				portlet = "Content Sets");
+				portlet = "Collections");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Depot Manual Asset List",
@@ -693,7 +693,7 @@ definition {
 
 			DepotNavigator.gotoDepot(
 				depotName = "Test Depot Name",
-				portlet = "Content Sets");
+				portlet = "Collections");
 
 			AssetListsAdmin.viewContent(
 				assetListTitle = "Depot Manual Asset List",
@@ -705,7 +705,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewNoContent(
 			assetListTitle = "Depot Manual Asset List",
@@ -864,7 +864,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
 
@@ -872,7 +872,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Manual Asset List",
@@ -883,7 +883,7 @@ definition {
 
 			DepotNavigator.gotoDepot(
 				depotName = "Test Depot Name",
-				portlet = "Content Sets");
+				portlet = "Collections");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Depot Manual Asset List",
@@ -896,7 +896,7 @@ definition {
 
 			DepotNavigator.gotoDepot(
 				depotName = "Test Depot Name",
-				portlet = "Content Sets");
+				portlet = "Collections");
 
 			AssetListsAdmin.viewContent(
 				assetListTitle = "Depot Manual Asset List",
@@ -922,7 +922,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.addManualSelection(
 			assetListTitle = "Depot Manual Asset List",
@@ -932,7 +932,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Manual Asset List",
@@ -943,7 +943,7 @@ definition {
 
 			DepotNavigator.gotoDepot(
 				depotName = "Test Depot Name",
-				portlet = "Content Sets");
+				portlet = "Collections");
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Depot Manual Asset List",
@@ -956,7 +956,7 @@ definition {
 
 			DepotNavigator.gotoDepot(
 				depotName = "Test Depot Name",
-				portlet = "Content Sets");
+				portlet = "Collections");
 
 			AssetListsAdmin.viewContent(
 				assetListTitle = "Depot Manual Asset List",
@@ -1133,11 +1133,11 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
-			value1 = "No Content Sets yet.");
+			value1 = "No Collections yet.");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO_TAGLIB_DESCRIPTION",

@@ -52,7 +52,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.addManualSelection(
 			assetListTitle = "Depot Manual Asset List",
@@ -62,7 +62,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.selectAsset(
 			assetListName = "Depot Manual Asset List",
@@ -73,7 +73,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.selectAsset(
 			assetListName = "Depot Manual Asset List",
@@ -95,7 +95,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewContent(
 			assetListTitle = "Depot Manual Asset List",
@@ -106,7 +106,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewContent(
 			assetListTitle = "Depot Manual Asset List",
@@ -127,20 +127,20 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Settings");
 
-		for (var application : list "Content Sets,Documents and Media,Web Content") {
+		for (var application : list "Collections,Documents and Media,Web Content") {
 			AssertChecked(
 				checkboxName = "${application}",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
 		Depot.configureApplication(
-			applicationList = "Content Sets,Documents and Media,Web Content",
+			applicationList = "Collections,Documents and Media,Web Content",
 			status = "Disabled");
 
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewApplication(
-			applicationList = "Content Sets,Documents and Media,Web Content",
+			applicationList = "Collections,Documents and Media,Web Content",
 			depotName = "Test Depot Name",
 			noApplication = "true");
 
@@ -152,13 +152,13 @@ definition {
 			portlet = "Settings");
 
 		Depot.configureApplication(
-			applicationList = "Content Sets,Documents and Media,Web Content",
+			applicationList = "Collections,Documents and Media,Web Content",
 			status = "Enabled");
 
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewApplication(
-			applicationList = "Content Sets,Documents and Media,Web Content",
+			applicationList = "Collections,Documents and Media,Web Content",
 			depotName = "Test Depot Name");
 	}
 
@@ -169,7 +169,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
 
@@ -177,7 +177,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.addDynamicSelection(assetListTitle = "Depot Dynamic Asset List");
 
@@ -189,13 +189,13 @@ definition {
 			portlet = "Settings");
 
 		Depot.configureApplication(
-			applicationList = "Content Sets",
+			applicationList = "Collections",
 			status = "Disabled");
 
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewApplication(
-			applicationList = "Content Sets",
+			applicationList = "Collections",
 			depotName = "Test Depot Name",
 			noApplication = "true");
 
@@ -213,20 +213,20 @@ definition {
 			portlet = "Settings");
 
 		Depot.configureApplication(
-			applicationList = "Content Sets",
+			applicationList = "Collections",
 			status = "Enabled");
 
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewApplication(
-			applicationList = "Content Sets",
+			applicationList = "Collections",
 			depotName = "Test Depot Name");
 
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+			portlet = "Collections");
 
 		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Manual Asset List",
@@ -248,7 +248,7 @@ definition {
 			portlet = "Settings");
 
 		Depot.configureApplication(
-			applicationList = "Content Sets,Documents and Media,Web Content",
+			applicationList = "Collections,Documents and Media,Web Content",
 			status = "Disabled");
 
 		DepotNavigator.openDepotAdmin();
@@ -473,7 +473,7 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewApplication(
-			applicationList = "Content Sets,Web Content",
+			applicationList = "Collections,Web Content",
 			depotName = "Test Depot Name");
 
 		DepotNavigator.openDepotAdmin();
@@ -534,7 +534,7 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewApplication(
-			applicationList = "Content Sets,Documents and Media",
+			applicationList = "Collections,Documents and Media",
 			depotName = "Test Depot Name");
 
 		DepotNavigator.openDepotAdmin();

@@ -2749,6 +2749,7 @@ definition {
 	@description = "Remove a field from the Form View from the Objects Sidebar"
 	@priority = "5"
 	test RemoveFormViewFieldInObjectSidebar {
+		property portal.upstream = "quarantine";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",

@@ -934,7 +934,7 @@ definition {
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "start-elasticsearch-node -Dremote.elasticsearch.cluster.size=1");
 
-		Pause(locator1 = "20000");
+		Pause(locator1 = "30000");
 
 		AntCommand(
 			locator1 = "build-test-elasticsearch7.xml",

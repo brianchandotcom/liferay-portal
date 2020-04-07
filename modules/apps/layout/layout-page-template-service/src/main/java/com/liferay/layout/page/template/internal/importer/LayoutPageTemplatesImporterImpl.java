@@ -30,6 +30,7 @@ import com.liferay.headless.delivery.dto.v1_0.Settings;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
+import com.liferay.layout.page.template.exception.MasterPageValidatorException;
 import com.liferay.layout.page.template.exception.PageDefinitionValidatorException;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
@@ -43,6 +44,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.validator.MasterPageValidator;
 import com.liferay.layout.page.template.validator.PageDefinitionValidator;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
@@ -298,8 +300,31 @@ public class LayoutPageTemplatesImporterImpl
 
 			String content = StringUtil.read(zipFile.getInputStream(zipEntry));
 
-			MasterPage masterPage = _objectMapper.readValue(
-				content, MasterPage.class);
+			MasterPage masterPage = null;
+
+			try {
+				MasterPageValidator.validateMasterPage(content);
+
+				masterPage = _objectMapper.readValue(content, MasterPage.class);
+			}
+			catch (MasterPageValidatorException masterPageValidatorException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Invalid master page for: " + zipEntry.getName());
+				}
+
+				_layoutPageTemplatesImporterResultEntries.add(
+					new LayoutPageTemplatesImporterResultEntry(
+						zipEntry.getName(),
+						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
+						_getErrorMessage(
+							groupId,
+							"x-could-not-be-imported-because-its-master-page-" +
+								"is-invalid",
+							new String[] {zipEntry.getName()})));
+
+				continue;
+			}
 
 			try {
 				String pageDefinitionJSON = _getPageDefinitionJSON(

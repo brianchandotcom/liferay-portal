@@ -15,10 +15,14 @@
 import '@testing-library/jest-dom/extend-expect';
 import {act, cleanup, getByText, render} from '@testing-library/react';
 import React from 'react';
+import {DndProvider} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
+import {CollectionItemWithControls} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items';
 import Collection from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items/Collection';
 import CollectionService from '../../../../src/main/resources/META-INF/resources/page_editor/app/services/CollectionService';
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';
+import {DragAndDropContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useDragAndDrop';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/CollectionService',
@@ -44,16 +48,30 @@ function renderCollection(itemConfig = {}) {
 	};
 
 	return render(
-		<StoreAPIContextProvider dispatch={() => {}} getState={() => state}>
-			<Collection
-				item={{
-					config: {...defaultConfig, ...itemConfig},
-					itemId: '',
-					parentId: '',
-					type: '',
-				}}
-			/>
-		</StoreAPIContextProvider>,
+		<DndProvider backend={HTML5Backend}>
+			<StoreAPIContextProvider dispatch={() => {}} getState={() => state}>
+				<DragAndDropContextProvider>
+					<Collection
+						item={{
+							config: {...defaultConfig, ...itemConfig},
+							itemId: 'collection',
+							parentId: '',
+							type: '',
+						}}
+					>
+						<CollectionItemWithControls
+							item={{
+								children: [],
+								itemId: 'collection-item',
+								parentId: 'collection',
+								type: 'collection-item',
+							}}
+							layoutData={{}}
+						></CollectionItemWithControls>
+					</Collection>
+				</DragAndDropContextProvider>
+			</StoreAPIContextProvider>
+		</DndProvider>,
 		{
 			baseElement: document.body,
 		}
@@ -102,5 +120,32 @@ describe('Collection', () => {
 				'you-do-not-have-any-items-in-this-collection'
 			)
 		).toBeInTheDocument();
+	});
+
+	it('renders empty collection items', async () => {
+		const items = [
+			{content: 'Item 1 Content', title: 'Item 1 Title'},
+			{content: 'Item 2 Content', title: 'Item 2 Title'},
+		];
+
+		CollectionService.getCollectionField.mockImplementation(() =>
+			Promise.resolve({
+				items,
+				length: 2,
+			})
+		);
+
+		await act(async () => {
+			renderCollection({
+				collection: {
+					itemSubtype: 'CollectionItemSubtype',
+					itemType: 'CollectionItemType',
+				},
+			});
+		});
+
+		items.forEach(item =>
+			expect(getByText(document.body, item.title)).toBeInTheDocument()
+		);
 	});
 });

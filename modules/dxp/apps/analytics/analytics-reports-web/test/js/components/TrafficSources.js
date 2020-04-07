@@ -48,4 +48,71 @@ describe('TrafficSources', () => {
 		expect(getByText('Second Testing')).toBeInTheDocument();
 		expect(getByText('278,256')).toBeInTheDocument();
 	});
+
+	it('displays a dash instead of value when the value is missing', () => {
+		const mockTrafficSources = [
+			{
+				helpMessage: 'Testing Help Message',
+				name: 'testing',
+				title: 'Testing',
+				value: 32178,
+			},
+			{
+				helpMessage: 'Second Testing Help Message',
+				name: 'second-testing',
+				title: 'Second Testing',
+			},
+		];
+
+		const {getByText} = render(
+			<TrafficSources
+				languageTag="en-US"
+				onTrafficSourceClick={() => {}}
+				trafficSources={mockTrafficSources}
+			/>
+		);
+
+		expect(getByText('Testing')).toBeInTheDocument();
+		expect(getByText('32,178')).toBeInTheDocument();
+
+		expect(getByText('Second Testing')).toBeInTheDocument();
+		expect(getByText('-')).toBeInTheDocument();
+	});
+
+	it('displays a message informing the user that there is no incoming traffic from search engines yet', () => {
+		const mockTrafficSources = [
+			{
+				helpMessage: 'Testing Help Message',
+				name: 'testing',
+				title: 'Testing',
+				value: 0,
+			},
+			{
+				helpMessage: 'Second Testing Help Message',
+				name: 'second-testing',
+				title: 'Second Testing',
+				value: 0,
+			},
+		];
+
+		const {getAllByText, getByText} = render(
+			<TrafficSources
+				languageTag="en-US"
+				onTrafficSourceClick={() => {}}
+				trafficSources={mockTrafficSources}
+			/>
+		);
+
+		expect(getByText('Testing')).toBeInTheDocument();
+		expect(getByText('Second Testing')).toBeInTheDocument();
+
+		const zeroValues = getAllByText('0');
+		expect(zeroValues.length == 2);
+
+		expect(
+			getByText(
+				'your-page-has-no-incoming-traffic-from-search-engines-yet'
+			)
+		).toBeInTheDocument();
+	});
 });

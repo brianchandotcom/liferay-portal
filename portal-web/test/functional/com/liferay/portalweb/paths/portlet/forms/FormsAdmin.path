@@ -11,7 +11,7 @@
 <!--FORMS_TABLE-->
 <tr>
 	<td>FORMS_TABLE_NAME</td>
-	<td>//div[contains(@class,'searchcontainer')]//h2[contains(.,'${key_formName}')]/a</td>
+	<td>//div[contains(@class,'searchcontainer')]//a[contains(.,'${key_formName}')] | //div[contains(@class,'searchcontainer')]//h2[contains(.,'${key_formName}')] </td>
 	<td></td>
 </tr>
 <tr>
@@ -21,7 +21,7 @@
 </tr>
 <tr>
 	<td>FORMS_TABLE_DESCRIPTION</td>
-	<td>//div[contains(@class,'searchcontainer')]//div[contains(@class,'form-instance-description') and contains(.,'${key_formDescription}')]</td>
+	<td>//div[contains(@class,'searchcontainer')]//div[contains(@class,'table-responsive')]//td[contains(@class,'lfr-description-column')] | //div[contains(@class,'searchcontainer')]//div[contains(@class,'form-instance-description') and contains(.,'${key_formDescription}')]</td>
 	<td></td>
 </tr>
 <tr>

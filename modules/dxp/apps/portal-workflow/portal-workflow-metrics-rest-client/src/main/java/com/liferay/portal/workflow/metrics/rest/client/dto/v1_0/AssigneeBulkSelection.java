@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.metrics.rest.client.dto.v1_0;
 import com.liferay.portal.workflow.metrics.rest.client.function.UnsafeSupplier;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.AssigneeBulkSelectionSerDes;
 
-import java.util.Date;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -28,69 +27,6 @@ import javax.annotation.Generated;
  */
 @Generated("")
 public class AssigneeBulkSelection implements Cloneable {
-
-	public Boolean getCompleted() {
-		return completed;
-	}
-
-	public void setCompleted(Boolean completed) {
-		this.completed = completed;
-	}
-
-	public void setCompleted(
-		UnsafeSupplier<Boolean, Exception> completedUnsafeSupplier) {
-
-		try {
-			completed = completedUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Boolean completed;
-
-	public Date getDateEnd() {
-		return dateEnd;
-	}
-
-	public void setDateEnd(Date dateEnd) {
-		this.dateEnd = dateEnd;
-	}
-
-	public void setDateEnd(
-		UnsafeSupplier<Date, Exception> dateEndUnsafeSupplier) {
-
-		try {
-			dateEnd = dateEndUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Date dateEnd;
-
-	public Date getDateStart() {
-		return dateStart;
-	}
-
-	public void setDateStart(Date dateStart) {
-		this.dateStart = dateStart;
-	}
-
-	public void setDateStart(
-		UnsafeSupplier<Date, Exception> dateStartUnsafeSupplier) {
-
-		try {
-			dateStart = dateStartUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Date dateStart;
 
 	public Long[] getInstanceIds() {
 		return instanceIds;
@@ -112,69 +48,6 @@ public class AssigneeBulkSelection implements Cloneable {
 	}
 
 	protected Long[] instanceIds;
-
-	public String getKeywords() {
-		return keywords;
-	}
-
-	public void setKeywords(String keywords) {
-		this.keywords = keywords;
-	}
-
-	public void setKeywords(
-		UnsafeSupplier<String, Exception> keywordsUnsafeSupplier) {
-
-		try {
-			keywords = keywordsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String keywords;
-
-	public Long[] getRoleIds() {
-		return roleIds;
-	}
-
-	public void setRoleIds(Long[] roleIds) {
-		this.roleIds = roleIds;
-	}
-
-	public void setRoleIds(
-		UnsafeSupplier<Long[], Exception> roleIdsUnsafeSupplier) {
-
-		try {
-			roleIds = roleIdsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long[] roleIds;
-
-	public String[] getTaskKeys() {
-		return taskKeys;
-	}
-
-	public void setTaskKeys(String[] taskKeys) {
-		this.taskKeys = taskKeys;
-	}
-
-	public void setTaskKeys(
-		UnsafeSupplier<String[], Exception> taskKeysUnsafeSupplier) {
-
-		try {
-			taskKeys = taskKeysUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String[] taskKeys;
 
 	@Override
 	public AssigneeBulkSelection clone() throws CloneNotSupportedException {

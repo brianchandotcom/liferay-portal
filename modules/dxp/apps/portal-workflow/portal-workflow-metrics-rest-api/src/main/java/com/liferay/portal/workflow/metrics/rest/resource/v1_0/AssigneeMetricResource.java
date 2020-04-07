@@ -14,10 +14,12 @@
 
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0;
 
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeBulkSelection;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetric;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetricBulkSelection;
 
 import java.util.Locale;
 
@@ -40,14 +42,15 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface AssigneeResource {
+public interface AssigneeMetricResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<Assignee> postProcessAssigneesPage(
-			Long processId, AssigneeBulkSelection assigneeBulkSelection)
+	public Page<AssigneeMetric> postProcessAssigneeMetricsPage(
+			Long processId, Pagination pagination, Sort[] sorts,
+			AssigneeMetricBulkSelection assigneeMetricBulkSelection)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -80,7 +83,7 @@ public interface AssigneeResource {
 	@ProviderType
 	public interface Builder {
 
-		public AssigneeResource build();
+		public AssigneeMetricResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

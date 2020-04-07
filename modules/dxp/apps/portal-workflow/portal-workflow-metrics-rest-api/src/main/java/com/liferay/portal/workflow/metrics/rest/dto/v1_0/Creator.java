@@ -67,7 +67,7 @@ public class Creator {
 	}
 
 	@GraphQLField(description = "The user's ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@Schema(description = "The user's full name.")
@@ -93,7 +93,7 @@ public class Creator {
 	}
 
 	@GraphQLField(description = "The user's full name.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	@Override

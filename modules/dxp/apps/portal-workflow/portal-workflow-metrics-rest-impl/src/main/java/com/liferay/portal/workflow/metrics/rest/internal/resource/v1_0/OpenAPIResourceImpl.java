@@ -66,6 +66,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(AssigneeResourceImpl.class);
 
+			add(AssigneeMetricResourceImpl.class);
+
 			add(CalendarResourceImpl.class);
 
 			add(InstanceResourceImpl.class);

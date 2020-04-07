@@ -17,9 +17,6 @@ package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -58,51 +55,6 @@ public class AssigneeBulkSelectionSerDes {
 
 		sb.append("{");
 
-		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-		if (assigneeBulkSelection.getCompleted() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"completed\": ");
-
-			sb.append(assigneeBulkSelection.getCompleted());
-		}
-
-		if (assigneeBulkSelection.getDateEnd() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dateEnd\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				liferayToJSONDateFormat.format(
-					assigneeBulkSelection.getDateEnd()));
-
-			sb.append("\"");
-		}
-
-		if (assigneeBulkSelection.getDateStart() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dateStart\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				liferayToJSONDateFormat.format(
-					assigneeBulkSelection.getDateStart()));
-
-			sb.append("\"");
-		}
-
 		if (assigneeBulkSelection.getInstanceIds() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -118,68 +70,6 @@ public class AssigneeBulkSelectionSerDes {
 				sb.append(assigneeBulkSelection.getInstanceIds()[i]);
 
 				if ((i + 1) < assigneeBulkSelection.getInstanceIds().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (assigneeBulkSelection.getKeywords() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"keywords\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(assigneeBulkSelection.getKeywords()));
-
-			sb.append("\"");
-		}
-
-		if (assigneeBulkSelection.getRoleIds() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"roleIds\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < assigneeBulkSelection.getRoleIds().length;
-				 i++) {
-
-				sb.append(assigneeBulkSelection.getRoleIds()[i]);
-
-				if ((i + 1) < assigneeBulkSelection.getRoleIds().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (assigneeBulkSelection.getTaskKeys() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"taskKeys\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < assigneeBulkSelection.getTaskKeys().length;
-				 i++) {
-
-				sb.append("\"");
-
-				sb.append(_escape(assigneeBulkSelection.getTaskKeys()[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < assigneeBulkSelection.getTaskKeys().length) {
 					sb.append(", ");
 				}
 			}
@@ -208,27 +98,6 @@ public class AssigneeBulkSelectionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-		if (assigneeBulkSelection.getCompleted() == null) {
-			map.put("completed", null);
-		}
-		else {
-			map.put(
-				"completed",
-				String.valueOf(assigneeBulkSelection.getCompleted()));
-		}
-
-		map.put(
-			"dateEnd",
-			liferayToJSONDateFormat.format(assigneeBulkSelection.getDateEnd()));
-
-		map.put(
-			"dateStart",
-			liferayToJSONDateFormat.format(
-				assigneeBulkSelection.getDateStart()));
-
 		if (assigneeBulkSelection.getInstanceIds() == null) {
 			map.put("instanceIds", null);
 		}
@@ -236,32 +105,6 @@ public class AssigneeBulkSelectionSerDes {
 			map.put(
 				"instanceIds",
 				String.valueOf(assigneeBulkSelection.getInstanceIds()));
-		}
-
-		if (assigneeBulkSelection.getKeywords() == null) {
-			map.put("keywords", null);
-		}
-		else {
-			map.put(
-				"keywords",
-				String.valueOf(assigneeBulkSelection.getKeywords()));
-		}
-
-		if (assigneeBulkSelection.getRoleIds() == null) {
-			map.put("roleIds", null);
-		}
-		else {
-			map.put(
-				"roleIds", String.valueOf(assigneeBulkSelection.getRoleIds()));
-		}
-
-		if (assigneeBulkSelection.getTaskKeys() == null) {
-			map.put("taskKeys", null);
-		}
-		else {
-			map.put(
-				"taskKeys",
-				String.valueOf(assigneeBulkSelection.getTaskKeys()));
 		}
 
 		return map;
@@ -285,46 +128,10 @@ public class AssigneeBulkSelectionSerDes {
 			AssigneeBulkSelection assigneeBulkSelection,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "completed")) {
-				if (jsonParserFieldValue != null) {
-					assigneeBulkSelection.setCompleted(
-						(Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dateEnd")) {
-				if (jsonParserFieldValue != null) {
-					assigneeBulkSelection.setDateEnd(
-						toDate((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dateStart")) {
-				if (jsonParserFieldValue != null) {
-					assigneeBulkSelection.setDateStart(
-						toDate((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "instanceIds")) {
+			if (Objects.equals(jsonParserFieldName, "instanceIds")) {
 				if (jsonParserFieldValue != null) {
 					assigneeBulkSelection.setInstanceIds(
 						toLongs((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "keywords")) {
-				if (jsonParserFieldValue != null) {
-					assigneeBulkSelection.setKeywords(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "roleIds")) {
-				if (jsonParserFieldValue != null) {
-					assigneeBulkSelection.setRoleIds(
-						toLongs((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "taskKeys")) {
-				if (jsonParserFieldValue != null) {
-					assigneeBulkSelection.setTaskKeys(
-						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else {

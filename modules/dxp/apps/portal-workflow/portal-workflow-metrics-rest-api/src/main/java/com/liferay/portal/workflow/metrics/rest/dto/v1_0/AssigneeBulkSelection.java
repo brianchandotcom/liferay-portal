@@ -25,10 +25,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -47,90 +43,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AssigneeBulkSelection")
 public class AssigneeBulkSelection {
-
-	@Schema
-	public Boolean getCompleted() {
-		return completed;
-	}
-
-	public void setCompleted(Boolean completed) {
-		this.completed = completed;
-	}
-
-	@JsonIgnore
-	public void setCompleted(
-		UnsafeSupplier<Boolean, Exception> completedUnsafeSupplier) {
-
-		try {
-			completed = completedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean completed;
-
-	@Schema
-	public Date getDateEnd() {
-		return dateEnd;
-	}
-
-	public void setDateEnd(Date dateEnd) {
-		this.dateEnd = dateEnd;
-	}
-
-	@JsonIgnore
-	public void setDateEnd(
-		UnsafeSupplier<Date, Exception> dateEndUnsafeSupplier) {
-
-		try {
-			dateEnd = dateEndUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Date dateEnd;
-
-	@Schema
-	public Date getDateStart() {
-		return dateStart;
-	}
-
-	public void setDateStart(Date dateStart) {
-		this.dateStart = dateStart;
-	}
-
-	@JsonIgnore
-	public void setDateStart(
-		UnsafeSupplier<Date, Exception> dateStartUnsafeSupplier) {
-
-		try {
-			dateStart = dateStartUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Date dateStart;
 
 	@Schema
 	public Long[] getInstanceIds() {
@@ -160,90 +72,6 @@ public class AssigneeBulkSelection {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] instanceIds;
 
-	@Schema
-	public String getKeywords() {
-		return keywords;
-	}
-
-	public void setKeywords(String keywords) {
-		this.keywords = keywords;
-	}
-
-	@JsonIgnore
-	public void setKeywords(
-		UnsafeSupplier<String, Exception> keywordsUnsafeSupplier) {
-
-		try {
-			keywords = keywordsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String keywords;
-
-	@Schema
-	public Long[] getRoleIds() {
-		return roleIds;
-	}
-
-	public void setRoleIds(Long[] roleIds) {
-		this.roleIds = roleIds;
-	}
-
-	@JsonIgnore
-	public void setRoleIds(
-		UnsafeSupplier<Long[], Exception> roleIdsUnsafeSupplier) {
-
-		try {
-			roleIds = roleIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long[] roleIds;
-
-	@Schema
-	public String[] getTaskKeys() {
-		return taskKeys;
-	}
-
-	public void setTaskKeys(String[] taskKeys) {
-		this.taskKeys = taskKeys;
-	}
-
-	@JsonIgnore
-	public void setTaskKeys(
-		UnsafeSupplier<String[], Exception> taskKeysUnsafeSupplier) {
-
-		try {
-			taskKeys = taskKeysUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] taskKeys;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -272,47 +100,6 @@ public class AssigneeBulkSelection {
 
 		sb.append("{");
 
-		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-		if (completed != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"completed\": ");
-
-			sb.append(completed);
-		}
-
-		if (dateEnd != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dateEnd\": ");
-
-			sb.append("\"");
-
-			sb.append(liferayToJSONDateFormat.format(dateEnd));
-
-			sb.append("\"");
-		}
-
-		if (dateStart != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dateStart\": ");
-
-			sb.append("\"");
-
-			sb.append(liferayToJSONDateFormat.format(dateStart));
-
-			sb.append("\"");
-		}
-
 		if (instanceIds != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -326,64 +113,6 @@ public class AssigneeBulkSelection {
 				sb.append(instanceIds[i]);
 
 				if ((i + 1) < instanceIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (keywords != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"keywords\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(keywords));
-
-			sb.append("\"");
-		}
-
-		if (roleIds != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"roleIds\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < roleIds.length; i++) {
-				sb.append(roleIds[i]);
-
-				if ((i + 1) < roleIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (taskKeys != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"taskKeys\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < taskKeys.length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(taskKeys[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < taskKeys.length) {
 					sb.append(", ");
 				}
 			}

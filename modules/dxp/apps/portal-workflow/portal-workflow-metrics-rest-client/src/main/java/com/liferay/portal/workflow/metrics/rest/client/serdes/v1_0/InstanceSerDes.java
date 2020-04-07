@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeUser;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Transition;
@@ -91,19 +91,19 @@ public class InstanceSerDes {
 			sb.append("\"");
 		}
 
-		if (instance.getAssigneeUsers() != null) {
+		if (instance.getAssignees() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"assigneeUsers\": ");
+			sb.append("\"assignees\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < instance.getAssigneeUsers().length; i++) {
-				sb.append(String.valueOf(instance.getAssigneeUsers()[i]));
+			for (int i = 0; i < instance.getAssignees().length; i++) {
+				sb.append(String.valueOf(instance.getAssignees()[i]));
 
-				if ((i + 1) < instance.getAssigneeUsers().length) {
+				if ((i + 1) < instance.getAssignees().length) {
 					sb.append(", ");
 				}
 			}
@@ -111,14 +111,14 @@ public class InstanceSerDes {
 			sb.append("]");
 		}
 
-		if (instance.getCreatorUser() != null) {
+		if (instance.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"creatorUser\": ");
+			sb.append("\"creator\": ");
 
-			sb.append(String.valueOf(instance.getCreatorUser()));
+			sb.append(String.valueOf(instance.getCreator()));
 		}
 
 		if (instance.getDateCompletion() != null) {
@@ -298,19 +298,18 @@ public class InstanceSerDes {
 			map.put("assetType", String.valueOf(instance.getAssetType()));
 		}
 
-		if (instance.getAssigneeUsers() == null) {
-			map.put("assigneeUsers", null);
+		if (instance.getAssignees() == null) {
+			map.put("assignees", null);
 		}
 		else {
-			map.put(
-				"assigneeUsers", String.valueOf(instance.getAssigneeUsers()));
+			map.put("assignees", String.valueOf(instance.getAssignees()));
 		}
 
-		if (instance.getCreatorUser() == null) {
-			map.put("creatorUser", null);
+		if (instance.getCreator() == null) {
+			map.put("creator", null);
 		}
 		else {
-			map.put("creatorUser", String.valueOf(instance.getCreatorUser()));
+			map.put("creator", String.valueOf(instance.getCreator()));
 		}
 
 		map.put(
@@ -400,22 +399,22 @@ public class InstanceSerDes {
 					instance.setAssetType((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "assigneeUsers")) {
+			else if (Objects.equals(jsonParserFieldName, "assignees")) {
 				if (jsonParserFieldValue != null) {
-					instance.setAssigneeUsers(
+					instance.setAssignees(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> AssigneeUserSerDes.toDTO((String)object)
+							object -> AssigneeSerDes.toDTO((String)object)
 						).toArray(
-							size -> new AssigneeUser[size]
+							size -> new Assignee[size]
 						));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "creatorUser")) {
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				if (jsonParserFieldValue != null) {
-					instance.setCreatorUser(
-						CreatorUserSerDes.toDTO((String)jsonParserFieldValue));
+					instance.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCompletion")) {

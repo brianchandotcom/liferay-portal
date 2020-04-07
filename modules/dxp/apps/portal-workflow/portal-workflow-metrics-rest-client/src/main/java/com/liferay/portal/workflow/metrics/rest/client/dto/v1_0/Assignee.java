@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.client.dto.v1_0;
 
 import com.liferay.portal.workflow.metrics.rest.client.function.UnsafeSupplier;
-import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.AssigneeUserSerDes;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.AssigneeSerDes;
 
 import java.util.Objects;
 
@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class AssigneeUser implements Cloneable {
+public class Assignee implements Cloneable {
 
 	public Long getDurationTaskAvg() {
 		return durationTaskAvg;
@@ -172,8 +172,8 @@ public class AssigneeUser implements Cloneable {
 	protected Long taskCount;
 
 	@Override
-	public AssigneeUser clone() throws CloneNotSupportedException {
-		return (AssigneeUser)super.clone();
+	public Assignee clone() throws CloneNotSupportedException {
+		return (Assignee)super.clone();
 	}
 
 	@Override
@@ -182,13 +182,13 @@ public class AssigneeUser implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof AssigneeUser)) {
+		if (!(object instanceof Assignee)) {
 			return false;
 		}
 
-		AssigneeUser assigneeUser = (AssigneeUser)object;
+		Assignee assignee = (Assignee)object;
 
-		return Objects.equals(toString(), assigneeUser.toString());
+		return Objects.equals(toString(), assignee.toString());
 	}
 
 	@Override
@@ -199,7 +199,7 @@ public class AssigneeUser implements Cloneable {
 	}
 
 	public String toString() {
-		return AssigneeUserSerDes.toJSON(this);
+		return AssigneeSerDes.toJSON(this);
 	}
 
 }

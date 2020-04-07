@@ -39,10 +39,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("CreatorUser")
+@GraphQLName("Creator")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "CreatorUser")
-public class CreatorUser {
+@XmlRootElement(name = "Creator")
+public class Creator {
 
 	@Schema(description = "The user's ID.")
 	public Long getId() {
@@ -102,13 +102,13 @@ public class CreatorUser {
 			return true;
 		}
 
-		if (!(object instanceof CreatorUser)) {
+		if (!(object instanceof Creator)) {
 			return false;
 		}
 
-		CreatorUser creatorUser = (CreatorUser)object;
+		Creator creator = (Creator)object;
 
-		return Objects.equals(toString(), creatorUser.toString());
+		return Objects.equals(toString(), creator.toString());
 	}
 
 	@Override
@@ -153,7 +153,7 @@ public class CreatorUser {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.CreatorUser",
+		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.Creator",
 		name = "x-class-name"
 	)
 	public String xClassName;

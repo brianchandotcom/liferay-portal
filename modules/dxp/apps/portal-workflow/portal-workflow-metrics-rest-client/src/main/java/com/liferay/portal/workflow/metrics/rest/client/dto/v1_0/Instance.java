@@ -133,47 +133,47 @@ public class Instance implements Cloneable {
 
 	protected String assetType;
 
-	public AssigneeUser[] getAssigneeUsers() {
-		return assigneeUsers;
+	public Assignee[] getAssignees() {
+		return assignees;
 	}
 
-	public void setAssigneeUsers(AssigneeUser[] assigneeUsers) {
-		this.assigneeUsers = assigneeUsers;
+	public void setAssignees(Assignee[] assignees) {
+		this.assignees = assignees;
 	}
 
-	public void setAssigneeUsers(
-		UnsafeSupplier<AssigneeUser[], Exception> assigneeUsersUnsafeSupplier) {
+	public void setAssignees(
+		UnsafeSupplier<Assignee[], Exception> assigneesUnsafeSupplier) {
 
 		try {
-			assigneeUsers = assigneeUsersUnsafeSupplier.get();
+			assignees = assigneesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected AssigneeUser[] assigneeUsers;
+	protected Assignee[] assignees;
 
-	public CreatorUser getCreatorUser() {
-		return creatorUser;
+	public Creator getCreator() {
+		return creator;
 	}
 
-	public void setCreatorUser(CreatorUser creatorUser) {
-		this.creatorUser = creatorUser;
+	public void setCreator(Creator creator) {
+		this.creator = creator;
 	}
 
-	public void setCreatorUser(
-		UnsafeSupplier<CreatorUser, Exception> creatorUserUnsafeSupplier) {
+	public void setCreator(
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
 
 		try {
-			creatorUser = creatorUserUnsafeSupplier.get();
+			creator = creatorUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected CreatorUser creatorUser;
+	protected Creator creator;
 
 	public Date getDateCompletion() {
 		return dateCompletion;

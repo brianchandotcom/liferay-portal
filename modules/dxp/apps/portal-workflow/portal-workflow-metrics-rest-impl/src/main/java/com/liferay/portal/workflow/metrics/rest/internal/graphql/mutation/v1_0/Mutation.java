@@ -22,10 +22,10 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUserBulkSelection;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeUserResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 
 import java.util.function.BiFunction;
@@ -47,12 +47,12 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
-	public static void setAssigneeUserResourceComponentServiceObjects(
-		ComponentServiceObjects<AssigneeUserResource>
-			assigneeUserResourceComponentServiceObjects) {
+	public static void setAssigneeResourceComponentServiceObjects(
+		ComponentServiceObjects<AssigneeResource>
+			assigneeResourceComponentServiceObjects) {
 
-		_assigneeUserResourceComponentServiceObjects =
-			assigneeUserResourceComponentServiceObjects;
+		_assigneeResourceComponentServiceObjects =
+			assigneeResourceComponentServiceObjects;
 	}
 
 	public static void setSLAResourceComponentServiceObjects(
@@ -64,25 +64,23 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public java.util.Collection<AssigneeUser> createProcessAssigneeUsersPage(
+	public java.util.Collection<Assignee> createProcessAssigneesPage(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
 			@GraphQLName("sort") String sortsString,
-			@GraphQLName("assigneeUserBulkSelection") AssigneeUserBulkSelection
-				assigneeUserBulkSelection)
+			@GraphQLName("assigneeBulkSelection") AssigneeBulkSelection
+				assigneeBulkSelection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_assigneeUserResourceComponentServiceObjects,
+			_assigneeResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			assigneeUserResource -> {
-				Page paginationPage =
-					assigneeUserResource.postProcessAssigneeUsersPage(
-						processId, Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(
-							assigneeUserResource, sortsString),
-						assigneeUserBulkSelection);
+			assigneeResource -> {
+				Page paginationPage = assigneeResource.postProcessAssigneesPage(
+					processId, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(assigneeResource, sortsString),
+					assigneeBulkSelection);
 
 				return paginationPage.getItems();
 			});
@@ -198,17 +196,15 @@ public class Mutation {
 		}
 	}
 
-	private void _populateResourceContext(
-			AssigneeUserResource assigneeUserResource)
+	private void _populateResourceContext(AssigneeResource assigneeResource)
 		throws Exception {
 
-		assigneeUserResource.setContextAcceptLanguage(_acceptLanguage);
-		assigneeUserResource.setContextCompany(_company);
-		assigneeUserResource.setContextHttpServletRequest(_httpServletRequest);
-		assigneeUserResource.setContextHttpServletResponse(
-			_httpServletResponse);
-		assigneeUserResource.setContextUriInfo(_uriInfo);
-		assigneeUserResource.setContextUser(_user);
+		assigneeResource.setContextAcceptLanguage(_acceptLanguage);
+		assigneeResource.setContextCompany(_company);
+		assigneeResource.setContextHttpServletRequest(_httpServletRequest);
+		assigneeResource.setContextHttpServletResponse(_httpServletResponse);
+		assigneeResource.setContextUriInfo(_uriInfo);
+		assigneeResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(SLAResource slaResource)
@@ -222,8 +218,8 @@ public class Mutation {
 		slaResource.setContextUser(_user);
 	}
 
-	private static ComponentServiceObjects<AssigneeUserResource>
-		_assigneeUserResourceComponentServiceObjects;
+	private static ComponentServiceObjects<AssigneeResource>
+		_assigneeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SLAResource>
 		_slaResourceComponentServiceObjects;
 

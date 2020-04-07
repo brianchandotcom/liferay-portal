@@ -32,9 +32,9 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUserBulkSelection;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeUserResource;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeBulkSelection;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeResource;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -72,14 +72,14 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseAssigneeUserResourceImpl
-	implements AssigneeUserResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<AssigneeUser> {
+public abstract class BaseAssigneeResourceImpl
+	implements AssigneeResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<Assignee> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/assignee-users' -d $'{"completed": ___, "dateEnd": ___, "dateStart": ___, "instanceIds": ___, "keywords": ___, "roleIds": ___, "taskKeys": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/assignees' -d $'{"completed": ___, "dateEnd": ___, "dateStart": ___, "instanceIds": ___, "keywords": ___, "roleIds": ___, "taskKeys": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -92,14 +92,14 @@ public abstract class BaseAssigneeUserResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
-	@Path("/processes/{processId}/assignee-users")
+	@Path("/processes/{processId}/assignees")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "AssigneeUser")})
-	public Page<AssigneeUser> postProcessAssigneeUsersPage(
+	@Tags(value = {@Tag(name = "Assignee")})
+	public Page<Assignee> postProcessAssigneesPage(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
 				processId,
 			@Context Pagination pagination, @Context Sort[] sorts,
-			AssigneeUserBulkSelection assigneeUserBulkSelection)
+			AssigneeBulkSelection assigneeBulkSelection)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -108,14 +108,14 @@ public abstract class BaseAssigneeUserResourceImpl
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			java.util.Collection<AssigneeUser> assigneeUsers,
+			java.util.Collection<Assignee> assignees,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
 
 	@Override
 	public void delete(
-			java.util.Collection<AssigneeUser> assigneeUsers,
+			java.util.Collection<Assignee> assignees,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
@@ -136,7 +136,7 @@ public abstract class BaseAssigneeUserResourceImpl
 	}
 
 	@Override
-	public Page<AssigneeUser> read(
+	public Page<Assignee> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
@@ -168,7 +168,7 @@ public abstract class BaseAssigneeUserResourceImpl
 
 	@Override
 	public void update(
-			java.util.Collection<AssigneeUser> assigneeUsers,
+			java.util.Collection<Assignee> assignees,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
@@ -230,8 +230,7 @@ public abstract class BaseAssigneeUserResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		AssigneeUser assigneeUser, AssigneeUser existingAssigneeUser) {
+	protected void preparePatch(Assignee assignee, Assignee existingAssignee) {
 	}
 
 	protected <T, R> List<R> transform(

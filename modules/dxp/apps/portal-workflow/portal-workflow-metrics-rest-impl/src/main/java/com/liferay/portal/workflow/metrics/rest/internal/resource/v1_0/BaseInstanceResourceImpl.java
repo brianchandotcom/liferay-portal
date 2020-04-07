@@ -85,7 +85,7 @@ public abstract class BaseInstanceResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
-			@Parameter(in = ParameterIn.QUERY, name = "assigneeUserIds"),
+			@Parameter(in = ParameterIn.QUERY, name = "assigneeIds"),
 			@Parameter(in = ParameterIn.QUERY, name = "dateEnd"),
 			@Parameter(in = ParameterIn.QUERY, name = "dateStart"),
 			@Parameter(in = ParameterIn.QUERY, name = "slaStatuses"),
@@ -101,8 +101,8 @@ public abstract class BaseInstanceResourceImpl
 	public Page<Instance> getProcessInstancesPage(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
 				processId,
-			@Parameter(hidden = true) @QueryParam("assigneeUserIds") Long[]
-				assigneeUserIds,
+			@Parameter(hidden = true) @QueryParam("assigneeIds") Long[]
+				assigneeIds,
 			@Parameter(hidden = true) @QueryParam("dateEnd") java.util.Date
 				dateEnd,
 			@Parameter(hidden = true) @QueryParam("dateStart") java.util.Date
@@ -181,7 +181,7 @@ public abstract class BaseInstanceResourceImpl
 
 		return getProcessInstancesPage(
 			(Long)parameters.get("processId"),
-			(Long[])parameters.get("assigneeUserIds"),
+			(Long[])parameters.get("assigneeIds"),
 			(java.util.Date)parameters.get("dateEnd"),
 			(java.util.Date)parameters.get("dateStart"),
 			(String[])parameters.get("slaStatuses"),

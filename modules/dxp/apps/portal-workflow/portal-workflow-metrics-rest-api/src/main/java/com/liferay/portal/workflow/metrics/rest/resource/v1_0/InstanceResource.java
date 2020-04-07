@@ -48,9 +48,9 @@ public interface InstanceResource {
 	}
 
 	public Page<Instance> getProcessInstancesPage(
-			Long processId, Long[] assigneeUserIds, Date dateEnd,
-			Date dateStart, String[] slaStatuses, String[] statuses,
-			String[] taskKeys, Pagination pagination)
+			Long processId, Long[] assigneeIds, Date dateEnd, Date dateStart,
+			String[] slaStatuses, String[] statuses, String[] taskKeys,
+			Pagination pagination)
 		throws Exception;
 
 	public Instance getProcessInstance(Long processId, Long instanceId)

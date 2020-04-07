@@ -119,56 +119,17 @@ public class AccountEntryUserRelLocalServiceTest {
 
 	@Test
 	public void testAddAccountEntryUserRel2() throws Exception {
-		AccountEntryUserRel accountEntryUserRel = _addAccountEntryUserRel(
-			_accountEntry.getAccountEntryId());
-
-		User user = _userLocalService.fetchUser(
-			accountEntryUserRel.getAccountUserId());
-
-		Assert.assertNotNull(user);
-		Assert.assertEquals(_accountEntry.getCompanyId(), user.getCompanyId());
-		Assert.assertEquals(_userInfo.screenName, user.getScreenName());
-		Assert.assertEquals(
-			accountEntryUserRel.getAccountUserId(), user.getUserId());
-
-		BaseModelSearchResult<User> baseModelSearchResult =
-			_accountUserRetriever.searchAccountUsers(
-				_accountEntry.getAccountEntryId(), user.getScreenName(),
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, "screenName", false);
-
-		List<User> users = baseModelSearchResult.getBaseModels();
-
-		Assert.assertEquals(users.toString(), 1, users.size());
-		Assert.assertEquals(users.get(0), user);
+		_testAddAccountEntryUserRel2(
+			_accountEntry.getAccountEntryId(), _accountEntry.getCompanyId());
 	}
 
 	@Test
 	public void testAddAccountEntryUserRel2WithDefaultAccountEntryId()
 		throws Exception {
 
-		AccountEntryUserRel accountEntryUserRel = _addAccountEntryUserRel(
-			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
-
-		User user = _userLocalService.fetchUser(
-			accountEntryUserRel.getAccountUserId());
-
-		Assert.assertNotNull(user);
-		Assert.assertEquals(
-			TestPropsValues.getCompanyId(), user.getCompanyId());
-		Assert.assertEquals(
-			accountEntryUserRel.getAccountUserId(), user.getUserId());
-
-		BaseModelSearchResult<User> baseModelSearchResult =
-			_accountUserRetriever.searchAccountUsers(
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, user.getScreenName(),
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, "screenName", false);
-
-		List<User> users = baseModelSearchResult.getBaseModels();
-
-		Assert.assertEquals(users.toString(), 1, users.size());
-		Assert.assertEquals(users.get(0), user);
+		_testAddAccountEntryUserRel2(
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			TestPropsValues.getCompanyId());
 	}
 
 	@Test
@@ -415,6 +376,33 @@ public class AccountEntryUserRelLocalServiceTest {
 			_userLocalService.getUser(accountEntryUserRel.getAccountUserId()));
 
 		return accountEntryUserRel;
+	}
+
+	private void _testAddAccountEntryUserRel2(
+			long accountEntryId, long expectedCompanyId)
+		throws Exception {
+
+		AccountEntryUserRel accountEntryUserRel = _addAccountEntryUserRel(
+			accountEntryId);
+
+		User user = _userLocalService.fetchUser(
+			accountEntryUserRel.getAccountUserId());
+
+		Assert.assertNotNull(user);
+		Assert.assertEquals(expectedCompanyId, user.getCompanyId());
+		Assert.assertEquals(
+			accountEntryUserRel.getAccountUserId(), user.getUserId());
+
+		BaseModelSearchResult<User> baseModelSearchResult =
+			_accountUserRetriever.searchAccountUsers(
+				accountEntryId, user.getScreenName(),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, "screenName", false);
+
+		List<User> users = baseModelSearchResult.getBaseModels();
+
+		Assert.assertEquals(users.toString(), 1, users.size());
+		Assert.assertEquals(users.get(0), user);
 	}
 
 	@DeleteAfterTestRun

@@ -47,7 +47,7 @@ definition {
 
 			var key_ddlDataDefinitionName = "${structureName}";
 
-			AssertClickNoError(
+			AssertClick.assertTextClickAt(
 				locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
 				value1 = "${structureName}");
 

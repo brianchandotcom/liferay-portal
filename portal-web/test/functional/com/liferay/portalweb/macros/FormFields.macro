@@ -384,7 +384,7 @@ definition {
 		var key_categoryColumnName = "${categoryColumnName}";
 		var key_optionRowName = "${optionRowName}";
 
-		Click(locator1 = "FormFields#GRID_RADIO_OPTIONS");
+		Click.clickNoWaitForVisible(locator1 = "FormFields#GRID_RADIO_OPTIONS");
 	}
 
 	macro selectRadioOption {

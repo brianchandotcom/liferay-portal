@@ -69,6 +69,21 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 	</c:when>
 	<c:when test="<%= type.equals(RatingsType.STARS.getValue()) || type.equals(RatingsType.STACKED_STARS.getValue()) %>">
 		<div>
+			<div class="autofit-row autofit-row-center ratings ratings-stars">
+				<div class="autofit-col">
+					<div class="dropdown">
+						<clay:button
+							disabled="<%= true %>"
+							elementClasses="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+							icon="star-o"
+							label="-"
+						/>
+					</div>
+				</div>
+				<div class="autofit-col">
+					<clay:icon symbol="star" elementClasses="ratings-stars-average-icon" />
+				</div>
+			</div>
 			<react:component
 				data="<%= data %>"
 				module="js/components/RatingsStars.es"

@@ -24,6 +24,7 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 
+import {useCollectionFields} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/CollectionItemContext';
 import MappingSelector from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/MappingSelector';
 import {config} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
@@ -79,6 +80,13 @@ jest.mock(
 				},
 			])
 		),
+	})
+);
+
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/components/CollectionItemContext',
+	() => ({
+		useCollectionFields: jest.fn(),
 	})
 );
 
@@ -244,5 +252,27 @@ describe('MappingSelector', () => {
 			fieldId: '',
 			mappedField: '',
 		});
+	});
+
+	it('renders correct selects when using Collection context', async () => {
+		const collectionFields = [
+			{key: 'field-1', label: 'Field 1', type: 'text'},
+			{key: 'field-2', label: 'Field 2', type: 'text'},
+		];
+
+		useCollectionFields.mockImplementation(() => collectionFields);
+
+		await act(async () => {
+			renderMappingSelector({});
+		});
+
+		expect(queryByText(document.body, 'source')).not.toBeInTheDocument();
+		expect(queryByText(document.body, 'content')).not.toBeInTheDocument();
+
+		expect(getByText(document.body, 'field')).toBeInTheDocument();
+
+		collectionFields.forEach(field =>
+			expect(getByText(document.body, field.label)).toBeInTheDocument()
+		);
 	});
 });

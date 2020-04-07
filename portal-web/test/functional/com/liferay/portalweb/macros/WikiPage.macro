@@ -30,11 +30,9 @@ definition {
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
 			value1 = "This page is empty. Edit it to add some text.");
 
-		AssertElementPresent(
-			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR");
-
-		CKEditor.addContent(content = "${wikiPageContent}");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiPageContent}");
 	}
 
 	macro addAttachmentViaPageEdit {
@@ -70,9 +68,11 @@ definition {
 
 		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
 
-		AlloyEditor.addTitle(title = "${wikiChildPageTitle}");
+		WikiEntry.addPageTitle(title = "${wikiChildPageTitle}");
 
-		CKEditor.addContent(content = "${wikiChildPageContent}");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiChildPageContent}");
 
 		Click(
 			locator1 = "Button#PUBLISH",
@@ -88,9 +88,11 @@ definition {
 
 		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
 
-		AlloyEditor.addTitle(title = "${wikiChildPageTitle}");
+		WikiEntry.addPageTitle(title = "${wikiChildPageTitle}");
 
-		CKEditor.addContent(content = "${wikiChildPageContent}");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiChildPageContent}");
 
 		Click(
 			locator1 = "Button#PUBLISH",
@@ -118,9 +120,13 @@ definition {
 
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		AlloyEditor.addTitle(title = "${wikiPageTitle}");
+		WikiEntry.addPageTitle(title = "${wikiPageTitle}");
 
-		CKEditor.addContent(content = "${wikiPageContent}");
+		var key_wikiPageTitle = "${wikiPageContent}";
+
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiPageContent}");
 
 		PortletEntry.publish();
 	}
@@ -132,9 +138,11 @@ definition {
 
 		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
 
-		AlloyEditor.addTitle(title = "${wikiChildPageTitle}");
+		WikiEntry.addPageTitle(title = "${wikiChildPageTitle}");
 
-		CKEditor.addContent(content = "${wikiChildPageContent}");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiChildPageContent}");
 
 		AssertClick(
 			locator1 = "Button#PUBLISH",
@@ -154,9 +162,11 @@ definition {
 
 		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
 
-		AlloyEditor.addTitle(title = "${wikiChildPageTitle}");
+		WikiEntry.addPageTitle(title = "${wikiChildPageTitle}");
 
-		CKEditor.addContent(content = "${wikiChildPageContent}");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiChildPageContent}");
 
 		AssertClick(
 			locator1 = "Button#PUBLISH",
@@ -174,7 +184,9 @@ definition {
 			locator1 = "Message#INFO_LINK",
 			value1 = "This page is empty. Edit it to add some text.");
 
-		CKEditor.addContent(content = "${wikiFrontPageContent}");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiFrontPageContent}");
 
 		PortletEntry.publish();
 	}
@@ -199,7 +211,9 @@ definition {
 				locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
 				value1 = "Creole");
 
-			CKEditor.addContent(content = "${wikiPageContent}");
+			Type.typeCKEditorWaitForCKEditor(
+				locator1 = "CKEditor#BODY",
+				value1 = "${wikiPageContent}");
 		}
 		else if ("${htmlSource}" == "true") {
 			Panel.expandPanel(panel = "Configuration");
@@ -210,10 +224,14 @@ definition {
 
 			AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
 
-			CKEditor.addContent(content = "${wikiPageContent}");
+			Type.typeCKEditorWaitForCKEditor(
+				locator1 = "CKEditor#BODY",
+				value1 = "${wikiPageContent}");
 		}
 		else {
-			CKEditor.addContent(content = "${wikiPageContent}");
+			Type.typeCKEditorWaitForCKEditor(
+				locator1 = "CKEditor#BODY",
+				value1 = "${wikiPageContent}");
 		}
 
 		if ("${pageAddTag}" == "true") {
@@ -275,9 +293,11 @@ definition {
 	macro addPageWithWorkflowPG {
 		WikiNavigator.gotoAddPageViaPG();
 
-		AlloyEditor.addTitle(title = "${wikiPageTitle}");
+		WikiEntry.addPageTitle(title = "${wikiPageTitle}");
 
-		CKEditor.addContent(content = "${wikiPageContent}");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiPageContent}");
 
 		AssertClick(
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
@@ -310,11 +330,7 @@ definition {
 	macro addPG {
 		WikiNavigator.gotoAddPageViaPG();
 
-		AssertElementPresent(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
-
-		AlloyEditor.addTitle(title = "${wikiPageTitle}");
+		WikiEntry.addPageTitle(title = "${wikiPageTitle}");
 
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
@@ -324,7 +340,9 @@ definition {
 				value1 = "${wikiFormat}");
 		}
 
-		CKEditor.addContent(content = "${wikiPageContent}");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiPageContent}");
 
 		if ("${viewCKEditorResizer}" == "true") {
 			AssertVisible(locator1 = "CKEditor#RESIZER");
@@ -650,7 +668,9 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		CKEditor.addContent(content = "${wikiPageContentEdit}");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiPageContentEdit}");
 
 		AssertClick(
 			locator1 = "Button#PUBLISH",
@@ -668,13 +688,9 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		Click(
-			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR");
-
-		AssertElementPresent(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
-
-		CKEditor.addContent(content = "${wikiPageContentEdit}");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiPageContentEdit}");
 
 		PortletEntry.publish();
 	}
@@ -686,7 +702,9 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		CKEditor.addContent(content = "${wikiPageContentEdit}");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiPageContentEdit}");
 
 		if ("${minorEdit}" == "true") {
 			Check(locator1 = "Checkbox#THIS_IS_A_MINOR_EDIT");
@@ -724,15 +742,15 @@ definition {
 			locator1 = "Link#EDIT",
 			value1 = "Edit");
 
-		AlloyEditor.clickContentField();
-
 		Panel.expandPanel(panel = "Configuration");
 
 		Select(
 			locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
 			value1 = "Creole");
 
-		CKEditor.addContent(content = "${wikiPage2Link}");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiPage2Link}");
 
 		PortletEntry.publish();
 
@@ -800,7 +818,9 @@ definition {
 			locator1 = "Button#REMOVE_REDIRECT",
 			value1 = "Remove Redirect");
 
-		CKEditor.addContent(content = "${wikiPage2Content}");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiPage2Content}");
 
 		PortletEntry.publish();
 	}

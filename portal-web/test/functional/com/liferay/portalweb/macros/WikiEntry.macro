@@ -1,7 +1,9 @@
 definition {
 
 	macro addPageContent {
-		AlloyEditor.addContent(content = "${wikiPageContent}");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiPageContent}");
 	}
 
 	macro addPageTitle {

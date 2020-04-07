@@ -8565,9 +8565,15 @@ public class JournalArticleLocalServiceImpl
 			article);
 
 		if (previousApprovedArticle.getVersion() == article.getVersion()) {
-			assetEntryLocalService.updateVisible(
+			AssetEntry assetEntry = assetEntryLocalService.updateVisible(
 				JournalArticle.class.getName(), article.getResourcePrimKey(),
 				false);
+
+			if (article.getStatus() == WorkflowConstants.STATUS_EXPIRED) {
+				assetEntry.setExpirationDate(article.getExpirationDate());
+
+				assetEntryLocalService.updateAssetEntry(assetEntry);
+			}
 		}
 		else {
 			AssetEntry assetEntry = assetEntryLocalService.updateEntry(

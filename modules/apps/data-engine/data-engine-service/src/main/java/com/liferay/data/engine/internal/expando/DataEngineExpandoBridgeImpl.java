@@ -58,11 +58,11 @@ import java.util.stream.Stream;
 public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 
 	public DataEngineExpandoBridgeImpl(
-		long companyId, String className, long classPK) {
+		String className, long classPK, long companyId) {
 
-		_companyId = companyId;
 		_className = className;
 		_classPK = classPK;
+		_companyId = companyId;
 
 		Group group = GroupLocalServiceUtil.fetchCompanyGroup(companyId);
 

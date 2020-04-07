@@ -34,7 +34,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.CreatorUser;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Creator;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
@@ -87,8 +87,8 @@ public class WorkflowMetricsRESTTestHelper {
 
 		Instance instance = new Instance();
 
-		instance.setCreatorUser(
-			new CreatorUser() {
+		instance.setCreator(
+			new Creator() {
 				{
 					id = RandomTestUtil.randomLong();
 					name = RandomTestUtil.randomString();
@@ -111,8 +111,8 @@ public class WorkflowMetricsRESTTestHelper {
 
 		Instance instance = new Instance();
 
-		instance.setCreatorUser(
-			new CreatorUser() {
+		instance.setCreator(
+			new Creator() {
 				{
 					id = RandomTestUtil.nextLong();
 					name = RandomTestUtil.randomString();
@@ -128,7 +128,7 @@ public class WorkflowMetricsRESTTestHelper {
 	public Instance addInstance(long companyId, Instance instance)
 		throws Exception {
 
-		CreatorUser creatorUser = instance.getCreatorUser();
+		Creator creator = instance.getCreator();
 
 		_instanceWorkflowMetricsIndexer.addInstance(
 			_createLocalizationMap(instance.getAssetTitle()),
@@ -140,7 +140,7 @@ public class WorkflowMetricsRESTTestHelper {
 				Date::new
 			),
 			instance.getId(), new Date(), instance.getProcessId(), "1.0",
-			creatorUser.getId(), creatorUser.getName());
+			creator.getId(), creator.getName());
 
 		_assertCount(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(companyId),

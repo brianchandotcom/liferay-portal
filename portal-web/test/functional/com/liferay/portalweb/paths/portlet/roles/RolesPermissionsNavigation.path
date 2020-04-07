@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_CONTENT_SETS</td>
-	<td>//a[contains(.,'Content') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//li[contains(@class,'permission-navigation-item')]/a[contains(.,'Content Sets')]</td>
+	<td>//a[contains(.,'Content') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//li[contains(@class,'permission-navigation-item')]/a[contains(.,'Collections')]</td>
 	<td></td>
 </tr>
 <tr>

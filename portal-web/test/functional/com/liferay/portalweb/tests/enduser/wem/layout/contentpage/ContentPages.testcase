@@ -1377,7 +1377,7 @@ definition {
 		}
 
 		task ("Add Image, Slider, Card and HTML fragments to page") {
-			for (var fragmentName : list "Image,Slider,Card,HTML") {
+			for (var fragmentName : list "HTML,Card,Slider,Image") {
 				PageEditor.addFragment(
 					collectionName = "Basic Components",
 					fragmentName = "${fragmentName}");
@@ -1419,13 +1419,13 @@ definition {
 		}
 
 		task ("Add My Sites, Documents and Media, Blogs and Asset Publisher widgets to page") {
-			for (var portletName : list "My Sites,Documents and Media,Blogs") {
+			for (var portletName : list "Asset Publisher,Blogs,Documents and Media") {
 				PageEditor.addWidget(portletName = "${portletName}");
 
 				Refresh();
 			}
 
-			PageEditor.addWidget(portletName = "Asset Publisher");
+			PageEditor.addWidget(portletName = "My Sites");
 		}
 
 		task ("Assert Header of Blogs is shown over body when doesn't reach the management toolbar") {

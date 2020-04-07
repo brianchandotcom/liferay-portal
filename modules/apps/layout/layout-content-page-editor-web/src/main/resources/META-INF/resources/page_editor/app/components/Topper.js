@@ -223,7 +223,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 
 				const multiSelect = event.shiftKey;
 
-				if (activeItemId !== item.itemId) {
+				if (activeItemId !== toControlsId(item.itemId)) {
 					selectItem(item.itemId, {multiSelect});
 				}
 			}}

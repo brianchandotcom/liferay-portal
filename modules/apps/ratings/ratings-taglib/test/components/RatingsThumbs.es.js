@@ -72,7 +72,7 @@ describe('RatingsThumbs', () => {
 		describe('and the user votes up', () => {
 			let getAllByRole;
 
-			beforeEach(async () => {
+			beforeEach(() => {
 				getAllByRole = renderComponent({
 					...defaultProps,
 					initialNegativeVotes: 10,
@@ -81,39 +81,39 @@ describe('RatingsThumbs', () => {
 
 				const [thumbUpButton] = getAllByRole('button');
 
-				await act(async () => {
+				act(() => {
 					fireEvent.click(thumbUpButton);
 				});
 			});
 
-			it('increases the up counter', async () => {
+			it('increases the up counter', () => {
 				const [thumbUpButton] = getAllByRole('button');
 
 				expect(thumbUpButton.value).toBe('27');
 			});
 
-			it('keeps the down counter', async () => {
+			it('keeps the down counter', () => {
 				const thumbDownButton = getAllByRole('button')[1];
 
 				expect(thumbDownButton.value).toBe('10');
 			});
 
 			describe('and the user votes down', () => {
-				beforeEach(async () => {
+				beforeEach(() => {
 					const thumbDownButton = getAllByRole('button')[1];
 
-					await act(async () => {
+					act(() => {
 						fireEvent.click(thumbDownButton);
 					});
 				});
 
-				it('decreases the up counter', async () => {
+				it('decreases the up counter', () => {
 					const [thumbUpButton] = getAllByRole('button');
 
 					expect(thumbUpButton.value).toBe('26');
 				});
 
-				it('increases the down counter', async () => {
+				it('increases the down counter', () => {
 					const thumbDownButton = getAllByRole('button')[1];
 
 					expect(thumbDownButton.value).toBe('11');
@@ -121,21 +121,21 @@ describe('RatingsThumbs', () => {
 			});
 
 			describe('and the user votes up again', () => {
-				beforeEach(async () => {
+				beforeEach(() => {
 					const [thumbUpButton] = getAllByRole('button');
 
-					await act(async () => {
+					act(() => {
 						fireEvent.click(thumbUpButton);
 					});
 				});
 
-				it('decreases the up counter', async () => {
+				it('decreases the up counter', () => {
 					const [thumbUpButton] = getAllByRole('button');
 
 					expect(thumbUpButton.value).toBe('26');
 				});
 
-				it('keeps the down counter', async () => {
+				it('keeps the down counter', () => {
 					const thumbDownButton = getAllByRole('button')[1];
 
 					expect(thumbDownButton.value).toBe('10');
@@ -146,7 +146,7 @@ describe('RatingsThumbs', () => {
 		describe('and the user votes down', () => {
 			let getAllByRole;
 
-			beforeEach(async () => {
+			beforeEach(() => {
 				getAllByRole = renderComponent({
 					...defaultProps,
 					initialNegativeVotes: 10,
@@ -155,39 +155,39 @@ describe('RatingsThumbs', () => {
 
 				const thumbDownButton = getAllByRole('button')[1];
 
-				await act(async () => {
+				act(() => {
 					fireEvent.click(thumbDownButton);
 				});
 			});
 
-			it('keeps the up counter', async () => {
+			it('keeps the up counter', () => {
 				const [thumbUpButton] = getAllByRole('button');
 
 				expect(thumbUpButton.value).toBe('26');
 			});
 
-			it('increases the down counter', async () => {
+			it('increases the down counter', () => {
 				const thumbDownButton = getAllByRole('button')[1];
 
 				expect(thumbDownButton.value).toBe('11');
 			});
 
 			describe('and the user votes up', () => {
-				beforeEach(async () => {
+				beforeEach(() => {
 					const [thumbUpButton] = getAllByRole('button');
 
-					await act(async () => {
+					act(() => {
 						fireEvent.click(thumbUpButton);
 					});
 				});
 
-				it('increases the up counter', async () => {
+				it('increases the up counter', () => {
 					const [thumbUpButton] = getAllByRole('button');
 
 					expect(thumbUpButton.value).toBe('27');
 				});
 
-				it('decreases the down counter', async () => {
+				it('decreases the down counter', () => {
 					const thumbDownButton = getAllByRole('button')[1];
 
 					expect(thumbDownButton.value).toBe('10');
@@ -195,21 +195,21 @@ describe('RatingsThumbs', () => {
 			});
 
 			describe('and the user votes down again', () => {
-				beforeEach(async () => {
+				beforeEach(() => {
 					const thumbDownButton = getAllByRole('button')[1];
 
-					await act(async () => {
+					act(() => {
 						fireEvent.click(thumbDownButton);
 					});
 				});
 
-				it('keeps the up counter', async () => {
+				it('keeps the up counter', () => {
 					const [thumbUpButton] = getAllByRole('button');
 
 					expect(thumbUpButton.value).toBe('26');
 				});
 
-				it('decreases the down counter', async () => {
+				it('decreases the down counter', () => {
 					const thumbDownButton = getAllByRole('button')[1];
 
 					expect(thumbDownButton.value).toBe('10');
@@ -242,7 +242,7 @@ describe('RatingsThumbs', () => {
 				});
 			});
 
-			it('sends a POST request to the server', async () => {
+			it('sends a POST request to the server', () => {
 				const [url, {body}] = fetch.mock.calls[0];
 				const objFormData = formDataToObj(body);
 
@@ -251,7 +251,7 @@ describe('RatingsThumbs', () => {
 				expect(objFormData.score).toBe('1');
 			});
 
-			it('updates the counters with the ones from the server', async () => {
+			it('updates the counters with the ones from the server', () => {
 				const [thumbUpButton, thumbDownButton] = getAllByRole('button');
 
 				expect(thumbUpButton.value).toBe('59');

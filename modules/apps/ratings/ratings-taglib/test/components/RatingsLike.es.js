@@ -82,7 +82,7 @@ describe('RatingsLike', () => {
 		describe('and the user clicks like', () => {
 			let getByRole;
 
-			beforeEach(async () => {
+			beforeEach(() => {
 				getByRole = renderComponent({
 					...defaultProps,
 					positiveVotes: 26,
@@ -90,25 +90,25 @@ describe('RatingsLike', () => {
 
 				const LikeButton = getByRole('button');
 
-				await act(async () => {
+				act(() => {
 					fireEvent.click(LikeButton);
 				});
 			});
 
-			it('increases the likes counter', async () => {
+			it('increases the likes counter', () => {
 				const LikeButton = getByRole('button');
 
 				expect(LikeButton.value).toBe('27');
 			});
 
 			describe('and the user clicks unlike', () => {
-				beforeEach(() =>
-					act(async () => {
+				beforeEach(() => {
+					act(() => {
 						fireEvent.click(getByRole('button'));
-					})
-				);
+					});
+				});
 
-				it('decreases the like counter', async () => {
+				it('decreases the like counter', () => {
 					const LikeButton = getByRole('button');
 
 					expect(LikeButton.value).toBe('26');
@@ -119,7 +119,7 @@ describe('RatingsLike', () => {
 		describe('and the user clicks unlike', () => {
 			let getByRole;
 
-			beforeEach(async () => {
+			beforeEach(() => {
 				getByRole = renderComponent({
 					...defaultProps,
 					initialLiked: true,
@@ -128,7 +128,7 @@ describe('RatingsLike', () => {
 
 				const LikeButton = getByRole('button');
 
-				await act(async () => {
+				act(() => {
 					fireEvent.click(LikeButton);
 				});
 			});
@@ -140,11 +140,11 @@ describe('RatingsLike', () => {
 			});
 
 			describe('and the user clicks like', () => {
-				beforeEach(() =>
-					act(async () => {
+				beforeEach(() => {
+					act(() => {
 						fireEvent.click(getByRole('button'));
-					})
-				);
+					});
+				});
 
 				it('increases the like counter', () => {
 					const LikeButton = getByRole('button');
@@ -167,7 +167,7 @@ describe('RatingsLike', () => {
 		describe('and the user clicks like', () => {
 			let getByRole;
 
-			beforeEach(async () => {
+			beforeEach(() => {
 				getByRole = renderComponent({
 					...defaultProps,
 					positiveVotes: 26,
@@ -175,12 +175,12 @@ describe('RatingsLike', () => {
 
 				const LikeButton = getByRole('button');
 
-				await act(async () => {
+				act(() => {
 					fireEvent.click(LikeButton);
 				});
 			});
 
-			it('sends a POST request to the server', async () => {
+			it('sends a POST request to the server', () => {
 				const [url, {body}] = fetch.mock.calls[0];
 				const objFormData = formDataToObj(body);
 
@@ -189,7 +189,7 @@ describe('RatingsLike', () => {
 				expect(objFormData.score).toBe('1');
 			});
 
-			it('updates the counters with the ones from the server', async () => {
+			it('updates the counters with the ones from the server', () => {
 				const LikeButton = getByRole('button');
 
 				expect(LikeButton.value).toBe('27');

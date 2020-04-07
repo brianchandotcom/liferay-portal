@@ -195,8 +195,8 @@ portletDisplay.setURLBack(backURL);
 						destroyOnHide: true,
 						modal: true,
 					},
-					eventName: '<portlet:namespace />addAccountUser',
-					id: '<portlet:namespace />selectAccount',
+					eventName: '<portlet:namespace />selectAccountEntry',
+					id: '<portlet:namespace />selectAccountEntry',
 					selectedData: searchContainerData,
 					title:
 						'<liferay-ui:message arguments="account" key="select-x" />',

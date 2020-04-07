@@ -14,7 +14,6 @@
 
 import React, {useEffect, useState} from 'react';
 
-import {COLLECTION_LIST_FORMATS} from '../../config/constants/collectionListFormats';
 import CollectionService from '../../services/CollectionService';
 import {useDispatch, useSelector} from '../../store/index';
 import {CollectionItemContextProvider} from '../CollectionItemContext';
@@ -130,44 +129,9 @@ const Grid = ({
 	return createRows();
 };
 
-const Stack = ({
-	child,
-	collection,
-	collectionFields,
-	collectionId,
-	collectionLength,
-	numberOfItems,
-}) => {
-	const maxNumberOfItems = Math.min(collectionLength, numberOfItems);
-
-	return Array.from({length: maxNumberOfItems}).map((_element, idx) => (
-		<CollectionItemContextProvider
-			key={idx}
-			value={{
-				canElevate: {
-					bottom: idx === maxNumberOfItems - 1,
-					top: idx === 0,
-				},
-				collectionFields,
-				collectionItem: collection[idx],
-				fromControlsId: idx === 0 ? null : fromControlsId,
-				toControlsId:
-					idx === 0 ? null : getToControlsId(collectionId, idx),
-			}}
-		>
-			{React.cloneElement(child)}
-		</CollectionItemContextProvider>
-	));
-};
-
 const Collection = React.forwardRef(({children, item}, ref) => {
 	const child = React.Children.toArray(children)[0];
 	const collectionConfig = item.config;
-
-	const ContentComponent =
-		collectionConfig.listFormat === COLLECTION_LIST_FORMATS.grid
-			? Grid
-			: Stack;
 
 	const dispatch = useDispatch();
 
@@ -227,7 +191,7 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 		<div className="page-editor__collection" ref={ref}>
 			{collectionIsMapped(collectionConfig) &&
 			collection.items.length > 0 ? (
-				<ContentComponent
+				<Grid
 					child={child}
 					collection={collection.items}
 					collectionFields={collectionFields}

@@ -17,7 +17,6 @@ import React from 'react';
 
 import {config} from '../../../app/config/index';
 import CollectionSelector from '../../../common/components/CollectionSelector';
-import {COLLECTION_LIST_FORMATS} from '../../config/constants/collectionListFormats';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
@@ -70,57 +69,26 @@ export const CollectionConfigurationPanel = ({item}) => {
 			{collectionIsMapped(item.config) && (
 				<>
 					<ClayForm.Group small>
-						<label htmlFor="collectionListFormat">
-							{Liferay.Language.get('list-format')}
+						<label htmlFor="collectionNumberOfColumns">
+							{Liferay.Language.get('number-of-columns')}
 						</label>
 						<ClaySelectWithOption
-							aria-label={Liferay.Language.get('list-format')}
-							id="collectionListFormat"
+							aria-label={Liferay.Language.get(
+								'number-of-columns'
+							)}
+							id="collectionNumberOfColumns"
 							onChange={({target: {value}}) =>
 								handleConfigurationChanged({
-									listFormat: value,
+									numberOfColumns: value,
 								})
 							}
-							options={[
-								{
-									label: Liferay.Language.get('stacked'),
-									value: COLLECTION_LIST_FORMATS.stacked,
-								},
-								{
-									label: Liferay.Language.get('grid'),
-									value: COLLECTION_LIST_FORMATS.grid,
-								},
-							]}
-							value={collectionConfig.listFormat}
+							options={NUMBER_OF_COLUMNS_OPTIONS.map(value => ({
+								label: value,
+								value,
+							}))}
+							value={item.config.numberOfColumns}
 						/>
 					</ClayForm.Group>
-
-					{item.config.listFormat ===
-						COLLECTION_LIST_FORMATS.grid && (
-						<ClayForm.Group small>
-							<label htmlFor="collectionNumberOfColumns">
-								{Liferay.Language.get('number-of-columns')}
-							</label>
-							<ClaySelectWithOption
-								aria-label={Liferay.Language.get(
-									'number-of-columns'
-								)}
-								id="collectionNumberOfColumns"
-								onChange={({target: {value}}) =>
-									handleConfigurationChanged({
-										numberOfColumns: value,
-									})
-								}
-								options={NUMBER_OF_COLUMNS_OPTIONS.map(
-									value => ({
-										label: value,
-										value,
-									})
-								)}
-								value={item.config.numberOfColumns}
-							/>
-						</ClayForm.Group>
-					)}
 
 					<ClayForm.Group small>
 						<label htmlFor="collectionNumberOfItems">

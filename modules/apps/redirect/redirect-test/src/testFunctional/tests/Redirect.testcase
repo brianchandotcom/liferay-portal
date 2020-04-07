@@ -398,7 +398,7 @@ definition {
 		Redirect.viewDefault();
 
 		Redirect.addEntry(
-			destinationURL = " ",
+			destinationURL = "",
 			redirectURLVariation = "Null",
 			siteName = "guest",
 			sourceURL = "sourceURL");
@@ -412,7 +412,7 @@ definition {
 			destinationURL = "http://localhost:8080",
 			redirectURLVariation = "Null",
 			siteName = "guest",
-			sourceURL = " ");
+			sourceURL = "");
 
 		AssertSelectedLabel(
 			locator1 = "Select#REDIRECT_TYPE",

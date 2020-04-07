@@ -111,6 +111,10 @@ public class FragmentEntryProcessorHelperImpl
 		InfoDisplayContributor infoDisplayContributor =
 			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
 
+		if (infoDisplayContributor == null) {
+			return null;
+		}
+
 		Object fieldValue = infoDisplayContributor.getInfoDisplayFieldValue(
 			displayObjectOptional.get(),
 			jsonObject.getString("collectionFieldId"),

@@ -189,11 +189,11 @@ public class DataDefinitionUtil {
 			if (clazz.isArray()) {
 				Object[] values = (Object[])value;
 
-				for (int i = 0; i < values.length; i++) {
+				for (Object curValue : values) {
 					try {
 						JSONObject jsonObject =
 							JSONFactoryUtil.createJSONObject(
-								values[i].toString());
+								curValue.toString());
 
 						ddmFormFieldOptions.addOptionLabel(
 							jsonObject.getString("value"),

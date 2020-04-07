@@ -129,14 +129,6 @@
 		border: 2px dashed $primary-l2;
 		padding: 15vh 0;
 
-		&--active {
-			border: 2px solid $primary-l1;
-
-			.page-editor__no-fragments-message__title {
-				color: $gray-400;
-			}
-		}
-
 		&__title {
 			color: $gray-500;
 			font-size: 14px;

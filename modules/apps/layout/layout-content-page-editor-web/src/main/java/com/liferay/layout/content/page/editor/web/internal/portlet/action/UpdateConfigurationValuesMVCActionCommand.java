@@ -125,16 +125,26 @@ public class UpdateConfigurationValuesMVCActionCommand
 		Iterator<String> keys =
 			defaultEditableFragmentEntryProcessorJSONObject.keys();
 
+		JSONObject mergedEditableFragmentEntryProcessorJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
 		while (keys.hasNext()) {
 			String key = keys.next();
 
 			if (editableFragmentEntryProcessorJSONObject.has(key)) {
-				continue;
+				mergedEditableFragmentEntryProcessorJSONObject.put(
+					key, editableFragmentEntryProcessorJSONObject.get(key));
 			}
-
-			editableFragmentEntryProcessorJSONObject.put(
-				key, defaultEditableFragmentEntryProcessorJSONObject.get(key));
+			else {
+				mergedEditableFragmentEntryProcessorJSONObject.put(
+					key,
+					defaultEditableFragmentEntryProcessorJSONObject.get(key));
+			}
 		}
+
+		editableValuesJSONObject.put(
+			_KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+			mergedEditableFragmentEntryProcessorJSONObject);
 
 		return editableValuesJSONObject;
 	}

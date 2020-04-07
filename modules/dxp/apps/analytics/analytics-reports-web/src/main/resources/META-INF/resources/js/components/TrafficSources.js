@@ -168,6 +168,11 @@ export default function TrafficSources({
 
 									return (
 										<Cell
+											className={{
+												dim:
+													highlighted &&
+													entry.name !== highlighted,
+											}}
 											fill={fillColor}
 											key={i}
 											onMouseOut={handleLegendMouseLeave}
@@ -176,13 +181,6 @@ export default function TrafficSources({
 													entry.name
 												)
 											}
-											style={{
-												opacity:
-													highlighted &&
-													entry.name !== highlighted
-														? '.4'
-														: '1',
-											}}
 										/>
 									);
 								})}

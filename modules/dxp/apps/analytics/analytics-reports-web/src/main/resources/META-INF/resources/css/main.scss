@@ -132,6 +132,11 @@
 				width: 8px;
 			}
 		}
+		.pie-chart-wrapper--chart {
+			.dim {
+				opacity: 0.4;
+			}
+		}
 		.custom-tooltip {
 			transform: translateX(-50%);
 		}

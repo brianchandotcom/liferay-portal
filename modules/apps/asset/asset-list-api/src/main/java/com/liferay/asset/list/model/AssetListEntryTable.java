@@ -63,6 +63,10 @@ public class AssetListEntryTable extends BaseTable<AssetListEntryTable> {
 		"title", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AssetListEntryTable, Integer> type = createColumn(
 		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<AssetListEntryTable, String> assetEntrySubtype =
+		createColumn(
+			"assetEntrySubtype", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<AssetListEntryTable, String> assetEntryType =
 		createColumn(
 			"assetEntryType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

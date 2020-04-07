@@ -80,8 +80,8 @@ public class AssetListEntryModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"assetListEntryKey", Types.VARCHAR}, {"title", Types.VARCHAR},
-		{"type_", Types.INTEGER}, {"assetEntryType", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"type_", Types.INTEGER}, {"assetEntrySubtype", Types.VARCHAR},
+		{"assetEntryType", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -101,12 +101,13 @@ public class AssetListEntryModelImpl
 		TABLE_COLUMNS_MAP.put("assetListEntryKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("assetEntrySubtype", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("assetEntryType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetListEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,assetListEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryKey VARCHAR(75) null,title VARCHAR(75) null,type_ INTEGER,assetEntryType VARCHAR(255) null,lastPublishDate DATE null,primary key (assetListEntryId, ctCollectionId))";
+		"create table AssetListEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,assetListEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryKey VARCHAR(75) null,title VARCHAR(75) null,type_ INTEGER,assetEntrySubtype VARCHAR(75) null,assetEntryType VARCHAR(255) null,lastPublishDate DATE null,primary key (assetListEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetListEntry";
 
@@ -172,6 +173,7 @@ public class AssetListEntryModelImpl
 		model.setAssetListEntryKey(soapModel.getAssetListEntryKey());
 		model.setTitle(soapModel.getTitle());
 		model.setType(soapModel.getType());
+		model.setAssetEntrySubtype(soapModel.getAssetEntrySubtype());
 		model.setAssetEntryType(soapModel.getAssetEntryType());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
@@ -389,6 +391,12 @@ public class AssetListEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"type",
 			(BiConsumer<AssetListEntry, Integer>)AssetListEntry::setType);
+		attributeGetterFunctions.put(
+			"assetEntrySubtype", AssetListEntry::getAssetEntrySubtype);
+		attributeSetterBiConsumers.put(
+			"assetEntrySubtype",
+			(BiConsumer<AssetListEntry, String>)
+				AssetListEntry::setAssetEntrySubtype);
 		attributeGetterFunctions.put(
 			"assetEntryType", AssetListEntry::getAssetEntryType);
 		attributeSetterBiConsumers.put(
@@ -661,6 +669,22 @@ public class AssetListEntryModelImpl
 
 	@JSON
 	@Override
+	public String getAssetEntrySubtype() {
+		if (_assetEntrySubtype == null) {
+			return "";
+		}
+		else {
+			return _assetEntrySubtype;
+		}
+	}
+
+	@Override
+	public void setAssetEntrySubtype(String assetEntrySubtype) {
+		_assetEntrySubtype = assetEntrySubtype;
+	}
+
+	@JSON
+	@Override
 	public String getAssetEntryType() {
 		if (_assetEntryType == null) {
 			return "";
@@ -751,6 +775,7 @@ public class AssetListEntryModelImpl
 		assetListEntryImpl.setAssetListEntryKey(getAssetListEntryKey());
 		assetListEntryImpl.setTitle(getTitle());
 		assetListEntryImpl.setType(getType());
+		assetListEntryImpl.setAssetEntrySubtype(getAssetEntrySubtype());
 		assetListEntryImpl.setAssetEntryType(getAssetEntryType());
 		assetListEntryImpl.setLastPublishDate(getLastPublishDate());
 
@@ -913,6 +938,14 @@ public class AssetListEntryModelImpl
 
 		assetListEntryCacheModel.type = getType();
 
+		assetListEntryCacheModel.assetEntrySubtype = getAssetEntrySubtype();
+
+		String assetEntrySubtype = assetListEntryCacheModel.assetEntrySubtype;
+
+		if ((assetEntrySubtype != null) && (assetEntrySubtype.length() == 0)) {
+			assetListEntryCacheModel.assetEntrySubtype = null;
+		}
+
 		assetListEntryCacheModel.assetEntryType = getAssetEntryType();
 
 		String assetEntryType = assetListEntryCacheModel.assetEntryType;
@@ -1030,6 +1063,7 @@ public class AssetListEntryModelImpl
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;
+	private String _assetEntrySubtype;
 	private String _assetEntryType;
 	private String _originalAssetEntryType;
 	private Date _lastPublishDate;

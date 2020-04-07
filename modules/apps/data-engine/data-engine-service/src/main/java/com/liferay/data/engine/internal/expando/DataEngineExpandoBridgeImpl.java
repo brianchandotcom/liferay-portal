@@ -24,11 +24,8 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -42,14 +39,14 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -179,14 +176,12 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 		DataDefinitionField[] dataDefinitionFields =
 			dataDefinition.getDataDefinitionFields();
 
-		Stream<DataDefinitionField> stream = Arrays.stream(
-			dataDefinitionFields);
-
-		Optional<DataDefinitionField> dataDefinitionFieldOptional =
-			stream.filter(
-				dataDefinitionField -> StringUtil.equals(
-					dataDefinitionField.getName(), name)
-			).findAny();
+		Optional<DataDefinitionField> dataDefinitionFieldOptional = Stream.of(
+			dataDefinitionFields
+		).filter(
+			dataDefinitionField -> StringUtil.equals(
+				dataDefinitionField.getName(), name)
+		).findAny();
 
 		if (dataDefinitionFieldOptional.isPresent()) {
 			return;
@@ -257,44 +252,43 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 		try {
 			DataDefinition dataDefinition = _getDataDefinition();
 
-			for (DataDefinitionField dataDefinitionField :
-					dataDefinition.getDataDefinitionFields()) {
+			Optional<Serializable> serializableOptional = Stream.of(
+				dataDefinition.getDataDefinitionFields()
+			).filter(
+				dataDefinitionField -> StringUtil.equals(
+					dataDefinitionField.getName(), name)
+			).map(
+				DataDefinitionField::getDefaultValue
+			).filter(
+				MapUtil::isNotEmpty
+			).map(
+				defaultValueMap -> (Serializable)defaultValueMap.get("en_US")
+			).findFirst();
 
-				if (StringUtil.equals(dataDefinitionField.getName(), name)) {
-					Map<String, Object> defaultValueMap =
-						dataDefinitionField.getDefaultValue();
-
-					if (!MapUtil.isEmpty(defaultValueMap)) {
-						return (Serializable)defaultValueMap.get("en_US");
-					}
-				}
-			}
+			return serializableOptional.get();
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
-
-		return null;
 	}
 
 	@Override
 	public Enumeration<String> getAttributeNames() {
-		List<String> attributeNames = new ArrayList<>();
-
 		try {
 			DataDefinition dataDefinition = _getDataDefinition();
 
-			for (DataDefinitionField dataDefinitionField :
-					dataDefinition.getDataDefinitionFields()) {
-
-				attributeNames.add(dataDefinitionField.getName());
-			}
+			return Collections.enumeration(
+				Stream.of(
+					dataDefinition.getDataDefinitionFields()
+				).map(
+					DataDefinitionField::getName
+				).collect(
+					Collectors.toList()
+				));
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
-
-		return Collections.enumeration(attributeNames);
 	}
 
 	@Override
@@ -303,16 +297,15 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 
 		DataDefinition dataDefinition = _getDataDefinition();
 
-		for (DataDefinitionField dataDefinitionField :
-				dataDefinition.getDataDefinitionFields()) {
-
-			if (StringUtil.equals(name, dataDefinitionField.getName())) {
-				unicodeProperties.put(
-					"fieldType", dataDefinitionField.getFieldType());
-
-				break;
-			}
-		}
+		Stream.of(
+			dataDefinition.getDataDefinitionFields()
+		).filter(
+			dataDefinitionField -> StringUtil.equals(
+				name, dataDefinitionField.getName())
+		).forEach(
+			dataDefinitionField -> unicodeProperties.put(
+				"fieldType", dataDefinitionField.getFieldType())
+		);
 
 		return unicodeProperties;
 	}
@@ -324,17 +317,13 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 
 	@Override
 	public Map<String, Serializable> getAttributes(boolean secure) {
-		Map<String, Serializable> attributes = new HashMap<>();
+		List<String> attributeNames = ListUtil.fromEnumeration(
+			getAttributeNames());
 
-		Enumeration<String> attributeNames = getAttributeNames();
+		Stream<String> stream = attributeNames.stream();
 
-		while (attributeNames.hasMoreElements()) {
-			String attributeName = attributeNames.nextElement();
-
-			attributes.put(attributeName, getAttribute(attributeName));
-		}
-
-		return attributes;
+		return stream.collect(
+			Collectors.toMap(Function.identity(), this::getAttribute));
 	}
 
 	@Override
@@ -346,23 +335,16 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 	public Map<String, Serializable> getAttributes(
 		Collection<String> names, boolean secure) {
 
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		List<String> namesList = new ArrayList<>(names);
-
 		List<String> attributeNames = ListUtil.fromEnumeration(
 			getAttributeNames());
 
 		Stream<String> stream = attributeNames.stream();
 
-		stream.filter(
-			attributeName -> ListUtil.exists(namesList, attributeName::equals)
-		).forEach(
-			attributeName -> attributes.put(
-				attributeName, getAttribute(attributeName))
+		return stream.filter(
+			names::contains
+		).collect(
+			Collectors.toMap(Function.identity(), this::getAttribute)
 		);
-
-		return attributes;
 	}
 
 	@Override
@@ -390,11 +372,10 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 		try {
 			DataDefinition dataDefinition = _getDataDefinition();
 
-			Stream<DataDefinitionField> stream = Arrays.stream(
-				dataDefinition.getDataDefinitionFields());
-
 			Optional<DataDefinitionField> dataDefinitionFieldOptional =
-				stream.filter(
+				Stream.of(
+					dataDefinition.getDataDefinitionFields()
+				).filter(
 					dataDefinitionField -> StringUtil.equals(
 						dataDefinitionField.getName(), name)
 				).findAny();
@@ -474,24 +455,20 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 	@Override
 	public void setAttributeDefault(String name, Serializable defaultValue) {
 		try {
-			DataDefinitionResource dataDefinitionResource =
-				_getDataDefinitionResource();
-
 			DataDefinition dataDefinition = _getDataDefinition();
 
-			for (DataDefinitionField dataDefinitionField :
-					dataDefinition.getDataDefinitionFields()) {
+			Stream.of(
+				dataDefinition.getDataDefinitionFields()
+			).filter(
+				dataDefinitionField -> StringUtil.equals(
+					dataDefinitionField.getName(), name)
+			).map(
+				DataDefinitionField::getDefaultValue
+			).forEach(
+				map -> map.put("en_US", defaultValue)
+			);
 
-				if (StringUtil.equals(dataDefinitionField.getName(), name)) {
-					Map<String, Object> defaultValueMap =
-						dataDefinitionField.getDefaultValue();
-
-					defaultValueMap.put("en_US", defaultValue);
-
-					dataDefinitionResource.putDataDefinition(
-						dataDefinition.getId(), dataDefinition);
-				}
-			}
+			_updateDataDefinition(dataDefinition);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -510,24 +487,19 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 		String name, UnicodeProperties unicodeProperties, boolean secure) {
 
 		try {
-			DataDefinitionResource dataDefinitionResource =
-				_getDataDefinitionResource();
-
 			DataDefinition dataDefinition = _getDataDefinition();
 
-			for (DataDefinitionField dataDefinitionField :
-					dataDefinition.getDataDefinitionFields()) {
+			Stream.of(
+				dataDefinition.getDataDefinitionFields()
+			).filter(
+				dataDefinitionField -> StringUtil.equals(
+					dataDefinitionField.getName(), name)
+			).forEach(
+				dataDefinitionField -> dataDefinitionField.setFieldType(
+					unicodeProperties.getProperty("fieldType"))
+			);
 
-				if (StringUtil.equals(dataDefinitionField.getName(), name)) {
-					dataDefinitionField.setFieldType(
-						unicodeProperties.getProperty("fieldType"));
-
-					dataDefinitionResource.putDataDefinition(
-						dataDefinition.getId(), dataDefinition);
-
-					break;
-				}
-			}
+			_updateDataDefinition(dataDefinition);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -587,11 +559,7 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 				"en_US", defaultValue
 			).build());
 		dataDefinitionField.setFieldType(type);
-		dataDefinitionField.setIndexable(false);
 		dataDefinitionField.setName(name);
-		dataDefinitionField.setReadOnly(false);
-		dataDefinitionField.setRequired(false);
-		dataDefinitionField.setVisible(true);
 
 		return dataDefinitionField;
 	}
@@ -633,15 +601,24 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 	private long _getUserId() throws PortalException {
 		long userId = PrincipalThreadLocal.getUserId();
 
-		if (userId == 0) {
-			Company company = CompanyLocalServiceUtil.getCompany(_companyId);
-
-			User user = company.getDefaultUser();
-
-			userId = user.getUserId();
+		if (userId != 0) {
+			return userId;
 		}
 
-		return userId;
+		return UserLocalServiceUtil.getDefaultUserId(_companyId);
+	}
+
+	private void _updateDataDefinition(DataDefinition dataDefinition) {
+		try {
+			DataDefinitionResource dataDefinitionResource =
+				_getDataDefinitionResource();
+
+			dataDefinitionResource.putDataDefinition(
+				dataDefinition.getId(), dataDefinition);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	private String _className;

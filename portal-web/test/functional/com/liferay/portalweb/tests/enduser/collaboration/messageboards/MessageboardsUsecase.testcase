@@ -31,56 +31,6 @@ definition {
 		}
 	}
 
-	@priority = "4"
-	test CopyAndPasteTextInAlloyEditor {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Message Boards Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Message Boards Page",
-			widgetName = "Message Boards");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		AssertClick(
-			locator1 = "Button#NEW_THREAD",
-			value1 = "New Thread");
-
-		AssertElementPresent.assertElementPresent(locator1 = "TextInput#SUBJECT");
-
-		Type(
-			locator1 = "TextInput#SUBJECT",
-			value1 = "Message Boards Subject");
-
-		AlloyEditor.typeEditor(
-			content = "Message Boards Body",
-			editor = "body");
-
-		Copy(locator1 = "TextInput#SUBJECT");
-
-		Paste(
-			key_editor = "body",
-			locator1 = "AlloyEditor#EDITOR");
-
-		PortletEntry.publish();
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Test Test",
-			replyCount = "0",
-			threadBody = "Message Boards Subject",
-			threadSubject = "Message Boards Subject");
-
-		MessageboardsThread.viewPG(
-			threadBody = "Message Boards Subject",
-			threadSubject = "Message Boards Subject",
-			userName = "Test Test");
-	}
-
 	@priority = "5"
 	test DeleteMessageboardsThread {
 		JSONMBMessage.addMessage(

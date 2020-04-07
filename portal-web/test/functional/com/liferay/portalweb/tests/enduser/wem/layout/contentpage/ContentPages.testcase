@@ -1131,7 +1131,7 @@ definition {
 			ContentPages.clickPencil();
 		}
 
-		task ("View Rich Text frgament is on top of Title fragment") {
+		task ("View Heading frgament is on top of Button fragment") {
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Heading",
 				position = "1");
@@ -1154,7 +1154,7 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
-		task ("Assert the Title fragment is on top of Rich Text frgament") {
+		task ("Assert the Button fragment is on top of Heading frgament") {
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Button",
 				position = "1");

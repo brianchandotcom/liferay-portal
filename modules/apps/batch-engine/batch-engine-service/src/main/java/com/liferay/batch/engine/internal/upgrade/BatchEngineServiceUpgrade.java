@@ -18,6 +18,7 @@ import com.liferay.batch.engine.internal.upgrade.v4_0_0.UpgradeVersion;
 import com.liferay.batch.engine.internal.upgrade.v4_0_1.UpgradeClassName;
 import com.liferay.batch.engine.internal.upgrade.v4_1_0.UpgradeTaskItemDelegateName;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,6 +32,8 @@ public class BatchEngineServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
+		registry.register("2.0.0", "3.0.0", new DummyUpgradeStep());
+
 		registry.register("3.0.0", "4.0.0", new UpgradeVersion());
 
 		registry.register("4.0.0", "4.0.1", new UpgradeClassName());

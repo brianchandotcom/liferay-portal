@@ -25,11 +25,15 @@ public class UpgradeSchema extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("DDLRecord", "className")) {
-			alter(DDLRecordTable.class, new AlterTableAddColumn("className"));
+			alter(
+				DDLRecordTable.class,
+				new AlterTableAddColumn("className", "VARCHAR(300) null"));
 		}
 
 		if (!hasColumn("DDLRecord", "classPK")) {
-			alter(DDLRecordTable.class, new AlterTableAddColumn("classPK"));
+			alter(
+				DDLRecordTable.class,
+				new AlterTableAddColumn("classPK", "LONG"));
 		}
 	}
 

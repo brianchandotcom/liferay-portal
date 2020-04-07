@@ -16,84 +16,92 @@ import {
 	generateInstanceId,
 	generateName,
 	generateNestedFieldName,
+	parseNestedFieldName,
 } from '../../util/repeatable.es';
 import {PagesVisitor} from '../../util/visitors.es';
+
+export const createRepeatedField = (sourceField, repeatedIndex) => {
+	const instanceId = generateInstanceId();
+
+	return {
+		...sourceField,
+		instanceId,
+		localizedValue: {},
+		name: generateName(sourceField.name, repeatedIndex, instanceId),
+		nestedFields: sourceField.nestedFields.map(nestedField => ({
+			...nestedField,
+			localizedValue: {},
+			value: undefined,
+		})),
+		value: undefined,
+	};
+};
+
+export const updateNestedFieldNames = (parentFieldName, nestedFields) => {
+	return (nestedFields || []).map(nestedField => {
+		const newNestedFieldName = generateNestedFieldName(
+			nestedField.name,
+			parentFieldName
+		);
+
+		return {
+			...nestedField,
+			name: newNestedFieldName,
+			nestedFields: updateNestedFieldNames(
+				newNestedFieldName,
+				nestedField.nestedFields
+			),
+			...parseNestedFieldName(newNestedFieldName),
+		};
+	});
+};
 
 export default (pages, name) => {
 	const visitor = new PagesVisitor(pages);
 
 	return visitor.mapColumns(column => {
 		const {fields} = column;
-		const currentIndex = fields.reduce(
-			(currentIndex = -1, field, index) => {
+		const sourceFieldIndex = fields.reduce(
+			(sourceFieldIndex = -1, field, index) => {
 				if (field.name === name) {
-					currentIndex = index;
+					sourceFieldIndex = index;
 				}
 
-				return currentIndex;
+				return sourceFieldIndex;
 			},
 			-1
 		);
 
-		if (currentIndex > -1) {
-			const field = fields[currentIndex];
-			const indexToAddField = currentIndex + 1;
-			const newField = {
-				...field,
-				instanceId: generateInstanceId(),
-				name: generateName(name, indexToAddField),
-			};
-
-			newField.localizedValue = {};
-
-			delete newField.value;
-
-			const newFields = [
-				...fields.slice(0, indexToAddField),
-				newField,
-				...fields.slice(indexToAddField),
-			];
+		if (sourceFieldIndex > -1) {
+			const newFieldIndex = sourceFieldIndex + 1;
+			const newField = createRepeatedField(
+				fields[sourceFieldIndex],
+				newFieldIndex
+			);
 
 			let currentRepeatedIndex = 0;
 
-			column = {
+			return {
 				...column,
-				fields: newFields.map((currentField, index) => {
+				fields: [
+					...fields.slice(0, newFieldIndex),
+					newField,
+					...fields.slice(newFieldIndex),
+				].map(currentField => {
 					if (currentField.fieldName === newField.fieldName) {
 						const name = generateName(
 							currentField.name,
 							currentRepeatedIndex++
 						);
 
-						currentField = {
+						return {
 							...currentField,
 							name,
+							nestedFields: updateNestedFieldNames(
+								name,
+								currentField.nestedFields
+							),
 						};
-
-						if (currentField.nestedFields) {
-							currentField = {
-								...currentField,
-								nestedFields: currentField.nestedFields.map(
-									nestedField => {
-										const newNestedField = {
-											...nestedField,
-											name: generateNestedFieldName(
-												nestedField.name,
-												name
-											),
-										};
-
-										if (index === indexToAddField) {
-											newField.localizedValue = {};
-
-											delete newNestedField.value;
-										}
-
-										return newNestedField;
-									}
-								),
-							};
-						}
 					}
 
 					return currentField;

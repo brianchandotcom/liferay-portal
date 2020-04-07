@@ -21,11 +21,12 @@ export const generateInstanceId = () =>
 		.toString(36)
 		.substr(2, 8);
 
-export const generateName = (name, repeatedIndex) => {
+export const generateName = (name, repeatedIndex, newInstanceId) => {
 	const parsedName = parseName(name);
 	const {fieldName, instanceId, locale, portletNamespace} = parsedName;
 
-	return `${portletNamespace}ddm$$${fieldName}$${instanceId}$${repeatedIndex}$$${locale}`;
+	return `${portletNamespace}ddm$$${fieldName}$${newInstanceId ||
+		instanceId}$${repeatedIndex}$$${locale}`;
 };
 
 export const generateNestedFieldName = (name, parentFieldName) => {

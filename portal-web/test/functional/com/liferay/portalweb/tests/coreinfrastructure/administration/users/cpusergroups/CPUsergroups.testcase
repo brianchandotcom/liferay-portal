@@ -292,6 +292,7 @@ definition {
 
 	@priority = "3"
 	test SearchCurrentMembersAssignedToUserGroup {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPUsergroups#SearchCurrentMembersAssignedToUserGroup";
 
 		ProductMenu.gotoPortlet(

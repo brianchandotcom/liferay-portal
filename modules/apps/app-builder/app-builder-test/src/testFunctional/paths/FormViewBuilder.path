@@ -66,7 +66,7 @@
 
 <tr>
 	<td>SIDEBAR_FIELDS_TAB</td>
-	<td>//li[@class='nav-item']//a[contains(text(),'Fields')]</td>
+	<td>//li[@class='nav-item']//*[contains(text(),'Fields')]</td>
 	<td></td>
 </tr>
 

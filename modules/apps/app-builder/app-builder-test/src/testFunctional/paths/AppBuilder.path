@@ -310,7 +310,7 @@
 <!-- NAVBAR -->
 <tr>
 	<td>NAVBAR</td>
-	<td>//div[contains(@class,'navbar')]</td>
+	<td>//div[contains(@class,'navbar-collapse')]</td>
 	<td></td>
 </tr>
 

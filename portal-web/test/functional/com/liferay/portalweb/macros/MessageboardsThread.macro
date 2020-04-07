@@ -18,9 +18,9 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
-		AlloyEditor.typeEditor(
-			content = "${threadBody}",
-			editor = "body");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${threadBody}");
 
 		if (isSet(categoryName)) {
 			Panel.expandPanel(panel = "Categorization");
@@ -99,20 +99,16 @@ definition {
 			value1 = "${threadSubject}");
 
 		if (isSet(source)) {
-			Click(
-				key_editor = "body",
-				locator1 = "AlloyEditor#EDITOR");
+			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
-			Click(locator1 = "Button#EDITOR_SWITCH");
-
-			Type.sendKeysAceEditor(
-				locator1 = "TextArea#ACE_EDITOR",
+			Type(
+				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
 				value1 = "${threadBody}");
 		}
 		else {
-			AlloyEditor.typeEditor(
-				content = "${threadBody}",
-				editor = "body");
+			Type.typeCKEditorWaitForCKEditor(
+				locator1 = "CKEditor#BODY",
+				value1 = "${threadBody}");
 		}
 
 		PortletEntry.publish();
@@ -129,9 +125,9 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
-		AlloyEditor.typeEditor(
-			content = "${threadBody}",
-			editor = "body");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${threadBody}");
 
 		Panel.expandPanel(panel = "More Settings");
 
@@ -160,9 +156,9 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
-		AlloyEditor.typeEditor(
-			content = "${threadBody}",
-			editor = "body");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${threadBody}");
 
 		Panel.expandPanel(panel = "Attachments");
 
@@ -194,9 +190,9 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
-		AlloyEditor.typeEditor(
-			content = "${threadBody}",
-			editor = "body");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${threadBody}");
 
 		Panel.expandPanel(panel = "Permissions");
 
@@ -220,9 +216,9 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
-		AlloyEditor.typeEditor(
-			content = "${threadBody}",
-			editor = "body");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${threadBody}");
 
 		Click(locator1 = "Button#SUBMIT_FOR_PUBLICATION");
 
@@ -238,9 +234,9 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
-		AlloyEditor.typeEditor(
-			content = "${threadBody}",
-			editor = "body");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${threadBody}");
 
 		Click(locator1 = "Button#SUBMIT_FOR_PUBLICATION");
 
@@ -270,9 +266,9 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
-		AlloyEditor.typeEditor(
-			content = "${threadBody}",
-			editor = "body");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${threadBody}");
 
 		AssertClick(
 			locator1 = "Button#CANCEL",
@@ -290,9 +286,9 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubjectEdit}");
 
-		AlloyEditor.typeEditor(
-			content = "${threadBodyEdit}",
-			editor = "body");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${threadBodyEdit}");
 
 		AssertClick(
 			locator1 = "Button#CANCEL",
@@ -349,15 +345,11 @@ definition {
 		}
 
 		if (isSet(threadBodyEdit)) {
-			Click(
-				key_editor = "body",
-				locator1 = "AlloyEditor#EDITOR");
+			Click(locator1 = "CKEditor#BODY");
 
-			AssertElementPresent(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
-
-			AlloyEditor.typeEditor(
-				content = "${threadBodyEdit}",
-				editor = "body");
+			Type.typeCKEditorWaitForCKEditor(
+				locator1 = "CKEditor#BODY",
+				value1 = "${threadBodyEdit}");
 		}
 
 		PortletEntry.publish();
@@ -377,9 +369,9 @@ definition {
 		}
 
 		if (isSet(threadBodyEdit)) {
-			AlloyEditor.typeEditor(
-				content = "${threadBodyEdit}",
-				editor = "body");
+			Type.typeCKEditorWaitForCKEditor(
+				locator1 = "CKEditor#BODY",
+				value1 = "${threadBodyEdit}");
 		}
 
 		if ("${saveAsDraft}" == "true") {
@@ -568,9 +560,9 @@ definition {
 				locator1 = "TextInput#SUBJECT",
 				value1 = "${explanationSubject}");
 
-			AlloyEditor.typeEditor(
-				content = "${explanationBody}",
-				editor = "body");
+			Type.typeCKEditorWaitForCKEditor(
+				locator1 = "CKEditor#BODY",
+				value1 = "${explanationBody}");
 		}
 
 		SelectFrame(value1 = "relative=top");
@@ -748,9 +740,9 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
-		AlloyEditor.typeEditor(
-			content = "${threadBody}",
-			editor = "body");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${threadBody}");
 
 		AssertClick(
 			locator1 = "Button#SAVE_AS_DRAFT",
@@ -795,9 +787,9 @@ definition {
 			locator1 = "MessageBoardsSplitThread#ADD_EXPLANATION_SUBJECT_FIELD",
 			value1 = "${threadSplitReplySubject}");
 
-		AlloyEditor.typeEditor(
-			content = "${threadSplitReplyBody}",
-			editor = "body");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "${threadSplitReplyBody}");
 
 		AssertClick(
 			locator1 = "Button#OK",

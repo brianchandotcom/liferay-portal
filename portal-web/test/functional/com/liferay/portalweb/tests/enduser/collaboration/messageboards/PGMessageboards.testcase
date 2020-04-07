@@ -361,9 +361,9 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "MB Thread Message Subject");
 
-		AlloyEditor.typeEditor(
-			content = "MB Thread Message Body",
-			editor = "body");
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY",
+			value1 = "MB Thread Message Body");
 
 		Panel.expandPanel(panel = "Attachments");
 

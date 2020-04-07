@@ -36,30 +36,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test case for LPS-80625. The fragment importer should not allow invalid zip files to be imported."
-	@priority = "5"
-	test CannotImportInvalidZip {
-		property portal.acceptance = "true";
-
-		task ("Navigate to the fragment import screen") {
-			FragmentsAdminNavigator.gotoImportCollection();
-		}
-
-		task ("Attempt to import a zip file with invalid structure") {
-			UploadCommonFile(
-				locator1 = "TextInput#FILE",
-				value1 = "fragment-invalid-zip.zip");
-
-			Button.click(button = "Import");
-		}
-
-		task ("Assert the user is prevented from importing an invalid zip and an error message displays") {
-			Alert.viewErrorMessage(errorMessage = "The selected file is not a valid zip file.");
-
-			IFrame.closeFrame();
-		}
-	}
-
 	@description = "This is a test case for LPS-80625. The fragment importer should not allow non-zip files to be imported."
 	@priority = "5"
 	test CannotImportNonZip {

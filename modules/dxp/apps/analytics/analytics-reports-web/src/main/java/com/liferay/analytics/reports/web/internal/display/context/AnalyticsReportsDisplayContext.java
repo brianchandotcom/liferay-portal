@@ -147,6 +147,8 @@ public class AnalyticsReportsDisplayContext {
 				).build()
 			).put(
 				"timeSpans", _getTimeSpansJSONArray()
+			).put(
+				"validAnalyticsCloudConnection", true
 			).build()
 		).put(
 			"props", getProps()

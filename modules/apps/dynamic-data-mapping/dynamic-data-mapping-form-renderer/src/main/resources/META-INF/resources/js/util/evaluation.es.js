@@ -114,23 +114,24 @@ export const mergePages = (
 
 	return newPagesVisitor.mapFields(
 		field => {
-			const sourceField = sourcePagesVisitor.findField(
-				({name}) => name === field.name
-			);
-
-			const displayErrors =
-				sourceField.displayErrors || field.fieldName === fieldName;
+			const sourceField =
+				sourcePagesVisitor.findField(({name}) => name === field.name) ||
+				{};
 
 			let newField = {
 				...sourceField,
 				...field,
 				defaultLanguageId,
-				displayErrors,
+				displayErrors:
+					sourceField.displayErrors || field.fieldName === fieldName,
 				editingLanguageId,
 				valid: field.valid !== false,
 			};
 
-			if (newField.type === 'options') {
+			if (
+				newField.type === 'options' &&
+				sourceField.value !== undefined
+			) {
 				newField = {
 					...newField,
 					value: mergeFieldOptions(sourceField, newField),

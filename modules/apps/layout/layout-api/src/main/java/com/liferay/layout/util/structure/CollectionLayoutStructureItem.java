@@ -16,6 +16,7 @@ package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
@@ -47,8 +48,6 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 				_collectionJSONObject,
 				collectionLayoutStructureItem._collectionJSONObject) ||
 			!Objects.equals(
-				_listFormat, collectionLayoutStructureItem._listFormat) ||
-			!Objects.equals(
 				_numberOfColumns,
 				collectionLayoutStructureItem._numberOfColumns) ||
 			!Objects.equals(
@@ -69,8 +68,6 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 		return JSONUtil.put(
 			"collection", _collectionJSONObject
 		).put(
-			"listFormat", _listFormat
-		).put(
 			"numberOfColumns", _numberOfColumns
 		).put(
 			"numberOfItems", _numberOfItems
@@ -82,8 +79,12 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 		return LayoutDataItemTypeConstants.TYPE_COLLECTION;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getListFormat() {
-		return _listFormat;
+		return StringPool.BLANK;
 	}
 
 	public int getNumberOfColumns() {
@@ -99,28 +100,15 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 		return HashUtil.hash(0, getItemId());
 	}
 
-	public boolean isListFormatGrid() {
-		if (Objects.equals(getListFormat(), _LIST_FORMAT_GRID)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isListFormatStacked() {
-		if (Objects.equals(getListFormat(), _LIST_FORMAT_STACKED)) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public void setCollectionJSONObject(JSONObject collectionJSONObject) {
 		_collectionJSONObject = collectionJSONObject;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setListFormat(String listFormat) {
-		_listFormat = listFormat;
 	}
 
 	public void setNumberOfColumns(int numberOfColumns) {
@@ -138,10 +126,6 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 				itemConfigJSONObject.getJSONObject("collection"));
 		}
 
-		if (itemConfigJSONObject.has("listFormat")) {
-			setListFormat(itemConfigJSONObject.getString("listFormat"));
-		}
-
 		if (itemConfigJSONObject.has("numberOfColumns")) {
 			setNumberOfColumns(itemConfigJSONObject.getInt("numberOfColumns"));
 		}
@@ -151,12 +135,7 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 		}
 	}
 
-	private static final String _LIST_FORMAT_GRID = "grid";
-
-	private static final String _LIST_FORMAT_STACKED = "stacked";
-
 	private JSONObject _collectionJSONObject;
-	private String _listFormat = _LIST_FORMAT_STACKED;
 	private int _numberOfColumns = 3;
 	private int _numberOfItems = 3;
 

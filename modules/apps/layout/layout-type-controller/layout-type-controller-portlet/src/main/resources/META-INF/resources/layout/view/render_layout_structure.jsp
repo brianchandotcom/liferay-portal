@@ -38,50 +38,27 @@ for (String childrenItemId : childrenItemIds) {
 			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 			%>
 
-			<c:choose>
-				<c:when test="<%= collectionLayoutStructureItem.isListFormatGrid() %>">
-					<div class="row">
+			<div class="row">
 
-						<%
-						for (Object collectionObject : portletLayoutDisplayContext.getCollection(collectionLayoutStructureItem)) {
-							try {
-								request.setAttribute("render_layout_structure.jsp-collectionObject", collectionObject);
-						%>
+				<%
+				for (Object collectionObject : portletLayoutDisplayContext.getCollection(collectionLayoutStructureItem)) {
+					try {
+						request.setAttribute("render_layout_structure.jsp-collectionObject", collectionObject);
+				%>
 
-								<div class="col-md-<%= 12 / collectionLayoutStructureItem.getNumberOfColumns() %>">
-									<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
-								</div>
-
-						<%
-							}
-							finally {
-								request.removeAttribute("render_layout_structure.jsp-collectionObject");
-							}
-						}
-						%>
-
-					</div>
-				</c:when>
-				<c:when test="<%= collectionLayoutStructureItem.isListFormatStacked() %>">
-
-					<%
-					for (Object collectionObject : portletLayoutDisplayContext.getCollection(collectionLayoutStructureItem)) {
-						try {
-							request.setAttribute("render_layout_structure.jsp-collectionObject", collectionObject);
-					%>
-
+						<div class="col-md-<%= 12 / collectionLayoutStructureItem.getNumberOfColumns() %>">
 							<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
+						</div>
 
-					<%
-						}
-						finally {
-							request.removeAttribute("render_layout_structure.jsp-collectionObject");
-						}
+				<%
 					}
-					%>
+					finally {
+						request.removeAttribute("render_layout_structure.jsp-collectionObject");
+					}
+				}
+				%>
 
-				</c:when>
-			</c:choose>
+			</div>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof ColumnLayoutStructureItem %>">
 

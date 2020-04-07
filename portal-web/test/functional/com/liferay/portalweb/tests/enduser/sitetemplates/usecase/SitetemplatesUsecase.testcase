@@ -96,6 +96,7 @@ definition {
 		Navigator.gotoNavNested(navNested = "Page Template Collection");
 
 		PageTemplatesAdmin.addDuplicatePageTemplate(
+			duplicatePageTemplate = "true",
 			pageTemplateName = "Test",
 			siteTemplate = "true");
 	}

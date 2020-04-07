@@ -94,7 +94,8 @@ public class JournalEditDDMStructuresDisplayContext {
 						_liferayPortletResponse.createRenderURL();
 
 					editBasicInfoURL.setParameter(
-						"mvcPath", "/ddm_structure/basic_info.jsp");
+						"mvcPath",
+						"/ddm_structure/basic_info_data_engine_editor.jsp");
 					editBasicInfoURL.setParameter(
 						"ddmStructureId", String.valueOf(getDDMStructureId()));
 					editBasicInfoURL.setWindowState(

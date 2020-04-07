@@ -12,7 +12,11 @@
  * details.
  */
 
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {
+	PagesVisitor,
+	generateName,
+	getRepeatedIndex,
+} from 'dynamic-data-mapping-form-renderer';
 
 import {FIELD_TYPE_FIELDSET} from './constants.es';
 
@@ -254,9 +258,16 @@ export const normalizeSettingsContextPages = (
 			};
 		}
 
+		const newInstanceId = generateInstanceId(8);
+
 		return {
 			...field,
-			instanceId: generateInstanceId(8),
+			instanceId: newInstanceId,
+			name: generateName(
+				field.name,
+				getRepeatedIndex(field.name),
+				newInstanceId
+			),
 		};
 	});
 };

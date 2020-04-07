@@ -353,7 +353,9 @@ public class AssetListItemSelectorView
 								themeDisplay.getScopeGroupId()));
 				}
 			}
-			else {
+			else if (Validator.isNull(
+						_infoListItemSelectorCriterion.getItemSubtype())) {
+
 				if (Validator.isNotNull(keywords)) {
 					assetListEntries =
 						_assetListEntryService.getAssetListEntries(
@@ -385,6 +387,46 @@ public class AssetListItemSelectorView
 							PortalUtil.getCurrentAndAncestorSiteGroupIds(
 								themeDisplay.getScopeGroupId()),
 							itemTypes.toArray(new String[0]));
+				}
+			}
+			else {
+				if (Validator.isNotNull(keywords)) {
+					assetListEntries =
+						_assetListEntryService.getAssetListEntries(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()),
+							keywords,
+							_infoListItemSelectorCriterion.getItemSubtype(),
+							_infoListItemSelectorCriterion.getItemType(),
+							searchContainer.getStart(),
+							searchContainer.getEnd(),
+							searchContainer.getOrderByComparator());
+
+					assetListEntriesCount =
+						_assetListEntryService.getAssetListEntriesCount(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()),
+							keywords,
+							_infoListItemSelectorCriterion.getItemSubtype(),
+							_infoListItemSelectorCriterion.getItemType());
+				}
+				else {
+					assetListEntries =
+						_assetListEntryService.getAssetListEntries(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()),
+							_infoListItemSelectorCriterion.getItemSubtype(),
+							_infoListItemSelectorCriterion.getItemType(),
+							searchContainer.getStart(),
+							searchContainer.getEnd(),
+							searchContainer.getOrderByComparator());
+
+					assetListEntriesCount =
+						_assetListEntryService.getAssetListEntriesCount(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()),
+							_infoListItemSelectorCriterion.getItemSubtype(),
+							_infoListItemSelectorCriterion.getItemType());
 				}
 			}
 

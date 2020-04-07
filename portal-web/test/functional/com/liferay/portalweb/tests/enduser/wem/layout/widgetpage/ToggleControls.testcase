@@ -19,8 +19,8 @@ definition {
 		JSONGroup.addGroup(groupName = "Secondary Test Site");
 
 		JSONLayout.addPublicLayout(
-				groupName = "Secondary Test Site",
-				layoutName =  "Secondary Widget Page");
+			groupName = "Secondary Test Site",
+			layoutName = "Secondary Widget Page");
 	}
 
 	tearDown {

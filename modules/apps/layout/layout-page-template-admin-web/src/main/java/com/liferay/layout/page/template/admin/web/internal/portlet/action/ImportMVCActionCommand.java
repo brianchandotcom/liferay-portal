@@ -84,19 +84,19 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			List<LayoutPageTemplatesImporterResultEntry>
-				layoutPageTemplateImporterResultEntries =
+				layoutPageTemplatesImporterResultEntries =
 					_layoutPageTemplatesImporter.importFile(
 						themeDisplay.getUserId(),
 						themeDisplay.getScopeGroupId(),
 						layoutPageTemplateCollectionId, file, overwrite);
 
-			if (ListUtil.isEmpty(layoutPageTemplateImporterResultEntries)) {
+			if (ListUtil.isEmpty(layoutPageTemplatesImporterResultEntries)) {
 				return;
 			}
 
 			SessionMessages.add(
 				actionRequest, "layoutPageTemplatesImporterResultEntries",
-				layoutPageTemplateImporterResultEntries);
+				layoutPageTemplatesImporterResultEntries);
 		}
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, exception.getClass(), exception);

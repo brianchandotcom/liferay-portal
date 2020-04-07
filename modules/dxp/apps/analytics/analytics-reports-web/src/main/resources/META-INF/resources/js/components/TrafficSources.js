@@ -45,9 +45,7 @@ export default function TrafficSources({
 }) {
 	const [highlighted, setHighlighted] = useState(null);
 
-	const fullPieChart = trafficSources.some(trafficSource => {
-		return trafficSource.value !== undefined && trafficSource.value !== 0;
-	});
+	const fullPieChart = trafficSources.some(source => !!source.value);
 
 	const missingTrafficSourceValue = trafficSources.some(trafficSource => {
 		return trafficSource.value === undefined;

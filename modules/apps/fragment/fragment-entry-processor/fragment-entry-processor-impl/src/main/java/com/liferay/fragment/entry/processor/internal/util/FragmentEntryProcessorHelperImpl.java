@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -99,9 +100,16 @@ public class FragmentEntryProcessorHelperImpl
 
 		ClassedModel classedModel = (ClassedModel)displayObject;
 
+		String className = classedModel.getModelClassName();
+
+		// LPS-111037
+
+		if (classedModel instanceof FileEntry) {
+			className = FileEntry.class.getName();
+		}
+
 		InfoDisplayContributor infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(
-				classedModel.getModelClassName());
+			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
 
 		Object fieldValue = infoDisplayContributor.getInfoDisplayFieldValue(
 			displayObjectOptional.get(),

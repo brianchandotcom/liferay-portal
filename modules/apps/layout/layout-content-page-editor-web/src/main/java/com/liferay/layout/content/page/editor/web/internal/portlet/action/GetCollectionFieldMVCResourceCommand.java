@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.pagination.Pagination;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -112,10 +115,19 @@ public class GetCollectionFieldMVCResourceCommand
 					List list = layoutListRetriever.getList(
 						listObjectReference, defaultLayoutListRetrieverContext);
 
+					// LPS-111037
+
+					String itemType = listObjectReference.getItemType();
+
+					if (Objects.equals(
+							DLFileEntryConstants.getClassName(), itemType)) {
+
+						itemType = FileEntry.class.getName();
+					}
+
 					InfoDisplayContributor infoDisplayContributor =
 						_infoDisplayContributorTracker.
-							getInfoDisplayContributor(
-								listObjectReference.getItemType());
+							getInfoDisplayContributor(itemType);
 
 					for (Object object : list) {
 						jsonArray.put(

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
@@ -90,6 +91,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
@@ -1286,8 +1288,15 @@ public class ContentPageEditorDisplayContext {
 		for (InfoDisplayContributor infoDisplayContributor :
 				infoDisplayContributorTracker.getInfoDisplayContributors()) {
 
-			infoDisplayContributorsClassNames.add(
-				infoDisplayContributor.getClassName());
+			// LPS-111037
+
+			String className = infoDisplayContributor.getClassName();
+
+			if (Objects.equals(FileEntry.class.getName(), className)) {
+				className = DLFileEntryConstants.getClassName();
+			}
+
+			infoDisplayContributorsClassNames.add(className);
 		}
 
 		return infoDisplayContributorsClassNames;

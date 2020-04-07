@@ -44,13 +44,13 @@ public interface InstanceResource {
 	}
 
 	public Page<Instance> getProcessInstancesPage(
-			Long processId, Long[] assigneeUserIds, java.util.Date dateEnd,
+			Long processId, Long[] assigneeIds, java.util.Date dateEnd,
 			java.util.Date dateStart, String[] slaStatuses, String[] statuses,
 			String[] taskKeys, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProcessInstancesPageHttpResponse(
-			Long processId, Long[] assigneeUserIds, java.util.Date dateEnd,
+			Long processId, Long[] assigneeIds, java.util.Date dateEnd,
 			java.util.Date dateStart, String[] slaStatuses, String[] statuses,
 			String[] taskKeys, Pagination pagination)
 		throws Exception;
@@ -118,14 +118,14 @@ public interface InstanceResource {
 	public static class InstanceResourceImpl implements InstanceResource {
 
 		public Page<Instance> getProcessInstancesPage(
-				Long processId, Long[] assigneeUserIds, java.util.Date dateEnd,
+				Long processId, Long[] assigneeIds, java.util.Date dateEnd,
 				java.util.Date dateStart, String[] slaStatuses,
 				String[] statuses, String[] taskKeys, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getProcessInstancesPageHttpResponse(
-					processId, assigneeUserIds, dateEnd, dateStart, slaStatuses,
+					processId, assigneeIds, dateEnd, dateStart, slaStatuses,
 					statuses, taskKeys, pagination);
 
 			String content = httpResponse.getContent();
@@ -149,7 +149,7 @@ public interface InstanceResource {
 		}
 
 		public HttpInvoker.HttpResponse getProcessInstancesPageHttpResponse(
-				Long processId, Long[] assigneeUserIds, java.util.Date dateEnd,
+				Long processId, Long[] assigneeIds, java.util.Date dateEnd,
 				java.util.Date dateStart, String[] slaStatuses,
 				String[] statuses, String[] taskKeys, Pagination pagination)
 			throws Exception {
@@ -178,10 +178,10 @@ public interface InstanceResource {
 			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 				"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-			if (assigneeUserIds != null) {
-				for (int i = 0; i < assigneeUserIds.length; i++) {
+			if (assigneeIds != null) {
+				for (int i = 0; i < assigneeIds.length; i++) {
 					httpInvoker.parameter(
-						"assigneeUserIds", String.valueOf(assigneeUserIds[i]));
+						"assigneeIds", String.valueOf(assigneeIds[i]));
 				}
 			}
 

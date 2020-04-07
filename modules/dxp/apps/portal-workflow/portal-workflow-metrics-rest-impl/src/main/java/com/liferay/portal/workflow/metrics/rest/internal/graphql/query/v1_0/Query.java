@@ -152,12 +152,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstances(assigneeUserIds: ___, dateEnd: ___, dateStart: ___, page: ___, pageSize: ___, processId: ___, slaStatuses: ___, statuses: ___, taskKeys: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstances(assigneeIds: ___, dateEnd: ___, dateStart: ___, page: ___, pageSize: ___, processId: ___, slaStatuses: ___, statuses: ___, taskKeys: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public InstancePage processInstances(
 			@GraphQLName("processId") Long processId,
-			@GraphQLName("assigneeUserIds") Long[] assigneeUserIds,
+			@GraphQLName("assigneeIds") Long[] assigneeIds,
 			@GraphQLName("dateEnd") Date dateEnd,
 			@GraphQLName("dateStart") Date dateStart,
 			@GraphQLName("slaStatuses") String[] slaStatuses,
@@ -172,14 +172,14 @@ public class Query {
 			this::_populateResourceContext,
 			instanceResource -> new InstancePage(
 				instanceResource.getProcessInstancesPage(
-					processId, assigneeUserIds, dateEnd, dateStart, slaStatuses,
+					processId, assigneeIds, dateEnd, dateStart, slaStatuses,
 					statuses, taskKeys, Pagination.of(page, pageSize))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstance(instanceId: ___, processId: ___){assetTitle, assetType, assigneeUsers, creatorUser, dateCompletion, dateCreated, id, processId, slaResults, slaStatus, status, taskNames, transitions}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstance(instanceId: ___, processId: ___){assetTitle, assetType, assignees, creator, dateCompletion, dateCreated, id, processId, slaResults, slaStatus, status, taskNames, transitions}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Instance processInstance(

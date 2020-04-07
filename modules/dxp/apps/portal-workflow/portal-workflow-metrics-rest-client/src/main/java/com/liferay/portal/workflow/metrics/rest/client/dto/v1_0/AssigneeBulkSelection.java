@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.client.dto.v1_0;
 
 import com.liferay.portal.workflow.metrics.rest.client.function.UnsafeSupplier;
-import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.AssigneeUserBulkSelectionSerDes;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.AssigneeBulkSelectionSerDes;
 
 import java.util.Date;
 import java.util.Objects;
@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class AssigneeUserBulkSelection implements Cloneable {
+public class AssigneeBulkSelection implements Cloneable {
 
 	public Boolean getCompleted() {
 		return completed;
@@ -177,8 +177,8 @@ public class AssigneeUserBulkSelection implements Cloneable {
 	protected String[] taskKeys;
 
 	@Override
-	public AssigneeUserBulkSelection clone() throws CloneNotSupportedException {
-		return (AssigneeUserBulkSelection)super.clone();
+	public AssigneeBulkSelection clone() throws CloneNotSupportedException {
+		return (AssigneeBulkSelection)super.clone();
 	}
 
 	@Override
@@ -187,14 +187,14 @@ public class AssigneeUserBulkSelection implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof AssigneeUserBulkSelection)) {
+		if (!(object instanceof AssigneeBulkSelection)) {
 			return false;
 		}
 
-		AssigneeUserBulkSelection assigneeUserBulkSelection =
-			(AssigneeUserBulkSelection)object;
+		AssigneeBulkSelection assigneeBulkSelection =
+			(AssigneeBulkSelection)object;
 
-		return Objects.equals(toString(), assigneeUserBulkSelection.toString());
+		return Objects.equals(toString(), assigneeBulkSelection.toString());
 	}
 
 	@Override
@@ -205,7 +205,7 @@ public class AssigneeUserBulkSelection implements Cloneable {
 	}
 
 	public String toString() {
-		return AssigneeUserBulkSelectionSerDes.toJSON(this);
+		return AssigneeBulkSelectionSerDes.toJSON(this);
 	}
 
 }

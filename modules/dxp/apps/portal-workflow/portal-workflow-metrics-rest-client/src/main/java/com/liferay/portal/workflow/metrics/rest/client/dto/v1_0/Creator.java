@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.client.dto.v1_0;
 
 import com.liferay.portal.workflow.metrics.rest.client.function.UnsafeSupplier;
-import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.CreatorUserSerDes;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.CreatorSerDes;
 
 import java.util.Objects;
 
@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class CreatorUser implements Cloneable {
+public class Creator implements Cloneable {
 
 	public Long getId() {
 		return id;
@@ -67,8 +67,8 @@ public class CreatorUser implements Cloneable {
 	protected String name;
 
 	@Override
-	public CreatorUser clone() throws CloneNotSupportedException {
-		return (CreatorUser)super.clone();
+	public Creator clone() throws CloneNotSupportedException {
+		return (Creator)super.clone();
 	}
 
 	@Override
@@ -77,13 +77,13 @@ public class CreatorUser implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof CreatorUser)) {
+		if (!(object instanceof Creator)) {
 			return false;
 		}
 
-		CreatorUser creatorUser = (CreatorUser)object;
+		Creator creator = (Creator)object;
 
-		return Objects.equals(toString(), creatorUser.toString());
+		return Objects.equals(toString(), creator.toString());
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class CreatorUser implements Cloneable {
 	}
 
 	public String toString() {
-		return CreatorUserSerDes.toJSON(this);
+		return CreatorSerDes.toJSON(this);
 	}
 
 }

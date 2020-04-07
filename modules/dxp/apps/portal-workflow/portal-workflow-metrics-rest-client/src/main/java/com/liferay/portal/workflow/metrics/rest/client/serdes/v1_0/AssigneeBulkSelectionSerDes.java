@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeUserBulkSelection;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -33,28 +33,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class AssigneeUserBulkSelectionSerDes {
+public class AssigneeBulkSelectionSerDes {
 
-	public static AssigneeUserBulkSelection toDTO(String json) {
-		AssigneeUserBulkSelectionJSONParser
-			assigneeUserBulkSelectionJSONParser =
-				new AssigneeUserBulkSelectionJSONParser();
+	public static AssigneeBulkSelection toDTO(String json) {
+		AssigneeBulkSelectionJSONParser assigneeBulkSelectionJSONParser =
+			new AssigneeBulkSelectionJSONParser();
 
-		return assigneeUserBulkSelectionJSONParser.parseToDTO(json);
+		return assigneeBulkSelectionJSONParser.parseToDTO(json);
 	}
 
-	public static AssigneeUserBulkSelection[] toDTOs(String json) {
-		AssigneeUserBulkSelectionJSONParser
-			assigneeUserBulkSelectionJSONParser =
-				new AssigneeUserBulkSelectionJSONParser();
+	public static AssigneeBulkSelection[] toDTOs(String json) {
+		AssigneeBulkSelectionJSONParser assigneeBulkSelectionJSONParser =
+			new AssigneeBulkSelectionJSONParser();
 
-		return assigneeUserBulkSelectionJSONParser.parseToDTOs(json);
+		return assigneeBulkSelectionJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(
-		AssigneeUserBulkSelection assigneeUserBulkSelection) {
-
-		if (assigneeUserBulkSelection == null) {
+	public static String toJSON(AssigneeBulkSelection assigneeBulkSelection) {
+		if (assigneeBulkSelection == null) {
 			return "null";
 		}
 
@@ -65,17 +61,17 @@ public class AssigneeUserBulkSelectionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (assigneeUserBulkSelection.getCompleted() != null) {
+		if (assigneeBulkSelection.getCompleted() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"completed\": ");
 
-			sb.append(assigneeUserBulkSelection.getCompleted());
+			sb.append(assigneeBulkSelection.getCompleted());
 		}
 
-		if (assigneeUserBulkSelection.getDateEnd() != null) {
+		if (assigneeBulkSelection.getDateEnd() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -86,12 +82,12 @@ public class AssigneeUserBulkSelectionSerDes {
 
 			sb.append(
 				liferayToJSONDateFormat.format(
-					assigneeUserBulkSelection.getDateEnd()));
+					assigneeBulkSelection.getDateEnd()));
 
 			sb.append("\"");
 		}
 
-		if (assigneeUserBulkSelection.getDateStart() != null) {
+		if (assigneeBulkSelection.getDateStart() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -102,12 +98,12 @@ public class AssigneeUserBulkSelectionSerDes {
 
 			sb.append(
 				liferayToJSONDateFormat.format(
-					assigneeUserBulkSelection.getDateStart()));
+					assigneeBulkSelection.getDateStart()));
 
 			sb.append("\"");
 		}
 
-		if (assigneeUserBulkSelection.getInstanceIds() != null) {
+		if (assigneeBulkSelection.getInstanceIds() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -116,14 +112,12 @@ public class AssigneeUserBulkSelectionSerDes {
 
 			sb.append("[");
 
-			for (int i = 0;
-				 i < assigneeUserBulkSelection.getInstanceIds().length; i++) {
+			for (int i = 0; i < assigneeBulkSelection.getInstanceIds().length;
+				 i++) {
 
-				sb.append(assigneeUserBulkSelection.getInstanceIds()[i]);
+				sb.append(assigneeBulkSelection.getInstanceIds()[i]);
 
-				if ((i + 1) <
-						assigneeUserBulkSelection.getInstanceIds().length) {
-
+				if ((i + 1) < assigneeBulkSelection.getInstanceIds().length) {
 					sb.append(", ");
 				}
 			}
@@ -131,7 +125,7 @@ public class AssigneeUserBulkSelectionSerDes {
 			sb.append("]");
 		}
 
-		if (assigneeUserBulkSelection.getKeywords() != null) {
+		if (assigneeBulkSelection.getKeywords() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -140,12 +134,12 @@ public class AssigneeUserBulkSelectionSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(assigneeUserBulkSelection.getKeywords()));
+			sb.append(_escape(assigneeBulkSelection.getKeywords()));
 
 			sb.append("\"");
 		}
 
-		if (assigneeUserBulkSelection.getRoleIds() != null) {
+		if (assigneeBulkSelection.getRoleIds() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -154,12 +148,12 @@ public class AssigneeUserBulkSelectionSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < assigneeUserBulkSelection.getRoleIds().length;
+			for (int i = 0; i < assigneeBulkSelection.getRoleIds().length;
 				 i++) {
 
-				sb.append(assigneeUserBulkSelection.getRoleIds()[i]);
+				sb.append(assigneeBulkSelection.getRoleIds()[i]);
 
-				if ((i + 1) < assigneeUserBulkSelection.getRoleIds().length) {
+				if ((i + 1) < assigneeBulkSelection.getRoleIds().length) {
 					sb.append(", ");
 				}
 			}
@@ -167,7 +161,7 @@ public class AssigneeUserBulkSelectionSerDes {
 			sb.append("]");
 		}
 
-		if (assigneeUserBulkSelection.getTaskKeys() != null) {
+		if (assigneeBulkSelection.getTaskKeys() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -176,16 +170,16 @@ public class AssigneeUserBulkSelectionSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < assigneeUserBulkSelection.getTaskKeys().length;
+			for (int i = 0; i < assigneeBulkSelection.getTaskKeys().length;
 				 i++) {
 
 				sb.append("\"");
 
-				sb.append(_escape(assigneeUserBulkSelection.getTaskKeys()[i]));
+				sb.append(_escape(assigneeBulkSelection.getTaskKeys()[i]));
 
 				sb.append("\"");
 
-				if ((i + 1) < assigneeUserBulkSelection.getTaskKeys().length) {
+				if ((i + 1) < assigneeBulkSelection.getTaskKeys().length) {
 					sb.append(", ");
 				}
 			}
@@ -199,17 +193,16 @@ public class AssigneeUserBulkSelectionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		AssigneeUserBulkSelectionJSONParser
-			assigneeUserBulkSelectionJSONParser =
-				new AssigneeUserBulkSelectionJSONParser();
+		AssigneeBulkSelectionJSONParser assigneeBulkSelectionJSONParser =
+			new AssigneeBulkSelectionJSONParser();
 
-		return assigneeUserBulkSelectionJSONParser.parseToMap(json);
+		return assigneeBulkSelectionJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		AssigneeUserBulkSelection assigneeUserBulkSelection) {
+		AssigneeBulkSelection assigneeBulkSelection) {
 
-		if (assigneeUserBulkSelection == null) {
+		if (assigneeBulkSelection == null) {
 			return null;
 		}
 
@@ -218,121 +211,119 @@ public class AssigneeUserBulkSelectionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (assigneeUserBulkSelection.getCompleted() == null) {
+		if (assigneeBulkSelection.getCompleted() == null) {
 			map.put("completed", null);
 		}
 		else {
 			map.put(
 				"completed",
-				String.valueOf(assigneeUserBulkSelection.getCompleted()));
+				String.valueOf(assigneeBulkSelection.getCompleted()));
 		}
 
 		map.put(
 			"dateEnd",
-			liferayToJSONDateFormat.format(
-				assigneeUserBulkSelection.getDateEnd()));
+			liferayToJSONDateFormat.format(assigneeBulkSelection.getDateEnd()));
 
 		map.put(
 			"dateStart",
 			liferayToJSONDateFormat.format(
-				assigneeUserBulkSelection.getDateStart()));
+				assigneeBulkSelection.getDateStart()));
 
-		if (assigneeUserBulkSelection.getInstanceIds() == null) {
+		if (assigneeBulkSelection.getInstanceIds() == null) {
 			map.put("instanceIds", null);
 		}
 		else {
 			map.put(
 				"instanceIds",
-				String.valueOf(assigneeUserBulkSelection.getInstanceIds()));
+				String.valueOf(assigneeBulkSelection.getInstanceIds()));
 		}
 
-		if (assigneeUserBulkSelection.getKeywords() == null) {
+		if (assigneeBulkSelection.getKeywords() == null) {
 			map.put("keywords", null);
 		}
 		else {
 			map.put(
 				"keywords",
-				String.valueOf(assigneeUserBulkSelection.getKeywords()));
+				String.valueOf(assigneeBulkSelection.getKeywords()));
 		}
 
-		if (assigneeUserBulkSelection.getRoleIds() == null) {
+		if (assigneeBulkSelection.getRoleIds() == null) {
 			map.put("roleIds", null);
 		}
 		else {
 			map.put(
-				"roleIds",
-				String.valueOf(assigneeUserBulkSelection.getRoleIds()));
+				"roleIds", String.valueOf(assigneeBulkSelection.getRoleIds()));
 		}
 
-		if (assigneeUserBulkSelection.getTaskKeys() == null) {
+		if (assigneeBulkSelection.getTaskKeys() == null) {
 			map.put("taskKeys", null);
 		}
 		else {
 			map.put(
 				"taskKeys",
-				String.valueOf(assigneeUserBulkSelection.getTaskKeys()));
+				String.valueOf(assigneeBulkSelection.getTaskKeys()));
 		}
 
 		return map;
 	}
 
-	public static class AssigneeUserBulkSelectionJSONParser
-		extends BaseJSONParser<AssigneeUserBulkSelection> {
+	public static class AssigneeBulkSelectionJSONParser
+		extends BaseJSONParser<AssigneeBulkSelection> {
 
 		@Override
-		protected AssigneeUserBulkSelection createDTO() {
-			return new AssigneeUserBulkSelection();
+		protected AssigneeBulkSelection createDTO() {
+			return new AssigneeBulkSelection();
 		}
 
 		@Override
-		protected AssigneeUserBulkSelection[] createDTOArray(int size) {
-			return new AssigneeUserBulkSelection[size];
+		protected AssigneeBulkSelection[] createDTOArray(int size) {
+			return new AssigneeBulkSelection[size];
 		}
 
 		@Override
 		protected void setField(
-			AssigneeUserBulkSelection assigneeUserBulkSelection,
+			AssigneeBulkSelection assigneeBulkSelection,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "completed")) {
 				if (jsonParserFieldValue != null) {
-					assigneeUserBulkSelection.setCompleted(
+					assigneeBulkSelection.setCompleted(
 						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateEnd")) {
 				if (jsonParserFieldValue != null) {
-					assigneeUserBulkSelection.setDateEnd(
+					assigneeBulkSelection.setDateEnd(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateStart")) {
 				if (jsonParserFieldValue != null) {
-					assigneeUserBulkSelection.setDateStart(
+					assigneeBulkSelection.setDateStart(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "instanceIds")) {
 				if (jsonParserFieldValue != null) {
-					assigneeUserBulkSelection.setInstanceIds(
+					assigneeBulkSelection.setInstanceIds(
 						toLongs((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "keywords")) {
 				if (jsonParserFieldValue != null) {
-					assigneeUserBulkSelection.setKeywords(
+					assigneeBulkSelection.setKeywords(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "roleIds")) {
 				if (jsonParserFieldValue != null) {
-					assigneeUserBulkSelection.setRoleIds(
+					assigneeBulkSelection.setRoleIds(
 						toLongs((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "taskKeys")) {
 				if (jsonParserFieldValue != null) {
-					assigneeUserBulkSelection.setTaskKeys(
+					assigneeBulkSelection.setTaskKeys(
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}

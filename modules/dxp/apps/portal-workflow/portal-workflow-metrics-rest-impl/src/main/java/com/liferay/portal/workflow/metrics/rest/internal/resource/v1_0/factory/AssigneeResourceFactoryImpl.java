@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeUserResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeResource;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -50,31 +50,30 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Rafael Praxedes
  * @generated
  */
-@Component(immediate = true, service = AssigneeUserResource.Factory.class)
+@Component(immediate = true, service = AssigneeResource.Factory.class)
 @Generated("")
-public class AssigneeUserResourceFactoryImpl
-	implements AssigneeUserResource.Factory {
+public class AssigneeResourceFactoryImpl implements AssigneeResource.Factory {
 
 	@Override
-	public AssigneeUserResource.Builder create() {
-		return new AssigneeUserResource.Builder() {
+	public AssigneeResource.Builder create() {
+		return new AssigneeResource.Builder() {
 
 			@Override
-			public AssigneeUserResource build() {
+			public AssigneeResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (AssigneeUserResource)ProxyUtil.newProxyInstance(
-					AssigneeUserResource.class.getClassLoader(),
-					new Class<?>[] {AssigneeUserResource.class},
+				return (AssigneeResource)ProxyUtil.newProxyInstance(
+					AssigneeResource.class.getClassLoader(),
+					new Class<?>[] {AssigneeResource.class},
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _preferredLocale, _user));
 			}
 
 			@Override
-			public AssigneeUserResource.Builder checkPermissions(
+			public AssigneeResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -83,7 +82,7 @@ public class AssigneeUserResourceFactoryImpl
 			}
 
 			@Override
-			public AssigneeUserResource.Builder httpServletRequest(
+			public AssigneeResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -92,7 +91,7 @@ public class AssigneeUserResourceFactoryImpl
 			}
 
 			@Override
-			public AssigneeUserResource.Builder preferredLocale(
+			public AssigneeResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -101,7 +100,7 @@ public class AssigneeUserResourceFactoryImpl
 			}
 
 			@Override
-			public AssigneeUserResource.Builder user(User user) {
+			public AssigneeResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -117,12 +116,12 @@ public class AssigneeUserResourceFactoryImpl
 
 	@Activate
 	protected void activate() {
-		AssigneeUserResource.FactoryHolder.factory = this;
+		AssigneeResource.FactoryHolder.factory = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		AssigneeUserResource.FactoryHolder.factory = null;
+		AssigneeResource.FactoryHolder.factory = null;
 	}
 
 	private Object _invoke(
@@ -147,27 +146,27 @@ public class AssigneeUserResourceFactoryImpl
 				_liberalPermissionCheckerFactory.create(user));
 		}
 
-		AssigneeUserResource assigneeUserResource =
+		AssigneeResource assigneeResource =
 			_componentServiceObjects.getService();
 
-		assigneeUserResource.setContextAcceptLanguage(
+		assigneeResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		assigneeUserResource.setContextCompany(company);
+		assigneeResource.setContextCompany(company);
 
-		assigneeUserResource.setContextHttpServletRequest(httpServletRequest);
-		assigneeUserResource.setContextUser(user);
+		assigneeResource.setContextHttpServletRequest(httpServletRequest);
+		assigneeResource.setContextUser(user);
 
 		try {
-			return method.invoke(assigneeUserResource, arguments);
+			return method.invoke(assigneeResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(assigneeUserResource);
+			_componentServiceObjects.ungetService(assigneeResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -179,8 +178,7 @@ public class AssigneeUserResourceFactoryImpl
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<AssigneeUserResource>
-		_componentServiceObjects;
+	private ComponentServiceObjects<AssigneeResource> _componentServiceObjects;
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;

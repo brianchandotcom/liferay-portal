@@ -4,9 +4,6 @@ components:
             description:
                 https://schema.org/Assignee
             properties:
-                durationTaskAvg:
-                    format: int64
-                    type: integer
                 id:
                     description:
                         The user's ID.
@@ -24,43 +21,15 @@ components:
                         The user's full name.
                     readOnly: true
                     type: string
-                onTimeTaskCount:
-                    format: int64
-                    type: integer
-                overdueTaskCount:
-                    format: int64
-                    type: integer
-                taskCount:
-                    format: int64
-                    type: integer
             type: object
         AssigneeBulkSelection:
             description:
                 https://schema.org/AssigneeBulkSelection
             properties:
-                completed:
-                    type: boolean
-                dateEnd:
-                    format: date-time
-                    type: string
-                dateStart:
-                    format: date-time
-                    type: string
                 instanceIds:
                     items:
                         format: int64
                         type: integer
-                    type: array
-                keywords:
-                    type: string
-                roleIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                taskKeys:
-                    items:
-                        type: string
                     type: array
             type: object
         Calendar:
@@ -362,6 +331,54 @@ components:
                 name:
                     readOnly: true
                     type: string
+            type: object
+        AssigneeMetric:
+            description:
+                https://schema.org/AssigneeMetric
+            properties:
+                assignee:
+                    $ref: "#/components/schemas/Assignee"
+                durationTaskAvg:
+                    format: int64
+                    type: integer
+                onTimeTaskCount:
+                    format: int64
+                    type: integer
+                overdueTaskCount:
+                    format: int64
+                    type: integer
+                taskCount:
+                    format: int64
+                    type: integer
+            type: object
+        AssigneeMetricBulkSelection:
+            description:
+                https://schema.org/AssigneeMetricBulkSelection
+            properties:
+                completed:
+                    type: boolean
+                dateEnd:
+                    format: date-time
+                    type: string
+                dateStart:
+                    format: date-time
+                    type: string
+                instanceIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                keywords:
+                    type: string
+                roleIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                taskKeys:
+                    items:
+                        type: string
+                    type: array
             type: object
 info:
     description:

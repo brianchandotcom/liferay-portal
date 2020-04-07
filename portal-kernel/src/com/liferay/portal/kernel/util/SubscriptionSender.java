@@ -360,6 +360,16 @@ public class SubscriptionSender implements Serializable {
 
 	public void setContextAttribute(String key, EscapableObject<String> value) {
 		_context.put(key, value);
+
+		_context.put(
+			_getFilterKey(key, "attr"),
+			new HtmlAtributeEscapableObject<>(value.getOriginalValue(), true));
+		_context.put(
+			_getFilterKey(key, "html"),
+			new HtmlEscapableObject<>(value.getOriginalValue(), true));
+		_context.put(
+			_getFilterKey(key, "uri"),
+			new UriEscapableObject<>(value.getOriginalValue(), true));
 	}
 
 	public void setContextAttribute(String key, Object value) {
@@ -1036,6 +1046,19 @@ public class SubscriptionSender implements Serializable {
 			_getBasicMailTemplateContext(locale));
 	}
 
+	private String _getFilterKey(String key, String escapeMode) {
+		int i = key.lastIndexOf("$]");
+
+		if (i != (key.length() - 2)) {
+			throw new IllegalArgumentException(
+				"Subscription template key is not syntactically correct: " +
+					key);
+		}
+
+		return StringBundler.concat(
+			key.substring(0, i), StringPool.PIPE, escapeMode, "$]");
+	}
+
 	private <T> List<Hook<T>> _getHooks(Hook.Event<T> event) {
 		return (List)_hooks.computeIfAbsent(event, key -> new ArrayList<>());
 	}
@@ -1120,5 +1143,40 @@ public class SubscriptionSender implements Serializable {
 	private final List<ObjectValuePair<String, String>>
 		_runtimeSubscribersOVPs = new ArrayList<>();
 	private final Set<String> _sentEmailAddresses = new HashSet<>();
+
+	private static class HtmlAtributeEscapableObject<T>
+		extends EscapableObject<T> {
+
+		public HtmlAtributeEscapableObject(T originalValue) {
+			super(originalValue);
+		}
+
+		public HtmlAtributeEscapableObject(T originalValue, boolean escape) {
+			super(originalValue, escape);
+		}
+
+		@Override
+		protected String escape(T value) {
+			return HtmlUtil.escapeAttribute(String.valueOf(value));
+		}
+
+	}
+
+	private static class UriEscapableObject<T> extends EscapableObject<T> {
+
+		public UriEscapableObject(T originalValue) {
+			super(originalValue);
+		}
+
+		public UriEscapableObject(T originalValue, boolean escape) {
+			super(originalValue, escape);
+		}
+
+		@Override
+		protected String escape(T value) {
+			return URLCodec.encodeURL(String.valueOf(value));
+		}
+
+	}
 
 }

@@ -609,7 +609,7 @@ paths:
                     description:
                         ""
             tags: ["Instance"]
-    "/processes/{processId}/metric":
+    "/processes/{processId}/metrics":
         get:
             operationId: getProcessMetric
             parameters:

@@ -37,7 +37,7 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 		if (!hasColumn("MBMessage", "urlSubject")) {
 			alter(
 				MBMessageTable.class,
-				new AlterColumnType("urlSubject", "VARCHAR(255) null"));
+				new AlterTableAddColumn("urlSubject", "VARCHAR(255) null"));
 		}
 
 		_populateUrlSubject();

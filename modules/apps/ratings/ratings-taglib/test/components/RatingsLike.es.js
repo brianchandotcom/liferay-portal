@@ -145,13 +145,13 @@ describe('RatingsLike', () => {
 		describe('and the user clicks like', () => {
 			let LikeButton;
 
-			beforeEach(() => {
+			beforeEach(async () => {
 				LikeButton = renderComponent({
 					...defaultProps,
 					positiveVotes: 3,
 				}).getByRole('button');
 
-				act(() => {
+				await act(async () => {
 					fireEvent.click(LikeButton);
 				});
 			});

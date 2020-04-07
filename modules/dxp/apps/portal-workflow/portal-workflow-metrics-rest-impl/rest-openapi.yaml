@@ -489,18 +489,6 @@ paths:
                   schema:
                       format: int64
                       type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
             requestBody:
                 content:
                     application/json:
@@ -968,3 +956,49 @@ paths:
                     description:
                         ""
             tags: ["TimeRange"]
+    "/processes/{processId}/assignees/metrics":
+        post:
+            operationId: postProcessAssigneeMetricsPage
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/AssigneeMetricBulkSelection"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/AssigneeMetricBulkSelection"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssigneeMetric"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssigneeMetric"
+                                type: array
+                    description:
+                        ""
+            tags: ["AssigneeMetric"]

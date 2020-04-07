@@ -82,11 +82,9 @@ export default function Topper({children, item, itemRef, layoutData}) {
 	const toControlsId = useToControlsId();
 
 	const {
-		canDrop,
 		drag,
 		drop,
 		isDragging,
-		isOver,
 		state: {
 			dropItem,
 			dropTargetItemId,
@@ -119,8 +117,6 @@ export default function Topper({children, item, itemRef, layoutData}) {
 	]);
 	const showRemoveButton =
 		useSelector(selectCanUpdateLayoutContent) && itemIsRemovable;
-
-	const childrenElement = children({canDrop, isOver});
 
 	const commentsPanelId = config.sidebarPanels.comments.sidebarPanelId;
 
@@ -323,10 +319,10 @@ export default function Topper({children, item, itemRef, layoutData}) {
 
 			<div className="page-editor__topper__content" ref={drop}>
 				{dataAdvice
-					? React.cloneElement(childrenElement, {
+					? React.cloneElement(children, {
 							data: {'data-advice': dataAdvice},
 					  })
-					: childrenElement}
+					: children}
 			</div>
 		</div>
 	);

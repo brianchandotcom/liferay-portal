@@ -101,7 +101,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 
 	return canUpdateLayoutContent ? (
 		<Topper item={item} itemRef={ref} layoutData={layoutData}>
-			{() => content}
+			{content}
 		</Topper>
 	) : (
 		content

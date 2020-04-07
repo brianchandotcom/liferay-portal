@@ -99,7 +99,7 @@ const ColumnWithControls = React.forwardRef(
 
 		return canUpdateLayoutContent ? (
 			<TopperEmpty item={item} layoutData={layoutData}>
-				{() => content}
+				{content}
 			</TopperEmpty>
 		) : (
 			content

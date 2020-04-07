@@ -38,23 +38,21 @@ import TopperEmpty from '../TopperEmpty';
 const Root = React.forwardRef(({children, item, layoutData}, ref) => {
 	return (
 		<TopperEmpty item={item} layoutData={layoutData}>
-			{() => (
-				<div className={classNames('page-editor__root')} ref={ref}>
-					{React.Children.count(children) ? (
-						children
-					) : (
-						<div
-							className={classNames(
-								'page-editor__no-fragments-message'
-							)}
-						>
-							<div className="page-editor__no-fragments-message__title">
-								{Liferay.Language.get('place-fragments-here')}
-							</div>
+			<div className={classNames('page-editor__root')} ref={ref}>
+				{React.Children.count(children) ? (
+					children
+				) : (
+					<div
+						className={classNames(
+							'page-editor__no-fragments-message'
+						)}
+					>
+						<div className="page-editor__no-fragments-message__title">
+							{Liferay.Language.get('place-fragments-here')}
 						</div>
-					)}
-				</div>
-			)}
+					</div>
+				)}
+			</div>
 		</TopperEmpty>
 	);
 });

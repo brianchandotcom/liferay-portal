@@ -239,7 +239,7 @@ const RowWithControls = React.forwardRef(
 
 		return canUpdateLayoutContent ? (
 			<Topper item={item} itemRef={ref} layoutData={layoutData}>
-				{() => content}
+				{content}
 			</Topper>
 		) : (
 			content

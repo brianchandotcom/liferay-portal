@@ -42,7 +42,7 @@ const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
 
 	return canUpdateLayoutContent ? (
 		<Topper active item={item} itemRef={ref} layoutData={layoutData}>
-			{() => content}
+			{content}
 		</Topper>
 	) : (
 		content

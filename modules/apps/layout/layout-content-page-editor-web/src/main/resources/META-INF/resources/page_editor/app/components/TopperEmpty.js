@@ -33,10 +33,8 @@ export default function TopperEmpty({children, item, layoutData}) {
 	const toControlsId = useToControlsId();
 
 	const {
-		canDrop,
 		drop,
 		isDragging,
-		isOver,
 		state: {
 			dropItem,
 			dropTargetItemId,
@@ -56,12 +54,8 @@ export default function TopperEmpty({children, item, layoutData}) {
 			? targetPositionWithoutMiddle
 			: targetPositionWithMiddle;
 
-	const childrenElement = children({canDrop, isOver});
-
-	const isFragment = childrenElement.type === React.Fragment;
-	const realChildren = isFragment
-		? childrenElement.props.children
-		: childrenElement;
+	const isFragment = children.type === React.Fragment;
+	const realChildren = isFragment ? children.props.children : children;
 
 	const isDraggableInPosition = position =>
 		targetPosition === position &&

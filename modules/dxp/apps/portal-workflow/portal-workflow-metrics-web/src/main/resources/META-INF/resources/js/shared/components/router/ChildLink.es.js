@@ -10,36 +10,22 @@
  */
 
 import React from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 import {useRouter} from '../../hooks/useRouter.es';
-import {parse, stringify} from './queryString.es';
-
-const BackLink = ({children, ...otherProps}) => {
-	const {backPath} = useParams();
-
-	return (
-		<Link {...otherProps} to={backPath}>
-			{children}
-		</Link>
-	);
-};
-
-const BackRedirect = () => {
-	const {backPath} = useParams();
-
-	return <Redirect to={backPath} />;
-};
+import {stringify} from './queryString.es';
 
 const ChildLink = ({children, query, to, ...otherProps}) => {
-	const {currentPath} = useParams();
+	const {
+		location: {pathname, search},
+	} = useRouter();
 
 	return (
 		<Link
 			{...otherProps}
 			to={{
 				pathname: to,
-				search: stringify({backPath: currentPath, ...query}),
+				search: stringify({backPath: `${pathname}${search}`, ...query}),
 			}}
 		>
 			{children}
@@ -47,14 +33,4 @@ const ChildLink = ({children, query, to, ...otherProps}) => {
 	);
 };
 
-const useParams = () => {
-	const {
-		location: {pathname, search},
-	} = useRouter();
-
-	const {backPath} = parse(search);
-
-	return {backPath, currentPath: `${pathname}${search}`};
-};
-
-export {BackLink, BackRedirect, ChildLink};
+export default ChildLink;

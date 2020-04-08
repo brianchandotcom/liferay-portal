@@ -13,8 +13,8 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import React, {useCallback} from 'react';
 
 import {useRouter} from '../../hooks/useRouter.es';
+import ChildLink from '../router/ChildLink.es';
 import {getPathname} from '../router/routerUtil.es';
-import {ChildLink} from '../router/routerWrapper.es';
 
 const Item = ({active, name, params, path}) => {
 	return (

@@ -15,7 +15,7 @@ import ClayIcon from '@clayui/icon';
 import React, {useMemo, useState} from 'react';
 
 import Portal from '../portal/Portal.es';
-import {ChildLink} from '../router/routerWrapper.es';
+import ChildLink from '../router/ChildLink.es';
 
 const HeaderKebab = ({kebabItems = []}) => {
 	const [active, setActive] = useState(false);

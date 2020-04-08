@@ -13,7 +13,7 @@ import ClayIcon from '@clayui/icon';
 import React, {useContext, useMemo, useState} from 'react';
 
 import filterConstants from '../../../shared/components/filter/util/filterConstants.es';
-import {ChildLink} from '../../../shared/components/router/routerWrapper.es';
+import ChildLink from '../../../shared/components/router/ChildLink.es';
 import {formatNumber} from '../../../shared/util/numeral.es';
 import {getPercentage} from '../../../shared/util/util.es';
 import {AppContext} from '../../AppContext.es';

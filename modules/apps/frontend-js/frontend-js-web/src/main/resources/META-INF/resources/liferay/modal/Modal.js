@@ -52,7 +52,7 @@ const Modal = ({buttons, id, onClose, size, title, url}) => {
 		return iframeURL.toString();
 	};
 
-	const onButtonClick = type => {
+	const onButtonClick = ({formId, type}) => {
 		if (type === 'cancel') {
 			processClose();
 		}
@@ -60,12 +60,25 @@ const Modal = ({buttons, id, onClose, size, title, url}) => {
 			const iframe = document.querySelector('.liferay-modal iframe');
 
 			if (iframe) {
-				const form = iframe.contentWindow.document.querySelector(
-					'form'
-				);
+				const iframeDocument = iframe.contentWindow.document;
 
-				if (form) {
-					form.submit();
+				const forms = iframeDocument.querySelectorAll('form');
+
+				if (forms.length !== 1) {
+					console.warn('There should be one form within a modal.');
+				}
+
+				if (formId) {
+					const form = iframeDocument.getElementById(formId);
+
+					if (form) {
+						form.submit();
+					}
+				}
+				else {
+					if (forms.length >= 1) {
+						forms[0].submit();
+					}
 				}
 			}
 		}
@@ -96,7 +109,13 @@ const Modal = ({buttons, id, onClose, size, title, url}) => {
 								<ClayButton.Group spaced>
 									{buttons.map(
 										(
-											{displayType, id, label, type},
+											{
+												displayType,
+												formId,
+												id,
+												label,
+												type,
+											},
 											index
 										) => (
 											<ClayButton
@@ -104,7 +123,10 @@ const Modal = ({buttons, id, onClose, size, title, url}) => {
 												id={id}
 												key={index}
 												onClick={() => {
-													onButtonClick(type);
+													onButtonClick({
+														formId,
+														type,
+													});
 												}}
 												type={
 													type === 'cancel'
@@ -135,6 +157,7 @@ Modal.propTypes = {
 				'secondary',
 				'unstyled',
 			]),
+			formId: PropTypes.string,
 			id: PropTypes.string,
 			label: PropTypes.string,
 			type: PropTypes.oneOf(['cancel', 'submit']),

@@ -105,11 +105,7 @@ definition {
 			site = "false",
 			title = "Digital Transformation or Digital Experience?");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
 
@@ -136,11 +132,7 @@ definition {
 			site = "false",
 			title = "Digital Transformation or Digital Experience?");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
 
@@ -151,11 +143,7 @@ definition {
 			locator1 = "AssetCategorization#TAG",
 			value1 = "dxp");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		WebContent.deleteCP(
 			siteURLKey = "test-depot-name",
@@ -243,11 +231,7 @@ definition {
 			site = "false",
 			title = "Digital Transformation or Digital Experience?");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
 

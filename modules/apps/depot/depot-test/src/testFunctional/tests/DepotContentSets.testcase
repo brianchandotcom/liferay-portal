@@ -293,11 +293,7 @@ definition {
 
 		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		NavItem.gotoStructures();
 
@@ -491,11 +487,7 @@ definition {
 			dmDocumentFile = "Document_2.doc",
 			dmDocumentTitle = "Document Title");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -619,11 +611,7 @@ definition {
 	@description = "This ensures that the asset can be removed in Collections."
 	@priority = "4"
 	test RemoveAssetFromContentSet {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		for (var i : list "1,2,3") {
 			WebContentNavigator.gotoAddCP();
@@ -705,11 +693,7 @@ definition {
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document Title");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		for (var i : list "1,2,3") {
 			WebContentNavigator.gotoAddCP();
@@ -1039,11 +1023,7 @@ definition {
 	@description = "This ensures that the web content created by the structure can be selected via searching for the corresponding structure name."
 	@priority = "5"
 	test SelectWebContentWithStructure {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		NavItem.gotoStructures();
 
@@ -1058,11 +1038,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		for (var i : list "1,2") {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");

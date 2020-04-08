@@ -46,11 +46,7 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		Check(
 			key_webContentTitle = "WC WebContent Title",
@@ -114,11 +110,7 @@ definition {
 	@description = "This ensures that the web content can be deleted after the recycle bin is disabled."
 	@priority = "5"
 	test DeleteWCAfterDisabling {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		ProductMenuHelper.openProductMenu();
 
@@ -143,11 +135,7 @@ definition {
 
 		Depot.configureRecycleBin(recycleBin = "Disabled");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		AssertElementNotPresent(
 			key_category = "Recycle Bin",
@@ -213,11 +201,7 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
@@ -235,11 +219,7 @@ definition {
 			assetRestoreLocation = "Home",
 			assetType = "Web Content Article");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 

@@ -258,11 +258,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		Pause(locator1 = "3000");
 
@@ -274,11 +270,7 @@ definition {
 
 		PortletEntry.publish();
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name 2",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name-2");
 
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 

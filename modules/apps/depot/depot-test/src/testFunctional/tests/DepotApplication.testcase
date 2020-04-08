@@ -540,11 +540,7 @@ definition {
 			applicationList = "Web Content",
 			depotName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 	}

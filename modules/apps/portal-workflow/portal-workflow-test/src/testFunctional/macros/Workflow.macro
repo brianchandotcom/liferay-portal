@@ -1223,6 +1223,12 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
+		if (IsElementNotPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE")) {
+			Navigator.gotoNavTab(navTab = "Assigned to Me");
+
+			Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+		}
+
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK",
 			value1 = "${workflowTask}");

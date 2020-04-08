@@ -69,7 +69,7 @@ export default function Sidebar() {
 
 	let registerPanel;
 
-	if (sidebarPanelId) {
+	if (sidebarPanelId && panel) {
 		registerPanel = register(sidebarPanelId, promise, {app, panel});
 	}
 

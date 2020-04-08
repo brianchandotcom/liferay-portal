@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *	  http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.felix.utils.properties;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 import org.osgi.framework.BundleContext;
 
@@ -34,448 +34,509 @@ import org.osgi.framework.BundleContext;
  */
 public class InterpolationHelper {
 
-    private InterpolationHelper() {
-    }
+	/**
+	 * Perform substitution on a property set
+	 *
+	 * @param properties the property set to perform substitution on
+	 */
+	public static void performSubstitution(Map<String, String> properties) {
+		performSubstitution(properties, (BundleContext)null);
+	}
 
-    private static final char   ESCAPE_CHAR = '\\';
-    private static final String DELIM_START = "${";
-    private static final String DELIM_STOP = "}";
-    private static final String MARKER = "$__";
-    private static final String ENV_PREFIX = "env:";
+	/**
+	 * Perform substitution on a property set
+	 *
+	 * @param properties the property set to perform substitution on
+	 * @param bundleContext The bundle context
+	 */
+	public static void performSubstitution(
+		Map<String, String> properties, BundleContext bundleContext) {
 
-    private static final Pattern ESCAPED_OPENING_CURLY = Pattern.compile("\\\\+\\{");
-    private static final Pattern ESCAPED_CLOSING_CURLY = Pattern.compile("\\\\+\\}");
-    private static final Pattern EXISTING_SUBST_VAR = Pattern.compile(".*\\$\\\\*\\{.*\\}.*");
+		performSubstitution(
+			properties, new BundleContextSubstitutionCallback(bundleContext));
+	}
 
+	/**
+	 * Perform substitution on a property set
+	 *
+	 * @param properties the property set to perform substitution on
+	 * @param substitutionCallback Callback for substituion
+	 */
+	public static void performSubstitution(
+		Map<String, String> properties,
+		SubstitutionCallback substitutionCallback) {
 
-    /**
-     * Callback for substitution
-     */
-    public interface SubstitutionCallback {
+		performSubstitution(properties, substitutionCallback, true, true, true);
+	}
 
-        String getValue(String key);
+	/**
+	 * Perform substitution on a property set
+	 *
+	 * @param properties the property set to perform substitution on
+	 * @param callback the callback to obtain substitution values
+	 * @param substituteFromConfig If substitute from configuration
+	 * @param substituteFromSystemProperties If substitute from system properties
+	 * @param defaultsToEmptyString sets an empty string if a replacement value is not found, leaves intact otherwise
+	 */
+	public static void performSubstitution(
+		Map<String, String> properties, SubstitutionCallback callback,
+		boolean substituteFromConfig, boolean substituteFromSystemProperties,
+		boolean defaultsToEmptyString) {
 
-    }
+		Map<String, String> map = new HashMap<>(properties);
 
-    /**
-     * Perform substitution on a property set
-     *
-     * @param properties the property set to perform substitution on
-     */
-    public static void performSubstitution(Map<String,String> properties)
-    {
-        performSubstitution(properties, (BundleContext) null);
-    }
+		for (Map.Entry<String, String> entry : properties.entrySet()) {
+			String name = entry.getKey();
 
-    /**
-     * Perform substitution on a property set
-     *
-     * @param properties the property set to perform substitution on
-     * @param context The bundle context
-     */
-    public static void performSubstitution(Map<String,String> properties, BundleContext context)
-    {
-        performSubstitution(properties, new BundleContextSubstitutionCallback(context));
-    }
+			properties.put(
+				name,
+				substVars(
+					entry.getValue(), name, null, map, callback,
+					substituteFromConfig, substituteFromSystemProperties,
+					defaultsToEmptyString));
+		}
+	}
 
-    /**
-     * Perform substitution on a property set
-     *
-     * @param properties the property set to perform substitution on
-     * @param callback Callback for substituion
-     */
-    public static void performSubstitution(Map<String,String> properties, SubstitutionCallback callback)
-    {
-        performSubstitution(properties, callback, true, true, true);
-    }
+	/**
+	 * <p>
+	 * This method performs property variable substitution on the
+	 * specified value. If the specified value contains the syntax
+	 * <tt>${&lt;prop-name&gt;}</tt>, where <tt>&lt;prop-name&gt;</tt>
+	 * refers to either a configuration property or a system property,
+	 * then the corresponding property value is substituted for the variable
+	 * placeholder. Multiple variable placeholders may exist in the
+	 * specified value as well as nested variable placeholders, which
+	 * are substituted from inner most to outer most. Configuration
+	 * properties override system properties.
+	 * </p>
+	 *
+	 * @param value The string on which to perform property substitution.
+	 * @param currentKey The key of the property being evaluated used to
+	 *		detect cycles.
+	 * @param cycleMap Map of variable references used to detect nested cycles.
+	 * @param configProps Set of configuration properties.
+	 * @return The value of the specified string after system property substitution.
+	 * @throws IllegalArgumentException If there was a syntax error in the
+	 *		 property placeholder syntax or a recursive variable reference.
+	 **/
+	public static String substVars(
+			String value, String currentKey, Map<String, String> cycleMap,
+			Map<String, String> configProps)
+		throws IllegalArgumentException {
 
-    /**
-     * Perform substitution on a property set
-     *
-     * @param properties the property set to perform substitution on
-     * @param callback the callback to obtain substitution values
-     * @param substituteFromConfig If substitute from configuration
-     * @param substituteFromSystemProperties If substitute from system properties
-     * @param defaultsToEmptyString sets an empty string if a replacement value is not found, leaves intact otherwise
-     */
-    public static void performSubstitution(Map<String,String> properties,
-                                           SubstitutionCallback callback,
-                                           boolean substituteFromConfig,
-                                           boolean substituteFromSystemProperties,
-                                           boolean defaultsToEmptyString)
-    {
-        Map<String, String> org = new HashMap<String, String>(properties);
-        for (String name : properties.keySet())
-        {
-            String value = properties.get(name);
-            properties.put(name, substVars(value, name, null, org, callback, substituteFromConfig, substituteFromSystemProperties, defaultsToEmptyString));
-        }
-    }
+		return substVars(
+			value, currentKey, cycleMap, configProps,
+			(SubstitutionCallback)null);
+	}
 
-    /**
-     * <p>
-     * This method performs property variable substitution on the
-     * specified value. If the specified value contains the syntax
-     * <tt>${&lt;prop-name&gt;}</tt>, where <tt>&lt;prop-name&gt;</tt>
-     * refers to either a configuration property or a system property,
-     * then the corresponding property value is substituted for the variable
-     * placeholder. Multiple variable placeholders may exist in the
-     * specified value as well as nested variable placeholders, which
-     * are substituted from inner most to outer most. Configuration
-     * properties override system properties.
-     * </p>
-     *
-     * @param val The string on which to perform property substitution.
-     * @param currentKey The key of the property being evaluated used to
-     *        detect cycles.
-     * @param cycleMap Map of variable references used to detect nested cycles.
-     * @param configProps Set of configuration properties.
-     * @return The value of the specified string after system property substitution.
-     * @throws IllegalArgumentException If there was a syntax error in the
-     *         property placeholder syntax or a recursive variable reference.
-     **/
-    public static String substVars(String val,
-                                   String currentKey,
-                                   Map<String,String> cycleMap,
-                                   Map<String,String> configProps)
-            throws IllegalArgumentException
-    {
-        return substVars(val, currentKey, cycleMap, configProps, (SubstitutionCallback) null);
-    }
+	/**
+	 * <p>
+	 * This method performs property variable substitution on the
+	 * specified value. If the specified value contains the syntax
+	 * <tt>${&lt;prop-name&gt;}</tt>, where <tt>&lt;prop-name&gt;</tt>
+	 * refers to either a configuration property or a system property,
+	 * then the corresponding property value is substituted for the variable
+	 * placeholder. Multiple variable placeholders may exist in the
+	 * specified value as well as nested variable placeholders, which
+	 * are substituted from inner most to outer most. Configuration
+	 * properties override system properties.
+	 * </p>
+	 *
+	 * @param value The string on which to perform property substitution.
+	 * @param currentKey The key of the property being evaluated used to
+	 *		detect cycles.
+	 * @param cycleMap Map of variable references used to detect nested cycles.
+	 * @param configProps Set of configuration properties.
+	 * @param bundleContext the bundle context to retrieve properties from
+	 * @return The value of the specified string after system property substitution.
+	 * @throws IllegalArgumentException If there was a syntax error in the
+	 *		 property placeholder syntax or a recursive variable reference.
+	 **/
+	public static String substVars(
+			String value, String currentKey, Map<String, String> cycleMap,
+			Map<String, String> configProps, BundleContext bundleContext)
+		throws IllegalArgumentException {
 
-    /**
-     * <p>
-     * This method performs property variable substitution on the
-     * specified value. If the specified value contains the syntax
-     * <tt>${&lt;prop-name&gt;}</tt>, where <tt>&lt;prop-name&gt;</tt>
-     * refers to either a configuration property or a system property,
-     * then the corresponding property value is substituted for the variable
-     * placeholder. Multiple variable placeholders may exist in the
-     * specified value as well as nested variable placeholders, which
-     * are substituted from inner most to outer most. Configuration
-     * properties override system properties.
-     * </p>
-     *
-     * @param val The string on which to perform property substitution.
-     * @param currentKey The key of the property being evaluated used to
-     *        detect cycles.
-     * @param cycleMap Map of variable references used to detect nested cycles.
-     * @param configProps Set of configuration properties.
-     * @param context the bundle context to retrieve properties from
-     * @return The value of the specified string after system property substitution.
-     * @throws IllegalArgumentException If there was a syntax error in the
-     *         property placeholder syntax or a recursive variable reference.
-     **/
-    public static String substVars(String val,
-                                   String currentKey,
-                                   Map<String,String> cycleMap,
-                                   Map<String,String> configProps,
-                                   BundleContext context)
-            throws IllegalArgumentException
-    {
-        return substVars(val, currentKey, cycleMap, configProps, new BundleContextSubstitutionCallback(context));
-    }
+		return substVars(
+			value, currentKey, cycleMap, configProps,
+			new BundleContextSubstitutionCallback(bundleContext));
+	}
 
-    /**
-     * <p>
-     * This method performs property variable substitution on the
-     * specified value. If the specified value contains the syntax
-     * <tt>${&lt;prop-name&gt;}</tt>, where <tt>&lt;prop-name&gt;</tt>
-     * refers to either a configuration property or a system property,
-     * then the corresponding property value is substituted for the variable
-     * placeholder. Multiple variable placeholders may exist in the
-     * specified value as well as nested variable placeholders, which
-     * are substituted from inner most to outer most. Configuration
-     * properties override system properties.
-     * </p>
-     *
-     * @param val The string on which to perform property substitution.
-     * @param currentKey The key of the property being evaluated used to
-     *        detect cycles.
-     * @param cycleMap Map of variable references used to detect nested cycles.
-     * @param configProps Set of configuration properties.
-     * @param callback the callback to obtain substitution values
-     * @return The value of the specified string after system property substitution.
-     * @throws IllegalArgumentException If there was a syntax error in the
-     *         property placeholder syntax or a recursive variable reference.
-     **/
-    public static String substVars(String val,
-                                   String currentKey,
-                                   Map<String,String> cycleMap,
-                                   Map<String,String> configProps,
-                                   SubstitutionCallback callback)
-            throws IllegalArgumentException
-    {
-        return substVars(val, currentKey, cycleMap, configProps, callback, true, true, true);
-    }
+	/**
+	 * <p>
+	 * This method performs property variable substitution on the
+	 * specified value. If the specified value contains the syntax
+	 * <tt>${&lt;prop-name&gt;}</tt>, where <tt>&lt;prop-name&gt;</tt>
+	 * refers to either a configuration property or a system property,
+	 * then the corresponding property value is substituted for the variable
+	 * placeholder. Multiple variable placeholders may exist in the
+	 * specified value as well as nested variable placeholders, which
+	 * are substituted from inner most to outer most. Configuration
+	 * properties override system properties.
+	 * </p>
+	 *
+	 * @param value The string on which to perform property substitution.
+	 * @param currentKey The key of the property being evaluated used to
+	 *		detect cycles.
+	 * @param cycleMap Map of variable references used to detect nested cycles.
+	 * @param configProps Set of configuration properties.
+	 * @param callback the callback to obtain substitution values
+	 * @return The value of the specified string after system property substitution.
+	 * @throws IllegalArgumentException If there was a syntax error in the
+	 *		 property placeholder syntax or a recursive variable reference.
+	 **/
+	public static String substVars(
+			String value, String currentKey, Map<String, String> cycleMap,
+			Map<String, String> configProps, SubstitutionCallback callback)
+		throws IllegalArgumentException {
 
-    /**
-     * <p>
-     * This method performs property variable substitution on the
-     * specified value. If the specified value contains the syntax
-     * <tt>${&lt;prop-name&gt;}</tt>, where <tt>&lt;prop-name&gt;</tt>
-     * refers to either a configuration property or a system property,
-     * then the corresponding property value is substituted for the variable
-     * placeholder. Multiple variable placeholders may exist in the
-     * specified value as well as nested variable placeholders, which
-     * are substituted from inner most to outer most. Configuration
-     * properties override system properties.
-     * </p>
-     *
-     * @param val The string on which to perform property substitution.
-     * @param currentKey The key of the property being evaluated used to
-     *        detect cycles.
-     * @param cycleMap Map of variable references used to detect nested cycles.
-     * @param configProps Set of configuration properties.
-     * @param callback the callback to obtain substitution values
-     * @param substituteFromConfig If substitute from configuration
-     * @param substituteFromSystemProperties If substitute from system properties
-     * @param defaultsToEmptyString sets an empty string if a replacement value is not found, leaves intact otherwise
-     * @return The value of the specified string after system property substitution.
-     * @throws IllegalArgumentException If there was a syntax error in the
-     *         property placeholder syntax or a recursive variable reference.
-     **/
-    public static String substVars(String val,
-                                   String currentKey,
-                                   Map<String,String> cycleMap,
-                                   Map<String,String> configProps,
-                                   SubstitutionCallback callback,
-                                   boolean substituteFromConfig,
-                                   boolean substituteFromSystemProperties,
-                                   boolean defaultsToEmptyString)
-            throws IllegalArgumentException
-    {
-        return unescape(doSubstVars(val, currentKey, cycleMap, configProps, callback, substituteFromConfig, substituteFromSystemProperties, defaultsToEmptyString));
-    }
+		return substVars(
+			value, currentKey, cycleMap, configProps, callback, true, true,
+			true);
+	}
 
-    private static String doSubstVars(String val,
-                                      String currentKey,
-                                      Map<String,String> cycleMap,
-                                      Map<String,String> configProps,
-                                      SubstitutionCallback callback,
-                                      boolean substituteFromConfig,
-                                      boolean substituteFromSystemProperties,
-                                      boolean defaultsToEmptyString)
-            throws IllegalArgumentException
-    {
-        if (cycleMap == null)
-        {
-            cycleMap = new HashMap<String,String>();
-        }
+	/**
+	 * <p>
+	 * This method performs property variable substitution on the
+	 * specified value. If the specified value contains the syntax
+	 * <tt>${&lt;prop-name&gt;}</tt>, where <tt>&lt;prop-name&gt;</tt>
+	 * refers to either a configuration property or a system property,
+	 * then the corresponding property value is substituted for the variable
+	 * placeholder. Multiple variable placeholders may exist in the
+	 * specified value as well as nested variable placeholders, which
+	 * are substituted from inner most to outer most. Configuration
+	 * properties override system properties.
+	 * </p>
+	 *
+	 * @param value The string on which to perform property substitution.
+	 * @param currentKey The key of the property being evaluated used to
+	 *		detect cycles.
+	 * @param cycleMap Map of variable references used to detect nested cycles.
+	 * @param configProps Set of configuration properties.
+	 * @param callback the callback to obtain substitution values
+	 * @param substituteFromConfig If substitute from configuration
+	 * @param substituteFromSystemProperties If substitute from system properties
+	 * @param defaultsToEmptyString sets an empty string if a replacement value is not found, leaves intact otherwise
+	 * @return The value of the specified string after system property substitution.
+	 * @throws IllegalArgumentException If there was a syntax error in the
+	 *		 property placeholder syntax or a recursive variable reference.
+	 **/
+	public static String substVars(
+			String value, String currentKey, Map<String, String> cycleMap,
+			Map<String, String> configProps, SubstitutionCallback callback,
+			boolean substituteFromConfig,
+			boolean substituteFromSystemProperties,
+			boolean defaultsToEmptyString)
+		throws IllegalArgumentException {
 
-        // Put the current key in the cycle map.
-        cycleMap.put(currentKey, currentKey);
+		return _unescape(
+			_substVars(
+				value, currentKey, cycleMap, configProps, callback,
+				substituteFromConfig, substituteFromSystemProperties,
+				defaultsToEmptyString));
+	}
 
-        // Assume we have a value that is something like:
-        // "leading ${foo.${bar}} middle ${baz} trailing"
+	public static class BundleContextSubstitutionCallback
+		implements SubstitutionCallback {
 
-        // Find the first ending '}' variable delimiter, which
-        // will correspond to the first deepest nested variable
-        // placeholder.
-        int startDelim;
-        int stopDelim = -1;
-        do
-        {
-            stopDelim = val.indexOf(DELIM_STOP, stopDelim + 1);
-            while (stopDelim > 0 && val.charAt(stopDelim - 1) == ESCAPE_CHAR)
-            {
-                stopDelim = val.indexOf(DELIM_STOP, stopDelim + 1);
-            }
+		public BundleContextSubstitutionCallback(BundleContext context) {
+			_bundleContext = context;
+		}
 
-            // Find the matching starting "${" variable delimiter
-            // by looping until we find a start delimiter that is
-            // greater than the stop delimiter we have found.
-            startDelim = val.indexOf(DELIM_START);
-            while (stopDelim >= 0)
-            {
-                int idx = val.indexOf(DELIM_START, startDelim + DELIM_START.length());
-                if ((idx < 0) || (idx > stopDelim))
-                {
-                    break;
-                }
-                else if (idx < stopDelim)
-                {
-                    startDelim = idx;
-                }
-            }
-        }
-        while (startDelim >= 0 && stopDelim >= 0 && stopDelim < startDelim + DELIM_START.length());
+		@Override
+		public String getValue(String key) {
+			String value = null;
 
-        // If we do not have a start or stop delimiter, then just
-        // return the existing value.
-        if ((startDelim < 0) || (stopDelim < 0))
-        {
-            cycleMap.remove(currentKey);
-            return val;
-        }
+			if (key.startsWith(_ENV_PREFIX)) {
+				value = System.getenv(key.substring(_ENV_PREFIX.length()));
+			}
+			else {
+				if (_bundleContext != null) {
+					value = _bundleContext.getProperty(key);
+				}
 
-        // At this point, we have found a variable placeholder so
-        // we must perform a variable substitution on it.
-        // Using the start and stop delimiter indices, extract
-        // the first, deepest nested variable placeholder.
-        String variable = val.substring(startDelim + DELIM_START.length(), stopDelim);
-        String org = variable;
+				if (value == null) {
+					value = System.getProperty(key);
+				}
+			}
 
-        // Strip expansion modifiers
-        int idx1 = variable.lastIndexOf(":-");
-        int idx2 = variable.lastIndexOf(":+");
-        int idx = idx1 >= 0 && idx2 >= 0 ? Math.min(idx1, idx2) : idx1 >= 0 ? idx1 : idx2;
-        String op = null;
-        if (idx >= 0 && idx < variable.length())
-        {
-            op = variable.substring(idx);
-            variable = variable.substring(0, idx);
-        }
+			return value;
+		}
 
-        // Verify that this is not a recursive variable reference.
-        if (cycleMap.get(variable) != null)
-        {
-            throw new IllegalArgumentException("recursive variable reference: " + variable);
-        }
+		private final BundleContext _bundleContext;
 
-        String substValue = null;
-        // Get the value of the deepest nested variable placeholder.
-        // Try to configuration properties first.
-        if (substituteFromConfig && configProps != null)
-        {
-            substValue = configProps.get(variable);
-        }
-        if (substValue == null)
-        {
-            if (variable.length() > 0)
-            {
-                if (callback != null)
-                {
-                    substValue = callback.getValue(variable);
-                }
-                if (substValue == null && substituteFromSystemProperties)
-                {
-                    substValue = System.getProperty(variable);
-                }
-            }
-        }
+	}
 
-        if (op != null)
-        {
-            if (op.startsWith(":-"))
-            {
-                if (substValue == null || substValue.length() == 0 )
-                {
-                    substValue = op.substring(":-".length());
-                }
-            }
-            else if (op.startsWith(":+"))
-            {
-                if (substValue != null && substValue.length() != 0)
-                {
-                    substValue = op.substring(":+".length());
-                }
-            }
-            else
-            {
-                throw new IllegalArgumentException("Bad substitution: ${" + org + "}");
-            }
-        }
+	/**
+	 * Callback for substitution
+	 */
+	public interface SubstitutionCallback {
 
-        if (substValue == null)
-        {
-            if (defaultsToEmptyString)
-            {
-                substValue = "";
-            }
-            else
-            {
-                // alters the original token to avoid infinite recursion
-                // altered tokens are reverted in substVarsPreserveUnresolved()
-                substValue = MARKER + "{" + variable + "}";
-            }
-        }
+		public String getValue(String key);
 
-        // Remove the found variable from the cycle map, since
-        // it may appear more than once in the value and we don't
-        // want such situations to appear as a recursive reference.
-        cycleMap.remove(variable);
+	}
 
-        // Append the leading characters, the substituted value of
-        // the variable, and the trailing characters to get the new
-        // value.
-        val = val.substring(0, startDelim) + substValue + val.substring(stopDelim + DELIM_STOP.length(), val.length());
+	private static int _indexOf(String value, int fromIndex) {
+		Matcher escapedOpeningCurlyMatcher = _escapedOpeningCurly.matcher(
+			value);
 
-        // Now perform substitution again, since there could still
-        // be substitutions to make.
-        val = doSubstVars(val, currentKey, cycleMap, configProps, callback, substituteFromConfig, substituteFromSystemProperties, defaultsToEmptyString);
+		Matcher escapedClosingCurlyMatcher = _escapedClosingCurly.matcher(
+			value);
 
-        cycleMap.remove(currentKey);
+		int escapedOpeningCurlyMatcherIndex = -1;
 
-        // Return the value.
-        return val;
-    }
+		if (escapedOpeningCurlyMatcher.find(fromIndex)) {
+			escapedOpeningCurlyMatcherIndex =
+				escapedOpeningCurlyMatcher.start();
+		}
 
-    private static String unescape(String val)
-    {
-        val = val.replaceAll("\\" + MARKER, "\\$");
+		int escapedClosingCurlyMatcherIndex = -1;
 
-        Matcher existingSubstVarMatcher = EXISTING_SUBST_VAR.matcher(val);
+		if (escapedClosingCurlyMatcher.find(fromIndex)) {
+			escapedClosingCurlyMatcherIndex =
+				escapedClosingCurlyMatcher.start();
+		}
 
-        if (!existingSubstVarMatcher.matches()) {
-            return val;
-        }
-        int escape = indexOf(val, 0);
-        while (escape >= 0 && escape < val.length() - 1)
-        {
-            char c = val.charAt(escape + 1);
-            if (c == '{' || c == '}' || c == ESCAPE_CHAR)
-            {
-                val = val.substring(0, escape) + val.substring(escape + 1);
-            }
-            escape = indexOf(val, escape + 1);
-        }
-        return val;
-    }
+		int index = Math.min(
+			escapedOpeningCurlyMatcherIndex, escapedClosingCurlyMatcherIndex);
 
-    private static int indexOf(String val, int fromIndex) {
-        Matcher escapedOpeningCurlyMatcher = ESCAPED_OPENING_CURLY.matcher(val);
+		if (index == Integer.MAX_VALUE) {
+			return -1;
+		}
 
-        Matcher escapedClosingCurlyMatcher = ESCAPED_CLOSING_CURLY.matcher(val);
+		return index;
+	}
 
-        int escapedOpeningCurlyMatcherIndex = escapedOpeningCurlyMatcher.find(fromIndex) ? escapedOpeningCurlyMatcher.start() : Integer.MAX_VALUE;
-        int escapedClosingCurlyMatcherIndex = escapedClosingCurlyMatcher.find(fromIndex) ? escapedClosingCurlyMatcher.start() : Integer.MAX_VALUE;
+	private static String _substVars(
+			String value, String currentKey, Map<String, String> cycleMap,
+			Map<String, String> configProps, SubstitutionCallback callback,
+			boolean substituteFromConfig,
+			boolean substituteFromSystemProperties,
+			boolean defaultsToEmptyString)
+		throws IllegalArgumentException {
 
-        int indexOf = Math.min(escapedOpeningCurlyMatcherIndex, escapedClosingCurlyMatcherIndex);
+		if (cycleMap == null) {
+			cycleMap = new HashMap<>();
+		}
 
-        return indexOf == Integer.MAX_VALUE ? -1 : indexOf;
-    }
+		// Put the current key in the cycle map.
 
-    public static class BundleContextSubstitutionCallback implements SubstitutionCallback
-    {
-        private final BundleContext context;
+		cycleMap.put(currentKey, currentKey);
 
-        public BundleContextSubstitutionCallback(BundleContext context)
-        {
-            this.context = context;
-        }
+		// Assume we have a value that is something like:
+		// "leading ${foo.${bar}} middle ${baz} trailing"
 
-        public String getValue(String key)
-        {
-            String value = null;
-            if (key.startsWith(ENV_PREFIX))
-            {
-                value = System.getenv(key.substring(ENV_PREFIX.length()));
-            }
-            else
-            {
-                if (context != null)
-                {
-                    value = context.getProperty(key);
-                }
-                if (value == null)
-                {
-                    value = System.getProperty(key);
-                }
-            }
-            return value;
-        }
-    }
+		// Find the first ending '}' variable delimiter, which
+		// will correspond to the first deepest nested variable
+		// placeholder.
+
+		int startDelim = value.indexOf(_DELIM_START);
+		int stopDelim = value.indexOf(_DELIM_STOP);
+
+		while ((startDelim >= 0) && (stopDelim >= 0)) {
+			while ((stopDelim > 0) &&
+				   (value.charAt(stopDelim - 1) == _ESCAPE_CHAR)) {
+
+				stopDelim = value.indexOf(_DELIM_STOP, stopDelim + 1);
+			}
+
+			// Find the matching starting "${" variable delimiter
+			// by looping until we find a start delimiter that is
+			// greater than the stop delimiter we have found.
+
+			while (stopDelim >= 0) {
+				int index = value.indexOf(
+					_DELIM_START, startDelim + _DELIM_START.length());
+
+				if ((index < 0) || (index > stopDelim)) {
+					break;
+				}
+				else if (index < stopDelim) {
+					startDelim = index;
+				}
+			}
+
+			if (startDelim < stopDelim) {
+				break;
+			}
+
+			stopDelim = value.indexOf(_DELIM_STOP, stopDelim + 1);
+			startDelim = value.indexOf(_DELIM_START);
+		}
+
+		// If we do not have a start or stop delimiter, then just
+		// return the existing value.
+
+		if ((startDelim < 0) || (stopDelim < 0)) {
+			cycleMap.remove(currentKey);
+
+			return value;
+		}
+
+		// At this point, we have found a variable placeholder so
+		// we must perform a variable substitution on it.
+		// Using the start and stop delimiter indices, extract
+		// the first, deepest nested variable placeholder.
+
+		String variable = value.substring(
+			startDelim + _DELIM_START.length(), stopDelim);
+
+		String original = variable;
+
+		// Strip expansion modifiers
+
+		int index1 = variable.lastIndexOf(":-");
+		int index2 = variable.lastIndexOf(":+");
+
+		int index = -1;
+
+		if ((index1 >= 0) && (index2 >= 0)) {
+			index = Math.min(index1, index1);
+		}
+		else if (index1 >= 0) {
+			index = index1;
+		}
+		else {
+			index = index2;
+		}
+
+		String op = null;
+
+		if ((index >= 0) && (index < variable.length())) {
+			op = variable.substring(index);
+
+			variable = variable.substring(0, index);
+		}
+
+		// Verify that this is not a recursive variable reference.
+
+		if (cycleMap.get(variable) != null) {
+			throw new IllegalArgumentException(
+				"recursive variable reference: " + variable);
+		}
+
+		String substValue = null;
+
+		// Get the value of the deepest nested variable placeholder.
+		// Try to configuration properties first.
+
+		if (substituteFromConfig && (configProps != null)) {
+			substValue = configProps.get(variable);
+		}
+
+		if ((substValue == null) && (variable.length() > 0)) {
+			if (callback != null) {
+				substValue = callback.getValue(variable);
+			}
+
+			if ((substValue == null) && substituteFromSystemProperties) {
+				substValue = System.getProperty(variable);
+			}
+		}
+
+		if (op != null) {
+			if (op.startsWith(":-")) {
+				if ((substValue == null) || (substValue.length() == 0)) {
+					substValue = op.substring(":-".length());
+				}
+			}
+			else if (op.startsWith(":+")) {
+				if ((substValue != null) && (substValue.length() != 0)) {
+					substValue = op.substring(":+".length());
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Bad substitution: ${" + original + "}");
+			}
+		}
+
+		if (substValue == null) {
+			if (defaultsToEmptyString) {
+				substValue = "";
+			}
+			else {
+
+				// alters the original token to avoid infinite recursion
+				// altered tokens are reverted in substVarsPreserveUnresolved()
+
+				substValue = _MARKER + "{" + variable + "}";
+			}
+		}
+
+		// Remove the found variable from the cycle map, since
+		// it may appear more than once in the value and we don't
+		// want such situations to appear as a recursive reference.
+
+		cycleMap.remove(variable);
+
+		// Append the leading characters, the substituted value of
+		// the variable, and the trailing characters to get the new
+		// value.
+
+		value =
+			value.substring(0, startDelim) + substValue +
+				value.substring(stopDelim + _DELIM_STOP.length());
+
+		// Now perform substitution again, since there could still
+		// be substitutions to make.
+
+		value = _substVars(
+			value, currentKey, cycleMap, configProps, callback,
+			substituteFromConfig, substituteFromSystemProperties,
+			defaultsToEmptyString);
+
+		cycleMap.remove(currentKey);
+
+		// Return the value.
+
+		return value;
+	}
+
+	private static String _unescape(String value) {
+		value = value.replaceAll("\\" + _MARKER, "\\$");
+
+		Matcher existingSubstVarMatcher = _existingSubstVar.matcher(value);
+
+		if (!existingSubstVarMatcher.matches()) {
+			return value;
+		}
+
+		int escape = _indexOf(value, 0);
+
+		while ((escape >= 0) && (escape < (value.length() - 1))) {
+			char c = value.charAt(escape + 1);
+
+			if ((c == '{') || (c == '}') || (c == _ESCAPE_CHAR)) {
+				value =
+					value.substring(0, escape) + value.substring(escape + 1);
+			}
+
+			escape = _indexOf(value, escape + 1);
+		}
+
+		return value;
+	}
+
+	private InterpolationHelper() {
+	}
+
+	private static final String _DELIM_START = "${";
+
+	private static final String _DELIM_STOP = "}";
+
+	private static final String _ENV_PREFIX = "env:";
+
+	private static final char _ESCAPE_CHAR = '\\';
+
+	private static final String _MARKER = "$__";
+
+	private static final Pattern _escapedClosingCurly = Pattern.compile(
+		"\\\\+\\}");
+	private static final Pattern _escapedOpeningCurly = Pattern.compile(
+		"\\\\+\\{");
+	private static final Pattern _existingSubstVar = Pattern.compile(
+		".*\\$\\\\*\\{.*\\}.*");
 
 }
 /* @generated */

@@ -150,6 +150,21 @@ public class KaleoTaskAssignmentInstanceLocalServiceImpl
 	}
 
 	@Override
+	public List<KaleoTaskAssignmentInstance> assignKaleoTaskAssignmentInstances(
+			KaleoTaskInstanceToken kaleoTaskInstanceToken,
+			Collection<KaleoTaskAssignment> kaleoTaskAssignments,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		deleteKaleoTaskAssignmentInstances(kaleoTaskInstanceToken);
+
+		return addTaskAssignmentInstances(
+			kaleoTaskInstanceToken, kaleoTaskAssignments, workflowContext,
+			serviceContext);
+	}
+
+	@Override
 	public KaleoTaskAssignmentInstance completeKaleoTaskInstanceToken(
 			long kaleoTaskInstanceTokenId, ServiceContext serviceContext)
 		throws PortalException {

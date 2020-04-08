@@ -20,7 +20,7 @@ dependencies {
 	testCompile group: "commons-httpclient", name: "commons-httpclient", version: "3.1"
 	testCompile group: "commons-io", name: "commons-io", version: "2.5"
 	testCompile group: "jaxen", name: "jaxen", version: "1.1.1"
-	testCompile group: "org.apache.tika", name: "tika-core", version: "1.14"
+	testCompile group: "org.apache.tika", name: "tika-core", version: "1.24"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 	testCompile project(":apps:petra:petra-xml")
 	testCompile project(":core:petra:petra-concurrent")

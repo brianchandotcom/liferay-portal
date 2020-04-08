@@ -4,7 +4,7 @@ dependencies {
 	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testCompile group: "commons-io", name: "commons-io", version: "2.5"
 	testCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
-	testCompile group: "org.apache.tika", name: "tika-core", version: "1.14"
+	testCompile group: "org.apache.tika", name: "tika-core", version: "1.24"
 	testCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testCompile project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-test-util")
 	testCompile project(":core:petra:petra-lang")

@@ -74,7 +74,7 @@ dependencies {
 	testCompile group: "com.mchange", name: "c3p0", version: "0.9.5"
 	testCompile group: "commons-io", name: "commons-io", version: "2.5"
 	testCompile group: "log4j", name: "apache-log4j-extras", version: "1.1"
-	testCompile group: "org.apache.tika", name: "tika-core", version: "1.14"
+	testCompile group: "org.apache.tika", name: "tika-core", version: "1.24"
 	testCompile group: "org.apache.tomcat", name: "tomcat-jdbc", version: "8.0.32"
 	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.4"
 	testCompile group: "org.json", name: "json", version: "20180813"

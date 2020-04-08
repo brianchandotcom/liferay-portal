@@ -86,8 +86,9 @@ public class DDMValueUtil {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
-					(localizedValue, locale) -> _toLocalizedDocument(
-						localizedValue, dlAppService),
+					(localizedContentFieldValue, locale) ->
+						_toLocalizedDocument(
+							localizedContentFieldValue, dlAppService),
 					preferredLocale);
 			}
 			else if (Objects.equals(
@@ -95,8 +96,8 @@ public class DDMValueUtil {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
-					(localizedValue, locale) -> _toLocalizedImage(
-						localizedValue, dlAppService),
+					(localizedContentFieldValue, locale) -> _toLocalizedImage(
+						localizedContentFieldValue, dlAppService),
 					preferredLocale);
 			}
 			else if (Objects.equals(
@@ -105,8 +106,10 @@ public class DDMValueUtil {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
-					(localizedValue, locale) -> _toLocalizedJournalArticle(
-						localizedValue, journalArticleService, locale),
+					(localizedContentFieldValue, locale) ->
+						_toLocalizedJournalArticle(
+							localizedContentFieldValue, journalArticleService,
+							locale),
 					preferredLocale);
 			}
 			else if (Objects.equals(
@@ -115,15 +118,18 @@ public class DDMValueUtil {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
-					(localizedValue, locale) -> _toLocalizedLinkToPage(
-						localizedValue, groupId, layoutLocalService),
+					(localizedContentFieldValue, locale) ->
+						_toLocalizedLinkToPage(
+							localizedContentFieldValue, groupId,
+							layoutLocalService),
 					preferredLocale);
 			}
 			else {
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
-					(localizedValue, locale) -> GetterUtil.getString(
-						localizedValue.getData()),
+					(localizedContentFieldValue, locale) ->
+						GetterUtil.getString(
+							localizedContentFieldValue.getData()),
 					preferredLocale);
 			}
 		}
@@ -344,14 +350,15 @@ public class DDMValueUtil {
 		).orElse(
 			Collections.emptyMap()
 		).forEach(
-			(languageId, languageValue) -> {
+			(languageId, localizedContentFieldValue) -> {
 				Locale locale = LocaleUtil.fromLanguageId(
 					languageId, true, false);
 
 				if (locale != null) {
 					localizedValue.addString(
 						locale,
-						localizedValueBiFunction.apply(languageValue, locale));
+						localizedValueBiFunction.apply(
+							localizedContentFieldValue, locale));
 				}
 			}
 		);

@@ -9,18 +9,21 @@
  * distribution rights of the Software.
  */
 
-import ClayIcon from '@clayui/icon';
-import React from 'react';
+import {useMemo} from 'react';
 
-const FieldLabel = ({fieldId, required, text}) => (
-	<label htmlFor={fieldId}>
-		{`${text} `}
-		{required && (
-			<span className="reference-mark">
-				<ClayIcon symbol="asterisk" />
-			</span>
-		)}
-	</label>
-);
+import {useFetch} from '../../../../shared/hooks/useFetch.es';
 
-export default FieldLabel;
+const useCalendars = () => {
+	const {data, fetchData: fetchCalendars} = useFetch({url: '/calendars'});
+
+	const calendars = useMemo(() => data.items || [], [data]);
+
+	const defaultCalendar = useMemo(
+		() => calendars.find(({defaultCalendar}) => defaultCalendar),
+		[calendars]
+	);
+
+	return {calendars, defaultCalendar, fetchCalendars};
+};
+
+export {useCalendars};

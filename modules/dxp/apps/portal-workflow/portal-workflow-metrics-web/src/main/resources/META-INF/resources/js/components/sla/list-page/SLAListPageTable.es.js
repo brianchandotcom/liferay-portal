@@ -12,9 +12,9 @@
 import ClayTable from '@clayui/table';
 import React, {useMemo} from 'react';
 
-import SLAListItem from './SLAListItem.es';
+import {Item} from './SLAListPageTableItem.es';
 
-const SLAListTable = ({items}) => {
+const Table = ({items}) => {
 	const blockedItems = useMemo(
 		() => items.filter(({status}) => status === 2),
 		[items]
@@ -29,26 +29,46 @@ const SLAListTable = ({items}) => {
 	const showRunningDivider = showBlockedDivider && unblockedItems.length > 0;
 
 	return (
-		<ClayTable>
+		<ClayTable className="table-responsive">
 			<ClayTable.Head>
 				<ClayTable.Row>
-					<ClayTable.Cell headingCell style={{width: '27%'}}>
+					<ClayTable.Cell
+						data-testid="slaName"
+						headingCell
+						style={{width: '27%'}}
+					>
 						{Liferay.Language.get('sla-name')}
 					</ClayTable.Cell>
 
-					<ClayTable.Cell headingCell style={{width: '24%'}}>
+					<ClayTable.Cell
+						data-testid="description"
+						headingCell
+						style={{width: '24%'}}
+					>
 						{Liferay.Language.get('description')}
 					</ClayTable.Cell>
 
-					<ClayTable.Cell headingCell style={{width: '17%'}}>
+					<ClayTable.Cell
+						data-testid="status"
+						headingCell
+						style={{width: '17%'}}
+					>
 						{Liferay.Language.get('status')}
 					</ClayTable.Cell>
 
-					<ClayTable.Cell headingCell style={{width: '17%'}}>
+					<ClayTable.Cell
+						data-testid="duration"
+						headingCell
+						style={{width: '17%'}}
+					>
 						{Liferay.Language.get('duration')}
 					</ClayTable.Cell>
 
-					<ClayTable.Cell headingCell style={{width: '25%'}}>
+					<ClayTable.Cell
+						data-testid="lastModified"
+						headingCell
+						style={{width: '25%'}}
+					>
 						{Liferay.Language.get('last-modified')}
 					</ClayTable.Cell>
 
@@ -58,31 +78,39 @@ const SLAListTable = ({items}) => {
 
 			<ClayTable.Body>
 				{showBlockedDivider && (
-					<tr className="table-divider">
-						<td colSpan="9">
+					<ClayTable.Row className="table-divider">
+						<ClayTable.Cell
+							colSpan="9"
+							data-testid="blockedDivider"
+						>
 							{Liferay.Language.get('blocked').toUpperCase()}
-						</td>
-					</tr>
+						</ClayTable.Cell>
+					</ClayTable.Row>
 				)}
 
 				{blockedItems.map((sla, index) => (
-					<SLAListItem {...sla} key={`blocked_${index}`} status={2} />
+					<Table.Item {...sla} key={`blocked_${index}`} status={2} />
 				))}
 
 				{showRunningDivider && (
-					<tr className="table-divider">
-						<td colSpan="9">
+					<ClayTable.Row className="table-divider">
+						<ClayTable.Cell
+							colSpan="9"
+							data-testid="runningDivider"
+						>
 							{Liferay.Language.get('running').toUpperCase()}
-						</td>
-					</tr>
+						</ClayTable.Cell>
+					</ClayTable.Row>
 				)}
 
 				{unblockedItems.map((sla, index) => (
-					<SLAListItem {...sla} key={`unblocked_${index}`} />
+					<Table.Item {...sla} key={`unblocked_${index}`} />
 				))}
 			</ClayTable.Body>
 		</ClayTable>
 	);
 };
 
-export default SLAListTable;
+Table.Item = Item;
+
+export {Table};

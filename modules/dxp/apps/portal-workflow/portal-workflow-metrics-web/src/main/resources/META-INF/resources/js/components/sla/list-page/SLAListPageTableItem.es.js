@@ -9,18 +9,18 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useContext} from 'react';
 
-import {ChildLink} from '../../shared/components/router/routerWrapper.es';
-import {formatDuration} from '../../shared/util/duration.es';
-import moment from '../../shared/util/moment.es';
-import SLAListCardContext from './SLAListCardContext.es';
+import QuickActionKebab from '../../../shared/components/quick-action-kebab/QuickActionKebab.es';
+import ChildLink from '../../../shared/components/router/ChildLink.es';
+import {useRouter} from '../../../shared/hooks/useRouter.es';
+import {formatDuration} from '../../../shared/util/duration.es';
+import moment from '../../../shared/util/moment.es';
+import {SLAListPageContext} from './SLAListPage.es';
 
-const SLAListItem = ({
+const Item = ({
 	dateModified,
 	description,
 	duration,
@@ -29,12 +29,15 @@ const SLAListItem = ({
 	processId,
 	status,
 }) => {
-	const [active, setActive] = useState(false);
-	const {showConfirmDialog} = useContext(SLAListCardContext);
-	const deleteHandler = useCallback(() => {
-		showConfirmDialog(id);
-		setActive(false);
-	}, [id, showConfirmDialog]);
+	const {
+		history,
+		location: {search},
+	} = useRouter();
+	const {showDeleteModal} = useContext(SLAListPageContext);
+
+	const handleDelete = useCallback(() => {
+		showDeleteModal(id);
+	}, [id, showDeleteModal]);
 
 	const blocked = status === 2;
 	const durationString = formatDuration(duration);
@@ -44,6 +47,22 @@ const SLAListItem = ({
 	const statusText = blocked
 		? Liferay.Language.get('blocked')
 		: Liferay.Language.get('running');
+
+	const dropDownItems = [
+		{
+			label: Liferay.Language.get('edit'),
+			onClick: () => {
+				history.push({
+					pathname: `/sla/${processId}/edit/${id}`,
+					search,
+				});
+			},
+		},
+		{
+			label: Liferay.Language.get('delete'),
+			onClick: handleDelete,
+		},
+	];
 
 	return (
 		<ClayTable.Row>
@@ -55,7 +74,7 @@ const SLAListItem = ({
 							symbol="exclamation-full"
 						/>
 					)}{' '}
-					<ChildLink to={`/sla/edit/${processId}/${id}`}>
+					<ChildLink to={`/sla/${processId}/edit/${id}`}>
 						{name}
 					</ChildLink>
 				</div>
@@ -65,7 +84,10 @@ const SLAListItem = ({
 				{description}
 			</ClayTable.Cell>
 
-			<ClayTable.Cell className={blockedStatusClass}>
+			<ClayTable.Cell
+				className={blockedStatusClass}
+				data-testid="SLAStatus"
+			>
 				{statusText}
 			</ClayTable.Cell>
 
@@ -80,43 +102,12 @@ const SLAListItem = ({
 			</ClayTable.Cell>
 
 			<ClayTable.Cell className="actions">
-				<ClayDropDown
-					active={active}
-					onActiveChange={setActive}
-					trigger={
-						<ClayButton
-							className="component-action"
-							data-testid="slaDropDownButton"
-							displayType="unstyled"
-							monospaced
-						>
-							<ClayIcon symbol="ellipsis-v" />
-						</ClayButton>
-					}
-				>
-					<ClayDropDown.ItemList>
-						<li>
-							<ChildLink
-								className="dropdown-item"
-								to={`/sla/edit/${processId}/${id}`}
-							>
-								{Liferay.Language.get('edit')}
-							</ChildLink>
-						</li>
-						<li>
-							<ClayButton
-								className="dropdown-item"
-								data-testid="deleteButton"
-								onClick={deleteHandler}
-							>
-								{Liferay.Language.get('delete')}
-							</ClayButton>
-						</li>
-					</ClayDropDown.ItemList>
-				</ClayDropDown>
+				<div className="autofit-col">
+					<QuickActionKebab dropDownItems={dropDownItems} />
+				</div>
 			</ClayTable.Cell>
 		</ClayTable.Row>
 	);
 };
 
-export default SLAListItem;
+export {Item};

@@ -9,86 +9,78 @@
  * distribution rights of the Software.
  */
 
-import {createContext, useCallback, useEffect, useState} from 'react';
+import {useState} from 'react';
 
-const useSLANodes = (processId, fetchClient) => {
+import {useFetch} from '../../../../shared/hooks/useFetch.es';
+
+const useSLANodes = processId => {
 	const [nodes, setNodes] = useState([]);
 
-	const fetchNodes = useCallback(
-		processId => {
-			return fetchClient
-				.get(`/processes/${processId}/nodes`)
-				.then(({data: {items}}) => {
-					const entersTaskString = Liferay.Language.get(
-						'enters-task'
-					);
-					const leavesTaskString = Liferay.Language.get(
-						'leaves-task'
-					);
-					const nodeBegins = [];
-					const nodeEnds = [];
-					const nodeEnters = [];
-					const nodeLeaves = [];
-					const processBeginsString = Liferay.Language.get(
-						'process-begins'
-					);
-					const processEndsString = Liferay.Language.get(
-						'process-ends'
-					);
+	const parseNodes = ({items}) => {
+		const entersTaskString = Liferay.Language.get('enters-task');
+		const leavesTaskString = Liferay.Language.get('leaves-task');
+		const nodeBegins = [];
+		const nodeEnds = [];
+		const nodeEnters = [];
+		const nodeLeaves = [];
+		const processBeginsString = Liferay.Language.get('process-begins');
+		const processEndsString = Liferay.Language.get('process-ends');
 
-					items.forEach(node => {
-						if (node.type === 'STATE') {
-							const newNode = {
-								...node,
-								desc: node.initial
-									? processBeginsString
-									: `${processEndsString} ${node.label}`,
-								executionType: node.initial ? 'begin' : 'end',
-							};
+		items.forEach(node => {
+			if (node.type === 'STATE') {
+				const newNode = {
+					...node,
+					desc: node.initial
+						? processBeginsString
+						: `${processEndsString} ${node.label}`,
+					executionType: node.initial ? 'begin' : 'end',
+				};
 
-							if (node.initial) {
-								nodeBegins.push(newNode);
-							}
-							else {
-								nodeEnds.push(newNode);
-							}
-						}
-						else if (node.type === 'TASK') {
-							nodeEnters.push({
-								...node,
-								desc: `${entersTaskString} ${node.label}`,
-								executionType: 'enter',
-							});
-
-							nodeLeaves.push({
-								...node,
-								desc: `${leavesTaskString} ${node.label}`,
-								executionType: 'leave',
-							});
-						}
-					});
-
-					const compareToLabel = (curNode, nextNode) =>
-						curNode.label.localeCompare(nextNode.label);
-
-					nodeEnters.sort(compareToLabel);
-					nodeLeaves.sort(compareToLabel);
-
-					const nodes = [
-						...nodeBegins,
-						...nodeEnters,
-						...nodeLeaves,
-						...nodeEnds,
-					].map(node => ({
-						...node,
-						compositeId: `${node.id}:${node.executionType}`,
-					}));
-
-					setNodes(nodes);
+				if (node.initial) {
+					nodeBegins.push(newNode);
+				}
+				else {
+					nodeEnds.push(newNode);
+				}
+			}
+			else if (node.type === 'TASK') {
+				nodeEnters.push({
+					...node,
+					desc: `${entersTaskString} ${node.label}`,
+					executionType: 'enter',
 				});
-		},
-		[fetchClient]
-	);
+
+				nodeLeaves.push({
+					...node,
+					desc: `${leavesTaskString} ${node.label}`,
+					executionType: 'leave',
+				});
+			}
+		});
+
+		const compareToLabel = (curNode, nextNode) =>
+			curNode.label.localeCompare(nextNode.label);
+
+		nodeEnters.sort(compareToLabel);
+		nodeLeaves.sort(compareToLabel);
+
+		const nodes = [
+			...nodeBegins,
+			...nodeEnters,
+			...nodeLeaves,
+			...nodeEnds,
+		].map(node => ({
+			...node,
+			compositeId: `${node.id}:${node.executionType}`,
+		}));
+
+		setNodes(nodes);
+	};
+
+	const {fetchData: fetchNodes} = useFetch({
+		callback: parseNodes,
+		url: `/processes/${processId}/nodes`,
+	});
 
 	const getPauseNodes = (startNodeKeys, stopNodeKeys) => {
 		const selectedNodes = [...startNodeKeys, ...stopNodeKeys]
@@ -150,10 +142,6 @@ const useSLANodes = (processId, fetchClient) => {
 			);
 	};
 
-	useEffect(() => {
-		fetchNodes(processId);
-	}, [fetchNodes, processId]);
-
 	return {
 		fetchNodes,
 		getPauseNodes,
@@ -163,6 +151,4 @@ const useSLANodes = (processId, fetchClient) => {
 	};
 };
 
-const SLANodes = createContext({});
-
-export {SLANodes, useSLANodes};
+export {useSLANodes};

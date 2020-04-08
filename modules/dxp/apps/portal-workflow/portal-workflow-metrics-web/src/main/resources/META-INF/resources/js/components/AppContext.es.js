@@ -16,14 +16,11 @@ import ToasterProvider from '../shared/components/toaster/ToasterProvider.es';
 const AppContext = React.createContext();
 
 const AppContextProvider = ({children, ...props}) => {
-	const [status, setStatus] = useState();
 	const [title, setTitle] = useState(Liferay.Language.get('metrics'));
 
 	const state = {
 		...props,
-		setStatus,
 		setTitle,
-		status,
 		title,
 	};
 
@@ -34,10 +31,4 @@ const AppContextProvider = ({children, ...props}) => {
 	);
 };
 
-const AppStatus = {
-	slaDeleted: 'sla-deleted',
-	slaSaved: 'sla-saved',
-	slaUpdated: 'sla-updated',
-};
-
-export {AppContext, AppContextProvider, AppStatus};
+export {AppContext, AppContextProvider};

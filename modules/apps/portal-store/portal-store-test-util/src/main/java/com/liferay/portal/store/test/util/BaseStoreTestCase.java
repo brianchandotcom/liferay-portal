@@ -327,6 +327,26 @@ public abstract class BaseStoreTestCase {
 	}
 
 	@Test
+	public void testGetFileVersions() throws Exception {
+		String fileName = RandomTestUtil.randomString();
+
+		_store.addFile(
+			_companyId, _repositoryId, fileName, Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
+
+		addVersions(fileName, 5);
+
+		String[] fileVersions = _store.getFileVersions(
+			_companyId, _repositoryId, fileName);
+
+		String versionLabel = "1.";
+
+		for (int i = 0; i < 5; i++) {
+			Assert.assertTrue((versionLabel + i).equals(fileVersions[i]));
+		}
+	}
+
+	@Test
 	public void testHasFile() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 

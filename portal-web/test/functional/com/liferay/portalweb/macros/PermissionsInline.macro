@@ -148,7 +148,7 @@ definition {
 			menuItem = "Permissions",
 			pageName = "${pageName}");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		IFrame.selectPermissionsFrame();
 	}
 
 	macro gotoPollPermissionsCP {

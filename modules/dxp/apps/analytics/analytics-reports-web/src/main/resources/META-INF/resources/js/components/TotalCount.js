@@ -11,8 +11,9 @@
 
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
+import StateContext from '../state/context';
 import Hint from './Hint';
 
 function TotalCount({
@@ -25,23 +26,30 @@ function TotalCount({
 	popoverMessage,
 	popoverPosition,
 }) {
+	const {validAnalyticsCloudConnection} = useContext(StateContext);
+
 	const [value, setValue] = useState('-');
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
-		dataProvider()
-			.then(value => {
-				if (isMounted()) {
-					setValue(value);
-				}
-			})
-			.catch(() => {
-				if (isMounted()) {
-					setValue('-');
-				}
-			});
+		if (validAnalyticsCloudConnection) {
+			dataProvider()
+				.then(value => {
+					if (isMounted()) {
+						setValue(value);
+					}
+				})
+				.catch(() => {
+					if (isMounted()) {
+						setValue('-');
+					}
+				});
+		}
+		else {
+			setValue('-');
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dataProvider]);
+	}, [dataProvider, validAnalyticsCloudConnection]);
 
 	return (
 		<div className={className}>

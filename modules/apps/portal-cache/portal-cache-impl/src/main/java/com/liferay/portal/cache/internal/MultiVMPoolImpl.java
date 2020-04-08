@@ -33,40 +33,28 @@ public class MultiVMPoolImpl implements MultiVMPool {
 
 	@Override
 	public void clear() {
-		PortalCacheManager<? extends Serializable, ? extends Serializable>
-			portalCacheManager = getPortalCacheManager();
-
-		portalCacheManager.clearAll();
+		_portalCacheManager.clearAll();
 	}
 
 	@Override
 	public PortalCache<? extends Serializable, ? extends Serializable>
 		getPortalCache(String portalCacheName) {
 
-		PortalCacheManager<? extends Serializable, ? extends Serializable>
-			portalCacheManager = getPortalCacheManager();
-
-		return portalCacheManager.getPortalCache(portalCacheName);
+		return _portalCacheManager.getPortalCache(portalCacheName);
 	}
 
 	@Override
 	public PortalCache<? extends Serializable, ? extends Serializable>
 		getPortalCache(String portalCacheName, boolean blocking) {
 
-		PortalCacheManager<? extends Serializable, ? extends Serializable>
-			portalCacheManager = getPortalCacheManager();
-
-		return portalCacheManager.getPortalCache(portalCacheName, blocking);
+		return _portalCacheManager.getPortalCache(portalCacheName, blocking);
 	}
 
 	@Override
 	public PortalCache<? extends Serializable, ? extends Serializable>
 		getPortalCache(String portalCacheName, boolean blocking, boolean mvcc) {
 
-		PortalCacheManager<? extends Serializable, ? extends Serializable>
-			portalCacheManager = getPortalCacheManager();
-
-		return portalCacheManager.getPortalCache(
+		return _portalCacheManager.getPortalCache(
 			portalCacheName, blocking, mvcc);
 	}
 
@@ -79,23 +67,13 @@ public class MultiVMPoolImpl implements MultiVMPool {
 
 	@Override
 	public void removePortalCache(String portalCacheName) {
-		PortalCacheManager<? extends Serializable, ? extends Serializable>
-			portalCacheManager = getPortalCacheManager();
-
-		portalCacheManager.removePortalCache(portalCacheName);
+		_portalCacheManager.removePortalCache(portalCacheName);
 	}
 
 	@Reference(
 		target = "(portal.cache.manager.name=" + PortalCacheManagerNames.MULTI_VM + ")",
 		unbind = "-"
 	)
-	protected void setPortalCacheManager(
-		PortalCacheManager<? extends Serializable, ? extends Serializable>
-			portalCacheManager) {
-
-		_portalCacheManager = portalCacheManager;
-	}
-
 	private PortalCacheManager<? extends Serializable, ? extends Serializable>
 		_portalCacheManager;
 

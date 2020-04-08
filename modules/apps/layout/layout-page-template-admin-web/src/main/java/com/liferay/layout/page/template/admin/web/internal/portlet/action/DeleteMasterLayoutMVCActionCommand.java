@@ -87,7 +87,7 @@ public class DeleteMasterLayoutMVCActionCommand extends BaseMVCActionCommand {
 				continue;
 			}
 
-			int count = _layoutLocalService.getLayoutsCount(
+			int count = _layoutLocalService.getMasterLayoutsCount(
 				layoutPageTemplateEntry.getGroupId(),
 				layoutPageTemplateEntry.getPlid());
 

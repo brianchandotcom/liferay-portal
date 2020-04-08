@@ -172,7 +172,7 @@ public class MasterLayoutVerticalCard
 
 	@Override
 	public String getSubtitle() {
-		int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
+		int layoutsCount = LayoutLocalServiceUtil.getMasterLayoutsCount(
 			_themeDisplay.getScopeGroupId(),
 			_layoutPageTemplateEntry.getPlid());
 

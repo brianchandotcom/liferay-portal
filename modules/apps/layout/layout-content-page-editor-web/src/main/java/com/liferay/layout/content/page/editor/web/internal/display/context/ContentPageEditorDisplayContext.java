@@ -1800,7 +1800,7 @@ public class ContentPageEditorDisplayContext {
 
 		Layout publishedLayout = _getPublishedLayout();
 
-		int masterUsagesCount = LayoutLocalServiceUtil.getLayoutsCount(
+		int masterUsagesCount = LayoutLocalServiceUtil.getMasterLayoutsCount(
 			themeDisplay.getScopeGroupId(), publishedLayout.getPlid());
 
 		if (masterUsagesCount > 0) {

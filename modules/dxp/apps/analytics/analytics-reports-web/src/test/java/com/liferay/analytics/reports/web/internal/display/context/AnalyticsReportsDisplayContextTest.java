@@ -69,7 +69,7 @@ public class AnalyticsReportsDisplayContextTest {
 	}
 
 	@Test
-	public void testGetProps() {
+	public void testGetPropsWithInvalidAnalyticsConnection() {
 		int organicTrafficAmount = RandomTestUtil.randomInt();
 		double organicTrafficShare = RandomTestUtil.randomDouble();
 
@@ -79,7 +79,7 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			_getAnalyticsReportsDataProvider(
 				organicTrafficAmount, organicTrafficShare, paidTrafficAmount,
-				paidTrafficShare);
+				paidTrafficShare, false);
 
 		AnalyticsReportsInfoItem analyticsReportsInfoItem =
 			_getAnalyticsReportsItem();
@@ -112,14 +112,62 @@ public class AnalyticsReportsDisplayContextTest {
 				JSONUtil.put(
 					"helpMessage", _titles.get(_MESSAGE_KEY_HELP)
 				).put(
+					"name", _TITLE_KEY_PAID
+				).put(
+					"title", _titles.get(_TITLE_KEY_PAID)
+				),
+				JSONUtil.put(
+					"helpMessage", _titles.get(_MESSAGE_KEY_HELP)
+				).put(
 					"name", _TITLE_KEY_ORGANIC
 				).put(
-					"share", organicTrafficShare
-				).put(
 					"title", _titles.get(_TITLE_KEY_ORGANIC)
-				).put(
-					"value", organicTrafficAmount
-				),
+				)
+			).toJSONString(),
+			trafficSourcesJSONArray.toJSONString());
+	}
+
+	@Test
+	public void testGetPropsWithValidAnalyticsConnection() {
+		int organicTrafficAmount = RandomTestUtil.randomInt();
+		double organicTrafficShare = RandomTestUtil.randomDouble();
+
+		int paidTrafficAmount = RandomTestUtil.randomInt();
+		double paidTrafficShare = RandomTestUtil.randomDouble();
+
+		AnalyticsReportsDataProvider analyticsReportsDataProvider =
+			_getAnalyticsReportsDataProvider(
+				organicTrafficAmount, organicTrafficShare, paidTrafficAmount,
+				paidTrafficShare, true);
+
+		AnalyticsReportsInfoItem analyticsReportsInfoItem =
+			_getAnalyticsReportsItem();
+
+		Layout layout = _getLayout();
+
+		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
+			new AnalyticsReportsDisplayContext(
+				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
+				null, null, null, _getResourceBundle(),
+				_getThemeDisplay(layout));
+
+		Map<String, Object> props = analyticsReportsDisplayContext.getProps();
+
+		Assert.assertEquals(
+			analyticsReportsInfoItem.getAuthorName(null),
+			props.get("authorName"));
+
+		Assert.assertEquals(layout.getPublishDate(), props.get("publishDate"));
+
+		Assert.assertEquals(
+			analyticsReportsInfoItem.getTitle(null, LocaleUtil.US),
+			props.get("title"));
+
+		JSONArray trafficSourcesJSONArray = (JSONArray)props.get(
+			"trafficSources");
+
+		Assert.assertEquals(
+			JSONUtil.putAll(
 				JSONUtil.put(
 					"helpMessage", _titles.get(_MESSAGE_KEY_HELP)
 				).put(
@@ -130,6 +178,17 @@ public class AnalyticsReportsDisplayContextTest {
 					"title", _titles.get(_TITLE_KEY_PAID)
 				).put(
 					"value", paidTrafficAmount
+				),
+				JSONUtil.put(
+					"helpMessage", _titles.get(_MESSAGE_KEY_HELP)
+				).put(
+					"name", _TITLE_KEY_ORGANIC
+				).put(
+					"share", organicTrafficShare
+				).put(
+					"title", _titles.get(_TITLE_KEY_ORGANIC)
+				).put(
+					"value", organicTrafficAmount
 				)
 			).toJSONString(),
 			trafficSourcesJSONArray.toJSONString());
@@ -137,7 +196,8 @@ public class AnalyticsReportsDisplayContextTest {
 
 	private AnalyticsReportsDataProvider _getAnalyticsReportsDataProvider(
 		int organicTrafficAmount, double organicTrafficShare,
-		int paidTrafficAmount, double paidTrafficShare) {
+		int paidTrafficAmount, double paidTrafficShare,
+		boolean validAnalyticsConnection) {
 
 		return new AnalyticsReportsDataProvider() {
 
@@ -147,9 +207,15 @@ public class AnalyticsReportsDisplayContextTest {
 
 				return Arrays.asList(
 					new TrafficSource(
-						"search", organicTrafficAmount, organicTrafficShare),
+						_TITLE_KEY_ORGANIC, organicTrafficAmount,
+						organicTrafficShare),
 					new TrafficSource(
 						_TITLE_KEY_PAID, paidTrafficAmount, paidTrafficShare));
+			}
+
+			@Override
+			public boolean isValidAnalyticsConnection(long companyId) {
+				return validAnalyticsConnection;
 			}
 
 		};

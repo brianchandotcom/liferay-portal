@@ -200,7 +200,7 @@ definition {
 
 			Refresh();
 
-			AssertClick.assertPartialTextClickAtNoMouseOver(
+			AssertClick.assertPartialTextClickAt(
 				locator1 = "Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW",
 				value1 = "${eventTitle}");
 		}

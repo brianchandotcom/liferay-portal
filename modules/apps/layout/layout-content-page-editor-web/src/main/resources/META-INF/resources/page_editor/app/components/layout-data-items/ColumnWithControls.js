@@ -18,8 +18,6 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
-import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
-import {useSelector} from '../../store/index';
 import {useIsActive} from '../Controls';
 import TopperEmpty from '../TopperEmpty';
 import Column from './Column';
@@ -28,9 +26,6 @@ import {ResizingContext} from './RowWithControls';
 const ColumnWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
 		const isActive = useIsActive();
-		const canUpdateLayoutContent = useSelector(
-			selectCanUpdateLayoutContent
-		);
 
 		const parentItemIsActive = useMemo(
 			() =>
@@ -81,28 +76,22 @@ const ColumnWithControls = React.forwardRef(
 			[]
 		);
 
-		const content = (
-			<Column className="page-editor__col" item={item} ref={ref}>
-				{parentItemIsActive && !columnInfo.isLastColumn ? (
-					<div>
-						{children}
-						<button
-							className="btn-primary page-editor__col__resizer"
-							onMouseDown={onResizeButtonMouseDown}
-						/>
-					</div>
-				) : (
-					children
-				)}
-			</Column>
-		);
-
-		return canUpdateLayoutContent ? (
+		return (
 			<TopperEmpty item={item} layoutData={layoutData}>
-				{content}
+				<Column className="page-editor__col" item={item} ref={ref}>
+					{parentItemIsActive && !columnInfo.isLastColumn ? (
+						<div>
+							{children}
+							<button
+								className="btn-primary page-editor__col__resizer"
+								onMouseDown={onResizeButtonMouseDown}
+							/>
+						</div>
+					) : (
+						children
+					)}
+				</Column>
 			</TopperEmpty>
-		) : (
-			content
 		);
 	}
 );

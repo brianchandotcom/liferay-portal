@@ -39,7 +39,6 @@ import updateColSize from '../../actions/updateColSize';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import resizeColumns from '../../thunks/resizeColumns';
@@ -75,9 +74,6 @@ const RowWithControls = React.forwardRef(
 		});
 
 		const state = useSelector(state => state);
-		const canUpdateLayoutContent = useSelector(
-			selectCanUpdateLayoutContent
-		);
 
 		const rowRef = useRef(null);
 		const rowRect = getRect(rowRef.current);
@@ -185,64 +181,58 @@ const RowWithControls = React.forwardRef(
 
 		buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration);
 
-		const content = (
-			<Row
-				className="page-editor__row"
-				item={item}
-				layoutData={layoutData}
-				ref={node => {
-					if (node) {
-						rowRef.current = node;
-
-						if (ref) {
-							ref.current = node;
-						}
-					}
-				}}
-			>
-				<FloatingToolbar
-					buttons={buttons}
+		return (
+			<Topper item={item} itemRef={ref} layoutData={layoutData}>
+				<Row
+					className="page-editor__row"
 					item={item}
-					itemRef={ref}
-					onButtonClick={handleButtonClick}
-				/>
+					layoutData={layoutData}
+					ref={node => {
+						if (node) {
+							rowRef.current = node;
 
-				<ResizingContext.Provider
-					value={{
-						onResizeEnd,
-						onResizeStart,
-						onResizing,
+							if (ref) {
+								ref.current = node;
+							}
+						}
 					}}
 				>
-					{children}
+					<FloatingToolbar
+						buttons={buttons}
+						item={item}
+						itemRef={ref}
+						onButtonClick={handleButtonClick}
+					/>
 
-					{showOverlay && (
-						<ColumnOverlayGrid
-							columnSpacing={gutters}
-							highlightedColumn={highlightedColumn}
-							rowRect={rowRect}
+					<ResizingContext.Provider
+						value={{
+							onResizeEnd,
+							onResizeStart,
+							onResizing,
+						}}
+					>
+						{children}
+
+						{showOverlay && (
+							<ColumnOverlayGrid
+								columnSpacing={gutters}
+								highlightedColumn={highlightedColumn}
+								rowRect={rowRect}
+							/>
+						)}
+					</ResizingContext.Provider>
+
+					{openSaveFragmentCompositionModal && (
+						<SaveFragmentCompositionModal
+							errorMessage={''}
+							itemId={item.itemId}
+							observer={observer}
+							onClose={onClose}
+							onErrorDismiss={() => true}
 						/>
 					)}
-				</ResizingContext.Provider>
-
-				{openSaveFragmentCompositionModal && (
-					<SaveFragmentCompositionModal
-						errorMessage={''}
-						itemId={item.itemId}
-						observer={observer}
-						onClose={onClose}
-						onErrorDismiss={() => true}
-					/>
-				)}
-			</Row>
-		);
-
-		return canUpdateLayoutContent ? (
-			<Topper item={item} itemRef={ref} layoutData={layoutData}>
-				{content}
+				</Row>
 			</Topper>
-		) : (
-			content
 		);
 	}
 );

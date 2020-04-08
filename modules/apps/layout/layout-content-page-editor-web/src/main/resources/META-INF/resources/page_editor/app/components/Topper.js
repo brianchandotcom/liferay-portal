@@ -69,7 +69,17 @@ TopperListItem.propTypes = {
 	expand: PropTypes.bool,
 };
 
-export default function Topper({children, item, itemRef, layoutData}) {
+export default function({children, ...props}) {
+	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
+
+	return canUpdateLayoutContent ? (
+		<Topper {...props}>{children}</Topper>
+	) : (
+		children
+	);
+}
+
+function Topper({children, item, itemRef, layoutData}) {
 	const containerRef = useRef(null);
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);

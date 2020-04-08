@@ -80,31 +80,25 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 		state.widgets,
 	]);
 
-	const content = (
-		<>
-			{canUpdateLayoutContent && (
-				<FloatingToolbar
-					buttons={floatingToolbarButtons}
-					item={item}
-					itemRef={ref}
-					onButtonClick={handleButtonClick}
-				/>
-			)}
-
-			<FragmentContent
-				fragmentEntryLinkId={fragmentEntryLink.fragmentEntryLinkId}
-				itemId={item.itemId}
-				ref={ref}
-			/>
-		</>
-	);
-
-	return canUpdateLayoutContent ? (
+	return (
 		<Topper item={item} itemRef={ref} layoutData={layoutData}>
-			{content}
+			<>
+				{canUpdateLayoutContent && (
+					<FloatingToolbar
+						buttons={floatingToolbarButtons}
+						item={item}
+						itemRef={ref}
+						onButtonClick={handleButtonClick}
+					/>
+				)}
+
+				<FragmentContent
+					fragmentEntryLinkId={fragmentEntryLink.fragmentEntryLinkId}
+					itemId={item.itemId}
+					ref={ref}
+				/>
+			</>
 		</Topper>
-	) : (
-		content
 	);
 });
 

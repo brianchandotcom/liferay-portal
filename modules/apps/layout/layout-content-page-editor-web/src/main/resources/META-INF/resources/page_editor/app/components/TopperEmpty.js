@@ -20,12 +20,23 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import selectCanUpdateLayoutContent from '../selectors/selectCanUpdateLayoutContent';
 import {useSelector} from '../store/index';
 import useDragAndDrop, {TARGET_POSITION} from '../utils/useDragAndDrop';
 import {useToControlsId} from './CollectionItemContext';
 import getLabelName from './layout-data-items/getLabelName';
 
-export default function TopperEmpty({children, item, layoutData}) {
+export default function({children, ...props}) {
+	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
+
+	return canUpdateLayoutContent ? (
+		<TopperEmpty {...props}>{children}</TopperEmpty>
+	) : (
+		children
+	);
+}
+
+function TopperEmpty({children, item, layoutData}) {
 	const containerRef = useRef(null);
 	const store = useSelector(state => state);
 	const fragmentEntryLinks = store.fragmentEntryLinks;

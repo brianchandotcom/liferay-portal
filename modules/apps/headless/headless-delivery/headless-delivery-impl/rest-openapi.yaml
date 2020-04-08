@@ -226,8 +226,6 @@ components:
             properties:
                 collectionConfig:
                     type: object
-                listFormat:
-                    type: string
                 numberOfColumns:
                     type: integer
                 numberOfItems:

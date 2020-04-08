@@ -401,8 +401,6 @@ public class PageDefinitionConverterUtil {
 							collectionConfig = _getConfigAsMap(
 								collectionLayoutStructureItem.
 									getCollectionJSONObject());
-							listFormat =
-								collectionLayoutStructureItem.getListFormat();
 							numberOfColumns =
 								collectionLayoutStructureItem.
 									getNumberOfColumns();

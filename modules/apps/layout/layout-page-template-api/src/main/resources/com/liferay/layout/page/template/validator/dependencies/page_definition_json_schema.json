@@ -10,10 +10,6 @@
 					"title": "The collectionConfig Schema",
 					"type": "object"
 				},
-				"listFormat": {
-					"title": "The listFormat Schema",
-					"type": "string"
-				},
 				"numberOfColumns": {
 					"minimum" : 0,
 					"title": "The numberOfColumns Schema",

@@ -60,8 +60,6 @@ public class CollectionLayoutStructureItemHelper
 					_getCollectionConfigAsJSONObject(collectionConfig));
 			}
 
-			collectionLayoutStructureItem.setListFormat(
-				(String)definitionMap.get("listFormat"));
 			collectionLayoutStructureItem.setNumberOfColumns(
 				(Integer)definitionMap.get("numberOfColumns"));
 			collectionLayoutStructureItem.setNumberOfColumns(

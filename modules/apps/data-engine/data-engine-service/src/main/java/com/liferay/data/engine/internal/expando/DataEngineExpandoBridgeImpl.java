@@ -228,7 +228,7 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 
 		try {
 			DDLRecord ddlRecord =
-				DDLRecordLocalServiceUtil.fetchFirstRecordByClassNameAndClassPK(
+				DDLRecordLocalServiceUtil.fetchFirstRecord(
 					_className, _classPK);
 
 			if (ddlRecord == null) {
@@ -418,7 +418,7 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 			DataRecord dataRecord = null;
 
 			DDLRecord ddlRecord =
-				DDLRecordLocalServiceUtil.fetchFirstRecordByClassNameAndClassPK(
+				DDLRecordLocalServiceUtil.fetchFirstRecord(
 					_className, _classPK);
 
 			if (ddlRecord == null) {

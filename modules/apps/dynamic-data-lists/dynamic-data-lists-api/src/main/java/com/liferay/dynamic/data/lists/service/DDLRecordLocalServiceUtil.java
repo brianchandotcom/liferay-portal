@@ -306,10 +306,9 @@ public class DDLRecordLocalServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecord
-		fetchFirstRecordByClassNameAndClassPK(String className, long classPK) {
+		fetchFirstRecord(String className, long classPK) {
 
-		return getService().fetchFirstRecordByClassNameAndClassPK(
-			className, classPK);
+		return getService().fetchFirstRecord(className, classPK);
 	}
 
 	/**

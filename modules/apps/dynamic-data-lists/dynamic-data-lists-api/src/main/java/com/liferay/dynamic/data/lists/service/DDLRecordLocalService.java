@@ -272,8 +272,7 @@ public interface DDLRecordLocalService
 	public DDLRecord fetchDDLRecordByUuidAndGroupId(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecord fetchFirstRecordByClassNameAndClassPK(
-		String className, long classPK);
+	public DDLRecord fetchFirstRecord(String className, long classPK);
 
 	/**
 	 * Returns the record with the ID.

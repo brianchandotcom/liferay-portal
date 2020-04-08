@@ -318,11 +318,10 @@ public class DDLRecordLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecord
-		fetchFirstRecordByClassNameAndClassPK(String className, long classPK) {
+	public com.liferay.dynamic.data.lists.model.DDLRecord fetchFirstRecord(
+		String className, long classPK) {
 
-		return _ddlRecordLocalService.fetchFirstRecordByClassNameAndClassPK(
-			className, classPK);
+		return _ddlRecordLocalService.fetchFirstRecord(className, classPK);
 	}
 
 	/**

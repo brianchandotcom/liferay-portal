@@ -91,10 +91,10 @@ public class DataEngineNativeObjectTest {
 
 		DataDefinitionResource dataDefinitionResource =
 			DataDefinitionResource.builder(
-			).user(
-				company.getDefaultUser()
 			).checkPermissions(
 				false
+			).user(
+				company.getDefaultUser()
 			).build();
 
 		DataDefinition dataDefinition =

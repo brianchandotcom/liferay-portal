@@ -392,9 +392,12 @@ const getElementAlign = (element, anchor) => {
 	let horizontal = 'left';
 	let vertical = 'bottom';
 
-	const productMenuOpen = Liferay.SideNavigation.instance(
-		document.querySelector('.product-menu-toggle')
-	).visible();
+	const productMenu = document.querySelector('.product-menu-toggle');
+
+	const productMenuOpen = productMenu
+		? Liferay.SideNavigation.instance(productMenu).visible()
+		: false;
+
 	const wrapperWidth = document
 		.getElementById('wrapper')
 		.getBoundingClientRect().width;

@@ -64,7 +64,10 @@ const Modal = ({buttons, id, onClose, size, title, url}) => {
 
 				const forms = iframeDocument.querySelectorAll('form');
 
-				if (forms.length !== 1) {
+				if (
+					forms.length !== 1 &&
+					process.env.NODE_ENV === 'development'
+				) {
 					console.warn('There should be one form within a modal.');
 				}
 
@@ -75,10 +78,8 @@ const Modal = ({buttons, id, onClose, size, title, url}) => {
 						form.submit();
 					}
 				}
-				else {
-					if (forms.length >= 1) {
-						forms[0].submit();
-					}
+				else if (forms.length >= 1) {
+					forms[0].submit();
 				}
 			}
 		}

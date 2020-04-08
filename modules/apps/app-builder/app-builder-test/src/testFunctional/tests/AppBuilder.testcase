@@ -2747,9 +2747,9 @@ definition {
 		FormViewBuilder.validateObjectFieldName(fieldName = "Text");
 	}
 
-	@description = "Remove a field from the Form View from the Objects Sidebar"
+	@description = "Remove a field added to the Objects Sidebar and make sure is not possible to save an empty form"
 	@priority = "5"
-	test RemoveFormViewFieldInObjectSidebar {
+	test MakeSureIsNotPossibleSaveEmptyFormView {
 		property portal.upstream = "quarantine";
 
 		AppBuilderAdmin.addCustomObject(

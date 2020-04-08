@@ -25,7 +25,10 @@ patch {
 	fileNames "org/apache/felix/fileinstall/internal/DirectoryWatcher.java"
 	fileNames "org/apache/felix/fileinstall/internal/FileInstall.java"
 	fileNames "org/apache/felix/fileinstall/internal/Util.java"
+	fileNames "org/apache/felix/utils/properties/ConfigurationHandler.java"
 	fileNames "org/apache/felix/utils/properties/InterpolationHelper.java"
+	fileNames "org/apache/felix/utils/properties/Properties.java"
+	fileNames "org/apache/felix/utils/properties/TypedProperties.java"
 	fileNames "OSGI-INF/metatype/metatype.xml"
 
 	originalLibModuleName = "org.apache.felix.fileinstall"

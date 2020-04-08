@@ -457,7 +457,16 @@ public class SharepointExtRepository implements ExtRepository {
 		String extRepositoryModelKey =
 			extRepositoryObject.getExtRepositoryModelKey();
 
+		String siteRepositoryModelKey = extRepositoryModelKey;
+
+		if (extRepositoryModelKey.contains(StringPool.SLASH)) {
+			siteRepositoryModelKey = extRepositoryModelKey.substring(
+				extRepositoryModelKey.lastIndexOf(StringPool.SLASH) + 1);
+		}
+
 		if (extRepositoryModelKey.equals(
+				_rootFolder.getExtRepositoryModelKey()) ||
+			siteRepositoryModelKey.equals(
 				_rootFolder.getExtRepositoryModelKey())) {
 
 			return null;

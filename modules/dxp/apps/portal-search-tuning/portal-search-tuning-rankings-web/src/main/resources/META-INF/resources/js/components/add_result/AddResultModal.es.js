@@ -14,7 +14,7 @@ import {useResource} from '@clayui/data-provider';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import ClayModal, {useModal} from '@clayui/modal';
+import ClayModal from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
@@ -40,8 +40,9 @@ import AddResultSearchBar from './AddResultSearchBar.es';
  */
 function AddResultModal({
 	fetchDocumentsSearchUrl,
+	observer,
 	onAddResultSubmit,
-	onCloseModal,
+	onClose,
 }) {
 	const {companyId, namespace, spritemap} = useContext(ThemeContext);
 
@@ -71,10 +72,6 @@ function AddResultModal({
 	 * `onAddResultSubmit`.
 	 */
 	const [dataMap, setDataMap] = useState(false);
-
-	const {observer, onClose} = useModal({
-		onClose: _handleCloseModal,
-	});
 
 	const {refetch, resource} = useResource({
 		fetchOptions: FETCH_OPTIONS,
@@ -159,14 +156,6 @@ function AddResultModal({
 	 */
 	function _handleClearAllSelected() {
 		setSelectedIds([]);
-	}
-
-	/**
-	 * Closes the modal and reverts back to initial state for the next time the
-	 * modal is opened.
-	 */
-	function _handleCloseModal() {
-		onCloseModal();
 	}
 
 	/**
@@ -505,7 +494,7 @@ function AddResultModal({
 AddResultModal.propTypes = {
 	fetchDocumentsSearchUrl: PropTypes.string.isRequired,
 	onAddResultSubmit: PropTypes.func.isRequired,
-	onCloseModal: PropTypes.func.isRequired,
+	onClose: PropTypes.func.isRequired,
 };
 
 export default AddResultModal;

@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import {useModal} from '@clayui/modal';
 import {
 	fireEvent,
 	getByPlaceholderText,
@@ -31,16 +32,21 @@ const RESULTS_LIST_ID = 'add-result-items';
 
 const START_ID = 100;
 
-function renderTestAddResultModal(props) {
-	return render(
+const AddResultModalWithModalMock = props => {
+	const {observer, onClose} = useModal({
+		onClose: jest.fn(),
+	});
+
+	return (
 		<AddResultModal
 			fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+			observer={observer}
 			onAddResultSubmit={jest.fn()}
-			onCloseModal={jest.fn()}
+			onClose={onClose}
 			{...props}
 		/>
 	);
-}
+};
 
 /**
  * Function that triggers the search in the modal, in order to see
@@ -68,7 +74,7 @@ describe('AddResultModal', () => {
 	});
 
 	it('renders the modal', async () => {
-		const {findByTestId} = renderTestAddResultModal();
+		const {findByTestId} = render(<AddResultModalWithModalMock />);
 
 		const modalElement = await findByTestId(MODAL_ID);
 
@@ -84,7 +90,7 @@ describe('AddResultModal', () => {
 		// This should be removed after disabling the initial fetch.
 		fetch.mockResponse(JSON.stringify({}));
 
-		const {getByTestId} = renderTestAddResultModal();
+		const {getByTestId} = render(<AddResultModalWithModalMock />);
 
 		await waitForElement(() => getByTestId(MODAL_ID));
 
@@ -98,9 +104,11 @@ describe('AddResultModal', () => {
 	it('searches for results and calls the onAddResultSubmit function after add is pressed', async () => {
 		const onAddResultSubmit = jest.fn();
 
-		const {getByTestId, getByText} = renderTestAddResultModal({
-			onAddResultSubmit,
-		});
+		const {getByTestId, getByText} = render(
+			<AddResultModalWithModalMock
+				onAddResultSubmit={onAddResultSubmit}
+			/>
+		);
 
 		await openResultsList(getByTestId);
 
@@ -114,7 +122,9 @@ describe('AddResultModal', () => {
 	});
 
 	it('disables the add button when the selected results are empty', async () => {
-		const {getByTestId, getByText} = renderTestAddResultModal();
+		const {getByTestId, getByText} = render(
+			<AddResultModalWithModalMock />
+		);
 
 		await waitForElement(() => getByTestId(MODAL_ID));
 
@@ -122,7 +132,7 @@ describe('AddResultModal', () => {
 	});
 
 	it('shows the results in the modal after enter key is pressed', async () => {
-		const {getByTestId} = renderTestAddResultModal();
+		const {getByTestId} = render(<AddResultModalWithModalMock />);
 
 		await openResultsList(getByTestId);
 
@@ -133,7 +143,7 @@ describe('AddResultModal', () => {
 	});
 
 	it('does not show the prompt in the modal after enter key is pressed', async () => {
-		const {getByTestId} = renderTestAddResultModal();
+		const {getByTestId} = render(<AddResultModalWithModalMock />);
 
 		await openResultsList(getByTestId);
 
@@ -143,7 +153,9 @@ describe('AddResultModal', () => {
 	});
 
 	it('closes the modal when the cancel button gets clicked', async () => {
-		const {getByText, queryByTestId} = renderTestAddResultModal();
+		const {getByText, queryByTestId} = render(
+			<AddResultModalWithModalMock />
+		);
 
 		await waitForElement(() => queryByTestId(MODAL_ID));
 
@@ -157,7 +169,11 @@ describe('AddResultModal', () => {
 	it('shows next page results in the modal after navigation is pressed', async () => {
 		const onAddResultSubmit = jest.fn();
 
-		const {getByTestId} = renderTestAddResultModal({onAddResultSubmit});
+		const {getByTestId} = render(
+			<AddResultModalWithModalMock
+				onAddResultSubmit={onAddResultSubmit}
+			/>
+		);
 
 		await openResultsList(getByTestId);
 
@@ -182,9 +198,11 @@ describe('AddResultModal', () => {
 	it('updates results count in the modal after page delta is pressed', async () => {
 		const onAddResultSubmit = jest.fn();
 
-		const {getByTestId, queryAllByText} = renderTestAddResultModal({
-			onAddResultSubmit,
-		});
+		const {getByTestId, queryAllByText} = render(
+			<AddResultModalWithModalMock
+				onAddResultSubmit={onAddResultSubmit}
+			/>
+		);
 
 		await openResultsList(getByTestId);
 

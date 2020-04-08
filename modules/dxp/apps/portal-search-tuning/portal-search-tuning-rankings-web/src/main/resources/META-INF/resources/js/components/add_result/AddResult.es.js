@@ -10,6 +10,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -22,18 +23,15 @@ import AddResultModal from './AddResultModal.es';
 function AddResult({fetchDocumentsSearchUrl, onAddResultSubmit}) {
 	const [showModal, setShowModal] = useState(false);
 
+	const {observer, onClose} = useModal({
+		onClose: () => setShowModal(false),
+	});
+
 	/**
 	 * Opens the modal when the add result button is clicked.
 	 */
 	function _handleAddResultButton() {
 		setShowModal(true);
-	}
-
-	/**
-	 * Hides the modal.
-	 */
-	function _handleCloseModal() {
-		setShowModal(false);
 	}
 
 	return (
@@ -49,8 +47,9 @@ function AddResult({fetchDocumentsSearchUrl, onAddResultSubmit}) {
 				{showModal ? (
 					<AddResultModal
 						fetchDocumentsSearchUrl={fetchDocumentsSearchUrl}
+						observer={observer}
 						onAddResultSubmit={onAddResultSubmit}
-						onCloseModal={_handleCloseModal}
+						onClose={onClose}
 					/>
 				) : null}
 			</ErrorBoundary>

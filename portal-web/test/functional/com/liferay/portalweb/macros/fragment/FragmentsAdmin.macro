@@ -27,6 +27,10 @@ definition {
 
 		IFrame.selectConfigurationFrame();
 
+		Pause(locator1 = "3000");
+
+		AssertVisible(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
+
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
 			value1 = "${resourceFile}");

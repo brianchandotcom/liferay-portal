@@ -8,7 +8,13 @@
 					"description": "number-of-tabs",
 					"label": "Number Of Tabs",
 					"name": "numberOfTabs",
-					"type": "text"
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"min": 1,
+							"type": "number"
+						}
+					}
 				},
 				{
 					"dataType": "string",

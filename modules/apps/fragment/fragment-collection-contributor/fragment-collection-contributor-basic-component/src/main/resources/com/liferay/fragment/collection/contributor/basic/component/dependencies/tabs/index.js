@@ -1,6 +1,7 @@
 /*eslint-disable*/
 const dropdown = fragmentElement.querySelector('.navbar-collapse');
 const dropdownButton = fragmentElement.querySelector('.navbar-toggler-link');
+const editMode = document.body.classList.contains('has-edit-mode-menu');
 const tabItems = [].slice.call(fragmentElement.querySelectorAll('.nav-link'));
 const tabPanelItems = [].slice.call(
 	fragmentElement.querySelectorAll('.tab-panel-item')
@@ -55,14 +56,12 @@ function openTabPanel(event, i) {
 	const isEditable = target.hasAttribute('data-lfr-editable-id') || target.hasAttribute('contenteditable');
 	const dropdownIsOpen = JSON.parse(dropdownButton.getAttribute('aria-expanded'));
 
-	event.preventDefault();
-
-	if (!isEditable) {	
+	if (!isEditable || !editMode) {	
 		if (dropdownIsOpen) {
 			handleDropdown({event, item: currentTarget});
 		}
-	
-		target.focus();
+
+		currentTarget.focus();
 
 		activeTab(currentTarget, i);
 		activeTabPanel(tabPanelItems[i]);
@@ -80,13 +79,8 @@ function main() {
 			if (!i) {
 				activeTab(item);
 			}
-			item.addEventListener('mousedown', function(event) {
+			item.addEventListener('click', function(event) {
 				openTabPanel(event, i);
-			});
-			item.addEventListener('keyup', function (event) {
-				if (event.keyCode === 13) {
-					openTabPanel(event, i);
-				}
 			});
 		});
 		tabPanelItems.forEach(function(item, i) {
@@ -99,13 +93,8 @@ function main() {
 		tabItemSelected = tabItems[this.tabIndex];
 		tabItems.forEach(function(item, i) {
 			activeTab(tabItems[this.tabIndex]);
-			item.addEventListener('mousedown', function(event) {
+			item.addEventListener('click', function(event) {
 				openTabPanel(event, i);
-			});
-			item.addEventListener('keyup', function (event) {
-				if (event.keyCode === 13) {
-					openTabPanel(event, i);
-				}
 			});
 		});
 		tabPanelItems.forEach(function() {

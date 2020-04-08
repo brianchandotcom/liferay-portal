@@ -15,10 +15,17 @@
 
 .component-tabs .navigation-bar-light .nav-link {
     color: #6B6C7E;
+    background: none;
+    border: none;
 }
 
 .component-tabs .navigation-bar-light .nav-link.active {
     color: #272833;
+}
+
+.component-tabs .navigation-bar-light .nav-link span:focus {
+    box-shadow: none;
+    outline: none;
 }
 
 .component-tabs img {

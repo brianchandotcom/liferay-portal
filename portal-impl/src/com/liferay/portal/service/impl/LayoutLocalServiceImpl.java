@@ -1784,6 +1784,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getMasterLayouts(long, long)}
+	 */
+	@Deprecated
+	@Override
+	public List<Layout> getLayouts(long groupId, long masterLayoutPlid) {
+		return layoutPersistence.findByG_MLP(groupId, masterLayoutPlid);
+	}
+
+	/**
 	 * Returns a range of all the layouts belonging to the group.
 	 *
 	 * @param  groupId the primary key of the group
@@ -2030,6 +2040,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	@Override
 	public int getLayoutsCount(long groupId, boolean privateLayout) {
 		return layoutPersistence.countByG_P(groupId, privateLayout);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getMasterLayoutsCount(long, long)}
+	 */
+	@Deprecated
+	@Override
+	public int getLayoutsCount(long groupId, long masterLayoutPlid) {
+		return layoutPersistence.countByG_MLP(groupId, masterLayoutPlid);
 	}
 
 	@Override

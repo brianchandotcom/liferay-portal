@@ -81,7 +81,9 @@ public class DepotPanelAppController {
 			_panelAppRegistry, _panelCategoryRegistry);
 
 		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext, PanelApp.class,
+			bundleContext,
+			"(&(objectClass=com.liferay.application.list.PanelApp)" +
+				"(!(depot.panel.app.wrapper=*)))",
 			new DepotPanelAppServiceTrackerCustomizer(bundleContext));
 	}
 
@@ -130,10 +132,6 @@ public class DepotPanelAppController {
 
 			PanelApp panelApp = _bundleContext.getService(serviceReference);
 
-			if (panelApp instanceof PanelAppWrapper) {
-				return null;
-			}
-
 			Dictionary<String, Object> panelAppProperties =
 				new HashMapDictionary<>();
 
@@ -143,6 +141,8 @@ public class DepotPanelAppController {
 
 			panelAppProperties.put(
 				"panel.app.order", _getPanelAppOrder(serviceReference) - 1);
+
+			panelAppProperties.put("depot.panel.app.wrapper", Boolean.TRUE);
 
 			PanelApp wrappedPanelApp = new PanelAppWrapper(panelApp);
 

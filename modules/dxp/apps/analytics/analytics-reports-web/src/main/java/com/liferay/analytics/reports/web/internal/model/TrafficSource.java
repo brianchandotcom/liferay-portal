@@ -17,7 +17,6 @@ package com.liferay.analytics.reports.web.internal.model;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -85,23 +84,15 @@ public class TrafficSource {
 		_trafficShare = trafficShare;
 	}
 
-	public JSONObject toJSONObject(
-		String helpMessage, Map<String, String> titleMap) {
-
-		String name = _name;
-
-		if (Objects.equals(name, "search")) {
-			name = "organic";
-		}
-
+	public JSONObject toJSONObject(String helpMessage, String title) {
 		return JSONUtil.put(
 			"helpMessage", helpMessage
 		).put(
-			"name", name
+			"name", getName()
 		).put(
 			"share", getTrafficShare()
 		).put(
-			"title", titleMap.getOrDefault(name, name)
+			"title", title
 		).put(
 			"value", getTrafficAmount()
 		);

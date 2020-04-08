@@ -19,9 +19,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
-import java.util.Collections;
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -45,9 +42,7 @@ public class TrafficSourceTest {
 			RandomTestUtil.randomDouble());
 
 		String helpMessage = RandomTestUtil.randomString();
-
-		Map<String, String> titleMap = Collections.singletonMap(
-			trafficSource.getName(), RandomTestUtil.randomString());
+		String title = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			JSONUtil.put(
@@ -57,11 +52,11 @@ public class TrafficSourceTest {
 			).put(
 				"share", trafficSource.getTrafficShare()
 			).put(
-				"title", titleMap.get(trafficSource.getName())
+				"title", title
 			).put(
 				"value", trafficSource.getTrafficAmount()
 			).toString(),
-			String.valueOf(trafficSource.toJSONObject(helpMessage, titleMap)));
+			String.valueOf(trafficSource.toJSONObject(helpMessage, title)));
 	}
 
 }

@@ -20,7 +20,7 @@ import {numberFormat} from './utils/numberFormat';
 export default function({context, props}) {
 	const {languageTag, namespace, page} = context;
 	const {defaultTimeSpanKey, timeSpans} = context;
-	const {validAnalyticsCloudConnection} = context;
+	const {validAnalyticsConnection} = context;
 	const {authorName, publishDate, title} = props;
 	const {trafficSources} = props;
 
@@ -52,7 +52,7 @@ export default function({context, props}) {
 			pageTitle={title}
 			timeSpanOptions={timeSpans}
 			trafficSources={trafficSources}
-			validAnalyticsCloudConnection={validAnalyticsCloudConnection}
+			validAnalyticsConnection={validAnalyticsConnection}
 		/>
 	);
 }
@@ -66,7 +66,7 @@ function Navigation({
 	pageTitle,
 	timeSpanOptions,
 	trafficSources,
-	validAnalyticsCloudConnection,
+	validAnalyticsConnection,
 }) {
 	const [currentPage, setCurrentPage] = useState({view: 'main'});
 
@@ -135,7 +135,7 @@ function Navigation({
 
 	return (
 		<>
-			{!validAnalyticsCloudConnection && (
+			{!validAnalyticsConnection && (
 				<ClayAlert
 					className="p-0"
 					displayType="danger"

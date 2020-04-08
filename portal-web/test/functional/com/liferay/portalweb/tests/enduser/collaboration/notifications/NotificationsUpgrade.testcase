@@ -10,7 +10,7 @@ definition {
 	setUp {
 		SignIn.signIn(userEmailAddress = "user@liferay.com");
 
-		Smoke.viewWelcomePage(upgrade = "true");
+		Smoke.viewWelcomePage();
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

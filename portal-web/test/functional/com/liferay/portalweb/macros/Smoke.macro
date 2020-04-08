@@ -132,11 +132,9 @@ definition {
 			locator1 = "HelloWorld#PORTLET_TITLE",
 			value1 = "Hello World");
 
-		if ("${upgrade}" == "true") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "HelloWorld#PORTLET_CONTENT",
-				value1 = "Welcome to Liferay");
-		}
+		AssertTextEquals.assertPartialText(
+			locator1 = "HelloWorld#PORTLET_CONTENT",
+			value1 = "Welcome to Liferay");
 	}
 
 }

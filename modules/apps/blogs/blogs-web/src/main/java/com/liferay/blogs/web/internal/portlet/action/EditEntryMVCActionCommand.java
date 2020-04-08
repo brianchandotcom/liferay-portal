@@ -198,6 +198,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			if (Validator.isNotNull(portletResource) &&
 				(workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
+				hideDefaultSuccessMessage(actionRequest);
+
 				MultiSessionMessages.add(
 					actionRequest, portletResource + "requestProcessed");
 			}

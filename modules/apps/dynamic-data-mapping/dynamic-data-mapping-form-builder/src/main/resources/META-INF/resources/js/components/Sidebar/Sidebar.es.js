@@ -17,7 +17,11 @@ import ClayButton from 'clay-button';
 import {ClayActionsDropdown, ClayDropdownBase} from 'clay-dropdown';
 import {ClayIcon} from 'clay-icon';
 import ClayModal from 'clay-modal';
-import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {
+	FormSupport,
+	PagesVisitor,
+	generateName,
+} from 'dynamic-data-mapping-form-renderer';
 import Form from 'dynamic-data-mapping-form-renderer/js/containers/Form/Form.es';
 import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 import dom from 'metal-dom';
@@ -160,11 +164,16 @@ class Sidebar extends Component {
 		return {
 			...settingsContext,
 			pages: visitor.mapFields(field => {
-				return {
+				const updatedField = {
 					...field,
 					defaultLanguageId,
 					editingLanguageId,
 					readOnly: this.isFieldReadOnly(field),
+				};
+
+				return {
+					...updatedField,
+					name: generateName(field.name, updatedField),
 				};
 			}),
 		};

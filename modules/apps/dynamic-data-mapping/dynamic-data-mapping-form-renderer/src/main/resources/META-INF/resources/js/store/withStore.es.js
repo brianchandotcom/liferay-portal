@@ -154,27 +154,24 @@ export default Component => {
 		}
 
 		willReceiveState(changes) {
+			const {defaultLanguageId} = this;
 			const {editingLanguageId} = changes;
 
 			if (editingLanguageId) {
 				const visitor = new PagesVisitor(this.pages);
 
-				const newPages = visitor.mapFields(
-					({localizedValue, name}) => ({
-						name: name.replace(
-							editingLanguageId.prevVal,
-							editingLanguageId.newVal
-						),
+				this.pages = visitor.mapFields(
+					({localizedValue}) => ({
 						value:
 							localizedValue &&
 							localizedValue[editingLanguageId.newVal]
 								? localizedValue[editingLanguageId.newVal]
+								: localizedValue[defaultLanguageId]
+								? localizedValue[defaultLanguageId]
 								: null,
 					}),
 					true
 				);
-
-				this.pages = newPages;
 			}
 		}
 

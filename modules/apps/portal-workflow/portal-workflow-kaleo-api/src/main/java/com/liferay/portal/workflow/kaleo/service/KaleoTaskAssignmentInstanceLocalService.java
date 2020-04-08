@@ -95,6 +95,13 @@ public interface KaleoTaskAssignmentInstanceLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public List<KaleoTaskAssignmentInstance> assignKaleoTaskAssignmentInstances(
+			KaleoTaskInstanceToken kaleoTaskInstanceToken,
+			Collection<KaleoTaskAssignment> kaleoTaskAssignments,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public KaleoTaskAssignmentInstance completeKaleoTaskInstanceToken(
 			long kaleoTaskInstanceTokenId, ServiceContext serviceContext)
 		throws PortalException;

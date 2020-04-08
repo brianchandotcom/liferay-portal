@@ -57,13 +57,13 @@ const reducer = (state, action) => {
 					: state.selectedItemsIds.concat([itemId]),
 			};
 		}
-		else if (itemId && itemId !== nextState.activeItemId) {
+		else if (itemId !== nextState.activeItemId) {
 			nextState = {
 				...nextState,
 				activationOrigin: origin,
 				activeItemId: itemId,
 				activeItemType: itemType,
-				selectedItemsIds: [itemId],
+				selectedItemsIds: itemId ? [itemId] : [],
 			};
 		}
 	}

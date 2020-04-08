@@ -162,36 +162,36 @@
 			</library>
 			<library>
 				<file-name>com.liferay.batch.engine.service.jar!poi-ooxml-schemas.jar</file-name>
-				<version>4.1.0</version>
+				<version>4.1.1</version>
 				<project-name>Apache POI</project-name>
 				<project-url>http://poi.apache.org/</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.batch.engine.service.jar!poi-ooxml.jar</file-name>
-				<version>4.1.0</version>
+				<version>4.1.1</version>
 				<project-name>Apache POI</project-name>
 				<project-url>http://poi.apache.org/</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.batch.engine.service.jar!poi.jar</file-name>
-				<version>4.1.0</version>
+				<version>4.1.1</version>
 				<project-name>Apache POI</project-name>
 				<project-url>http://poi.apache.org/</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -338,6 +338,30 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.data.engine.rest.api.jar!jodd-bean.jar</file-name>
+				<version>3.6.4</version>
+				<project-name>Jodd BeanUtil</project-name>
+				<project-url>http://jodd.org</project-url>
+				<licenses>
+					<license>
+						<license-name>The New BSD License</license-name>
+						<license-url>http://jodd.org/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.data.engine.rest.api.jar!jodd-core.jar</file-name>
+				<version>3.6.4</version>
+				<project-name>Jodd Core</project-name>
+				<project-url>http://jodd.org</project-url>
+				<licenses>
+					<license>
+						<license-name>The New BSD License</license-name>
+						<license-url>http://jodd.org/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.data.engine.rest.impl.jar!accessors-smart.jar</file-name>
 				<version>1.1</version>
 				<project-name>ASM based accessors helper used by json-smart</project-name>
@@ -345,6 +369,17 @@
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.data.engine.rest.impl.jar!gson.jar</file-name>
+				<version>2.8.4</version>
+				<project-name>Gson</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -363,42 +398,6 @@
 			</library>
 			<library>
 				<file-name>com.liferay.data.engine.rest.impl.jar!json-smart.jar</file-name>
-				<version>2.2.1</version>
-				<project-name>JSON Small and Fast Parser</project-name>
-				<project-url>http://www.minidev.net/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.data.engine.spi.jar!accessors-smart.jar</file-name>
-				<version>1.1</version>
-				<project-name>ASM based accessors helper used by json-smart</project-name>
-				<project-url>http://www.minidev.net/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.data.engine.spi.jar!json-path.jar</file-name>
-				<version>2.2.0</version>
-				<project-name>Json Path</project-name>
-				<project-url>https://github.com/jayway/JsonPath</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.data.engine.spi.jar!json-smart.jar</file-name>
 				<version>2.2.1</version>
 				<project-name>JSON Small and Fast Parser</project-name>
 				<project-url>http://www.minidev.net/</project-url>
@@ -709,128 +708,128 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-api.jar</file-name>
-				<version>2.7.11</version>
-				<project-name>Apache CXF API</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-core.jar</file-name>
+				<version>3.2.12</version>
+				<project-name>Apache CXF Core</project-name>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-bindings-soap.jar</file-name>
-				<version>2.7.11</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Runtime SOAP Binding</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-bindings-xml.jar</file-name>
-				<version>2.7.11</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Runtime XML Binding</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-core.jar</file-name>
-				<version>2.7.11</version>
-				<project-name>Apache CXF Runtime Core</project-name>
-				<project-url>http://cxf.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-databinding-jaxb.jar</file-name>
-				<version>2.7.11</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Runtime JAXB DataBinding</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-frontend-jaxws.jar</file-name>
-				<version>2.7.11</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Runtime JAX-WS Frontend</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-frontend-simple.jar</file-name>
-				<version>2.7.11</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Runtime Simple Frontend</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-transports-http.jar</file-name>
-				<version>2.7.11</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Runtime HTTP Transport</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-ws-addr.jar</file-name>
-				<version>2.7.11</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Runtime WS Addressing</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-ws-policy.jar</file-name>
-				<version>2.7.11</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Runtime WS Policy</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-wsdl.jar</file-name>
+				<version>3.2.12</version>
+				<project-name>Apache CXF Runtime Core for WSDL</project-name>
+				<project-url>https://cxf.apache.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!neethi.jar</file-name>
-				<version>3.0.3</version>
+				<version>3.1.1</version>
 				<project-name>Apache Neethi</project-name>
 				<project-url>http://www.apache.org/</project-url>
 				<licenses>
@@ -896,13 +895,37 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.dynamic.data.lists.service.jar!SparseBitSet.jar</file-name>
+				<version>1.2</version>
+				<project-name>SparseBitSet</project-name>
+				<project-url>https://github.com/brettwooldridge/SparseBitSet</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.dynamic.data.lists.service.jar!commons-math3.jar</file-name>
+				<version>3.6.1</version>
+				<project-name>Apache Commons Math</project-name>
+				<project-url>http://commons.apache.org/proper/commons-math/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.dynamic.data.lists.service.jar!poi.jar</file-name>
-				<version>3.15</version>
+				<version>4.1.2</version>
 				<project-name>Apache POI</project-name>
 				<project-url>http://poi.apache.org/</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -1225,7 +1248,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-bmp.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.5</version>
 				<project-name>TwelveMonkeys :: ImageIO :: BMP plugin</project-name>
 				<licenses>
 					<license>
@@ -1236,7 +1259,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-core.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.5</version>
 				<project-name>TwelveMonkeys :: ImageIO :: Core</project-name>
 				<licenses>
 					<license>
@@ -1247,7 +1270,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-hdr.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.5</version>
 				<project-name>TwelveMonkeys :: ImageIO :: HDR plugin</project-name>
 				<licenses>
 					<license>
@@ -1258,7 +1281,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-icns.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.5</version>
 				<project-name>TwelveMonkeys :: ImageIO :: ICNS plugin</project-name>
 				<licenses>
 					<license>
@@ -1269,7 +1292,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-iff.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.5</version>
 				<project-name>TwelveMonkeys :: ImageIO :: IFF plugin</project-name>
 				<licenses>
 					<license>
@@ -1280,7 +1303,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-jpeg.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.5</version>
 				<project-name>TwelveMonkeys :: ImageIO :: JPEG plugin</project-name>
 				<licenses>
 					<license>
@@ -1291,7 +1314,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-metadata.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.5</version>
 				<project-name>TwelveMonkeys :: ImageIO :: Metadata</project-name>
 				<licenses>
 					<license>
@@ -1302,7 +1325,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-pcx.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.5</version>
 				<project-name>TwelveMonkeys :: ImageIO :: PCX plugin</project-name>
 				<licenses>
 					<license>
@@ -1313,7 +1336,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-pict.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.5</version>
 				<project-name>TwelveMonkeys :: ImageIO :: PICT plugin</project-name>
 				<licenses>
 					<license>
@@ -1324,7 +1347,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-pnm.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.5</version>
 				<project-name>TwelveMonkeys :: ImageIO :: PNM plugin</project-name>
 				<licenses>
 					<license>
@@ -1335,7 +1358,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-psd.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.5</version>
 				<project-name>TwelveMonkeys :: ImageIO :: PSD plugin</project-name>
 				<licenses>
 					<license>
@@ -1346,7 +1369,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-sgi.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.5</version>
 				<project-name>TwelveMonkeys :: ImageIO :: SGI plugin</project-name>
 				<licenses>
 					<license>
@@ -1357,7 +1380,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-tga.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.5</version>
 				<project-name>TwelveMonkeys :: ImageIO :: TGA plugin</project-name>
 				<licenses>
 					<license>
@@ -1368,7 +1391,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-thumbsdb.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.5</version>
 				<project-name>TwelveMonkeys :: ImageIO :: Thumbs.db plugin</project-name>
 				<licenses>
 					<license>
@@ -1379,7 +1402,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-tiff.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.5</version>
 				<project-name>TwelveMonkeys :: ImageIO :: TIFF plugin</project-name>
 				<licenses>
 					<license>
@@ -1971,73 +1994,73 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!cxf-core.jar</file-name>
-				<version>3.2.5</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Core</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!cxf-rt-bindings-soap.jar</file-name>
-				<version>3.2.5</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Runtime SOAP Binding</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!cxf-rt-bindings-xml.jar</file-name>
-				<version>3.2.5</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Runtime XML Binding</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!cxf-rt-databinding-jaxb.jar</file-name>
-				<version>3.2.5</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Runtime JAXB DataBinding</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!cxf-rt-wsdl.jar</file-name>
-				<version>3.2.5</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Runtime Core for WSDL</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!cxf-tools-validator.jar</file-name>
-				<version>3.2.5</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Command Line Tools Validator</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2055,25 +2078,25 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.rest.extender.jar!cxf-rt-rs-extension-providers.jar</file-name>
-				<version>3.2.5</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF JAX-RS Extensions: Providers</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.rest.extender.jar!cxf-rt-rs-json-basic.jar</file-name>
-				<version>3.2.5</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF JAX-RS Extensions: JSON Basic</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2090,37 +2113,37 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.soap.extender.impl.jar!cxf-rt-frontend-jaxws.jar</file-name>
-				<version>3.2.5</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Runtime JAX-WS Frontend</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.soap.extender.impl.jar!cxf-rt-frontend-simple.jar</file-name>
-				<version>3.2.5</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Runtime Simple Frontend</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.soap.extender.impl.jar!cxf-rt-ws-policy.jar</file-name>
-				<version>3.2.5</version>
+				<version>3.2.12</version>
 				<project-name>Apache CXF Runtime WS Policy</project-name>
-				<project-url>http://cxf.apache.org</project-url>
+				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2590,7 +2613,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!netty-all.jar</file-name>
-				<version>4.1.11.Final</version>
+				<version>4.1.43.Final</version>
 				<project-name>Netty/All-in-One</project-name>
 				<licenses>
 					<license>
@@ -2787,9 +2810,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!unboundid-ldapsdk.jar</file-name>
-				<version>4.0.2</version>
+				<version>4.0.14</version>
 				<project-name>UnboundID LDAP SDK for Java</project-name>
-				<project-url>https://www.ldap.com/unboundid-ldap-sdk-for-java</project-url>
+				<project-url>https://github.com/pingidentity/ldapsdk</project-url>
 				<licenses>
 					<license>
 						<license-name>UnboundID LDAP SDK Free Use License</license-name>

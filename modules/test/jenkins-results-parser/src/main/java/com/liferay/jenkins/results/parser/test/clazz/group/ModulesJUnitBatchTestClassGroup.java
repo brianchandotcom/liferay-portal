@@ -153,6 +153,39 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 							testClassNamesRelativeGlob.substring(3)));
 				}
 			}
+
+			String modulesTestBatchClassNamesIncludes = null;
+
+			File modifiedDirTestProperties = new File(
+				modifiedModuleDir, "test.properties");
+
+			Properties testProperties = JenkinsResultsParserUtil.getProperties(
+				modifiedDirTestProperties);
+
+			if (modifiedDirTestProperties.exists()) {
+				String firstMatchingPropertyName = getFirstMatchingPropertyName(
+					"modules.includes.required.test.batch.class.names.includes",
+					testProperties, testSuiteName);
+
+				if (firstMatchingPropertyName != null) {
+					modulesTestBatchClassNamesIncludes =
+						JenkinsResultsParserUtil.getProperty(
+							testProperties, firstMatchingPropertyName);
+				}
+			}
+
+			if (modulesTestBatchClassNamesIncludes == null) {
+				continue;
+			}
+
+			for (String modulesTestBatchClassNamesInclude :
+					JenkinsResultsParserUtil.getGlobsFromProperty(
+						modulesTestBatchClassNamesIncludes)) {
+
+				relevantTestClassNameRelativeGlobs.add(
+					JenkinsResultsParserUtil.combine(
+						"modules/", modulesTestBatchClassNamesInclude));
+			}
 		}
 
 		return relevantTestClassNameRelativeGlobs;

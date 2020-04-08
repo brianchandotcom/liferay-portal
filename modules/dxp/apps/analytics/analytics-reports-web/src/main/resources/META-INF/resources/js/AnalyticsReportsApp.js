@@ -10,10 +10,11 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import Detail from './components/Detail';
 import Main from './components/Main';
+import StateContext from './state/context';
 import APIService from './utils/APIService';
 import {numberFormat} from './utils/numberFormat';
 
@@ -43,17 +44,22 @@ export default function({context, props}) {
 	});
 
 	return (
-		<Navigation
-			api={api}
-			authorName={authorName}
-			defaultTimeSpanKey={defaultTimeSpanKey}
-			languageTag={languageTag}
-			pagePublishDate={publishDate}
-			pageTitle={title}
-			timeSpanOptions={timeSpans}
-			trafficSources={trafficSources}
-			validAnalyticsConnection={validAnalyticsConnection}
-		/>
+		<StateContext.Provider
+			value={{
+				validAnalyticsConnection,
+			}}
+		>
+			<Navigation
+				api={api}
+				authorName={authorName}
+				defaultTimeSpanKey={defaultTimeSpanKey}
+				languageTag={languageTag}
+				pagePublishDate={publishDate}
+				pageTitle={title}
+				timeSpanOptions={timeSpans}
+				trafficSources={trafficSources}
+			/>
+		</StateContext.Provider>
 	);
 }
 
@@ -66,11 +72,12 @@ function Navigation({
 	pageTitle,
 	timeSpanOptions,
 	trafficSources,
-	validAnalyticsConnection,
 }) {
 	const [currentPage, setCurrentPage] = useState({view: 'main'});
 
 	const [trafficSourceName, setTrafficSourceName] = useState('');
+
+	const {validAnalyticsConnection} = useContext(StateContext);
 
 	const {getHistoricalReads, getHistoricalViews} = api;
 

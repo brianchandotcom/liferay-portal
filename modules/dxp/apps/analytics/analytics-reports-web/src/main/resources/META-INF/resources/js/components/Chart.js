@@ -9,10 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
-import {ClaySelect} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import className from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
@@ -32,6 +29,7 @@ import {useChartState} from '../utils/chartState';
 import {numberFormat} from '../utils/numberFormat';
 import {ActiveDot as CustomActiveDot, Dot as CustomDot} from './CustomDots';
 import CustomTooltip from './CustomTooltip';
+import TimeSpanSelector from './TimeSpanSelector';
 
 const {useEffect, useMemo} = React;
 
@@ -329,55 +327,15 @@ export default function Chart({
 	return (
 		<>
 			{timeSpanOptions.length && (
-				<div className="d-flex mb-3 mt-3">
-					<ClaySelect
-						aria-label={Liferay.Language.get('select-date-range')}
-						onChange={handleTimeSpanChange}
-						value={chartState.timeSpanOption}
-					>
-						{timeSpanOptions.map(option => {
-							return (
-								<ClaySelect.Option
-									key={option.key}
-									label={option.label}
-									value={option.key}
-								/>
-							);
-						})}
-					</ClaySelect>
-
-					<div className="d-flex ml-2">
-						<ClayTooltipProvider>
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get(
-									'previous-period'
-								)}
-								className="mr-1"
-								data-tooltip-align="top-right"
-								disabled={disabledPreviousPeriodButton}
-								displayType="secondary"
-								onClick={handlePreviousTimeSpanClick}
-								small
-								symbol="angle-left"
-								title={
-									disabledPreviousPeriodButton
-										? Liferay.Language.get(
-												'you-cannot-choose-a-date-prior-to-the-publication-date'
-										  )
-										: undefined
-								}
-							/>
-						</ClayTooltipProvider>
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('next-period')}
-							disabled={disabledNextTimeSpan}
-							displayType="secondary"
-							onClick={handleNextTimeSpanClick}
-							small
-							symbol="angle-right"
-						/>
-					</div>
-				</div>
+				<TimeSpanSelector
+					disabledNextTimeSpan={disabledNextTimeSpan}
+					disabledPreviousPeriodButton={disabledPreviousPeriodButton}
+					onNextTimeSpanClick={handleNextTimeSpanClick}
+					onPreviousTimeSpanClick={handlePreviousTimeSpanClick}
+					onTimeSpanChange={handleTimeSpanChange}
+					timeSpanOption={chartState.timeSpanOption}
+					timeSpanOptions={timeSpanOptions}
+				/>
 			)}
 
 			{dataSet ? (

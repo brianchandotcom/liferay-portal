@@ -112,7 +112,7 @@ public class DataRecordValuesUtil {
 				jsonObject.put(
 					entry.getKey(),
 					JSONFactoryUtil.createJSONArray(
-						(Object[])dataRecordValues.get(entry.getKey())));
+						(List<Object>)dataRecordValues.get(entry.getKey())));
 			}
 			else {
 				jsonObject.put(
@@ -154,7 +154,7 @@ public class DataRecordValuesUtil {
 		}
 
 		if (ddmFormField.isRepeatable()) {
-			Object[] instancesValue = null;
+			List<Object> instancesValue = null;
 
 			if (ddmFormField.isLocalizable()) {
 				Object value = dataRecordValues.get(name);
@@ -167,11 +167,11 @@ public class DataRecordValuesUtil {
 				Map<String, Object> localizedValues =
 					(Map<String, Object>)value;
 
-				instancesValue = (Object[])localizedValues.get(
+				instancesValue = (List<Object>)localizedValues.get(
 					LanguageUtil.getLanguageId(locale));
 			}
 			else {
-				instancesValue = (Object[])dataRecordValues.get(name);
+				instancesValue = (List<Object>)dataRecordValues.get(name);
 			}
 
 			if (instancesValue == null) {
@@ -179,7 +179,7 @@ public class DataRecordValuesUtil {
 			}
 
 			List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>(
-				instancesValue.length);
+				instancesValue.size());
 
 			for (Object instanceValue : instancesValue) {
 				ddmFormFieldValue = new DDMFormFieldValue();

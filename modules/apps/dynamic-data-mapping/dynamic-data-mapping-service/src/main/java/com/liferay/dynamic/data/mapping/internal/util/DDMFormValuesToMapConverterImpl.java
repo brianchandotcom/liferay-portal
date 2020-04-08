@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -100,27 +100,24 @@ public class DDMFormValuesToMapConverterImpl
 				for (Locale locale : availableLocales) {
 					String languageId = LanguageUtil.getLanguageId(locale);
 
-					Object[] instancesValue =
-						(Object[])localizedValues.getOrDefault(
-							languageId, new Object[0]);
+					List<Object> instancesValue =
+						(List<Object>)localizedValues.getOrDefault(
+							languageId, new ArrayList<>());
 
-					localizedValues.put(
-						languageId,
-						ArrayUtil.append(
-							instancesValue, localizedValue.getString(locale)));
+					instancesValue.add(localizedValue.getString(locale));
+
+					localizedValues.put(languageId, instancesValue);
 				}
 
 				values.put(ddmFormField.getName(), localizedValues);
 			}
 			else {
-				Object[] instancesValue = (Object[])values.getOrDefault(
-					ddmFormField.getName(), new Object[0]);
+				List<Object> instancesValue = (List<Object>)values.getOrDefault(
+					ddmFormField.getName(), new ArrayList<>());
 
-				values.put(
-					ddmFormField.getName(),
-					ArrayUtil.append(
-						instancesValue,
-						value.getString(value.getDefaultLocale())));
+				instancesValue.add(value.getString(value.getDefaultLocale()));
+
+				values.put(ddmFormField.getName(), instancesValue);
 			}
 		}
 		else if (ddmFormField.isLocalizable()) {

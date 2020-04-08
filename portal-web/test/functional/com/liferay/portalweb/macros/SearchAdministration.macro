@@ -104,7 +104,7 @@ definition {
 				echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
 			}
 
-			while (((contains("${elasticsearchTasks}", "indices:data/write/bulk")) || IsElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && ("${reindexElapsedTime}" != "240") && (maxIterations = "24")) {
+			while (((contains("${elasticsearchTasks}", "indices:data/write/bulk")) || IsElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && ("${reindexElapsedTime}" != "120")) {
 				Pause.pauseNoSPARefresh(locator1 = "10000");
 
 				var reindexElapsedTime = ${reindexElapsedTime} + 10;
@@ -128,7 +128,7 @@ definition {
 				echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
 			}
 
-			while ((IsElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && ("${reindexElapsedTime}" != "240") && (maxIterations = "24")) {
+			while ((IsElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && ("${reindexElapsedTime}" != "120")) {
 				Pause.pauseNoSPARefresh(locator1 = "10000");
 
 				var reindexElapsedTime = ${reindexElapsedTime} + 10;
@@ -137,8 +137,8 @@ definition {
 
 		takeScreenshot();
 
-		if ("${reindexElapsedTime}" == "240") {
-			fail("Reindex timed out after 240 seconds.");
+		if ("${reindexElapsedTime}" == "120") {
+			fail("Reindex timed out after 120 seconds.");
 		}
 		else {
 			echo("Finished reindexing after ${reindexElapsedTime} seconds.");

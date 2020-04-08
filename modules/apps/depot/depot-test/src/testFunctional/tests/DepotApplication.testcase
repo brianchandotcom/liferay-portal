@@ -114,12 +114,11 @@ definition {
 			assetType = "Document");
 	}
 
-	// Ignored because of the ticket LRQA-57597
-
 	@description = "This ensures that the Applications can be set in a depot."
 	@priority = "5"
 	test Smoke {
 		property portal.acceptance = "true";
+		property testray.component.names = "Asset Lists";
 
 		DepotNavigator.openDepotAdmin();
 

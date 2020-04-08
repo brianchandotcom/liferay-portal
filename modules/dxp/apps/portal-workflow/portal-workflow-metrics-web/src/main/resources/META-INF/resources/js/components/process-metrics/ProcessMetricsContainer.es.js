@@ -61,7 +61,7 @@ const PerformanceTab = props => {
 	);
 };
 
-const ProcessMetrics = ({history, processId, query}) => {
+const ProcessMetricsContainer = ({history, processId, query}) => {
 	const {defaultDelta} = useContext(AppContext);
 
 	const dashboardTab = useMemo(
@@ -102,15 +102,12 @@ const ProcessMetrics = ({history, processId, query}) => {
 	}
 
 	return (
-		<div
-			className="workflow-process-dashboard"
-			data-testid="processMetricsDashBoard"
-		>
+		<div className="workflow-process-dashboard">
 			<HeaderKebab
 				kebabItems={[
 					{
 						label: Liferay.Language.get('sla-settings'),
-						link: `/slas/${processId}/${defaultDelta}/1`,
+						link: `/sla/${processId}/list/${defaultDelta}/1`,
 					},
 				]}
 			/>
@@ -136,4 +133,4 @@ const ProcessMetrics = ({history, processId, query}) => {
 	);
 };
 
-export default ProcessMetrics;
+export default ProcessMetricsContainer;

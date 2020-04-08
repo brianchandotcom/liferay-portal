@@ -410,7 +410,7 @@ definition {
 
 	@description = "This ensures that able to select specific asset libraries scope from Collections permissions."
 	@priority = "5"
-	test SelectDepotFromContentSetsPermissions {
+	test SelectDepotFromCollectionsPermissions {
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Depot Regrole Name",
 			userEmailAddress = "userea@liferay.com",
@@ -427,7 +427,7 @@ definition {
 
 		Role.definePermissionCP(
 			assetLibrariesScope = "true",
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_CONTENT_SETS_ASSET_LIST_ENTRY_DELETE_CHECKBOX",
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_COLLECTIONS_ASSET_LIST_ENTRY_DELETE_CHECKBOX",
 			permissionDefinitionValue = "Delete",
 			roleTitle = "Depot Regrole Name",
 			siteNameScope = "Test Depot Name");

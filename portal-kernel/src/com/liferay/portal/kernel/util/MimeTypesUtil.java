@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.util;
 import java.io.File;
 import java.io.InputStream;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -96,10 +95,6 @@ public class MimeTypesUtil {
 		return getMimeTypes().getExtensionContentType(extension);
 	}
 
-	public static String getExtensionMimeType(String extension) {
-		return _mimeTypes.getExtensionContentType(extension);
-	}
-
 	/**
 	 * Returns the possible file extensions for the content type.
 	 *
@@ -109,16 +104,6 @@ public class MimeTypesUtil {
 	 */
 	public static Set<String> getExtensions(String contentType) {
 		return getMimeTypes().getExtensions(contentType);
-	}
-
-	public static Set<String> getExtensionsMimeTypes(String[] extensions) {
-		Set<String> extensionsMimeTypes = new HashSet<>();
-
-		for (String extension : extensions) {
-			extensionsMimeTypes.add(getExtensionMimeType(extension));
-		}
-
-		return extensionsMimeTypes;
 	}
 
 	public static MimeTypes getMimeTypes() {

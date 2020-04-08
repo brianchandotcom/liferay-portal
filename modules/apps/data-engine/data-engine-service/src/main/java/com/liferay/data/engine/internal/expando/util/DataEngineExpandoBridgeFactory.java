@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.data.engine.internal.expando;
+package com.liferay.data.engine.internal.expando.util;
 
+import com.liferay.data.engine.internal.expando.model.DataEngineExpandoBridgeImpl;
 import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactory;

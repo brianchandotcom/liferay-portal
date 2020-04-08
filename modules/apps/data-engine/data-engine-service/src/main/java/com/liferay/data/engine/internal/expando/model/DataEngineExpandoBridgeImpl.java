@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.internal.expando;
+package com.liferay.data.engine.internal.expando.model;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
@@ -227,9 +227,8 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 		}
 
 		try {
-			DDLRecord ddlRecord =
-				DDLRecordLocalServiceUtil.fetchFirstRecord(
-					_className, _classPK);
+			DDLRecord ddlRecord = DDLRecordLocalServiceUtil.fetchFirstRecord(
+				_className, _classPK);
 
 			if (ddlRecord == null) {
 				return getAttributeDefault(name);
@@ -417,9 +416,8 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 
 			DataRecord dataRecord = null;
 
-			DDLRecord ddlRecord =
-				DDLRecordLocalServiceUtil.fetchFirstRecord(
-					_className, _classPK);
+			DDLRecord ddlRecord = DDLRecordLocalServiceUtil.fetchFirstRecord(
+				_className, _classPK);
 
 			if (ddlRecord == null) {
 				dataRecord = new DataRecord();

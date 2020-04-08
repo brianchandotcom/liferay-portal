@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.nativeobject.test;
+package com.liferay.data.engine.internal.expando.model.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
@@ -54,7 +54,7 @@ import org.osgi.framework.ServiceReference;
  * @author Jeyvison Nascimento
  */
 @RunWith(Arquillian.class)
-public class DataEngineNativeObjectTest {
+public class DataEngineExpandoBridgeImplTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -64,7 +64,7 @@ public class DataEngineNativeObjectTest {
 			testGroup.getCompanyId());
 
 		Bundle bundle = FrameworkUtil.getBundle(
-			DataEngineNativeObjectTest.class);
+			DataEngineExpandoBridgeImplTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 

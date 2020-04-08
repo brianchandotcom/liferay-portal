@@ -149,8 +149,6 @@ definition {
 	macro addEntryWithUploadedCoverImage {
 		BlogsNavigator.gotoAddEntry();
 
-		Pause(locator1 = "5000");
-
 		BlogsNavigator.gotoSelectFile();
 
 		ItemSelector.uploadFile(

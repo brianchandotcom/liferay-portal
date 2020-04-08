@@ -222,8 +222,6 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Pause(locator1 = "5000");
-
 		BlogsNavigator.gotoSelectFile();
 
 		ItemSelector.uploadFile(

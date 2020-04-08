@@ -65,7 +65,12 @@ public class AnalyticsReportsDisplayContext {
 		_portal = portal;
 		_renderResponse = renderResponse;
 		_resourceBundle = resourceBundle;
+
 		_themeDisplay = themeDisplay;
+
+		_validAnalyticsConnection =
+			_analyticsReportsDataProvider.isValidAnalyticsConnection(
+				_themeDisplay.getCompanyId());
 	}
 
 	public Map<String, Object> getData() {
@@ -148,7 +153,7 @@ public class AnalyticsReportsDisplayContext {
 			).put(
 				"timeSpans", _getTimeSpansJSONArray()
 			).put(
-				"validAnalyticsConnection", true
+				"validAnalyticsConnection", _validAnalyticsConnection
 			).build()
 		).put(
 			"props", getProps()
@@ -254,5 +259,6 @@ public class AnalyticsReportsDisplayContext {
 	private final RenderResponse _renderResponse;
 	private final ResourceBundle _resourceBundle;
 	private final ThemeDisplay _themeDisplay;
+	private final boolean _validAnalyticsConnection;
 
 }

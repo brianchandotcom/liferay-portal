@@ -19,7 +19,7 @@ import {act} from 'react-dom/test-utils';
 import RatingsLike from '../../src/main/resources/META-INF/resources/js/components/RatingsLike.es';
 import {formDataToObj} from '../utils';
 
-const defaultProps = {
+const baseProps = {
 	className: 'com.liferay.model.RateableEntry',
 	classPK: 'classPK',
 	enabled: true,
@@ -27,8 +27,8 @@ const defaultProps = {
 	url: 'http://url',
 };
 
-const renderComponent = (props = defaultProps) =>
-	render(<RatingsLike {...props} />);
+const renderComponent = props =>
+	render(<RatingsLike {...baseProps} {...props} />);
 
 describe('RatingsLike', () => {
 	afterEach(cleanup);
@@ -52,7 +52,6 @@ describe('RatingsLike', () => {
 	describe('when rendered with enabled = false', () => {
 		it('is disabled', () => {
 			const LikeButton = renderComponent({
-				...defaultProps,
 				enabled: false,
 			}).getByRole('button');
 
@@ -74,7 +73,6 @@ describe('RatingsLike', () => {
 
 			beforeEach(() => {
 				LikeButton = renderComponent({
-					...defaultProps,
 					positiveVotes: 26,
 				}).getByRole('button');
 
@@ -105,7 +103,6 @@ describe('RatingsLike', () => {
 
 			beforeEach(() => {
 				LikeButton = renderComponent({
-					...defaultProps,
 					initialLiked: true,
 					positiveVotes: 26,
 				}).getByRole('button');
@@ -147,7 +144,6 @@ describe('RatingsLike', () => {
 
 			beforeEach(async () => {
 				LikeButton = renderComponent({
-					...defaultProps,
 					positiveVotes: 3,
 				}).getByRole('button');
 
@@ -160,8 +156,8 @@ describe('RatingsLike', () => {
 				const [url, {body}] = fetch.mock.calls[0];
 				const objFormData = formDataToObj(body);
 
-				expect(url).toBe(defaultProps.url);
-				expect(objFormData.className).toBe(defaultProps.className);
+				expect(url).toBe(baseProps.url);
+				expect(objFormData.className).toBe(baseProps.className);
 				expect(objFormData.score).toBe('1');
 			});
 

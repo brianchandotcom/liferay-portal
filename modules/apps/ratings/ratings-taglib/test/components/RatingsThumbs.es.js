@@ -19,7 +19,7 @@ import {act} from 'react-dom/test-utils';
 import RatingsThumbs from '../../src/main/resources/META-INF/resources/js/components/RatingsThumbs.es';
 import {formDataToObj} from '../utils';
 
-const defaultProps = {
+const baseProps = {
 	className: 'com.liferay.model.RateableEntry',
 	classPK: 'classPK',
 	enabled: true,
@@ -27,8 +27,8 @@ const defaultProps = {
 	url: 'http://url',
 };
 
-const renderComponent = (props = defaultProps) =>
-	render(<RatingsThumbs {...props} />);
+const renderComponent = props =>
+	render(<RatingsThumbs {...baseProps} {...props} />);
 
 describe('RatingsThumbs', () => {
 	afterEach(cleanup);
@@ -49,7 +49,6 @@ describe('RatingsThumbs', () => {
 	describe('when rendered with enabled = false', () => {
 		it('is disabled', () => {
 			const {getAllByRole} = renderComponent({
-				...defaultProps,
 				enabled: false,
 			});
 
@@ -75,7 +74,6 @@ describe('RatingsThumbs', () => {
 
 			beforeEach(() => {
 				[thumbUpButton, thumbDownButton] = renderComponent({
-					...defaultProps,
 					initialNegativeVotes: 10,
 					initialPositiveVotes: 26,
 				}).getAllByRole('button');
@@ -132,7 +130,6 @@ describe('RatingsThumbs', () => {
 
 			beforeEach(() => {
 				[thumbUpButton, thumbDownButton] = renderComponent({
-					...defaultProps,
 					initialNegativeVotes: 10,
 					initialPositiveVotes: 26,
 				}).getAllByRole('button');
@@ -214,8 +211,8 @@ describe('RatingsThumbs', () => {
 				const [url, {body}] = fetch.mock.calls[0];
 				const objFormData = formDataToObj(body);
 
-				expect(url).toBe(defaultProps.url);
-				expect(objFormData.className).toBe(defaultProps.className);
+				expect(url).toBe(baseProps.url);
+				expect(objFormData.className).toBe(baseProps.className);
 				expect(objFormData.score).toBe('1');
 			});
 

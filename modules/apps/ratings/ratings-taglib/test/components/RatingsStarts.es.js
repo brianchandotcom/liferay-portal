@@ -19,7 +19,7 @@ import {act} from 'react-dom/test-utils';
 import RatingsStars from '../../src/main/resources/META-INF/resources/js/components/RatingsStars.es';
 import {formDataToObj} from '../utils';
 
-const defaultProps = {
+const baseProps = {
 	className: 'com.liferay.model.RateableEntry',
 	classPK: 'classPK',
 	enabled: true,
@@ -28,8 +28,8 @@ const defaultProps = {
 	url: 'http://url',
 };
 
-const renderComponent = (props = defaultProps) =>
-	render(<RatingsStars {...props} />);
+const renderComponent = props =>
+	render(<RatingsStars {...baseProps} {...props} />);
 
 describe('RatingsStars', () => {
 	afterEach(cleanup);
@@ -53,7 +53,6 @@ describe('RatingsStars', () => {
 	describe('when rendered with enabled = false', () => {
 		it('is disabled', () => {
 			const starsDropdownToggle = renderComponent({
-				...defaultProps,
 				enabled: false,
 			}).getAllByRole('button')[0];
 
@@ -76,7 +75,6 @@ describe('RatingsStars', () => {
 
 			beforeEach(() => {
 				starsButtons = renderComponent({
-					...defaultProps,
 					userScore: 0.4,
 				}).getAllByRole('button');
 				starsDropdownToggle = starsButtons[0];
@@ -109,7 +107,6 @@ describe('RatingsStars', () => {
 
 			beforeEach(() => {
 				starsButtons = renderComponent({
-					...defaultProps,
 					userScore: 1,
 				}).getAllByRole('button');
 				starsDropdownToggle = starsButtons[0];
@@ -136,7 +133,11 @@ describe('RatingsStars', () => {
 	describe('when there is a valid server response', () => {
 		beforeEach(() => {
 			fetch.mockResponseOnce(
-				JSON.stringify({averageScore: 4, score: 0.2, totalEntries: 2})
+				JSON.stringify({
+					averageScore: 0.5,
+					score: 0.2,
+					totalEntries: 2,
+				})
 			);
 		});
 
@@ -150,7 +151,6 @@ describe('RatingsStars', () => {
 
 			beforeEach(async () => {
 				starsButtons = renderComponent({
-					...defaultProps,
 					userScore: 0.6,
 				}).getAllByRole('button');
 				starsDropdownToggle = starsButtons[0];
@@ -164,8 +164,8 @@ describe('RatingsStars', () => {
 				const [url, {body}] = fetch.mock.calls[0];
 				const objFormData = formDataToObj(body);
 
-				expect(url).toBe(defaultProps.url);
-				expect(objFormData.className).toBe(defaultProps.className);
+				expect(url).toBe(baseProps.url);
+				expect(objFormData.className).toBe(baseProps.className);
 				expect(objFormData.score).toBe('0.4');
 			});
 

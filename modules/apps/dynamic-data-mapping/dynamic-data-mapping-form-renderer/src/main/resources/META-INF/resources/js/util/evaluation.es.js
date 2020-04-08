@@ -87,9 +87,12 @@ export const mergeFieldOptions = (field, newField) => {
 		newValue = {
 			...newValue,
 			[languageId]: newValue[languageId].map(option => {
-				const existingOption = field.value[languageId].find(
-					({value}) => value === option.value
-				);
+				const existingOption =
+					field.value &&
+					field.value[languageId] &&
+					field.value[languageId].find(
+						({value}) => value === option.value
+					);
 
 				return {
 					...option,
@@ -128,10 +131,7 @@ export const mergePages = (
 				valid: field.valid !== false,
 			};
 
-			if (
-				newField.type === 'options' &&
-				sourceField.value !== undefined
-			) {
+			if (newField.type === 'options') {
 				newField = {
 					...newField,
 					value: mergeFieldOptions(sourceField, newField),

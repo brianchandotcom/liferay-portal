@@ -120,12 +120,6 @@ public class DepotPanelAppController {
 	private class DepotPanelAppServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<PanelApp, ServiceRegistration<?>> {
 
-		public DepotPanelAppServiceTrackerCustomizer(
-			BundleContext bundleContext) {
-
-			_bundleContext = bundleContext;
-		}
-
 		@Override
 		public ServiceRegistration<?> addingService(
 			ServiceReference<PanelApp> serviceReference) {
@@ -139,15 +133,20 @@ public class DepotPanelAppController {
 				panelAppProperties.put(key, serviceReference.getProperty(key));
 			}
 
-			panelAppProperties.put(
-				"panel.app.order", _getPanelAppOrder(serviceReference) - 1);
+			Integer panelAppOrder = (Integer)serviceReference.getProperty(
+				"panel.app.order");
+
+			if (panelAppOrder == null) {
+				panelAppOrder = 0;
+			}
+
+			panelAppProperties.put("panel.app.order", panelAppOrder - 1);
 
 			panelAppProperties.put("depot.panel.app.wrapper", Boolean.TRUE);
 
-			PanelApp wrappedPanelApp = new PanelAppWrapper(panelApp);
-
 			return _bundleContext.registerService(
-				PanelApp.class, wrappedPanelApp, panelAppProperties);
+				PanelApp.class, new PanelAppWrapper(panelApp),
+				panelAppProperties);
 		}
 
 		@Override
@@ -168,17 +167,10 @@ public class DepotPanelAppController {
 			serviceRegistration.unregister();
 		}
 
-		private Integer _getPanelAppOrder(
-			ServiceReference<PanelApp> serviceReference) {
+		private DepotPanelAppServiceTrackerCustomizer(
+			BundleContext bundleContext) {
 
-			Integer panelAppOrder = (Integer)serviceReference.getProperty(
-				"panel.app.order");
-
-			if (panelAppOrder != null) {
-				return panelAppOrder;
-			}
-
-			return 0;
+			_bundleContext = bundleContext;
 		}
 
 		private final BundleContext _bundleContext;
@@ -186,10 +178,6 @@ public class DepotPanelAppController {
 	}
 
 	private class PanelAppWrapper implements PanelApp {
-
-		public PanelAppWrapper(PanelApp panelApp) {
-			_panelApp = panelApp;
-		}
 
 		@Override
 		public String getKey() {
@@ -254,6 +242,10 @@ public class DepotPanelAppController {
 		@Override
 		public void setPortlet(Portlet portlet) {
 			_panelApp.setPortlet(portlet);
+		}
+
+		private PanelAppWrapper(PanelApp panelApp) {
+			_panelApp = panelApp;
 		}
 
 		private final PanelApp _panelApp;

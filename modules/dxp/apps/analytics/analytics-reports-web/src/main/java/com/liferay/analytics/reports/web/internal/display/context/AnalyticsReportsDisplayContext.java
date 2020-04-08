@@ -79,82 +79,7 @@ public class AnalyticsReportsDisplayContext {
 		}
 
 		_data = HashMapBuilder.<String, Object>put(
-			"context",
-			HashMapBuilder.<String, Object>put(
-				"defaultTimeSpanKey", TimeSpan.defaultTimeSpanKey()
-			).put(
-				"endpoints",
-				HashMapBuilder.<String, Object>put(
-					"getAnalyticsReportsHistoricalReadsURL",
-					() -> {
-						ResourceURL resourceURL =
-							_renderResponse.createResourceURL();
-
-						resourceURL.setResourceID(
-							"/analytics_reports/get_historical_reads");
-
-						return resourceURL.toString();
-					}
-				).put(
-					"getAnalyticsReportsHistoricalViewsURL",
-					() -> {
-						ResourceURL resourceURL =
-							_renderResponse.createResourceURL();
-
-						resourceURL.setResourceID(
-							"/analytics_reports/get_historical_views");
-
-						return resourceURL.toString();
-					}
-				).put(
-					"getAnalyticsReportsTotalReadsURL",
-					() -> {
-						ResourceURL resourceURL =
-							_renderResponse.createResourceURL();
-
-						resourceURL.setResourceID(
-							"/analytics_reports/get_total_reads");
-
-						return resourceURL.toString();
-					}
-				).put(
-					"getAnalyticsReportsTotalViewsURL",
-					() -> {
-						ResourceURL resourceURL =
-							_renderResponse.createResourceURL();
-
-						resourceURL.setResourceID(
-							"/analytics_reports/get_total_views");
-
-						return resourceURL.toString();
-					}
-				).build()
-			).put(
-				"languageTag",
-				() -> {
-					Locale locale = _themeDisplay.getLocale();
-
-					return locale.toLanguageTag();
-				}
-			).put(
-				"namespace",
-				_portal.getPortletNamespace(
-					AnalyticsReportsPortletKeys.ANALYTICS_REPORTS)
-			).put(
-				"page",
-				HashMapBuilder.<String, Object>put(
-					"plid",
-					() -> {
-						Layout layout = _themeDisplay.getLayout();
-
-						return layout.getPlid();
-					}
-				).build()
-			).put(
-				"timeSpans", _getTimeSpansJSONArray()
-			).put(
-				"validAnalyticsConnection", _validAnalyticsConnection
-			).build()
+			"context", _getContext()
 		).put(
 			"props", getProps()
 		).build();
@@ -193,6 +118,84 @@ public class AnalyticsReportsDisplayContext {
 				_analyticsReportsInfoItemObject, _themeDisplay.getLocale())
 		).put(
 			"trafficSources", _getTrafficSourcesJSONArray()
+		).build();
+	}
+
+	private Map<String, Object> _getContext() {
+		return HashMapBuilder.<String, Object>put(
+			"defaultTimeSpanKey", TimeSpan.defaultTimeSpanKey()
+		).put(
+			"endpoints",
+			HashMapBuilder.<String, Object>put(
+				"getAnalyticsReportsHistoricalReadsURL",
+				() -> {
+					ResourceURL resourceURL =
+						_renderResponse.createResourceURL();
+
+					resourceURL.setResourceID(
+						"/analytics_reports/get_historical_reads");
+
+					return resourceURL.toString();
+				}
+			).put(
+				"getAnalyticsReportsHistoricalViewsURL",
+				() -> {
+					ResourceURL resourceURL =
+						_renderResponse.createResourceURL();
+
+					resourceURL.setResourceID(
+						"/analytics_reports/get_historical_views");
+
+					return resourceURL.toString();
+				}
+			).put(
+				"getAnalyticsReportsTotalReadsURL",
+				() -> {
+					ResourceURL resourceURL =
+						_renderResponse.createResourceURL();
+
+					resourceURL.setResourceID(
+						"/analytics_reports/get_total_reads");
+
+					return resourceURL.toString();
+				}
+			).put(
+				"getAnalyticsReportsTotalViewsURL",
+				() -> {
+					ResourceURL resourceURL =
+						_renderResponse.createResourceURL();
+
+					resourceURL.setResourceID(
+						"/analytics_reports/get_total_views");
+
+					return resourceURL.toString();
+				}
+			).build()
+		).put(
+			"languageTag",
+			() -> {
+				Locale locale = _themeDisplay.getLocale();
+
+				return locale.toLanguageTag();
+			}
+		).put(
+			"namespace",
+			_portal.getPortletNamespace(
+				AnalyticsReportsPortletKeys.ANALYTICS_REPORTS)
+		).put(
+			"page",
+			HashMapBuilder.<String, Object>put(
+				"plid",
+				() -> {
+					Layout layout = _themeDisplay.getLayout();
+
+					return layout.getPlid();
+				}
+			).build()
+		).put(
+			"timeSpans", _getTimeSpansJSONArray()
+		).put(
+			"validAnalyticsConnection", _validAnalyticsConnection
 		).build();
 	}
 

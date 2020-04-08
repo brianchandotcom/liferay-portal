@@ -15,7 +15,12 @@ import EmptyState from '../empty-state/EmptyState.es';
 import LoadingState from '../loading/LoadingState.es';
 import PromisesResolver from '../promises-resolver/PromisesResolver.es';
 
-const ContentView = ({children, emptyProps, errorProps, loadingProps}) => {
+const ContentView = ({
+	children,
+	emptyProps = {},
+	errorProps = {},
+	loadingProps = {},
+}) => {
 	return (
 		<>
 			<PromisesResolver.Pending>

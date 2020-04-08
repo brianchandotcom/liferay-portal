@@ -18,6 +18,7 @@ import React, {useEffect, useMemo} from 'react';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
+import selectCanUpdate from '../../selectors/selectCanUpdate';
 import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
 import {useSelector} from '../../store/index';
 import {
@@ -48,6 +49,9 @@ export default function FragmentContentInteractionsFilter({
 	const selectItem = useSelectItem();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
+	const canUpdate = useSelector(selectCanUpdate);
+
+	const canOnlyUpdateInlineContent = !canUpdate && canUpdateLayoutContent;
 
 	const editableValues = useSelector(state =>
 		state.fragmentEntryLinks[fragmentEntryLinkId]
@@ -195,7 +199,7 @@ export default function FragmentContentInteractionsFilter({
 
 	const props = {};
 
-	if (siblingIds.some(isActive)) {
+	if (siblingIds.some(isActive) || canOnlyUpdateInlineContent) {
 		props.onClickCapture = selectEditable;
 		props.onMouseOverCapture = hoverEditable;
 	}

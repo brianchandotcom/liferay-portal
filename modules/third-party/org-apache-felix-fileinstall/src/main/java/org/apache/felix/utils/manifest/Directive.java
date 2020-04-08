@@ -16,28 +16,26 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package org.apache.felix.utils.manifest;
 
-public class Directive
-{
+public class Directive {
 
-    private final String name;
-    private final String value;
+	public Directive(String name, String value) {
+		_name = name;
+		_value = value;
+	}
 
-    public Directive(String name, String value)
-    {
-        this.name = name;
-        this.value = value;
-    }
+	public String getName() {
+		return _name;
+	}
 
-    public String getName()
-    {
-        return name;
-    }
+	public String getValue() {
+		return _value;
+	}
 
-    public String getValue()
-    {
-        return value;
-    }
+	private final String _name;
+	private final String _value;
 
 }
+/* @generated */

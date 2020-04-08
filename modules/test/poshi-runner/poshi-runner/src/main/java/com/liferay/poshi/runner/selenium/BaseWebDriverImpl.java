@@ -2891,7 +2891,20 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		while (retryCount < maxRetries) {
 			webElement.clear();
 
-			typeKeys(locator, value);
+			if (retryCount == 0) {
+				typeKeys(locator, value);
+			}
+			else {
+				for (char c : value.toCharArray()) {
+					typeKeys(locator, Character.toString(c));
+
+					try {
+						Thread.sleep(200);
+					}
+					catch (InterruptedException interruptedException) {
+					}
+				}
+			}
 
 			String webElementTagNametagName = webElement.getTagName();
 

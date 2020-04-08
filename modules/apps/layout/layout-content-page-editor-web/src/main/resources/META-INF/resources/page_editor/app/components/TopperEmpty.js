@@ -20,16 +20,16 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import selectCanUpdateLayoutContent from '../selectors/selectCanUpdateLayoutContent';
+import selectCanUpdate from '../selectors/selectCanUpdate';
 import {useSelector} from '../store/index';
 import useDragAndDrop, {TARGET_POSITION} from '../utils/useDragAndDrop';
 import {useToControlsId} from './CollectionItemContext';
 import getLabelName from './layout-data-items/getLabelName';
 
 export default function({children, ...props}) {
-	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
+	const canUpdate = useSelector(selectCanUpdate);
 
-	return canUpdateLayoutContent ? (
+	return canUpdate ? (
 		<TopperEmpty {...props}>{children}</TopperEmpty>
 	) : (
 		children

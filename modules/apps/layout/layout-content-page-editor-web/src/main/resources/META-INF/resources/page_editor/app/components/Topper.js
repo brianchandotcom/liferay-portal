@@ -25,7 +25,7 @@ import {
 import {switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {config} from '../config/index';
-import selectCanUpdateLayoutContent from '../selectors/selectCanUpdateLayoutContent';
+import selectCanUpdate from '../selectors/selectCanUpdate';
 import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
 import moveItem from '../thunks/moveItem';
@@ -70,13 +70,9 @@ TopperListItem.propTypes = {
 };
 
 export default function({children, ...props}) {
-	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
+	const canUpdate = useSelector(selectCanUpdate);
 
-	return canUpdateLayoutContent ? (
-		<Topper {...props}>{children}</Topper>
-	) : (
-		children
-	);
+	return canUpdate ? <Topper {...props}>{children}</Topper> : children;
 }
 
 function Topper({children, item, itemRef, layoutData}) {
@@ -125,8 +121,6 @@ function Topper({children, item, itemRef, layoutData}) {
 		item,
 		layoutData,
 	]);
-	const showRemoveButton =
-		useSelector(selectCanUpdateLayoutContent) && itemIsRemovable;
 
 	const commentsPanelId = config.sidebarPanels.comments.sidebarPanelId;
 
@@ -300,7 +294,7 @@ function Topper({children, item, itemRef, layoutData}) {
 							</ClayButton>
 						</TopperListItem>
 					)}
-					{showRemoveButton && (
+					{itemIsRemovable && (
 						<TopperListItem>
 							<ClayButton
 								displayType="unstyled"

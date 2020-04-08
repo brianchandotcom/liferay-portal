@@ -16,196 +16,239 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package org.apache.felix.utils.manifest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Parser
-{
-    private Parser() { }
+public final class Parser {
 
-    public static Clause[] parseHeader(String header) throws IllegalArgumentException
-    {
-        Clause[] clauses = null;
-        if (header != null)
-        {
-            if (header.length() == 0)
-            {
-                throw new IllegalArgumentException("The header cannot be an empty string.");
-            }
-            String[] ss = parseDelimitedString(header, ",");
-            clauses = parseClauses(ss);
-        }
-        return (clauses == null) ? new Clause[0] : clauses;
-    }
+	public static Clause[] parseClauses(String[] clauses)
+		throws IllegalArgumentException {
 
-    public static Clause[] parseClauses(String[] ss) throws IllegalArgumentException
-    {
-        if (ss == null)
-        {
-            return null;
-        }
+		if (clauses == null) {
+			return null;
+		}
 
-        List completeList = new ArrayList();
-        for (int ssIdx = 0; ssIdx < ss.length; ssIdx++)
-        {
-            // Break string into semi-colon delimited pieces.
-            String[] pieces = parseDelimitedString(ss[ssIdx], ";");
+		List<Clause> completeList = new ArrayList<>();
 
-            // Count the number of different clauses; clauses
-            // will not have an '=' in their string. This assumes
-            // that clauses come first, before directives and
-            // attributes.
-            int pathCount = 0;
-            for (int pieceIdx = 0; pieceIdx < pieces.length; pieceIdx++)
-            {
-                if (pieces[pieceIdx].indexOf('=') >= 0)
-                {
-                    break;
-                }
-                pathCount++;
-            }
+		for (String clause : clauses) {
 
-            // Error if no packages were specified.
-            if (pathCount == 0)
-            {
-                throw new IllegalArgumentException("No path specified on clause: " + ss[ssIdx]);
-            }
+			// Break string into semi-colon delimited pieces.
 
-            // Parse the directives/attributes.
-            Directive[] dirs = new Directive[pieces.length - pathCount];
-            Attribute[] attrs = new Attribute[pieces.length - pathCount];
-            int dirCount = 0, attrCount = 0;
-            int idx = -1;
-            String sep = null;
-            for (int pieceIdx = pathCount; pieceIdx < pieces.length; pieceIdx++)
-            {
-                if ((idx = pieces[pieceIdx].indexOf("=")) <= 0)
-                {
-                    // It is an error.
-                    throw new IllegalArgumentException("Not a directive/attribute: " + ss[ssIdx]);
-                }
-                // This a directive.
-                if (pieces[pieceIdx].charAt(idx - 1) == ':')
-                {
-                    idx--;
-                    sep = ":=";
-                }
-                // This an attribute.
-                else
-                {
-                    sep = "=";
-                }
+			String[] tokens = parseDelimitedString(clause, ";");
 
-                String key = pieces[pieceIdx].substring(0, idx).trim();
-                String value = pieces[pieceIdx].substring(idx + sep.length()).trim();
+			// Count the number of different clauses; clauses
+			// will not have an '=' in their string. This assumes
+			// that clauses come first, before directives and
+			// attributes.
 
-                // Remove quotes, if value is quoted.
-                if (value.startsWith("\"") && value.endsWith("\""))
-                {
-                    value = value.substring(1, value.length() - 1);
-                }
+			int pathCount = 0;
 
-                // Save the directive/attribute in the appropriate array.
-                if (sep.equals(":="))
-                {
-                    dirs[dirCount++] = new Directive(key, value);
-                }
-                else
-                {
-                    attrs[attrCount++] = new Attribute(key, value);
-                }
-            }
+			for (String token : tokens) {
+				if (token.indexOf('=') != -1) {
+					break;
+				}
 
-            // Shrink directive array.
-            Directive[] dirsFinal = new Directive[dirCount];
-            System.arraycopy(dirs, 0, dirsFinal, 0, dirCount);
-            // Shrink attribute array.
-            Attribute[] attrsFinal = new Attribute[attrCount];
-            System.arraycopy(attrs, 0, attrsFinal, 0, attrCount);
+				pathCount++;
+			}
 
-            // Create package attributes for each package and
-            // set directives/attributes. Add each package to
-            // completel list of packages.
-            Clause[] pkgs = new Clause[pathCount];
-            for (int pkgIdx = 0; pkgIdx < pathCount; pkgIdx++)
-            {
-                pkgs[pkgIdx] = new Clause(pieces[pkgIdx], dirsFinal, attrsFinal);
-                completeList.add(pkgs[pkgIdx]);
-            }
-        }
+			// Error if no packages were specified.
 
-        Clause[] pkgs = (Clause[]) completeList.toArray(new Clause[completeList.size()]);
-        return pkgs;
-    }
+			if (pathCount == 0) {
+				throw new IllegalArgumentException(
+					"No path specified on clause: " + clause);
+			}
 
-    /**
-     * Parses delimited string and returns an array containing the tokens. This
-     * parser obeys quotes, so the delimiter character will be ignored if it is
-     * inside of a quote. This method assumes that the quote character is not
-     * included in the set of delimiter characters.
-     * @param value the delimited string to parse.
-     * @param delim the characters delimiting the tokens.
-     * @return an array of string tokens or null if there were no tokens.
-    **/
-    public static String[] parseDelimitedString(String value, String delim)
-    {
-        if (value == null)
-        {
-           value = "";
-        }
+			// Parse the directives/attributes.
 
-        List list = new ArrayList();
+			int size = tokens.length - pathCount;
 
-        int CHAR = 1;
-        int DELIMITER = 2;
-        int STARTQUOTE = 4;
-        int ENDQUOTE = 8;
+			Directive[] directives = new Directive[size];
+			Attribute[] attributes = new Attribute[size];
 
-        StringBuffer sb = new StringBuffer();
+			int directiveCount = 0;
+			int attributeCount = 0;
 
-        int expecting = (CHAR | DELIMITER | STARTQUOTE);
+			int index = -1;
 
-        for (int i = 0; i < value.length(); i++)
-        {
-            char c = value.charAt(i);
+			String separator = null;
 
-            boolean isDelimiter = (delim.indexOf(c) >= 0);
-            boolean isQuote = (c == '"');
+			for (int pieceIndex = pathCount; pieceIndex < tokens.length;
+				 pieceIndex++) {
 
-            if (isDelimiter && ((expecting & DELIMITER) > 0))
-            {
-                list.add(sb.toString().trim());
-                sb.delete(0, sb.length());
-                expecting = (CHAR | DELIMITER | STARTQUOTE);
-            }
-            else if (isQuote && ((expecting & STARTQUOTE) > 0))
-            {
-                sb.append(c);
-                expecting = CHAR | ENDQUOTE;
-            }
-            else if (isQuote && ((expecting & ENDQUOTE) > 0))
-            {
-                sb.append(c);
-                expecting = (CHAR | STARTQUOTE | DELIMITER);
-            }
-            else if ((expecting & CHAR) > 0)
-            {
-                sb.append(c);
-            }
-            else
-            {
-                throw new IllegalArgumentException("Invalid delimited string: " + value);
-            }
-        }
+				String piece = tokens[pieceIndex];
 
-        String s = sb.toString().trim();
-        if (s.length() > 0)
-        {
-            list.add(s);
-        }
+				index = piece.indexOf("=");
 
-        return (String[]) list.toArray(new String[list.size()]);
-    }
+				if (index <= 0) {
+					throw new IllegalArgumentException(
+						"Not a directive/attribute: " + clause);
+				}
+
+				// This a directive.
+
+				if (piece.charAt(index - 1) == ':') {
+					index--;
+					separator = ":=";
+				}
+
+				// This an attribute.
+
+				else {
+					separator = "=";
+				}
+
+				String key = piece.substring(0, index);
+
+				key = key.trim();
+
+				String value = piece.substring(index + separator.length());
+
+				value = value.trim();
+
+				// Remove quotes, if value is quoted.
+
+				if (value.startsWith("\"") && value.endsWith("\"")) {
+					value = value.substring(1, value.length() - 1);
+				}
+
+				// Save the directive/attribute in the appropriate array.
+
+				if (separator.equals(":=")) {
+					directives[directiveCount++] = new Directive(key, value);
+				}
+				else {
+					attributes[attributeCount++] = new Attribute(key, value);
+				}
+			}
+
+			// Shrink directive array.
+
+			Directive[] dirsFinal = new Directive[directiveCount];
+
+			System.arraycopy(directives, 0, dirsFinal, 0, directiveCount);
+
+			// Shrink attribute array.
+
+			Attribute[] attrsFinal = new Attribute[attributeCount];
+
+			System.arraycopy(attributes, 0, attrsFinal, 0, attributeCount);
+
+			// Create package attributes for each package and
+			// set directives/attributes. Add each package to
+			// completel list of packages.
+
+			Clause[] packages = new Clause[pathCount];
+
+			for (int packageIndex = 0; packageIndex < pathCount;
+				 packageIndex++) {
+
+				packages[packageIndex] = new Clause(
+					tokens[packageIndex], dirsFinal, attrsFinal);
+
+				completeList.add(packages[packageIndex]);
+			}
+		}
+
+		return completeList.toArray(new Clause[0]);
+	}
+
+	/**
+	 * Parses delimited string and returns an array containing the tokens. This
+	 * parser obeys quotes, so the delimiter character will be ignored if it is
+	 * inside of a quote. This method assumes that the quote character is not
+	 * included in the set of delimiter characters.
+	 * @param value the delimited string to parse.
+	 * @param delimiter the characters delimiting the tokens.
+	 * @return an array of string tokens or null if there were no tokens.
+	 */
+	public static String[] parseDelimitedString(
+		String value, String delimiter) {
+
+		if (value == null) {
+			value = "";
+		}
+
+		List<String> list = new ArrayList<>();
+
+		StringBuffer sb = new StringBuffer();
+
+		int expecting = _CHAR | _DELIMITER | _STARTQUOTE;
+
+		for (int i = 0; i < value.length(); i++) {
+			char c = value.charAt(i);
+
+			if ((delimiter.indexOf(c) != -1) &&
+				((expecting & _DELIMITER) > 0)) {
+
+				String string = sb.toString();
+
+				list.add(string.trim());
+
+				sb.delete(0, sb.length());
+
+				expecting = _CHAR | _DELIMITER | _STARTQUOTE;
+			}
+			else if ((c == '"') && ((expecting & _STARTQUOTE) > 0)) {
+				sb.append(c);
+				expecting = _CHAR | _ENDQUOTE;
+			}
+			else if ((c == '"') && ((expecting & _ENDQUOTE) > 0)) {
+				sb.append(c);
+				expecting = _CHAR | _STARTQUOTE | _DELIMITER;
+			}
+			else if ((expecting & _CHAR) > 0) {
+				sb.append(c);
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Invalid delimited string: " + value);
+			}
+		}
+
+		String string = sb.toString();
+
+		string = string.trim();
+
+		if (string.length() > 0) {
+			list.add(string);
+		}
+
+		return (String[])list.toArray(new String[0]);
+	}
+
+	public static Clause[] parseHeader(String header)
+		throws IllegalArgumentException {
+
+		Clause[] clauses = null;
+
+		if (header != null) {
+			if (header.length() == 0) {
+				throw new IllegalArgumentException(
+					"The header cannot be an empty string");
+			}
+
+			String[] headers = parseDelimitedString(header, ",");
+
+			clauses = parseClauses(headers);
+		}
+
+		if (clauses == null) {
+			return new Clause[0];
+		}
+
+		return clauses;
+	}
+
+	private static final int _CHAR = 1;
+
+	private static final int _DELIMITER = 2;
+
+	private static final int _ENDQUOTE = 8;
+
+	private static final int _STARTQUOTE = 4;
+
 }
+/* @generated */

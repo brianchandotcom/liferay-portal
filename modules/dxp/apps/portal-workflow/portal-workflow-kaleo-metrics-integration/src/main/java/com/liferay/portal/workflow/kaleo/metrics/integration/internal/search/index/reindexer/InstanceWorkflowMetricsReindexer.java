@@ -14,12 +14,11 @@
 
 package com.liferay.portal.workflow.kaleo.metrics.integration.internal.search.index.reindexer;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.workflow.kaleo.metrics.integration.internal.util.InstanceIndexerHelper;
+import com.liferay.portal.workflow.kaleo.metrics.integration.internal.helper.InstanceIndexerHelper;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
@@ -44,9 +43,6 @@ public class InstanceWorkflowMetricsReindexer
 
 	@Override
 	public void reindex(long companyId) throws PortalException {
-		InstanceIndexerHelper instanceIndexerHelper = new InstanceIndexerHelper(
-			_assetEntryLocalService);
-
 		ActionableDynamicQuery actionableDynamicQuery =
 			_kaleoInstanceLocalService.getActionableDynamicQuery();
 
@@ -69,9 +65,9 @@ public class InstanceWorkflowMetricsReindexer
 				}
 
 				_instanceWorkflowMetricsIndexer.addInstance(
-					instanceIndexerHelper.createAssetTitleLocalizationMap(
+					_instanceIndexerHelper.createAssetTitleLocalizationMap(
 						kaleoInstance),
-					instanceIndexerHelper.createAssetTypeLocalizationMap(
+					_instanceIndexerHelper.createAssetTypeLocalizationMap(
 						kaleoInstance),
 					kaleoInstance.getClassName(), kaleoInstance.getClassPK(),
 					companyId, kaleoInstance.getCompletionDate(),
@@ -87,7 +83,7 @@ public class InstanceWorkflowMetricsReindexer
 	}
 
 	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
+	private InstanceIndexerHelper _instanceIndexerHelper;
 
 	@Reference
 	private InstanceWorkflowMetricsIndexer _instanceWorkflowMetricsIndexer;

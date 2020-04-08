@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.kaleo.metrics.integration.internal.util;
+package com.liferay.portal.workflow.kaleo.metrics.integration.internal.helper;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -29,40 +29,34 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Rafael Praxedes
  */
+@Component(immediate = true, service = InstanceIndexerHelper.class)
 public class InstanceIndexerHelper {
-
-	public InstanceIndexerHelper(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
 
 	public Map<Locale, String> createAssetTitleLocalizationMap(
 		KaleoInstance kaleoInstance) {
 
-		try {
-			AssetRenderer<?> assetRenderer = _getAssetRenderer(
-				kaleoInstance.getClassName(), kaleoInstance.getClassPK());
+		AssetRenderer<?> assetRenderer = _getAssetRenderer(
+			kaleoInstance.getClassName(), kaleoInstance.getClassPK());
 
-			if (assetRenderer != null) {
-				AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-					assetRenderer.getClassName(), assetRenderer.getClassPK());
+		if (assetRenderer != null) {
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				assetRenderer.getClassName(), assetRenderer.getClassPK());
 
+			if (assetEntry != null) {
 				return LocalizationUtil.populateLocalizationMap(
 					assetEntry.getTitleMap(), assetEntry.getDefaultLanguageId(),
 					assetEntry.getGroupId());
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -70,18 +64,23 @@ public class InstanceIndexerHelper {
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(
 				kaleoInstance.getClassName());
 
-		Map<Locale, String> localizationMap = new HashMap<>();
+		if (workflowHandler != null) {
+			Map<Locale, String> localizationMap = new HashMap<>();
 
-		for (Locale availableLocale :
-				LanguageUtil.getAvailableLocales(kaleoInstance.getGroupId())) {
+			for (Locale availableLocale :
+					LanguageUtil.getAvailableLocales(
+						kaleoInstance.getGroupId())) {
 
-			localizationMap.put(
-				availableLocale,
-				workflowHandler.getTitle(
-					kaleoInstance.getClassPK(), availableLocale));
+				localizationMap.put(
+					availableLocale,
+					workflowHandler.getTitle(
+						kaleoInstance.getClassPK(), availableLocale));
+			}
+
+			return localizationMap;
 		}
 
-		return localizationMap;
+		return Collections.emptyMap();
 	}
 
 	public Map<Locale, String> createAssetTypeLocalizationMap(
@@ -101,27 +100,29 @@ public class InstanceIndexerHelper {
 		return localizationMap;
 	}
 
-	private AssetRenderer<?> _getAssetRenderer(String className, long classPK)
-		throws PortalException {
-
-		AssetRendererFactory<?> assetRendererFactory = _getAssetRendererFactory(
-			className);
+	private AssetRenderer<?> _getAssetRenderer(String className, long classPK) {
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
 
 		if (assetRendererFactory != null) {
-			return assetRendererFactory.getAssetRenderer(classPK);
+			try {
+				return assetRendererFactory.getAssetRenderer(classPK);
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException, portalException);
+				}
+			}
 		}
 
 		return null;
 	}
 
-	private AssetRendererFactory<?> _getAssetRendererFactory(String className) {
-		return AssetRendererFactoryRegistryUtil.
-			getAssetRendererFactoryByClassName(className);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		InstanceIndexerHelper.class);
 
-	private final AssetEntryLocalService _assetEntryLocalService;
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 }

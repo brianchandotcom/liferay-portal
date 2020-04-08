@@ -14,9 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.metrics.integration.internal.model.listener;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.workflow.kaleo.metrics.integration.internal.util.InstanceIndexerHelper;
+import com.liferay.portal.workflow.kaleo.metrics.integration.internal.helper.InstanceIndexerHelper;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
@@ -47,13 +46,11 @@ public class KaleoInstanceModelListener
 			return;
 		}
 
-		InstanceIndexerHelper instanceIndexerHelper = new InstanceIndexerHelper(
-			_assetEntryLocalService);
-
 		_instanceWorkflowMetricsIndexer.addInstance(
-			instanceIndexerHelper.createAssetTitleLocalizationMap(
+			_instanceIndexerHelper.createAssetTitleLocalizationMap(
 				kaleoInstance),
-			instanceIndexerHelper.createAssetTypeLocalizationMap(kaleoInstance),
+			_instanceIndexerHelper.createAssetTypeLocalizationMap(
+				kaleoInstance),
 			kaleoInstance.getClassName(), kaleoInstance.getClassPK(),
 			kaleoInstance.getCompanyId(), null, kaleoInstance.getCreateDate(),
 			kaleoInstance.getKaleoInstanceId(), kaleoInstance.getModifiedDate(),
@@ -89,13 +86,10 @@ public class KaleoInstanceModelListener
 				kaleoInstance.getModifiedDate());
 		}
 		else {
-			InstanceIndexerHelper instanceIndexerHelper =
-				new InstanceIndexerHelper(_assetEntryLocalService);
-
 			_instanceWorkflowMetricsIndexer.updateInstance(
-				instanceIndexerHelper.createAssetTitleLocalizationMap(
+				_instanceIndexerHelper.createAssetTitleLocalizationMap(
 					kaleoInstance),
-				instanceIndexerHelper.createAssetTypeLocalizationMap(
+				_instanceIndexerHelper.createAssetTypeLocalizationMap(
 					kaleoInstance),
 				kaleoInstance.getCompanyId(),
 				kaleoInstance.getKaleoInstanceId(),
@@ -104,7 +98,7 @@ public class KaleoInstanceModelListener
 	}
 
 	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
+	private InstanceIndexerHelper _instanceIndexerHelper;
 
 	@Reference
 	private InstanceWorkflowMetricsIndexer _instanceWorkflowMetricsIndexer;

@@ -76,34 +76,6 @@ public class CollectionDefinition {
 	protected Object collectionConfig;
 
 	@Schema
-	public String getListFormat() {
-		return listFormat;
-	}
-
-	public void setListFormat(String listFormat) {
-		this.listFormat = listFormat;
-	}
-
-	@JsonIgnore
-	public void setListFormat(
-		UnsafeSupplier<String, Exception> listFormatUnsafeSupplier) {
-
-		try {
-			listFormat = listFormatUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String listFormat;
-
-	@Schema
 	public Integer getNumberOfColumns() {
 		return numberOfColumns;
 	}
@@ -195,20 +167,6 @@ public class CollectionDefinition {
 			sb.append("\"collectionConfig\": ");
 
 			sb.append(String.valueOf(collectionConfig));
-		}
-
-		if (listFormat != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"listFormat\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(listFormat));
-
-			sb.append("\"");
 		}
 
 		if (numberOfColumns != null) {

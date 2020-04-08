@@ -49,27 +49,6 @@ public class CollectionDefinition implements Cloneable {
 
 	protected Object collectionConfig;
 
-	public String getListFormat() {
-		return listFormat;
-	}
-
-	public void setListFormat(String listFormat) {
-		this.listFormat = listFormat;
-	}
-
-	public void setListFormat(
-		UnsafeSupplier<String, Exception> listFormatUnsafeSupplier) {
-
-		try {
-			listFormat = listFormatUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String listFormat;
-
 	public Integer getNumberOfColumns() {
 		return numberOfColumns;
 	}

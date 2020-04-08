@@ -69,20 +69,6 @@ public class CollectionDefinitionSerDes {
 			sb.append("\"");
 		}
 
-		if (collectionDefinition.getListFormat() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"listFormat\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(collectionDefinition.getListFormat()));
-
-			sb.append("\"");
-		}
-
 		if (collectionDefinition.getNumberOfColumns() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -133,15 +119,6 @@ public class CollectionDefinitionSerDes {
 				String.valueOf(collectionDefinition.getCollectionConfig()));
 		}
 
-		if (collectionDefinition.getListFormat() == null) {
-			map.put("listFormat", null);
-		}
-		else {
-			map.put(
-				"listFormat",
-				String.valueOf(collectionDefinition.getListFormat()));
-		}
-
 		if (collectionDefinition.getNumberOfColumns() == null) {
 			map.put("numberOfColumns", null);
 		}
@@ -185,12 +162,6 @@ public class CollectionDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					collectionDefinition.setCollectionConfig(
 						(Object)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "listFormat")) {
-				if (jsonParserFieldValue != null) {
-					collectionDefinition.setListFormat(
-						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "numberOfColumns")) {

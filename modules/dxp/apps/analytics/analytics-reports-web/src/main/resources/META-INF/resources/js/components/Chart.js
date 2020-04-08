@@ -224,9 +224,12 @@ export default function Chart({
 	publishDate,
 	timeSpanOptions,
 }) {
+	const {validAnalyticsCloudConnection} = useContext(StateContext);
+
 	const {actions, state: chartState} = useChartState({
 		defaultTimeSpanOption,
 		publishDate,
+		validAnalyticsCloudConnection,
 	});
 	const isMounted = useIsMounted();
 
@@ -317,8 +320,6 @@ export default function Chart({
 		actions.nextTimeSpan();
 	};
 
-	const {validAnalyticsCloudConnection} = useContext(StateContext);
-
 	const legendFormatter =
 		dataSet &&
 		legendFormatterGenerator(
@@ -401,6 +402,13 @@ export default function Chart({
 								minTickGap={3}
 								tickFormatter={thousandsToKilosFormater}
 								tickLine={false}
+								ticks={
+									!validAnalyticsCloudConnection && [
+										0,
+										50,
+										100,
+									]
+								}
 								width={CHART_SIZES.yAxisWidth}
 							/>
 

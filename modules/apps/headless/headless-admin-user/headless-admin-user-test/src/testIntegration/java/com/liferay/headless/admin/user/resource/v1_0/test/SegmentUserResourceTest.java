@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -54,12 +55,25 @@ public class SegmentUserResourceTest extends BaseSegmentUserResourceTestCase {
 		Assert.assertEquals(0, page.getTotalCount());
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGetSegmentUserAccountsPage() throws Exception {
+	}
+
 	@Test(expected = Problem.ProblemException.class)
 	public void testGetSegmentUserAccountsPageWithNonexistingSegmentId()
 		throws Exception {
 
 		segmentUserResource.getSegmentUserAccountsPage(
 			RandomTestUtil.randomLong(), null);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSegmentUserAccountsPageWithPagination()
+		throws Exception {
 	}
 
 	@Override

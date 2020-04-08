@@ -25,6 +25,10 @@ if (!System.getenv("JENKINS_HOME") || !systemPackagesExtraManifestFile.exists())
 
 		outputFile = systemPackagesExtraManifestFile
 
+		outputs.upToDateWhen {
+			false
+		}
+
 		properties liferayOSGi.bundleDefaultInstructions
 
 		property "-check", "IMPORTS"

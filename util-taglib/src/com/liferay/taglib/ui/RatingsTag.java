@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Shuyang Zhou
  * @author Roberto Díaz
  * @deprecated As of Athanasius (7.3.x), replaced by {@link
-		com.liferay.ratings.taglib.servlet.taglib.RatingsTag}
+ *             com.liferay.ratings.taglib.servlet.taglib.RatingsTag}
  */
 @Deprecated
 public class RatingsTag extends IncludeTag {

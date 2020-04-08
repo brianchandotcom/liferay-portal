@@ -74,16 +74,21 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 					<div class="dropdown">
 						<clay:button
 							disabled="<%= true %>"
-							elementClasses="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+							elementClasses="btn btn-outline-borderless btn-outline-secondary btn-sm dropdown-toggle"
 							icon="star-o"
 							label="-"
 						/>
 					</div>
 				</div>
+
 				<div class="autofit-col">
-					<clay:icon symbol="star" elementClasses="ratings-stars-average-icon" />
+					<clay:icon
+						elementClasses="ratings-stars-average-icon"
+						symbol="star"
+					/>
 				</div>
 			</div>
+
 			<react:component
 				data="<%= data %>"
 				module="js/components/RatingsStars.es"

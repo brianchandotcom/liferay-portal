@@ -16,8 +16,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ taglib uri="http://liferay.com/tld/ratings" prefix="liferay-ratings" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@ taglib uri="http://liferay.com/tld/ratings" prefix="liferay-ratings" %>
 
 <%@ page import="com.liferay.journal.model.JournalArticle" %><%@
 page import="com.liferay.journal.model.JournalArticleDisplay" %><%@

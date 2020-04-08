@@ -27,6 +27,11 @@ public class AnalyticsReportsUtil {
 	public static final String ANALYTICS_CLOUD_TRIAL_URL =
 		"https://www.liferay.com/products/analytics-cloud/get-started";
 
+	public static String getAsahFaroBackendDataSourceId(long companyId) {
+		return PrefsPropsUtil.getString(
+			companyId, "liferayAnalyticsDataSourceId");
+	}
+
 	public static String getAsahFaroBackendSecuritySignature(long companyId) {
 		return PrefsPropsUtil.getString(
 			companyId, "liferayAnalyticsFaroBackendSecuritySignature");

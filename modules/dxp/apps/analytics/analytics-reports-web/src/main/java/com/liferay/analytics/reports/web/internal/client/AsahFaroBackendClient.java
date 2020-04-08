@@ -17,6 +17,8 @@ package com.liferay.analytics.reports.web.internal.client;
 import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NestableRuntimeException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -67,6 +69,30 @@ public class AsahFaroBackendClient {
 		}
 	}
 
+	public boolean isValidConnection(long companyId) {
+		if (!AnalyticsReportsUtil.isAnalyticsConnected(companyId)) {
+			return false;
+		}
+
+		try {
+			String asahFaroBackendDataSourceId =
+				AnalyticsReportsUtil.getAsahFaroBackendDataSourceId(companyId);
+
+			doGet(
+				companyId,
+				"/api/1.0/data-sources/" + asahFaroBackendDataSourceId);
+
+			return true;
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Invalid Asah Faro backend connection", exception);
+			}
+
+			return false;
+		}
+	}
+
 	private HttpResponse _request(
 			long companyId, HttpRequestBase httpRequestBase)
 		throws IOException {
@@ -100,5 +126,8 @@ public class AsahFaroBackendClient {
 			return httpResponse;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AsahFaroBackendClient.class);
 
 }

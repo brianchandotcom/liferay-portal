@@ -116,6 +116,10 @@ public class AnalyticsReportsDataProvider {
 		}
 	}
 
+	public boolean isValidAnalyticsConnection(long companyId) {
+		return _asahFaroBackendClient.isValidConnection(companyId);
+	}
+
 	private JSONObject _getHistoricalJSONObject(
 		Collection<LocalDateTime> intervals) {
 

@@ -124,7 +124,7 @@ const RatingsStars = ({
 		}
 		else if (score > 0) {
 			const title =
-				score === 0
+				score === 1
 					? Liferay.Language.get(
 							'you-have-rated-this-x-star-out-of-x'
 					  )

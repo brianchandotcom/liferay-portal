@@ -45,7 +45,9 @@ definition {
 	}
 
 	macro selectPermissionsFrame {
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		while (IsElementPresent(locator1 = "IFrame#DIALOG")) {
+			SelectFrame(locator1 = "IFrame#DIALOG");
+		}
 	}
 
 	macro selectTopFrame {

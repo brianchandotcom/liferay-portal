@@ -43,10 +43,10 @@ const MockRouter = ({
 	path = '/:page/:pageSize/:sort',
 	query = '?backPath=%2F',
 	userId = '1',
+	userName = 'Test Test',
 	withoutRouterProps,
 }) => {
 	const [title, setTitle] = useState(null);
-	const [status, setStatus] = useState(null);
 
 	const contextState = useMemo(
 		() => ({
@@ -57,11 +57,10 @@ const MockRouter = ({
 			isAmPm,
 			maxPages: 3,
 			namespace: 'workflow_',
-			setStatus,
 			setTitle,
-			status,
 			title,
 			userId,
+			userName,
 		}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]

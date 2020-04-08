@@ -15,7 +15,7 @@ import {
 	validateHours,
 	validateName,
 	validateNodeKeys,
-} from '../../../../src/main/resources/META-INF/resources/js/components/sla/util/slaFormUtil.es';
+} from '../../../../../src/main/resources/META-INF/resources/js/components/sla/form-page/util/slaFormUtil.es';
 
 test('Should test duration', () => {
 	const invalidKey = 'a-duration-time-is-required';

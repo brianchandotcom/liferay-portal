@@ -48,8 +48,8 @@
 				{
 					"dataType": "string",
 					"defaultValue": "3",
-					"label": "bottom-spacing",
-					"name": "bottomSpacing",
+					"label": "margin-bottom",
+					"name": "marginBottom",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [

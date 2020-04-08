@@ -95,10 +95,12 @@ const RatingsStars = ({
 				method: 'POST',
 			})
 				.then(response => response.json())
-				.then(response => {
-					setTotalEntries(response.totalEntries);
-					setAverageScore(formatAverageScore(response.averageScore));
-					setScore(getLabelScore(response.score));
+				.then(({averageScore, score, totalEntries}) => {
+					if (averageScore && score && totalEntries) {
+						setTotalEntries(totalEntries);
+						setAverageScore(formatAverageScore(averageScore));
+						setScore(getLabelScore(score));
+					}
 				});
 		},
 		[className, classPK, formatAverageScore, getLabelScore, url]
@@ -164,6 +166,7 @@ const RatingsStars = ({
 							displayType="secondary"
 							small
 							title={getTitle()}
+							value={score}
 						>
 							<span className="inline-item inline-item-before">
 								<ClayIcon symbol={score ? 'star' : 'star-o'} />

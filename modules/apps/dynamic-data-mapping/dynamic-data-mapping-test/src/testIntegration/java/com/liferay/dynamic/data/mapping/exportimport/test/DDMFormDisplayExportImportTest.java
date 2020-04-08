@@ -42,7 +42,6 @@ import javax.portlet.PortletPreferences;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -133,11 +132,9 @@ public class DDMFormDisplayExportImportTest
 				"formInstanceId", StringPool.BLANK));
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testExportImportAssetLinks() throws Exception {
-		super.testExportImportAssetLinks();
 	}
 
 	private DDMFormInstanceRecordTestHelper _ddmFormInstanceRecordTestHelper;

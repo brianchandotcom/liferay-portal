@@ -74,13 +74,6 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	public PortalCacheManager<? extends Serializable, ? extends Serializable>
 		getPortalCacheManager() {
 
-		PortalCacheManager<? extends Serializable, ? extends Serializable>
-			portalCacheManager = _spiPortalCacheManager;
-
-		if (portalCacheManager != null) {
-			return portalCacheManager;
-		}
-
 		return _portalCacheManager;
 	}
 
@@ -105,7 +98,5 @@ public class MultiVMPoolImpl implements MultiVMPool {
 
 	private PortalCacheManager<? extends Serializable, ? extends Serializable>
 		_portalCacheManager;
-	private volatile PortalCacheManager
-		<? extends Serializable, ? extends Serializable> _spiPortalCacheManager;
 
 }

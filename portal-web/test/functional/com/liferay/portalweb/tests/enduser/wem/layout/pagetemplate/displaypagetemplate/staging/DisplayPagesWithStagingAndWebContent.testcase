@@ -37,6 +37,10 @@ definition {
 				collectionName = "Collection Name",
 				fragmentName = "Title");
 
+			AssertVisible(
+				key_text = "Discard Draft",
+				locator1 = "Button#ANY_ENABLED");
+
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Rich Text");

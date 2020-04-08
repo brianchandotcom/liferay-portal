@@ -29,9 +29,11 @@ const Body = ({filtered, items, page, pageSize, totalCount}) => {
 			errorProps: {
 				actionButton: <ReloadButton />,
 				hideAnimation: true,
-				message: Liferay.Language.get('unable-to-retrieve-data'),
+				message: Liferay.Language.get(
+					'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+				),
 			},
-			loadingProps: {className: 'pb-6 pt-6 sheet'},
+			loadingProps: {className: 'py-6 sheet'},
 		}),
 		[filtered]
 	);

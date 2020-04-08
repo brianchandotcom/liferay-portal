@@ -21,9 +21,8 @@ const Body = ({items, page, pageSize, processId, totalCount}) => {
 	const statesProps = {
 		emptyProps: {
 			className: 'py-6',
-			message: Liferay.Language.get(
-				'there-are-no-pending-items-at-the-moment'
-			),
+			hideAnimation: true,
+			message: Liferay.Language.get('there-is-no-data-at-the-moment'),
 			messageClassName: 'small',
 		},
 		errorProps: {

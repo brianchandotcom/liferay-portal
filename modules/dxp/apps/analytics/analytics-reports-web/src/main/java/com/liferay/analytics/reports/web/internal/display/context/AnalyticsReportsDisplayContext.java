@@ -34,11 +34,13 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
@@ -220,6 +222,23 @@ public class AnalyticsReportsDisplayContext {
 		return timeSpansJSONArray;
 	}
 
+	private List<TrafficSource> _getTrafficSources() {
+		List<TrafficSource> trafficSources = Collections.emptyList();
+
+		if (_validAnalyticsConnection) {
+			try {
+				trafficSources =
+					_analyticsReportsDataProvider.getTrafficSources(
+						_themeDisplay.getCompanyId(), _canonicalURL);
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
+			}
+		}
+
+		return trafficSources;
+	}
+
 	private JSONArray _getTrafficSourcesJSONArray() {
 		JSONArray trafficSourcesJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -234,18 +253,30 @@ public class AnalyticsReportsDisplayContext {
 			"paid", ResourceBundleUtil.getString(_resourceBundle, "paid")
 		).build();
 
-		try {
-			List<TrafficSource> trafficSources =
-				_analyticsReportsDataProvider.getTrafficSources(
-					_themeDisplay.getCompanyId(), _canonicalURL);
+		List<TrafficSource> trafficSources = _getTrafficSources();
 
-			trafficSources.forEach(
-				trafficSource -> trafficSourcesJSONArray.put(
-					trafficSource.toJSONObject(helpMessage, titleMap)));
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-		}
+		titleMap.forEach(
+			(name, title) -> {
+				Stream<TrafficSource> stream = trafficSources.stream();
+
+				trafficSourcesJSONArray.put(
+					stream.filter(
+						trafficSource -> Objects.equals(
+							name, trafficSource.getName())
+					).findFirst(
+					).map(
+						trafficSource -> trafficSource.toJSONObject(
+							helpMessage, title)
+					).orElse(
+						JSONUtil.put(
+							"helpMessage", helpMessage
+						).put(
+							"name", name
+						).put(
+							"title", title
+						)
+					));
+			});
 
 		return trafficSourcesJSONArray;
 	}

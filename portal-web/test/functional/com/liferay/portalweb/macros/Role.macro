@@ -294,8 +294,8 @@ definition {
 				var permissionNavigationKey = "SITE_ADMIN_CATEGORIES";
 				var permissionNavigationValue = "Categories";
 			}
-			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_CONTENT_SETS")) {
-				var permissionNavigationKey = "SITE_ADMIN_CONTENT_CONTENT_SETS";
+			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_COLLECTIONS")) {
+				var permissionNavigationKey = "SITE_ADMIN_CONTENT_COLLECTIONS";
 				var permissionNavigationValue = "Collections";
 			}
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA")) {
@@ -629,8 +629,8 @@ definition {
 			var permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS";
 			var permissionNavigationValue = "Blogs";
 		}
-		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_CONTENT_SETS")) {
-			var permissionNavigationKey = "SITE_ADMIN_CONTENT_CONTENT_SETS";
+		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_COLLECTIONS")) {
+			var permissionNavigationKey = "SITE_ADMIN_CONTENT_COLLECTIONS";
 			var permissionNavigationValue = "Collections";
 		}
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA")) {

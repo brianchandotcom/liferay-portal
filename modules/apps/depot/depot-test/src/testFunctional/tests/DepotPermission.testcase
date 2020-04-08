@@ -566,11 +566,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "Site DM Document Title");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Depot DM Document Title");
 

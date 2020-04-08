@@ -43,11 +43,7 @@ definition {
 	@description = "This ensures that the approved image from a depot is available to use in its connected site."
 	@priority = "5"
 	test ApproveImage {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
@@ -103,11 +99,7 @@ definition {
 			workflowAssetType = "Document",
 			workflowTask = "Review");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -351,11 +343,7 @@ definition {
 	@description = "This ensures that the resubmitted document from a depot is available to use in its connected site."
 	@priority = "5"
 	test RejectAndResubmitDocument {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
@@ -422,11 +410,7 @@ definition {
 			workflowAssetType = "Document",
 			workflowTask = "Review");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 

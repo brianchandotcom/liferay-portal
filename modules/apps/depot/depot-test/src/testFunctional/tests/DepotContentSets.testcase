@@ -357,11 +357,7 @@ definition {
 
 		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMNavigator.gotoDocumentType();
 
@@ -409,11 +405,7 @@ definition {
 	test DisplayImageInAP {
 		property portal.upstream = "quarantine";
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -492,11 +484,7 @@ definition {
 	@description = "This ensures that tagged the web content is displayed by AP through dynamic selection in a depot."
 	@priority = "5"
 	test DisplayWebContentWithTagInAP {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -591,11 +579,7 @@ definition {
 	@description = "This ensures that images are excluded with the dynamic selection that does not contain the keyword "Image" in a depot."
 	@priority = "5"
 	test ExcludeImagesDynamically {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		for (var i : list "1,2") {
 			DMDocument.addCP(
@@ -714,11 +698,7 @@ definition {
 	@description = "This ensures that only web contents configured to show with dynamic selection are displayed in a depot."
 	@priority = "4"
 	test SelectAllWebContentDynamically {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -850,11 +830,7 @@ definition {
 	@description = "This ensures that multiple documents can be selected through Collections in a depot."
 	@priority = "5"
 	test SelectMultipleDocumentsManually {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.txt");
 

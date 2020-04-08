@@ -37,9 +37,7 @@ definition {
 	test AddImageViaBlogs {
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -90,11 +88,7 @@ definition {
 	@description = "This ensures that a depot image can be used through page creation on a connected site."
 	@priority = "5"
 	test AddImageViaContentPage {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -145,11 +139,7 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -205,11 +195,7 @@ definition {
 	@description = "This ensures that a depot image can be used through web content on a connected site."
 	@priority = "5"
 	test AddImageViaWebContent {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",

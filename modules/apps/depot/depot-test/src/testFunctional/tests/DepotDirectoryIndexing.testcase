@@ -74,11 +74,7 @@ definition {
 			dmDocumentTitle = "DM Document JPG",
 			groupName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
@@ -111,11 +107,7 @@ definition {
 			depotName = "test depot name",
 			dmDocumentTitle = "DM Document PDF");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");
 
@@ -146,21 +138,13 @@ definition {
 			depotName = "test depot name",
 			dmDocumentTitle = "DM Document TXT");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMDocument.editCP(
 			dmDocumentTitle = "DM Document TXT",
 			dmDocumentTitleEdit = "DM Document TXT Edit");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document TXT Edit");
 
@@ -184,11 +168,7 @@ definition {
 
 		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
@@ -200,11 +180,7 @@ definition {
 			folderName = "DM Folder Name",
 			groupName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMFolder.gotoEntry(dmFolderName = "DM Folder Name");
 
@@ -231,11 +207,7 @@ definition {
 
 		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
@@ -295,11 +267,7 @@ definition {
 			dmDocumentTitle = "DM Document SVG",
 			groupName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document SVG");
 

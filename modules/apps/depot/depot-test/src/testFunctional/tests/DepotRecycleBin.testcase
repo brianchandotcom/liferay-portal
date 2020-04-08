@@ -36,11 +36,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
@@ -104,11 +100,7 @@ definition {
 
 		Depot.configureRecycleBin(recycleBin = "Disabled");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -167,11 +159,7 @@ definition {
 	@description = "This ensures that the documents can be restored from recycle bin."
 	@priority = "5"
 	test RestoreDocuments {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg");
 
@@ -203,22 +191,14 @@ definition {
 			assetRestoreLocation = "Home",
 			assetType = "Document");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		for (var dmDocumentTitle : list "Document_1.doc,Document_2.jpg") {
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
 
 			DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
 
-			DepotNavigator.openDepotAdmin();
-
-			DepotNavigator.gotoDepot(
-				depotName = "Test Depot Name",
-				portlet = "Documents and Media");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 		}
 	}
 

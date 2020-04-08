@@ -1205,6 +1205,11 @@ public class LayoutLocalServiceUtil {
 		return getService().getLayouts(groupId, start, end, obc);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getMasterLayouts(long, long)}
+	 */
+	@Deprecated
 	public static java.util.List<com.liferay.portal.kernel.model.Layout>
 		getLayouts(long groupId, long masterLayoutPlid) {
 
@@ -1383,6 +1388,11 @@ public class LayoutLocalServiceUtil {
 		return getService().getLayoutsCount(groupId, privateLayout);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getMasterLayoutsCount(long, long)}
+	 */
+	@Deprecated
 	public static int getLayoutsCount(long groupId, long masterLayoutPlid) {
 		return getService().getLayoutsCount(groupId, masterLayoutPlid);
 	}
@@ -1417,6 +1427,18 @@ public class LayoutLocalServiceUtil {
 
 		return getService().getLayoutsCount(
 			user, privateLayout, includeUserGroups);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Layout>
+		getMasterLayouts(long groupId, long masterLayoutPlid) {
+
+		return getService().getMasterLayouts(groupId, masterLayoutPlid);
+	}
+
+	public static int getMasterLayoutsCount(
+		long groupId, long masterLayoutPlid) {
+
+		return getService().getMasterLayoutsCount(groupId, masterLayoutPlid);
 	}
 
 	/**

@@ -1229,6 +1229,11 @@ public class LayoutLocalServiceWrapper
 		return _layoutLocalService.getLayouts(groupId, start, end, obc);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getMasterLayouts(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<Layout> getLayouts(
 		long groupId, long masterLayoutPlid) {
@@ -1419,6 +1424,11 @@ public class LayoutLocalServiceWrapper
 		return _layoutLocalService.getLayoutsCount(groupId, privateLayout);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getMasterLayoutsCount(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public int getLayoutsCount(long groupId, long masterLayoutPlid) {
 		return _layoutLocalService.getLayoutsCount(groupId, masterLayoutPlid);
@@ -1457,6 +1467,19 @@ public class LayoutLocalServiceWrapper
 
 		return _layoutLocalService.getLayoutsCount(
 			user, privateLayout, includeUserGroups);
+	}
+
+	@Override
+	public java.util.List<Layout> getMasterLayouts(
+		long groupId, long masterLayoutPlid) {
+
+		return _layoutLocalService.getMasterLayouts(groupId, masterLayoutPlid);
+	}
+
+	@Override
+	public int getMasterLayoutsCount(long groupId, long masterLayoutPlid) {
+		return _layoutLocalService.getMasterLayoutsCount(
+			groupId, masterLayoutPlid);
 	}
 
 	/**

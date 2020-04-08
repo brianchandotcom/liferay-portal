@@ -78,8 +78,26 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 							<strong><liferay-ui:message key="<%= HtmlUtil.escape(assetListEntry.getTypeLabel()) %>" /></strong>
 						</h6>
 
+						<%
+						String assetEntryTypeLabel = ResourceActionsUtil.getModelResource(locale, assetListEntry.getAssetEntryType());
+
+						long classTypeId = GetterUtil.getLong(assetListEntry.getAssetEntrySubtype());
+
+						if (classTypeId > 0) {
+							AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetListEntry.getAssetEntryType());
+
+							if ((assetRendererFactory != null) && assetRendererFactory.isSupportsClassTypes()) {
+								ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
+
+								ClassType classType = classTypeReader.getClassType(classTypeId, locale);
+
+								assetEntryTypeLabel = assetEntryTypeLabel + " - " + classType.getName();
+							}
+						}
+						%>
+
 						<h6 class="text-default">
-							<strong><%= ResourceActionsUtil.getModelResource(locale, assetListEntry.getAssetEntryType()) %></strong>
+							<strong><%= assetEntryTypeLabel %></strong>
 						</h6>
 
 						<%

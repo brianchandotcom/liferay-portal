@@ -333,6 +333,56 @@ public class AssetListEntryServiceSoap {
 
 	public static com.liferay.asset.list.model.AssetListEntrySoap[]
 			getAssetListEntries(
+				long[] groupIds, String assetEntrySubtype,
+				String assetEntryType, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.asset.list.model.AssetListEntry>
+						orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.asset.list.model.AssetListEntry>
+				returnValue = AssetListEntryServiceUtil.getAssetListEntries(
+					groupIds, assetEntrySubtype, assetEntryType, start, end,
+					orderByComparator);
+
+			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntrySoap[]
+			getAssetListEntries(
+				long[] groupIds, String title, String assetEntrySubtype,
+				String assetEntryType, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.asset.list.model.AssetListEntry>
+						orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.asset.list.model.AssetListEntry>
+				returnValue = AssetListEntryServiceUtil.getAssetListEntries(
+					groupIds, title, assetEntrySubtype, assetEntryType, start,
+					end, orderByComparator);
+
+			return com.liferay.asset.list.model.AssetListEntrySoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntrySoap[]
+			getAssetListEntries(
 				long[] groupIds, String title, String[] assetEntryTypes,
 				int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
@@ -435,6 +485,43 @@ public class AssetListEntryServiceSoap {
 			int returnValue =
 				AssetListEntryServiceUtil.getAssetListEntriesCount(
 					groupIds, title);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getAssetListEntriesCount(
+			long[] groupIds, String assetEntrySubtype, String assetEntryType)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				AssetListEntryServiceUtil.getAssetListEntriesCount(
+					groupIds, assetEntrySubtype, assetEntryType);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getAssetListEntriesCount(
+			long[] groupIds, String title, String assetEntrySubtype,
+			String assetEntryType)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				AssetListEntryServiceUtil.getAssetListEntriesCount(
+					groupIds, title, assetEntrySubtype, assetEntryType);
 
 			return returnValue;
 		}

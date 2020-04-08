@@ -14,6 +14,10 @@
 
 package com.liferay.asset.list.item.selector.web.internal;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.list.util.AssetListPortletUtil;
@@ -29,8 +33,11 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -103,6 +110,9 @@ public class AssetListItemSelectorView
 				infoListItemSelectorCriterion, portletURL));
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetListItemSelectorView.class);
+
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new InfoListItemSelectorReturnType());
@@ -168,6 +178,8 @@ public class AssetListItemSelectorView
 					).put(
 						"classPK", assetListEntry.getAssetListEntryId()
 					).put(
+						"itemSubtype", assetListEntry.getAssetEntrySubtype()
+					).put(
 						"itemType", assetListEntry.getAssetEntryType()
 					).put(
 						"title", assetListEntry.getTitle()
@@ -176,8 +188,22 @@ public class AssetListItemSelectorView
 
 				@Override
 				public String getSubtitle(Locale locale) {
-					return ResourceActionsUtil.getModelResource(
+					String subtitle = ResourceActionsUtil.getModelResource(
 						locale, assetListEntry.getAssetEntryType());
+
+					if (Validator.isNull(
+							assetListEntry.getAssetEntrySubtype())) {
+
+						return subtitle;
+					}
+
+					String subtypeLabel = _getAssetEntrySubtypeSubtypeLabel();
+
+					if (Validator.isNull(subtypeLabel)) {
+						return subtitle;
+					}
+
+					return subtitle + " - " + subtypeLabel;
 				}
 
 				@Override
@@ -198,6 +224,47 @@ public class AssetListItemSelectorView
 				@Override
 				public String getUserName() {
 					return assetListEntry.getUserName();
+				}
+
+				private String _getAssetEntrySubtypeSubtypeLabel() {
+					long classTypeId = GetterUtil.getLong(
+						assetListEntry.getAssetEntrySubtype());
+
+					if (classTypeId <= 0) {
+						return StringPool.BLANK;
+					}
+
+					AssetRendererFactory assetRendererFactory =
+						AssetRendererFactoryRegistryUtil.
+							getAssetRendererFactoryByClassName(
+								assetListEntry.getAssetEntryType());
+
+					if ((assetRendererFactory == null) ||
+						!assetRendererFactory.isSupportsClassTypes()) {
+
+						return StringPool.BLANK;
+					}
+
+					ClassTypeReader classTypeReader =
+						assetRendererFactory.getClassTypeReader();
+
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)_httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					try {
+						ClassType classType = classTypeReader.getClassType(
+							classTypeId, themeDisplay.getLocale());
+
+						return classType.getName();
+					}
+					catch (PortalException portalException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(portalException, portalException);
+						}
+					}
+
+					return StringPool.BLANK;
 				}
 
 			};
@@ -286,7 +353,9 @@ public class AssetListItemSelectorView
 								themeDisplay.getScopeGroupId()));
 				}
 			}
-			else {
+			else if (Validator.isNull(
+						_infoListItemSelectorCriterion.getItemSubtype())) {
+
 				if (Validator.isNotNull(keywords)) {
 					assetListEntries =
 						_assetListEntryService.getAssetListEntries(
@@ -318,6 +387,46 @@ public class AssetListItemSelectorView
 							PortalUtil.getCurrentAndAncestorSiteGroupIds(
 								themeDisplay.getScopeGroupId()),
 							itemTypes.toArray(new String[0]));
+				}
+			}
+			else {
+				if (Validator.isNotNull(keywords)) {
+					assetListEntries =
+						_assetListEntryService.getAssetListEntries(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()),
+							keywords,
+							_infoListItemSelectorCriterion.getItemSubtype(),
+							_infoListItemSelectorCriterion.getItemType(),
+							searchContainer.getStart(),
+							searchContainer.getEnd(),
+							searchContainer.getOrderByComparator());
+
+					assetListEntriesCount =
+						_assetListEntryService.getAssetListEntriesCount(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()),
+							keywords,
+							_infoListItemSelectorCriterion.getItemSubtype(),
+							_infoListItemSelectorCriterion.getItemType());
+				}
+				else {
+					assetListEntries =
+						_assetListEntryService.getAssetListEntries(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()),
+							_infoListItemSelectorCriterion.getItemSubtype(),
+							_infoListItemSelectorCriterion.getItemType(),
+							searchContainer.getStart(),
+							searchContainer.getEnd(),
+							searchContainer.getOrderByComparator());
+
+					assetListEntriesCount =
+						_assetListEntryService.getAssetListEntriesCount(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								themeDisplay.getScopeGroupId()),
+							_infoListItemSelectorCriterion.getItemSubtype(),
+							_infoListItemSelectorCriterion.getItemType());
 				}
 			}
 

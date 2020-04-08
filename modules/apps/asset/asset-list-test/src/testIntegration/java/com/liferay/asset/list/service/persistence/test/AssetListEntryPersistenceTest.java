@@ -148,6 +148,8 @@ public class AssetListEntryPersistenceTest {
 
 		newAssetListEntry.setType(RandomTestUtil.nextInt());
 
+		newAssetListEntry.setAssetEntrySubtype(RandomTestUtil.randomString());
+
 		newAssetListEntry.setAssetEntryType(RandomTestUtil.randomString());
 
 		newAssetListEntry.setLastPublishDate(RandomTestUtil.nextDate());
@@ -192,6 +194,9 @@ public class AssetListEntryPersistenceTest {
 			existingAssetListEntry.getTitle(), newAssetListEntry.getTitle());
 		Assert.assertEquals(
 			existingAssetListEntry.getType(), newAssetListEntry.getType());
+		Assert.assertEquals(
+			existingAssetListEntry.getAssetEntrySubtype(),
+			newAssetListEntry.getAssetEntrySubtype());
 		Assert.assertEquals(
 			existingAssetListEntry.getAssetEntryType(),
 			newAssetListEntry.getAssetEntryType());
@@ -319,6 +324,41 @@ public class AssetListEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_AES_AET() throws Exception {
+		_persistence.countByG_AES_AET(RandomTestUtil.nextLong(), "", "");
+
+		_persistence.countByG_AES_AET(0L, "null", "null");
+
+		_persistence.countByG_AES_AET(0L, (String)null, (String)null);
+	}
+
+	@Test
+	public void testCountByG_AES_AETArrayable() throws Exception {
+		_persistence.countByG_AES_AET(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+	}
+
+	@Test
+	public void testCountByG_LikeT_AES_AET() throws Exception {
+		_persistence.countByG_LikeT_AES_AET(
+			RandomTestUtil.nextLong(), "", "", "");
+
+		_persistence.countByG_LikeT_AES_AET(0L, "null", "null", "null");
+
+		_persistence.countByG_LikeT_AES_AET(
+			0L, (String)null, (String)null, (String)null);
+	}
+
+	@Test
+	public void testCountByG_LikeT_AES_AETArrayable() throws Exception {
+		_persistence.countByG_LikeT_AES_AET(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AssetListEntry newAssetListEntry = addAssetListEntry();
 
@@ -353,8 +393,8 @@ public class AssetListEntryPersistenceTest {
 			"uuid", true, "assetListEntryId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "assetListEntryKey", true, "title",
-			true, "type", true, "assetEntryType", true, "lastPublishDate",
-			true);
+			true, "type", true, "assetEntrySubtype", true, "assetEntryType",
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -642,6 +682,8 @@ public class AssetListEntryPersistenceTest {
 		assetListEntry.setTitle(RandomTestUtil.randomString());
 
 		assetListEntry.setType(RandomTestUtil.nextInt());
+
+		assetListEntry.setAssetEntrySubtype(RandomTestUtil.randomString());
 
 		assetListEntry.setAssetEntryType(RandomTestUtil.randomString());
 

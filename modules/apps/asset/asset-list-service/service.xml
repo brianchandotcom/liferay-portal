@@ -26,6 +26,7 @@
 		<column name="assetListEntryKey" type="String" />
 		<column name="title" type="String" />
 		<column name="type" type="int" />
+		<column name="assetEntrySubtype" type="String" />
 		<column name="assetEntryType" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
@@ -58,6 +59,17 @@
 			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column comparator="LIKE" name="title" />
 			<finder-column arrayable-operator="OR" name="assetEntryType" />
+		</finder>
+		<finder name="G_AES_AET" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column name="assetEntrySubtype" />
+			<finder-column name="assetEntryType" />
+		</finder>
+		<finder name="G_LikeT_AES_AET" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column comparator="LIKE" name="title" />
+			<finder-column name="assetEntrySubtype" />
+			<finder-column name="assetEntryType" />
 		</finder>
 
 		<!-- References -->

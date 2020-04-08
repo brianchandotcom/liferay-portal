@@ -682,6 +682,8 @@ definition {
 				key_fieldLabel = "Number of Columns",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${columnCount}");
+
+			Pause(locator = "3000");
 		}
 
 		if ("${spaceBetweenColumns}" == "true") {
@@ -713,6 +715,8 @@ definition {
 			Click(
 				key_paletteItem = "${backgroundColor}",
 				locator1 = "Button#PALETTE_ITEM");
+
+			Pause(locator = "3000");
 		}
 
 		if (isSet(backgroundImage)) {
@@ -755,6 +759,8 @@ definition {
 
 				SelectFrame(value1 = "relative=top");
 			}
+
+			Pause(locator = "3000");
 		}
 
 		if (isSet(container)) {
@@ -762,6 +768,8 @@ definition {
 				key_fieldLabel = "Container",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${container}");
+
+			Pause(locator = "3000");
 		}
 
 		if (isSet(paddingBottom)) {
@@ -769,6 +777,8 @@ definition {
 				key_fieldLabel = "Padding Bottom",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${paddingBottom}");
+
+			Pause(locator = "3000");
 		}
 
 		if (isSet(paddingHorizontal)) {
@@ -776,6 +786,8 @@ definition {
 				key_fieldLabel = "Padding Horizontal",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${paddingHorizontal}");
+
+			Pause(locator = "3000");
 		}
 
 		if (isSet(paddingTop)) {
@@ -783,6 +795,8 @@ definition {
 				key_fieldLabel = "Padding Top",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${paddingTop}");
+
+			Pause(locator = "3000");
 		}
 
 		PageEditor.waitForAutoSave();

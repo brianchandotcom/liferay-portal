@@ -28,7 +28,8 @@ public class FragmentExportImportConstants {
 	@Deprecated
 	public static final String FILE_NAME_COLLECTION_CONFIG = "collection.json";
 
-	public static final String FILE_NAME_COMPOSITION = "composition.json";
+	public static final String FILE_NAME_COMPOSITION =
+		"fragment-composition.json";
 
 	public static final String FILE_NAME_FRAGMENT = "fragment.json";
 

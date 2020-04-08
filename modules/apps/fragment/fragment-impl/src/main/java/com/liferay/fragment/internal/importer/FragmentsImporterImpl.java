@@ -589,7 +589,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			String description = jsonObject.getString("description");
 			String definitionData = _getFragmentEntryContent(
 				zipFile, entry.getValue(),
-				jsonObject.getString("definitionDataPath"));
+				jsonObject.getString("fragmentCompositionDefinitionPath"));
 
 			FragmentComposition fragmentComposition =
 				_fragmentCompositionService.fetchFragmentComposition(

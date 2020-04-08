@@ -167,7 +167,11 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 				dataRecordValues = HashMapBuilder.<String, Object>put(
 					fieldName,
 					HashMapBuilder.put(
-						"en_US", RandomTestUtil.randomString()
+						"en_US",
+						new String[] {
+							RandomTestUtil.randomString(),
+							RandomTestUtil.randomString()
+						}
 					).build()
 				).build();
 			}

@@ -34,7 +34,7 @@
 				"en_US": ""
 			},
 			"readOnly": false,
-			"repeatable": false,
+			"repeatable": true,
 			"required": false,
 			"showLabel": true,
 			"tip": {

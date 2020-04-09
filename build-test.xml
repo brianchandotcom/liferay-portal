@@ -1737,77 +1737,214 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 
 	<macrodef name="prepare-database-jndi">
 		<sequential>
+			<get-database-property property.name="database.driver" />
+			<get-database-property property.name="database.host" />
+			<get-database-property property.name="database.password" />
+			<get-database-property property.name="database.schema" />
+			<get-database-property property.name="database.username" />
+
 			<if>
-				<not>
+				<and>
+					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<equals arg1="${database.type}" arg2="mysql" />
+				</and>
+				<then>
+					<if>
+						<not>
+							<resourcecontains
+								resource="${app.server.dir}/conf/context.xml"
+								substring="jdbc/LiferayPool"
+							/>
+						</not>
+						<then>
+							<replace
+								file="${app.server.dir}/conf/context.xml"
+							>
+								<replacetoken><![CDATA[<Context>]]></replacetoken>
+								<replacevalue>
+									<![CDATA[
+										<Context>
+											<ResourceLink name="jdbc/LiferayPool" global="jdbc/LiferayPool" type="javax.sql.DataSource" />
+									]]>
+								</replacevalue>
+							</replace>
+						</then>
+					</if>
+
+					<if>
+						<not>
+							<resourcecontains
+								resource="${app.server.dir}/conf/server.xml"
+								substring="jdbc/LiferayPool"
+							/>
+						</not>
+						<then>
+							<replace
+								file="${app.server.dir}/conf/server.xml"
+							>
+								<replacetoken><![CDATA[<GlobalNamingResources>]]></replacetoken>
+								<replacevalue expandproperties="true">
+									<![CDATA[
+										<GlobalNamingResources>
+											<Resource
+												auth="Container"
+												description="Global Address Database"
+												driverClassName="${database.driver}"
+												maxActive="40"
+												maxIdle="20"
+												maxWait="1000"
+												name="jdbc/LiferayPool"
+												password="${database.password}"
+												type="javax.sql.DataSource"
+												url="jdbc:mysql://${database.host}/${database.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false&amp;serverTimezone=GMT&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true"
+												username="${database.username}"
+											/>
+									]]>
+								</replacevalue>
+							</replace>
+						</then>
+					</if>
+				</then>
+				<elseif>
 					<and>
-						<equals arg1="${app.server.type}" arg2="tomcat" />
+						<equals arg1="${app.server.type}" arg2="wildfly" />
+						<equals arg1="${database.type}" arg2="mariadb" />
+					</and>
+					<then>
+						<if>
+							<not>
+								<resourcecontains
+									resource="${app.server.dir}/standalone/configuration/standalone.xml"
+									substring="jdbc/LiferayPool"
+								/>
+							</not>
+							<then>
+								<replace
+									file="${app.server.dir}/standalone/configuration/standalone.xml"
+								>
+									<replacetoken><![CDATA[<datasources>]]></replacetoken>
+									<replacevalue expandproperties="true">
+										<![CDATA[
+											<datasources>
+        										<datasource jndi-name="java:/jdbc/LiferayPool" pool-name="LiferayPool" enabled="true" jta="true" use-java-context="true" use-ccm="true">
+            										<connection-url>jdbc:mariadb://${database.host}/${database.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false</connection-url>
+            										<driver>mariadb</driver>
+            										<security>
+                										<user-name>${database.username}</user-name>
+                										<password>${database.password}</password>
+            										</security>
+        										</datasource>
+										]]>
+									</replacevalue>
+								</replace>
+								<replace
+									file="${app.server.dir}/standalone/configuration/standalone.xml"
+								>
+									<replacetoken><![CDATA[<drivers>]]></replacetoken>
+									<replacevalue expandproperties="true">
+										<![CDATA[
+											<drivers>
+            									<driver name="mariadb" module="com.liferay.portal">
+                									<driver-class>${database.driver}</driver-class>
+            									</driver>
+										]]>
+									</replacevalue>
+								</replace>
+								<replace
+									file="${app.server.dir}/standalone/configuration/standalone.xml"
+								>
+									<replacetoken><![CDATA[datasource="java:jboss/datasources/ExampleDS"]]></replacetoken>
+									<replacevalue><![CDATA[datasource="java:/jdbc/LiferayPool"]]></replacevalue>
+								</replace>
+							</then>
+						</if>
+					</then>
+				</elseif>
+				<elseif>
+					<and>
+						<equals arg1="${app.server.type}" arg2="weblogic" />
 						<equals arg1="${database.type}" arg2="mysql" />
 					</and>
-				</not>
-				<then>
-					<fail>Tests utilizing JNDI are only available for Tomcat+MySQL.</fail>
-				</then>
-			</if>
-
-			<if>
-				<not>
-					<resourcecontains
-						resource="${app.server.dir}/conf/context.xml"
-						substring="jdbc/LiferayPool"
-					/>
-				</not>
-				<then>
-					<replace
-						file="${app.server.dir}/conf/context.xml"
-					>
-						<replacetoken><![CDATA[<Context>]]></replacetoken>
-						<replacevalue>
+					<then>
+						<echo file="${app.server.weblogic.instance.dir}/config/jdbc/Liferay_Data_Source-jdbc.xml">
 							<![CDATA[
-								<Context>
-									<ResourceLink name="jdbc/LiferayPool" global="jdbc/LiferayPool" type="javax.sql.DataSource" />
-							]]>
-						</replacevalue>
-					</replace>
-				</then>
-			</if>
+								<?xml version='1.0' encoding='UTF-8'?>
+								<jdbc-data-source>
+									<name>Liferay Data Source</name>
+									<datasource-type>GENERIC</datasource-type>
+									<jdbc-driver-params>
+										<url>jdbc:mysql://${database.host}/${database.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false&amp;serverTimezone=GMT&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true</url>
+										<driver-name>${database.driver}</driver-name>
+										<properties>
+											<property>
+												<name>user</name>
+												<value>${database.username}</value>
+											</property>
+										</properties>
+										<password-encrypted>${database.password}</password-encrypted>
+									</jdbc-driver-params>
+									<jdbc-connection-pool-params>
+										<initial-capacity>5</initial-capacity>
+										<max-capacity>100</max-capacity>
+										<min-capacity>5</min-capacity>
+										<test-table-name>SQL SELECT 1</test-table-name>
+									</jdbc-connection-pool-params>
+									<jdbc-data-source-params>
+										<jndi-name>jdbc/LiferayPool</jndi-name>
+										<global-transactions-protocol>None</global-transactions-protocol>
+									</jdbc-data-source-params>
+								</jdbc-data-source>
+    						]]>
+						</echo>
 
-			<if>
-				<not>
-					<resourcecontains
-						resource="${app.server.dir}/conf/server.xml"
-						substring="jdbc/LiferayPool"
-					/>
-				</not>
-				<then>
-					<get-database-property property.name="database.host" />
-					<get-database-property property.name="database.password" />
-					<get-database-property property.name="database.schema" />
-					<get-database-property property.name="database.username" />
-
-					<replace
-						file="${app.server.dir}/conf/server.xml"
-					>
-						<replacetoken><![CDATA[<GlobalNamingResources>]]></replacetoken>
-						<replacevalue expandproperties="true">
-							<![CDATA[
-								<GlobalNamingResources>
-									<Resource
-										auth="Container"
-										description="Global Address Database"
-										driverClassName="com.mysql.cj.jdbc.Driver"
-										maxActive="40"
-										maxIdle="20"
-										maxWait="1000"
-										name="jdbc/LiferayPool"
-										password="${database.password}"
-										type="javax.sql.DataSource"
-										url="jdbc:mysql://${database.host}:3306/${database.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false"
-										username="${database.username}"
-									/>
-							]]>
-						</replacevalue>
-					</replace>
-				</then>
+						<replace
+							file="${app.server.weblogic.instance.dir}/config/config.xml"
+						>
+							<replacetoken><![CDATA[</domain>]]></replacetoken>
+							<replacevalue>
+								<![CDATA[
+									<jdbc-system-resource>
+										<name>Liferay Data Source</name>
+										<target>AdminServer</target>
+										<descriptor-file-name>jdbc/Liferay_Data_Source-jdbc.xml</descriptor-file-name>
+									</jdbc-system-resource>
+								</domain>
+								]]>
+							</replacevalue>
+						</replace>
+					</then>
+				</elseif>
+				<elseif>
+					<and>
+						<equals arg1="${app.server.type}" arg2="websphere" />
+						<equals arg1="${database.type}" arg2="mysql" />
+					</and>
+					<then>
+						<replace
+							file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/resources.xml"
+						>
+							<replacetoken><![CDATA[</xmi:XMI>]]></replacetoken>
+							<replacevalue expandproperties="true">
+								<![CDATA[
+									<resources.jdbc:JDBCProvider xmi:id="Liferay_JDBCProvider" name="Liferay JDBC Provider" providerType="User-defined JDBC Provider" isolatedClassLoader="false" implementationClassName="com.mysql.cj.jdbc.MysqlConnectionPoolDataSource" xa="false">
+										<factories xmi:type="resources.jdbc:DataSource" xmi:id="Liferay_DataSource" name="Liferay DataSource" jndiName="jdbc/LiferayPool" providerType="User-defined JDBC Provider" authMechanismPreference="BASIC_PASSWORD" authDataAlias="" manageCachedHandles="false" logMissingTransactionContext="true" diagnoseConnectionUsage="false" relationalResourceAdapter="builtin_rra" statementCacheSize="10" datasourceHelperClassname="com.ibm.websphere.rsadapter.GenericDataStoreHelper">
+											<propertySet xmi:id="J2EEResourcePropertySet_1">
+												<resourceProperties xmi:id="J2EEResourceProperty_1" name="user" type="java.lang.String" value="${database.username}" required="false" />
+												<resourceProperties xmi:id="J2EEResourceProperty_2" name="password" type="java.lang.String" value="${database.password}" required="false" />
+												<resourceProperties xmi:id="J2EEResourceProperty_3" name="url" type="java.lang.String" value="jdbc:mysql://${database.host}/${database.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false&amp;serverTimezone=GMT&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true" required="false" />
+											</propertySet>
+											<connectionPool xmi:id="ConnectionPool_1" connectionTimeout="1800" maxConnections="100" minConnections="5" reapTime="180" unusedTimeout="1800" agedTimeout="180" purgePolicy="EntirePool" />
+										</factories>
+									</resources.jdbc:JDBCProvider>
+								</xmi:XMI>
+								]]>
+							</replacevalue>
+						</replace>
+					</then>
+				</elseif>
+				<else>
+					<fail message="Tests utilizing JNDI are not available." />
+				</else>
 			</if>
 		</sequential>
 	</macrodef>

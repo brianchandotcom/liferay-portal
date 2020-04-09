@@ -587,7 +587,7 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "${kbArticleTitleEdit}");
 
-		CKEditor.addContent(content = "${kbArticleContentEdit}");
+		CKEditor.addContent(kbArticleContentEdit = "${kbArticleContentEdit}");
 
 		if (isSet(kbArticleAttachment)) {
 			KBArticle.selectAttachmentCP(kbArticleAttachment = "${kbArticleAttachment}");
@@ -630,7 +630,7 @@ definition {
 
 		var kbArticleContentEdit = "${kbArticleContentEdit}";
 
-		CKEditor.addContent(content = "${kbArticleContentEdit}");
+		CKEditor.addContent(kbArticleContentEdit = "${kbArticleContentEdit}");
 
 		if ("${cancel}" == "true") {
 			Button.clickCancel();
@@ -667,7 +667,7 @@ definition {
 
 		var kbArticleContentEdit = "${kbArticleContentEdit}";
 
-		CKEditor.addContent(content = "${kbArticleContentEdit}");
+		CKEditor.addContent(kbArticleContentEdit = "${kbArticleContentEdit}");
 
 		if (IsElementPresent(locator1 = "Home#PORTAL_LOCALIZATION_TRANSLATION_LANGUAGE_MESSAGE")) {
 			Click(locator1 = "Home#PORTAL_LOCALIZATION_IGNORE_BUTTON");

@@ -405,7 +405,6 @@ definition {
 			privacy = "Public Pages");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test EnableStagingWithWebContentReferencedFromDeletedSite {
 		JSONWebcontent.addWebContent(

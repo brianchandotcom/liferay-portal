@@ -1103,7 +1103,6 @@ definition {
 			webContentTitle = "Web Content Title 2");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test StagingPublishChildSiteWithReference {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");

@@ -1027,7 +1027,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-54392 and LPS-88014."
-	@ignore = "true"
 	@priority = "3"
 	test ExportImportSiteWithReferencedWebContent {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportSiteWithReferencedWebContent";
@@ -1226,7 +1225,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-84204."
-	@ignore = "true"
 	@priority = "4"
 	test ExportImportWCDReferenceWhenNotStagedWebContent {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportWCDReferenceWhenNotStagedWebContent";

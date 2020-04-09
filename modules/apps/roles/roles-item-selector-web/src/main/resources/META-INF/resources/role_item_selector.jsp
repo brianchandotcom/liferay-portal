@@ -34,13 +34,24 @@ RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext = (RoleIte
 			keyProperty="roleId"
 			modelVar="role"
 		>
+
+			<%
+			String cssClass = "table-cell-content";
+
+			RowChecker rowChecker = searchContainer.getRowChecker();
+
+			if ((rowChecker != null) && rowChecker.isDisabled(role)) {
+				cssClass += " text-muted";
+			}
+			%>
+
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="<%= cssClass %>"
 				property="name"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="<%= cssClass %>"
 				property="description"
 			/>
 		</liferay-ui:search-container-row>

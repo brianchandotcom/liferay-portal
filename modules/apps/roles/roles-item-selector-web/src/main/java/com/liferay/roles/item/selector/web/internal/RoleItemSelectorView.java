@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
@@ -104,6 +103,8 @@ public class RoleItemSelectorView
 				httpServletRequest, itemSelectedEventName,
 				_getSearchContainer(
 					renderRequest, renderResponse,
+					roleItemSelectorCriterion.getCheckedRoleIds(),
+					roleItemSelectorCriterion.getExcludedRoleNames(),
 					roleItemSelectorCriterion.getType()),
 				_portal.getLiferayPortletRequest(renderRequest),
 				_portal.getLiferayPortletResponse(renderResponse));
@@ -122,7 +123,8 @@ public class RoleItemSelectorView
 	}
 
 	private SearchContainer<Role> _getSearchContainer(
-		RenderRequest renderRequest, RenderResponse renderResponse, int type) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		long[] checkedRoleIds, String[] excludedRoleNames, int type) {
 
 		PortletURL currentURL = PortletURLUtil.getCurrent(
 			renderRequest, renderResponse);
@@ -141,8 +143,7 @@ public class RoleItemSelectorView
 
 		searchContainer.setRowChecker(
 			new RoleItemSelectorChecker(
-				renderResponse,
-				ParamUtil.getLongValues(renderRequest, "checkedRoleIds")));
+				renderResponse, checkedRoleIds, excludedRoleNames));
 
 		RoleSearchTerms searchTerms =
 			(RoleSearchTerms)searchContainer.getSearchTerms();

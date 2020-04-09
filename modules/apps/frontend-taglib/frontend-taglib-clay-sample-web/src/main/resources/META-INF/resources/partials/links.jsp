@@ -27,9 +27,9 @@
 </blockquote>
 
 <%
-Map<String, String> data = new HashMap<>();
-
-data.put("customProperty", "customValue");
+Map<String, String> data = HashMapBuilder.put(
+	"customProperty", "customValue"
+).build();
 %>
 
 <clay:link

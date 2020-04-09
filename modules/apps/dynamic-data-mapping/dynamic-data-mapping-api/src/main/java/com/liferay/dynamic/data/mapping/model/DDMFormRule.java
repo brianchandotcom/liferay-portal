@@ -120,7 +120,6 @@ public class DDMFormRule implements Serializable {
 		int hash = HashUtil.hash(0, _actions);
 
 		hash = HashUtil.hash(hash, _condition);
-
 		hash = HashUtil.hash(hash, _enabled);
 
 		return HashUtil.hash(hash, _name);

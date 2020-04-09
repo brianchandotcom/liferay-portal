@@ -79,7 +79,6 @@ public class SPIDDMFormRule {
 		int hash = HashUtil.hash(0, _logicalOperator);
 
 		hash = HashUtil.hash(hash, _name);
-
 		hash = HashUtil.hash(hash, _spiDDMFormRuleActions);
 
 		return HashUtil.hash(hash, _spiDDMFormRuleConditions);

@@ -16,7 +16,11 @@ package com.liferay.calendar.web.internal.portlet;
 
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.exception.CalendarBookingDurationException;
 import com.liferay.calendar.exception.CalendarBookingRecurrenceException;
@@ -57,6 +61,7 @@ import com.liferay.calendar.web.internal.upgrade.CalendarWebUpgrade;
 import com.liferay.calendar.web.internal.util.CalendarResourceUtil;
 import com.liferay.calendar.web.internal.util.CalendarUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
@@ -102,6 +107,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -121,6 +127,7 @@ import com.liferay.rss.util.RSSUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -632,6 +639,34 @@ public class CalendarPortlet extends MVCPortlet {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CalendarBooking.class.getName(), actionRequest);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			CalendarBooking.class.getName(), calendarBookingId);
+
+		List<AssetLink> assetLinks = AssetLinkLocalServiceUtil.getLinks(
+			assetEntry.getEntryId());
+
+		long[] assetLinkEntryIds = ListUtil.toLongArray(
+			assetLinks,
+			assetLink -> {
+				if (assetLink.getEntryId1() == assetEntry.getEntryId()) {
+					return assetLink.getEntryId2();
+				}
+
+				return assetLink.getEntryId1();
+			});
+
+		serviceContext.setAssetTagNames(assetEntry.getTagNames());
+		serviceContext.setAssetCategoryIds(assetEntry.getCategoryIds());
+		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
+		serviceContext.setAssetPriority(assetEntry.getPriority());
+
+		ExpandoBridge expandoBridge = calendarBooking.getExpandoBridge();
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			expandoBridge.getAttributes();
+
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
 
 		JSONObject jsonObject = null;
 

@@ -1905,7 +1905,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
-			value1 = "Spanish (Spain)   English (United States)");
+			value1 = "Spanish (Spain)  English (United States)");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Localization",

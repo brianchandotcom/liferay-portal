@@ -128,7 +128,7 @@ public class UpgradeDDMFormInstanceSettings extends UpgradeProcess {
 			}
 		}
 
-		return null;
+		return _jsonFactory.createJSONObject();
 	}
 
 	protected void updateSettings(JSONObject settingsJSONObject) {

@@ -263,11 +263,10 @@ export const normalizeSettingsContextPages = (
 		return {
 			...field,
 			instanceId: newInstanceId,
-			name: generateName(
-				field.name,
-				getRepeatedIndex(field.name),
-				newInstanceId
-			),
+			name: generateName(field.name, {
+				instanceId: newInstanceId,
+				repeatedIndex: getRepeatedIndex(field.name),
+			}),
 		};
 	});
 };

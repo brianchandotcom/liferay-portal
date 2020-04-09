@@ -337,6 +337,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SECTION_CONTAINER_RESTRICTION_VISUAL_FEEDBACK</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__container') and @data-advice='A Section cannot be dropped inside a Section.']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SECTION_CONTAINER_NESTED_ELEMENT</td>
 	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[@class='container']${key_elementHeader}</td>
 	<td></td>

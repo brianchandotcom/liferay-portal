@@ -16,7 +16,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_TITLE_INPUT</td>
-	<td>//h1[contains(@class,'kb-title')]//div[contains(@class,'alloy-editor-placeholder cke_editable')]</td>
+	<td>//h1[contains(@class,'kb-title')]//div[label[contains(.,'Title')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>

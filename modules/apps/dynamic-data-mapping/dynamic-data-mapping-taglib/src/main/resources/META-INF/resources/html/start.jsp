@@ -78,15 +78,17 @@
 
 							String title = HtmlUtil.escapeAttribute(curLocale.getDisplayName(LocaleUtil.fromLanguageId(LanguageUtil.getLanguageId(request)))) + " " + LanguageUtil.get(LocaleUtil.getDefault(), "translation");
 
-							Map<String, Object> data = new HashMap<String, Object>();
+							Map<String, Object> data = HashMapBuilder.<String, Object>put(
+								"languageid", curLanguageId
+							).build();
 
-							data.put("languageid", curLanguageId);
-
-							Map<String, Object> iconData = new HashMap<>();
-
-							iconData.put("index", index++);
-							iconData.put("languageid", curLanguageId);
-							iconData.put("value", curLanguageId);
+							Map<String, Object> iconData = HashMapBuilder.<String, Object>put(
+								"index", index++
+							).put(
+								"languageid", curLanguageId
+							).put(
+								"value", curLanguageId
+							).build();
 							%>
 
 							<liferay-ui:icon

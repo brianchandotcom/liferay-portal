@@ -1847,11 +1847,11 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		FormFields.viewTextMultilineValue(
-			fieldName = "reserved-screen-names",
+			fieldName = "reserved.screen.names",
 			fieldValue = "usersn");
 
 		FormFields.viewTextMultilineValue(
-			fieldName = "reserved-email-addresses",
+			fieldName = "reserved.email.addresses",
 			fieldValue = "userea@liferay.com");
 
 		PortalSettings.gotoConfiguration(
@@ -1871,11 +1871,11 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		FormFields.viewTextMultilineValue(
-			fieldName = "default-group-names",
+			fieldName = "default.group.names",
 			fieldValue = "Liferay");
 
 		FormFields.viewTextMultilineValue(
-			fieldName = "default-role-names",
+			fieldName = "default.role.names",
 			fieldValue = "Administrator");
 
 		PortalSettings.gotoConfiguration(
@@ -1884,7 +1884,7 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		FormFields.viewTextValue(
-			fieldName = "email-from-name",
+			fieldName = "email.from.name",
 			fieldValue = "Test Test");
 
 		PortalSettings.gotoConfiguration(

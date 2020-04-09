@@ -597,8 +597,8 @@ definition {
 			portlet = "Server Administration");
 
 		ServerAdministration.configureMailServerSettings(
-			userName = PropsUtil.get("email.address.1"),
-			userPassword = PropsUtil.get("email.password.1"));
+			userName = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"));
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080/");
 
@@ -608,7 +608,7 @@ definition {
 
 		User.addCreateAccountPG(
 			newPassword = "password",
-			userEmailAddress = PropsUtil.get("email.address.2"),
+			userEmailAddress = PropsUtil.get("email.address.3"),
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
@@ -616,8 +616,8 @@ definition {
 		Pause(locator1 = "30000");
 
 		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.2"),
-			userPassword = PropsUtil.get("email.password.2"));
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"));
 
 		Gmail.gotoHtmlMode();
 
@@ -637,7 +637,7 @@ definition {
 		User.signInPG(
 			emailPassword = "password",
 			emailVerification = "${emailVerification}",
-			userEmailAddress = PropsUtil.get("email.address.2"));
+			userEmailAddress = PropsUtil.get("email.address.3"));
 
 		User.firstLoginPG(
 			password = "test",
@@ -652,11 +652,11 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://www.baker.com:8080/");
 
-		User.editEmailViaMyAccount(userEmailAddress = PropsUtil.get("email.address.3"));
+		User.editEmailViaMyAccount(userEmailAddress = PropsUtil.get("email.address.4"));
 
 		Gmail.logoutAndLogin(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"));
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"));
 
 		Gmail.gotoHtmlMode();
 

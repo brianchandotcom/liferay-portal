@@ -554,6 +554,35 @@ definition {
 			value1 = "${themeName}");
 	}
 
+	macro viewCurrentThemeSettings {
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "${pageName}");
+
+		Navigator.gotoNavTab(navTab = "Look and Feel");
+
+		if (isSet(checkThemeSettingList)) {
+			for (var themeSetting : list "${checkThemeSettingList}") {
+				AssertChecked(
+					key_toggleSwitchLabel = "${themeSetting}",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+
+		if (isSet(uncheckThemeSettingList)) {
+			for (var themeSetting : list "${uncheckThemeSettingList}") {
+				AssertNotChecked(
+					key_contentName = "${themeSetting}",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+	}
+
 	macro viewCustomLogoPG {
 		AssertElementPresent(locator1 = "Home#CUSTOM_LOGO");
 

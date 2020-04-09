@@ -30,10 +30,24 @@ export const compose = (...fns) =>
 export const isOptionValueGenerated = (
 	defaultLanguageId,
 	editingLanguageId,
+	options,
 	option
 ) => {
 	if (defaultLanguageId !== editingLanguageId) {
 		return false;
+	}
+
+	if (option.value === '') {
+		return true;
+	}
+
+	const optionIndex = options.indexOf(option);
+	const duplicated = options.some(({value}, index) => {
+		return value === option.value && index !== optionIndex;
+	});
+
+	if (duplicated) {
+		return true;
 	}
 
 	if (option.edited) {

@@ -92,7 +92,10 @@ const Options = ({
 	}, [defaultLanguageId, value]);
 
 	const [fields, setFields] = useState(() => {
-		const options = normalizedValue[editingLanguageId] || [];
+		const options =
+			normalizedValue[editingLanguageId] ||
+			normalizedValue[defaultLanguageId] ||
+			[];
 
 		return [
 			...options.map(option => ({
@@ -100,6 +103,7 @@ const Options = ({
 				generateKeyword: isOptionValueGenerated(
 					defaultLanguageId,
 					editingLanguageId,
+					options,
 					option
 				),
 				id: random(),
@@ -156,11 +160,11 @@ const Options = ({
 	};
 
 	const change = (fields, index, property, value) => {
-		const {edited, value: prevValue} = fields[index];
+		const {edited, label} = fields[index];
 
 		fields[index][property] = value;
 		fields[index]['edited'] =
-			edited || (value && value !== prevValue && property === 'value');
+			edited || (value && value !== label && property === 'value');
 
 		return [fields, index, property, value];
 	};

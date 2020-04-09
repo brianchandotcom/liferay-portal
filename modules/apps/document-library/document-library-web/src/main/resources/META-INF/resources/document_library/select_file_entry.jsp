@@ -103,10 +103,11 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 							>
 
 								<%
-								Map<String, Object> data = new HashMap<String, Object>();
-
-								data.put("entryid", fileEntry.getFileEntryId());
-								data.put("entryname", HtmlUtil.unescape(fileEntry.getTitle()));
+								Map<String, Object> data = HashMapBuilder.<String, Object>put(
+									"entryid", fileEntry.getFileEntryId()
+								).put(
+									"entryname", HtmlUtil.unescape(fileEntry.getTitle())
+								).build();
 								%>
 
 								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">

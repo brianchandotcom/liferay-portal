@@ -174,9 +174,9 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 										<c:otherwise>
 
 											<%
-											Map<String, String> data = new HashMap<>();
-
-											data.put("analytics-file-entry-id", String.valueOf(fileEntry.getFileEntryId()));
+											Map<String, String> data = HashMapBuilder.put(
+												"analytics-file-entry-id", String.valueOf(fileEntry.getFileEntryId())
+											).build();
 											%>
 
 											<div class="btn-group-item">
@@ -232,9 +232,9 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 						String urlInputId = liferayPortletResponse.getNamespace() + "urlInput";
 
-						Map<String, String> urlButtonData = new HashMap<>();
-
-						urlButtonData.put("clipboard-target", "#" + urlInputId);
+						Map<String, String> urlButtonData = HashMapBuilder.put(
+							"clipboard-target", "#" + urlInputId
+						).build();
 						%>
 
 						<div class="form-group">
@@ -271,9 +271,9 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 							String webDavURLInputId = liferayPortletResponse.getNamespace() + "webDavURLInput";
 
-							Map<String, String> webDavButtonData = new HashMap<>();
-
-							webDavButtonData.put("clipboard-target", "#" + webDavURLInputId);
+							Map<String, String> webDavButtonData = HashMapBuilder.put(
+								"clipboard-target", "#" + webDavURLInputId
+							).build();
 							%>
 
 							<div class="form-group">

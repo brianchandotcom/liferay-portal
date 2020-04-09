@@ -124,10 +124,11 @@ portletURL.setParameter("mvcPath", "/document_library/select_group.jsp");
 				<liferay-ui:search-container-column-text>
 
 					<%
-					Map<String, Object> data = new HashMap<String, Object>();
-
-					data.put("groupdescriptivename", groupDescriptiveName);
-					data.put("groupid", group.getGroupId());
+					Map<String, Object> data = HashMapBuilder.<String, Object>put(
+						"groupdescriptivename", groupDescriptiveName
+					).put(
+						"groupid", group.getGroupId()
+					).build();
 					%>
 
 					<aui:button cssClass="selector-button" data="<%= data %>" value="select" />

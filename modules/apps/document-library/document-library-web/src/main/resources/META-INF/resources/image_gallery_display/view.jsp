@@ -50,9 +50,9 @@ if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 	status = WorkflowConstants.STATUS_ANY;
 }
 
-Map<String, Object> contextObjects = new HashMap<String, Object>();
-
-contextObjects.put("dlPortletInstanceSettings", dlPortletInstanceSettings);
+Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+	"dlPortletInstanceSettings", dlPortletInstanceSettings
+).build();
 
 String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 

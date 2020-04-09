@@ -73,11 +73,13 @@ String navigation = ParamUtil.getString(request, "navigation");
 		<%
 		BulkSelectionRunner bulkSelectionRunner = BulkSelectionRunnerUtil.getBulkSelectionRunner();
 
-		Map<String, Object> context = new HashMap<>();
-
-		context.put("bulkComponentId", liferayPortletResponse.getNamespace() + "BulkStatus");
-		context.put("bulkInProgress", bulkSelectionRunner.isBusy(user));
-		context.put("pathModule", PortalUtil.getPathModule());
+		Map<String, Object> context = HashMapBuilder.<String, Object>put(
+			"bulkComponentId", liferayPortletResponse.getNamespace() + "BulkStatus"
+		).put(
+			"bulkInProgress", bulkSelectionRunner.isBusy(user)
+		).put(
+			"pathModule", PortalUtil.getPathModule()
+		).build();
 		%>
 
 		<div>
@@ -312,18 +314,19 @@ String navigation = ParamUtil.getString(request, "navigation");
 		</aui:script>
 
 		<%
-		Map<String, Object> editTagsData = new HashMap<>();
-
-		editTagsData.put("context", Collections.singletonMap("namespace", liferayPortletResponse.getNamespace()));
-
-		Map<String, Object> editTagsProps = new HashMap<>();
+		Map<String, Object> editTagsData = HashMapBuilder.<String, Object>put(
+			"context", Collections.singletonMap("namespace", liferayPortletResponse.getNamespace())
+		).build();
 
 		long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 
-		editTagsProps.put("groupIds", groupIds);
-
-		editTagsProps.put("pathModule", PortalUtil.getPathModule());
-		editTagsProps.put("repositoryId", String.valueOf(repositoryId));
+		Map<String, Object> editTagsProps = HashMapBuilder.<String, Object>put(
+			"groupIds", groupIds
+		).put(
+			"pathModule", PortalUtil.getPathModule()
+		).put(
+			"repositoryId", String.valueOf(repositoryId)
+		).build();
 
 		editTagsData.put("props", editTagsProps);
 		%>
@@ -336,16 +339,19 @@ String navigation = ParamUtil.getString(request, "navigation");
 		</div>
 
 		<%
-		Map<String, Object> editCategoriesData = new HashMap<>();
+		Map<String, Object> editCategoriesData = HashMapBuilder.<String, Object>put(
+			"context", Collections.singletonMap("namespace", liferayPortletResponse.getNamespace())
+		).build();
 
-		editCategoriesData.put("context", Collections.singletonMap("namespace", liferayPortletResponse.getNamespace()));
-
-		Map<String, Object> editCategoriesProps = new HashMap<>();
-
-		editCategoriesProps.put("groupIds", groupIds);
-		editCategoriesProps.put("pathModule", PortalUtil.getPathModule());
-		editCategoriesProps.put("repositoryId", String.valueOf(repositoryId));
-		editCategoriesProps.put("selectCategoriesUrl", selectCategoriesURL.toString());
+		Map<String, Object> editCategoriesProps = HashMapBuilder.<String, Object>put(
+			"groupIds", groupIds
+		).put(
+			"pathModule", PortalUtil.getPathModule()
+		).put(
+			"repositoryId", String.valueOf(repositoryId)
+		).put(
+			"selectCategoriesUrl", selectCategoriesURL.toString()
+		).build();
 
 		editCategoriesData.put("props", editCategoriesProps);
 		%>

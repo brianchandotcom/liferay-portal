@@ -59,12 +59,15 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 			</c:if>
 
 			<%
-			Map<String, Object> data = new HashMap<String, Object>();
-
-			data.put("folderid", folderId);
-			data.put("folderissupportsmetadata", (folder != null) ? folder.isSupportsMetadata() : Boolean.TRUE.toString());
-			data.put("folderissupportssocial", (folder != null) ? folder.isSupportsSocial() : Boolean.TRUE.toString());
-			data.put("foldername", folderName);
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"folderid", folderId
+			).put(
+				"folderissupportsmetadata", (folder != null) ? folder.isSupportsMetadata() : Boolean.TRUE.toString()
+			).put(
+				"folderissupportssocial", (folder != null) ? folder.isSupportsSocial() : Boolean.TRUE.toString()
+			).put(
+				"foldername", folderName
+			).build();
 			%>
 
 			<aui:button cssClass="selector-button" data="<%= data %>" value="select-this-folder" />
@@ -152,12 +155,15 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 					<c:if test="<%= rowURL != null %>">
 
 						<%
-						Map<String, Object> data = new HashMap<String, Object>();
-
-						data.put("folderid", curFolder.getFolderId());
-						data.put("folderissupportsmetadata", curFolder.isSupportsMetadata());
-						data.put("folderissupportssocial", curFolder.isSupportsSocial());
-						data.put("foldername", curFolder.getName());
+						Map<String, Object> data = HashMapBuilder.<String, Object>put(
+							"folderid", curFolder.getFolderId()
+						).put(
+							"folderissupportsmetadata", curFolder.isSupportsMetadata()
+						).put(
+							"folderissupportssocial", curFolder.isSupportsSocial()
+						).put(
+							"foldername", curFolder.getName()
+						).build();
 						%>
 
 						<aui:button cssClass="selector-button" data="<%= data %>" value="select" />

@@ -25,9 +25,9 @@ List<Folder> folders = (List<Folder>)request.getAttribute(WebKeys.DOCUMENT_LIBRA
 List<FileEntry> fileEntries = (List<FileEntry>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES);
 List<FileShortcut> fileShortcuts = (List<FileShortcut>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUTS);
 
-Map<String, Object> infoPanelToggleData = new HashMap<>();
-
-infoPanelToggleData.put("toggle", liferayPortletResponse.getNamespace() + "infoPanelId");
+Map<String, Object> infoPanelToggleData = HashMapBuilder.<String, Object>put(
+	"toggle", liferayPortletResponse.getNamespace() + "infoPanelId"
+).build();
 
 if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmpty(fileShortcuts)) {
 	long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"), ParamUtil.getLong(request, "folderId"));

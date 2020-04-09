@@ -48,11 +48,13 @@ SearchContainer<com.liferay.dynamic.data.mapping.model.DDMStructure> ddmStructur
 					<c:when test="<%= ddmStructure.getStructureId() != dlSelectDDMStructureDisplayContext.getDDMStructureId() %>">
 
 						<%
-						Map<String, Object> data = new HashMap<>();
-
-						data.put("ddmstructureid", ddmStructure.getStructureId());
-						data.put("ddmstructurekey", ddmStructure.getStructureKey());
-						data.put("name", ddmStructure.getName(locale));
+						Map<String, Object> data = HashMapBuilder.<String, Object>put(
+							"ddmstructureid", ddmStructure.getStructureId()
+						).put(
+							"ddmstructurekey", ddmStructure.getStructureKey()
+						).put(
+							"name", ddmStructure.getName(locale)
+						).build();
 						%>
 
 						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">

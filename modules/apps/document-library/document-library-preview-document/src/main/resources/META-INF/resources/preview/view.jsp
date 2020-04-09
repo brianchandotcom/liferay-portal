@@ -37,11 +37,13 @@ previewFileURLs[0] = DLURLHelperUtil.getPreviewURL(fileVersion.getFileEntry(), f
 
 String previewFileURL = previewFileURLs[0];
 
-Map<String, Object> data = new HashMap<>();
-
-data.put("baseImageURL", previewFileURL);
-data.put("initialPage", 1);
-data.put("totalPages", previewFileCount);
+Map<String, Object> data = HashMapBuilder.<String, Object>put(
+	"baseImageURL", previewFileURL
+).put(
+	"initialPage", 1
+).put(
+	"totalPages", previewFileCount
+).build();
 %>
 
 <liferay-util:html-top

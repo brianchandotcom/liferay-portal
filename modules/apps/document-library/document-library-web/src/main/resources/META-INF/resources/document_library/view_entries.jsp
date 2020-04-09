@@ -99,11 +99,13 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 						dlSearchContainer.setRowChecker(entriesChecker);
 					}
 
-					Map<String, Object> rowData = new HashMap<String, Object>();
-
-					rowData.put("actions", StringUtil.merge(dlAdminManagementToolbarDisplayContext.getAvailableActions(fileEntry)));
-					rowData.put("draggable", draggable);
-					rowData.put("title", fileEntry.getTitle());
+					Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+						"actions", StringUtil.merge(dlAdminManagementToolbarDisplayContext.getAvailableActions(fileEntry))
+					).put(
+						"draggable", draggable
+					).put(
+						"title", fileEntry.getTitle()
+					).build();
 
 					row.setData(rowData);
 
@@ -372,13 +374,17 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 						}
 					}
 
-					Map<String, Object> rowData = new HashMap<String, Object>();
-
-					rowData.put("actions", StringUtil.merge(dlAdminManagementToolbarDisplayContext.getAvailableActions(curFolder)));
-					rowData.put("draggable", draggable);
-					rowData.put("folder", true);
-					rowData.put("folder-id", curFolder.getFolderId());
-					rowData.put("title", curFolder.getName());
+					Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+						"actions", StringUtil.merge(dlAdminManagementToolbarDisplayContext.getAvailableActions(curFolder))
+					).put(
+						"draggable", draggable
+					).put(
+						"folder", true
+					).put(
+						"folder-id", curFolder.getFolderId()
+					).put(
+						"title", curFolder.getName()
+					).build();
 
 					row.setData(rowData);
 

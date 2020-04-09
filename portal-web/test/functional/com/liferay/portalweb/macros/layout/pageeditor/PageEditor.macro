@@ -262,9 +262,16 @@ definition {
 			locator2 = "${dropTarget}",
 			value1 = "");
 
+		if (isSet(position)) {
+			var key_position = "${position}";
+		}
+		else {
+			var key_position = "1";
+		}
+
 		AssertVisible(
 			key_elementType = "Section",
-			key_position = "1",
+			key_position = "${position}",
 			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
 		PageEditor.waitForAutoSave();

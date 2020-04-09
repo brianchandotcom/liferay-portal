@@ -33,6 +33,9 @@ patch {
 	fileNames "org/apache/felix/utils/properties/InterpolationHelper.java"
 	fileNames "org/apache/felix/utils/properties/Properties.java"
 	fileNames "org/apache/felix/utils/properties/TypedProperties.java"
+	fileNames "org/apache/felix/utils/version/VersionCleaner.java"
+	fileNames "org/apache/felix/utils/version/VersionRange.java"
+	fileNames "org/apache/felix/utils/version/VersionTable.java"
 	fileNames "OSGI-INF/metatype/metatype.xml"
 
 	originalLibModuleName = "org.apache.felix.fileinstall"

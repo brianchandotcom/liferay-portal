@@ -2418,8 +2418,6 @@ definition {
 
 		FormFields.viewCheckboxNotChecked(fieldName = "journalArticleForceAutogenerateId");
 
-		FormFields.viewCheckboxNotChecked(fieldName = "journalArticlesSearchWithIndex");
-
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

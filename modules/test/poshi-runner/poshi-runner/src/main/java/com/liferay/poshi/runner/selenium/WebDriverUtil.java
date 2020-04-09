@@ -155,6 +155,16 @@ public class WebDriverUtil extends PropsValues {
 		return new ChromeDriver(chromeOptions);
 	}
 
+	private InternetExplorerOptions _getDefaultInternetExplorerOptions() {
+		InternetExplorerOptions internetExplorerOptions =
+			new InternetExplorerOptions();
+
+		internetExplorerOptions.destructivelyEnsureCleanSession();
+		internetExplorerOptions.introduceFlakinessByIgnoringSecurityDomains();
+
+		return internetExplorerOptions;
+	}
+
 	private WebDriver _getEdgeDriver() {
 		return new EdgeDriver();
 	}
@@ -234,25 +244,13 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private WebDriver _getInternetExplorerDriver() {
-		InternetExplorerOptions internetExplorerOptions =
-			new InternetExplorerOptions();
-
-		internetExplorerOptions.setCapability(
-			InternetExplorerDriver.
-				INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
-			true);
-
-		return new InternetExplorerDriver(internetExplorerOptions);
+		return new InternetExplorerDriver(_getDefaultInternetExplorerOptions());
 	}
 
 	private WebDriver _getInternetExplorerRemoteDriver() {
 		InternetExplorerOptions internetExplorerOptions =
-			new InternetExplorerOptions();
+			_getDefaultInternetExplorerOptions();
 
-		internetExplorerOptions.setCapability(
-			InternetExplorerDriver.
-				INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
-			true);
 		internetExplorerOptions.setCapability(
 			"platform", PropsValues.SELENIUM_DESIRED_CAPABILITIES_PLATFORM);
 		internetExplorerOptions.setCapability(

@@ -205,12 +205,14 @@ class Options extends Component {
 	}
 
 	prepareStateForRender(state) {
-		const {editingLanguageId} = this;
+		const {defaultLanguageId, editingLanguageId} = this;
 		const {value} = state;
 
 		return {
 			...state,
-			items: this.getItems(value[editingLanguageId]),
+			items: this.getItems(
+				value[editingLanguageId] || value[defaultLanguageId]
+			),
 		};
 	}
 

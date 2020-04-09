@@ -88,6 +88,65 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 	}
 
 	@Override
+	protected List<String> getRelevantTestClassNamesRelativeExcludesGlobs() {
+		List<String> relevantTestClassNameRelativeExcludesGlobs =
+			new ArrayList<>();
+
+		Set<File> modifiedModuleDirsList = new HashSet<>();
+
+		try {
+			modifiedModuleDirsList.addAll(
+				portalGitWorkingDirectory.getModifiedModuleDirsList());
+		}
+		catch (IOException ioException) {
+			File workingDirectory =
+				portalGitWorkingDirectory.getWorkingDirectory();
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get relevant module group directories in ",
+					workingDirectory.getPath()),
+				ioException);
+		}
+
+		for (File modifiedModuleDir : modifiedModuleDirsList) {
+			String modulesTestBatchClassNamesExcludes = null;
+
+			File modifiedDirTestProperties = new File(
+				modifiedModuleDir, "test.properties");
+
+			Properties testProperties = JenkinsResultsParserUtil.getProperties(
+				modifiedDirTestProperties);
+
+			if (modifiedDirTestProperties.exists()) {
+				String firstMatchingPropertyName = getFirstMatchingPropertyName(
+					"modules.includes.required.test.batch.class.names.excludes",
+					testProperties, testSuiteName);
+
+				if (firstMatchingPropertyName != null) {
+					modulesTestBatchClassNamesExcludes =
+						JenkinsResultsParserUtil.getProperty(
+							testProperties, firstMatchingPropertyName);
+				}
+			}
+
+			if (modulesTestBatchClassNamesExcludes == null) {
+				continue;
+			}
+
+			for (String modulesTestBatchClassNamesExclude :
+					modulesTestBatchClassNamesExcludes.split(",")) {
+
+				relevantTestClassNameRelativeExcludesGlobs.add(
+					JenkinsResultsParserUtil.combine(
+						"modules/", modulesTestBatchClassNamesExclude));
+			}
+		}
+
+		return relevantTestClassNameRelativeExcludesGlobs;
+	}
+
+	@Override
 	protected List<String> getRelevantTestClassNamesRelativeIncludesGlobs(
 		List<String> testClassNamesRelativeIncludesGlobs) {
 

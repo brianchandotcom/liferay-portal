@@ -425,6 +425,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return testClassNamesRelativeIncludesGlobs;
 	}
 
+	protected List<String> getRelevantTestClassNamesRelativeExcludesGlobs() {
+		return new ArrayList();
+	}
+
 	protected List<String> getRelevantTestClassNamesRelativeIncludesGlobs(
 		List<String> testClassNamesRelativeIncludesGlobs) {
 

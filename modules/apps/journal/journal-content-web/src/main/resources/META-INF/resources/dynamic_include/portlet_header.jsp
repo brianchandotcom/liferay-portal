@@ -36,11 +36,13 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 			<%
 			JournalArticle latestArticle = journalContentDisplayContext.getLatestArticle();
 
-			Map<String, Object> data = new HashMap<String, Object>();
-
-			data.put("destroyOnHide", true);
-			data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
-			data.put("title", HtmlUtil.escape(latestArticle.getTitle(locale)));
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"destroyOnHide", true
+			).put(
+				"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset"
+			).put(
+				"title", HtmlUtil.escape(latestArticle.getTitle(locale))
+			).build();
 			%>
 
 			<liferay-ui:icon
@@ -81,11 +83,13 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 			<%
 			JournalArticle latestArticle = journalContentDisplayContext.getLatestArticle();
 
-			Map<String, Object> data = new HashMap<String, Object>();
-
-			data.put("destroyOnHide", true);
-			data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
-			data.put("title", HtmlUtil.escape(latestArticle.getTitle(locale)));
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"destroyOnHide", true
+			).put(
+				"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset"
+			).put(
+				"title", HtmlUtil.escape(latestArticle.getTitle(locale))
+			).build();
 			%>
 
 			<liferay-ui:icon

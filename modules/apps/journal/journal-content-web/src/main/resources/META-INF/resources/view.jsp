@@ -146,10 +146,11 @@ if (journalContentDisplayContext.isShowArticle()) {
 						<%
 						AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
 
-						Map<String, Object> data = new HashMap<>();
-
-						data.put("fragments-editor-item-id", PortalUtil.getClassNameId(JournalArticle.class) + "-" + assetRenderer.getClassPK());
-						data.put("fragments-editor-item-type", "fragments-editor-mapped-item");
+						Map<String, Object> data = HashMapBuilder.<String, Object>put(
+							"fragments-editor-item-id", PortalUtil.getClassNameId(JournalArticle.class) + "-" + assetRenderer.getClassPK()
+						).put(
+							"fragments-editor-item-type", "fragments-editor-mapped-item"
+						).build();
 						%>
 
 						<div class="<%= journalContentDisplayContext.isPreview() ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>

@@ -19,11 +19,13 @@
 <%
 DDMTemplate ddmTemplate = journalContentDisplayContext.getDDMTemplate();
 
-Map<String, Object> data = new HashMap<String, Object>();
-
-data.put("destroyOnHide", true);
-data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
-data.put("title", HtmlUtil.escape(ddmTemplate.getName(locale)));
+Map<String, Object> data = HashMapBuilder.<String, Object>put(
+	"destroyOnHide", true
+).put(
+	"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset"
+).put(
+	"title", HtmlUtil.escape(ddmTemplate.getName(locale))
+).build();
 %>
 
 <liferay-ui:icon

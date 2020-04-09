@@ -1125,8 +1125,6 @@ definition {
 
 	@priority = "4"
 	test ExportImportThemeSettings {
-		property portal.upstream = "quarantine";
-
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "Site Name");

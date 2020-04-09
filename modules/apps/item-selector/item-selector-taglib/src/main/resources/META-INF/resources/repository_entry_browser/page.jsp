@@ -315,10 +315,11 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 
 									JSONObject itemMedatadaJSONObject = ItemSelectorRepositoryEntryBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
 
-									Map<String, Object> data = new HashMap<>();
-
-									data.put("description", fileEntry.getDescription());
-									data.put("fileEntryId", fileEntry.getFileEntryId());
+									Map<String, Object> data = HashMapBuilder.<String, Object>put(
+										"description", fileEntry.getDescription()
+									).put(
+										"fileEntryId", fileEntry.getFileEntryId()
+									).build();
 
 									String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 

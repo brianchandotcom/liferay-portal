@@ -19,9 +19,9 @@
 <%
 ItemSelectorURLViewDisplayContext itemSelectorURLViewDisplayContext = (ItemSelectorURLViewDisplayContext)request.getAttribute(ItemSelectorURLView.ITEM_SELECTOR_URL_VIEW_DISPLAY_CONTEXT);
 
-Map<String, Object> data = new HashMap<>();
-
-data.put("eventName", itemSelectorURLViewDisplayContext.getItemSelectedEventName());
+Map<String, Object> data = HashMapBuilder.<String, Object>put(
+	"eventName", itemSelectorURLViewDisplayContext.getItemSelectedEventName()
+).build();
 %>
 
 <div class="lfr-form-content">

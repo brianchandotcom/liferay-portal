@@ -1854,6 +1854,9 @@ definition {
 			fieldName = "reserved.email.addresses",
 			fieldValue = "userea@liferay.com");
 
+		// Ignore test until LPS-98192 is resolved
+
+		/*
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Users",
 			configurationName = "Fields",
@@ -1863,7 +1866,7 @@ definition {
 
 		FormFields.viewCheckboxNotChecked(fieldName = "field-enable-com-liferay-portal-kernel-model-Contact-birthday");
 
-		FormFields.viewCheckboxNotChecked(fieldName = "field-enable-com-liferay-portal-kernel-model-Contact-male");
+		FormFields.viewCheckboxNotChecked(fieldName = "field-enable-com-liferay-portal-kernel-model-Contact-male");*/
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Users",
@@ -2506,6 +2509,9 @@ definition {
 
 		FormFields.viewCheckboxNotChecked(fieldName = "enableRelatedAssets");
 
+		// Ignore test until LPS-97976 is resolved
+
+		/*
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -2542,7 +2548,7 @@ definition {
 
 		FormFields.viewCheckboxNotChecked(fieldName = "autogenerateStructureKey");
 
-		FormFields.viewCheckboxNotChecked(fieldName = "autogenerateTemplateKey");
+		FormFields.viewCheckboxNotChecked(fieldName = "autogenerateTemplateKey");*/
 	}
 
 	macro viewUpgrade {

@@ -10,6 +10,7 @@
  */
 
 import {
+	act,
 	fireEvent,
 	render,
 	waitForElement,
@@ -48,6 +49,12 @@ function renderTestResultRankingsForm(props) {
 		/>
 	);
 }
+
+jest.useFakeTimers();
+
+afterEach(() => {
+	act(() => jest.runAllTimers());
+});
 
 describe('ResultRankingsForm', () => {
 	it('renders the results ranking form', () => {

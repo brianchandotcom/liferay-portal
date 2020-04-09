@@ -425,10 +425,11 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return testClassNamesRelativeGlobs;
 	}
 
-	protected List<String> getRelevantTestClassNamesRelativeGlobs(
-		List<String> testClassNamesRelativeGlobs) {
+	protected List<String> getRelevantTestClassNamesRelativeIncludesGlobs(
+		List<String> testClassNamesRelativeIncludesGlobs) {
 
-		List<String> relevantTestClassNameRelativeGlobs = new ArrayList<>();
+		List<String> relevantTestClassNameRelativeIncludesGlobs =
+			new ArrayList<>();
 
 		List<File> moduleDirsList = null;
 
@@ -466,13 +467,13 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				continue;
 			}
 
-			relevantTestClassNameRelativeGlobs.addAll(
-				testClassNamesRelativeGlobs);
+			relevantTestClassNameRelativeIncludesGlobs.addAll(
+				testClassNamesRelativeIncludesGlobs);
 
-			return relevantTestClassNameRelativeGlobs;
+			return relevantTestClassNameRelativeIncludesGlobs;
 		}
 
-		return relevantTestClassNameRelativeGlobs;
+		return relevantTestClassNameRelativeIncludesGlobs;
 	}
 
 	@Override
@@ -745,7 +746,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 		else if (testRelevantChanges) {
 			testClassNamesIncludesRelativeGlobs =
-				getRelevantTestClassNamesRelativeGlobs(
+				getRelevantTestClassNamesRelativeIncludesGlobs(
 					testClassNamesIncludesRelativeGlobs);
 		}
 

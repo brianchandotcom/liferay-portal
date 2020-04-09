@@ -88,10 +88,11 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 	}
 
 	@Override
-	protected List<String> getRelevantTestClassNamesRelativeGlobs(
-		List<String> testClassNamesRelativeGlobs) {
+	protected List<String> getRelevantTestClassNamesRelativeIncludesGlobs(
+		List<String> testClassNamesRelativeIncludesGlobs) {
 
-		List<String> relevantTestClassNameRelativeGlobs = new ArrayList<>();
+		List<String> relevantTestClassNameRelativeIncludesGlobs =
+			new ArrayList<>();
 
 		Set<File> modifiedModuleDirsList = new HashSet<>();
 
@@ -139,15 +140,15 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			}
 
 			for (String testClassNamesRelativeGlob :
-					testClassNamesRelativeGlobs) {
+					testClassNamesRelativeIncludesGlobs) {
 
-				relevantTestClassNameRelativeGlobs.add(
+				relevantTestClassNameRelativeIncludesGlobs.add(
 					JenkinsResultsParserUtil.combine(
 						modifiedModuleRelativePath, "/",
 						testClassNamesRelativeGlob));
 
 				if (testClassNamesRelativeGlob.startsWith("**/")) {
-					relevantTestClassNameRelativeGlobs.add(
+					relevantTestClassNameRelativeIncludesGlobs.add(
 						JenkinsResultsParserUtil.combine(
 							modifiedModuleRelativePath, "/",
 							testClassNamesRelativeGlob.substring(3)));
@@ -182,13 +183,13 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 					JenkinsResultsParserUtil.getGlobsFromProperty(
 						modulesTestBatchClassNamesIncludes)) {
 
-				relevantTestClassNameRelativeGlobs.add(
+				relevantTestClassNameRelativeIncludesGlobs.add(
 					JenkinsResultsParserUtil.combine(
 						"modules/", modulesTestBatchClassNamesInclude));
 			}
 		}
 
-		return relevantTestClassNameRelativeGlobs;
+		return relevantTestClassNameRelativeIncludesGlobs;
 	}
 
 	private String _getAppTitle(File appBndFile) {

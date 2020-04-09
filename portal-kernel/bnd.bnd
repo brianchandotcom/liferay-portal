@@ -1,6 +1,6 @@
 Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
-Bundle-Version: 6.11.0
+Bundle-Version: 7.0.0
 Export-Package:\
 	!com.liferay.portal.kernel.internal.*,\
 	!com.liferay.portal.kernel.test.*,\

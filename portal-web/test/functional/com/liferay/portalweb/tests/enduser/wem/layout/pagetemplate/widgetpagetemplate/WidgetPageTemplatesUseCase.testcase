@@ -25,6 +25,8 @@ definition {
 
 	@priority = "3"
 	test ViewNoAddPageTabViaPageTemplatesCP {
+		property test.name.skip.portal.instance = "WidgetPageTemplatesUseCase#ViewNoAddPageTabViaPageTemplatesCP";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();

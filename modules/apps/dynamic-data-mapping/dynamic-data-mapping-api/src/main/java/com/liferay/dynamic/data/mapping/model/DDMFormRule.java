@@ -32,17 +32,38 @@ public class DDMFormRule implements Serializable {
 	}
 
 	public DDMFormRule(DDMFormRule ddmFormRule) {
-		_condition = ddmFormRule._condition;
 		_actions = new ArrayList<>(ddmFormRule._actions);
+		_condition = ddmFormRule._condition;
 		_enabled = ddmFormRule._enabled;
 		_name = ddmFormRule._name;
 	}
 
+	public DDMFormRule(List<String> actions, String condition) {
+		_actions = actions;
+		_condition = condition;
+	}
+
+	public DDMFormRule(
+		List<String> actions, String condition, LocalizedValue name) {
+
+		_actions = actions;
+		_condition = condition;
+		_name = name;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #DDMFormRule(List, String)}
+	 */
+	@Deprecated
 	public DDMFormRule(String condition, List<String> actions) {
 		_condition = condition;
 		_actions = actions;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #DDMFormRule(List, String, LocalizedValue)}
+	 */
+	@Deprecated
 	public DDMFormRule(
 		String condition, List<String> actions, LocalizedValue name) {
 
@@ -51,8 +72,12 @@ public class DDMFormRule implements Serializable {
 		_name = name;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #DDMFormRule(List, String)}
+	 */
+	@Deprecated
 	public DDMFormRule(String condition, String... actions) {
-		this(condition, Arrays.asList(actions));
+		this(Arrays.asList(actions), condition);
 	}
 
 	@Override

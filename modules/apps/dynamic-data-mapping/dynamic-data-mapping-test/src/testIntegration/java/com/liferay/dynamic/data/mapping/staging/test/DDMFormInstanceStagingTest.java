@@ -128,7 +128,7 @@ public class DDMFormInstanceStagingTest {
 
 		DDMFormStagingTestUtil.enableLocalStaging(_liveGroup, true);
 
-		DDMFormInstanceServiceUtil.addFormInstance(
+		_formInstance = DDMFormInstanceServiceUtil.addFormInstance(
 			_liveGroup.getGroupId(), null, null, null, null, null, null);
 	}
 

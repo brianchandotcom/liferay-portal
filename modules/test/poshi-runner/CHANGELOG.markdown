@@ -1,5 +1,18 @@
 # Poshi Runner Change Log
 
+## 1.0.264
+
+### Other
+
+* [LPS-105380](https://issues.liferay.com/browse/LPS-105380) - SourceFormatter Improvements
+* [LPS-111020](https://issues.liferay.com/browse/LPS-111020) - Use of library with known vulnerability: dom4j-1.6.1
+* [LRCI-1129](https://issues.liferay.com/browse/LRCI-1129) - Add Liferay Components & Teams to Spira
+
+### WebDriver
+
+* [POSHI-65](https://issues.liferay.com/browse/POSHI-65) - Use new method to type in CodeMirror editor
+* [POSHI-68](https://issues.liferay.com/browse/POSHI-68) - Type slower on type retries
+
 ## 1.0.261
 
 ### Gradle

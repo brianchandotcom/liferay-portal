@@ -232,6 +232,12 @@ public class BlogsStatsUserLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.blogs.model.BlogsStatsUser> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the blogs stats user with the primary key.
 	 *

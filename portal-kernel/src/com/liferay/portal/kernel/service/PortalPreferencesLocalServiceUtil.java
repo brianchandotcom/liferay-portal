@@ -221,6 +221,13 @@ public class PortalPreferencesLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.PortalPreferences>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

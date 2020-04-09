@@ -294,6 +294,14 @@ public class DEDataDefinitionFieldLinkLocalServiceWrapper
 			getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.data.engine.model.DEDataDefinitionFieldLink>
+			getBasePersistence() {
+
+		return _deDataDefinitionFieldLinkLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the de data definition field link with the primary key.
 	 *

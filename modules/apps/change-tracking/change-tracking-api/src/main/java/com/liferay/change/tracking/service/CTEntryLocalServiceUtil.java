@@ -225,6 +225,12 @@ public class CTEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.change.tracking.model.CTEntry> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.change.tracking.model.CTEntry>
 		getCTCollectionCTEntries(long ctCollectionId) {
 

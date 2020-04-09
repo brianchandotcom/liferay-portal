@@ -266,6 +266,13 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.portal.kernel.model.WorkflowDefinitionLink
 			getDefaultWorkflowDefinitionLink(
 				long companyId, String className, long classPK, long typePK)

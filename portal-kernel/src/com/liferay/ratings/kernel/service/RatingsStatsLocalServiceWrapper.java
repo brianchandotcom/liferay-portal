@@ -233,6 +233,13 @@ public class RatingsStatsLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.ratings.kernel.model.RatingsStats> getBasePersistence() {
+
+		return _ratingsStatsLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

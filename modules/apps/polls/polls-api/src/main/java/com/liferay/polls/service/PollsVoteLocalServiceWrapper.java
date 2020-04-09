@@ -240,6 +240,13 @@ public class PollsVoteLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.polls.model.PollsVote> getBasePersistence() {
+
+		return _pollsVoteLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<com.liferay.polls.model.PollsVote> getChoiceVotes(
 		long choiceId, int start, int end) {
 

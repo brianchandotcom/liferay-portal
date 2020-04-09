@@ -381,6 +381,13 @@ public class DDLRecordSetLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.lists.model.DDLRecordSet>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the ddl record set with the primary key.
 	 *

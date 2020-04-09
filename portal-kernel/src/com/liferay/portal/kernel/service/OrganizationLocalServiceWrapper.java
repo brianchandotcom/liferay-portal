@@ -498,6 +498,13 @@ public class OrganizationLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.Organization> getBasePersistence() {
+
+		return _organizationLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.lang.String[] getChildrenTypes(java.lang.String type) {
 		return _organizationLocalService.getChildrenTypes(type);
 	}

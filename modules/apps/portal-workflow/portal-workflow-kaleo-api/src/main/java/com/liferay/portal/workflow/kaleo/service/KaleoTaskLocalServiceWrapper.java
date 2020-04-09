@@ -239,6 +239,14 @@ public class KaleoTaskLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.workflow.kaleo.model.KaleoTask>
+			getBasePersistence() {
+
+		return _kaleoTaskLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

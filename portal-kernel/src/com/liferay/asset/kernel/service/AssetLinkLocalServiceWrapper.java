@@ -318,6 +318,13 @@ public class AssetLinkLocalServiceWrapper
 		return _assetLinkLocalService.getAssetLinksCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<AssetLink> getBasePersistence() {
+
+		return _assetLinkLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns all the asset links whose first entry ID is the given entry ID.
 	 *

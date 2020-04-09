@@ -256,6 +256,13 @@ public class SegmentsEntryRoleLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.segments.model.SegmentsEntryRole> getBasePersistence() {
+
+		return _segmentsEntryRoleLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

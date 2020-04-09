@@ -263,6 +263,13 @@ public class MicroblogsEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.microblogs.model.MicroblogsEntry> getBasePersistence() {
+
+		return _microblogsEntryLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry>
 		getCompanyMicroblogsEntries(long companyId, int start, int end) {
 

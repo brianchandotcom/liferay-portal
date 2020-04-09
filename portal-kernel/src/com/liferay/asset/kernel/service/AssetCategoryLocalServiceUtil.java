@@ -513,6 +513,12 @@ public class AssetCategoryLocalServiceUtil {
 		return getService().getAssetEntryPrimaryKeys(categoryId);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.asset.kernel.model.AssetCategory> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory>
 		getCategories() {
 

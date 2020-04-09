@@ -268,6 +268,13 @@ public class DLContentLocalServiceWrapper
 		return _dlContentLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<DLContent> getBasePersistence() {
+
+		return _dlContentLocalService.getBasePersistence();
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #getContent(long, long, String, String)}

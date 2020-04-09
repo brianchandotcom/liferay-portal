@@ -408,6 +408,13 @@ public class KBArticleLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.knowledge.base.model.KBArticle> getBasePersistence() {
+
+		return _kbArticleLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<com.liferay.knowledge.base.model.KBArticle>
 		getCompanyKBArticles(
 			long companyId, int status, int start, int end,

@@ -237,6 +237,13 @@ public class HtmlPreviewEntryLocalServiceWrapper
 		return _htmlPreviewEntryLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.html.preview.model.HtmlPreviewEntry> getBasePersistence() {
+
+		return _htmlPreviewEntryLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns a range of all the html preview entries.
 	 *

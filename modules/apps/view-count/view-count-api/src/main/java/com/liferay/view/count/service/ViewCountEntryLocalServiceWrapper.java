@@ -229,6 +229,13 @@ public class ViewCountEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.view.count.model.ViewCountEntry> getBasePersistence() {
+
+		return _viewCountEntryLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

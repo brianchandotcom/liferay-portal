@@ -252,6 +252,13 @@ public class ChangesetCollectionLocalServiceWrapper
 		return _changesetCollectionLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.changeset.model.ChangesetCollection> getBasePersistence() {
+
+		return _changesetCollectionLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the changeset collection with the primary key.
 	 *

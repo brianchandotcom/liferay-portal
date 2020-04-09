@@ -315,6 +315,14 @@ public class OAuth2ApplicationLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.oauth2.provider.model.OAuth2Application>
+			getBasePersistence() {
+
+		return _oAuth2ApplicationLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

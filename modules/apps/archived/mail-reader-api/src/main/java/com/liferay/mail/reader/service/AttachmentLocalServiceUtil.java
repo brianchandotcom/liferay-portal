@@ -267,6 +267,12 @@ public class AttachmentLocalServiceUtil {
 		return getService().getAttachmentsCount();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.mail.reader.model.Attachment> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.io.File getFile(long attachmentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

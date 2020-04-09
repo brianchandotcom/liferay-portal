@@ -275,6 +275,13 @@ public class MBThreadLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.message.boards.model.MBThread> getBasePersistence() {
+
+		return _mbThreadLocalService.getBasePersistence();
+	}
+
+	@Override
 	public int getCategoryThreadsCount(
 		long groupId, long categoryId, int status) {
 

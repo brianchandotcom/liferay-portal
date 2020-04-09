@@ -363,6 +363,14 @@ public class AnnouncementsEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.announcements.kernel.model.AnnouncementsEntry>
+			getBasePersistence() {
+
+		return _announcementsEntryLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List
 		<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
 			long userId, java.util.LinkedHashMap<Long, long[]> scopes,

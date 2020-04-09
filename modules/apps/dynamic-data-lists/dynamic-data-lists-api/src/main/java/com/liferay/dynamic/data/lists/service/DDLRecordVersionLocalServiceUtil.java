@@ -229,6 +229,13 @@ public class DDLRecordVersionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.lists.model.DDLRecordVersion>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the ddl record version with the primary key.
 	 *

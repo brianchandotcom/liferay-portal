@@ -455,6 +455,13 @@ public class RoleLocalServiceWrapper
 		return _roleLocalService.getAssigneesTotal(roleId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.Role> getBasePersistence() {
+
+		return _roleLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the default role for the group with the primary key.
 	 *

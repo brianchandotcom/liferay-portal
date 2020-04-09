@@ -292,6 +292,14 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.layout.page.template.model.LayoutPageTemplateStructure>
+			getBasePersistence() {
+
+		return _layoutPageTemplateStructureLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

@@ -220,6 +220,13 @@ public class BrowserTrackerLocalServiceWrapper
 		return _browserTrackerLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.BrowserTracker> getBasePersistence() {
+
+		return _browserTrackerLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the browser tracker with the primary key.
 	 *

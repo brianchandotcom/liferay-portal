@@ -262,6 +262,13 @@ public class EntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.reports.engine.console.model.Entry>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns a range of all the entries.
 	 *

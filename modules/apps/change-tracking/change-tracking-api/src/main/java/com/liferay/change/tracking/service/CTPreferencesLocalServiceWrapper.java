@@ -228,6 +228,13 @@ public class CTPreferencesLocalServiceWrapper
 		return _ctPreferencesLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.change.tracking.model.CTPreferences> getBasePersistence() {
+
+		return _ctPreferencesLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the ct preferences with the primary key.
 	 *

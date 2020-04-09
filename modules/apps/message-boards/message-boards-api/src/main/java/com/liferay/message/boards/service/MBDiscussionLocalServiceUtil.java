@@ -253,6 +253,12 @@ public class MBDiscussionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.message.boards.model.MBDiscussion> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.message.boards.model.MBDiscussion getDiscussion(
 			long discussionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

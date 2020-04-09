@@ -435,6 +435,13 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.document.library.kernel.model.DLFileEntry>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List
 		<com.liferay.document.library.kernel.model.DLFileEntry>
 			getDDMStructureFileEntries(long groupId, long[] ddmStructureIds) {

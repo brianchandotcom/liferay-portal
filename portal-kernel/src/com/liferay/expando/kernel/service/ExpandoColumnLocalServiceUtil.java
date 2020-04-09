@@ -267,6 +267,12 @@ public class ExpandoColumnLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.expando.kernel.model.ExpandoColumn> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.expando.kernel.model.ExpandoColumn getColumn(
 			long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException {

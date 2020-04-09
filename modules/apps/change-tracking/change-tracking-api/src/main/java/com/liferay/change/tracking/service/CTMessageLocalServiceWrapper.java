@@ -220,6 +220,13 @@ public class CTMessageLocalServiceWrapper
 		return _ctMessageLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.change.tracking.model.CTMessage> getBasePersistence() {
+
+		return _ctMessageLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the ct message with the primary key.
 	 *

@@ -257,6 +257,14 @@ public class RecentLayoutRevisionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.RecentLayoutRevision>
+			getBasePersistence() {
+
+		return _recentLayoutRevisionLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

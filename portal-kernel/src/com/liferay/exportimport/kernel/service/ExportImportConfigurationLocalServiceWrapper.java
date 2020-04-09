@@ -289,6 +289,14 @@ public class ExportImportConfigurationLocalServiceWrapper
 			getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.exportimport.kernel.model.ExportImportConfiguration>
+			getBasePersistence() {
+
+		return _exportImportConfigurationLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the export import configuration with the primary key.
 	 *

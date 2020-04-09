@@ -293,6 +293,14 @@ public class AnnouncementsFlagLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.announcements.kernel.model.AnnouncementsFlag>
+			getBasePersistence() {
+
+		return _announcementsFlagLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.announcements.kernel.model.AnnouncementsFlag getFlag(
 			long userId, long entryId, int value)
 		throws com.liferay.portal.kernel.exception.PortalException {

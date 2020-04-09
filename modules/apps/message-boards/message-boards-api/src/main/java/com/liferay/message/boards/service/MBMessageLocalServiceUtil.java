@@ -428,6 +428,12 @@ public class MBMessageLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.message.boards.model.MBMessage> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.message.boards.model.MBMessage>
 		getCategoryMessages(
 			long groupId, long categoryId, int status, int start, int end) {

@@ -1858,6 +1858,13 @@ public class JournalArticleLocalServiceWrapper
 		return _journalArticleLocalService.getArticleTitleMap(articlePK);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<JournalArticle> getBasePersistence() {
+
+		return _journalArticleLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns an ordered range of all the web content articles matching the
 	 * company, version, and workflow status.

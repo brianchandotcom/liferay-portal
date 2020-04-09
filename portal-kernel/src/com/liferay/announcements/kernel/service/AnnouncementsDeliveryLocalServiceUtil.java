@@ -276,6 +276,13 @@ public class AnnouncementsDeliveryLocalServiceUtil {
 		return getService().getAnnouncementsDelivery(deliveryId);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery
 			getDelivery(long deliveryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

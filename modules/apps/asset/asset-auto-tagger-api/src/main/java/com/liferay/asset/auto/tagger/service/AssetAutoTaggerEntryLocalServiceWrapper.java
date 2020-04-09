@@ -305,6 +305,13 @@ public class AssetAutoTaggerEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<AssetAutoTaggerEntry> getBasePersistence() {
+
+		return _assetAutoTaggerEntryLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

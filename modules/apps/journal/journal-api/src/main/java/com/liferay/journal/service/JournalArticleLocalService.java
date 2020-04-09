@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.PersistedResourcedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -1486,6 +1487,9 @@ public interface JournalArticleLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Locale, String> getArticleTitleMap(long articlePK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BasePersistence<JournalArticle> getBasePersistence();
 
 	/**
 	 * Returns an ordered range of all the web content articles matching the

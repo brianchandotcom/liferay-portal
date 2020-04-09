@@ -250,6 +250,14 @@ public class KaleoConditionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.workflow.kaleo.model.KaleoCondition>
+			getBasePersistence() {
+
+		return _kaleoConditionLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

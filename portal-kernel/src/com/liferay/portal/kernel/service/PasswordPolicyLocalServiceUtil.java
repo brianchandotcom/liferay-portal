@@ -261,6 +261,12 @@ public class PasswordPolicyLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.PasswordPolicy> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.portal.kernel.model.PasswordPolicy
 			getDefaultPasswordPolicy(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {

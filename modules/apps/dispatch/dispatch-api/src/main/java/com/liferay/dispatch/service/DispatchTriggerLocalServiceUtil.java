@@ -225,6 +225,12 @@ public class DispatchTriggerLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dispatch.model.DispatchTrigger> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the dispatch trigger with the primary key.
 	 *

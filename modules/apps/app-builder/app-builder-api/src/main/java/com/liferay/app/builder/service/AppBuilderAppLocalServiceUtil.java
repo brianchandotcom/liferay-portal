@@ -379,6 +379,12 @@ public class AppBuilderAppLocalServiceUtil {
 			groupId, companyId, ddmStructureId);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.app.builder.model.AppBuilderApp> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

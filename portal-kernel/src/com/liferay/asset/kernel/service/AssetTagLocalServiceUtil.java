@@ -509,6 +509,12 @@ public class AssetTagLocalServiceUtil {
 		return getService().getAssetTagsCount();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.asset.kernel.model.AssetTag> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the asset tags of the asset entry.
 	 *

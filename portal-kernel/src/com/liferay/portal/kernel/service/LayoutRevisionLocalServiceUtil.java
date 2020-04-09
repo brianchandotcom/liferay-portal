@@ -274,6 +274,12 @@ public class LayoutRevisionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.LayoutRevision> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutRevision>
 		getChildLayoutRevisions(
 			long layoutSetBranchId, long parentLayoutRevisionId, long plid) {

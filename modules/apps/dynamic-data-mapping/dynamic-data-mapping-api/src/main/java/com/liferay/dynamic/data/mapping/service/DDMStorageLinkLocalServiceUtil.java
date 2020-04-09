@@ -251,6 +251,13 @@ public class DDMStorageLinkLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.mapping.model.DDMStorageLink>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink
 			getClassStorageLink(long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {

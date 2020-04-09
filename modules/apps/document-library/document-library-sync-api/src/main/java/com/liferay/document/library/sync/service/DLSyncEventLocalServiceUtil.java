@@ -218,6 +218,13 @@ public class DLSyncEventLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.document.library.sync.model.DLSyncEvent>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the dl sync event with the primary key.
 	 *

@@ -219,6 +219,12 @@ public class CTProcessLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.change.tracking.model.CTProcess> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the ct process with the primary key.
 	 *

@@ -240,6 +240,13 @@ public class DDMContentLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.mapping.model.DDMContent>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.dynamic.data.mapping.model.DDMContent getContent(
 			long contentId)
 		throws com.liferay.portal.kernel.exception.PortalException {

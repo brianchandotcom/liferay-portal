@@ -308,6 +308,14 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance>
+			getBasePersistence() {
+
+		return _mdrRuleGroupInstanceLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

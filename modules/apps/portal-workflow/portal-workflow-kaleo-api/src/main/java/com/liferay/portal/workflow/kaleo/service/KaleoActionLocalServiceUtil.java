@@ -233,6 +233,13 @@ public class KaleoActionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.workflow.kaleo.model.KaleoAction>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

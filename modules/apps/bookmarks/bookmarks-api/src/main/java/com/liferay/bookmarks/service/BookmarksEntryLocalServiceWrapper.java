@@ -271,6 +271,13 @@ public class BookmarksEntryLocalServiceWrapper
 		return _bookmarksEntryLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.bookmarks.model.BookmarksEntry> getBasePersistence() {
+
+		return _bookmarksEntryLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns a range of all the bookmarks entries.
 	 *

@@ -243,6 +243,13 @@ public class TasksEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.tasks.model.TasksEntry> getBasePersistence() {
+
+		return _tasksEntryLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<com.liferay.tasks.model.TasksEntry>
 		getGroupAssigneeTasksEntries(
 			long groupId, long assigneeUserId, int start, int end) {

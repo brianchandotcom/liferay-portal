@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -186,6 +187,9 @@ public interface StatusLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Object[]> getAllStatuses(
 		long companyId, long userId, long modifiedDate, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BasePersistence<Status> getBasePersistence();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Object[]> getGroupStatuses(

@@ -210,6 +210,13 @@ public class DDMStructureVersionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.mapping.model.DDMStructureVersion>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the ddm structure version with the primary key.
 	 *

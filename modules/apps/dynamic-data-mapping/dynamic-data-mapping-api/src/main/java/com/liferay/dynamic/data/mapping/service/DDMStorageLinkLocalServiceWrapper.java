@@ -265,6 +265,14 @@ public class DDMStorageLinkLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.mapping.model.DDMStorageLink>
+			getBasePersistence() {
+
+		return _ddmStorageLinkLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStorageLink
 			getClassStorageLink(long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {

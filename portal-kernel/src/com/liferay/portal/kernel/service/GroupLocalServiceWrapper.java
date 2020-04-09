@@ -724,6 +724,13 @@ public class GroupLocalServiceWrapper
 		return _groupLocalService.getActiveGroupsCount(companyId, active, site);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.Group> getBasePersistence() {
+
+		return _groupLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the company group.
 	 *

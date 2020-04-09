@@ -1239,6 +1239,13 @@ public class UserLocalServiceWrapper
 		return _userLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.User> getBasePersistence() {
+
+		return _userLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns a range of all the users belonging to the company.
 	 *

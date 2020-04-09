@@ -331,6 +331,13 @@ public class DLOpenerFileEntryReferenceLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.document.library.opener.model.DLOpenerFileEntryReference>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 #getDLOpenerFileEntryReference(String, FileEntry)}

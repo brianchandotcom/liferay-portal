@@ -276,6 +276,13 @@ public class CalendarResourceLocalServiceWrapper
 		return _calendarResourceLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.calendar.model.CalendarResource> getBasePersistence() {
+
+		return _calendarResourceLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the calendar resource with the primary key.
 	 *

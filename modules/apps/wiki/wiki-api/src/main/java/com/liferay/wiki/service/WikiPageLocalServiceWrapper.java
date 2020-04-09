@@ -444,6 +444,13 @@ public class WikiPageLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.wiki.model.WikiPage> getBasePersistence() {
+
+		return _wikiPageLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<com.liferay.wiki.model.WikiPage> getChildren(
 		long nodeId, boolean head, String parentTitle) {
 

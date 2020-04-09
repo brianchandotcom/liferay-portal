@@ -224,6 +224,13 @@ public class DDMStructureVersionLocalServiceWrapper
 		return _ddmStructureVersionLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<DDMStructureVersion> getBasePersistence() {
+
+		return _ddmStructureVersionLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the ddm structure version with the primary key.
 	 *

@@ -265,6 +265,14 @@ public class DefinitionLocalServiceWrapper
 		return _definitionLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.reports.engine.console.model.Definition>
+			getBasePersistence() {
+
+		return _definitionLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the definition with the primary key.
 	 *

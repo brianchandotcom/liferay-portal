@@ -247,6 +247,14 @@ public class LazyBlobEntityLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.tools.service.builder.test.model.LazyBlobEntity>
+			getBasePersistence() {
+
+		return _lazyBlobEntityLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.tools.service.builder.test.model.
 		LazyBlobEntityBlob1BlobModel getBlob1BlobModel(
 			java.io.Serializable primaryKey) {

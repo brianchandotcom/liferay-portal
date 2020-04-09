@@ -239,6 +239,12 @@ public class RatingsEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.ratings.kernel.model.RatingsEntry> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.Map
 		<Long, com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
 			long userId, String className, long[] classPKs) {

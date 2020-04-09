@@ -245,6 +245,13 @@ public class DepotEntryLocalServiceWrapper
 		return _depotEntryLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.depot.model.DepotEntry> getBasePersistence() {
+
+		return _depotEntryLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns a range of all the depot entries.
 	 *

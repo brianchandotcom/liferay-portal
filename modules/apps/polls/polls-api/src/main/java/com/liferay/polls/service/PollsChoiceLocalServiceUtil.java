@@ -227,6 +227,12 @@ public class PollsChoiceLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.polls.model.PollsChoice> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.polls.model.PollsChoice getChoice(long choiceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

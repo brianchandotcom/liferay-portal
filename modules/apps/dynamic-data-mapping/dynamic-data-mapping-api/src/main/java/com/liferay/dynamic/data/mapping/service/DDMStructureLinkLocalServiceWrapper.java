@@ -261,6 +261,13 @@ public class DDMStructureLinkLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<DDMStructureLink> getBasePersistence() {
+
+		return _ddmStructureLinkLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<DDMStructureLink> getClassNameStructureLinks(
 		long classNameId) {
 

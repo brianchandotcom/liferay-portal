@@ -230,6 +230,14 @@ public class DDLRecordSetVersionLocalServiceWrapper
 		return _ddlRecordSetVersionLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.lists.model.DDLRecordSetVersion>
+			getBasePersistence() {
+
+		return _ddlRecordSetVersionLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the ddl record set version with the primary key.
 	 *

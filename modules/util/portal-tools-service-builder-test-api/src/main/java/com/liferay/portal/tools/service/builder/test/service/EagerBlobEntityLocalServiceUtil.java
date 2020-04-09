@@ -229,6 +229,13 @@ public class EagerBlobEntityLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.tools.service.builder.test.model.EagerBlobEntity>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns a range of all the eager blob entities.
 	 *

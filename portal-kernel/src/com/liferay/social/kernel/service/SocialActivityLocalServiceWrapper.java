@@ -639,6 +639,13 @@ public class SocialActivityLocalServiceWrapper
 			activitySetId, start, end);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.social.kernel.model.SocialActivity> getBasePersistence() {
+
+		return _socialActivityLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns a range of all the activities done in the group.
 	 *

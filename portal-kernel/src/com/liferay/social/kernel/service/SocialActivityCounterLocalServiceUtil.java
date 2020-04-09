@@ -455,6 +455,13 @@ public class SocialActivityCounterLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.social.kernel.model.SocialActivityCounter>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

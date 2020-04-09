@@ -227,6 +227,12 @@ public class PowwowMeetingLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.powwow.model.PowwowMeeting> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

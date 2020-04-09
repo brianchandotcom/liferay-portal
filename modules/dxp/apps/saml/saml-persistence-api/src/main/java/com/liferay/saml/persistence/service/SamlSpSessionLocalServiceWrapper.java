@@ -254,6 +254,14 @@ public class SamlSpSessionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.saml.persistence.model.SamlSpSession>
+			getBasePersistence() {
+
+		return _samlSpSessionLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

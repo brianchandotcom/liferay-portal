@@ -278,6 +278,13 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion
 			getFirstKaleoDefinitionVersion(long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {

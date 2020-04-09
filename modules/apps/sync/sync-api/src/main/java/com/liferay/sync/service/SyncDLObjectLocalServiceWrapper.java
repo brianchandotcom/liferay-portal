@@ -246,6 +246,13 @@ public class SyncDLObjectLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.sync.model.SyncDLObject> getBasePersistence() {
+
+		return _syncDLObjectLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

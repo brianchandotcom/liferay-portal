@@ -237,6 +237,14 @@ public class SPIDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.resiliency.spi.model.SPIDefinition>
+			getBasePersistence() {
+
+		return _spiDefinitionLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

@@ -311,6 +311,12 @@ public class AssetLinkLocalServiceUtil {
 		return getService().getAssetLinksCount();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.asset.kernel.model.AssetLink> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns all the asset links whose first entry ID is the given entry ID.
 	 *

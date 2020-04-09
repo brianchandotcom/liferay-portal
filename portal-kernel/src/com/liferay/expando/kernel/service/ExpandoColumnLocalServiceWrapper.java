@@ -292,6 +292,13 @@ public class ExpandoColumnLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.expando.kernel.model.ExpandoColumn> getBasePersistence() {
+
+		return _expandoColumnLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn getColumn(
 			long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException {

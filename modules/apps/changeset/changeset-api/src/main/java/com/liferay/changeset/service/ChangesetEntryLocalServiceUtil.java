@@ -252,6 +252,12 @@ public class ChangesetEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.changeset.model.ChangesetEntry> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns a range of all the changeset entries.
 	 *

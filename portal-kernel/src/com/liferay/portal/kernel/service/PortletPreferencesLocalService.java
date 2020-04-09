@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
@@ -225,6 +226,9 @@ public interface PortletPreferencesLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BasePersistence<PortletPreferences> getBasePersistence();
 
 	@Transactional(enabled = false)
 	public javax.portlet.PortletPreferences getDefaultPreferences(

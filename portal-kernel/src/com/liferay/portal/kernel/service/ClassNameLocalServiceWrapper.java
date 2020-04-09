@@ -236,6 +236,13 @@ public class ClassNameLocalServiceWrapper
 		return _classNameLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.ClassName> getBasePersistence() {
+
+		return _classNameLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the class name with the primary key.
 	 *

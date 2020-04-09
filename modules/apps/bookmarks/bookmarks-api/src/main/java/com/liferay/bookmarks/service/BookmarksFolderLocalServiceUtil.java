@@ -265,6 +265,12 @@ public class BookmarksFolderLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.bookmarks.model.BookmarksFolder> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the bookmarks folder with the primary key.
 	 *

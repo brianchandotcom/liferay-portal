@@ -476,6 +476,12 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getAssetTagPrimaryKeys(entryId);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.asset.kernel.model.AssetEntry> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
 			getChildEntries(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

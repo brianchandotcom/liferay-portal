@@ -284,6 +284,14 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.site.navigation.model.SiteNavigationMenuItem>
+			getBasePersistence() {
+
+		return _siteNavigationMenuItemLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

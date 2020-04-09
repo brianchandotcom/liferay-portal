@@ -238,6 +238,14 @@ public class EagerBlobEntityLocalServiceWrapper
 		return _eagerBlobEntityLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.tools.service.builder.test.model.EagerBlobEntity>
+			getBasePersistence() {
+
+		return _eagerBlobEntityLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns a range of all the eager blob entities.
 	 *

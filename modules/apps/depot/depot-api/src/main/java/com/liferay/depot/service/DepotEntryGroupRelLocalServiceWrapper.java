@@ -243,6 +243,13 @@ public class DepotEntryGroupRelLocalServiceWrapper
 		return _depotEntryGroupRelLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.depot.model.DepotEntryGroupRel> getBasePersistence() {
+
+		return _depotEntryGroupRelLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the depot entry group rel with the primary key.
 	 *

@@ -289,6 +289,13 @@ public class PortletPreferencesLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<PortletPreferences> getBasePersistence() {
+
+		return _portletPreferencesLocalService.getBasePersistence();
+	}
+
+	@Override
 	public javax.portlet.PortletPreferences getDefaultPreferences(
 		long companyId, String portletId) {
 

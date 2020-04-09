@@ -487,6 +487,13 @@ public class UserNotificationEventLocalServiceUtil {
 			userId, deliveryType, delivered, actionRequired, archived);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.UserNotificationEvent>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static int getDeliveredArchivedUserNotificationEventsCount(
 		long userId, int deliveryType, boolean delivered, boolean archived) {
 

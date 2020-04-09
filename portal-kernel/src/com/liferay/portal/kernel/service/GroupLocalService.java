@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -468,6 +469,9 @@ public interface GroupLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getActiveGroupsCount(
 		long companyId, boolean active, boolean site);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BasePersistence<Group> getBasePersistence();
 
 	/**
 	 * Returns the company group.

@@ -218,6 +218,13 @@ public class CompanyInfoLocalServiceWrapper
 		return _companyInfoLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.CompanyInfo> getBasePersistence() {
+
+		return _companyInfoLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the company info with the primary key.
 	 *

@@ -304,6 +304,14 @@ public class AnalyticsMessageLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.analytics.message.storage.model.AnalyticsMessage>
+			getBasePersistence() {
+
+		return _analyticsMessageLocalService.getBasePersistence();
+	}
+
+	@Override
 	public
 		com.liferay.analytics.message.storage.model.
 			AnalyticsMessageBodyBlobModel getBodyBlobModel(

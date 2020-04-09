@@ -534,6 +534,14 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.UserNotificationEvent>
+			getBasePersistence() {
+
+		return _userNotificationEventLocalService.getBasePersistence();
+	}
+
+	@Override
 	public int getDeliveredArchivedUserNotificationEventsCount(
 		long userId, int deliveryType, boolean delivered, boolean archived) {
 

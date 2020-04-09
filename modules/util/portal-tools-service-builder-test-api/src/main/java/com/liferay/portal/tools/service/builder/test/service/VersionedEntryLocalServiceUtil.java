@@ -296,6 +296,13 @@ public class VersionedEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.tools.service.builder.test.model.VersionedEntry>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static
 		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
 				getDraft(long primaryKey)

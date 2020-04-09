@@ -293,6 +293,13 @@ public class LayoutRevisionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.LayoutRevision> getBasePersistence() {
+
+		return _layoutRevisionLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.kernel.model.LayoutRevision>
 		getChildLayoutRevisions(
 			long layoutSetBranchId, long parentLayoutRevisionId, long plid) {

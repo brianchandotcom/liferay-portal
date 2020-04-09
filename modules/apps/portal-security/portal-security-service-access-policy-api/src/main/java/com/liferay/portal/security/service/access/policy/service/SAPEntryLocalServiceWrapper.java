@@ -262,6 +262,14 @@ public class SAPEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.security.service.access.policy.model.SAPEntry>
+			getBasePersistence() {
+
+		return _sapEntryLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List
 		<com.liferay.portal.security.service.access.policy.model.SAPEntry>
 			getCompanySAPEntries(long companyId, int start, int end) {

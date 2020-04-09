@@ -231,6 +231,13 @@ public class CTEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.change.tracking.model.CTEntry> getBasePersistence() {
+
+		return _ctEntryLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<com.liferay.change.tracking.model.CTEntry>
 		getCTCollectionCTEntries(long ctCollectionId) {
 

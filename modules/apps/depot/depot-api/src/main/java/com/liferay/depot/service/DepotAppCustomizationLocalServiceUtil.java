@@ -218,6 +218,12 @@ public class DepotAppCustomizationLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.depot.model.DepotAppCustomization> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the depot app customization with the primary key.
 	 *

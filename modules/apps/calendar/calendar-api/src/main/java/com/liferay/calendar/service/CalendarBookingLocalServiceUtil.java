@@ -359,6 +359,12 @@ public class CalendarBookingLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.calendar.model.CalendarBooking> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the calendar booking with the primary key.
 	 *

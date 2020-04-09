@@ -233,6 +233,12 @@ public class PollsVoteLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.polls.model.PollsVote> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.polls.model.PollsVote>
 		getChoiceVotes(long choiceId, int start, int end) {
 

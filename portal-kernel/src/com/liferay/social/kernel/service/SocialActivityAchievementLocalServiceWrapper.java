@@ -249,6 +249,14 @@ public class SocialActivityAchievementLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.social.kernel.model.SocialActivityAchievement>
+			getBasePersistence() {
+
+		return _socialActivityAchievementLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List
 		<com.liferay.social.kernel.model.SocialActivityAchievement>
 			getGroupAchievements(long groupId) {

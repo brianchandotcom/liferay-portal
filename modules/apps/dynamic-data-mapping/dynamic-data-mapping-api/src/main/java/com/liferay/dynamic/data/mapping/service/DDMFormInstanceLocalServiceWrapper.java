@@ -342,6 +342,14 @@ public class DDMFormInstanceLocalServiceWrapper
 		return _ddmFormInstanceLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.mapping.model.DDMFormInstance>
+			getBasePersistence() {
+
+		return _ddmFormInstanceLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the ddm form instance with the primary key.
 	 *

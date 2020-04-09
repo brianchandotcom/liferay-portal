@@ -223,6 +223,13 @@ public class FolderLocalServiceWrapper
 		return _folderLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.mail.reader.model.Folder> getBasePersistence() {
+
+		return _folderLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the folder with the primary key.
 	 *

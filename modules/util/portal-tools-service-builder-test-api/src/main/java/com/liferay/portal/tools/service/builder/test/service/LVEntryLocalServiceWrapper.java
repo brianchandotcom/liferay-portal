@@ -388,6 +388,14 @@ public class LVEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.tools.service.builder.test.model.LVEntry>
+			getBasePersistence() {
+
+		return _lvEntryLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List
 		<com.liferay.portal.tools.service.builder.test.model.LVEntry>
 			getBigDecimalEntryLVEntries(long bigDecimalEntryId) {

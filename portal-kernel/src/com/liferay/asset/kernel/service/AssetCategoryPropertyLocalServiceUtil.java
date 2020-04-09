@@ -276,6 +276,13 @@ public class AssetCategoryPropertyLocalServiceUtil {
 		return getService().getAssetCategoryProperty(categoryPropertyId);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.asset.kernel.model.AssetCategoryProperty>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List
 		<com.liferay.asset.kernel.model.AssetCategoryProperty>
 			getCategoryProperties() {

@@ -265,6 +265,14 @@ public class SocialActivitySettingLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.social.kernel.model.SocialActivitySetting>
+			getBasePersistence() {
+
+		return _socialActivitySettingLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

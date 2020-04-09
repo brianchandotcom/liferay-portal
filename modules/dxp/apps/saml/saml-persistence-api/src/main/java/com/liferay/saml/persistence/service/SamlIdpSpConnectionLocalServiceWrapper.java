@@ -245,6 +245,14 @@ public class SamlIdpSpConnectionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.saml.persistence.model.SamlIdpSpConnection>
+			getBasePersistence() {
+
+		return _samlIdpSpConnectionLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

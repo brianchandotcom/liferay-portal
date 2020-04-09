@@ -303,6 +303,14 @@ public class KaleoDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>
+			getBasePersistence() {
+
+		return _kaleoDefinitionLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

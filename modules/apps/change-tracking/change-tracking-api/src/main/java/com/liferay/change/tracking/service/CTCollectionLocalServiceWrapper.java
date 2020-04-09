@@ -244,6 +244,13 @@ public class CTCollectionLocalServiceWrapper
 		return _ctCollectionLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.change.tracking.model.CTCollection> getBasePersistence() {
+
+		return _ctCollectionLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the ct collection with the primary key.
 	 *

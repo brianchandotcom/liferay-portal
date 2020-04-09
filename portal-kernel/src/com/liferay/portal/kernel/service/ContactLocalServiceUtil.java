@@ -219,6 +219,12 @@ public class ContactLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.Contact> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.portal.kernel.model.Contact>
 		getCompanyContacts(long companyId, int start, int end) {
 

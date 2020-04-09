@@ -305,6 +305,14 @@ public class VersionedEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.tools.service.builder.test.model.VersionedEntry>
+			getBasePersistence() {
+
+		return _versionedEntryLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.tools.service.builder.test.model.VersionedEntry
 			getDraft(long primaryKey)
 		throws com.liferay.portal.kernel.exception.PortalException {

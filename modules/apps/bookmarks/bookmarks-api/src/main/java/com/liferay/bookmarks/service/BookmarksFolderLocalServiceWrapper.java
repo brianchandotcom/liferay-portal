@@ -283,6 +283,13 @@ public class BookmarksFolderLocalServiceWrapper
 		return _bookmarksFolderLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.bookmarks.model.BookmarksFolder> getBasePersistence() {
+
+		return _bookmarksFolderLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the bookmarks folder with the primary key.
 	 *

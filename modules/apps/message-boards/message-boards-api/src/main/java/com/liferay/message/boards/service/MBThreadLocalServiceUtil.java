@@ -259,6 +259,12 @@ public class MBThreadLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.message.boards.model.MBThread> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static int getCategoryThreadsCount(
 		long groupId, long categoryId, int status) {
 

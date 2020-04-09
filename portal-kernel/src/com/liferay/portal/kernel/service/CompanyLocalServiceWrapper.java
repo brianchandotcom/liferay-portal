@@ -320,6 +320,13 @@ public class CompanyLocalServiceWrapper
 		return _companyLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.Company> getBasePersistence() {
+
+		return _companyLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns all the companies.
 	 *

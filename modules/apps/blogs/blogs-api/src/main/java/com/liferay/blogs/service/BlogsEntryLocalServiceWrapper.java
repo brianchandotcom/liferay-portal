@@ -459,6 +459,13 @@ public class BlogsEntryLocalServiceWrapper
 		return _blogsEntryLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.blogs.model.BlogsEntry> getBasePersistence() {
+
+		return _blogsEntryLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns a range of all the blogs entries.
 	 *

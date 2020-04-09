@@ -278,6 +278,13 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return getService().getAutoSiteNavigationMenus(groupId);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.site.navigation.model.SiteNavigationMenu>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

@@ -275,6 +275,13 @@ public class ExportImportConfigurationLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.exportimport.kernel.model.ExportImportConfiguration>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the export import configuration with the primary key.
 	 *

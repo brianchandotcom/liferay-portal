@@ -333,6 +333,14 @@ public class OAuth2ScopeGrantLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.oauth2.provider.model.OAuth2ScopeGrant>
+			getBasePersistence() {
+
+		return _oAuth2ScopeGrantLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.Collection
 		<com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope>
 			getFilteredLiferayOAuth2Scopes(

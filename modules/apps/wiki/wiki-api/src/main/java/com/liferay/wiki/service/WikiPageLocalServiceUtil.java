@@ -412,6 +412,12 @@ public class WikiPageLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.wiki.model.WikiPage> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.wiki.model.WikiPage> getChildren(
 		long nodeId, boolean head, String parentTitle) {
 

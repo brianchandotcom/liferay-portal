@@ -276,6 +276,14 @@ public class KaleoProcessLocalServiceWrapper
 		return _kaleoProcessLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess>
+			getBasePersistence() {
+
+		return _kaleoProcessLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the Kaleo process matching the DDL record set ID.
 	 *

@@ -306,6 +306,14 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
+			getBasePersistence() {
+
+		return _announcementsDeliveryLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.announcements.kernel.model.AnnouncementsDelivery
 			getDelivery(long deliveryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

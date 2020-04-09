@@ -331,6 +331,13 @@ public class AccountEntryUserRelLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.account.model.AccountEntryUserRel> getBasePersistence() {
+
+		return _accountEntryUserRelLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

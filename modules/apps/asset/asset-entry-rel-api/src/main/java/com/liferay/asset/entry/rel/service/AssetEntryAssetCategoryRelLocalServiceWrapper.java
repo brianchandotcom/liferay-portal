@@ -403,6 +403,13 @@ public class AssetEntryAssetCategoryRelLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<AssetEntryAssetCategoryRel> getBasePersistence() {
+
+		return _assetEntryAssetCategoryRelLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

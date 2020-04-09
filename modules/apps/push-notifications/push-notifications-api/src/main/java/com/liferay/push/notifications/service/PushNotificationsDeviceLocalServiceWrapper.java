@@ -248,6 +248,14 @@ public class PushNotificationsDeviceLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.push.notifications.model.PushNotificationsDevice>
+			getBasePersistence() {
+
+		return _pushNotificationsDeviceLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

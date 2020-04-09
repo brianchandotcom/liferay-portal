@@ -263,6 +263,13 @@ public class PortletPreferencesLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.PortletPreferences>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static javax.portlet.PortletPreferences getDefaultPreferences(
 		long companyId, String portletId) {
 

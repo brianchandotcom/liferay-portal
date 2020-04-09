@@ -206,6 +206,12 @@ public class DispatchLogLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dispatch.model.DispatchLog> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the dispatch log with the primary key.
 	 *

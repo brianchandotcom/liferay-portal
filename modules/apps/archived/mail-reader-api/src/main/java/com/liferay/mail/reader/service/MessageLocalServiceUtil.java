@@ -228,6 +228,12 @@ public class MessageLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.mail.reader.model.Message> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.mail.reader.model.Message>
 		getCompanyMessages(long companyId, int start, int end) {
 

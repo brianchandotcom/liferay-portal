@@ -845,6 +845,12 @@ public class LayoutLocalServiceUtil {
 		return getService().getAllLayouts(groupId, privateLayout, type);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.Layout> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the primary key of the default layout for the group.
 	 *

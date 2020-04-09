@@ -249,6 +249,14 @@ public class SocialActivitySetLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.social.kernel.model.SocialActivitySet>
+			getBasePersistence() {
+
+		return _socialActivitySetLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.social.kernel.model.SocialActivitySet
 		getClassActivitySet(long classNameId, long classPK, int type) {
 

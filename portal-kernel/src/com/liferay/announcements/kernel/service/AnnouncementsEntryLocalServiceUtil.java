@@ -335,6 +335,13 @@ public class AnnouncementsEntryLocalServiceUtil {
 			uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.announcements.kernel.model.AnnouncementsEntry>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List
 		<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
 			long userId, java.util.LinkedHashMap<Long, long[]> scopes,

@@ -241,6 +241,14 @@ public class DLFileVersionLocalServiceWrapper
 		return _dlFileVersionLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.document.library.kernel.model.DLFileVersion>
+			getBasePersistence() {
+
+		return _dlFileVersionLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the document library file version with the primary key.
 	 *

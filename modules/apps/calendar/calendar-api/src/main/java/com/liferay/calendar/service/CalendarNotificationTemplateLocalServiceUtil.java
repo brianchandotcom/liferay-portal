@@ -264,6 +264,13 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.calendar.model.CalendarNotificationTemplate>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the calendar notification template with the primary key.
 	 *

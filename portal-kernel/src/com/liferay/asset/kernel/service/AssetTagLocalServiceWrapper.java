@@ -525,6 +525,13 @@ public class AssetTagLocalServiceWrapper
 		return _assetTagLocalService.getAssetTagsCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<AssetTag> getBasePersistence() {
+
+		return _assetTagLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the asset tags of the asset entry.
 	 *

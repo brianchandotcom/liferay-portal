@@ -426,6 +426,12 @@ public class RoleLocalServiceUtil {
 		return getService().getAssigneesTotal(roleId);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.Role> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the default role for the group with the primary key.
 	 *

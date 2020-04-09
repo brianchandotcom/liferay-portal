@@ -251,6 +251,14 @@ public class DDMContentLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.mapping.model.DDMContent>
+			getBasePersistence() {
+
+		return _ddmContentLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMContent getContent(
 			long contentId)
 		throws com.liferay.portal.kernel.exception.PortalException {

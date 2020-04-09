@@ -862,6 +862,13 @@ public class LayoutLocalServiceWrapper
 		return _layoutLocalService.getAllLayouts(groupId, privateLayout, type);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence<Layout>
+		getBasePersistence() {
+
+		return _layoutLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the primary key of the default layout for the group.
 	 *

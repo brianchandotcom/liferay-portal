@@ -203,6 +203,13 @@ public class ImageLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.Image> getBasePersistence() {
+
+		return _imageLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.Image getCompanyLogo(long imageId) {
 		return _imageLocalService.getCompanyLogo(imageId);
 	}

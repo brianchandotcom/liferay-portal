@@ -310,6 +310,12 @@ public class MBCategoryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.message.boards.model.MBCategory> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.message.boards.model.MBCategory>
 		getCategories(long groupId) {
 

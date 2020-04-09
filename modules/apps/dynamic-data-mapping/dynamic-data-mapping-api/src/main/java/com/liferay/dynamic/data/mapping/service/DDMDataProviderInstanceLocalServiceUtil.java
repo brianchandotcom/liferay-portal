@@ -276,6 +276,13 @@ public class DDMDataProviderInstanceLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
 			getDataProviderInstance(long dataProviderInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {

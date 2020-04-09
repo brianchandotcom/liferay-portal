@@ -249,6 +249,14 @@ public class MFAEmailOTPEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.multi.factor.authentication.email.otp.model.
+			MFAEmailOTPEntry> getBasePersistence() {
+
+		return _mfaEmailOTPEntryLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

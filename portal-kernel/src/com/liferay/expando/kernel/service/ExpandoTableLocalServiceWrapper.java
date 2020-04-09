@@ -309,6 +309,13 @@ public class ExpandoTableLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.expando.kernel.model.ExpandoTable> getBasePersistence() {
+
+		return _expandoTableLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.expando.kernel.model.ExpandoTable getDefaultTable(
 			long companyId, long classNameId)
 		throws com.liferay.portal.kernel.exception.PortalException {

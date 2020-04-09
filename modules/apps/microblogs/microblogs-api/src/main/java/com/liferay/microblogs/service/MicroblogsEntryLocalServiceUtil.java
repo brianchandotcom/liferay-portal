@@ -248,6 +248,12 @@ public class MicroblogsEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.microblogs.model.MicroblogsEntry> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry>
 		getCompanyMicroblogsEntries(long companyId, int start, int end) {
 

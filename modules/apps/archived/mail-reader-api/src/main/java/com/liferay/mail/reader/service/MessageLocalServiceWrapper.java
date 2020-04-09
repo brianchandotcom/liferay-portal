@@ -231,6 +231,13 @@ public class MessageLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.mail.reader.model.Message> getBasePersistence() {
+
+		return _messageLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<com.liferay.mail.reader.model.Message>
 		getCompanyMessages(long companyId, int start, int end) {
 

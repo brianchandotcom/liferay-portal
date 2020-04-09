@@ -256,6 +256,14 @@ public class BatchEngineExportTaskLocalServiceWrapper
 		return _batchEngineExportTaskLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.batch.engine.model.BatchEngineExportTask>
+			getBasePersistence() {
+
+		return _batchEngineExportTaskLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the batch engine export task with the primary key.
 	 *

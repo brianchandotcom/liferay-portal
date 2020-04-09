@@ -214,6 +214,14 @@ public class TestEntityLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.external.data.source.test.model.TestEntity>
+			getBasePersistence() {
+
+		return _testEntityLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

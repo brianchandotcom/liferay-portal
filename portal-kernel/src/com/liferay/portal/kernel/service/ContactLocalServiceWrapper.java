@@ -226,6 +226,13 @@ public class ContactLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.Contact> getBasePersistence() {
+
+		return _contactLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Contact>
 		getCompanyContacts(long companyId, int start, int end) {
 

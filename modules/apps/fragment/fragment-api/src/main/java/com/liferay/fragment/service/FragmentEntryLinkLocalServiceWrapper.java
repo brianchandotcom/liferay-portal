@@ -275,6 +275,13 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.fragment.model.FragmentEntryLink> getBasePersistence() {
+
+		return _fragmentEntryLinkLocalService.getBasePersistence();
+	}
+
+	@Override
 	public int getClassedModelFragmentEntryLinksCount(
 		long groupId, long classNameId, long classPK) {
 

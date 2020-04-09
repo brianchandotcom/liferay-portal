@@ -494,6 +494,13 @@ public class AssetEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<AssetEntry> getBasePersistence() {
+
+		return _assetEntryLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<AssetEntry> getChildEntries(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -276,6 +276,14 @@ public class OAuth2ApplicationScopeAliasesLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases>
+			getBasePersistence() {
+
+		return _oAuth2ApplicationScopeAliasesLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

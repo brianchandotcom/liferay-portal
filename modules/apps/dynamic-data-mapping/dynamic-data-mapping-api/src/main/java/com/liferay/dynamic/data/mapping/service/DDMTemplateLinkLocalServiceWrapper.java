@@ -246,6 +246,13 @@ public class DDMTemplateLinkLocalServiceWrapper
 		return _ddmTemplateLinkLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<DDMTemplateLink> getBasePersistence() {
+
+		return _ddmTemplateLinkLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the ddm template link with the primary key.
 	 *

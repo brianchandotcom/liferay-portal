@@ -379,6 +379,12 @@ public class KBArticleLocalServiceUtil {
 			resourcePrimKey, status, orderByComparator);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.knowledge.base.model.KBArticle> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.knowledge.base.model.KBArticle>
 		getCompanyKBArticles(
 			long companyId, int status, int start, int end,

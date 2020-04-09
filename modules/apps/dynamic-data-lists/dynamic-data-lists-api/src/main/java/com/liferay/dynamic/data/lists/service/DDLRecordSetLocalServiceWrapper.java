@@ -397,6 +397,14 @@ public class DDLRecordSetLocalServiceWrapper
 		return _ddlRecordSetLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.lists.model.DDLRecordSet>
+			getBasePersistence() {
+
+		return _ddlRecordSetLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the ddl record set with the primary key.
 	 *

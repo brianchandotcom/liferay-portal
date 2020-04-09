@@ -278,6 +278,14 @@ public class DLFileRankLocalServiceWrapper
 		return _dlFileRankLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.document.library.file.rank.model.DLFileRank>
+			getBasePersistence() {
+
+		return _dlFileRankLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the document library file rank with the primary key.
 	 *

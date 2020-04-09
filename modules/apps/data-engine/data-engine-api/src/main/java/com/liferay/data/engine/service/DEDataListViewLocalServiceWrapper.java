@@ -249,6 +249,13 @@ public class DEDataListViewLocalServiceWrapper
 		return _deDataListViewLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.data.engine.model.DEDataListView> getBasePersistence() {
+
+		return _deDataListViewLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the de data list view with the primary key.
 	 *

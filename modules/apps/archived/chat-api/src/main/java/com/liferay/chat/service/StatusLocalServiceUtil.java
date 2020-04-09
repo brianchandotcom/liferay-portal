@@ -208,6 +208,12 @@ public class StatusLocalServiceUtil {
 			companyId, userId, modifiedDate, start, end);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.chat.model.Status> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<Object[]> getGroupStatuses(
 		long userId, long modifiedDate, String[] groupNames, int start,
 		int end) {

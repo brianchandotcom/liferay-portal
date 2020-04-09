@@ -303,6 +303,13 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.oauth2.provider.model.OAuth2ScopeGrant>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.Collection
 		<com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope>
 			getFilteredLiferayOAuth2Scopes(

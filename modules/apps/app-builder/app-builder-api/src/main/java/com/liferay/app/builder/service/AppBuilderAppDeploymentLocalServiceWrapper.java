@@ -301,6 +301,14 @@ public class AppBuilderAppDeploymentLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.app.builder.model.AppBuilderAppDeployment>
+			getBasePersistence() {
+
+		return _appBuilderAppDeploymentLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

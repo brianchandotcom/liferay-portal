@@ -232,6 +232,13 @@ public class CTSContentLocalServiceWrapper
 		return _ctsContentLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<CTSContent> getBasePersistence() {
+
+		return _ctsContentLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the cts content with the primary key.
 	 *

@@ -279,6 +279,14 @@ public class PasswordPolicyRelLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.PasswordPolicyRel>
+			getBasePersistence() {
+
+		return _passwordPolicyRelLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

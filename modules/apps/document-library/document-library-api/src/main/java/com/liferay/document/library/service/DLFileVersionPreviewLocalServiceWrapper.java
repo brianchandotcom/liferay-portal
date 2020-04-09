@@ -258,6 +258,14 @@ public class DLFileVersionPreviewLocalServiceWrapper
 		return _dlFileVersionPreviewLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.document.library.model.DLFileVersionPreview>
+			getBasePersistence() {
+
+		return _dlFileVersionPreviewLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the dl file version preview with the primary key.
 	 *

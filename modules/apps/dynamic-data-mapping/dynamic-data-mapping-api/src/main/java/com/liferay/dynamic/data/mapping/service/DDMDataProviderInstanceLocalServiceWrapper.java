@@ -304,6 +304,14 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance>
+			getBasePersistence() {
+
+		return _ddmDataProviderInstanceLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
 			getDataProviderInstance(long dataProviderInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {

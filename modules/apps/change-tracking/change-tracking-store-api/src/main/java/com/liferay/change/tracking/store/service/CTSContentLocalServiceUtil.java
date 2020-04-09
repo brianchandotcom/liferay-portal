@@ -232,6 +232,13 @@ public class CTSContentLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.change.tracking.store.model.CTSContent>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the cts content with the primary key.
 	 *

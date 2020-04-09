@@ -224,6 +224,13 @@ public class DDMTemplateVersionLocalServiceWrapper
 		return _ddmTemplateVersionLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<DDMTemplateVersion> getBasePersistence() {
+
+		return _ddmTemplateVersionLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the ddm template version with the primary key.
 	 *

@@ -240,6 +240,13 @@ public class BatchEngineExportTaskLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.batch.engine.model.BatchEngineExportTask>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the batch engine export task with the primary key.
 	 *

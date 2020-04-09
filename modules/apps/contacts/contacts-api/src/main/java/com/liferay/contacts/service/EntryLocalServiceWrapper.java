@@ -213,6 +213,13 @@ public class EntryLocalServiceWrapper
 		return _entryLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.contacts.model.Entry> getBasePersistence() {
+
+		return _entryLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns a range of all the entries.
 	 *

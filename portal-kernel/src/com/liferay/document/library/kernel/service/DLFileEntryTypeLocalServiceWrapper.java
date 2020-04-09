@@ -409,6 +409,14 @@ public class DLFileEntryTypeLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.document.library.kernel.model.DLFileEntryType>
+			getBasePersistence() {
+
+		return _dlFileEntryTypeLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.document.library.kernel.model.DLFileEntryType
 			getBasicDocumentDLFileEntryType()
 		throws com.liferay.document.library.kernel.exception.

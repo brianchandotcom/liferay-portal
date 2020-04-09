@@ -277,6 +277,13 @@ public class AnalyticsMessageLocalServiceUtil {
 		return getService().getAnalyticsMessagesCount();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.analytics.message.storage.model.AnalyticsMessage>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static
 		com.liferay.analytics.message.storage.model.
 			AnalyticsMessageBodyBlobModel getBodyBlobModel(

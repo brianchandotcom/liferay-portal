@@ -247,6 +247,13 @@ public class EmailAddressLocalServiceWrapper
 		return _emailAddressLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.EmailAddress> getBasePersistence() {
+
+		return _emailAddressLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the email address with the primary key.
 	 *

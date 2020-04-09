@@ -257,6 +257,14 @@ public class KaleoTransitionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.workflow.kaleo.model.KaleoTransition>
+			getBasePersistence() {
+
+		return _kaleoTransitionLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoTransition
 			getDefaultKaleoTransition(long kaleoNodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {

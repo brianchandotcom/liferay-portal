@@ -313,6 +313,13 @@ public class PortletLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.Portlet> getBasePersistence() {
+
+		return _portletLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List
 		<com.liferay.expando.kernel.model.CustomAttributesDisplay>
 			getCustomAttributesDisplays() {

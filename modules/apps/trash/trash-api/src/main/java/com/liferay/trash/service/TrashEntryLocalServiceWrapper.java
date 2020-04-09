@@ -314,6 +314,13 @@ public class TrashEntryLocalServiceWrapper
 		return _trashEntryLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.trash.model.TrashEntry> getBasePersistence() {
+
+		return _trashEntryLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the trash entries with the matching group ID.
 	 *

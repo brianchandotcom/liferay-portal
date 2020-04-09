@@ -461,6 +461,13 @@ public class MBMessageLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.message.boards.model.MBMessage> getBasePersistence() {
+
+		return _mbMessageLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<com.liferay.message.boards.model.MBMessage>
 		getCategoryMessages(
 			long groupId, long categoryId, int status, int start, int end) {

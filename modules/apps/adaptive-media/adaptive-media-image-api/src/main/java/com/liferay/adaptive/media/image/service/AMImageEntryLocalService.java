@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -371,6 +372,9 @@ public interface AMImageEntryLocalService
 	public InputStream getAMImageEntryContentStream(
 		AMImageConfigurationEntry amImageConfigurationEntry,
 		FileVersion fileVersion);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BasePersistence<AMImageEntry> getBasePersistence();
 
 	/**
 	 * Returns the total number of adaptive media images that are expected to be

@@ -512,6 +512,13 @@ public class DDMStructureLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<DDMStructure> getBasePersistence() {
+
+		return _ddmStructureLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<DDMStructure> getChildrenStructures(
 		long parentStructureId) {
 

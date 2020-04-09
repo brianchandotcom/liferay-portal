@@ -295,6 +295,14 @@ public class KaleoTaskInstanceTokenLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken>
+			getBasePersistence() {
+
+		return _kaleoTaskInstanceTokenLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List
 		<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken>
 			getCompanyKaleoTaskInstanceTokens(

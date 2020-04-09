@@ -281,6 +281,12 @@ public class JournalFolderLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.journal.model.JournalFolder> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.journal.model.JournalFolder>
 		getCompanyFolders(long companyId, int start, int end) {
 

@@ -269,6 +269,13 @@ public class JournalArticleResourceLocalServiceUtil {
 		return getService().getArticleResources(groupId);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.journal.model.JournalArticleResource>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

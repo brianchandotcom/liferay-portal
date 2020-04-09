@@ -267,6 +267,14 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry>
+			getBasePersistence() {
+
+		return _sharepointOAuth2TokenEntryLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

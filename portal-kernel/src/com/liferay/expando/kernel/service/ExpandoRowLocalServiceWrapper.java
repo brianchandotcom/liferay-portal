@@ -270,6 +270,13 @@ public class ExpandoRowLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.expando.kernel.model.ExpandoRow> getBasePersistence() {
+
+		return _expandoRowLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<com.liferay.expando.kernel.model.ExpandoRow>
 		getDefaultTableRows(
 			long companyId, long classNameId, int start, int end) {

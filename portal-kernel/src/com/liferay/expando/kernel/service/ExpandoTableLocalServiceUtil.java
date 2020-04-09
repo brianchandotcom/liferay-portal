@@ -284,6 +284,12 @@ public class ExpandoTableLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.expando.kernel.model.ExpandoTable> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.expando.kernel.model.ExpandoTable getDefaultTable(
 			long companyId, long classNameId)
 		throws com.liferay.portal.kernel.exception.PortalException {

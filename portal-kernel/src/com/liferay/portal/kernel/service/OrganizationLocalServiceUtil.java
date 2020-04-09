@@ -464,6 +464,12 @@ public class OrganizationLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.Organization> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static String[] getChildrenTypes(String type) {
 		return getService().getChildrenTypes(type);
 	}

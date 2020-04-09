@@ -264,6 +264,15 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.workflow.metrics.model.
+			WorkflowMetricsSLADefinitionVersion> getBasePersistence() {
+
+		return _workflowMetricsSLADefinitionVersionLocalService.
+			getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

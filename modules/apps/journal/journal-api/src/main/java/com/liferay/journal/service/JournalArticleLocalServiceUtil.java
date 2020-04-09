@@ -1807,6 +1807,12 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getArticleTitleMap(articlePK);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.journal.model.JournalArticle> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns an ordered range of all the web content articles matching the
 	 * company, version, and workflow status.

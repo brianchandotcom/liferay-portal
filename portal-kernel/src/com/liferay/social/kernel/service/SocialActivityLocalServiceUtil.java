@@ -605,6 +605,12 @@ public class SocialActivityLocalServiceUtil {
 		return getService().getActivitySetActivities(activitySetId, start, end);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.social.kernel.model.SocialActivity> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns a range of all the activities done in the group.
 	 *

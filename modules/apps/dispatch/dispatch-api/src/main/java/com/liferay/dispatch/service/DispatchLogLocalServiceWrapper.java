@@ -213,6 +213,13 @@ public class DispatchLogLocalServiceWrapper
 		return _dispatchLogLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dispatch.model.DispatchLog> getBasePersistence() {
+
+		return _dispatchLogLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the dispatch log with the primary key.
 	 *

@@ -239,6 +239,14 @@ public class SamlSpMessageLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.saml.persistence.model.SamlSpMessage>
+			getBasePersistence() {
+
+		return _samlSpMessageLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

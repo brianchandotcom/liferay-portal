@@ -417,6 +417,13 @@ public class AssetVocabularyLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<AssetVocabulary> getBasePersistence() {
+
+		return _assetVocabularyLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<AssetVocabulary> getCompanyVocabularies(
 		long companyId) {
 

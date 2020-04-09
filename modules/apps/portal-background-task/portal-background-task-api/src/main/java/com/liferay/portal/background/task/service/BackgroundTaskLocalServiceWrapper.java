@@ -714,6 +714,14 @@ public class BackgroundTaskLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.background.task.model.BackgroundTask>
+			getBasePersistence() {
+
+		return _backgroundTaskLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

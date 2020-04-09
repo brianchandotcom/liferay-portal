@@ -400,6 +400,13 @@ public class AssetListEntrySegmentsEntryRelLocalServiceUtil {
 			assetListEntryId);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

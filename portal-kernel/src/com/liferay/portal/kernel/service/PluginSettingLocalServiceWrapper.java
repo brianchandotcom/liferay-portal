@@ -222,6 +222,13 @@ public class PluginSettingLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.PluginSetting> getBasePersistence() {
+
+		return _pluginSettingLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.PluginSetting
 		getDefaultPluginSetting() {
 

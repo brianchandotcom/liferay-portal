@@ -265,6 +265,13 @@ public class ChangesetEntryLocalServiceWrapper
 		return _changesetEntryLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.changeset.model.ChangesetEntry> getBasePersistence() {
+
+		return _changesetEntryLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns a range of all the changeset entries.
 	 *

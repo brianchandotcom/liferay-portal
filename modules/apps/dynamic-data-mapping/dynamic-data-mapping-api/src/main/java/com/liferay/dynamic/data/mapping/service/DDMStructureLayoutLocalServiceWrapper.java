@@ -313,6 +313,14 @@ public class DDMStructureLayoutLocalServiceWrapper
 		return _ddmStructureLayoutLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.mapping.model.DDMStructureLayout>
+			getBasePersistence() {
+
+		return _ddmStructureLayoutLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the ddm structure layout with the primary key.
 	 *

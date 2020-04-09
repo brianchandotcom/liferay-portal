@@ -245,6 +245,13 @@ public class MBStatsUserLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.message.boards.model.MBStatsUser> getBasePersistence() {
+
+		return _mbStatsUserLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

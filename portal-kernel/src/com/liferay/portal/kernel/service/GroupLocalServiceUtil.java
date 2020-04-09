@@ -674,6 +674,12 @@ public class GroupLocalServiceUtil {
 		return getService().getActiveGroupsCount(companyId, active, site);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.Group> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * Returns the company group.
 	 *

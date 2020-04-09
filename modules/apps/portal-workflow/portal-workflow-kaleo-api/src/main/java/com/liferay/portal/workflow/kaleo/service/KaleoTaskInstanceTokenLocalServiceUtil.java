@@ -272,6 +272,13 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List
 		<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken>
 			getCompanyKaleoTaskInstanceTokens(

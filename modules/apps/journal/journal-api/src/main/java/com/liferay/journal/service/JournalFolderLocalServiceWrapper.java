@@ -292,6 +292,13 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<JournalFolder> getBasePersistence() {
+
+		return _journalFolderLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<JournalFolder> getCompanyFolders(
 		long companyId, int start, int end) {
 

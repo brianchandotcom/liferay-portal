@@ -230,6 +230,12 @@ public class ReleaseLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.Release> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */

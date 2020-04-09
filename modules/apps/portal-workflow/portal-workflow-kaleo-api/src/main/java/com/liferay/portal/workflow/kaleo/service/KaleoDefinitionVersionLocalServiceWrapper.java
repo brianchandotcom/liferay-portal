@@ -303,6 +303,14 @@ public class KaleoDefinitionVersionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion>
+			getBasePersistence() {
+
+		return _kaleoDefinitionVersionLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion
 			getFirstKaleoDefinitionVersion(long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {

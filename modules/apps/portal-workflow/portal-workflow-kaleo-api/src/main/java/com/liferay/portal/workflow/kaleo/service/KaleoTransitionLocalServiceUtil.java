@@ -239,6 +239,13 @@ public class KaleoTransitionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.workflow.kaleo.model.KaleoTransition>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.portal.workflow.kaleo.model.KaleoTransition
 			getDefaultKaleoTransition(long kaleoNodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -253,6 +253,12 @@ public class ExpandoRowLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.expando.kernel.model.ExpandoRow> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.expando.kernel.model.ExpandoRow>
 		getDefaultTableRows(
 			long companyId, long classNameId, int start, int end) {

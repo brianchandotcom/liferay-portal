@@ -253,6 +253,13 @@ public class RatingsEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.ratings.kernel.model.RatingsEntry> getBasePersistence() {
+
+		return _ratingsEntryLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.Map<Long, com.liferay.ratings.kernel.model.RatingsEntry>
 		getEntries(long userId, String className, long[] classPKs) {
 

@@ -282,6 +282,14 @@ public class DLFileEntryMetadataLocalServiceWrapper
 		return _dlFileEntryMetadataLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.document.library.kernel.model.DLFileEntryMetadata>
+			getBasePersistence() {
+
+		return _dlFileEntryMetadataLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the document library file entry metadata with the primary key.
 	 *

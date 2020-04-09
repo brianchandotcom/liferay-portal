@@ -228,6 +228,12 @@ public class TasksEntryLocalServiceUtil {
 		return getService().getAssigneeTasksEntriesCount(assigneeUserId);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.tasks.model.TasksEntry> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.tasks.model.TasksEntry>
 		getGroupAssigneeTasksEntries(
 			long groupId, long assigneeUserId, int start, int end) {

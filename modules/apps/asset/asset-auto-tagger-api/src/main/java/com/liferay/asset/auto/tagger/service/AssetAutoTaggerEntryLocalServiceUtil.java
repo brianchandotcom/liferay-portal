@@ -281,6 +281,13 @@ public class AssetAutoTaggerEntryLocalServiceUtil {
 		return getService().getAssetAutoTaggerEntry(assetAutoTaggerEntryId);
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

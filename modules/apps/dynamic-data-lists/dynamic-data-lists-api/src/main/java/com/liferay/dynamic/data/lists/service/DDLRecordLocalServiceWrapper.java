@@ -338,6 +338,13 @@ public class DDLRecordLocalServiceWrapper
 		return _ddlRecordLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.lists.model.DDLRecord> getBasePersistence() {
+
+		return _ddlRecordLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns an ordered range of all the records matching the company,
 	 * workflow status, and scope.

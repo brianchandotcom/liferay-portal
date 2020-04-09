@@ -257,6 +257,14 @@ public class MemberRequestLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.invitation.invite.members.model.MemberRequest>
+			getBasePersistence() {
+
+		return _memberRequestLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

@@ -455,6 +455,13 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<AssetListEntryAssetEntryRel> getBasePersistence() {
+
+		return _assetListEntryAssetEntryRelLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

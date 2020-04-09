@@ -504,6 +504,13 @@ public class DDMStructureLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.mapping.model.DDMStructure>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List
 		<com.liferay.dynamic.data.mapping.model.DDMStructure>
 			getChildrenStructures(long parentStructureId) {

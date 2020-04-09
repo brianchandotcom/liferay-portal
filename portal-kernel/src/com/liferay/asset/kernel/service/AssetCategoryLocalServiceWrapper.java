@@ -540,6 +540,13 @@ public class AssetCategoryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<AssetCategory> getBasePersistence() {
+
+		return _assetCategoryLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<AssetCategory> getCategories() {
 		return _assetCategoryLocalService.getCategories();
 	}

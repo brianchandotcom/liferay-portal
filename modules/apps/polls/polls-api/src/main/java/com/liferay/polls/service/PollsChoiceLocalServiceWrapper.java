@@ -236,6 +236,13 @@ public class PollsChoiceLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.polls.model.PollsChoice> getBasePersistence() {
+
+		return _pollsChoiceLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.polls.model.PollsChoice getChoice(long choiceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

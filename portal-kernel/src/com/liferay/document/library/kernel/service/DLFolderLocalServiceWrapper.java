@@ -395,6 +395,14 @@ public class DLFolderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.document.library.kernel.model.DLFolder>
+			getBasePersistence() {
+
+		return _dlFolderLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<com.liferay.document.library.kernel.model.DLFolder>
 		getCompanyFolders(long companyId, int start, int end) {
 

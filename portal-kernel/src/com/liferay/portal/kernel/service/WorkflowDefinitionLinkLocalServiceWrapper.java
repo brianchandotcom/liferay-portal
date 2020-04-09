@@ -291,6 +291,14 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
+			getBasePersistence() {
+
+		return _workflowDefinitionLinkLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.WorkflowDefinitionLink
 			getDefaultWorkflowDefinitionLink(
 				long companyId, java.lang.String className, long classPK,

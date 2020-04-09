@@ -250,6 +250,14 @@ public class SamlSpAuthRequestLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.saml.persistence.model.SamlSpAuthRequest>
+			getBasePersistence() {
+
+		return _samlSpAuthRequestLocalService.getBasePersistence();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

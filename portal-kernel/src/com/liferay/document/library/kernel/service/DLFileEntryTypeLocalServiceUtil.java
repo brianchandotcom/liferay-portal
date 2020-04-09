@@ -360,6 +360,13 @@ public class DLFileEntryTypeLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.document.library.kernel.model.DLFileEntryType>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.document.library.kernel.model.DLFileEntryType
 			getBasicDocumentDLFileEntryType()
 		throws com.liferay.document.library.kernel.exception.

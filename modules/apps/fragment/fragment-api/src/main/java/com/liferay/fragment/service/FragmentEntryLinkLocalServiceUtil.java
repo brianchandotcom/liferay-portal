@@ -256,6 +256,12 @@ public class FragmentEntryLinkLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.fragment.model.FragmentEntryLink> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static int getClassedModelFragmentEntryLinksCount(
 		long groupId, long classNameId, long classPK) {
 

@@ -281,6 +281,14 @@ public class DDMDataProviderInstanceLinkLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink>
+			getBasePersistence() {
+
+		return _ddmDataProviderInstanceLinkLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List
 		<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink>
 			getDataProviderInstanceLinks(long structureId) {

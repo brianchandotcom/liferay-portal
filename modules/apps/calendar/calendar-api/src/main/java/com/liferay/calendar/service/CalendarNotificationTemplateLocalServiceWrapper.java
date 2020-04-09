@@ -286,6 +286,14 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 			getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.calendar.model.CalendarNotificationTemplate>
+			getBasePersistence() {
+
+		return _calendarNotificationTemplateLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the calendar notification template with the primary key.
 	 *

@@ -286,6 +286,12 @@ public class WikiNodeLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.wiki.model.WikiNode> getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static java.util.List<com.liferay.wiki.model.WikiNode>
 		getCompanyNodes(long companyId, int start, int end) {
 

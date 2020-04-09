@@ -233,6 +233,14 @@ public class DDMFormInstanceVersionLocalServiceWrapper
 		return _ddmFormInstanceVersionLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion>
+			getBasePersistence() {
+
+		return _ddmFormInstanceVersionLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the ddm form instance version with the primary key.
 	 *

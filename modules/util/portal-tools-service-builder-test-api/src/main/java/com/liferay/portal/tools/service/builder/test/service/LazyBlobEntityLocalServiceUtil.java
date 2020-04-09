@@ -239,6 +239,13 @@ public class LazyBlobEntityLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.tools.service.builder.test.model.LazyBlobEntity>
+			getBasePersistence() {
+
+		return getService().getBasePersistence();
+	}
+
 	public static com.liferay.portal.tools.service.builder.test.model.
 		LazyBlobEntityBlob1BlobModel getBlob1BlobModel(
 			java.io.Serializable primaryKey) {

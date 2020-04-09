@@ -346,6 +346,14 @@ public class DLFileShortcutLocalServiceWrapper
 		return _dlFileShortcutLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.document.library.kernel.model.DLFileShortcut>
+			getBasePersistence() {
+
+		return _dlFileShortcutLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the document library file shortcut with the primary key.
 	 *

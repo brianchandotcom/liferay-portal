@@ -466,6 +466,14 @@ public class AMImageEntryLocalServiceWrapper
 			amImageConfigurationEntry, fileVersion);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.adaptive.media.image.model.AMImageEntry>
+			getBasePersistence() {
+
+		return _amImageEntryLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the total number of adaptive media images that are expected to be
 	 * in a company once they are generated. The number of adaptive media images

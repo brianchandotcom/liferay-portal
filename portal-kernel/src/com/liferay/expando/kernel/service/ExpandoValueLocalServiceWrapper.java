@@ -536,6 +536,13 @@ public class ExpandoValueLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.expando.kernel.model.ExpandoValue> getBasePersistence() {
+
+		return _expandoValueLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<com.liferay.expando.kernel.model.ExpandoValue>
 		getColumnValues(long columnId, int start, int end) {
 

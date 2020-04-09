@@ -213,6 +213,13 @@ public class StatusLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.chat.model.Status> getBasePersistence() {
+
+		return _statusLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<Object[]> getGroupStatuses(
 		long userId, long modifiedDate, String[] groupNames, int start,
 		int end) {

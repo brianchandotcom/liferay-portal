@@ -258,6 +258,14 @@ public class BatchEngineImportTaskLocalServiceWrapper
 		return _batchEngineImportTaskLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.batch.engine.model.BatchEngineImportTask>
+			getBasePersistence() {
+
+		return _batchEngineImportTaskLocalService.getBasePersistence();
+	}
+
 	/**
 	 * Returns the batch engine import task with the primary key.
 	 *

@@ -237,6 +237,13 @@ public class ReleaseLocalServiceWrapper
 		return _releaseLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.portal.kernel.model.Release> getBasePersistence() {
+
+		return _releaseLocalService.getBasePersistence();
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */

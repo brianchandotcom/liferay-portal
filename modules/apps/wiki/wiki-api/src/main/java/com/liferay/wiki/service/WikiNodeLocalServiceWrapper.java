@@ -307,6 +307,13 @@ public class WikiNodeLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.service.persistence.BasePersistence
+		<com.liferay.wiki.model.WikiNode> getBasePersistence() {
+
+		return _wikiNodeLocalService.getBasePersistence();
+	}
+
+	@Override
 	public java.util.List<com.liferay.wiki.model.WikiNode> getCompanyNodes(
 		long companyId, int start, int end) {
 

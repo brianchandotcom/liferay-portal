@@ -85,12 +85,12 @@ const KeyValueWithFieldBase = ({
 				onChange={event => {
 					const {value} = event.target;
 
+					onTextChange(event);
+
 					if (generateKeywordRef.current) {
 						const newKeyword = normalizeFieldName(value);
 						onKeywordChange(event, newKeyword, true);
 					}
-
-					onTextChange(event);
 				}}
 				onFocus={onTextFocus}
 				placeholder={placeholder}

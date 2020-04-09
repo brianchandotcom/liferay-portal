@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String eventName = (String)request.getAttribute("view.jsp-eventName");
+String[] excludedRoleNames = (String[])request.getAttribute(SegmentsWebKeys.EXCLUDED_ROLE_NAMES);
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
@@ -62,8 +64,18 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 	<c:if test="<%= !group.isCompany() && SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.ASSIGN_USER_ROLES) %>">
 
 		<%
+		ItemSelector itemSelector = (ItemSelector)request.getAttribute(SegmentsWebKeys.ITEM_SELECTOR);
+
+		RoleItemSelectorCriterion roleItemSelectorCriterion = new RoleItemSelectorCriterion(RoleConstants.TYPE_SITE);
+
+		roleItemSelectorCriterion.setCheckedRoleIds(segmentsEntry.getRoleIds());
+		roleItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
+		roleItemSelectorCriterion.setExcludedRoleNames(excludedRoleNames);
+
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(renderRequest), eventName, roleItemSelectorCriterion);
+
 		Map<String, Object> data = HashMapBuilder.<String, Object>put(
-			"roleIds", StringUtil.merge(segmentsEntry.getRoleIds())
+			"itemSelectorURL", itemSelectorURL.toString()
 		).put(
 			"segmentsEntryId", segmentsEntry.getSegmentsEntryId()
 		).build();

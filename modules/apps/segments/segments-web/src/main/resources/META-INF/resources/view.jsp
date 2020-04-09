@@ -14,11 +14,15 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <%
 SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.getAttribute(SegmentsWebKeys.SEGMENTS_DISPLAY_CONTEXT);
-%>
 
-<%@ include file="/init.jsp" %>
+String eventName = renderResponse.getNamespace() + "assignSiteRoles";
+
+request.setAttribute("view.jsp-eventName", eventName);
+%>
 
 <clay:management-toolbar
 	actionDropdownItems="<%= segmentsDisplayContext.getActionDropdownItems() %>"
@@ -159,18 +163,6 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 	});
 </aui:script>
 
-<%
-ItemSelector itemSelector = (ItemSelector)request.getAttribute(SegmentsWebKeys.ITEM_SELECTOR);
-
-ItemSelectorCriterion itemSelectorCriterion = new RoleItemSelectorCriterion(RoleConstants.TYPE_SITE);
-
-itemSelectorCriterion.setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
-
-String eventName = renderResponse.getNamespace() + "assignSiteRoles";
-
-PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(renderRequest), eventName, itemSelectorCriterion);
-%>
-
 <portlet:actionURL name="updateSegmentsEntrySiteRoles" var="updateSegmentsEntrySiteRolesURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
@@ -188,26 +180,13 @@ PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortle
 	dom.delegate(document, 'click', '.assign-site-roles-link', function(event) {
 		var link = dom.closest(event.target, '.assign-site-roles-link');
 
+		var itemSelectorURL = link.dataset.itemselectorurl;
 		var segmentsEntryId = link.dataset.segmentsentryid;
-		var roleIds = link.dataset.roleids;
-
-		var parameters = {
-			p_p_id: '<%= ItemSelectorPortletKeys.ITEM_SELECTOR %>',
-		};
-
-		if (roleIds) {
-			parameters.checkedRoleIds = roleIds;
-		}
-
-		var url = Liferay.Util.PortletURL.createRenderURL(
-			'<%= itemSelectorURL.toString() %>',
-			parameters
-		);
 
 		var itemSelectorDialog = new ItemSelectorDialog.default({
 			eventName: '<%= eventName %>',
 			title: '<liferay-ui:message key="assign-site-roles" />',
-			url: url.toString(),
+			url: itemSelectorURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', function(event) {

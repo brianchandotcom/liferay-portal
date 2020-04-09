@@ -22,6 +22,8 @@ public class SegmentsWebKeys {
 	public static final String EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT =
 		"EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT";
 
+	public static final String EXCLUDED_ROLE_NAMES = "EXCLUDED_ROLE_NAMES";
+
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
 	public static final String PREVIEW_SEGMENTS_ENTRY_CRITERIA =

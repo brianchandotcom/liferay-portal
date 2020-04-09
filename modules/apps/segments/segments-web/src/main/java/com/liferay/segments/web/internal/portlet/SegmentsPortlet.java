@@ -15,8 +15,11 @@
 package com.liferay.segments.web.internal.portlet;
 
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
+import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
@@ -65,6 +68,8 @@ public class SegmentsPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
+			SegmentsWebKeys.EXCLUDED_ROLE_NAMES, _getExcludedRoleNames());
+		renderRequest.setAttribute(
 			SegmentsWebKeys.ITEM_SELECTOR, _itemSelector);
 
 		SegmentsDisplayContext segmentsDisplayContext =
@@ -78,11 +83,26 @@ public class SegmentsPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	private String[] _getExcludedRoleNames() {
+		RoleTypeContributor roleTypeContributor =
+			_roleTypeContributorProvider.getRoleTypeContributor(
+				RoleConstants.TYPE_SITE);
+
+		if (roleTypeContributor != null) {
+			return roleTypeContributor.getExcludedRoleNames();
+		}
+
+		return new String[0];
+	}
+
 	@Reference
 	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RoleTypeContributorProvider _roleTypeContributorProvider;
 
 	@Reference
 	private SegmentsEntryService _segmentsEntryService;

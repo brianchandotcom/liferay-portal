@@ -35,6 +35,7 @@ definition {
 	@description = "This is a test for LPS-97184. Invalid fragment configuration cannot be published and offers useful advice."
 	@priority = "4"
 	test AddInvalidConfiguration {
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "FragmentsConfiguration#AddInvalidConfiguration";
 
 		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");

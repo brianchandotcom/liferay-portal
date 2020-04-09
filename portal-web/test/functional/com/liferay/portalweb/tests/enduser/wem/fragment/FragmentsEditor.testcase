@@ -41,6 +41,8 @@ definition {
 	@description = "This is a test for LPS-80503. Assert that when lfr is typed within a tag, a list of choices to autocomplete the fragment are presented."
 	@priority = "4"
 	test AutocompleteFragment {
+		property portal.acceptance = "quarantine";
+
 		task ("Navigate to the fragment collection") {
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}

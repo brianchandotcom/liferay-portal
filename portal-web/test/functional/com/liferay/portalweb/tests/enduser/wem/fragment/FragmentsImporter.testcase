@@ -61,13 +61,10 @@ definition {
 	}
 
 	@description = "Fragment collections can be exported and imported."
-	@ignore = "true"
 	@priority = "5"
 	test ExportImportCollectionViewFragment {
-
-		// Ignore test until LPS-111437 is resolved
-
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		task ("Add a fragment collection") {
 			FragmentsAdmin.addCollection(

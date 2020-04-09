@@ -48,16 +48,16 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 	}
 
 	@Override
-	protected List<String> getReleaseTestClassNamesRelativeGlobs(
-		List<String> testClassNamesRelativeGlobs) {
+	protected List<String> getReleaseTestClassNamesRelativeIncludesGlobs(
+		List<String> testClassNamesRelativeIncludesGlobs) {
 
 		Set<File> releaseModuleAppDirs = _getReleaseModuleAppDirs();
 
 		if (releaseModuleAppDirs.isEmpty()) {
-			return testClassNamesRelativeGlobs;
+			return testClassNamesRelativeIncludesGlobs;
 		}
 
-		List<String> testClassNameRelativeGlobs = new ArrayList<>();
+		List<String> testClassNameRelativeIncludesGlobs = new ArrayList<>();
 
 		for (File releaseModuleAppDir : releaseModuleAppDirs) {
 			String releaseModuleAppAbsolutePath =
@@ -68,15 +68,15 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 					releaseModuleAppAbsolutePath.indexOf("modules/"));
 
 			for (String testClassNamesRelativeGlob :
-					testClassNamesRelativeGlobs) {
+					testClassNamesRelativeIncludesGlobs) {
 
-				testClassNameRelativeGlobs.add(
+				testClassNameRelativeIncludesGlobs.add(
 					JenkinsResultsParserUtil.combine(
 						appSourceRelativePath, "/",
 						testClassNamesRelativeGlob));
 
 				if (testClassNamesRelativeGlob.startsWith("**/")) {
-					testClassNameRelativeGlobs.add(
+					testClassNameRelativeIncludesGlobs.add(
 						JenkinsResultsParserUtil.combine(
 							appSourceRelativePath, "/",
 							testClassNamesRelativeGlob.substring(3)));
@@ -84,7 +84,7 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			}
 		}
 
-		return testClassNameRelativeGlobs;
+		return testClassNameRelativeIncludesGlobs;
 	}
 
 	@Override

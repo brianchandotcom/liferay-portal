@@ -419,10 +419,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		setAxisTestClassGroups();
 	}
 
-	protected List<String> getReleaseTestClassNamesRelativeGlobs(
-		List<String> testClassNamesRelativeGlobs) {
+	protected List<String> getReleaseTestClassNamesRelativeIncludesGlobs(
+		List<String> testClassNamesRelativeIncludesGlobs) {
 
-		return testClassNamesRelativeGlobs;
+		return testClassNamesRelativeIncludesGlobs;
 	}
 
 	protected List<String> getRelevantTestClassNamesRelativeIncludesGlobs(
@@ -741,7 +741,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		if (testReleaseBundle) {
 			testClassNamesIncludesRelativeGlobs =
-				getReleaseTestClassNamesRelativeGlobs(
+				getReleaseTestClassNamesRelativeIncludesGlobs(
 					testClassNamesIncludesRelativeGlobs);
 		}
 		else if (testRelevantChanges) {

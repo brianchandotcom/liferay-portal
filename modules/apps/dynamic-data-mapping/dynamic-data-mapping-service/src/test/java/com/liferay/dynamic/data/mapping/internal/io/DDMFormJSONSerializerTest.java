@@ -84,12 +84,12 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 		List<DDMFormRule> ddmFormRules = new ArrayList<>();
 
 		DDMFormRule ddmFormRule1 = new DDMFormRule(
-			"Condition 1", Arrays.asList("Action 1", "Action 2"));
+			Arrays.asList("Action 1", "Action 2"), "Condition 1");
 
 		ddmFormRules.add(ddmFormRule1);
 
 		DDMFormRule ddmFormRule2 = new DDMFormRule(
-			"Condition 2", Arrays.asList("Action 3"));
+			Arrays.asList("Action 3"), "Condition 2");
 
 		ddmFormRule2.setEnabled(false);
 

@@ -222,7 +222,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		ddmForm.addDDMFormRule(
-			new DDMFormRule("TRUE", Arrays.asList("jumpPage(0, 2)")));
+			new DDMFormRule(Arrays.asList("jumpPage(0, 2)"), "TRUE"));
 
 		ddmForm.addDDMFormField(
 			DDMFormTestUtil.createDDMFormField(

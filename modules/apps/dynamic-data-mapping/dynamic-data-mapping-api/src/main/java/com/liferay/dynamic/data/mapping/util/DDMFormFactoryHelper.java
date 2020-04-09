@@ -160,8 +160,8 @@ public class DDMFormFactoryHelper {
 		for (DDMFormRule ddmFormRule : _ddmForm.rules()) {
 			ddmFormRules.add(
 				new com.liferay.dynamic.data.mapping.model.DDMFormRule(
-					ddmFormRule.condition(),
-					ListUtil.fromArray(ddmFormRule.actions())));
+					ListUtil.fromArray(ddmFormRule.actions()),
+					ddmFormRule.condition()));
 		}
 
 		return ddmFormRules;

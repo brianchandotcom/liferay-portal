@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.SetUtil;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -134,7 +135,8 @@ public class DDMFormTemplateContextFactoryHelperTest extends PowerMockito {
 		sb.append(", 'input=Field1', 'Field2=output')");
 
 		return new DDMFormRule(
-			"not(equals(getValue('Field1'), 'Option'))", sb.toString());
+			Arrays.asList(sb.toString()),
+			"not(equals(getValue('Field1'), 'Option'))");
 	}
 
 	private static final String _DATA_PROVIDER_INSTANCE_UUID =

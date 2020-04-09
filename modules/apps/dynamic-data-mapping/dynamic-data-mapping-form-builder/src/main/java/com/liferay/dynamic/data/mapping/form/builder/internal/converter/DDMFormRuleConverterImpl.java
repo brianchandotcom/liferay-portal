@@ -208,7 +208,7 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 					spiDDMFormRuleSerializerContext));
 		}
 
-		return new DDMFormRule(condition, actions, spiDDMFormRule.getName());
+		return new DDMFormRule(actions, condition, spiDDMFormRule.getName());
 	}
 
 	protected String createCondition(

@@ -73,6 +73,7 @@ import com.liferay.registry.RegistryUtil;
 
 import java.math.BigDecimal;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -138,8 +139,8 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 		ddmForm.addDDMFormRule(
 			new DDMFormRule(
-				"all('#value# <= 10', getValue('field1'))",
-				"setEnabled(\"field0\", false)"));
+				Arrays.asList("setEnabled(\"field0\", false)"),
+				"all('#value# <= 10', getValue('field1'))"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -191,7 +192,8 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 		ddmForm.addDDMFormRule(
 			new DDMFormRule(
-				"belongsTo([\"Role1\"])", "setEnabled(\"field0\", false)"));
+				Arrays.asList("setEnabled(\"field0\", false)"),
+				"belongsTo([\"Role1\"])"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -251,7 +253,8 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 		ddmForm.addDDMFormField(ddmFormField);
 
 		ddmForm.addDDMFormRule(
-			new DDMFormRule("getValue(\"field0\") >= 1", "jumpPage(1, 3)"));
+			new DDMFormRule(
+				Arrays.asList("jumpPage(1, 3)"), "getValue(\"field0\") >= 1"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -287,8 +290,8 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 		ddmForm.addDDMFormRule(
 			new DDMFormRule(
-				"not(all('between(#value#,2,6)', getValue('field1')))",
-				"setVisible(\"field0\", false)"));
+				Arrays.asList("setVisible(\"field0\", false)"),
+				"not(all('between(#value#,2,6)', getValue('field1')))"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -336,8 +339,8 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 		ddmForm.addDDMFormRule(
 			new DDMFormRule(
-				"not(belongsTo([\"Role1\"]))",
-				"setVisible(\"field0\", false)"));
+				Arrays.asList("setVisible(\"field0\", false)"),
+				"not(belongsTo([\"Role1\"]))"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -383,7 +386,8 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 		ddmForm.addDDMFormField(ddmFormField);
 
 		ddmForm.addDDMFormRule(
-			new DDMFormRule("getValue(\"field0\") > 1", "jumpPage(1, 3)"));
+			new DDMFormRule(
+				Arrays.asList("jumpPage(1, 3)"), "getValue(\"field0\") > 1"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -505,7 +509,8 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 		ddmForm.addDDMFormRule(
 			new DDMFormRule(
-				"getValue(\"field0\") > 10", "setRequired(\"field1\", true)"));
+				Arrays.asList("setRequired(\"field1\", true)"),
+				"getValue(\"field0\") > 10"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -597,8 +602,10 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 		ddmForm.addDDMFormRule(
 			new DDMFormRule(
-				"getValue(\"field0\") >= 30", "setVisible(\"field1\", false)",
-				"setEnabled(\"field2\", false)"));
+				Arrays.asList(
+					"setVisible(\"field1\", false)",
+					"setEnabled(\"field2\", false)"),
+				"getValue(\"field0\") >= 30"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -676,7 +683,8 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 		ddmForm.addDDMFormRule(
 			new DDMFormRule(
-				"TRUE", "setValue('field0', sum(getValue('field1')))"));
+				Arrays.asList("setValue('field0', sum(getValue('field1')))"),
+				"TRUE"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -729,9 +737,10 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 		ddmForm.addDDMFormRule(
 			new DDMFormRule(
-				"getValue(\"field0\") > 0 && getValue(\"field1\") > 0",
-				"calculate(\"field2\", getValue(\"field0\") * " +
-					"getValue(\"field1\"))"));
+				Arrays.asList(
+					"calculate(\"field2\", getValue(\"field0\") * " +
+						"getValue(\"field1\"))"),
+				"getValue(\"field0\") > 0 && getValue(\"field1\") > 0"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -819,9 +828,10 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 		ddmForm.addDDMFormRule(
 			new DDMFormRule(
-				"getValue(\"field0\") > 0 && getValue(\"field1\") > 0",
-				"calculate(\"field2\", getValue(\"field0\") * " +
-					"getValue(\"field1\"))"));
+				Arrays.asList(
+					"calculate(\"field2\", getValue(\"field0\") * " +
+						"getValue(\"field1\"))"),
+				"getValue(\"field0\") > 0 && getValue(\"field1\") > 0"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -1106,9 +1116,11 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 		ddmForm.addDDMFormRule(
 			new DDMFormRule(
-				"getValue(\"field0\") <= 10",
-				"setInvalid(\"field0\", \"The value should be greater than " +
-					"10.\")"));
+				Arrays.asList(
+					"setInvalid(" +
+						"\"field0\", \"The value should be greater than " +
+							"10.\")"),
+				"getValue(\"field0\") <= 10"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);

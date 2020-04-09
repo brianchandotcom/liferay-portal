@@ -178,7 +178,7 @@ public class DDMFormTemplateContextProcessor {
 		List<String> actions = getDDMFormRuleActions(
 			jsonObject.getJSONArray("actions"));
 
-		return new DDMFormRule(jsonObject.getString("condition"), actions);
+		return new DDMFormRule(actions, jsonObject.getString("condition"));
 	}
 
 	protected List<String> getDDMFormRuleActions(JSONArray jsonArray) {

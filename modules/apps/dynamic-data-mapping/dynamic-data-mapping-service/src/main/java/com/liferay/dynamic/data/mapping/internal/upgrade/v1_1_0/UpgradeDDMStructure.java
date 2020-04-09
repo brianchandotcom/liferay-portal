@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -79,8 +80,9 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 			}
 
 			DDMFormRule ddmFormRule = new DDMFormRule(
-				visibilityExpression,
-				"setVisible('" + ddmFormField.getName() + "', true)");
+				Arrays.asList(
+					"setVisible('" + ddmFormField.getName() + "', true)"),
+				visibilityExpression);
 
 			ddmFormRules.add(ddmFormRule);
 

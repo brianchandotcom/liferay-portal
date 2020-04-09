@@ -263,7 +263,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		actions.add(action);
 
-		DDMFormRule ddmFormRule = new DDMFormRule("TRUE", actions);
+		DDMFormRule ddmFormRule = new DDMFormRule(actions, "TRUE");
 
 		ddmForm.addDDMFormRule(ddmFormRule);
 
@@ -824,7 +824,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		actions.add(action1);
 		actions.add(action2);
 
-		DDMFormRule ddmFormRule1 = new DDMFormRule("TRUE", actions);
+		DDMFormRule ddmFormRule1 = new DDMFormRule(actions, "TRUE");
 
 		ddmForm.addDDMFormRule(ddmFormRule1);
 
@@ -832,7 +832,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		actions.add(action1);
 
-		DDMFormRule ddmFormRule2 = new DDMFormRule("FALSE", actions);
+		DDMFormRule ddmFormRule2 = new DDMFormRule(actions, "FALSE");
 
 		ddmForm.addDDMFormRule(ddmFormRule2);
 

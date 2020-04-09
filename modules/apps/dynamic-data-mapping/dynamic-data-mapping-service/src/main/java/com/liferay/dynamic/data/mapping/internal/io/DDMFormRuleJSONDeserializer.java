@@ -46,7 +46,7 @@ public class DDMFormRuleJSONDeserializer {
 		List<String> actions = _getDDMFormRuleActions(
 			jsonObject.getJSONArray("actions"));
 
-		DDMFormRule ddmFormRule = new DDMFormRule(condition, actions);
+		DDMFormRule ddmFormRule = new DDMFormRule(actions, condition);
 
 		ddmFormRule.setEnabled(jsonObject.getBoolean("enabled", true));
 

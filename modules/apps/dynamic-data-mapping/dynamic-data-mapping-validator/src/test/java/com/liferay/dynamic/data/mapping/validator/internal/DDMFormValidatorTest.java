@@ -148,7 +148,7 @@ public class DDMFormValidatorTest {
 	public void testFormRuleEmptyCondition() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("Name");
 
-		ddmForm.addDDMFormRule(new DDMFormRule("", Arrays.asList("true")));
+		ddmForm.addDDMFormRule(new DDMFormRule(Arrays.asList("true"), ""));
 
 		_ddmFormValidatorImpl.validate(ddmForm);
 	}
@@ -267,7 +267,7 @@ public class DDMFormValidatorTest {
 	public void testInvalidFormRuleAction() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("Name");
 
-		ddmForm.addDDMFormRule(new DDMFormRule("true", Arrays.asList("*/?")));
+		ddmForm.addDDMFormRule(new DDMFormRule(Arrays.asList("*/?"), "true"));
 
 		_ddmFormValidatorImpl.validate(ddmForm);
 	}
@@ -276,7 +276,7 @@ public class DDMFormValidatorTest {
 	public void testInvalidFormRuleCondition() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("Name");
 
-		ddmForm.addDDMFormRule(new DDMFormRule("*/?", Arrays.asList("true")));
+		ddmForm.addDDMFormRule(new DDMFormRule(Arrays.asList("true"), "*/?"));
 
 		_ddmFormValidatorImpl.validate(ddmForm);
 	}

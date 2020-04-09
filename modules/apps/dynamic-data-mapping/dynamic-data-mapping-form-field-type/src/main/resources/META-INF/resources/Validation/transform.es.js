@@ -101,22 +101,17 @@ export const transformData = ({
 	validation,
 	value,
 }) => {
-	const validations = transformValidations(
-		initialValidations,
+	const dataType =
 		validation && validation.dataType
 			? validation.dataType
-			: initialDataType
-	);
+			: initialDataType;
+	const validations = transformValidations(initialValidations, dataType);
 	const parsedValidation = getValidation(
 		defaultLanguageId,
 		editingLanguageId,
 		validations,
 		getValidationFromExpression(validations, validation)
 	)(value);
-	const dataType =
-		validation && validation.dataType
-			? validation.dataType
-			: initialDataType;
 	const localizationMode = editingLanguageId !== defaultLanguageId;
 
 	return {

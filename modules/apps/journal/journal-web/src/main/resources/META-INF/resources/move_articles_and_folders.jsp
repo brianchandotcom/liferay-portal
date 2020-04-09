@@ -183,9 +183,9 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 </portlet:renderURL>
 
 <%
-Map<String, Object> context = new HashMap<>();
-
-context.put("selectFolderURL", selectFolderURL);
+Map<String, Object> context = HashMapBuilder.<String, Object>put(
+	"selectFolderURL", selectFolderURL
+).build();
 %>
 
 <liferay-frontend:component

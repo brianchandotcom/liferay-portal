@@ -43,9 +43,9 @@ JournalPreviewArticleContentTemplateDisplayContext journalPreviewArticleContentT
 				<div class="journal-article-button-row tbar-section text-right">
 
 					<%
-					Map<String, Object> data = new HashMap<>();
-
-					data.put("ddmtemplateid", journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId());
+					Map<String, Object> data = HashMapBuilder.<String, Object>put(
+						"ddmtemplateid", journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId()
+					).build();
 					%>
 
 					<aui:button cssClass="btn-sm selector-button" data="<%= data %>" value="apply" />

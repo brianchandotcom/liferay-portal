@@ -60,8 +60,6 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 					<%
 					row.setCssClass("articles " + row.getCssClass());
 
-					Map<String, Object> data = new HashMap<>();
-
 					JSONObject articleJSONObject = JSONUtil.put(
 						"className", JournalArticle.class.getName()
 					).put(
@@ -78,7 +76,9 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 
 					articleJSONObject.put("title", title);
 
-					data.put("value", articleJSONObject.toString());
+					Map<String, Object> data = HashMapBuilder.<String, Object>put(
+						"value", articleJSONObject.toString()
+					).build();
 
 					row.setData(data);
 					%>

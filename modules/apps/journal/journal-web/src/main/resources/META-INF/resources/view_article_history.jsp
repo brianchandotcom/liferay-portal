@@ -66,9 +66,9 @@ JournalArticle article = journalDisplayContext.getArticle();
 				>
 
 					<%
-					Map<String, Object> rowData = new HashMap<>();
-
-					rowData.put("actions", journalHistoryManagementToolbarDisplayContext.getAvailableActions(articleVersion));
+					Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+						"actions", journalHistoryManagementToolbarDisplayContext.getAvailableActions(articleVersion)
+					).build();
 
 					row.setData(rowData);
 

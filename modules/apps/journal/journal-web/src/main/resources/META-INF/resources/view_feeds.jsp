@@ -66,9 +66,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 				editURL = editFeedURL.toString();
 			}
 
-			Map<String, Object> rowData = new HashMap<>();
-
-			rowData.put("actions", journalFeedsManagementToolbarDisplayContext.getAvailableActions(feed));
+			Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+				"actions", journalFeedsManagementToolbarDisplayContext.getAvailableActions(feed)
+			).build();
 
 			row.setData(rowData);
 			%>

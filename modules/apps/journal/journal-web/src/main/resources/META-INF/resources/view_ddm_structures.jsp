@@ -69,9 +69,9 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 				rowHREF = rowURL.toString();
 			}
 
-			Map<String, Object> rowData = new HashMap<>();
-
-			rowData.put("actions", journalDDMStructuresManagementToolbarDisplayContext.getAvailableActions(ddmStructure));
+			Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+				"actions", journalDDMStructuresManagementToolbarDisplayContext.getAvailableActions(ddmStructure)
+			).build();
 
 			row.setData(rowData);
 			%>

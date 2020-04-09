@@ -55,13 +55,17 @@ JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = 
 							<c:when test="<%= ddmTemplate.getTemplateId() != journalSelectDDMTemplateDisplayContext.getDDMTemplateId() %>">
 
 								<%
-								Map<String, Object> data = new HashMap<>();
-
-								data.put("ddmtemplateid", ddmTemplate.getTemplateId());
-								data.put("ddmtemplatekey", ddmTemplate.getTemplateKey());
-								data.put("description", ddmTemplate.getDescription(locale));
-								data.put("imageurl", ddmTemplate.getTemplateImageURL(themeDisplay));
-								data.put("name", ddmTemplate.getName(locale));
+								Map<String, Object> data = HashMapBuilder.<String, Object>put(
+									"ddmtemplateid", ddmTemplate.getTemplateId()
+								).put(
+									"ddmtemplatekey", ddmTemplate.getTemplateKey()
+								).put(
+									"description", ddmTemplate.getDescription(locale)
+								).put(
+									"imageurl", ddmTemplate.getTemplateImageURL(themeDisplay)
+								).put(
+									"name", ddmTemplate.getName(locale)
+								).build();
 								%>
 
 								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">

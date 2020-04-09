@@ -282,6 +282,8 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 			ConfigurableUtil.createConfigurable(
 				SearchEngineHelperConfiguration.class, properties);
 
+		_excludedEntryClassNames.clear();
+
 		Collections.addAll(
 			_excludedEntryClassNames,
 			searchEngineHelperConfiguration.excludedEntryClassNames());

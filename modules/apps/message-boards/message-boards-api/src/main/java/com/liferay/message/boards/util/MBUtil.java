@@ -32,6 +32,14 @@ import java.util.Date;
  */
 public class MBUtil {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static final String BB_CODE_EDITOR_WYSIWYG_IMPL_KEY =
+		"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards." +
+			"edit_message.bb_code.jsp";
+
 	public static final String EMOTICONS = "/emoticons";
 
 	public static String getBBCodeHTML(String msgBody, String pathThemeImages) {

@@ -29,10 +29,11 @@ String appBuilderRootElementId = renderResponse.getNamespace() + "-app-builder-r
 <div id="<%= appBuilderRootElementId %>">
 
 	<%
-	Map<String, Object> data = new HashMap<>();
-
-	data.put("basePortletURL", basePortletURL);
-	data.put("pathFriendlyURLPublic", PortalUtil.getPathFriendlyURLPublic());
+	Map<String, Object> data = HashMapBuilder.<String, Object>put(
+		"basePortletURL", basePortletURL
+	).put(
+		"pathFriendlyURLPublic", PortalUtil.getPathFriendlyURLPublic()
+	).build();
 	%>
 
 	<react:component

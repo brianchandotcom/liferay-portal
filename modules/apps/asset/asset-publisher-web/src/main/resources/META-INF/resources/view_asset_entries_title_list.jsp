@@ -62,10 +62,11 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 		request.setAttribute("view.jsp-assetEntry", assetEntry);
 		request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 
-		Map<String, Object> fragmentsEditorData = new HashMap<>();
-
-		fragmentsEditorData.put("fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK());
-		fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-item");
+		Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
+			"fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK()
+		).put(
+			"fragments-editor-item-type", "fragments-editor-mapped-item"
+		).build();
 	%>
 
 		<li class="list-group-item list-group-item-flex <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "active" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>

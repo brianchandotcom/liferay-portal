@@ -118,10 +118,11 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									</liferay-util:buffer>
 
 									<%
-									Map<String, String> dataInReply = new HashMap<>();
-
-									dataInReply.put("inreply-content", parentDiscussionComment.getBody());
-									dataInReply.put("inreply-title", parentCommentUserBuffer);
+									Map<String, String> dataInReply = HashMapBuilder.put(
+										"inreply-content", parentDiscussionComment.getBody()
+									).put(
+										"inreply-title", parentCommentUserBuffer
+									).build();
 									%>
 
 									<clay:link

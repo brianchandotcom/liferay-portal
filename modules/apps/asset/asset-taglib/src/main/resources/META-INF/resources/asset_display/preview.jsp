@@ -73,11 +73,13 @@ AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.
 	</div>
 
 	<%
-	Map<String, Object> data = new HashMap<String, Object>();
-
-	data.put("class-name", assetEntry.getClassName());
-	data.put("class-pk", assetEntry.getClassPK());
-	data.put("instanceable", Boolean.TRUE);
+	Map<String, Object> data = HashMapBuilder.<String, Object>put(
+		"class-name", assetEntry.getClassName()
+	).put(
+		"class-pk", assetEntry.getClassPK()
+	).put(
+		"instanceable", Boolean.TRUE
+	).build();
 
 	String portletId = PortletProviderUtil.getPortletId(assetEntry.getClassName(), PortletProvider.Action.ADD);
 

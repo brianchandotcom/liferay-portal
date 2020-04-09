@@ -20,6 +20,7 @@
 <%@ page import="com.liferay.portal.kernel.servlet.taglib.aui.ScriptData"%>
 <%@ page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
 <%@ page import="com.liferay.portal.kernel.util.StringBundler" %>
 <%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.Validator" %>

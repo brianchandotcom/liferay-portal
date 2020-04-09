@@ -58,9 +58,9 @@
 					<div class="autofit-col">
 
 						<%
-						Map<String, String> data = new HashMap<>();
-
-						data.put("key", connectedApp.getKey());
+						Map<String, String> data = HashMapBuilder.put(
+							"key", connectedApp.getKey()
+						).build();
 						%>
 
 						<clay:button

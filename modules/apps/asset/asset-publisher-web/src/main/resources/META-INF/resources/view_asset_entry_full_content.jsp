@@ -58,10 +58,11 @@ if (print) {
 
 String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, HttpUtil.setParameter(viewFullContentURL.toString(), "redirect", currentURL));
 
-Map<String, Object> fragmentsEditorData = new HashMap<>();
-
-fragmentsEditorData.put("fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK());
-fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-item");
+Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
+	"fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK()
+).put(
+	"fragments-editor-item-type", "fragments-editor-mapped-item"
+).build();
 %>
 
 <div class="asset-full-content clearfix mb-5 <%= assetPublisherDisplayContext.isDefaultAssetPublisher() ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %> <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
@@ -389,11 +390,11 @@ fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-i
 				exportAssetURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 				for (String extension : assetPublisherDisplayContext.getExtensions(assetRenderer)) {
-					Map<String, Object> data = new HashMap<>();
-
 					exportAssetURL.setParameter("targetExtension", extension);
 
-					data.put("resource-href", exportAssetURL.toString());
+					Map<String, Object> data = HashMapBuilder.<String, Object>put(
+						"resource-href", exportAssetURL.toString()
+					).build();
 				%>
 
 					<div class="autofit-col component-subtitle export-action">

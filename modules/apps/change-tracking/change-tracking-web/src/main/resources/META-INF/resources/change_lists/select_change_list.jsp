@@ -43,9 +43,9 @@ SelectChangeListManagementToolbarDisplayContext selectChangeListManagementToolba
 
 				<%
 				for (CTCollection ctCollection : searchContainer.getResults()) {
-					Map<String, Object> data = new HashMap<String, Object>();
-
-					data.put("ctcollectionid", ctCollection.getCtCollectionId());
+					Map<String, Object> data = HashMapBuilder.<String, Object>put(
+						"ctcollectionid", ctCollection.getCtCollectionId()
+					).build();
 				%>
 
 					<tr>

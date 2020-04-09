@@ -19,22 +19,35 @@
 <portlet:renderURL var="basePortletURL" />
 
 <%
-Map<String, Object> data = new HashMap<>();
-
-data.put("availableLanguageIds", availableLanguageIds);
-data.put("config", configJSONObject);
-data.put("contentType", contentType);
-data.put("context", dataLayoutJSONObject);
-data.put("dataDefinitionId", dataDefinitionId);
-data.put("dataLayoutBuilderElementId", renderResponse.getNamespace() + "-data-layout-builder");
-data.put("dataLayoutBuilderId", componentId);
-data.put("dataLayoutId", dataLayoutId);
-data.put("fieldTypes", fieldTypesJSONArray);
-data.put("fieldTypesModules", fieldTypesModules);
-data.put("groupId", groupId);
-data.put("localizable", localizable);
-data.put("sidebarPanels", sidebarPanels);
-data.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+Map<String, Object> data = HashMapBuilder.<String, Object>put(
+	"availableLanguageIds", availableLanguageIds
+).put(
+	"config", configJSONObject
+).put(
+	"contentType", contentType
+).put(
+	"context", dataLayoutJSONObject
+).put(
+	"dataDefinitionId", dataDefinitionId
+).put(
+	"dataLayoutBuilderElementId", renderResponse.getNamespace() + "-data-layout-builder"
+).put(
+	"dataLayoutBuilderId", componentId
+).put(
+	"dataLayoutId", dataLayoutId
+).put(
+	"fieldTypes", fieldTypesJSONArray
+).put(
+	"fieldTypesModules", fieldTypesModules
+).put(
+	"groupId", groupId
+).put(
+	"localizable", localizable
+).put(
+	"sidebarPanels", sidebarPanels
+).put(
+	"spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+).build();
 %>
 
 <div id="<%= componentId + "container" %>">

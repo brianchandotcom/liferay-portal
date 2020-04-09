@@ -690,11 +690,15 @@ definition {
 				value1 = "Reply");
 		}
 
-		AssertElementPresent.assertVisible(locator1 = "MessageBoardsThread#THREAD_REPLY_EDITOR");
+		AssertElementPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-		Type.typeEditor(
-			locator1 = "MessageBoardsThread#THREAD_REPLY_EDITOR",
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
+			locator1 = "CKEditor#BODY",
 			value1 = "${threadReplyBody}");
+
+		SelectFrameTop();
 
 		if ("${anonymous}" == "true") {
 			Check(locator1 = "Checkbox#ANONYMOUS");
@@ -720,9 +724,15 @@ definition {
 			locator1 = "MessageBoardsThread#THREAD_REPLY_BUTTON",
 			value1 = "Reply");
 
-		Type.typeEditor(
-			locator1 = "MessageBoardsThread#THREAD_REPLY_EDITOR",
+		AssertElementPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
+			locator1 = "CKEditor#BODY",
 			value1 = "${threadReplyBody}");
+
+		SelectFrameTop();
 
 		AssertClick(
 			locator1 = "Button#ADVANCED_REPLY",

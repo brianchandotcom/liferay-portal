@@ -1378,7 +1378,7 @@ definition {
 			value1 = "A new version is created automatically if this content is modified.");
 
 		AssertTextEquals(
-			locator1 = "KnowledgeBaseArticle#TITLE",
+			locator1 = "ControlMenu#HEADING",
 			value1 = "${kbArticleTitle}");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");

@@ -133,8 +133,6 @@ definition {
 			Type(
 				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
 				value1 = "${kbArticleContentSource}");
-
-			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 		}
 		else {
 			CKEditor.addContent(content = "${kbArticleContent}");

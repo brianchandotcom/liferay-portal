@@ -326,17 +326,6 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	public Task addTask(
-			long assigneeId, long companyId, long processId, String status,
-			Task task, String version)
-		throws Exception {
-
-		return addTask(
-			assigneeId, companyId,
-			() -> addInstance(companyId, false, processId), processId, status,
-			task, version);
-	}
-
-	public Task addTask(
 			long assigneeId, long companyId,
 			UnsafeSupplier<Instance, Exception> instanceSuplier, long processId,
 			String status)

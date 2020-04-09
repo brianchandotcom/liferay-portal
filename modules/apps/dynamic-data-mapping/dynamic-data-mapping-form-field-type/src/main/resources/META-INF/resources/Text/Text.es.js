@@ -263,7 +263,7 @@ const DISPLAY_STYLE = {
 	singleline: Text,
 };
 
-const TextWithFieldBase = ({
+const Main = ({
 	autocomplete,
 	autocompleteEnabled,
 	displayStyle = 'singleline',
@@ -306,8 +306,10 @@ const TextWithFieldBase = ({
 	);
 };
 
+Main.displayName = 'Text';
+
 const TextProxy = connectStore(({emit, ...otherProps}) => (
-	<TextWithFieldBase
+	<Main
 		{...otherProps}
 		onBlur={event => emit('fieldBlurred', event, event.target.value)}
 		onChange={event => emit('fieldEdited', event, event.target.value)}
@@ -320,5 +322,5 @@ const ReactTextAdapter = getConnectedReactComponentAdapter(
 	templates
 );
 
-export {ReactTextAdapter, useSyncValue, TextWithFieldBase};
+export {ReactTextAdapter, useSyncValue, Main};
 export default ReactTextAdapter;

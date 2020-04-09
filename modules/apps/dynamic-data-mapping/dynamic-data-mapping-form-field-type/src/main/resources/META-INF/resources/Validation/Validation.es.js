@@ -20,7 +20,7 @@ import React, {useState} from 'react';
 import {Main as Checkbox} from '../Checkbox/Checkbox.es';
 import {Main as Numeric} from '../Numeric/Numeric.es';
 import {Main as Select} from '../Select/Select.es';
-import {TextWithFieldBase} from '../Text/Text.es';
+import {Main as Text} from '../Text/Text.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import {subWords} from '../util/strings.es';
@@ -60,7 +60,7 @@ const Validation = ({
 		selectedValidation &&
 		selectedValidation.parameterMessage &&
 		dataType === 'string'
-			? TextWithFieldBase
+			? Text
 			: Numeric;
 
 	const handleChange = (key, newValue) => {
@@ -155,7 +155,7 @@ const Validation = ({
 							visible
 						/>
 					)}
-					<TextWithFieldBase
+					<Text
 						{...otherProps}
 						label={Liferay.Language.get('show-error-message')}
 						name={`${name}_errorMessage`}

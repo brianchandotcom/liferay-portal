@@ -144,6 +144,8 @@ const Main = ({
 	);
 };
 
+Main.displayName = 'Checkbox';
+
 const CheckboxProxy = connectStore(({emit, ...otherProps}) => (
 	<Main
 		{...otherProps}

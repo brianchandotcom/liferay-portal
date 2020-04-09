@@ -1,0 +1,96 @@
+{
+	"items": {
+		"COLUMN1-UUID": {
+			"children": [
+				"FRAGMENT1-UUID"
+			],
+			"config": {
+				"size": 3
+			},
+			"itemId": "COLUMN1-UUID",
+			"parentId": "ROW-UUID",
+			"type": "column"
+		},
+		"COLUMN2-UUID": {
+			"children": [],
+			"config": {
+				"size": 3
+			},
+			"itemId": "COLUMN2-UUID",
+			"parentId": "ROW-UUID",
+			"type": "column"
+		},
+		"COLUMN3-UUID": {
+			"children": [],
+			"config": {
+				"size": 3
+			},
+			"itemId": "COLUMN3-UUID",
+			"parentId": "ROW-UUID",
+			"type": "column"
+		},
+		"COLUMN4-UUID": {
+			"children": [],
+			"config": {
+				"size": 3
+			},
+			"itemId": "COLUMN4-UUID",
+			"parentId": "ROW-UUID",
+			"type": "column"
+		},
+		"FRAGMENT1-UUID": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "${FRAGMENT_ENTRY_LINK1_ID}"
+			},
+			"itemId": "FRAGMENT1-UUID",
+			"parentId": "COLUMN1-UUID",
+			"type": "fragment"
+		},
+		"MAIN-UUID": {
+			"children": [
+				"SECTION-UUID"
+			],
+			"config": {},
+			"itemId": "MAIN-UUID",
+			"parentId": "",
+			"type": "root"
+		},
+		"ROW-UUID": {
+			"children": [
+				"COLUMN1-UUID",
+				"COLUMN2-UUID",
+				"COLUMN3-UUID",
+				"COLUMN4-UUID"
+			],
+			"config": {
+				"gutters": false,
+				"numberOfColumns": 4
+			},
+			"itemId": "ROW-UUID",
+			"parentId": "SECTION-UUID",
+			"type": "row"
+		},
+		"SECTION-UUID": {
+			"children": [
+				"ROW-UUID"
+			],
+			"config": {
+				"backgroundColorCssClass": "light",
+				"backgroundImage": {},
+				"paddingBottom": 6,
+				"paddingHorizontal": 8,
+				"paddingTop": 7,
+				"type": "fluid"
+			},
+			"itemId": "SECTION-UUID",
+			"parentId": "MAIN-UUID",
+			"type": "container"
+		}
+	},
+	"rootItems": {
+		"dropZone": "",
+		"main": "MAIN-UUID"
+	},
+	"version": 1
+}

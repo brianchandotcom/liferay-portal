@@ -492,6 +492,8 @@ const Main = ({
 	);
 };
 
+Main.displayName = 'Select';
+
 const SelectProxy = connectStore(({emit, ...otherProps}) => (
 	<Main
 		{...otherProps}

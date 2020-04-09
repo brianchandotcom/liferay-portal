@@ -143,6 +143,8 @@ const Main = ({
 	</FieldBaseProxy>
 );
 
+Main.displayName = 'Numeric';
+
 const NumericProxy = connectStore(({emit, ...otherProps}) => (
 	<Main
 		{...otherProps}

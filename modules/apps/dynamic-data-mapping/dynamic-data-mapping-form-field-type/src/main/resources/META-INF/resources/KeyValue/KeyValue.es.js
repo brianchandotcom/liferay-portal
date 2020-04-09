@@ -18,7 +18,7 @@ import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
 import React, {useRef} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import {TextWithFieldBase, useSyncValue} from '../Text/Text.es';
+import {Main as Text, useSyncValue} from '../Text/Text.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import templates from './KeyValueAdapter.soy';
@@ -78,7 +78,7 @@ const KeyValueWithFieldBase = ({
 			store={store}
 			visible={visible}
 		>
-			<TextWithFieldBase
+			<Text
 				dispatch={dispatch}
 				name={`keyValueLabel${name}`}
 				onBlur={onTextBlur}

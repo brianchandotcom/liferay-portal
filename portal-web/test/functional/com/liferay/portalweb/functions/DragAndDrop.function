@@ -85,4 +85,24 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function javaScriptDragOver {
+		WaitForSPARefresh();
+
+		selenium.waitForVisible("${locator1}");
+
+		selenium.mouseOver("${locator1}");
+
+		selenium.waitForPartialTextCaseInsensitive("${locator1}", "${value1}");
+
+		selenium.waitForVisible("${locator2}");
+
+		selenium.mouseOver("${locator2}");
+
+		selenium.javaScriptDragOver("${locator1}", "${locator2}");
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 }

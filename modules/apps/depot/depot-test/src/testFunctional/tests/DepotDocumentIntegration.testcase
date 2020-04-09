@@ -35,8 +35,6 @@ definition {
 	@description = "This ensures that a depot image can be used through Blogs on a connected site."
 	@priority = "5"
 	test AddImageViaBlogs {
-		property portal.upstream = "quarantine";
-
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(
@@ -92,8 +90,6 @@ definition {
 	@description = "This ensures that a depot image can be used through page creation on a connected site."
 	@priority = "5"
 	test AddImageViaContentPage {
-		property portal.upstream = "quarantine";
-
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(
@@ -136,8 +132,6 @@ definition {
 	@description = "This test covers LPS-105401. It ensures that a depot image can be used on a connected staging site."
 	@priority = "5"
 	test AddImageViaStagedSite {
-		property portal.upstream = "quarantine";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Test Page");
@@ -211,8 +205,6 @@ definition {
 	@description = "This ensures that a depot image can be used through web content on a connected site."
 	@priority = "5"
 	test AddImageViaWebContent {
-		property portal.upstream = "quarantine";
-
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(

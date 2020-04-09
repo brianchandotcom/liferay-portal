@@ -486,8 +486,6 @@ definition {
 	@description = "This ensures that the user can view documents on site and library with all sites and libraries scope view permissions."
 	@priority = "5"
 	test ViewDocumentOnSiteAndLibrary {
-		property portal.upstream = "quarantine";
-
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Depot DM Document Title",

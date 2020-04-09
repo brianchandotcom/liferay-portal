@@ -29,8 +29,6 @@ definition {
 	@description = "This is a use case for LPS-82073."
 	@priority = "5"
 	test AddShortcutToSiteDocument {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -97,7 +95,6 @@ definition {
 	}
 
 	@description = "This test ensures that a user can check in a document as a major version."
-	@ignore = "true"
 	@priority = "5"
 	test CheckInDocumentAsMajorVersion {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -130,7 +127,6 @@ definition {
 	}
 
 	@description = "This test ensures that a user can check in a document as a minor version."
-	@ignore = "true"
 	@priority = "5"
 	test CheckInDocumentAsMinorVersion {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -746,8 +742,6 @@ definition {
 	@description = "This test covers LPS-91598. It makes sure that all files are deleted when user selects all."
 	@priority = "4"
 	test SelectAllAndDelete {
-		property portal.upstream = "quarantine";
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt,Document_1.txt,Document_2.xls,Document_3.jpg,Document_4.jpg,Document_1.xls,Document_2.doc");

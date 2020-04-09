@@ -165,8 +165,6 @@ definition {
 	@description = "This ensures that a depot web content can be searched on a connected site when searching is reenabled."
 	@priority = "5"
 	test ReenableSearchability {
-		property portal.upstream = "quarantine";
-
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name",
@@ -614,8 +612,7 @@ definition {
 	@description = "This ensures that a depot can be connected to the site."
 	@priority = "5"
 	test Smoke {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

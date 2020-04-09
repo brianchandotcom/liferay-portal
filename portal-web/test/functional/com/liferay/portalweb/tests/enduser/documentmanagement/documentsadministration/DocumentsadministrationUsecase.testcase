@@ -142,12 +142,8 @@ definition {
 		DMDocument.viewCategories(categoryNameList = "category");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test AddDocumentTypeAndMetadata {
-
-		// Ignore test until LPS-111207 is resolved
-
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
@@ -420,7 +416,6 @@ definition {
 	@priority = "5"
 	test CannotViewMultipleDocumentsAsSiteMember {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		JSONUser.addUser(
@@ -473,7 +468,6 @@ definition {
 	@priority = "5"
 	test CheckOutDocument {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.upstream = "quarantine";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -599,8 +593,6 @@ definition {
 
 	@priority = "4"
 	test Comments {
-		property portal.upstream = "quarantine";
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMFolder.addCP(dmFolderName = "Folder1");
@@ -780,7 +772,6 @@ definition {
 	@priority = "5"
 	test ImportAudioAndLimitPermissionsToSubfolder {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		JSONGroup.addGroup(groupName = "Moon Rocks 101");
@@ -958,8 +949,6 @@ definition {
 	@description = "This test covers LPS-91597. It ensures that a user can delete multiple documents simultaneously."
 	@priority = "4"
 	test SelectMultipleDocumentsAndDeleteViaActionsButton {
-		property portal.upstream = "quarantine";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");
@@ -1429,7 +1418,6 @@ definition {
 	@priority = "5"
 	test ViewFolderAsOrganizationUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		JSONUser.addUser(

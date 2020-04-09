@@ -30,7 +30,6 @@ definition {
 	@priority = "5"
 	test CheckExpiredEntries {
 		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
-		property portal.upstream = "quarantine";
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
@@ -123,8 +122,6 @@ definition {
 	@description = "This ensures that the web content can be deleted after the recycle bin is disabled."
 	@priority = "5"
 	test DeleteWCAfterDisabling {
-		property portal.upstream = "quarantine";
-
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(

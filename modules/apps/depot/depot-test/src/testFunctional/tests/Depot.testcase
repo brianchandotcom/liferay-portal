@@ -199,8 +199,6 @@ definition {
 	@description = "This ensures that a depot with multiple files can be deleted."
 	@priority = "4"
 	test DeleteDepotWithMultipleFiles {
-		property portal.upstream = "quarantine";
-
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");

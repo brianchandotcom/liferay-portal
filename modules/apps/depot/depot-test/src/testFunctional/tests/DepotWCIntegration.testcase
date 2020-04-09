@@ -92,8 +92,6 @@ definition {
 	@description = "This test covers LPS-105119. It ensures that a web content in a depot can be selected through the field."
 	@priority = "4"
 	test SelectDepotContentViaWebContentField {
-		property portal.upstream = "quarantine";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name");
@@ -169,8 +167,6 @@ definition {
 	@description = "This ensures that a depot web content can be selected through the fragment in a content page on a connected site."
 	@priority = "5"
 	test SelectFromFragmentInContentPage {
-		property portal.upstream = "quarantine";
-
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
 			groupName = "Test Depot Name",
@@ -210,8 +206,6 @@ definition {
 	@description = "This ensures that a depot web content can be selected through the fragment in a display page template on a connected site."
 	@priority = "5"
 	test SelectFromFragmentInDisplayPageTemplate {
-		property portal.upstream = "quarantine";
-
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
 			groupName = "Test Depot Name",

@@ -47,14 +47,8 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test AddDocuments {
-
-		// Ignore test until LRQA-57418 is resolved
-
-		property portal.acceptance = "true";
-
 		property testray.component.names = "Training";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -319,8 +313,6 @@ definition {
 
 	@priority = "4"
 	test AddFolderImage {
-		property portal.upstream = "quarantine";
-
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
@@ -341,8 +333,6 @@ definition {
 
 	@priority = "4"
 	test AddFolderImageDuplicate {
-		property portal.upstream = "quarantine";
-
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
@@ -365,8 +355,6 @@ definition {
 
 	@priority = "4"
 	test AddFolderImages {
-		property portal.upstream = "quarantine";
-
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
@@ -415,8 +403,6 @@ definition {
 
 	@priority = "4"
 	test AddFolderNameSymbol {
-		property portal.upstream = "quarantine";
-
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
@@ -568,8 +554,6 @@ definition {
 	@description = "This test covers LPS-94508. It ensures that a tag can be created when selecting an item from autocomplete."
 	@priority = "5"
 	test CreateTagUsingAutocomplete {
-		property portal.upstream = "quarantine";
-
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.docx");
 
 		for (var tagName : list "tagone,tagtwo,tagthree") {
@@ -857,8 +841,6 @@ definition {
 
 	@priority = "5"
 	test EditDocumentType {
-		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(
@@ -902,8 +884,6 @@ definition {
 
 	@priority = "5"
 	test EditFolderDocument {
-		property portal.upstream = "quarantine";
-
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
@@ -963,8 +943,6 @@ definition {
 
 	@priority = "5"
 	test EditSubFolder {
-		property portal.upstream = "quarantine";
-
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
@@ -1554,8 +1532,6 @@ definition {
 	@description = "This test covers LPS-91595. It ensures that the document selection persists when navigating through the pagination in the DM widget."
 	@priority = "4"
 	test ViewDocumentPagination {
-		property portal.upstream = "quarantine";
-
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt,Document_1.txt,Document_2.xls,Document_3.jpg,Document_4.jpg,Document_1.xls,Document_2.doc");

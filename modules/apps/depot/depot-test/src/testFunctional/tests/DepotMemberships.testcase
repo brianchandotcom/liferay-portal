@@ -224,8 +224,6 @@ definition {
 	@description = "This ensures that an assigned asset library can be removed from the user profile."
 	@priority = "5"
 	test RemoveALFromUserProfile {
-		property portal.upstream = "quarantine";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

@@ -218,8 +218,6 @@ definition {
 	@description = "This ensures that a LAR file consisting of a DL document and image can be imported in a depot."
 	@priority = "4"
 	test ImportFile {
-		property portal.upstream = "quarantine";
-
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpg",

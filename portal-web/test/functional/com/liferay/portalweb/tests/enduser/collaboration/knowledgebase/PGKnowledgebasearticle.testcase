@@ -38,8 +38,6 @@ definition {
 
 	@priority = "3"
 	test DeleteKBArticleViaKBArticle {
-		property portal.upstream = "quarantine";
-
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(

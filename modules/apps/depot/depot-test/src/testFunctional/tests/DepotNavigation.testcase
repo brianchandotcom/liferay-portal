@@ -80,9 +80,6 @@ definition {
 	@description = "This test covers LPS-104832. It ensures that the repositories can not connect to repositories."
 	@priority = "5"
 	test ViewRestrictionWhenConnectingSites {
-		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
-
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");

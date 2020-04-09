@@ -33,9 +33,6 @@ definition {
 	@description = "This test asserts that Not Found error returns when visiting FTP mode if indexing is disabled."
 	@priority = "5"
 	test DisableIndexing {
-		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
-
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");

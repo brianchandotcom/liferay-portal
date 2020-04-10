@@ -170,9 +170,6 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 					joinStep, "\""));
 		}
 
-		TableJoinHolder tableJoinHolder = new TableJoinHolder(
-			fromPKColumn, joinPKColumn, joinFunction);
-
 		List<TableJoinHolder> tableJoinHolders = null;
 
 		if (joinStepASTNodeListener._parentJoinFunction) {
@@ -186,7 +183,8 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 				fromTable -> new ArrayList<>());
 		}
 
-		tableJoinHolders.add(tableJoinHolder);
+		tableJoinHolders.add(
+			new TableJoinHolder(fromPKColumn, joinPKColumn, joinFunction));
 	}
 
 	public TableReferenceInfo<T> getTableReferenceInfo() {

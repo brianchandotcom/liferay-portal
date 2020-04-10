@@ -611,6 +611,8 @@ definition {
 
 		WikiEntry.addPageContent(wikiPageContent = "Wiki Page Content");
 
+		SelectFrame(value1 = "relative=top");
+
 		WikiEntry.cancel();
 
 		WikiTable.viewNoEntry(wikiPageTitle = "Wiki Page Title");
@@ -628,6 +630,8 @@ definition {
 
 		WikiEntry.addPageContent(wikiPageContent = "Wiki Page Content");
 
+		SelectFrame(value1 = "relative=top");
+
 		PortletEntry.publish();
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
@@ -637,6 +641,8 @@ definition {
 		WikiNavigator.gotoEntryEditViaPGTable(wikiPageTitle = "Wiki Page Title");
 
 		WikiEntry.addPageContent(wikiPageContent = "Edited Wiki Page Content");
+
+		SelectFrame(value1 = "relative=top");
 
 		WikiEntry.cancel();
 
@@ -693,6 +699,8 @@ definition {
 
 		WikiEntry.addPageContent(wikiPageContent = "Wiki Page Content");
 
+		SelectFrame(value1 = "relative=top");
+
 		PortletEntry.publish();
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
@@ -704,6 +712,8 @@ definition {
 		WikiEntry.addPageTitle(wikiPageTitle = "Copied Wiki Page Title");
 
 		WikiEntry.addPageContent(wikiPageContent = "Copied Wiki Page Content");
+
+		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.publish();
 
@@ -774,6 +784,8 @@ definition {
 
 		WikiEntry.addPageContent(wikiPageContent = "Wiki Page Content");
 
+		SelectFrame(value1 = "relative=top");
+
 		WikiEntry.saveAsDraft();
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
@@ -793,6 +805,8 @@ definition {
 		AssertElementPresent(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
 
 		WikiEntry.addPageContent(wikiPageContent = "Edited Wiki Page Content");
+
+		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.publish();
 
@@ -1082,6 +1096,8 @@ definition {
 
 		WikiEntry.addPageContent(wikiPageContent = "Wiki Page Content");
 
+		SelectFrame(value1 = "relative=top");
+
 		PortletEntry.publish();
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
@@ -1091,6 +1107,8 @@ definition {
 		WikiNavigator.gotoEntryEditViaPGTable(wikiPageTitle = "Wiki Page Title");
 
 		WikiEntry.addPageContent(wikiPageContent = "Edited Wiki Page Content");
+
+		SelectFrame(value1 = "relative=top");
 
 		WikiEntry.saveAsDraft();
 

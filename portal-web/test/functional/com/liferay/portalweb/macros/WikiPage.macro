@@ -30,9 +30,13 @@ definition {
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
 			value1 = "This page is empty. Edit it to add some text.");
 
-		Type.typeCKEditorWaitForCKEditor(
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiPageContent}");
+
+		SelectFrame(value1 = "relative=top");
 	}
 
 	macro addAttachmentViaPageEdit {
@@ -70,9 +74,13 @@ definition {
 
 		WikiEntry.addPageTitle(title = "${wikiChildPageTitle}");
 
-		Type.typeCKEditorWaitForCKEditor(
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiChildPageContent}");
+
+		SelectFrame(value1 = "relative=top");
 
 		Click(
 			locator1 = "Button#PUBLISH",
@@ -90,9 +98,13 @@ definition {
 
 		WikiEntry.addPageTitle(title = "${wikiChildPageTitle}");
 
-		Type.typeCKEditorWaitForCKEditor(
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiChildPageContent}");
+
+		SelectFrame(value1 = "relative=top");
 
 		Click(
 			locator1 = "Button#PUBLISH",
@@ -124,9 +136,13 @@ definition {
 
 		var key_wikiPageTitle = "${wikiPageContent}";
 
-		Type.typeCKEditorWaitForCKEditor(
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiPageContent}");
+
+		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.publish();
 	}
@@ -140,9 +156,13 @@ definition {
 
 		WikiEntry.addPageTitle(title = "${wikiChildPageTitle}");
 
-		Type.typeCKEditorWaitForCKEditor(
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiChildPageContent}");
+
+		SelectFrame(value1 = "relative=top");
 
 		AssertClick(
 			locator1 = "Button#PUBLISH",
@@ -164,9 +184,13 @@ definition {
 
 		WikiEntry.addPageTitle(title = "${wikiChildPageTitle}");
 
-		Type.typeCKEditorWaitForCKEditor(
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiChildPageContent}");
+
+		SelectFrame(value1 = "relative=top");
 
 		AssertClick(
 			locator1 = "Button#PUBLISH",
@@ -184,9 +208,13 @@ definition {
 			locator1 = "Message#INFO_LINK",
 			value1 = "This page is empty. Edit it to add some text.");
 
-		Type.typeCKEditorWaitForCKEditor(
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiFrontPageContent}");
+
+		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.publish();
 	}
@@ -210,10 +238,6 @@ definition {
 			Select.pauseSelect(
 				locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
 				value1 = "Creole");
-
-			Type.typeCKEditorWaitForCKEditor(
-				locator1 = "CKEditor#BODY",
-				value1 = "${wikiPageContent}");
 		}
 		else if ("${htmlSource}" == "true") {
 			Panel.expandPanel(panel = "Configuration");
@@ -223,16 +247,15 @@ definition {
 				value1 = "HTML");
 
 			AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
+		}
 
-			Type.typeCKEditorWaitForCKEditor(
-				locator1 = "CKEditor#BODY",
-				value1 = "${wikiPageContent}");
-		}
-		else {
-			Type.typeCKEditorWaitForCKEditor(
-				locator1 = "CKEditor#BODY",
-				value1 = "${wikiPageContent}");
-		}
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "${wikiPageContent}");
+
+		SelectFrame(value1 = "relative=top");
 
 		if ("${pageAddTag}" == "true") {
 			WikiPage.addTagPGCmd(tagNameList = "${tagNameList}");
@@ -295,9 +318,13 @@ definition {
 
 		WikiEntry.addPageTitle(title = "${wikiPageTitle}");
 
-		Type.typeCKEditorWaitForCKEditor(
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiPageContent}");
+
+		SelectFrame(value1 = "relative=top");
 
 		AssertClick(
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
@@ -340,9 +367,13 @@ definition {
 				value1 = "${wikiFormat}");
 		}
 
-		Type.typeCKEditorWaitForCKEditor(
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiPageContent}");
+
+		SelectFrame(value1 = "relative=top");
 
 		if ("${viewCKEditorResizer}" == "true") {
 			AssertVisible(locator1 = "CKEditor#RESIZER");
@@ -668,9 +699,13 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		Type.typeCKEditorWaitForCKEditor(
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiPageContentEdit}");
+
+		SelectFrame(value1 = "relative=top");
 
 		AssertClick(
 			locator1 = "Button#PUBLISH",
@@ -688,9 +723,13 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		Type.typeCKEditorWaitForCKEditor(
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiPageContentEdit}");
+
+		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.publish();
 	}
@@ -702,9 +741,13 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		Type.typeCKEditorWaitForCKEditor(
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiPageContentEdit}");
+
+		SelectFrame(value1 = "relative=top");
 
 		if ("${minorEdit}" == "true") {
 			Check(locator1 = "Checkbox#THIS_IS_A_MINOR_EDIT");
@@ -748,9 +791,13 @@ definition {
 			locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
 			value1 = "Creole");
 
-		Type.typeCKEditorWaitForCKEditor(
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiPage2Link}");
+
+		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.publish();
 
@@ -818,9 +865,13 @@ definition {
 			locator1 = "Button#REMOVE_REDIRECT",
 			value1 = "Remove Redirect");
 
-		Type.typeCKEditorWaitForCKEditor(
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiPage2Content}");
+
+		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.publish();
 	}

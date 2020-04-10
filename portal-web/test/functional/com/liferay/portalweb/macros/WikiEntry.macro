@@ -1,7 +1,9 @@
 definition {
 
 	macro addPageContent {
-		Type.typeCKEditorWaitForCKEditor(
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiPageContent}");
 	}

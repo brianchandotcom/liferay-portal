@@ -215,6 +215,8 @@ definition {
 
 		WikiEntry.addPageContent(wikiPageContent = "Child Page Content");
 
+		SelectFrame(value1 = "relative=top");
+
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(

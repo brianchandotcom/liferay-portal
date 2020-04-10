@@ -319,9 +319,54 @@ definition {
 			locator1 = "SearchAdmin#LOCAL_CLUSTER_NAME",
 			value1 = "LiferayElasticsearchClusterTwo");
 
-		SearchAdministration.addMultipleIndices();
+		var curlCluster1 = '''
+			http://localhost:9200/federated_index/_doc/1?pretty \
+				-H 'Content-Type: application/json' \
+				-d '{"demo" : "cluster one"}'
+		''';
 
-		SearchPortlets.setupMultipleConnectionsPage(layoutName = "Multiple Connections Page 1");
+		var curlCluster2 = '''
+			http://localhost:9202/federated_index/_doc/1?pretty \
+				-H 'Content-Type: application/json' \
+				-d '{"demo" : "cluster two"}'
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curlCluster1}");
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curlCluster2}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Multiple Connections Page 1");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Multiple Connections Page 1",
+			layoutTemplate = "3 Columns");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Multiple Connections Page 1",
+			widgetName = "Custom Filter");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Multiple Connections Page 1",
+			widgetName = "Search Results");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "3",
+			groupName = "Guest",
+			layoutName = "Multiple Connections Page 1",
+			widgetName = "Search Options");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "3",
+			groupName = "Guest",
+			layoutName = "Multiple Connections Page 1",
+			widgetName = "Low Level Search Options");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/multiple-connections-page-1");
 
@@ -345,7 +390,38 @@ definition {
 			key_searchAssetTitle = "cluster one",
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
 
-		SearchPortlets.setupMultipleConnectionsPage(layoutName = "Multiple Connections Page 2");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Multiple Connections Page 2");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Multiple Connections Page 2",
+			layoutTemplate = "3 Columns");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Multiple Connections Page 2",
+			widgetName = "Custom Filter");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Multiple Connections Page 2",
+			widgetName = "Search Results");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "3",
+			groupName = "Guest",
+			layoutName = "Multiple Connections Page 2",
+			widgetName = "Search Options");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "3",
+			groupName = "Guest",
+			layoutName = "Multiple Connections Page 2",
+			widgetName = "Low Level Search Options");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/multiple-connections-page-2");
 

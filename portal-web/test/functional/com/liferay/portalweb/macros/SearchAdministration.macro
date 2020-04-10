@@ -1,23 +1,5 @@
 definition {
 
-	macro addMultipleIndices {
-		var curlCluster1 = '''
-			http://localhost:9200/federated_index/_doc/1?pretty \
-				-H 'Content-Type: application/json' \
-				-d '{"demo" : "cluster one"}'
-		''';
-
-		var curlCluster2 = '''
-			http://localhost:9202/federated_index/_doc/1?pretty \
-				-H 'Content-Type: application/json' \
-				-d '{"demo" : "cluster two"}'
-		''';
-
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curlCluster1}");
-
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curlCluster2}");
-	}
-
 	macro assertEngineVendorAndVersions {
 		if (IsElementNotPresent(locator1 = "SearchAdmin#ELASTICSEARCH6_ENGINE_VENDOR")) {
 			AssertTextEquals.assertPartialText(

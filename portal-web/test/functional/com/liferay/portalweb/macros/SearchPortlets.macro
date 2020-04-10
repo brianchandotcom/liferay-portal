@@ -426,41 +426,6 @@ definition {
 		}
 	}
 
-	macro setupMultipleConnectionsPage {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "${layoutName}");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Guest",
-			layoutName = "${layoutName}",
-			layoutTemplate = "3 Columns");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "${layoutName}",
-			widgetName = "Custom Filter");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
-			groupName = "Guest",
-			layoutName = "${layoutName}",
-			widgetName = "Search Results");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "3",
-			groupName = "Guest",
-			layoutName = "${layoutName}",
-			widgetName = "Search Options");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "3",
-			groupName = "Guest",
-			layoutName = "${layoutName}",
-			widgetName = "Low Level Search Options");
-	}
-
 	macro setupSimilarResultsPage {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

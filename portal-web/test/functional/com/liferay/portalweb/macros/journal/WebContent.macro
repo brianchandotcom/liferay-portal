@@ -299,7 +299,8 @@ definition {
 		PortletEntry.inputTitle(title = "${webContentTitle}");
 
 		Type.typeCKEditorWaitForCKEditor(
-			locator1 = "CKEditor#BODY_FIELD",
+			key_fieldLabel = "content",
+			locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
 			value1 = "${webContentContent}");
 	}
 

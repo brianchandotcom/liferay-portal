@@ -17,10 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Map<String, Object> contextUseForAllTitle = new HashMap<>();
-
-contextUseForAllTitle.put("disableOnChecked", false);
-contextUseForAllTitle.put("inputSelector", ".custom-title input");
+Map<String, Object> contextUseForAllTitle = HashMapBuilder.<String, Object>put(
+	"disableOnChecked", false
+).put(
+	"inputSelector", ".custom-title input"
+).build();
 %>
 
 <aui:input checked="<%= portletConfigurationCSSPortletDisplayContext.isUseCustomTitle() %>" data="<%= contextUseForAllTitle %>" label="use-custom-title" name="useCustomTitle" type="toggle-switch" />

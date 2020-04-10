@@ -46,11 +46,13 @@ String name = ParamUtil.getString(request, "name");
 	</div>
 
 	<%
-	Map<String, Object> data = new HashMap<>();
-
-	data.put("color", color);
-	data.put("label", label);
-	data.put("name", name);
+	Map<String, Object> data = HashMapBuilder.<String, Object>put(
+		"color", color
+	).put(
+		"label", label
+	).put(
+		"name", name
+	).build();
 	%>
 
 	<react:component

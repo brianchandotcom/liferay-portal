@@ -14,14 +14,8 @@
 
 package com.liferay.change.tracking.internal.reference;
 
-import com.liferay.change.tracking.internal.reference.closure.CTClosureImpl;
-import com.liferay.change.tracking.internal.reference.closure.Node;
 import com.liferay.change.tracking.internal.reference.helper.TableReferenceDefinitionHelperImpl;
-import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.closure.CTClosure;
-import com.liferay.change.tracking.reference.closure.CTClosureFactory;
-import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.log.Log;
@@ -31,7 +25,6 @@ import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -50,28 +43,51 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = CTClosureFactory.class)
-public class TableReferenceDefinitionManager implements CTClosureFactory {
+@Component(immediate = true, service = TableReferenceDefinitionManager.class)
+public class TableReferenceDefinitionManager {
 
-	@Override
-	public CTClosure create(long ctCollectionId) {
-		Map<Long, List<Long>> map = new HashMap<>();
+	public SchemaContext getSchemaContext() {
+		SchemaContext schemaContext = _schemaContext;
 
-		for (CTEntry ctEntry :
-				_ctEntryLocalService.getCTCollectionCTEntries(ctCollectionId)) {
-
-			List<Long> primaryKeys = map.computeIfAbsent(
-				ctEntry.getModelClassNameId(), key -> new ArrayList<>());
-
-			primaryKeys.add(ctEntry.getModelClassPK());
+		if (schemaContext != null) {
+			return schemaContext;
 		}
 
-		SchemaContext schemaContext = _getSchemaContext();
+		synchronized (_tableReferenceInfos) {
+			Map<Table<?>, Long> tableClassNameIds = new HashMap<>();
+			Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos =
+				new HashMap<>();
 
-		Map<Node, Collection<Node>> closureMap = schemaContext.buildClosureMap(
-			ctCollectionId, map);
+			for (TableReferenceInfo<?> tableReferenceInfo :
+					_tableReferenceInfos) {
 
-		return new CTClosureImpl(ctCollectionId, closureMap);
+				TableReferenceDefinition<?> tableReferenceDefinition =
+					tableReferenceInfo.getTableReferenceDefinition();
+
+				PersistedModelLocalService persistedModelLocalService =
+					tableReferenceDefinition.getPersistedModelLocalService();
+
+				BasePersistence<?> basePersistence =
+					persistedModelLocalService.getBasePersistence();
+
+				long classNameId = _classNameLocalService.getClassNameId(
+					basePersistence.getModelClass());
+
+				tableClassNameIds.put(
+					tableReferenceDefinition.getTable(), classNameId);
+
+				combinedTableReferenceInfos.put(
+					classNameId,
+					_getCombinedTableReferenceInfo(tableReferenceInfo));
+			}
+
+			schemaContext = new SchemaContext(
+				tableClassNameIds, combinedTableReferenceInfos);
+
+			_schemaContext = schemaContext;
+		}
+
+		return schemaContext;
 	}
 
 	@Activate
@@ -182,58 +198,11 @@ public class TableReferenceDefinitionManager implements CTClosureFactory {
 			combinedParentJoinHoldersMap, combinedChildJoinHoldersMap);
 	}
 
-	private SchemaContext _getSchemaContext() {
-		SchemaContext schemaContext = _schemaContext;
-
-		if (schemaContext != null) {
-			return schemaContext;
-		}
-
-		synchronized (_tableReferenceInfos) {
-			Map<Table<?>, Long> tableClassNameIds = new HashMap<>();
-			Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos =
-				new HashMap<>();
-
-			for (TableReferenceInfo<?> tableReferenceInfo :
-					_tableReferenceInfos) {
-
-				TableReferenceDefinition<?> tableReferenceDefinition =
-					tableReferenceInfo.getTableReferenceDefinition();
-
-				PersistedModelLocalService persistedModelLocalService =
-					tableReferenceDefinition.getPersistedModelLocalService();
-
-				BasePersistence<?> basePersistence =
-					persistedModelLocalService.getBasePersistence();
-
-				long classNameId = _classNameLocalService.getClassNameId(
-					basePersistence.getModelClass());
-
-				tableClassNameIds.put(
-					tableReferenceDefinition.getTable(), classNameId);
-
-				combinedTableReferenceInfos.put(
-					classNameId,
-					_getCombinedTableReferenceInfo(tableReferenceInfo));
-			}
-
-			schemaContext = new SchemaContext(
-				tableClassNameIds, combinedTableReferenceInfos);
-
-			_schemaContext = schemaContext;
-		}
-
-		return schemaContext;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		TableReferenceDefinitionManager.class);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private CTEntryLocalService _ctEntryLocalService;
 
 	private volatile SchemaContext _schemaContext;
 	private ServiceTracker<?, ?> _serviceTracker;

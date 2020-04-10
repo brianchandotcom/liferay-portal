@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.portal.search.web.constants,\
 	com.liferay.portal.search.web.facet,\
 	com.liferay.portal.search.web.facet.util.comparator,\
+	com.liferay.portal.search.web.interpreter,\
 	com.liferay.portal.search.web.layout.prototype,\
 	com.liferay.portal.search.web.portlet.shared.search,\
 	com.liferay.portal.search.web.portlet.shared.task,\

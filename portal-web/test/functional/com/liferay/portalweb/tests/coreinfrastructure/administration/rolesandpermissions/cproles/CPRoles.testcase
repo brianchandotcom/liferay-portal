@@ -246,11 +246,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		RoleNavigator.gotoAssignees(roleTitle = "Regular Role");
-
-		RoleNavigator.gotoAssigneeType(assigneeType = "Users");
-
-		Role.addAssignees(assigneeName = "userfn userln");
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",

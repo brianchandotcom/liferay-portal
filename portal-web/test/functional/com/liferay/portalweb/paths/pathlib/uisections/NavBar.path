@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAV_ITEM_REDIRECTION</td>
+	<td>//a[contains(@class,'nav-link')]/span[contains(.,'${key_navItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORGANIZATIONS</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'navbar-nav')]/li/a[contains(.,'Organizations')]</td>
 	<td></td>

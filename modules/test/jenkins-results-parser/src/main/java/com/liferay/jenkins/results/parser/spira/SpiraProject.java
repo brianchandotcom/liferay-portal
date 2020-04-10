@@ -18,6 +18,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -32,26 +34,32 @@ import org.json.JSONObject;
  */
 public class SpiraProject extends BaseSpiraArtifact {
 
-	public static SpiraProject getSpiraProjectByID(final int projectID) {
-		List<SpiraProject> spiraProjects = getSpiraArtifacts(
-			SpiraProject.class,
-			new Supplier<List<JSONObject>>() {
-
-				@Override
-				public List<JSONObject> get() {
-					return _requestSpiraProjectByID(projectID);
-				}
-
-			},
-			new Function<JSONObject, SpiraProject>() {
-
-				@Override
-				public SpiraProject apply(JSONObject jsonObject) {
-					return new SpiraProject(jsonObject);
-				}
-
-			},
+	public static SpiraProject getSpiraProjectByID(int projectID) {
+		List<SpiraProject> spiraProjects = _getSpiraProjects(
 			new SearchQuery.SearchParameter(ID_KEY, projectID));
+
+		if (spiraProjects.size() > 1) {
+			throw new RuntimeException("Duplicate project ID " + projectID);
+		}
+
+		if (spiraProjects.isEmpty()) {
+			throw new RuntimeException("Missing project ID " + projectID);
+		}
+
+		return spiraProjects.get(0);
+	}
+
+	public static SpiraProject getSpiraProjectByName(String projectName) {
+		List<SpiraProject> spiraProjects = _getSpiraProjects(
+			new SearchQuery.SearchParameter("Name", projectName));
+
+		if (spiraProjects.size() > 1) {
+			throw new RuntimeException("Duplicate project name " + projectName);
+		}
+
+		if (spiraProjects.isEmpty()) {
+			throw new RuntimeException("Missing project name " + projectName);
+		}
 
 		return spiraProjects.get(0);
 	}
@@ -292,6 +300,32 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 	protected static final String ID_KEY = "ProjectId";
 
+	private static List<SpiraProject> _getSpiraProjects(
+		SearchQuery.SearchParameter... searchParameters) {
+
+		List<SpiraProject> spiraProjects = getSpiraArtifacts(
+			SpiraProject.class,
+			new Supplier<List<JSONObject>>() {
+
+				@Override
+				public List<JSONObject> get() {
+					return _requestSpiraProjects();
+				}
+
+			},
+			new Function<JSONObject, SpiraProject>() {
+
+				@Override
+				public SpiraProject apply(JSONObject jsonObject) {
+					return new SpiraProject(jsonObject);
+				}
+
+			},
+			searchParameters);
+
+		return spiraProjects;
+	}
+
 	private static List<JSONObject> _requestSpiraProjectByID(
 		Integer projectID) {
 
@@ -304,6 +338,24 @@ public class SpiraProject extends BaseSpiraArtifact {
 				SpiraRestAPIUtil.requestJSONObject(
 					"projects/{project_id}", null, urlPathReplacements,
 					HttpRequestMethod.GET, null));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private static List<JSONObject> _requestSpiraProjects() {
+		try {
+			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
+				"projects", null, null, HttpRequestMethod.GET, null);
+
+			List<JSONObject> spiraProjects = new ArrayList<>();
+
+			for (int i = 0; i < responseJSONArray.length(); i++) {
+				spiraProjects.add(responseJSONArray.getJSONObject(i));
+			}
+
+			return spiraProjects;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

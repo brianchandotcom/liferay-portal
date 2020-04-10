@@ -1,6 +1,18 @@
 definition {
 
-	macro rate {
+	macro rateStar {
+		Click(locator1 = "Ratings#YOUR_RATING_STAR");
+
+		Click.clickNoMouseOver(
+			key_ratingStarCount = "${ratingStarCount}",
+			locator1 = "Ratings#YOUR_RATING_STAR_COUNT");
+
+		AssertElementPresent(
+			key_ratingStarCount = "${ratingStarCount}",
+			locator1 = "Ratings#YOUR_RATING_STAR_RESULT");
+	}
+
+	macro rateThumb {
 		if (isSet(commentRating)) {
 			Click.clickNoMouseOver(
 				key_ratingResult = "${ratingResult}",
@@ -13,19 +25,29 @@ definition {
 		}
 	}
 
-	macro rateStarPG {
-		Click(locator1 = "Ratings#YOUR_RATING_STAR");
-
-		Click.clickNoMouseOver(
-			key_ratingStarCount = "${ratingStarCount}",
-			locator1 = "Ratings#YOUR_RATING_STAR_COUNT");
-
+	macro viewRateStar {
 		AssertElementPresent(
 			key_ratingStarCount = "${ratingStarCount}",
 			locator1 = "Ratings#YOUR_RATING_STAR_RESULT");
+
+		AssertTextEquals(
+			key_ratingStarCount = "${ratingStarCount}",
+			locator1 = "Ratings#YOUR_RATING_STAR_RESULT_COUNT",
+			value1 = "${ratingStarCount}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Ratings#AVERAGE_STAR_RESULT",
+			value1 = "${averageRatingStarCount}");
 	}
 
-	macro viewRating {
+	macro viewRateStarReadOnly {
+		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR");
+
+		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_DISABLE");
+		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR");
+	}
+
+	macro viewRateThumb {
 		if (isSet(ratingResult)) {
 			if (isSet(commentRating)) {
 				AssertTextEquals(
@@ -42,22 +64,7 @@ definition {
 		}
 	}
 
-	macro viewRateStarPG {
-		AssertElementPresent(
-			key_ratingStarCount = "${ratingStarCount}",
-			locator1 = "Ratings#YOUR_RATING_STAR_RESULT");
-
-		AssertTextEquals(
-			key_ratingStarCount = "${ratingStarCount}",
-			locator1 = "Ratings#YOUR_RATING_STAR_RESULT_COUNT",
-			value1 = "${ratingStarCount}");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Ratings#AVERAGE_STAR_RESULT",
-			value1 = "${averageRatingStarCount}");
-	}
-
-	macro viewRatingReadOnly {
+	macro viewRateThumbReadOnly {
 		AssertElementNotPresent(
 			key_ratingResult = "Rate this as good",
 			locator1 = "Ratings#THUMB");
@@ -68,13 +75,6 @@ definition {
 
 		AssertElementPresent(locator1 = "Ratings#THUMB_UP_OFF");
 		AssertElementPresent(locator1 = "Ratings#THUMB_DOWN_OFF");
-	}
-
-	macro viewRatingWithStarsReadOnly {
-		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_DISABLE");
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR");
 	}
 
 }

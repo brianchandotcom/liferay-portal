@@ -3,6 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testray.component.names = "User Interface";
 	property testray.main.component.name = "User Interface";
 
 	setUp {
@@ -66,7 +67,7 @@ definition {
 
 	@priority = "5"
 	test RightToLeftSmoke {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "UIInfrastructureUsecase#RightToLeftSmoke";
 
 		ProductMenu.gotoPortlet(
@@ -284,9 +285,6 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewSignInSignOutUI {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property environment.acceptance = "quarantine";
 		property portal.acceptance = "false";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "UIInfrastructureUsecase#ViewSignInSignOutUI";

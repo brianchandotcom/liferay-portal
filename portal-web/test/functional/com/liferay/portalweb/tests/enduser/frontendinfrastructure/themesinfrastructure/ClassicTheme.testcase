@@ -22,6 +22,8 @@ definition {
 
 	@priority = "5"
 	test ConfigureLookAndFeelSettingsSinglePage {
+		property portal.acceptance = "true";
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",

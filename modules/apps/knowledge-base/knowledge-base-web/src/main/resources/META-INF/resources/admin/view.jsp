@@ -142,11 +142,11 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 						<c:when test="<%= kbObject instanceof KBFolder %>">
 
 							<%
-							Map<String, Object> rowData = new HashMap<String, Object>();
-
 							KBFolder kbFolder = (KBFolder)kbObject;
 
-							rowData.put("actions", StringUtil.merge(kbAdminManagementToolbarDisplayContext.getAvailableActions(kbFolder)));
+							Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+								"actions", StringUtil.merge(kbAdminManagementToolbarDisplayContext.getAvailableActions(kbFolder))
+							).build();
 
 							row.setData(rowData);
 
@@ -226,11 +226,11 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 						<c:otherwise>
 
 							<%
-							Map<String, Object> rowData = new HashMap<String, Object>();
-
 							KBArticle kbArticle = (KBArticle)kbObject;
 
-							rowData.put("actions", StringUtil.merge(kbAdminManagementToolbarDisplayContext.getAvailableActions(kbArticle)));
+							Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+								"actions", StringUtil.merge(kbAdminManagementToolbarDisplayContext.getAvailableActions(kbArticle))
+							).build();
 
 							row.setData(rowData);
 

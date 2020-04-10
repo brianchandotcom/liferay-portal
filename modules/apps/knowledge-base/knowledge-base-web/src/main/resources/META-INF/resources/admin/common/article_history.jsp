@@ -86,9 +86,9 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 							</portlet:renderURL>
 
 							<%
-							Map<String, Object> data = new HashMap<String, Object>();
-
-							data.put("uri", compareVersionsURL);
+							Map<String, Object> data = HashMapBuilder.<String, Object>put(
+								"uri", compareVersionsURL
+							).build();
 							%>
 
 							<liferay-ui:icon

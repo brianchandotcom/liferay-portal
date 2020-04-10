@@ -65,10 +65,11 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 								curSourceVersion = tempVersion;
 							}
 
-							Map<String, Object> data = new HashMap<String, Object>();
-
-							data.put("sourceversion", curSourceVersion);
-							data.put("targetversion", curTargetVersion);
+							Map<String, Object> data = HashMapBuilder.<String, Object>put(
+								"sourceversion", curSourceVersion
+							).put(
+								"targetversion", curTargetVersion
+							).build();
 							%>
 
 							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">

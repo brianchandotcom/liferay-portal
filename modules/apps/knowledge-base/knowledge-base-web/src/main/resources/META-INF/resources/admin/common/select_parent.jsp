@@ -96,12 +96,15 @@ else {
 			<aui:button-row cssClass="input-append">
 
 				<%
-				Map<String, Object> data = new HashMap<String, Object>();
-
-				data.put("priority", priority);
-				data.put("resourceClassNameId", parentResourceClassNameId);
-				data.put("resourcePrimKey", parentResourcePrimKey);
-				data.put("title", parentTitle);
+				Map<String, Object> data = HashMapBuilder.<String, Object>put(
+					"priority", priority
+				).put(
+					"resourceClassNameId", parentResourceClassNameId
+				).put(
+					"resourcePrimKey", parentResourcePrimKey
+				).put(
+					"title", parentTitle
+				).build();
 				%>
 
 				<aui:button cssClass="selector-button" data="<%= data %>" value='<%= (parentResourceClassNameId == kbFolderClassNameId) ? "choose-this-folder" : "choose-this-article" %>' />
@@ -175,12 +178,15 @@ else {
 						>
 
 							<%
-							Map<String, Object> data = new HashMap<String, Object>();
-
-							data.put("priority", KBArticleConstants.DEFAULT_PRIORITY);
-							data.put("resourceClassNameId", kbFolder.getClassNameId());
-							data.put("resourcePrimKey", kbFolder.getKbFolderId());
-							data.put("title", kbFolder.getName());
+							Map<String, Object> data = HashMapBuilder.<String, Object>put(
+								"priority", KBArticleConstants.DEFAULT_PRIORITY
+							).put(
+								"resourceClassNameId", kbFolder.getClassNameId()
+							).put(
+								"resourcePrimKey", kbFolder.getKbFolderId()
+							).put(
+								"title", kbFolder.getName()
+							).build();
 							%>
 
 							<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= (kbFolder.getKbFolderId() == resourcePrimKey) || (kbFolder.getKbFolderId() == originalParentResourcePrimKey) || !ArrayUtil.contains(selectableClassNameIds, kbFolderClassNameId) %>" value="select" />
@@ -246,12 +252,15 @@ else {
 						>
 
 							<%
-							Map<String, Object> data = new HashMap<String, Object>();
-
-							data.put("priority", kbArticle.getPriority());
-							data.put("resourceClassNameId", kbArticle.getClassNameId());
-							data.put("resourcePrimKey", kbArticle.getResourcePrimKey());
-							data.put("title", kbArticle.getTitle());
+							Map<String, Object> data = HashMapBuilder.<String, Object>put(
+								"priority", kbArticle.getPriority()
+							).put(
+								"resourceClassNameId", kbArticle.getClassNameId()
+							).put(
+								"resourcePrimKey", kbArticle.getResourcePrimKey()
+							).put(
+								"title", kbArticle.getTitle()
+							).build();
 							%>
 
 							<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= (kbArticle.getResourcePrimKey() == resourcePrimKey) || (kbArticle.getResourcePrimKey() == originalParentResourcePrimKey) || !ArrayUtil.contains(selectableClassNameIds, kbArticleClassNameId) %>" value="select" />

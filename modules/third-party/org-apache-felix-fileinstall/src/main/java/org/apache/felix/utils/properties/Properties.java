@@ -666,8 +666,10 @@ public class Properties extends AbstractMap<String, String> {
 				typed = matcher.matches();
 			}
 
-			if ((_typed == null) || !_typed) {
+			if (_typed == null) {
 				_typed = typed;
+			} else {
+				_typed = _typed & typed;
 			}
 
 			_propertyName = _unescapeJava(property[0]);

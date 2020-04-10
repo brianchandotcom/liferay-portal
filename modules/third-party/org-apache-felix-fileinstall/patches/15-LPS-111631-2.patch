@@ -1,0 +1,16 @@
+diff --git a/org/apache/felix/utils/properties/Properties.java b/org/apache/felix/utils/properties/Properties.java
+index 123d825..12ed78c 100644
+--- a/org/apache/felix/utils/properties/Properties.java
++++ b/org/apache/felix/utils/properties/Properties.java
+@@ -666,8 +666,10 @@ public class Properties extends AbstractMap<String, String> {
+ 				typed = matcher.matches();
+ 			}
+ 
+-			if ((_typed == null) || !_typed) {
++			if (_typed == null) {
+ 				_typed = typed;
++			} else {
++				_typed = _typed & typed;
+ 			}
+ 
+ 			_propertyName = _unescapeJava(property[0]);

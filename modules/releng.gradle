@@ -82,6 +82,7 @@ task portalJavadoc(type: Javadoc)
 task portalJavadocJar(type: Jar)
 task portalSourcesJar(type: ShadowJar)
 task prepareMajorIncrement
+task syncAppProperties
 task syncGitRepoReleases
 task tagAppReleases
 
@@ -774,6 +775,39 @@ prepareMajorIncrement {
 repositories {
 	maven {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+syncAppProperties {
+	description = "Updates the 'app.portal.build' property for all 'app.properties' files."
+	group = "releng"
+
+	doLast {
+		if (FileUtil.exists(project, ".releng/dxp")) {
+			assert FileUtil.exists(project, "../release.profile-dxp.properties") : "Please run 'ant setup-profile-dxp'"
+		}
+
+		Properties releaseProperties = GUtil.loadProperties(new File(projectDir.parentFile, "release.properties"))
+
+		FileTree appPropertiesFileTree = fileTree(dir: projectDir, includes: [".releng/apps/**/app.properties"])
+
+		appPropertiesFileTree.each {
+			File appPropertiesFile ->
+
+			appPropertiesFile.text = appPropertiesFile.text.replaceFirst(~/app.portal.build=.+/, "app.portal.build=" + releaseProperties.getProperty("release.info.build"))
+		}
+
+		if (FileUtil.exists(project, ".releng/dxp")) {
+			releaseProperties = GUtil.loadProperties(new File(projectDir.parentFile, "release.profile-dxp.properties"))
+
+			appPropertiesFileTree = fileTree(dir: projectDir, includes: [".releng/dxp/**/app.properties"])
+
+			appPropertiesFileTree.each {
+				File appPropertiesFile ->
+
+				appPropertiesFile.text = appPropertiesFile.text.replaceFirst(~/app.portal.build=.+/, "app.portal.build=" + releaseProperties.getProperty("release.info.build"))
+			}
+		}
 	}
 }
 

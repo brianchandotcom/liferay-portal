@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.dom4j.Element;
 
@@ -92,7 +93,11 @@ public interface Build {
 
 	public JenkinsSlave getJenkinsSlave();
 
+	public Job getJob();
+
 	public String getJobName();
+
+	public Properties getJobProperties();
 
 	public String getJobURL();
 

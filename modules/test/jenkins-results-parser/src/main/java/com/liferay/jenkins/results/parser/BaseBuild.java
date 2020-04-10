@@ -693,8 +693,44 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public Job getJob() {
+		if (_job != null) {
+			return _job;
+		}
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		String topLevelJobName = topLevelBuild.getJobName();
+
+		String repositoryName = null;
+
+		if (topLevelJobName.contains("subrepository")) {
+			repositoryName = topLevelBuild.getBaseGitRepositoryName();
+		}
+
+		_job = JobFactory.newJob(
+			topLevelJobName, topLevelBuild.getTestSuiteName(),
+			topLevelBuild.getBranchName(), repositoryName);
+
+		return _job;
+	}
+
+	@Override
 	public String getJobName() {
 		return jobName;
+	}
+
+	@Override
+	public Properties getJobProperties() {
+		if (_jobProperties != null) {
+			return _jobProperties;
+		}
+
+		Job job = getJob();
+
+		_jobProperties = job.getJobProperties();
+
+		return _jobProperties;
 	}
 
 	@Override
@@ -2539,32 +2575,6 @@ public abstract class BaseBuild implements Build {
 		return parameterNames;
 	}
 
-	protected Properties getJobProperties() {
-		if (_jobProperties != null) {
-			return _jobProperties;
-		}
-
-		System.out.println("Reading job properties");
-
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		String topLevelJobName = topLevelBuild.getJobName();
-
-		String repositoryName = null;
-
-		if (topLevelJobName.contains("subrepository")) {
-			repositoryName = topLevelBuild.getBaseGitRepositoryName();
-		}
-
-		Job job = JobFactory.newJob(
-			topLevelJobName, topLevelBuild.getTestSuiteName(),
-			topLevelBuild.getBranchName(), repositoryName);
-
-		_jobProperties = job.getJobProperties();
-
-		return _jobProperties;
-	}
-
 	protected Map<String, String> getParameters(JSONArray jsonArray) {
 		Map<String, String> parameters = new HashMap<>(jsonArray.length());
 
@@ -3484,6 +3494,7 @@ public abstract class BaseBuild implements Build {
 	private JenkinsConsoleTextLoader _jenkinsConsoleTextLoader;
 	private JenkinsMaster _jenkinsMaster;
 	private JenkinsSlave _jenkinsSlave;
+	private Job _job;
 	private Properties _jobProperties;
 	private Map<String, String> _parameters = new HashMap<>();
 	private final Build _parentBuild;

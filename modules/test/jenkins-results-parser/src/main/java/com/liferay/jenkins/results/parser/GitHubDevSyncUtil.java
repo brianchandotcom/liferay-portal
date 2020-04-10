@@ -113,11 +113,7 @@ public class GitHubDevSyncUtil {
 			gitWorkingDirectory);
 
 		try {
-			int retries = 0;
-
-			while ((retries < 3) && !gitHubDevGitRemotes.isEmpty()) {
-				retries++;
-
+			while (!gitHubDevGitRemotes.isEmpty()) {
 				GitRemote gitHubDevGitRemote = getRandomGitRemote(
 					gitHubDevGitRemotes);
 
@@ -137,7 +133,7 @@ public class GitHubDevSyncUtil {
 						"Unable to fetch cached remote Git branch ",
 						cacheBranchName, "\n", runtimeException.getMessage());
 
-					if (retries == 3) {
+					if (gitHubDevGitRemotes.isEmpty()) {
 						System.out.println(message);
 
 						throw new RuntimeException(

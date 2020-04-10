@@ -16,6 +16,8 @@ package com.liferay.portal.search.test.util;
 
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
 
 import java.util.List;
 
@@ -38,6 +40,18 @@ public class HitsAssert {
 		Assert.assertEquals(String.valueOf(documents), 1, documents.size());
 
 		return documents.get(0);
+	}
+
+	public static com.liferay.portal.search.document.Document assertOnlyOne(
+		SearchHits searchHits) {
+
+		List<SearchHit> searchHitList = searchHits.getSearchHits();
+
+		Assert.assertEquals(searchHitList.toString(), 1, searchHitList.size());
+
+		SearchHit searchHit = searchHitList.get(0);
+
+		return searchHit.getDocument();
 	}
 
 	public static Document assertOnlyOne(String message, Hits hits) {

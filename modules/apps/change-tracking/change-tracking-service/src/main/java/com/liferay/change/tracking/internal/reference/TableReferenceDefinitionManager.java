@@ -25,11 +25,11 @@ import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -46,20 +46,40 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true, service = TableReferenceDefinitionManager.class)
 public class TableReferenceDefinitionManager {
 
-	public SchemaContext getSchemaContext() {
-		SchemaContext schemaContext = _schemaContext;
+	public Long getClassNameId(Table<?> table) {
+		TableReferenceInfo<?> tableReferenceInfo = _tableReferenceInfos.get(
+			table);
 
-		if (schemaContext != null) {
-			return schemaContext;
+		if (tableReferenceInfo == null) {
+			return null;
 		}
 
-		synchronized (_tableReferenceInfos) {
-			Map<Table<?>, Long> tableClassNameIds = new HashMap<>();
-			Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos =
-				new HashMap<>();
+		TableReferenceDefinition<?> tableReferenceDefinition =
+			tableReferenceInfo.getTableReferenceDefinition();
+
+		PersistedModelLocalService persistedModelLocalService =
+			tableReferenceDefinition.getPersistedModelLocalService();
+
+		BasePersistence<?> basePersistence =
+			persistedModelLocalService.getBasePersistence();
+
+		return _classNameLocalService.getClassNameId(
+			basePersistence.getModelClass());
+	}
+
+	public Map<Long, TableReferenceInfo<?>> getCombinedTableReferenceInfos() {
+		Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos =
+			_combinedTableReferenceInfos;
+
+		if (combinedTableReferenceInfos != null) {
+			return combinedTableReferenceInfos;
+		}
+
+		synchronized (this) {
+			combinedTableReferenceInfos = new HashMap<>();
 
 			for (TableReferenceInfo<?> tableReferenceInfo :
-					_tableReferenceInfos) {
+					_tableReferenceInfos.values()) {
 
 				TableReferenceDefinition<?> tableReferenceDefinition =
 					tableReferenceInfo.getTableReferenceDefinition();
@@ -70,24 +90,19 @@ public class TableReferenceDefinitionManager {
 				BasePersistence<?> basePersistence =
 					persistedModelLocalService.getBasePersistence();
 
-				long classNameId = _classNameLocalService.getClassNameId(
-					basePersistence.getModelClass());
-
-				tableClassNameIds.put(
-					tableReferenceDefinition.getTable(), classNameId);
-
 				combinedTableReferenceInfos.put(
-					classNameId,
+					_classNameLocalService.getClassNameId(
+						basePersistence.getModelClass()),
 					_getCombinedTableReferenceInfo(tableReferenceInfo));
 			}
 
-			schemaContext = new SchemaContext(
-				tableClassNameIds, combinedTableReferenceInfos);
+			combinedTableReferenceInfos = Collections.unmodifiableMap(
+				combinedTableReferenceInfos);
 
-			_schemaContext = schemaContext;
+			_combinedTableReferenceInfos = combinedTableReferenceInfos;
 		}
 
-		return schemaContext;
+		return combinedTableReferenceInfos;
 	}
 
 	@Activate
@@ -137,7 +152,7 @@ public class TableReferenceDefinitionManager {
 		T table = tableReferenceDefinition.getTable();
 
 		for (TableReferenceInfo<?> currentTableReferenceInfo :
-				_tableReferenceInfos) {
+				_tableReferenceInfos.values()) {
 
 			if (tableReferenceInfo == currentTableReferenceInfo) {
 				continue;
@@ -204,10 +219,11 @@ public class TableReferenceDefinitionManager {
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	private volatile SchemaContext _schemaContext;
+	private volatile Map<Long, TableReferenceInfo<?>>
+		_combinedTableReferenceInfos;
 	private ServiceTracker<?, ?> _serviceTracker;
-	private final Set<TableReferenceInfo<?>> _tableReferenceInfos =
-		new HashSet<>();
+	private final Map<Table<?>, TableReferenceInfo<?>> _tableReferenceInfos =
+		new ConcurrentHashMap<>();
 
 	private class TableReferenceDefinitionServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
@@ -234,10 +250,14 @@ public class TableReferenceDefinitionManager {
 			ServiceReference<TableReferenceDefinition> serviceReference,
 			TableReferenceInfo<?> tableReferenceInfo) {
 
-			synchronized (_tableReferenceInfos) {
-				_tableReferenceInfos.remove(tableReferenceInfo);
+			synchronized (this) {
+				TableReferenceDefinition<?> tableReferenceDefinition =
+					tableReferenceInfo.getTableReferenceDefinition();
 
-				_schemaContext = null;
+				_tableReferenceInfos.remove(
+					tableReferenceDefinition.getTable());
+
+				_combinedTableReferenceInfos = null;
 			}
 
 			_bundleContext.ungetService(serviceReference);
@@ -276,10 +296,12 @@ public class TableReferenceDefinitionManager {
 				tableReferenceDefinitionHelperImpl.getTableReferenceInfo();
 
 			if (tableReferenceInfo != null) {
-				synchronized (_tableReferenceInfos) {
-					_tableReferenceInfos.add(tableReferenceInfo);
+				synchronized (this) {
+					_tableReferenceInfos.put(
+						tableReferenceDefinition.getTable(),
+						tableReferenceInfo);
 
-					_schemaContext = null;
+					_combinedTableReferenceInfos = null;
 				}
 			}
 

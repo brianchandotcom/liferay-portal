@@ -24,6 +24,9 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.test.util.HitsAssert;
 
 import java.util.Locale;
@@ -34,8 +37,12 @@ import java.util.Objects;
  */
 public class DLSearchFixture {
 
-	public DLSearchFixture(IndexerRegistry indexerRegistry) {
+	public DLSearchFixture(
+		IndexerRegistry indexerRegistry,
+		SearchRequestBuilderFactory searchRequestBuilderFactory) {
+
 		_indexerRegistry = indexerRegistry;
+		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 	}
 
 	public SearchContext getSearchContext(String keywords, Locale locale)
@@ -61,6 +68,27 @@ public class DLSearchFixture {
 
 		return HitsAssert.assertOnlyOne(
 			search(getSearchContext(keywords, locale)));
+	}
+
+	public com.liferay.portal.search.document.Document searchOnlyOneSearchHit(
+			String keywords, Locale locale)
+		throws Exception {
+
+		SearchContext searchContext = getSearchContext(keywords, locale);
+
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder(searchContext);
+
+		searchRequestBuilder.fetchSource(true);
+
+		searchRequestBuilder.build();
+
+		search(searchContext);
+
+		SearchResponse searchResponse =
+			(SearchResponse)searchContext.getAttribute("search.response");
+
+		return HitsAssert.assertOnlyOne(searchResponse.getSearchHits());
 	}
 
 	public void setGroup(Group group) {
@@ -90,6 +118,7 @@ public class DLSearchFixture {
 	private Group _group;
 	private Indexer<?> _indexer;
 	private final IndexerRegistry _indexerRegistry;
+	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private User _user;
 
 }

@@ -23,16 +23,18 @@ import com.liferay.document.library.test.util.search.FileEntryBlueprint;
 import com.liferay.document.library.test.util.search.FileEntrySearchFixture;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -120,7 +122,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 		FileEntry fileEntry = addFileEntry(fileName_jp);
 
-		Document document = dlSearchFixture.searchOnlyOne(
+		Document document = dlSearchFixture.searchOnlyOneSearchHit(
 			searchTerm, LocaleUtil.JAPAN);
 
 		indexedFieldsFixture.postProcessDocument(document);
@@ -129,7 +131,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 		populateExpectedFieldValues(fileEntry, map);
 
-		FieldValuesAssert.assertFieldValues(map, document, searchTerm);
+		FieldValuesAssert.assertFieldValues(searchTerm, document, map);
 	}
 
 	protected String getContents(FileEntry fileEntry) throws Exception {
@@ -224,7 +226,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		populateLocalizedTitles(fileEntry, map);
 		populateViewCount(fileEntry, map);
 
-		indexedFieldsFixture.populatePriority("0.0", map);
+		indexedFieldsFixture.populatePriority("0.0", map, true);
 		indexedFieldsFixture.populateRoleIdFields(
 			fileEntry.getCompanyId(), DLFileEntry.class.getName(),
 			fileEntry.getPrimaryKey(), fileEntry.getGroupId(), null, map);
@@ -232,17 +234,22 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			DLFileEntry.class.getName(), fileEntry.getFileEntryId(), map);
 	}
 
-	protected void populateHttpHeader(
-		String fieldName, String value, String ddmStructureId,
-		Map<String, String> map) {
+	protected String populateHttpHeader(
+		String fieldName, String value, String ddmStructureId) {
 
-		String contentEncodingFieldName = StringBundler.concat(
-			"ddm__text__", ddmStructureId, "__HttpHeaders_", fieldName);
+		Map<String, String> ddmFields = HashMapBuilder.put(
+			"fieldName",
+			StringBundler.concat(
+				"ddm__text__", ddmStructureId, "__HttpHeaders_", fieldName)
+		).put(
+			"fieldValueText", value
+		).put(
+			"fieldValueText_String_sortable", StringUtil.toLowerCase(value)
+		).put(
+			"valueFieldName", "fieldValueText"
+		).build();
 
-		map.put(contentEncodingFieldName, value);
-		map.put(
-			contentEncodingFieldName + "_String_sortable",
-			StringUtil.toLowerCase(value));
+		return ddmFields.toString();
 	}
 
 	protected void populateHttpHeaders(
@@ -251,9 +258,19 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 		String ddmStructureId = String.valueOf(getDDMStructureId(fileEntry));
 
-		populateHttpHeader("CONTENT_ENCODING", "UTF-8", ddmStructureId, map);
-		populateHttpHeader(
-			"CONTENT_TYPE", "text/plain; charset=UTF-8", ddmStructureId, map);
+		String[] ddmFields = new String[2];
+
+		ddmFields[0] = populateHttpHeader(
+			"CONTENT_TYPE", "text/plain; charset=UTF-8", ddmStructureId);
+		ddmFields[1] = populateHttpHeader(
+			"CONTENT_ENCODING", "UTF-8", ddmStructureId);
+
+		map.put(
+			"ddmFields",
+			StringBundler.concat(
+				StringPool.OPEN_BRACKET, ddmFields[0],
+				StringPool.COMMA_AND_SPACE, ddmFields[1],
+				StringPool.CLOSE_BRACKET));
 	}
 
 	protected void populateLocalizedTitles(

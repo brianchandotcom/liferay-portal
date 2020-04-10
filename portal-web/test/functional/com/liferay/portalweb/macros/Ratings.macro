@@ -13,6 +13,18 @@ definition {
 		}
 	}
 
+	macro rateStarPG {
+		Click(locator1 = "Ratings#YOUR_RATING_STAR");
+
+		Click.clickNoMouseOver(
+			key_ratingStarCount = "${ratingStarCount}",
+			locator1 = "Ratings#YOUR_RATING_STAR_COUNT");
+
+		AssertElementPresent(
+			key_ratingStarCount = "${ratingStarCount}",
+			locator1 = "Ratings#YOUR_RATING_STAR_RESULT");
+	}
+
 	macro viewRating {
 		if (isSet(ratingResult)) {
 			if (isSet(commentRating)) {
@@ -28,6 +40,21 @@ definition {
 					value1 = "${voteCount}");
 			}
 		}
+	}
+
+	macro viewRateStarPG {
+		AssertElementPresent(
+			key_ratingStarCount = "${ratingStarCount}",
+			locator1 = "Ratings#YOUR_RATING_STAR_RESULT");
+
+		AssertTextEquals(
+			key_ratingStarCount = "${ratingStarCount}",
+			locator1 = "Ratings#YOUR_RATING_STAR_RESULT_COUNT",
+			value1 = "${ratingStarCount}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Ratings#AVERAGE_STAR_RESULT",
+			value1 = "${averageRatingStarCount}");
 	}
 
 	macro viewRatingReadOnly {

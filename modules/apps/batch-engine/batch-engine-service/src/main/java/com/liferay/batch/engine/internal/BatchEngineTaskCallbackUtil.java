@@ -43,7 +43,8 @@ public class BatchEngineTaskCallbackUtil {
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
 		try (CloseableHttpClient closeableHttpClient =
-				httpClientBuilder.build()) {
+				httpClientBuilder.useSystemProperties(
+				).build()) {
 
 			HttpPost httpPost = new HttpPost(callbackURL);
 

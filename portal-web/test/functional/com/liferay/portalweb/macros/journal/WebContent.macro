@@ -662,7 +662,10 @@ definition {
 		}
 
 		if (isSet(description)) {
-			AlloyEditor.addDescription(description = "${description}");
+			Type.typeCKEditorWaitForCKEditor(
+				key_fieldLabel = "Summary",
+				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
+				value1 = "${description}");
 		}
 
 		if (isSet(templateName)) {

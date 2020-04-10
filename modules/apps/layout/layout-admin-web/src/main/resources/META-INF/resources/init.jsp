@@ -117,6 +117,7 @@ page import="com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants"
 page import="com.liferay.portal.kernel.template.StringTemplateResource" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
@@ -138,8 +139,7 @@ page import="com.liferay.segments.exception.RequiredSegmentsExperienceException"
 page import="com.liferay.site.navigation.model.SiteNavigationMenu" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Objects" %><%@

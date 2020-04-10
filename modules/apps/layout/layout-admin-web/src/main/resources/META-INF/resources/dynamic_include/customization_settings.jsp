@@ -21,9 +21,9 @@ String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.
 
 boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(CustomizationSettingsControlMenuJSPDynamicInclude.CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION));
 
-Map<String, Object> data = new HashMap<>();
-
-data.put("qa-id", "customizations");
+Map<String, Object> data = HashMapBuilder.<String, Object>put(
+	"qa-id", "customizations"
+).build();
 %>
 
 <div id="<%= portletNamespace %>customizationBar">

@@ -30,13 +30,13 @@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.Map" %>
+<%@ page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.PortletRequest" %><%@

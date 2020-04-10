@@ -19,9 +19,9 @@
 <%
 String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES);
 
-Map<String, Object> data = new HashMap<>();
-
-data.put("qa-id", "info");
+Map<String, Object> data = HashMapBuilder.<String, Object>put(
+	"qa-id", "info"
+).build();
 %>
 
 <li class="control-menu-nav-item">

@@ -683,6 +683,14 @@ definition {
 	}
 
 	macro addWithTagCP {
+		for (var key_panel : list "Basic Information,Default Template,Display Page Template,Featured Image ") {
+			if ((IsElementPresent(locator1 = "Panel#PANEL_EXPANDED")) && (IsVisible(locator1 = "Panel#PANEL_EXPANDED"))) {
+				AssertClick(
+					locator1 = "Panel#PANEL_EXPANDED",
+					value1 = "${key_panel}");
+			}
+		}
+
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
 			webContentTitle = "${webContentTitle}");

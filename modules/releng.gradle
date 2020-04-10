@@ -794,7 +794,11 @@ syncAppProperties {
 		appPropertiesFileTree.each {
 			File appPropertiesFile ->
 
-			appPropertiesFile.text = appPropertiesFile.text.replaceFirst(~/app.portal.build=.+/, "app.portal.build=" + releaseProperties.getProperty("release.info.build"))
+			File markerFile = new File(appPropertiesFile.parentFile, ".app-portal-build-ignore")
+
+			if (!markerFile.exists()) {
+				appPropertiesFile.text = appPropertiesFile.text.replaceFirst(~/app.portal.build=.+/, "app.portal.build=" + releaseProperties.getProperty("release.info.build"))
+			}
 		}
 
 		if (FileUtil.exists(project, ".releng/dxp")) {
@@ -805,7 +809,11 @@ syncAppProperties {
 			appPropertiesFileTree.each {
 				File appPropertiesFile ->
 
-				appPropertiesFile.text = appPropertiesFile.text.replaceFirst(~/app.portal.build=.+/, "app.portal.build=" + releaseProperties.getProperty("release.info.build"))
+				File markerFile = new File(appPropertiesFile.parentFile, ".app-portal-build-ignore")
+
+				if (!markerFile.exists()) {
+					appPropertiesFile.text = appPropertiesFile.text.replaceFirst(~/app.portal.build=.+/, "app.portal.build=" + releaseProperties.getProperty("release.info.build"))
+				}
 			}
 		}
 	}

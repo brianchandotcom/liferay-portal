@@ -594,9 +594,7 @@ definition {
 
 		Panel.expandPanel(panel = "Filter");
 
-		Click(locator1 = "APConfiguration#RULE_BUILDER_ADD_CONDITION");
-
-		if (isSet(aqueryAndOperator)) {
+		if (isSet(queryAndOperator)) {
 			Select(
 				locator1 = "APConfiguration#FILTER_QUERY_AND_OPERATOR",
 				value1 = "${queryAndOperator}");

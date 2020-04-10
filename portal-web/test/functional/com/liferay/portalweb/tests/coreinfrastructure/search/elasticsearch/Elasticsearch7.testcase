@@ -302,6 +302,8 @@ definition {
 			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_federated.config",
 			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;federated&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
 
+		Pause(locator1 = "5000");
+
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -310,10 +312,6 @@ definition {
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
-
-		Pause(locator1 = "5000");
-
-		Refresh();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchAdmin#REMOTE_CLUSTER_NAME",

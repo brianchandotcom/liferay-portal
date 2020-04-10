@@ -101,9 +101,9 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		Queue<Map.Entry<Long, List<Long>>> queue = new LinkedList<>(
 			map.entrySet());
 
-		Map.Entry<Long, List<Long>> queueEntry = null;
+		while (queue.size() > 0) {
+			Map.Entry<Long, List<Long>> queueEntry = queue.poll();
 
-		while ((queueEntry = queue.poll()) != null) {
 			long childClassNameId = queueEntry.getKey();
 			List<Long> childPrimaryKeys = queueEntry.getValue();
 

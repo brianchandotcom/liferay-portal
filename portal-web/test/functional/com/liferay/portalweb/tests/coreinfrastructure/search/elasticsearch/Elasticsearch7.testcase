@@ -319,19 +319,16 @@ definition {
 			locator1 = "SearchAdmin#LOCAL_CLUSTER_NAME",
 			value1 = "LiferayElasticsearchClusterTwo");
 
-		var curlCluster1 = '''
-			http://localhost:9200/federated_index/_doc/1?pretty \
-				-H 'Content-Type: application/json' \
-				-d '{"demo" : "cluster one"}'
-		''';
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "apple");
 
 		var curlCluster2 = '''
 			http://localhost:9202/federated_index/_doc/1?pretty \
 				-H 'Content-Type: application/json' \
 				-d '{"demo" : "cluster two"}'
 		''';
-
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curlCluster1}");
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curlCluster2}");
 
@@ -370,6 +367,14 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/multiple-connections-page-1");
 
+		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
+
+		Refresh();
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "apple",
+			searchAssetType = "Web Content Article");
+
 		SearchPortlets.configureCustomFilter(
 			filterField = "demo",
 			filterQueryType = "Match",
@@ -378,17 +383,9 @@ definition {
 
 		SearchResultPortlet.configureSearchResults(fieldsToDisplay = "demo");
 
-		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
-
 		SearchPortlets.configureLowLevelSearchOptions(
 			connectionId = "remote",
 			indexes = "federated_index");
-
-		Refresh();
-
-		AssertElementPresent(
-			key_searchAssetTitle = "cluster one",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

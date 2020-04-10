@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_RATING</td>
-	<td>//dd[contains(@class,'sidebar-dd')]/div[contains(@class,'taglib-ratings')]</td>
+	<td>//dd[contains(@class,'sidebar-dd')]//div[contains(@class,'ratings-stars')]</td>
 	<td></td>
 </tr>
 <tr>

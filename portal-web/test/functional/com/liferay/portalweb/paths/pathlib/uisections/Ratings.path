@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>THUMB</td>
-	<td>//div[contains(@class,'ratings')]//a[contains(@class,'${key_ratingResult}')]</td>
+	<td>//div[contains(@class,'ratings-thumbs')]//button[contains(@title,'${key_ratingResult}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>THUMB_UP_OFF</td>
-	<td>//span[contains(@class,'thumb-up') and contains(@class,'rating-off')]</td>
+	<td>//div[contains(@class,'ratings-thumbs')]//button[contains(@disabled,'')]//span[*[name()='svg'][contains(@class,'thumbs-up')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>THUMB_DOWN_OFF</td>
-	<td>//span[contains(@class,'thumb-down') and contains(@class,'rating-off')]</td>
+	<td>//div[contains(@class,'ratings-thumbs')]//button[contains(@disabled,'')]//span[*[name()='svg'][contains(@class,'thumbs-down')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,7 +46,7 @@
 <!--COMMENT_RATING-->
 <tr>
 	<td>COMMENT_RATING_THUMB</td>
-	<td>//div[contains(@class,'comment')]//div[contains(@class,'ratings')]//a[contains(@class,'${key_ratingResult}')]</td>
+	<td>//div[contains(@class,'comment')]//div[contains(@class,'ratings')]//button[contains(@title,'${key_ratingResult}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -112,12 +112,32 @@
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='btn btn-unstyled rating-element icon-star-on'])[${key_ratingStarPosition}]</td>
+	<td>//div[contains(@class,'ratings-stars')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_COUNT</td>
+	<td>//div[contains(@class,'ratings-stars-dropdown')]//button[contains(.,'Rate this ${key_ratingStarCount} stars out of 5')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_DISABLE</td>
+	<td>//div[contains(@class,'ratings-stars')]//button[@title='Ratings are disabled in Staging']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_EMPTY</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='btn btn-unstyled rating-element icon-star-off'])[${key_emptyStarPosition}]</td>
+	<td>//div[contains(@class,'ratings-stars')]//button[contains(@title,'Vote')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_RESULT</td>
+	<td>//div[contains(@class,'ratings-stars')]//button[contains(@title,'You have rated this ${key_ratingStarCount} stars out of 5')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_RESULT_COUNT</td>
+	<td>//div[contains(@class,'ratings-stars')]//button[contains(@title,'You have rated this ${key_ratingStarCount} stars out of 5')]//span[@class='inline-item']</td>
 	<td></td>
 </tr>
 <tr>
@@ -183,17 +203,17 @@
 </tr>
 <tr>
 	<td>AVERAGE_STAR</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//span[@class='rating-element icon-star-on'])[${key_averageRatingStar}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVERAGE_STAR_DISABLE</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//span[(@class='rating-element icon-star-off') and (@title='Ratings are disabled in Staging')])[${key_averageDisableStar}]</td>
+	<td>//div[contains(@class,'ratings-stars')]//div[*[name()='svg'][contains(@class,'ratings-stars-average-icon')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY</td>
 	<td>xPath=(//div[contains(@id,'_ratingScore')]//span[@class='rating-element icon-star-off'])[${key_averageEmptyStar}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_RESULT</td>
+	<td>//div[contains(@class,'ratings-stars')]//span[contains(@class,'ratings-stars-average-text')]</td>
 	<td></td>
 </tr>
 </tbody>

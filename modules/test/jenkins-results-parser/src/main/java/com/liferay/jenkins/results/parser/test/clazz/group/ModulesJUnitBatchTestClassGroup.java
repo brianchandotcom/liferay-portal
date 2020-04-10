@@ -135,7 +135,8 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			}
 
 			for (String modulesTestBatchClassNamesExclude :
-					modulesTestBatchClassNamesExcludes.split(",")) {
+					JenkinsResultsParserUtil.getGlobsFromProperty(
+						modulesTestBatchClassNamesExcludes)) {
 
 				relevantTestClassNameRelativeExcludesGlobs.add(
 					JenkinsResultsParserUtil.combine(

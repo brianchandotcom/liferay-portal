@@ -712,18 +712,47 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private void _setTestClassNamesExcludesRelativeGlobs() {
-		testClassNamesExcludesPathMatchers.addAll(
-			getPathMatchers(
-				_getTestClassNamesExcludesPropertyValue(testSuiteName, false),
-				portalGitWorkingDirectory.getWorkingDirectory()));
+		String testClassNamesExcludesPropertyValue =
+			_getTestClassNamesExcludesPropertyValue(testSuiteName, false);
+
+		List<String> testClassNamesExcludesRelativeGlobs = new ArrayList<>();
+
+		if ((testClassNamesExcludesPropertyValue != null) &&
+			!testClassNamesExcludesPropertyValue.isEmpty()) {
+
+			Collections.addAll(
+				testClassNamesExcludesRelativeGlobs,
+				JenkinsResultsParserUtil.getGlobsFromProperty(
+					testClassNamesExcludesPropertyValue));
+		}
+
+		if (testRelevantChanges) {
+			testClassNamesExcludesRelativeGlobs.addAll(
+				getRelevantTestClassNamesRelativeExcludesGlobs());
+		}
 
 		if (includeStableTestSuite && isStableTestSuiteBatch()) {
-			testClassNamesExcludesPathMatchers.addAll(
-				getPathMatchers(
-					_getTestClassNamesExcludesPropertyValue(
-						NAME_STABLE_TEST_SUITE, false),
-					portalGitWorkingDirectory.getWorkingDirectory()));
+			String stableTestClassNamesExcludesPropertyValue =
+				_getTestClassNamesExcludesPropertyValue(
+					NAME_STABLE_TEST_SUITE, false);
+
+			if ((stableTestClassNamesExcludesPropertyValue != null) &&
+				!stableTestClassNamesExcludesPropertyValue.isEmpty()) {
+
+				Collections.addAll(
+					testClassNamesExcludesRelativeGlobs,
+					JenkinsResultsParserUtil.getGlobsFromProperty(
+						stableTestClassNamesExcludesPropertyValue));
+			}
 		}
+
+		testClassNamesExcludesPathMatchers.addAll(
+			JenkinsResultsParserUtil.toPathMatchers(
+				JenkinsResultsParserUtil.combine(
+					JenkinsResultsParserUtil.getCanonicalPath(
+						_rootWorkingDirectory),
+					File.separator),
+				testClassNamesExcludesRelativeGlobs.toArray(new String[0])));
 	}
 
 	private void _setTestClassNamesIncludesRelativeGlobs() {

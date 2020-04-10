@@ -23,14 +23,14 @@ taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetTermDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.user.facet.configuration.UserFacetPortletInstanceConfiguration" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <portlet:defineObjects />
@@ -44,10 +44,11 @@ if (userSearchFacetDisplayContext.isRenderNothing()) {
 
 UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = userSearchFacetDisplayContext.getUserFacetPortletInstanceConfiguration();
 
-Map<String, Object> contextObjects = new HashMap<String, Object>();
-
-contextObjects.put("namespace", renderResponse.getNamespace());
-contextObjects.put("userSearchFacetDisplayContext", userSearchFacetDisplayContext);
+Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+	"namespace", renderResponse.getNamespace()
+).put(
+	"userSearchFacetDisplayContext", userSearchFacetDisplayContext
+).build();
 
 List<UserSearchFacetTermDisplayContext> userSearchFacetTermDisplayContexts = userSearchFacetDisplayContext.getTermDisplayContexts();
 %>

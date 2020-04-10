@@ -25,14 +25,14 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.search.Document" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.search.results.configuration.SearchResultsPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletDisplayContext" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <portlet:defineObjects />
@@ -50,11 +50,13 @@ List<SearchResultSummaryDisplayContext> searchResultSummaryDisplayContexts = sea
 
 SearchContainer<Document> searchContainer = searchResultsPortletDisplayContext.getSearchContainer();
 
-Map<String, Object> contextObjects = new HashMap<String, Object>();
-
-contextObjects.put("namespace", renderResponse.getNamespace());
-contextObjects.put("searchContainer", searchContainer);
-contextObjects.put("searchResultsPortletDisplayContext", searchResultsPortletDisplayContext);
+Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+	"namespace", renderResponse.getNamespace()
+).put(
+	"searchContainer", searchContainer
+).put(
+	"searchResultsPortletDisplayContext", searchResultsPortletDisplayContext
+).build();
 %>
 
 <c:choose>

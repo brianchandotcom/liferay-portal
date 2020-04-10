@@ -23,14 +23,14 @@ taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.category.facet.configuration.CategoryFacetPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetTermDisplayContext" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <portlet:defineObjects />
@@ -44,10 +44,11 @@ if (assetCategoriesSearchFacetDisplayContext.isRenderNothing()) {
 
 CategoryFacetPortletInstanceConfiguration categoryFacetPortletInstanceConfiguration = assetCategoriesSearchFacetDisplayContext.getCategoryFacetPortletInstanceConfiguration();
 
-Map<String, Object> contextObjects = new HashMap<String, Object>();
-
-contextObjects.put("assetCategoriesSearchFacetDisplayContext", assetCategoriesSearchFacetDisplayContext);
-contextObjects.put("namespace", renderResponse.getNamespace());
+Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+	"assetCategoriesSearchFacetDisplayContext", assetCategoriesSearchFacetDisplayContext
+).put(
+	"namespace", renderResponse.getNamespace()
+).build();
 
 List<AssetCategoriesSearchFacetTermDisplayContext> assetCategoriesSearchFacetTermDisplayContexts = assetCategoriesSearchFacetDisplayContext.getTermDisplayContexts();
 %>

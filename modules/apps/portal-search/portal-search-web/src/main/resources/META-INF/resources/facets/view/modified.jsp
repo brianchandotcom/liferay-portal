@@ -83,10 +83,11 @@ int index = 0;
 					<li class="default facet-value">
 
 						<%
-						Map<String, Object> data = new HashMap<>();
-
-						data.put("selection", 0);
-						data.put("value", StringPool.BLANK);
+						Map<String, Object> data = HashMapBuilder.<String, Object>put(
+							"selection", 0
+						).put(
+							"value", StringPool.BLANK
+						).build();
 						%>
 
 						<aui:a cssClass='<%= (Validator.isNull(fieldParamSelection) || fieldParamSelection.equals("0")) ? "facet-term-selected" : "facet-term-unselected" %>' href="javascript:;">
@@ -113,10 +114,11 @@ int index = 0;
 								rangeCssClass = "facet-term-selected";
 							}
 
-							data = new HashMap<>();
-
-							data.put("selection", index);
-							data.put("value", HtmlUtil.escape(range));
+							data = HashMapBuilder.<String, Object>put(
+								"selection", index
+							).put(
+								"value", HtmlUtil.escape(range)
+							).build();
 							%>
 
 							<aui:a cssClass="<%= rangeCssClass %>" data="<%= data %>" href="javascript:;">

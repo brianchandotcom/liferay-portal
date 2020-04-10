@@ -24,6 +24,7 @@ taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -31,7 +32,6 @@ page import="com.liferay.portal.search.web.internal.custom.filter.configuration.
 page import="com.liferay.portal.search.web.internal.custom.filter.display.context.CustomFilterDisplayContext" %>
 
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.HashMap" %><%@
 page import="java.util.Map" %>
 
 <portlet:defineObjects />
@@ -42,10 +42,11 @@ CustomFilterDisplayContext customFilterDisplayContext = (CustomFilterDisplayCont
 CustomFilterPortletInstanceConfiguration
 	customFilterPortletInstanceConfiguration = customFilterDisplayContext.getCustomFilterPortletInstanceConfiguration();
 
-Map<String, Object> contextObjects = new HashMap<String, Object>();
-
-contextObjects.put("namespace", renderResponse.getNamespace());
-contextObjects.put("customFilterDisplayContext", customFilterDisplayContext);
+Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+	"customFilterDisplayContext", customFilterDisplayContext
+).put(
+	"namespace", renderResponse.getNamespace()
+).build();
 %>
 
 <c:if test="<%= !customFilterDisplayContext.isRenderNothing() %>">

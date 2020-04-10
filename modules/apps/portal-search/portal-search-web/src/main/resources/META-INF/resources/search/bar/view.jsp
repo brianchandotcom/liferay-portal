@@ -25,6 +25,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
@@ -33,7 +34,6 @@ page import="com.liferay.portal.search.web.internal.search.bar.portlet.SearchBar
 page import="com.liferay.portal.search.web.internal.search.bar.portlet.configuration.SearchBarPortletInstanceConfiguration" %>
 
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
@@ -64,10 +64,11 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 
 			List<SearchBarPortletDisplayContext> entries = new ArrayList<>();
 
-			Map<String, Object> contextObjects = new HashMap<String, Object>();
-
-			contextObjects.put("namespace", renderResponse.getNamespace());
-			contextObjects.put("searchBarPortletDisplayContext", searchBarPortletDisplayContext);
+			Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+				"namespace", renderResponse.getNamespace()
+			).put(
+				"searchBarPortletDisplayContext", searchBarPortletDisplayContext
+			).build();
 			%>
 
 			<liferay-ddm:template-renderer

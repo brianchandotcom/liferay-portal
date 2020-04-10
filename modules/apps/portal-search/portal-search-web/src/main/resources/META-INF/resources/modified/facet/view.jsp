@@ -23,6 +23,7 @@ taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.modified.facet.configuration.ModifiedFacetPortletInstanceConfiguration" %><%@
@@ -30,8 +31,7 @@ page import="com.liferay.portal.search.web.internal.modified.facet.display.conte
 page import="com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetTermDisplayContext" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <portlet:defineObjects />
@@ -48,12 +48,15 @@ ModifiedFacetCalendarDisplayContext modifiedFacetCalendarDisplayContext = modifi
 ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfiguration = modifiedFacetDisplayContext.getModifiedFacetPortletInstanceConfiguration();
 List<ModifiedFacetTermDisplayContext> modifiedFacetTermDisplayContexts = modifiedFacetDisplayContext.getModifiedFacetTermDisplayContexts();
 
-Map<String, Object> contextObjects = new HashMap<String, Object>();
-
-contextObjects.put("customRangeModifiedFacetTermDisplayContext", customRangeModifiedFacetTermDisplayContext);
-contextObjects.put("modifiedFacetCalendarDisplayContext", modifiedFacetCalendarDisplayContext);
-contextObjects.put("modifiedFacetDisplayContext", modifiedFacetDisplayContext);
-contextObjects.put("namespace", renderResponse.getNamespace());
+Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+	"customRangeModifiedFacetTermDisplayContext", customRangeModifiedFacetTermDisplayContext
+).put(
+	"modifiedFacetCalendarDisplayContext", modifiedFacetCalendarDisplayContext
+).put(
+	"modifiedFacetDisplayContext", modifiedFacetDisplayContext
+).put(
+	"namespace", renderResponse.getNamespace()
+).build();
 %>
 
 <c:if test="<%= !modifiedFacetDisplayContext.isRenderNothing() %>">

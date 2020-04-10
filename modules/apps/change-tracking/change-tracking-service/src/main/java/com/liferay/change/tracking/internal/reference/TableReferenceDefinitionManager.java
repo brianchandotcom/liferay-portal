@@ -54,17 +54,7 @@ public class TableReferenceDefinitionManager {
 			return null;
 		}
 
-		TableReferenceDefinition<?> tableReferenceDefinition =
-			tableReferenceInfo.getTableReferenceDefinition();
-
-		PersistedModelLocalService persistedModelLocalService =
-			tableReferenceDefinition.getPersistedModelLocalService();
-
-		BasePersistence<?> basePersistence =
-			persistedModelLocalService.getBasePersistence();
-
-		return _classNameLocalService.getClassNameId(
-			basePersistence.getModelClass());
+		return _getClassNameId(tableReferenceInfo);
 	}
 
 	public Map<Long, TableReferenceInfo<?>> getCombinedTableReferenceInfos() {
@@ -81,18 +71,8 @@ public class TableReferenceDefinitionManager {
 			for (TableReferenceInfo<?> tableReferenceInfo :
 					_tableReferenceInfos.values()) {
 
-				TableReferenceDefinition<?> tableReferenceDefinition =
-					tableReferenceInfo.getTableReferenceDefinition();
-
-				PersistedModelLocalService persistedModelLocalService =
-					tableReferenceDefinition.getPersistedModelLocalService();
-
-				BasePersistence<?> basePersistence =
-					persistedModelLocalService.getBasePersistence();
-
 				combinedTableReferenceInfos.put(
-					_classNameLocalService.getClassNameId(
-						basePersistence.getModelClass()),
+					_getClassNameId(tableReferenceInfo),
 					_getCombinedTableReferenceInfo(tableReferenceInfo));
 			}
 
@@ -132,6 +112,20 @@ public class TableReferenceDefinitionManager {
 		}
 
 		return copy;
+	}
+
+	private Long _getClassNameId(TableReferenceInfo<?> tableReferenceInfo) {
+		TableReferenceDefinition<?> tableReferenceDefinition =
+			tableReferenceInfo.getTableReferenceDefinition();
+
+		PersistedModelLocalService persistedModelLocalService =
+			tableReferenceDefinition.getPersistedModelLocalService();
+
+		BasePersistence<?> basePersistence =
+			persistedModelLocalService.getBasePersistence();
+
+		return _classNameLocalService.getClassNameId(
+			basePersistence.getModelClass());
 	}
 
 	private <T extends Table<T>> TableReferenceInfo<T>

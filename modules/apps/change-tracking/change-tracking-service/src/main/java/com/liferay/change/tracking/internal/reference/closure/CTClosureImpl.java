@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * @author Preston Crary
@@ -48,7 +49,7 @@ public class CTClosureImpl implements CTClosure {
 			return Collections.emptyMap();
 		}
 
-		Set<Node> set = new HashSet<>();
+		Set<Node> excludedNodes = new HashSet<>();
 
 		Queue<Node> queue = new LinkedList<>(nodes);
 
@@ -59,25 +60,14 @@ public class CTClosureImpl implements CTClosure {
 
 			if (childNodes != null) {
 				for (Node childNode : childNodes) {
-					if (set.add(childNode)) {
+					if (excludedNodes.add(childNode)) {
 						queue.add(childNode);
 					}
 				}
 			}
 		}
 
-		Map<Long, List<Long>> children = new HashMap<>();
-
-		for (Node node : nodes) {
-			if (!set.contains(node)) {
-				List<Long> primaryKeys = children.computeIfAbsent(
-					node.getClassNameId(), key -> new ArrayList<>());
-
-				primaryKeys.add(node.getPrimaryKey());
-			}
-		}
-
-		return children;
+		return _getPrimaryKeysMap(nodes, node -> excludedNodes.contains(node));
 	}
 
 	@Override
@@ -87,16 +77,27 @@ public class CTClosureImpl implements CTClosure {
 
 	@Override
 	public Map<Long, List<Long>> getRoots() {
-		Map<Long, List<Long>> children = new HashMap<>();
+		return _getPrimaryKeysMap(
+			_closureMap.get(Node.ROOT_NODE), node -> false);
+	}
 
-		for (Node node : _closureMap.get(Node.ROOT_NODE)) {
-			List<Long> primaryKeys = children.computeIfAbsent(
+	private Map<Long, List<Long>> _getPrimaryKeysMap(
+		Collection<Node> nodes, Function<Node, Boolean> skipFunction) {
+
+		Map<Long, List<Long>> primaryKeysMap = new HashMap<>();
+
+		for (Node node : nodes) {
+			if (skipFunction.apply(node)) {
+				continue;
+			}
+
+			List<Long> primaryKeys = primaryKeysMap.computeIfAbsent(
 				node.getClassNameId(), key -> new ArrayList<>());
 
 			primaryKeys.add(node.getPrimaryKey());
 		}
 
-		return children;
+		return primaryKeysMap;
 	}
 
 	private final Map<Node, Collection<Node>> _closureMap;

@@ -79,7 +79,7 @@ definition {
 			locator1 = "Button#RESTORE_VALUES",
 			value1 = "Restore Values");
 
-		Check.checkToggleSwitch(
+		Check.checkToggleSwitchAndPause(
 			checkboxName = "${checkboxName}",
 			locator1 = "Fragment#FRAGMENT_CHECKBOX");
 

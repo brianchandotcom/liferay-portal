@@ -481,13 +481,13 @@ definition {
 			vocabularyName2 = "Vocabulary Name 2");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ADTTagsNavigationPortlet {
 
-		// Ignore test until LRQA-54932 is resolved
+		// Quarantine test until LRQA-54932 is resolved
 
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Content and Application Templates,Tags";
 
 		JSONLayout.addWidgetToPublicLayout(

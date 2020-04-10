@@ -299,12 +299,10 @@ definition {
 		property remote.elasticsearch.enabled = "true";
 
 		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_federated.config",
-			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;federated&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
+			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-connection2.config",
+			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;connection2&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
 
 		Pause(locator1 = "5000");
-
-		var portalURL = PropsUtil.get("portal.url");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -324,13 +322,15 @@ definition {
 			groupName = "Guest",
 			title = "apple");
 
-		var curlCluster2 = '''
-			http://localhost:9202/federated_index/_doc/1?pretty \
+		var curlSecondConnection = '''
+			http://localhost:9202/connection2_index/_doc/1?pretty \
 				-H 'Content-Type: application/json' \
-				-d '{"demo" : "cluster two"}'
+				-d '{"connection2_field" : "multiple connections is cool"}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curlCluster2}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curlSecondConnection}");
+
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -376,21 +376,21 @@ definition {
 			searchAssetType = "Web Content Article");
 
 		SearchPortlets.configureCustomFilter(
-			filterField = "demo",
+			filterField = "connection2_field",
 			filterQueryType = "Match",
-			filterValue = "cluster",
+			filterValue = "cool",
 			occur = "must");
 
-		SearchResultPortlet.configureSearchResults(fieldsToDisplay = "demo");
+		SearchResultPortlet.configureSearchResults(fieldsToDisplay = "connection2_field");
 
 		SearchPortlets.configureLowLevelSearchOptions(
-			connectionId = "federated",
-			indexes = "federated_index");
+			connectionId = "connection2",
+			indexes = "connection2_index");
 
 		Refresh();
 
 		AssertElementPresent(
-			key_searchAssetTitle = "cluster two",
+			key_searchAssetTitle = "multiple connections is cool",
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
 	}
 

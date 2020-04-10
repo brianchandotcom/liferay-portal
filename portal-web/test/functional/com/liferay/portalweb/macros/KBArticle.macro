@@ -874,30 +874,6 @@ definition {
 			value1 = "Select");
 	}
 
-	macro rateArticle1Star {
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#DISPLAY_TITLE",
-			value1 = "${kbArticleTitle}");
-
-		Click.clickWaitForInlineCKEditorNoMouseOver(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_1");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_1");
-
-		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_5");
-	}
-
-	macro rateArticleFrom1StarTo5Star {
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#DISPLAY_TITLE",
-			value1 = "${kbArticleTitle}");
-
-		Click.clickWaitForInlineCKEditorNoMouseOver(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_4");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_5");
-
-		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_1");
-	}
-
 	macro selectAllCP {
 		PortletEntry.selectAll();
 
@@ -1047,70 +1023,6 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
-	}
-
-	macro viewArticle1StarRatingPG {
-		AssertTextEquals(
-			locator1 = "Ratings#AVERAGE_LABEL",
-			value1 = "Average (1 Vote)");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_1");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_2");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_3");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_4");
-
-		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_5");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_1");
-
-		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR_2");
-
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR_EMPTY_1");
-
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR_EMPTY_2");
-
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR_EMPTY_3");
-
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR_EMPTY_4");
-
-		AssertElementNotPresent(locator1 = "Ratings#AVERAGE_STAR_EMPTY_5");
-
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR_1");
-
-		AssertElementNotPresent(locator1 = "Ratings#AVERAGE_STAR_2");
-	}
-
-	macro viewArticle5StarRatingPG {
-		AssertTextEquals(
-			locator1 = "Ratings#AVERAGE_LABEL",
-			value1 = "Average (1 Vote)");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_1");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_2");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_3");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_4");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_5");
-
-		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_1");
-
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR_1");
-
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR_2");
-
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR_3");
-
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR_4");
-
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR_5");
-
-		AssertElementNotPresent(locator1 = "Ratings#AVERAGE_STAR_EMPTY_1");
 	}
 
 	macro viewArticleHistoryPG {

@@ -41,7 +41,7 @@ definition {
 	}
 
 	macro viewRateStarReadOnly {
-		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR");
+		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
 
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_DISABLE");
 		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR");

@@ -437,9 +437,13 @@ definition {
 			locator1 = "Button#REPLY",
 			value1 = "Reply");
 
-		AssertElementPresent(locator1 = "Ratings#THUMB_UP");
+		AssertElementPresent(
+			key_ratingResult = "Rate this as good",
+			locator1 = "Ratings#THUMB");
 
-		AssertElementPresent(locator1 = "Ratings#THUMB_DOWN");
+		AssertElementPresent(
+			key_ratingResult = "Rate this as bad",
+			locator1 = "Ratings#THUMB");
 	}
 
 	macro viewConfigureScopePG {

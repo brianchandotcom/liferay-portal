@@ -777,14 +777,6 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	macro rate4StarsPG {
-		var key_wikiPageTitle = "${wikiPageTitle}";
-
-		Click.clickNoMouseOver(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_4");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_4");
-	}
-
 	macro removeAttachmentViaPageEdit {
 		AssertClick(
 			locator1 = "Link#EDIT",
@@ -1191,9 +1183,9 @@ definition {
 
 		AssertElementPresent(locator1 = "Button#SUBSCRIBE");
 
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_LABEL");
+		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR");
 
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_LABEL");
+		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR");
 	}
 
 	macro viewFrontPageDefaultCP {
@@ -1461,34 +1453,6 @@ definition {
 		AssertTextNotPresent(value1 = "Please configure this portlet to make it visible to all users.");
 
 		AssertElementNotPresent(locator1 = "Message#INFO_1");
-	}
-
-	macro viewRate4StarsPG {
-		var key_wikiPageTitle = "${wikiPageTitle}";
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_1");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_2");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_3");
-
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_4");
-
-		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR_5");
-
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR_1");
-
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR_2");
-
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR_3");
-
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR_4");
-
-		AssertElementNotPresent(locator1 = "Ratings#AVERAGE_STAR_5");
-
-		AssertTextEquals(
-			locator1 = "Ratings#AVERAGE_LABEL",
-			value1 = "Average (1 Vote)");
 	}
 
 	macro viewRedirectLinkPG {

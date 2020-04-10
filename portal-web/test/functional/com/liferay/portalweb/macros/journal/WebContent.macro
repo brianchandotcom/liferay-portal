@@ -1446,7 +1446,9 @@ definition {
 			navTab = "${navTab}",
 			type = "Audio");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "content",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 		AssertElementPresent(locator1 = "CKEditor#CONTENT_AUDIO_LINK_IMAGE");
 
@@ -1461,7 +1463,9 @@ definition {
 			navTab = "${navTab}",
 			type = "Video");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "content",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 		AssertElementPresent(locator1 = "CKEditor#CONTENT_VIDEO_LINK_IMAGE");
 

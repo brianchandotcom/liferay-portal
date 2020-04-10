@@ -111,10 +111,11 @@ else {
 				<liferay-ui:search-container-column-text>
 
 					<%
-					Map<String, Object> data = new HashMap<>();
-
-					data.put("categoryId", curCategory.getCategoryId());
-					data.put("name", curCategory.getName());
+					Map<String, Object> data = HashMapBuilder.<String, Object>put(
+						"categoryId", curCategory.getCategoryId()
+					).put(
+						"name", curCategory.getName()
+					).build();
 					%>
 
 					<aui:button cssClass="selector-button" data="<%= data %>" value="select" />
@@ -124,10 +125,11 @@ else {
 			<aui:button-row>
 
 				<%
-				Map<String, Object> data = new HashMap<>();
-
-				data.put("categoryId", categoryId);
-				data.put("name", categoryName);
+				Map<String, Object> data = HashMapBuilder.<String, Object>put(
+					"categoryId", categoryId
+				).put(
+					"name", categoryName
+				).build();
 				%>
 
 				<aui:button cssClass="selector-button" data="<%= data %>" value="select-this-category" />

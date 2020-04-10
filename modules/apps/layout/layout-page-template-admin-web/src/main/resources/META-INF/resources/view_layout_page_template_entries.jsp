@@ -46,9 +46,9 @@ LayoutPageTemplateManagementToolbarDisplayContext layoutPageTemplateManagementTo
 			<%
 			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
 
-			Map<String, Object> rowData = new HashMap<>();
-
-			rowData.put("actions", layoutPageTemplateManagementToolbarDisplayContext.getAvailableActions(layoutPageTemplateEntry));
+			Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+				"actions", layoutPageTemplateManagementToolbarDisplayContext.getAvailableActions(layoutPageTemplateEntry)
+			).build();
 
 			row.setData(rowData);
 			%>

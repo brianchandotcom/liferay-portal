@@ -56,9 +56,9 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 					<c:if test="<%= curLayout != null %>">
 
 						<%
-						Map<String, String> data = new HashMap<>();
-
-						data.put("href", layoutClassedModelUsagesDisplayContext.getPreviewURL(layoutClassedModelUsage));
+						Map<String, String> data = HashMapBuilder.put(
+							"href", layoutClassedModelUsagesDisplayContext.getPreviewURL(layoutClassedModelUsage)
+						).build();
 						%>
 
 						<clay:button

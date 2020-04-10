@@ -56,9 +56,9 @@ LayoutPrototypeManagementToolbarDisplayContext layoutPrototypeManagementToolbarD
 
 			row.setCssClass("entry-card lfr-asset-item");
 
-			Map<String, Object> rowData = new HashMap<>();
-
-			rowData.put("actions", layoutPrototypeManagementToolbarDisplayContext.getAvailableActions(layoutPrototype));
+			Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+				"actions", layoutPrototypeManagementToolbarDisplayContext.getAvailableActions(layoutPrototype)
+			).build();
 
 			row.setData(rowData);
 			%>

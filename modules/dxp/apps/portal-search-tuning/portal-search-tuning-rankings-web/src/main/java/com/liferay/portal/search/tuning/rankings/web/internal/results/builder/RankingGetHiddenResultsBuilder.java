@@ -33,12 +33,14 @@ import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
+import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingResultUtil;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author André de Oliveira
@@ -51,7 +53,7 @@ public class RankingGetHiddenResultsBuilder {
 		FastDateFormatFactory fastDateFormatFactory, Queries queries,
 		RankingIndexName rankingIndexName,
 		RankingIndexReader rankingIndexReader, ResourceActions resourceActions,
-		ResourceRequest resourceRequest,
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 		SearchEngineAdapter searchEngineAdapter) {
 
 		_dlAppLocalService = dlAppLocalService;
@@ -61,6 +63,7 @@ public class RankingGetHiddenResultsBuilder {
 		_rankingIndexReader = rankingIndexReader;
 		_resourceActions = resourceActions;
 		_resourceRequest = resourceRequest;
+		_resourceResponse = resourceResponse;
 		_searchEngineAdapter = searchEngineAdapter;
 	}
 
@@ -162,14 +165,27 @@ public class RankingGetHiddenResultsBuilder {
 			_dlAppLocalService, _fastDateFormatFactory, _resourceActions,
 			_resourceRequest);
 
-		return rankingJSONBuilder.document(
+		return rankingJSONBuilder.deleted(
+			_isAssetDeleted(document)
+		).document(
 			document
 		).hidden(
 			true
+		).viewURL(
+			_getViewURL(document)
 		).build();
 	}
 
 	protected static final String LIFERAY_DOCUMENT_TYPE = "LiferayDocumentType";
+
+	private String _getViewURL(Document document) {
+		return RankingResultUtil.getRankingResultViewURL(
+			document, _resourceRequest, _resourceResponse, true);
+	}
+
+	private boolean _isAssetDeleted(Document document) {
+		return RankingResultUtil.isAssetDeleted(document);
+	}
 
 	private final DLAppLocalService _dlAppLocalService;
 	private final FastDateFormatFactory _fastDateFormatFactory;
@@ -180,6 +196,7 @@ public class RankingGetHiddenResultsBuilder {
 	private final RankingIndexReader _rankingIndexReader;
 	private final ResourceActions _resourceActions;
 	private final ResourceRequest _resourceRequest;
+	private final ResourceResponse _resourceResponse;
 	private final SearchEngineAdapter _searchEngineAdapter;
 	private int _size;
 

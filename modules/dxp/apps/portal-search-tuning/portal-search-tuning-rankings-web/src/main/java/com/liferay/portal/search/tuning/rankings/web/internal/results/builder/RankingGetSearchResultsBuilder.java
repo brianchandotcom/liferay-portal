@@ -28,10 +28,12 @@ import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingResultUtil;
 
 import java.util.stream.Stream;
 
 import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author André de Oliveira
@@ -44,7 +46,7 @@ public class RankingGetSearchResultsBuilder {
 		DLAppLocalService dlAppLocalService,
 		FastDateFormatFactory fastDateFormatFactory, Queries queries,
 		ResourceActions resourceActions, ResourceRequest resourceRequest,
-		Searcher searcher,
+		ResourceResponse resourceResponse, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory) {
 
 		_complexQueryPartBuilderFactory = complexQueryPartBuilderFactory;
@@ -53,6 +55,7 @@ public class RankingGetSearchResultsBuilder {
 		_queries = queries;
 		_resourceActions = resourceActions;
 		_resourceRequest = resourceRequest;
+		_resourceResponse = resourceResponse;
 		_searcher = searcher;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 	}
@@ -132,9 +135,22 @@ public class RankingGetSearchResultsBuilder {
 			_dlAppLocalService, _fastDateFormatFactory, _resourceActions,
 			_resourceRequest);
 
-		return rankingJSONBuilder.document(
+		return rankingJSONBuilder.deleted(
+			_isAssetDeleted(document)
+		).document(
 			document
+		).viewURL(
+			_getViewURL(document)
 		).build();
+	}
+
+	private String _getViewURL(Document document) {
+		return RankingResultUtil.getRankingResultViewURL(
+			document, _resourceRequest, _resourceResponse, true);
+	}
+
+	private boolean _isAssetDeleted(Document document) {
+		return RankingResultUtil.isAssetDeleted(document);
 	}
 
 	private long _companyId;
@@ -147,6 +163,7 @@ public class RankingGetSearchResultsBuilder {
 	private String _queryString;
 	private final ResourceActions _resourceActions;
 	private final ResourceRequest _resourceRequest;
+	private final ResourceResponse _resourceResponse;
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private int _size;

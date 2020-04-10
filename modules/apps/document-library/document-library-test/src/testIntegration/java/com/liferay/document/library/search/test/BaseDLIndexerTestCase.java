@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.model.uid.UIDFactory;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
 import com.liferay.portal.test.rule.Inject;
 
@@ -55,7 +56,8 @@ public abstract class BaseDLIndexerTestCase {
 	}
 
 	protected DLSearchFixture createDLSearchFixture() {
-		return new DLSearchFixture(indexerRegistry);
+		return new DLSearchFixture(
+			indexerRegistry, searchRequestBuilderFactory);
 	}
 
 	protected IndexedFieldsFixture createIndexedFieldsFixture() {
@@ -107,6 +109,9 @@ public abstract class BaseDLIndexerTestCase {
 
 	@Inject
 	protected SearchEngineHelper searchEngineHelper;
+
+	@Inject
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 	@Inject
 	protected UIDFactory uidFactory;

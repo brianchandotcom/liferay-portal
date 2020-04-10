@@ -53,9 +53,9 @@ if (Validator.isNotNull(keywords)) {
 					continue;
 				}
 
-				Map<String, Object> data = new HashMap<String, Object>();
-
-				data.put("delta", curDelta);
+				Map<String, Object> data = HashMapBuilder.<String, Object>put(
+					"delta", curDelta
+				).build();
 			%>
 
 				<li class="num-item <%= (delta == curDelta) ? "active" : StringPool.BLANK %>">
@@ -71,9 +71,9 @@ if (Validator.isNotNull(keywords)) {
 	<span class="float-right" id="<portlet:namespace />displayStyleContainer">
 
 		<%
-		Map<String, Object> data = new HashMap<String, Object>();
-
-		data.put("displaystyle", "icon");
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"displaystyle", "icon"
+		).build();
 		%>
 
 		<liferay-ui:icon
@@ -171,10 +171,11 @@ if (Validator.isNotNull(keywords)) {
 
 		boolean hasAddToPagePermission = PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.ADD_TO_PAGE);
 
-		Map<String, Object> itemData = new HashMap<String, Object>();
-
-		itemData.put("class-name", assetEntry.getClassName());
-		itemData.put("class-pk", assetEntry.getClassPK());
+		Map<String, Object> itemData = HashMapBuilder.<String, Object>put(
+			"class-name", assetEntry.getClassName()
+		).put(
+			"class-pk", assetEntry.getClassPK()
+		).build();
 
 		if (hasAddToPagePermission) {
 			itemData.put("draggable", true);

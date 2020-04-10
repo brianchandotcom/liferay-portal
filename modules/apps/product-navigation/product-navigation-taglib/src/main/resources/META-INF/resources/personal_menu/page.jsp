@@ -88,13 +88,17 @@ if (size != null) {
 	resourceURL.setParameter("portletId", themeDisplay.getPpid());
 	resourceURL.setResourceID("/get_personal_menu_items");
 
-	Map<String, Object> data = new HashMap<>();
-
-	data.put("color", color);
-	data.put("isImpersonated", themeDisplay.isImpersonated());
-	data.put("itemsURL", resourceURL.toString());
-	data.put("label", label);
-	data.put("size", size);
+	Map<String, Object> data = HashMapBuilder.<String, Object>put(
+		"color", color
+	).put(
+		"isImpersonated", themeDisplay.isImpersonated()
+	).put(
+		"itemsURL", resourceURL.toString()
+	).put(
+		"label", label
+	).put(
+		"size", size
+	).build();
 
 	if (user2.getPortraitId() > 0) {
 		data.put("userPortraitURL", user2.getPortraitURL(themeDisplay));

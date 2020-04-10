@@ -28,9 +28,9 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() %>">
 
 				<%
-				Map<String, Object> data = new HashMap<String, Object>();
-
-				data.put("qa-id", "staging");
+				Map<String, Object> data = HashMapBuilder.<String, Object>put(
+					"qa-id", "staging"
+				).build();
 				%>
 
 				<div class="float-right staging-links">

@@ -29,8 +29,7 @@ page import="com.liferay.product.navigation.control.menu.ProductNavigationContro
 page import="com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />

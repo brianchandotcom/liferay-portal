@@ -139,15 +139,21 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 							<c:when test="<%= layout.isTypePortlet() %>">
 
 								<%
-								Map<String, Object> data = new HashMap<String, Object>();
-
-								data.put("draggable", true);
-								data.put("id", renderResponse.getNamespace() + "portletItem" + portlet.getPortletId());
-								data.put("instanceable", portletInstanceable);
-								data.put("plid", plid);
-								data.put("portlet-id", portlet.getPortletId());
-								data.put("search", sb.toString().replace(':', '-'));
-								data.put("title", PortalUtil.getPortletTitle(portlet, application, locale));
+								Map<String, Object> data = HashMapBuilder.<String, Object>put(
+									"draggable", true
+								).put(
+									"id", renderResponse.getNamespace() + "portletItem" + portlet.getPortletId()
+								).put(
+									"instanceable", portletInstanceable
+								).put(
+									"plid", plid
+								).put(
+									"portlet-id", portlet.getPortletId()
+								).put(
+									"search", sb.toString().replace(':', '-')
+								).put(
+									"title", PortalUtil.getPortletTitle(portlet, application, locale)
+								).build();
 
 								String cssClass = "drag-content-item";
 
@@ -192,16 +198,23 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 												sb.append(matcher.group());
 											}
 
-											Map<String, Object> portletItemData = new HashMap<String, Object>();
-
-											portletItemData.put("draggable", true);
-											portletItemData.put("id", renderResponse.getNamespace() + "portletItem" + portletItem.getPortletItemId());
-											portletItemData.put("instanceable", portletInstanceable);
-											portletItemData.put("plid", plid);
-											portletItemData.put("portlet-id", portlet.getPortletId());
-											portletItemData.put("portlet-item-id", portletItem.getPortletItemId());
-											portletItemData.put("search", sb.toString().replace(':', '-'));
-											portletItemData.put("title", HtmlUtil.escape(portletItem.getName()));
+											Map<String, Object> portletItemData = HashMapBuilder.<String, Object>put(
+												"draggable", true
+											).put(
+												"id", renderResponse.getNamespace() + "portletItem" + portletItem.getPortletItemId()
+											).put(
+												"instanceable", portletInstanceable
+											).put(
+												"plid", plid
+											).put(
+												"portlet-id", portlet.getPortletId()
+											).put(
+												"portlet-item-id", portletItem.getPortletItemId()
+											).put(
+												"search", sb.toString().replace(':', '-')
+											).put(
+												"title", HtmlUtil.escape(portletItem.getName())
+											).build();
 										%>
 
 											<li class="lfr-archived-setup lfr-content-item" role="presentation">

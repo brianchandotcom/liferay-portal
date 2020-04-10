@@ -357,6 +357,57 @@ definition {
 			sourceURL = "${portalURL}/web/test-site-name/new-source-page");
 	}
 
+	@description = "This ensures that a URL can be ignored after reactivation."
+	@priority = "5"
+	test IgnoreURLAfterReactivation {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewURLsNotFoundCP(
+			activeIgnoreURL = "true",
+			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			requestNumber = "1");
+
+		Redirect.ignoreEntry(ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.ignoreEntry(
+			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			Unignore = "true");
+
+		Redirect.viewURLsDefaultNotFoundCP();
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Active URLs");
+
+		Redirect.ignoreEntry(ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Ignored URLs");
+
+		Redirect.viewURLsNotFoundCP(
+			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			requestNumber = "1");
+	}
+
 	@description = "This ensures that an expired permanent redirect can be reset."
 	@priority = "5"
 	test ResetExpiredEntry {
@@ -511,6 +562,46 @@ definition {
 			expirationDate = "Expired",
 			redirectType = "Temporary",
 			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
+	}
+
+	@description = "This ensures that an ignored URL can be viewed."
+	@priority = "5"
+	test ViewIgnoredURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			redirectType = "Permanent (301)",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewURLsNotFoundCP(
+			activeIgnoreURL = "true",
+			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			requestNumber = "1");
+
+		Redirect.ignoreEntry(ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1");
+
+		Redirect.viewURLsDefaultNotFoundCP();
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Ignored URLs");
+
+		Redirect.viewURLsNotFoundCP(
+			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			requestNumber = "1");
 	}
 
 }

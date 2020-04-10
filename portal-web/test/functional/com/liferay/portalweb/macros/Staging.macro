@@ -715,7 +715,7 @@ definition {
 			Click(locator1 = "Staging#STAGING_PUBLISH_TO_REMOTE_LIVE_BUTTON");
 		}
 		else {
-			Click(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
+			Click(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_CUSTOM_PUBLICATION");
 		}
 
 		Pause(locator1 = "30000");

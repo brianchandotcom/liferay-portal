@@ -19,7 +19,9 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -321,6 +323,22 @@ public class SpiraProject extends BaseSpiraArtifact {
 			searchParameters);
 	}
 
+	private static JSONObject _requestSpiraProject(JSONObject jsonObject) {
+		try {
+			Map<String, String> urlPathReplacements = new HashMap<>();
+
+			urlPathReplacements.put(
+				"project_id", String.valueOf(jsonObject.getInt(ID_KEY)));
+
+			return SpiraRestAPIUtil.requestJSONObject(
+				"projects/{project_id}", null, urlPathReplacements,
+				HttpRequestMethod.GET, null);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	private static List<JSONObject> _requestSpiraProjects() {
 		try {
 			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
@@ -329,7 +347,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 			List<JSONObject> spiraProjects = new ArrayList<>();
 
 			for (int i = 0; i < responseJSONArray.length(); i++) {
-				spiraProjects.add(responseJSONArray.getJSONObject(i));
+				spiraProjects.add(
+					_requestSpiraProject(responseJSONArray.getJSONObject(i)));
 			}
 
 			return spiraProjects;

@@ -421,15 +421,15 @@ definition {
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
 
-		AssetPublisherPortlet.rateAssetPG(rating = "4");
+		Ratings.rateStar(ratingStarCount = "4");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
 
-		AssetPublisherPortlet.viewAssetRatingPG(rating = "4");
-
-		AssetPublisherPortlet.viewAverageRatingPG(averageRating = "4");
+		Ratings.viewRateStar(
+			averageRatingStarCount = "4.0",
+			ratingStarCount = "4");
 	}
 
 	@priority = "5"

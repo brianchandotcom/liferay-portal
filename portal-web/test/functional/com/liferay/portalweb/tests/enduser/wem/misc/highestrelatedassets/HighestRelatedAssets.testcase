@@ -83,7 +83,7 @@ definition {
 			assetContent = "Web Content Content",
 			assetTitle = "Web Content Title 1");
 
-		AssetPublisherPortlet.rateAssetPG(rating = "3");
+		Ratings.rateStar(ratingStarCount = "3");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page 2",
@@ -93,7 +93,7 @@ definition {
 			assetContent = "Web Content Content",
 			assetTitle = "Web Content Title 2");
 
-		AssetPublisherPortlet.rateAssetPG(rating = "5");
+		Ratings.rateStar(ratingStarCount = "5");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page 2",
@@ -103,7 +103,9 @@ definition {
 			assetContent = "Web Content Content",
 			assetTitle = "Web Content Title 1");
 
-		AssetPublisherPortlet.viewAssetRatingPG(rating = "3");
+		Ratings.viewRateStar(
+			averageRatingStarCount = "3.0",
+			ratingStarCount = "3");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page 2",
@@ -113,7 +115,9 @@ definition {
 			assetContent = "Web Content Content",
 			assetTitle = "Web Content Title 2");
 
-		AssetPublisherPortlet.viewAssetRatingPG(rating = "5");
+		Ratings.viewRateStar(
+			averageRatingStarCount = "5.0",
+			ratingStarCount = "5");
 	}
 
 }

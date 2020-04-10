@@ -52,10 +52,10 @@ definition {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		AssertTextEquals(
-			locator1 = "Ratings#AVERAGE_LABEL",
-			value1 = "Average (0 Votes)");
+			locator1 = "Ratings#AVERAGE_STAR_RESULT",
+			value1 = "0.0");
 
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_1");
+		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
 	}
 
 	@description = "This is a use case for LPS-74621."
@@ -108,7 +108,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		Ratings.rate(ratingResult = "Thumb Up");
+		Ratings.rateThumb(ratingResult = "Rate this as good");
 
 		Comments.addPG(entryComment = "Blogs Entry Comment");
 
@@ -120,8 +120,8 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Ratings.viewRating(
-			ratingResult = "Thumb Up",
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as good",
 			voteCount = "1");
 
 		Comments.viewPG(
@@ -139,7 +139,7 @@ definition {
 
 		Comments.viewCommentReadOnly();
 
-		Ratings.viewRatingReadOnly();
+		Ratings.viewRateThumbReadOnly();
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",
@@ -182,8 +182,8 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Ratings.viewRating(
-			ratingResult = "Thumb Up",
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as good",
 			voteCount = "1");
 
 		Comments.viewPG(
@@ -231,7 +231,7 @@ definition {
 			wikiPageContent = "Wiki FrontPage Content",
 			wikiPageTitle = "FrontPage");
 
-		WikiPage.rate4StarsPG(wikiPageTitle = "FrontPage");
+		Ratings.rateStar(ratingStarCount = "2");
 
 		Comments.addPG(entryComment = "Wiki FrontPage Comment");
 
@@ -239,9 +239,9 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		AssetPublisherPortlet.viewAssetRatingPG(rating = "4");
-
-		AssetPublisherPortlet.viewAverageRatingPG(averageRating = "4");
+		Ratings.viewRateStar(
+			averageRatingStarCount = "2.0",
+			ratingStarCount = "2");
 
 		Comments.viewPG(
 			commentCount = "1",
@@ -258,7 +258,7 @@ definition {
 
 		Comments.viewCommentReadOnly();
 
-		Ratings.viewRatingWithStarsReadOnly();
+		Ratings.viewRateStarReadOnly();
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
@@ -294,9 +294,9 @@ definition {
 			wikiPageContent = "Wiki FrontPage Content",
 			wikiPageTitle = "FrontPage");
 
-		AssetPublisherPortlet.viewAssetRatingPG(rating = "4");
-
-		AssetPublisherPortlet.viewAverageRatingPG(averageRating = "4");
+		Ratings.viewRateStar(
+			averageRatingStarCount = "2.0",
+			ratingStarCount = "2");
 
 		Comments.viewPG(
 			commentCount = "1",
@@ -327,13 +327,13 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Ratings.rate(ratingResult = "Thumb Up");
+		Ratings.rateThumb(ratingResult = "Rate this as good");
 
 		Comments.addPG(entryComment = "Blogs Entry Comment");
 
-		Ratings.rate(
+		Ratings.rateThumb(
 			commentRating = "true",
-			ratingResult = "Thumb Up");
+			ratingResult = "Rate this as good");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -341,8 +341,8 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Ratings.viewRating(
-			ratingResult = "Thumb Up",
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as good",
 			voteCount = "1");
 
 		Comments.viewPG(
@@ -350,9 +350,9 @@ definition {
 			entryComment = "Blogs Entry Comment",
 			userFullName = "Test Test (You)");
 
-		Ratings.viewRating(
+		Ratings.viewRateThumb(
 			commentRating = "true",
-			ratingResult = "Thumb Up",
+			ratingResult = "You have rated this as good",
 			voteCount = "1");
 
 		LAR.openExportAdmin(siteScopeName = "Guest");
@@ -393,8 +393,8 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Ratings.viewRating(
-			ratingResult = "Thumb Up",
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as good",
 			voteCount = "1");
 
 		Comments.viewPG(
@@ -402,9 +402,9 @@ definition {
 			entryComment = "Blogs Entry Comment",
 			userFullName = "Test Test (You)");
 
-		Ratings.viewRating(
+		Ratings.viewRateThumb(
 			commentRating = "true",
-			ratingResult = "Thumb Up",
+			ratingResult = "You have rated this as good",
 			voteCount = "1");
 	}
 
@@ -442,9 +442,9 @@ definition {
 
 		WikiPage.addComment(entryComment = "Wiki Page Comment");
 
-		Ratings.rate(
+		Ratings.rateThumb(
 			commentRating = "true",
-			ratingResult = "Thumb Up");
+			ratingResult = "Rate this as good");
 
 		WikiPage.editComment(
 			entryComment = "Wiki Page Comment",
@@ -460,12 +460,14 @@ definition {
 			entryComment = "Wiki Page Comment Edited",
 			wikiPageTitle = "Wiki Page 1");
 
-		Ratings.viewRating(
-			ratingResult = "Thumb Up",
+		Ratings.viewRateThumb(
+			commentRating = "true",
+			ratingResult = "You have rated this as good",
 			voteCount = "1");
 
-		Ratings.viewRating(
-			ratingResult = "Thumb Down",
+		Ratings.viewRateThumb(
+			commentRating = "true",
+			ratingResult = "Rate this as bad",
 			voteCount = "0");
 	}
 
@@ -494,24 +496,24 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Ratings.rate(ratingResult = "Thumb Up");
+		Ratings.rateThumb(ratingResult = "Rate this as good");
 
-		Ratings.viewRating(
-			ratingResult = "Thumb Up",
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as good",
 			voteCount = "1");
 
-		Ratings.viewRating(
-			ratingResult = "Thumb Down",
+		Ratings.viewRateThumb(
+			ratingResult = "Rate this as bad",
 			voteCount = "0");
 
-		Ratings.rate(ratingResult = "Thumb Down");
+		Ratings.rateThumb(ratingResult = "Rate this as bad");
 
-		Ratings.viewRating(
-			ratingResult = "Thumb Up",
+		Ratings.viewRateThumb(
+			ratingResult = "Rate this as good",
 			voteCount = "0");
 
-		Ratings.viewRating(
-			ratingResult = "Thumb Down",
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as bad",
 			voteCount = "1");
 	}
 
@@ -536,10 +538,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		Ratings.rate(ratingResult = "Thumb Up");
+		Ratings.rateThumb(ratingResult = "Rate this as good");
 
-		Ratings.viewRating(
-			ratingResult = "Thumb Up",
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as good",
 			voteCount = "1");
 	}
 
@@ -575,7 +577,7 @@ definition {
 
 		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 1");
 
-		WikiPage.rate4StarsPG(wikiPageTitle = "Wiki Page 1");
+		Ratings.rateStar(ratingStarCount = "4");
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
@@ -585,7 +587,9 @@ definition {
 
 		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 1");
 
-		WikiPage.viewRate4StarsPG(wikiPageTitle = "Wiki Page 1");
+		Ratings.viewRateStar(
+			averageRatingStarCount = "4.0",
+			ratingStarCount = "4");
 	}
 
 	@priority = "3"
@@ -631,13 +635,17 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.rateArticle1Star(kbArticleTitle = "Knowledge Base Article Title");
+		Ratings.rateStar(ratingStarCount = "2");
 
-		KBArticle.viewArticle1StarRatingPG();
+		Ratings.viewRateStar(
+			averageRatingStarCount = "2.0",
+			ratingStarCount = "2");
 
-		KBArticle.rateArticleFrom1StarTo5Star(kbArticleTitle = "Knowledge Base Article Title");
+		Ratings.rateStar(ratingStarCount = "5");
 
-		KBArticle.viewArticle5StarRatingPG();
+		Ratings.viewRateStar(
+			averageRatingStarCount = "5.0",
+			ratingStarCount = "5");
 	}
 
 	@ignore = "true"
@@ -667,10 +675,10 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		Ratings.rate(ratingResult = "Thumb Up");
+		Ratings.rateThumb(ratingResult = "Rate this as good");
 
-		Ratings.viewRating(
-			ratingResult = "Thumb Up",
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as good",
 			voteCount = "1");
 
 		PortalSettings.gotoConfiguration(
@@ -690,7 +698,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.viewArticle5StarRatingPG();
+		Ratings.viewRateStar(
+			averageRatingStarCount = "5.0",
+			ratingStarCount = "5");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Community Tools",
@@ -709,7 +719,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		Ratings.viewRating(voteCount = "1");
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as good",
+			voteCount = "1");
 	}
 
 }

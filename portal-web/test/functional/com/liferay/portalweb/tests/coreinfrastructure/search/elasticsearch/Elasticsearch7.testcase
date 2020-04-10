@@ -334,38 +334,38 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
-			layoutName = "Multiple Connections Page 1");
+			layoutName = "Multiple Connections Page");
 
 		JSONLayout.updateLayoutTemplateOfPublicLayout(
 			groupName = "Guest",
-			layoutName = "Multiple Connections Page 1",
+			layoutName = "Multiple Connections Page",
 			layoutTemplate = "3 Columns");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Guest",
-			layoutName = "Multiple Connections Page 1",
+			layoutName = "Multiple Connections Page",
 			widgetName = "Custom Filter");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "2",
 			groupName = "Guest",
-			layoutName = "Multiple Connections Page 1",
+			layoutName = "Multiple Connections Page",
 			widgetName = "Search Results");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "3",
 			groupName = "Guest",
-			layoutName = "Multiple Connections Page 1",
+			layoutName = "Multiple Connections Page",
 			widgetName = "Search Options");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "3",
 			groupName = "Guest",
-			layoutName = "Multiple Connections Page 1",
+			layoutName = "Multiple Connections Page",
 			widgetName = "Low Level Search Options");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/multiple-connections-page-1");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/multiple-connections-page");
 
 		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
 
@@ -384,64 +384,8 @@ definition {
 		SearchResultPortlet.configureSearchResults(fieldsToDisplay = "demo");
 
 		SearchPortlets.configureLowLevelSearchOptions(
-			connectionId = "remote",
-			indexes = "federated_index");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Multiple Connections Page 2");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Guest",
-			layoutName = "Multiple Connections Page 2",
-			layoutTemplate = "3 Columns");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Multiple Connections Page 2",
-			widgetName = "Custom Filter");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
-			groupName = "Guest",
-			layoutName = "Multiple Connections Page 2",
-			widgetName = "Search Results");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "3",
-			groupName = "Guest",
-			layoutName = "Multiple Connections Page 2",
-			widgetName = "Search Options");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "3",
-			groupName = "Guest",
-			layoutName = "Multiple Connections Page 2",
-			widgetName = "Low Level Search Options");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/multiple-connections-page-2");
-
-		SearchPortlets.configureCustomFilter(
-			customParameterName = "qq",
-			federatedSearchKey = "federated",
-			filterField = "demo",
-			filterQueryType = "Match",
-			filterValue = "cluster",
-			occur = "must");
-
-		SearchResultPortlet.configureSearchResults(
-			federatedSearchKey = "federated",
-			fieldsToDisplay = "demo");
-
-		SearchPortlets.configureLowLevelSearchOptions(
 			connectionId = "federated",
-			federatedSearchKey = "federated",
 			indexes = "federated_index");
-
-		SearchPortlets.configureSearchOptions(
-			allowEmptySearches = "true",
-			federatedSearchKey = "federated");
 
 		Refresh();
 

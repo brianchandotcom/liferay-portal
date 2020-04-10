@@ -68,7 +68,20 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 	@Override
 	public CTClosure create(long ctCollectionId) {
+		return new CTClosureImpl(
+			ctCollectionId,
+			_buildClosureMap(
+				ctCollectionId,
+				_tableReferenceDefinitionManager.
+					getCombinedTableReferenceInfos()));
+	}
+
+	private Map<Node, Collection<Node>> _buildClosureMap(
+		long ctCollectionId,
+		Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos) {
+
 		Map<Long, List<Long>> map = new HashMap<>();
+		Set<Node> nodes = new HashSet<>();
 
 		for (CTEntry ctEntry :
 				_ctEntryLocalService.getCTCollectionCTEntries(ctCollectionId)) {
@@ -77,28 +90,10 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 				ctEntry.getModelClassNameId(), key -> new ArrayList<>());
 
 			primaryKeys.add(ctEntry.getModelClassPK());
-		}
 
-		Map<Node, Collection<Node>> closureMap = _buildClosureMap(
-			ctCollectionId, map,
-			_tableReferenceDefinitionManager.getCombinedTableReferenceInfos());
-
-		return new CTClosureImpl(ctCollectionId, closureMap);
-	}
-
-	private Map<Node, Collection<Node>> _buildClosureMap(
-		long ctCollectionId, Map<Long, List<Long>> map,
-		Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos) {
-
-		Set<Node> nodes = new HashSet<>();
-
-		for (Map.Entry<Long, List<Long>> entry : map.entrySet()) {
-			long classNameId = entry.getKey();
-			List<Long> primaryKeys = entry.getValue();
-
-			for (long primaryKey : primaryKeys) {
-				nodes.add(new Node(classNameId, primaryKey));
-			}
+			nodes.add(
+				new Node(
+					ctEntry.getModelClassNameId(), ctEntry.getModelClassPK()));
 		}
 
 		Map<Node, Collection<Edge>> edgeMap = new LinkedHashMap<>();

@@ -85,6 +85,7 @@ page import="com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil" %
 page import="com.liferay.portal.kernel.service.ThemeLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
@@ -99,7 +100,6 @@ page import="com.liferay.portal.util.PropsValues" %>
 
 <%@ page import="java.util.Collection" %><%@
 page import="java.util.Collections" %><%@
-page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@

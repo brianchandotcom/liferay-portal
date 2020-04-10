@@ -53,11 +53,11 @@
 
 							Set<String> assignedScopeAliases = relations.getAssignedScopeAliases();
 
-							Map<String, Object> data = new HashMap<>();
-
 							Set<String> globalScopeAliases = relations.getGlobalScopeAliases();
 
-							data.put("slave", StringUtil.merge(globalScopeAliases, StringPool.SPACE));
+							Map<String, Object> data = HashMapBuilder.<String, Object>put(
+								"slave", StringUtil.merge(globalScopeAliases, StringPool.SPACE)
+							).build();
 
 							String id = "scopeAlias" + StringUtil.randomId();
 

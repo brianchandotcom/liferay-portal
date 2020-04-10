@@ -92,10 +92,11 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 			<%
 			MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.fetchRuleGroupInstance(className, classPK, ruleGroup.getRuleGroupId());
 
-			Map<String, Object> data = new HashMap<String, Object>();
-
-			data.put("rulegroupid", ruleGroup.getRuleGroupId());
-			data.put("rulegroupname", ruleGroup.getName());
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"rulegroupid", ruleGroup.getRuleGroupId()
+			).put(
+				"rulegroupname", ruleGroup.getName()
+			).build();
 			%>
 
 			<c:choose>

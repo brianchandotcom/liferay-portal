@@ -43,10 +43,11 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 			>
 
 				<%
-				Map<String, Object> data = new HashMap<>();
-
-				data.put("screenname", userRow.getScreenName());
-				data.put("userid", userRow.getUserId());
+				Map<String, Object> data = HashMapBuilder.<String, Object>put(
+					"screenname", userRow.getScreenName()
+				).put(
+					"userid", userRow.getUserId()
+				).build();
 				%>
 
 				<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">

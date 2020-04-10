@@ -304,8 +304,6 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		ProductMenu.gotoPortlet(
@@ -325,7 +323,7 @@ definition {
 
 		SearchPortlets.setupMultipleConnectionsPage(layoutName = "Multiple Connections Page 1");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/multiple-connections-page-1");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/multiple-connections-page-1");
 
 		SearchPortlets.configureCustomFilter(
 			filterField = "demo",
@@ -349,7 +347,7 @@ definition {
 
 		SearchPortlets.setupMultipleConnectionsPage(layoutName = "Multiple Connections Page 2");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/multiple-connections-page-2");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/multiple-connections-page-2");
 
 		SearchPortlets.configureCustomFilter(
 			customParameterName = "qq",

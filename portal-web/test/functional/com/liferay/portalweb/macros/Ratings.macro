@@ -1,62 +1,53 @@
 definition {
 
 	macro rate {
-		var key_ratingResult = StringUtil.replace("${ratingResult}", " ", "-");
-		var key_ratingResult = StringUtil.lowerCase("${key_ratingResult}");
-
 		if (isSet(commentRating)) {
-			Click(locator1 = "Ratings#COMMENT_RATING_THUMB");
+			Click.clickNoMouseOver(
+				key_ratingResult = "${ratingResult}",
+				locator1 = "Ratings#COMMENT_RATING_THUMB");
 		}
 		else {
-			Click(locator1 = "Ratings#THUMB");
+			Click(
+				key_ratingResult = "${ratingResult}",
+				locator1 = "Ratings#THUMB");
 		}
 	}
 
 	macro viewRating {
-		var key_ratingResult = StringUtil.replace("${ratingResult}", " ", "-");
-		var key_ratingResult = StringUtil.lowerCase("${key_ratingResult}");
-
 		if (isSet(ratingResult)) {
 			if (isSet(commentRating)) {
 				AssertTextEquals(
+					key_ratingResult = "${ratingResult}",
 					locator1 = "Ratings#COMMENT_RATING_THUMB",
 					value1 = "${voteCount}");
 			}
 			else {
 				AssertTextEquals(
+					key_ratingResult = "${ratingResult}",
 					locator1 = "Ratings#THUMB",
 					value1 = "${voteCount}");
 			}
 		}
-		else {
-			AssertTextEquals(
-				locator1 = "Ratings#DISPLAY_VOTES",
-				value1 = "${voteCount}");
-		}
 	}
 
 	macro viewRatingReadOnly {
-		AssertElementNotPresent(locator1 = "Ratings#THUMB_UP");
+		AssertElementNotPresent(
+			key_ratingResult = "Rate this as good",
+			locator1 = "Ratings#THUMB");
 
-		AssertElementNotPresent(locator1 = "Ratings#THUMB_DOWN");
+		AssertElementNotPresent(
+			key_ratingResult = "Rate this as bad",
+			locator1 = "Ratings#THUMB");
 
 		AssertElementPresent(locator1 = "Ratings#THUMB_UP_OFF");
-
 		AssertElementPresent(locator1 = "Ratings#THUMB_DOWN_OFF");
 	}
 
 	macro viewRatingWithStarsReadOnly {
-		for (var starCount : list "1,2,3,4,5") {
-			AssertElementNotPresent(
-				key_averageRatingStar = "${starCount}",
-				locator1 = "Ratings#AVERAGE_STAR");
-		}
+		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR");
 
-		for (var starCount : list "1,2,3,4,5") {
-			AssertElementPresent(
-				key_averageDisableStar = "${starCount}",
-				locator1 = "Ratings#AVERAGE_STAR_DISABLE");
-		}
+		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_DISABLE");
+		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR");
 	}
 
 }

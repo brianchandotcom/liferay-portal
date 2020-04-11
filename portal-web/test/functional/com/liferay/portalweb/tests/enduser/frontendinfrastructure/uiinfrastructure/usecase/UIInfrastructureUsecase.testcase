@@ -176,12 +176,8 @@ definition {
 			columnNumberTo = "1",
 			portletName = "Hello World");
 
-		task ("Removes Hello World Portlets on Test Page and Welcome Page") {
+		task ("Removes Hello World Portlet on Test Page") {
 			Navigator.gotoPage(pageName = "Test Page");
-
-			Portlet.deletePG(portletName = "Hello World");
-
-			Navigator.gotoPage(pageName = "Home");
 
 			Portlet.deletePG(portletName = "Hello World");
 

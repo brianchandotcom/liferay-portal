@@ -794,7 +794,7 @@ syncAppProperties {
 		appPropertiesFileTree.each {
 			File appPropertiesFile ->
 
-			File markerFile = new File(appPropertiesFile.parentFile, ".app-portal-build-ignore")
+			File markerFile = new File(appPropertiesFile.parentFile, ".lfrbuild-app-portal-build-ignore")
 
 			if (!markerFile.exists()) {
 				appPropertiesFile.text = appPropertiesFile.text.replaceFirst(~/app.portal.build=.+/, "app.portal.build=" + releaseProperties.getProperty("release.info.build"))
@@ -809,7 +809,7 @@ syncAppProperties {
 			appPropertiesFileTree.each {
 				File appPropertiesFile ->
 
-				File markerFile = new File(appPropertiesFile.parentFile, ".app-portal-build-ignore")
+				File markerFile = new File(appPropertiesFile.parentFile, ".lfrbuild-app-portal-build-ignore")
 
 				if (!markerFile.exists()) {
 					appPropertiesFile.text = appPropertiesFile.text.replaceFirst(~/app.portal.build=.+/, "app.portal.build=" + releaseProperties.getProperty("release.info.build"))

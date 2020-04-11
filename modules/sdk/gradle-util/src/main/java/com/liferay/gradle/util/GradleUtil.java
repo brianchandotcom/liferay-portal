@@ -51,6 +51,7 @@ import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.util.PatternFilterable;
 import org.gradle.api.tasks.util.PatternSet;
 import org.gradle.util.GUtil;
@@ -421,6 +422,14 @@ public class GradleUtil {
 		}
 
 		return value;
+	}
+
+	public static <T extends Task> TaskProvider<T> registerTask(
+		Project project, String name, Class<T> clazz) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		return taskContainer.register(name, clazz);
 	}
 
 	public static void removeDependencies(

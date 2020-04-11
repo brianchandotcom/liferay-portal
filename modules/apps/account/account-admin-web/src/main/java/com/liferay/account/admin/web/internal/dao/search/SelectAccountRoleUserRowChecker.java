@@ -14,12 +14,12 @@
 
 package com.liferay.account.admin.web.internal.dao.search;
 
+import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.account.service.AccountRoleLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 
 import javax.portlet.PortletResponse;
@@ -41,7 +41,7 @@ public class SelectAccountRoleUserRowChecker extends EmptyOnClickRowChecker {
 
 	@Override
 	public boolean isChecked(Object obj) {
-		User user = (User)obj;
+		AccountUserDisplay accountUserDisplay = (AccountUserDisplay)obj;
 
 		AccountEntry accountEntry =
 			AccountEntryLocalServiceUtil.fetchAccountEntry(_accountEntryId);
@@ -50,7 +50,8 @@ public class SelectAccountRoleUserRowChecker extends EmptyOnClickRowChecker {
 			_accountRoleId);
 
 		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				user.getUserId(), accountEntry.getAccountEntryGroupId(),
+				accountUserDisplay.getUserId(),
+				accountEntry.getAccountEntryGroupId(),
 				accountRole.getRoleId())) {
 
 			return true;

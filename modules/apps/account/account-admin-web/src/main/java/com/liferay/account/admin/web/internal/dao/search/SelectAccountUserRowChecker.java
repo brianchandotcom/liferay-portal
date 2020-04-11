@@ -14,9 +14,9 @@
 
 package com.liferay.account.admin.web.internal.dao.search;
 
+import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
 import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
-import com.liferay.portal.kernel.model.User;
 
 import javax.portlet.PortletResponse;
 
@@ -35,10 +35,10 @@ public class SelectAccountUserRowChecker extends EmptyOnClickRowChecker {
 
 	@Override
 	public boolean isChecked(Object obj) {
-		User user = (User)obj;
+		AccountUserDisplay accountUserDisplay = (AccountUserDisplay)obj;
 
 		if (AccountEntryUserRelLocalServiceUtil.hasAccountEntryUserRel(
-				_accountEntryId, user.getUserId())) {
+				_accountEntryId, accountUserDisplay.getUserId())) {
 
 			return true;
 		}

@@ -40,14 +40,14 @@ SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementTo
 		searchContainer="<%= userSearchContainer %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.model.User"
+			className="com.liferay.account.admin.web.internal.display.AccountUserDisplay"
 			keyProperty="userId"
-			modelVar="user"
+			modelVar="accountUserDisplay"
 		>
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-small table-cell-minw-150"
 				name="name"
-				property="fullName"
+				property="name"
 			/>
 
 			<liferay-ui:search-container-column-text
@@ -59,7 +59,7 @@ SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementTo
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-small table-cell-minw-150"
 				name="account-roles"
-				value=""
+				value="<%= accountUserDisplay.getAccountRoleNames(accountEntryId, locale) %>"
 			/>
 		</liferay-ui:search-container-row>
 

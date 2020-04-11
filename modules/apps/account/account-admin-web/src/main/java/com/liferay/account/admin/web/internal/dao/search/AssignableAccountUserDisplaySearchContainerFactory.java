@@ -14,6 +14,7 @@
 
 package com.liferay.account.admin.web.internal.dao.search;
 
+import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.retriever.AccountUserRetriever;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Objects;
 
@@ -95,7 +97,9 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 				searchContainer.getDelta(), orderByCol,
 				_isReverseOrder(orderByType));
 
-		searchContainer.setResults(baseModelSearchResult.getBaseModels());
+		searchContainer.setResults(
+			TransformUtil.transform(
+				baseModelSearchResult.getBaseModels(), AccountUserDisplay::of));
 		searchContainer.setTotal(baseModelSearchResult.getLength());
 
 		return searchContainer;

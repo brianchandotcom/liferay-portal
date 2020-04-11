@@ -78,7 +78,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Preston Crary
  */
 @RunWith(Arquillian.class)
-public class TableReferenceDefinitionManagerTest {
+public class CTClosureFactoryImplTest {
 
 	@ClassRule
 	@Rule
@@ -87,8 +87,7 @@ public class TableReferenceDefinitionManagerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(
-			TableReferenceDefinitionManagerTest.class);
+		Bundle bundle = FrameworkUtil.getBundle(CTClosureFactoryImplTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -192,8 +191,7 @@ public class TableReferenceDefinitionManagerTest {
 
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			TableReferenceDefinitionManagerTest.class.getSimpleName(),
-			StringPool.BLANK);
+			CTClosureFactoryImplTest.class.getSimpleName(), StringPool.BLANK);
 	}
 
 	@After

@@ -128,7 +128,7 @@ definition {
 
 	@summary = "View default welcome page while signed in as '${userFirstName} ${userLastName}'"
 	macro viewWelcomePage {
-		AssertTextEquals(
+		AssertTextPresent(
 			locator1 = "HelloWorld#PORTLET_TITLE",
 			value1 = "Hello World");
 

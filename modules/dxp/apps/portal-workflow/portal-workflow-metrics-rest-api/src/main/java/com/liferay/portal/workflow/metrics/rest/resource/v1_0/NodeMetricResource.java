@@ -14,8 +14,11 @@
 
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0;
 
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Metric;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.NodeMetric;
 
 import java.util.Date;
 import java.util.Locale;
@@ -39,14 +42,15 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface MetricResource {
+public interface NodeMetricResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public Metric getProcessMetric(
-			Long processId, Date dateEnd, Date dateStart, String unit)
+	public Page<NodeMetric> getProcessNodeMetricsPage(
+			Long processId, Boolean completed, Date dateEnd, Date dateStart,
+			String key, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -79,7 +83,7 @@ public interface MetricResource {
 	@ProviderType
 	public interface Builder {
 
-		public MetricResource build();
+		public NodeMetricResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

@@ -179,6 +179,8 @@ public abstract class BaseInstanceResourceTestCase {
 
 		instance.setAssetTitle(regex);
 		instance.setAssetType(regex);
+		instance.setClassName(regex);
+		instance.setProcessVersion(regex);
 
 		String json = InstanceSerDes.toJSON(instance);
 
@@ -188,6 +190,8 @@ public abstract class BaseInstanceResourceTestCase {
 
 		Assert.assertEquals(regex, instance.getAssetTitle());
 		Assert.assertEquals(regex, instance.getAssetType());
+		Assert.assertEquals(regex, instance.getClassName());
+		Assert.assertEquals(regex, instance.getProcessVersion());
 	}
 
 	@Test
@@ -278,8 +282,7 @@ public abstract class BaseInstanceResourceTestCase {
 			Long processId, Instance instance)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return instanceResource.postProcessInstance(processId, instance);
 	}
 
 	protected Long testGetProcessInstancesPage_getProcessId() throws Exception {
@@ -291,6 +294,52 @@ public abstract class BaseInstanceResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostProcessInstance() throws Exception {
+		Instance randomInstance = randomInstance();
+
+		Instance postInstance = testPostProcessInstance_addInstance(
+			randomInstance);
+
+		assertEquals(randomInstance, postInstance);
+		assertValid(postInstance);
+	}
+
+	protected Instance testPostProcessInstance_addInstance(Instance instance)
+		throws Exception {
+
+		return instanceResource.postProcessInstance(
+			testGetProcessInstancesPage_getProcessId(), instance);
+	}
+
+	@Test
+	public void testDeleteProcessInstance() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Instance instance = testDeleteProcessInstance_addInstance();
+
+		assertHttpResponseStatusCode(
+			204,
+			instanceResource.deleteProcessInstanceHttpResponse(
+				instance.getProcessId(), instance.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			instanceResource.getProcessInstanceHttpResponse(
+				instance.getProcessId(), instance.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			instanceResource.getProcessInstanceHttpResponse(
+				instance.getProcessId(), 0L));
+	}
+
+	protected Instance testDeleteProcessInstance_addInstance()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -335,6 +384,50 @@ public abstract class BaseInstanceResourceTestCase {
 		Assert.assertTrue(
 			equalsJSONObject(
 				instance, dataJSONObject.getJSONObject("processInstance")));
+	}
+
+	@Test
+	public void testPatchProcessInstance() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Instance instance = testPatchProcessInstance_addInstance();
+
+		assertHttpResponseStatusCode(
+			204,
+			instanceResource.patchProcessInstanceHttpResponse(
+				instance.getProcessId(), instance.getId(), instance));
+
+		assertHttpResponseStatusCode(
+			404,
+			instanceResource.patchProcessInstanceHttpResponse(
+				instance.getProcessId(), 0L, instance));
+	}
+
+	protected Instance testPatchProcessInstance_addInstance() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchProcessInstanceComplete() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Instance instance = testPatchProcessInstanceComplete_addInstance();
+
+		assertHttpResponseStatusCode(
+			204,
+			instanceResource.patchProcessInstanceCompleteHttpResponse(
+				instance.getProcessId(), instance.getId(), instance));
+
+		assertHttpResponseStatusCode(
+			404,
+			instanceResource.patchProcessInstanceCompleteHttpResponse(
+				instance.getProcessId(), 0L, instance));
+	}
+
+	protected Instance testPatchProcessInstanceComplete_addInstance()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Instance testGraphQLInstance_addInstance() throws Exception {
@@ -416,6 +509,10 @@ public abstract class BaseInstanceResourceTestCase {
 			valid = false;
 		}
 
+		if (instance.getDateModified() == null) {
+			valid = false;
+		}
+
 		if (instance.getId() == null) {
 			valid = false;
 		}
@@ -431,6 +528,14 @@ public abstract class BaseInstanceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("assetTitle_i18n", additionalAssertFieldName)) {
+				if (instance.getAssetTitle_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("assetType", additionalAssertFieldName)) {
 				if (instance.getAssetType() == null) {
 					valid = false;
@@ -439,8 +544,40 @@ public abstract class BaseInstanceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("assetType_i18n", additionalAssertFieldName)) {
+				if (instance.getAssetType_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("assignees", additionalAssertFieldName)) {
 				if (instance.getAssignees() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("className", additionalAssertFieldName)) {
+				if (instance.getClassName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("classPK", additionalAssertFieldName)) {
+				if (instance.getClassPK() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("completed", additionalAssertFieldName)) {
+				if (instance.getCompleted() == null) {
 					valid = false;
 				}
 
@@ -463,8 +600,24 @@ public abstract class BaseInstanceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("duration", additionalAssertFieldName)) {
+				if (instance.getDuration() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("processId", additionalAssertFieldName)) {
 				if (instance.getProcessId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("processVersion", additionalAssertFieldName)) {
+				if (instance.getProcessVersion() == null) {
 					valid = false;
 				}
 
@@ -574,6 +727,17 @@ public abstract class BaseInstanceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("assetTitle_i18n", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						instance1.getAssetTitle_i18n(),
+						instance2.getAssetTitle_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("assetType", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						instance1.getAssetType(), instance2.getAssetType())) {
@@ -584,9 +748,50 @@ public abstract class BaseInstanceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("assetType_i18n", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						instance1.getAssetType_i18n(),
+						instance2.getAssetType_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("assignees", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						instance1.getAssignees(), instance2.getAssignees())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("className", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						instance1.getClassName(), instance2.getClassName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("classPK", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						instance1.getClassPK(), instance2.getClassPK())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("completed", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						instance1.getCompleted(), instance2.getCompleted())) {
 
 					return false;
 				}
@@ -626,6 +831,27 @@ public abstract class BaseInstanceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						instance1.getDateModified(),
+						instance2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("duration", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						instance1.getDuration(), instance2.getDuration())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(instance1.getId(), instance2.getId())) {
 					return false;
@@ -637,6 +863,17 @@ public abstract class BaseInstanceResourceTestCase {
 			if (Objects.equals("processId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						instance1.getProcessId(), instance2.getProcessId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("processVersion", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						instance1.getProcessVersion(),
+						instance2.getProcessVersion())) {
 
 					return false;
 				}
@@ -729,6 +966,49 @@ public abstract class BaseInstanceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("className", fieldName)) {
+				if (!Objects.deepEquals(
+						instance.getClassName(),
+						jsonObject.getString("className"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("classPK", fieldName)) {
+				if (!Objects.deepEquals(
+						instance.getClassPK(), jsonObject.getLong("classPK"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("completed", fieldName)) {
+				if (!Objects.deepEquals(
+						instance.getCompleted(),
+						jsonObject.getBoolean("completed"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("duration", fieldName)) {
+				if (!Objects.deepEquals(
+						instance.getDuration(),
+						jsonObject.getLong("duration"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", fieldName)) {
 				if (!Objects.deepEquals(
 						instance.getId(), jsonObject.getLong("id"))) {
@@ -743,6 +1023,17 @@ public abstract class BaseInstanceResourceTestCase {
 				if (!Objects.deepEquals(
 						instance.getProcessId(),
 						jsonObject.getLong("processId"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("processVersion", fieldName)) {
+				if (!Objects.deepEquals(
+						instance.getProcessVersion(),
+						jsonObject.getString("processVersion"))) {
 
 					return false;
 				}
@@ -815,6 +1106,11 @@ public abstract class BaseInstanceResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("assetTitle_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("assetType")) {
 			sb.append("'");
 			sb.append(String.valueOf(instance.getAssetType()));
@@ -823,7 +1119,30 @@ public abstract class BaseInstanceResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("assetType_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("assignees")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("className")) {
+			sb.append("'");
+			sb.append(String.valueOf(instance.getClassName()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("classPK")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("completed")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -896,6 +1215,42 @@ public abstract class BaseInstanceResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("dateModified")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(instance.getDateModified(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(instance.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(instance.getDateModified()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("duration")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -904,6 +1259,14 @@ public abstract class BaseInstanceResourceTestCase {
 		if (entityFieldName.equals("processId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("processVersion")) {
+			sb.append("'");
+			sb.append(String.valueOf(instance.getProcessVersion()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("slaResults")) {
@@ -957,10 +1320,16 @@ public abstract class BaseInstanceResourceTestCase {
 			{
 				assetTitle = RandomTestUtil.randomString();
 				assetType = RandomTestUtil.randomString();
+				className = RandomTestUtil.randomString();
+				classPK = RandomTestUtil.randomLong();
+				completed = RandomTestUtil.randomBoolean();
 				dateCompletion = RandomTestUtil.nextDate();
 				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				duration = RandomTestUtil.randomLong();
 				id = RandomTestUtil.randomLong();
 				processId = RandomTestUtil.randomLong();
+				processVersion = RandomTestUtil.randomString();
 			}
 		};
 	}

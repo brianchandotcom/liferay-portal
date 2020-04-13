@@ -41,11 +41,11 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Metric;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.HistogramMetric;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
-import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.MetricResource;
-import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.MetricSerDes;
+import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.HistogramMetricResource;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.HistogramMetricSerDes;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -78,7 +78,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseMetricResourceTestCase {
+public abstract class BaseHistogramMetricResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -99,11 +99,12 @@ public abstract class BaseMetricResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_metricResource.setContextCompany(testCompany);
+		_histogramMetricResource.setContextCompany(testCompany);
 
-		MetricResource.Builder builder = MetricResource.builder();
+		HistogramMetricResource.Builder builder =
+			HistogramMetricResource.builder();
 
-		metricResource = builder.locale(
+		histogramMetricResource = builder.locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -132,13 +133,13 @@ public abstract class BaseMetricResourceTestCase {
 			}
 		};
 
-		Metric metric1 = randomMetric();
+		HistogramMetric histogramMetric1 = randomHistogramMetric();
 
-		String json = objectMapper.writeValueAsString(metric1);
+		String json = objectMapper.writeValueAsString(histogramMetric1);
 
-		Metric metric2 = MetricSerDes.toDTO(json);
+		HistogramMetric histogramMetric2 = HistogramMetricSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(metric1, metric2));
+		Assert.assertTrue(equals(histogramMetric1, histogramMetric2));
 	}
 
 	@Test
@@ -158,10 +159,10 @@ public abstract class BaseMetricResourceTestCase {
 			}
 		};
 
-		Metric metric = randomMetric();
+		HistogramMetric histogramMetric = randomHistogramMetric();
 
-		String json1 = objectMapper.writeValueAsString(metric);
-		String json2 = MetricSerDes.toJSON(metric);
+		String json1 = objectMapper.writeValueAsString(histogramMetric);
+		String json2 = HistogramMetricSerDes.toJSON(histogramMetric);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -171,22 +172,22 @@ public abstract class BaseMetricResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		Metric metric = randomMetric();
+		HistogramMetric histogramMetric = randomHistogramMetric();
 
-		String json = MetricSerDes.toJSON(metric);
+		String json = HistogramMetricSerDes.toJSON(histogramMetric);
 
 		Assert.assertFalse(json.contains(regex));
 
-		metric = MetricSerDes.toDTO(json);
+		histogramMetric = HistogramMetricSerDes.toDTO(json);
 	}
 
 	@Test
-	public void testGetProcessMetric() throws Exception {
+	public void testGetProcessHistogramMetric() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGraphQLGetProcessMetric() throws Exception {
+	public void testGraphQLGetProcessHistogramMetric() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -198,32 +199,39 @@ public abstract class BaseMetricResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(Metric metric1, Metric metric2) {
+	protected void assertEquals(
+		HistogramMetric histogramMetric1, HistogramMetric histogramMetric2) {
+
 		Assert.assertTrue(
-			metric1 + " does not equal " + metric2, equals(metric1, metric2));
+			histogramMetric1 + " does not equal " + histogramMetric2,
+			equals(histogramMetric1, histogramMetric2));
 	}
 
-	protected void assertEquals(List<Metric> metrics1, List<Metric> metrics2) {
-		Assert.assertEquals(metrics1.size(), metrics2.size());
+	protected void assertEquals(
+		List<HistogramMetric> histogramMetrics1,
+		List<HistogramMetric> histogramMetrics2) {
 
-		for (int i = 0; i < metrics1.size(); i++) {
-			Metric metric1 = metrics1.get(i);
-			Metric metric2 = metrics2.get(i);
+		Assert.assertEquals(histogramMetrics1.size(), histogramMetrics2.size());
 
-			assertEquals(metric1, metric2);
+		for (int i = 0; i < histogramMetrics1.size(); i++) {
+			HistogramMetric histogramMetric1 = histogramMetrics1.get(i);
+			HistogramMetric histogramMetric2 = histogramMetrics2.get(i);
+
+			assertEquals(histogramMetric1, histogramMetric2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Metric> metrics1, List<Metric> metrics2) {
+		List<HistogramMetric> histogramMetrics1,
+		List<HistogramMetric> histogramMetrics2) {
 
-		Assert.assertEquals(metrics1.size(), metrics2.size());
+		Assert.assertEquals(histogramMetrics1.size(), histogramMetrics2.size());
 
-		for (Metric metric1 : metrics1) {
+		for (HistogramMetric histogramMetric1 : histogramMetrics1) {
 			boolean contains = false;
 
-			for (Metric metric2 : metrics2) {
-				if (equals(metric1, metric2)) {
+			for (HistogramMetric histogramMetric2 : histogramMetrics2) {
+				if (equals(histogramMetric1, histogramMetric2)) {
 					contains = true;
 
 					break;
@@ -231,18 +239,19 @@ public abstract class BaseMetricResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				metrics2 + " does not contain " + metric1, contains);
+				histogramMetrics2 + " does not contain " + histogramMetric1,
+				contains);
 		}
 	}
 
 	protected void assertEqualsJSONArray(
-		List<Metric> metrics, JSONArray jsonArray) {
+		List<HistogramMetric> histogramMetrics, JSONArray jsonArray) {
 
-		for (Metric metric : metrics) {
+		for (HistogramMetric histogramMetric : histogramMetrics) {
 			boolean contains = false;
 
 			for (Object object : jsonArray) {
-				if (equalsJSONObject(metric, (JSONObject)object)) {
+				if (equalsJSONObject(histogramMetric, (JSONObject)object)) {
 					contains = true;
 
 					break;
@@ -250,18 +259,18 @@ public abstract class BaseMetricResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				jsonArray + " does not contain " + metric, contains);
+				jsonArray + " does not contain " + histogramMetric, contains);
 		}
 	}
 
-	protected void assertValid(Metric metric) {
+	protected void assertValid(HistogramMetric histogramMetric) {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("histograms", additionalAssertFieldName)) {
-				if (metric.getHistograms() == null) {
+				if (histogramMetric.getHistograms() == null) {
 					valid = false;
 				}
 
@@ -269,7 +278,7 @@ public abstract class BaseMetricResourceTestCase {
 			}
 
 			if (Objects.equals("unit", additionalAssertFieldName)) {
-				if (metric.getUnit() == null) {
+				if (histogramMetric.getUnit() == null) {
 					valid = false;
 				}
 
@@ -277,7 +286,7 @@ public abstract class BaseMetricResourceTestCase {
 			}
 
 			if (Objects.equals("value", additionalAssertFieldName)) {
-				if (metric.getValue() == null) {
+				if (histogramMetric.getValue() == null) {
 					valid = false;
 				}
 
@@ -292,12 +301,13 @@ public abstract class BaseMetricResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Metric> page) {
+	protected void assertValid(Page<HistogramMetric> page) {
 		boolean valid = false;
 
-		java.util.Collection<Metric> metrics = page.getItems();
+		java.util.Collection<HistogramMetric> histogramMetrics =
+			page.getItems();
 
-		int size = metrics.size();
+		int size = histogramMetrics.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -329,8 +339,10 @@ public abstract class BaseMetricResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(Metric metric1, Metric metric2) {
-		if (metric1 == metric2) {
+	protected boolean equals(
+		HistogramMetric histogramMetric1, HistogramMetric histogramMetric2) {
+
+		if (histogramMetric1 == histogramMetric2) {
 			return true;
 		}
 
@@ -339,7 +351,8 @@ public abstract class BaseMetricResourceTestCase {
 
 			if (Objects.equals("histograms", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						metric1.getHistograms(), metric2.getHistograms())) {
+						histogramMetric1.getHistograms(),
+						histogramMetric2.getHistograms())) {
 
 					return false;
 				}
@@ -348,7 +361,10 @@ public abstract class BaseMetricResourceTestCase {
 			}
 
 			if (Objects.equals("unit", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(metric1.getUnit(), metric2.getUnit())) {
+				if (!Objects.deepEquals(
+						histogramMetric1.getUnit(),
+						histogramMetric2.getUnit())) {
+
 					return false;
 				}
 
@@ -357,7 +373,8 @@ public abstract class BaseMetricResourceTestCase {
 
 			if (Objects.equals("value", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						metric1.getValue(), metric2.getValue())) {
+						histogramMetric1.getValue(),
+						histogramMetric2.getValue())) {
 
 					return false;
 				}
@@ -373,11 +390,14 @@ public abstract class BaseMetricResourceTestCase {
 		return true;
 	}
 
-	protected boolean equalsJSONObject(Metric metric, JSONObject jsonObject) {
+	protected boolean equalsJSONObject(
+		HistogramMetric histogramMetric, JSONObject jsonObject) {
+
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("value", fieldName)) {
 				if (!Objects.deepEquals(
-						metric.getValue(), jsonObject.getDouble("value"))) {
+						histogramMetric.getValue(),
+						jsonObject.getDouble("value"))) {
 
 					return false;
 				}
@@ -395,13 +415,13 @@ public abstract class BaseMetricResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_metricResource instanceof EntityModelResource)) {
+		if (!(_histogramMetricResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_metricResource;
+			(EntityModelResource)_histogramMetricResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -430,7 +450,8 @@ public abstract class BaseMetricResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Metric metric) {
+		EntityField entityField, String operator,
+		HistogramMetric histogramMetric) {
 
 		StringBundler sb = new StringBundler();
 
@@ -478,25 +499,28 @@ public abstract class BaseMetricResourceTestCase {
 		return httpResponse.getContent();
 	}
 
-	protected Metric randomMetric() throws Exception {
-		return new Metric() {
+	protected HistogramMetric randomHistogramMetric() throws Exception {
+		return new HistogramMetric() {
 			{
 				value = RandomTestUtil.randomDouble();
 			}
 		};
 	}
 
-	protected Metric randomIrrelevantMetric() throws Exception {
-		Metric randomIrrelevantMetric = randomMetric();
+	protected HistogramMetric randomIrrelevantHistogramMetric()
+		throws Exception {
 
-		return randomIrrelevantMetric;
+		HistogramMetric randomIrrelevantHistogramMetric =
+			randomHistogramMetric();
+
+		return randomIrrelevantHistogramMetric;
 	}
 
-	protected Metric randomPatchMetric() throws Exception {
-		return randomMetric();
+	protected HistogramMetric randomPatchHistogramMetric() throws Exception {
+		return randomHistogramMetric();
 	}
 
-	protected MetricResource metricResource;
+	protected HistogramMetricResource histogramMetricResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -560,7 +584,7 @@ public abstract class BaseMetricResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseMetricResourceTestCase.class);
+		BaseHistogramMetricResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -577,8 +601,7 @@ public abstract class BaseMetricResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private
-		com.liferay.portal.workflow.metrics.rest.resource.v1_0.MetricResource
-			_metricResource;
+	private com.liferay.portal.workflow.metrics.rest.resource.v1_0.
+		HistogramMetricResource _histogramMetricResource;
 
 }

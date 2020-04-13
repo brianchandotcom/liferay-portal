@@ -65,6 +65,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.core.MultivaluedHashMap;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -176,6 +177,7 @@ public abstract class BaseNodeResourceTestCase {
 
 		node.setLabel(regex);
 		node.setName(regex);
+		node.setProcessVersion(regex);
 		node.setType(regex);
 
 		String json = NodeSerDes.toJSON(node);
@@ -186,6 +188,7 @@ public abstract class BaseNodeResourceTestCase {
 
 		Assert.assertEquals(regex, node.getLabel());
 		Assert.assertEquals(regex, node.getName());
+		Assert.assertEquals(regex, node.getProcessVersion());
 		Assert.assertEquals(regex, node.getType());
 	}
 
@@ -229,8 +232,7 @@ public abstract class BaseNodeResourceTestCase {
 	protected Node testGetProcessNodesPage_addNode(Long processId, Node node)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return nodeResource.postProcessNode(processId, node);
 	}
 
 	protected Long testGetProcessNodesPage_getProcessId() throws Exception {
@@ -242,6 +244,37 @@ public abstract class BaseNodeResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostProcessNode() throws Exception {
+		Node randomNode = randomNode();
+
+		Node postNode = testPostProcessNode_addNode(randomNode);
+
+		assertEquals(randomNode, postNode);
+		assertValid(postNode);
+	}
+
+	protected Node testPostProcessNode_addNode(Node node) throws Exception {
+		return nodeResource.postProcessNode(
+			testGetProcessNodesPage_getProcessId(), node);
+	}
+
+	@Test
+	public void testDeleteProcessNode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Node node = testDeleteProcessNode_addNode();
+
+		assertHttpResponseStatusCode(
+			204,
+			nodeResource.deleteProcessNodeHttpResponse(
+				node.getProcessId(), node.getId()));
+	}
+
+	protected Node testDeleteProcessNode_addNode() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Node testGraphQLNode_addNode() throws Exception {
@@ -315,6 +348,14 @@ public abstract class BaseNodeResourceTestCase {
 	protected void assertValid(Node node) {
 		boolean valid = true;
 
+		if (node.getDateCreated() == null) {
+			valid = false;
+		}
+
+		if (node.getDateModified() == null) {
+			valid = false;
+		}
+
 		if (node.getId() == null) {
 			valid = false;
 		}
@@ -340,6 +381,22 @@ public abstract class BaseNodeResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (node.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("processId", additionalAssertFieldName)) {
+				if (node.getProcessId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("processVersion", additionalAssertFieldName)) {
+				if (node.getProcessVersion() == null) {
 					valid = false;
 				}
 
@@ -415,6 +472,26 @@ public abstract class BaseNodeResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						node1.getDateCreated(), node2.getDateCreated())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						node1.getDateModified(), node2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(node1.getId(), node2.getId())) {
 					return false;
@@ -443,6 +520,26 @@ public abstract class BaseNodeResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(node1.getName(), node2.getName())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("processId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						node1.getProcessId(), node2.getProcessId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("processVersion", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						node1.getProcessVersion(), node2.getProcessVersion())) {
+
 					return false;
 				}
 
@@ -510,6 +607,27 @@ public abstract class BaseNodeResourceTestCase {
 			if (Objects.equals("name", fieldName)) {
 				if (!Objects.deepEquals(
 						node.getName(), jsonObject.getString("name"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("processId", fieldName)) {
+				if (!Objects.deepEquals(
+						node.getProcessId(), jsonObject.getLong("processId"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("processVersion", fieldName)) {
+				if (!Objects.deepEquals(
+						node.getProcessVersion(),
+						jsonObject.getString("processVersion"))) {
 
 					return false;
 				}
@@ -595,6 +713,68 @@ public abstract class BaseNodeResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("dateCreated")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(node.getDateCreated(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(node.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(node.getDateCreated()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("dateModified")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(node.getDateModified(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(node.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(node.getDateModified()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -616,6 +796,19 @@ public abstract class BaseNodeResourceTestCase {
 		if (entityFieldName.equals("name")) {
 			sb.append("'");
 			sb.append(String.valueOf(node.getName()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("processId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("processVersion")) {
+			sb.append("'");
+			sb.append(String.valueOf(node.getProcessVersion()));
 			sb.append("'");
 
 			return sb.toString();
@@ -658,10 +851,14 @@ public abstract class BaseNodeResourceTestCase {
 	protected Node randomNode() throws Exception {
 		return new Node() {
 			{
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
 				initial = RandomTestUtil.randomBoolean();
 				label = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
+				processId = RandomTestUtil.randomLong();
+				processVersion = RandomTestUtil.randomString();
 				terminal = RandomTestUtil.randomBoolean();
 				type = RandomTestUtil.randomString();
 			}

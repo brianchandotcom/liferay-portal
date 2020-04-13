@@ -32,8 +32,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Metric;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.MetricResource;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.ProcessMetric;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessMetricResource;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -43,6 +43,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -59,6 +60,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
@@ -69,9 +71,35 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseMetricResourceImpl
-	implements MetricResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<Metric> {
+public abstract class BaseProcessMetricResourceImpl
+	implements ProcessMetricResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<ProcessMetric> {
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/metrics'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "title"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
+		}
+	)
+	@Path("/processes/metrics")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ProcessMetric")})
+	public Page<ProcessMetric> getProcessMetricsPage(
+			@Parameter(hidden = true) @QueryParam("title") String title,
+			@Context Pagination pagination, @Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
 
 	/**
 	 * Invoke this method with the command line:
@@ -83,38 +111,39 @@ public abstract class BaseMetricResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
+			@Parameter(in = ParameterIn.QUERY, name = "completed"),
 			@Parameter(in = ParameterIn.QUERY, name = "dateEnd"),
-			@Parameter(in = ParameterIn.QUERY, name = "dateStart"),
-			@Parameter(in = ParameterIn.QUERY, name = "unit")
+			@Parameter(in = ParameterIn.QUERY, name = "dateStart")
 		}
 	)
 	@Path("/processes/{processId}/metrics")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Metric")})
-	public Metric getProcessMetric(
+	@Tags(value = {@Tag(name = "ProcessMetric")})
+	public ProcessMetric getProcessMetric(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
 				processId,
+			@Parameter(hidden = true) @QueryParam("completed") Boolean
+				completed,
 			@Parameter(hidden = true) @QueryParam("dateEnd") java.util.Date
 				dateEnd,
 			@Parameter(hidden = true) @QueryParam("dateStart") java.util.Date
-				dateStart,
-			@NotNull @Parameter(hidden = true) @QueryParam("unit") String unit)
+				dateStart)
 		throws Exception {
 
-		return new Metric();
+		return new ProcessMetric();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			java.util.Collection<Metric> metrics,
+			java.util.Collection<ProcessMetric> processMetrics,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
 
 	@Override
 	public void delete(
-			java.util.Collection<Metric> metrics,
+			java.util.Collection<ProcessMetric> processMetrics,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
@@ -135,12 +164,13 @@ public abstract class BaseMetricResourceImpl
 	}
 
 	@Override
-	public Page<Metric> read(
+	public Page<ProcessMetric> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return null;
+		return getProcessMetricsPage(
+			(String)parameters.get("title"), pagination, sorts);
 	}
 
 	@Override
@@ -167,7 +197,7 @@ public abstract class BaseMetricResourceImpl
 
 	@Override
 	public void update(
-			java.util.Collection<Metric> metrics,
+			java.util.Collection<ProcessMetric> processMetrics,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
@@ -229,7 +259,8 @@ public abstract class BaseMetricResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(Metric metric, Metric existingMetric) {
+	protected void preparePatch(
+		ProcessMetric processMetric, ProcessMetric existingProcessMetric) {
 	}
 
 	protected <T, R> List<R> transform(

@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.MetricResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.HistogramMetricResource;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -50,30 +50,31 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Rafael Praxedes
  * @generated
  */
-@Component(immediate = true, service = MetricResource.Factory.class)
+@Component(immediate = true, service = HistogramMetricResource.Factory.class)
 @Generated("")
-public class MetricResourceFactoryImpl implements MetricResource.Factory {
+public class HistogramMetricResourceFactoryImpl
+	implements HistogramMetricResource.Factory {
 
 	@Override
-	public MetricResource.Builder create() {
-		return new MetricResource.Builder() {
+	public HistogramMetricResource.Builder create() {
+		return new HistogramMetricResource.Builder() {
 
 			@Override
-			public MetricResource build() {
+			public HistogramMetricResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (MetricResource)ProxyUtil.newProxyInstance(
-					MetricResource.class.getClassLoader(),
-					new Class<?>[] {MetricResource.class},
+				return (HistogramMetricResource)ProxyUtil.newProxyInstance(
+					HistogramMetricResource.class.getClassLoader(),
+					new Class<?>[] {HistogramMetricResource.class},
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _preferredLocale, _user));
 			}
 
 			@Override
-			public MetricResource.Builder checkPermissions(
+			public HistogramMetricResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -82,7 +83,7 @@ public class MetricResourceFactoryImpl implements MetricResource.Factory {
 			}
 
 			@Override
-			public MetricResource.Builder httpServletRequest(
+			public HistogramMetricResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -91,7 +92,7 @@ public class MetricResourceFactoryImpl implements MetricResource.Factory {
 			}
 
 			@Override
-			public MetricResource.Builder preferredLocale(
+			public HistogramMetricResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -100,7 +101,7 @@ public class MetricResourceFactoryImpl implements MetricResource.Factory {
 			}
 
 			@Override
-			public MetricResource.Builder user(User user) {
+			public HistogramMetricResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -116,12 +117,12 @@ public class MetricResourceFactoryImpl implements MetricResource.Factory {
 
 	@Activate
 	protected void activate() {
-		MetricResource.FactoryHolder.factory = this;
+		HistogramMetricResource.FactoryHolder.factory = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		MetricResource.FactoryHolder.factory = null;
+		HistogramMetricResource.FactoryHolder.factory = null;
 	}
 
 	private Object _invoke(
@@ -146,26 +147,28 @@ public class MetricResourceFactoryImpl implements MetricResource.Factory {
 				_liberalPermissionCheckerFactory.create(user));
 		}
 
-		MetricResource metricResource = _componentServiceObjects.getService();
+		HistogramMetricResource histogramMetricResource =
+			_componentServiceObjects.getService();
 
-		metricResource.setContextAcceptLanguage(
+		histogramMetricResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		metricResource.setContextCompany(company);
+		histogramMetricResource.setContextCompany(company);
 
-		metricResource.setContextHttpServletRequest(httpServletRequest);
-		metricResource.setContextUser(user);
+		histogramMetricResource.setContextHttpServletRequest(
+			httpServletRequest);
+		histogramMetricResource.setContextUser(user);
 
 		try {
-			return method.invoke(metricResource, arguments);
+			return method.invoke(histogramMetricResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(metricResource);
+			_componentServiceObjects.ungetService(histogramMetricResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -177,7 +180,8 @@ public class MetricResourceFactoryImpl implements MetricResource.Factory {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<MetricResource> _componentServiceObjects;
+	private ComponentServiceObjects<HistogramMetricResource>
+		_componentServiceObjects;
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;

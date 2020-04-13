@@ -77,6 +77,16 @@ public class InstanceSerDes {
 			sb.append("\"");
 		}
 
+		if (instance.getAssetTitle_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetTitle_i18n\": ");
+
+			sb.append(_toJSON(instance.getAssetTitle_i18n()));
+		}
+
 		if (instance.getAssetType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -89,6 +99,16 @@ public class InstanceSerDes {
 			sb.append(_escape(instance.getAssetType()));
 
 			sb.append("\"");
+		}
+
+		if (instance.getAssetType_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetType_i18n\": ");
+
+			sb.append(_toJSON(instance.getAssetType_i18n()));
 		}
 
 		if (instance.getAssignees() != null) {
@@ -109,6 +129,40 @@ public class InstanceSerDes {
 			}
 
 			sb.append("]");
+		}
+
+		if (instance.getClassName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"className\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(instance.getClassName()));
+
+			sb.append("\"");
+		}
+
+		if (instance.getClassPK() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"classPK\": ");
+
+			sb.append(instance.getClassPK());
+		}
+
+		if (instance.getCompleted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"completed\": ");
+
+			sb.append(instance.getCompleted());
 		}
 
 		if (instance.getCreator() != null) {
@@ -151,6 +205,31 @@ public class InstanceSerDes {
 			sb.append("\"");
 		}
 
+		if (instance.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateModified\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(instance.getDateModified()));
+
+			sb.append("\"");
+		}
+
+		if (instance.getDuration() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"duration\": ");
+
+			sb.append(instance.getDuration());
+		}
+
 		if (instance.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -169,6 +248,20 @@ public class InstanceSerDes {
 			sb.append("\"processId\": ");
 
 			sb.append(instance.getProcessId());
+		}
+
+		if (instance.getProcessVersion() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"processVersion\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(instance.getProcessVersion()));
+
+			sb.append("\"");
 		}
 
 		if (instance.getSlaResults() != null) {
@@ -291,6 +384,15 @@ public class InstanceSerDes {
 			map.put("assetTitle", String.valueOf(instance.getAssetTitle()));
 		}
 
+		if (instance.getAssetTitle_i18n() == null) {
+			map.put("assetTitle_i18n", null);
+		}
+		else {
+			map.put(
+				"assetTitle_i18n",
+				String.valueOf(instance.getAssetTitle_i18n()));
+		}
+
 		if (instance.getAssetType() == null) {
 			map.put("assetType", null);
 		}
@@ -298,11 +400,40 @@ public class InstanceSerDes {
 			map.put("assetType", String.valueOf(instance.getAssetType()));
 		}
 
+		if (instance.getAssetType_i18n() == null) {
+			map.put("assetType_i18n", null);
+		}
+		else {
+			map.put(
+				"assetType_i18n", String.valueOf(instance.getAssetType_i18n()));
+		}
+
 		if (instance.getAssignees() == null) {
 			map.put("assignees", null);
 		}
 		else {
 			map.put("assignees", String.valueOf(instance.getAssignees()));
+		}
+
+		if (instance.getClassName() == null) {
+			map.put("className", null);
+		}
+		else {
+			map.put("className", String.valueOf(instance.getClassName()));
+		}
+
+		if (instance.getClassPK() == null) {
+			map.put("classPK", null);
+		}
+		else {
+			map.put("classPK", String.valueOf(instance.getClassPK()));
+		}
+
+		if (instance.getCompleted() == null) {
+			map.put("completed", null);
+		}
+		else {
+			map.put("completed", String.valueOf(instance.getCompleted()));
 		}
 
 		if (instance.getCreator() == null) {
@@ -320,6 +451,17 @@ public class InstanceSerDes {
 			"dateCreated",
 			liferayToJSONDateFormat.format(instance.getDateCreated()));
 
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(instance.getDateModified()));
+
+		if (instance.getDuration() == null) {
+			map.put("duration", null);
+		}
+		else {
+			map.put("duration", String.valueOf(instance.getDuration()));
+		}
+
 		if (instance.getId() == null) {
 			map.put("id", null);
 		}
@@ -332,6 +474,14 @@ public class InstanceSerDes {
 		}
 		else {
 			map.put("processId", String.valueOf(instance.getProcessId()));
+		}
+
+		if (instance.getProcessVersion() == null) {
+			map.put("processVersion", null);
+		}
+		else {
+			map.put(
+				"processVersion", String.valueOf(instance.getProcessVersion()));
 		}
 
 		if (instance.getSlaResults() == null) {
@@ -394,9 +544,23 @@ public class InstanceSerDes {
 					instance.setAssetTitle((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "assetTitle_i18n")) {
+				if (jsonParserFieldValue != null) {
+					instance.setAssetTitle_i18n(
+						(Map)InstanceSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "assetType")) {
 				if (jsonParserFieldValue != null) {
 					instance.setAssetType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetType_i18n")) {
+				if (jsonParserFieldValue != null) {
+					instance.setAssetType_i18n(
+						(Map)InstanceSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "assignees")) {
@@ -409,6 +573,22 @@ public class InstanceSerDes {
 						).toArray(
 							size -> new Assignee[size]
 						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "className")) {
+				if (jsonParserFieldValue != null) {
+					instance.setClassName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "classPK")) {
+				if (jsonParserFieldValue != null) {
+					instance.setClassPK(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "completed")) {
+				if (jsonParserFieldValue != null) {
+					instance.setCompleted((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
@@ -429,6 +609,18 @@ public class InstanceSerDes {
 						toDate((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					instance.setDateModified(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "duration")) {
+				if (jsonParserFieldValue != null) {
+					instance.setDuration(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					instance.setId(Long.valueOf((String)jsonParserFieldValue));
@@ -438,6 +630,11 @@ public class InstanceSerDes {
 				if (jsonParserFieldValue != null) {
 					instance.setProcessId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "processVersion")) {
+				if (jsonParserFieldValue != null) {
+					instance.setProcessVersion((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "slaResults")) {

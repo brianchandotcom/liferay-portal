@@ -14,11 +14,9 @@
 
 package com.liferay.portal.workflow.metrics.rest.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -43,62 +41,111 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Metric")
+@GraphQLName("ProcessMetric")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Metric")
-public class Metric {
+@XmlRootElement(name = "ProcessMetric")
+public class ProcessMetric {
 
-	@GraphQLName("Unit")
-	public static enum Unit {
-
-		DAYS("Days"), HOURS("Hours"), MONTHS("Months"), WEEKS("Weeks"),
-		YEARS("Years");
-
-		@JsonCreator
-		public static Unit create(String value) {
-			for (Unit unit : values()) {
-				if (Objects.equals(unit.getValue(), value)) {
-					return unit;
-				}
-			}
-
-			return null;
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Unit(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
+	@Schema
+	public Long getInstanceCount() {
+		return instanceCount;
 	}
+
+	public void setInstanceCount(Long instanceCount) {
+		this.instanceCount = instanceCount;
+	}
+
+	@JsonIgnore
+	public void setInstanceCount(
+		UnsafeSupplier<Long, Exception> instanceCountUnsafeSupplier) {
+
+		try {
+			instanceCount = instanceCountUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long instanceCount;
+
+	@Schema
+	public Long getOnTimeInstanceCount() {
+		return onTimeInstanceCount;
+	}
+
+	public void setOnTimeInstanceCount(Long onTimeInstanceCount) {
+		this.onTimeInstanceCount = onTimeInstanceCount;
+	}
+
+	@JsonIgnore
+	public void setOnTimeInstanceCount(
+		UnsafeSupplier<Long, Exception> onTimeInstanceCountUnsafeSupplier) {
+
+		try {
+			onTimeInstanceCount = onTimeInstanceCountUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long onTimeInstanceCount;
+
+	@Schema
+	public Long getOverdueInstanceCount() {
+		return overdueInstanceCount;
+	}
+
+	public void setOverdueInstanceCount(Long overdueInstanceCount) {
+		this.overdueInstanceCount = overdueInstanceCount;
+	}
+
+	@JsonIgnore
+	public void setOverdueInstanceCount(
+		UnsafeSupplier<Long, Exception> overdueInstanceCountUnsafeSupplier) {
+
+		try {
+			overdueInstanceCount = overdueInstanceCountUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long overdueInstanceCount;
 
 	@Schema
 	@Valid
-	public Histogram[] getHistograms() {
-		return histograms;
+	public Process getProcess() {
+		return process;
 	}
 
-	public void setHistograms(Histogram[] histograms) {
-		this.histograms = histograms;
+	public void setProcess(Process process) {
+		this.process = process;
 	}
 
 	@JsonIgnore
-	public void setHistograms(
-		UnsafeSupplier<Histogram[], Exception> histogramsUnsafeSupplier) {
+	public void setProcess(
+		UnsafeSupplier<Process, Exception> processUnsafeSupplier) {
 
 		try {
-			histograms = histogramsUnsafeSupplier.get();
+			process = processUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -110,31 +157,23 @@ public class Metric {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Histogram[] histograms;
+	protected Process process;
 
 	@Schema
-	@Valid
-	public Unit getUnit() {
-		return unit;
+	public Long getUntrackedInstanceCount() {
+		return untrackedInstanceCount;
+	}
+
+	public void setUntrackedInstanceCount(Long untrackedInstanceCount) {
+		this.untrackedInstanceCount = untrackedInstanceCount;
 	}
 
 	@JsonIgnore
-	public String getUnitAsString() {
-		if (unit == null) {
-			return null;
-		}
+	public void setUntrackedInstanceCount(
+		UnsafeSupplier<Long, Exception> untrackedInstanceCountUnsafeSupplier) {
 
-		return unit.toString();
-	}
-
-	public void setUnit(Unit unit) {
-		this.unit = unit;
-	}
-
-	@JsonIgnore
-	public void setUnit(UnsafeSupplier<Unit, Exception> unitUnsafeSupplier) {
 		try {
-			unit = unitUnsafeSupplier.get();
+			untrackedInstanceCount = untrackedInstanceCountUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -146,35 +185,7 @@ public class Metric {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Unit unit;
-
-	@Schema
-	public Double getValue() {
-		return value;
-	}
-
-	public void setValue(Double value) {
-		this.value = value;
-	}
-
-	@JsonIgnore
-	public void setValue(
-		UnsafeSupplier<Double, Exception> valueUnsafeSupplier) {
-
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Double value;
+	protected Long untrackedInstanceCount;
 
 	@Override
 	public boolean equals(Object object) {
@@ -182,13 +193,13 @@ public class Metric {
 			return true;
 		}
 
-		if (!(object instanceof Metric)) {
+		if (!(object instanceof ProcessMetric)) {
 			return false;
 		}
 
-		Metric metric = (Metric)object;
+		ProcessMetric processMetric = (ProcessMetric)object;
 
-		return Objects.equals(toString(), metric.toString());
+		return Objects.equals(toString(), processMetric.toString());
 	}
 
 	@Override
@@ -203,48 +214,54 @@ public class Metric {
 
 		sb.append("{");
 
-		if (histograms != null) {
+		if (instanceCount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"histograms\": ");
+			sb.append("\"instanceCount\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < histograms.length; i++) {
-				sb.append(String.valueOf(histograms[i]));
-
-				if ((i + 1) < histograms.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(instanceCount);
 		}
 
-		if (unit != null) {
+		if (onTimeInstanceCount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"unit\": ");
+			sb.append("\"onTimeInstanceCount\": ");
 
-			sb.append("\"");
-
-			sb.append(unit);
-
-			sb.append("\"");
+			sb.append(onTimeInstanceCount);
 		}
 
-		if (value != null) {
+		if (overdueInstanceCount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"value\": ");
+			sb.append("\"overdueInstanceCount\": ");
 
-			sb.append(value);
+			sb.append(overdueInstanceCount);
+		}
+
+		if (process != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"process\": ");
+
+			sb.append(String.valueOf(process));
+		}
+
+		if (untrackedInstanceCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"untrackedInstanceCount\": ");
+
+			sb.append(untrackedInstanceCount);
 		}
 
 		sb.append("}");
@@ -253,7 +270,7 @@ public class Metric {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.Metric",
+		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.ProcessMetric",
 		name = "x-class-name"
 	)
 	public String xClassName;

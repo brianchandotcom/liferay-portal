@@ -70,13 +70,17 @@ public class OpenAPIResourceImpl {
 
 			add(CalendarResourceImpl.class);
 
-			add(InstanceResourceImpl.class);
+			add(HistogramMetricResourceImpl.class);
 
-			add(MetricResourceImpl.class);
+			add(InstanceResourceImpl.class);
 
 			add(NodeResourceImpl.class);
 
+			add(NodeMetricResourceImpl.class);
+
 			add(ProcessResourceImpl.class);
+
+			add(ProcessMetricResourceImpl.class);
 
 			add(RoleResourceImpl.class);
 

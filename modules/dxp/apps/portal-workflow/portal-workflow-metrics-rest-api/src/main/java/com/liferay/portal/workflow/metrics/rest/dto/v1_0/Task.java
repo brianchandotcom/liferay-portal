@@ -25,6 +25,10 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -45,20 +49,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Task {
 
 	@Schema
-	public Long getBreachedInstanceCount() {
-		return breachedInstanceCount;
+	public Long getAssigneeId() {
+		return assigneeId;
 	}
 
-	public void setBreachedInstanceCount(Long breachedInstanceCount) {
-		this.breachedInstanceCount = breachedInstanceCount;
+	public void setAssigneeId(Long assigneeId) {
+		this.assigneeId = assigneeId;
 	}
 
 	@JsonIgnore
-	public void setBreachedInstanceCount(
-		UnsafeSupplier<Long, Exception> breachedInstanceCountUnsafeSupplier) {
+	public void setAssigneeId(
+		UnsafeSupplier<Long, Exception> assigneeIdUnsafeSupplier) {
 
 		try {
-			breachedInstanceCount = breachedInstanceCountUnsafeSupplier.get();
+			assigneeId = assigneeIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -70,27 +74,23 @@ public class Task {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long breachedInstanceCount;
+	protected Long assigneeId;
 
 	@Schema
-	public Double getBreachedInstancePercentage() {
-		return breachedInstancePercentage;
+	public String getClassName() {
+		return className;
 	}
 
-	public void setBreachedInstancePercentage(
-		Double breachedInstancePercentage) {
-
-		this.breachedInstancePercentage = breachedInstancePercentage;
+	public void setClassName(String className) {
+		this.className = className;
 	}
 
 	@JsonIgnore
-	public void setBreachedInstancePercentage(
-		UnsafeSupplier<Double, Exception>
-			breachedInstancePercentageUnsafeSupplier) {
+	public void setClassName(
+		UnsafeSupplier<String, Exception> classNameUnsafeSupplier) {
 
 		try {
-			breachedInstancePercentage =
-				breachedInstancePercentageUnsafeSupplier.get();
+			className = classNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -102,23 +102,23 @@ public class Task {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Double breachedInstancePercentage;
+	protected String className;
 
 	@Schema
-	public Long getDurationAvg() {
-		return durationAvg;
+	public Long getClassPK() {
+		return classPK;
 	}
 
-	public void setDurationAvg(Long durationAvg) {
-		this.durationAvg = durationAvg;
+	public void setClassPK(Long classPK) {
+		this.classPK = classPK;
 	}
 
 	@JsonIgnore
-	public void setDurationAvg(
-		UnsafeSupplier<Long, Exception> durationAvgUnsafeSupplier) {
+	public void setClassPK(
+		UnsafeSupplier<Long, Exception> classPKUnsafeSupplier) {
 
 		try {
-			durationAvg = durationAvgUnsafeSupplier.get();
+			classPK = classPKUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -130,23 +130,23 @@ public class Task {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long durationAvg;
+	protected Long classPK;
 
 	@Schema
-	public Long getInstanceCount() {
-		return instanceCount;
+	public Boolean getCompleted() {
+		return completed;
 	}
 
-	public void setInstanceCount(Long instanceCount) {
-		this.instanceCount = instanceCount;
+	public void setCompleted(Boolean completed) {
+		this.completed = completed;
 	}
 
 	@JsonIgnore
-	public void setInstanceCount(
-		UnsafeSupplier<Long, Exception> instanceCountUnsafeSupplier) {
+	public void setCompleted(
+		UnsafeSupplier<Boolean, Exception> completedUnsafeSupplier) {
 
 		try {
-			instanceCount = instanceCountUnsafeSupplier.get();
+			completed = completedUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -158,21 +158,23 @@ public class Task {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long instanceCount;
+	protected Boolean completed;
 
 	@Schema
-	public String getKey() {
-		return key;
+	public Long getCompletionUserId() {
+		return completionUserId;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setCompletionUserId(Long completionUserId) {
+		this.completionUserId = completionUserId;
 	}
 
 	@JsonIgnore
-	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
+	public void setCompletionUserId(
+		UnsafeSupplier<Long, Exception> completionUserIdUnsafeSupplier) {
+
 		try {
-			key = keyUnsafeSupplier.get();
+			completionUserId = completionUserIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -184,7 +186,201 @@ public class Task {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String key;
+	protected Long completionUserId;
+
+	@Schema
+	public Date getDateCompletion() {
+		return dateCompletion;
+	}
+
+	public void setDateCompletion(Date dateCompletion) {
+		this.dateCompletion = dateCompletion;
+	}
+
+	@JsonIgnore
+	public void setDateCompletion(
+		UnsafeSupplier<Date, Exception> dateCompletionUnsafeSupplier) {
+
+		try {
+			dateCompletion = dateCompletionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Date dateCompletion;
+
+	@Schema
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@JsonIgnore
+	public void setDateCreated(
+		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
+
+		try {
+			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Date dateCreated;
+
+	@Schema
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
+	}
+
+	@JsonIgnore
+	public void setDateModified(
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Date dateModified;
+
+	@Schema
+	public Long getDuration() {
+		return duration;
+	}
+
+	public void setDuration(Long duration) {
+		this.duration = duration;
+	}
+
+	@JsonIgnore
+	public void setDuration(
+		UnsafeSupplier<Long, Exception> durationUnsafeSupplier) {
+
+		try {
+			duration = durationUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long duration;
+
+	@Schema
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long id;
+
+	@Schema
+	public Long getInstanceId() {
+		return instanceId;
+	}
+
+	public void setInstanceId(Long instanceId) {
+		this.instanceId = instanceId;
+	}
+
+	@JsonIgnore
+	public void setInstanceId(
+		UnsafeSupplier<Long, Exception> instanceIdUnsafeSupplier) {
+
+		try {
+			instanceId = instanceIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long instanceId;
+
+	@Schema
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	@JsonIgnore
+	public void setLabel(
+		UnsafeSupplier<String, Exception> labelUnsafeSupplier) {
+
+		try {
+			label = labelUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String label;
 
 	@Schema
 	public String getName() {
@@ -213,20 +409,20 @@ public class Task {
 	protected String name;
 
 	@Schema
-	public Long getOnTimeInstanceCount() {
-		return onTimeInstanceCount;
+	public Long getNodeId() {
+		return nodeId;
 	}
 
-	public void setOnTimeInstanceCount(Long onTimeInstanceCount) {
-		this.onTimeInstanceCount = onTimeInstanceCount;
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
 	}
 
 	@JsonIgnore
-	public void setOnTimeInstanceCount(
-		UnsafeSupplier<Long, Exception> onTimeInstanceCountUnsafeSupplier) {
+	public void setNodeId(
+		UnsafeSupplier<Long, Exception> nodeIdUnsafeSupplier) {
 
 		try {
-			onTimeInstanceCount = onTimeInstanceCountUnsafeSupplier.get();
+			nodeId = nodeIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -238,23 +434,23 @@ public class Task {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long onTimeInstanceCount;
+	protected Long nodeId;
 
 	@Schema
-	public Long getOverdueInstanceCount() {
-		return overdueInstanceCount;
+	public Long getProcessId() {
+		return processId;
 	}
 
-	public void setOverdueInstanceCount(Long overdueInstanceCount) {
-		this.overdueInstanceCount = overdueInstanceCount;
+	public void setProcessId(Long processId) {
+		this.processId = processId;
 	}
 
 	@JsonIgnore
-	public void setOverdueInstanceCount(
-		UnsafeSupplier<Long, Exception> overdueInstanceCountUnsafeSupplier) {
+	public void setProcessId(
+		UnsafeSupplier<Long, Exception> processIdUnsafeSupplier) {
 
 		try {
-			overdueInstanceCount = overdueInstanceCountUnsafeSupplier.get();
+			processId = processIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -266,7 +462,35 @@ public class Task {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long overdueInstanceCount;
+	protected Long processId;
+
+	@Schema
+	public String getProcessVersion() {
+		return processVersion;
+	}
+
+	public void setProcessVersion(String processVersion) {
+		this.processVersion = processVersion;
+	}
+
+	@JsonIgnore
+	public void setProcessVersion(
+		UnsafeSupplier<String, Exception> processVersionUnsafeSupplier) {
+
+		try {
+			processVersion = processVersionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String processVersion;
 
 	@Override
 	public boolean equals(Object object) {
@@ -295,56 +519,145 @@ public class Task {
 
 		sb.append("{");
 
-		if (breachedInstanceCount != null) {
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		if (assigneeId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"breachedInstanceCount\": ");
+			sb.append("\"assigneeId\": ");
 
-			sb.append(breachedInstanceCount);
+			sb.append(assigneeId);
 		}
 
-		if (breachedInstancePercentage != null) {
+		if (className != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"breachedInstancePercentage\": ");
-
-			sb.append(breachedInstancePercentage);
-		}
-
-		if (durationAvg != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"durationAvg\": ");
-
-			sb.append(durationAvg);
-		}
-
-		if (instanceCount != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"instanceCount\": ");
-
-			sb.append(instanceCount);
-		}
-
-		if (key != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"key\": ");
+			sb.append("\"className\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(key));
+			sb.append(_escape(className));
+
+			sb.append("\"");
+		}
+
+		if (classPK != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"classPK\": ");
+
+			sb.append(classPK);
+		}
+
+		if (completed != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"completed\": ");
+
+			sb.append(completed);
+		}
+
+		if (completionUserId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"completionUserId\": ");
+
+			sb.append(completionUserId);
+		}
+
+		if (dateCompletion != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCompletion\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(dateCompletion));
+
+			sb.append("\"");
+		}
+
+		if (dateCreated != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCreated\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(dateCreated));
+
+			sb.append("\"");
+		}
+
+		if (dateModified != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateModified\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(dateModified));
+
+			sb.append("\"");
+		}
+
+		if (duration != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"duration\": ");
+
+			sb.append(duration);
+		}
+
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(id);
+		}
+
+		if (instanceId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"instanceId\": ");
+
+			sb.append(instanceId);
+		}
+
+		if (label != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(label));
 
 			sb.append("\"");
 		}
@@ -363,24 +676,38 @@ public class Task {
 			sb.append("\"");
 		}
 
-		if (onTimeInstanceCount != null) {
+		if (nodeId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"onTimeInstanceCount\": ");
+			sb.append("\"nodeId\": ");
 
-			sb.append(onTimeInstanceCount);
+			sb.append(nodeId);
 		}
 
-		if (overdueInstanceCount != null) {
+		if (processId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"overdueInstanceCount\": ");
+			sb.append("\"processId\": ");
 
-			sb.append(overdueInstanceCount);
+			sb.append(processId);
+		}
+
+		if (processVersion != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"processVersion\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(processVersion));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

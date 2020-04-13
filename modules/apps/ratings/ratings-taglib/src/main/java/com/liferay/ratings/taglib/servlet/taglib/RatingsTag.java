@@ -198,6 +198,8 @@ public class RatingsTag extends IncludeTag {
 				).put(
 					"thumbUp", thumbUp
 				).put(
+					"type", _getType(httpServletRequest)
+				).put(
 					"url", url
 				).put(
 					"userScore", userScore

@@ -470,15 +470,6 @@ definition {
 			Pause(locator1 = "2000");
 		}
 
-		if (isSet(verticalSpace)) {
-			Select(
-				key_fieldLabel = "Bottom Spacing",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${verticalSpace}");
-
-			Pause(locator1 = "2000");
-		}
-
 		PageEditor.waitForAutoSave();
 	}
 
@@ -1266,13 +1257,6 @@ definition {
 				key_fragmentName = "${fragmentName}",
 				key_type = "${type}",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TYPE");
-		}
-
-		if (isSet(verticalSpace)) {
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_verticalSpace = "${verticalSpace}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_VERTICAL_SPACE");
 		}
 	}
 

@@ -17,6 +17,7 @@ import ContentView from '../../../shared/components/content-view/ContentView.es'
 import FormGroupWithStatus from '../../../shared/components/form/FormGroupWithStatus.es';
 import ReloadButton from '../../../shared/components/list/ReloadButton.es';
 import {useToaster} from '../../../shared/components/toaster/hooks/useToaster.es';
+import {usePageTitle} from '../../../shared/hooks/usePageTitle.es';
 import {AppContext} from '../../AppContext.es';
 import {SLAContext} from '../SLAContainer.es';
 import {
@@ -53,6 +54,8 @@ const Body = ({history, id, processId, query}) => {
 		sla,
 	} = useContext(SLAFormContext);
 	const toaster = useToaster();
+
+	usePageTitle(id ? sla.name : Liferay.Language.get('new-sla'));
 
 	const handleErrors = error => {
 		const {data} = error.response || {};

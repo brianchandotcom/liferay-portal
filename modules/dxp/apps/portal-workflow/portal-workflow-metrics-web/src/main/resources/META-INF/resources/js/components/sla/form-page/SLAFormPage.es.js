@@ -9,24 +9,12 @@
  * distribution rights of the Software.
  */
 
-import React, {useContext, useEffect} from 'react';
+import React from 'react';
 
-import {AppContext} from '../../AppContext.es';
 import {Body} from './SLAFormPageBody.es';
 import SLAFormPageProvider from './SLAFormPageProvider.es';
 
 const SLAFormPage = props => {
-	const {setTitle} = useContext(AppContext);
-
-	useEffect(() => {
-		setTitle(
-			props.id
-				? Liferay.Language.get('edit-sla')
-				: Liferay.Language.get('new-sla')
-		);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
 	return (
 		<div className="sla-form">
 			<SLAFormPageProvider {...props}>

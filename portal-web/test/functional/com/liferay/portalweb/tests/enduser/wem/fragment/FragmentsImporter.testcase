@@ -64,7 +64,6 @@ definition {
 	@priority = "5"
 	test ExportImportCollectionViewFragment {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		task ("Add a fragment collection") {
 			FragmentsAdmin.addCollection(

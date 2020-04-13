@@ -162,7 +162,7 @@ definition {
 
 	@priority = "5"
 	test EditMBThreadSubjectAndBody {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		JSONMBMessage.addMessage(
 			groupName = "Guest",

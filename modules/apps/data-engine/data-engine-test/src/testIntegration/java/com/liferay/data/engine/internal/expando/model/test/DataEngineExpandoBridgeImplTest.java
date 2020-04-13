@@ -108,30 +108,27 @@ public class DataEngineExpandoBridgeImplTest {
 
 	@Test
 	public void testAddAttribute() throws PortalException {
-		String attributeName = _addAttribute();
-
 		long classPK = _expandoBridge.getClassPK();
 
 		_expandoBridge.setClassPK(1);
 
 		Assert.assertEquals(
-			StringPool.BLANK, _expandoBridge.getAttribute(attributeName));
+			StringPool.BLANK, _expandoBridge.getAttribute(_addAttribute()));
 
 		_expandoBridge.setClassPK(classPK);
 	}
 
 	@Test
 	public void testAddAttributeWithDefaultValue() throws PortalException {
-		String defaultValue = RandomTestUtil.randomString();
-
-		String attributeName = _addAttributeWithValue(defaultValue);
-
 		long classPK = _expandoBridge.getClassPK();
 
 		_expandoBridge.setClassPK(1);
 
+		String defaultValue = RandomTestUtil.randomString();
+
 		Assert.assertEquals(
-			defaultValue, _expandoBridge.getAttribute(attributeName));
+			defaultValue,
+			_expandoBridge.getAttribute(_addAttributeWithValue(defaultValue)));
 
 		_expandoBridge.setClassPK(classPK);
 	}
@@ -140,10 +137,10 @@ public class DataEngineExpandoBridgeImplTest {
 	public void testGetAttributeDefault() throws PortalException {
 		String defaultValue = RandomTestUtil.randomString();
 
-		String attributeName = _addAttributeWithValue(defaultValue);
-
 		Assert.assertEquals(
-			defaultValue, _expandoBridge.getAttributeDefault(attributeName));
+			defaultValue,
+			_expandoBridge.getAttributeDefault(
+				_addAttributeWithValue(defaultValue)));
 	}
 
 	@Test
@@ -157,10 +154,8 @@ public class DataEngineExpandoBridgeImplTest {
 
 	@Test
 	public void testGetAttributeProperties() throws PortalException {
-		String attributeName = _addAttribute();
-
 		UnicodeProperties unicodeProperties =
-			_expandoBridge.getAttributeProperties(attributeName);
+			_expandoBridge.getAttributeProperties(_addAttribute());
 
 		Assert.assertEquals("text", unicodeProperties.getProperty("fieldType"));
 	}
@@ -181,9 +176,7 @@ public class DataEngineExpandoBridgeImplTest {
 
 	@Test
 	public void testHasAttribute() throws PortalException {
-		String attributeName = _addAttribute();
-
-		Assert.assertTrue(_expandoBridge.hasAttribute(attributeName));
+		Assert.assertTrue(_expandoBridge.hasAttribute(_addAttribute()));
 	}
 
 	@Test

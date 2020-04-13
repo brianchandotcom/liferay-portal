@@ -172,10 +172,7 @@ public class TableReferenceDefinitionManager {
 						currentParentJoinHolders) {
 
 					combinedChildJoinHolders.add(
-						new TableJoinHolder(
-							currentParentJoinHolder.getJoinPKColumn(),
-							currentParentJoinHolder.getFromPKColumn(),
-							currentParentJoinHolder.getJoinFunction()));
+						currentParentJoinHolder.reverse());
 				}
 			}
 
@@ -195,10 +192,7 @@ public class TableReferenceDefinitionManager {
 						currentChildJoinHolders) {
 
 					combinedParentJoinHolders.add(
-						new TableJoinHolder(
-							currentChildJoinHolder.getJoinPKColumn(),
-							currentChildJoinHolder.getFromPKColumn(),
-							currentChildJoinHolder.getJoinFunction()));
+						currentChildJoinHolder.reverse());
 				}
 			}
 		}

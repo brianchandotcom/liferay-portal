@@ -42,6 +42,8 @@ definition {
 
 		FragmentsEditor.gotoConfigurationTab();
 
+		Pause(locator1 = "3000");
+
 		FragmentsEditor.typeFileContent(fileName = "fragment_configuration_invalid.json");
 
 		FragmentsEditor.gotoCodeTab();
@@ -76,9 +78,13 @@ definition {
 
 		FragmentsEditor.gotoConfigurationTab();
 
+		Pause(locator1 = "3000");
+
 		FragmentsEditor.typeFileContent(fileName = "fragment_configuration.json");
 
 		FragmentsEditor.gotoCodeTab();
+
+		Pause(locator1 = "3000");
 
 		FragmentsEditor.typeFileContent(fileName = "fragment_configuration.html");
 

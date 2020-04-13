@@ -178,6 +178,30 @@ describe('RatingsStars', () => {
 			it('updates the user score with the one from the server', () => {
 				expect(starsDropdownToggle.value).toBe('1');
 			});
+
+			describe('and the user change her vote to 5/5 stars', () => {
+				beforeEach(async () => {
+					fetch.mockResponseOnce(
+						JSON.stringify({
+							averageScore: 1,
+							score: 1,
+							totalEntries: 1,
+						})
+					);
+
+					await act(async () => {
+						fireEvent.click(starsButtons[5]);
+					});
+				});
+
+				it('updates the user score with the one from the server', () => {
+					expect(starsDropdownToggle.value).toBe('5');
+				});
+
+				it('updates the average score of 1 vote', async () => {
+					expect(result.queryByText(`5.0 (1 vote)`)).toBeTruthy();
+				});
+			});
 		});
 	});
 });

@@ -4143,24 +4143,24 @@
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.sms.jar!httpclient.jar</file-name>
-				<version>4.2.6</version>
-				<project-name>HttpComponents Apache HttpClient</project-name>
+				<version>4.5.12</version>
+				<project-name>Apache HttpClient</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.sms.jar!httpcore.jar</file-name>
-				<version>4.2.5</version>
+				<version>4.4.13</version>
 				<project-name>HttpComponents Apache HttpCore</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>

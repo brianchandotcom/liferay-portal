@@ -44,16 +44,16 @@ public class LayoutStructureItemHelperFactory {
 			return new DropZoneLayoutStructureItemHelper();
 		}
 
+		if (pageElementType == PageElement.Type.FRAGMENT) {
+			return new FragmentLayoutStructureItemHelper();
+		}
+
 		if (pageElementType == PageElement.Type.ROW) {
 			return new RowLayoutStructureItemHelper();
 		}
 
 		if (pageElementType == PageElement.Type.SECTION) {
 			return new ContainerLayoutStructureItemHelper();
-		}
-
-		if (pageElementType == PageElement.Type.FRAGMENT) {
-			return new FragmentLayoutStructureItemHelper();
 		}
 
 		if (pageElementType == PageElement.Type.WIDGET) {

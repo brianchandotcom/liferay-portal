@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 $toolbarDesktopHeight: 64px;
 $toolbarHeight: 110px;
 $toolbarZIndex: 971;
@@ -142,7 +144,7 @@ $productMenuWidth: 320px;
 				border: 0;
 			}
 
-			@media (min-width: 768px) {
+			@include media-breakpoint-up(lg) {
 				min-height: $toolbarDesktopHeight;
 
 				> .container-fluid > .tbar-nav {
@@ -166,7 +168,7 @@ $productMenuWidth: 320px;
 		.contextual-sidebar-content {
 			margin-top: $toolbarHeight;
 
-			@media (min-width: 768px) {
+			@include media-breakpoint-up(lg) {
 				margin-top: $toolbarDesktopHeight;
 			}
 
@@ -192,10 +194,10 @@ $productMenuWidth: 320px;
 			padding-top: 0;
 			position: fixed;
 			top: auto;
-			width: 100%;
+			width: calc(100% - #{$productMenuWidth});
 			z-index: 1;
 
-			@media (min-width: 768px) {
+			@include media-breakpoint-up(lg) {
 				margin-top: $toolbarDesktopHeight;
 				width: $productMenuWidth;
 			}

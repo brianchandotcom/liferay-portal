@@ -73,7 +73,11 @@ $zIndexContent: 0;
 		width: $multiPanelSidebarContentWidth;
 		z-index: $zIndexContent;
 
-		&--open {
+		.rtl & {
+			transform: translateX(-100%);
+		}
+
+		&.multi-panel-sidebar__content--open {
 			transform: translateX(0);
 		}
 	}

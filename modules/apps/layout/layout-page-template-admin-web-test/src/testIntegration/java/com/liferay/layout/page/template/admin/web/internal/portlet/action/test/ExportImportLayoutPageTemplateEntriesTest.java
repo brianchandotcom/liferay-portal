@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -102,8 +101,6 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			_group1, TestPropsValues.getUserId());
 		_serviceContext2 = ServiceContextTestUtil.getServiceContext(
 			_group2, TestPropsValues.getUserId());
-
-		_user = TestPropsValues.getUser();
 	}
 
 	@Test
@@ -195,7 +192,8 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 		try {
 			layoutPageTemplatesImporterResultEntries =
 				_layoutPageTemplatesImporter.importFile(
-					_user.getUserId(), _group2.getGroupId(), 0, file, false);
+					TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
+					false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -539,6 +537,5 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 
 	private ServiceContext _serviceContext1;
 	private ServiceContext _serviceContext2;
-	private User _user;
 
 }

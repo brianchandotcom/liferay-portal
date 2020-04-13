@@ -190,7 +190,7 @@ const SectionAttribute = ({description, detail}) => {
 	return (
 		<p className="row">
 			<span className="col-2 font-weight-medium small text-secondary">
-				{`${description} `}
+				{`${description}`}
 			</span>
 
 			<span className="col small" data-testid="instanceDetailSpan">

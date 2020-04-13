@@ -160,10 +160,9 @@ const DurationSection = ({onChangeHandler}) => {
 						>
 							{calendars.map((calendar, index) => (
 								<option key={index} value={calendar.key}>
-									{calendar.title}
-
+									{calendar.title}{' '}
 									{calendar.defaultCalendar &&
-										` (${Liferay.Language.get(
+										`(${Liferay.Language.get(
 											'system-default'
 										)})`}
 								</option>

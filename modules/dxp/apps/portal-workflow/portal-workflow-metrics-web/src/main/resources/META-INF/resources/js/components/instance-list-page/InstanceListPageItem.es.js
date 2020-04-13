@@ -144,7 +144,7 @@ const Item = ({totalCount, ...instance}) => {
 			</ClayTable.Cell>
 
 			<ClayTable.Cell data-testid="assetInfoCell">
-				{`${assetType}: ${assetTitle} `}
+				{`${assetType}: ${assetTitle}`}
 			</ClayTable.Cell>
 
 			<ClayTable.Cell data-testid="taskNamesCell">

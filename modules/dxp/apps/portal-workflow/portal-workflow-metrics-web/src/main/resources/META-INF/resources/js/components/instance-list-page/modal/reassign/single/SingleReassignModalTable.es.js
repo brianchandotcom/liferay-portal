@@ -129,8 +129,7 @@ const Table = ({items, setAssigneeId}) => {
 							width: '25%',
 						}}
 					>
-						{`${Liferay.Language.get('new-assignee')} `}
-
+						{`${Liferay.Language.get('new-assignee')}`}{' '}
 						<ClayTooltipProvider>
 							<ClayIcon
 								data-tooltip-align="top"

@@ -32,7 +32,7 @@ const SLAInfo = ({processId}) => {
 				setAlert({
 					content: `${Liferay.Language.get(
 						'no-slas-are-defined-for-this-process'
-					)} `,
+					)}`,
 					link: `/sla/${processId}/new`,
 					linkText: Liferay.Language.get('add-a-new-sla'),
 				});
@@ -56,7 +56,7 @@ const SLAInfo = ({processId}) => {
 						totalCount,
 					])} ${Liferay.Language.get(
 						'fix-the-sla-configuration-to-resume-accurate-reporting'
-					)} `,
+					)}`,
 					link: `/sla/${processId}/list/${defaultDelta}/1`,
 					linkText: Liferay.Language.get('set-up-slas'),
 				});
@@ -80,8 +80,7 @@ const SLAInfo = ({processId}) => {
 						onClose={() => setAlert()}
 						title={Liferay.Language.get('warning')}
 					>
-						{alert.content}
-
+						{alert.content}{' '}
 						<ChildLink
 							className="font-weight-bold"
 							data-testid="slaInfoLink"

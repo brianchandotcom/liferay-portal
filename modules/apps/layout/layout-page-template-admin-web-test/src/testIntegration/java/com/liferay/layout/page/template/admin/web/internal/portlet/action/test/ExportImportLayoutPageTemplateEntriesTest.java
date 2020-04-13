@@ -105,18 +105,18 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 
 	@Test
 	public void testExportImportLayoutPageTemplateEntry() throws Exception {
-		LayoutPageTemplateCollection layoutPageTemplateCollection1 =
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
 					TestPropsValues.getUserId(), _group1.getGroupId(),
-					"Page Template Collection One", StringPool.BLANK,
+					"Page Template Collection", StringPool.BLANK,
 					_serviceContext1);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				_serviceContext1.getUserId(),
 				_serviceContext1.getScopeGroupId(),
-				layoutPageTemplateCollection1.
+				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				"Page Template One",
 				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
@@ -126,14 +126,14 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			"<lfr-editable id=\"element-text\" type=\"text\">Test Text " +
 				"Fragment</lfr-editable>";
 
-		FragmentEntry fragmentEntry1 = _addFragmentEntry(
+		FragmentEntry fragmentEntry = _addFragmentEntry(
 			_group1.getGroupId(), "test-text-fragment", "Test Text Fragment",
 			html);
 
-		FragmentEntryLink fragmentEntryLink1 =
+		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group1.getGroupId(), 0,
-				fragmentEntry1.getFragmentEntryId(),
+				fragmentEntry.getFragmentEntryId(),
 				_portal.getClassNameId(Layout.class),
 				layoutPageTemplateEntry1.getPlid(), StringPool.BLANK, html,
 				StringPool.BLANK,
@@ -143,7 +143,7 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 
 		HashMap<String, String> valuesMap = HashMapBuilder.put(
 			"FRAGMENT_ENTRY_LINK1_ID",
-			String.valueOf(fragmentEntryLink1.getFragmentEntryLinkId())
+			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
 		).build();
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(

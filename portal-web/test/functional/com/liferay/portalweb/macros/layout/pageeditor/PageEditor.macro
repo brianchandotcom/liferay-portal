@@ -820,7 +820,7 @@ definition {
 	}
 
 	macro gotoCommentList {
-		Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BACK");
+		Click.pauseClickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BACK");
 
 		AssertTextEquals(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_LIST_TITLE",

@@ -17,6 +17,7 @@ package com.liferay.fragment.internal.validator;
 import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.FileImpl;
 
@@ -626,6 +627,26 @@ public class FragmentEntryValidatorImplTest {
 	public void testValidateConfigurationValidRequired() throws Exception {
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration_valid_required.json"));
+	}
+
+	@Test
+	public void testValidateConfigurationValuesTextFieldTypeInvalidEmail()
+		throws Exception {
+
+		expectedException.expect(FragmentEntryConfigurationException.class);
+
+		_fragmentEntryValidatorImpl.validateConfigurationValues(
+			_read("configuration_field_text_typeoptions_validation_email.json"),
+			JSONUtil.put("emailField", "test-liferay.com"));
+	}
+
+	@Test
+	public void testValidateConfigurationValuesTextFieldTypeValidEmail()
+		throws Exception {
+
+		_fragmentEntryValidatorImpl.validateConfigurationValues(
+			_read("configuration_field_text_typeoptions_validation_email.json"),
+			JSONUtil.put("emailField", "test@liferay.com"));
 	}
 
 	@Rule

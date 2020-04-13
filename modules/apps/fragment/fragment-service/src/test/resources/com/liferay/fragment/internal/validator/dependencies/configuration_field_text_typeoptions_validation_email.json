@@ -1,0 +1,17 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"name": "emailField",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"type": "email"
+						}
+					}
+				}
+			]
+		}
+	]
+}

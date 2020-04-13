@@ -16,7 +16,7 @@ package com.liferay.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.helper.TableReferenceDefinitionHelper;
 import com.liferay.petra.sql.dsl.Table;
-import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * @author Preston Crary
@@ -26,7 +26,7 @@ public interface TableReferenceDefinition<T extends Table<T>> {
 	public void defineTableReferences(
 		TableReferenceDefinitionHelper<T> tableReferenceDefinitionHelper);
 
-	public PersistedModelLocalService getPersistedModelLocalService();
+	public BasePersistence<?> getBasePersistence();
 
 	public T getTable();
 

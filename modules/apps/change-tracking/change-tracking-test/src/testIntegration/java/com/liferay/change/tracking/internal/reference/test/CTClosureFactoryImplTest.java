@@ -30,11 +30,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -646,8 +644,8 @@ public class CTClosureFactoryImplTest {
 		}
 
 		@Override
-		public PersistedModelLocalService getPersistedModelLocalService() {
-			return new TestPersistedModelLocalService(_basePersistence);
+		public BasePersistence<?> getBasePersistence() {
+			return _basePersistence;
 		}
 
 		@Override
@@ -715,8 +713,8 @@ public class CTClosureFactoryImplTest {
 		}
 
 		@Override
-		public PersistedModelLocalService getPersistedModelLocalService() {
-			return new TestPersistedModelLocalService(_basePersistence);
+		public BasePersistence<?> getBasePersistence() {
+			return _basePersistence;
 		}
 
 		@Override
@@ -784,8 +782,8 @@ public class CTClosureFactoryImplTest {
 		}
 
 		@Override
-		public PersistedModelLocalService getPersistedModelLocalService() {
-			return new TestPersistedModelLocalService(_basePersistence);
+		public BasePersistence<?> getBasePersistence() {
+			return _basePersistence;
 		}
 
 		@Override
@@ -794,36 +792,6 @@ public class CTClosureFactoryImplTest {
 		}
 
 		private ParentTableReferenceDefinition(
-			BasePersistence<?> basePersistence) {
-
-			_basePersistence = basePersistence;
-		}
-
-		private final BasePersistence<?> _basePersistence;
-
-	}
-
-	private static class TestPersistedModelLocalService
-		implements PersistedModelLocalService {
-
-		@Override
-		public PersistedModel deletePersistedModel(
-			PersistedModel persistedModel) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public BasePersistence<?> getBasePersistence() {
-			return _basePersistence;
-		}
-
-		@Override
-		public PersistedModel getPersistedModel(Serializable primaryKeyObj) {
-			throw new UnsupportedOperationException();
-		}
-
-		private TestPersistedModelLocalService(
 			BasePersistence<?> basePersistence) {
 
 			_basePersistence = basePersistence;

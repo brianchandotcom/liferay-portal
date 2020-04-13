@@ -7,7 +7,7 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
     <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-ja-jp" focusable="false" role="presentation">
             <use href="icons.svg#ja-jp"></use>
           </svg></span><span class="btn-section">ja-jp</span></button>
-      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu">
+      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
         <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
                     <use href="icons.svg#en-us"></use>
                   </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
@@ -60,7 +60,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
     <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
             <use href="icons.svg#en-us"></use>
           </svg></span><span class="btn-section">en-us</span></button>
-      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu">
+      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
         <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
                     <use href="icons.svg#en-us"></use>
                   </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
@@ -113,7 +113,7 @@ exports[`Field LocalizableText fills with the default language value when the se
     <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-ja-jp" focusable="false" role="presentation">
             <use href="icons.svg#ja-jp"></use>
           </svg></span><span class="btn-section">ja-jp</span></button>
-      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu">
+      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
         <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
                     <use href="icons.svg#en-us"></use>
                   </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
@@ -166,7 +166,7 @@ exports[`Field LocalizableText fills with the selected language value when the s
     <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-ca-es" focusable="false" role="presentation">
             <use href="icons.svg#ca-es"></use>
           </svg></span><span class="btn-section">ca-es</span></button>
-      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu">
+      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
         <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
                     <use href="icons.svg#en-us"></use>
                   </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
@@ -220,7 +220,7 @@ exports[`Field LocalizableText has a label 1`] = `
     <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
             <use href="icons.svg#en-us"></use>
           </svg></span><span class="btn-section">en-us</span></button>
-      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu">
+      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
         <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
                     <use href="icons.svg#en-us"></use>
                   </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
@@ -273,7 +273,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
     <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
             <use href="icons.svg#en-us"></use>
           </svg></span><span class="btn-section">en-us</span></button>
-      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu">
+      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
         <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
                     <use href="icons.svg#en-us"></use>
                   </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
@@ -326,7 +326,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
     <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
             <use href="icons.svg#en-us"></use>
           </svg></span><span class="btn-section">en-us</span></button>
-      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu">
+      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
         <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
                     <use href="icons.svg#en-us"></use>
                   </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
@@ -379,7 +379,7 @@ exports[`Field LocalizableText is not required 1`] = `
     <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
             <use href="icons.svg#en-us"></use>
           </svg></span><span class="btn-section">en-us</span></button>
-      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu">
+      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
         <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
                     <use href="icons.svg#en-us"></use>
                   </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
@@ -432,7 +432,7 @@ exports[`Field LocalizableText removes the translation of an item already transl
     <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-pt-br" focusable="false" role="presentation">
             <use href="icons.svg#pt-br"></use>
           </svg></span><span class="btn-section">pt-br</span></button>
-      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu">
+      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
         <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
                     <use href="icons.svg#en-us"></use>
                   </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
@@ -485,7 +485,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
     <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
             <use href="icons.svg#en-us"></use>
           </svg></span><span class="btn-section">en-us</span></button>
-      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu">
+      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
         <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
                     <use href="icons.svg#en-us"></use>
                   </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
@@ -538,7 +538,7 @@ exports[`Field LocalizableText renders values 1`] = `
     <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
             <use href="icons.svg#en-us"></use>
           </svg></span><span class="btn-section">en-us</span></button>
-      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu">
+      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
         <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
                     <use href="icons.svg#en-us"></use>
                   </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>
@@ -591,7 +591,7 @@ exports[`Field LocalizableText shows default language value when no other langua
     <div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
             <use href="icons.svg#en-us"></use>
           </svg></span><span class="btn-section">en-us</span></button>
-      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu">
+      <ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu" data-toggle="liferay-dropdown">
         <li><a class="autofit-row dropdown-item custom-dropdown-item-row" data-locale-id="en_US" href="#1"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-en-us" focusable="false" role="presentation">
                     <use href="icons.svg#en-us"></use>
                   </svg></span>English (United States)</span></span><span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">default</span></span></span></a></li>

@@ -315,6 +315,11 @@
 
 		_onEditorKey(event) {
 			var instance = this;
+			var editor = instance.get(STR_EDITOR);
+
+			if (editor.mode !== 'wysiwyg') {
+				return;
+			}
 
 			if (instance._isEmptySelection()) {
 				event = instance._normalizeCKEditorKeyEvent(event);
@@ -325,8 +330,6 @@
 					acVisible &&
 					KeyMap.isKeyInSet(event.keyCode, 'down', 'enter', 'up')
 				) {
-					var editor = instance.get(STR_EDITOR);
-
 					var inlineEditor = editor.editable().isInline();
 
 					if (KeyMap.isKey(event.keyCode, 'enter') || !inlineEditor) {
